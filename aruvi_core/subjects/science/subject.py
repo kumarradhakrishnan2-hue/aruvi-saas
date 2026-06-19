@@ -17,33 +17,11 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
+from ...normalize import as_list as _as_list, classify_stimulus
 from ...ports import Prompt
 from ...view_model import (
-    AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView,
-    Period, StimulusType, VisualStimulus,
+    AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
 )
-
-
-def classify_stimulus(raw: str) -> VisualStimulus:
-    """Type a raw visual_stimulus string so the renderer never has to guess or dump
-    raw markup as prose (the prototype's recurring bug). SVG > pipe-table > prose."""
-    s = (raw or "").strip()
-    if not s:
-        return VisualStimulus(StimulusType.NONE, "")
-    if s.lower().startswith("<svg") and "</svg>" in s.lower():
-        return VisualStimulus(StimulusType.SVG, s)
-    # pipe-delimited table: at least one line with two or more '|' separators
-    if any(line.count("|") >= 2 for line in s.splitlines()):
-        return VisualStimulus(StimulusType.TABLE, s)
-    return VisualStimulus(StimulusType.PROSE, s)
-
-
-def _as_list(v: Any) -> List[str]:
-    if v is None or v == "":
-        return []
-    if isinstance(v, list):
-        return [str(x) for x in v if str(x).strip()]
-    return [str(v)]
 
 
 def _phase_lines(phases: Any) -> List[str]:
