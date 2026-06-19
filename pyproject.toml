@@ -1,0 +1,16 @@
+[project]
+name = "aruvi-core"
+version = "0.0.1"
+description = "Aruvi generation engine — subject plugins, canonical view model, vendor-neutral ports."
+requires-python = ">=3.9"
+# The core has no hard runtime deps yet. Adapters add their own (anthropic, reportlab,
+# pypdf, etc.); the API/service layer adds fastapi, pydantic, the DB driver, and so on.
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aruvi_core*"]
