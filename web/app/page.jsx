@@ -163,12 +163,51 @@ function MyPlans({ subject, grade }) {
   );
 }
 
-function Generate() {
+function Generate({ subject, grade }) {
+  const [chapters, setChapters] = useState([]);
+  const [plans, setPlans] = useState([]);
+  const [chNum, setChNum] = useState("");
+  const [periods, setPeriods] = useState(5);
+  const [minutes, setMinutes] = useState(40);
+  const [view, setView] = useState(null);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => { setView(null); setNote("");
+    getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setChNum(String(d.chapters[0]?.chapter_number ?? "")); }).catch(() => setChapters([]));
+    getJSON(`/plans/${subject}/${grade}`).then((d) => setPlans(d.plans)).catch(() => setPlans([]));
+  }, [subject, grade]);
+
+  const run = async () => {
+    setBusy(true); setView(null); setNote("");
+    try {
+      const match = plans.find((p) => String(p.chapter_number) === String(chNum));
+      if (match) {
+        setView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view);
+        setNote(`Preview — live generation is coming soon. Showing a previously generated plan for this chapter (your request: ${periods} periods × ${minutes} min).`);
+      } else {
+        setNote("Live generation is wired but deferred, and there is no saved example for this chapter yet.");
+      }
+    } finally { setBusy(false); }
+  };
+
   return (
-    <div className="empty">
-      <div style={{ fontSize: 17, fontWeight: 600, color: "var(--ink)", marginBottom: 6 }}>Generate — coming soon</div>
-      Live generation is wired but intentionally deferred for now.<br />
-      Meanwhile, open <b>My Plans</b> to view real generated lesson plans &amp; assessments.
+    <div>
+      <p className="h2">Generate a lesson plan &amp; assessment for one chapter.</p>
+      <div style={{ display: "flex", gap: 12, alignItems: "flex-end", marginBottom: 18, flexWrap: "wrap" }}>
+        <label className="fld">Chapter
+          <select value={chNum} onChange={(e) => setChNum(e.target.value)} style={{ minWidth: 300 }}>
+            {chapters.map((c) => <option key={c.chapter_number} value={c.chapter_number}>Ch {c.chapter_number} — {c.chapter_title}</option>)}
+          </select></label>
+        <label className="fld">Periods
+          <input type="number" min="1" value={periods} onChange={(e) => setPeriods(e.target.value)} style={{ width: 90 }} /></label>
+        <label className="fld">Min / period
+          <input type="number" min="5" step="5" value={minutes} onChange={(e) => setMinutes(e.target.value)} style={{ width: 100 }} /></label>
+        <button className="primary" onClick={run} disabled={busy || !chapters.length}>{busy ? "Generating…" : "Generate"}</button>
+      </div>
+      {note && <div className="note">{note}</div>}
+      {view ? <ViewModelView view={view} />
+        : !note && <div className="empty">Pick a chapter and period schedule, then press Generate.</div>}
     </div>
   );
 }
@@ -214,7 +253,7 @@ export default function Home() {
       <main>
         {!subject ? <div className="empty">Connecting to the Aruvi API…</div> :
           tab === "allocate" ? <Allocate subject={subject} grade={grade} /> :
-          tab === "generate" ? <Generate /> :
+          tab === "generate" ? <Generate subject={subject} grade={grade} /> :
           <MyPlans subject={subject} grade={grade} />}
       </main>
     </>
