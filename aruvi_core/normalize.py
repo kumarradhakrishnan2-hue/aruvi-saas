@@ -47,3 +47,37 @@ def as_list(v: Any) -> List[str]:
     if isinstance(v, list):
         return [str(x) for x in v if str(x).strip()]
     return [str(v)]
+
+
+_TEXTISH = ("text", "activity", "description", "task_brief", "item", "prompt")
+
+
+def text_lines(items: Any) -> List[str]:
+    """Turn a list of strings OR dicts into display lines, pulling the first text-ish field
+    from dicts (or 'ref'+'title' for textbook segments). Avoids dumping raw dicts."""
+    out: List[str] = []
+    for it in items or []:
+        if isinstance(it, dict):
+            picked = next((str(it[f]) for f in _TEXTISH if it.get(f)), "")
+            if not picked:
+                picked = " ".join(str(it[k]) for k in ("ref", "title") if it.get(k))
+            if picked:
+                out.append(picked)
+        elif str(it).strip():
+            out.append(str(it))
+    return out
+
+
+def band_lines(bands: Any) -> List[str]:
+    """Time bands / phases shaped like {minutes, description|activity} -> 'mins: text'."""
+    out: List[str] = []
+    for b in bands or []:
+        if isinstance(b, dict):
+            mins = b.get("minutes", "")
+            desc = b.get("description") or b.get("activity") or ""
+            line = f"{mins}: {desc}".strip(": ").strip()
+            if line:
+                out.append(line)
+        elif str(b).strip():
+            out.append(str(b))
+    return out
