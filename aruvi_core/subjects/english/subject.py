@@ -20,7 +20,7 @@ import copy
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
-from ...normalize import as_list, classify_stimulus
+from ...normalize import as_list, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -29,6 +29,26 @@ from ...view_model import (
 
 def _spine_label(codes: List[str]) -> str:
     return " + ".join(c.replace("_", " ").title() for c in codes) or "General"
+
+
+def _task_lines(tasks: Any) -> List[str]:
+    """English tasks_in_class are dicts {spine, task_index, task_brief}; show the brief."""
+    out: List[str] = []
+    for t in tasks or []:
+        if isinstance(t, dict):
+            txt = t.get("task_brief") or t.get("task") or t.get("brief") or ""
+            if txt:
+                out.append(str(txt))
+        elif str(t).strip():
+            out.append(str(t))
+    return out
+
+
+def _homework_text(hw: Any) -> str:
+    """Homework may be a plain string OR a list of task dicts (same shape as tasks_in_class)."""
+    if isinstance(hw, list):
+        return "; ".join(_task_lines(hw))
+    return hw or ""
 
 
 def _phase_lines(phases: Any) -> List[str]:
@@ -145,9 +165,9 @@ class EnglishSubject:
             spine_index[key].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
-                activities=as_list(p.get("tasks_in_class")) + _phase_lines(p.get("phases")),
+                activities=_task_lines(p.get("tasks_in_class")) + _phase_lines(p.get("phases")),
                 teacher_notes=as_list(p.get("teacher_notes")),
-                homework=p.get("homework", ""),
+                homework=_homework_text(p.get("homework")),
                 meta={"pedagogical_methods": p.get("pedagogical_methods", {}),
                       "materials": p.get("materials", ""),
                       "spines_taught": spines,
@@ -171,10 +191,12 @@ class EnglishSubject:
                 meta={"spine_code": sg.get("spine_code", "")},
             )
             for it in sg.get("items", []):
+                options, answer = normalize_options(it.get("options"))
                 g.items.append(AssessmentItem(
                     prompt=it.get("item_stem", ""),
                     item_type=it.get("question_type", ""),
-                    options=as_list(it.get("options")),
+                    options=options,
+                    answer=answer,
                     teacher_guide=as_list(it.get("teacher_guide")),
                     implied_lo=it.get("source_lo", ""),
                     visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),

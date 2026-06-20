@@ -23,6 +23,23 @@ def classify_stimulus(raw: str) -> VisualStimulus:
     return VisualStimulus(StimulusType.PROSE, s)
 
 
+def normalize_options(raw: Any) -> tuple:
+    """Options may be plain strings OR dicts like {label, text, is_correct}.
+    Return (list_of_display_texts, answer_label) so the renderer shows clean text and can
+    mark the correct one. Generic — used by every subject."""
+    options: List[str] = []
+    answer = ""
+    for o in raw or []:
+        if isinstance(o, dict):
+            txt = o.get("text") or o.get("option") or o.get("label") or ""
+            options.append(str(txt))
+            if o.get("is_correct"):
+                answer = str(o.get("label") or txt)
+        elif str(o).strip():
+            options.append(str(o))
+    return options, answer
+
+
 def as_list(v: Any) -> List[str]:
     """Coerce a string / list / None field into a clean list of non-empty strings."""
     if v is None or v == "":

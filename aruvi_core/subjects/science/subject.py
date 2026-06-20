@@ -17,7 +17,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
-from ...normalize import as_list as _as_list, classify_stimulus
+from ...normalize import as_list as _as_list, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -163,10 +163,12 @@ class ScienceSubject:
                 groups.append(g)
             guide = (_as_list(it.get("look_for")) + _as_list(it.get("expected_elements"))
                      + _as_list(it.get("scaffold")) + _as_list(it.get("format_of_output")))
+            options, answer = normalize_options(it.get("options"))
             by_stage[stage].items.append(AssessmentItem(
                 prompt=it.get("question_text") or it.get("task", ""),
                 item_type=it.get("question_type", ""),
-                options=_as_list(it.get("options")),
+                options=options,
+                answer=answer,
                 teacher_guide=guide,
                 implied_lo=it.get("implied_lo_assessed", ""),
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
