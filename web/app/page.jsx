@@ -6,6 +6,8 @@ const ROMAN = ["iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
 const pretty = (s) => (s || "").split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const gradeUp = (g) => (g || "").replace(/grade/i, "").trim().toUpperCase();
+const kickerOf = (t) => (t || "").replace(/_/g, " ").toUpperCase();
+const pad = (n) => String(n ?? "").padStart(2, "0");
 
 async function getJSON(path, opts) {
   const r = await fetch(API + path, opts);
@@ -13,10 +15,10 @@ async function getJSON(path, opts) {
   return r.json();
 }
 
-/* ───────────────────────── view-model renderer (on-screen) ───────────────────────── */
+/* ───────── view-model renderer (the document) ───────── */
 function Stimulus({ vs }) {
   if (!vs || vs.type === "none" || !vs.content) return null;
-  if (vs.type === "svg") return <div className="vs" dangerouslySetInnerHTML={{ __html: vs.content }} />;
+  if (vs.type === "svg") return <div className="vs"><div className="vs-svg" dangerouslySetInnerHTML={{ __html: vs.content }} /></div>;
   if (vs.type === "table") {
     const rows = vs.content.split("\n").filter((l) => l.trim()).map((l) => l.split("|").map((c) => c.trim()));
     return (
@@ -26,51 +28,80 @@ function Stimulus({ vs }) {
       </table></div>
     );
   }
-  return <div className="vs prose">{vs.content}</div>;
+  return <div className="vs vs-prose">{vs.content}</div>;
 }
 
-function Chips({ meta }) {
-  const keep = ["weight", "implied_lo", "stage_number", "description", "spine_code", "section_id", "section_anchor"];
-  const chips = keep.filter((k) => meta && meta[k] !== undefined && meta[k] !== "" && meta[k] !== null)
-    .map((k) => <span className="chip" key={k}><b>{k}</b> {String(meta[k])}</span>);
-  return chips.length ? <div className="chips">{chips}</div> : null;
+function Tags({ items }) {
+  const t = items.filter((x) => x && x[1] != null && x[1] !== "" && !(Array.isArray(x[1]) && !x[1].length));
+  if (!t.length) return null;
+  return <div className="tags">{t.map(([k, v], i) => (
+    <span className="tag" key={i}><b>{k}</b> {Array.isArray(v) ? v.join(", ") : String(v)}</span>
+  ))}</div>;
 }
 
 function PeriodCard({ p }) {
+  const m = p.meta || {};
   return (
-    <div className="card">
-      <div className="card-hd"><span className="pnum">P{p.number}</span>{p.title}
-        {p.meta?.duration_minutes ? <span className="dur">{p.meta.duration_minutes} min</span> : null}</div>
-      {p.activities?.length ? <ul className="acts">{p.activities.map((a, i) => <li key={i}>{a}</li>)}</ul> : null}
-      {p.learning_outcomes?.length ? <div className="sub"><b>LO:</b> {p.learning_outcomes.join("; ")}</div> : null}
-      {p.meta?.pedagogical_method || p.meta?.pedagogical_approach ?
-        <div className="sub"><b>Pedagogy:</b> {p.meta.pedagogical_method || p.meta.pedagogical_approach}</div> : null}
-      {p.teacher_notes?.length ? <div className="sub"><b>Teacher notes:</b> {p.teacher_notes.join(" ")}</div> : null}
-      {p.homework ? <div className="sub"><b>Homework:</b> {p.homework}</div> : null}
+    <div className="entry">
+      <div className="entry-rail">
+        <div className="entry-no">{pad(p.number)}</div>
+        {m.duration_minutes ? <div className="entry-dur">{m.duration_minutes}′</div> : null}
+      </div>
+      <div className="entry-body">
+        <div className="entry-title">{p.title}</div>
+        {p.activities?.length ? <ul className="acts">{p.activities.map((a, i) => <li key={i}>{a}</li>)}</ul> : null}
+        {p.learning_outcomes?.length ?
+          <div className="field"><span className="field-k">Learning outcome</span>{p.learning_outcomes.join("; ")}</div> : null}
+        <Tags items={[["Pedagogy", m.pedagogical_method || m.pedagogical_approach], ["Mode", m.dominant_mode], ["Materials", m.materials]]} />
+        {p.teacher_notes?.length ? <div className="tnote">{p.teacher_notes.join(" ")}</div> : null}
+        {p.homework ? <div className="field"><span className="field-k">Homework</span>{p.homework}</div> : null}
+      </div>
     </div>
   );
 }
 
-function GroupBlock({ g }) {
+function Group({ g, nested }) {
+  const m = g.meta || {};
   return (
-    <section className="grp">
-      <div className="grp-hd"><span className="gtype">{g.type}</span><span className="glabel">{g.label}</span></div>
-      <Chips meta={g.meta} />
+    <section className={`sec ${nested ? "nested" : ""}`}>
+      <div className="sec-hd">
+        <span className="kicker">{kickerOf(g.type)}</span>
+        <span className="sec-label">{g.label}</span>
+        {m.weight ? <span className="sec-badge">weight {m.weight}</span> : null}
+      </div>
+      {m.implied_lo ? <div className="sec-imp">{m.implied_lo}</div> : (m.description ? <div className="sec-imp">{m.description}</div> : null)}
       {g.periods?.map((p, i) => <PeriodCard key={i} p={p} />)}
-      {g.children?.map((c, i) => <GroupBlock key={i} g={c} />)}
+      {g.children?.map((c, i) => <Group key={i} g={c} nested />)}
     </section>
   );
 }
 
-function AItem({ it }) {
+function QItem({ it, n }) {
+  const m = it.meta || {};
+  const comp = m.competency && m.competency.c_code ? m.competency.c_code : null;
   return (
-    <div className="card">
-      <div className="card-hd"><span className="qtype">{it.item_type}</span>{it.prompt}</div>
-      <Stimulus vs={it.visual_stimulus} />
-      {it.options?.length ? <ol className="opts" type="A">{it.options.map((o, i) => <li key={i}>{o}</li>)}</ol> : null}
-      {it.answer ? <div className="ans">Answer: {it.answer}</div> : null}
-      {it.implied_lo ? <div className="sub"><b>Implied LO:</b> {it.implied_lo}</div> : null}
-      {it.teacher_guide?.length ? <div className="sub"><b>Teacher guide:</b> {it.teacher_guide.join(" · ")}</div> : null}
+    <div className="qentry">
+      <div className="q-no">Q{n}</div>
+      <div className="q-body">
+        <div className="q-type">{it.item_type}</div>
+        <div className="q-prompt">{it.prompt}</div>
+        <Stimulus vs={it.visual_stimulus} />
+        {it.options?.length ? <ol className="opts">{it.options.map((o, i) => <li key={i}>{o}</li>)}</ol> : null}
+        {it.answer ? <div className="ans">{it.answer}</div> : null}
+        {it.implied_lo ? <div className="field"><span className="field-k">Implied LO</span>{it.implied_lo}</div> : null}
+        {it.teacher_guide?.length ? <div className="field"><span className="field-k">Teacher guide</span>{it.teacher_guide.join(" · ")}</div> : null}
+        <Tags items={[["Cognitive", m.cognitive_demand], ["Competency", comp]]} />
+      </div>
+    </div>
+  );
+}
+
+function DocHead({ kicker, title, meta }) {
+  return (
+    <div className="doc-hd">
+      <span className="kicker">{kicker}</span>
+      <div className="doc-title">{title}</div>
+      {meta ? <div className="doc-meta">{meta}</div> : null}
     </div>
   );
 }
@@ -78,22 +109,29 @@ function AItem({ it }) {
 function ViewModelView({ view }) {
   const lp = view.lesson_plan, a = view.assessment;
   return (
-    <div className="vm">
-      <h3>Lesson Plan — {lp.chapter_title} <small>({pretty(lp.subject)}, grade {gradeUp(lp.grade)}, {lp.total_periods} periods)</small></h3>
-      {lp.groups.map((g, i) => <GroupBlock key={i} g={g} />)}
-      <h3>Assessment — {a.chapter_title}</h3>
+    <div className="doc">
+      <DocHead kicker="Lesson Plan" title={lp.chapter_title}
+        meta={<>{pretty(lp.subject)} <span>·</span> Grade {gradeUp(lp.grade)} <span>·</span> {lp.total_periods} periods</>} />
+      <div className="rule-hero" />
+      {lp.groups.map((g, i) => <Group key={i} g={g} />)}
+      <div style={{ marginTop: 50 }} />
+      <DocHead kicker="Assessment" title={a.chapter_title} />
+      <div className="rule-hero" />
       {a.groups.map((g, i) => (
-        <section className="grp" key={i}>
-          <div className="grp-hd"><span className="gtype">{g.type}</span><span className="glabel">{g.label}</span></div>
-          <Chips meta={g.meta} />
-          {g.items.map((it, j) => <AItem key={j} it={it} />)}
+        <section className="sec" key={i}>
+          <div className="sec-hd">
+            <span className="kicker">{kickerOf(g.type)}</span>
+            <span className="sec-label">{g.label}</span>
+          </div>
+          {g.meta?.implied_lo ? <div className="sec-imp">{g.meta.implied_lo}</div> : null}
+          {g.items.map((it, j) => <QItem key={j} it={it} n={j + 1} />)}
         </section>
       ))}
     </div>
   );
 }
 
-/* ───────────────────────── tabs ───────────────────────── */
+/* ───────── tabs ───────── */
 function Allocate({ subject, grade }) {
   const [chapters, setChapters] = useState([]);
   const [total, setTotal] = useState(50);
@@ -104,8 +142,7 @@ function Allocate({ subject, grade }) {
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => setChapters(d.chapters)).catch(() => setChapters([]));
   }, [subject, grade]);
 
-  const run = async () => {
-    setBusy(true);
+  const run = async () => { setBusy(true);
     try { setAlloc((await getJSON(`/subjects/${subject}/${grade}/allocate`,
       { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ total_periods: Number(total) }) })).allocations); }
     finally { setBusy(false); }
@@ -115,10 +152,10 @@ function Allocate({ subject, grade }) {
   const maxP = Math.max(1, ...rows.map((r) => r.periods || r.weight || 0));
   return (
     <div>
-      <p className="h2">Allocate the year across {chapters.length} chapters by weight.</p>
-      <div style={{ display: "flex", gap: 12, alignItems: "flex-end", marginBottom: 18 }}>
-        <label className="fld">Total periods
-          <input type="number" min="1" value={total} onChange={(e) => setTotal(e.target.value)} style={{ width: 110 }} /></label>
+      <p className="h2">Allocate the year across {chapters.length} chapters.</p>
+      <div style={{ display: "flex", gap: 14, alignItems: "flex-end", marginBottom: 26 }}>
+        <label className="fld"><span>Total periods</span>
+          <input type="number" min="1" value={total} onChange={(e) => setTotal(e.target.value)} style={{ width: 120 }} /></label>
         <button className="primary" onClick={run} disabled={busy || !chapters.length}>{busy ? "Allocating…" : "Allocate"}</button>
       </div>
       {rows.map((r) => (
@@ -128,7 +165,7 @@ function Allocate({ subject, grade }) {
           <div className="alloc-p">{r.periods != null ? <><b>{r.periods}</b> periods</> : <span className="chipw">w {r.weight}</span>}</div>
         </div>
       ))}
-      {!chapters.length && <div className="empty">No chapter mappings for this subject/grade.</div>}
+      {!chapters.length && <div className="empty">No chapter mappings for this subject &amp; grade.</div>}
     </div>
   );
 }
@@ -146,19 +183,19 @@ function MyPlans({ subject, grade }) {
     try { setView((await getJSON(`/plans/${subject}/${grade}/${fn}/view`)).view); } finally { setLoading(false); }
   };
 
-  if (loading) return <div className="spin">Loading plan…</div>;
-  if (view) return (<div><button className="primary" onClick={() => setView(null)} style={{ marginBottom: 14 }}>← Back to plans</button><ViewModelView view={view} /></div>);
+  if (loading) return <div className="spin">Opening plan…</div>;
+  if (view) return (<div><button className="back" onClick={() => setView(null)}>← all plans</button><ViewModelView view={view} /></div>);
   return (
     <div>
       <p className="h2">{plans.length} saved plan{plans.length === 1 ? "" : "s"}.</p>
       {plans.map((p) => (
         <div className="plan-row" key={p.filename} onClick={() => open(p.filename)}>
-          <span className="plan-num">Ch {p.chapter_number}</span>
-          <span>{p.chapter_title}</span>
+          <span className="plan-num">CH {pad(p.chapter_number)}</span>
+          <span className="plan-title">{p.chapter_title}</span>
           <span className="plan-date">{(p.saved_at || "").slice(0, 10)}</span>
         </div>
       ))}
-      {!plans.length && <div className="empty">No saved plans for this subject/grade yet.</div>}
+      {!plans.length && <div className="empty">No saved plans for this subject &amp; grade yet.</div>}
     </div>
   );
 }
@@ -178,41 +215,37 @@ function Generate({ subject, grade }) {
     getJSON(`/plans/${subject}/${grade}`).then((d) => setPlans(d.plans)).catch(() => setPlans([]));
   }, [subject, grade]);
 
-  const run = async () => {
-    setBusy(true); setView(null); setNote("");
+  const run = async () => { setBusy(true); setView(null); setNote("");
     try {
       const match = plans.find((p) => String(p.chapter_number) === String(chNum));
       if (match) {
         setView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view);
         setNote(`Preview — live generation is coming soon. Showing a previously generated plan for this chapter (your request: ${periods} periods × ${minutes} min).`);
-      } else {
-        setNote("Live generation is wired but deferred, and there is no saved example for this chapter yet.");
-      }
+      } else { setNote("Live generation is wired but deferred, and there is no saved example for this chapter yet."); }
     } finally { setBusy(false); }
   };
 
   return (
     <div>
-      <p className="h2">Generate a lesson plan &amp; assessment for one chapter.</p>
-      <div style={{ display: "flex", gap: 12, alignItems: "flex-end", marginBottom: 18, flexWrap: "wrap" }}>
-        <label className="fld">Chapter
-          <select value={chNum} onChange={(e) => setChNum(e.target.value)} style={{ minWidth: 300 }}>
+      <p className="h2">Generate a lesson plan &amp; assessment.</p>
+      <div style={{ display: "flex", gap: 14, alignItems: "flex-end", marginBottom: 24, flexWrap: "wrap" }}>
+        <label className="fld"><span>Chapter</span>
+          <select value={chNum} onChange={(e) => setChNum(e.target.value)} style={{ minWidth: 320 }}>
             {chapters.map((c) => <option key={c.chapter_number} value={c.chapter_number}>Ch {c.chapter_number} — {c.chapter_title}</option>)}
           </select></label>
-        <label className="fld">Periods
-          <input type="number" min="1" value={periods} onChange={(e) => setPeriods(e.target.value)} style={{ width: 90 }} /></label>
-        <label className="fld">Min / period
-          <input type="number" min="5" step="5" value={minutes} onChange={(e) => setMinutes(e.target.value)} style={{ width: 100 }} /></label>
+        <label className="fld"><span>Periods</span>
+          <input type="number" min="1" value={periods} onChange={(e) => setPeriods(e.target.value)} style={{ width: 84 }} /></label>
+        <label className="fld"><span>Min / period</span>
+          <input type="number" min="5" step="5" value={minutes} onChange={(e) => setMinutes(e.target.value)} style={{ width: 96 }} /></label>
         <button className="primary" onClick={run} disabled={busy || !chapters.length}>{busy ? "Generating…" : "Generate"}</button>
       </div>
       {note && <div className="note">{note}</div>}
-      {view ? <ViewModelView view={view} />
-        : !note && <div className="empty">Pick a chapter and period schedule, then press Generate.</div>}
+      {view ? <ViewModelView view={view} /> : !note && <div className="empty">Pick a chapter &amp; period schedule, then Generate.</div>}
     </div>
   );
 }
 
-/* ───────────────────────── app shell ───────────────────────── */
+/* ───────── app shell ───────── */
 export default function Home() {
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState("");
@@ -231,13 +264,13 @@ export default function Home() {
   return (
     <>
       <header className="hdr">
-        <div className="brand">Aruvi <span>· lesson planner</span></div>
+        <div className="brand">Aruvi<em>.</em><small>lesson studio</small></div>
         <div className="sel">
-          <label className="fld">Subject
+          <label className="fld"><span>Subject</span>
             <select value={subject} onChange={(e) => setSubject(e.target.value)}>
               {subjects.map((s) => <option key={s} value={s}>{pretty(s)}</option>)}
             </select></label>
-          <label className="fld">Grade
+          <label className="fld"><span>Grade</span>
             <select value={grade} onChange={(e) => setGrade(e.target.value)}>
               {grades.map((g) => <option key={g} value={g}>{gradeUp(g)}</option>)}
             </select></label>
@@ -246,12 +279,12 @@ export default function Home() {
       <div className="tabs">
         {["allocate", "generate", "myplans"].map((t) => (
           <button key={t} className={`tab ${tab === t ? "active" : ""}`} onClick={() => setTab(t)}>
-            {t === "myplans" ? "My Plans" : pretty(t)}
+            {t === "myplans" ? "My Plans" : t}
           </button>
         ))}
       </div>
       <main>
-        {!subject ? <div className="empty">Connecting to the Aruvi API…</div> :
+        {!subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
           tab === "allocate" ? <Allocate subject={subject} grade={grade} /> :
           tab === "generate" ? <Generate subject={subject} grade={grade} /> :
           <MyPlans subject={subject} grade={grade} />}
