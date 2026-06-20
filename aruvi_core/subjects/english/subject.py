@@ -130,6 +130,9 @@ class EnglishSubject:
         strip(s)
         return s
 
+    def chapter_weight(self, mapping):
+        return float(mapping.get("effort_index") or 0)
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

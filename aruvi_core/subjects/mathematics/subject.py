@@ -58,6 +58,9 @@ class MathematicsSubject:
                 "Raw JSON only.")
         return Prompt(system=system, messages=[{"role": "user", "content": user}], cache_system=True)
 
+    def chapter_weight(self, mapping):
+        return float(mapping.get("effort_index") or 0)
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

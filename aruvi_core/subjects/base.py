@@ -41,3 +41,8 @@ class Subject(Protocol):
     def assessment_to_view(
         self, raw: Dict[str, Any], *, grade: str, chapter: Dict[str, Any],
     ) -> AssessmentView: ...
+
+    def chapter_weight(self, mapping: Dict[str, Any]) -> float:
+        """The single number that drives Allocate for this chapter — read from the chapter's
+        mapping JSON. SS reads `chapter_weight`; the effort-index subjects read `effort_index`."""
+        ...
