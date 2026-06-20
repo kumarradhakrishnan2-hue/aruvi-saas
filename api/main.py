@@ -11,7 +11,7 @@ Data comes from local disk (api/data.py) for now; live generation and the DB com
 """
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,7 +25,7 @@ import aruvi_core.subjects.science          # noqa: F401
 import aruvi_core.subjects.social_sciences  # noqa: F401
 import aruvi_core.subjects.the_world_around_us  # noqa: F401
 from aruvi_core import subjects
-from aruvi_core.allocate import allocate_for_subject
+from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subject
 from aruvi_core.view_model import ViewModel
 
 from . import data
@@ -36,8 +36,15 @@ app.add_middleware(
 )
 
 
+class PeriodRow(BaseModel):
+    minutes: int
+    count: int
+
+
 class AllocateRequest(BaseModel):
-    total_periods: int
+    # Either a multi-row schedule (preferred) or a single total (back-compat).
+    period_rows: Optional[List[PeriodRow]] = None
+    total_periods: Optional[int] = None
 
 
 def _subject(name: str):
@@ -81,9 +88,18 @@ def post_allocate(subject: str, grade: str, req: AllocateRequest) -> Dict[str, A
     mappings = data.load_mappings(subject, grade)
     if not mappings:
         raise HTTPException(status_code=404, detail="No chapter mappings for that subject/grade.")
-    allocs = allocate_for_subject(subject, mappings, req.total_periods)
-    return {"subject": subject, "grade": grade, "total_periods": req.total_periods,
-            "allocations": [a.__dict__ for a in allocs]}
+
+    if req.period_rows:
+        rows = [r.model_dump() for r in req.period_rows]
+        result = allocate_schedule_for_subject(subject, mappings, rows)
+        return {"subject": subject, "grade": grade, **result}
+
+    if req.total_periods is not None:  # back-compat single-total path
+        allocs = allocate_for_subject(subject, mappings, req.total_periods)
+        return {"subject": subject, "grade": grade, "total_periods": req.total_periods,
+                "allocations": [a.__dict__ for a in allocs]}
+
+    raise HTTPException(status_code=422, detail="Provide period_rows or total_periods.")
 
 
 @app.get("/plans/{subject}/{grade}")

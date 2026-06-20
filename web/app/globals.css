@@ -70,6 +70,26 @@ button.primary:disabled { opacity: .45; cursor: default; }
 .alloc-p b { font-size: 18px; color: var(--ink); font-weight: 600; }
 .chipw { font-family: var(--f-mono); font-size: 11px; color: var(--clay); }
 
+/* period-row editor */
+.prows { display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
+.prow { display: flex; align-items: center; gap: 9px; }
+.pin { font-family: var(--f-mono); width: 78px; text-align: right; }
+.px { font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft); }
+.prm { border: none; background: none; color: var(--clay); cursor: pointer; font-size: 19px; line-height: 1; padding: 0 4px; }
+.padd { align-self: flex-start; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pine); background: none; border: 1px dashed var(--line); border-radius: 3px; padding: 6px 13px; cursor: pointer; }
+.padd:hover { border-color: var(--pine); }
+
+/* allocation table */
+.atable { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.atable th { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.atable th.num, .atable td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.atable td { padding: 10px; border-bottom: 1px solid var(--line-soft); font-size: 16px; }
+.atable td.num { font-family: var(--f-mono); font-size: 14px; color: var(--ink-soft); }
+.atable td.total { color: var(--ink); font-weight: 600; font-size: 16px; }
+.atable .chn { font-family: var(--f-mono); font-size: 11px; color: var(--pine); margin-right: 9px; }
+.atable tfoot td { border-top: 2px solid var(--pine); border-bottom: none; padding-top: 11px; color: var(--ink); font-family: var(--f-mono); }
+.atable tfoot .lbl { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pine-d); }
+
 /* ── Plans list ───────────────────────────────────────── */
 .plan-row { display: flex; align-items: baseline; gap: 16px; padding: 16px 4px; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding-left .15s; }
 .plan-row:hover { padding-left: 12px; }

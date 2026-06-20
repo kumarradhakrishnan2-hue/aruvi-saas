@@ -19,7 +19,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import aruvi_core.subjects.science          # noqa: E402  (register)
 import aruvi_core.subjects.social_sciences  # noqa: E402  (register)
-from aruvi_core.allocate import allocate_for_subject, allocate_periods  # noqa: E402
+from aruvi_core.allocate import (  # noqa: E402
+    allocate_for_subject, allocate_periods, allocate_schedule_for_subject,
+)
 
 FXM = os.path.join(os.path.dirname(__file__), "fixtures", "mappings")
 
@@ -65,10 +67,28 @@ def test_science_reads_effort_index_real_data():
     assert hi.weight == 11.0 and lo.weight == 4.0 and hi.periods > lo.periods
 
 
+def test_multi_row_schedule_real_data():
+    # Science: 150 periods of 45 min + 50 of 60 min, allocated across 12 chapters.
+    res = allocate_schedule_for_subject("science", _mappings("science"),
+                                        [{"minutes": 45, "count": 150}, {"minutes": 60, "count": 50}])
+    assert res["durations"] == [45, 60]
+    a = res["allocations"]
+    # each duration column sums EXACTLY to its pool (remainder method)
+    assert sum(x["periods_by_duration"]["45"] for x in a) == 150
+    assert sum(x["periods_by_duration"]["60"] for x in a) == 50
+    # per-chapter total is the row sum; grand total is 200
+    assert all(x["total_periods"] == x["periods_by_duration"]["45"] + x["periods_by_duration"]["60"] for x in a)
+    assert res["totals"]["periods"] == 200 and res["totals"]["minutes"] == 150 * 45 + 50 * 60
+    # heavier chapter gets more total periods
+    hi = max(a, key=lambda x: x["weight"]); lo = min(a, key=lambda x: x["weight"])
+    assert hi["total_periods"] > lo["total_periods"]
+
+
 if __name__ == "__main__":
     test_algorithm_basic_proportional_and_exact_total()
     test_algorithm_respects_minimums()
     test_ss_reads_chapter_weight_real_data()
     test_science_reads_effort_index_real_data()
-    print("OK — Allocate: proportional + minimums + exact total; SS reads chapter_weight and "
-          "Science reads effort_index, verified on real 12-chapter mappings.")
+    test_multi_row_schedule_real_data()
+    print("OK — Allocate: proportional + minimums + exact total; per-subject weight field; "
+          "and multi-row schedule (per-duration columns sum exactly, totals correct).")

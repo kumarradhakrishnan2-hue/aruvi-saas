@@ -132,40 +132,69 @@ function ViewModelView({ view }) {
 }
 
 /* ───────── tabs ───────── */
+function PeriodRows({ rows, setRows }) {
+  const upd = (i, k, v) => setRows(rows.map((r, j) => (j === i ? { ...r, [k]: v } : r)));
+  return (
+    <div className="prows">
+      {rows.map((r, i) => (
+        <div className="prow" key={i}>
+          <input className="pin" type="number" min="0" value={r.count} onChange={(e) => upd(i, "count", e.target.value)} />
+          <span className="px">periods ×</span>
+          <input className="pin" type="number" min="5" step="5" value={r.minutes} onChange={(e) => upd(i, "minutes", e.target.value)} />
+          <span className="px">min</span>
+          {rows.length > 1 ? <button className="prm" title="remove" onClick={() => setRows(rows.filter((_, j) => j !== i))}>×</button> : null}
+        </div>
+      ))}
+      <button className="padd" onClick={() => setRows([...rows, { count: 20, minutes: 60 }])}>+ add period type</button>
+    </div>
+  );
+}
+
+const toPeriodRows = (rows) => rows.map((r) => ({ minutes: Number(r.minutes), count: Number(r.count) })).filter((r) => r.count > 0 && r.minutes > 0);
+
 function Allocate({ subject, grade }) {
   const [chapters, setChapters] = useState([]);
-  const [total, setTotal] = useState(50);
-  const [alloc, setAlloc] = useState(null);
+  const [rows, setRows] = useState([{ count: 120, minutes: 45 }, { count: 40, minutes: 60 }]);
+  const [res, setRes] = useState(null);
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => { setAlloc(null);
+  useEffect(() => { setRes(null);
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => setChapters(d.chapters)).catch(() => setChapters([]));
   }, [subject, grade]);
 
   const run = async () => { setBusy(true);
-    try { setAlloc((await getJSON(`/subjects/${subject}/${grade}/allocate`,
-      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ total_periods: Number(total) }) })).allocations); }
+    try { setRes(await getJSON(`/subjects/${subject}/${grade}/allocate`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ period_rows: toPeriodRows(rows) }) })); }
     finally { setBusy(false); }
   };
 
-  const rows = alloc || chapters.map((c) => ({ ...c, periods: null }));
-  const maxP = Math.max(1, ...rows.map((r) => r.periods || r.weight || 0));
+  const dur = res ? res.durations : [];
+  const byCh = res ? Object.fromEntries(res.allocations.map((a) => [a.chapter_number, a])) : {};
   return (
     <div>
       <p className="h2">Allocate the year across {chapters.length} chapters.</p>
-      <div style={{ display: "flex", gap: 14, alignItems: "flex-end", marginBottom: 26 }}>
-        <label className="fld"><span>Total periods</span>
-          <input type="number" min="1" value={total} onChange={(e) => setTotal(e.target.value)} style={{ width: 120 }} /></label>
-        <button className="primary" onClick={run} disabled={busy || !chapters.length}>{busy ? "Allocating…" : "Allocate"}</button>
-      </div>
-      {rows.map((r) => (
-        <div className="alloc-bar" key={r.chapter_number}>
-          <div className="alloc-name"><b>Ch {r.chapter_number}</b>{r.chapter_title}</div>
-          <div className="bar-track"><div className="bar-fill" style={{ width: `${((r.periods ?? r.weight) / maxP) * 100}%` }} /></div>
-          <div className="alloc-p">{r.periods != null ? <><b>{r.periods}</b> periods</> : <span className="chipw">w {r.weight}</span>}</div>
-        </div>
-      ))}
-      {!chapters.length && <div className="empty">No chapter mappings for this subject &amp; grade.</div>}
+      <PeriodRows rows={rows} setRows={setRows} />
+      <button className="primary" onClick={run} disabled={busy || !chapters.length} style={{ marginBottom: 26 }}>{busy ? "Allocating…" : "Allocate"}</button>
+      {!chapters.length ? <div className="empty">No chapter mappings for this subject &amp; grade.</div> :
+        <table className="atable">
+          <thead><tr>
+            <th>Chapter</th><th className="num">Wt</th>
+            {dur.map((m) => <th className="num" key={m}>{m}′</th>)}
+            {res ? <th className="num">Periods</th> : null}
+          </tr></thead>
+          <tbody>{chapters.map((c) => { const a = byCh[c.chapter_number]; return (
+            <tr key={c.chapter_number}>
+              <td><span className="chn">CH {pad(c.chapter_number)}</span>{c.chapter_title}</td>
+              <td className="num">{c.weight}</td>
+              {dur.map((m) => <td className="num" key={m}>{a ? a.periods_by_duration[m] : ""}</td>)}
+              {res ? <td className="num total">{a ? a.total_periods : ""}</td> : null}
+            </tr>); })}</tbody>
+          {res ? <tfoot><tr>
+            <td className="lbl">Total · {res.totals.minutes.toLocaleString()} min</td><td></td>
+            {dur.map((m) => <td className="num" key={m}>{res.totals.by_duration[m]}</td>)}
+            <td className="num total">{res.totals.periods}</td>
+          </tr></tfoot> : null}
+        </table>}
     </div>
   );
 }
@@ -204,8 +233,7 @@ function Generate({ subject, grade }) {
   const [chapters, setChapters] = useState([]);
   const [plans, setPlans] = useState([]);
   const [chNum, setChNum] = useState("");
-  const [periods, setPeriods] = useState(5);
-  const [minutes, setMinutes] = useState(40);
+  const [rows, setRows] = useState([{ count: 4, minutes: 45 }, { count: 1, minutes: 60 }]);
   const [view, setView] = useState(null);
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
@@ -217,10 +245,11 @@ function Generate({ subject, grade }) {
 
   const run = async () => { setBusy(true); setView(null); setNote("");
     try {
+      const sched = toPeriodRows(rows).map((r) => `${r.count}×${r.minutes}′`).join(" + ") || "—";
       const match = plans.find((p) => String(p.chapter_number) === String(chNum));
       if (match) {
         setView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view);
-        setNote(`Preview — live generation is coming soon. Showing a previously generated plan for this chapter (your request: ${periods} periods × ${minutes} min).`);
+        setNote(`Preview — live generation is coming soon. Showing a previously generated plan for this chapter (your schedule: ${sched}).`);
       } else { setNote("Live generation is wired but deferred, and there is no saved example for this chapter yet."); }
     } finally { setBusy(false); }
   };
@@ -228,17 +257,13 @@ function Generate({ subject, grade }) {
   return (
     <div>
       <p className="h2">Generate a lesson plan &amp; assessment.</p>
-      <div style={{ display: "flex", gap: 14, alignItems: "flex-end", marginBottom: 24, flexWrap: "wrap" }}>
-        <label className="fld"><span>Chapter</span>
-          <select value={chNum} onChange={(e) => setChNum(e.target.value)} style={{ minWidth: 320 }}>
-            {chapters.map((c) => <option key={c.chapter_number} value={c.chapter_number}>Ch {c.chapter_number} — {c.chapter_title}</option>)}
-          </select></label>
-        <label className="fld"><span>Periods</span>
-          <input type="number" min="1" value={periods} onChange={(e) => setPeriods(e.target.value)} style={{ width: 84 }} /></label>
-        <label className="fld"><span>Min / period</span>
-          <input type="number" min="5" step="5" value={minutes} onChange={(e) => setMinutes(e.target.value)} style={{ width: 96 }} /></label>
-        <button className="primary" onClick={run} disabled={busy || !chapters.length}>{busy ? "Generating…" : "Generate"}</button>
-      </div>
+      <label className="fld" style={{ marginBottom: 16, maxWidth: 480 }}><span>Chapter</span>
+        <select value={chNum} onChange={(e) => setChNum(e.target.value)}>
+          {chapters.map((c) => <option key={c.chapter_number} value={c.chapter_number}>Ch {c.chapter_number} — {c.chapter_title}</option>)}
+        </select></label>
+      <div className="kicker" style={{ marginBottom: 9 }}>Period schedule</div>
+      <PeriodRows rows={rows} setRows={setRows} />
+      <button className="primary" onClick={run} disabled={busy || !chapters.length} style={{ marginBottom: 22 }}>{busy ? "Generating…" : "Generate"}</button>
       {note && <div className="note">{note}</div>}
       {view ? <ViewModelView view={view} /> : !note && <div className="empty">Pick a chapter &amp; period schedule, then Generate.</div>}
     </div>
