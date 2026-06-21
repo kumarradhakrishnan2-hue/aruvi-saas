@@ -46,3 +46,9 @@ class Subject(Protocol):
         """The single number that drives Allocate for this chapter — read from the chapter's
         mapping JSON. SS reads `chapter_weight`; the effort-index subjects read `effort_index`."""
         ...
+
+    def allocation_basis(self, grade: str) -> Dict[str, Any]:
+        """Static, subject/stage-level explanation of WHAT the allocation weight reflects —
+        the factors enumerated, never the numbers/ranges. Powers the teacher-facing
+        'How are periods allocated?' note. Shape: {"basis": str, "factors": [str, ...]}."""
+        ...

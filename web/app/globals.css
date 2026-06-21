@@ -86,9 +86,26 @@ button.primary:disabled { opacity: .45; cursor: default; }
 .atable td { padding: 10px; border-bottom: 1px solid var(--line-soft); font-size: 16px; }
 .atable td.num { font-family: var(--f-mono); font-size: 14px; color: var(--ink-soft); }
 .atable td.total { color: var(--ink); font-weight: 600; font-size: 16px; }
-.atable .chn { font-family: var(--f-mono); font-size: 11px; color: var(--pine); margin-right: 9px; }
+.chn { font-family: var(--f-mono); font-size: 11px; color: var(--pine); margin-right: 9px; }
 .atable tfoot td { border-top: 2px solid var(--pine); border-bottom: none; padding-top: 11px; color: var(--ink); font-family: var(--f-mono); }
 .atable tfoot .lbl { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pine-d); }
+
+/* "How are periods allocated?" note */
+.howbox { margin: 2px 0 24px; }
+.howtoggle { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pine); background: none; border: none; cursor: pointer; padding: 0; }
+.howtoggle:hover { color: var(--clay); }
+.howbody { margin-top: 11px; background: var(--paper-2); border: 1px solid var(--line); border-left: 3px solid var(--pine); border-radius: 0 4px 4px 0; padding: 13px 17px; max-width: 660px; font-size: 15.5px; }
+.howbody p { margin: 0 0 6px; }
+.howbody ul { margin: 7px 0 0; padding-left: 20px; }
+.howbody li { margin: 4px 0; }
+.howmore { font-style: italic; color: var(--ink-soft); font-size: 14px; margin-top: 9px !important; }
+.howmore b { font-style: normal; color: var(--pine-d); font-weight: 500; }
+
+/* pre-allocation emphasis list (relative load, no numbers) */
+.emph-row { display: grid; grid-template-columns: 1fr 200px; align-items: center; gap: 18px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
+.emph-name { font-size: 16px; }
+.emph-track { background: var(--paper-sunk); border-radius: 2px; height: 7px; overflow: hidden; }
+.emph-fill { background: rgba(28, 107, 91, .28); height: 100%; }
 
 /* ── Plans list ───────────────────────────────────────── */
 .plan-row { display: flex; align-items: baseline; gap: 16px; padding: 16px 4px; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding-left .15s; }

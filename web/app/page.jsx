@@ -154,12 +154,14 @@ const toPeriodRows = (rows) => rows.map((r) => ({ minutes: Number(r.minutes), co
 
 function Allocate({ subject, grade }) {
   const [chapters, setChapters] = useState([]);
+  const [basis, setBasis] = useState(null);
   const [rows, setRows] = useState([{ count: 120, minutes: 45 }, { count: 40, minutes: 60 }]);
   const [res, setRes] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [showHow, setShowHow] = useState(false);
 
   useEffect(() => { setRes(null);
-    getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => setChapters(d.chapters)).catch(() => setChapters([]));
+    getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
   }, [subject, grade]);
 
   const run = async () => { setBusy(true);
@@ -170,31 +172,55 @@ function Allocate({ subject, grade }) {
 
   const dur = res ? res.durations : [];
   const byCh = res ? Object.fromEntries(res.allocations.map((a) => [a.chapter_number, a])) : {};
+  const maxW = Math.max(1, ...chapters.map((c) => c.weight || 0));
+
   return (
     <div>
       <p className="h2">Allocate the year across {chapters.length} chapters.</p>
       <PeriodRows rows={rows} setRows={setRows} />
-      <button className="primary" onClick={run} disabled={busy || !chapters.length} style={{ marginBottom: 26 }}>{busy ? "Allocating…" : "Allocate"}</button>
+      <button className="primary" onClick={run} disabled={busy || !chapters.length} style={{ marginBottom: 22 }}>{busy ? "Allocating…" : "Allocate"}</button>
+
+      {basis ? (
+        <div className="howbox">
+          <button className="howtoggle" onClick={() => setShowHow(!showHow)}>{showHow ? "▾" : "▸"} How are periods allocated?</button>
+          {showHow ? (
+            <div className="howbody">
+              <p>Each chapter receives periods in proportion to its {basis.basis}, which reflects:</p>
+              <ul>{basis.factors.map((f, i) => <li key={i}>{f}</li>)}</ul>
+              <p className="howmore">Curious why a particular chapter gets more or fewer? Just <b>Ask Aruvi</b>.</p>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
       {!chapters.length ? <div className="empty">No chapter mappings for this subject &amp; grade.</div> :
-        <table className="atable">
-          <thead><tr>
-            <th>Chapter</th><th className="num">Wt</th>
-            {dur.map((m) => <th className="num" key={m}>{m}′</th>)}
-            {res ? <th className="num">Periods</th> : null}
-          </tr></thead>
-          <tbody>{chapters.map((c) => { const a = byCh[c.chapter_number]; return (
-            <tr key={c.chapter_number}>
-              <td><span className="chn">CH {pad(c.chapter_number)}</span>{c.chapter_title}</td>
-              <td className="num">{c.weight}</td>
-              {dur.map((m) => <td className="num" key={m}>{a ? a.periods_by_duration[m] : ""}</td>)}
-              {res ? <td className="num total">{a ? a.total_periods : ""}</td> : null}
-            </tr>); })}</tbody>
-          {res ? <tfoot><tr>
-            <td className="lbl">Total · {res.totals.minutes.toLocaleString()} min</td><td></td>
-            {dur.map((m) => <td className="num" key={m}>{res.totals.by_duration[m]}</td>)}
-            <td className="num total">{res.totals.periods}</td>
-          </tr></tfoot> : null}
-        </table>}
+        res ? (
+          <table className="atable">
+            <thead><tr>
+              <th>Chapter</th>
+              {dur.map((m) => <th className="num" key={m}>{m}′</th>)}
+              <th className="num">Periods</th>
+            </tr></thead>
+            <tbody>{chapters.map((c) => { const a = byCh[c.chapter_number]; return (
+              <tr key={c.chapter_number}>
+                <td><span className="chn">CH {pad(c.chapter_number)}</span>{c.chapter_title}</td>
+                {dur.map((m) => <td className="num" key={m}>{a ? a.periods_by_duration[m] : ""}</td>)}
+                <td className="num total">{a ? a.total_periods : ""}</td>
+              </tr>); })}</tbody>
+            <tfoot><tr>
+              <td className="lbl">Total · {res.totals.minutes.toLocaleString()} min</td>
+              {dur.map((m) => <td className="num" key={m}>{res.totals.by_duration[m]}</td>)}
+              <td className="num total">{res.totals.periods}</td>
+            </tr></tfoot>
+          </table>
+        ) : (
+          <div>{chapters.map((c) => (
+            <div className="emph-row" key={c.chapter_number}>
+              <div className="emph-name"><span className="chn">CH {pad(c.chapter_number)}</span>{c.chapter_title}</div>
+              <div className="emph-track"><div className="emph-fill" style={{ width: `${(c.weight / maxW) * 100}%` }} /></div>
+            </div>
+          ))}</div>
+        )}
     </div>
   );
 }

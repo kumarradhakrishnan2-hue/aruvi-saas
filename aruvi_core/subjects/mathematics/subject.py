@@ -61,6 +61,16 @@ class MathematicsSubject:
     def chapter_weight(self, mapping):
         return float(mapping.get("effort_index") or 0)
 
+    def allocation_basis(self, grade):
+        if stage_for(grade) == "secondary":
+            factors = ["Conceptual demand", "Reasoning load", "In-class execution load"]
+        else:
+            factors = ["Conceptual demand",
+                       "The core competency and any adjacent ones",
+                       "Activities and worked examples",
+                       "In-class execution load"]
+        return {"basis": "effort index", "factors": factors}
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

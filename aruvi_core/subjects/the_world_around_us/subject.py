@@ -46,6 +46,12 @@ class TheWorldAroundUsSubject:
     def chapter_weight(self, mapping):
         return float(mapping.get("effort_index") or 0)
 
+    def allocation_basis(self, grade):
+        return {"basis": "effort index", "factors": [
+            "The curricular goals the chapter develops",
+            "The breadth of explore, discuss and create activities",
+        ]}
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

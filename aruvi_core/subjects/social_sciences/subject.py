@@ -49,6 +49,13 @@ class SocialSciencesSubject:
     def chapter_weight(self, mapping):
         return float(mapping.get("chapter_weight") or 0)
 
+    def allocation_basis(self, grade):
+        return {"basis": "NCF competency weight", "factors": [
+            "The NCF competencies each chapter develops",
+            "How central each competency is to the chapter",
+            "Whether a competency is engaged structurally or only in passing",
+        ]}
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

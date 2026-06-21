@@ -17,6 +17,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
+from ...grades import stage_for
 from ...normalize import as_list as _as_list, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
@@ -86,6 +87,16 @@ class ScienceSubject:
 
     def chapter_weight(self, mapping):
         return float(mapping.get("effort_index") or 0)
+
+    def allocation_basis(self, grade):
+        if stage_for(grade) == "secondary":
+            factors = ["Conceptual demand of the ideas", "Reasoning load", "In-class execution load"]
+        else:
+            factors = ["Conceptual demand of the ideas",
+                       "The central and co-central competencies",
+                       "Hands-on load — activities and demonstrations",
+                       "In-class execution load"]
+        return {"basis": "effort index", "factors": factors}
 
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:

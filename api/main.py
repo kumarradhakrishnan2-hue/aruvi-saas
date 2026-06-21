@@ -79,7 +79,8 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
          "weight": sub.chapter_weight(m)}
         for m in data.load_mappings(subject, grade)
     ]
-    return {"subject": subject, "grade": grade, "chapters": chapters}
+    return {"subject": subject, "grade": grade, "chapters": chapters,
+            "allocation_basis": sub.allocation_basis(grade)}
 
 
 @app.post("/subjects/{subject}/{grade}/allocate")
