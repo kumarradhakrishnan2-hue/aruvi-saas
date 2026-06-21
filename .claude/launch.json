@@ -2,10 +2,18 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "aruvi-demo",
+      "name": "aruvi-api",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8799", "--directory", "out"],
-      "port": 8799
+      "runtimeArgs": ["-m", "uvicorn", "api.main:app", "--port", "8000"],
+      "port": 8000,
+      "autoPort": false
+    },
+    {
+      "name": "aruvi-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "web", "run", "dev"],
+      "port": 3000,
+      "autoPort": false
     }
   ]
 }
