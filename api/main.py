@@ -45,6 +45,9 @@ class AllocateRequest(BaseModel):
     # Either a multi-row schedule (preferred) or a single total (back-compat).
     period_rows: Optional[List[PeriodRow]] = None
     total_periods: Optional[int] = None
+    # Optional subset of chapters to allocate across (teacher deselected some in the UI).
+    # None/omitted = allocate across every chapter mapping, as before.
+    chapter_numbers: Optional[List[Any]] = None
 
 
 def _subject(name: str):
@@ -89,6 +92,12 @@ def post_allocate(subject: str, grade: str, req: AllocateRequest) -> Dict[str, A
     mappings = data.load_mappings(subject, grade)
     if not mappings:
         raise HTTPException(status_code=404, detail="No chapter mappings for that subject/grade.")
+
+    if req.chapter_numbers is not None:
+        keep = {str(n) for n in req.chapter_numbers}
+        mappings = [m for m in mappings if str(m.get("chapter_number")) in keep]
+        if not mappings:
+            raise HTTPException(status_code=422, detail="No chapters selected.")
 
     if req.period_rows:
         rows = [r.model_dump() for r in req.period_rows]

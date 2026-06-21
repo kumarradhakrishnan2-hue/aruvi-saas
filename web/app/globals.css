@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --paper: #f6f1e7;
-  --paper-2: #fefdfa;
-  --paper-sunk: #efe8d8;
-  --ink: #2a251c;
-  --ink-soft: #756a57;
-  --line: #e2d8c4;
-  --line-soft: #ece3d2;
-  --pine: #1c6b5b;
-  --pine-d: #134c40;
+  --paper: #faf7f1;
+  --paper-2: #ffffff;
+  --paper-sunk: #f1ece2;
+  --ink: #1f2a24;
+  --ink-soft: #6b6a63;
+  --line: #e4ddd0;
+  --line-soft: #ece7dc;
+  --pine: #1e5c4a;
+  --pine-d: #164436;
   --clay: #b65a31;
   --ochre: #9a7321;
+  --danger: #c0392b;
+  --card-bg: #f3f1ea;
   --f-display: "Fraunces", Georgia, serif;
   --f-body: "Newsreader", Georgia, serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -33,6 +35,11 @@ body {
   position: sticky; top: 0; z-index: 6; background: var(--paper);
   border-bottom: 1px solid var(--line); padding: 16px 34px; display: flex; align-items: center; gap: 18px;
 }
+@media (max-width: 600px) {
+  .hdr { padding: 14px 18px; }
+  .brand-row { font-size: 21px; }
+  .brand small { display: none; } /* "lesson studio" kicker — drop on phones, brand name + NCF line carry it */
+}
 .brand { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-row { display: flex; align-items: baseline; font-family: var(--f-display); font-weight: 600; font-size: 25px; letter-spacing: -.4px; color: var(--pine-d); }
 .brand em { font-style: italic; color: var(--clay); font-weight: 500; }
@@ -48,12 +55,54 @@ select, input[type="number"] {
 select:focus, input:focus { outline: none; border-color: var(--pine); }
 
 /* ── Tabs ─────────────────────────────────────────────── */
-.tabs { display: flex; gap: 26px; padding: 0 34px; background: transparent; border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
-.tab { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 15px 2px; border: none; background: none; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tabs { display: flex; align-items: center; gap: 26px; padding: 0 34px; background: transparent; border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
+.tab {
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 15px 2px;
+  border: none; background: none; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color .18s ease, border-color .18s ease;
+}
 .tab:hover { color: var(--ink); }
 .tab.active { color: var(--pine-d); border-bottom-color: var(--clay); }
+.tabs-spacer { flex: 1; }
+
+@media (max-width: 600px) {
+  /* Narrow phones: let the tab row scroll horizontally rather than wrap awkwardly or crush
+   * the subject/grade pills against the three section tabs. */
+  .tabs { padding: 0 18px; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab { padding: 13px 1px; font-size: 11px; white-space: nowrap; }
+  .tabs-spacer { flex: none; width: 10px; }
+  .pillmenu { min-width: 140px; }
+}
+
+/* state pills — subject / grade, styled as tabs that flip into a dropdown */
+.pillwrap { position: relative; }
+.tab-pill { color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px; }
+.tab-pill:hover, .tab-pill.active { color: var(--pine-d); border-bottom-color: var(--pine); }
+.pillcaret { font-size: 9px; color: inherit; transition: transform .18s ease; }
+.tab-pill.active .pillcaret { transform: rotate(180deg); }
+
+.pillmenu {
+  position: absolute; top: 100%; right: 0; margin-top: 1px; z-index: 8;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 0 0 4px 4px;
+  box-shadow: 0 8px 20px rgba(42, 37, 28, .1);
+  min-width: 160px; padding: 6px; display: flex; flex-direction: column; gap: 1px;
+}
+.pillopt {
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: .05em; text-align: left;
+  border: none; background: none; color: var(--ink-soft); cursor: pointer;
+  padding: 8px 10px 6px; border-radius: 3px; transition: color .15s ease;
+  align-self: flex-start; display: inline-flex; flex-direction: column;
+}
+.pillopt::after {
+  content: ""; display: block; height: 2px; margin-top: 4px; background: transparent; transition: background-color .15s ease;
+}
+.pillopt:hover, .pillopt:focus { color: var(--pine-d); outline: none; }
+.pillopt:hover::after, .pillopt:focus::after { background-color: var(--clay); }
 
 main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: relative; z-index: 1; }
+@media (max-width: 600px) {
+  main { padding: 26px 18px 72px; }
+}
 .h2 { font-family: var(--f-display); font-size: 22px; font-weight: 500; margin: 0 0 22px; }
 button.primary {
   font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
@@ -72,14 +121,85 @@ button.primary:disabled { opacity: .45; cursor: default; }
 .alloc-p b { font-size: 18px; color: var(--ink); font-weight: 600; }
 .chipw { font-family: var(--f-mono); font-size: 11px; color: var(--clay); }
 
-/* period-row editor */
-.prows { display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
-.prow { display: flex; align-items: center; gap: 9px; }
-.pin { font-family: var(--f-mono); width: 78px; text-align: right; }
-.px { font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft); }
-.prm { border: none; background: none; color: var(--clay); cursor: pointer; font-size: 19px; line-height: 1; padding: 0 4px; }
-.padd { align-self: flex-start; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pine); background: none; border: 1px dashed var(--line); border-radius: 3px; padding: 6px 13px; cursor: pointer; }
-.padd:hover { border-color: var(--pine); }
+/* h2 sub-line under Allocate heading */
+.h2-sub { font-size: 14.5px; color: var(--ink-soft); margin: -14px 0 22px; }
+
+/* period types section label */
+.ptsection-label { font-family: var(--f-display); font-size: 16px; font-weight: 500; margin: 0 0 12px; display: flex; align-items: center; gap: 7px; }
+.infoq { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 50%; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; cursor: help; }
+
+/* period-type cards */
+.ptcards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.ptcard {
+  display: grid; grid-template-columns: 30px 1fr; align-items: center; gap: 14px;
+  background: var(--card-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px;
+}
+.ptnum {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--paper-sunk); color: var(--pine-d);
+  font-family: var(--f-mono); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+}
+.ptbody { display: flex; flex-direction: column; min-width: 0; }
+.ptmain-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.ptlabel-col { display: flex; flex-direction: column; gap: 1px; margin-right: 6px; flex: 1; min-width: 170px; }
+.ptlabel { font-family: var(--f-display); font-size: 16px; font-weight: 500; color: var(--ink); }
+.ptdel { border: none; background: none; color: var(--danger); cursor: pointer; padding: 4px; line-height: 1; margin-left: auto; display: inline-flex; align-items: center; justify-content: center; }
+.ptdel:hover { opacity: .75; }
+.ptdel svg { display: block; }
+.ptunit { font-family: var(--f-mono); font-size: 12.5px; color: var(--ink-soft); margin-right: 6px; }
+
+.stepper { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: var(--paper); }
+.step-btn { border: none; background: var(--paper-sunk); color: var(--ink); width: 28px; height: 32px; font-size: 15px; line-height: 1; cursor: pointer; flex-shrink: 0; }
+.step-btn:hover { background: var(--line); }
+.step-in {
+  font-family: var(--f-mono); font-size: 13.5px; width: 60px; min-width: 60px; text-align: center;
+  border: none; background: var(--paper); padding: 6px 10px; -moz-appearance: textfield;
+}
+.step-in:focus { outline: none; }
+.step-in::-webkit-outer-spin-button, .step-in::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Touch devices: widen the +/- hit area on the main period-type steppers (not the compact
+ * in-table delta steppers, which intentionally stay small to fit the allocation table). The
+ * stock 28×32px buttons are under the ~44px touch-target guideline. */
+@media (pointer: coarse) {
+  .ptcards .stepper:not(.stepper-sm) .step-btn { width: 40px; height: 44px; font-size: 17px; }
+  .ptcards .stepper:not(.stepper-sm) .step-in { height: 44px; }
+}
+
+.padd {
+  align-self: flex-start; font-family: var(--f-mono); font-size: 13px; font-weight: 500; color: var(--pine);
+  background: none; border: 1px solid var(--line); border-radius: 8px; padding: 13px 16px; cursor: pointer;
+  width: 100%; text-align: left;
+}
+.padd:hover { border-color: var(--pine); background: var(--paper-sunk); }
+
+/* total allocated-time bar */
+.totalbar {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px;
+  background: var(--card-bg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 16px 20px; margin-top: 22px;
+}
+.totalbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.totalbar-check {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--pine); color: var(--paper-2);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.totalbar-mid { min-width: 0; }
+.totalbar-label { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.totalbar-value { font-family: var(--f-display); font-size: 24px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+.totalbar-unit { font-family: var(--f-mono); font-size: 12px; font-weight: 400; color: var(--ink-soft); }
+.totalbar-fine { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+
+@media (max-width: 640px) {
+  .totalbar { grid-template-columns: 1fr; }
+}
+
+/* compact variant: chapter-allocation step header (no period-type box, just totals + edit) */
+.totalbar-compact { grid-template-columns: auto auto; justify-content: space-between; margin-top: 0; margin-bottom: 26px; }
+.totalbar-edit { margin: 0; white-space: nowrap; }
+@media (max-width: 600px) {
+  .totalbar-compact { grid-template-columns: 1fr; gap: 12px; }
+  .totalbar-edit { justify-self: start; }
+}
 
 /* allocation table */
 .atable { width: 100%; border-collapse: collapse; margin-top: 6px; }
@@ -92,16 +212,112 @@ button.primary:disabled { opacity: .45; cursor: default; }
 .atable tfoot td { border-top: 2px solid var(--pine); border-bottom: none; padding-top: 11px; color: var(--ink); font-family: var(--f-mono); }
 .atable tfoot .lbl { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pine-d); }
 
-/* "How are periods allocated?" note */
-.howbox { margin: 2px 0 24px; }
-.howtoggle { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pine); background: none; border: none; cursor: pointer; padding: 0; }
-.howtoggle:hover { color: var(--clay); }
-.howbody { margin-top: 11px; background: var(--paper-2); border: 1px solid var(--line); border-left: 3px solid var(--pine); border-radius: 0 4px 4px 0; padding: 13px 17px; max-width: 660px; font-size: 15.5px; }
+/* chapter-selection column (shared by single-checkbox-column tables) */
+.atable th.chk, .atable td.chk { width: 30px; padding-right: 0; }
+.atable th.chk input, .atable td.chk input { width: 15px; height: 15px; accent-color: var(--pine); cursor: pointer; }
+.atable tr.row-off td { color: var(--ink-soft); opacity: .5; }
+.atable tr.row-off .chn { opacity: .6; }
+.stepper-sm { transform: scale(.88); transform-origin: right center; display: inline-flex; }
+.stepper-sm .step-btn { width: 24px; height: 28px; font-size: 13px; }
+.step-btn:disabled { opacity: .4; cursor: default; }
+
+/* ── Allocation adjustment screen: one combined table ────────────────────
+ * A single table with two header rows: a grouping row ("Suggested periods" /
+ * "Change allocation" spans) and a sub-header row naming each period type (taken from the
+ * teacher's names on the periods step). The master select-all checkbox lives in the
+ * checkbox column's own header cell, directly above the per-row checkboxes. The whole table
+ * sits in a card using the same background as the "Total allocated time" box above it. */
+.atable-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 16px; }
+.atable-combined { background: transparent; }
+
+/* Allocation tables can grow wide (chapter + N duration columns + N delta columns). Below
+ * desktop width, scroll horizontally inside the card rather than squeezing columns illegibly
+ * or overflowing the page. The chapter column stays pinned on the left as the anchor while
+ * the numeric columns scroll — sticky needs a solid (not transparent) background to avoid
+ * see-through while scrolled. */
+.atable-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 720px) {
+  .atable-scroll { margin: 0 -16px; padding: 0 16px; }
+  .atable-combined th:first-child, .atable-combined td:first-child {
+    position: sticky; left: 0; background: var(--card-bg); z-index: 1;
+  }
+  .atable-combined tr.row-off td:first-child,
+  .atable-combined tr.row-bad td:first-child { background: var(--card-bg); }
+}
+.atable-combined th.group-h {
+  text-align: center; font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-soft); font-weight: 500; padding: 9px 10px 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.atable-combined th.sub-h { font-size: 10px; text-align: center; }
+.atable-combined th.chapter-h { vertical-align: bottom; }
+
+/* two-line period column headers: teacher's chosen name on top, minutes below */
+.sub-h-name { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+.sub-h-min { display: block; font-family: var(--f-body); font-size: 11px; font-style: italic; color: var(--ink-soft); font-weight: 400; text-transform: none; letter-spacing: 0; margin-top: 1px; }
+.atable-combined thead tr.grouprow th { border-bottom: 1px solid var(--line-soft); }
+.atable-combined thead tr:last-child th { border-bottom: 1px solid var(--line); }
+
+/* numeric columns center-aligned (overrides the right-align default) */
+.atable-combined th.num, .atable-combined td.num { text-align: center; }
+
+/* chapter title — sized down (two steps smaller than the 16px row text) to keep rows compact */
+.ch-title { font-size: 13px; }
+
+/* visually separate the "Change allocation" column block from "Suggested periods" */
+.atable-combined .group-h-adjust, .atable-combined .sub-h-adjust, .atable-combined td.adjust-cell {
+  border-left: 1px solid var(--line);
+}
+
+/* delta cell — compact stepper per duration cell, can go negative */
+td.adjust-cell { padding: 6px 8px; }
+.stepper-delta { width: 100%; justify-content: center; }
+.stepper-delta .step-in {
+  width: 38px; min-width: 38px; text-align: center; background: var(--paper);
+  font-family: var(--f-mono); font-size: 13px; padding: 6px 2px; border: none;
+}
+.stepper-delta .step-in:focus { outline: none; }
+.stepper-delta .step-in-neg { color: var(--danger); }
+tr.row-bad td { background: rgba(192, 57, 43, .07); }
+tr.row-bad .chn { color: var(--danger); }
+
+/* Save Allocation bar */
+.savebar { display: flex; align-items: center; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+.savebar-hint { font-size: 13px; color: var(--ink-soft); }
+
+/* Net Δ per period type, shown in the table's total row instead of the separate balance rows
+ * that used to sit below the table. Flags in --danger when the column doesn't net to zero;
+ * reverts to the normal cell look the instant it nets back to zero. */
+.adjust-total { font-weight: 600; }
+.adjust-total-warn { color: var(--danger); background: rgba(192, 57, 43, .12); }
+
+/* Warning modal — shown when Save Allocation is pressed while deltas are invalid (negative
+ * final allocation, or a non-zero net adjustment for some period type). */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(31, 28, 23, .45);
+  display: flex; align-items: center; justify-content: center; z-index: 30; padding: 20px;
+}
+.modal-box {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 8px;
+  padding: 22px 24px; max-width: 420px; box-shadow: 0 12px 32px rgba(0, 0, 0, .18);
+}
+.modal-title { font-family: var(--f-mono); font-size: 13px; letter-spacing: .04em; color: var(--danger); margin: 0 0 10px; font-weight: 600; }
+.modal-body { font-size: 14px; color: var(--ink); line-height: 1.5; margin: 0 0 18px; }
+.modal-actions { display: flex; justify-content: flex-end; }
+
+/* "Why did Aruvi allocate periods this way?" note — single bordered card, chevron toggle
+ * inline with a bold green title, plain body copy below (no bullets). */
+.howbox { margin: 2px 0 24px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; }
+.howtoggle {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  font-family: var(--f-body); font-size: 14px; font-weight: 600; color: var(--pine-d);
+  background: none; border: none; cursor: pointer; padding: 0;
+}
+.howtoggle:hover { color: var(--pine); }
+.howchevron { font-size: 11px; color: var(--pine-d); transition: transform .15s ease; flex-shrink: 0; }
+.howbody { margin-top: 11px; font-size: 11.5px; color: var(--ink); line-height: 1.5; }
 .howbody p { margin: 0 0 6px; }
-.howbody ul { margin: 7px 0 0; padding-left: 20px; }
-.howbody li { margin: 4px 0; }
-.howmore { font-style: italic; color: var(--ink-soft); font-size: 14px; margin-top: 9px !important; }
-.howmore b { font-style: normal; color: var(--pine-d); font-weight: 500; }
+.howbody a, .howbody b.howlink { color: var(--pine-d); font-weight: 600; }
 
 /* pre-allocation emphasis list (relative load, no numbers) */
 .emph-row { display: grid; grid-template-columns: 1fr 200px; align-items: center; gap: 18px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
@@ -176,3 +392,12 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .spin { font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft); padding: 24px 0; }
 .back { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--pine); background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 18px; }
 .back:hover { color: var(--clay); }
+
+/* "Modify Allocation" — orange fill signals a temporary/unsaved-state action, distinct from
+ * the primary "Accept Allocation" button beside it. */
+.modify-btn {
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  color: #fff; background: var(--ochre); border: 1px solid var(--ochre); border-radius: 5px;
+  cursor: pointer; padding: 10px 18px;
+}
+.modify-btn:hover { background: var(--clay); border-color: var(--clay); }
