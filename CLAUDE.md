@@ -47,9 +47,25 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
 - **Ports & adapters** (`aruvi_core/ports.py`): core depends only on `LLMClient`,
   `OutputCache`, `Storage`, `Repository`, `AuthProvider`, `BillingProvider`. Each vendor is a
   thin adapter → no lock-in.
-- **Allocate UX:** show the *answer* (periods), not the raw weight number. A collapsible
-  "How are periods allocated?" note enumerates the factors (no numbers) via
-  `Subject.allocation_basis(grade)`; deeper "why this chapter" is deferred to Ask Aruvi.
+- **Allocate UX:** show the *answer* (periods), not the raw weight number. The flow is four
+  explicit steps in `web/app/page.jsx`'s `Allocate` component, gated by its `step` state
+  (`"periods" | "select" | "adjust" | "final"`, 2026-06-21): (1) **periods** — define period
+  types/durations; (2) **select** — plain checkbox list of chapters, default all selected, no
+  allocation numbers yet; the LRM does NOT run live as checkboxes toggle. "Allocate Periods"
+  runs it once for whatever is checked; (3) **adjust** — shows the suggested allocation table
+  scoped ONLY to the chapters chosen in step 2 (unselected chapters are never displayed, not
+  just greyed out), with a collapsible "How are periods allocated?" note
+  (`Subject.allocation_basis(grade)`, no numbers, deeper "why" deferred to Ask Aruvi) and a
+  binary choice — **Accept Allocation** (saves as-is, Δ=0, no edit UI ever shown) vs **Modify
+  Allocation** (styled `.modify-btn`, solid `--ochre` fill, to visually flag the temporary/
+  unsaved state before it reveals per-chapter Δ columns, live balance check, Save Allocation
+  bar); (4) **final** — read-only Final Period Allocation table. The "Why did Aruvi allocate
+  periods this way?" card (`.howbox`) uses fixed copy (not the per-subject factors list as
+  bullets) pointing teachers to the Ask Aruvi "How time is allocated across chapters" tab.
+  Every period-duration column header is two lines — teacher's chosen name (`.sub-h-name`)
+  stacked over its minutes (`.sub-h-min`), e.g. "Core" / "45 min" — in both the suggested and
+  Δ column groups, and the Δ group header no longer uses a distinct clay/red color (matches
+  the suggested-periods group styling).
 - **Output caching** keyed by (subject, grade, chapter, period_profile, constitution_version)
   is the #1 economic lever at seasonal scale — wire it at the service layer when live gen lands.
 
@@ -71,6 +87,17 @@ generic look.
 - The on-screen plan/assessment view is a React renderer in `web/app/page.jsx`
   (`ViewModelView` and friends). `aruvi_core/render/html.py` is the separate **export/PDF**
   renderer — keep the two visually aligned.
+- **Mobile compatibility is a standing requirement — check it on a regular basis (VERY
+  IMPORTANT).** Many Indian K–12 teachers will reach Aruvi on a phone, so the web UI must
+  stay usable on small screens, not just desktop. Treat mobile as a first-class viewport:
+  - **Every UI change must be verified at a mobile width before it is considered done** —
+    use the Cowork preview `preview_resize` (e.g. 390×844, iPhone-class) and `preview_snapshot`
+    in addition to the desktop check. No layout regression ships unverified on mobile.
+  - Watch for the usual breakages: horizontal overflow / sideways scroll, fixed-width tables
+    (Allocate period columns, competency tables), the marginal numbering rail crowding text,
+    tap targets too small, and font sizes that don't scale down.
+  - Keep responsive rules in `web/app/globals.css` (`@media` breakpoints); don't hardcode
+    desktop-only widths in component styles.
 
 ---
 
@@ -117,6 +144,11 @@ REAL saved prototype plan through its normalizers — fixtures are the acceptanc
 
 Tooling note: the Cowork browser preview only rasterizes the first viewport, so scrolled
 screenshots can come back blank — verify via DOM (`preview_eval`) or bring content to the top.
+
+**Mobile check is part of "tested" (see §4):** for any UI work, after the desktop pass, run
+`preview_resize` to a phone width (~390×844) and re-snapshot to confirm no horizontal overflow,
+broken tables, or unreadable text. Do this every session that touches the web UI — mobile
+parity is verified routinely, not just at the eventual Expo milestone.
 
 ---
 
