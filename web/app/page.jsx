@@ -315,7 +315,10 @@ export default function Home() {
   return (
     <>
       <header className="hdr">
-        <div className="brand">Aruvi<em>.</em><small>lesson studio</small></div>
+        <div className="brand">
+          <span className="brand-row">Aruvi<em>.</em><small>lesson studio</small></span>
+          <span className="brand-ncf">NCF 2023 aligned</span>
+        </div>
         <div className="sel">
           <label className="fld"><span>Subject</span>
             <select value={subject} onChange={(e) => setSubject(e.target.value)}>
