@@ -66,6 +66,7 @@ export default function Allocate({ subject, grade }) {
   const [selected, setSelected] = useState(null); // Set of chapter_number, null = "all" (not yet touched)
   const [deltas, setDeltas] = useState({}); // { [chapter_number]: { [duration]: number } }
   const [finalAlloc, setFinalAlloc] = useState(null); // locked-in result, set by Save Allocation
+  const [allAllocations, setAllAllocations] = useState([]); // accumulate all saved allocations
   // "adjust" step has two sub-states: the AI suggestion is shown first with a binary choice
   // (Accept as-is vs Modify); only choosing Modify reveals the Δ columns / balance / save bar.
   const [modifying, setModifying] = useState(false);
@@ -135,7 +136,9 @@ export default function Allocate({ subject, grade }) {
 
   const saveAllocation = () => {
     if (!canSave) { setShowInvalidWarning(true); return; }
-    setFinalAlloc(buildFinalAllocation(res, byCh, deltas, selectedChapters));
+    const newAlloc = buildFinalAllocation(res, byCh, deltas, selectedChapters);
+    setFinalAlloc(newAlloc);
+    setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
   };
 
@@ -143,15 +146,28 @@ export default function Allocate({ subject, grade }) {
   // no Δ table is ever shown for this path, matching "Option A" in the spec.
   const acceptAllocation = () => {
     if (!res || !selectedChapters.length) return;
-    setFinalAlloc(buildFinalAllocation(res, byCh, {}, selectedChapters));
+    const newAlloc = buildFinalAllocation(res, byCh, {}, selectedChapters);
+    setFinalAlloc(newAlloc);
+    setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
   };
 
   if (step === "final" && finalAlloc) {
+    // Combine all allocations across all saved sets
+    const allChaptersData = allAllocations.flatMap((alloc) => alloc.allocations);
+    const combinedTotals = {
+      periods: allChaptersData.reduce((s, a) => s + a.total_periods, 0),
+      minutes: allChaptersData.reduce((s, a) => s + a.total_minutes, 0),
+      by_duration: Object.fromEntries(finalAlloc.durations.map((m) => [
+        m,
+        allChaptersData.reduce((s, a) => s + (a.periods_by_duration[m] || 0), 0),
+      ])),
+    };
+
     return (
       <div>
         <button className="back" onClick={() => setStep("adjust")}>← back to allocation</button>
-        <p className="h2">Final allocation — {finalAlloc.allocations.length} chapters.</p>
+        <p className="h2">Final allocation — {allChaptersData.length} chapters total.</p>
         <div className="atable-scroll">
         <table className="atable atable-combined">
           <thead><tr>
@@ -164,7 +180,7 @@ export default function Allocate({ subject, grade }) {
             ))}
             <th className="num">Periods</th>
           </tr></thead>
-          <tbody>{finalAlloc.allocations.map((a) => (
+          <tbody>{allChaptersData.map((a) => (
             <tr key={a.chapter_number}>
               <td><span className="chn">CH {pad(a.chapter_number)}</span>{a.chapter_title}</td>
               {finalAlloc.durations.map((m) => <td className="num" key={m}>{a.periods_by_duration[m]}</td>)}
@@ -172,11 +188,16 @@ export default function Allocate({ subject, grade }) {
             </tr>
           ))}</tbody>
           <tfoot><tr>
-            <td className="lbl">Total · {finalAlloc.totals.minutes.toLocaleString()} min</td>
-            {finalAlloc.durations.map((m) => <td className="num" key={m}>{finalAlloc.totals.by_duration[m]}</td>)}
-            <td className="num total">{finalAlloc.totals.periods}</td>
+            <td className="lbl">Total · {combinedTotals.minutes.toLocaleString()} min</td>
+            {finalAlloc.durations.map((m) => <td className="num" key={m}>{combinedTotals.by_duration[m]}</td>)}
+            <td className="num total">{combinedTotals.periods}</td>
           </tr></tfoot>
         </table>
+        </div>
+        <div className="savebar">
+          <button className="primary" onClick={() => { setStep("select"); setRes(null); setModifying(false); setDeltas({}); setShowInvalidWarning(false); }}>
+            Allocate more chapters →
+          </button>
         </div>
       </div>
     );
@@ -245,7 +266,7 @@ export default function Allocate({ subject, grade }) {
     return (
       <div>
         <button className="back" onClick={() => { setStep("select"); setRes(null); setModifying(false); setDeltas({}); setShowInvalidWarning(false); }}>← back to chapter selection</button>
-        <p className="h2">AI Suggested Allocation</p>
+        <p className="h2">Suggested allocation</p>
 
         {basis ? (
           <div className="howbox">
@@ -367,7 +388,7 @@ export default function Allocate({ subject, grade }) {
   return (
     <div>
       <p className="h2">Allocate the available time across chapters</p>
-      <p className="h2-sub">Set the total number of periods available and how long each period type lasts.</p>
+      <p className="h2-sub">To begin, set the total number of periods available and how long each period type lasts below.</p>
 
       <div className="ptsection-label">Period types <span className="infoq" title="Define the period types that fit your school schedule.">ⓘ</span></div>
       <PeriodRows rows={rows} setRows={setRows} />
