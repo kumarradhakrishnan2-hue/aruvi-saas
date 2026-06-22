@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pad } from "../lib/format";
 import PeriodRows, { toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
+import AllocationReportView from "./AllocationReportView";
 
 /* ── Teacher-adjustment model (explicit Δ per duration, budget-neutral) ──
  * `deltas`: { [chapter_number]: { [duration]: number } }. No auto-rebalancing — the teacher
@@ -73,10 +74,99 @@ export default function Allocate({ subject, grade }) {
   // Shown when Save Allocation is pressed while deltas are invalid (negative final allocation
   // for some chapter, or a non-zero net adjustment for some period type).
   const [showInvalidWarning, setShowInvalidWarning] = useState(false);
+  const [showClearWarning, setShowClearWarning] = useState(false);
+  const [allocationReport, setAllocationReport] = useState(null);
 
-  useEffect(() => { setRes(null); setStep("periods"); setSelected(null); setDeltas({}); setFinalAlloc(null); setModifying(false);
+  // LocalStorage key for persisting allocations across subject/grade changes
+  const allocationStorageKey = `allocations_${subject}_${grade}`;
+
+  // Load persisted allocations from localStorage on mount or subject/grade change
+  useEffect(() => {
+    setRes(null);
+    setStep("periods");
+    setSelected(null);
+    setDeltas({});
+    setFinalAlloc(null);
+    setModifying(false);
+
+    // Load persisted allocations for this subject/grade combination
+    try {
+      const stored = localStorage.getItem(allocationStorageKey);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        // Convert arrays back to proper structures
+        const restored = parsed.map((alloc) => ({
+          ...alloc,
+          durations: alloc.durations || [],
+          allocations: alloc.allocations || [],
+        }));
+        setAllAllocations(restored);
+      } else {
+        setAllAllocations([]);
+      }
+    } catch (e) {
+      console.warn("Failed to load persisted allocations:", e);
+      setAllAllocations([]);
+    }
+
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
-  }, [subject, grade]);
+  }, [subject, grade, allocationStorageKey]);
+
+  // Persist allocations to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(allocationStorageKey, JSON.stringify(allAllocations));
+    } catch (e) {
+      console.warn("Failed to persist allocations:", e);
+    }
+  }, [allAllocations, allocationStorageKey]);
+
+  /* Build AllocationReport from the current final allocation state.
+     This is called when entering the final step, and formats all the data
+     needed by AllocationReportView for rendering and exporting. */
+  const buildReport = (alloc, subject_) => {
+    if (!alloc) return null;
+
+    const stage = {
+      "vii": "middle",
+      "vi": "middle",
+      "viii": "middle",
+      "ix": "secondary",
+      "x": "secondary",
+      "iii": "preparatory",
+      "iv": "preparatory",
+      "v": "middle",
+    }[grade] || "middle";
+
+    const rows = alloc.allocations.map((a, idx) => ({
+      chapter_number: a.chapter_number,
+      chapter_name: a.chapter_title,
+      total_periods: a.total_periods, // allocated for this year
+      allocated_periods: a.total_periods,
+      effort_index: a.effort_index || null,
+      competency_weight: a.weight || null, // from allocations
+    }));
+
+    const periodProfileName = rows[0] && alloc.durations
+      ? `${alloc.durations.length > 1 ? "Mixed" : "Standard"}`
+      : "Custom";
+    const periodDuration = alloc.durations && alloc.durations.length > 0
+      ? Math.max(...alloc.durations.map(Number))
+      : 45;
+
+    return {
+      subject: subject_,
+      grade: parseInt(grade.replace(/[^\d]/g, "")) || 7,
+      stage,
+      period_profile_name: periodProfileName,
+      period_duration_minutes: periodDuration,
+      total_periods: alloc.totals.periods,
+      generated_at: new Date().toISOString(),
+      rows,
+      allocation_basis: basis?.name || "Custom",
+      notes: null,
+    };
+  };
 
   const isSelected = (cn) => selected === null || selected.has(cn);
   const selectedChapters = chapters.filter((c) => isSelected(c.chapter_number));
@@ -138,6 +228,7 @@ export default function Allocate({ subject, grade }) {
     if (!canSave) { setShowInvalidWarning(true); return; }
     const newAlloc = buildFinalAllocation(res, byCh, deltas, selectedChapters);
     setFinalAlloc(newAlloc);
+    setAllocationReport(buildReport(newAlloc, subject));
     setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
   };
@@ -148,13 +239,67 @@ export default function Allocate({ subject, grade }) {
     if (!res || !selectedChapters.length) return;
     const newAlloc = buildFinalAllocation(res, byCh, {}, selectedChapters);
     setFinalAlloc(newAlloc);
+    setAllocationReport(buildReport(newAlloc, subject));
     setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
   };
 
+  /* Export handlers for PDF and DOCX */
+  const handleExportPDF = async () => {
+    if (!allocationReport) return;
+    try {
+      const response = await fetch("/api/allocation/export-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(allocationReport),
+      });
+      if (!response.ok) throw new Error("Export failed");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `allocation-report-grade-${allocationReport.grade}-${subject}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("PDF export error:", err);
+      alert("Failed to export PDF. Please try again.");
+    }
+  };
+
+  const handleExportDOCX = async () => {
+    if (!allocationReport) return;
+    try {
+      const response = await fetch("/api/allocation/export-docx", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(allocationReport),
+      });
+      if (!response.ok) throw new Error("Export failed");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `allocation-report-grade-${allocationReport.grade}-${subject}.docx`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("DOCX export error:", err);
+      alert("Failed to export Word document. Please try again.");
+    }
+  };
+
   if (step === "final" && finalAlloc) {
-    // Combine all allocations across all saved sets
-    const allChaptersData = allAllocations.flatMap((alloc) => alloc.allocations);
+    // Merge overlapping chapters: last allocation for a chapter wins (overwrites earlier)
+    const mergedChapters = {};
+    allAllocations.forEach((alloc) => {
+      alloc.allocations.forEach((a) => {
+        mergedChapters[a.chapter_number] = a; // last one wins
+      });
+    });
+    const allChaptersData = Object.values(mergedChapters).sort((a, b) => a.chapter_number - b.chapter_number);
+    const allocatedChapterNumbers = new Set(allChaptersData.map((a) => a.chapter_number));
+
     const combinedTotals = {
       periods: allChaptersData.reduce((s, a) => s + a.total_periods, 0),
       minutes: allChaptersData.reduce((s, a) => s + a.total_minutes, 0),
@@ -164,6 +309,7 @@ export default function Allocate({ subject, grade }) {
       ])),
     };
 
+    const sortedDurations = [...finalAlloc.durations].sort((a, b) => Number(b) - Number(a));
     return (
       <div>
         <button className="back" onClick={() => setStep("adjust")}>← back to allocation</button>
@@ -172,7 +318,7 @@ export default function Allocate({ subject, grade }) {
         <table className="atable atable-combined">
           <thead><tr>
             <th>Chapter</th>
-            {finalAlloc.durations.map((m) => (
+            {sortedDurations.map((m) => (
               <th className="num sub-h" key={m}>
                 <span className="sub-h-name">{ptNames[m] || `${m} min period`}</span>
                 <span className="sub-h-min">{m} min</span>
@@ -180,25 +326,64 @@ export default function Allocate({ subject, grade }) {
             ))}
             <th className="num">Periods</th>
           </tr></thead>
-          <tbody>{allChaptersData.map((a) => (
-            <tr key={a.chapter_number}>
+          <tbody>{allChaptersData.map((a, idx) => (
+            <tr key={`ch-${a.chapter_number}-${idx}`}>
               <td><span className="chn">CH {pad(a.chapter_number)}</span>{a.chapter_title}</td>
-              {finalAlloc.durations.map((m) => <td className="num" key={m}>{a.periods_by_duration[m]}</td>)}
+              {sortedDurations.map((m) => <td className="num" key={m}>{a.periods_by_duration[m] || 0}</td>)}
               <td className="num total">{a.total_periods}</td>
             </tr>
           ))}</tbody>
           <tfoot><tr>
             <td className="lbl">Total · {combinedTotals.minutes.toLocaleString()} min</td>
-            {finalAlloc.durations.map((m) => <td className="num" key={m}>{combinedTotals.by_duration[m]}</td>)}
+            {sortedDurations.map((m) => <td className="num" key={m}>{combinedTotals.by_duration[m]}</td>)}
             <td className="num total">{combinedTotals.periods}</td>
           </tr></tfoot>
         </table>
         </div>
+
+        {/* Allocation Report with PDF/DOCX export */}
+        {allocationReport && (
+          <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+            <AllocationReportView
+              report={allocationReport}
+              onExportPDF={handleExportPDF}
+              onExportDOCX={handleExportDOCX}
+            />
+          </div>
+        )}
+
         <div className="savebar">
-          <button className="primary" onClick={() => { setStep("select"); setRes(null); setModifying(false); setDeltas({}); setShowInvalidWarning(false); }}>
+          <button className="primary" onClick={() => {
+            // Set selected to only the chapters NOT yet allocated (inverse selection)
+            const unallocated = new Set(chapters.filter((c) => !allocatedChapterNumbers.has(c.chapter_number)).map((c) => c.chapter_number));
+            setSelected(unallocated.size === chapters.length ? null : unallocated); // null = all selected, so invert to unallocated
+            setStep("select");
+            setRes(null);
+            setModifying(false);
+            setDeltas({});
+            setShowInvalidWarning(false);
+          }}>
             Allocate more chapters →
           </button>
+          <button className="clear-btn" onClick={() => setShowClearWarning(true)}>
+            Clear all
+          </button>
         </div>
+        {showClearWarning ? (
+          <div className="modal-backdrop" onClick={() => setShowClearWarning(false)}>
+            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+              <p className="modal-title">Are you sure?</p>
+              <p className="modal-body">This will remove all saved chapter allocations for this subject.</p>
+              <div className="modal-actions">
+                <button className="primary" onClick={() => setShowClearWarning(false)}>Cancel</button>
+                <button className="clear-btn" onClick={() => {
+                  localStorage.removeItem(allocationStorageKey);
+                  setStep("periods"); setRes(null); setSelected(null); setDeltas({}); setFinalAlloc(null); setAllAllocations([]); setModifying(false); setShowInvalidWarning(false); setShowClearWarning(false);
+                }}>Clear All</button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -206,6 +391,14 @@ export default function Allocate({ subject, grade }) {
   // Step 2 — chapter selection only. No allocation numbers here: a plain checked/unchecked
   // list, default all selected. "Allocate Periods" runs the LRM once for whatever is checked.
   if (step === "select") {
+    // Compute which chapters are already allocated (locked/greyed out)
+    const allocatedChapterNumbers = new Set();
+    allAllocations.forEach((alloc) => {
+      alloc.allocations.forEach((a) => {
+        allocatedChapterNumbers.add(a.chapter_number);
+      });
+    });
+
     return (
       <div>
         <div className="totalbar totalbar-compact">
@@ -237,10 +430,11 @@ export default function Allocate({ subject, grade }) {
                 </thead>
                 <tbody>{chapters.map((c) => {
                   const on = isSelected(c.chapter_number);
+                  const isAllocated = allocatedChapterNumbers.has(c.chapter_number);
                   return (
-                    <tr key={c.chapter_number} className={on ? "" : "row-off"}>
-                      <td className="chk"><input type="checkbox" checked={on} onChange={() => toggleOne(c.chapter_number)} /></td>
-                      <td><span className="chn">CH {pad(c.chapter_number)}</span><span className="ch-title">{c.chapter_title}</span></td>
+                    <tr key={c.chapter_number} className={isAllocated ? "row-allocated" : on ? "" : "row-off"}>
+                      <td className="chk"><input type="checkbox" checked={on} onChange={() => toggleOne(c.chapter_number)} disabled={isAllocated} title={isAllocated ? "Already allocated" : ""} /></td>
+                      <td><span className="chn">CH {pad(c.chapter_number)}</span><span className="ch-title">{c.chapter_title}</span>{isAllocated ? <span className="ch-badge">allocated</span> : null}</td>
                     </tr>
                   );
                 })}</tbody>

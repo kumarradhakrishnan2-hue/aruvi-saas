@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 # Register all subjects (import side-effect).
@@ -28,6 +28,9 @@ from aruvi_core import subjects, engine
 from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subject
 from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
+from aruvi_core.report_allocation import AllocationReport
+from aruvi_core.export_allocation_pdf import export_allocation_report_pdf
+from aruvi_core.export_allocation_docx import export_allocation_report_docx
 
 from . import data, config
 
@@ -62,6 +65,23 @@ class SaveAllocationRequest(BaseModel):
     # Dict mapping chapter number (as string) to periods allocated (as int).
     # E.g., {"1": 5, "2": 6, "3": 4}
     allocation: Dict[str, int]
+
+
+class AllocationReportRequest(BaseModel):
+    """Request body for allocation report export endpoints.
+
+    Contains a serialized AllocationReport dict ready for export to PDF/DOCX.
+    """
+    subject: str
+    grade: int
+    stage: str
+    period_profile_name: str
+    period_duration_minutes: int
+    total_periods: int
+    generated_at: str
+    allocation_basis: str
+    notes: Optional[str] = None
+    rows: List[Dict[str, Any]] = []
 
 
 def _subject(name: str):
@@ -194,3 +214,92 @@ def generate(subject: str, grade: str) -> JSONResponse:
                  "detail": "Live generation is wired but intentionally deferred; "
                            "view a saved plan instead."},
     )
+
+
+@app.post("/api/allocation/export-pdf")
+def export_allocation_pdf(req: AllocationReportRequest) -> StreamingResponse:
+    """Export allocation report as PDF.
+
+    Takes the serialized AllocationReport from the frontend and returns a PDF binary.
+    """
+    try:
+        # Reconstruct AllocationReport from request
+        report = AllocationReport(
+            subject=req.subject,
+            grade=req.grade,
+            stage=req.stage,
+            period_profile_name=req.period_profile_name,
+            period_duration_minutes=req.period_duration_minutes,
+            total_periods=req.total_periods,
+            generated_at=__import__("datetime").datetime.fromisoformat(req.generated_at),
+            allocation_basis=req.allocation_basis,
+            notes=req.notes,
+            rows=[
+                __import__("aruvi_core.report_allocation", fromlist=["AllocationRow"]).AllocationRow(
+                    chapter_number=r["chapter_number"],
+                    chapter_name=r["chapter_name"],
+                    total_periods=r["total_periods"],
+                    allocated_periods=r["allocated_periods"],
+                    effort_index=r.get("effort_index"),
+                    competency_weight=r.get("competency_weight"),
+                    notes=r.get("notes", ""),
+                )
+                for r in req.rows
+            ],
+        )
+
+        pdf_bytes = export_allocation_report_pdf(report)
+        return StreamingResponse(
+            iter([pdf_bytes]),
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f'attachment; filename="allocation-report-grade-{req.grade}-{req.subject}.pdf"'
+            },
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"PDF export failed: {str(e)}")
+
+
+@app.post("/api/allocation/export-docx")
+def export_allocation_docx(req: AllocationReportRequest) -> StreamingResponse:
+    """Export allocation report as DOCX (Word document).
+
+    Takes the serialized AllocationReport from the frontend and returns a DOCX binary.
+    Requires Node.js and 'npm install -g docx' to be installed on the server.
+    """
+    try:
+        # Reconstruct AllocationReport from request
+        report = AllocationReport(
+            subject=req.subject,
+            grade=req.grade,
+            stage=req.stage,
+            period_profile_name=req.period_profile_name,
+            period_duration_minutes=req.period_duration_minutes,
+            total_periods=req.total_periods,
+            generated_at=__import__("datetime").datetime.fromisoformat(req.generated_at),
+            allocation_basis=req.allocation_basis,
+            notes=req.notes,
+            rows=[
+                __import__("aruvi_core.report_allocation", fromlist=["AllocationRow"]).AllocationRow(
+                    chapter_number=r["chapter_number"],
+                    chapter_name=r["chapter_name"],
+                    total_periods=r["total_periods"],
+                    allocated_periods=r["allocated_periods"],
+                    effort_index=r.get("effort_index"),
+                    competency_weight=r.get("competency_weight"),
+                    notes=r.get("notes", ""),
+                )
+                for r in req.rows
+            ],
+        )
+
+        docx_bytes = export_allocation_report_docx(report)
+        return StreamingResponse(
+            iter([docx_bytes]),
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            headers={
+                "Content-Disposition": f'attachment; filename="allocation-report-grade-{req.grade}-{req.subject}.docx"'
+            },
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"DOCX export failed: {str(e)}")
