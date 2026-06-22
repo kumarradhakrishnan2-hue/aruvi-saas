@@ -9,7 +9,7 @@ pattern the prototype's `llm_client.py` already proved, applied across the board
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
+from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
 
 
 # ── LLM provider ──────────────────────────────────────────────────────────────
@@ -82,3 +82,41 @@ class AuthProvider(Protocol):
 class BillingProvider(Protocol):
     def create_subscription(self, tenant_id: str, plan_id: str) -> Dict[str, Any]: ...
     def verify_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]: ...
+
+
+# ── Allocation persistence (Persistent Annual Allocation Register) ──────────────
+@dataclass
+class AllocationSummary:
+    """Summary of the current state of a subject/grade allocation register."""
+    chapters_allocated: int
+    chapters_remaining: int
+    total_planned_periods: int
+    total_planned_time_minutes: int
+
+
+@runtime_checkable
+class AllocationRepository(Protocol):
+    """Persists the Persistent Annual Allocation Register.
+
+    Merge semantics: save_allocation() merges new/overwritten chapters into the existing
+    register, preserving chapters not included in the current save.
+
+    File-based (JSON) implementation for now; Supabase adapter swaps in later without
+    touching business logic.
+    """
+    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, int]:
+        """Load the Annual Allocation Register as {chapter_num: periods_allocated}.
+        Returns empty dict if no register exists yet."""
+        ...
+
+    def save_allocation(self, subject: str, grade: Union[str, int], chapters_allocation: Dict[str, int]) -> None:
+        """Save allocation data, merging into the existing register.
+
+        Chapters in chapters_allocation overwrite existing allocations for those chapters.
+        Chapters not in chapters_allocation retain their previous allocations.
+        """
+        ...
+
+    def get_summary(self, subject: str, grade: Union[str, int]) -> AllocationSummary:
+        """Return a summary of the current register state."""
+        ...

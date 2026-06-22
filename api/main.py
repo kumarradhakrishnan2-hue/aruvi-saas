@@ -24,16 +24,20 @@ import aruvi_core.subjects.mathematics      # noqa: F401
 import aruvi_core.subjects.science          # noqa: F401
 import aruvi_core.subjects.social_sciences  # noqa: F401
 import aruvi_core.subjects.the_world_around_us  # noqa: F401
-from aruvi_core import subjects
+from aruvi_core import subjects, engine
 from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subject
 from aruvi_core.view_model import ViewModel
+from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
 
-from . import data
+from . import data, config
 
 app = FastAPI(title="Aruvi API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
+
+# Initialize the allocation repository (file-based for now; Supabase adapter comes later).
+allocation_repo = AllocationRepositoryFileImpl(config.DATA_DIR)
 
 
 class PeriodRow(BaseModel):
@@ -48,6 +52,16 @@ class AllocateRequest(BaseModel):
     # Optional subset of chapters to allocate across (teacher deselected some in the UI).
     # None/omitted = allocate across every chapter mapping, as before.
     chapter_numbers: Optional[List[Any]] = None
+
+
+class SaveAllocationRequest(BaseModel):
+    # Subject name (e.g., "science", "mathematics")
+    subject: str
+    # Grade (as integer, e.g., 7)
+    grade: int
+    # Dict mapping chapter number (as string) to periods allocated (as int).
+    # E.g., {"1": 5, "2": 6, "3": 4}
+    allocation: Dict[str, int]
 
 
 def _subject(name: str):
@@ -130,6 +144,43 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
     lp = sub.lesson_plan_to_view(r.get("lesson_plan", {}), grade=g, chapter=chapter)
     a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter)
     return {"meta": chapter, "view": ViewModel(lp, a).to_dict()}
+
+
+@app.post("/subjects/{subject}/{grade}/save_allocation")
+def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dict[str, Any]:
+    """Save allocation data to the Persistent Annual Allocation Register.
+
+    Merges the provided allocation into the existing register for the subject/grade.
+    Chapters in the allocation overwrite existing allocations; untouched chapters persist.
+
+    Returns the updated Annual Allocation Summary.
+    """
+    _subject(subject)
+    try:
+        engine.save_allocation(
+            subject_name=subject,
+            grade=int(grade),
+            chapters_allocation=req.allocation,
+            allocation_repo=allocation_repo,
+        )
+        summary = engine.get_allocation_summary(
+            subject_name=subject,
+            grade=int(grade),
+            allocation_repo=allocation_repo,
+        )
+        return {
+            "subject": subject,
+            "grade": grade,
+            "status": "saved",
+            "summary": {
+                "chapters_allocated": summary.chapters_allocated,
+                "chapters_remaining": summary.chapters_remaining,
+                "total_planned_periods": summary.total_planned_periods,
+                "total_planned_time_minutes": summary.total_planned_time_minutes,
+            },
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save allocation: {str(e)}")
 
 
 @app.post("/subjects/{subject}/{grade}/generate")

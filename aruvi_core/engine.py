@@ -12,7 +12,7 @@ import json
 from typing import Any, Dict
 
 from . import subjects
-from .ports import LLMClient
+from .ports import LLMClient, AllocationRepository, AllocationSummary
 from .view_model import AssessmentView, LessonPlanView, ViewModel
 
 
@@ -67,3 +67,28 @@ def generate(
     a_view: AssessmentView = subject.assessment_to_view(a_raw, grade=grade, chapter=chapter)
 
     return ViewModel(lesson_plan=lp_view, assessment=a_view)
+
+
+def save_allocation(
+    *,
+    subject_name: str,
+    grade: int,
+    chapters_allocation: Dict[str, int],
+    allocation_repo: AllocationRepository,
+) -> None:
+    """Save allocation data to the Persistent Annual Allocation Register.
+
+    Merges chapters_allocation into the existing register — new/overwritten chapters
+    replace existing ones; untouched chapters persist.
+    """
+    allocation_repo.save_allocation(subject_name, grade, chapters_allocation)
+
+
+def get_allocation_summary(
+    *,
+    subject_name: str,
+    grade: int,
+    allocation_repo: AllocationRepository,
+) -> AllocationSummary:
+    """Retrieve a summary of the current allocation register state."""
+    return allocation_repo.get_summary(subject_name, grade)
