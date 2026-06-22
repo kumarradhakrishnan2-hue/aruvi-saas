@@ -290,6 +290,7 @@ tr.row-bad .chn { color: var(--danger); }
 
 /* Save Allocation bar */
 .savebar { display: flex; align-items: center; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+.savebar-final { justify-content: space-between; }
 .savebar-hint { font-size: 13px; color: var(--ink-soft); }
 
 /* Net Δ per period type, shown in the table's total row instead of the separate balance rows
@@ -421,89 +422,46 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 }
 .clear-btn:hover { background: var(--clay); border-color: var(--clay); }
 
-/* ── Allocation Report (final step) ─────────────────────────────── */
-.arpt {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper-2);
-  padding: 22px 24px;
+/* "Continue Allocating" — primary filled action on the final step */
+.continue-btn {
+  font-family: var(--f-mono); font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  color: #f6f1e7; background: var(--pine); border: none; border-radius: 7px;
+  cursor: pointer; padding: 13px 22px; display: inline-flex; align-items: center; gap: 9px;
+  transition: background .15s;
 }
-.arpt-head {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 16px; flex-wrap: wrap;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 16px; margin-bottom: 18px;
+.continue-btn:hover { background: var(--pine-d); }
+
+
+/* ── Final-step header: title + saved confirmation, reports inline ─── */
+.final-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 22px;
 }
-.arpt-kicker {
-  font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--pine); margin: 0 0 4px;
+.final-h2 { margin-bottom: 6px; }
+.final-saved { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+
+.reports-inline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.reports-inline-label {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 600;
 }
-.arpt-title {
-  font-family: var(--f-display); font-size: 22px; font-weight: 600;
-  color: var(--ink); margin: 0 0 4px; text-transform: capitalize;
-}
-.arpt-date { font-family: var(--f-body); font-size: 14px; color: var(--ink-soft); margin: 0; }
-.arpt-actions { display: flex; gap: 10px; flex-shrink: 0; }
-.arpt-btn {
+.reports-inline-actions { display: flex; gap: 8px; }
+.filebtn {
   display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--pine);
-  background: var(--paper); border: 1px solid var(--line);
-  border-radius: 5px; cursor: pointer; padding: 8px 14px;
-  transition: background .15s, border-color .15s, color .15s;
+  font-family: var(--f-mono); font-size: 12.5px; font-weight: 600; letter-spacing: .03em;
+  background: var(--paper); border: none; border-radius: 6px;
+  padding: 8px 14px; cursor: pointer; color: var(--ink); transition: box-shadow .15s;
 }
-.arpt-btn:hover:not(:disabled) { background: var(--pine); border-color: var(--pine); color: #fff; }
-.arpt-btn:disabled { opacity: .55; cursor: default; }
-
-.arpt-meta {
-  display: flex; flex-wrap: wrap; gap: 28px;
-  margin-bottom: 18px;
-}
-.arpt-meta-item { display: flex; flex-direction: column; gap: 3px; }
-.arpt-meta-label {
-  font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--ink-soft);
-}
-.arpt-meta-value { font-family: var(--f-body); font-size: 16px; color: var(--ink); }
-
-.arpt-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.arpt-table { width: 100%; border-collapse: collapse; font-family: var(--f-body); }
-.arpt-table th {
-  font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--ink-soft); font-weight: 500;
-  text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line);
-  white-space: nowrap;
-}
-.arpt-table td {
-  font-size: 15px; color: var(--ink);
-  padding: 9px 12px; border-bottom: 1px solid var(--line-soft);
-}
-.arpt-table th.num, .arpt-table td.num { text-align: right; }
-.arpt-chn { font-family: var(--f-mono); font-size: 13px; color: var(--ink-soft); }
-.arpt-total-lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
-.arpt-total { font-weight: 700; color: var(--pine); }
-.arpt-table tfoot td { border-top: 1.5px solid var(--line); border-bottom: none; }
-
-.arpt-note {
-  margin-top: 18px; padding: 14px 16px;
-  background: var(--paper-sunk); border-radius: 6px;
-}
-.arpt-note-title {
-  font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--pine); margin: 0 0 6px;
-}
-.arpt-note-text { font-family: var(--f-body); font-size: 14px; line-height: 1.55; color: var(--ink); margin: 0; }
+.filebtn:hover { box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.filebtn:disabled { opacity: .55; cursor: default; }
+.filebtn-pdf { color: #c0392b; }
+.filebtn-docx { color: #1e5ca8; }
 
 @media (max-width: 600px) {
-  .arpt { padding: 18px 16px; }
-  .arpt-head { flex-direction: column; }
-  .arpt-actions { width: 100%; }
-  .arpt-btn { flex: 1; justify-content: center; }
-  .arpt-meta { gap: 16px 24px; }
-  .arpt-title { font-size: 19px; }
-}
-
-@media print {
-  .arpt-actions { display: none; }
-  .arpt { border: none; padding: 0; }
+  .final-head { flex-direction: column; align-items: stretch; }
+  .reports-inline { justify-content: space-between; }
+  .reports-inline-actions { flex: 1; }
+  .filebtn { flex: 1; justify-content: center; }
+  .savebar { flex-direction: column; align-items: stretch; }
+  .continue-btn { justify-content: center; }
 }

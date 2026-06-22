@@ -1,331 +1,468 @@
 """
-PDF export for allocation reports using reportlab.
-Renders with warm editorial design language consistent with web UI.
+Period Allocation Report — HTML template + PDF export.
+
+The layout is ported from the prototype's report (knowledge_commons/pdf_generator.py).
+There are two renderers: render_report_html() (flexbox, for the on-screen / mobile
+web preview) and render_pdf_html() + export_allocation_report_pdf() which use
+xhtml2pdf — pure-Python (reportlab + html5lib) with NO system-library dependency,
+so the PDF generates identically on a teacher's Mac/Windows and on a cloud server
+with nothing to install at the OS level.
+
+Per product direction: NO per-chapter effort-index line and NO "About the Effort
+Index" section. Each chapter shows its allocation pill and a competency table
+(# / Code / Competency / Justification). Competency-weight subjects also show a
+weight indicator.
 """
 
-from io import BytesIO
-from reportlab.lib.pagesizes import letter
-from reportlab.lib.units import inch
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Table,
-    TableStyle,
-    PageBreak,
+from __future__ import annotations
+
+import html as _html
+from typing import List
+
+from .report_competency import (
+    CompetencyAllocationReport, ChapterReport,
+    grade_roman, subject_display, date_long, executive_summary_paragraphs,
 )
-from reportlab.lib import colors
-from datetime import datetime
-
-from .report_allocation import AllocationReport
 
 
-# Design palette (matching web globals.css)
-COLOR_PAPER = colors.HexColor("#fefaf4")
-COLOR_INK = colors.HexColor("#1a1410")
-COLOR_PINE = colors.HexColor("#2d5f4f")
-COLOR_CLAY = colors.HexColor("#c89968")
-COLOR_OCHRE = colors.HexColor("#d4a574")
-COLOR_LINE = colors.HexColor("#d4c5b0")
+# ── HTML template ──────────────────────────────────────────────────────────
 
+def render_report_html(report: CompetencyAllocationReport, *, for_pdf: bool = True) -> str:
+    """Build the full report HTML. `for_pdf=True` includes @page/print rules and
+    the fixed footer; the web preview passes for_pdf=False."""
+    esc = lambda s: _html.escape(str(s or ""))
 
-def export_allocation_report_pdf(report: AllocationReport) -> bytes:
-    """
-    Generate allocation report PDF.
+    g = grade_roman(report.grade)
+    subj = subject_display(report.subject)
+    today = date_long(report.generated_at)
 
-    Args:
-        report: AllocationReport object
+    types = report.sorted_types
+    total_periods = report.total_periods
+    total_mins = report.total_minutes
+    total_hrs, rem = divmod(total_mins, 60)
+    time_str = f"{total_hrs}h {rem}min" if rem else f"{total_hrs}h"
+    period_type_str = " · ".join(f"{t.count}×{t.minutes}min" for t in types) or "—"
 
-    Returns:
-        PDF bytes
-    """
-    buffer = BytesIO()
-
-    # Page setup: US Letter, 1-inch margins
-    doc = SimpleDocTemplate(
-        buffer,
-        pagesize=letter,
-        rightMargin=1 * inch,
-        leftMargin=1 * inch,
-        topMargin=1 * inch,
-        bottomMargin=0.75 * inch,
-        title=f"Allocation Report - Grade {report.grade} - {report.subject}",
-    )
-
-    # Define custom styles
-    styles = getSampleStyleSheet()
-
-    # Title style
-    title_style = ParagraphStyle(
-        "CustomTitle",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=18,
-        textColor=COLOR_INK,
-        spaceAfter=6,
-        alignment=TA_LEFT,
-        letterSpacing=-0.5,
-    )
-
-    # Subtitle style (small caps, mono)
-    subtitle_style = ParagraphStyle(
-        "CustomSubtitle",
-        parent=styles["Normal"],
-        fontName="Courier-Bold",
-        fontSize=8,
-        textColor=COLOR_PINE,
-        spaceAfter=4,
-        alignment=TA_LEFT,
-        letterSpacing=1.5,
-    )
-
-    # Date style
-    date_style = ParagraphStyle(
-        "DateStyle",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=9,
-        textColor=COLOR_INK,
-        spaceAfter=12,
-        alignment=TA_LEFT,
-    )
-
-    # Metadata label and value styles
-    meta_label_style = ParagraphStyle(
-        "MetaLabel",
-        parent=styles["Normal"],
-        fontName="Courier-Bold",
-        fontSize=7,
-        textColor=COLOR_PINE,
-        letterSpacing=0.5,
-    )
-
-    meta_value_style = ParagraphStyle(
-        "MetaValue",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=11,
-        textColor=COLOR_INK,
-    )
-
-    # Note style
-    note_style = ParagraphStyle(
-        "NoteStyle",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=9,
-        textColor=COLOR_INK,
-        leftIndent=10,
-        rightIndent=10,
-        spaceBefore=6,
-    )
-
-    # Footer style
-    footer_style = ParagraphStyle(
-        "FooterStyle",
-        parent=styles["Normal"],
-        fontName="Courier",
-        fontSize=7,
-        textColor=COLOR_INK,
-        alignment=TA_CENTER,
-    )
-
-    # Build story (content to render)
-    story = []
-
-    # ========== HEADER ==========
-    subject_display = report.subject.replace("_", " ").title()
-
-    story.append(
-        Paragraph("ARUVI Period Allocation Report", title_style)
-    )
-    story.append(
-        Paragraph(
-            f"NCF 2023 · PEDAGOGICAL PLATFORM · GRADE {report.grade} · {report.subject.upper().replace('_', ' ')} · {report.generated_at.strftime('%Y-%m-%d')}",
-            subtitle_style,
-        )
-    )
-    story.append(Spacer(1, 0.15 * inch))
-
-    # ========== METADATA BOX ==========
-    metadata_data = [
-        [
-            Paragraph("PERIOD DURATION", meta_label_style),
-            Paragraph(f"{report.period_duration_minutes} min", meta_value_style),
-        ],
-        [
-            Paragraph("TOTAL PERIODS", meta_label_style),
-            Paragraph(f"{report.total_periods}", meta_value_style),
-        ],
-        [
-            Paragraph("ALLOCATION BASIS", meta_label_style),
-            Paragraph(report.allocation_basis, meta_value_style),
-        ],
+    # ── stat strip ──
+    summary_cells = [
+        (len(report.chapters), "Chapters"),
+        (total_periods, "Periods"),
+        (time_str, "Total time"),
+        (period_type_str, "Period types"),
     ]
-
-    metadata_table = Table(metadata_data, colWidths=[2.5 * inch, 2.5 * inch])
-    metadata_table.setStyle(
-        TableStyle([
-            ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f5f3f0")),
-            ("LINEABOVE", (0, 0), (-1, 0), 0.5, COLOR_LINE),
-            ("LINEBELOW", (0, -1), (-1, -1), 0.5, COLOR_LINE),
-            ("LINEBETWEEN", (0, 0), (-1, -1), 0.5, COLOR_LINE),
-            ("ROWBACKGROUNDS", (0, 0), (-1, -1), [colors.white, colors.HexColor("#fafaf8")]),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("LEFTPADDING", (0, 0), (-1, -1), 10),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 10),
-            ("TOPPADDING", (0, 0), (-1, -1), 8),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-        ])
-    )
-    story.append(metadata_table)
-    story.append(Spacer(1, 0.25 * inch))
-
-    # ========== ALLOCATION TABLE ==========
-    # Header row
-    has_effort = any(r.effort_index is not None for r in report.rows)
-    has_competency = any(r.competency_weight is not None for r in report.rows)
-
-    table_data = [
-        [
-            Paragraph("<b>#</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white, alignment=TA_CENTER)),
-            Paragraph("<b>Chapter</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white)),
-            Paragraph("<b>Total Periods</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white, alignment=TA_RIGHT)),
-            Paragraph(f"<b>{report.period_profile_name} Periods</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white, alignment=TA_RIGHT)),
-        ]
-    ]
-
-    # Add optional columns
-    if has_effort:
-        table_data[0].append(
-            Paragraph("<b>Effort Index</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white, alignment=TA_RIGHT))
-        )
-    if has_competency:
-        table_data[0].append(
-            Paragraph("<b>Competency Weight</b>", ParagraphStyle("TH", parent=styles["Normal"], fontSize=8, textColor=colors.white, alignment=TA_RIGHT))
-        )
-
-    # Data rows
-    total_allocated = 0
-    for row in report.rows:
-        total_allocated += row.allocated_periods
-        row_data = [
-            Paragraph(str(row.chapter_number), ParagraphStyle("TD", parent=styles["Normal"], fontSize=8, alignment=TA_CENTER)),
-            Paragraph(row.chapter_name, ParagraphStyle("TD", parent=styles["Normal"], fontSize=8)),
-            Paragraph(str(row.total_periods), ParagraphStyle("TD", parent=styles["Normal"], fontSize=8, alignment=TA_RIGHT)),
-            Paragraph(f"<b>{row.allocated_periods}</b>", ParagraphStyle("TD", parent=styles["Normal"], fontSize=8, textColor=COLOR_CLAY, alignment=TA_RIGHT)),
-        ]
-
-        if has_effort:
-            effort_text = f"{row.effort_index:.1f}" if row.effort_index is not None else "—"
-            row_data.append(Paragraph(effort_text, ParagraphStyle("TD", parent=styles["Normal"], fontSize=8, alignment=TA_RIGHT)))
-        if has_competency:
-            weight_text = f"{row.competency_weight * 100:.0f}%" if row.competency_weight is not None else "—"
-            row_data.append(Paragraph(weight_text, ParagraphStyle("TD", parent=styles["Normal"], fontSize=8, alignment=TA_RIGHT)))
-
-        table_data.append(row_data)
-
-    # Total row
-    total_row = [
-        Paragraph("", styles["Normal"]),
-        Paragraph("<b>Total</b>", ParagraphStyle("TDTotal", parent=styles["Normal"], fontSize=8, textColor=COLOR_INK)),
-        Paragraph("", styles["Normal"]),
-        Paragraph(f"<b>{total_allocated}</b>", ParagraphStyle("TDTotal", parent=styles["Normal"], fontSize=8, textColor=COLOR_CLAY, alignment=TA_RIGHT)),
-    ]
-
-    if has_effort:
-        total_row.append(Paragraph("", styles["Normal"]))
-    if has_competency:
-        total_row.append(Paragraph("", styles["Normal"]))
-
-    table_data.append(total_row)
-
-    # Column widths
-    col_widths = [0.4 * inch, 2.2 * inch, 1.0 * inch, 1.0 * inch]
-    if has_effort:
-        col_widths.append(1.0 * inch)
-    if has_competency:
-        col_widths.append(1.2 * inch)
-
-    allocation_table = Table(table_data, colWidths=col_widths)
-    allocation_table.setStyle(
-        TableStyle([
-            # Header styling
-            ("BACKGROUND", (0, 0), (-1, 0), COLOR_PINE),
-            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-            ("ALIGN", (0, 0), (-1, 0), "LEFT"),
-            ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
-            ("FONTNAME", (0, 0), (-1, 0), "Courier-Bold"),
-            ("FONTSIZE", (0, 0), (-1, 0), 7),
-            ("LEFTPADDING", (0, 0), (-1, 0), 6),
-            ("RIGHTPADDING", (0, 0), (-1, 0), 6),
-            ("TOPPADDING", (0, 0), (-1, 0), 8),
-            ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
-
-            # Data rows
-            ("BACKGROUND", (0, 1), (-1, len(table_data) - 2), colors.white),
-            ("ROWBACKGROUNDS", (0, 1), (-1, len(table_data) - 2), [colors.white, colors.HexColor("#fafaf8")]),
-            ("TEXTCOLOR", (0, 1), (-1, -2), COLOR_INK),
-            ("ALIGN", (0, 1), (0, -2), "CENTER"),
-            ("ALIGN", (2, 1), (-1, -2), "RIGHT"),
-            ("VALIGN", (0, 1), (-1, -2), "MIDDLE"),
-            ("FONTNAME", (0, 1), (-1, -2), "Helvetica"),
-            ("FONTSIZE", (0, 1), (-1, -2), 8),
-            ("LEFTPADDING", (0, 1), (-1, -2), 6),
-            ("RIGHTPADDING", (0, 1), (-1, -2), 6),
-            ("TOPPADDING", (0, 1), (-1, -2), 6),
-            ("BOTTOMPADDING", (0, 1), (-1, -2), 6),
-
-            # Total row
-            ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#f0ede8")),
-            ("TEXTCOLOR", (0, -1), (-1, -1), COLOR_INK),
-            ("LINEABOVE", (0, -1), (-1, -1), 1.5, COLOR_PINE),
-            ("LINEBELOW", (0, -1), (-1, -1), 1.5, COLOR_PINE),
-            ("ALIGN", (2, -1), (-1, -1), "RIGHT"),
-            ("VALIGN", (0, -1), (-1, -1), "MIDDLE"),
-            ("FONTNAME", (0, -1), (-1, -1), "Courier-Bold"),
-            ("FONTSIZE", (0, -1), (-1, -1), 8),
-            ("LEFTPADDING", (0, -1), (-1, -1), 6),
-            ("RIGHTPADDING", (0, -1), (-1, -1), 6),
-            ("TOPPADDING", (0, -1), (-1, -1), 8),
-            ("BOTTOMPADDING", (0, -1), (-1, -1), 8),
-
-            # All grid lines
-            ("GRID", (0, 0), (-1, -1), 0.5, COLOR_LINE),
-        ])
+    summary_html = "".join(
+        f'<div class="sum-cell"><span class="sum-val">{esc(v)}</span>'
+        f'<span class="sum-key">{esc(k)}</span></div>'
+        for v, k in summary_cells
     )
 
-    story.append(allocation_table)
-    story.append(Spacer(1, 0.25 * inch))
+    # ── executive summary ──
+    intro = executive_summary_intro(report)
+    exec_html = f"""
+    <div class="exec">
+      <div class="exec-title">Executive Summary</div>
+      <p>This report presents the allocation of available instructional periods across the
+         selected chapters for {esc(subj)}, Grade {esc(g)}.</p>
+      <p>{esc(intro)}</p>
+      <p>The allocation shown below distributes the available periods across the chapters using
+         the approach described above. For each chapter, the competency section lists the
+         competencies the chapter addresses, together with the rationale for including each one.</p>
+      <p>This information is intended to support teacher planning, curriculum alignment, and
+         instructional decision-making.</p>
+    </div>"""
 
-    # ========== ALLOCATION BASIS NOTE ==========
-    note_title = Paragraph("<b>How are periods allocated?</b>", ParagraphStyle("NoteTitle", parent=styles["Normal"], fontSize=9, textColor=COLOR_CLAY))
-    story.append(note_title)
+    # ── chapter blocks ──
+    blocks = "".join(_chapter_block(ch, types, report.is_effort, esc) for ch in report.chapters)
 
-    if report.allocation_basis == "Effort Index":
-        note_text = "Periods are allocated proportionally based on the effort index for each chapter. Chapters with higher effort indices receive more time to ensure mastery. Learn more in the Ask Aruvi helpline."
-    elif report.allocation_basis == "Competency Weights":
-        note_text = "Periods are allocated according to the relative weight of competencies covered in each chapter. Learn more in the Ask Aruvi helpline."
+    page_css = """
+  @page {
+    size: A4; margin: 18mm 14mm 16mm 14mm;
+    @bottom-left { content: "Aruvi · Period Allocation Report"; font-size: 6pt; color: #bbb; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages) " · Confidential"; font-size: 6pt; color: #bbb; }
+  }
+""" if for_pdf else ""
+
+    footer_html = ""  # PDF footer comes from @page; web preview needs none
+
+    return f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8pt; color: #1a1917; background: #fff; line-height: 1.5; }}
+  {page_css}
+
+  .page-header {{ display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 6px; border-bottom: 2px solid #1a1917; }}
+  .brand-name {{ font-size: 13pt; font-weight: 700; font-family: Georgia, serif; color: #1a1917; letter-spacing: .04em; }}
+  .brand-sub {{ font-size: 6pt; color: #999; display: block; margin-top: 1px; letter-spacing:.04em; }}
+  .report-right {{ text-align: right; }}
+  .report-title {{ font-size: 9.5pt; font-weight: 700; }}
+  .report-sub {{ font-size: 6.5pt; color: #777; margin-top: 2px; }}
+  .header-rule2 {{ border: none; border-top: 0.5px solid #1a1917; margin: 3px 0 12px 0; }}
+
+  .summary {{ display: flex; margin-bottom: 14px; border: 0.5px solid #ddd; }}
+  .sum-cell {{ flex: 1; padding: 6px 8px; border-right: 0.5px solid #ddd; text-align: center; }}
+  .sum-cell:last-child {{ border-right: none; }}
+  .sum-val {{ font-size: 10pt; font-weight: 700; display: block; }}
+  .sum-key {{ font-size: 5.5pt; color: #999; text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; display: block; }}
+
+  .exec {{ margin-bottom: 16px; }}
+  .exec-title {{ font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color:#1a1917; padding-bottom: 4px; border-bottom: 1px solid #1a1917; margin-bottom: 6px; }}
+  .exec p {{ font-size: 7.5pt; color: #333; margin-bottom: 5px; line-height: 1.55; }}
+
+  .section-label {{ font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing:.08em; margin-bottom: 8px; }}
+
+  .chapter-block {{ margin-bottom: 14px; page-break-inside: avoid; break-inside: avoid; }}
+  .chapter-header {{ display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; padding-bottom: 3px; border-bottom: 1.5px solid #1a1917; }}
+  .ch-num {{ font-size: 6.5pt; color: #aaa; font-weight: 500; white-space: nowrap; }}
+  .ch-title {{ font-size: 8.5pt; font-weight: 700; font-family: Georgia, serif; flex: 1; min-width: 0; word-break: break-word; }}
+  .ch-alloc {{ font-size: 6.5pt; font-weight: 600; color: #fff; background: #1a1917; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }}
+  .ch-weight {{ font-size: 6.5pt; color: #aaa; white-space: nowrap; padding-left: 6px; }}
+
+  .comp-table {{ width: 100%; border-collapse: collapse; margin-top: 2px; }}
+  .comp-table th {{ font-size: 6pt; font-weight: 600; letter-spacing:.05em; text-transform: uppercase; color: #bbb; padding: 4px 6px; text-align: left; border-bottom: 0.5px solid #e0ddd8; }}
+  .th-seq {{ width: 16px; text-align: right; }}
+  .th-code {{ width: 42px; }}
+  .th-comp {{ width: 30%; }}
+  .th-wt {{ width: 44px; text-align: center; }}
+  .comp-table tr {{ break-inside: avoid; page-break-inside: avoid; }}
+  .comp-table td {{ padding: 4px 6px; vertical-align: top; border-bottom: 0.5px solid #f0ede9; font-size: 7pt; line-height: 1.45; color: #2a2a2a; }}
+  .comp-table tr:last-child td {{ border-bottom: none; }}
+  .seq {{ color: #bbb; font-size: 6.5pt; text-align: right; }}
+  .code {{ font-weight: 700; font-size: 7.5pt; white-space: nowrap; }}
+  .wt {{ text-align: center; vertical-align: middle; }}
+  .dots {{ display: flex; gap: 3px; justify-content: center; align-items: center; }}
+  .dot {{ width: 5px; height: 5px; border-radius: 50%; display: inline-block; }}
+  .dot.filled {{ background: #1a1917; }}
+  .dot.empty {{ border: 1px solid #ccc; }}
+  .nocomp {{ font-size: 7pt; color: #aaa; padding: 4px 0; }}
+
+  .page-footer {{ display: flex; justify-content: space-between; font-size: 6pt; color: #bbb; border-top: 0.5px solid #eee; padding-top: 4px; }}
+</style></head>
+<body>
+  <div class="page-header">
+    <div>
+      <span class="brand-name">ARUVI</span>
+      <span class="brand-sub">NCF 2023 · Pedagogical Platform</span>
+    </div>
+    <div class="report-right">
+      <div class="report-title">Period Allocation Report</div>
+      <div class="report-sub">{esc(today)} · Grade {esc(g)} · {esc(subj)}</div>
+    </div>
+  </div>
+  <hr class="header-rule2">
+
+  <div class="summary">{summary_html}</div>
+
+  {exec_html}
+
+  <div class="section-label">Allocation &amp; Competency Detail</div>
+  {blocks}
+  {footer_html}
+</body></html>"""
+
+
+def _chapter_block(ch: ChapterReport, types, is_effort: bool, esc) -> str:
+    period_cells = " · ".join(
+        f'{ch.periods_by_duration.get(t.minutes, 0)}×{t.minutes}min' for t in types
+    ) or "—"
+    weight_chip = ""
+    if not is_effort and ch.chapter_weight not in (None, ""):
+        weight_chip = f'<span class="ch-weight">Weight {esc(ch.chapter_weight)}</span>'
+
+    show_wt = (not is_effort) and any(c.weight is not None for c in ch.competencies)
+    head = (
+        '<tr><th class="th-seq">#</th><th class="th-code">Code</th>'
+        '<th class="th-comp">Competency</th><th>Justification</th>'
+        + ('<th class="th-wt">Weight</th>' if show_wt else '')
+        + '</tr>'
+    )
+    rows = ""
+    for i, c in enumerate(ch.competencies, 1):
+        wt_cell = ""
+        if show_wt:
+            w = int(c.weight or 0)
+            dots = "".join(
+                f'<span class="dot {"filled" if d < w else "empty"}"></span>' for d in range(3)
+            )
+            wt_cell = f'<td class="wt"><div class="dots">{dots}</div></td>'
+        rows += (
+            f'<tr><td class="seq">{i}</td>'
+            f'<td class="code">{esc(c.c_code)}</td>'
+            f'<td>{esc(c.description)}</td>'
+            f'<td>{esc(c.justification)}</td>'
+            f'{wt_cell}</tr>'
+        )
+    table = (
+        f'<table class="comp-table"><thead>{head}</thead><tbody>{rows}</tbody></table>'
+        if rows else '<p class="nocomp">No competency entries for this chapter.</p>'
+    )
+
+    return (
+        f'<div class="chapter-block">'
+        f'<div class="chapter-header">'
+        f'<span class="ch-num">Ch {str(ch.chapter_number).zfill(2)}</span>'
+        f'<span class="ch-title">{esc(ch.chapter_title)}</span>'
+        f'<span class="ch-alloc">{period_cells} · {ch.total_periods} periods · {ch.total_minutes}min</span>'
+        f'{weight_chip}'
+        f'</div>{table}</div>'
+    )
+
+
+# ── PDF rendering (xhtml2pdf) ──────────────────────────────────────────────
+# xhtml2pdf is pure-Python (reportlab + html5lib) and needs NO system libraries —
+# so the PDF generates identically on a teacher's Mac, on Windows, and on a cloud
+# server, with nothing to `brew install`. Its CSS subset is narrower than a
+# browser's (no flexbox, limited @page), so the PDF uses a dedicated table-based
+# template below rather than the flexbox web template in render_report_html().
+
+def render_pdf_html(report: CompetencyAllocationReport) -> str:
+    """xhtml2pdf-friendly report (table layout, no flexbox). Three sections:
+    Executive Summary · Allocation Details (periods table) · Competency Report."""
+    esc = lambda s: _html.escape(str(s or ""))
+    g = grade_roman(report.grade)
+    subj = subject_display(report.subject)
+    today = date_long(report.generated_at)
+
+    types = report.sorted_types
+    total_mins = report.total_minutes
+    hrs, rem = divmod(total_mins, 60)
+    time_str = f"{hrs}h {rem}min" if rem else f"{hrs}h"
+    ptype = " · ".join(f"{t.count}×{t.minutes}min" for t in types) or "—"
+
+    # ── (point 1) summary strip — mimic prototype: Chapters / Periods / Total time / Period types
+    stats = [(len(report.chapters), "Chapters"), (report.total_periods, "Periods"),
+             (time_str, "Total time"), (ptype, "Period types")]
+    stat_cells = "".join(
+        f'<td class="sum-cell" width="25%"><span class="sum-val">{esc(v)}</span><br/>'
+        f'<span class="sum-key">{esc(k)}</span></td>' for v, k in stats
+    )
+
+    # ── (point 7) executive summary paragraphs
+    exec_paras = "".join(f'<p class="exec">{esc(p)}</p>' for p in executive_summary_paragraphs(report))
+
+    # ── (point 9) Allocation Details table + (point 10) Competency Report blocks
+    alloc_table = _pdf_allocation_table(report, types, esc)
+    comp_blocks = "".join(_pdf_chapter_block(ch, types, report.is_effort, esc) for ch in report.chapters)
+
+    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+  @page {{
+    size: a4 portrait; margin: 1.6cm 1.3cm 1.4cm 1.3cm;
+    @frame footer {{ -pdf-frame-content: footerContent; bottom: 0.7cm; margin-left: 1.3cm; margin-right: 1.3cm; height: 0.6cm; }}
+  }}
+  body {{ font-family: Helvetica; font-size: 8pt; color: #1a1917; }}
+
+  /* ── header / brand (point 5: match the site's "Aruvi.lesson studio") ── */
+  .hdr {{ width: 100%; }}
+  .brand-aruvi {{ font-family: Georgia, "Times New Roman", serif; font-size: 16pt; font-weight: bold; color: #164436; }}
+  .brand-dot {{ font-family: Georgia, serif; font-size: 16pt; font-style: italic; color: #b65a31; }}
+  .brand-studio {{ font-size: 7pt; letter-spacing: 1.5px; color: #6b6a63; }}
+  .brand-ncf {{ font-family: Georgia, serif; font-style: italic; font-size: 7.5pt; color: #6b6a63; }}
+  .rep-title {{ font-family: Georgia, serif; font-size: 11pt; font-weight: bold; color: #164436; }}
+  .rep-sub {{ font-size: 7pt; color: #555; }}
+  /* (point 1) gap below the logo, then the prototype's heavy full-width rule (2px solid).
+     Rendered as a 1-cell table because xhtml2pdf draws table borders reliably. */
+  .rule-tbl {{ width: 100%; margin-top: 10px; margin-bottom: 12px; }}
+  .rule-tbl td {{ border-bottom: 2px solid #1a1917; font-size: 1pt; line-height: 1pt; }}
+
+  /* (point 1) summary strip */
+  .summary {{ width: 100%; border: 0.75px solid #ddd; margin-bottom: 14px; }}
+  .sum-cell {{ text-align: center; padding: 6px 4px; border-right: 0.75px solid #ddd; }}
+  .sum-val {{ font-size: 11pt; font-weight: bold; color: #1a1917; }}
+  .sum-key {{ font-size: 5.5pt; letter-spacing: 0.5px; color: #777; }}
+
+  /* (point 6) section heads — chapter-title font, two notches larger than chapter title (8.5pt -> 10.5pt) */
+  .section-head {{ font-family: Georgia, serif; font-size: 10.5pt; font-weight: bold; color: #1a1917;
+                   border-bottom: 1.25px solid #1a1917; padding-bottom: 3px; margin-top: 14px; margin-bottom: 7px; }}
+  .exec p {{ font-size: 8pt; color: #333; margin-top: 5px; }}
+
+  /* (point 9) Allocation Details table — clean, no dark bands (mirrors uploaded sample).
+     Hairlines + alt shading live on the CELLS (not the table element) so they span the
+     full width including the last column, which is where the previous version clipped. */
+  .alloc-table {{ width: 100%; }}
+  .alloc-table th {{ font-size: 6.5pt; color: #1a1917; font-weight: normal; text-align: center;
+                     padding: 5px 6px; border-top: 0.75px solid #cccccc; border-bottom: 0.75px solid #dddddd; }}
+  .alloc-table td {{ font-size: 8pt; color: #2a2a2a; padding: 5px 6px; text-align: center;
+                     border-bottom: 0.5px solid #efefef; }}
+  .alloc-table .alloc-name {{ text-align: left; padding-left: 8px; }}
+  .alloc-seq {{ color: #888; font-size: 7pt; }}
+  .alloc-strong {{ font-weight: bold; }}
+  .alloc-table th:last-child, .alloc-table td:last-child {{ padding-right: 14px; }}
+  .alloc-table th:first-child, .alloc-table td:first-child {{ padding-left: 10px; }}
+  .alloc-table tr.alt td {{ background-color: #faf9f7; }}
+  .alloc-table tr.alloc-total td {{ font-weight: bold; border-top: 0.75px solid #cccccc;
+                                    border-bottom: 0.75px solid #cccccc; background-color: #f4f2ee; }}
+
+  /* (point 10) Competency Report — prototype look, minus dark bands (point 3) */
+  .ch-head {{ width: 100%; border-bottom: 0.75px solid #1a1917; margin-top: 12px; }}
+  .ch-num {{ font-size: 8pt; font-weight: bold; color: #1a1917; }}   /* (point 8) same color as title */
+  .ch-title {{ font-size: 8.5pt; font-weight: bold; font-family: Georgia, serif; color: #1a1917; }}
+  .ch-alloc {{ font-size: 6.5pt; color: #333; }}                     /* (point 3) plain text, no dark band */
+  .ch-weight {{ font-size: 6.5pt; color: #777; }}
+  .comp-table {{ width: 100%; margin-top: 3px; }}
+  /* (point 3) competency header: light row with dark text + underline, NOT a dark band */
+  .comp-table th {{ font-size: 6pt; color: #1a1917; font-weight: normal; letter-spacing: 0.4px;
+                    background-color: #ffffff; padding: 4px 6px; text-align: left;
+                    border-bottom: 0.75px solid #d8d8d8; }}
+  .comp-table td {{ font-size: 7pt; color: #2a2a2a; padding: 4px 6px; border-bottom: 0.5px solid #eee; vertical-align: top; }}
+  .seq {{ color: #888; font-size: 6.5pt; text-align: center; }}
+  .code {{ font-weight: bold; }}
+  .wt {{ text-align: center; }}
+  .nocomp {{ font-size: 7pt; color: #888; }}
+  .footer {{ font-size: 6pt; color: #999; }}
+</style></head><body>
+
+  <table class="hdr"><tr>
+    <td width="60%">
+      <span class="brand-aruvi">Aruvi</span><span class="brand-dot">.</span>
+      <span class="brand-studio">LESSON STUDIO</span><br/>
+      <span class="brand-ncf">NCF 2023 aligned</span>
+    </td>
+    <td width="40%" align="right">
+      <span class="rep-title">Allocation &amp; Competency report</span><br/>
+      <span class="rep-sub">Grade {esc(g)} · {esc(subj)} · {esc(today)}</span>
+    </td>
+  </tr></table>
+  <table class="rule-tbl"><tr><td></td></tr></table>
+
+  <table class="summary"><tr>{stat_cells}</tr></table>
+
+  <div class="section-head">Executive summary</div>
+  {exec_paras}
+
+  <div class="section-head">Allocation details</div>
+  {alloc_table}
+
+  <div class="section-head">Competency report</div>
+  {comp_blocks}
+
+  <div id="footerContent" class="footer">
+    Aruvi · Allocation &amp; Competency report · Grade {esc(g)} · {esc(subj)} · Confidential
+  </div>
+</body></html>"""
+
+
+def _pdf_allocation_table(report: CompetencyAllocationReport, types, esc) -> str:
+    """(point 9) The Allocation Details table: one row per chapter with the per-duration
+    period columns + total + the basis metric (Effort Index or Competency Weight)."""
+    is_effort = report.is_effort
+    metric_head = "Effort Index" if is_effort else "Competency Weight"
+
+    # Column widths are set as per-cell width="%" on the header <th> cells.
+    # xhtml2pdf 0.2.17 does NOT honor <colgroup>/<col> widths (it silently falls back
+    # to equal-width columns), but it DOES honor width="" on the header cells. It also
+    # systematically shrinks the LAST column below its requested width — which is what
+    # previously collapsed the metric column to a ~12pt sliver, so its header and value
+    # overflowed past the page's right edge. A small empty trailing "spacer" column
+    # absorbs that shrink: with the spacer last, the metric column keeps its full width
+    # and the alternating-/total-row shading reaches the table's true right border.
+    n_dur = len(types)
+    seq_w, total_w, metric_w, spacer_w, dur_w = 4, 12, 15, 3, 11
+    chapter_w = 100 - (seq_w + total_w + metric_w + spacer_w + dur_w * n_dur)
+    if chapter_w < 18:
+        dur_w = max(7, (100 - seq_w - total_w - metric_w - spacer_w - 18) // max(n_dur, 1))
+        chapter_w = 100 - (seq_w + total_w + metric_w + spacer_w + dur_w * n_dur)
+
+    header = (
+        f'<tr><th width="{seq_w}%">#</th>'
+        f'<th class="alloc-name" width="{chapter_w}%">Chapter</th>'
+        + "".join(f'<th width="{dur_w}%">{t.minutes}-min Periods</th>' for t in types)
+        + f'<th width="{total_w}%">Total Periods</th>'
+        + f'<th width="{metric_w}%">{metric_head}</th>'
+        + f'<th width="{spacer_w}%"></th></tr>'
+    )
+
+    rows = ""
+    tot_by_dur = {t.minutes: 0 for t in types}
+    tot_periods = 0
+    for i, ch in enumerate(report.chapters, 1):
+        alt = " alt" if i % 2 == 0 else ""
+        dur_cells = ""
+        for t in types:
+            v = ch.periods_by_duration.get(t.minutes, 0)
+            tot_by_dur[t.minutes] += v
+            dur_cells += f'<td>{v}</td>'
+        tot_periods += ch.total_periods
+        if is_effort:
+            metric = "" if ch.effort_index in (None, "") else _g(ch.effort_index)
+        else:
+            metric = "" if ch.chapter_weight in (None, "") else _g(ch.chapter_weight)
+        rows += (
+            f'<tr class="row{alt}">'
+            f'<td class="alloc-seq">{i}</td>'
+            f'<td class="alloc-name">{esc(ch.chapter_title)}</td>'
+            f'{dur_cells}'
+            f'<td class="alloc-strong">{ch.total_periods}</td>'
+            f'<td class="alloc-strong">{esc(metric)}</td>'
+            f'<td></td></tr>'
+        )
+
+    foot_dur = "".join(f'<td>{tot_by_dur[t.minutes]}</td>' for t in types)
+    footer = (
+        f'<tr class="alloc-total"><td></td><td class="alloc-name">Total</td>{foot_dur}'
+        f'<td>{tot_periods}</td><td></td><td></td></tr>'
+    )
+    return f'<table class="alloc-table" width="100%"><thead>{header}</thead><tbody>{rows}{footer}</tbody></table>'
+
+
+def _g(v) -> str:
+    """Trim trailing .0 (13.0 -> 13, 13.5 -> 13.5)."""
+    try:
+        f = float(v)
+        return str(int(f)) if f == int(f) else str(f)
+    except (TypeError, ValueError):
+        return str(v)
+
+
+def _pdf_chapter_block(ch: ChapterReport, types, is_effort: bool, esc) -> str:
+    period_cells = " · ".join(
+        f'{ch.periods_by_duration.get(t.minutes, 0)}×{t.minutes}min' for t in types
+    ) or "—"
+    weight_chip = ""
+    if not is_effort and ch.chapter_weight not in (None, ""):
+        weight_chip = f' &nbsp; <span class="ch-weight">Weight {esc(ch.chapter_weight)}</span>'
+
+    show_wt = (not is_effort) and any(c.weight is not None for c in ch.competencies)
+    if show_wt:
+        head = ('<tr><th width="6%">#</th><th width="11%">Code</th>'
+                '<th width="30%">Competency</th><th width="42%">Justification</th>'
+                '<th width="11%">Weight</th></tr>')
     else:
-        note_text = "Periods are allocated according to a custom allocation strategy defined for this curriculum. Learn more in the Ask Aruvi helpline."
+        head = ('<tr><th width="6%">#</th><th width="12%">Code</th>'
+                '<th width="33%">Competency</th><th width="49%">Justification</th></tr>')
+    rows = ""
+    for i, c in enumerate(ch.competencies, 1):
+        wt_cell = ""
+        if show_wt:
+            w = int(c.weight or 0)
+            wt_cell = f'<td class="wt">{"●" * w}{"○" * (3 - w)}</td>'
+        rows += (
+            f'<tr><td class="seq">{i}</td>'
+            f'<td class="code">{esc(c.c_code)}</td>'
+            f'<td>{esc(c.description)}</td>'
+            f'<td>{esc(c.justification)}</td>'
+            f'{wt_cell}</tr>'
+        )
+    table = (
+        f'<table class="comp-table"><thead>{head}</thead><tbody>{rows}</tbody></table>'
+        if rows else '<p class="nocomp">No competency entries for this chapter.</p>'
+    )
 
-    story.append(Paragraph(note_text, note_style))
-    story.append(Spacer(1, 0.2 * inch))
+    # chapter header: Ch NN (point 8: dark, same as title) + title; allocation as plain text (point 3)
+    return (
+        f'<table class="ch-head"><tr>'
+        f'<td><span class="ch-num">Ch {str(ch.chapter_number).zfill(2)}</span> '
+        f'<span class="ch-title">{esc(ch.chapter_title)}</span>{weight_chip}</td>'
+        f'<td align="right"><span class="ch-alloc">{period_cells} · {ch.total_periods} periods · {ch.total_minutes}min</span></td>'
+        f'</tr></table>{table}'
+    )
 
-    # ========== OPTIONAL REPORT NOTES ==========
-    if report.notes:
-        story.append(Paragraph("<b>Notes:</b>", ParagraphStyle("NotesTitle", parent=styles["Normal"], fontSize=9, textColor=COLOR_PINE)))
-        story.append(Paragraph(report.notes, note_style))
-        story.append(Spacer(1, 0.2 * inch))
 
-    # ========== FOOTER ==========
-    story.append(Spacer(1, 0.1 * inch))
-    footer_text = f"Aruvi · Period Allocation Report · Grade {report.grade} · {subject_display} · Page 1 of 1 · Confidential"
-    story.append(Paragraph(footer_text, footer_style))
-
-    # Build PDF
-    doc.build(story)
-    buffer.seek(0)
-    return buffer.getvalue()
+def export_allocation_report_pdf(report: CompetencyAllocationReport) -> bytes:
+    """Render the report to PDF bytes via xhtml2pdf (pure-Python, no system libs)."""
+    from io import BytesIO
+    from xhtml2pdf import pisa
+    html_str = render_pdf_html(report)
+    buf = BytesIO()
+    result = pisa.CreatePDF(html_str, dest=buf, encoding="utf-8")
+    if result.err:
+        raise RuntimeError(f"xhtml2pdf failed with {result.err} error(s)")
+    return buf.getvalue()

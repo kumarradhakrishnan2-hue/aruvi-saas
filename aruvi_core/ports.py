@@ -94,6 +94,13 @@ class AllocationSummary:
     total_planned_time_minutes: int
 
 
+# A single chapter's saved allocation record. `periods_by_duration` is keyed by the
+# period-type minutes (as a string, e.g. "45"), matching the shape the LRM/allocate
+# engine and the frontend both already use — so the register is "redraw-ready" with no
+# re-derivation needed (chapter_title/weight/totals travel with it, not just an int).
+AllocationRecord = Dict[str, Any]  # {chapter_title, weight, periods_by_duration, total_periods, total_minutes}
+
+
 @runtime_checkable
 class AllocationRepository(Protocol):
     """Persists the Persistent Annual Allocation Register.
@@ -104,12 +111,13 @@ class AllocationRepository(Protocol):
     File-based (JSON) implementation for now; Supabase adapter swaps in later without
     touching business logic.
     """
-    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, int]:
-        """Load the Annual Allocation Register as {chapter_num: periods_allocated}.
+    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, "AllocationRecord"]:
+        """Load the Annual Allocation Register as {chapter_num: AllocationRecord}.
         Returns empty dict if no register exists yet."""
         ...
 
-    def save_allocation(self, subject: str, grade: Union[str, int], chapters_allocation: Dict[str, int]) -> None:
+    def save_allocation(self, subject: str, grade: Union[str, int],
+                         chapters_allocation: Dict[str, "AllocationRecord"]) -> None:
         """Save allocation data, merging into the existing register.
 
         Chapters in chapters_allocation overwrite existing allocations for those chapters.
@@ -119,4 +127,9 @@ class AllocationRepository(Protocol):
 
     def get_summary(self, subject: str, grade: Union[str, int]) -> AllocationSummary:
         """Return a summary of the current register state."""
+        ...
+
+    def clear_register(self, subject: str, grade: Union[str, int]) -> None:
+        """Erase the entire register for a subject/grade (the "Reset allocations" action).
+        No-op if no register exists yet."""
         ...

@@ -3,15 +3,20 @@
 Persists the Persistent Annual Allocation Register as JSON at
 ARUVI_DATA_DIR/allocations/{subject}/{grade}/allocation.json.
 
+Each chapter's value is a full AllocationRecord — {chapter_title, weight,
+periods_by_duration, total_periods, total_minutes} — not just an int. This keeps the
+register "redraw-ready": the frontend's final-allocation table can be rebuilt straight
+from what's on disk, with no re-derivation against the LRM/mappings needed.
+
 Merge semantics: chapters in the new allocation overwrite existing allocations
 for those chapters; chapters not in the new allocation retain their previous
 allocations.
 """
 import json
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Dict, Union
 
-from aruvi_core.ports import AllocationRepository, AllocationSummary
+from aruvi_core.ports import AllocationRecord, AllocationRepository, AllocationSummary
 from aruvi_core.grades import stage_for
 
 
@@ -30,7 +35,7 @@ class AllocationRepositoryFileImpl(AllocationRepository):
         """Return the path to the allocation register file."""
         return self.allocations_dir / subject / str(grade) / "allocation.json"
 
-    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, int]:
+    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, AllocationRecord]:
         """Load the Annual Allocation Register.
 
         Returns empty dict if no register exists yet.
@@ -42,12 +47,28 @@ class AllocationRepositoryFileImpl(AllocationRepository):
         try:
             with open(path, "r") as f:
                 data = json.load(f)
-            # Ensure all values are integers (chapters allocated periods)
-            return {str(k): int(v) for k, v in data.items()}
         except (json.JSONDecodeError, IOError) as e:
             raise ValueError(f"Failed to load allocation register from {path}: {e}")
 
-    def save_allocation(self, subject: str, grade: Union[str, int], chapters_allocation: Dict[str, int]) -> None:
+        # Normalize each entry to the AllocationRecord shape. Tolerates legacy registers
+        # written before this schema (plain int = total periods only) by upgrading them
+        # to a minimal record on read, rather than crashing.
+        normalized: Dict[str, AllocationRecord] = {}
+        for k, v in data.items():
+            if isinstance(v, dict):
+                normalized[str(k)] = v
+            else:
+                normalized[str(k)] = {
+                    "chapter_title": "",
+                    "weight": 0,
+                    "periods_by_duration": {},
+                    "total_periods": int(v),
+                    "total_minutes": 0,
+                }
+        return normalized
+
+    def save_allocation(self, subject: str, grade: Union[str, int],
+                         chapters_allocation: Dict[str, AllocationRecord]) -> None:
         """Save allocation data, merging into the existing register.
 
         Chapters in chapters_allocation overwrite existing allocations for those chapters.
@@ -77,8 +98,8 @@ class AllocationRepositoryFileImpl(AllocationRepository):
         # Count allocated chapters
         chapters_allocated = len(register)
 
-        # Total periods allocated
-        total_periods = sum(register.values())
+        # Total periods allocated (now read from each record, not the bare value)
+        total_periods = sum(int(rec.get("total_periods", 0)) for rec in register.values())
 
         # Get stage to determine total chapters for "remaining" count
         # grade can be int or string; convert to string for stage_for()
@@ -96,10 +117,10 @@ class AllocationRepositoryFileImpl(AllocationRepository):
 
         chapters_remaining = max(0, total_chapters_estimate - chapters_allocated)
 
-        # Assume standard period duration; this can be refined with metadata later.
-        # For now, 1 period = 45 minutes (common in Indian schools).
-        minutes_per_period = 45
-        total_time_minutes = total_periods * minutes_per_period
+        # total_minutes now comes straight from each record (sum of periods_by_duration *
+        # duration, computed by the caller when the record was built) instead of being
+        # estimated from a flat 45-min assumption.
+        total_time_minutes = sum(int(rec.get("total_minutes", 0)) for rec in register.values())
 
         return AllocationSummary(
             chapters_allocated=chapters_allocated,
@@ -107,3 +128,9 @@ class AllocationRepositoryFileImpl(AllocationRepository):
             total_planned_periods=total_periods,
             total_planned_time_minutes=total_time_minutes,
         )
+
+    def clear_register(self, subject: str, grade: Union[str, int]) -> None:
+        """Erase the register file for a subject/grade. No-op if it doesn't exist."""
+        path = self._register_path(subject, grade)
+        if path.exists():
+            path.unlink()

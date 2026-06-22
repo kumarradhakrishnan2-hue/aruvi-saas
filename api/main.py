@@ -28,9 +28,11 @@ from aruvi_core import subjects, engine
 from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subject
 from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
-from aruvi_core.report_allocation import AllocationReport
-from aruvi_core.export_allocation_pdf import export_allocation_report_pdf
-from aruvi_core.export_allocation_docx import export_allocation_report_docx
+from aruvi_core.grades import stage_for, UnknownGradeError
+from aruvi_core.report_competency import build_report as build_competency_report
+# NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
+# so a missing optional dependency (weasyprint, python-docx) can never break API
+# startup — only the export endpoints would error, with a clear message.
 
 from . import data, config
 
@@ -60,28 +62,34 @@ class AllocateRequest(BaseModel):
 class SaveAllocationRequest(BaseModel):
     # Subject name (e.g., "science", "mathematics")
     subject: str
-    # Grade (as integer, e.g., 7)
-    grade: int
-    # Dict mapping chapter number (as string) to periods allocated (as int).
-    # E.g., {"1": 5, "2": 6, "3": 4}
-    allocation: Dict[str, int]
+    # Grade as the roman-numeral string used everywhere else in the API ("vii"), not an
+    # integer — stage_for()/grades.py and the /chapters and /allocate endpoints all key
+    # off this same roman string. (req.subject/req.grade are echoed back only; the path
+    # params {subject}/{grade} are what's actually used to read/write the register.)
+    grade: str
+    # Dict mapping chapter number (as string) to a full allocation record:
+    # {chapter_title, weight, periods_by_duration: {minutes_str: count}, total_periods,
+    # total_minutes}. The full record (not just a period total) is stored so the saved
+    # register is "redraw-ready" for the frontend's final-allocation table.
+    allocation: Dict[str, Dict[str, Any]]
 
 
 class AllocationReportRequest(BaseModel):
-    """Request body for allocation report export endpoints.
+    """Request body for the allocation-report export endpoints.
 
-    Contains a serialized AllocationReport dict ready for export to PDF/DOCX.
+    The frontend sends the allocation result only; the API enriches each chapter
+    with its competencies (code + description + justification) from the mappings
+    and the framework glossary, server-side. `grade` is the roman string ("vii").
+    `period_types` is [{minutes, count}]. `chapters` is the allocate output:
+    [{chapter_number, chapter_title, periods_by_duration {min:count}, total_periods,
+      total_minutes, weight}].
     """
     subject: str
-    grade: int
-    stage: str
-    period_profile_name: str
-    period_duration_minutes: int
-    total_periods: int
-    generated_at: str
-    allocation_basis: str
+    grade: str
+    generated_at: Optional[str] = None
     notes: Optional[str] = None
-    rows: List[Dict[str, Any]] = []
+    period_types: List[Dict[str, Any]] = []
+    chapters: List[Dict[str, Any]] = []
 
 
 def _subject(name: str):
@@ -93,7 +101,9 @@ def _subject(name: str):
 
 @app.get("/health")
 def health() -> Dict[str, str]:
-    return {"status": "ok"}
+    # `report` marker bumps when the report code changes — lets you confirm the
+    # server is running the latest code (curl localhost:8000/health).
+    return {"status": "ok", "report": "competency-v6-rules"}
 
 
 @app.get("/subjects")
@@ -166,6 +176,23 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
     return {"meta": chapter, "view": ViewModel(lp, a).to_dict()}
 
 
+@app.get("/subjects/{subject}/{grade}/allocation")
+def get_allocation(subject: str, grade: str) -> Dict[str, Any]:
+    """Load the Persistent Annual Allocation Register for a subject/grade.
+
+    Returns the full saved register so the frontend can rehydrate its final-allocation
+    view on page load — surviving a server restart or a fresh browser/profile, not just
+    a localStorage cache in the same browser.
+    """
+    _subject(subject)
+    register = engine.get_allocation_register(
+        subject_name=subject,
+        grade=grade,
+        allocation_repo=allocation_repo,
+    )
+    return {"subject": subject, "grade": grade, "allocation": register}
+
+
 @app.post("/subjects/{subject}/{grade}/save_allocation")
 def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dict[str, Any]:
     """Save allocation data to the Persistent Annual Allocation Register.
@@ -179,13 +206,13 @@ def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dic
     try:
         engine.save_allocation(
             subject_name=subject,
-            grade=int(grade),
+            grade=grade,
             chapters_allocation=req.allocation,
             allocation_repo=allocation_repo,
         )
         summary = engine.get_allocation_summary(
             subject_name=subject,
-            grade=int(grade),
+            grade=grade,
             allocation_repo=allocation_repo,
         )
         return {
@@ -203,6 +230,20 @@ def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dic
         raise HTTPException(status_code=500, detail=f"Failed to save allocation: {str(e)}")
 
 
+@app.delete("/subjects/{subject}/{grade}/allocation")
+def delete_allocation(subject: str, grade: str) -> Dict[str, Any]:
+    """Erase the saved Annual Allocation Register for a subject/grade — the server-side
+    half of the "Reset allocations" action (the frontend also clears its localStorage
+    cache)."""
+    _subject(subject)
+    engine.clear_allocation_register(
+        subject_name=subject,
+        grade=grade,
+        allocation_repo=allocation_repo,
+    )
+    return {"subject": subject, "grade": grade, "status": "cleared"}
+
+
 @app.post("/subjects/{subject}/{grade}/generate")
 def generate(subject: str, grade: str) -> JSONResponse:
     """Stub — live generation is deferred. The frontend treats this as 'coming soon' and
@@ -216,90 +257,91 @@ def generate(subject: str, grade: str) -> JSONResponse:
     )
 
 
+def _safe_name(s: str) -> str:
+    """Filename-safe slug for the Content-Disposition header."""
+    return "".join(c if c.isalnum() or c in "-_" else "-" for c in str(s)).strip("-").lower()
+
+
+def _build_report(req: "AllocationReportRequest"):
+    """Assemble the full per-chapter competency report from the request + server data.
+
+    The request carries only the allocation (periods per chapter); competencies and
+    their descriptions/justifications are loaded here from the mappings and the
+    framework glossary so the frontend never has to ship them.
+    """
+    from datetime import datetime
+    _subject(req.subject)  # 404 on unknown subject
+    try:
+        stage = stage_for(req.grade)
+    except UnknownGradeError:
+        raise HTTPException(status_code=422, detail=f"Unknown grade: {req.grade}")
+
+    mappings = data.load_mappings(req.subject, req.grade)
+    mappings_by_chapter = {int(m.get("chapter_number")): m for m in mappings
+                           if m.get("chapter_number") is not None}
+    descriptions = data.load_competency_descriptions(req.subject, req.grade)
+
+    generated_at = datetime.now()
+    if req.generated_at:
+        try:
+            generated_at = datetime.fromisoformat(req.generated_at)
+        except ValueError:
+            pass
+
+    return build_competency_report(
+        subject=req.subject,
+        grade=req.grade,
+        stage=stage,
+        period_types=req.period_types,
+        chapters_alloc=req.chapters,
+        mappings_by_chapter=mappings_by_chapter,
+        descriptions=descriptions,
+        generated_at=generated_at,
+        notes=req.notes,
+    )
+
+
 @app.post("/api/allocation/export-pdf")
 def export_allocation_pdf(req: AllocationReportRequest) -> StreamingResponse:
-    """Export allocation report as PDF.
-
-    Takes the serialized AllocationReport from the frontend and returns a PDF binary.
-    """
+    """Export the allocation report as a PDF binary."""
     try:
-        # Reconstruct AllocationReport from request
-        report = AllocationReport(
-            subject=req.subject,
-            grade=req.grade,
-            stage=req.stage,
-            period_profile_name=req.period_profile_name,
-            period_duration_minutes=req.period_duration_minutes,
-            total_periods=req.total_periods,
-            generated_at=__import__("datetime").datetime.fromisoformat(req.generated_at),
-            allocation_basis=req.allocation_basis,
-            notes=req.notes,
-            rows=[
-                __import__("aruvi_core.report_allocation", fromlist=["AllocationRow"]).AllocationRow(
-                    chapter_number=r["chapter_number"],
-                    chapter_name=r["chapter_name"],
-                    total_periods=r["total_periods"],
-                    allocated_periods=r["allocated_periods"],
-                    effort_index=r.get("effort_index"),
-                    competency_weight=r.get("competency_weight"),
-                    notes=r.get("notes", ""),
-                )
-                for r in req.rows
-            ],
-        )
-
-        pdf_bytes = export_allocation_report_pdf(report)
+        from aruvi_core.export_allocation_pdf import export_allocation_report_pdf
+        pdf_bytes = export_allocation_report_pdf(_build_report(req))
+        fname = f"allocation-report-grade-{req.grade}-{_safe_name(req.subject)}.pdf"
         return StreamingResponse(
             iter([pdf_bytes]),
             media_type="application/pdf",
-            headers={
-                "Content-Disposition": f'attachment; filename="allocation-report-grade-{req.grade}-{req.subject}.pdf"'
-            },
+            headers={"Content-Disposition": f'attachment; filename="{fname}"'},
         )
+    except HTTPException:
+        raise  # let 404/422 from _build_report pass through unchanged
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"PDF export failed: {str(e)}")
+        import traceback
+        tb = traceback.format_exc()
+        print("\n[export-pdf] FAILED:\n" + tb, flush=True)  # full traceback to server console
+        last = tb.strip().splitlines()
+        where = next((l.strip() for l in reversed(last) if "aruvi" in l or "api/" in l), "")
+        raise HTTPException(status_code=500, detail=f"PDF export failed: {e}  [{where}]")
 
 
 @app.post("/api/allocation/export-docx")
 def export_allocation_docx(req: AllocationReportRequest) -> StreamingResponse:
-    """Export allocation report as DOCX (Word document).
-
-    Takes the serialized AllocationReport from the frontend and returns a DOCX binary.
-    Requires Node.js and 'npm install -g docx' to be installed on the server.
-    """
+    """Export the allocation report as a DOCX (Word) binary."""
     try:
-        # Reconstruct AllocationReport from request
-        report = AllocationReport(
-            subject=req.subject,
-            grade=req.grade,
-            stage=req.stage,
-            period_profile_name=req.period_profile_name,
-            period_duration_minutes=req.period_duration_minutes,
-            total_periods=req.total_periods,
-            generated_at=__import__("datetime").datetime.fromisoformat(req.generated_at),
-            allocation_basis=req.allocation_basis,
-            notes=req.notes,
-            rows=[
-                __import__("aruvi_core.report_allocation", fromlist=["AllocationRow"]).AllocationRow(
-                    chapter_number=r["chapter_number"],
-                    chapter_name=r["chapter_name"],
-                    total_periods=r["total_periods"],
-                    allocated_periods=r["allocated_periods"],
-                    effort_index=r.get("effort_index"),
-                    competency_weight=r.get("competency_weight"),
-                    notes=r.get("notes", ""),
-                )
-                for r in req.rows
-            ],
-        )
-
-        docx_bytes = export_allocation_report_docx(report)
+        from aruvi_core.export_allocation_docx import export_allocation_report_docx
+        docx_bytes = export_allocation_report_docx(_build_report(req))
+        fname = f"allocation-report-grade-{req.grade}-{_safe_name(req.subject)}.docx"
         return StreamingResponse(
             iter([docx_bytes]),
             media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            headers={
-                "Content-Disposition": f'attachment; filename="allocation-report-grade-{req.grade}-{req.subject}.docx"'
-            },
+            headers={"Content-Disposition": f'attachment; filename="{fname}"'},
         )
+    except HTTPException:
+        raise  # let 404/422 from _build_report pass through unchanged
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"DOCX export failed: {str(e)}")
+        import traceback
+        tb = traceback.format_exc()
+        print("\n[export-docx] FAILED:\n" + tb, flush=True)
+        last = tb.strip().splitlines()
+        where = next((l.strip() for l in reversed(last) if "aruvi" in l or "api/" in l), "")
+        raise HTTPException(status_code=500, detail=f"DOCX export failed: {e}  [{where}]")

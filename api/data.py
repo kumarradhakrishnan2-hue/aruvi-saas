@@ -34,6 +34,72 @@ def load_mappings(subject: str, grade: str) -> List[Dict[str, Any]]:
     return out
 
 
+def load_competency_descriptions(subject: str, grade: str) -> Dict[str, str]:
+    """Flatten the framework's competency-description glossary into {code: description}.
+
+    The file lives at framework/{subject}/{stage}/competency_descriptions_*.json and is
+    nested as curricular_goals[CG-x].competency_codes[C-x.y] = "description". Mapping JSONs
+    only carry the code + justification, so the human-readable competency text comes from
+    here. Returns {} if the glossary is missing (report then shows the code alone).
+    """
+    from aruvi_core.grades import stage_for, UnknownGradeError
+    try:
+        stage = stage_for(grade)
+    except UnknownGradeError:
+        return {}
+    d = os.path.join(DATA_DIR, "framework", subject, stage)
+    if not os.path.isdir(d):
+        return {}
+    out: Dict[str, str] = {}
+    for f in sorted(os.listdir(d)):
+        if f.startswith("competency_descriptions") and f.endswith(".json"):
+            try:
+                doc = json.load(open(os.path.join(d, f)))
+            except Exception:
+                continue
+            out.update(_flatten_descriptions(doc))
+    return out
+
+
+def _flatten_descriptions(doc: Dict[str, Any]) -> Dict[str, str]:
+    """Flatten a competency-descriptions doc to {code: description}, tolerating the
+    three schemas in the data:
+
+      1. curricular_goals as a DICT  (english, mathematics):
+         {"CG-1": {"competency_codes": {"C-1.1": "desc", ...}}, ...}
+      2. curricular_goals as a LIST  (science, the_world_around_us):
+         [{"cg_code": "...", "competencies": [{"code": "C-1.1", "description": "..."}]}, ...]
+      3. flat top-level map          (social_sciences):
+         {"C-1.1": "desc", "C-1.2": "desc", ...}  (curricular_goals absent/None)
+    """
+    out: Dict[str, str] = {}
+    cg = doc.get("curricular_goals")
+
+    if isinstance(cg, dict):  # schema 1
+        for goal in cg.values():
+            if isinstance(goal, dict):
+                for code, desc in (goal.get("competency_codes") or {}).items():
+                    out[code] = desc
+    elif isinstance(cg, list):  # schema 2
+        for goal in cg:
+            if not isinstance(goal, dict):
+                continue
+            comps = goal.get("competencies") or goal.get("competency_codes")
+            if isinstance(comps, dict):
+                out.update({k: v for k, v in comps.items() if isinstance(v, str)})
+            elif isinstance(comps, list):
+                for c in comps:
+                    if isinstance(c, dict):
+                        code = c.get("code") or c.get("c_code")
+                        if code:
+                            out[code] = c.get("description", "")
+    else:  # schema 3 — flat {code: description} at the top level
+        for k, v in doc.items():
+            if isinstance(v, str) and k not in ("subject", "stage", "source"):
+                out[k] = v
+    return out
+
+
 def list_saved_plans(subject: str, grade: str) -> List[Dict[str, Any]]:
     d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
     out: List[Dict[str, Any]] = []

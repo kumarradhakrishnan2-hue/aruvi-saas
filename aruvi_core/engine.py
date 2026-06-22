@@ -9,10 +9,10 @@ service layer's concern (output caching wraps this call; see ports.OutputCache).
 from __future__ import annotations
 
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Union
 
 from . import subjects
-from .ports import LLMClient, AllocationRepository, AllocationSummary
+from .ports import LLMClient, AllocationRecord, AllocationRepository, AllocationSummary
 from .view_model import AssessmentView, LessonPlanView, ViewModel
 
 
@@ -72,8 +72,8 @@ def generate(
 def save_allocation(
     *,
     subject_name: str,
-    grade: int,
-    chapters_allocation: Dict[str, int],
+    grade: Union[str, int],
+    chapters_allocation: Dict[str, AllocationRecord],
     allocation_repo: AllocationRepository,
 ) -> None:
     """Save allocation data to the Persistent Annual Allocation Register.
@@ -87,8 +87,30 @@ def save_allocation(
 def get_allocation_summary(
     *,
     subject_name: str,
-    grade: int,
+    grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> AllocationSummary:
     """Retrieve a summary of the current allocation register state."""
     return allocation_repo.get_summary(subject_name, grade)
+
+
+def get_allocation_register(
+    *,
+    subject_name: str,
+    grade: Union[str, int],
+    allocation_repo: AllocationRepository,
+) -> Dict[str, AllocationRecord]:
+    """Retrieve the full saved register ({chapter_num: AllocationRecord}) so the
+    frontend can rehydrate its final-allocation view without re-deriving it from the
+    LRM/mappings."""
+    return allocation_repo.load_register(subject_name, grade)
+
+
+def clear_allocation_register(
+    *,
+    subject_name: str,
+    grade: Union[str, int],
+    allocation_repo: AllocationRepository,
+) -> None:
+    """Erase the saved register for a subject/grade (the "Reset allocations" action)."""
+    allocation_repo.clear_register(subject_name, grade)

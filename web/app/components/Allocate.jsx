@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pad } from "../lib/format";
+import { getJSON, pad, API } from "../lib/format";
 import PeriodRows, { toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
-import AllocationReportView from "./AllocationReportView";
 
 /* ── Teacher-adjustment model (explicit Δ per duration, budget-neutral) ──
  * `deltas`: { [chapter_number]: { [duration]: number } }. No auto-rebalancing — the teacher
@@ -77,10 +76,38 @@ export default function Allocate({ subject, grade }) {
   const [showClearWarning, setShowClearWarning] = useState(false);
   const [allocationReport, setAllocationReport] = useState(null);
 
-  // LocalStorage key for persisting allocations across subject/grade changes
+  // LocalStorage key — now just a same-browser cache for instant paint; the server-side
+  // register (app/mirror/allocations/{subject}/{grade}/allocation.json) is the source of
+  // truth and is what actually survives an API/web server restart or a fresh browser.
   const allocationStorageKey = `allocations_${subject}_${grade}`;
 
-  // Load persisted allocations from localStorage on mount or subject/grade change
+  // Convert the saved server register ({chapter_num: AllocationRecord}) into the same
+  // { durations, allocations, totals } shape buildFinalAllocation() produces, so the
+  // "final" step can render it without any special-casing.
+  const registerToAlloc = (register) => {
+    const entries = Object.entries(register || {});
+    if (!entries.length) return null;
+    const durSet = new Set();
+    entries.forEach(([, rec]) => Object.keys(rec.periods_by_duration || {}).forEach((m) => durSet.add(m)));
+    const durations = [...durSet];
+    const allocations = entries.map(([cn, rec]) => ({
+      chapter_number: Number(cn),
+      chapter_title: rec.chapter_title || "",
+      weight: rec.weight ?? 0,
+      periods_by_duration: rec.periods_by_duration || {},
+      total_periods: rec.total_periods ?? 0,
+      total_minutes: rec.total_minutes ?? 0,
+    }));
+    const totals = {
+      periods: allocations.reduce((s, a) => s + a.total_periods, 0),
+      minutes: allocations.reduce((s, a) => s + a.total_minutes, 0),
+      by_duration: Object.fromEntries(durations.map((m) => [m, allocations.reduce((s, a) => s + (a.periods_by_duration[m] || 0), 0)])),
+    };
+    return { durations, allocations, totals };
+  };
+
+  // Load persisted allocations on mount or subject/grade change: paint instantly from
+  // localStorage (if present), then reconcile against the server register, which wins.
   useEffect(() => {
     setRes(null);
     setStep("periods");
@@ -89,81 +116,80 @@ export default function Allocate({ subject, grade }) {
     setFinalAlloc(null);
     setModifying(false);
 
-    // Load persisted allocations for this subject/grade combination
     try {
       const stored = localStorage.getItem(allocationStorageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
-        // Convert arrays back to proper structures
-        const restored = parsed.map((alloc) => ({
-          ...alloc,
-          durations: alloc.durations || [],
-          allocations: alloc.allocations || [],
-        }));
+        const restored = parsed.map((alloc) => ({ ...alloc, durations: alloc.durations || [], allocations: alloc.allocations || [] }));
         setAllAllocations(restored);
       } else {
         setAllAllocations([]);
       }
     } catch (e) {
-      console.warn("Failed to load persisted allocations:", e);
+      console.warn("Failed to load cached allocations:", e);
       setAllAllocations([]);
     }
 
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
+
+    // Server register is the source of truth — overrides the localStorage paint above
+    // once it arrives, so a restarted server / fresh browser still shows saved work.
+    getJSON(`/subjects/${subject}/${grade}/allocation`).then((d) => {
+      const alloc = registerToAlloc(d.allocation);
+      if (alloc && alloc.allocations.length) {
+        setAllAllocations([alloc]);
+        setFinalAlloc(alloc);
+        setStep("final");
+      }
+    }).catch((e) => console.warn("Failed to load saved allocation register:", e));
   }, [subject, grade, allocationStorageKey]);
 
-  // Persist allocations to localStorage whenever they change
+  // Cache allocations to localStorage whenever they change (instant repaint on next visit;
+  // not relied on for durability — the server register is authoritative).
   useEffect(() => {
     try {
       localStorage.setItem(allocationStorageKey, JSON.stringify(allAllocations));
     } catch (e) {
-      console.warn("Failed to persist allocations:", e);
+      console.warn("Failed to cache allocations:", e);
     }
   }, [allAllocations, allocationStorageKey]);
 
-  /* Build AllocationReport from the current final allocation state.
-     This is called when entering the final step, and formats all the data
-     needed by AllocationReportView for rendering and exporting. */
+  /* Build the AllocationReport payload from the final allocation state.
+     Called on Accept/Save; this is the exact JSON POSTed to the export
+     endpoints (no on-page rendering — downloads only). */
   const buildReport = (alloc, subject_) => {
     if (!alloc) return null;
 
-    const stage = {
-      "vii": "middle",
-      "vi": "middle",
-      "viii": "middle",
-      "ix": "secondary",
-      "x": "secondary",
-      "iii": "preparatory",
-      "iv": "preparatory",
-      "v": "middle",
-    }[grade] || "middle";
+    const durations = alloc.durations || [];
 
-    const rows = alloc.allocations.map((a, idx) => ({
-      chapter_number: a.chapter_number,
-      chapter_name: a.chapter_title,
-      total_periods: a.total_periods, // allocated for this year
-      allocated_periods: a.total_periods,
-      effort_index: a.effort_index || null,
-      competency_weight: a.weight || null, // from allocations
+    // Per-chapter allocation. The API enriches each chapter with its competencies
+    // (code + description + justification) and effort signals server-side, so the
+    // frontend only ships the periods. periods_by_duration is keyed by minutes.
+    const reportChapters = alloc.allocations.map((a) => {
+      const pbd = {};
+      durations.forEach((m) => { pbd[m] = a.periods_by_duration?.[m] || 0; });
+      return {
+        chapter_number: a.chapter_number,
+        chapter_title: a.chapter_title,
+        periods_by_duration: pbd,
+        total_periods: a.total_periods,
+        total_minutes: a.total_minutes ?? durations.reduce((s, m) => s + (pbd[m] || 0) * Number(m), 0),
+        weight: a.weight ?? null,
+      };
+    });
+
+    // Period types used in this allocation: {minutes, count}.
+    const periodTypes = durations.map((m) => ({
+      minutes: Number(m),
+      count: reportChapters.reduce((s, c) => s + (c.periods_by_duration[m] || 0), 0),
     }));
-
-    const periodProfileName = rows[0] && alloc.durations
-      ? `${alloc.durations.length > 1 ? "Mixed" : "Standard"}`
-      : "Custom";
-    const periodDuration = alloc.durations && alloc.durations.length > 0
-      ? Math.max(...alloc.durations.map(Number))
-      : 45;
 
     return {
       subject: subject_,
-      grade: parseInt(grade.replace(/[^\d]/g, "")) || 7,
-      stage,
-      period_profile_name: periodProfileName,
-      period_duration_minutes: periodDuration,
-      total_periods: alloc.totals.periods,
+      grade: String(grade),          // roman string; API derives stage from it
       generated_at: new Date().toISOString(),
-      rows,
-      allocation_basis: basis?.name || "Custom",
+      period_types: periodTypes,
+      chapters: reportChapters,
       notes: null,
     };
   };
@@ -224,6 +250,36 @@ export default function Allocate({ subject, grade }) {
   const badRows = res ? negativeRows(byCh, deltas, selectedChapters, dur) : new Set();
   const canSave = !!res && selectedChapters.length > 0 && balancesOk && badRows.size === 0;
 
+  // Build the {chapter_num: AllocationRecord} payload the /save_allocation endpoint
+  // expects, from the same shape buildFinalAllocation() returns.
+  const toRegisterPayload = (alloc) => Object.fromEntries(alloc.allocations.map((a) => [
+    String(a.chapter_number),
+    {
+      chapter_title: a.chapter_title,
+      weight: a.weight,
+      periods_by_duration: a.periods_by_duration,
+      total_periods: a.total_periods,
+      total_minutes: a.total_minutes,
+    },
+  ]));
+
+  // Persist the allocation to the server's file-backed register (the actual source of
+  // truth — see registerToAlloc/the GET effect above). Fire-and-forget from the UI's
+  // perspective: we've already committed to "final" locally, so a transient network
+  // error here shouldn't block the teacher; it just means this save didn't reach disk
+  // and a hard refresh would fall back to the last server-confirmed state.
+  const persistAllocation = async (alloc) => {
+    try {
+      await getJSON(`/subjects/${subject}/${grade}/save_allocation`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subject, grade: String(grade), allocation: toRegisterPayload(alloc) }),
+      });
+    } catch (e) {
+      console.warn("Failed to save allocation to server:", e);
+    }
+  };
+
   const saveAllocation = () => {
     if (!canSave) { setShowInvalidWarning(true); return; }
     const newAlloc = buildFinalAllocation(res, byCh, deltas, selectedChapters);
@@ -231,6 +287,7 @@ export default function Allocate({ subject, grade }) {
     setAllocationReport(buildReport(newAlloc, subject));
     setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
+    persistAllocation(newAlloc);
   };
 
   // Accept Allocation: take the AI suggestion as-is (Δ = 0 everywhere) and save immediately —
@@ -242,52 +299,57 @@ export default function Allocate({ subject, grade }) {
     setAllocationReport(buildReport(newAlloc, subject));
     setAllAllocations((prev) => [...prev, newAlloc]); // accumulate
     setStep("final");
+    persistAllocation(newAlloc);
   };
 
-  /* Export handlers for PDF and DOCX */
-  const handleExportPDF = async () => {
+  /* Export handlers for PDF and DOCX. The report itself isn't shown on the page —
+     these just stream the file from the API and trigger a browser download.
+     NOTE: hit the API base (port 8000), not a relative path (which would hit the
+     Next dev server on :3000 and 404). */
+  const [exporting, setExporting] = useState({ pdf: false, docx: false });
+
+  const downloadReport = async (fmt) => {
     if (!allocationReport) return;
+    setExporting((p) => ({ ...p, [fmt]: true }));
     try {
-      const response = await fetch("/api/allocation/export-pdf", {
+      const response = await fetch(`${API}/api/allocation/export-${fmt}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(allocationReport),
       });
-      if (!response.ok) throw new Error("Export failed");
+      if (!response.ok) {
+        // FastAPI's `detail` may be a string OR (for 422) an array of error objects.
+        let detail = `HTTP ${response.status}`;
+        try {
+          const body = await response.json();
+          if (typeof body?.detail === "string") detail = body.detail;
+          else if (Array.isArray(body?.detail)) detail = body.detail.map((e) => e.msg || JSON.stringify(e)).join("; ");
+          else if (body?.detail) detail = JSON.stringify(body.detail);
+        } catch {}
+        throw new Error(detail);
+      }
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `allocation-report-grade-${allocationReport.grade}-${subject}.pdf`;
+      a.download = `allocation-report-grade-${allocationReport.grade}-${subject}.${fmt}`;
+      document.body.appendChild(a);
       a.click();
+      a.remove();
       URL.revokeObjectURL(url);
     } catch (err) {
-      console.error("PDF export error:", err);
-      alert("Failed to export PDF. Please try again.");
+      console.error(`${fmt.toUpperCase()} export error:`, err);
+      const msg = err?.message
+        ? err.message
+        : "Couldn't reach the Aruvi engine (is the API running on :8000?).";
+      alert(`Couldn't generate the ${fmt.toUpperCase()} report.\n\n${msg}`);
+    } finally {
+      setExporting((p) => ({ ...p, [fmt]: false }));
     }
   };
 
-  const handleExportDOCX = async () => {
-    if (!allocationReport) return;
-    try {
-      const response = await fetch("/api/allocation/export-docx", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(allocationReport),
-      });
-      if (!response.ok) throw new Error("Export failed");
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `allocation-report-grade-${allocationReport.grade}-${subject}.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("DOCX export error:", err);
-      alert("Failed to export Word document. Please try again.");
-    }
-  };
+  const handleExportPDF = () => downloadReport("pdf");
+  const handleExportDOCX = () => downloadReport("docx");
 
   if (step === "final" && finalAlloc) {
     // Merge overlapping chapters: last allocation for a chapter wins (overwrites earlier)
@@ -312,8 +374,35 @@ export default function Allocate({ subject, grade }) {
     const sortedDurations = [...finalAlloc.durations].sort((a, b) => Number(b) - Number(a));
     return (
       <div>
-        <button className="back" onClick={() => setStep("adjust")}>← back to allocation</button>
-        <p className="h2">Final allocation — {allChaptersData.length} chapters total.</p>
+        <div className="final-head">
+          <div>
+            <p className="h2 final-h2">Final allocation — {allChaptersData.length} chapters total.</p>
+            <p className="final-saved">Allocation has been saved successfully.</p>
+          </div>
+          {allocationReport && (
+            <div className="reports-inline">
+              <span className="reports-inline-label">Reports</span>
+              <div className="reports-inline-actions">
+                <button className="filebtn filebtn-pdf" onClick={handleExportPDF} disabled={exporting.pdf} aria-label="Download PDF report">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2.5h8.5L19 7v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V4a1.5 1.5 0 0 1 1-1.5Z" fill="#c0392b"/>
+                    <path d="M14.5 2.5V7H19l-4.5-4.5Z" fill="#e0735a"/>
+                    <text x="12" y="17.2" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="6.2" fontWeight="700" fill="#fff">PDF</text>
+                  </svg>
+                  {exporting.pdf ? "Preparing…" : "PDF"}
+                </button>
+                <button className="filebtn filebtn-docx" onClick={handleExportDOCX} disabled={exporting.docx} aria-label="Download Word report">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2.5h8.5L19 7v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V4a1.5 1.5 0 0 1 1-1.5Z" fill="#1e5ca8"/>
+                    <path d="M14.5 2.5V7H19l-4.5-4.5Z" fill="#5b8fd6"/>
+                    <text x="12" y="17.2" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="6.2" fontWeight="700" fill="#fff">DOC</text>
+                  </svg>
+                  {exporting.docx ? "Preparing…" : "Word"}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="atable-scroll">
         <table className="atable atable-combined">
           <thead><tr>
@@ -341,19 +430,8 @@ export default function Allocate({ subject, grade }) {
         </table>
         </div>
 
-        {/* Allocation Report with PDF/DOCX export */}
-        {allocationReport && (
-          <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-            <AllocationReportView
-              report={allocationReport}
-              onExportPDF={handleExportPDF}
-              onExportDOCX={handleExportDOCX}
-            />
-          </div>
-        )}
-
-        <div className="savebar">
-          <button className="primary" onClick={() => {
+        <div className="savebar savebar-final">
+          <button className="continue-btn" onClick={() => {
             // Set selected to only the chapters NOT yet allocated (inverse selection)
             const unallocated = new Set(chapters.filter((c) => !allocatedChapterNumbers.has(c.chapter_number)).map((c) => c.chapter_number));
             setSelected(unallocated.size === chapters.length ? null : unallocated); // null = all selected, so invert to unallocated
@@ -363,10 +441,14 @@ export default function Allocate({ subject, grade }) {
             setDeltas({});
             setShowInvalidWarning(false);
           }}>
-            Allocate more chapters →
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M10.3 8.3 14 12l-3.7 3.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Continue Allocating
           </button>
           <button className="clear-btn" onClick={() => setShowClearWarning(true)}>
-            Clear all
+            Reset allocations
           </button>
         </div>
         {showClearWarning ? (
@@ -378,8 +460,9 @@ export default function Allocate({ subject, grade }) {
                 <button className="primary" onClick={() => setShowClearWarning(false)}>Cancel</button>
                 <button className="clear-btn" onClick={() => {
                   localStorage.removeItem(allocationStorageKey);
+                  getJSON(`/subjects/${subject}/${grade}/allocation`, { method: "DELETE" }).catch((e) => console.warn("Failed to clear server allocation register:", e));
                   setStep("periods"); setRes(null); setSelected(null); setDeltas({}); setFinalAlloc(null); setAllAllocations([]); setModifying(false); setShowInvalidWarning(false); setShowClearWarning(false);
-                }}>Clear All</button>
+                }}>Reset allocations</button>
               </div>
             </div>
           </div>
@@ -553,8 +636,7 @@ export default function Allocate({ subject, grade }) {
               </div>
             ) : (
               <div className="savebar">
-                <button className="primary" onClick={saveAllocation}>Save Allocation</button>
-                <button className="back" onClick={() => { setDeltas({}); setModifying(false); setShowInvalidWarning(false); }}>← back</button>
+                <button className="primary" onClick={saveAllocation}>Save changes</button>
               </div>
             )}
           </>
