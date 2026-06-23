@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi · Planning Layer Mockups</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Newsreader:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+    --ink:#1f2a24; --ink-soft:#6b6a63;
+    --line:#e4ddd0; --line-soft:#ece7dc;
+    --pine:#1e5c4a; --pine-d:#164436;
+    --clay:#b65a31; --ochre:#9a7321;
+    --f-display:"Fraunces",Georgia,serif;
+    --f-body:"Newsreader",Georgia,serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:#e9e2d4; color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:30px 20px 80px;}
+  .page-head{font-family:var(--f-display); font-weight:600; font-size:30px; color:var(--pine-d); letter-spacing:-.4px;}
+  .page-head em{font-style:italic; color:var(--clay); font-weight:500;}
+  .page-sub{font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); margin-top:4px;}
+  .legend{font-style:italic; color:var(--ink-soft); font-size:14px; margin:10px 0 28px; max-width:760px;}
+
+  .screen-label{font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--clay); margin:38px 0 4px; font-weight:500;}
+  .screen-note{font-style:italic; color:var(--ink-soft); font-size:13.5px; margin:0 0 14px; max-width:760px;}
+
+  .device{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:0; overflow:hidden; box-shadow:0 1px 0 #d8cfbe;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media(max-width:820px){ .row2{grid-template-columns:1fr;} }
+
+  .kicker{font-family:var(--f-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--pine); font-weight:500;}
+  .kicker-ochre{color:var(--ochre);}
+  .kicker-soft{color:var(--ink-soft);}
+  .mono{font-family:var(--f-mono);}
+  .disp{font-family:var(--f-display); font-weight:500; color:var(--ink);}
+
+  .hd{background:var(--paper-2); border-bottom:1px solid var(--line); padding:15px 20px;}
+  .pad{padding:16px 20px 20px;}
+
+  .daylabel{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); margin:14px 0 8px; padding-left:2px;}
+  .daylabel:first-child{margin-top:0;}
+
+  .slotcard{display:flex; background:var(--paper-2); border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:8px;}
+  .slotrail{width:8px; flex:0 0 8px; background:var(--pine);}
+  .slotrail.dim{background:var(--line);}
+  .slotbody{flex:1; padding:11px 14px;}
+  .slotcard.empty{border-style:dashed; background:#f6f1e7;}
+  .toprow{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .sec{font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; color:var(--ochre);}
+  .ptr{font-family:var(--f-mono); font-size:10.5px; color:var(--pine);}
+  .ptr.none{color:var(--ink-soft);}
+  .lessontitle{font-family:var(--f-display); font-size:17px; margin-top:3px; color:var(--ink);}
+  .lessonmeta{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+  .lessontitle.muted{color:var(--ink-soft); font-style:italic; font-size:16px;}
+
+  .btn{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.04em; border-radius:7px; padding:11px 14px; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--ink);}
+  .btn-primary{background:var(--pine); color:#f3efe6; border-color:var(--pine);}
+  .btn-eject{color:var(--clay); border-color:#e0c3b2;}
+  .btn-row{display:flex; gap:10px;}
+
+  table.sched{width:100%; border-collapse:collapse; margin-top:6px;}
+  table.sched th{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); font-weight:500;}
+  table.sched td{padding:7px 8px; border-bottom:1px solid var(--line-soft); font-family:var(--f-mono); font-size:12.5px; color:var(--ink);}
+  .pillinput{font-family:var(--f-mono); font-size:12px; border:1px solid var(--line); background:var(--paper-2); border-radius:4px; padding:6px 9px; color:var(--ink);}
+
+  .phaserow{display:flex; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft);}
+  .phaserow:last-child{border-bottom:none;}
+  .phasemin{font-family:var(--f-mono); font-size:11px; color:var(--ochre); width:54px; flex:0 0 54px;}
+  .phasetext{font-size:14px; color:#34403a; line-height:1.5;}
+
+  .peek{display:flex; justify-content:space-between; align-items:center; background:var(--paper-sunk); border:1px solid var(--line); border-radius:8px; padding:9px 13px; margin-bottom:12px;}
+  .peeknav{font-family:var(--f-mono); font-size:11px; color:var(--pine); cursor:pointer;}
+  .peeknav.off{color:#bcae98; cursor:default;}
+  .peekmid{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);}
+
+  .orgbar{border:1px solid var(--line); border-radius:8px; margin-bottom:7px; overflow:hidden; background:var(--paper-2);}
+  .orgbar-head{display:flex; justify-content:space-between; align-items:center; padding:11px 14px; cursor:pointer; background:#f5f0e6;}
+  .orgbar-title{font-family:var(--f-display); font-size:15.5px; color:var(--ink);}
+  .orgbar-sub{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; color:var(--ink-soft);}
+  .orgchild{padding:4px 14px 10px;}
+  .spinehead{font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ochre); margin:9px 0 5px;}
+  .periodlink{display:flex; justify-content:space-between; align-items:center; padding:7px 10px; border-radius:6px; cursor:pointer; border:1px solid var(--line-soft); margin-bottom:5px; background:var(--paper);}
+  .periodlink:hover{border-color:var(--pine);}
+  .periodlink .pl-t{font-size:13.5px; color:var(--ink);}
+  .periodlink .pl-n{font-family:var(--f-mono); font-size:10.5px; color:var(--ink-soft);}
+  .periodlink.current{border-color:var(--pine); background:#eef4f0;}
+  .periodlink.current .pl-n{color:var(--pine);}
+
+  .versioncard{border:1px solid var(--line); border-radius:10px; padding:13px 16px; margin-bottom:10px; background:var(--paper-2);}
+  .versioncard.active{border:1.5px solid var(--pine);}
+  .badge{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.1em; padding:3px 9px; border-radius:5px;}
+  .badge-active{background:#e6efe9; color:var(--pine-d);}
+  .badge-old{color:var(--ink-soft);}
+
+  .footnote{font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:12px; padding-top:10px; border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-head">Aruvi <em>·</em> Planning layer</div>
+  <div class="page-sub">My Plan, evolved · mockups against the build spec · 2026-06-23</div>
+  <div class="legend">Static visual mockups in the app's warm-paper design language (real <span class="mono">globals.css</span> tokens). They illustrate the five deliverables in the planner-doc spec. Not wired — reference for build.</div>
+
+  <!-- ========================= SCREEN 1: SCHEDULE INPUT ========================= -->
+  <div class="screen-label">Screen 1 · Schedule input</div>
+  <div class="screen-note">The one piece of real setup. Four fields only — day, grade, section, period duration. No dates, no holidays, no period-of-day numbers.</div>
+  <div class="device" style="max-width:640px;">
+    <div class="hd">
+      <div class="kicker kicker-soft">My Plan · Setup</div>
+      <div class="disp" style="font-size:21px; margin-top:2px;">Your weekly teaching</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Add each class you teach in a normal week. Aruvi only needs the day and how long the period runs.</div>
+    </div>
+    <div class="pad">
+      <table class="sched">
+        <thead><tr><th>Day</th><th>Grade</th><th>Section</th><th>Period</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Monday</td><td>VI</td><td>A · Science</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
+          <tr><td>Monday</td><td>VI</td><td>B · Science</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
+          <tr><td>Tuesday</td><td>VIII</td><td>C · History</td><td>60 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
+          <tr><td>Wednesday</td><td>VII</td><td>A · English</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
+        </tbody>
+      </table>
+      <div style="display:flex; gap:8px; align-items:center; margin-top:14px; flex-wrap:wrap;">
+        <select class="pillinput"><option>Mon</option><option>Tue</option><option>Wed</option><option>Thu</option><option>Fri</option><option>Sat</option></select>
+        <select class="pillinput"><option>VI</option><option>VII</option><option>VIII</option></select>
+        <input class="pillinput" style="width:120px;" placeholder="A · Science">
+        <select class="pillinput"><option>45 min</option><option>60 min</option><option>40 min</option></select>
+        <button class="btn btn-primary">Add class</button>
+      </div>
+      <div class="footnote">No timetable generation, no leave, no calendar. Just the recurring slots you teach.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 2: WEEKLY DASHBOARD ========================= -->
+  <div class="screen-label">Screen 2 · Weekly dashboard</div>
+  <div class="screen-note">The Sunday glance. Every section's next class, each row resolving to named content. Rows with no chapter started show as plain schedule rows. Never a progress comparison.</div>
+  <div class="device" style="max-width:680px;">
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:baseline;">
+      <div>
+        <div class="kicker kicker-ochre">My Plan · Next week</div>
+        <div class="disp" style="font-size:23px; margin-top:2px;">This week's teaching</div>
+      </div>
+      <div class="mono kicker-soft" style="font-size:11px; text-align:right; line-height:1.5;">6 classes<br>4 sections</div>
+    </div>
+    <div class="pad">
+      <div class="daylabel">Monday</div>
+
+      <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
+        <div class="toprow"><span class="sec">6A SCIENCE</span><span class="ptr">Current: Period 4</span></div>
+        <div class="lessontitle">Optics — Reflection in plane mirrors</div>
+        <div class="lessonmeta">5 phases · tap to see · resumes where you left 6A</div>
+      </div></div>
+
+      <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
+        <div class="toprow"><span class="sec">6B SCIENCE</span><span class="ptr">Current: Period 3</span></div>
+        <div class="lessontitle">Optics — How light travels</div>
+        <div class="lessonmeta">4 phases · tap to see · resumes where you left 6B</div>
+      </div></div>
+
+      <div class="daylabel">Tuesday</div>
+      <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
+        <div class="toprow"><span class="sec">8C HISTORY</span><span class="ptr">Current: Period 9</span></div>
+        <div class="lessontitle">The Mauryan Empire — Administration &amp; trade</div>
+        <div class="lessonmeta">5 phases · tap to see · resumes where you left 8C</div>
+      </div></div>
+
+      <div class="daylabel">Wednesday</div>
+      <div class="slotcard empty"><div class="slotrail dim"></div><div class="slotbody">
+        <div class="toprow"><span class="sec">7A ENGLISH</span><span class="ptr none">No chapter started</span></div>
+        <div class="lessontitle muted">Pick a chapter to begin tracking</div>
+        <div class="lessonmeta">Schedule only — no content cued yet</div>
+      </div></div>
+
+      <div class="footnote">Tap any class to open its lesson. The pointer only moves when you tell it to.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 3: SLOT / PERIOD VIEW ========================= -->
+  <div class="screen-label">Screen 3 · Slot / period view</div>
+  <div class="screen-note">Opening 6A mid-chapter. Current period is the hero (phases as absolute durations). Pointer-safe ← previous / next → peek for prep. Pointer controls only here. Stop-tracking off-ramp at the bottom. No phase-marker screen — the full phase list is the recall cue.</div>
+  <div class="device" style="max-width:680px;">
+    <div class="hd">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <div>
+          <div class="kicker kicker-ochre">6A SCIENCE · OPTICS</div>
+          <div class="disp" style="font-size:22px; margin-top:2px;">Reflection in plane mirrors</div>
+        </div>
+        <div class="mono kicker-soft" style="font-size:11px;">Period 4 of 10</div>
+      </div>
+      <div class="kicker" style="margin-top:8px;">PROGRESSION STAGE 2 · BUILDING THE MODEL</div>
+    </div>
+    <div class="pad">
+      <div class="peek">
+        <span class="peeknav">← Period 3</span>
+        <span class="peekmid">Preview · doesn't move your place</span>
+        <span class="peeknav">Period 5 →</span>
+      </div>
+
+      <div class="kicker kicker-soft" style="margin-bottom:6px;">PHASES · 60 MIN TOTAL</div>
+      <div class="phaserow"><span class="phasemin">5 min</span><span class="phasetext">Recall: where does light come from? Quick oral recap of the previous period.</span></div>
+      <div class="phaserow"><span class="phasemin">15 min</span><span class="phasetext">Demonstrate reflection with a plane mirror and torch; students predict the path.</span></div>
+      <div class="phaserow"><span class="phasemin">20 min</span><span class="phasetext">Paired investigation: measure angle of incidence vs. angle of reflection.</span></div>
+      <div class="phaserow"><span class="phasemin">12 min</span><span class="phasetext">Class discussion: state the law of reflection in students' own words.</span></div>
+      <div class="phaserow"><span class="phasemin">8 min</span><span class="phasetext">Wrap-up and set homework: two everyday examples of reflection.</span></div>
+
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-primary" style="flex:1;">Move 6A to Period 5 →</button>
+        <button class="btn">Stay on Period 4</button>
+      </div>
+
+      <div style="margin-top:14px; padding-top:13px; border-top:1px solid var(--line);">
+        <button class="btn btn-eject" style="width:100%;">Stop tracking this chapter</button>
+        <div class="footnote" style="border:none; padding-top:7px; text-align:center;">Removes it from your schedule. The plan stays safe in My Plans — same as finishing, no trail kept.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 4: CHAPTER ORGANIZATION ========================= -->
+  <div class="screen-label">Screen 4 · Chapter organization page</div>
+  <div class="screen-note">The default the first time a chapter opens; later a link from the slot view. Uniform collapsible drill — label → … → period link. Same component for every subject; depth comes from the data. Two examples below. Every drill is navigation, never pointer movement.</div>
+  <div class="row2">
+
+    <div>
+      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">ENGLISH</span> — nests section → spine → period (two-axis).</div>
+      <div class="device">
+        <div class="hd">
+          <div class="kicker kicker-ochre">7A ENGLISH · CHAPTER ORGANIZATION</div>
+          <div class="disp" style="font-size:19px; margin-top:2px;">The Tempest — abridged</div>
+        </div>
+        <div class="pad">
+          <div class="orgbar">
+            <div class="orgbar-head"><span class="orgbar-title">Section 1 — The storm (prose)</span><span class="orgbar-sub">3 spines ▾</span></div>
+            <div class="orgchild">
+              <div class="spinehead">Reading for comprehension</div>
+              <div class="periodlink"><span class="pl-t">Close reading: the opening scene</span><span class="pl-n">P1</span></div>
+              <div class="spinehead">Speaking &amp; listening</div>
+              <div class="periodlink"><span class="pl-t">Dramatised read-aloud in pairs</span><span class="pl-n">P2</span></div>
+              <div class="spinehead">Writing</div>
+              <div class="periodlink"><span class="pl-t">Describe the storm from Miranda's view</span><span class="pl-n">P3</span></div>
+            </div>
+          </div>
+          <div class="orgbar">
+            <div class="orgbar-head"><span class="orgbar-title">Section 2 — The island (prose)</span><span class="orgbar-sub">2 spines ▾</span></div>
+          </div>
+          <div class="footnote">Tap any period to open it. Browsing here never moves your pointer.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">SOCIAL SCIENCES</span> — competency clusters non-adjacent periods.</div>
+      <div class="device">
+        <div class="hd">
+          <div class="kicker kicker-ochre">8C HISTORY · CHAPTER ORGANIZATION</div>
+          <div class="disp" style="font-size:19px; margin-top:2px;">The Mauryan Empire</div>
+        </div>
+        <div class="pad">
+          <div class="orgbar">
+            <div class="orgbar-head"><span class="orgbar-title">C-2.3 — Analyses cause &amp; effect in history</span><span class="orgbar-sub">3 periods ▾</span></div>
+            <div class="orgchild">
+              <div class="periodlink"><span class="pl-t">Why empires rise: conditions in Magadha</span><span class="pl-n">P3</span></div>
+              <div class="periodlink current"><span class="pl-t">Administration &amp; trade</span><span class="pl-n">P9 · current</span></div>
+              <div class="periodlink"><span class="pl-t">Decline: causes and consequences</span><span class="pl-n">P12</span></div>
+            </div>
+          </div>
+          <div class="orgbar">
+            <div class="orgbar-head"><span class="orgbar-title">C-1.4 — Reads &amp; interprets historical sources</span><span class="orgbar-sub">2 periods ▾</span></div>
+          </div>
+          <div class="footnote">Periods appear by competency, not in lesson order — that's the point of this view.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================= SCREEN 5: START DECLARATION ========================= -->
+  <div class="screen-label">Screen 5 · Start declaration (with inline version choice)</div>
+  <div class="screen-note">What an unstarted slot shows. "Which chapter are you starting?" lists the saved plans. Where a chapter has more than one version, the choice is offered <b>here, in the flow</b> — she never steps out to My Plans to operate. Default is the newest; she can peek either in the reader. The tap binds the chapter, creates the pointer, and locks the version.</div>
+  <div class="device" style="max-width:680px;">
+    <div class="hd">
+      <div class="kicker kicker-ochre">6B SCIENCE</div>
+      <div class="disp" style="font-size:22px; margin-top:2px;">Which chapter are you starting?</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Tap a plan to begin. Tracking starts from your first tap — nothing before.</div>
+    </div>
+    <div class="pad">
+      <div class="orgbar" style="border-color:var(--pine);">
+        <div class="orgbar-head" style="background:#eef4f0;">
+          <span class="orgbar-title">Optics</span>
+          <span class="orgbar-sub">2 versions ▾</span>
+        </div>
+        <div class="orgchild" style="padding-top:9px;">
+          <div class="periodlink current" style="padding:10px 12px;">
+            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">12 periods</span><br><span class="pl-n">newest · roomier pace · default</span></span>
+            <span class="mono" style="font-size:11px; color:var(--pine);">Start on 12 →</span>
+          </div>
+          <div class="periodlink" style="padding:10px 12px;">
+            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">10 periods</span><br><span class="pl-n">your first take</span></span>
+            <span class="mono" style="font-size:11px; color:var(--pine);">Start on 10 →</span>
+          </div>
+          <div class="mono" style="font-size:10.5px; color:var(--ochre); margin-top:4px; cursor:pointer;">⌕ Preview either in the reader</div>
+        </div>
+      </div>
+      <div class="orgbar">
+        <div class="orgbar-head"><span class="orgbar-title">Planets &amp; Stars</span><span class="orgbar-sub">1 version · start →</span></div>
+      </div>
+      <div class="footnote">6A is already teaching Optics on the 12-period version — that's locked. Choosing 10 here for 6B is fine: each section runs its own version, its own pointer.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 6: MY PLANS ========================= -->
+  <div class="screen-label">Screen 6 · My Plans (the library)</div>
+  <div class="screen-note">The library — read, compare, see what exists. Marks the active version; never auto-deletes. Operating (choose version, start) happens at the slot start card (Screen 5), not here. When generation completes, the plan auto-saves and opens in the read-only reader — no save prompt, no separate LP popup. <b>"Preview" opens the read-only chapter-org reader (Screen 4), not a separate LP view.</b></div>
+  <div class="device" style="max-width:680px;">
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:baseline;">
+      <div>
+        <div class="kicker kicker-ochre">My Plans · 6A Science</div>
+        <div class="disp" style="font-size:21px; margin-top:2px;">Optics</div>
+      </div>
+      <span class="mono kicker-soft" style="font-size:11px;">2 versions</span>
+    </div>
+    <div class="pad">
+      <div class="versioncard active">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="badge badge-active">● ACTIVE ON SCHEDULE</span>
+          <span class="mono kicker-soft" style="font-size:11px;">generated today, 9:14 am</span>
+        </div>
+        <div class="disp" style="font-size:17px; margin-top:9px;">Optics — 12 periods</div>
+        <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Roomier pace — extra period each for reflection and refraction practice.</div>
+        <div class="ptr" style="margin-top:8px;">Not yet started — this is what 6A's slot will open.</div>
+      </div>
+      <div class="versioncard">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="badge badge-old">EARLIER VERSION</span>
+          <span class="mono kicker-soft" style="font-size:11px;">generated today, 8:02 am</span>
+        </div>
+        <div class="disp" style="font-size:17px; margin-top:9px; color:#4a4639;">Optics — 10 periods</div>
+        <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Your first take. Kept safe — nothing is auto-deleted.</div>
+        <div class="btn-row" style="margin-top:11px;">
+          <button class="btn" style="padding:8px 13px;">Preview → read-only reader</button>
+          <button class="btn" style="padding:8px 13px;">Make this active</button>
+        </div>
+      </div>
+      <div class="footnote">"Preview" opens the chapter-org reader (Screen 4) read-only — no pointer, no controls — the only way to read an unstarted plan on screen. There is no separate LP view. The slot follows one version at a time; you can switch freely until 6A's first Optics class, after which the active version locks for the chapter so your pointer never loses its place.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
