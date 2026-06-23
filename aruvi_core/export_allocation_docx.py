@@ -176,6 +176,10 @@ def export_allocation_report_docx(report: CompetencyAllocationReport) -> bytes:
     _section_head(doc, "Allocation details")
     _allocation_table(doc, report)
 
+    # Blank spacer row between the Allocation Details table and the Competency Report
+    # section head.
+    doc.add_paragraph().paragraph_format.space_after = Pt(10)
+
     # ── Competency report (point 10) ──
     _section_head(doc, "Competency report")
     for ch in report.chapters:
@@ -186,10 +190,14 @@ def export_allocation_report_docx(report: CompetencyAllocationReport) -> bytes:
 
 
 def _allocation_table(doc, report):
-    """(point 9) Clean periods table — no dark bands; light striping + a Total row."""
+    """(point 9) Clean periods table — no dark bands; light striping + a Total row.
+
+    No effort-index/competency-weight column here by product direction — that metric
+    is an internal input to the suggested allocation, not something a teacher needs to
+    read off this table (it still shows as a "Weight" chip per chapter in the
+    Competency Report section below, where it's contextual)."""
     types = report.sorted_types
-    metric_head = "Effort Index" if report.is_effort else "Competency Weight"
-    headers = ["#", "Chapter"] + [f"{t.minutes}-min Periods" for t in types] + ["Total Periods", metric_head]
+    headers = ["#", "Chapter"] + [f"{t.minutes}-min Periods" for t in types] + ["Total Periods"]
     t = doc.add_table(rows=1, cols=len(headers)); t.alignment = WD_TABLE_ALIGNMENT.CENTER
     _hairlines(t, "DDDDDD")
     for i, h in enumerate(headers):
@@ -209,8 +217,6 @@ def _allocation_table(doc, report):
             _cell(cells[c], v, size=8, align="center"); c += 1
         tot_periods += ch.total_periods
         _cell(cells[c], ch.total_periods, size=8, bold=True, align="center"); c += 1
-        metric = ch.effort_index if report.is_effort else ch.chapter_weight
-        _cell(cells[c], "" if metric in (None, "") else _g(metric), size=8, bold=True, align="center")
         if idx % 2 == 0:
             for cell in cells:
                 _bg(cell, ALT_HEX)
@@ -222,14 +228,13 @@ def _allocation_table(doc, report):
     for tp in types:
         _cell(cells[c], tot_by_dur[tp.minutes], size=8, bold=True, align="center"); c += 1
     _cell(cells[c], tot_periods, size=8, bold=True, align="center"); c += 1
-    _cell(cells[c], "", size=8)
     for cell in cells:
         _bg(cell, TOTAL_HEX)
-    # Fixed widths (≈7.1in total): #, Chapter, each duration, Total Periods, metric.
+    # Fixed widths (≈7.1in total): #, Chapter, each duration, Total Periods.
     n_dur = len(types)
     dur_w = 1.0
-    chapter_w = max(1.6, 7.1 - 0.4 - dur_w * n_dur - 1.1 - 1.2)
-    _set_widths(t, [0.4, chapter_w] + [dur_w] * n_dur + [1.1, 1.2])
+    chapter_w = max(1.6, 7.1 - 0.4 - dur_w * n_dur - 1.3)
+    _set_widths(t, [0.4, chapter_w] + [dur_w] * n_dur + [1.3])
 
 
 def _chapter_block(doc, ch, report):

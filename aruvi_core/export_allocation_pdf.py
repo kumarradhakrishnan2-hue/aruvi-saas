@@ -290,6 +290,8 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
   .alloc-table tr.alt td {{ background-color: #faf9f7; }}
   .alloc-table tr.alloc-total td {{ font-weight: bold; border-top: 0.75px solid #cccccc;
                                     border-bottom: 0.75px solid #cccccc; background-color: #f4f2ee; }}
+  /* Blank spacer row between Allocation Details and the Competency Report section head. */
+  .alloc-spacer-row {{ font-size: 10pt; line-height: 10pt; }}
 
   /* (point 10) Competency Report — prototype look, minus dark bands (point 3) */
   .ch-head {{ width: 100%; border-bottom: 0.75px solid #1a1917; margin-top: 12px; }}
@@ -331,6 +333,8 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
   <div class="section-head">Allocation details</div>
   {alloc_table}
 
+  <div class="alloc-spacer-row">&nbsp;</div>
+
   <div class="section-head">Competency report</div>
   {comp_blocks}
 
@@ -342,31 +346,28 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
 
 def _pdf_allocation_table(report: CompetencyAllocationReport, types, esc) -> str:
     """(point 9) The Allocation Details table: one row per chapter with the per-duration
-    period columns + total + the basis metric (Effort Index or Competency Weight)."""
-    is_effort = report.is_effort
-    metric_head = "Effort Index" if is_effort else "Competency Weight"
-
+    period columns + total. No effort-index/competency-weight column here by product
+    direction — that metric is an internal input to the suggested allocation, not
+    something a teacher needs to read off this table (it still shows as a "Weight"
+    chip per chapter in the Competency Report section below, where it's contextual)."""
     # Column widths are set as per-cell width="%" on the header <th> cells.
     # xhtml2pdf 0.2.17 does NOT honor <colgroup>/<col> widths (it silently falls back
     # to equal-width columns), but it DOES honor width="" on the header cells. It also
-    # systematically shrinks the LAST column below its requested width — which is what
-    # previously collapsed the metric column to a ~12pt sliver, so its header and value
-    # overflowed past the page's right edge. A small empty trailing "spacer" column
-    # absorbs that shrink: with the spacer last, the metric column keeps its full width
-    # and the alternating-/total-row shading reaches the table's true right border.
+    # systematically shrinks the LAST column below its requested width, so a small
+    # empty trailing "spacer" column absorbs that shrink and keeps the alternating-/
+    # total-row shading reaching the table's true right border.
     n_dur = len(types)
-    seq_w, total_w, metric_w, spacer_w, dur_w = 4, 12, 15, 3, 11
-    chapter_w = 100 - (seq_w + total_w + metric_w + spacer_w + dur_w * n_dur)
+    seq_w, total_w, spacer_w, dur_w = 4, 14, 4, 12
+    chapter_w = 100 - (seq_w + total_w + spacer_w + dur_w * n_dur)
     if chapter_w < 18:
-        dur_w = max(7, (100 - seq_w - total_w - metric_w - spacer_w - 18) // max(n_dur, 1))
-        chapter_w = 100 - (seq_w + total_w + metric_w + spacer_w + dur_w * n_dur)
+        dur_w = max(7, (100 - seq_w - total_w - spacer_w - 18) // max(n_dur, 1))
+        chapter_w = 100 - (seq_w + total_w + spacer_w + dur_w * n_dur)
 
     header = (
         f'<tr><th width="{seq_w}%">#</th>'
         f'<th class="alloc-name" width="{chapter_w}%">Chapter</th>'
         + "".join(f'<th width="{dur_w}%">{t.minutes}-min Periods</th>' for t in types)
         + f'<th width="{total_w}%">Total Periods</th>'
-        + f'<th width="{metric_w}%">{metric_head}</th>'
         + f'<th width="{spacer_w}%"></th></tr>'
     )
 
@@ -381,24 +382,19 @@ def _pdf_allocation_table(report: CompetencyAllocationReport, types, esc) -> str
             tot_by_dur[t.minutes] += v
             dur_cells += f'<td>{v}</td>'
         tot_periods += ch.total_periods
-        if is_effort:
-            metric = "" if ch.effort_index in (None, "") else _g(ch.effort_index)
-        else:
-            metric = "" if ch.chapter_weight in (None, "") else _g(ch.chapter_weight)
         rows += (
             f'<tr class="row{alt}">'
             f'<td class="alloc-seq">{i}</td>'
             f'<td class="alloc-name">{esc(ch.chapter_title)}</td>'
             f'{dur_cells}'
             f'<td class="alloc-strong">{ch.total_periods}</td>'
-            f'<td class="alloc-strong">{esc(metric)}</td>'
             f'<td></td></tr>'
         )
 
     foot_dur = "".join(f'<td>{tot_by_dur[t.minutes]}</td>' for t in types)
     footer = (
         f'<tr class="alloc-total"><td></td><td class="alloc-name">Total</td>{foot_dur}'
-        f'<td>{tot_periods}</td><td></td><td></td></tr>'
+        f'<td>{tot_periods}</td><td></td></tr>'
     )
     return f'<table class="alloc-table" width="100%"><thead>{header}</thead><tbody>{rows}{footer}</tbody></table>'
 

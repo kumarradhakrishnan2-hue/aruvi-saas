@@ -423,7 +423,7 @@ export default function Allocate({ subject, grade }) {
             </tr>
           ))}</tbody>
           <tfoot><tr>
-            <td className="lbl">Total · {combinedTotals.minutes.toLocaleString()} min</td>
+            <td className="lbl">Total</td>
             {sortedDurations.map((m) => <td className="num" key={m}>{combinedTotals.by_duration[m]}</td>)}
             <td className="num total">{combinedTotals.periods}</td>
           </tr></tfoot>
