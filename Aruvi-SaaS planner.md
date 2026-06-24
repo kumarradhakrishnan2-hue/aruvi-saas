@@ -365,6 +365,9 @@ empty ──(teacher picks chapter)──▶ in-progress[chapter, pointer] ─�
 - **Truncation is first-class.** "Done with this chapter" at 12/13 is one unburied tap.
 - **One off-ramp = "Stop tracking."** Same action and outcome as "done": no trail, returns to
   empty, plan stays safe in My Plans. Lives **on the slot view**, not in a settings menu.
+- **Chapter-end offers Chapter Notes (§I-bis).** On the chapter-end transition — either "I'm done"
+  or "Stop tracking" — a single declinable offer: "Add any notes on this chapter for next time?"
+  Yes opens the Chapter Notes window; No moves on to the empty slot. The one active note-prompt.
 - **No mid-chapter plan switch.** Once a chapter begins, its active plan is **locked** for the
   chapter's duration.
 
@@ -492,6 +495,203 @@ the pointer as `(period, phase)` from day one, surface phase-resolution only aft
 is proven), **materials** (aggregate into a weekly prep checklist), **assessment items** (a
 per-chapter item bank), **competencies/outcomes** (school-ICP coverage dashboard later).
 
+## I-bis. Period Notes & Chapter Notes (the teacher's overlay)
+
+**Purpose / why it matters.** Teachers are creatures of habit — they reuse the same plan across
+sections and year after year to do less work. Period/Chapter Notes are the mechanism that makes
+that reuse *compound*: the AI plan is the canonical starting point; the notes are **the teacher's
+accrued personal improvement layer on top of it**, built over time. This is a primary retention
+hook — it's the thing she'd lose by leaving. Notes are **overlay, never edit**: the canonical AI
+plan renders identically with or without them; strip the overlay and the plan is untouched.
+
+Two tiers, plainly named (the name is the spec):
+
+**Period Notes** — pinned to a period.
+- **Where/when:** written from the **period view (slot, Screen 3), after class** — the one moment
+  she's reflecting on what just happened. A deliberately invoked field, **never always-open**.
+- **Viewing:** **collapsed by default.** A period that *has* a note shows a small mark
+  ("📝"); tapping expands it. A period with no note shows **nothing** — no empty-and-waiting
+  field (that's the chore trap we avoid). Invisible when empty, a mark when present, full text on
+  invoke. Past notes are reached via a drop-down / invoke, never persistently on screen.
+- **Five purposes (all execution insight, none is "edit the plan"):** (1) time — did this,
+  couldn't do that; (2) materials — keep this too / discard that; (3) student(s); (4) what to do
+  next class in relation to this one; (5) next-year — don't do this, do it that way.
+- **Contiguous context:** purpose (4) needs the previous/next periods' notes while writing — this
+  rides on the **existing ← previous / next → peek (§F)**, now also surfacing those periods' notes
+  read-only. No new mechanism.
+
+**Chapter Notes** — per (section, chapter), unpinned to any period.
+- **Where:** on the **Chapter Organization page (§E), chapter altitude** — *not* the everyday slot
+  view. This altitude placement **is the intrusiveness control**: the everyday teacher who only
+  opens the slot to teach never lands here and never sees Chapter Notes; the reflective teacher who
+  goes here finds them where her head is already at chapter level. Opt-in by location, not by nag.
+- **How invoked:** a **single collapsed "Chapter Notes" affordance on that page** — a small mark if
+  notes exist, nothing insistent if they don't — expanding to the field on tap. Never an always-open
+  box competing with the chapter structure (the page's primary job is the section→period drill).
+  Pull, not push.
+- **When (three convergent moments, all on the same page):** (1) *mid-chapter reflection* — she
+  steps up from a class via the slot's "see chapter organization" link and jots a thought; (2)
+  *chapter-end* — on the chapter-end transition (§B), i.e. **either "I'm done with this chapter" or
+  "Stop tracking"** (one transition, both labels), **one gentle, declinable offer**: "Add any notes
+  on this chapter for next time?" — **Yes** opens the Chapter Notes window; **No** moves straight on
+  to the empty slot. This is the single active prompt, fired at the moment she's leaving the chapter
+  and next-year reflection is naturally top of mind; (3) *next-year planning* — she opens last year's
+  record from My Plans (the read-only reader **is** this page), reads last year's Chapter Notes, and
+  adds to this year's as she plans. One place to invoke, reached three ways; **only the chapter-end
+  offer is a nudge — the one and only push for Chapter Notes — everywhere else it's pull.**
+- **Purposes:** general activities where students struggled; materials used outside the book;
+  next-year precautions / better planning. Reflective, long-horizon — futuristic; valued by the
+  committed teacher, never in the everyday teacher's way.
+
+**The writing surface (both tiers).** Typed, **voice-supported, multilingual**; ~250-word soft
+cap; **mobile-first**. **No rich text, color, tables, or attachments** — a plain note field. The
+constraints *are* the feature (a mini-editor becomes a thing to fuss over → a chore). Voice and
+multilingual mostly ride the device keyboard/dictation (so "support" = not breaking Unicode / IME
+/ dictation). **Maths/Science subject symbols are deferred** — v1 is plain Unicode text; a
+symbol palette / shorthand is a known later enhancement (the one non-trivial input build).
+
+**The two tiers key to two different things — and the key follows the altitude.** A generated
+plan is the teacher's **owned, kept asset**, shared across sections that use it (one Optics
+generation may serve 6A and 6B).
+
+- **Period Notes → the (section, plan) instance.** A Period Note is about *what happened in a
+  specific class* ("7A got stuck on the mirror angles," "6B ran short today") — irreducibly
+  per-section. So Period Notes are keyed to the section instance, alongside its own pointer and
+  version-lock (same per-section principle, now extended to notes — they ride the existing
+  *instance* concept, not a new key). 6A's Period Notes never pool into 6B's; she keeps each class
+  separate, exactly as wanted.
+- **Chapter Notes → the plan asset itself (not the instance).** A Chapter Note is reflective and
+  *lesson-shaped*, not class-shaped ("this investigation always overruns," "next year reorder
+  these") — true regardless of which section she has in mind. Keying it per-instance would force her
+  to write the same insight under 6A and 6B and let them drift — the redundancy we avoid. So she
+  **writes a Chapter Note once, against the plan asset**, and it surfaces wherever that plan is used,
+  for every section. Invokes the **main asset, not the section instance.**
+
+This makes the keying **follow the altitude**: write from the class/period view → about this class →
+section instance; write from the Chapter Organization page → about this chapter/plan → the asset.
+The surface tells you what it attaches to. (This also *is* the class-vs-lesson distinction — a
+genuinely 6A-specific thought is a class observation and belongs in 6A's Period Notes; the chapter
+tier is deliberately the shared, cross-section reflection. No separate "promote to plan-level"
+mechanism is needed.)
+
+**Persistence — notes live with their record; they never migrate.** Both tiers stay with the
+record they were written against (Period Notes with the section-instance, Chapter Notes with the
+plan-asset record).
+- **Reuse of the *same* record** (unchanged plan next year): notes persist and compound — the
+  accrued edge.
+- **Regeneration** (book/chapters changed → a new plan asset record): **last year's asset, its
+  Chapter Notes, and each section instance's Period Notes all persist untouched as their own dated
+  record.** She **opens last year's record to read them** alongside this year's fresh plan. Notes
+  are **never migrated onto the regenerated plan** — a note about last year's Period 4 may not fit
+  this year's (possibly different) Period 4. So the year-over-year case has **nothing to re-anchor**
+  — notes don't move, can't orphan.
+Records are **dated** so years stay legible.
+
+**Privacy / safety.** Schedule + durations + these notes are the **only** teacher-authored data
+in the system, and the notes are the sensitive part (candid reflections, possible student refs).
+They are **private, per-teacher, tenant-isolated** — never pooled, never shown to admins — joining
+the user-data-isolation set (saved_plans / feedback → per-user DB in the cloud move). The product
+should **gently steer toward non-identifying phrasing** for student references (steer, not forbid)
+so we don't accumulate identifiable minor data in free text. **Export** of one's own notes is a
+**planned, low-priority** trust gesture ("your notes are yours") — not v1.
+
+**Dependencies (record honestly).** (a) **Period Notes need stable period identity *within a
+single plan record*** — periods must be stably identified so a note re-finds its period when that
+same plan is reopened/reused. This is bounded by the "notes never migrate across plan records"
+model above, which removes the cross-year orphaning risk (regeneration makes a new record, not a
+re-anchor). So the identity requirement is the simpler intra-plan one, not a cross-version
+re-anchor. (b) The subject-symbol input is the one non-trivial build in an otherwise plain field —
+deferred per above.
+
+## I-ter. Assessment — objectification & period linkage
+
+Assessment is an **add-on aligned to the lesson plan**, primarily formative. Aruvi's
+differentiator: unlike textbook end-of-chapter Q&A (which breaks the cognitive chain), every
+Aruvi item traces to an **implied LO** that is the same LO its lesson unit was built on. The
+chain is intact in the data, and that LO is the join key that lets us objectify items and link
+them to the plan. Teachers use it on-the-go (per unit, deferring the pointer) or end-of-chapter;
+the PDF remains the printable summary.
+
+### The governing principle — the assessment unit is the GROUP, not the period
+
+The constitutions emit assessment per **group** ("each element represents one progression
+stage," one item per section, per (section×spine) cell, per competency), **not per period**.
+So an item tests the *cognitive transition through its group*, which is often **cross-period
+synthesis** no single period could support. Decomposing a group's items back onto individual
+periods would be pedagogically false. Therefore:
+
+- **Assessment unit = the group** (stage / section / spine-cell / competency / intent-tier).
+- **It becomes answerable at the group's close**, so it **anchors at the group's closing
+  (latest) period** — the first point the unit's cognition is complete. Full item display
+  there, **labelled by the group** ("Stage 4 assessment"), not "Period N assessment."
+- **Earlier periods of the group** carry only a **forward-reference marker** ("stage assessment
+  follows, at P-n") — honest (the check isn't answerable yet), not a duplicated item.
+- **Where the group is a single period** (TWAU; any section = one period), this collapses to a
+  genuine **per-period check**.
+- The **chapter-org / end-of-chapter view** is where the *full* assessment lives, grouped by its
+  native axis — consistent, since the unit was always the group.
+
+### Link resolution — verified 8-rule table (all confirmed on real saved files)
+
+Each item resolves to a **period set** (never "latest only" as the stored value — that is lossy;
+the closing period is flagged as the display *anchor*, the set is retained). Join key, LO source,
+and item-container shape are **subject-specific** and were each corrected against saved data
+(constitution prose diverged from reality on all but SS):
+
+| # | Subject / Stage | Join method | LO source | Item container |
+|---|---|---|---|---|
+| 1 | Science middle | item `progression_stage` → handoff `stage_number` → `period_numbers` | handoff `implied_lo` (item: `implied_lo_assessed`) | flat list |
+| 2 | Science secondary | item `section_number` → handoff `section_number` → `period_numbers` | handoff `implied_lo` | `{…,questions:[]}` dict |
+| 3 | Social Sciences middle | item `period_ref[]` (direct) | item `implied_lo` (inline) | flat list |
+| 4 | Maths middle | item `section_ref` ("section 5.2") → period `textbook_segments[].ref` | none | flat list |
+| 5 | Maths preparatory | item `section_ref` ("S2") → period `section_refs[]` | none | grouped by `section_code` A/B/C |
+| 6 | Maths secondary | item `section_number` → handoff `section_number` → `period_numbers` (**NOT** `section_anchor`) | handoff `implied_lo` (item: `implied_lo_assessed`) | `{…,questions:[]}` dict |
+| 7 | English (prep/mid/sec) | item (`source_section_id` + `source_spine`) → period (`section_id` + `spines_taught[]`) | handoff cell `implied_lo` (item: `source_lo`) | spine-grouped list |
+| 8 | TWAU preparatory | item `period_ref[]` (direct) | item `implied_lo` (inline) | flat list (1:1) |
+
+**Three carrier families** (the only real variation): **item-self-sufficient** (SS, TWAU — read
+`period_ref` + `implied_lo` off the item) · **handoff-bridged** (Science both, Maths-secondary —
+join the integer section/stage number through the handoff; **never** match `section_anchor` text
+— it is messy/granular and orphans items) · **period-field join** (Maths middle/prep, English —
+match the item's section/spine code to the period's own field).
+
+**Hard-won corrections (locked by data):** never join on `section_anchor` (failed in both
+secondary stages); "unique section per item" is **false** everywhere (A/B/C and intent tiers
+re-test a section) — resolvers must accept many-items→one-group and one-group→many-periods;
+**store the period set**, flag the closing period as anchor; **five distinct container shapes**
+exist (flat list · spine-grouped · `questions` dict · `section_code` groups · per-competency) —
+each resolver declares its own, none inferable; **no LO for Maths middle & prep** (structural link
+only — LO/coverage views don't apply there).
+
+### Architecture — sanctioned subject gating, not forbidden runtime branching
+
+The per-subject link logic is **real subject gating**, but it lives in the one place the
+convention sanctions it: **each subject plugin's normalizer**, run **once at normalize-time**
+(not generative, not runtime). Every resolver outputs the **same uniform contract** —
+`item.meta.linked_periods = [period set]`, `item.meta.anchor_period = closing period`,
+`item.meta.linked_lo = LO | null` — so the renderer/engine stay subject-agnostic. This is the
+assessment-side mirror of the view-model axis difference already handled in normalizers.
+
+**Guardrails:** (a) each resolver is **parity-tested** — a per-subject "every item resolves to
+≥1 period, 0 orphans" assertion run against a real saved plan (the existing parity-test pattern);
+(b) resolvers are **derived from saved-file inspection, never constitution prose** (prose diverged
+on 7 of 8). All 8 rows are currently **verified on real saved files**.
+
+### Tracking (when assessment tracking is taken up)
+
+If tracked at all: **competency/LO coverage only** ("which LOs/competencies have been assessed"
+— feeds NCF/school-ICP compliance evidence), **never student marks or grades** (gradebook = ERP
+line, permanently out of scope). Most of v1 can surface items read-only (view/pull-up at the
+anchor period + full set on the chapter-org page); item-bank *assembly* is a deferred enhancement.
+
+### Constitution fix already applied + owed
+
+- **SS middle assessment (done this session):** Rule 4 changed from "minimum / uncapped" to
+  **exact** per-weight counts (Central = exactly 2 MCQ + 1 SCR + 1 ECR + 1 Open Task, etc.),
+  removing the loophole that produced 6 MCQs on one Central competency. Runtime mirror only.
+- **Owed at generation:** audit the *other* subjects' assessment constitutions for the same
+  minimum/uncapped loophole and apply exact counts where intended (see §J).
+
 ## J. Owed at the generation milestone (nothing owed now)
 
 For now, building/testing on fixtures needs **no constitution change** — only a by-hand,
@@ -510,3 +710,7 @@ is wired — and **both apply across the board, to every subject's LP constituti
    freed, while content order (textbook sequence, competency coverage) is untouched. SS already
    budgets time as a quantity, so for it this is mostly prompt wording; subjects whose wrappers
    carry explicit order language (e.g. English) need that phrasing removed.
+3. **Assessment exact-counts audit** (§I-ter) — SS-middle was fixed this session (min/uncapped →
+   exact per-weight counts). Audit every *other* subject's assessment constitution for the same
+   "minimum / uncapped" loophole and apply exact counts where a fixed item set is intended, so
+   re-generation does not reproduce the over-generation (e.g. 6 MCQs on one Central competency).
