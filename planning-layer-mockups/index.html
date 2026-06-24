@@ -182,7 +182,7 @@
 
   <!-- ========================= SCREEN 3: SLOT / PERIOD VIEW ========================= -->
   <div class="screen-label">Screen 3 · Slot / period view</div>
-  <div class="screen-note">Opening 6A mid-chapter. Current period is the hero (phases as absolute durations). Pointer-safe ← previous / next → peek for prep. Pointer controls only here. Stop-tracking off-ramp at the bottom. No phase-marker screen — the full phase list is the recall cue.</div>
+  <div class="screen-note">Opening 6A mid-chapter. Phases as absolute durations are the hero. Controls rationalized: <b>Move to Period 5</b> (no section name — she knows she's in 6A) and Stay. A quiet <b>"Assessment here"</b> affordance opens a <i>dedicated</i> assessment view (Screen 3b) rather than clogging the period viewer. Assessment lives here because the lesson concludes here and the LO is fresh. No chapter-structure labels — the LO is the only visible link.</div>
   <div class="device" style="max-width:680px;">
     <div class="hd">
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -201,7 +201,10 @@
         <span class="peeknav">Period 5 →</span>
       </div>
 
-      <div class="kicker kicker-soft" style="margin-bottom:6px;">PHASES · 60 MIN TOTAL</div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
+        <span class="kicker kicker-soft">PHASES · 60 MIN TOTAL</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:#1e5c4a; cursor:pointer;">assessment here →</span>
+      </div>
       <div class="phaserow"><span class="phasemin">5 min</span><span class="phasetext">Recall: where does light come from? Quick oral recap of the previous period.</span></div>
       <div class="phaserow"><span class="phasemin">15 min</span><span class="phasetext">Demonstrate reflection with a plane mirror and torch; students predict the path.</span></div>
       <div class="phaserow"><span class="phasemin">20 min</span><span class="phasetext">Paired investigation: measure angle of incidence vs. angle of reflection.</span></div>
@@ -209,7 +212,7 @@
       <div class="phaserow"><span class="phasemin">8 min</span><span class="phasetext">Wrap-up and set homework: two everyday examples of reflection.</span></div>
 
       <div class="btn-row" style="margin-top:18px;">
-        <button class="btn btn-primary" style="flex:1;">Move 6A to Period 5 →</button>
+        <button class="btn btn-primary" style="flex:1;">Move to Period 5 →</button>
         <button class="btn">Stay on Period 4</button>
       </div>
 
@@ -217,6 +220,61 @@
         <button class="btn btn-eject" style="width:100%;">Stop tracking this chapter</button>
         <div class="footnote" style="border:none; padding-top:7px; text-align:center;">Removes it from your schedule. The plan stays safe in My Plans — same as finishing, no trail kept.</div>
       </div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 3b: DEDICATED ASSESSMENT VIEW ========================= -->
+  <div class="screen-label">Screen 3b · Assessment view (dedicated, green)</div>
+  <div class="screen-note">Opened from "Assessment here" on Screen 3. A distinct <b>green</b> scheme sets it apart from the warm LP — she always knows she's in assessment, not the lesson. Holds the full-richness item(s); a clear <b>← Back to lesson</b> returns her exactly where she was. No chapter-structure labels.</div>
+  <div class="device" style="max-width:680px; background:#e7f0ec; border-color:#cde0d8;">
+    <div style="background:#dceae3; padding:14px 20px 13px; border-bottom:1px solid #cde0d8;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0f6e56; cursor:pointer;">← Back to lesson</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; color:#0f6e56;">ASSESSMENT</span>
+      </div>
+      <div style="font-family:'Fraunces',Georgia,serif; font-size:21px; font-weight:500; color:#0c3a2e; margin-top:6px;">Reflection in plane mirrors</div>
+      <div style="font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px;">Tests this lesson's outcome — can the class state the law of reflection and apply it to a new case?</div>
+    </div>
+
+    <div style="padding:16px 20px 20px;">
+
+      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px; margin-bottom:11px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#0f6e56;">MCQ · UNDERSTANDING</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:#0f6e56;">visual: figure ▸</span>
+        </div>
+        <div style="font-size:14px; color:#1f2a24; margin-top:6px; line-height:1.5;">A ray of light hits a mirror at 30° to the surface. What is the angle of reflection, measured from the normal?</div>
+        <div style="margin-top:10px; display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; gap:9px; font-size:13px; color:#1f2a24;"><span style="font-family:monospace; color:#0f6e56;">A</span><span>60°</span><span style="font-size:11px; color:#993c1d; font-style:italic;">✓ correct — measured from the normal, not the surface</span></div>
+          <div style="display:flex; gap:9px; font-size:13px; color:#1f2a24;"><span style="font-family:monospace; color:#0f6e56;">B</span><span>30°</span><span style="font-size:11px; color:#5f6f67; font-style:italic;">reveals: student measured from the surface (common error)</span></div>
+          <div style="display:flex; gap:9px; font-size:13px; color:#1f2a24;"><span style="font-family:monospace; color:#0f6e56;">C</span><span>90°</span><span style="font-size:11px; color:#5f6f67; font-style:italic;">reveals: confuses the normal with the mirror plane</span></div>
+          <div style="display:flex; gap:9px; font-size:13px; color:#1f2a24;"><span style="font-family:monospace; color:#0f6e56;">D</span><span>45°</span><span style="font-size:11px; color:#5f6f67; font-style:italic;">reveals: guessed the midpoint without applying the law</span></div>
+        </div>
+        <div style="margin-top:11px; padding-top:9px; border-top:1px dashed #cde0d8;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; color:#0f6e56;">LOOK FOR</span>
+          <div style="font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5;">Whether the student measures the angle from the normal. If they pick B, reteach where the angle is measured from before moving on.</div>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px; margin-bottom:11px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#0f6e56;">SHORT RESPONSE · APPLICATION</span>
+        <div style="font-size:14px; color:#1f2a24; margin-top:6px; line-height:1.5;">In your own words, state the law of reflection and give one everyday example where you see it.</div>
+        <div style="margin-top:10px; padding-top:9px; border-top:1px dashed #cde0d8;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; color:#0f6e56;">EXPECTED ELEMENTS</span>
+          <div style="font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5;">Angle of incidence = angle of reflection · both measured from the normal · a valid example (mirror, still water, polished surface).</div>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#0f6e56;">EXPLAIN · APPLICATION</span>
+        <div style="font-size:14px; color:#1f2a24; margin-top:6px; line-height:1.5;">Why does a periscope let you see over a wall? Draw a ray diagram and explain using the law of reflection.</div>
+        <div style="margin-top:10px; padding-top:9px; border-top:1px dashed #cde0d8;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; color:#0f6e56;">SCAFFOLD</span>
+          <div style="font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5;">Prompt: where does the light enter, and how many times does it reflect before reaching the eye?</div>
+        </div>
+      </div>
+
+      <button style="width:100%; margin-top:15px; font-family:'IBM Plex Mono',monospace; font-size:12px; background:#0f6e56; color:#eafaf4; border:none; padding:12px; border-radius:8px; cursor:pointer;">← Back to lesson</button>
     </div>
   </div>
 

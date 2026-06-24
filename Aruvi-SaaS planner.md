@@ -612,24 +612,25 @@ chain is intact in the data, and that LO is the join key that lets us objectify 
 them to the plan. Teachers use it on-the-go (per unit, deferring the pointer) or end-of-chapter;
 the PDF remains the printable summary.
 
-### The governing principle — the assessment unit is the GROUP, not the period
+### The governing principle — assessment is an appendage to the LP, linked by the LO
 
-The constitutions emit assessment per **group** ("each element represents one progression
-stage," one item per section, per (section×spine) cell, per competency), **not per period**.
-So an item tests the *cognitive transition through its group*, which is often **cross-period
-synthesis** no single period could support. Decomposing a group's items back onto individual
-periods would be pedagogically false. Therefore:
+Chapter structure (stages / sections / cells / competencies) belongs to **Chapter Organization**;
+the **LP enacts** it; **assessment is an appendage to the LP**. The teacher is **never shown the
+structure** to justify an item's placement — no "stage-4 assessment," no "shown at period 10,"
+no forward markers. That is internal plumbing and means nothing to her. We do **not** prove to the
+teacher that an item has stage/section links.
 
-- **Assessment unit = the group** (stage / section / spine-cell / competency / intent-tier).
-- **It becomes answerable at the group's close**, so it **anchors at the group's closing
-  (latest) period** — the first point the unit's cognition is complete. Full item display
-  there, **labelled by the group** ("Stage 4 assessment"), not "Period N assessment."
-- **Earlier periods of the group** carry only a **forward-reference marker** ("stage assessment
-  follows, at P-n") — honest (the check isn't answerable yet), not a duplicated item.
-- **Where the group is a single period** (TWAU; any section = one period), this collapses to a
-  genuine **per-period check**.
-- The **chapter-org / end-of-chapter view** is where the *full* assessment lives, grouped by its
-  native axis — consistent, since the unit was always the group.
+What is visible and meaningful is the **learning outcome**: wherever an assessment item exists, it
+carries the LO it tests, and that LO is the honest link to the lesson ("does the class now transfer
+what this period built?"). The group→period-set→anchor machinery (below) stays **entirely under the
+hood in the normalizer** — it decides *which period an item surfaces at*, but never appears as
+teacher-facing copy.
+
+**The item arrives in full richness — that is the differentiator.** Each item carries what the
+constitution packs into it: MCQ **distractors with what-each-reveals**, expected elements, scaffold,
+look-fors, teacher guide, cognitive demand, visual stimulus. The assessment surface **opens the item
+up fully**; it never reduces it to a thin "check" line. (Internally, items still resolve to a period
+set and anchor at the group's closing period — see resolver table — but this is silent.)
 
 ### Link resolution — verified 8-rule table (all confirmed on real saved files)
 
@@ -676,6 +677,28 @@ assessment-side mirror of the view-model axis difference already handled in norm
 ≥1 period, 0 orphans" assertion run against a real saved plan (the existing parity-test pattern);
 (b) resolvers are **derived from saved-file inspection, never constitution prose** (prose diverged
 on 7 of 8). All 8 rows are currently **verified on real saved files**.
+
+### Where assessment surfaces — the lesson/period viewer (Screen 3 / §F), nowhere else
+
+Assessment lives at the **period viewer (Screen 3)** — *not* the dashboard (Screen 2, a teaching
+glance) and *not* Chapter Organization (Screen 4, structure). The reason is pedagogical: at the end
+of the period's phases there is a fresh, rich grasp of the LO, and the *transferability* of that
+understanding is exactly what wants testing — right there, in the moment the lesson concludes.
+(Because **Preview** shows future periods' content, future assessment comes along for free — it is
+part of the period view.)
+
+**Surfacing — a dedicated assessment view, not inline.** Inline expansion clogs the period viewer
+(a full-richness item with distractors + look-fors is too tall, especially on a phone). Instead, a
+**quiet "Assessment here" affordance** on Screen 3 opens a **dedicated assessment view (Screen 3b)**
+in a **distinct green colour scheme** — set apart from the LP's warm paper so she always knows she
+is in assessment, not the lesson. That view holds the period's linked item(s) in **full richness**
+(stem, options with what-each-distractor-reveals, expected elements, scaffold, look-fors, cognitive
+demand, visual stimulus), and provides a clear **"← Back to lesson"** return that lands her exactly
+where she was. No structural labels anywhere.
+
+**Rationalized Screen-3 controls** (clutter removed): the move button drops the section name —
+"**Move to Period N+1**" (she knows she's in 6A; naming it is redundant), alongside "**Stay on
+Period N**", a quiet "**Assessment here**" affordance (opens Screen 3b), and "**Stop tracking**".
 
 ### Tracking (when assessment tracking is taken up)
 
