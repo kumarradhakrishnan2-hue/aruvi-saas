@@ -129,6 +129,12 @@ This reflects real classroom behaviour.
 
 ## Key Design Shift: Lesson Pointer
 
+> **Vocabulary note (standing rule).** "Pointer" is **internal/design vocabulary only** — it is
+> how *we* describe the model in this doc and in code. It must **never appear in any teacher-facing
+> UI string.** In the product, say it in plain language instead: "current period", "where you left
+> off", "your place in the lesson", "resumes at Period N". Any new screen or copy is checked
+> against this before it ships.
+
 Instead of tracking detailed completion states, Aruvi tracks a single value:
 
 ### Current Lesson Pointer
@@ -385,10 +391,11 @@ own pointer. The **lock is per section**: 6A starting on 12 does not lock 6B out
 **Version choice happens in the flow, at the slot — she never steps out to operate.** When she
 opens an unstarted slot, that is the start declaration ("Which chapter are you starting?"); if a
 chapter has more than one saved version, the **start card surfaces the choice inline** (default =
-newest, peek either in the read-only reader right there). My Plans keeps a "Make this active"
-control, but it is the **library** (read / compare / see what exists), not the operating surface
-— operating (choose version, start) happens where she already is. Switching version is only
-possible **before start**; after start the version locks for that section's chapter.
+newest, with a full read-only **Preview** of each version right there). There is **no separate
+library and no "Make this active" control** (old Screen 6, removed 2026-06-25) — reading, comparing
+and choosing all happen on the start card, the one place she already is, because reading is always
+mid-decision. Switching version is only possible **before start**; after start the version locks
+for that section's chapter.
 
 **Generation outcome.** When generation completes, the plan is **auto-saved** and **opens
 directly in the read-only chapter-org reader** (§E) — no "do you wish to save?" prompt, no
@@ -419,15 +426,35 @@ reader** — the old standalone HTML LP view is retired for good and not reintro
 **PDF stays** as the consolidated class-use / print artifact. The same reader serves three
 access modes, differing only in whether a pointer exists:
 
-- **Read-only, from My Plans (unstarted plan, no pointer).** Tapping a saved plan opens the
-  chapter-org reader read-only — she can drill to and read any period in full, but there are
-  **no pointer controls anywhere** (no stay/move), because the chapter hasn't started. This is
-  the **only door to read an unstarted plan on screen** — including a freshly generated
-  not-yet-active version she wants to review before committing. (Resolves the otherwise-missing
-  "where does she view it?" gap: dashboard shows a plain row, the slot view doesn't exist yet,
-  so My Plans → Preview is the entry point.)
-- **Default on first start (pointer just created)** and **recede-to-link during execution
-  (pointer live)** — the two altitudes below.
+- **Read-only, from the start card (unstarted plan, no live place-marker).** Reading a plan is
+  never an independent want — it always happens because she is mid-decision (about to teach a
+  class). So previewing lives **inside the start flow**, not on a separate library she navigates
+  to: the dashboard's "pick a chapter to begin" row opens the **start card (§G item 5)**, which
+  lists the chapter's saved versions; tapping **Preview** on any version opens the chapter-org
+  reader read-only — she can drill to and read any period in full **and its assessment**, but
+  there are **no place-controls anywhere** (no stay/move), because the chapter hasn't started —
+  then she returns to the start card to choose. Reading and choosing are the same motivated act
+  in the same place. (Resolves the earlier "where does she view it?" gap **without** a standalone
+  library: the start card is both the preview surface and the commit surface.)
+
+  > **Read-without-commitment — resolved (2026-06-25).** The genuine need stands: a teacher may
+  > want to *read* a plan without committing it to a grade & section. But the earlier resolution —
+  > a standalone "My Plans" library (old Screen 6) reached independently of any section — was
+  > **dropped**, because in Aruvi every screen is reached *because* of a prior motivator; there is
+  > no free-floating "browse my plans" want. Reading is always mid-decision. So the read-without-
+  > commitment path is served **in the flow**, two ways, with **no separate library**:
+  > (1) *before start* — the **start card** lists the chapter's versions and offers a full
+  > read-only **Preview** (the §E reader, including the assessment suite) on each, then returns her
+  > to the card to choose; reading happens any number of times before — or without ever —
+  > committing, and committing (binding to a section, starting tracking) is a separate deliberate
+  > tap. (2) *after start* — re-reading for prep is the period view's **← previous / next → peek
+  > (§F)**, equally motivated and in-flow. Consequences: standalone Screen 6 removed; the
+  > "Make this active" housekeeping control removed (version choice is the commit act on the start
+  > card); the per-version contextual note (e.g. "6A is already teaching the 12-period version")
+  > **stays** because it prevents accidental mismatched picks, but its mechanism tail ("that's
+  > locked / own pointer") is dropped from teacher copy.
+- **Default on first start (place-marker just created)** and **recede-to-link during execution
+  (place-marker live)** — the two altitudes below.
 
 Two altitudes within the reader:
 
@@ -471,14 +498,20 @@ One window:
 3. **Chapter Organization page** — section E, chapter altitude (uniform collapsible drill to
    period links).
 4. **Slot / Period view** — section F.
-5. **Start declaration card** — what an unstarted slot shows: "Which chapter are you starting?"
-   listing that grade/subject's saved plans; where a chapter has multiple versions, the version
-   choice is offered **inline here** (default newest, peek in the read-only reader). The tap
-   binds the chapter, creates the pointer, and locks the version.
-6. **My Plans (the library)** — saved plans per grade/subject; marks the active version; never
-   auto-deletes; no "stop tracking" here (that lives on the slot). **"Preview" opens the
-   read-only chapter-org reader (§E), not any separate LP view.** "Make this active" is housekeeping
-   only — the expected operating path is the slot start card (5), not this tab.
+5. **Start declaration card** — what an unstarted slot shows, reached straight from the
+   dashboard's "pick a chapter to begin" row: "Which chapter are you starting?" listing that
+   grade/subject's saved plans; where a chapter has multiple versions, the version choice is
+   offered **inline here**, default newest. **This is also the read-without-commitment surface**
+   (§E): each version carries a full read-only **Preview** that opens the §E chapter reader —
+   including its assessment suite — and returns her here to choose, so she can read freely before
+   committing. The tap binds the chapter to the section, starts tracking, and locks the version.
+   A per-version contextual note where useful (e.g. "6A is already teaching the 12-period
+   version") prevents accidental mismatched picks — kept in plain language, no mechanism-speak.
+
+   _(There is **no** standalone "My Plans" library screen — removed 2026-06-25. Reading is always
+   mid-decision, so it lives in-flow: before start via this card's Preview, after start via the
+   §F period-view peek. There is no separate "Make this active" control; version choice is the
+   commit act here.)_
 
 ## H. Design language
 
@@ -692,9 +725,36 @@ part of the period view.)
 **quiet "Assessment here" affordance** on Screen 3 opens a **dedicated assessment view (Screen 3b)**
 in a **distinct green colour scheme** — set apart from the LP's warm paper so she always knows she
 is in assessment, not the lesson. That view holds the period's linked item(s) in **full richness**
-(stem, options with what-each-distractor-reveals, expected elements, scaffold, look-fors, cognitive
-demand, visual stimulus), and provides a clear **"← Back to lesson"** return that lands her exactly
-where she was. No structural labels anywhere.
+(the item's **learning outcome aired above its stem** — see next subsection — then stem, options
+with what-each-distractor-reveals, expected elements, scaffold, look-fors, cognitive demand, visual
+stimulus), and provides a clear **"← Back to lesson"** return that lands her exactly where she was.
+No structural labels anywhere.
+
+### Airing the LO on 3b — the bridge from phases to item (per item, not per view)
+
+The teacher reaches 3b **from the phases** — the part of the period that imparts the transferable
+skill. The **LO is the bridge** between that skill and the item that tests its transfer, so she must
+read the LO **first**, immediately before the item. 3b is therefore the right and only place to air
+it. Placement rules (locked against the audit):
+
+- **Per item, above the stem — never one LO in the header.** The audit confirms the LO lives at the
+  level of the **assessment item** for every subject except Maths middle/prep, and the normalizer
+  contract is per-item (`item.meta.linked_lo`). A single 3b view can hold **multiple items resolving
+  to one period**, and those items may test **different LOs** (A/B/C and intent tiers re-test a
+  section). So the LO is aired as a labelled `LEARNING OUTCOME` line at the **top of each item card,
+  directly above that item's stem** — reading order LO → item, per item. A single header LO line
+  would mislabel any view whose items differ.
+- **Header carries only a unit framer**, e.g. "Checks whether the class can transfer what this period
+  built" — context, not a per-item LO claim.
+- **Maths middle & preparatory have no LO** (resolver rows 4–5: structural link only; `linked_lo =
+  null`). There the LO line is **absent, not blank** — no empty "LEARNING OUTCOME" label, no
+  placeholder. Renderer branch is **intended**, not a bug. Maths **secondary** does carry an LO
+  (row 6) and shows the line like every other subject. English airs the LO from the handoff cell
+  (`source_lo`, row 7) — still per item.
+
+(Mockup: `planning-layer-mockups/index.html` Screen 3b shows both cases — the Science view with a
+per-item LO above each stem, the items deliberately carrying two different LOs to prove the per-item
+placement; and a Maths middle/prep view with the line absent.)
 
 **Rationalized Screen-3 controls** (clutter removed): the move button drops the section name —
 "**Move to Period N+1**" (she knows she's in 6A; naming it is redundant), alongside "**Stay on
