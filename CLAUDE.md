@@ -98,6 +98,23 @@ generic look.
     tap targets too small, and font sizes that don't scale down.
   - Keep responsive rules in `web/app/globals.css` (`@media` breakpoints); don't hardcode
     desktop-only widths in component styles.
+- **The Monday-morning feel (design principle, not yet built).** The product still reads as
+  planner-centric — built around the plan as artifact, not the teacher's morning as
+  experience. The opening moment should land emotionally before it lands technically. A
+  teacher opens Aruvi at 8:20 AM; the first five seconds shouldn't show a dashboard, they
+  should feel like being met. Something like: "Good morning. Today you teach three classes."
+  followed by a short, scannable list —
+  - 7A → Period 4
+  - 7B → Period 6
+  - 8A → Start Chapter 3
+
+  — and one tap from there into the actual lesson. This is a north star for a future
+  home/landing view (not yet specced or scheduled — see §9), but every screen built between
+  now and then should be judged against it: does this feel like a planner serving the
+  teacher's day, or like the teacher serving the tool's structure? When the home view is
+  eventually designed, keep it consistent with §4's "scholarly planner on warm paper" system
+  (Fraunces/Newsreader/mono kickers) — warmth comes from the words and pacing, not a
+  different visual language.
 
 ---
 

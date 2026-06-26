@@ -55,7 +55,7 @@ function buildFinalAllocation(res, byCh, deltas, chapters) {
   return { durations: dur, allocations, totals };
 }
 
-export default function Allocate({ subject, grade }) {
+export default function Allocate({ subject, grade, onNavigate }) {
   const [chapters, setChapters] = useState([]);
   const [basis, setBasis] = useState(null);
   const [rows, setRows] = useState([{ name: "", count: 45, minutes: 45 }, { name: "", count: 60, minutes: 60 }]);
@@ -361,6 +361,7 @@ export default function Allocate({ subject, grade }) {
     });
     const allChaptersData = Object.values(mergedChapters).sort((a, b) => a.chapter_number - b.chapter_number);
     const allocatedChapterNumbers = new Set(allChaptersData.map((a) => a.chapter_number));
+    const allChaptersAllocated = chapters.length > 0 && chapters.every((c) => allocatedChapterNumbers.has(c.chapter_number));
 
     const combinedTotals = {
       periods: allChaptersData.reduce((s, a) => s + a.total_periods, 0),
@@ -431,21 +432,30 @@ export default function Allocate({ subject, grade }) {
         </div>
 
         <div className="savebar savebar-final">
-          <button className="continue-btn" onClick={() => {
-            // Set selected to only the chapters NOT yet allocated (inverse selection)
-            const unallocated = new Set(chapters.filter((c) => !allocatedChapterNumbers.has(c.chapter_number)).map((c) => c.chapter_number));
-            setSelected(unallocated.size === chapters.length ? null : unallocated); // null = all selected, so invert to unallocated
-            setStep("select");
-            setRes(null);
-            setModifying(false);
-            setDeltas({});
-            setShowInvalidWarning(false);
-          }}>
+          {!allChaptersAllocated ? (
+            <button className="continue-btn continue-btn-ghost" onClick={() => {
+              // Set selected to only the chapters NOT yet allocated (inverse selection)
+              const unallocated = new Set(chapters.filter((c) => !allocatedChapterNumbers.has(c.chapter_number)).map((c) => c.chapter_number));
+              setSelected(unallocated.size === chapters.length ? null : unallocated); // null = all selected, so invert to unallocated
+              setStep("select");
+              setRes(null);
+              setModifying(false);
+              setDeltas({});
+              setShowInvalidWarning(false);
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M10.3 8.3 14 12l-3.7 3.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Continue Allocating
+            </button>
+          ) : null}
+          <button className="continue-btn" onClick={() => onNavigate && onNavigate("generate")}>
+            Continue to Generate
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/>
               <path d="M10.3 8.3 14 12l-3.7 3.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            Continue Allocating
           </button>
           <button className="clear-btn" onClick={() => setShowClearWarning(true)}>
             Reset allocations
@@ -455,7 +465,7 @@ export default function Allocate({ subject, grade }) {
           <div className="modal-backdrop" onClick={() => setShowClearWarning(false)}>
             <div className="modal-box" onClick={(e) => e.stopPropagation()}>
               <p className="modal-title">Are you sure?</p>
-              <p className="modal-body">This will remove all saved chapter allocations for this subject.</p>
+              <p className="modal-body">This will remove all saved chapter allocations for this subject at this grade level.</p>
               <div className="modal-actions">
                 <button className="primary" onClick={() => setShowClearWarning(false)}>Cancel</button>
                 <button className="clear-btn" onClick={() => {
@@ -496,6 +506,7 @@ export default function Allocate({ subject, grade }) {
           <button className="back totalbar-edit" onClick={() => setStep("periods")}>← back to period types</button>
         </div>
         <p className="h2">Select the chapters you want to include in this year's plan.</p>
+        <p className="h2-sub">Now choose the chapters you plan to cover in this time. Aruvi holds your plan safely, so you can return and plan the rest of the chapters whenever you're ready.</p>
 
         {!chapters.length ? <div className="empty">No chapter mappings for this subject &amp; grade.</div> : (
           <>
@@ -664,7 +675,7 @@ export default function Allocate({ subject, grade }) {
   return (
     <div>
       <p className="h2">Allocate the available time across chapters</p>
-      <p className="h2-sub">To begin, set the total number of periods available and how long each period type lasts below.</p>
+      <p className="h2-sub">Set the time available for teaching some or all the chapters. You will specify the chapters in the next screen.</p>
 
       <div className="ptsection-label">Period types <span className="infoq" title="Define the period types that fit your school schedule.">ⓘ</span></div>
       <PeriodRows rows={rows} setRows={setRows} />

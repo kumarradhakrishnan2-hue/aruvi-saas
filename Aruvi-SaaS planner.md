@@ -405,6 +405,19 @@ unstarted). How she *returns* to a generated plan later, and the smooth Generate
 hand-off, is **deferred to the Generate-tab navigation milestone** (taken up last, with live
 generation) — not patched with a dashboard indicator now.
 
+**Per-section plan-lock — the load-bearing invariant (do not violate).** State the rule plainly
+so a future "use the latest plan everywhere" shortcut can't silently break a teacher mid-chapter:
+a section binds to whichever plan version is current **at the moment that section starts the
+chapter**, and that binding is **permanent for that section's run of that chapter**. The "latest
+plan auto-activates" behaviour applies **only to not-yet-started sections** — never to one already
+underway. So with 6A and 6B on the same chapter, 6A locked to the old version and 6B free to take
+the new one is the *correct, intended* state, not an inconsistency to reconcile. There is **no
+operation** that re-points a started section to a different plan (no regenerate-into-started, no
+edit, no "apply latest to all") — by design those affordances do not exist (§C above). Multi-section
+needs **no separate mechanism**: it is just this per-(section, chapter) lock applied independently
+per section. Editing an LU and regenerating under a started plan are both **non-operations** — there
+is nothing to invalidate because neither is permitted.
+
 ## D. Time model — content spine (the "(c)" decision)
 
 - The plan is **content + duration-needs**, not a fixed time sequence. The teacher inputs a
@@ -797,3 +810,189 @@ is wired — and **both apply across the board, to every subject's LP constituti
    exact per-weight counts). Audit every *other* subject's assessment constitution for the same
    "minimum / uncapped" loophole and apply exact counts where a fixed item set is intended, so
    re-generation does not reproduce the over-generation (e.g. 6 MCQs on one Central competency).
+
+## K. Generate tab — naming & period model (decided 2026-06-26)
+
+The LP **output** is named **Learning Units** (LU 1, LU 2, …) — **not** "Period 1, Period 2." The
+teacher's **input** keeps the word **"period"** (their real class durations and counts). Two
+different nouns for two different things, with two different owners.
+
+**Three nouns / three owners (keep distinct):**
+
+- **Period** — the teacher's *real* class time (durations + counts from their day schedule, e.g.
+  "six 45-min, one 60-min"); a genuine timetable object. *Owner: teacher (they tell us).*
+- **Learning Unit (LU)** — a pedagogical segment of the chapter Aruvi produces, sized to fit the
+  time given and ordered by the chapter's learning progression. *Owner: Aruvi (we produce).*
+- **Placement** — which LU runs in which actual class period. *Owner: teacher (they map).*
+
+The honest division of labour: **you give Aruvi your periods (time); Aruvi gives back Learning
+Units (a sized progression); you place the units across your periods.** Do not let "period" and
+"Learning Unit" blur — the whole clarity comes from them being *different words for different
+things*.
+
+**Why "Learning Unit," not "period" or "block":**
+
+- "Period 1 — 45 min" makes the teacher read it as *his* first timetable slot and compare against
+  his real first class ("but my first class is 60 minutes"). That slot-comparison is the entire
+  source of the gross-periods discomfort — the label itself triggers the wrong mental model.
+- "Block" still carries a container/slot flavour (something you *fit into* a slot), so it doesn't
+  fully escape the calendar association.
+- "Learning Unit" names the thing by its *pedagogical content*, not its temporal footprint. No
+  teacher has a "Learning Unit 1" on their timetable to compare against, so the relabel **removes
+  the trigger** rather than arguing against it; the helper microcopy then has less to do.
+
+**Why the numbering matters — flow, not displacement:**
+
+- "Period 3" sits on a grid → fixed location → when reality moves it the teacher feels
+  *displacement* ("I'm behind / Period 3 didn't happen on time"); every disruption reads as failure
+  against the calendar.
+- "Learning Unit 3" sits on a *sequence* → a position in the chapter's arc, not a slot on a clock.
+  Moving LU 1 → LU 2 reads as *progress along the chapter*. This converts the teacher's frame from
+  **schedule-adherence** (disruption = failure) to **progression** (disruption = carry the next
+  unit forward) — the frame that makes the gross / disruption-robust period model (§D, §J) feel
+  *right* rather than a compromise. Label and architecture now agree instead of fighting. (Also why
+  calendar sequencing — stamping LU → date — was ditched: too volatile, and it reintroduces the
+  displacement frame the LU naming removes.)
+
+**Carry-forward (do not regress):**
+
+- The rename is a **find-EVERYWHERE** change, not a one-component tweak: the on-screen renderer
+  (`web/app/page.jsx`), the PDF/export renderer (`aruvi_core/render/html.py`), the Allocate-box copy
+  in Generate, and Ask Aruvi answers. If Generate says "Learning Unit" but the PDF still prints
+  "Period 2," the slot association returns on the very artifact the teacher keeps (same screen↔print
+  parity discipline as the design system).
+- **Keep "period" for the teacher's input** — they enter real timetable objects; the word is
+  correct there.
+- **Visual must deliver the flow the label promises:** render LU numbers on the marginal numbering
+  rail as a **continuous rail** (connector / unbroken line), NOT separated cards — else the label
+  says "flow" and the layout says "pagination," and the layout wins.
+- **Temptation to resist:** "just call them periods, teachers understand periods." The answer is
+  this section — periods imply a grid, the grid implies displacement, and displacement is the
+  feeling we deliberately engineered out.
+
+**Supporting Generate-tab decisions (same session):**
+
+- **Period buckets from the day schedule:** if the section's schedule is filled, Generate shows that
+  section's durations as default period buckets (same-grade sections very likely share the duration
+  mix) with the *count* input by the teacher. Teacher can drop any/all buckets and add more. Input
+  is gross periods (time), not an ordered slot list.
+- **Allocate-box in Generate:** when a chapter is picked, if the teacher has run the Allocate tab for
+  the subject, the box shows the **recommended periods from Allocate**; if not, it **asks whether
+  they'd like to allocate first, with a direct link to the Allocate tab.** Makes Allocate pay off
+  inside Generate rather than feeling like a separate chore.
+- **Gross-periods comfort (pointer):** the LU rename is the primary fix; supporting microcopy frames
+  it as *"You give the time, Aruvi sizes the Learning Units to fit the chapter's progression, you
+  place each unit in your actual class,"* and reframes non-pinning as a feature (*"units aren't
+  pinned to clock times on purpose — so a shortened or cancelled class never breaks your plan"*).
+  Surface the note more prominently when period durations are **mixed**; stay quiet when uniform.
+
+## L. Navigation model & preconditions (decided 2026-06-26)
+
+### The model: three workspaces, not a linear workflow
+
+The three tabs are **three independent teacher intentions**, not compulsory sequential steps —
+*prepare to teach* (My Plan) · *plan the curriculum* (Allocate) · *generate lessons* (Generate).
+The justification is **temporal**: the three have different cadences. Allocation is done once-ish,
+early, planning-minded ("now that I have my annual budget, let me plan the next 3 chapters and see
+how much of the year that uses"). Generation is repeated, late, just-before-teaching ("Chapter 4
+goes live in 2 weeks — make me the plan"); a teacher may allocate and then *suspend and revisit
+generation weeks later*. Daily execution is every morning. Forcing one linear sequence would
+misrepresent the teacher's real rhythm. So the workspaces are independent **in intention** — but
+ordered **in dependency** (next section). Independence is not symmetry.
+
+- **My Plan** — the teacher's operational home and the **default first screen every day**. Owns two
+  things: (1) **readiness** — the weekly teaching schedule + annual teaching capacity (period
+  durations and teaching weeks); (2) **daily execution** — the lesson-pointer view. Setup lives
+  *inside* My Plan, not in a separate "Setup" tab, because setup is not a fourth intention — it is
+  the *precondition* of the operational home.
+- **Allocate** — independent planning workspace: distribute the annual teaching budget across
+  chapters, with a running **"how much of annual capacity is committed"** meter.
+- **Generate** — independent workspace: create a chapter's lesson plan when needed. Uses the
+  recommended allocation **if one exists**, or proceeds on the teacher's own input if she skips
+  allocation. **Never forced through Allocate.**
+
+### The dependency ladder (one-way; the system quietly enforces it)
+
+1. **My Plan readiness (weekly schedule + annual capacity)** → precondition for *everything*.
+   - Annual capacity = annual teaching **weeks** × the **durations already entered in the schedule**.
+   - **Unit discipline:** capacity AND chapter allocation are both expressed in the **same
+     duration-bucket counts** (e.g. "180 × 45-min periods/year available; this chapter commits 6"),
+     so the Allocate "budget used" meter is clean subtraction — same noun on both sides, no
+     minutes↔count conversion.
+2. **Allocate** → requires readiness; inert without it. **Visible-but-inert** behind the gate (NOT
+   hidden) — a greyed tab with a pointer ("complete your schedule in My Plan to start allocating →")
+   *teaches* the dependency; hiding it would make teachers think the feature doesn't exist. Once
+   readiness exists, Allocate carries the annual budget and asks only **how many of each
+   already-entered duration** (in numbers / weeks) to commit per chapter.
+3. **Generate** → requires the **same readiness** (it needs the period durations to offer buckets).
+   *Uses* allocation if present (pre-seeded suggestion), *proceeds without* it if not. Allocation is
+   an **input it uses if present, never a gate.**
+4. **My Plan Screen 2 (daily pointer view)** → needs an actual **generated plan** to point at.
+
+**Two distinct gates in My Plan (do not conflate):** *readiness* (schedule + capacity) unlocks
+**Allocate** and **Generate**; a *generated plan* populates **Screen 2**. Different gates, different
+consumers, different empty states.
+
+### NO bypass of real generation (decided — rejected the artifact/bypass path)
+
+A teacher **cannot** walk into Generate cold, type custom durations, and produce a real plan with
+zero My-Plan setup. **Readiness is a hard gate for *real* generation**, not only for Allocate and
+Screen 2. Rationale:
+
+- A bypass plan would be a **dead document** — no pointer, no daily view, no assessment-on-the-run,
+  no progression. It exposes Aruvi's *shallowest surface* (a PDF generator) as if it were the
+  product, guaranteeing the low-quality cohort that generates 3–4 times in 6 months and churns —
+  *they can't convert off an experience they were never given.* Cutting bypass doesn't lose real
+  market; it declines to mint customers whose only impression is the weakest face.
+- We are **not** removing the free taste — the **read-only sample plans** (NCF-standard, clearly
+  labelled *samples*) remain the no-commitment "look before you buy" surface and require nothing.
+  What's removed is the *fake-commitment* path (a real-looking plan that secretly tracks nothing).
+- **The funnel:** browse samples freely → to generate a *real* plan, complete the minimum readiness
+  → every plan made is then automatically part of the living/tracked system. Either *looking*
+  (samples) or *in* (readiness done, plans tracked). No degraded middle tier.
+- **System simplification (not just stricter):** with no bypass, no plan can exist without a
+  schedule, so by the time any plan exists Screen 2 always has the machinery to show it. The
+  **orphan-plan case disappears** — three empty states (not-ready / ready-no-plan / orphan) collapse
+  to two (not-ready → setup prompt; ready → daily view fills as she generates). The deferred
+  "promote a bypass artifact into the tracked system" reconciliation is **moot**.
+- **Gate framing matters — it's a help, not a toll:** the gate message is *"tell Aruvi your schedule
+  so the plans it makes can actually run your week,"* NOT "complete setup to unlock generation." The
+  required commitment is the minimum that makes her plan *real* — the same readiness she needs for
+  any daily value. Freemium then rations the **real** (tracked) generation, not a separate shallow
+  thing.
+
+### Input UX — conversational entry + side state table (applies to Allocate AND Generate)
+
+All non-button inputs are **natural-language / conversational**, not form fields. (Buttons — e.g.
+"Continue to Allocate" — stay buttons.) The pattern is **chat window = the act of entering**;
+**side table = committed state** (the source of truth the teacher glances at, so she never re-reads
+the conversation to know where she stands).
+
+- **Question wording:** "How long is each period, in minutes?" → answer stays on screen → "How many
+  *xx*-minute periods do you plan to allocate for the **chapters**?" — **Allocate uses plural
+  "chapters"** (whole-subject distribution); **Generate uses singular "chapter"** (one chapter in
+  focus). The singular/plural swap also signals the teacher's *altitude* without a heading.
+- **Bucket naming = by duration, echoed from her own answer** — NOT "period type 1 / type 2"
+  (rejected as too technical, reads like a DB field) and NOT a pre-assumed "45-minute period"
+  (presumptuous before she's told us). Naming a bucket by duration is only legitimate *because* the
+  conversation asks first, then echoes her answer back. (Earlier teacher-renaming of buckets —
+  "Core"/"non-core" — was **dropped**: added a step, no value.)
+- **Confirmed bucket → side table row:** once duration + count are confirmed, a row appears in the
+  side table (duration × count) with a **red discard** beside it. Chat then asks **"Add more?"** and
+  loops — this loop is what preserves the **mixed-duration** case (e.g. 45 × 6 *and* 60 × 1) legibly.
+- **Two correction modes by lifecycle:** *adjust-before-commit* (while a bucket is still in the
+  input area, both duration and count stay live/adjustable via the box's +/− — fixes a mid-entry
+  typo before there's a row to discard) → *discard-after-commit* (once it's a table row, the only
+  edit is the red discard + redo).
+- **Allocate hand-off opening (the §K "Allocate-box in Generate" behaviour, rendered in this UI):**
+  if an allocation exists, the side table is **pre-seeded** with the suggested buckets and the chat
+  *states* rather than asks — "Allocate suggests these periods for this chapter; add more, or
+  discard any to change them." If no allocation, the chat either offers the "allocate first?"
+  pointer or proceeds to "How long is each period?". **Same two surfaces (chat + table) serve both
+  modes** — start empty (ask) or start seeded (state). One interface, learned once.
+- **Same pattern at chapter level for Generate** as for Allocate — keep Allocate and Generate the
+  **identical chat-left / table-right shape**; only question wording and singular/plural differ.
+  Don't let them drift into two layouts for the same act at two altitudes.
+- **Mobile (standing requirement):** design the chat + table **stack-first** — on a ~390px phone the
+  table stacks above/below the chat, it must not assume horizontal room beside the chat. The table is
+  two columns + a discard, so it stacks cleanly; verify at mobile width before any such UI is "done."

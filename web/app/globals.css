@@ -431,6 +431,14 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 }
 .continue-btn:hover { background: var(--pine-d); }
 
+/* "Continue Allocating" on the final step — secondary/loop-back action, soft neutral fill so
+ * the solid-pine "Continue to Generate" reads as the single primary forward action. */
+.continue-btn-ghost {
+  color: var(--ink); background: var(--paper-sunk); border: 1px solid var(--line);
+  transition: background .15s, border-color .15s;
+}
+.continue-btn-ghost:hover { background: var(--paper); border-color: var(--ink-soft); }
+
 
 /* ── Final-step header: title + saved confirmation, reports inline ─── */
 .final-head {

@@ -52,7 +52,7 @@ export default function Home() {
       </div>
       <main>
         {!subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
-          tab === "allocate" ? <Allocate subject={subject} grade={grade} /> :
+          tab === "allocate" ? <Allocate subject={subject} grade={grade} onNavigate={setTab} /> :
           tab === "generate" ? <Generate subject={subject} grade={grade} /> :
           <MyPlans subject={subject} grade={grade} />}
       </main>
