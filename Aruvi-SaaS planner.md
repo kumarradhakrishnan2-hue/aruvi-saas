@@ -872,14 +872,16 @@ things*.
 
 **Supporting Generate-tab decisions (same session):**
 
-- **Period buckets from the day schedule:** if the section's schedule is filled, Generate shows that
-  section's durations as default period buckets (same-grade sections very likely share the duration
-  mix) with the *count* input by the teacher. Teacher can drop any/all buckets and add more. Input
-  is gross periods (time), not an ordered slot list.
-- **Allocate-box in Generate:** when a chapter is picked, if the teacher has run the Allocate tab for
-  the subject, the box shows the **recommended periods from Allocate**; if not, it **asks whether
-  they'd like to allocate first, with a direct link to the Allocate tab.** Makes Allocate pay off
-  inside Generate rather than feeling like a separate chore.
+- **Period buckets from the day schedule:** the section's durations seed the period buckets
+  (same-grade sections very likely share the duration mix); the teacher supplies counts. Input is
+  gross periods (time), not an ordered slot list. **NOTE (superseded location):** this duration+count
+  collection now happens **in the Allocate build flow only** — Generate does NOT collect input (see
+  §L "Allocate is the sole route" / "Generate: select + confirm"). Generate just selects an
+  allocated chapter and confirms.
+- **Allocate is the input stage (revised):** an earlier draft had Generate showing an "Allocate-box"
+  that either pre-filled recommended periods or asked "allocate first?". Superseded — there is **no
+  bypass and no second axis**: Generate is reached only via *Continue to Generation* from Allocate,
+  so all period inputs are already gathered at Allocate. See §L.
 - **Gross-periods comfort (pointer):** the LU rename is the primary fix; supporting microcopy frames
   it as *"You give the time, Aruvi sizes the Learning Units to fit the chapter's progression, you
   place each unit in your actual class,"* and reframes non-pinning as a feature (*"units aren't
@@ -888,111 +890,176 @@ things*.
 
 ## L. Navigation model & preconditions (decided 2026-06-26)
 
-### The model: three workspaces, not a linear workflow
+> **FINAL TAB STRUCTURE (decided end of session — read this first; it overrides any "three tab"
+> language below).** There are **TWO tabs: "My Plans" and "Generate."** There is **no separate
+> "Allocate" tab.** What earlier text calls the "Allocate tab / Allocate workspace" is now the
+> **front half of the Generate tab** — i.e. the Generate tab *contains* the whole arc: choose
+> chapters → allocate time (budget ledger + meter) → **Generate Lesson Plan** (terminal action).
+> "Allocate" survives only as the name of the *internal process/steps*, never as a tab.
+>
+> - **My Plans** — day-to-day execution (the lesson pointer; surfaces generated LPs to invoke).
+> - **Generate** — the generative process: allocation steps + generation, in one tab.
+>
+> **Deep start-dependency (unchanged):** the **Generate tab stays inactive until My Plans holds both
+> the weekly schedule AND the annual budget.** Once that readiness exists, Generate is fully usable;
+> My Plans then runs daily execution. So everywhere below: read "Allocate tab" as "the
+> allocation/ledger *part of the Generate tab*," and the route "readiness → Allocate → Generate" as
+> "readiness → (the Generate tab, whose steps are: allocate → generate)." The dependency, no-bypass,
+> inverted flow, budget meter, selective reset, ledger-as-resting-view, and select+confirm rules all
+> stand exactly as written — only the *tab name* "Allocate" collapses into "Generate."
+>
+> *(Why "Generate" and not "Plan/Prepare": in this model allocation is the **on-ramp to**
+> generation, not a co-equal standalone activity — nobody allocates for its own sake; it exists to
+> feed the plan. So the tab is named for its payoff, the lesson plan. The allocation front-steps read
+> as "the steps of generating," and the terminal button is "Generate Lesson Plan.")*
 
-The three tabs are **three independent teacher intentions**, not compulsory sequential steps —
-*prepare to teach* (My Plan) · *plan the curriculum* (Allocate) · *generate lessons* (Generate).
-The justification is **temporal**: the three have different cadences. Allocation is done once-ish,
-early, planning-minded ("now that I have my annual budget, let me plan the next 3 chapters and see
-how much of the year that uses"). Generation is repeated, late, just-before-teaching ("Chapter 4
-goes live in 2 weeks — make me the plan"); a teacher may allocate and then *suspend and revisit
-generation weeks later*. Daily execution is every morning. Forcing one linear sequence would
-misrepresent the teacher's real rhythm. So the workspaces are independent **in intention** — but
-ordered **in dependency** (next section). Independence is not symmetry.
+> **Revision note (earlier same session):** an even earlier draft framed the tabs as three
+> *independent, optional* intentions and allowed a "skip Allocate, input durations directly in
+> Generate" path. **Superseded.** Single hardcoded pathway, no bypass, no second axis — inputs are
+> gathered in the allocation steps, so a path that skipped them would merely duplicate the step.
 
-- **My Plan** — the teacher's operational home and the **default first screen every day**. Owns two
-  things: (1) **readiness** — the weekly teaching schedule + annual teaching capacity (period
-  durations and teaching weeks); (2) **daily execution** — the lesson-pointer view. Setup lives
-  *inside* My Plan, not in a separate "Setup" tab, because setup is not a fourth intention — it is
-  the *precondition* of the operational home.
-- **Allocate** — independent planning workspace: distribute the annual teaching budget across
-  chapters, with a running **"how much of annual capacity is committed"** meter.
-- **Generate** — independent workspace: create a chapter's lesson plan when needed. Uses the
-  recommended allocation **if one exists**, or proceeds on the teacher's own input if she skips
-  allocation. **Never forced through Allocate.**
+### The model: three workspaces, one pathway
 
-### The dependency ladder (one-way; the system quietly enforces it)
+Three tabs, three intentions — *prepare to teach* (My Plan) · *plan the curriculum* (Allocate) ·
+*generate lessons* (Generate) — but the **path through them is fixed**: you cannot reach Generate
+except through Allocate. The temporal cadences still differ (allocate once-ish/early; generate
+repeatedly/late, just-before-teaching; execute daily), so a teacher may allocate then suspend and
+return to generate weeks later — but the *sequence* readiness → Allocate → Generate is the only
+route.
 
-1. **My Plan readiness (weekly schedule + annual capacity)** → precondition for *everything*.
-   - Annual capacity = annual teaching **weeks** × the **durations already entered in the schedule**.
-   - **Unit discipline:** capacity AND chapter allocation are both expressed in the **same
+- **My Plan** — operational home, **default first screen every day**, **scope-free** (it spans all
+  subjects/sections — organized by her *day*, not by subject; see §scope below). Owns: (1)
+  **readiness** — weekly teaching schedule + annual teaching capacity (period durations + teaching
+  weeks); (2) **daily execution** — surfaces generated LPs to invoke when needed via the lesson
+  pointer. It does **NOT** own allocation. Setup lives inside My Plan (it is the *precondition* of
+  the home, not a fourth intention).
+- **Allocate** — **the** planning workspace AND the standing **view** of current allocation. Owns the
+  annual-budget ledger and the route to Generate. (Function vs. view split below.)
+- **Generate** — reached only as the **continuation of an Allocate session** (Continue to
+  Generation). A **select-allocated-chapter + confirm** surface, not an input surface. Shows only
+  allocated chapters.
+
+### The dependency ladder (one-way; system quietly enforces it)
+
+1. **My Plan readiness (weekly schedule + annual capacity)** → precondition for everything.
+   - Annual capacity = annual teaching **weeks** × the **durations already in the schedule**.
+   - **Unit discipline:** capacity AND chapter allocation both expressed in the **same
      duration-bucket counts** (e.g. "180 × 45-min periods/year available; this chapter commits 6"),
-     so the Allocate "budget used" meter is clean subtraction — same noun on both sides, no
-     minutes↔count conversion.
-2. **Allocate** → requires readiness; inert without it. **Visible-but-inert** behind the gate (NOT
-   hidden) — a greyed tab with a pointer ("complete your schedule in My Plan to start allocating →")
-   *teaches* the dependency; hiding it would make teachers think the feature doesn't exist. Once
-   readiness exists, Allocate carries the annual budget and asks only **how many of each
-   already-entered duration** (in numbers / weeks) to commit per chapter.
-3. **Generate** → requires the **same readiness** (it needs the period durations to offer buckets).
-   *Uses* allocation if present (pre-seeded suggestion), *proceeds without* it if not. Allocation is
-   an **input it uses if present, never a gate.**
+     so the budget meter is clean subtraction — same noun both sides, no minutes↔count conversion.
+2. **Allocate** → requires readiness; **visible-but-inert** behind the gate (greyed + pointer
+   "complete your schedule in My Plan to start allocating →"; not hidden — hiding implies the feature
+   doesn't exist).
+3. **Generate** → reached only via **Continue to Generation** from Allocate. No independent input
+   entry; no bypass.
 4. **My Plan Screen 2 (daily pointer view)** → needs an actual **generated plan** to point at.
 
-**Two distinct gates in My Plan (do not conflate):** *readiness* (schedule + capacity) unlocks
-**Allocate** and **Generate**; a *generated plan* populates **Screen 2**. Different gates, different
-consumers, different empty states.
+**Two distinct gates in My Plan (do not conflate):** *readiness* unlocks **Allocate**; a *generated
+plan* populates **Screen 2**.
 
-### NO bypass of real generation (decided — rejected the artifact/bypass path)
+### NO bypass; Allocate is the sole route to Generate
 
-A teacher **cannot** walk into Generate cold, type custom durations, and produce a real plan with
-zero My-Plan setup. **Readiness is a hard gate for *real* generation**, not only for Allocate and
-Screen 2. Rationale:
+A teacher cannot reach real generation without going through readiness → Allocate. Rationale:
 
-- A bypass plan would be a **dead document** — no pointer, no daily view, no assessment-on-the-run,
-  no progression. It exposes Aruvi's *shallowest surface* (a PDF generator) as if it were the
-  product, guaranteeing the low-quality cohort that generates 3–4 times in 6 months and churns —
-  *they can't convert off an experience they were never given.* Cutting bypass doesn't lose real
-  market; it declines to mint customers whose only impression is the weakest face.
-- We are **not** removing the free taste — the **read-only sample plans** (NCF-standard, clearly
-  labelled *samples*) remain the no-commitment "look before you buy" surface and require nothing.
-  What's removed is the *fake-commitment* path (a real-looking plan that secretly tracks nothing).
-- **The funnel:** browse samples freely → to generate a *real* plan, complete the minimum readiness
-  → every plan made is then automatically part of the living/tracked system. Either *looking*
-  (samples) or *in* (readiness done, plans tracked). No degraded middle tier.
-- **System simplification (not just stricter):** with no bypass, no plan can exist without a
-  schedule, so by the time any plan exists Screen 2 always has the machinery to show it. The
-  **orphan-plan case disappears** — three empty states (not-ready / ready-no-plan / orphan) collapse
-  to two (not-ready → setup prompt; ready → daily view fills as she generates). The deferred
-  "promote a bypass artifact into the tracked system" reconciliation is **moot**.
-- **Gate framing matters — it's a help, not a toll:** the gate message is *"tell Aruvi your schedule
-  so the plans it makes can actually run your week,"* NOT "complete setup to unlock generation." The
-  required commitment is the minimum that makes her plan *real* — the same readiness she needs for
-  any daily value. Freemium then rations the **real** (tracked) generation, not a separate shallow
-  thing.
+- A bypass plan would be a **dead document** (no pointer, no daily view, no assessment-tag-along, no
+  progression) — Aruvi's shallowest surface masquerading as the product, minting the churn cohort
+  that generates 3–4× in 6 months. *They can't convert off an experience they were never given.*
+- The free taste is the **read-only sample plans** (NCF-standard, labelled *samples*) — the only
+  no-commitment surface, requires nothing. What's removed is the *fake-commitment* path.
+- **System simplification:** no plan can exist without a schedule, so by the time any plan exists
+  Screen 2 always has machinery to show it. The **orphan-plan case disappears**; the "promote a
+  bypass artifact" reconciliation is moot.
+- **Gate framing — help, not toll:** *"tell Aruvi your schedule so the plans it makes can actually
+  run your week,"* not "complete setup to unlock generation." Freemium rations the **real** (tracked)
+  generation, not a shallow substitute.
 
-### Input UX — conversational entry + side state table (applies to Allocate AND Generate)
+### Subject·grade scope (top-left indicator)
 
-All non-button inputs are **natural-language / conversational**, not form fields. (Buttons — e.g.
-"Continue to Allocate" — stay buttons.) The pattern is **chat window = the act of entering**;
-**side table = committed state** (the source of truth the teacher glances at, so she never re-reads
-the conversation to know where she stands).
+- **Present & load-bearing on Allocate and Generate** — both are inherently single-scope (the budget,
+  ledger, % utilization, chapter list are all *per subject·grade*; "62% committed" is meaningless
+  without knowing which). On the **Allocate view** it is the **active scope-switcher** the teacher
+  toggles herself to inspect any subject·grade.
+- **Absent on My Plan** — My Plan is cross-scope (one morning mixes 6A Science + 7B Maths). No single
+  subject·grade, and deliberately **no annual-budget number on My Plan** — across all
+  subjects/sections it would be either meaningless or a wall of numbers reading like teacher
+  *tracking*, which the product rules out on principle (§"deliberately avoids"). Budget utilization
+  lives **only** inside Allocate's scoped view.
 
-- **Question wording:** "How long is each period, in minutes?" → answer stays on screen → "How many
-  *xx*-minute periods do you plan to allocate for the **chapters**?" — **Allocate uses plural
-  "chapters"** (whole-subject distribution); **Generate uses singular "chapter"** (one chapter in
-  focus). The singular/plural swap also signals the teacher's *altitude* without a heading.
-- **Bucket naming = by duration, echoed from her own answer** — NOT "period type 1 / type 2"
-  (rejected as too technical, reads like a DB field) and NOT a pre-assumed "45-minute period"
-  (presumptuous before she's told us). Naming a bucket by duration is only legitimate *because* the
-  conversation asks first, then echoes her answer back. (Earlier teacher-renaming of buckets —
-  "Core"/"non-core" — was **dropped**: added a step, no value.)
-- **Confirmed bucket → side table row:** once duration + count are confirmed, a row appears in the
-  side table (duration × count) with a **red discard** beside it. Chat then asks **"Add more?"** and
-  loops — this loop is what preserves the **mixed-duration** case (e.g. 45 × 6 *and* 60 × 1) legibly.
-- **Two correction modes by lifecycle:** *adjust-before-commit* (while a bucket is still in the
-  input area, both duration and count stay live/adjustable via the box's +/− — fixes a mid-entry
-  typo before there's a row to discard) → *discard-after-commit* (once it's a table row, the only
-  edit is the red discard + redo).
-- **Allocate hand-off opening (the §K "Allocate-box in Generate" behaviour, rendered in this UI):**
-  if an allocation exists, the side table is **pre-seeded** with the suggested buckets and the chat
-  *states* rather than asks — "Allocate suggests these periods for this chapter; add more, or
-  discard any to change them." If no allocation, the chat either offers the "allocate first?"
-  pointer or proceeds to "How long is each period?". **Same two surfaces (chat + table) serve both
-  modes** — start empty (ask) or start seeded (state). One interface, learned once.
-- **Same pattern at chapter level for Generate** as for Allocate — keep Allocate and Generate the
-  **identical chat-left / table-right shape**; only question wording and singular/plural differ.
-  Don't let them drift into two layouts for the same act at two altitudes.
-- **Mobile (standing requirement):** design the chat + table **stack-first** — on a ~390px phone the
-  table stacks above/below the chat, it must not assume horizontal room beside the chat. The table is
-  two columns + a discard, so it stacks cleanly; verify at mobile width before any such UI is "done."
+### Allocate: function vs. view (the key distinction)
+
+Opening the **Allocate tab is passive** — it shows the ledger and **never auto-runs anything and
+never auto-threads to generation**. Every forward step is a **deliberate tap**. But the tab is *not*
+read-only: add/modify/reset and Continue-to-Generation are all launched **from** it.
+
+- **Two entries set scope:** (a) tapping an unstarted class on My Plan (e.g. "6A Science") — the tap
+  *carries* the scope, populating Allocate with Science·VI; (b) opening the Allocate tab directly and
+  **toggling** subject·grade herself.
+- **Resting state when allocations exist = the ledger:** allocated chapters, periods, started/
+  unstarted status, total weeks + periods, **% budget utilized**. *This is the answer to "where do I
+  see my current allocation" — open Allocate, toggle scope, read.*
+- **First-time (no allocations):** opens to "Ready to plan your first few chapters?" → into the build
+  flow.
+
+### Allocate build flow — INVERTED (teacher-shaped), budget-metered
+
+The old "show all chapters, all ticked, untick what you don't want" is **replaced**. A teacher
+doesn't budget a year top-down; she has a few chapters in mind and wants their *time cost*. So:
+
+1. **Affirmative chapter select** — a dropdown; she **ticks** the chapters she plans to teach (1 or
+   several). **Only ticked chapters show** on screen — the workspace shows *her* plan, not the
+   catalogue.
+2. **Allocate Time** → suggested allocation + **live budget utilization** (weeks, periods×duration,
+   % of annual budget).
+3. **Modify (absolute, NOT zero-sum)** — the old zero-sum modify assumed total periods was fixed; it
+   isn't. New premise = "spend against an annual budget." So modify nudges any chapter's periods
+   **up or down freely**, and **budget utilization recomputes live**. The meter *replaces* the
+   zero-sum constraint as the feedback mechanism. **Modify is no longer terminal** — it shows the
+   adjusted allocation; **Accept is the sole commit.**
+4. **Accept Allocation** — commits to the ledger. (Accept = commit to *budget ledger*; it does NOT
+   auto-generate — see two-step below.)
+5. **Continue to Generation** — carries **only the allocated chapters** forward.
+   **Reset Allocation** is also available (selective — below).
+   *("Continue to Allocate" button is removed — she's already there, nowhere further to push.)*
+
+- **Second-time (allocations already exist):** the ledger shows **prior allocations + their %
+  utilization**, so adding chapters shows the **incremental** budget effect.
+- **Selective reset:** not blanket. Opens a **tick-which-to-reset** list scoped to **unstarted
+  allocations only**; started/committed chapters are shown but **not selectable** (locked, §C).
+  Resetting frees that budget back. One rule governs modify, remove, AND reset uniformly:
+  **unstarted = editable ledger line; started = frozen, still counts** (§C per-section lock).
+
+### Generate: select + confirm (no input collection)
+
+- Shows **only allocated chapters**. She picks the one to generate; **Generate is one confirming
+  tap** — even in the **single-chapter** case (nothing to select, but still a deliberate Generate
+  tap). *Accept-allocation and Generate stay two steps:* Accept commits the budget ledger; Generate
+  spends the API cost — and she may Accept today but generate two weeks before teaching.
+- **Already-generated warning:** if she picks a chapter that **already has an LP**, a **plain
+  warning** flashes — *"a plan already exists for this chapter"* — **overridable**. No
+  started-vs-unstarted nuance shown (she wouldn't parse it); the system still honours §C underneath
+  (unstarted → new compare-version, newest auto-active; started → locked).
+
+### My Plan empty states (two)
+
+- **Readiness incomplete** → inward prompt to finish schedule + capacity.
+- **Ready, no plan** → the **panic/forward state** ("Wednesday class, no plan"): a single CTA
+  **"Ready to plan your first few chapters?"** → Allocate. **No dual Allocate/Generate CTA** (an
+  earlier draft proposed one — superseded; the only route is Allocate).
+
+### Input UX — conversational entry + side state table (Allocate build flow)
+
+All non-button inputs are **conversational**, not form fields (buttons stay buttons). **Chat window =
+the act of entering; side table = committed state** (glanceable truth, so she never re-reads the
+conversation).
+
+- **Wording:** "How long is each period, in minutes?" → answer stays on screen → "How many *xx*-minute
+  periods …?" — Allocate uses plural **"chapters"** (whole-subject), Generate-context wording uses
+  singular **"chapter"**; the swap signals altitude without a heading.
+- **Bucket naming = by duration, echoed from her answer** — NOT "period type 1/2" (too technical) and
+  NOT a pre-assumed "45-min period" (presumptuous); legitimate only *because* it asks first then
+  echoes back. (Teacher-renaming "Core/non-core" was **dropped** — a step with no value.)
+- **Confirmed bucket → table row** (duration × count) with a **red discard**; chat asks **"Add
+  more?"** and loops — preserving the **mixed-duration** case (45×6 *and* 60×1) legibly.
+- **Two correction modes by lifecycle:** *adjust-before-commit* (live +/− while still in the input
+  area) → *discard-after-commit* (table row → red discard + redo only).
+- **Mobile (standing requirement):** design chat + table **stack-first** (~390px → table stacks
+  above/below chat, never assumes horizontal room beside it); verify at mobile width before "done."
