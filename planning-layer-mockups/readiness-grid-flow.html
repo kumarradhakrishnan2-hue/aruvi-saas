@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi · Readiness grid flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Newsreader:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+    --ink:#1f2a24; --ink-soft:#6b6a63;
+    --line:#e4ddd0; --line-soft:#ece7dc;
+    --pine:#1e5c4a; --pine-d:#164436;
+    --clay:#b65a31; --ochre:#9a7321;
+    --f-display:"Fraunces",Georgia,serif;
+    --f-body:"Newsreader",Georgia,serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb;
+    --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
+    --sec-c:#9a7321; --sec-c-bg:#f4ecd8;
+    --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:#e9e2d4; color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px; margin:0 auto; padding:30px 18px 80px;}
+  .page-head{font-family:var(--f-display); font-weight:600; font-size:28px; color:var(--pine-d); letter-spacing:-.4px;}
+  .page-head em{font-style:italic; color:var(--clay); font-weight:500;}
+  .page-sub{font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); margin-top:4px;}
+  .legend{font-style:italic; color:var(--ink-soft); font-size:14px; margin:10px 0 18px; max-width:760px;}
+
+  .device{background:var(--paper); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 1px 0 #d8cfbe; max-width:680px; margin:0 auto;}
+
+  .prog{display:flex; align-items:center; gap:10px; padding:13px 20px; background:var(--paper-2); border-bottom:1px solid var(--line);}
+  .prog .pk{font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); white-space:nowrap;}
+  .pips{display:flex; gap:6px; margin-left:auto;}
+  .pip{width:26px; height:6px; border-radius:3px; background:#e0d8c7;}
+  .pip.on{background:var(--pine);}
+  .pip.half{background:linear-gradient(90deg,var(--pine) 50%,#e0d8c7 50%);}
+
+  .hd{padding:16px 20px 4px;}
+  .kicker{font-family:var(--f-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ochre); font-weight:500;}
+  .disp{font-family:var(--f-display); font-weight:500; font-size:21px; color:var(--ink); margin-top:3px;}
+  .askline{font-style:italic; color:var(--ink-soft); font-size:13.5px; margin-top:3px;}
+  .pad{padding:14px 20px 22px;}
+
+  .btn{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.04em; border-radius:7px; padding:11px 15px; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--ink);}
+  .btn-primary{background:var(--pine); color:#f3efe6; border-color:var(--pine);}
+  .btn-ghost{background:transparent;}
+  .btn-row{display:flex; gap:10px; margin-top:18px;}
+
+  /* duration chips — all same size/font; each declared duration a different colour */
+  .durwrap{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:8px;}
+  .gc-foot{flex-wrap:wrap;}
+  .durchip{display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:14px; font-weight:500; border-radius:9px; padding:11px 15px; border:1px solid;}
+  .durchip[data-d="0"]{color:#f3efe6; background:var(--sec-a); border-color:var(--sec-a);}
+  .durchip[data-d="1"]{color:#f7efe9; background:var(--sec-b); border-color:var(--sec-b);}
+  .durchip[data-d="2"]{color:#fbf6e9; background:var(--sec-c); border-color:var(--sec-c);}
+  .durchip .x{cursor:pointer; font-size:13px; line-height:1; opacity:.85;}
+  .addchip{font-family:var(--f-mono); font-size:14px; font-weight:500; color:var(--pine-d); border:1px dashed #bcd0c4; border-radius:9px; padding:11px 15px; cursor:pointer; background:#eef4f0;}
+
+  /* the grid */
+  table.wk{width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; margin-top:8px;}
+  table.wk th{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; padding:7px 2px; text-align:center;}
+  table.wk th.rowhd{text-align:left; width:62px; padding-left:4px;}
+  table.wk td{padding:3px;}
+  .rowtag{font-family:var(--f-mono); font-size:12px; font-weight:500; padding:4px 0;}
+  .cell{height:42px; border-radius:7px; border:1px solid var(--line); background:var(--paper-2); cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--f-mono); font-size:11px; color:transparent; transition:background .08s, border-color .08s; user-select:none;}
+  .cell:hover{border-color:#cbbfa6;}
+  .cell.on{color:#fff; font-weight:500;}
+  .cell.on[data-sec="A"]{background:var(--sec-a); border-color:var(--sec-a);}
+  .cell.on[data-sec="B"]{background:var(--sec-b); border-color:var(--sec-b);}
+  .cell.on[data-sec="C"]{background:var(--sec-c); border-color:var(--sec-c);}
+  .cell.on[data-sec="D"]{background:var(--sec-d); border-color:var(--sec-d);}
+  tr[data-sec="A"] .rowtag{color:var(--sec-a);}
+  tr[data-sec="B"] .rowtag{color:var(--sec-b);}
+  tr[data-sec="C"] .rowtag{color:var(--sec-c);}
+  tr[data-sec="D"] .rowtag{color:var(--sec-d);}
+  tr[data-sec="A"] .cell:not(.on){background:var(--sec-a-bg);}
+  tr[data-sec="B"] .cell:not(.on){background:var(--sec-b-bg);}
+  tr[data-sec="C"] .cell:not(.on){background:var(--sec-c-bg);}
+  tr[data-sec="D"] .cell:not(.on){background:var(--sec-d-bg);}
+  .cell.pulse{animation:cellpulse .42s ease-out;}
+  @keyframes cellpulse{0%{transform:scale(1);} 35%{transform:scale(1.14); box-shadow:0 0 0 3px rgba(30,92,74,.25);} 100%{transform:scale(1); box-shadow:none;}}
+
+  .livehint{font-family:var(--f-mono); font-size:11px; color:var(--ochre); background:#f7efda; border:1px solid #e6d8ad; border-radius:7px; padding:0 11px; margin-top:10px; max-height:0; opacity:0; overflow:hidden; transition:max-height .2s ease, opacity .2s ease, padding .2s ease;}
+  .livehint.show{max-height:60px; opacity:1; padding:8px 11px;}
+
+  .hint{font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:12px; display:flex; gap:7px; align-items:flex-start;}
+  .hint .i{color:var(--ochre); font-style:normal;}
+  .clashnote{font-family:var(--f-mono); font-size:11px; color:var(--clay); margin-top:10px; min-height:16px;}
+  .clashnote.ok{color:var(--pine);}
+
+  .footnote{font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:14px; padding-top:11px; border-top:1px solid var(--line);}
+  .screen-label{font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--clay); margin:34px 0 4px; font-weight:500;}
+  .hide{display:none !important;}
+
+  /* annual-time screen */
+  .methodrow{display:flex; flex-direction:column; gap:9px; margin-top:6px;}
+  .method{border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper-2); cursor:pointer; transition:border-color .1s, background .1s;}
+  .method:hover{border-color:#cbbfa6;}
+  .method.sel{border-color:var(--pine); background:#eef4f0;}
+  .method .mt{font-family:var(--f-mono); font-size:12.5px; font-weight:500; color:var(--pine-d); display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .method .mt .chev{color:var(--ink-soft); transition:transform .15s ease;}
+  .method.open .mt .chev{transform:rotate(180deg); color:var(--pine);}
+  .method .body{max-height:0; opacity:0; overflow:hidden; transition:max-height .2s ease, opacity .2s ease, margin .2s ease;}
+  .method.open .body{max-height:160px; opacity:1; margin-top:8px;}
+  .method .md{font-style:italic; font-size:12.5px; color:var(--ink-soft);}
+  .method .inrow{display:flex; align-items:center; gap:10px; margin-top:11px; flex-wrap:wrap;}
+  .estbreak{font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:9px; padding-top:9px; border-top:1px solid #cfe0d6; line-height:1.7;}
+  .estbreak b{color:var(--pine-d); font-weight:500;}
+
+  /* budget summary row (this method's computed total) */
+  .budgetsum{border:1px solid #cfe0d6; background:#eef4f0; border-radius:11px; padding:14px 16px; margin-top:16px;}
+  .budgetsum .bsk{font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--pine);}
+  .budgetsum .bsv{font-family:var(--f-display); font-size:23px; color:var(--pine-d); margin-top:4px;}
+  .budgetsum .bsv small{font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); white-space:nowrap;}
+  .budgetsum .bsn{font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:7px; line-height:1.6;}
+
+  /* inline input inside an open method tab */
+  .method .inrow .numin{font-family:var(--f-mono); font-size:13px;}
+  .method .estnote{font-style:italic; font-size:12.5px; color:var(--ochre); margin-top:8px;}
+
+  /* per-grade budget cards (legacy, kept harmless) */
+  .gradecard{border:1px solid var(--line); border-radius:11px; padding:13px 15px; margin-bottom:10px; background:var(--paper-2);}
+  .gc-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .gc-name{font-family:var(--f-display); font-size:16px; color:var(--ink);}
+  .gc-budget{font-family:var(--f-mono); font-size:12px; color:var(--ink-soft); white-space:nowrap;}
+  .gc-budget b{font-family:var(--f-display); font-size:20px; color:var(--pine-d); font-weight:500;}
+  .gc-mid{display:flex; align-items:center; gap:10px; margin-top:11px;}
+  .gc-auto{font-style:italic; font-size:12.5px; color:var(--ink-soft);}
+  .gc-foot{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:11px; padding-top:9px; border-top:1px solid var(--line-soft);}
+  .gc-method{font-family:var(--f-mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft);}
+  .gc-switch{font-family:var(--f-mono); font-size:10.5px; color:var(--pine); cursor:pointer; white-space:nowrap;}
+  .gc-methods{display:none; flex-direction:column; gap:5px; margin-top:9px;}
+  .gc-methods.show{display:flex;}
+  .gc-opt{font-family:var(--f-mono); font-size:11.5px; color:var(--ink); border:1px solid var(--line); border-radius:7px; padding:8px 11px; cursor:pointer; background:var(--paper);}
+  .gc-opt:hover{border-color:var(--pine);}
+  .gc-opt.on{border-color:var(--pine); background:#eef4f0; color:var(--pine-d);}
+  .steppermini{display:inline-flex; align-items:center; gap:8px;}
+  .steppermini button{width:28px; height:28px; border-radius:6px; border:1px solid var(--line); background:var(--paper-2); color:var(--pine-d); cursor:pointer; font-size:14px; line-height:1;}
+  .steppermini .v{min-width:40px; text-align:center; font-family:var(--f-display); font-size:18px; color:var(--pine-d);}
+  .unitlab{font-family:var(--f-mono); font-size:11px; color:var(--ink-soft);}
+
+  .estimate{border:1px solid #cfe0d6; background:#eef4f0; border-radius:11px; padding:15px 16px; margin-top:14px;}
+  .estimate .ek{font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--pine); }
+  .estimate .ev{font-family:var(--f-display); font-size:24px; color:var(--pine-d); margin-top:4px;}
+  .estimate .en{font-style:italic; font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+
+  @media(max-width:520px){
+    .wrap{padding:24px 12px 70px;}
+    .pad{padding:14px 14px 20px;}
+    table.wk th{font-size:8px; letter-spacing:.02em;}
+    table.wk th.rowhd{width:38px; padding-left:2px;}
+    table.wk td{padding:2px;}
+    .cell{height:44px; font-size:11px;}            /* 44px touch target */
+    .disp{font-size:19px;}
+    /* bigger tap targets for steppers on touch */
+    .steppermini button{width:34px; height:34px; font-size:16px;}
+    .steppermini .v{min-width:34px; font-size:17px;}
+    /* summary headline: let the hours drop to their own line */
+    .budgetsum .bsv{font-size:21px; line-height:1.3;}
+    .budgetsum .bsv small{display:block; white-space:normal; margin-top:2px;}
+    /* method tab labels can wrap rather than overflow */
+    .method .mt{font-size:12px;}
+    .btn-row{flex-wrap:wrap;}
+    .btn-row .btn{min-height:44px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-head">Aruvi <em>·</em> Readiness grid flow</div>
+  <div class="page-sub">My Plans · setup · durations → weekly grid (per grade) → annual time · 2026-06-27</div>
+  <div class="legend">Interactive prototype. <b>Tap</b> a cell to mark a class (fills the shortest duration). <b>Hold</b> a cell — touch long-press, or press-and-hold / right-click on desktop — to cycle it up to the next declared duration; tap a filled cell again to clear. Grids start empty. One grid per subject·grade; sections are fixed from setup. The flow loops grade by grade, then estimates annual teaching time the way the teacher already thinks about it.</div>
+
+  <!-- ====================== STEP A: DURATIONS ====================== -->
+  <div class="screen-label">Step 4 (split per grade) · class durations</div>
+  <div class="device" id="screenDur">
+    <div class="prog"><span class="pk">My Plans · Setup</span>
+      <div class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip half"></span><span class="pip"></span></div>
+    </div>
+    <div class="hd">
+      <div class="kicker" id="durScope">Science · Grade VI</div>
+      <div class="disp" id="durQ">What class durations do you have for Science, Grade VI?</div>
+      <div class="askline">Most teachers have just one. Add another only if some classes run longer.</div>
+    </div>
+    <div class="pad">
+      <div class="durwrap" id="durList"><!-- chips injected --></div>
+      <div class="hint"><span class="i">›</span><span>Tapping a cell on the next screen fills the shortest duration; hold a cell to switch it to a longer one.</span></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" style="flex:1;" onclick="goGrid()">Continue to the weekly grid →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== STEP B: GRID ====================== -->
+  <div class="screen-label">Step 5 · weekly grid (sections × days), one per grade</div>
+  <div class="device hide" id="screenGrid">
+    <div class="prog"><span class="pk">My Plans · Setup</span>
+      <div class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip half"></span></div>
+    </div>
+    <div class="hd">
+      <div class="kicker" id="gridScope">Science · Grade VI · 45-min periods</div>
+      <div class="disp" id="gridQ">When do you teach each Science VI section?</div>
+      <div class="askline">Tap the days you teach each section. Hold a cell for a longer period.</div>
+    </div>
+    <div class="pad">
+      <table class="wk">
+        <thead><tr><th class="rowhd">Section</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+        <tbody id="gridBody"></tbody>
+      </table>
+      <div class="livehint" id="liveHint"></div>
+      <div class="clashnote ok" id="clash">No two sections clash on a day — looking good.</div>
+      <div class="hint"><span class="i">›</span><span>Each section has its own colour, so you can see at a glance that two sections don't collide on the same day.</span></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="show('screenDur')">← durations</button>
+        <button class="btn btn-primary" style="flex:1;" id="gridNext" onclick="gridNext()">Continue →</button>
+      </div>
+      <div class="footnote" id="gridFoot">After your last grade, you'll estimate how much you teach in a year.</div>
+    </div>
+  </div>
+
+  <!-- ====================== STEP C: ANNUAL BUDGET — one screen per grade ====================== -->
+  <div class="screen-label">Annual budget · one screen per subject·grade (method chosen on the first, default thereafter) · last screen → Generate</div>
+  <div class="device hide" id="screenBudget">
+    <div class="prog"><span class="pk">My Plans · Setup</span>
+      <div class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span></div>
+    </div>
+    <div class="hd">
+      <div class="kicker" id="budScope">Science · Grade VI · annual budget</div>
+      <div class="disp" id="budQ">How much do you teach Science VI in a year?</div>
+      <div class="askline" id="budAsk">Tell Aruvi however you know it — it works out the yearly periods from this grade's timetable.</div>
+    </div>
+    <div class="pad">
+      <div class="kicker" style="color:var(--ink-soft); margin-bottom:7px;" id="methodLabel">HOW DO YOU KNOW YOUR YEAR?</div>
+
+      <!-- four inline-accordion method tabs; the open one holds its own input -->
+      <div class="methodrow" id="methodPicker"></div>
+
+      <!-- one-line switch shown only on later grades (collapsed to preferred method) -->
+      <div class="gc-switch" id="altSwitch" style="display:none; margin-top:10px;">use a different method ▾</div>
+
+      <!-- summary row: this method's computed total -->
+      <div class="budgetsum" id="budSum"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="budBack" onclick="budBack()">← back</button>
+        <button class="btn btn-primary" style="flex:1;" id="budNext" onclick="budNext()">Continue →</button>
+      </div>
+      <div class="footnote" id="budFoot">This grade's budget is the pool Aruvi allocates chapters against.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* ---- the grade plan (would come from earlier setup) ---- */
+  var SUBJECT = 'Science';
+  var GRADES = [
+    { grade:'VI',  sections:[{tag:'6A',sec:'A'},{tag:'6B',sec:'B'}], durations:[45] },
+    { grade:'VII', sections:[{tag:'7A',sec:'A'}],                    durations:[45] }
+  ];
+  var DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat'];
+  var gi = 0;                 // current grade index
+  var grids = {};             // grids[gradeIndex] = state matrix (all start empty)
+
+  function curGrade(){ return GRADES[gi]; }
+  function durations(){ return curGrade().durations; }
+
+  function emptyState(g){ return g.sections.map(function(){ return DAYS.map(function(){ return -1; }); }); }
+  function stateFor(idx){ if(!grids[idx]) grids[idx] = emptyState(GRADES[idx]); return grids[idx]; }
+
+  /* ---------- DURATIONS SCREEN ---------- */
+  function renderDur(){
+    document.getElementById('durScope').textContent = SUBJECT + ' · Grade ' + curGrade().grade;
+    document.getElementById('durQ').textContent = 'What class durations do you have for ' + SUBJECT + ', Grade ' + curGrade().grade + '?';
+    var list = document.getElementById('durList'); list.innerHTML = '';
+    durations().forEach(function(d, i){
+      var chip = document.createElement('span');
+      chip.className = 'durchip'; chip.setAttribute('data-d', i);
+      chip.innerHTML = d + ' min' + (i>0 ? ' <span class="x" title="remove">✕</span>' : '');
+      if(i>0){ chip.querySelector('.x').onclick = function(){ durations().splice(i,1); renderDur(); }; }
+      list.appendChild(chip);
+    });
+    if(durations().length < 3){
+      var add = document.createElement('span');
+      add.className = 'addchip'; add.textContent = '＋ add another duration';
+      add.onclick = function(){
+        var next = durations().indexOf(60) < 0 ? 60 : (durations().indexOf(50) < 0 ? 50 : 90);
+        durations().push(next); durations().sort(function(a,b){return a-b;}); renderDur();
+      };
+      list.appendChild(add);
+    }
+  }
+
+  function goGrid(){ stateFor(gi); renderGrid(); show('screenGrid'); }
+
+  /* ---------- GRID SCREEN ---------- */
+  function scopeText(){
+    var ds = durations(); var lab = ds.length===1 ? (ds[0]+'-min periods') : (ds.join(' & ')+'-min periods');
+    return SUBJECT + ' · Grade ' + curGrade().grade + ' · ' + lab;
+  }
+  function renderGrid(){
+    document.getElementById('gridScope').textContent = scopeText();
+    document.getElementById('gridQ').textContent = 'When do you teach each ' + SUBJECT + ' ' + curGrade().grade + ' section?';
+    var body = document.getElementById('gridBody'); body.innerHTML = '';
+    var st = stateFor(gi);
+    curGrade().sections.forEach(function(s, r){
+      var tr = document.createElement('tr'); tr.setAttribute('data-sec', s.sec);
+      var th = document.createElement('th'); th.className='rowhd'; th.innerHTML = '<span class="rowtag">'+s.tag+'</span>'; tr.appendChild(th);
+      DAYS.forEach(function(d, c){
+        var td = document.createElement('td');
+        var cell = document.createElement('div'); cell.className='cell';
+        cell.setAttribute('data-r', r); cell.setAttribute('data-c', c);
+        var v = st[r][c];
+        if(v >= 0){ cell.classList.add('on'); cell.setAttribute('data-sec', s.sec); cell.textContent = durations()[v]; }
+        var holdTimer=null, didHold=false;
+        cell.oncontextmenu = function(e){ e.preventDefault(); hardPress(r,c); };
+        cell.onclick = function(){ if(didHold){ didHold=false; return; } tapCell(r,c); };
+        cell.addEventListener('touchstart', function(){ didHold=false; holdTimer=setTimeout(function(){ didHold=true; hardPress(r,c); },380); }, {passive:true});
+        cell.addEventListener('touchmove', function(){ clearTimeout(holdTimer); });
+        cell.addEventListener('touchend', function(){ clearTimeout(holdTimer); });
+        cell.addEventListener('mousedown', function(e){ if(e.button!==0) return; didHold=false; holdTimer=setTimeout(function(){ didHold=true; hardPress(r,c); },380); });
+        cell.addEventListener('mouseup', function(){ clearTimeout(holdTimer); });
+        cell.addEventListener('mouseleave', function(){ clearTimeout(holdTimer); });
+        td.appendChild(cell); tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    // last grade? change the button + footnote
+    var btn = document.getElementById('gridNext'); var foot = document.getElementById('gridFoot');
+    if(gi === GRADES.length - 1){
+      btn.textContent = 'Ready to estimate your annual teaching time? →';
+      foot.textContent = 'That was your last grade. Next, a single quick estimate of how much you teach in a year.';
+    } else {
+      btn.textContent = 'Continue to ' + SUBJECT + ' Grade ' + GRADES[gi+1].grade + ' →';
+      foot.textContent = 'Next you’ll set Grade ' + GRADES[gi+1].grade + ' the same way — its durations, then its grid.';
+    }
+    updateClash();
+  }
+
+  function tapCell(r,c){ var st=stateFor(gi); st[r][c] = st[r][c] < 0 ? 0 : -1; renderGrid(); }
+  function hardPress(r,c){
+    var st=stateFor(gi);
+    if(st[r][c] < 0){ st[r][c] = 0; }
+    else { st[r][c] = (st[r][c] + 1) % durations().length; }
+    if(durations().length < 2){ flashHint('Only one duration so far. Add a second duration on the previous screen to switch a cell to it.'); }
+    renderGrid(); pulseCell(r,c);
+  }
+  function pulseCell(r,c){ var el=document.querySelector('.cell[data-r="'+r+'"][data-c="'+c+'"]'); if(!el) return; el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+  var hintTimer=null;
+  function flashHint(msg){ var h=document.getElementById('liveHint'); h.textContent=msg; h.classList.add('show'); clearTimeout(hintTimer); hintTimer=setTimeout(function(){ h.classList.remove('show'); },2600); }
+
+  function updateClash(){
+    var note=document.getElementById('clash'); var st=stateFor(gi); var conflictDay=-1;
+    DAYS.forEach(function(d,c){ var cnt=0; curGrade().sections.forEach(function(s,r){ if(st[r][c]>=0) cnt++; }); if(cnt>1 && conflictDay<0) conflictDay=c; });
+    if(curGrade().sections.length < 2){ note.className='clashnote ok'; note.textContent='One section this grade — tap the days you teach it.'; return; }
+    if(conflictDay>=0){ note.className='clashnote'; note.textContent='Heads up: two sections both fall on '+DAYS[conflictDay]+' — fine if your timetable allows it, just check.'; }
+    else { note.className='clashnote ok'; note.textContent='No two sections clash on a day — looking good.'; }
+  }
+
+  function gridNext(){
+    if(gi === GRADES.length - 1){ bi = 0; renderBudget(); show('screenBudget'); }  // grids done → enter budget loop
+    else { gi++; renderDur(); show('screenDur'); }
+  }
+
+  function restartFlow(){ gi = 0; grids = {}; renderDur(); show('screenDur'); }
+
+  /* ---------- ANNUAL BUDGET — inline-accordion methods + summary row ---------- */
+  var WORK_WEEK = 6;                 // 6-day school week (Mon–Sat grid) → days ÷ 6 = weeks
+  var ESTIMATE_WEEKS = 30;           // "not sure" estimate (schools typically 28–33)
+  var defaultMethod = 'weeks';       // chosen on the first grade, default for the rest
+
+  var METHODS = {
+    weeks:   { label:'I know my teaching weeks', unit:'weeks',        step:1, def:36  },
+    periods: { label:'I know my period count',   unit:'periods / year', step:5, def:0 }, // def set from wp later
+    days:    { label:'I know my working days',   unit:'working days', step:6, def:180 },
+    auto:    { label:'I’m not sure — estimate it', unit:'',           step:0, def:0  }
+  };
+  var METHOD_ORDER = ['weeks','periods','days','auto'];
+
+  var budget = {};   // budget[gradeIdx] = { method, value }
+  // The budget is PER SECTION. Same subject·grade sections get the same weekly load, so we
+  // take the grid's total across all sections and divide by section count (rounded to nearest).
+  function sectionCount(idx){ return GRADES[idx].sections.length || 1; }
+  function weeklyPeriods(idx){ var st=stateFor(idx); var n=0; st.forEach(function(row){ row.forEach(function(v){ if(v>=0) n++; }); }); return Math.round(n / sectionCount(idx)); }
+  // weekly teaching minutes, per section = (sum of all marked cells' durations) ÷ sections
+  function weeklyMinutes(idx){ var st=stateFor(idx); var ds=GRADES[idx].durations; var m=0; st.forEach(function(row){ row.forEach(function(v){ if(v>=0) m += ds[v]; }); }); return Math.round(m / sectionCount(idx)); }
+
+  // returns { periods, weeks } for a method — weeks is the derived teaching-weeks (for hours), null when direct
+  function computeBudget(idx, method, value){
+    var wp = weeklyPeriods(idx);
+    if(method==='weeks'){   return { periods: wp*value,                        weeks: value }; }
+    if(method==='periods'){ return { periods: value,                          weeks: (wp? value/wp : null) }; }
+    if(method==='days'){    var w = value/WORK_WEEK; return { periods: Math.round(wp*w), weeks: w }; }
+    return { periods: wp*ESTIMATE_WEEKS, weeks: ESTIMATE_WEEKS };               // auto
+  }
+  function defaultValueFor(idx, method){
+    if(method==='weeks'){ return 36; }
+    if(method==='periods'){ return weeklyPeriods(idx)*36; }   // seed direct entry with a sensible number
+    if(method==='days'){ return 180; }
+    return 0;
+  }
+  function annualHours(idx, weeks){
+    if(weeks==null) return null;
+    return Math.round(weeklyMinutes(idx) * weeks / 60);
+  }
+
+  /* ----- BUDGET LOOP: one screen per grade ----- */
+  var bi = 0;
+  var showAlt = false;               // later grades: whether the alternate-method tabs are expanded
+  function bGrade(){ return GRADES[bi]; }
+
+  function renderBudget(){
+    var g = bGrade();
+    if(!budget[bi]){ budget[bi] = { method:defaultMethod, value:defaultValueFor(bi, defaultMethod) }; }
+    showAlt = (bi === 0);            // first grade always shows all tabs; later grades collapse to preferred
+    document.getElementById('budScope').textContent = SUBJECT + ' · Grade ' + g.grade + ' · annual budget';
+    document.getElementById('budQ').textContent = 'How much do you teach ' + SUBJECT + ' ' + g.grade + ' in a year?';
+    document.getElementById('budAsk').textContent = (bi===0)
+      ? 'Tell Aruvi however you know it — open the option that fits and enter the number. This choice becomes the default for your other grades.'
+      : 'Same method as your first grade. Enter this grade’s number — or tap below to use a different method.';
+    document.getElementById('methodLabel').textContent = (bi===0) ? 'HOW DO YOU KNOW YOUR YEAR?' : 'YOUR PREFERRED METHOD';
+
+    renderMethodTabs();
+
+    // back / next
+    document.getElementById('budBack').textContent = (bi === 0) ? '← back to grids' : '← Grade ' + GRADES[bi-1].grade;
+    var next = document.getElementById('budNext'); var foot = document.getElementById('budFoot');
+    if(bi === GRADES.length - 1){
+      next.textContent = 'Confirm — continue to Generate →';
+      foot.textContent = 'That’s the last grade. This unlocks Generate, where you plan chapters and make lesson plans.';
+    } else {
+      next.textContent = 'Continue to Grade ' + GRADES[bi+1].grade + ' →';
+      foot.textContent = 'This grade’s budget is the pool Aruvi allocates chapters against. Next: Grade ' + GRADES[bi+1].grade + '.';
+    }
+  }
+
+  function renderMethodTabs(){
+    var b = budget[bi];
+    var wrap = document.getElementById('methodPicker'); wrap.innerHTML='';
+    // which methods to render: first grade (or alt expanded) = all; later collapsed = only the chosen
+    var list = (bi===0 || showAlt) ? METHOD_ORDER : [b.method];
+
+    list.forEach(function(m){
+      var meta = METHODS[m];
+      var open = (m===b.method);
+      var el = document.createElement('div');
+      el.className = 'method' + (open ? ' open sel' : '');
+      var bodyInner = '';
+      if(m==='auto'){
+        bodyInner = '<div class="md">Schools typically have between 28–33 working weeks. Aruvi uses <b>'+ESTIMATE_WEEKS+' weeks</b> as the estimate — adjust later if you like.</div>';
+      } else {
+        bodyInner = '<div class="inrow"><span class="steppermini"><button data-act="dec">–</button><span class="v">'+b.value+'</span><button data-act="inc">+</button></span><span class="unitlab">'+meta.unit+'</span></div>';
+      }
+      el.innerHTML = '<div class="mt"><span>'+meta.label+'</span><span class="chev">▾</span></div><div class="body">'+bodyInner+'</div>';
+
+      el.querySelector('.mt').onclick = function(){
+        if(m===b.method) return;
+        b.method = m; b.value = defaultValueFor(bi, m);
+        if(bi===0) defaultMethod = m;     // first grade sets the default
+        renderMethodTabs();
+      };
+      el.querySelectorAll('.steppermini button').forEach(function(btn){
+        btn.onclick = function(e){ e.stopPropagation(); var d=(btn.getAttribute('data-act')==='inc'?1:-1)*meta.step; b.value=Math.max(0,b.value+d); renderMethodTabs(); };
+      });
+      wrap.appendChild(el);
+    });
+
+    // the one-line alternate-method switch (later grades, when collapsed)
+    var alt = document.getElementById('altSwitch');
+    if(bi>0 && !showAlt){ alt.style.display=''; alt.textContent='use a different method ▾'; alt.onclick=function(){ showAlt=true; renderMethodTabs(); }; }
+    else if(bi>0 && showAlt){ alt.style.display=''; alt.textContent='keep this method ▴'; alt.onclick=function(){ showAlt=false; renderMethodTabs(); }; }
+    else { alt.style.display='none'; }
+
+    renderSummary();
+  }
+
+  function renderSummary(){
+    var b = budget[bi]; var meta = METHODS[b.method];
+    var res = computeBudget(bi, b.method, b.value);
+    var hrs = annualHours(bi, res.weeks);
+    var sum = document.getElementById('budSum');
+    var line2;
+    if(b.method==='periods'){ line2 = 'Entered directly — '+weeklyPeriods(bi)+' periods/week in your timetable.'; }
+    else if(b.method==='weeks'){ line2 = b.value+' weeks × '+weeklyPeriods(bi)+' periods/week.'; }
+    else if(b.method==='days'){ line2 = b.value+' working days ÷ '+WORK_WEEK+' = '+ (Math.round(res.weeks*10)/10) +' weeks × '+weeklyPeriods(bi)+' periods/week.'; }
+    else { line2 = 'Estimated '+ESTIMATE_WEEKS+' weeks × '+weeklyPeriods(bi)+' periods/week.'; }
+    sum.innerHTML =
+      '<div class="bsk">'+SUBJECT+' Grade '+bGrade().grade+' · annual budget</div>'+
+      '<div class="bsv">'+res.periods+' periods <small>≈ '+ (hrs!=null? hrs+' teaching hours' : '—') +'</small></div>'+
+      '<div class="bsn">'+line2+'</div>';
+  }
+
+  function budBack(){
+    if(bi === 0){ gi = GRADES.length - 1; renderGrid(); show('screenGrid'); }
+    else { bi--; renderBudget(); }
+  }
+  function budNext(){
+    if(bi === GRADES.length - 1){ alert('Setup complete — Generate unlocks. (mockup)'); }
+    else { bi++; renderBudget(); }
+  }
+
+  function show(id){
+    ['screenDur','screenGrid','screenBudget'].forEach(function(s){ document.getElementById(s).classList.toggle('hide', s!==id); });
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  renderDur();
+</script>
+</body>
+</html>

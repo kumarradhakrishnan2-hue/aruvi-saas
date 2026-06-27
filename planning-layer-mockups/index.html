@@ -23,10 +23,18 @@
   .page-head{font-family:var(--f-display); font-weight:600; font-size:30px; color:var(--pine-d); letter-spacing:-.4px;}
   .page-head em{font-style:italic; color:var(--clay); font-weight:500;}
   .page-sub{font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); margin-top:4px;}
-  .legend{font-style:italic; color:var(--ink-soft); font-size:14px; margin:10px 0 28px; max-width:760px;}
+  .legend{font-style:italic; color:var(--ink-soft); font-size:14px; margin:10px 0 22px; max-width:820px;}
+
+  /* section divider for the two tabs */
+  .tabdiv{margin:46px 0 6px; padding:13px 16px; border-radius:11px; border:1px solid var(--line); background:var(--paper-2);}
+  .tabdiv .t-k{font-family:var(--f-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft);}
+  .tabdiv .t-h{font-family:var(--f-display); font-weight:600; font-size:22px; color:var(--pine-d); margin-top:3px;}
+  .tabdiv .t-s{font-style:italic; color:var(--ink-soft); font-size:13.5px; margin-top:3px; max-width:820px;}
+  .flowline{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.04em; color:var(--pine); margin-top:9px;}
+  .flowline b{color:var(--clay); font-weight:500;}
 
   .screen-label{font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--clay); margin:38px 0 4px; font-weight:500;}
-  .screen-note{font-style:italic; color:var(--ink-soft); font-size:13.5px; margin:0 0 14px; max-width:760px;}
+  .screen-note{font-style:italic; color:var(--ink-soft); font-size:13.5px; margin:0 0 14px; max-width:820px;}
 
   .device{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:0; overflow:hidden; box-shadow:0 1px 0 #d8cfbe;}
   .row2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
@@ -40,6 +48,18 @@
 
   .hd{background:var(--paper-2); border-bottom:1px solid var(--line); padding:15px 20px;}
   .pad{padding:16px 20px 20px;}
+
+  /* tab bar inside a device (shows which of the two tabs you're in) */
+  .tabbar{display:flex; gap:0; background:var(--paper-sunk); border-bottom:1px solid var(--line);}
+  .tabbar .tb{flex:1; text-align:center; font-family:var(--f-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; padding:10px 8px; color:var(--ink-soft); border-bottom:2px solid transparent;}
+  .tabbar .tb.on{color:var(--pine-d); background:var(--paper-2); border-bottom-color:var(--pine); font-weight:500;}
+  .tabbar .tb.locked{color:#bcae98;}
+  .tabbar .tb .lk{font-size:8.5px;}
+
+  /* subject·grade scope switcher */
+  .scope{display:inline-flex; align-items:center; gap:7px; font-family:var(--f-mono); font-size:11px; color:var(--pine-d); background:#eef4f0; border:1px solid #cfe0d6; border-radius:7px; padding:5px 10px; cursor:pointer;}
+  .scope .sg{font-weight:500; letter-spacing:.04em;}
+  .scope .chev{color:var(--ink-soft);}
 
   .daylabel{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); margin:14px 0 8px; padding-left:2px;}
   .daylabel:first-child{margin-top:0;}
@@ -60,6 +80,7 @@
   .btn{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.04em; border-radius:7px; padding:11px 14px; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--ink);}
   .btn-primary{background:var(--pine); color:#f3efe6; border-color:var(--pine);}
   .btn-eject{color:var(--clay); border-color:#e0c3b2;}
+  .btn-modify{background:var(--ochre); color:#fbf6e9; border-color:var(--ochre);}
   .btn-row{display:flex; gap:10px;}
 
   table.sched{width:100%; border-collapse:collapse; margin-top:6px;}
@@ -97,21 +118,95 @@
   .badge-old{color:var(--ink-soft);}
 
   .footnote{font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:12px; padding-top:10px; border-top:1px solid var(--line);}
+
+  /* ---- Learning Unit continuous rail (replaces "Period N" cards) ---- */
+  .lurail{position:relative; margin:4px 0 0; padding-left:34px;}
+  .lurail::before{content:""; position:absolute; left:13px; top:6px; bottom:6px; width:2px; background:linear-gradient(var(--line),#cfc4ad);}
+  .lunode{position:relative; padding:9px 0 13px;}
+  .lunode .dot{position:absolute; left:-27px; top:9px; width:18px; height:18px; border-radius:50%; background:var(--paper-2); border:2px solid var(--pine); display:flex; align-items:center; justify-content:center; font-family:var(--f-mono); font-size:8px; color:var(--pine-d);}
+  .lunode.future .dot{border-color:var(--line); color:var(--ink-soft);}
+  .lunode .lulabel{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--pine);}
+  .lunode.future .lulabel{color:var(--ink-soft);}
+  .lunode .lutitle{font-size:13.5px; color:var(--ink); margin-top:1px;}
+
+  /* ---- conversational input (chat + side table) ---- */
+  .convgrid{display:grid; grid-template-columns:1.25fr 1fr; gap:16px;}
+  @media(max-width:680px){ .convgrid{grid-template-columns:1fr;} }
+  .chatcol{display:flex; flex-direction:column; gap:9px;}
+  .ai{background:var(--paper-2); border:1px solid var(--line); border-radius:11px 11px 11px 3px; padding:10px 13px; font-size:14px; color:var(--ink); max-width:92%;}
+  .me{align-self:flex-end; background:#eef4f0; border:1px solid #cfe0d6; border-radius:11px 11px 3px 11px; padding:8px 13px; font-family:var(--f-mono); font-size:12.5px; color:var(--pine-d); max-width:80%;}
+  .ai .ask{font-style:italic; color:var(--ink-soft); font-size:12px; margin-top:3px;}
+  .inputbox{display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:9px; padding:7px 9px; background:var(--paper-2); margin-top:3px;}
+  .stepper{display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:13px;}
+  .stepper button{width:24px; height:24px; border-radius:6px; border:1px solid var(--line); background:var(--paper); color:var(--pine-d); cursor:pointer; font-size:13px; line-height:1;}
+  .stepper .val{min-width:30px; text-align:center; color:var(--ink);}
+
+  .statetable{border:1px solid var(--line); border-radius:11px; overflow:hidden; background:var(--paper-2); align-self:start;}
+  .statetable .st-h{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); padding:9px 13px; border-bottom:1px solid var(--line); background:#f5f0e6;}
+  .strow{display:flex; justify-content:space-between; align-items:center; padding:10px 13px; border-bottom:1px solid var(--line-soft);}
+  .strow:last-of-type{border-bottom:none;}
+  .strow .bk{font-family:var(--f-mono); font-size:12.5px; color:var(--ink);}
+  .strow .bk small{color:var(--ink-soft);}
+  .strow .disc{font-family:var(--f-mono); font-size:14px; color:var(--clay); cursor:pointer; line-height:1;}
+  .stfoot{padding:9px 13px; border-top:1px solid var(--line); font-family:var(--f-mono); font-size:10.5px; color:var(--ink-soft);}
+
+  /* ---- budget meter ---- */
+  .budget{border:1px solid var(--line); border-radius:10px; padding:12px 14px; background:#f7f3ea; margin-bottom:14px;}
+  .budget .bl{display:flex; justify-content:space-between; align-items:baseline;}
+  .budget .bk{font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft);}
+  .budget .bv{font-family:var(--f-display); font-size:18px; color:var(--pine-d);}
+  .meter{height:9px; border-radius:5px; background:#e7dfce; margin-top:9px; overflow:hidden;}
+  .meter > span{display:block; height:100%; background:linear-gradient(90deg,var(--pine),#2f7e66);}
+  .budget .bnote{font-family:var(--f-mono); font-size:10px; color:var(--ink-soft); margin-top:7px;}
+
+  /* ledger rows */
+  .ledrow{display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); border-radius:9px; padding:11px 14px; margin-bottom:8px; background:var(--paper-2);}
+  .ledrow .lt{font-family:var(--f-display); font-size:15.5px; color:var(--ink);}
+  .ledrow .lmeta{font-family:var(--f-mono); font-size:10px; color:var(--ink-soft); margin-top:2px;}
+  .pillstat{font-family:var(--f-mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:5px;}
+  .pillstat.started{background:#e6efe9; color:var(--pine-d);}
+  .pillstat.unstarted{background:#f3ead8; color:var(--ochre);}
+  .pillstat.nogen{background:#f6e6dd; color:var(--clay);}
+  .rowact{font-family:var(--f-mono); font-size:10.5px; color:var(--pine); cursor:pointer;}
+  .rowact.lock{color:#bcae98; cursor:default;}
+
+  .warn{display:flex; gap:10px; align-items:flex-start; border:1px solid #e6c9a0; background:#fbf2e0; border-radius:9px; padding:11px 13px; margin:12px 0;}
+  .warn .wi{font-size:15px;}
+  .warn .wt{font-size:13px; color:#7a5a1e;}
+
+  .reset-pick{display:flex; justify-content:space-between; align-items:center; padding:9px 12px; border:1px solid var(--line-soft); border-radius:7px; margin-bottom:6px; background:var(--paper);}
+  .reset-pick.lock{opacity:.55; background:var(--paper-sunk);}
+  .cbx{width:15px; height:15px; border:1.5px solid var(--pine); border-radius:4px; display:inline-block; vertical-align:middle;}
+  .cbx.on{background:var(--pine);}
+  .cbx.lock{border-color:#c3b79f;}
+
+  .sampletag{display:inline-block; font-family:var(--f-mono); font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:#8a6d1c; background:#f6efda; border:1px solid #e6d8ad; border-radius:4px; padding:2px 7px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="page-head">Aruvi <em>·</em> Planning layer</div>
-  <div class="page-sub">My Plan, evolved · mockups against the build spec · 2026-06-23</div>
-  <div class="legend">Static visual mockups in the app's warm-paper design language (real <span class="mono">globals.css</span> tokens). They illustrate the five deliverables in the planner-doc spec. Not wired — reference for build.</div>
+  <div class="page-sub">Two tabs · finalized model · mockups against planner §K / §L · 2026-06-27</div>
+  <div class="legend">Static visual mockups in the app's warm-paper design language (real <span class="mono">globals.css</span> tokens). The product has <b>two tabs</b>: <b>My&nbsp;Plans</b> (daily execution + the readiness setup that gates everything) and <b>Generate</b> (allocate&nbsp;→&nbsp;generate, in one tab). Screens below run in the order a teacher meets them. Not wired — reference for build.</div>
 
-  <!-- ========================= SCREEN 1: SCHEDULE INPUT ========================= -->
-  <div class="screen-label">Screen 1 · Schedule input</div>
-  <div class="screen-note">The one piece of real setup. Four fields only — day, grade, section, period duration. No dates, no holidays, no period-of-day numbers.</div>
-  <div class="device" style="max-width:640px;">
+  <!-- ============================================================= -->
+  <!-- TAB 1 · MY PLANS                                                -->
+  <!-- ============================================================= -->
+  <div class="tabdiv">
+    <div class="t-k">Tab 1 of 2</div>
+    <div class="t-h">My&nbsp;Plans</div>
+    <div class="t-s">The operational home and the default first screen every day. Cross-scope (spans every subject &amp; section). Owns <b>readiness</b> (weekly schedule + annual budget) and <b>daily execution</b> (the lesson pointer). No subject·grade label, and deliberately no budget number here — nothing that reads like tracking the teacher.</div>
+    <div class="flowline">Gate: <b>Generate stays locked</b> until both the weekly schedule AND the annual budget are filled in here.</div>
+  </div>
+
+  <!-- ========================= SCREEN 1: WEEKLY SCHEDULE (readiness 1/2) ========================= -->
+  <div class="screen-label">Screen 1 · Weekly schedule  ·  readiness 1 of 2</div>
+  <div class="screen-note">The first piece of real setup. Four fields only — day, grade, section, period duration. No dates, no holidays, no period-of-day numbers. The durations entered here are reused everywhere (they seed the period buckets in Generate).</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb locked">Generate <span class="lk">🔒</span></div></div>
     <div class="hd">
-      <div class="kicker kicker-soft">My Plan · Setup</div>
+      <div class="kicker kicker-soft">My Plans · Setup · Step 1 of 2</div>
       <div class="disp" style="font-size:21px; margin-top:2px;">Your weekly teaching</div>
       <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Add each class you teach in a normal week. Aruvi only needs the day and how long the period runs.</div>
     </div>
@@ -132,17 +227,100 @@
         <select class="pillinput"><option>45 min</option><option>60 min</option><option>40 min</option></select>
         <button class="btn btn-primary">Add class</button>
       </div>
-      <div class="footnote">No timetable generation, no leave, no calendar. Just the recurring slots you teach.</div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">Next: set your annual budget →</button>
+      </div>
+      <div class="footnote">No timetable generation, no leave, no calendar. Just the recurring slots you teach. Next, tell Aruvi how many teaching weeks your year has — that turns these durations into your annual budget.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 1b: ANNUAL BUDGET (readiness 2/2) ========================= -->
+  <div class="screen-label">Screen 1b · Annual budget  ·  readiness 2 of 2  ·  NEW</div>
+  <div class="screen-note">The second readiness step, and the one that unlocks Generate. The teacher gives the number of <b>teaching weeks</b> in her year; Aruvi multiplies it by the period durations already in her schedule to express her <b>annual capacity in the same duration-bucket counts</b> the allocation later spends against — so the budget meter is clean subtraction, never a minutes↔count conversion.</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb locked">Generate <span class="lk">🔒</span></div></div>
+    <div class="hd">
+      <div class="kicker kicker-soft">My Plans · Setup · Step 2 of 2</div>
+      <div class="disp" style="font-size:21px; margin-top:2px;">How long is your teaching year?</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Roughly how many weeks you actually teach — leave out exam blocks and long breaks. This becomes the budget you spend across chapters.</div>
+    </div>
+    <div class="pad">
+      <div class="inputbox" style="max-width:330px;">
+        <span class="mono" style="font-size:12px; color:var(--ink-soft);">Teaching weeks this year</span>
+        <span class="stepper" style="margin-left:auto;"><button>–</button><span class="val">36</span><button>+</button></span>
+      </div>
+
+      <div class="budget" style="margin-top:16px;">
+        <div class="bl"><span class="bk">Your annual budget · 6A Science (45-min periods)</span><span class="bv">36 weeks</span></div>
+        <div class="bnote">36 teaching weeks × the periods in your weekly schedule → the pool you allocate from. Each subject·grade carries its own budget; switch with the scope chip inside Generate.</div>
+      </div>
+
+      <table class="sched" style="margin-top:6px;">
+        <thead><tr><th>Subject · grade</th><th>Period</th><th>Per week</th><th>Annual pool</th></tr></thead>
+        <tbody>
+          <tr><td>VI · A Science</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
+          <tr><td>VI · B Science</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
+          <tr><td>VIII · C History</td><td>60 min</td><td>1</td><td>36 periods</td></tr>
+          <tr><td>VII · A English</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
+        </tbody>
+      </table>
+
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn" style="flex:0 0 auto;">← Back to schedule</button>
+        <button class="btn btn-primary" style="flex:1;">Finish setup — this unlocks Generate ✓</button>
+      </div>
+      <div class="footnote">Tell Aruvi your schedule so the plans it makes can actually run your week. Once this is done, the <b>Generate</b> tab activates — that's where you plan chapters and make lesson plans.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 2a: EMPTY STATE — readiness incomplete ========================= -->
+  <div class="screen-label">Screen 2a · My Plans empty state — readiness incomplete  ·  NEW</div>
+  <div class="screen-note">If a teacher opens the app before finishing setup, My Plans points <b>inward</b> — finish your schedule + budget. No daily view yet, nothing to point at. The Generate tab is visibly locked (shown, not hidden, so she knows it exists).</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb locked">Generate <span class="lk">🔒</span></div></div>
+    <div class="pad" style="text-align:center; padding:40px 26px 36px;">
+      <div class="kicker kicker-ochre">Welcome to Aruvi</div>
+      <div class="disp" style="font-size:23px; margin:8px 0 6px;">Let's get your week set up</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:14px; max-width:420px; margin:0 auto 18px;">Aruvi needs two quick things before it can plan with you — your weekly classes, and how long your teaching year is.</div>
+      <div style="display:inline-flex; flex-direction:column; gap:9px; text-align:left; min-width:280px;">
+        <div class="reset-pick" style="background:#f6f1e7;"><span class="mono" style="font-size:12px; color:var(--ink);">1 · Weekly schedule</span><span class="rowact">add →</span></div>
+        <div class="reset-pick lock"><span class="mono" style="font-size:12px;">2 · Annual budget</span><span class="rowact lock">after step 1</span></div>
+      </div>
+      <div class="footnote" style="border:none; max-width:420px; margin:18px auto 0;">Want to see what a finished plan looks like first? Browse the <b>sample plans</b> — read-only, no setup needed (last screen).</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 2b: EMPTY STATE — ready, no plan ========================= -->
+  <div class="screen-label">Screen 2b · My Plans empty state — ready, no plan (the forward/panic state)  ·  NEW</div>
+  <div class="screen-note">Readiness is done, but nothing has been generated yet — and a class is coming up with no plan. A <b>single</b> call to action points to Generate. (No dual "Allocate vs Generate" choice — Generate is the only route, and it contains the allocation steps.)</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb">Generate</div></div>
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:baseline;">
+      <div><div class="kicker kicker-ochre">My Plans · This week</div><div class="disp" style="font-size:22px; margin-top:2px;">This week's teaching</div></div>
+      <div class="mono kicker-soft" style="font-size:11px; text-align:right; line-height:1.5;">6 classes<br>4 sections</div>
+    </div>
+    <div class="pad">
+      <div class="daylabel">Wednesday · coming up</div>
+      <div class="slotcard empty"><div class="slotrail dim"></div><div class="slotbody">
+        <div class="toprow"><span class="sec">7A ENGLISH</span><span class="ptr none">No plan yet</span></div>
+        <div class="lessontitle muted">You teach this class Wednesday — no lesson plan made</div>
+        <div class="lessonmeta">Plan the chapter in Generate, and it'll appear here, ready to teach.</div>
+      </div></div>
+      <div style="text-align:center; padding:14px 10px 6px;">
+        <button class="btn btn-primary" style="padding:13px 22px;">Ready to plan your first few chapters? →</button>
+        <div class="footnote" style="border:none; padding-top:9px;">Opens the Generate tab — choose chapters, set their time, make the plans.</div>
+      </div>
     </div>
   </div>
 
   <!-- ========================= SCREEN 2: WEEKLY DASHBOARD ========================= -->
-  <div class="screen-label">Screen 2 · Weekly dashboard</div>
-  <div class="screen-note">The Sunday glance. Every section's next class, each row resolving to named content. Rows with no chapter started show as plain schedule rows. Never a progress comparison.</div>
+  <div class="screen-label">Screen 2 · Weekly dashboard (populated)</div>
+  <div class="screen-note">The Sunday glance once plans exist. Every section's next class, each row resolving to named content. Rows with no chapter started show as plain schedule rows. <b>Never a progress comparison, never a budget number</b> — My Plans is organized by her day, not by tracking. The pointer reads "Learning Unit", not "Period", so a disruption never reads as being behind.</div>
   <div class="device" style="max-width:680px;">
+    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb">Generate</div></div>
     <div class="hd" style="display:flex; justify-content:space-between; align-items:baseline;">
       <div>
-        <div class="kicker kicker-ochre">My Plan · Next week</div>
+        <div class="kicker kicker-ochre">My Plans · Next week</div>
         <div class="disp" style="font-size:23px; margin-top:2px;">This week's teaching</div>
       </div>
       <div class="mono kicker-soft" style="font-size:11px; text-align:right; line-height:1.5;">6 classes<br>4 sections</div>
@@ -151,20 +329,20 @@
       <div class="daylabel">Monday</div>
 
       <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
-        <div class="toprow"><span class="sec">6A SCIENCE</span><span class="ptr">Current: Period 4</span></div>
+        <div class="toprow"><span class="sec">6A SCIENCE</span><span class="ptr">On: Learning Unit 4</span></div>
         <div class="lessontitle">Optics — Reflection in plane mirrors</div>
         <div class="lessonmeta">5 phases · tap to see · resumes where you left 6A</div>
       </div></div>
 
       <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
-        <div class="toprow"><span class="sec">6B SCIENCE</span><span class="ptr">Current: Period 3</span></div>
+        <div class="toprow"><span class="sec">6B SCIENCE</span><span class="ptr">On: Learning Unit 3</span></div>
         <div class="lessontitle">Optics — How light travels</div>
         <div class="lessonmeta">4 phases · tap to see · resumes where you left 6B</div>
       </div></div>
 
       <div class="daylabel">Tuesday</div>
       <div class="slotcard"><div class="slotrail"></div><div class="slotbody">
-        <div class="toprow"><span class="sec">8C HISTORY</span><span class="ptr">Current: Period 9</span></div>
+        <div class="toprow"><span class="sec">8C HISTORY</span><span class="ptr">On: Learning Unit 9</span></div>
         <div class="lessontitle">The Mauryan Empire — Administration &amp; trade</div>
         <div class="lessonmeta">5 phases · tap to see · resumes where you left 8C</div>
       </div></div>
@@ -180,9 +358,244 @@
     </div>
   </div>
 
-  <!-- ========================= SCREEN 3: SLOT / PERIOD VIEW ========================= -->
-  <div class="screen-label">Screen 3 · Slot / period view</div>
-  <div class="screen-note">Opening 6A mid-chapter. Phases as absolute durations are the hero. Controls rationalized: <b>Move to Period 5</b> (no section name — she knows she's in 6A) and Stay. A quiet <b>"Assessment here"</b> affordance opens a <i>dedicated</i> assessment view (Screen 3b) rather than clogging the period viewer. Assessment lives here because the lesson concludes here and the LO is fresh. No chapter-structure labels — the LO is the only visible link.</div>
+  <!-- ============================================================= -->
+  <!-- TAB 2 · GENERATE                                                -->
+  <!-- ============================================================= -->
+  <div class="tabdiv">
+    <div class="t-k">Tab 2 of 2  ·  was called "Allocate" — now folded in</div>
+    <div class="t-h">Generate</div>
+    <div class="t-s">The whole act of getting a chapter ready, in one tab: <b>choose chapters → set their time (budget ledger) → Generate Lesson Plan</b>. Single-scope — it always operates on one subject·grade (the scope chip, top-right). Allocation is the on-ramp; the payoff is the plan, so the tab is named for the plan.</div>
+    <div class="flowline">One pathway, no bypass: <b>readiness</b> → choose → allocate → <b>Generate Lesson Plan</b>. Opening the tab is passive (shows the ledger); every forward step is a deliberate tap.</div>
+  </div>
+
+  <!-- ========================= SCREEN 3-G: GENERATE — gated/inert ========================= -->
+  <div class="screen-label">Screen G1 · Generate — locked until readiness  ·  NEW</div>
+  <div class="screen-note">Before the schedule + budget exist, Generate is <b>visible but inert</b> — greyed, with a pointer back to My Plans. Shown, never hidden: hiding it would make teachers think the feature doesn't exist. This <i>teaches</i> the dependency.</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on locked">Generate <span class="lk">🔒</span></div></div>
+    <div class="pad" style="text-align:center; padding:44px 26px 40px; opacity:.92;">
+      <div style="font-size:26px;">🔒</div>
+      <div class="disp" style="font-size:21px; margin:8px 0 6px; color:var(--ink-soft);">Generate unlocks after setup</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:14px; max-width:430px; margin:0 auto 16px;">Aruvi needs your weekly schedule and annual budget first — that's how the plans it makes can fit your real classes and your real year.</div>
+      <button class="btn btn-primary">Finish setup in My Plans →</button>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN 3-G: GENERATE — ledger (resting view) ========================= -->
+  <div class="screen-label">Screen G2 · Generate — the ledger (resting view, second-time)  ·  NEW</div>
+  <div class="screen-note">What opening the Generate tab shows once allocations exist — the standing answer to "where do I see my allocation". Allocated chapters, their periods, started/unstarted status, and the <b>budget meter for this subject·grade</b>. The scope chip (top-right) is the active switcher she toggles to inspect any subject·grade. <b>Opening this never starts anything</b> — add / modify / reset / generate are all deliberate taps from here.</div>
+  <div class="device" style="max-width:680px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><div class="kicker kicker-ochre">Generate · Your plan for</div><div class="disp" style="font-size:20px; margin-top:2px;">Science · Grade VI</div></div>
+      <span class="scope"><span class="sg">6A · SCIENCE · VI</span><span class="chev">▾ switch</span></span>
+    </div>
+    <div class="pad">
+      <div class="budget">
+        <div class="bl"><span class="bk">Annual budget used · 45-min periods</span><span class="bv">22 / 36 &nbsp;·&nbsp; 61%</span></div>
+        <div class="meter"><span style="width:61%;"></span></div>
+        <div class="bnote">14 periods (about 5 teaching weeks) still free this year.</div>
+      </div>
+
+      <div class="kicker kicker-soft" style="margin-bottom:8px;">ALLOCATED CHAPTERS</div>
+
+      <div class="ledrow">
+        <div><div class="lt">Optics</div><div class="lmeta">12 periods · started in 6A</div></div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="pillstat started">in progress</span>
+          <span class="rowact lock">🔒 locked</span>
+        </div>
+      </div>
+
+      <div class="ledrow">
+        <div><div class="lt">Heat</div><div class="lmeta">6 periods · plan generated, not started</div></div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="pillstat unstarted">not started</span>
+          <span class="rowact">modify</span>
+        </div>
+      </div>
+
+      <div class="ledrow">
+        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">4 periods · allocated — no plan made yet</div></div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="pillstat nogen">generate</span>
+          <span class="rowact">Generate plan →</span>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">+ Add chapters to plan</button>
+        <button class="btn">Reset allocation</button>
+      </div>
+      <div class="footnote">Locked chapters are already being taught — they count toward your budget but can't be changed. "Generate plan" spends the API cost; you can allocate now and generate closer to teaching.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G3: inverted chapter select ========================= -->
+  <div class="screen-label">Screen G3 · Choose chapters — inverted, affirmative  ·  NEW</div>
+  <div class="screen-note">The inversion: <b>not</b> "all chapters shown, untick what you don't want." A teacher has a few chapters in mind and wants their time cost. She <b>ticks</b> the chapters she plans to teach from a dropdown; <b>only ticked chapters stay on screen</b> — the workspace shows <i>her</i> plan, not the catalogue.</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Which chapters do you plan to teach?</div></div>
+      <span class="scope"><span class="sg">6A · SCIENCE · VI</span><span class="chev">▾</span></span>
+    </div>
+    <div class="pad">
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-bottom:10px;">Pick the ones coming up — one or a few. You can always add more later.</div>
+      <div class="inputbox" style="justify-content:space-between;">
+        <span class="mono" style="font-size:12px; color:var(--ink-soft);">＋ Add a chapter…</span>
+        <span class="chev mono" style="font-size:12px; color:var(--ink-soft);">▾</span>
+      </div>
+      <div class="kicker kicker-soft" style="margin:16px 0 8px;">CHOSEN — 2 CHAPTERS</div>
+      <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Heat</span></span><span class="rowact">remove</span></div>
+      <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Acids &amp; Bases</span></span><span class="rowact">remove</span></div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">Allocate time for these →</button>
+      </div>
+      <div class="footnote">Only the chapters you tick appear here — this is your plan, not the whole textbook list.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G4: conversational input (chat + table) ========================= -->
+  <div class="screen-label">Screen G4 · Set the time — conversational input  ·  NEW</div>
+  <div class="screen-note">All non-button input is conversational. <b>Left = the act of entering</b> (chat asks, she answers, the answer is echoed back so the bucket is named by <i>her</i> duration, never a presumed one). <b>Right = committed state</b> (the side table she glances at — duration × count rows, each with a red discard). "Add more?" loops, which is how the mixed-duration case (45×6 <i>and</i> 60×1) stays legible. Corrections: live +/− before a row is committed; discard-and-redo after.</div>
+  <div class="device" style="max-width:720px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI · Heat</div><div class="disp" style="font-size:19px; margin-top:2px;">How much time does this chapter get?</div></div>
+    <div class="pad">
+      <div class="convgrid">
+        <div class="chatcol">
+          <div class="ai">How long is each period, in minutes?</div>
+          <div class="me">45</div>
+          <div class="ai">How many 45-minute periods for this chapter?</div>
+          <div class="me">6</div>
+          <div class="ai">Got it — added. Any periods of a <i>different</i> length for this chapter?
+            <div class="ask">e.g. a longer double period</div>
+          </div>
+          <div class="inputbox">
+            <span class="mono" style="font-size:11px; color:var(--ink-soft);">Duration</span>
+            <span class="stepper"><button>–</button><span class="val">60</span><button>+</button></span>
+            <span class="mono" style="font-size:11px; color:var(--ink-soft); margin-left:8px;">×</span>
+            <span class="stepper"><button>–</button><span class="val">1</span><button>+</button></span>
+            <button class="btn btn-primary" style="padding:7px 12px; margin-left:auto;">Add</button>
+          </div>
+          <div class="footnote" style="border:none; padding-top:4px;">Adjust freely here before adding — once a bucket is in the table, change it by discarding the row.</div>
+        </div>
+
+        <div class="statetable">
+          <div class="st-h">This chapter · committed</div>
+          <div class="strow"><span class="bk">45 min <small>× 6</small></span><span class="disc">✕</span></div>
+          <div class="strow"><span class="bk" style="opacity:.5;">60 min <small>× 1</small> &nbsp;<small style="font-style:italic;">adding…</small></span><span class="disc" style="color:#cbb;">✕</span></div>
+          <div class="stfoot">7 periods · ~ 5h 30m</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G5: suggested allocation + live budget + Accept/Modify ========================= -->
+  <div class="screen-label">Screen G5 · Suggested allocation + live budget  ·  NEW</div>
+  <div class="screen-note">Aruvi suggests the period split across the chosen chapters; the <b>budget meter recomputes live</b> as the answer she's spending against. Two choices: <b>Accept</b> (commit as-is — the sole commit) or <b>Modify</b> (absolute, not zero-sum — nudge any chapter up or down, the meter moves with it). Modify is <i>not</i> terminal; after adjusting, Accept commits.</div>
+  <div class="device" style="max-width:680px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Suggested time for these chapters</div></div>
+    <div class="pad">
+      <div class="budget">
+        <div class="bl"><span class="bk">Annual budget used · 45-min periods</span><span class="bv">32 / 36 &nbsp;·&nbsp; 89%</span></div>
+        <div class="meter"><span style="width:89%;"></span></div>
+        <div class="bnote">Adding these two chapters takes you from 61% → 89%. 4 periods would remain.</div>
+      </div>
+
+      <div class="ledrow">
+        <div><div class="lt">Heat</div><div class="lmeta">suggested</div></div>
+        <div class="stepper"><button>–</button><span class="val">6</span><button>+</button> <span class="mono" style="font-size:10px; color:var(--ink-soft); margin-left:6px;">periods</span></div>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">suggested</div></div>
+        <div class="stepper"><button>–</button><span class="val">4</span><button>+</button> <span class="mono" style="font-size:10px; color:var(--ink-soft); margin-left:6px;">periods</span></div>
+      </div>
+
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-primary" style="flex:1;">Accept allocation</button>
+        <button class="btn btn-modify">Modify — adjust up or down</button>
+      </div>
+      <div class="footnote">Modify lets you spend more or less on any chapter against your budget — the meter updates as you go. Nothing is committed until you tap <b>Accept</b>.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G6: selective reset ========================= -->
+  <div class="screen-label">Screen G6 · Reset — selective, unstarted only  ·  NEW</div>
+  <div class="screen-note">Reset isn't blanket. She ticks <b>which</b> allocations to clear; <b>started chapters are shown but not selectable</b> (locked, greyed) — same rule that governs modify and remove. Clearing an allocation frees that budget back.</div>
+  <div class="device" style="max-width:640px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Reset which allocations?</div></div>
+    <div class="pad">
+      <div class="reset-pick lock"><span><span class="cbx lock"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Optics · 12 periods</span></span><span class="mono" style="font-size:10px; color:#bcae98;">🔒 in progress — can't reset</span></div>
+      <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Heat · 6 periods</span></span><span class="mono" style="font-size:10px; color:var(--ink-soft);">not started</span></div>
+      <div class="reset-pick"><span><span class="cbx"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Acids &amp; Bases · 4 periods</span></span><span class="mono" style="font-size:10px; color:var(--ink-soft);">not started</span></div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn" style="flex:0 0 auto;">Cancel</button>
+        <button class="btn btn-eject" style="flex:1;">Reset selected — frees 6 periods</button>
+      </div>
+      <div class="footnote">Resetting clears the allocation and returns that time to your annual budget. Chapters already being taught are locked.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G7: select + confirm (terminal generate) ========================= -->
+  <div class="screen-label">Screen G7 · Generate — select allocated chapter + confirm  ·  NEW</div>
+  <div class="screen-note">After Accept, this is all Generate does: it shows <b>only allocated chapters</b>, she picks one, and confirms. <b>Accept and Generate stay two steps</b> — Accept commits the budget; Generate spends the API cost (she may accept today, generate two weeks before teaching). Even with a single chapter it's still one deliberate Generate tap.</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Make a lesson plan</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Pick a chapter you've allocated. Aruvi builds the lesson plan + its assessment.</div>
+    </div>
+    <div class="pad">
+      <div class="ledrow" style="border-color:var(--pine); background:#eef4f0;">
+        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">4 periods allocated · no plan yet</div></div>
+        <span class="pillstat nogen">ready</span>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Heat</div><div class="lmeta">6 periods allocated</div></div>
+        <span class="pillstat unstarted">plan exists</span>
+      </div>
+
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-primary" style="flex:1;">Generate Lesson Plan · Acids &amp; Bases</button>
+      </div>
+      <div class="footnote">Generation takes a few minutes. When it's done, the plan opens in the chapter reader and appears in My Plans, ready to teach.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G7b: already-generated warning ========================= -->
+  <div class="screen-label">Screen G7b · Already-generated warning (plain, overridable)  ·  NEW</div>
+  <div class="screen-note">If she picks a chapter that already has a plan, a <b>plain warning</b> flashes — overridable. No started-vs-unstarted nuance she'd have to decode; the system still honours the version/lock rules underneath.</div>
+  <div class="device" style="max-width:660px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI · Heat</div><div class="disp" style="font-size:20px; margin-top:2px;">Generate again?</div></div>
+    <div class="pad">
+      <div class="warn">
+        <span class="wi">⚠️</span>
+        <span class="wt"><b>A plan already exists for this chapter.</b> Generating again makes a new version — it won't replace what you already have, and it spends the generation cost again.</span>
+      </div>
+      <div class="btn-row" style="margin-top:6px;">
+        <button class="btn" style="flex:0 0 auto;">Keep the existing plan</button>
+        <button class="btn btn-primary" style="flex:1;">Generate a new version anyway</button>
+      </div>
+      <div class="footnote">You'll choose which version to teach when you start the chapter in My Plans.</div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- EXECUTION SCREENS (reached from My Plans, by tapping a class)   -->
+  <!-- ============================================================= -->
+  <div class="tabdiv">
+    <div class="t-k">My Plans · execution (tap a class on the dashboard)</div>
+    <div class="t-h">Teaching a chapter</div>
+    <div class="t-s">These open from a dashboard row. The output is <b>Learning Units</b> (LU 1, LU 2 …), drawn on a continuous rail so moving LU→LU reads as flow, not as being behind a calendar. Assessment is an <b>artifact that tags along</b> — no time budget, no marks, no tracking.</div>
+  </div>
+
+  <!-- ========================= SCREEN 3: SLOT / LEARNING-UNIT VIEW ========================= -->
+  <div class="screen-label">Screen 3 · Lesson view (Learning Units on a continuous rail)</div>
+  <div class="screen-note">Opening 6A mid-chapter. Phases as absolute durations are the hero. The unit is a <b>Learning Unit</b> on a flowing rail — never "Period 4", so a shortened or cancelled class never reads as displacement. Controls: <b>Move to next unit</b> and Stay. A quiet <b>"assessment here"</b> affordance opens the dedicated assessment artifact (Screen 3b). The pointer moves only when she moves it — reasons don't matter.</div>
   <div class="device" style="max-width:680px;">
     <div class="hd">
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -190,30 +603,37 @@
           <div class="kicker kicker-ochre">6A SCIENCE · OPTICS</div>
           <div class="disp" style="font-size:22px; margin-top:2px;">Reflection in plane mirrors</div>
         </div>
-        <div class="mono kicker-soft" style="font-size:11px;">Period 4 of 10</div>
+        <div class="mono kicker-soft" style="font-size:11px;">Learning Unit 4 of 10</div>
       </div>
       <div class="kicker" style="margin-top:8px;">PROGRESSION STAGE 2 · BUILDING THE MODEL</div>
     </div>
     <div class="pad">
       <div class="peek">
-        <span class="peeknav">← Period 3</span>
+        <span class="peeknav">← LU 3</span>
         <span class="peekmid">Preview · doesn't move your place</span>
-        <span class="peeknav">Period 5 →</span>
+        <span class="peeknav">LU 5 →</span>
+      </div>
+
+      <!-- continuous-rail context strip -->
+      <div class="lurail" style="margin-bottom:14px;">
+        <div class="lunode"><span class="dot">3</span><span class="lulabel">Learning Unit 3 · done</span><div class="lutitle">Light travels in straight lines</div></div>
+        <div class="lunode"><span class="dot">4</span><span class="lulabel">Learning Unit 4 · now</span><div class="lutitle" style="font-weight:600;">Reflection in plane mirrors</div></div>
+        <div class="lunode future"><span class="dot">5</span><span class="lulabel">Learning Unit 5 · next</span><div class="lutitle">The law of reflection</div></div>
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
         <span class="kicker kicker-soft">PHASES · 60 MIN TOTAL</span>
         <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:#1e5c4a; cursor:pointer;">assessment here →</span>
       </div>
-      <div class="phaserow"><span class="phasemin">5 min</span><span class="phasetext">Recall: where does light come from? Quick oral recap of the previous period.</span></div>
+      <div class="phaserow"><span class="phasemin">5 min</span><span class="phasetext">Recall: where does light come from? Quick oral recap of the previous unit.</span></div>
       <div class="phaserow"><span class="phasemin">15 min</span><span class="phasetext">Demonstrate reflection with a plane mirror and torch; students predict the path.</span></div>
       <div class="phaserow"><span class="phasemin">20 min</span><span class="phasetext">Paired investigation: measure angle of incidence vs. angle of reflection.</span></div>
       <div class="phaserow"><span class="phasemin">12 min</span><span class="phasetext">Class discussion: state the law of reflection in students' own words.</span></div>
       <div class="phaserow"><span class="phasemin">8 min</span><span class="phasetext">Wrap-up and set homework: two everyday examples of reflection.</span></div>
 
       <div class="btn-row" style="margin-top:18px;">
-        <button class="btn btn-primary" style="flex:1;">Move to Period 5 →</button>
-        <button class="btn">Stay on Period 4</button>
+        <button class="btn btn-primary" style="flex:1;">Move to Learning Unit 5 →</button>
+        <button class="btn">Stay on Learning Unit 4</button>
       </div>
 
       <div style="margin-top:14px; padding-top:13px; border-top:1px solid var(--line);">
@@ -224,16 +644,16 @@
   </div>
 
   <!-- ========================= SCREEN 3b: DEDICATED ASSESSMENT VIEW ========================= -->
-  <div class="screen-label">Screen 3b · Assessment view (dedicated, green)</div>
-  <div class="screen-note">Opened from "Assessment here" on Screen 3. A distinct <b>green</b> scheme sets it apart from the warm LP — she always knows she's in assessment, not the lesson. Holds the full-richness item(s); a clear <b>← Back to lesson</b> returns her exactly where she was. No chapter-structure labels. <b>The learning outcome is aired per item, above each stem</b> — it is the bridge from the phases she just taught to the item that tests their transfer, so she reads the LO first. The header carries only a unit framer, not a single LO (one view can hold items testing different LOs).</div>
+  <div class="screen-label">Screen 3b · Assessment artifact (dedicated, green)</div>
+  <div class="screen-note">Opened from "assessment here". A distinct <b>green</b> scheme sets it apart from the warm lesson. It is an <b>artifact that tags along</b> — no time is allocated to it, no marks, no tracking. <b>The learning outcome is aired per item, above each stem</b> — the bridge from the unit just taught to the item testing its transfer.</div>
   <div class="device" style="max-width:680px; background:#e7f0ec; border-color:#cde0d8;">
     <div style="background:#dceae3; padding:14px 20px 13px; border-bottom:1px solid #cde0d8;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0f6e56; cursor:pointer;">← Back to lesson</span>
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; color:#0f6e56;">ASSESSMENT</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; color:#0f6e56;">ASSESSMENT · TAGS ALONG</span>
       </div>
       <div style="font-family:'Fraunces',Georgia,serif; font-size:21px; font-weight:500; color:#0c3a2e; margin-top:6px;">Reflection in plane mirrors</div>
-      <div style="font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px;">Checks whether the class can transfer what this period built. Each item names the outcome it tests.</div>
+      <div style="font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px;">Checks whether the class can transfer what this unit built. Each item names the outcome it tests. No marks, no scoring — a teaching aid.</div>
     </div>
 
     <div style="padding:16px 20px 20px;">
@@ -260,7 +680,7 @@
         </div>
       </div>
 
-      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px; margin-bottom:11px;">
+      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px;">
         <div style="background:#eef6f1; border-left:3px solid #0f6e56; border-radius:5px; padding:7px 10px; margin-bottom:10px;">
           <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:.12em; color:#0f6e56;">LEARNING OUTCOME</span>
           <div style="font-size:12.5px; color:#1f3a30; margin-top:2px; line-height:1.45;">Relates reflection to a familiar everyday observation.</div>
@@ -270,19 +690,6 @@
         <div style="margin-top:10px; padding-top:9px; border-top:1px dashed #cde0d8;">
           <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; color:#0f6e56;">EXPECTED ELEMENTS</span>
           <div style="font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5;">Angle of incidence = angle of reflection · both measured from the normal · a valid example (mirror, still water, polished surface).</div>
-        </div>
-      </div>
-
-      <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px;">
-        <div style="background:#eef6f1; border-left:3px solid #0f6e56; border-radius:5px; padding:7px 10px; margin-bottom:10px;">
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:.12em; color:#0f6e56;">LEARNING OUTCOME</span>
-          <div style="font-size:12.5px; color:#1f3a30; margin-top:2px; line-height:1.45;">States the law of reflection and applies it to find an unknown angle.</div>
-        </div>
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#0f6e56;">EXPLAIN · APPLICATION</span>
-        <div style="font-size:14px; color:#1f2a24; margin-top:6px; line-height:1.5;">Why does a periscope let you see over a wall? Draw a ray diagram and explain using the law of reflection.</div>
-        <div style="margin-top:10px; padding-top:9px; border-top:1px dashed #cde0d8;">
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; color:#0f6e56;">SCAFFOLD</span>
-          <div style="font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5;">Prompt: where does the light enter, and how many times does it reflect before reaching the eye?</div>
         </div>
       </div>
 
@@ -296,10 +703,10 @@
     <div style="background:#dceae3; padding:14px 20px 13px; border-bottom:1px solid #cde0d8;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0f6e56; cursor:pointer;">← Back to lesson</span>
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; color:#0f6e56;">ASSESSMENT</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; color:#0f6e56;">ASSESSMENT · TAGS ALONG</span>
       </div>
       <div style="font-family:'Fraunces',Georgia,serif; font-size:21px; font-weight:500; color:#0c3a2e; margin-top:6px;">Fractions — equivalence</div>
-      <div style="font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px;">Checks whether the class can transfer what this period built.</div>
+      <div style="font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px;">Checks whether the class can transfer what this unit built.</div>
     </div>
     <div style="padding:16px 20px 20px;">
       <div style="background:#ffffff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px;">
@@ -317,11 +724,11 @@
 
   <!-- ========================= SCREEN 4: CHAPTER ORGANIZATION ========================= -->
   <div class="screen-label">Screen 4 · Chapter organization page</div>
-  <div class="screen-note">The default the first time a chapter opens; later a link from the slot view. Uniform collapsible drill — label → … → period link. Same component for every subject; depth comes from the data. Two examples below. Every drill is navigation, never a move of the teacher's place in the lesson.</div>
+  <div class="screen-note">The default the first time a chapter opens; later a link from the lesson view. Uniform collapsible drill — label → … → Learning Unit. Same component for every subject; depth comes from the data. Every drill is navigation, never a move of the teacher's place.</div>
   <div class="row2">
 
     <div>
-      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">ENGLISH</span> — nests section → spine → period (two-axis).</div>
+      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">ENGLISH</span> — nests section → spine → Learning Unit (two-axis).</div>
       <div class="device">
         <div class="hd">
           <div class="kicker kicker-ochre">7A ENGLISH · CHAPTER ORGANIZATION</div>
@@ -332,23 +739,23 @@
             <div class="orgbar-head"><span class="orgbar-title">Section 1 — The storm (prose)</span><span class="orgbar-sub">3 spines ▾</span></div>
             <div class="orgchild">
               <div class="spinehead">Reading for comprehension</div>
-              <div class="periodlink"><span class="pl-t">Close reading: the opening scene</span><span class="pl-n">P1</span></div>
+              <div class="periodlink"><span class="pl-t">Close reading: the opening scene</span><span class="pl-n">LU 1</span></div>
               <div class="spinehead">Speaking &amp; listening</div>
-              <div class="periodlink"><span class="pl-t">Dramatised read-aloud in pairs</span><span class="pl-n">P2</span></div>
+              <div class="periodlink"><span class="pl-t">Dramatised read-aloud in pairs</span><span class="pl-n">LU 2</span></div>
               <div class="spinehead">Writing</div>
-              <div class="periodlink"><span class="pl-t">Describe the storm from Miranda's view</span><span class="pl-n">P3</span></div>
+              <div class="periodlink"><span class="pl-t">Describe the storm from Miranda's view</span><span class="pl-n">LU 3</span></div>
             </div>
           </div>
           <div class="orgbar">
             <div class="orgbar-head"><span class="orgbar-title">Section 2 — The island (prose)</span><span class="orgbar-sub">2 spines ▾</span></div>
           </div>
-          <div class="footnote">Tap any period to open it. Browsing here never moves your place in the lesson.</div>
+          <div class="footnote">Tap any Learning Unit to open it. Browsing here never moves your place in the lesson.</div>
         </div>
       </div>
     </div>
 
     <div>
-      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">SOCIAL SCIENCES</span> — competency clusters non-adjacent periods.</div>
+      <div class="screen-note" style="margin-bottom:8px;"><span class="mono kicker-ochre">SOCIAL SCIENCES</span> — competency clusters non-adjacent units.</div>
       <div class="device">
         <div class="hd">
           <div class="kicker kicker-ochre">8C HISTORY · CHAPTER ORGANIZATION</div>
@@ -356,17 +763,17 @@
         </div>
         <div class="pad">
           <div class="orgbar">
-            <div class="orgbar-head"><span class="orgbar-title">C-2.3 — Analyses cause &amp; effect in history</span><span class="orgbar-sub">3 periods ▾</span></div>
+            <div class="orgbar-head"><span class="orgbar-title">C-2.3 — Analyses cause &amp; effect in history</span><span class="orgbar-sub">3 units ▾</span></div>
             <div class="orgchild">
-              <div class="periodlink"><span class="pl-t">Why empires rise: conditions in Magadha</span><span class="pl-n">P3</span></div>
-              <div class="periodlink current"><span class="pl-t">Administration &amp; trade</span><span class="pl-n">P9 · current</span></div>
-              <div class="periodlink"><span class="pl-t">Decline: causes and consequences</span><span class="pl-n">P12</span></div>
+              <div class="periodlink"><span class="pl-t">Why empires rise: conditions in Magadha</span><span class="pl-n">LU 3</span></div>
+              <div class="periodlink current"><span class="pl-t">Administration &amp; trade</span><span class="pl-n">LU 9 · current</span></div>
+              <div class="periodlink"><span class="pl-t">Decline: causes and consequences</span><span class="pl-n">LU 12</span></div>
             </div>
           </div>
           <div class="orgbar">
-            <div class="orgbar-head"><span class="orgbar-title">C-1.4 — Reads &amp; interprets historical sources</span><span class="orgbar-sub">2 periods ▾</span></div>
+            <div class="orgbar-head"><span class="orgbar-title">C-1.4 — Reads &amp; interprets historical sources</span><span class="orgbar-sub">2 units ▾</span></div>
           </div>
-          <div class="footnote">Periods appear by competency, not in lesson order — that's the point of this view.</div>
+          <div class="footnote">Learning Units appear by competency, not in lesson order — that's the point of this view.</div>
         </div>
       </div>
     </div>
@@ -375,7 +782,7 @@
 
   <!-- ========================= SCREEN 5: START DECLARATION ========================= -->
   <div class="screen-label">Screen 5 · Start declaration (with inline version choice)</div>
-  <div class="screen-note">What an unstarted slot shows, reached straight from the dashboard's "pick a chapter to begin" row. "Which chapter are you starting?" lists the saved plans. Where a chapter has more than one version, the choice is offered <b>here, in the flow</b> — reading and choosing happen in the same place, motivated by the same intent (she's about to teach). Each version offers a <b>full read-only preview</b> (the chapter reader, Screen 4, including its assessment suite) so she can read before committing, then come back here to choose. The tap binds the chapter to this section, starts tracking, and locks that version for the chapter.</div>
+  <div class="screen-note">What an unstarted slot shows, reached from the dashboard's "pick a chapter to begin" row. Where a chapter has more than one generated version, the choice is offered <b>here, in the flow</b>. The tap binds the chapter to this section, starts tracking, and <b>locks that version for this section</b> — 6A and 6B can run different versions in parallel, and that's intended, not an inconsistency.</div>
   <div class="device" style="max-width:680px;">
     <div class="hd">
       <div class="kicker kicker-ochre">6B SCIENCE</div>
@@ -390,36 +797,61 @@
         </div>
         <div class="orgchild" style="padding-top:9px;">
           <div class="periodlink current" style="padding:10px 12px;">
-            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">12 periods</span><br><span class="pl-n">newest · roomier pace · default</span></span>
+            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">12 Learning Units</span><br><span class="pl-n">newest · roomier pace · default</span></span>
             <span style="display:flex; gap:12px; align-items:center;">
               <span class="mono" style="font-size:10.5px; color:var(--ochre); cursor:pointer;">⌕ Preview</span>
-              <span class="mono" style="font-size:11px; color:var(--pine);">Start on 12 →</span>
+              <span class="mono" style="font-size:11px; color:var(--pine);">Start on this →</span>
             </span>
           </div>
           <div class="periodlink" style="padding:10px 12px;">
-            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">10 periods</span><br><span class="pl-n">your first take</span></span>
+            <span><span class="pl-t" style="font-family:var(--f-display); font-size:15px;">10 Learning Units</span><br><span class="pl-n">your first take</span></span>
             <span style="display:flex; gap:12px; align-items:center;">
               <span class="mono" style="font-size:10.5px; color:var(--ochre); cursor:pointer;">⌕ Preview</span>
-              <span class="mono" style="font-size:11px; color:var(--pine);">Start on 10 →</span>
+              <span class="mono" style="font-size:11px; color:var(--pine);">Start on this →</span>
             </span>
           </div>
-          <div class="mono" style="font-size:10.5px; color:var(--ink-soft); margin-top:6px;">⌕ Preview opens the full chapter reader — read any period and its assessment — then returns you here to choose.</div>
+          <div class="mono" style="font-size:10.5px; color:var(--ink-soft); margin-top:6px;">⌕ Preview opens the full chapter reader — read any unit and its assessment — then returns you here to choose.</div>
         </div>
       </div>
       <div class="orgbar">
         <div class="orgbar-head"><span class="orgbar-title">Planets &amp; Stars</span><span class="orgbar-sub">1 version · start →</span></div>
       </div>
-      <div class="footnote">6A is already teaching Optics on the 12-period version. You can pick the same one for 6B, or a different one — each class follows its own.</div>
+      <div class="footnote">6A is already teaching Optics on the 12-unit version. You can pick the same one for 6B, or a different one — each class follows its own, locked once it starts.</div>
     </div>
   </div>
 
-  <!-- Screen 6 (standalone "My Plans" library) removed 2026-06-25.
-       Reading a plan is never an independent want — it always happens mid-decision
-       (about to teach). So previewing now lives inside the start flow: dashboard
-       "pick a chapter" row → Screen 5 start card → per-version "Preview" → full
-       Screen 4 reader (incl. assessment) → back to Screen 5 to choose. Mid-chapter
-       prep-reading is served by Screen 3's "← previous / next →" peek. No separate
-       library surface, no "Make this active" housekeeping. -->
+  <!-- ========================= SCREEN S: SAMPLE PLANS (no-commitment surface) ========================= -->
+  <div class="tabdiv">
+    <div class="t-k">Pre-readiness · the only no-commitment surface</div>
+    <div class="t-h">Sample plans</div>
+    <div class="t-s">Read-only, clearly labelled <b>samples</b> — the "look before you buy" surface that needs no setup. This is the free taste; it never pretends to be <i>her</i> tracked plan. Generating a real (tracked) plan still requires going through readiness → Generate.</div>
+  </div>
+  <div class="screen-label">Screen S · Sample plan browse (read-only)  ·  NEW</div>
+  <div class="screen-note">Reachable from the welcome/empty state without any setup. Each sample is the NCF-standard treatment of a chapter, labelled as a sample, fully readable — but read-only, with a clear path to "make your own".</div>
+  <div class="device" style="max-width:680px;">
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><div class="kicker kicker-ochre">Samples · no setup needed</div><div class="disp" style="font-size:20px; margin-top:2px;">See what Aruvi makes</div></div>
+      <span class="sampletag">read-only sample</span>
+    </div>
+    <div class="pad">
+      <div class="ledrow">
+        <div><div class="lt">Optics · Science VI <span class="sampletag" style="margin-left:6px;">sample</span></div><div class="lmeta">NCF-standard · 10 Learning Units · full plan + assessment</div></div>
+        <span class="rowact">Read →</span>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">The Mauryan Empire · History VIII <span class="sampletag" style="margin-left:6px;">sample</span></div><div class="lmeta">NCF-standard · 9 Learning Units · full plan + assessment</div></div>
+        <span class="rowact">Read →</span>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Fractions · Maths VI <span class="sampletag" style="margin-left:6px;">sample</span></div><div class="lmeta">NCF-standard · 8 Learning Units · full plan + assessment</div></div>
+        <span class="rowact">Read →</span>
+      </div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">Make a plan for your own class — set up Aruvi →</button>
+      </div>
+      <div class="footnote">Samples show the shape and quality of a plan. To get a plan built for <b>your</b> chapter and time — one that tracks in My Plans — finish setup and use Generate.</div>
+    </div>
+  </div>
 
 </div>
 </body>
