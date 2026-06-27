@@ -141,6 +141,20 @@
   .stepper button{width:24px; height:24px; border-radius:6px; border:1px solid var(--line); background:var(--paper); color:var(--pine-d); cursor:pointer; font-size:13px; line-height:1;}
   .stepper .val{min-width:30px; text-align:center; color:var(--ink);}
 
+  /* ---- aligned per-period-type number columns (G5 + G5-modify) ---- */
+  .numcols{display:grid; grid-template-columns:82px 82px 48px; gap:8px; align-items:center; text-align:center; flex:0 0 auto;}
+  .numcols.head{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .numcols .nc{font-family:var(--f-mono); font-size:13px; color:var(--ink);}
+  .numcols .nc.tot{color:var(--pine-d); font-weight:600;}
+  .allochead{display:flex; justify-content:space-between; align-items:flex-end; margin:6px 0 8px;}
+  .allochead .ch-k{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft);}
+  /* boxed stepper used in Modify so +/- clearly belong to one number */
+  .stepbox{display:grid; grid-template-columns:82px 82px 48px; gap:8px; align-items:center; flex:0 0 auto;}
+  .stepunit{display:flex; align-items:center; justify-content:space-between; gap:2px; border:1px solid var(--line); border-radius:8px; background:var(--paper-2); padding:3px; overflow:hidden;}
+  .stepunit button{width:22px; height:24px; border-radius:5px; border:1px solid var(--line); background:var(--paper); color:var(--pine-d); cursor:pointer; font-size:14px; line-height:1; flex:0 0 22px; padding:0;}
+  .stepunit .sv{flex:1 1 auto; text-align:center; font-family:var(--f-mono); font-size:13px; color:var(--ink); min-width:0;}
+  .stepbox .tot{font-family:var(--f-mono); font-size:13px; color:var(--pine-d); font-weight:600; text-align:center;}
+
   .statetable{border:1px solid var(--line); border-radius:11px; overflow:hidden; background:var(--paper-2); align-self:start;}
   .statetable .st-h{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); padding:9px 13px; border-bottom:1px solid var(--line); background:#f5f0e6;}
   .strow{display:flex; justify-content:space-between; align-items:center; padding:10px 13px; border-bottom:1px solid var(--line-soft);}
@@ -181,6 +195,24 @@
   .cbx.lock{border-color:#c3b79f;}
 
   .sampletag{display:inline-block; font-family:var(--f-mono); font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:#8a6d1c; background:#f6efda; border:1px solid #e6d8ad; border-radius:4px; padding:2px 7px;}
+
+  /* "How does Aruvi allocate?" collapsible note (G5) */
+  .howbox{border:1px solid var(--line); border-radius:9px; background:#f7f3ea; margin-top:14px; overflow:hidden;}
+  .howbox summary{list-style:none; cursor:pointer; padding:10px 14px; display:flex; align-items:center; gap:8px; font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--pine-d);}
+  .howbox summary::-webkit-details-marker{display:none;}
+  .howbox summary .chev{margin-left:auto; color:var(--ink-soft); transition:transform .15s ease;}
+  .howbox[open] summary .chev{transform:rotate(180deg);}
+  .howbox .howbody{padding:2px 16px 14px; font-size:13px; color:#34403a; line-height:1.55;}
+  .howbox .howbody .basis{font-style:italic; color:var(--ink-soft); margin-bottom:7px;}
+  .howbox .howbody ul{margin:0; padding-left:18px;}
+  .howbox .howbody li{margin:3px 0;}
+  .howbox .howbody .moreq{font-style:italic; color:var(--ink-soft); margin-top:9px; padding-top:9px; border-top:1px solid var(--line);}
+
+  /* destructive zone — separates a kill action from navigation (G2) */
+  .dangerzone{margin-top:16px; padding-top:13px; border-top:1px dashed #e0c3b2;}
+  .dangerzone .dz-k{font-family:var(--f-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--clay); margin-bottom:7px;}
+  .btn-danger{background:transparent; color:var(--clay); border:1px solid #e0c3b2;}
+  .btn-danger:hover{background:#fbeee7;}
 </style>
 </head>
 <body>
@@ -196,82 +228,13 @@
   <div class="tabdiv">
     <div class="t-k">Tab 1 of 2</div>
     <div class="t-h">My&nbsp;Plans</div>
-    <div class="t-s">The operational home and the default first screen every day. Cross-scope (spans every subject &amp; section). Owns <b>readiness</b> (weekly schedule + annual budget) and <b>daily execution</b> (the lesson pointer). No subject·grade label, and deliberately no budget number here — nothing that reads like tracking the teacher.</div>
-    <div class="flowline">Gate: <b>Generate stays locked</b> until both the weekly schedule AND the annual budget are filled in here.</div>
+    <div class="t-s">The operational home and the default first screen every day. Cross-scope (spans every subject &amp; section). Owns <b>readiness</b> (the weekly grid + annual budget) and <b>daily execution</b> (the lesson pointer). No subject·grade label, and deliberately no budget number here — nothing that reads like tracking the teacher.</div>
+    <div class="flowline">Gate: <b>Generate stays locked</b> until readiness is complete — see the readiness flow below.</div>
   </div>
 
-  <!-- ========================= SCREEN 1: WEEKLY SCHEDULE (readiness 1/2) ========================= -->
-  <div class="screen-label">Screen 1 · Weekly schedule  ·  readiness 1 of 2</div>
-  <div class="screen-note">The first piece of real setup. Four fields only — day, grade, section, period duration. No dates, no holidays, no period-of-day numbers. The durations entered here are reused everywhere (they seed the period buckets in Generate).</div>
-  <div class="device" style="max-width:660px;">
-    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb locked">Generate <span class="lk">🔒</span></div></div>
-    <div class="hd">
-      <div class="kicker kicker-soft">My Plans · Setup · Step 1 of 2</div>
-      <div class="disp" style="font-size:21px; margin-top:2px;">Your weekly teaching</div>
-      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Add each class you teach in a normal week. Aruvi only needs the day and how long the period runs.</div>
-    </div>
-    <div class="pad">
-      <table class="sched">
-        <thead><tr><th>Day</th><th>Grade</th><th>Section</th><th>Period</th><th></th></tr></thead>
-        <tbody>
-          <tr><td>Monday</td><td>VI</td><td>A · Science</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
-          <tr><td>Monday</td><td>VI</td><td>B · Science</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
-          <tr><td>Tuesday</td><td>VIII</td><td>C · History</td><td>60 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
-          <tr><td>Wednesday</td><td>VII</td><td>A · English</td><td>45 min</td><td class="mono" style="color:var(--clay); text-align:right; cursor:pointer;">remove</td></tr>
-        </tbody>
-      </table>
-      <div style="display:flex; gap:8px; align-items:center; margin-top:14px; flex-wrap:wrap;">
-        <select class="pillinput"><option>Mon</option><option>Tue</option><option>Wed</option><option>Thu</option><option>Fri</option><option>Sat</option></select>
-        <select class="pillinput"><option>VI</option><option>VII</option><option>VIII</option></select>
-        <input class="pillinput" style="width:120px;" placeholder="A · Science">
-        <select class="pillinput"><option>45 min</option><option>60 min</option><option>40 min</option></select>
-        <button class="btn btn-primary">Add class</button>
-      </div>
-      <div class="btn-row" style="margin-top:16px;">
-        <button class="btn btn-primary" style="flex:1;">Next: set your annual budget →</button>
-      </div>
-      <div class="footnote">No timetable generation, no leave, no calendar. Just the recurring slots you teach. Next, tell Aruvi how many teaching weeks your year has — that turns these durations into your annual budget.</div>
-    </div>
-  </div>
-
-  <!-- ========================= SCREEN 1b: ANNUAL BUDGET (readiness 2/2) ========================= -->
-  <div class="screen-label">Screen 1b · Annual budget  ·  readiness 2 of 2  ·  NEW</div>
-  <div class="screen-note">The second readiness step, and the one that unlocks Generate. The teacher gives the number of <b>teaching weeks</b> in her year; Aruvi multiplies it by the period durations already in her schedule to express her <b>annual capacity in the same duration-bucket counts</b> the allocation later spends against — so the budget meter is clean subtraction, never a minutes↔count conversion.</div>
-  <div class="device" style="max-width:660px;">
-    <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb locked">Generate <span class="lk">🔒</span></div></div>
-    <div class="hd">
-      <div class="kicker kicker-soft">My Plans · Setup · Step 2 of 2</div>
-      <div class="disp" style="font-size:21px; margin-top:2px;">How long is your teaching year?</div>
-      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Roughly how many weeks you actually teach — leave out exam blocks and long breaks. This becomes the budget you spend across chapters.</div>
-    </div>
-    <div class="pad">
-      <div class="inputbox" style="max-width:330px;">
-        <span class="mono" style="font-size:12px; color:var(--ink-soft);">Teaching weeks this year</span>
-        <span class="stepper" style="margin-left:auto;"><button>–</button><span class="val">36</span><button>+</button></span>
-      </div>
-
-      <div class="budget" style="margin-top:16px;">
-        <div class="bl"><span class="bk">Your annual budget · 6A Science (45-min periods)</span><span class="bv">36 weeks</span></div>
-        <div class="bnote">36 teaching weeks × the periods in your weekly schedule → the pool you allocate from. Each subject·grade carries its own budget; switch with the scope chip inside Generate.</div>
-      </div>
-
-      <table class="sched" style="margin-top:6px;">
-        <thead><tr><th>Subject · grade</th><th>Period</th><th>Per week</th><th>Annual pool</th></tr></thead>
-        <tbody>
-          <tr><td>VI · A Science</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
-          <tr><td>VI · B Science</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
-          <tr><td>VIII · C History</td><td>60 min</td><td>1</td><td>36 periods</td></tr>
-          <tr><td>VII · A English</td><td>45 min</td><td>1</td><td>36 periods</td></tr>
-        </tbody>
-      </table>
-
-      <div class="btn-row" style="margin-top:16px;">
-        <button class="btn" style="flex:0 0 auto;">← Back to schedule</button>
-        <button class="btn btn-primary" style="flex:1;">Finish setup — this unlocks Generate ✓</button>
-      </div>
-      <div class="footnote">Tell Aruvi your schedule so the plans it makes can actually run your week. Once this is done, the <b>Generate</b> tab activates — that's where you plan chapters and make lesson plans.</div>
-    </div>
-  </div>
+  <!-- ========================= READINESS · MOVED OUT ========================= -->
+  <div class="screen-label">Readiness setup (durations → weekly grid → annual budget)  ·  MOVED</div>
+  <div class="screen-note" style="margin-bottom:18px;">The old static readiness mockups (former <b>Screen&nbsp;1 · Weekly schedule</b> and <b>Screen&nbsp;1b · Annual budget</b>) have been removed from this index. They are <b>replaced by the interactive prototype <a href="readiness-grid-flow.html" style="color:var(--pine); font-weight:500;">readiness-grid-flow.html</a></b>, which is the canonical readiness flow: per-grade class durations → a tap/hold weekly grid (sections × days) → an annual-budget step offering four ways to express the year (teaching weeks / period count / working days / estimate). Readiness still gates Generate exactly as before; only the way the teacher enters it has changed. Everything from <b>Screen&nbsp;2a</b> onward below is unchanged in purpose.</div>
 
   <!-- ========================= SCREEN 2a: EMPTY STATE — readiness incomplete ========================= -->
   <div class="screen-label">Screen 2a · My Plans empty state — readiness incomplete  ·  NEW</div>
@@ -281,9 +244,9 @@
     <div class="pad" style="text-align:center; padding:40px 26px 36px;">
       <div class="kicker kicker-ochre">Welcome to Aruvi</div>
       <div class="disp" style="font-size:23px; margin:8px 0 6px;">Let's get your week set up</div>
-      <div style="font-style:italic; color:var(--ink-soft); font-size:14px; max-width:420px; margin:0 auto 18px;">Aruvi needs two quick things before it can plan with you — your weekly classes, and how long your teaching year is.</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:14px; max-width:420px; margin:0 auto 18px;">Aruvi needs two quick things before it can plan with you — your weekly grid of classes, and how long your teaching year is.</div>
       <div style="display:inline-flex; flex-direction:column; gap:9px; text-align:left; min-width:280px;">
-        <div class="reset-pick" style="background:#f6f1e7;"><span class="mono" style="font-size:12px; color:var(--ink);">1 · Weekly schedule</span><span class="rowact">add →</span></div>
+        <div class="reset-pick" style="background:#f6f1e7;"><span class="mono" style="font-size:12px; color:var(--ink);">1 · Weekly grid</span><span class="rowact">set up →</span></div>
         <div class="reset-pick lock"><span class="mono" style="font-size:12px;">2 · Annual budget</span><span class="rowact lock">after step 1</span></div>
       </div>
       <div class="footnote" style="border:none; max-width:420px; margin:18px auto 0;">Want to see what a finished plan looks like first? Browse the <b>sample plans</b> — read-only, no setup needed (last screen).</div>
@@ -292,7 +255,7 @@
 
   <!-- ========================= SCREEN 2b: EMPTY STATE — ready, no plan ========================= -->
   <div class="screen-label">Screen 2b · My Plans empty state — ready, no plan (the forward/panic state)  ·  NEW</div>
-  <div class="screen-note">Readiness is done, but nothing has been generated yet — and a class is coming up with no plan. A <b>single</b> call to action points to Generate. (No dual "Allocate vs Generate" choice — Generate is the only route, and it contains the allocation steps.)</div>
+  <div class="screen-note">Readiness is done, but nothing has been generated yet — and a class is coming up with no plan. A <b>single</b> call to action points to Generate. (No dual "Allocate vs Generate" choice — Generate is the only route, and it contains the allocation steps.) <b>Routing:</b> on this first run there are no allocations yet, so the button goes straight to <b>G3 (Choose chapters)</b> — the empty G2 landing page is skipped — then G3 → G4 → G5 → (Accept) → G2 landing.</div>
   <div class="device" style="max-width:660px;">
     <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb">Generate</div></div>
     <div class="hd" style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -308,13 +271,13 @@
       </div></div>
       <div style="text-align:center; padding:14px 10px 6px;">
         <button class="btn btn-primary" style="padding:13px 22px;">Ready to plan your first few chapters? →</button>
-        <div class="footnote" style="border:none; padding-top:9px;">Opens the Generate tab — choose chapters, set their time, make the plans.</div>
+        <div class="footnote" style="border:none; padding-top:9px;">Opens the Generate tab at <b>G3 (Choose chapters)</b> — choose chapters, set their time, make the plans.</div>
       </div>
     </div>
   </div>
 
-  <!-- ========================= SCREEN 2: WEEKLY DASHBOARD ========================= -->
-  <div class="screen-label">Screen 2 · Weekly dashboard (populated)</div>
+  <!-- ========================= SCREEN 2c: WEEKLY DASHBOARD (populated) ========================= -->
+  <div class="screen-label">Screen 2c · Weekly dashboard (populated)</div>
   <div class="screen-note">The Sunday glance once plans exist. Every section's next class, each row resolving to named content. Rows with no chapter started show as plain schedule rows. <b>Never a progress comparison, never a budget number</b> — My Plans is organized by her day, not by tracking. The pointer reads "Learning Unit", not "Period", so a disruption never reads as being behind.</div>
   <div class="device" style="max-width:680px;">
     <div class="tabbar"><div class="tb on">My&nbsp;Plans</div><div class="tb">Generate</div></div>
@@ -365,10 +328,10 @@
     <div class="t-k">Tab 2 of 2  ·  was called "Allocate" — now folded in</div>
     <div class="t-h">Generate</div>
     <div class="t-s">The whole act of getting a chapter ready, in one tab: <b>choose chapters → set their time (budget ledger) → Generate Lesson Plan</b>. Single-scope — it always operates on one subject·grade (the scope chip, top-right). Allocation is the on-ramp; the payoff is the plan, so the tab is named for the plan.</div>
-    <div class="flowline">One pathway, no bypass: <b>readiness</b> → choose → allocate → <b>Generate Lesson Plan</b>. Opening the tab is passive (shows the ledger); every forward step is a deliberate tap.</div>
+    <div class="flowline">Hub-and-spoke: opening the tab (or accepting an allocation) lands on the <b>G2 landing page</b>; from there three deliberate taps branch out — <b>Allocate</b> (→ G3 → G4 → G5, back to G2), <b>Generate</b> (→ G7), <b>Reset</b> (→ G6). Opening the tab is passive; every forward step is a tap.</div>
   </div>
 
-  <!-- ========================= SCREEN 3-G: GENERATE — gated/inert ========================= -->
+  <!-- ========================= SCREEN G1: GENERATE — gated/inert ========================= -->
   <div class="screen-label">Screen G1 · Generate — locked until readiness  ·  NEW</div>
   <div class="screen-note">Before the schedule + budget exist, Generate is <b>visible but inert</b> — greyed, with a pointer back to My Plans. Shown, never hidden: hiding it would make teachers think the feature doesn't exist. This <i>teaches</i> the dependency.</div>
   <div class="device" style="max-width:660px;">
@@ -381,9 +344,9 @@
     </div>
   </div>
 
-  <!-- ========================= SCREEN 3-G: GENERATE — ledger (resting view) ========================= -->
-  <div class="screen-label">Screen G2 · Generate — the ledger (resting view, second-time)  ·  NEW</div>
-  <div class="screen-note">What opening the Generate tab shows once allocations exist — the standing answer to "where do I see my allocation". Allocated chapters, their periods, started/unstarted status, and the <b>budget meter for this subject·grade</b>. The scope chip (top-right) is the active switcher she toggles to inspect any subject·grade. <b>Opening this never starts anything</b> — add / modify / reset / generate are all deliberate taps from here.</div>
+  <!-- ========================= SCREEN G2: GENERATE — landing / allocation table (hub) ========================= -->
+  <div class="screen-label">Screen G2 · Generate landing — the allocation table (hub)  ·  REVISED</div>
+  <div class="screen-note">The Generate tab's <b>single landing page</b>, reached two ways: (1) opening the tab on a return visit, and (2) tapping <b>Accept allocation</b> on G5 / G5&nbsp;(Modify). It mirrors G5's read-only allocation table — per-chapter 45-min / 60-min / total columns and the subject·grade budget bar — and carries the three deliberate exits at the bottom: <b>Continue to Allocate</b> (→ G3, choose chapters → set time), <b>Continue to Generate</b> (→ G7, make a lesson plan), and <b>Reset allocations</b> (→ G6). No teaching status here — whether a chapter is started / in progress / locked is <i>execution</i>, and that lives in <b>My Plans</b>, not in Generate. This replaces the old status-ledger; opening it never starts anything.</div>
   <div class="device" style="max-width:680px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
     <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
@@ -392,48 +355,53 @@
     </div>
     <div class="pad">
       <div class="budget">
-        <div class="bl"><span class="bk">Annual budget used · 45-min periods</span><span class="bv">22 / 36 &nbsp;·&nbsp; 61%</span></div>
-        <div class="meter"><span style="width:61%;"></span></div>
-        <div class="bnote">14 periods (about 5 teaching weeks) still free this year.</div>
+        <div class="bl"><span class="bk">Annual budget · 6A Science</span><span class="bv">80 periods · 64h</span></div>
+        <div class="bl" style="margin-top:3px;"><span class="bk">Allocated so far</span><span class="mono" style="font-size:12px; color:var(--ink-soft);">48 periods · 60%</span></div>
+        <div class="meter"><span style="width:60%;"></span></div>
+        <div class="bnote">32 periods (about 26h) still free this year.</div>
       </div>
 
-      <div class="kicker kicker-soft" style="margin-bottom:8px;">ALLOCATED CHAPTERS</div>
-
-      <div class="ledrow">
-        <div><div class="lt">Optics</div><div class="lmeta">12 periods · started in 6A</div></div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <span class="pillstat started">in progress</span>
-          <span class="rowact lock">🔒 locked</span>
-        </div>
+      <div class="allochead">
+        <span class="ch-k">Allocated chapters</span>
+        <div class="numcols head"><span>45 min</span><span>60 min</span><span>total</span></div>
       </div>
 
       <div class="ledrow">
-        <div><div class="lt">Heat</div><div class="lmeta">6 periods · plan generated, not started</div></div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <span class="pillstat unstarted">not started</span>
-          <span class="rowact">modify</span>
-        </div>
+        <div><div class="lt">Heat</div></div>
+        <div class="numcols"><span class="nc">14</span><span class="nc">7</span><span class="nc tot">21</span></div>
       </div>
-
       <div class="ledrow">
-        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">4 periods · allocated — no plan made yet</div></div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <span class="pillstat nogen">generate</span>
-          <span class="rowact">Generate plan →</span>
-        </div>
+        <div><div class="lt">Acids &amp; Bases</div></div>
+        <div class="numcols"><span class="nc">11</span><span class="nc">5</span><span class="nc tot">16</span></div>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Motion</div></div>
+        <div class="numcols"><span class="nc">7</span><span class="nc">4</span><span class="nc tot">11</span></div>
+      </div>
+      <div class="ledrow" style="background:var(--paper-sunk); border-style:dashed;">
+        <div><div class="lt" style="font-size:14px;">Total allocated</div></div>
+        <div class="numcols"><span class="nc">32</span><span class="nc">16</span><span class="nc tot">48</span></div>
       </div>
 
-      <div class="btn-row" style="margin-top:16px;">
-        <button class="btn btn-primary" style="flex:1;">+ Add chapters to plan</button>
-        <button class="btn">Reset allocation</button>
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-primary" style="flex:1;">Continue to Allocate →</button>
+        <button class="btn btn-primary" style="flex:1;">Continue to Generate →</button>
       </div>
-      <div class="footnote">Locked chapters are already being taught — they count toward your budget but can't be changed. "Generate plan" spends the API cost; you can allocate now and generate closer to teaching.</div>
+      <div class="footnote"><b>Continue to Allocate</b> adds or re-times chapters (choose chapters → set time). <b>Continue to Generate</b> turns an allocated chapter into a lesson plan.</div>
+
+      <div class="dangerzone">
+        <div class="dz-k">Manage allocations</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+          <span style="font-style:italic; color:var(--ink-soft); font-size:12.5px;">Clear unstarted allocations and free that time back to your budget.</span>
+          <button class="btn btn-danger" style="flex:0 0 auto;">Reset allocations…</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ========================= SCREEN G3: inverted chapter select ========================= -->
   <div class="screen-label">Screen G3 · Choose chapters — inverted, affirmative  ·  NEW</div>
-  <div class="screen-note">The inversion: <b>not</b> "all chapters shown, untick what you don't want." A teacher has a few chapters in mind and wants their time cost. She <b>ticks</b> the chapters she plans to teach from a dropdown; <b>only ticked chapters stay on screen</b> — the workspace shows <i>her</i> plan, not the catalogue.</div>
+  <div class="screen-note"><b>Entry point for the Allocate spoke</b>, reached two ways: from <b>Screen 2b</b> ("Ready to plan your first few chapters?") on a first run, and from the <b>G2 landing page</b> ("Continue to Allocate") on every later run. The inversion: <b>not</b> "all chapters shown, untick what you don't want." A teacher has a few chapters in mind and wants their time cost. She <b>ticks</b> the chapters she plans to teach from a dropdown; <b>only ticked chapters stay on screen</b> — the workspace shows <i>her</i> plan, not the catalogue. From here: G3 → G4 → G5 → (Accept) → G2 landing.</div>
   <div class="device" style="max-width:660px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
     <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
@@ -446,103 +414,210 @@
         <span class="mono" style="font-size:12px; color:var(--ink-soft);">＋ Add a chapter…</span>
         <span class="chev mono" style="font-size:12px; color:var(--ink-soft);">▾</span>
       </div>
-      <div class="kicker kicker-soft" style="margin:16px 0 8px;">CHOSEN — 2 CHAPTERS</div>
+      <div class="kicker kicker-soft" style="margin:16px 0 8px;">CHOSEN — 3 CHAPTERS</div>
       <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Heat</span></span><span class="rowact">remove</span></div>
       <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Acids &amp; Bases</span></span><span class="rowact">remove</span></div>
+      <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Motion</span></span><span class="rowact">remove</span></div>
       <div class="btn-row" style="margin-top:16px;">
-        <button class="btn btn-primary" style="flex:1;">Allocate time for these →</button>
+        <button class="btn btn-primary" style="flex:1;">Set time for the selected chapters →</button>
       </div>
       <div class="footnote">Only the chapters you tick appear here — this is your plan, not the whole textbook list.</div>
     </div>
   </div>
 
-  <!-- ========================= SCREEN G4: conversational input (chat + table) ========================= -->
-  <div class="screen-label">Screen G4 · Set the time — conversational input  ·  NEW</div>
-  <div class="screen-note">All non-button input is conversational. <b>Left = the act of entering</b> (chat asks, she answers, the answer is echoed back so the bucket is named by <i>her</i> duration, never a presumed one). <b>Right = committed state</b> (the side table she glances at — duration × count rows, each with a red discard). "Add more?" loops, which is how the mixed-duration case (45×6 <i>and</i> 60×1) stays legible. Corrections: live +/− before a row is committed; discard-and-redo after.</div>
+  <!-- ========================= SCREEN G4: how many periods (chat + derived table) ========================= -->
+  <div class="screen-label">Screen G4 · Set the time — how many periods  ·  REVISED</div>
+  <div class="screen-note">Period <i>durations</i> are already known from the weekly schedule, so Aruvi never asks for them again — it asks one thing: <b>how many periods these chapters get in total</b>. <b>Left = the act of entering</b> (a single number). <b>Right = derived state</b> — Aruvi splits that number across her period types using the <b>weekly ratio</b> of period lengths for this subject·grade (here 2 × 45-min : 1 × 60-min), so the side box shows duration × count per type without her having to enter durations. The title is singular/plural by chapter count; navigation reads <b>Continue to Allocate</b>.</div>
   <div class="device" style="max-width:720px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
-    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI · Heat</div><div class="disp" style="font-size:19px; margin-top:2px;">How much time does this chapter get?</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI · 3 chapters</div><div class="disp" style="font-size:19px; margin-top:2px;">How much time do these chapters get in total?</div>
+      <div style="font-style:italic; color:var(--ink-soft); font-size:13px; margin-top:2px;">Heat · Acids &amp; Bases · Motion — Aruvi will divide this across them by effort.</div>
+    </div>
     <div class="pad">
       <div class="convgrid">
         <div class="chatcol">
-          <div class="ai">How long is each period, in minutes?</div>
-          <div class="me">45</div>
-          <div class="ai">How many 45-minute periods for this chapter?</div>
-          <div class="me">6</div>
-          <div class="ai">Got it — added. Any periods of a <i>different</i> length for this chapter?
-            <div class="ask">e.g. a longer double period</div>
+          <div class="ai">How many periods are planned to be spent teaching these chapters in total?
+            <div class="ask">Your weekly schedule already tells Aruvi how long each period is — just the count.</div>
           </div>
           <div class="inputbox">
-            <span class="mono" style="font-size:11px; color:var(--ink-soft);">Duration</span>
-            <span class="stepper"><button>–</button><span class="val">60</span><button>+</button></span>
-            <span class="mono" style="font-size:11px; color:var(--ink-soft); margin-left:8px;">×</span>
-            <span class="stepper"><button>–</button><span class="val">1</span><button>+</button></span>
-            <button class="btn btn-primary" style="padding:7px 12px; margin-left:auto;">Add</button>
+            <span class="mono" style="font-size:11px; color:var(--ink-soft);">Periods in total</span>
+            <span class="stepper" style="margin-left:auto;"><button>–</button><span class="val">48</span><button>+</button></span>
           </div>
-          <div class="footnote" style="border:none; padding-top:4px;">Adjust freely here before adding — once a bucket is in the table, change it by discarding the row.</div>
+          <div class="footnote" style="border:none; padding-top:6px;">Aruvi splits this across your period lengths using how your week is built (2 of every 3 periods run 45 min, 1 runs 60 min for this class).</div>
         </div>
 
         <div class="statetable">
-          <div class="st-h">This chapter · committed</div>
-          <div class="strow"><span class="bk">45 min <small>× 6</small></span><span class="disc">✕</span></div>
-          <div class="strow"><span class="bk" style="opacity:.5;">60 min <small>× 1</small> &nbsp;<small style="font-style:italic;">adding…</small></span><span class="disc" style="color:#cbb;">✕</span></div>
-          <div class="stfoot">7 periods · ~ 5h 30m</div>
+          <div class="st-h">By period length · weekly ratio</div>
+          <div class="strow"><span class="bk">45 min <small>× 32</small></span><span class="mono" style="font-size:11px; color:var(--ink-soft);">24h 00m</span></div>
+          <div class="strow"><span class="bk">60 min <small>× 16</small></span><span class="mono" style="font-size:11px; color:var(--ink-soft);">16h 00m</span></div>
+          <div class="stfoot">48 periods · ~ 40h 00m total</div>
         </div>
+      </div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">Continue to Allocate →</button>
       </div>
     </div>
   </div>
 
-  <!-- ========================= SCREEN G5: suggested allocation + live budget + Accept/Modify ========================= -->
-  <div class="screen-label">Screen G5 · Suggested allocation + live budget  ·  NEW</div>
-  <div class="screen-note">Aruvi suggests the period split across the chosen chapters; the <b>budget meter recomputes live</b> as the answer she's spending against. Two choices: <b>Accept</b> (commit as-is — the sole commit) or <b>Modify</b> (absolute, not zero-sum — nudge any chapter up or down, the meter moves with it). Modify is <i>not</i> terminal; after adjusting, Accept commits.</div>
+  <!-- ========================= SCREEN G5: suggested allocation (per-period-type columns) + Accept/Modify ========================= -->
+  <div class="screen-label">Screen G5 · Suggested allocation — per period type + total  ·  REVISED</div>
+  <div class="screen-note">Aruvi divides the 48 periods across the chosen chapters by <b>effort index</b>, and shows each chapter as duration-split columns (45-min, 60-min) <b>plus a Total</b>. The budget bar at the top is for <i>this</i> subject·grade and carries both the annual budget (periods + hours) and what's <b>already allotted</b> (zero on a first run). Two buttons: <b>Accept allocation</b> (commits → lands on the <b>G2 Generate landing page</b>) or <b>Modify — adjust up or down</b> (reveals ± on both sides; absolute, not zero-sum; the Total reflows). After Modify, the only button is <b>Accept allocation</b>, which commits and again lands on the G2 landing page.</div>
   <div class="device" style="max-width:680px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
     <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Suggested time for these chapters</div></div>
     <div class="pad">
       <div class="budget">
-        <div class="bl"><span class="bk">Annual budget used · 45-min periods</span><span class="bv">32 / 36 &nbsp;·&nbsp; 89%</span></div>
-        <div class="meter"><span style="width:89%;"></span></div>
-        <div class="bnote">Adding these two chapters takes you from 61% → 89%. 4 periods would remain.</div>
+        <div class="bl"><span class="bk">Annual budget · 6A Science</span><span class="bv">80 periods · 64h</span></div>
+        <div class="bl" style="margin-top:3px;"><span class="bk">Already allotted</span><span class="mono" style="font-size:12px; color:var(--ink-soft);">0 periods · first allocation</span></div>
+        <div class="meter"><span style="width:60%;"></span></div>
+        <div class="bnote">These 48 periods would use 60% of the year — 32 periods (about 26h) left after.</div>
+      </div>
+
+      <div class="allochead">
+        <span class="ch-k">Chapter</span>
+        <div class="numcols head"><span>45 min</span><span>60 min</span><span>total</span></div>
       </div>
 
       <div class="ledrow">
-        <div><div class="lt">Heat</div><div class="lmeta">suggested</div></div>
-        <div class="stepper"><button>–</button><span class="val">6</span><button>+</button> <span class="mono" style="font-size:10px; color:var(--ink-soft); margin-left:6px;">periods</span></div>
+        <div><div class="lt">Heat</div><div class="lmeta">effort index 0.42</div></div>
+        <div class="numcols"><span class="nc">14</span><span class="nc">7</span><span class="nc tot">21</span></div>
       </div>
       <div class="ledrow">
-        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">suggested</div></div>
-        <div class="stepper"><button>–</button><span class="val">4</span><button>+</button> <span class="mono" style="font-size:10px; color:var(--ink-soft); margin-left:6px;">periods</span></div>
+        <div><div class="lt">Acids &amp; Bases</div><div class="lmeta">effort index 0.33</div></div>
+        <div class="numcols"><span class="nc">11</span><span class="nc">5</span><span class="nc tot">16</span></div>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Motion</div><div class="lmeta">effort index 0.25</div></div>
+        <div class="numcols"><span class="nc">7</span><span class="nc">4</span><span class="nc tot">11</span></div>
+      </div>
+      <div class="ledrow" style="background:var(--paper-sunk); border-style:dashed;">
+        <div><div class="lt" style="font-size:14px;">Total allocated</div></div>
+        <div class="numcols"><span class="nc">32</span><span class="nc">16</span><span class="nc tot">48</span></div>
+      </div>
+
+      <details class="howbox">
+        <summary>How does Aruvi allocate? <span class="chev">▾</span></summary>
+        <div class="howbody">
+          <div class="basis">Aruvi splits your periods by each chapter's <b>effort index</b> — heavier chapters get more time. For Science (middle stage), the effort index weighs:</div>
+          <ul>
+            <li>Conceptual demand of the ideas</li>
+            <li>The central and co-central competencies</li>
+            <li>Hands-on load — activities and demonstrations</li>
+            <li>In-class execution load</li>
+          </ul>
+          <div class="moreq">Other subjects weigh different things — Social Sciences uses NCF competency weight, English weighs its language spines and writing demand. Want the deeper "why" for a chapter? Ask Aruvi.</div>
+        </div>
+      </details>
+
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1;">Accept allocation</button>
+        <button class="btn btn-modify">Modify — adjust up or down</button>
+      </div>
+      <div class="footnote">Accept saves this split and lands you on the G2 Generate landing page. Modify reveals ＋ / − on each chapter to spend more or less against your budget — the totals update as you go, then Accept commits.</div>
+    </div>
+  </div>
+
+  <!-- ========================= SCREEN G5-mod: Modify mode (± both sides, single Accept) ========================= -->
+  <div class="screen-label">Screen G5 (Modify) · Adjust up or down — absolute, not zero-sum  ·  NEW</div>
+  <div class="screen-note">After tapping <b>Modify</b>: each chapter row gains <b>＋ / −</b> on both period-type counts; pressing ＋ raises a count, − lowers it, and the chapter Total + the grand Total + the budget bar all reflow live. It's absolute — nudging one chapter up does <i>not</i> pull from another. Now there is a <b>single</b> button: <b>Accept allocation</b>, which commits and lands on the <b>G2 Generate landing page</b>.</div>
+  <div class="device" style="max-width:700px;">
+    <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
+    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI · modifying</div><div class="disp" style="font-size:20px; margin-top:2px;">Adjust each chapter up or down</div></div>
+    <div class="pad">
+      <div class="budget">
+        <div class="bl"><span class="bk">Annual budget · 6A Science</span><span class="bv">80 periods · 64h</span></div>
+        <div class="bl" style="margin-top:3px;"><span class="bk">Already allotted</span><span class="mono" style="font-size:12px; color:var(--ink-soft);">0 periods · first allocation</span></div>
+        <div class="meter"><span style="width:64%;"></span></div>
+        <div class="bnote">Now spending 51 of 80 periods (64%) — 29 left. Adjust freely; nothing commits until you Accept.</div>
+      </div>
+
+      <div class="allochead">
+        <span class="ch-k">Chapter</span>
+        <div class="numcols head"><span>45 min</span><span>60 min</span><span>total</span></div>
+      </div>
+
+      <div class="ledrow">
+        <div><div class="lt">Heat</div></div>
+        <div class="stepbox">
+          <span class="stepunit"><button>–</button><span class="sv">16</span><button>+</button></span>
+          <span class="stepunit"><button>–</button><span class="sv">8</span><button>+</button></span>
+          <span class="tot">24</span>
+        </div>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Acids &amp; Bases</div></div>
+        <div class="stepbox">
+          <span class="stepunit"><button>–</button><span class="sv">11</span><button>+</button></span>
+          <span class="stepunit"><button>–</button><span class="sv">5</span><button>+</button></span>
+          <span class="tot">16</span>
+        </div>
+      </div>
+      <div class="ledrow">
+        <div><div class="lt">Motion</div></div>
+        <div class="stepbox">
+          <span class="stepunit"><button>–</button><span class="sv">7</span><button>+</button></span>
+          <span class="stepunit"><button>–</button><span class="sv">4</span><button>+</button></span>
+          <span class="tot">11</span>
+        </div>
+      </div>
+      <div class="ledrow" style="background:var(--paper-sunk); border-style:dashed;">
+        <div><div class="lt" style="font-size:14px;">Total allocated</div></div>
+        <div class="numcols"><span class="nc">34</span><span class="nc">17</span><span class="nc tot">51</span></div>
       </div>
 
       <div class="btn-row" style="margin-top:18px;">
         <button class="btn btn-primary" style="flex:1;">Accept allocation</button>
-        <button class="btn btn-modify">Modify — adjust up or down</button>
       </div>
-      <div class="footnote">Modify lets you spend more or less on any chapter against your budget — the meter updates as you go. Nothing is committed until you tap <b>Accept</b>.</div>
+      <div class="footnote">Raising Heat from 21 → 24 only changes Heat — the others hold. Accept commits this and lands you on the G2 Generate landing page.</div>
     </div>
   </div>
 
   <!-- ========================= SCREEN G6: selective reset ========================= -->
   <div class="screen-label">Screen G6 · Reset — selective, unstarted only  ·  NEW</div>
-  <div class="screen-note">Reset isn't blanket. She ticks <b>which</b> allocations to clear; <b>started chapters are shown but not selectable</b> (locked, greyed) — same rule that governs modify and remove. Clearing an allocation frees that budget back.</div>
-  <div class="device" style="max-width:640px;">
+  <div class="screen-note">Reached from the <b>G2 landing page</b> via <b>Reset allocations…</b>, and <b>aligned to look like G2</b> — same scope header, same budget bar, the allocation list rendered as ledger rows so the teacher recognises she's still on her allocation table, just in a "select to clear" mode. Reset isn't blanket — she ticks <b>which</b> allocations to clear; <b>started chapters are shown but not selectable</b> (locked, greyed). The destructive confirm sits alone in its own zone, named with the count it frees; Cancel returns to G2 unchanged.</div>
+  <div class="device" style="max-width:680px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
-    <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Reset which allocations?</div></div>
+    <div class="hd" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><div class="kicker kicker-ochre">Generate · Reset allocations</div><div class="disp" style="font-size:20px; margin-top:2px;">Science · Grade VI</div></div>
+      <span class="scope"><span class="sg">6A · SCIENCE · VI</span><span class="chev">▾ switch</span></span>
+    </div>
     <div class="pad">
-      <div class="reset-pick lock"><span><span class="cbx lock"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Optics · 12 periods</span></span><span class="mono" style="font-size:10px; color:#bcae98;">🔒 in progress — can't reset</span></div>
-      <div class="reset-pick"><span><span class="cbx on"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Heat · 6 periods</span></span><span class="mono" style="font-size:10px; color:var(--ink-soft);">not started</span></div>
-      <div class="reset-pick"><span><span class="cbx"></span> &nbsp;<span class="mono" style="font-size:12.5px;">Acids &amp; Bases · 4 periods</span></span><span class="mono" style="font-size:10px; color:var(--ink-soft);">not started</span></div>
-      <div class="btn-row" style="margin-top:16px;">
-        <button class="btn" style="flex:0 0 auto;">Cancel</button>
-        <button class="btn btn-eject" style="flex:1;">Reset selected — frees 6 periods</button>
+      <div class="budget">
+        <div class="bl"><span class="bk">Annual budget · 6A Science</span><span class="bv">80 periods · 64h</span></div>
+        <div class="bl" style="margin-top:3px;"><span class="bk">Frees back if reset</span><span class="mono" style="font-size:12px; color:var(--clay);">+ 6 periods → 42 allocated</span></div>
+        <div class="meter"><span style="width:53%;"></span></div>
+        <div class="bnote">Tick the unstarted allocations to clear. Started chapters are locked.</div>
       </div>
-      <div class="footnote">Resetting clears the allocation and returns that time to your annual budget. Chapters already being taught are locked.</div>
+
+      <div class="kicker kicker-soft" style="margin:4px 0 8px;">SELECT ALLOCATIONS TO CLEAR</div>
+
+      <div class="ledrow" style="opacity:.6;">
+        <div style="display:flex; align-items:center; gap:11px;"><span class="cbx lock"></span><div><div class="lt">Optics</div><div class="lmeta">12 periods · 🔒 in progress — can't reset</div></div></div>
+        <div class="numcols"><span class="nc">8</span><span class="nc">4</span><span class="nc tot">12</span></div>
+      </div>
+      <div class="ledrow" style="border-color:var(--clay);">
+        <div style="display:flex; align-items:center; gap:11px;"><span class="cbx on"></span><div><div class="lt">Heat</div><div class="lmeta">not started</div></div></div>
+        <div class="numcols"><span class="nc">4</span><span class="nc">2</span><span class="nc tot">6</span></div>
+      </div>
+      <div class="ledrow">
+        <div style="display:flex; align-items:center; gap:11px;"><span class="cbx"></span><div><div class="lt">Acids &amp; Bases</div><div class="lmeta">not started</div></div></div>
+        <div class="numcols"><span class="nc">3</span><span class="nc">1</span><span class="nc tot">4</span></div>
+      </div>
+
+      <div class="dangerzone">
+        <div class="dz-k">This permanently clears the ticked allocations</div>
+        <div class="btn-row" style="margin-top:0;">
+          <button class="btn" style="flex:0 0 auto;">Cancel</button>
+          <button class="btn btn-eject" style="flex:1;">Reset 1 allocation — frees 6 periods</button>
+        </div>
+      </div>
+      <div class="footnote">Clearing returns that time to your annual budget; the plan files (if any) stay safe. Chapters already being taught are locked. Cancel leaves everything as it was.</div>
     </div>
   </div>
 
   <!-- ========================= SCREEN G7: select + confirm (terminal generate) ========================= -->
   <div class="screen-label">Screen G7 · Generate — select allocated chapter + confirm  ·  NEW</div>
-  <div class="screen-note">After Accept, this is all Generate does: it shows <b>only allocated chapters</b>, she picks one, and confirms. <b>Accept and Generate stay two steps</b> — Accept commits the budget; Generate spends the API cost (she may accept today, generate two weeks before teaching). Even with a single chapter it's still one deliberate Generate tap.</div>
+  <div class="screen-note">Reached from the <b>G2 landing page</b> via its <b>Continue to Generate</b> button (Accept first lands on G2 — it does <i>not</i> jump straight here). It shows <b>only allocated chapters</b>, she picks one, and confirms. <b>Accept and Generate stay two steps</b> — Accept commits the budget; Generate spends the API cost (she may accept today, generate two weeks before teaching). Even with a single chapter it's still one deliberate Generate tap.</div>
   <div class="device" style="max-width:660px;">
     <div class="tabbar"><div class="tb">My&nbsp;Plans</div><div class="tb on">Generate</div></div>
     <div class="hd"><div class="kicker kicker-ochre">Generate · Science · Grade VI</div><div class="disp" style="font-size:20px; margin-top:2px;">Make a lesson plan</div>
