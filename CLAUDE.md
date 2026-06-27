@@ -126,7 +126,7 @@ aruvi_core/            engine (Python, no UI deps)
   subjects/            base.py (Subject interface) + __init__.py (registry) + one pkg/subject
   ports.py  engine.py  normalize.py  grades.py  allocate.py  render/html.py
 api/                   FastAPI service (main.py, data.py, config.py) — wraps the engine
-web/                   Next.js app (app/page.jsx = 3 tabs + renderer; app/globals.css = design)
+web/                   Next.js app (app/page.jsx = 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
 ```
 
@@ -172,15 +172,34 @@ parity is verified routinely, not just at the eventual Expo milestone.
 ## 9. Status & roadmap
 
 **Done:** engine + all 5 subjects (parity-tested) · grade→stage · allocate (multi-row
-schedule) · FastAPI · Next.js 3-tab app (Allocate live · Generate input panel + saved-plan
-preview · My Plans live) · HTML redesign (warm-editorial) · factors note.
+schedule) · FastAPI · HTML redesign (warm-editorial) · factors note · allocation-report
+PDF/DOCX export.
+
+**Planning-layer rebuild (2026-06-27) — the web app was restructured from 3 sibling tabs to
+the finalized two-tab, readiness-gated, hub-and-spoke flow** (mocked in
+`planning-layer-mockups/index.html`; flow chart in `aruvi_saas_full_lifecycle_flow.png`). See
+§11 for the new web architecture. Phases done: 1 (two-tab shell + readiness lock), 2
+(readiness setup flow), 3 (Generate hub G2 + generate spoke G7 + G4 total-periods model + G5
+howbox), 5 (My Plans dashboard + Learning-Unit lesson view + assessment artifact).
+**IMPORTANT — these phases are code-complete and STATICALLY verified only; they have NOT been
+live-rendered** (the Cowork sandbox can't load Next.js's arm64 SWC binary, so `next dev`/
+`build` don't run there). A local smoke test of the full loop — readiness → unlock Generate →
+allocate → accept → hub → generate → My Plans dashboard → teach (Learning Units) → assessment
+— at desktop AND mobile widths is the immediate must-do before further UI work.
 
 **Next (in order):**
-1. **Allocation-report PDF** (carry the design language to print).
-2. **LP + assessment PDFs** (same language; screen ↔ print parity).
-3. **Live generation** — Anthropic `LLMClient` adapter + output cache (prompt builders are
-   already lifted per subject).
-4. **Auth + DB + multi-tenancy** (Supabase) → **payments** (Razorpay) → **mobile** (Expo).
+1. **Phase 4** — Auth + DB + multi-tenancy (Supabase): replace the front-end `ready` flag and
+   localStorage pointers/allocations with real per-user/tenant state; the readiness payload
+   currently lives only in front-end state.
+2. **Live generation** — Anthropic `LLMClient` adapter + output cache (prompt builders are
+   already lifted per subject); wire it into the G7 generate spoke (which currently serves
+   saved-plan previews).
+3. **LP + assessment PDFs** (same language; screen ↔ print parity).
+4. **Payments** (Razorpay) → **mobile** (Expo).
+5. **Deferred polish:** G6 selective-reset screen still uses the old modal (not yet the
+   G2-aligned select-to-clear danger-zone screen from the mockup); "sample plans" pre-readiness
+   surface deliberately parked (it shows only an LP, not the execution/My-Plans value — needs
+   a better approach, see mockups Screen S note).
 
 ---
 
@@ -190,3 +209,82 @@ preview · My Plans live) · HTML redesign (warm-editorial) · factors note.
 `mirror/` data, and the behavioural spec for rendering. It still runs independently. Lift
 from it; don't depend on its code. Authoring of new mirror data still happens with the
 prototype's in-house pipeline.
+
+---
+
+## 11. Web app architecture (post 2026-06-27 planning-layer rebuild)
+
+The visual + behavioural spec is `planning-layer-mockups/index.html` (screen-by-screen
+mockups) and `aruvi_saas_full_lifecycle_flow.png` (the conceptual flow). The
+`planning-layer-mockups/readiness-grid-flow.html` is the interactive prototype the readiness
+React component was ported from.
+
+**Two tabs, not three.** `web/app/page.jsx` renders **My Plans** (default) and **Generate**.
+The old standalone "Allocate" tab is folded into Generate. `Generate.jsx` (the old thin
+input-panel component) is now DEAD CODE — left on disk, not imported.
+
+**Readiness gates Generate.** `page.jsx` holds `ready` (boolean, defaults false) and
+`readiness` (the setup payload). Until readiness is complete, the Generate tab shows a locked
+inert state (`GenerateTab.jsx`, the G1 screen). Completing setup flips `ready` true and routes
+to Generate. `ready`/`readiness` are front-end state only for now — **Phase 4 moves them to
+Supabase per user/tenant.**
+
+**Component map (`web/app/components/`):**
+- `Readiness.jsx` — ported from `readiness-grid-flow.html`. Three steps looped per grade:
+  class durations (chips) → weekly grid (tap to mark a class at shortest duration, hold/
+  right-click to cycle longer; clash detection) → annual budget (4 methods: weeks / periods /
+  working days / estimate). **As of 2026-06-27 the flow opens with the conversational
+  collection steps 1–4** (the missing piece between Screen 2a and the grid): (1) subjects —
+  multi-select, "Tell us what you teach"; (2) grades per subject; (3) sections per subject·
+  grade; (4) class durations per subject — then the existing weekly grid + annual budget loop
+  PER grade WITHIN each subject, and the whole thing loops per subject. One question per
+  screen, "Step N of 6" progress, reassurance microcopy. The hardcoded seeded grade plan is
+  gone; the structure is collected. On finish calls `onComplete(payload)`. The payload's
+  **canonical** shape is `payload.subjects[]` (self-contained per-subject record:
+  name/durations/grades[{grade,sections[{tag,sec}]}]/grids/budget); it ALSO carries a
+  denormalized active-subject projection `{subject, grades, durations, grids, budget}` purely
+  for backward compat with `MyPlans.classesFromReadiness` + `Allocate.weeklyRatioFromReadiness`
+  (do not persist that projection — see CLOUD_DATA_MODEL.md §2.1).
+- **`CLOUD_DATA_MODEL.md` (root) is the single source of truth for the Supabase/cloud data
+  boundary** (added 2026-06-27): which data is shared read-only CONTENT vs per-user/tenant
+  STATE, the proposed tables (incl. the readiness teaching-profile), and the ordered migration
+  checklist for Phase 4. Read it before any DB/persistence work.
+- `GenerateTab.jsx` — readiness gate (G1) in front of `Allocate`; passes `readiness` through.
+- `Allocate.jsx` — the Generate tab's working component. Steps: `periods` (G4) → `select`
+  (G3) → `adjust` (G5) → `final` (G2 hub) → `generate` (G7). **G2 hub** = the `final` step:
+  allocation table + budget bar + nav buttons (Continue to Allocate → `select`/G3 flow ·
+  Continue to Generate → `generate`/G7 spoke · Reset in a danger zone). **G4** = single
+  "periods in total" input split across period types by the weekly ratio
+  (`weeklyRatioFromReadiness` + `splitByRatio`, largest-remainder; falls back to period-rows
+  when readiness absent). Internally the split is written back into `rows` so the rest of the
+  flow (engine allocate call, adjust, persist, export) is unchanged. **G5** howbox uses the
+  live `allocation_basis` (basis + per-subject factors). The server-backed allocation register
+  + PDF/DOCX export are preserved untouched. The `generate` spoke serves saved-plan previews
+  (live gen deferred).
+- `MyPlans.jsx` — when `!ready` shows the **Screen 2a welcome landing** first ("Let's get
+  your week set up" + 1·Weekly grid / 2·Annual budget checklist; gated by local `setupStarted`
+  state), and only on tapping "set up →" renders the `Readiness` grid flow. When ready renders
+  the **weekly dashboard** (2c): classes from the readiness grid grouped by day, crossed with
+  saved plans;
+  populated rows show "On: Learning Unit N" (from the localStorage pointer) and open
+  `LessonView` on tap; the 2b empty/forward state shows a single CTA to Generate. Falls back to
+  a plans-list of openable cards when readiness has no schedule.
+- `LessonView.jsx` — Screen 3 + 3b. Flattens `lesson_plan.groups[].periods[]` into Learning
+  Units on a continuous rail (done/now/future); activities = phase rows (no fabricated
+  minutes); Move-to-next / Stay; **pointer (current LU) persists per section in localStorage**
+  key `lu_pointer_{sectionKey}`. "assessment here →" opens the dedicated green assessment
+  artifact built from the view model's assessment items.
+- `PeriodRows.jsx` (exports `Stepper`, `toPeriodRows`, `periodTypeNames`), `ViewModelView.jsx`
+  (the document renderer — used by LessonView's flatten source), `StatePill.jsx`,
+  `AllocationReportView.jsx` unchanged.
+
+**Status is execution, and lives in My Plans — never in Generate.** Started / in-progress /
+locked is teaching state (the LU pointer); Generate only knows allocated vs. plan-made. This
+was a deliberate split during the rebuild.
+
+**Verification reality in Cowork:** the sandbox cannot run `next dev`/`build` (arm64 SWC
+binary won't load) and Google-Fonts `@import` stalls the build. So web changes here are
+verified **statically** (balanced braces, default exports, prop-contract greps, CSS brace
+balance, unit-testing pure helpers like `splitByRatio`). **Live render + mobile check must be
+done locally:** `export ARUVI_DATA_DIR="../Project Aruvi/app/mirror"; python3 -m uvicorn
+api.main:app --port 8000; npm --prefix web run dev`.

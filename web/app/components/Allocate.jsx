@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pad, API } from "../lib/format";
-import PeriodRows, { toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
+import { getJSON, pad, API, pretty } from "../lib/format";
+import PeriodRows, { Stepper, toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
+import ViewModelView from "./ViewModelView";
 
 /* ── Teacher-adjustment model (explicit Δ per duration, budget-neutral) ──
  * `deltas`: { [chapter_number]: { [duration]: number } }. No auto-rebalancing — the teacher
@@ -55,14 +56,55 @@ function buildFinalAllocation(res, byCh, deltas, chapters) {
   return { durations: dur, allocations, totals };
 }
 
-export default function Allocate({ subject, grade, onNavigate }) {
+/* Derive the weekly period-type ratio from the readiness payload, for this subject·grade.
+ * Returns { [minutes]: count } counting how many cells of each duration the teacher set in
+ * her weekly grid (summed across this subject's grades). Falls back to null when readiness
+ * data isn't available, in which case G4 uses the period-type rows' own counts as the ratio. */
+function weeklyRatioFromReadiness(readiness) {
+  if (!readiness || !readiness.grids || !readiness.durations) return null;
+  const ratio = {};
+  readiness.grids.forEach((grid, gi) => {
+    const durs = readiness.durations[gi] || [];
+    grid.forEach((row) => row.forEach((v) => {
+      if (v >= 0 && durs[v] != null) {
+        const m = String(durs[v]);
+        ratio[m] = (ratio[m] || 0) + 1;
+      }
+    }));
+  });
+  return Object.keys(ratio).length ? ratio : null;
+}
+
+/* Split a total period count across period types by a ratio map { [minutes]: weight }.
+ * Largest-remainder method so the per-type counts always sum back to `total` exactly. */
+function splitByRatio(total, ratio) {
+  const types = Object.keys(ratio).map((m) => ({ m, w: ratio[m] }));
+  const sumW = types.reduce((s, t) => s + t.w, 0) || 1;
+  const raw = types.map((t) => ({ m: t.m, exact: (total * t.w) / sumW }));
+  const out = {};
+  let assigned = 0;
+  raw.forEach((r) => { out[r.m] = Math.floor(r.exact); assigned += out[r.m]; });
+  // distribute the remainder to the largest fractional parts
+  const rem = total - assigned;
+  raw.map((r) => ({ m: r.m, frac: r.exact - Math.floor(r.exact) }))
+     .sort((a, b) => b.frac - a.frac)
+     .slice(0, Math.max(0, rem))
+     .forEach((r) => { out[r.m] += 1; });
+  return out;
+}
+
+export default function Allocate({ subject, grade, readiness, onNavigate }) {
   const [chapters, setChapters] = useState([]);
   const [basis, setBasis] = useState(null);
   const [rows, setRows] = useState([{ name: "", count: 45, minutes: 45 }, { name: "", count: 60, minutes: 60 }]);
   const [res, setRes] = useState(null);
   const [busy, setBusy] = useState(false);
   const [showHow, setShowHow] = useState(false);
-  const [step, setStep] = useState("periods"); // "periods" | "select" | "adjust" | "final"
+  const [step, setStep] = useState("periods"); // "periods" | "select" | "adjust" | "final" | "generate"
+  const [genPlans, setGenPlans] = useState([]);   // saved plans for this subject·grade (generate spoke)
+  const [genView, setGenView] = useState(null);   // currently-opened plan view
+  const [genBusy, setGenBusy] = useState(false);
+  const [totalPeriodsInput, setTotalPeriodsInput] = useState(48); // G4: single total → split by weekly ratio
   const [selected, setSelected] = useState(null); // Set of chapter_number, null = "all" (not yet touched)
   const [deltas, setDeltas] = useState({}); // { [chapter_number]: { [duration]: number } }
   const [finalAlloc, setFinalAlloc] = useState(null); // locked-in result, set by Save Allocation
@@ -131,6 +173,10 @@ export default function Allocate({ subject, grade, onNavigate }) {
     }
 
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
+
+    // saved plans power the generate spoke's previews (live gen deferred)
+    setGenView(null);
+    getJSON(`/plans/${subject}/${grade}`).then((d) => setGenPlans(d.plans || [])).catch(() => setGenPlans([]));
 
     // Server register is the source of truth — overrides the localStorage paint above
     // once it arrives, so a restarted server / fresh browser still shows saved work.
@@ -375,6 +421,17 @@ export default function Allocate({ subject, grade, onNavigate }) {
     const sortedDurations = [...finalAlloc.durations].sort((a, b) => Number(b) - Number(a));
     return (
       <div>
+        {/* G2 hub — the allocation table is the resting/landing state for this subject·grade.
+            Budget bar shows what's committed; the action bar below carries the three spokes
+            (allocate more · generate · reset). annualBudget plumbing from readiness is a
+            follow-up; for now the bar reports the committed allocation. */}
+        <div className="hubbudget">
+          <div className="hubbudget-row">
+            <span className="hubbudget-k">Allocated for this subject · grade</span>
+            <span className="hubbudget-v">{combinedTotals.periods} periods · {Math.round(combinedTotals.minutes / 60)}h</span>
+          </div>
+          <div className="hubbudget-note">{allChaptersAllocated ? "All chapters allocated." : `${allChaptersData.length} of ${chapters.length} chapters allocated.`}</div>
+        </div>
         <div className="final-head">
           <div>
             <p className="h2 final-h2">Final allocation — {allChaptersData.length} chapters total.</p>
@@ -450,15 +507,19 @@ export default function Allocate({ subject, grade, onNavigate }) {
               Continue Allocating
             </button>
           ) : null}
-          <button className="continue-btn" onClick={() => onNavigate && onNavigate("generate")}>
+          <button className="continue-btn" onClick={() => setStep("generate")}>
             Continue to Generate
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/>
               <path d="M10.3 8.3 14 12l-3.7 3.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+        </div>
+        {/* Reset is destructive — kept out of the navigation row, in its own danger zone (G2 spec). */}
+        <div className="hubdanger">
+          <span className="hubdanger-k">Manage allocations</span>
           <button className="clear-btn" onClick={() => setShowClearWarning(true)}>
-            Reset allocations
+            Reset allocations…
           </button>
         </div>
         {showClearWarning ? (
@@ -477,6 +538,62 @@ export default function Allocate({ subject, grade, onNavigate }) {
             </div>
           </div>
         ) : null}
+      </div>
+    );
+  }
+
+  // Generate spoke (G7) — reached from the hub's "Continue to Generate". Pick an allocated
+  // chapter and view its plan. Live generation is deferred, so this serves the saved-plan
+  // preview for the chapter (same source as the old Generate tab).
+  if (step === "generate") {
+    const allocatedNums = new Set();
+    allAllocations.forEach((alloc) => alloc.allocations.forEach((a) => allocatedNums.add(a.chapter_number)));
+    const allocatedList = chapters.filter((c) => allocatedNums.has(c.chapter_number));
+    const planFor = (cn) => genPlans.find((p) => String(p.chapter_number) === String(cn));
+
+    const openPlan = async (cn) => {
+      const match = planFor(cn);
+      if (!match) return;
+      setGenBusy(true);
+      try { setGenView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view); }
+      finally { setGenBusy(false); }
+    };
+
+    if (genView) {
+      return (
+        <div>
+          <button className="back" onClick={() => setGenView(null)}>← back to chapters</button>
+          <ViewModelView view={genView} />
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <button className="back" onClick={() => setStep("final")}>← back to allocation</button>
+        <p className="h2">Make a lesson plan</p>
+        <p className="h2-sub">Pick a chapter you&rsquo;ve allocated. Aruvi builds the lesson plan + its assessment. (Live generation is coming soon — allocated chapters with a saved plan open as a preview.)</p>
+        {!allocatedList.length ? (
+          <div className="empty">No allocated chapters yet — allocate some first.</div>
+        ) : (
+          <div className="atable-card">
+            {allocatedList.map((c) => {
+              const hasPlan = !!planFor(c.chapter_number);
+              return (
+                <div className="genrow" key={c.chapter_number}>
+                  <div><span className="chn">CH {pad(c.chapter_number)}</span><span className="ch-title">{c.chapter_title}</span></div>
+                  {hasPlan ? (
+                    <button className="primary" onClick={() => openPlan(c.chapter_number)} disabled={genBusy}>
+                      {genBusy ? "Opening…" : "Open plan →"}
+                    </button>
+                  ) : (
+                    <span className="gen-soon">plan coming soon</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     );
   }
@@ -559,14 +676,18 @@ export default function Allocate({ subject, grade, onNavigate }) {
         {basis ? (
           <div className="howbox">
             <button className="howtoggle" onClick={() => setShowHow(!showHow)}>
-              <span className="howchevron">{showHow ? "▾" : "▸"}</span> Why did Aruvi allocate periods this way?
+              <span className="howchevron">{showHow ? "▾" : "▸"}</span> How does Aruvi allocate?
             </button>
             {showHow ? (
               <div className="howbody">
-                <p>
-                  Aruvi estimates the teaching effort required for each chapter and allocates periods proportionally.
-                  {" "}The factors considered vary by subject and may include {basis.factors.join(", ").replace(/, ([^,]*)$/, " and $1")}.
-                  {" "}Click the &ldquo;How time is allocated across chapters&rdquo; tab of <b className="howlink">Ask Aruvi</b> to know more.
+                <p className="howbasis">
+                  Aruvi splits your periods across chapters by each chapter&rsquo;s <b>{basis.basis || "effort index"}</b> — heavier chapters get more time. For {pretty(subject)}, it weighs:
+                </p>
+                <ul className="howfactors">
+                  {basis.factors.map((f, i) => <li key={i}>{f}</li>)}
+                </ul>
+                <p className="howmore">
+                  Other subjects weigh different things. Want the deeper &ldquo;why&rdquo; for a chapter? Open the &ldquo;How time is allocated across chapters&rdquo; tab of <b className="howlink">Ask Aruvi</b>.
                 </p>
               </div>
             ) : null}
@@ -672,26 +793,56 @@ export default function Allocate({ subject, grade, onNavigate }) {
     );
   }
 
+  // ── G4 — how many periods in total → split across period types by the weekly ratio ──
+  // Ratio source: the readiness weekly grid when available; otherwise the period-type rows'
+  // own counts (so the screen still works before readiness data is threaded in).
+  const ratio = weeklyRatioFromReadiness(readiness) ||
+    Object.fromEntries(toPeriodRows(rows).map((r) => [String(r.minutes), r.count]));
+  const ratioTypes = Object.keys(ratio).map(Number).sort((a, b) => b - a); // longest first
+  const g4Total = Number(totalPeriodsInput) || 0;
+  const g4Split = splitByRatio(g4Total, ratio);
+  const g4Minutes = ratioTypes.reduce((s, m) => s + (g4Split[String(m)] || 0) * m, 0);
+
+  // Commit the split into `rows` (the internal contract the rest of the flow consumes),
+  // then advance to chapter selection.
+  const g4Continue = () => {
+    const newRows = ratioTypes.map((m) => ({ name: "", count: g4Split[String(m)] || 0, minutes: m }));
+    setRows(newRows.length ? newRows : rows);
+    setStep("select");
+  };
+
   return (
     <div>
-      <p className="h2">Allocate the available time across chapters</p>
-      <p className="h2-sub">Set the time available for teaching some or all the chapters. You will specify the chapters in the next screen.</p>
+      <p className="h2">How many periods do these chapters get in total?</p>
+      <p className="h2-sub">Your weekly schedule already tells Aruvi how long each period is — just give the total number of periods. Aruvi splits it across your period lengths, then across chapters in the next steps.</p>
 
-      <div className="ptsection-label">Period types <span className="infoq" title="Define the period types that fit your school schedule.">ⓘ</span></div>
-      <PeriodRows rows={rows} setRows={setRows} />
-
-      <div className="totalbar">
-        <div className="totalbar-left">
-          <div className="totalbar-check">✓</div>
-          <div className="totalbar-mid">
-            <div className="totalbar-label">Total allocated time</div>
-            <div className="totalbar-value">{totalPeriods} <span className="totalbar-unit">periods</span> / {totalHours % 1 === 0 ? totalHours : totalHours.toFixed(1)} <span className="totalbar-unit">hours</span></div>
-            <div className="totalbar-fine">{totalsFinePrint(rows)}</div>
+      <div className="g4-grid">
+        <div className="g4-input-card">
+          <div className="g4-input-label">Periods in total</div>
+          <Stepper value={totalPeriodsInput} min={0} onChange={setTotalPeriodsInput} />
+          <div className="g4-input-fine">
+            Split using your weekly mix
+            {ratioTypes.length ? ` (${ratioTypes.map((m) => `${ratio[String(m)]}×${m}min`).join(" : ")})` : ""}.
           </div>
         </div>
-        <button className="primary" onClick={goToSelect} disabled={!chapters.length}>
+
+        <div className="g4-breakdown">
+          <div className="g4-breakdown-h">By period length</div>
+          {ratioTypes.map((m) => (
+            <div className="g4-brow" key={m}>
+              <span className="g4-bk">{m} min <small>× {g4Split[String(m)] || 0}</small></span>
+              <span className="g4-bv">{(((g4Split[String(m)] || 0) * m) / 60).toFixed(1)}h</span>
+            </div>
+          ))}
+          <div className="g4-bfoot">{g4Total} periods · ~{(g4Minutes / 60).toFixed(1)}h total</div>
+        </div>
+      </div>
+
+      <div className="savebar">
+        <button className="primary" onClick={g4Continue} disabled={!chapters.length || g4Total < 1}>
           Continue to chapter selection →
         </button>
+        {!chapters.length ? <span className="savebar-hint">No chapter mappings for this subject &amp; grade.</span> : null}
       </div>
     </div>
   );
