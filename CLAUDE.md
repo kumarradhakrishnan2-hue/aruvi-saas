@@ -125,10 +125,21 @@ aruvi_core/            engine (Python, no UI deps)
   view_model.py        canonical structure-preserving contract
   subjects/            base.py (Subject interface) + __init__.py (registry) + one pkg/subject
   ports.py  engine.py  normalize.py  grades.py  allocate.py  render/html.py
+  adapters/            file impls of the ports (allocation + readiness repos; Supabase later)
 api/                   FastAPI service (main.py, data.py, config.py) — wraps the engine
-web/                   Next.js app (app/page.jsx = 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
+web/                   Next.js app (app/page.jsx = login gate + 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
+data/                  ★ the single data root (everything that migrates to cloud) — see §7
+  content/             Bucket A: read-only CONTENT (chapters, constitutions, framework, sample plans)
+  readiness/           Bucket B: per-tenant teaching profiles  → {tenant}/{user}/profile.json
+  allocations/         Bucket B: per-tenant allocation registers → {tenant}/{user}/{subject}/{grade}/
+docs/                  architecture-plan.md, ALLOCATION_REPORT_*.md, flow PNG, mockups/ (design refs, not loaded by code)
+CLAUDE.md MEMORY.md CLOUD_DATA_MODEL.md   standing docs (stay at root by convention)
 ```
+
+Cleanup/reorg done 2026-06-28: junk purged (out/, .next/, caches, others/), docs consolidated
+under `docs/`. `data/` is now the self-contained root (§7). Everything under `data/` except
+the README is git-ignored.
 
 ---
 
