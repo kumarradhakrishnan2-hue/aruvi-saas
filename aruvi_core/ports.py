@@ -103,7 +103,12 @@ AllocationRecord = Dict[str, Any]  # {chapter_title, weight, periods_by_duration
 
 @runtime_checkable
 class AllocationRepository(Protocol):
-    """Persists the Persistent Annual Allocation Register.
+    """Persists the Persistent Annual Allocation Register, per tenant + user.
+
+    The register is per-user/tenant STATE (Bucket B, CLOUD_DATA_MODEL.md §2.2), so every
+    method is keyed by tenant_id + user_id — the same identity readiness uses — in addition
+    to subject·grade. Today auth is stubbed so tenant_id == user_id (the X-Aruvi-User
+    header); Phase 4 derives both from the Supabase auth token with no signature change.
 
     Merge semantics: save_allocation() merges new/overwritten chapters into the existing
     register, preserving chapters not included in the current save.
@@ -111,27 +116,31 @@ class AllocationRepository(Protocol):
     File-based (JSON) implementation for now; Supabase adapter swaps in later without
     touching business logic.
     """
-    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, "AllocationRecord"]:
-        """Load the Annual Allocation Register as {chapter_num: AllocationRecord}.
-        Returns empty dict if no register exists yet."""
+    def load_register(self, tenant_id: str, user_id: str,
+                      subject: str, grade: Union[str, int]) -> Dict[str, "AllocationRecord"]:
+        """Load this teacher's Annual Allocation Register for a subject·grade as
+        {chapter_num: AllocationRecord}. Returns empty dict if none exists yet."""
         ...
 
-    def save_allocation(self, subject: str, grade: Union[str, int],
-                         chapters_allocation: Dict[str, "AllocationRecord"]) -> None:
-        """Save allocation data, merging into the existing register.
+    def save_allocation(self, tenant_id: str, user_id: str,
+                        subject: str, grade: Union[str, int],
+                        chapters_allocation: Dict[str, "AllocationRecord"]) -> None:
+        """Save allocation data for this teacher, merging into the existing register.
 
         Chapters in chapters_allocation overwrite existing allocations for those chapters.
         Chapters not in chapters_allocation retain their previous allocations.
         """
         ...
 
-    def get_summary(self, subject: str, grade: Union[str, int]) -> AllocationSummary:
-        """Return a summary of the current register state."""
+    def get_summary(self, tenant_id: str, user_id: str,
+                    subject: str, grade: Union[str, int]) -> AllocationSummary:
+        """Return a summary of this teacher's current register state."""
         ...
 
-    def clear_register(self, subject: str, grade: Union[str, int]) -> None:
-        """Erase the entire register for a subject/grade (the "Reset allocations" action).
-        No-op if no register exists yet."""
+    def clear_register(self, tenant_id: str, user_id: str,
+                       subject: str, grade: Union[str, int]) -> None:
+        """Erase this teacher's register for a subject·grade (the "Reset allocations"
+        action). No-op if no register exists yet."""
         ...
 
 

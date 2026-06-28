@@ -10,7 +10,7 @@ import { useState } from "react";
  *     3. sections          → which sections, per subject·grade
  *     4. durations         → which class durations exist, per subject·grade
  *
- *   PART B — the weekly reality (ported from planning-layer-mockups/readiness-grid-flow.html):
+ *   PART B — the weekly reality (ported from docs/mockups/readiness-grid-flow.html):
  *     5. grid              → tap/hold weekly grid (sections × days) per subject·grade
  *     6. budget            → annual budget per subject·grade (weeks / periods / days / estimate)
  *

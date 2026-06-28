@@ -18,7 +18,9 @@ client = TestClient(app)
 
 
 def test_health_and_subjects():
-    assert client.get("/health").json() == {"status": "ok"}
+    # /health returns {"status":"ok", ...} plus a code-version marker; assert the contract,
+    # not the exact dict (the marker bumps when report code changes).
+    assert client.get("/health").json().get("status") == "ok"
     subs = client.get("/subjects").json()["subjects"]
     assert set(subs) >= {"science", "english", "mathematics", "social_sciences", "the_world_around_us"}
 

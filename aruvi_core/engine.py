@@ -71,46 +71,55 @@ def generate(
 
 def save_allocation(
     *,
+    tenant_id: str,
+    user_id: str,
     subject_name: str,
     grade: Union[str, int],
     chapters_allocation: Dict[str, AllocationRecord],
     allocation_repo: AllocationRepository,
 ) -> None:
-    """Save allocation data to the Persistent Annual Allocation Register.
+    """Save allocation data to this teacher's Persistent Annual Allocation Register.
 
     Merges chapters_allocation into the existing register — new/overwritten chapters
-    replace existing ones; untouched chapters persist.
+    replace existing ones; untouched chapters persist. Keyed per tenant + user.
     """
-    allocation_repo.save_allocation(subject_name, grade, chapters_allocation)
+    allocation_repo.save_allocation(tenant_id, user_id, subject_name, grade, chapters_allocation)
 
 
 def get_allocation_summary(
     *,
+    tenant_id: str,
+    user_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> AllocationSummary:
-    """Retrieve a summary of the current allocation register state."""
-    return allocation_repo.get_summary(subject_name, grade)
+    """Retrieve a summary of this teacher's current allocation register state."""
+    return allocation_repo.get_summary(tenant_id, user_id, subject_name, grade)
 
 
 def get_allocation_register(
     *,
+    tenant_id: str,
+    user_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> Dict[str, AllocationRecord]:
-    """Retrieve the full saved register ({chapter_num: AllocationRecord}) so the
+    """Retrieve this teacher's full saved register ({chapter_num: AllocationRecord}) so the
     frontend can rehydrate its final-allocation view without re-deriving it from the
     LRM/mappings."""
-    return allocation_repo.load_register(subject_name, grade)
+    return allocation_repo.load_register(tenant_id, user_id, subject_name, grade)
 
 
 def clear_allocation_register(
     *,
+    tenant_id: str,
+    user_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> None:
-    """Erase the saved register for a subject/grade (the "Reset allocations" action)."""
-    allocation_repo.clear_register(subject_name, grade)
+    """Erase this teacher's saved register for a subject·grade (the "Reset allocations"
+    action)."""
+    allocation_repo.clear_register(tenant_id, user_id, subject_name, grade)

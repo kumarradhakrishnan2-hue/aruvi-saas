@@ -4,8 +4,8 @@
 
 ### What changed
 - Web app went from **3 sibling tabs** (Allocate / Generate / My Plans) to the finalized
-  **two-tab, readiness-gated, hub-and-spoke** flow. Spec: `planning-layer-mockups/index.html`
-  + `aruvi_saas_full_lifecycle_flow.png`. Full architecture documented in **CLAUDE.md §11**.
+  **two-tab, readiness-gated, hub-and-spoke** flow. Spec: `docs/mockups/index.html`
+  + `docs/aruvi_saas_full_lifecycle_flow.png`. Full architecture documented in **CLAUDE.md §11**.
 - New components: `Readiness.jsx` (ported from `readiness-grid-flow.html`), `GenerateTab.jsx`
   (readiness gate + folds in Allocate), `LessonView.jsx` (Learning-Unit lesson view +
   assessment artifact). Rebuilt: `MyPlans.jsx` (weekly dashboard). Reshaped: `Allocate.jsx`

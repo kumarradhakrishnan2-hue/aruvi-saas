@@ -214,15 +214,20 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
 
 
 @app.get("/subjects/{subject}/{grade}/allocation")
-def get_allocation(subject: str, grade: str) -> Dict[str, Any]:
-    """Load the Persistent Annual Allocation Register for a subject/grade.
+def get_allocation(subject: str, grade: str,
+                   identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Load this teacher's Persistent Annual Allocation Register for a subject/grade.
 
-    Returns the full saved register so the frontend can rehydrate its final-allocation
-    view on page load — surviving a server restart or a fresh browser/profile, not just
-    a localStorage cache in the same browser.
+    Scoped to X-Aruvi-User: two teachers' registers for the same subject·grade are
+    independent. Returns the full saved register so the frontend can rehydrate its
+    final-allocation view on page load — surviving a server restart or a fresh
+    browser/profile, not just a localStorage cache in the same browser.
     """
     _subject(subject)
+    tenant_id, user_id = identity
     register = engine.get_allocation_register(
+        tenant_id=tenant_id,
+        user_id=user_id,
         subject_name=subject,
         grade=grade,
         allocation_repo=allocation_repo,
@@ -231,23 +236,30 @@ def get_allocation(subject: str, grade: str) -> Dict[str, Any]:
 
 
 @app.post("/subjects/{subject}/{grade}/save_allocation")
-def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dict[str, Any]:
-    """Save allocation data to the Persistent Annual Allocation Register.
+def save_allocation(subject: str, grade: str, req: SaveAllocationRequest,
+                    identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Save allocation data to this teacher's Persistent Annual Allocation Register.
 
-    Merges the provided allocation into the existing register for the subject/grade.
-    Chapters in the allocation overwrite existing allocations; untouched chapters persist.
+    Merges the provided allocation into the existing register for the subject/grade,
+    scoped to X-Aruvi-User. Chapters in the allocation overwrite existing allocations;
+    untouched chapters persist.
 
     Returns the updated Annual Allocation Summary.
     """
     _subject(subject)
+    tenant_id, user_id = identity
     try:
         engine.save_allocation(
+            tenant_id=tenant_id,
+            user_id=user_id,
             subject_name=subject,
             grade=grade,
             chapters_allocation=req.allocation,
             allocation_repo=allocation_repo,
         )
         summary = engine.get_allocation_summary(
+            tenant_id=tenant_id,
+            user_id=user_id,
             subject_name=subject,
             grade=grade,
             allocation_repo=allocation_repo,
@@ -268,12 +280,16 @@ def save_allocation(subject: str, grade: str, req: SaveAllocationRequest) -> Dic
 
 
 @app.delete("/subjects/{subject}/{grade}/allocation")
-def delete_allocation(subject: str, grade: str) -> Dict[str, Any]:
-    """Erase the saved Annual Allocation Register for a subject/grade — the server-side
-    half of the "Reset allocations" action (the frontend also clears its localStorage
-    cache)."""
+def delete_allocation(subject: str, grade: str,
+                      identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Erase this teacher's saved Annual Allocation Register for a subject/grade — the
+    server-side half of the "Reset allocations" action (the frontend also clears its
+    localStorage cache). Scoped to X-Aruvi-User."""
     _subject(subject)
+    tenant_id, user_id = identity
     engine.clear_allocation_register(
+        tenant_id=tenant_id,
+        user_id=user_id,
         subject_name=subject,
         grade=grade,
         allocation_repo=allocation_repo,

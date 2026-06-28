@@ -177,7 +177,7 @@ PDF/DOCX export.
 
 **Planning-layer rebuild (2026-06-27) — the web app was restructured from 3 sibling tabs to
 the finalized two-tab, readiness-gated, hub-and-spoke flow** (mocked in
-`planning-layer-mockups/index.html`; flow chart in `aruvi_saas_full_lifecycle_flow.png`). See
+`docs/mockups/index.html`; flow chart in `docs/aruvi_saas_full_lifecycle_flow.png`). See
 §11 for the new web architecture. Phases done: 1 (two-tab shell + readiness lock), 2
 (readiness setup flow), 3 (Generate hub G2 + generate spoke G7 + G4 total-periods model + G5
 howbox), 5 (My Plans dashboard + Learning-Unit lesson view + assessment artifact).
@@ -214,9 +214,9 @@ prototype's in-house pipeline.
 
 ## 11. Web app architecture (post 2026-06-27 planning-layer rebuild)
 
-The visual + behavioural spec is `planning-layer-mockups/index.html` (screen-by-screen
-mockups) and `aruvi_saas_full_lifecycle_flow.png` (the conceptual flow). The
-`planning-layer-mockups/readiness-grid-flow.html` is the interactive prototype the readiness
+The visual + behavioural spec is `docs/mockups/index.html` (screen-by-screen
+mockups) and `docs/aruvi_saas_full_lifecycle_flow.png` (the conceptual flow). The
+`docs/mockups/readiness-grid-flow.html` is the interactive prototype the readiness
 React component was ported from.
 
 **Two tabs, not three.** `web/app/page.jsx` renders **My Plans** (default) and **Generate**.

@@ -765,7 +765,7 @@ it. Placement rules (locked against the audit):
   (row 6) and shows the line like every other subject. English airs the LO from the handoff cell
   (`source_lo`, row 7) — still per item.
 
-(Mockup: `planning-layer-mockups/index.html` Screen 3b shows both cases — the Science view with a
+(Mockup: `docs/mockups/index.html` Screen 3b shows both cases — the Science view with a
 per-item LO above each stem, the items deliberately carrying two different LOs to prove the per-item
 placement; and a Maths middle/prep view with the line absent.)
 

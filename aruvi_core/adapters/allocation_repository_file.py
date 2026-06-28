@@ -1,7 +1,12 @@
 """File-based implementation of AllocationRepository.
 
 Persists the Persistent Annual Allocation Register as JSON at
-ARUVI_DATA_DIR/allocations/{subject}/{grade}/allocation.json.
+STATE_DIR/allocations/{tenant_id}/{user_id}/{subject}/{grade}/allocation.json.
+
+The register is per-user/tenant STATE (Bucket B), so it is keyed by tenant_id + user_id —
+the same identity readiness uses — so two teachers never share or overwrite each other's
+allocations. Today auth is stubbed so tenant_id == user_id (the X-Aruvi-User header);
+Phase 4 swaps the values from the Supabase auth token with no code change here.
 
 Each chapter's value is a full AllocationRecord — {chapter_title, weight,
 periods_by_duration, total_periods, total_minutes} — not just an int. This keeps the
@@ -20,27 +25,36 @@ from aruvi_core.ports import AllocationRecord, AllocationRepository, AllocationS
 from aruvi_core.grades import stage_for
 
 
+def _slug(s: str) -> str:
+    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
+    s = str(s).strip() or "local"
+    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+
+
 class AllocationRepositoryFileImpl(AllocationRepository):
-    """File-based Persistent Annual Allocation Register."""
+    """File-based Persistent Annual Allocation Register, keyed per tenant + user."""
 
     def __init__(self, data_dir: str):
         """
         Args:
-            data_dir: Base directory where allocations/ folder lives (e.g., ARUVI_DATA_DIR).
+            data_dir: Base directory where allocations/ folder lives (e.g., STATE_DIR).
         """
         self.data_dir = Path(data_dir)
         self.allocations_dir = self.data_dir / "allocations"
 
-    def _register_path(self, subject: str, grade: Union[str, int]) -> Path:
-        """Return the path to the allocation register file."""
-        return self.allocations_dir / subject / str(grade) / "allocation.json"
+    def _register_path(self, tenant_id: str, user_id: str,
+                       subject: str, grade: Union[str, int]) -> Path:
+        """Return the path to this teacher's allocation register file."""
+        return (self.allocations_dir / _slug(tenant_id) / _slug(user_id)
+                / subject / str(grade) / "allocation.json")
 
-    def load_register(self, subject: str, grade: Union[str, int]) -> Dict[str, AllocationRecord]:
-        """Load the Annual Allocation Register.
+    def load_register(self, tenant_id: str, user_id: str,
+                      subject: str, grade: Union[str, int]) -> Dict[str, AllocationRecord]:
+        """Load this teacher's Annual Allocation Register.
 
         Returns empty dict if no register exists yet.
         """
-        path = self._register_path(subject, grade)
+        path = self._register_path(tenant_id, user_id, subject, grade)
         if not path.exists():
             return {}
 
@@ -67,21 +81,22 @@ class AllocationRepositoryFileImpl(AllocationRepository):
                 }
         return normalized
 
-    def save_allocation(self, subject: str, grade: Union[str, int],
-                         chapters_allocation: Dict[str, AllocationRecord]) -> None:
-        """Save allocation data, merging into the existing register.
+    def save_allocation(self, tenant_id: str, user_id: str,
+                        subject: str, grade: Union[str, int],
+                        chapters_allocation: Dict[str, AllocationRecord]) -> None:
+        """Save allocation data for this teacher, merging into the existing register.
 
         Chapters in chapters_allocation overwrite existing allocations for those chapters.
         Chapters not in chapters_allocation retain their previous allocations.
         """
-        # Load existing register
-        existing = self.load_register(subject, grade)
+        # Load existing register (this teacher's)
+        existing = self.load_register(tenant_id, user_id, subject, grade)
 
         # Merge: update with new allocations, preserve untouched chapters
         merged = {**existing, **chapters_allocation}
 
         # Ensure path exists
-        path = self._register_path(subject, grade)
+        path = self._register_path(tenant_id, user_id, subject, grade)
         path.parent.mkdir(parents=True, exist_ok=True)
 
         # Write merged register
@@ -91,9 +106,10 @@ class AllocationRepositoryFileImpl(AllocationRepository):
         except IOError as e:
             raise ValueError(f"Failed to save allocation register to {path}: {e}")
 
-    def get_summary(self, subject: str, grade: Union[str, int]) -> AllocationSummary:
-        """Return a summary of the current register state."""
-        register = self.load_register(subject, grade)
+    def get_summary(self, tenant_id: str, user_id: str,
+                    subject: str, grade: Union[str, int]) -> AllocationSummary:
+        """Return a summary of this teacher's current register state."""
+        register = self.load_register(tenant_id, user_id, subject, grade)
 
         # Count allocated chapters
         chapters_allocated = len(register)
@@ -129,8 +145,19 @@ class AllocationRepositoryFileImpl(AllocationRepository):
             total_planned_time_minutes=total_time_minutes,
         )
 
-    def clear_register(self, subject: str, grade: Union[str, int]) -> None:
-        """Erase the register file for a subject/grade. No-op if it doesn't exist."""
-        path = self._register_path(subject, grade)
-        if path.exists():
+    def clear_register(self, tenant_id: str, user_id: str,
+                       subject: str, grade: Union[str, int]) -> None:
+        """Erase this teacher's register for a subject·grade. No-op if it doesn't exist.
+
+        Prefers removing the file; on filesystems where unlink is not permitted (some
+        read-restricted mounts allow overwrite but not delete) falls back to writing an
+        empty register, so "Reset allocations" never errors.
+        """
+        path = self._register_path(tenant_id, user_id, subject, grade)
+        if not path.exists():
+            return
+        try:
             path.unlink()
+        except OSError:
+            with open(path, "w") as f:
+                json.dump({}, f)
