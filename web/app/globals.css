@@ -73,6 +73,44 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 .gate-sub { font-style: italic; color: var(--ink-soft); font-size: 14px; margin: 6px 0 20px; }
 @media (max-width: 600px) { .gate { margin: 32px auto; } }
 
+/* ── User-ID portal (pre-auth tenanting) ─────────────────── */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login-card {
+  width: 100%; max-width: 420px; background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 40px 38px 30px; box-shadow: 0 1px 0 var(--line-soft), 0 18px 40px -28px rgba(31,42,36,.35);
+  display: flex; flex-direction: column;
+}
+.login-brand { display: flex; flex-direction: column; line-height: 1.1; margin-bottom: 28px; }
+.login-brand .brand-row { font-family: var(--f-display); font-weight: 600; font-size: 30px; letter-spacing: -.5px; color: var(--pine-d); }
+.login-brand .brand-row em { font-style: italic; color: var(--clay); font-weight: 500; }
+.login-tag { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft); margin-top: 6px; }
+.login-kicker { margin-bottom: 8px; }
+.login-q { font-family: var(--f-display); font-weight: 600; font-size: 26px; line-height: 1.15; color: var(--ink); margin: 0 0 10px; }
+.login-ask { font-style: italic; color: var(--ink-soft); font-size: 14.5px; line-height: 1.5; margin: 0 0 22px; }
+.login-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+.login-field > span { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft); }
+.login-field input {
+  font-family: var(--f-mono); font-size: 15px; border: 1px solid var(--line); background: var(--paper);
+  border-radius: 4px; padding: 12px 13px; color: var(--ink);
+}
+.login-field input:focus { outline: none; border-color: var(--pine); background: var(--paper-2); }
+.login-btn { width: 100%; padding: 13px; font-size: 13px; }
+.login-note { font-family: var(--f-mono); font-size: 10px; letter-spacing: .04em; color: var(--ink-soft); text-align: center; margin: 16px 0 0; }
+@media (max-width: 600px) { .login-card { padding: 32px 24px 24px; } .login-q { font-size: 23px; } }
+
+/* signed-in chip + sign-out, in the header */
+.user-chip {
+  display: flex; align-items: center; gap: 8px; margin-left: 8px;
+  font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft);
+}
+.user-chip .uid { color: var(--pine-d); font-weight: 500; letter-spacing: .03em; }
+.signout {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink-soft);
+  border-radius: 3px; padding: 5px 9px; cursor: pointer; transition: color .15s ease, border-color .15s ease;
+}
+.signout:hover { color: var(--clay); border-color: var(--clay); }
+
 @media (max-width: 600px) {
   /* Narrow phones: let the tab row scroll horizontally rather than wrap awkwardly or crush
    * the subject/grade pills against the three section tabs. */

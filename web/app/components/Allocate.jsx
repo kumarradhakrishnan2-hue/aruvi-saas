@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pad, API, pretty } from "../lib/format";
+import { getJSON, pad, API, pretty, withUser } from "../lib/format";
 import PeriodRows, { Stepper, toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
 import ViewModelView from "./ViewModelView";
 
@@ -358,11 +358,11 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
     if (!allocationReport) return;
     setExporting((p) => ({ ...p, [fmt]: true }));
     try {
-      const response = await fetch(`${API}/api/allocation/export-${fmt}`, {
+      const response = await fetch(`${API}/api/allocation/export-${fmt}`, withUser({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(allocationReport),
-      });
+      }));
       if (!response.ok) {
         // FastAPI's `detail` may be a string OR (for 422) an array of error objects.
         let detail = `HTTP ${response.status}`;

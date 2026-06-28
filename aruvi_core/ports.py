@@ -133,3 +133,46 @@ class AllocationRepository(Protocol):
         """Erase the entire register for a subject/grade (the "Reset allocations" action).
         No-op if no register exists yet."""
         ...
+
+
+# ── Readiness teaching-profile persistence (the setup payload) ──────────────────
+# The per-teacher "teaching profile" emitted by web/app/components/Readiness.jsx —
+# which subjects/grades/sections/durations a teacher takes, plus the weekly grid and
+# annual budget. This is the single most important Bucket-B item to persist (see
+# CLOUD_DATA_MODEL.md §2.1): without it the readiness flow is lost on every refresh.
+#
+# The CANONICAL shape is the self-contained `subjects[]` array. Each element:
+#   {name, durations[], grades[{grade, sections[{tag,sec}], durations[]}],
+#    grids[grade][section][day]=durationIdx|-1, budget{gradeIdx:{method,value}}}
+# The denormalized "active subject" projection the component also emits
+# (subject/grades/grids/durations/budget at top level) is derived sugar for current
+# consumers — it is NEVER persisted (CLOUD_DATA_MODEL.md §5 invariant). The adapter
+# stores subjects[] only; the projection is regenerated on read by the frontend.
+#
+# Every record is keyed by tenant_id + user_id. With no auth yet both stub to "local";
+# Phase 4 swaps the values straight from the Supabase auth token — no schema change.
+ReadinessProfile = Dict[str, Any]  # {subjects: [...], updated_at: str}
+
+
+@runtime_checkable
+class ReadinessRepository(Protocol):
+    """Persists a teacher's readiness teaching profile, keyed by tenant_id + user_id.
+
+    File-based (JSON) implementation for now; a Supabase adapter swaps in later behind
+    this same port without touching the engine, API routes, or the React component.
+    """
+    def load_profile(self, tenant_id: str, user_id: str) -> Optional["ReadinessProfile"]:
+        """Load the saved readiness profile, or None if the teacher has none yet.
+        A None result is what the frontend reads as "not ready" (setup incomplete)."""
+        ...
+
+    def save_profile(self, tenant_id: str, user_id: str,
+                     profile: "ReadinessProfile") -> None:
+        """Persist the readiness profile (full replace — readiness setup is re-run whole,
+        not merged chapter-by-chapter the way allocations are)."""
+        ...
+
+    def clear_profile(self, tenant_id: str, user_id: str) -> None:
+        """Erase the teacher's readiness profile (the "start setup over" action).
+        No-op if none exists yet."""
+        ...

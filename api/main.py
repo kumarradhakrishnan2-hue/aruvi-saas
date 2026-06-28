@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
@@ -28,6 +28,7 @@ from aruvi_core import subjects, engine
 from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subject
 from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
+from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -43,6 +44,25 @@ app.add_middleware(
 
 # Initialize the allocation repository (file-based for now; Supabase adapter comes later).
 allocation_repo = AllocationRepositoryFileImpl(config.DATA_DIR)
+
+# Initialize the readiness teaching-profile repository (file-based for now; Supabase
+# adapter swaps in at Phase 4 behind the same ReadinessRepository port).
+readiness_repo = ReadinessRepositoryFileImpl(config.DATA_DIR)
+
+
+# Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User
+# request header (set by the login portal, sent on every API call). Each user ID is its
+# own individual-teacher tenant, so tenant_id == user_id (matches the ICP "individual
+# teacher = a tenant with one user", CLOUD_DATA_MODEL.md §3). Phase 4 replaces the header
+# read with the (tenant_id, user_id) decoded from the Supabase auth token via the
+# AuthProvider port — this one function is the only thing that changes.
+#
+# Falls back to "local" when no header is present (e.g. health checks, curl) so nothing
+# 500s; a real teacher always has one because the frontend gates the app behind login.
+def _current_identity(x_aruvi_user: Optional[str] = Header(default=None)) -> tuple[str, str]:
+    """Return (tenant_id, user_id) for the caller, from the X-Aruvi-User header."""
+    uid = (x_aruvi_user or "").strip() or "local"
+    return (uid, uid)
 
 
 class PeriodRow(BaseModel):
@@ -72,6 +92,17 @@ class SaveAllocationRequest(BaseModel):
     # total_minutes}. The full record (not just a period total) is stored so the saved
     # register is "redraw-ready" for the frontend's final-allocation table.
     allocation: Dict[str, Dict[str, Any]]
+
+
+class ReadinessRequest(BaseModel):
+    """Body for POST /readiness — the teacher's readiness teaching profile.
+
+    Only `subjects` (the canonical self-contained per-subject array emitted by
+    Readiness.jsx) is persisted. The frontend may also send the denormalized
+    active-subject projection (subject/grades/grids/durations/budget); it is ignored
+    here and stripped by the adapter — see CLOUD_DATA_MODEL.md §2.1.
+    """
+    subjects: List[Dict[str, Any]] = []
 
 
 class AllocationReportRequest(BaseModel):
@@ -242,6 +273,48 @@ def delete_allocation(subject: str, grade: str) -> Dict[str, Any]:
         allocation_repo=allocation_repo,
     )
     return {"subject": subject, "grade": grade, "status": "cleared"}
+
+
+@app.get("/readiness")
+def get_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Load the current teacher's readiness teaching profile (per X-Aruvi-User).
+
+    Returns {"ready": bool, "readiness": {subjects:[...]} | None}. `ready` is derived
+    server-side as "a saved profile with at least one subject exists" — the frontend's
+    old front-end-only `ready` flag now rehydrates from here, so the subject/grades/
+    sections/durations a teacher entered survive a refresh, a server restart, or a fresh
+    browser. Phase 4 keys this per user/tenant from the auth token (CLOUD_DATA_MODEL §2.1).
+    """
+    tenant_id, user_id = identity
+    profile = readiness_repo.load_profile(tenant_id, user_id)
+    ready = bool(profile and profile.get("subjects"))
+    return {"ready": ready, "readiness": profile}
+
+
+@app.post("/readiness")
+def save_readiness(req: ReadinessRequest,
+                   identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Persist the current teacher's readiness teaching profile (full replace, per user).
+
+    Stores only the canonical subjects[]; the denormalized projection is stripped by
+    the adapter. Called by the shell on Readiness onComplete so the setup is never lost.
+    """
+    tenant_id, user_id = identity
+    try:
+        readiness_repo.save_profile(tenant_id, user_id, {"subjects": req.subjects})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save readiness: {str(e)}")
+    saved = readiness_repo.load_profile(tenant_id, user_id)
+    return {"status": "saved", "ready": bool(saved and saved.get("subjects")),
+            "readiness": saved}
+
+
+@app.delete("/readiness")
+def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Erase the current teacher's readiness profile (the "start setup over" action)."""
+    tenant_id, user_id = identity
+    readiness_repo.clear_profile(tenant_id, user_id)
+    return {"status": "cleared"}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")
