@@ -13,9 +13,12 @@ function classesFromReadiness(readiness) {
   const out = [];
   readiness.grids.forEach((grid, gi) => {
     const g = readiness.grades[gi];
+    if (!g || !Array.isArray(grid)) return;          // guard sparse/edited projections
+    const secs = g.sections || [];
     grid.forEach((row, r) => {
-      const sec = g.sections[r];
-      row.forEach((v, c) => { if (v >= 0) out.push({ day: DAYS[c], dayIdx: c, grade: g.grade, sectionTag: sec.tag }); });
+      const sec = secs[r];
+      if (!sec) return;                               // grid row without a matching section
+      (row || []).forEach((v, c) => { if (v >= 0) out.push({ day: DAYS[c], dayIdx: c, grade: g.grade, sectionTag: sec.tag }); });
     });
   });
   return out;

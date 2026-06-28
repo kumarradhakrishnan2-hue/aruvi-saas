@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi — My Classes (unified drill) mockup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+  --ink:#1f2a24; --ink-soft:#6b6a63; --line:#e4ddd0; --line-soft:#ece7dc;
+  --pine:#1e5c4a; --pine-d:#164436; --clay:#b65a31; --ochre:#9a7321; --danger:#c0392b;
+  --card-bg:#f3f1ea;
+  --f-display:"Fraunces",Georgia,serif; --f-body:"Newsreader",Georgia,serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  /* day-grid section colours (from readiness "let us begin") */
+  --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
+  --sec-c:#9a7321; --sec-c-bg:#f4ecd8; --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
+  /* single accent for all collapsible rows — same green as the top row */
+  --accent:var(--pine); --accent-bg:#eef4f0; --accent-d:var(--pine-d);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.55; font-optical-sizing:auto;
+}
+.kicker{font-family:var(--f-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.18em; color:var(--pine); font-weight:500;}
+
+.hdr{position:sticky; top:0; z-index:6; background:var(--paper); border-bottom:1px solid var(--line); padding:16px 34px; display:flex; align-items:center; gap:18px;}
+.brand-row{display:flex; align-items:baseline; font-family:var(--f-display); font-weight:600; font-size:25px; letter-spacing:-.4px; color:var(--pine-d);}
+.brand-row em{font-style:italic; color:var(--clay); font-weight:500;}
+.brand-row small{font-family:var(--f-mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); margin-left:10px;}
+.hdr .user-chip{margin-left:auto; font-family:var(--f-mono); font-size:11px; color:var(--ink-soft);}
+.hdr .user-chip b{color:var(--pine-d); font-weight:600;}
+
+.tabs{display:flex; align-items:center; gap:26px; padding:0 34px; border-bottom:1px solid var(--line);}
+.tab{font-family:var(--f-mono); font-size:14px; letter-spacing:.08em; text-transform:uppercase; padding:15px 2px; border:none; background:none; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;}
+.tab:hover{color:var(--ink);}
+.tab.active{color:var(--pine-d); border-bottom-color:var(--clay);}
+
+main{max-width:780px; margin:0 auto; padding:30px 34px 96px;}
+
+.crumb{display:flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-bottom:6px; flex-wrap:wrap;}
+.crumb a{color:var(--pine-d); cursor:pointer; text-decoration:none;}
+.crumb a:hover{color:var(--clay);}
+.crumb .sep{color:#c3bba8;}
+.back{font-family:var(--f-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--pine); background:none; border:none; cursor:pointer; padding:0; margin-bottom:16px; display:inline-flex; align-items:center; gap:7px;}
+.back:hover{color:var(--clay);}
+.back.hidden{display:none;}
+
+.lvl-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:4px; flex-wrap:wrap;}
+.lvl-title{font-family:var(--f-display); font-size:27px; font-weight:600; margin:0; line-height:1.1; display:flex; align-items:center; gap:13px;}
+.lvl-sub{font-size:14px; color:var(--ink-soft); margin:4px 0 0;}
+.edit-toggle{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--pine-d); background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:9px 15px; cursor:pointer; white-space:nowrap;}
+.edit-toggle:hover{border-color:var(--pine);}
+.edit-toggle.on{background:var(--pine); color:#f3efe6; border-color:var(--pine);}
+/* small guidance line under the sub-line, shown in VIEW mode: "To make changes, use Edit button".
+ * Hidden once editing (the Edit button itself reads "Done" then, so the hint is redundant). */
+.edit-hint{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.03em; color:var(--ink-soft); margin:5px 0 0; display:block;}
+body.editing .edit-hint{display:none;}
+
+.section-kicker{margin:22px 0 12px; display:flex; align-items:center; gap:10px;}
+.section-kicker .kicker{color:var(--pine-d);}
+.section-kicker .rule{flex:1; height:1px; background:var(--line);}
+
+/* ── node cards: hover spotlight (single green accent), no default fill, no logos ── */
+.nodes{display:flex; flex-direction:column; gap:10px; animation:fade .22s ease both;}
+@keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.node{display:flex; align-items:center; gap:14px; background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:16px 18px; cursor:pointer; transition:border-color .14s, box-shadow .14s, padding-left .14s, background .14s; position:relative;}
+.node:hover{background:var(--accent-bg); border-color:var(--accent); box-shadow:inset 3px 0 0 var(--accent); padding-left:22px;}
+.node:hover .node-name{color:var(--accent-d);}
+.node-body{flex:1; min-width:0;}
+.node-name{font-family:var(--f-display); font-size:18px; font-weight:600; color:var(--ink);}
+.node-meta{font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:2px;}
+.node-meta .needs{color:var(--clay); font-weight:600;}
+.node-go{font-family:var(--f-mono); font-size:15px; color:var(--ink-soft); flex-shrink:0;}
+.node-del{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--clay); background:none; border:1px solid transparent; border-radius:5px; cursor:pointer; padding:6px 9px; flex-shrink:0; display:none;}
+body.editing .node-del{display:inline-block;}
+.node-del:hover{border-color:var(--clay); background:rgba(192,57,43,.06);}
+
+.add-node{display:none; align-items:center; gap:11px; background:#eef4f0; border:1px dashed #bcd0c4; border-radius:10px; padding:15px 18px; cursor:pointer; font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--pine-d);}
+body.editing .add-node{display:flex;}
+.add-node:hover{background:#e4efe8;}
+
+/* ── grade-level tab strip — styled like the My Plans / Generate top tabs, one notch larger ── */
+.gtabs{display:flex; align-items:center; gap:26px; border-bottom:1px solid var(--line); margin-bottom:18px; flex-wrap:wrap;}
+.gtab{font-family:var(--f-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; padding:14px 2px; border:none; background:none; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; display:inline-flex; align-items:center; gap:8px; transition:color .14s, border-color .14s;}
+.gtab:hover{color:var(--ink);}
+.gtab.on{color:var(--pine-d); border-bottom-color:var(--clay);}
+.gtab-go{font-size:15px; color:var(--ink-soft);}
+.gtab.on .gtab-go{color:var(--clay);}
+.gtab-flag{font-family:var(--f-mono); font-size:9px; font-weight:600; color:#fff; background:var(--clay); border-radius:9px; padding:1px 6px; line-height:1.5; text-transform:none; letter-spacing:0;}
+
+/* detail panels */
+.detail-card{background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:14px;}
+.detail-label{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
+.detail-label .move{font-style:italic; text-transform:none; letter-spacing:0; font-family:var(--f-body); font-size:11px; color:#b3ab9a;}
+.detail-sub{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--pine-d); margin:6px 0 10px;}
+
+/* ── Annual budget — readiness "budgetsum" footer style: periods (with +/- arrows) and hours ── */
+.budgetsum{border:1px solid #cfe0d6; background:#eef4f0; border-radius:11px; padding:16px 18px;}
+.budgetsum .bsk{font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--pine);}
+.budget-stepline{display:flex; align-items:center; gap:13px; margin-top:9px; flex-wrap:wrap;}
+.steppermini{display:inline-flex; align-items:center; gap:8px;}
+.steppermini button{width:30px; height:30px; border-radius:6px; border:1px solid #bcd0c4; background:var(--paper-2); color:var(--pine-d); cursor:pointer; font-size:15px; line-height:1;}
+.steppermini button:hover{border-color:var(--pine);}
+.steppermini .v{min-width:64px; text-align:center; font-family:var(--f-display); font-size:24px; color:var(--pine-d);}
+/* direct-entry budget field (edit mode only) — type any number; NO native up/down spinner.
+ * It's a text input with inputmode=numeric, so there are no browser stepper arrows; the – / +
+ * buttons step by 1. */
+.budget-num{width:84px; text-align:center; font-family:var(--f-display); font-size:24px; color:var(--pine-d); background:var(--paper-2); border:1px solid #bcd0c4; border-radius:7px; padding:4px 6px;}
+.budget-num:focus{outline:none; border-color:var(--pine);}
+/* read-only budget value (view mode) — plain number, no controls */
+.budget-ro{font-family:var(--f-display); font-size:24px; color:var(--pine-d); min-width:64px;}
+/* read-only day-grid cell (view mode) — shows state, but default cursor, no hover affordance */
+.cell.ro{cursor:default;}
+.cell.ro:hover{border-color:var(--line);}
+.cell.ro.on:hover{border-color:var(--sec-a);}
+.budget-unit{font-family:var(--f-mono); font-size:12px; color:var(--ink-soft);}
+.budget-hours{font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); white-space:nowrap;}
+.budgetsum .bsn{font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:10px; line-height:1.6;}
+.budget-prompt{font-family:var(--f-display); font-size:17px; font-weight:500; color:var(--pine-d); margin-bottom:10px;}
+
+/* ── Duration — chips + GREY add box + paged dropdown (4 at a time, 5-min steps) ── */
+.dur-chips{display:flex; gap:9px; flex-wrap:wrap; align-items:center;}
+.dur-chip{display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:13px; font-weight:500; color:#f3efe6; background:var(--pine); border:1px solid var(--pine); border-radius:8px; padding:9px 13px;}
+.dur-chip.alt{background:var(--clay); border-color:var(--clay);}
+.dur-chip .x{cursor:pointer; opacity:.85; font-size:12px;}
+/* grey filled add box */
+.dur-add{font-family:var(--f-mono); font-size:13px; font-weight:500; color:var(--ink); background:var(--paper-sunk); border:1px solid var(--line); border-radius:8px; padding:9px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:7px;}
+.dur-add:hover{background:#e6e0d4; border-color:#cbbfa6;}
+.dur-empty{font-style:italic; font-size:13px; color:var(--clay); margin-bottom:10px;}
+
+/* paged dropdown menu (shared: durations, grades, sections) */
+.mdd{position:relative; margin-top:4px;}
+.mdd-control{width:100%; display:flex; align-items:center; gap:10px; cursor:pointer; font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--ink); background:var(--paper-2); border:1px solid var(--line); border-radius:9px; padding:12px 14px; text-align:left;}
+.mdd-control:hover{border-color:#cbbfa6;}
+.mdd-summary{flex:1;}
+.mdd-summary.ph{color:var(--ink-soft); font-style:italic;}
+.mdd-chev{color:var(--ink-soft);}
+.mdd-menu{margin-top:6px; border:1px solid var(--line); border-radius:9px; background:var(--paper-2); overflow:hidden;}
+.mdd-opt{width:100%; display:flex; align-items:center; gap:11px; cursor:pointer; text-align:left; font-family:var(--f-mono); font-size:13.5px; color:var(--ink); background:none; border:none; border-bottom:1px solid var(--line-soft); padding:12px 14px;}
+.mdd-opt:last-of-type{border-bottom:none;}
+.mdd-opt:hover{background:var(--paper-sunk);}
+.mdd-opt.on{color:var(--pine-d); background:#eef4f0; font-weight:500;}
+.mdd-mark{display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:5px; font-size:11px; border:1px solid var(--line); color:#fff; background:var(--paper);}
+.mdd-opt.on .mdd-mark{background:var(--pine); border-color:var(--pine);}
+.mdd-pager{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 12px; background:var(--paper-sunk); border-top:1px solid var(--line-soft);}
+.mdd-pager-l{display:flex; gap:8px;}
+.mdd-pg{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.04em; color:var(--pine-d); background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:7px 11px; cursor:pointer;}
+.mdd-pg:hover{border-color:#cbbfa6;}
+.mdd-pg.done{color:#fff; background:var(--pine); border-color:var(--pine);}
+.mdd-pg.done:hover{background:var(--pine-d);}
+
+/* ── Section day grid (readiness "wk" style): one row, day names above, duration boxes, click rotates ── */
+.daycal{background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:18px 20px;}
+table.wk{width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; margin-top:4px;}
+table.wk th{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; padding:7px 2px; text-align:center;}
+table.wk td{padding:3px;}
+.cell{height:46px; border-radius:7px; border:1px solid var(--line); background:var(--paper-2); cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--f-mono); font-size:11px; color:transparent; transition:background .08s, border-color .08s; user-select:none; line-height:1.1; text-align:center;}
+.cell:hover{border-color:#cbbfa6;}
+.cell.on{color:#fff; font-weight:500;}
+.cell.on{background:var(--sec-a); border-color:var(--sec-a);}
+.daycal-note{font-style:italic; font-size:12.5px; color:var(--ink-soft); margin-top:13px;}
+.daycal-empty{color:var(--clay); font-weight:600; font-style:normal;}
+
+.tip{display:flex; align-items:center; gap:10px; margin-top:18px; padding:12px 16px; background:var(--paper-2); border:1px solid var(--line); border-radius:8px; font-size:13.5px; color:var(--ink-soft);}
+.tip b{color:var(--ink); font-weight:600;}
+.tip .bulb{color:var(--ochre);}
+
+/* modal */
+.modal-bg{position:fixed; inset:0; background:rgba(31,42,36,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:40;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:24px 26px; max-width:460px; width:100%; animation:fade .18s ease both; max-height:88vh; overflow:auto;}
+.modal-kicker{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px;}
+.modal-kicker.danger{color:var(--danger);}
+.modal-kicker.add{color:var(--pine-d);}
+.modal-title{font-family:var(--f-display); font-size:21px; font-weight:600; margin:0 0 8px;}
+.modal-ask{font-style:italic; font-size:13.5px; color:var(--ink-soft); margin:0 0 16px;}
+.modal-body{font-size:14.5px; color:var(--ink); line-height:1.55; margin:0 0 18px;}
+.modal-body ul{margin:8px 0 0; padding-left:20px;}
+.modal-body li{margin:4px 0;}
+.modal-field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+.modal-field label{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);}
+.modal-field select,.modal-field input{font-family:var(--f-mono); font-size:14px; border:1px solid var(--line); border-radius:6px; padding:10px 12px; background:var(--paper-2); color:var(--ink);}
+.modal-bar{display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap; margin-top:6px;}
+.btn{font-family:var(--f-mono); font-size:12px; letter-spacing:.05em; border-radius:7px; padding:11px 18px; cursor:pointer;}
+.btn-cancel{background:var(--paper-2); border:1px solid var(--line); color:var(--ink-soft);}
+.btn-cancel:hover{border-color:var(--ink-soft);}
+.btn-danger{background:var(--danger); border:none; color:#fff;}
+.btn-danger:hover{background:#a5301f;}
+.btn-go{background:var(--pine); border:none; color:#f3efe6;}
+.btn-go:hover{background:var(--pine-d);}
+.btn-go:disabled{opacity:.45; cursor:default;}
+
+.toast{position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--pine-d); color:#f3efe6; font-family:var(--f-mono); font-size:12px; padding:11px 20px; border-radius:8px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:50;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+@media (max-width:640px){
+  .hdr{padding:14px 18px;}
+  .tabs{padding:0 18px;}
+  main{padding:22px 18px 80px;}
+  .lvl-title{font-size:23px;}
+  .gtabs{gap:18px;}
+  .gtab{font-size:11px;}
+  .modal-bar{flex-direction:column-reverse;}
+  .modal-bar .btn{width:100%;}
+  .budgetsum .budget-hours{display:block; white-space:normal; margin-top:2px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="brand-row">Aruvi<em>.</em><small>Lesson Studio</small></div>
+  <div class="user-chip">Signed in · <b>Kumar1</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active">My Classes</button>
+  <button class="tab" style="opacity:.5;cursor:default" title="folded into My Classes">My Lesson Plans</button>
+</div>
+
+<main>
+  <button class="back" id="backBtn" onclick="goUp()">← Back</button>
+  <div class="crumb" id="crumb"></div>
+
+  <div class="lvl-head">
+    <div>
+      <h1 class="lvl-title" id="lvlTitle"></h1>
+      <p class="lvl-sub" id="lvlSub"></p>
+      <p class="edit-hint" id="editHint">To make changes, use the Edit button.</p>
+    </div>
+    <button class="edit-toggle" id="editToggle" onclick="toggleEdit()">Edit</button>
+  </div>
+
+  <div class="section-kicker" id="kickerRow"><span class="kicker" id="lvlKicker"></span><span class="rule"></span></div>
+
+  <div id="levelBody"></div>
+
+  <div class="tip"><span class="bulb">◔</span><span><b>Tip:</b> Drill Subject → Grade → Section to reach a section's weekly days. Hover lights the row under your cursor. <b>Edit</b> adds or removes at the level you're on.</span></div>
+</main>
+
+<div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SUBJ_ABBR={Science:'Sci',Mathematics:'Mat','Social Science':'Soc',English:'Eng'};
+const ALL_SUBJECTS=['Science','Mathematics','Social Science','English','The World Around Us'];
+const ALL_GRADES=['III','IV','V','VI','VII','VIII','IX','X'];          // shown as "Grade VI"
+const SECTION_CHOICES='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const DURATION_CHOICES=Array.from({length:25},(_,i)=>30+i*5);          // 30,35,…150 (5-min)
+const SECTION_PAGE=3, DURATION_PAGE=4;
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat'];
+const MIN_PER_PERIOD_FALLBACK=45;
+
+// section: {tag, days:{Mon:durIdx,...}} — a day maps to which duration index meets that day,
+// matching readiness: tapping a day rotates through the grade's durations, tap-again clears.
+function sec(tag,dayMap){return {tag,days:dayMap||{}};}
+let data=[
+  {name:'Science', grades:[
+    {g:'VI', durs:[45,60], budget:240, secs:[sec('A',{Mon:0,Wed:0,Fri:1}),sec('B',{Tue:0,Thu:0})]},
+    {g:'VII', durs:[45,60], budget:300, secs:[sec('A',{Mon:0,Thu:1}),sec('B',{Tue:0,Fri:0}),sec('C',{Wed:0,Sat:0})]},
+    {g:'VIII', durs:[45,60], budget:180, secs:[sec('A',{Tue:0,Thu:0})]},
+  ]},
+  {name:'Mathematics', grades:[
+    {g:'VI', durs:[45,60], budget:240, secs:[sec('A',{Mon:0,Wed:0}),sec('B',{Thu:0,Fri:0})]},
+    {g:'VII', durs:[45,30], budget:300, secs:[sec('A',{Mon:0,Wed:0,Fri:0}),sec('B',{Tue:0,Thu:1}),sec('C',{Mon:0,Fri:0})]},
+    {g:'VIII', durs:[45,60], budget:180, secs:[sec('A',{Tue:0,Thu:0})]},
+  ]},
+  {name:'Social Science', grades:[
+    {g:'VI', durs:[45], budget:180, secs:[sec('A',{Mon:0}),sec('B',{Thu:0})]},
+    {g:'VII', durs:[45], budget:180, secs:[sec('A',{Wed:0}),sec('B',{Fri:0})]},
+  ]},
+  {name:'English', grades:[
+    {g:'VII', durs:[45], budget:120, secs:[sec('A',{Mon:0,Wed:0,Fri:0}),sec('B',{Tue:0,Thu:0})]},
+  ]},
+];
+
+let path=[];        // [] | [si] | [si,gi] | [si,gi,xi]
+let editing=false;
+let gradeTab='budget';
+let toastT;
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),1900);}
+
+function goUp(){ if(path.length){path.pop(); editing=false; renderLevel();} }
+function drill(i){ path.push(i); editing=false; if(path.length===2)gradeTab='budget'; renderLevel(); }
+function jumpTo(d){ path=path.slice(0,d); editing=false; renderLevel(); }
+function toggleEdit(){ editing=!editing; renderLevel(); }
+function romanLabel(g){return 'Grade '+g;}
+function nextSec(secs){const u=new Set(secs.map(s=>s.tag.toUpperCase()));for(let c=65;c<91;c++){const L=String.fromCharCode(c);if(!u.has(L))return L;}return '?';}
+function daysOf(x){return DAYS.filter(d=>x.days[d]!==undefined);}
+
+function renderLevel(){
+  document.body.classList.toggle('editing',editing);
+  const tg=document.getElementById('editToggle');
+  tg.classList.toggle('on',editing); tg.textContent=editing?'Done':'Edit';
+  document.getElementById('backBtn').classList.toggle('hidden', path.length===0);
+  document.getElementById('kickerRow').style.display='';   // restore (grade screen hides it)
+
+  const parts=['<a onclick="jumpTo(0)">My Classes</a>'];
+  if(path.length>=1) crumbPart(parts,1,data[path[0]].name);
+  if(path.length>=2) crumbPart(parts,2,romanLabel(data[path[0]].grades[path[1]].g));
+  if(path.length>=3) crumbPart(parts,3,'Section '+data[path[0]].grades[path[1]].secs[path[2]].tag);
+  document.getElementById('crumb').innerHTML=parts.join('<span class="sep">›</span>');
+
+  if(path.length===0) renderSubjects();
+  else if(path.length===1) renderGrades();
+  else if(path.length===2) renderGradeDetail();
+  else renderSection();
+}
+function crumbPart(arr,depth,label){
+  if(path.length===depth) arr.push('<span>'+label+'</span>');
+  else arr.push('<a onclick="jumpTo('+depth+')">'+label+'</a>');
+}
+function setHead(title,sub,kicker){
+  document.getElementById('lvlTitle').textContent=title;        // no logos — name only
+  document.getElementById('lvlSub').textContent=sub;
+  document.getElementById('lvlKicker').textContent=kicker;
+}
+function nodeCard(o){
+  const del=`<button class="node-del" onclick="event.stopPropagation();${o.onDel}">Delete</button>`;
+  const go=o.noGo?'':`<span class="node-go">›</span>`;
+  const click=o.onDrill?`onclick="${o.onDrill}"`:'';
+  return `<div class="node" ${click}>
+    <div class="node-body"><div class="node-name">${o.name}</div><div class="node-meta">${o.meta}</div></div>
+    ${del}${go}</div>`;
+}
+
+// LEVEL 0 — subjects (no logos, single green hover spotlight)
+function renderSubjects(){
+  setHead('My Classes','What you teach — tap a subject to open its grades.','Subjects');
+  const cards=data.map((s,i)=>{
+    const secs=s.grades.reduce((a,g)=>a+g.secs.length,0);
+    return nodeCard({name:s.name, meta:`${s.grades.length} grades · ${secs} sections`,
+      onDrill:`drill(${i})`, onDel:`askDelete('subject',${i})`});
+  }).join('');
+  document.getElementById('levelBody').innerHTML=
+    `<div class="nodes">${cards}<div class="add-node" onclick="askAddSubject()"><span style="font-size:16px">＋</span> Add a subject</div></div>`;
+}
+
+// LEVEL 1 — grades
+function renderGrades(){
+  const s=data[path[0]];
+  setHead(s.name,'Grades you teach in '+s.name+' — tap one for its budget, durations & sections.','Grades');
+  const cards=s.grades.map((g,i)=>nodeCard({
+    name:romanLabel(g.g),
+    meta:`${g.secs.length} section${g.secs.length>1?'s':''} · ${g.durs.map(d=>d+' min').join(' · ')} · ${g.budget} periods/yr`,
+    onDrill:`drill(${i})`, onDel:`askDelete('grade',${i})`})).join('');
+  document.getElementById('levelBody').innerHTML=
+    `<div class="nodes">${cards}<div class="add-node" onclick="askAddGrade()"><span style="font-size:16px">＋</span> Add a grade to ${s.name}</div></div>`;
+}
+
+// LEVEL 2 — grade detail: THREE TABS styled like the top tabs (Annual budget · Duration · Sections →)
+function renderGradeDetail(){
+  const s=data[path[0]], g=s.grades[path[1]];
+  setHead(`${s.name} · ${romanLabel(g.g)}`,'Budget, durations and sections for this class.','');
+  document.getElementById('kickerRow').style.display='none';  // tab strip is the divider
+
+  const secNeeds=g.secs.filter(x=>daysOf(x).length===0).length;
+  const tabs=`<div class="gtabs">
+    <button class="gtab ${gradeTab==='budget'?'on':''}" onclick="setGradeTab('budget')">Annual budget</button>
+    <button class="gtab ${gradeTab==='duration'?'on':''}" onclick="setGradeTab('duration')">Duration</button>
+    <button class="gtab ${gradeTab==='sections'?'on':''}" onclick="setGradeTab('sections')">Sections <span class="gtab-go">›</span>${secNeeds?`<span class="gtab-flag">${secNeeds}</span>`:''}</button>
+  </div>`;
+
+  let panel='';
+  if(gradeTab==='budget') panel=budgetPanel(g, g.budget===0?'Enter the annual budget':null);
+  else if(gradeTab==='duration') panel=durationPanel(g);
+  else panel=sectionsPanel(g);
+  document.getElementById('levelBody').innerHTML=tabs+panel;
+}
+// Switching tabs cancels any unsaved edit session: each tab's edit is deliberate and
+// self-contained, so you always land in a new tab in view mode and must press Edit again there.
+function setGradeTab(t){
+  if(t===gradeTab) return;
+  if(editing){ editing=false; toast('Edit cancelled — switch tab in view mode'); }
+  gradeTab=t;
+  renderLevel();   // refresh header Edit toggle + body.editing class + panel together
+}
+
+// ── budget panel — READ-ONLY in view mode; editable controls only when editing ──
+function budgetPanel(g, prompt){
+  const avgMin = g.durs.length ? Math.round(g.durs.reduce((a,b)=>a+b,0)/g.durs.length) : MIN_PER_PERIOD_FALLBACK;
+  const hrs = Math.round(g.budget*avgMin/60);
+  // editing: stepper (– / +, step 5) + direct-entry field WITHOUT native up/down spinner
+  // view: a plain read-only value, no controls — nothing can change by accident
+  const valueBlock = editing
+    ? `<span class="steppermini">
+         <button onclick="stepBudget(-1)">–</button>
+         <input id="budgetNum" class="budget-num" type="text" inputmode="numeric" value="${g.budget}"
+                oninput="setBudget(this.value)" onchange="setBudget(this.value)">
+         <button onclick="stepBudget(1)">+</button>
+       </span>`
+    : `<span class="budget-ro" id="budgetRO">${g.budget}</span>`;
+  return `<div class="budgetsum">
+    <div class="bsk">${romanLabel(g.g)} · annual budget</div>
+    ${(editing && prompt)?`<div class="budget-prompt">${prompt}</div>`:''}
+    <div class="budget-stepline">
+      ${valueBlock}
+      <span class="budget-unit">periods / year</span>
+      <span class="budget-hours" id="budgetHours">≈ ${hrs} teaching hours</span>
+    </div>
+    <div class="bsn" id="budgetFormula">${g.budget} periods × ${avgMin} min ÷ 60 = ${hrs} hours.</div>
+  </div>`;
+}
+// type any number directly (no spinner); update data + hours in place so focus is kept
+function setBudget(v){
+  if(!editing) return;                       // guard: never mutate outside edit mode
+  const g=data[path[0]].grades[path[1]];
+  g.budget=Math.max(0, Math.round(+(String(v).replace(/[^0-9]/g,''))||0));
+  refreshBudgetReadout(g);
+}
+// +/- buttons step by 1; write into the input and refresh the readout
+function stepBudget(d){
+  if(!editing) return;                       // guard: never mutate outside edit mode
+  const g=data[path[0]].grades[path[1]];
+  g.budget=Math.max(0,g.budget+d);
+  const inp=document.getElementById('budgetNum'); if(inp)inp.value=g.budget;
+  refreshBudgetReadout(g);
+  // re-render once the prompt should disappear (budget crossed 0 → non-zero) so it stays in sync
+  if(g.budget>0 && document.querySelector('.budget-prompt')) renderGradeDetail();
+}
+function refreshBudgetReadout(g){
+  const avgMin=g.durs.length?Math.round(g.durs.reduce((a,b)=>a+b,0)/g.durs.length):MIN_PER_PERIOD_FALLBACK;
+  const hrs=Math.round(g.budget*avgMin/60);
+  const hEl=document.getElementById('budgetHours'); if(hEl)hEl.textContent=`≈ ${hrs} teaching hours`;
+  const fEl=document.getElementById('budgetFormula'); if(fEl)fEl.textContent=`${g.budget} periods × ${avgMin} min ÷ 60 = ${hrs} hours.`;
+}
+
+// ── duration panel: chips + GREY add box; add opens paged dropdown (4 at a time, 5-min) ──
+function durationPanel(g){
+  // chips show the ✕ remover only when editing; "Add duration" box only when editing
+  const chips=g.durs.length
+    ? g.durs.map((d,di)=>`<span class="dur-chip ${di===1?'alt':''}">${d} min${editing?`<span class="x" onclick="dropDur(${di})">✕</span>`:''}</span>`).join('')
+    : '';
+  const empty=g.durs.length?'':`<div class="dur-empty">No durations set${editing?' — add one to begin.':'.'}</div>`;
+  const addBox=editing?`<button class="dur-add" onclick="openDurMenu()"><span style="font-size:14px">＋</span> Add duration</button>`:'';
+  return `<div class="detail-card">
+    <div class="detail-label">Duration types <span class="move">(grade-level — all sections share these)</span></div>
+    ${empty}
+    <div class="dur-chips">${chips}${addBox}</div>
+    <div id="durMenuMount"></div>
+  </div>`;
+}
+let _durPage=0, _durOpen=false;
+function openDurMenu(){_durOpen=!_durOpen; _durPage=0; paintDurMenu();}
+function paintDurMenu(){
+  const mount=document.getElementById('durMenuMount'); if(!mount)return;
+  if(!_durOpen){mount.innerHTML=''; return;}
+  const g=data[path[0]].grades[path[1]];
+  const avail=DURATION_CHOICES.filter(d=>!g.durs.includes(d));
+  const pageCount=Math.ceil(avail.length/DURATION_PAGE);
+  const items=avail.slice(_durPage*DURATION_PAGE,_durPage*DURATION_PAGE+DURATION_PAGE);
+  mount.innerHTML=`<div class="mdd"><div class="mdd-menu">
+    ${items.map(d=>`<button class="mdd-opt" onclick="pickDur(${d})"><span class="mdd-mark"></span><span class="mdd-lbl">${d} minutes</span></button>`).join('')}
+    <div class="mdd-pager"><div class="mdd-pager-l">
+      ${_durPage>0?`<button class="mdd-pg" onclick="durPage(-1)">← back</button>`:''}
+      ${_durPage<pageCount-1?`<button class="mdd-pg" onclick="durPage(1)">list more →</button>`:''}
+    </div><button class="mdd-pg done" onclick="closeDurMenu()">Done</button></div>
+  </div></div>`;
+}
+function durPage(d){_durPage+=d; paintDurMenu();}
+function pickDur(d){if(!editing)return; const g=data[path[0]].grades[path[1]]; g.durs.push(d); g.durs.sort((a,b)=>a-b); renderGradeDetail(); _durOpen=true; paintDurMenu(); toast(d+' min added');}
+function closeDurMenu(){_durOpen=false; paintDurMenu();}
+function dropDur(di){if(!editing)return; const g=data[path[0]].grades[path[1]]; g.durs.splice(di,1); renderGradeDetail(); toast('Duration removed');}
+
+// ── sections panel: drill list (each drills to its day grid) ──
+function sectionsPanel(g){
+  const cards=g.secs.map((x,i)=>{
+    const ds=daysOf(x);
+    return nodeCard({name:'Section '+x.tag,
+      meta: ds.length?ds.join(' · '):'<span class="needs">Needs weekly days →</span>',
+      onDrill:`drill(${i})`, onDel:`askDelete('section',${i})`});
+  }).join('');
+  return `<div class="detail-sub">Tap a section for its weekly days</div>
+    <div class="nodes">${cards}<div class="add-node" onclick="addSection()"><span style="font-size:16px">＋</span> Add a section</div></div>`;
+}
+
+// LEVEL 3 — section day grid. Cells are tappable ONLY in edit mode; in view mode the grid is a
+// read-only display of when the section meets — no accidental rescheduling.
+function renderSection(){
+  const s=data[path[0]], g=s.grades[path[1]], x=g.secs[path[2]];
+  setHead(`${romanLabel(g.g)} · Section ${x.tag}`,
+    editing?'Tap a day to set its period.':'When this section meets. Tap Edit to change.','Weekly days');
+  const durList=g.durs.join(', ');
+  const headRow=DAYS.map(d=>`<th>${d}</th>`).join('');
+  const cells=DAYS.map(d=>{
+    const di=x.days[d];
+    const on=di!==undefined;
+    const lab=on?`${g.durs[di]}<br>min`:'';
+    const click=editing?`onclick="tapCell('${d}')"`:'';
+    return `<td><div class="cell ${on?'on':''} ${editing?'':'ro'}" ${click}>${lab}</div></td>`;
+  }).join('');
+  const ds=daysOf(x);
+  let note;
+  if(!editing){
+    note = ds.length===0
+      ? `<div class="daycal-note daycal-empty">No days set yet — tap Edit to schedule.</div>`
+      : `<div class="daycal-note">Meets ${ds.length} day${ds.length>1?'s':''} a week. Tap Edit to change.</div>`;
+  } else {
+    note = ds.length===0
+      ? `<div class="daycal-note daycal-empty">No days yet — tap to add them.</div>`
+      : (g.durs.length>1
+          ? `<div class="daycal-note">Tap a day to mark it; tap again to cycle ${durList} min; once more to clear.</div>`
+          : `<div class="daycal-note">Tap the days this section meets. Tap again to clear.</div>`);
+  }
+  document.getElementById('levelBody').innerHTML=
+    `<div class="daycal"><table class="wk"><thead><tr>${headRow}</tr></thead><tbody><tr>${cells}</tr></tbody></table>${note}</div>`;
+}
+// tap rotates: empty → dur0 → dur1 → … → clear (matches readiness cellVal cycle)
+function tapCell(d){
+  if(!editing) return;                       // guard: never mutate outside edit mode
+  const g=data[path[0]].grades[path[1]], x=g.secs[path[2]];
+  const cur=x.days[d];
+  if(cur===undefined) x.days[d]=0;
+  else if(cur < g.durs.length-1) x.days[d]=cur+1;
+  else delete x.days[d];
+  renderSection();
+}
+
+// ── edits: add section ──
+function addSection(){
+  if(!editing) return;                       // guard: never mutate outside edit mode
+  const g=data[path[0]].grades[path[1]];
+  const L=nextSec(g.secs); g.secs.push(sec(L,{}));
+  renderGradeDetail();
+  toast(`Section ${L} added — open it to set weekly days`);
+}
+
+// ── delete with downstream warning ──
+function askDelete(kind,i){
+  let title,body,onYes,after;
+  if(kind==='subject'){
+    const s=data[i]; const secs=s.grades.reduce((a,g)=>a+g.secs.length,0);
+    title=`Delete ${s.name}?`;
+    body=`This removes the whole subject and everything under it:<ul><li>${s.grades.length} grades</li><li>${secs} sections and their weekly days</li><li>durations &amp; annual budgets</li></ul>This can't be undone.`;
+    onYes=()=>data.splice(i,1); after=renderLevel;
+  } else if(kind==='grade'){
+    const s=data[path[0]], g=s.grades[i];
+    title=`Delete ${s.name} · ${romanLabel(g.g)}?`;
+    body=`This grade has <b>${g.secs.length} section${g.secs.length>1?'s':''}</b>, each with its own weekly days, plus durations and an annual budget. Deleting removes all of it.`;
+    onYes=()=>s.grades.splice(i,1); after=renderLevel;
+  } else {
+    const g=data[path[0]].grades[path[1]];
+    if(g.secs.length<=1){toast('A grade needs at least one section');return;}
+    const x=g.secs[i]; const ds=daysOf(x);
+    title=`Delete Section ${x.tag}?`;
+    body= ds.length? `Section ${x.tag} meets ${ds.join(', ')}. Its weekly schedule will be removed.` : `Section ${x.tag} has no schedule yet — safe to remove.`;
+    onYes=()=>g.secs.splice(i,1); after=renderGradeDetail;
+  }
+  openModal(`<div class="modal-kicker danger">⚠ Confirm delete</div><h3 class="modal-title">${title}</h3>
+    <p class="modal-body">${body}</p>
+    <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Keep it</button><button class="btn btn-danger" id="delYes">Delete</button></div>`);
+  document.getElementById('delYes').onclick=()=>{onYes();closeModal();after();toast('Deleted (mock — not saved)');};
+}
+
+/* ════════ guided add — subject → grades (MULTI) → sections (MULTI, 3 at a time) →
+ *           budget prompt + duration-from-scratch handled at the grade afterwards ════════ */
+let _ns, _ngrades, _nSecByGrade, _gPage, _sPageByGrade;
+function askAddSubject(){
+  const avail=ALL_SUBJECTS.filter(s=>!data.some(d=>d.name===s));
+  openModal(`<div class="modal-kicker add">Add subject · step 1 of 3</div>
+    <h3 class="modal-title">Which subject?</h3>
+    <p class="modal-ask">Choose the subject you want to add.</p>
+    <div class="modal-field"><label>Subject</label><select id="newSubj">${avail.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Cancel</button><button class="btn btn-go" onclick="addSubjStep2()">Next →</button></div>`);
+}
+// step 2 — which grades? MULTI-SELECT, paged like readiness
+function addSubjStep2(){
+  _ns=document.getElementById('newSubj').value;
+  _ngrades=[]; _gPage=0;
+  openModal(addSubjStep2Html());
+}
+function addSubjStep2Html(){
+  const pageSize=4; const pageCount=Math.ceil(ALL_GRADES.length/pageSize);
+  const items=ALL_GRADES.slice(_gPage*pageSize,_gPage*pageSize+pageSize);
+  const summary=_ngrades.length?_ngrades.map(romanLabel).join(', '):'Choose your grades';
+  return `<div class="modal-kicker add">Add ${_ns} · step 2 of 3</div>
+    <h3 class="modal-title">Which grades?</h3>
+    <p class="modal-ask">Pick every grade you teach ${_ns} to — choose as many as you like.</p>
+    <div class="mdd"><div class="mdd-control" style="cursor:default"><span class="mdd-summary ${_ngrades.length?'':'ph'}">${summary}</span></div>
+      <div class="mdd-menu">
+        ${items.map(g=>`<button class="mdd-opt ${_ngrades.includes(g)?'on':''}" onclick="toggleNewGrade('${g}')"><span class="mdd-mark">${_ngrades.includes(g)?'✓':''}</span><span class="mdd-lbl">${romanLabel(g)}</span></button>`).join('')}
+        <div class="mdd-pager"><div class="mdd-pager-l">
+          ${_gPage>0?`<button class="mdd-pg" onclick="gradePage(-1)">← back</button>`:''}
+          ${_gPage<pageCount-1?`<button class="mdd-pg" onclick="gradePage(1)">list more →</button>`:''}
+        </div></div>
+      </div></div>
+    <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-go" id="g2next" ${_ngrades.length?'':'disabled'} onclick="addSubjStep3()">Next →</button></div>`;
+}
+function toggleNewGrade(g){const i=_ngrades.indexOf(g); if(i>=0)_ngrades.splice(i,1); else _ngrades.push(g); _ngrades.sort((a,b)=>ALL_GRADES.indexOf(a)-ALL_GRADES.indexOf(b)); document.getElementById('modal').innerHTML=addSubjStep2Html();}
+function gradePage(d){_gPage+=d; document.getElementById('modal').innerHTML=addSubjStep2Html();}
+
+// step 3 — sections per chosen grade, MULTI, 3 at a time
+function addSubjStep3(){
+  if(!_ngrades.length)return;
+  _nSecByGrade={}; _sPageByGrade={};
+  _ngrades.forEach(g=>{_nSecByGrade[g]=['A','B']; _sPageByGrade[g]=0;});
+  document.getElementById('modal').innerHTML=addSubjStep3Html();
+}
+function addSubjStep3Html(){
+  const groups=_ngrades.map(g=>{
+    const pageCount=Math.ceil(SECTION_CHOICES.length/SECTION_PAGE);
+    const p=_sPageByGrade[g];
+    const items=SECTION_CHOICES.slice(p*SECTION_PAGE,p*SECTION_PAGE+SECTION_PAGE);
+    const sel=_nSecByGrade[g];
+    const summary=sel.length?sel.join(', '):'Choose sections';
+    return `<div style="margin-bottom:14px">
+      <div class="kicker" style="margin-bottom:7px">${romanLabel(g)}</div>
+      <div class="mdd"><div class="mdd-control" style="cursor:default"><span class="mdd-summary ${sel.length?'':'ph'}">${summary}</span></div>
+        <div class="mdd-menu">
+          ${items.map(s=>`<button class="mdd-opt ${sel.includes(s)?'on':''}" onclick="toggleNewSec('${g}','${s}')"><span class="mdd-mark">${sel.includes(s)?'✓':''}</span><span class="mdd-lbl">Section ${s}</span></button>`).join('')}
+          <div class="mdd-pager"><div class="mdd-pager-l">
+            ${p>0?`<button class="mdd-pg" onclick="secPage('${g}',-1)">← back</button>`:''}
+            ${p<pageCount-1?`<button class="mdd-pg" onclick="secPage('${g}',1)">list more →</button>`:''}
+          </div></div>
+        </div></div></div>`;
+  }).join('');
+  const ready=_ngrades.every(g=>_nSecByGrade[g].length>0);
+  return `<div class="modal-kicker add">Add ${_ns} · step 3 of 3</div>
+    <h3 class="modal-title">Which sections?</h3>
+    <p class="modal-ask">Choose the sections you take for each grade. Three show at a time — tap “list more” for the next set.</p>
+    ${groups}
+    <p class="modal-body" style="font-size:12.5px;font-style:italic;color:var(--ink-soft);margin-top:4px">After this, open each grade to set its duration and annual budget — nothing is pre-filled.</p>
+    <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-go" ${ready?'':'disabled'} onclick="finishAddSubj()">Add ${_ns}</button></div>`;
+}
+function toggleNewSec(g,s){const a=_nSecByGrade[g]; const i=a.indexOf(s); if(i>=0)a.splice(i,1); else a.push(s); a.sort(); document.getElementById('modal').innerHTML=addSubjStep3Html();}
+function secPage(g,d){_sPageByGrade[g]+=d; document.getElementById('modal').innerHTML=addSubjStep3Html();}
+function finishAddSubj(){
+  const grades=_ngrades.map(g=>({g, durs:[], budget:0, secs:_nSecByGrade[g].map(t=>sec(t,{}))}));
+  data.push({name:_ns, grades});
+  if(!SUBJ_ABBR[_ns])SUBJ_ABBR[_ns]=_ns.slice(0,3);
+  closeModal(); renderLevel();
+  toast(`${_ns} added — open each grade to set duration & budget`);
+}
+
+// add a grade to existing subject — also multi sections (3 at a time), no duration/budget default
+function askAddGrade(){
+  const s=data[path[0]];
+  const avail=ALL_GRADES.filter(g=>!s.grades.some(x=>x.g===g));
+  _ns=s.name; _ngrades=[]; _gPage=0; _nSecByGrade={}; _sPageByGrade={}; _agAvail=avail;
+  openModal(addGradeHtml());
+}
+let _agAvail, _agGrade;
+function addGradeHtml(){
+  // choose ONE grade (a grade is a single pick), then its sections multi
+  if(!_agGrade){
+    const pageSize=4; const pageCount=Math.ceil(_agAvail.length/pageSize);
+    const items=_agAvail.slice(_gPage*pageSize,_gPage*pageSize+pageSize);
+    return `<div class="modal-kicker add">Add grade to ${_ns}</div>
+      <h3 class="modal-title">Which grade?</h3>
+      <p class="modal-ask">Pick the grade to add.</p>
+      <div class="mdd"><div class="mdd-menu">
+        ${items.map(g=>`<button class="mdd-opt" onclick="pickAgGrade('${g}')"><span class="mdd-mark"></span><span class="mdd-lbl">${romanLabel(g)}</span></button>`).join('')}
+        <div class="mdd-pager"><div class="mdd-pager-l">
+          ${_gPage>0?`<button class="mdd-pg" onclick="agPage(-1)">← back</button>`:''}
+          ${_gPage<pageCount-1?`<button class="mdd-pg" onclick="agPage(1)">list more →</button>`:''}
+        </div></div></div></div>
+      <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Cancel</button></div>`;
+  }
+  // sections for the chosen grade (3 at a time, multi)
+  const pageCount=Math.ceil(SECTION_CHOICES.length/SECTION_PAGE);
+  const p=_sPageByGrade[_agGrade]||0;
+  const items=SECTION_CHOICES.slice(p*SECTION_PAGE,p*SECTION_PAGE+SECTION_PAGE);
+  const sel=_nSecByGrade[_agGrade]||[];
+  const summary=sel.length?sel.join(', '):'Choose sections';
+  return `<div class="modal-kicker add">Add ${romanLabel(_agGrade)} to ${_ns}</div>
+    <h3 class="modal-title">Which sections?</h3>
+    <p class="modal-ask">Choose the sections you take. Three show at a time — tap “list more” for the next set.</p>
+    <div class="mdd"><div class="mdd-control" style="cursor:default"><span class="mdd-summary ${sel.length?'':'ph'}">${summary}</span></div>
+      <div class="mdd-menu">
+        ${items.map(s=>`<button class="mdd-opt ${sel.includes(s)?'on':''}" onclick="toggleAgSec('${s}')"><span class="mdd-mark">${sel.includes(s)?'✓':''}</span><span class="mdd-lbl">Section ${s}</span></button>`).join('')}
+        <div class="mdd-pager"><div class="mdd-pager-l">
+          ${p>0?`<button class="mdd-pg" onclick="agSecPage(-1)">← back</button>`:''}
+          ${p<pageCount-1?`<button class="mdd-pg" onclick="agSecPage(1)">list more →</button>`:''}
+        </div></div>
+      </div></div>
+    <p class="modal-body" style="font-size:12.5px;font-style:italic;color:var(--ink-soft);margin-top:4px">Then set this grade's duration and budget — nothing is pre-filled.</p>
+    <div class="modal-bar"><button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-go" ${sel.length?'':'disabled'} onclick="finishAddGrade()">Add grade</button></div>`;
+}
+function pickAgGrade(g){_agGrade=g; _nSecByGrade[g]=['A','B']; _sPageByGrade[g]=0; document.getElementById('modal').innerHTML=addGradeHtml();}
+function agPage(d){_gPage+=d; document.getElementById('modal').innerHTML=addGradeHtml();}
+function toggleAgSec(s){const a=_nSecByGrade[_agGrade]; const i=a.indexOf(s); if(i>=0)a.splice(i,1); else a.push(s); a.sort(); document.getElementById('modal').innerHTML=addGradeHtml();}
+function agSecPage(d){_sPageByGrade[_agGrade]=(_sPageByGrade[_agGrade]||0)+d; document.getElementById('modal').innerHTML=addGradeHtml();}
+function finishAddGrade(){
+  const s=data[path[0]];
+  s.grades.push({g:_agGrade, durs:[], budget:0, secs:_nSecByGrade[_agGrade].map(t=>sec(t,{}))});
+  _agGrade=null;
+  closeModal(); renderLevel();
+  toast(`${romanLabel(s.grades[s.grades.length-1].g)} added — set its duration & budget`);
+}
+
+function openModal(html){document.getElementById('modal').innerHTML=html;document.getElementById('modalBg').classList.add('show');}
+function closeModal(){document.getElementById('modalBg').classList.remove('show'); _agGrade=null; _durOpen=false;}
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target.id==='modalBg')closeModal();});
+
+renderLevel();
+</script>
+</body>
+</html>

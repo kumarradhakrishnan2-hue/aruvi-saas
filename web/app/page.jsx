@@ -5,6 +5,9 @@ import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import StatePill from "./components/StatePill";
 import Login from "./components/Login";
+import SidebarNav from "./components/SidebarNav";
+import MyClasses from "./components/MyClasses";
+import MyCalendar from "./components/MyCalendar";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -27,6 +30,8 @@ export default function Home() {
   const [tab, setTab] = useState("myplans");
   const [ready, setReady] = useState(false);      // readiness flag — rehydrated per user from GET /readiness
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
+  const [navCollapsed, setNavCollapsed] = useState(false); // below-logo sidebar collapse state
+  const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | null — sidebar-launched setup re-run
 
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
@@ -70,6 +75,7 @@ export default function Home() {
     })).catch(() => {});
   };
 
+
   const onEnter = (id) => { setUser(id); setUserState(id); };
   const onSignOut = () => {
     clearUser(); setUserState("");
@@ -83,6 +89,9 @@ export default function Home() {
 
   const TABS = [{ id: "myplans", label: "My Plans" }, { id: "generate", label: "Generate" }];
 
+  // The below-logo rail exists only once a profile is set up; open by default, collapsible.
+  const navOpen = ready && !navCollapsed;
+
   return (
     <>
       <header className="hdr">
@@ -90,51 +99,69 @@ export default function Home() {
           <span className="brand-row">Aruvi<em>.</em><small>lesson studio</small></span>
           <span className="brand-ncf">NCF 2023 aligned</span>
         </div>
-        <span className="tabs-spacer" />
-        <div className="user-chip">
-          <span className="uid">{user}</span>
-          <button className="signout" onClick={onSignOut}>Sign out</button>
-        </div>
       </header>
-      <div className="tabs">
-        {TABS.map((t) => {
-          const locked = t.id === "generate" && !ready;
-          return (
-            <button
-              key={t.id}
-              className={`tab ${tab === t.id ? "active" : ""} ${locked ? "locked" : ""}`}
-              onClick={() => setTab(t.id)}
-            >
-              {t.label}{locked ? " 🔒" : ""}
-            </button>
-          );
-        })}
-        <span className="tabs-spacer" />
-        {/* Subject·grade scope pills are hidden during pre-readiness setup (welcome + grid
-            flow are cross-scope, not tied to a subject·grade). */}
-        {!(tab === "myplans" && !ready) && (
-          <>
-            <StatePill
-              value={subject}
-              options={subjects.map((s) => ({ value: s, label: pretty(s) }))}
-              render={pretty(subject)}
-              onChange={setSubject}
-            />
-            <StatePill
-              value={grade}
-              options={grades.map((g) => ({ value: g, label: gradeUp(g) }))}
-              render={grade ? `Grade ${gradeUp(grade)}` : "—"}
-              onChange={setGrade}
-            />
-          </>
+
+      <div className={`body ${navOpen ? "nav-open" : ""}`}>
+        {navOpen && (
+          <aside className="bodyrail">
+            <button className="rail-collapse" onClick={() => setNavCollapsed(true)} aria-label="Collapse menu">‹</button>
+            <SidebarNav onEdit={setEditFlow} onWeek={() => { setEditFlow(null); setTab("myplans"); }}
+              user={user} onSignOut={onSignOut} />
+          </aside>
         )}
+
+        <div className="bodycontent">
+          <div className="tabs">
+            {ready && navCollapsed && (
+              <button className="hamb" onClick={() => setNavCollapsed(false)} aria-label="Open menu">
+                <span /><span /><span />
+              </button>
+            )}
+            {TABS.map((t) => {
+              const locked = t.id === "generate" && !ready;
+              return (
+                <button key={t.id}
+                  className={`tab ${tab === t.id ? "active" : ""} ${locked ? "locked" : ""}`}
+                  onClick={() => setTab(t.id)}>
+                  {t.label}{locked ? " 🔒" : ""}
+                </button>
+              );
+            })}
+            {/* Subject·grade scope pills belong to the Generate tab only — they have no role
+             * in My Plans. Pushed to the right of the tab row by the spacer, same row as tabs. */}
+            {tab === "generate" && ready && (
+              <>
+                <span className="tabs-spacer" />
+                <div className="hdr-scope">
+                  <StatePill value={subject} options={subjects.map((s) => ({ value: s, label: pretty(s) }))}
+                    render={pretty(subject)} onChange={setSubject} />
+                  <StatePill value={grade} options={grades.map((g) => ({ value: g, label: gradeUp(g) }))}
+                    render={grade ? `Grade ${gradeUp(grade)}` : "—"} onChange={setGrade} />
+                </div>
+              </>
+            )}
+          </div>
+
+          <main>
+            {editFlow === "calendar" ? (
+              /* My Calendar — read-only weekly timetable built from the readiness profile. */
+              <div className="editflow">
+                <MyCalendar readiness={readiness} />
+              </div>
+            ) : editFlow === "profile" ? (
+              /* My Class — the editable teaching-profile drill-down (subjects/grades/sections +
+               * time facts). Persists each edit to /readiness and calls onChange to re-project. */
+              <div className="editflow">
+                <MyClasses readiness={readiness} onChange={setReadiness} />
+              </div>
+            ) :
+              !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
+              tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness} onNavigate={setTab} /> :
+              <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
+                onReady={onReadyComplete} onNavigate={setTab} />}
+          </main>
+        </div>
       </div>
-      <main>
-        {!subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
-          tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness} onNavigate={setTab} /> :
-          <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
-            onReady={onReadyComplete} onNavigate={setTab} />}
-      </main>
     </>
   );
 }

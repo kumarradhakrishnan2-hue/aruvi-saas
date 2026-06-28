@@ -154,21 +154,41 @@ Web fonts load via a Google Fonts `@import` (needs internet, else serif fallback
 
 ---
 
-## 7. Data source
+## 7. Data source — self-contained under `data/` (rebuilt 2026-06-28)
 
-The API reads mappings + saved plans from `ARUVI_DATA_DIR` (see `api/config.py`), which
-**defaults to the prototype's mirror**:
-`/Users/kumar_radhakrishnan/main/kumar/AI/Project Aruvi/app/mirror`.
-So keep the sibling `Project Aruvi` folder on disk, OR set `ARUVI_DATA_DIR` to a copy. This
-local-disk access is the seam the cloud content store / DB replaces later.
+The app no longer reads from the prototype mirror at runtime. **All data lives under
+`data/`**, the single root that migrates to the cloud. `api/config.py` exposes two seams,
+kept strictly apart (the Bucket A / Bucket B split in `CLOUD_DATA_MODEL.md §0`):
+
+- **`DATA_DIR`** (env `ARUVI_DATA_DIR`) — **Bucket A**, shared read-only CONTENT (chapter
+  summaries/mappings, constitutions, framework, sample saved plans). Defaults to
+  `data/content/` (a self-contained copy lifted from the prototype mirror). The app never
+  writes here. Cloud home: object/vector store.
+- **`STATE_DIR`** (env `ARUVI_STATE_DIR`) — **Bucket B**, per-user/tenant STATE the app
+  writes at runtime. Defaults to `data/` (subfolders `readiness/`, `allocations/`). Cloud
+  home: Supabase Postgres.
+
+Both default-derive from the repo root (never hardcoded to a machine). So a fresh clone is
+runnable with **no env vars and no sibling `Project Aruvi` folder**. The prototype is still
+the *authoring* source for new content (§10), but it is not a runtime dependency.
+
+**Tenanting (no auth yet).** The teacher's user ID arrives in the **`X-Aruvi-User`** request
+header (set by the login portal, §11); the API's `_current_identity()` reads it, with
+`tenant_id == user_id` (one teacher = one individual tenant — the ICP). Both readiness and
+allocations are keyed `{tenant}/{user}/…` on disk, so two teachers never share or overwrite
+state. Phase 4 swaps the header read for the Supabase auth token — that one function is the
+only change. (Current dev data is under user **`Kumar1`**.)
 
 ---
 
 ## 8. Tests
 
 Stdlib only; run any directly, e.g. `python3 tests/test_render.py`. Suites: view_model,
-science/english/maths/ss/twau ports, render, allocate, api. Each subject's parity test runs a
-REAL saved prototype plan through its normalizers — fixtures are the acceptance spec.
+science/english/maths/ss/twau ports, render, allocate, **allocation (tenant-keyed register
+merge + isolation), readiness (per-tenant persistence + projection-stripping)**, api. Each
+subject's parity test runs a REAL saved prototype plan through its normalizers — fixtures are
+the acceptance spec. Full suite is **11/11 green** (2026-06-28; the two previously-stale
+allocation/api tests were fixed). `test_*` that hit content need `ARUVI_DATA_DIR=$PWD/data/content`.
 
 Tooling note: the Cowork browser preview only rasterizes the first viewport, so scrolled
 screenshots can come back blank — verify via DOM (`preview_eval`) or bring content to the top.
@@ -186,6 +206,39 @@ parity is verified routinely, not just at the eventual Expo milestone.
 schedule) · FastAPI · HTML redesign (warm-editorial) · factors note · allocation-report
 PDF/DOCX export.
 
+**Editable teaching-profile drill-down — `MyClasses.jsx` (2026-06-28).** The "wizard-as-profile"
+pattern (re-launching `Readiness` to edit) is RETIRED. Profile editing now uses a new focused
+drill-down: **Subject → Grade → Section**, view-first, one level in focus at a time (back +
+breadcrumb). The grade screen is **three tabs** (Annual budget · Duration · Sections →) styled
+like the top tabs. **Editing is gated behind an explicit Edit toggle — nothing mutates in view
+mode** (every mutator early-returns when `!editing`; budget/durations/day-grid are read-only
+displays until Edit); switching grade tabs cancels an in-progress edit. Weekly days are **per
+section** (no schema change — the readiness `grids[gradeIdx][secIdx][dayIdx]` was always
+per-section). Guided **add** flows (subject → grades multi → sections multi, paged 3/4 at a time
+in 5-min duration steps) reuse the readiness "Let us begin" patterns; **delete** warns about
+downstream children. The component operates DIRECTLY on the canonical `readiness.subjects[]`,
+deep-clone-mutates, `POST /readiness {subjects}` (full replace, same as first-time setup), and
+calls `onChange(projectReadiness(...))` so MyPlans/Allocate consumers stay in sync. Budget edits
+are stored as `{method:"periods", value}`. Wired in `page.jsx`'s `editFlow` slot (both sidebar
+"Edit profile"/"Edit calendar" links land here); `Readiness` is now used ONLY for first-time
+setup (in `MyPlans`). Design spec/source: `docs/mockups/editable-profile-tree.html` (the
+iterated mockup). **STATICALLY verified only** (babel-parse clean, CSS balanced, pure data-helper
+unit tests pass) — per §11 the sandbox can't `next dev`; **live render + mobile (~390px) check is
+the immediate must-do before further work.**
+
+**Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
+server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login
+portal** (`web/app/components/Login.jsx`) gating the app — no password yet; the ID travels as
+the `X-Aruvi-User` header (§7). (b) **Readiness persistence** — a `ReadinessRepository` port +
+file adapter (`/readiness` GET/POST/DELETE); the teaching profile (subjects/grades/sections/
+durations) survives refresh/restart/new browser, keyed `{tenant}/{user}`. (c) **Allocation
+register made tenant-keyed** — the `AllocationRepository` port + adapter + engine fns + API
+routes all thread `tenant_id/user_id`; path is now `{tenant}/{user}/{subject}/{grade}/`, so
+teachers are isolated (was a real multi-tenancy hole). (d) **Self-contained `data/` root**
+(§7) — content copied to `data/content/`, state to `data/`; no runtime dependency on the
+prototype mirror. All keyed `tenant_id==user_id` today (stub), a clean drop-in for Supabase.
+Repo cleanup/reorg also done (§5). NOTE: front-end still verified statically only (see below).
+
 **Planning-layer rebuild (2026-06-27) — the web app was restructured from 3 sibling tabs to
 the finalized two-tab, readiness-gated, hub-and-spoke flow** (mocked in
 `docs/mockups/index.html`; flow chart in `docs/aruvi_saas_full_lifecycle_flow.png`). See
@@ -199,9 +252,13 @@ allocate → accept → hub → generate → My Plans dashboard → teach (Learn
 — at desktop AND mobile widths is the immediate must-do before further UI work.
 
 **Next (in order):**
-1. **Phase 4** — Auth + DB + multi-tenancy (Supabase): replace the front-end `ready` flag and
-   localStorage pointers/allocations with real per-user/tenant state; the readiness payload
-   currently lives only in front-end state.
+1. **Phase 4** — Auth + DB + multi-tenancy (Supabase). Groundwork now in place (2026-06-28):
+   identity flows via `X-Aruvi-User`/`_current_identity()`; readiness + allocations are
+   server-persisted and tenant-keyed behind ports. Remaining: real Supabase Auth (replace the
+   header stub + `tenant_id==user_id`), write the Supabase adapters behind the existing
+   `ReadinessRepository`/`AllocationRepository` ports, move the lesson pointer + `ready` flag
+   off localStorage, enable RLS. See `CLOUD_DATA_MODEL.md §4` checklist (§2.1/§2.2 already
+   half-done — tenant key landed early).
 2. **Live generation** — Anthropic `LLMClient` adapter + output cache (prompt builders are
    already lifted per subject); wire it into the G7 generate spoke (which currently serves
    saved-plan previews).
@@ -230,15 +287,23 @@ mockups) and `docs/aruvi_saas_full_lifecycle_flow.png` (the conceptual flow). Th
 `docs/mockups/readiness-grid-flow.html` is the interactive prototype the readiness
 React component was ported from.
 
-**Two tabs, not three.** `web/app/page.jsx` renders **My Plans** (default) and **Generate**.
-The old standalone "Allocate" tab is folded into Generate. `Generate.jsx` (the old thin
-input-panel component) is now DEAD CODE — left on disk, not imported.
+**Login gate first.** `page.jsx` renders `Login.jsx` (user-ID portal, no password) until a
+user ID is set; the ID is stored in localStorage and sent as `X-Aruvi-User` on every API call
+(`web/app/lib/format.js` `withUser()` wraps fetch). Sign-out clears it. `tenant_id == user_id`
+server-side (§7).
 
-**Readiness gates Generate.** `page.jsx` holds `ready` (boolean, defaults false) and
-`readiness` (the setup payload). Until readiness is complete, the Generate tab shows a locked
-inert state (`GenerateTab.jsx`, the G1 screen). Completing setup flips `ready` true and routes
-to Generate. `ready`/`readiness` are front-end state only for now — **Phase 4 moves them to
-Supabase per user/tenant.**
+**Two tabs, not three.** Once signed in, `web/app/page.jsx` renders **My Plans** (default) and
+**Generate**. The old standalone "Allocate" tab is folded into Generate. `Generate.jsx` (the
+old thin input-panel component) is now DEAD CODE — left on disk, not imported.
+
+**Readiness gates Generate, and is now PERSISTED per user (2026-06-28).** `page.jsx` holds
+`ready` + `readiness`, but these are **rehydrated on sign-in from `GET /readiness`** (not just
+front-end state): on completing setup it `POST`s the canonical `subjects[]` to the server, and
+`projectReadiness()` regenerates the active-subject projection on read. So the teaching profile
+survives refresh/restart/new browser. Until readiness exists, Generate shows the locked G1
+state (`GenerateTab.jsx`). **Phase 4** swaps the file store for Supabase behind the same
+`/readiness` endpoints + `ReadinessRepository` port; the lesson pointer is still localStorage-
+only (next to migrate).
 
 **Component map (`web/app/components/`):**
 - `Readiness.jsx` — ported from `readiness-grid-flow.html`. Three steps looped per grade:
@@ -297,5 +362,6 @@ was a deliberate split during the rebuild.
 binary won't load) and Google-Fonts `@import` stalls the build. So web changes here are
 verified **statically** (balanced braces, default exports, prop-contract greps, CSS brace
 balance, unit-testing pure helpers like `splitByRatio`). **Live render + mobile check must be
-done locally:** `export ARUVI_DATA_DIR="../Project Aruvi/app/mirror"; python3 -m uvicorn
-api.main:app --port 8000; npm --prefix web run dev`.
+done locally:** `python3 -m uvicorn api.main:app --port 8000; npm --prefix web run dev` — no
+`ARUVI_DATA_DIR` needed now (defaults to `data/content/`, §7). Sign in with any user ID
+(e.g. `Kumar1`, which has seeded data) to pass the login gate.

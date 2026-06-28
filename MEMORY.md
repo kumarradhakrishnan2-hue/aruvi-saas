@@ -1,5 +1,50 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-06-28 — Persistence + tenanting + self-contained `data/` + repo cleanup
+
+### What changed (big session — see CLAUDE.md §5/§7/§9/§11)
+- **User-ID login portal** (`web/app/components/Login.jsx`) now gates the app. No password
+  yet: the ID is stored in localStorage and sent as the **`X-Aruvi-User`** header on every
+  API call (`format.js` `withUser()` wraps fetch). Server `_current_identity()` reads it;
+  `tenant_id == user_id` (one teacher = one individual tenant). Phase-4 swaps for Supabase Auth.
+- **Readiness is now server-persisted** (was front-end only — that gap is closed). New
+  `ReadinessRepository` port + file adapter; `/readiness` GET/POST/DELETE. Profile survives
+  refresh/restart/new browser. Stores ONLY canonical `subjects[]`; the denormalized projection
+  is stripped on save and regenerated on read via `projectReadiness()` (format.js).
+- **Allocation register made tenant-keyed** (it was NOT — a real multi-tenancy hole: all
+  teachers shared one register per subject·grade). Threaded `tenant_id/user_id` through the
+  `AllocationRepository` port → file adapter → engine fns → API routes. Path is now
+  `allocations/{tenant}/{user}/{subject}/{grade}/allocation.json`.
+- **Self-contained `data/` root.** Content copied prototype-mirror → `data/content/`
+  (`ARUVI_DATA_DIR` default); state at `data/` (`ARUVI_STATE_DIR` default). Both repo-derived,
+  no machine hardcoding. **App no longer reads the prototype mirror at runtime.** Two seams in
+  `api/config.py`: `DATA_DIR` (Bucket A content) vs `STATE_DIR` (Bucket B state).
+- **Repo cleanup/reorg.** Purged junk (`out/`, `web/.next/`, caches, `.DS_Store`, `others/`);
+  consolidated design docs under `docs/` (incl. `docs/mockups/`, `docs/architecture-plan.md`).
+  All moved-file references were comment/doc-only (no code paths) — rewritten to new paths.
+- **Tests:** added `test_readiness.py` + rewrote `test_allocation.py` (tenant isolation, new
+  signatures, redraw-ready record schema); fixed stale `/health` assert in `test_api.py`.
+  **Full suite 11/11 green.**
+
+### Key decisions / carry-forwards
+- **`tenant_id == user_id` is the deliberate stub** until Supabase Auth. Every Bucket-B record
+  already carries both keys, so Phase-4 is a value swap in `_current_identity()`, not a schema
+  change. Grep invariant (CLOUD_DATA_MODEL §5): no teacher data without a tenant key.
+- **Never persist the readiness active-subject projection** (subject/grades/grids/durations/
+  budget top-level keys) — derived sugar, regenerated on read. The file adapter strips it
+  defensively even if the frontend sends it.
+- **Sandbox cannot DELETE files in the mounted repo** (`Operation not permitted`) — only
+  create/overwrite. So destructive cleanup must be a script the USER runs on their Mac
+  (`tidy_repo.sh` was the vehicle this session). `clear_*` adapter methods fall back to
+  overwriting-empty when unlink is blocked, so resets never 500.
+- Current dev data is under user **`Kumar1`** (`data/readiness/Kumar1/…`, `data/allocations/Kumar1/…`).
+
+### Verification limitation (unchanged, still important)
+- Web/React changes are verified **statically only** (sandbox can't run `next dev`). The full
+  login→readiness→allocate→teach loop must be smoke-tested locally at desktop + mobile widths.
+  Local run is now `python3 -m uvicorn api.main:app --port 8000; npm --prefix web run dev`
+  with **no `ARUVI_DATA_DIR` needed** (defaults to `data/content/`).
+
 ## 2026-06-27 — Planning-layer rebuild (web app restructured to the finalized flow)
 
 ### What changed
@@ -13,10 +58,10 @@
 - `Generate.jsx` (old thin component) is now **dead code** — not imported; safe to delete later.
 
 ### Key decisions / carry-forwards
-- **Readiness state (`ready` flag + `readiness` payload) is front-end only** — lives in
-  `page.jsx`, threaded to GenerateTab/MyPlans. **Phase 4 must move it to Supabase per
-  user/tenant.** Same for the LU pointer (`localStorage` key `lu_pointer_{sectionKey}`) and
-  allocations (already noted below, 2026-06-22).
+- ~~**Readiness state is front-end only**~~ **(SUPERSEDED 2026-06-28: now server-persisted +
+  tenant-keyed via `/readiness`; see top entry.)** Original note: lived in `page.jsx`, threaded
+  to GenerateTab/MyPlans. Still front-end-only: the **LU pointer** (`localStorage` key
+  `lu_pointer_{sectionKey}`) — next to migrate.
 - **G4 weekly ratio** comes from the readiness grid (`weeklyRatioFromReadiness`) and splits the
   single total-periods input via `splitByRatio` (largest-remainder — unit-tested, always sums
   exactly). Falls back to period-rows when readiness data absent. Internally still writes into
@@ -40,7 +85,7 @@
 - **Sample-plans pre-readiness surface** parked — it exposes only an LP, not the execution/
   My-Plans value; needs a better approach (mockups Screen S note).
 
-## 2026-06-22
+## 2026-06-22  *(allocations note below SUPERSEDED 2026-06-28 — register is now file-persisted AND tenant-keyed; only the Supabase swap remains)*
 
 ### Allocations persistence (accumulation model)
 - **What was built:** The Allocate tab now accumulates allocations — when a teacher allocates a second set of chapters, both sets persist in the Final view, not just the latest one.

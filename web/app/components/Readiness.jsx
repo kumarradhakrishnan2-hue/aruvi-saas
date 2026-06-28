@@ -62,16 +62,52 @@ const sectionTag = (gradeRoman, sec) => `${GRADE_ARABIC[gradeRoman] || gradeRoma
 // Total step count for the "Step N of M" progress line: 4 collection steps + grid + budget.
 const TOTAL_STEPS = 6;
 
-export default function Readiness({ subject: subjectProp, onComplete }) {
+/* Reverse buildPayload(): turn a saved readiness `subjects[]` record back into the internal
+ * authoring shape this component edits — sections as plain strings, plus the grids/budgets
+ * maps keyed the way PART B reads them. Used only for the edit-mode pre-fill. */
+function hydrateFromReadiness(readiness) {
+  const src = (readiness && readiness.subjects) || [];
+  const profile = {
+    subjects: src.map((s) => ({
+      name: s.name,
+      grades: (s.grades || []).map((g) => ({
+        grade: g.grade,
+        sections: (g.sections || []).map((sec) => (typeof sec === "string" ? sec : sec.sec)),
+        durations: [...(g.durations || [])],
+      })),
+    })),
+  };
+  const grids = {};
+  const budgets = {};
+  src.forEach((s, sIdx) => {
+    if (Array.isArray(s.grids)) grids[sIdx] = s.grids;
+    const b = s.budget || {};
+    (s.grades || []).forEach((_, gIdx) => {
+      const entry = b[gIdx] ?? b[String(gIdx)];
+      if (entry) budgets[`${sIdx}:${gIdx}`] = entry;
+    });
+  });
+  // Seed the default method from the first grade that has one, so the budget step opens on it.
+  const firstBudget = budgets["0:0"];
+  return { profile, grids, budgets, defaultMethod: (firstBudget && firstBudget.method) || "weeks" };
+}
+
+export default function Readiness({ subject: subjectProp, onComplete, initialReadiness = null, startPhase = "subjects", calendarOnly = false }) {
+  // Edit-mode pre-fill: when an existing profile is handed in, reverse it into the authoring
+  // shape so every step shows the teacher's real answers instead of blanks. One-time seed.
+  const seed = initialReadiness ? hydrateFromReadiness(initialReadiness) : null;
+
   /* ───────── PART A collected state ─────────
    * `profile` is the authoritative collected structure during setup:
    *   profile.subjects: [{ name, grades: [{ grade, sections: ["A","B"], durations: [45,60] }] }]
-   * Starts EMPTY — the teacher actively chooses every subject; nothing is pre-selected.
+   * Starts EMPTY for first-time setup; pre-filled in edit mode (seed above).
    * (`subjectProp` is no longer used to seed a default; kept for API compatibility.) */
-  const [profile, setProfile] = useState(() => ({ subjects: [] }));
+  const [profile, setProfile] = useState(() => (seed ? seed.profile : { subjects: [] }));
 
   // Where we are. Phases A1..A4 are global; "grid"/"budget" loop per (subject, grade).
-  const [phase, setPhase] = useState("subjects"); // subjects | grades | sections | durations | grid | budget
+  // startPhase lets an edit link drop the teacher straight onto the relevant screen
+  // ("subjects" for profile edits, "durations" for calendar edits).
+  const [phase, setPhase] = useState(startPhase); // subjects | grades | sections | durations | grid | budget
   const [si, setSi] = useState(0);   // active subject index (grades/sections/durations/grid/budget)
   const [gi, setGi] = useState(0);   // active grade index within current subject (grid loop)
   const [bi, setBi] = useState(0);   // active grade index within current subject (budget loop)
@@ -79,10 +115,10 @@ export default function Readiness({ subject: subjectProp, onComplete }) {
   // Durations are collected PER SUBJECT·GRADE (in step 4, like sections) and stored on each
   // grade as grade.durations. The grid/budget read the active grade's durations (curDur below).
 
-  // PART B working state (built lazily once collection is done).
-  const [grids, setGrids] = useState({});   // { `${si}` : [grade][section][day] = durIdx|-1 }
-  const [budgets, setBudgets] = useState({}); // { `${si}:${gradeIdx}` : { method, value } }
-  const [defaultMethod, setDefaultMethod] = useState("weeks");
+  // PART B working state (built lazily once collection is done; pre-seeded in edit mode).
+  const [grids, setGrids] = useState(() => (seed ? seed.grids : {}));   // { `${si}` : [grade][section][day] = durIdx|-1 }
+  const [budgets, setBudgets] = useState(() => (seed ? seed.budgets : {})); // { `${si}:${gradeIdx}` : { method, value } }
+  const [defaultMethod, setDefaultMethod] = useState(() => (seed ? seed.defaultMethod : "weeks"));
   const [showAlt, setShowAlt] = useState(false);
 
   const subjects = profile.subjects;
@@ -434,9 +470,12 @@ export default function Readiness({ subject: subjectProp, onComplete }) {
           ))}
         </div>
         <div className="rd-btns">
-          <button className="ghost" onClick={() => { if (si === 0) { setSi(subjects.length - 1); setPhase("sections"); } else setSi(si - 1); }}>
-            {si === 0 ? "← sections" : `← ${subjects[si - 1].name} durations`}
-          </button>
+          {/* In calendar-edit mode durations is the entry screen — no back into sections. */}
+          {!(calendarOnly && si === 0) && (
+            <button className="ghost" onClick={() => { if (si === 0) { setSi(subjects.length - 1); setPhase("sections"); } else setSi(si - 1); }}>
+              {si === 0 ? "← sections" : `← ${subjects[si - 1].name} durations`}
+            </button>
+          )}
           <button className="primary" style={{ flex: 1 }} disabled={!durationsComplete} onClick={goFromDurations}>
             {!lastSubject ? `Continue to ${subjects[si + 1].name} durations →` : "Continue to the weekly grid →"}
           </button>
@@ -523,8 +562,9 @@ export default function Readiness({ subject: subjectProp, onComplete }) {
     ? `${res.periods} periods × ${avgMin} min ÷ 60 = ${hrs} hours.`
     : null;
 
+  const editing = !!initialReadiness;
   const finishLabel = lastGrade
-    ? (lastSubject ? "Confirm — continue to Generate →" : `Continue to ${subjects[si + 1].name} →`)
+    ? (lastSubject ? (editing ? "Save changes →" : "Confirm — continue to Generate →") : `Continue to ${subjects[si + 1].name} →`)
     : `Continue to Grade ${curSubject.grades[bi + 1].grade} →`;
 
   return (

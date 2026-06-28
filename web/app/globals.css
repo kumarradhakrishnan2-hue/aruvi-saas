@@ -57,7 +57,7 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 /* ── Tabs ─────────────────────────────────────────────── */
 .tabs { display: flex; align-items: center; gap: 26px; padding: 0 34px; background: transparent; border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
 .tab {
-  font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 15px 2px;
+  font-family: var(--f-mono); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; padding: 15px 2px;
   border: none; background: none; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
   transition: color .18s ease, border-color .18s ease;
 }
@@ -65,6 +65,8 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 .tab.active { color: var(--pine-d); border-bottom-color: var(--clay); }
 .tab.locked { color: #bcae98; }
 .tabs-spacer { flex: 1; }
+/* subject·grade scope pills, riding in the Generate tab's tab row (right-aligned via spacer) */
+.hdr-scope { display: flex; align-items: center; gap: 18px; }
 
 /* readiness gate — Generate tab inert until setup is done (G1 state) */
 .gate { max-width: 460px; margin: 48px auto; text-align: center; padding: 0 20px; }
@@ -115,7 +117,7 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
   /* Narrow phones: let the tab row scroll horizontally rather than wrap awkwardly or crush
    * the subject/grade pills against the three section tabs. */
   .tabs { padding: 0 18px; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .tab { padding: 13px 1px; font-size: 11px; white-space: nowrap; }
+  .tab { padding: 13px 1px; font-size: 14px; white-space: nowrap; }
   .tabs-spacer { flex: none; width: 10px; }
   .pillmenu { min-width: 140px; }
 }
@@ -148,6 +150,114 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: relative; z-index: 1; }
 @media (max-width: 600px) {
   main { padding: 26px 18px 72px; }
+}
+
+/* ── Body: below-logo accordion rail + content (2026-06-28 v2) ─────────────────
+ * Body is a row of [rail | content]. The rail sits below the logo, same warm-paper colour,
+ * a single separator line on its right. NO row hairlines anywhere. When the rail is OPEN the
+ * tabs (which live inside the content column) naturally sit to the RIGHT of it, never above
+ * it. Collapsed = rail fully gone, only the hamburger (left of the tabs) remains. */
+.body { display: flex; align-items: flex-start; }
+.bodyrail {
+  position: relative; width: 256px; flex-shrink: 0;
+  padding: 26px 22px 30px 34px; border-right: 1px solid var(--line); align-self: stretch;
+  min-height: calc(100vh - 70px); display: flex; flex-direction: column;
+}
+.body:not(.nav-open) .bodyrail { display: none; }
+.bodycontent { flex: 1; min-width: 0; }
+.body.nav-open .bodycontent main { max-width: 760px; }
+
+.rail-collapse {
+  position: absolute; top: 14px; right: 12px;
+  font-family: var(--f-display); font-size: 22px; line-height: 1; color: var(--ink-soft);
+  background: none; border: none; cursor: pointer; padding: 0 4px;
+}
+.rail-collapse:hover { color: var(--pine); }
+
+/* hamburger (three lines) — sits at the left of the tab row when the rail is collapsed */
+.hamb {
+  display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
+  width: 26px; height: 26px; padding: 0; margin-right: 6px;
+  background: none; border: none; cursor: pointer;
+}
+.hamb span { display: block; height: 2px; width: 20px; background: var(--pine-d); border-radius: 2px; }
+.hamb:hover span { background: var(--clay); }
+
+/* ── Rail contents (no horizontal row separators) ── */
+/* padding-top drops "My Class" down so it lines up with the subject title on the screen it
+   opens (tabs bar ~48px + main's 40px top padding), making the click feel like the label
+   stays put. Reset on mobile where the rail becomes a horizontal top bar. */
+.sbn { display: flex; flex-direction: column; flex: 1; padding-top: 54px; }
+.sbn-item {
+  font-family: var(--f-display); font-size: 18px; font-weight: 500; color: var(--ink);
+  background: none; border: none; text-align: left; cursor: pointer; padding: 9px 0;
+  display: flex; justify-content: space-between; align-items: center; transition: color .15s ease;
+}
+.sbn-item:hover, .sbn-item.open { color: var(--pine); }
+/* caret takes the same colour as its label (pine), not a contrasting red */
+.sbn-acccar { font-family: var(--f-mono); font-size: 12px; color: inherit; }
+.sbn-item:hover .sbn-acccar, .sbn-item.open .sbn-acccar { color: var(--pine); }
+
+.sbn-drill { padding: 0 0 8px 2px; }
+.sbn-node { display: flex; flex-direction: column; }
+.sbn-children { padding-left: 14px; border-left: 1px solid var(--line-soft); margin: 2px 0 4px 4px; display: flex; flex-direction: column; gap: 3px; }
+.sbn-rowwrap { display: flex; align-items: center; gap: 8px; }
+.sbn-row {
+  flex: 1; display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--f-body); color: var(--ink);
+  background: none; border: none; text-align: left; cursor: pointer; padding: 6px 0;
+}
+.sbn-row.lvl1 { font-size: 17px; }
+.sbn-row.lvl2 { font-size: 16px; }
+.sbn-row:hover, .sbn-row.on { color: var(--pine); }
+.sbn-chev { color: inherit; font-size: 13px; }
+.sbn-leaf { flex: 1; font-family: var(--f-body); font-size: 15px; color: var(--ink); padding: 6px 0; }
+.sbn-leaf-empty { font-style: italic; color: var(--ink-soft); font-size: 13px; }
+.sbn-del { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--clay); background: none; border: none; cursor: pointer; padding: 4px 2px; }
+.sbn-del:hover { text-decoration: underline; }
+.sbn-del.wide { padding: 8px 0; text-align: left; margin-top: 6px; }
+.sbn-add { font-family: var(--f-mono); font-size: 12px; color: var(--pine); background: none; border: none; text-align: left; cursor: pointer; padding: 6px 0; }
+.sbn-add:hover { text-decoration: underline; }
+
+/* sidebar-launched setup re-run (Edit profile / Edit calendar), shown in the main content area */
+.editflow { padding-top: 8px; }
+.editflow-cancel { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 6px 0 14px; }
+.editflow-cancel:hover { color: var(--clay); }
+.sbn-addsel { margin: 6px 0; width: 100%; }
+
+.sbn-fact { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; }
+.sbn-fact > span:first-child { font-family: var(--f-body); font-size: 16px; color: var(--ink); }
+.sbn-factv { font-family: var(--f-mono); font-size: 13px; color: var(--ink-soft); }
+.sbn-factv input { width: 52px; font-family: var(--f-mono); font-size: 13px; border: 1px solid var(--line); border-radius: 4px; padding: 4px 7px; background: var(--paper-2); color: var(--ink); margin-right: 4px; }
+.sbn-note { font-style: italic; font-size: 12px; color: var(--ink-soft); margin-top: 8px; line-height: 1.5; }
+.sbn-err { color: var(--clay); font-size: 13px; margin-top: 10px; }
+
+/* ── Rail foot: hairline above, Settings / Help, then user + logout (smaller) ── */
+.sbn-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.sbn-foot-item { font-family: var(--f-body); font-size: 16px; color: var(--ink); background: none; border: none; text-align: left; cursor: pointer; padding: 7px 0; }
+.sbn-foot-item:hover { color: var(--pine); }
+.sbn-foot-user { margin-top: 18px; }
+.sbn-foot-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
+.sbn-foot-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 4px 0; }
+.sbn-foot-logout:hover { color: var(--clay); }
+
+.sbn-modal-bg { position: fixed; inset: 0; background: rgba(31,42,36,.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
+.sbn-modal { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; max-width: 420px; width: 100%; }
+.sbn-modal-list { margin: 10px 0; padding-left: 18px; }
+.sbn-modal-list li { font-size: 14px; color: var(--ink); margin-bottom: 7px; line-height: 1.5; }
+.sbn-modal-note { font-style: italic; font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+.sbn-modal-bar { display: flex; gap: 12px; justify-content: flex-end; }
+.sbn-keep { font-family: var(--f-mono); font-size: 12px; background: none; border: 1px solid var(--line); border-radius: 7px; padding: 11px 18px; color: var(--ink-soft); cursor: pointer; }
+.sbn-remove { font-family: var(--f-mono); font-size: 12px; background: var(--ochre); color: #fbf6ea; border: none; border-radius: 7px; padding: 11px 18px; cursor: pointer; }
+.sbn-remove:hover { background: #83611c; }
+
+@media (max-width: 720px) {
+  .body { display: block; }
+  .bodyrail { width: auto; min-height: 0; position: static; border-right: none; border-bottom: 1px solid var(--line); padding: 18px; }
+  .sbn { padding-top: 0; }   /* rail is a horizontal top bar on mobile — no title-alignment offset */
+  .body.nav-open .bodycontent main { max-width: 860px; margin: 0 auto; }
+  .sbn-modal-bar { flex-direction: column-reverse; }
+  .sbn-modal-bar button { width: 100%; min-height: 44px; }
 }
 .h2 { font-family: var(--f-display); font-size: 22px; font-weight: 500; margin: 0 0 22px; }
 button.primary {
@@ -797,3 +907,195 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .welcome-begin { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .04em; border: none; border-radius: 7px; padding: 13px 26px; background: var(--pine); color: #f4efe6; cursor: pointer; }
 .welcome-begin:hover { background: var(--pine-d); }
 @media (max-width: 600px) { .welcome { margin: 28px auto; } .welcome-begin { width: 100%; min-height: 44px; } }
+
+/* ═══════════ MyClasses — editable teaching-profile drill-down (2026-06-28) ═══════════
+ * Ported from docs/mockups/editable-profile-tree.html. Reuses existing readiness styles where
+ * the visual language matches (.budgetsum, .steppermini, .wk/.cell, .mdd-*, .kicker, .back);
+ * only the NEW classes are defined here. Scoped under .myclasses so nothing leaks into the
+ * readiness flow. Single green accent (no per-subject colour); hover-spotlight rows; grade
+ * screen = 3 tabs styled like the top tabs. Mobile checked at ~390px. */
+.myclasses {
+  max-width: 780px;
+  /* Section palette — same tokens the readiness grid (.rd) defines. CSS custom properties
+     inherit by DOM subtree, not by selector, so the day grid here needs its own copy or the
+     .cell/.wk colour rules resolve to nothing (empty cells went pure-white on the grey card). */
+  --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
+  --sec-c:#9a7321; --sec-c-bg:#f4ecd8; --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
+}
+/* Root ("My Class") screen sits ~two rows lower than the inner screens (which start with a
+   back button / breadcrumb), so the title drops down to roughly meet the lowered sidebar item. */
+.myclasses.at-root .lvl-head { margin-top: 30px; }
+.myclasses .crumb { display:flex; align-items:center; gap:4px; font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-bottom:6px; flex-wrap:wrap; }
+.myclasses .crumb a { color:var(--pine-d); cursor:pointer; }
+.myclasses .crumb a:hover { color:var(--clay); }
+.myclasses .crumb .sep { color:#c3bba8; }
+
+.myclasses .lvl-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:4px; flex-wrap:wrap; }
+.myclasses .lvl-title { font-family:var(--f-display); font-size:27px; font-weight:600; margin:0; line-height:1.1; }
+.myclasses .lvl-sub { font-size:14px; color:var(--ink-soft); margin:4px 0 0; }
+.myclasses .mc-hint { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.03em; color:var(--ink-soft); margin:5px 0 0; }
+.myclasses .edit-toggle { margin-left:auto; align-self:flex-start; font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--pine-d); background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:9px 15px; cursor:pointer; white-space:nowrap; }
+.myclasses .edit-toggle:hover { border-color:var(--pine); }
+.myclasses .edit-toggle.on { background:var(--pine); color:#f3efe6; border-color:var(--pine); }
+
+.myclasses .section-kicker { margin:22px 0 12px; display:flex; align-items:center; gap:10px; }
+.myclasses .section-kicker .kicker { color:var(--pine-d); }
+.myclasses .section-kicker .rule { flex:1; height:1px; background:var(--line); }
+
+/* drill rows — hover spotlight (single green accent), no default fill, no logos */
+.myclasses .nodes { display:flex; flex-direction:column; gap:10px; }
+.myclasses .node { display:flex; align-items:center; gap:14px; background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:16px 18px; cursor:pointer; transition:border-color .14s, box-shadow .14s, padding-left .14s, background .14s; }
+.myclasses .node:hover { background:#eef4f0; border-color:var(--pine); box-shadow:inset 3px 0 0 var(--pine); padding-left:22px; }
+.myclasses .node:hover .node-name { color:var(--pine-d); }
+.myclasses .node-body { flex:1; min-width:0; }
+.myclasses .node-name { font-family:var(--f-display); font-size:18px; font-weight:600; color:var(--ink); }
+.myclasses .node-meta { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:2px; }
+.myclasses .node-meta .needs { color:var(--clay); font-weight:600; }
+.myclasses .node-go { font-family:var(--f-mono); font-size:15px; color:var(--ink-soft); flex-shrink:0; }
+.myclasses .node-del { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--clay); background:none; border:1px solid transparent; border-radius:5px; cursor:pointer; padding:6px 9px; flex-shrink:0; }
+.myclasses .node-del:hover { border-color:var(--clay); background:rgba(192,57,43,.06); }
+.myclasses .add-node { display:flex; align-items:center; gap:11px; background:#eef4f0; border:1px dashed #bcd0c4; border-radius:10px; padding:15px 18px; cursor:pointer; font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--pine-d); }
+.myclasses .add-node:hover { background:#e4efe8; }
+.myclasses .add-plus { font-size:16px; }
+.myclasses .add-plus-sm { font-size:14px; }
+
+/* grade tab strip — styled like the My Plans/Generate top tabs (font two notches down) */
+.myclasses .gtabs { display:flex; align-items:center; gap:26px; border-bottom:1px solid var(--line); margin-bottom:18px; flex-wrap:wrap; }
+.myclasses .gtab { font-family:var(--f-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; padding:14px 2px; border:none; background:none; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; display:inline-flex; align-items:center; gap:8px; transition:color .14s, border-color .14s; }
+.myclasses .gtab:hover { color:var(--ink); }
+.myclasses .gtab.on { color:var(--pine-d); border-bottom-color:var(--clay); }
+.myclasses .gtab-go { font-size:15px; color:var(--ink-soft); }
+.myclasses .gtab.on .gtab-go { color:var(--clay); }
+.myclasses .gtab-flag { font-family:var(--f-mono); font-size:9px; font-weight:600; color:#fff; background:var(--clay); border-radius:9px; padding:1px 6px; line-height:1.5; }
+
+.myclasses .detail-card { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:14px; }
+.myclasses .detail-label { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:11px; }
+.myclasses .detail-label .move { font-style:italic; text-transform:none; letter-spacing:0; font-family:var(--f-body); font-size:11px; color:#b3ab9a; }
+.myclasses .detail-sub { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--pine-d); margin:6px 0 10px; }
+
+/* budget — reuses .budgetsum/.steppermini; adds the read-only value + direct-entry field */
+.myclasses .budget-stepline { display:flex; align-items:center; gap:13px; margin-top:9px; flex-wrap:wrap; }
+.myclasses .budget-unit { font-family:var(--f-mono); font-size:12px; color:var(--ink-soft); }
+.myclasses .budget-hours { font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); white-space:nowrap; }
+.myclasses .budget-prompt { font-family:var(--f-display); font-size:17px; font-weight:500; color:var(--pine-d); margin:8px 0 2px; }
+.myclasses .budget-num { width:84px; text-align:center; font-family:var(--f-display); font-size:24px; color:var(--pine-d); background:var(--paper-2); border:1px solid #bcd0c4; border-radius:7px; padding:4px 6px; }
+.myclasses .budget-num:focus { outline:none; border-color:var(--pine); }
+.myclasses .budget-ro { font-family:var(--f-display); font-size:24px; color:var(--pine-d); min-width:64px; }
+
+/* duration chips + grey add box */
+.myclasses .dur-chips { display:flex; gap:9px; flex-wrap:wrap; align-items:center; }
+.myclasses .dur-chip { display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:13px; font-weight:500; color:#f3efe6; background:var(--pine); border:1px solid var(--pine); border-radius:8px; padding:9px 13px; }
+.myclasses .dur-chip.alt { background:var(--clay); border-color:var(--clay); }
+.myclasses .dur-chip .x { cursor:pointer; opacity:.85; font-size:12px; }
+.myclasses .dur-add { font-family:var(--f-mono); font-size:13px; font-weight:500; color:var(--ink); background:var(--paper-sunk); border:1px solid var(--line); border-radius:8px; padding:9px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; }
+.myclasses .dur-add:hover { background:#e6e0d4; border-color:#cbbfa6; }
+.myclasses .dur-empty { font-style:italic; font-size:13px; color:var(--clay); margin-bottom:10px; }
+
+/* section day grid — reuses .wk/.cell; read-only cell variant for view mode */
+.myclasses .daycal { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:18px 20px; }
+/* Empty (unselected) day cells sit on the grey --card-bg, so the default white fill + pale
+   --line border washed out (the screenshot showed near-invisible white-on-grey cells). Give
+   them an explicit warm-paper fill and a darker border so every day is clearly visible — the
+   selected cells keep their solid section colour from the .cell.on[data-sec] rules above. */
+.myclasses .daycal .cell:not(.on) { background:var(--paper-2); border-color:#d8cfbe; }
+.myclasses .daycal .cell:not(.on):hover { border-color:#bcae90; }
+.myclasses .daycal-note { font-style:italic; font-size:12.5px; color:var(--ink-soft); margin-top:13px; }
+.myclasses .daycal-note.daycal-empty { color:var(--clay); font-weight:600; font-style:normal; }
+.myclasses .cell.ro { cursor:default; }
+.myclasses .cell.ro:hover { border-color:#d8cfbe; }
+
+.myclasses .tip { display:flex; align-items:center; gap:10px; margin-top:18px; padding:12px 16px; background:var(--paper-2); border:1px solid var(--line); border-radius:8px; font-size:13.5px; color:var(--ink-soft); }
+.myclasses .tip b { color:var(--ink); font-weight:600; }
+.myclasses .tip .bulb { color:var(--ochre); }
+
+/* modals */
+.mc-modal-bg { position:fixed; inset:0; background:rgba(31,42,36,.45); display:flex; align-items:center; justify-content:center; padding:20px; z-index:40; }
+.mc-modal { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:24px 26px; max-width:460px; width:100%; max-height:88vh; overflow:auto; }
+.mc-modal .modal-kicker { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px; }
+.mc-modal .modal-kicker.danger { color:var(--danger); }
+.mc-modal .modal-kicker.add { color:var(--pine-d); }
+.mc-modal .modal-title { font-family:var(--f-display); font-size:21px; font-weight:600; margin:0 0 8px; }
+.mc-modal .modal-ask { font-style:italic; font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; }
+.mc-modal .modal-body { font-size:14.5px; color:var(--ink); line-height:1.55; margin:0 0 18px; }
+.mc-modal .modal-body ul { margin:8px 0 0; padding-left:20px; }
+.mc-modal .modal-body li { margin:4px 0; }
+.mc-modal .modal-fine { font-size:12.5px; font-style:italic; color:var(--ink-soft); margin:4px 0 14px; }
+.mc-modal .modal-field { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+.mc-modal .modal-field label { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+.mc-modal .modal-field select { font-family:var(--f-mono); font-size:14px; border:1px solid var(--line); border-radius:6px; padding:10px 12px; background:var(--paper-2); color:var(--ink); }
+.mc-modal .addsec-group { margin-bottom:14px; }
+.mc-modal .modal-bar { display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap; margin-top:6px; }
+.mc-modal .btn { font-family:var(--f-mono); font-size:12px; letter-spacing:.05em; border-radius:7px; padding:11px 18px; cursor:pointer; }
+.mc-modal .btn-cancel { background:var(--paper-2); border:1px solid var(--line); color:var(--ink-soft); }
+.mc-modal .btn-cancel:hover { border-color:var(--ink-soft); }
+.mc-modal .btn-danger { background:var(--danger); border:none; color:#fff; }
+.mc-modal .btn-danger:hover { background:#a5301f; }
+.mc-modal .btn-go { background:var(--pine); border:none; color:#f3efe6; }
+.mc-modal .btn-go:hover { background:var(--pine-d); }
+.mc-modal .btn-go:disabled { opacity:.45; cursor:default; }
+
+.mc-toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:var(--pine-d); color:#f3efe6; font-family:var(--f-mono); font-size:12px; padding:11px 20px; border-radius:8px; z-index:50; }
+
+@media (max-width: 600px) {
+  .myclasses .lvl-title { font-size:23px; }
+  .myclasses .gtabs { gap:18px; }
+  .myclasses .gtab { font-size:11px; }
+  .myclasses .budget-hours { display:block; white-space:normal; margin-top:2px; }
+  .mc-modal .modal-bar { flex-direction:column-reverse; }
+  .mc-modal .btn { width:100%; }
+}
+
+/* ═══════════ My Calendar — read-only weekly timetable (2026-06-28) ═══════════
+ * Rows = Grade·Section, columns = weekdays. Cell fills/inks are computed per subject·grade in
+ * the component (inline styles); only the layout, headers and legend are styled here. */
+.mycal { max-width: 980px; }
+.mycal .lvl-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:4px; flex-wrap:wrap; }
+.mycal .lvl-title { font-family:var(--f-display); font-size:27px; font-weight:600; margin:0; line-height:1.1; }
+.mycal .lvl-sub { font-size:14px; color:var(--ink-soft); margin:4px 0 0; }
+.mycal .cal-empty { margin-top:22px; padding:20px 22px; background:var(--card-bg); border:1px solid var(--line); border-radius:10px; font-style:italic; color:var(--ink-soft); }
+
+/* filter bar — chip buttons grouped under Classes / Subject filter.
+   The filter and totals bars use a deeper warm fill (--paper-sunk) so they read as a different
+   part from the table (which keeps the lighter --card-bg surface). */
+.mycal .cal-filterbar { display:flex; gap:42px; margin-top:18px; padding:16px 18px; background:var(--paper-sunk); border:1px solid #d8cfbe; border-radius:12px; flex-wrap:wrap; }
+.mycal .cal-fgroup { display:flex; flex-direction:column; gap:9px; }
+.mycal .cal-fgroup-lbl { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+.mycal .cal-chips { display:flex; gap:8px; flex-wrap:wrap; }
+.mycal .cal-chip { display:inline-flex; align-items:center; gap:7px; font-family:var(--f-mono); font-size:13px; color:var(--ink); background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:8px 15px; cursor:pointer; transition:border-color .12s, background .12s; }
+.mycal .cal-chip:hover { border-color:#cbbfa6; }
+.mycal .cal-chip.on { background:#e7efe9; border-color:var(--pine); color:var(--pine-d); }
+.mycal .cal-chip-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+/* table — card-grey surface (prior state), with grid lines on every cell boundary */
+.mycal .cal-scroll { margin-top:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:10px; background:var(--card-bg); }
+.mycal .caltable { border-collapse:separate; border-spacing:0; width:100%; min-width:640px; }
+.mycal .caltable th, .mycal .caltable td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); }
+.mycal .caltable th:last-child, .mycal .caltable td:last-child { border-right:none; }
+.mycal .caltable tbody tr:last-child th, .mycal .caltable tbody tr:last-child td { border-bottom:none; }
+.mycal .cal-dayhd { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); font-weight:700; padding:11px 8px; text-align:center; }
+.mycal .cal-rowhd { text-align:left; padding:10px 14px; white-space:nowrap; position:sticky; left:0; background:var(--card-bg); z-index:1; }
+.mycal thead .cal-rowhd { vertical-align:middle; }
+.mycal thead .cal-rowhd { font-family:var(--f-mono); font-size:12px; font-weight:600; color:var(--pine-d); }
+.mycal .cal-rowhd-tag { display:block; font-family:var(--f-display); font-size:16px; font-weight:700; color:var(--ink); line-height:1.1; }
+.mycal .cal-cell { padding:5px; vertical-align:middle; width:15%; }
+.mycal .cal-box { border-radius:8px; padding:8px 9px; min-height:40px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:1px; }
+.mycal .cal-box-subj { font-family:var(--f-display); font-size:13px; font-weight:600; line-height:1.15; }
+.mycal .cal-box-min { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.02em; opacity:.85; }
+
+/* totals footer — grand total + per-subject tallies (deeper fill, distinct from the table) */
+.mycal .cal-totals { display:flex; align-items:center; gap:34px; margin-top:18px; padding:16px 20px; background:var(--paper-sunk); border:1px solid #d8cfbe; border-radius:12px; flex-wrap:wrap; }
+.mycal .cal-total-grand { display:flex; align-items:center; gap:12px; }
+.mycal .cal-total-clock { font-size:26px; color:var(--pine); line-height:1; }
+.mycal .cal-total-cap { font-family:var(--f-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); }
+.mycal .cal-total-big { font-family:var(--f-display); font-size:22px; font-weight:700; color:var(--ink); line-height:1.1; }
+.mycal .cal-total-sub { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); }
+.mycal .cal-total-subj { display:flex; align-items:center; gap:11px; }
+.mycal .cal-total-swatch { width:30px; height:30px; border-radius:7px; flex-shrink:0; }
+.mycal .cal-total-name { font-family:var(--f-display); font-size:14px; font-weight:600; color:var(--ink); }
+.mycal .cal-total-detail { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:1px; }
+
+@media (max-width: 600px) {
+  .mycal .lvl-title { font-size:23px; }
+  .mycal .cal-box-subj { font-size:12px; }
+  .mycal .cal-filterbar { gap:20px; }
+}

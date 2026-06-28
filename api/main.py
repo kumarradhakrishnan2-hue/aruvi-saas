@@ -109,6 +109,11 @@ class ReadinessRequest(BaseModel):
     here and stripped by the adapter — see CLOUD_DATA_MODEL.md §2.1.
     """
     subjects: List[Dict[str, Any]] = []
+    # When true, the server cascade-deletes the allocation registers for any subject·grade the
+    # edit removed (the teacher saw the named warning and accepted). When false/omitted, a
+    # destructive edit is REFUSED with HTTP 409 + the impact list so the UI can warn first.
+    # Additive edits (nothing removed) save regardless.
+    cascade: bool = False
 
 
 class AllocationReportRequest(BaseModel):
@@ -134,6 +139,103 @@ def _subject(name: str):
         return subjects.get(name)
     except Exception:
         raise HTTPException(status_code=404, detail=f"Unknown subject: {name}")
+
+
+# ── Readiness ↔ allocation slug bridge + cascade ────────────────────────────────
+# The readiness profile stores display values (subject "Science", grade "VII"); the
+# allocation register is keyed by engine slugs ("science", "vii"). A profile edit that
+# removes a subject/grade/section can orphan downstream work (a saved allocation register
+# per subject·grade; an in-progress lesson pointer per section). These helpers diff old vs
+# new, report the impact, and (on confirm) cascade-delete exactly the removed scope.
+def _subject_slug(name: str) -> str:
+    return str(name or "").strip().lower().replace(" ", "_")
+
+
+def _grade_slug(grade: str) -> str:
+    return str(grade or "").strip().lower()
+
+
+def _profile_index(subjects_list: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+    """Index subjects[] by slug → {grades: {grade_slug: [section_tags]}} for diffing."""
+    out: Dict[str, Dict[str, Any]] = {}
+    for s in subjects_list or []:
+        ss = _subject_slug(s.get("name"))
+        if not ss:
+            continue
+        grades: Dict[str, List[str]] = {}
+        for g in s.get("grades", []) or []:
+            gs = _grade_slug(g.get("grade"))
+            if not gs:
+                continue
+            grades[gs] = [str((sec or {}).get("tag", "")) for sec in (g.get("sections") or [])]
+        out[ss] = {"grades": grades}
+    return out
+
+
+def _diff_profiles(old_subjects: List[Dict[str, Any]],
+                   new_subjects: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Compute what an edit REMOVES (old minus new), normalized to slugs.
+
+    {removed_subjects:[{subject, grades:[...]}], removed_grades:[{subject, grade}],
+     removed_sections:[{subject, grade, section}]}. removed_grades excludes grades whose
+     whole subject was removed (already accounted for)."""
+    old, new = _profile_index(old_subjects), _profile_index(new_subjects)
+    rem_subj, rem_grade, rem_sec = [], [], []
+    for ss, oinfo in old.items():
+        if ss not in new:
+            rem_subj.append({"subject": ss, "grades": list(oinfo["grades"].keys())})
+            continue
+        ninfo = new[ss]
+        for gs, osecs in oinfo["grades"].items():
+            if gs not in ninfo["grades"]:
+                rem_grade.append({"subject": ss, "grade": gs})
+                continue
+            nsecs = set(ninfo["grades"][gs])
+            for tag in osecs:
+                if tag and tag not in nsecs:
+                    rem_sec.append({"subject": ss, "grade": gs, "section": tag})
+    return {"removed_subjects": rem_subj, "removed_grades": rem_grade, "removed_sections": rem_sec}
+
+
+def _cascade_impact(tenant_id: str, user_id: str, diff: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Name the downstream losses for a removal diff, checking which removed scopes actually
+    have a saved allocation register. Sections carry no allocation (subject·grade keyed) but
+    orphan their LU pointer — flagged so the frontend clears it."""
+    impact: List[Dict[str, Any]] = []
+
+    def reg_count(subj: str, grd: str) -> int:
+        try:
+            return len(engine.get_allocation_register(
+                tenant_id=tenant_id, user_id=user_id, subject_name=subj, grade=grd,
+                allocation_repo=allocation_repo))
+        except Exception:
+            return 0
+
+    for r in diff["removed_subjects"]:
+        for gs in r["grades"]:
+            impact.append({"scope": "subject", "subject": r["subject"], "grade": gs,
+                           "chapters_allocated": reg_count(r["subject"], gs)})
+    for r in diff["removed_grades"]:
+        impact.append({"scope": "grade", "subject": r["subject"], "grade": r["grade"],
+                       "chapters_allocated": reg_count(r["subject"], r["grade"])})
+    for r in diff["removed_sections"]:
+        impact.append({"scope": "section", "subject": r["subject"], "grade": r["grade"],
+                       "section": r["section"], "chapters_allocated": 0,
+                       "lu_pointer": f"{r['subject']}_{r['grade']}_{r['section']}"})
+    return impact
+
+
+def _apply_cascade(tenant_id: str, user_id: str, diff: Dict[str, Any]) -> None:
+    """Clear the allocation register for every removed subject·grade and removed grade.
+    Narrow: only the removed scope; siblings untouched. Sections' LU pointers are
+    localStorage (frontend-cleared)."""
+    for r in diff["removed_subjects"]:
+        for gs in r["grades"]:
+            engine.clear_allocation_register(tenant_id=tenant_id, user_id=user_id,
+                subject_name=r["subject"], grade=gs, allocation_repo=allocation_repo)
+    for r in diff["removed_grades"]:
+        engine.clear_allocation_register(tenant_id=tenant_id, user_id=user_id,
+            subject_name=r["subject"], grade=r["grade"], allocation_repo=allocation_repo)
 
 
 @app.get("/health")
@@ -313,22 +415,50 @@ def get_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, Any
     return {"ready": ready, "readiness": profile}
 
 
+@app.post("/readiness/impact")
+def preview_readiness_impact(req: ReadinessRequest,
+                             identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Dry-run a profile edit: report what downstream work the proposed subjects[] would
+    DELETE, without saving. The sidebar editor calls this before a destructive save so it can
+    show a contextual warning. Returns {destructive, impact:[...]}."""
+    tenant_id, user_id = identity
+    current = readiness_repo.load_profile(tenant_id, user_id) or {}
+    diff = _diff_profiles(current.get("subjects", []), req.subjects)
+    impact = _cascade_impact(tenant_id, user_id, diff)
+    return {"destructive": bool(impact), "impact": impact}
+
+
 @app.post("/readiness")
 def save_readiness(req: ReadinessRequest,
                    identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Persist the current teacher's readiness teaching profile (full replace, per user).
 
-    Stores only the canonical subjects[]; the denormalized projection is stripped by
-    the adapter. Called by the shell on Readiness onComplete so the setup is never lost.
-    """
+    Stores only the canonical subjects[]; the projection is stripped by the adapter.
+    Cascade guard: if the edit REMOVES a subject/grade/section with downstream state and
+    cascade is not set, refuse with HTTP 409 + the impact list so the UI can warn. With
+    cascade=true, clear exactly the removed scopes' registers, then save. Additive edits
+    save normally."""
     tenant_id, user_id = identity
+    current = readiness_repo.load_profile(tenant_id, user_id) or {}
+    diff = _diff_profiles(current.get("subjects", []), req.subjects)
+    impact = _cascade_impact(tenant_id, user_id, diff)
+
+    if impact and not req.cascade:
+        raise HTTPException(status_code=409, detail={
+            "error": "destructive_edit",
+            "message": "This edit removes classes that have saved work. Confirm to proceed.",
+            "impact": impact,
+        })
+
     try:
+        if impact:
+            _apply_cascade(tenant_id, user_id, diff)
         readiness_repo.save_profile(tenant_id, user_id, {"subjects": req.subjects})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save readiness: {str(e)}")
     saved = readiness_repo.load_profile(tenant_id, user_id)
     return {"status": "saved", "ready": bool(saved and saved.get("subjects")),
-            "readiness": saved}
+            "cascaded": impact if impact else [], "readiness": saved}
 
 
 @app.delete("/readiness")
