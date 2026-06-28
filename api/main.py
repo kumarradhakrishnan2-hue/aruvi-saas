@@ -42,12 +42,18 @@ app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
 
-# Initialize the allocation repository (file-based for now; Supabase adapter comes later).
-allocation_repo = AllocationRepositoryFileImpl(config.DATA_DIR)
+# Initialize the allocation repository. The allocation register is per-user/tenant STATE
+# (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/allocations/) — NOT the read-only
+# content dir. (Previously it wrote into the prototype content mirror; moved here so all
+# user data lives under data/.) File-based now; Supabase adapter swaps in behind the same
+# AllocationRepository port at Phase 4.
+allocation_repo = AllocationRepositoryFileImpl(config.STATE_DIR)
 
-# Initialize the readiness teaching-profile repository (file-based for now; Supabase
-# adapter swaps in at Phase 4 behind the same ReadinessRepository port).
-readiness_repo = ReadinessRepositoryFileImpl(config.DATA_DIR)
+# Initialize the readiness teaching-profile repository. This is per-user/tenant STATE
+# (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/) — NOT the read-only content
+# mirror in DATA_DIR. File-based for now; the Supabase adapter swaps in at Phase 4 behind
+# the same ReadinessRepository port, replacing this folder. (See CLOUD_DATA_MODEL.md §0/§2.)
+readiness_repo = ReadinessRepositoryFileImpl(config.STATE_DIR)
 
 
 # Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User

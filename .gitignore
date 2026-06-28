@@ -19,3 +19,15 @@ out/
 
 # stray temp files
 *.tmp
+
+# data/ is the migration root. Ignore the BULK data under it — NOT the design docs and
+# README that also live in data/. Each ignored subfolder is listed explicitly so adding a
+# new data kind is a deliberate one-line change.
+#
+# Bucket A — content snapshot (large, lifted from the prototype mirror; regenerable):
+/data/content/
+# Bucket B — per-user/tenant runtime state (real user data; Supabase replaces it):
+/data/readiness/
+/data/allocations/
+/data/saved_plans/
+/data/pointers/
