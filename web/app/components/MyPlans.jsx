@@ -24,7 +24,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, user, onSignOut, pendingOpen, onConsumePending }) {
   const [plans, setPlans] = useState([]);
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,21 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (!ready) return;
     getJSON(`/plans/${subject}/${grade}`).then((d) => setPlans(d.plans || [])).catch(() => setPlans([]));
   }, [subject, grade, ready]);
+
+  // Deep-link from Track (My Lesson Plans): open a specific SECTION's plan, pointer-enabled.
+  // Only act once the active scope matches the request, so we open against the right subject·grade.
+  useEffect(() => {
+    if (!pendingOpen || !ready) return;
+    if (pendingOpen.subject !== subject || pendingOpen.grade !== grade) return;
+    const sectionKey = `${subject}_${grade}_${pendingOpen.sectionTag}`;
+    let live = true;
+    setLoading(true);
+    getJSON(`/plans/${subject}/${grade}/${pendingOpen.filename}/view`)
+      .then((d) => { if (live) setOpenPlan({ view: d.view, sectionKey }); })
+      .catch(() => {})
+      .finally(() => { if (live) { setLoading(false); onConsumePending && onConsumePending(); } });
+    return () => { live = false; };
+  }, [pendingOpen, ready, subject, grade, onConsumePending]);
 
   // Readiness incomplete → first the 2a welcome landing, then the readiness grid flow.
   if (!ready) {

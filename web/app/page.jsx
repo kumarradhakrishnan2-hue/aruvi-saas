@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import SidebarNav from "./components/SidebarNav";
 import MyClasses from "./components/MyClasses";
 import MyCalendar from "./components/MyCalendar";
+import MyLessonPlans from "./components/MyLessonPlans";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -31,7 +32,8 @@ export default function Home() {
   const [ready, setReady] = useState(false);      // readiness flag — rehydrated per user from GET /readiness
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
   const [navCollapsed, setNavCollapsed] = useState(false); // below-logo sidebar collapse state
-  const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | null — sidebar-launched setup re-run
+  const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | "lessonplans" | null — sidebar-launched view
+  const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
 
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
@@ -76,6 +78,26 @@ export default function Home() {
   };
 
 
+  // From My Lesson Plans: "Need a chapter…" pre-scopes Generate to a subject·grade and opens
+  // it, so the allocation table lands on that exact combo (slugs match the scope-pill state).
+  const onAllocateScoped = (subjectSlug, gradeSlug) => {
+    if (subjectSlug) setSubject(subjectSlug);
+    if (gradeSlug) setGrade(gradeSlug);
+    setEditFlow(null);
+    setTab("generate");
+  };
+
+  // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
+  // plan (grade-level reads, section-level acts). Scope the tab, leave the library, and stash
+  // a pending-open hint that MyPlans consumes on mount.
+  const onOpenSection = (subjectSlug, gradeSlug, sectionTag, plan) => {
+    if (subjectSlug) setSubject(subjectSlug);
+    if (gradeSlug) setGrade(gradeSlug);
+    setPendingOpen({ subject: subjectSlug, grade: gradeSlug, sectionTag, filename: plan && plan.filename });
+    setEditFlow(null);
+    setTab("myplans");
+  };
+
   const onEnter = (id) => { setUser(id); setUserState(id); };
   const onSignOut = () => {
     clearUser(); setUserState("");
@@ -99,6 +121,12 @@ export default function Home() {
           <span className="brand-row">Aruvi<em>.</em><small>lesson studio</small></span>
           <span className="brand-ncf">NCF 2023 aligned</span>
         </div>
+        {user && (
+          <div className="hdr-user">
+            <span className="hdr-user-name">{user}</span>
+            <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
+          </div>
+        )}
       </header>
 
       <div className={`body ${navOpen ? "nav-open" : ""}`}>
@@ -106,7 +134,8 @@ export default function Home() {
           <aside className="bodyrail">
             <button className="rail-collapse" onClick={() => setNavCollapsed(true)} aria-label="Collapse menu">‹</button>
             <SidebarNav onEdit={setEditFlow} onWeek={() => { setEditFlow(null); setTab("myplans"); }}
-              user={user} onSignOut={onSignOut} />
+              user={user} onSignOut={onSignOut}
+              active={editFlow === "profile" ? "profile" : editFlow === "calendar" ? "calendar" : editFlow === "lessonplans" ? "lessonplans" : "week"} />
           </aside>
         )}
 
@@ -143,12 +172,20 @@ export default function Home() {
           </div>
 
           <main>
-            {editFlow === "calendar" ? (
+            {/* Edit-flow views (My Calendar / My Class) require a set-up profile. A not-ready
+             * user is always routed to the My Plans "Let's begin" setup flow instead of a
+             * dead-end empty view — readiness gates these the same way it gates Generate. */}
+            {(editFlow === "calendar" && ready) ? (
               /* My Calendar — read-only weekly timetable built from the readiness profile. */
               <div className="editflow">
                 <MyCalendar readiness={readiness} />
               </div>
-            ) : editFlow === "profile" ? (
+            ) : (editFlow === "lessonplans" && ready) ? (
+              /* My Lesson Plans — technical resource library (subject → grade → chapter). */
+              <div className="editflow">
+                <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection} />
+              </div>
+            ) : (editFlow === "profile" && ready) ? (
               /* My Class — the editable teaching-profile drill-down (subjects/grades/sections +
                * time facts). Persists each edit to /readiness and calls onChange to re-project. */
               <div className="editflow">
@@ -158,7 +195,8 @@ export default function Home() {
               !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
               tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness} onNavigate={setTab} /> :
               <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
-                onReady={onReadyComplete} onNavigate={setTab} />}
+                onReady={onReadyComplete} onNavigate={setTab} user={user} onSignOut={onSignOut}
+                pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)} />}
           </main>
         </div>
       </div>

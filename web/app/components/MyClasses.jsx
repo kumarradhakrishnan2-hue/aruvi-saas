@@ -269,12 +269,17 @@ function Grades({ subj, editing, onDrill, onAdd, onDel }) {
 }
 
 /* ─────────── level: grade detail ───────────
- * Two tabs (Annual budget · Duration) toggle the top box; the Sections list sits ALWAYS BELOW
- * it (it's no longer a third tab), each section a collapsible row drilling into its weekly days. */
+ * Sections come FIRST (each a collapsible row drilling into its weekly days), then the two tabs
+ * (Annual budget · Duration) toggling their panel BELOW it. */
 function GradeDetail({ subj, grade, gi, tab, editing, onTab, onStepBudget, onSetBudget, onAddDur, onDropDur, onDrillSec, onAddSec, onDelSec }) {
   const showDuration = tab === "duration";
   return (
     <div>
+      <div className="grade-sections">
+        <div className="section-kicker"><span className="kicker">Sections</span><span className="rule" /></div>
+        <SectionsPanel subj={subj} grade={grade} gi={gi} editing={editing} onDrill={onDrillSec} onAdd={onAddSec} onDel={onDelSec} />
+      </div>
+
       <div className="gtabs">
         <button className={`gtab ${!showDuration ? "on" : ""}`} onClick={() => onTab("budget")}>Annual budget</button>
         <button className={`gtab ${showDuration ? "on" : ""}`} onClick={() => onTab("duration")}>Duration</button>
@@ -282,11 +287,6 @@ function GradeDetail({ subj, grade, gi, tab, editing, onTab, onStepBudget, onSet
       {showDuration
         ? <DurationPanel grade={grade} editing={editing} onAdd={onAddDur} onDrop={onDropDur} />
         : <BudgetPanel subj={subj} grade={grade} gi={gi} editing={editing} onStep={onStepBudget} onSet={onSetBudget} />}
-
-      <div className="grade-sections">
-        <div className="section-kicker"><span className="kicker">Sections</span><span className="rule" /></div>
-        <SectionsPanel subj={subj} grade={grade} gi={gi} editing={editing} onDrill={onDrillSec} onAdd={onAddSec} onDel={onDelSec} />
-      </div>
     </div>
   );
 }

@@ -117,16 +117,17 @@ export default function MyCalendar({ readiness }) {
   const subjects = (readiness && readiness.subjects) || [];
   const { rows, legend } = useMemo(() => buildModel(subjects), [subjects]);
 
-  const [classFilter, setClassFilter] = useState("all");     // a row tag, or "all"
+  const [gradeFilter, setGradeFilter] = useState("all");     // a grade number, or "all"
   const [subjectFilter, setSubjectFilter] = useState("all"); // a subject name, or "all"
 
-  const classOptions = rows.map((r) => r.tag);
+  // Grade options in ascending order (one entry per grade, regardless of section count).
+  const gradeOptions = [...new Set(rows.map((r) => r.gradeNum))].sort((a, b) => a - b);
   const swatchOf = {};
   legend.forEach((l) => { if (l.grades[0]) swatchOf[l.subject] = l.grades[0].bg; });
 
-  // Apply filters: class filter narrows the rows; subject filter blanks non-matching cells.
+  // Apply filters: grade filter narrows the rows; subject filter blanks non-matching cells.
   const shownRows = rows
-    .filter((r) => classFilter === "all" || r.tag === classFilter)
+    .filter((r) => gradeFilter === "all" || r.gradeNum === gradeFilter)
     .map((r) => ({
       ...r,
       days: r.days.map((cell) =>
@@ -159,11 +160,11 @@ export default function MyCalendar({ readiness }) {
         <>
           <div className="cal-filterbar">
             <div className="cal-fgroup">
-              <span className="cal-fgroup-lbl">Classes</span>
+              <span className="cal-fgroup-lbl">Grade</span>
               <div className="cal-chips">
-                <button className={`cal-chip ${classFilter === "all" ? "on" : ""}`} onClick={() => setClassFilter("all")}>All</button>
-                {classOptions.map((t) => (
-                  <button key={t} className={`cal-chip ${classFilter === t ? "on" : ""}`} onClick={() => setClassFilter(t)}>{t}</button>
+                <button className={`cal-chip ${gradeFilter === "all" ? "on" : ""}`} onClick={() => setGradeFilter("all")}>All</button>
+                {gradeOptions.map((g) => (
+                  <button key={g} className={`cal-chip ${gradeFilter === g ? "on" : ""}`} onClick={() => setGradeFilter(g)}>{g}</button>
                 ))}
               </div>
             </div>
