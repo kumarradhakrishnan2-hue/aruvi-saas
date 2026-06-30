@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
+from ...link_resolver import stamp
 from ...normalize import as_list, band_lines, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
