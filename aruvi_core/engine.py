@@ -64,7 +64,11 @@ def generate(
         mapping=mapping, lesson_plan=lp_raw,
     )
     a_raw = subject.validate(_parse_json(llm.generate(a_prompt).text))
-    a_view: AssessmentView = subject.assessment_to_view(a_raw, grade=grade, chapter=chapter)
+    _lp = lp_raw.get("lesson_plan", lp_raw)
+    link_context = {"periods": _lp.get("periods", []),
+                    "handoff": lp_raw.get("coverage_handoff", _lp.get("coverage_handoff", []))}
+    a_view: AssessmentView = subject.assessment_to_view(
+        a_raw, grade=grade, chapter=chapter, link_context=link_context)
 
     return ViewModel(lesson_plan=lp_view, assessment=a_view)
 

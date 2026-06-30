@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import useSupportedGrades from "../lib/useSupportedGrades";
 
 /* ───────── Readiness setup (Phase 2) ─────────
  * Conversational, one-question-per-screen setup. Two halves:
@@ -48,7 +49,8 @@ const METHOD_ORDER = ["weeks", "periods", "days", "auto"];
 
 // Picklists for the conversational collection steps.
 const SUBJECT_CHOICES = ["Science", "Mathematics", "Social Sciences", "English", "The World Around Us"];
-const GRADE_CHOICES = ["III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+// Grade choices are NOT a fixed list here — they come per-subject from useSupportedGrades (shared
+// with My Class), so the grade step only offers grades Aruvi has chapters for.
 // Sections paged 3 at a time; extended A–Z so a teacher can keep asking for "more" indefinitely.
 const SECTION_CHOICES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const SECTION_PAGE = 3;
@@ -127,6 +129,10 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
   const EMPTY_SUBJECT = { name: "", grades: [] };
   const curSubject = subjects[si] || subjects[0] || EMPTY_SUBJECT;
 
+  // Grade choices restricted to what this subject actually supports — via the SHARED hook so the
+  // rule is identical to My Class's editor (one source of truth in lib/useSupportedGrades).
+  const gradeChoicesForSubject = useSupportedGrades(curSubject.name);
+
   // Per-subject pass marker (2a/2b/3a/3b…): only when the teacher has more than one subject.
   const multiSubject = subjects.length > 1;
   const passSuffix = multiSubject ? String.fromCharCode(97 + si) : "";   // 0→"a", 1→"b"…
@@ -151,7 +157,7 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
     const sub = p.subjects[si];
     const idx = sub.grades.findIndex((x) => x.grade === g);
     if (idx >= 0) sub.grades.splice(idx, 1);
-    else sub.grades.push({ grade: g, sections: ["A"], durations: [45] });
+    else sub.grades.push({ grade: g, sections: [], durations: [] });
     sub.grades.sort((a, b) => (GRADE_ARABIC[a.grade] || 0) - (GRADE_ARABIC[b.grade] || 0));
   });
 
@@ -292,62 +298,56 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
   };
 
   /* ════════════════════ navigation ════════════════════
-   * Grouped by step: STEP 2 (grades) loops ALL subjects (2a,2b…), THEN STEP 3 (sections) loops
-   * ALL subjects (3a,3b…), THEN STEP 4 (durations) loops ALL subjects (4a,4b…, per grade),
-   * THEN grid+budget per subject·grade. `si` resets to 0 at each phase boundary, walks subjects. */
+   * SUBJECT-MAJOR (2026-06-29): each subject runs its FULL setup before the next starts —
+   * grades → sections → durations → weekly grid (all grades) → budget (all grades) → then the
+   * NEXT subject's grades. Within a subject the phases run in order; only the budget step (the
+   * subject's last) advances `si` to the next subject. `gi`/`bi` walk grades within the subject. */
   const lastSubject = si >= subjects.length - 1;
 
   const goFromSubjects = () => { if (subjects.length) { setSi(0); setPhase("grades"); } };
 
-  // STEP 2 — grades: walk every subject, then move to sections.
+  // grades → sections (same subject)
   const goFromGrades = () => {
     if (!curSubject.grades.length) return;       // need ≥1 grade for this subject
-    if (!lastSubject) { setSi(si + 1); return; } // next subject's grades (2b…)
-    setSi(0); setPhase("sections");              // all grades done → sections
+    setPhase("sections");
   };
 
-  // STEP 3 — sections: walk every subject, then move to durations.
-  // Each grade needs ≥1 section for the weekly grid; teacher may unclick freely but not advance empty.
+  // sections → durations (same subject)
   const sectionsComplete = curSubject.grades.every((gr) => gr.sections.length > 0);
   const goFromSections = () => {
     if (!sectionsComplete) return;
-    if (!lastSubject) { setSi(si + 1); return; } // next subject's sections (3b…)
-    setSi(0); setPhase("durations");             // all sections done → durations
+    setPhase("durations");
   };
 
-  // STEP 4 — durations: per subject·grade (like sections). Walk every subject, then start the
-  // grid/budget loop at subject 0. Each grade needs ≥1 duration for the weekly grid.
+  // durations → weekly grid (same subject, first grade)
   const durationsComplete = curSubject.grades.every((gr) => (gr.durations || []).length > 0);
   const goFromDurations = () => {
     if (!durationsComplete) return;
-    if (!lastSubject) { setSi(si + 1); return; }  // next subject's durations (4b…)
-    setSi(0); setGi(0); ensureGrid(0); setPhase("grid");  // all done → weekly grid
+    setGi(0); ensureGrid(si); setPhase("grid");
   };
 
-  // STEP 5 — weekly grid: walk every grade of every subject (5a,5b…), THEN move to budget.
+  // weekly grid → walk this subject's grades, then THIS subject's budget.
   const gridNext = () => {
     if (gi < curSubject.grades.length - 1) { setGi(gi + 1); return; }  // next grade, same subject
-    if (!lastSubject) {                                               // next subject's grid
-      const ns = si + 1; setSi(ns); setGi(0); ensureGrid(ns); return;
-    }
-    setSi(0); setBi(0); setShowAlt(true); setPhase("budget");         // all grids done → budget
+    setBi(0); setShowAlt(true); setPhase("budget");                   // this subject's grids done → its budget
   };
   const gridBack = () => {
     if (gi > 0) { setGi(gi - 1); return; }
-    if (si > 0) { const ps = si - 1; setSi(ps); setGi(subjects[ps].grades.length - 1); ensureGrid(ps); return; }
-    setSi(subjects.length - 1); setPhase("durations");               // back into the durations pass
+    setPhase("durations");                                            // back to this subject's durations
   };
 
-  // STEP 6 — budget: walk every grade of every subject (6a,6b…), THEN finish.
+  // budget → walk this subject's grades; after the last grade, move to the NEXT subject's grades
+  // (or finish). This is the single point where the flow advances from one subject to the next.
   const budBack = () => {
     if (bi > 0) { setBi(bi - 1); return; }
-    if (si > 0) { const ps = si - 1; setSi(ps); setBi(subjects[ps].grades.length - 1); return; }
-    setSi(subjects.length - 1); setGi(curSubject.grades.length - 1); setPhase("grid");  // back to last grid
+    setGi(curSubject.grades.length - 1); setPhase("grid");           // back to this subject's last grid
   };
   const budNext = () => {
-    if (bi < curSubject.grades.length - 1) { setBi(bi + 1); setShowAlt(false); return; }  // next grade
-    if (!lastSubject) { const ns = si + 1; setSi(ns); setBi(0); setShowAlt(false); return; }  // next subject's budget
-    onComplete && onComplete(buildPayload());                                              // all done → finish
+    if (bi < curSubject.grades.length - 1) { setBi(bi + 1); setShowAlt(false); return; }  // next grade, same subject
+    if (!lastSubject) {                                              // → next subject, start at its grades
+      const ns = si + 1; setSi(ns); setGi(0); setBi(0); setShowAlt(false); setPhase("grades"); return;
+    }
+    onComplete && onComplete(buildPayload());                        // all subjects done → finish
   };
 
   /* ════════════════════ render ════════════════════ */
@@ -390,18 +390,18 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
           <p className="rd-ask">Choose each grade you take this subject for.</p>
         </div>
         <MultiDropdown
-          choices={GRADE_CHOICES}
+          choices={gradeChoicesForSubject}
           selected={chosen}
           onToggle={toggleGrade}
           render={(g) => `Grade ${g}`}
           placeholder="Choose your grades"
         />
         <div className="rd-btns">
-          <button className="ghost" onClick={() => { if (si === 0) setPhase("subjects"); else setSi(si - 1); }}>
-            {si === 0 ? "← subjects" : `← ${subjects[si - 1].name} grades`}
+          <button className="ghost" onClick={() => { if (si === 0) setPhase("subjects"); else { const ps = si - 1; setSi(ps); setBi(subjects[ps].grades.length - 1); setShowAlt(false); setPhase("budget"); } }}>
+            {si === 0 ? "← subjects" : `← ${subjects[si - 1].name}`}
           </button>
           <button className="primary" style={{ flex: 1 }} disabled={!chosen.length} onClick={goFromGrades}>
-            {!lastSubject ? `Continue to ${subjects[si + 1].name} grades →` : "Continue →"}
+            Continue →
           </button>
         </div>
       </div>
@@ -433,11 +433,9 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
           ))}
         </div>
         <div className="rd-btns">
-          <button className="ghost" onClick={() => { if (si === 0) { setSi(subjects.length - 1); setPhase("grades"); } else setSi(si - 1); }}>
-            {si === 0 ? "← grades" : `← ${subjects[si - 1].name} sections`}
-          </button>
+          <button className="ghost" onClick={() => setPhase("grades")}>← grades</button>
           <button className="primary" style={{ flex: 1 }} disabled={!sectionsComplete} onClick={goFromSections}>
-            {!lastSubject ? `Continue to ${subjects[si + 1].name} sections →` : "Continue →"}
+            Continue →
           </button>
         </div>
       </div>
@@ -472,12 +470,10 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
         <div className="rd-btns">
           {/* In calendar-edit mode durations is the entry screen — no back into sections. */}
           {!(calendarOnly && si === 0) && (
-            <button className="ghost" onClick={() => { if (si === 0) { setSi(subjects.length - 1); setPhase("sections"); } else setSi(si - 1); }}>
-              {si === 0 ? "← sections" : `← ${subjects[si - 1].name} durations`}
-            </button>
+            <button className="ghost" onClick={() => setPhase("sections")}>← sections</button>
           )}
           <button className="primary" style={{ flex: 1 }} disabled={!durationsComplete} onClick={goFromDurations}>
-            {!lastSubject ? `Continue to ${subjects[si + 1].name} durations →` : "Continue to the weekly grid →"}
+            Continue to the weekly grid →
           </button>
         </div>
       </div>
@@ -528,13 +524,11 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
           </tbody>
         </table>
         <div className="rd-btns">
-          <button className="ghost" onClick={gridBack}>← {gi === 0 ? (si === 0 ? "durations" : `${subjects[si - 1].name} grid`) : `Grade ${curSubject.grades[gi - 1].grade}`}</button>
+          <button className="ghost" onClick={gridBack}>← {gi === 0 ? "durations" : `Grade ${curSubject.grades[gi - 1].grade}`}</button>
           <button className="primary" style={{ flex: 1 }} onClick={gridNext}>
             {!lastGrade
               ? `Continue to ${curSubject.name} Grade ${curSubject.grades[gi + 1].grade} →`
-              : !lastSubject
-                ? `Continue to ${subjects[si + 1].name} →`
-                : "Ready to estimate your annual teaching time? →"}
+              : "Ready to estimate your annual teaching time? →"}
           </button>
         </div>
       </div>
@@ -733,8 +727,9 @@ function PickList({ choices, selected, onToggle, render, label, inline }) {
 }
 
 /* `suffix` (e.g. "a","b") marks which subject's pass this is, shown only when a teacher has
- * more than one subject. The pips stay keyed to `n`, so the bar does NOT advance between the
- * per-subject passes (2a→2b keep step 2 lit); progress only moves on to the next numbered step. */
+ * more than one subject. Flow is SUBJECT-MAJOR: each subject runs steps 2→6 in full before the
+ * next subject begins, so the pips advance 2→6 within a subject and the suffix flips (…6a → 2b)
+ * when the next subject's pass starts. */
 function StepProgress({ n, suffix, subjectName }) {
   return (
     <div className="rd-prog">

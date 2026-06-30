@@ -129,7 +129,7 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 
 /* state pills — subject / grade, styled as tabs that flip into a dropdown */
 .pillwrap { position: relative; }
-.tab-pill { color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px; }
+.tab-pill { color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px; font-size: 13.5px; }
 .tab-pill:hover, .tab-pill.active { color: var(--pine-d); border-bottom-color: var(--pine); }
 .pillcaret { font-size: 9px; color: inherit; transition: transform .18s ease; }
 .tab-pill.active .pillcaret { transform: rotate(180deg); }
@@ -774,18 +774,71 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .budgetsum .bsn { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:7px; line-height:1.6; }
 
 /* ── G4: total-periods input + weekly-ratio breakdown ── */
-.g4-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin:14px 0 4px; }
-.g4-input-card { border:1px solid var(--line); border-radius:11px; background:var(--paper-2); padding:16px; }
-.g4-input-label { font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:10px; }
-.g4-input-fine { font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:12px; }
-.g4-breakdown { border:1px solid var(--line); border-radius:11px; background:var(--paper-sunk); padding:14px 16px; align-self:start; }
-.g4-breakdown-h { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; }
-.g4-brow { display:flex; justify-content:space-between; align-items:baseline; padding:6px 0; border-bottom:1px solid var(--line-soft); }
-.g4-bk { font-family:var(--f-mono); font-size:13px; color:var(--ink); }
-.g4-bk small { color:var(--ink-soft); }
-.g4-bv { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); }
-.g4-bfoot { font-family:var(--f-mono); font-size:11px; color:var(--pine-d); margin-top:9px; padding-top:9px; border-top:1px solid var(--line); }
-@media (max-width: 600px) { .g4-grid { grid-template-columns:1fr; } }
+/* G4 period input — same shape as the Let's-begin budget screen (steppermini + budgetsum) */
+.g4-inrow { display:flex; align-items:center; gap:12px; margin:14px 0 4px; }
+/* the value between –/+ is a directly-editable number field (looks like the .v span) */
+.g4-vinput { width:56px; border:1px solid var(--line); border-radius:6px; background:var(--paper-2); padding:4px 6px; -moz-appearance:textfield; }
+.g4-vinput:focus { outline:none; border-color:var(--pine); }
+.g4-vinput::-webkit-outer-spin-button, .g4-vinput::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+
+/* periods/hours stacked as two lines inside the tight budget boxes — 2 notches smaller
+   than the standard .bsv (23px → 19px), hours line sits directly below periods */
+.bsv-sm { font-size:19px; margin-top:2px; }
+.bsv-sm + .bsv-sm { margin-top:0; }
+/* two notches down from .bsv-sm (19 → 15px) for the G4 top budget boxes */
+.bsv-xs { font-size:15px; margin-top:2px; }
+
+/* G4 layout (2026-06-29 rework): both budget boxes on TOP in a row, each a single inline
+   "N periods / N hours" line; the period stepper sits BELOW them, with the effort-index reco
+   table filling the space to its right on a return visit. */
+.g4-boxrow { display:flex; gap:14px; flex-wrap:wrap; margin:16px 0 4px; }
+.budgetsum-top { display:inline-block; width:auto; margin-top:0; padding:11px 16px; min-width:210px; }
+.bsv-sl { color:#c9bfa9; font-weight:400; margin:0 4px; }
+
+.g4-midrow { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:14px; }
+.g4-midrow .g4-inrow { margin:6px 0 0; flex:0 0 auto; }
+
+/* effort-index reco — compact table, small fonts so all chapters fit beside the stepper */
+.g4-reco { flex:1 1 320px; min-width:300px; border:1px solid var(--line); border-radius:11px; background:var(--paper-2); overflow:hidden; }
+.g4-reco-head { display:flex; align-items:center; gap:10px; background:var(--paper-sunk); border-bottom:1px solid var(--line); padding:8px 14px; }
+.g4-reco-k { font-family:var(--f-mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase; color:var(--pine); }
+.g4-reco-d { font-family:var(--f-mono); font-size:9px; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-soft); margin-left:auto; }
+.g4-reco-tbl { width:100%; border-collapse:collapse; }
+.g4-reco-tbl th { font-family:var(--f-mono); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ochre); font-weight:500; text-align:left; padding:6px 14px; border-bottom:1px solid var(--line-soft); }
+.g4-reco-tbl td { padding:4px 14px; font-size:12px; line-height:1.3; border-bottom:1px solid #f5f1e8; }
+.g4-reco-tbl tbody tr:last-child td { border-bottom:none; }
+.g4-reco-tbl .rc-no { font-family:var(--f-mono); font-size:10.5px; color:var(--ink-soft); width:44px; }
+.g4-reco-tbl .rc-name { color:var(--ink); }
+.g4-reco-tbl .rc-num { text-align:right; width:78px; }
+.g4-reco-tbl .rc-pp { font-family:var(--f-display); font-size:13px; color:var(--pine-d); }
+.g4-reco-foot td { background:var(--paper); border-top:1px solid var(--line); font-size:11px; padding:6px 14px; }
+.g4-reco-foot .rc-lab { font-style:italic; color:var(--ink-soft); }
+.g4-reco-foot .rc-pp { color:var(--clay); }
+.g4-reco-foot .rc-of { font-family:var(--f-mono); font-size:9.5px; color:var(--ink-soft); }
+
+@media (max-width: 600px) {
+  .g4-boxrow { flex-direction:column; }
+  .budgetsum-top { width:100%; }
+  .g4-midrow { flex-direction:column; }
+  .g4-reco { width:100%; min-width:0; }
+}
+
+/* G3 inverted chapter select — add from a dropdown; only chosen chapters listed */
+.g3-add { margin:14px 0 6px; }
+.g3-add-select { width:100%; font-family:var(--f-mono); font-size:13px; padding:12px 14px; border:1px solid var(--line); border-radius:9px; background:var(--paper-2); color:var(--ink); cursor:pointer; }
+.g3-chosen-h { margin:16px 0 8px; }
+.g3-row { display:flex; align-items:center; gap:12px; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; padding:11px 14px; margin-bottom:8px; }
+.g3-row-name { flex:1; font-family:var(--f-body); font-size:15px; color:var(--ink); }
+.g3-row-name .chn { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-right:10px; }
+.g3-row-sugg { font-family:var(--f-mono); font-size:11.5px; color:var(--pine-d); background:var(--paper-sunk); border-radius:5px; padding:3px 9px; white-space:nowrap; }
+.g3-row-remove { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); background:none; border:none; cursor:pointer; padding:4px 6px; }
+.g3-row-remove:hover { color:var(--clay); }
+.g3-empty { font-style:italic; color:var(--ink-soft); font-size:13px; padding:10px 2px; }
+.g3-fc-note { font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:10px 2px 2px; }
+.g3-fc-back { font-family:var(--f-mono); font-size:11px; font-weight:700; color:var(--pine); background:none; border:none; cursor:pointer; padding:0; }
+.g3-fc-back:hover { color:var(--pine-d); }
+
+/* budget anchor on G4 — annual budget + how much is used / being added */
 
 /* ── G2 hub: budget bar, danger zone, generate spoke ── */
 .hubbudget { border:1px solid var(--line); border-radius:10px; background:#f7f3ea; padding:12px 14px; margin-bottom:14px; }
@@ -826,13 +879,20 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .dash-hd { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:6px; }
 .dash-title { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin-top:2px; }
 .dash-count { font-family:var(--f-mono); font-size:11px; text-align:right; line-height:1.5; color:var(--ink-soft); }
-.daylabel { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); margin:16px 0 8px; }
-.slotcard { display:flex; background:var(--paper-2); border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:8px; cursor:pointer; }
-.slotcard.empty { border-style:dashed; background:#f6f1e7; cursor:default; }
-.slotcard:not(.empty):hover { border-color:var(--pine); }
-.slotrail { width:8px; flex:0 0 8px; background:var(--pine); }
+.daylabel { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); margin:14px 0 8px; padding-left:2px; }
+.daylabel:first-child { margin-top:0; }
+/* Card = Screen 2c, exact: white card, hairline border, 8px pine rail, 11/14 body padding.
+ * Empty slots keep the SAME green rail (an open invitation, not a disabled slot) but a soft
+ * warm fill so they still read as "not yet started". */
+.slotcard { display:flex; align-items:stretch; min-height:0; background:var(--paper-2); border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:8px; cursor:pointer; transition:background .12s ease, border-color .12s ease; }
+/* empty stays WHITE (same as populated) for figure/ground contrast against the cream page;
+   the green rail marks it as an open slot. Hover brings the green tinge. */
+.slotcard:hover { border-color:var(--pine); background:#eef4f0; }
+/* NB: use .slot-empty (NOT .empty) — the generic .empty utility adds 50px padding + centering */
+.slotcard.slot-empty { background:var(--paper-2); }
+.slotrail { width:8px; flex:0 0 8px; background:var(--pine); align-self:stretch; }
 .slotrail.dim { background:var(--line); }
-.slotbody { flex:1; padding:11px 14px; min-width:0; }
+.slotbody { flex:1; padding:11px 14px; min-width:0; min-height:0; line-height:1.3; }
 .slot-toprow { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
 .slot-sec { font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; color:var(--ochre); }
 .slot-ptr { font-family:var(--f-mono); font-size:10.5px; color:var(--pine); }
@@ -843,6 +903,21 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .dash-cta { text-align:center; padding:16px 10px 6px; }
 .dash-cta-note { font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:9px; }
 .dash-foot { font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:14px; }
+/* welcome nudge above the cards when nothing is planned yet (fresh after setup); no button —
+   the class cards below are the entry (each scoped, no picker) */
+.dash-welcome { background:var(--paper-sunk); border:1px solid var(--line); border-radius:10px; padding:13px 16px; margin-bottom:16px; }
+.dash-welcome-title { font-family:var(--f-display); font-weight:500; font-size:17px; color:var(--ink); }
+.dash-welcome-sub { font-size:12.5px; color:var(--ink-soft); margin-top:2px; }
+
+/* Generate G1.9 subject·grade picker */
+.gpick-hd { margin-bottom:18px; }
+.gpick-q { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin:2px 0 0; }
+.gpick-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; }
+.gpick-card { display:flex; flex-direction:column; gap:4px; text-align:left; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; padding:16px 18px; cursor:pointer; transition:background .12s ease, border-color .12s ease; }
+.gpick-card:hover { background:#eef4f0; border-color:var(--pine); }
+.gpick-card-name { font-family:var(--f-display); font-size:18px; font-weight:500; color:var(--ink); }
+.gpick-card-meta { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.04em; color:var(--ink-soft); }
+.gpick-back { margin-top:16px; }
 
 /* lesson view (Screen 3) */
 .lessonview { max-width:680px; }
@@ -1152,27 +1227,32 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mlp-panel { border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:12px; background:var(--paper-2); }
 .mlp-single { margin-top:18px; }
 
-.mlp-grade-head { width:100%; display:flex; align-items:center; gap:10px; padding:14px 16px; background:var(--paper); border:none; cursor:pointer; text-align:left; }
+/* unfilled by default; green spotlight on hover (same language as My Class rows + My Week cards) */
+.mlp-grade-head { width:100%; display:flex; align-items:center; gap:10px; padding:14px 16px; background:transparent; border:none; border-left:3px solid transparent; cursor:pointer; text-align:left; transition:background .12s ease, border-color .12s ease; }
+.mlp-grade-head:hover { background:#eef4f0; border-left-color:var(--pine); }
+.mlp-grade-head:hover .mlp-grade-name { color:var(--pine-d); }
+.mlp-grade-head:hover .mlp-caret { color:var(--pine); }
 .mlp-panel .mlp-grade-head { border-bottom:1px solid transparent; }
-.mlp-grade-head.plain { cursor:default; background:transparent; padding:0 0 10px; border-bottom:1px solid var(--line); }
+.mlp-grade-head.plain { cursor:default; background:transparent; padding:0 0 10px; border-bottom:1px solid var(--line); border-left:none; }
+.mlp-grade-head.plain:hover { background:transparent; }
 .mlp-caret { font-family:var(--f-mono); font-size:17px; color:var(--ink-soft); transition:transform .15s ease; display:inline-block; }
 .mlp-caret.open { transform:rotate(90deg); }
 .mlp-grade-name { font-family:var(--f-display); font-size:17px; font-weight:600; color:var(--ink); }
 .mlp-grade-meta { font-family:var(--f-mono); font-size:10px; letter-spacing:.06em; color:var(--ink-soft); }
 
-.mlp-gradebody { padding:6px 16px 14px; }
-.mlp-single .mlp-gradebody { padding:6px 0 0; }
-/* row = clickable title area + a Track button; the whole row spotlights on hover (My Class pattern) */
-.mlp-row { display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--line); border-left:3px solid transparent; transition:background .12s ease, border-color .12s ease, padding .12s ease; }
-.mlp-row:last-of-type { border-bottom:none; }
-.mlp-row:hover { background:#eef4f0; border-left-color:var(--pine); padding-left:9px; }
-.mlp-row-open { flex:1; display:flex; align-items:center; gap:12px; padding:11px 4px; background:none; border:none; cursor:pointer; text-align:left; transition:color .12s ease; }
+.mlp-gradebody { padding:8px 16px 14px; }
+.mlp-single .mlp-gradebody { padding:8px 0 0; }
+/* row = a 2c-style card: white, hairline border, persistent 8px pine rail at the left edge,
+   compact height; green tinge on hover. Built with a left rail via a thick border-left. */
+.mlp-row { display:flex; align-items:center; gap:12px; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; overflow:hidden; margin-bottom:8px; transition:background .12s ease, border-color .12s ease; }
+.mlp-row:hover { background:#eef4f0; border-color:var(--pine); }
+.mlp-row-open { flex:1; display:flex; align-items:center; gap:12px; padding:11px 14px; background:none; border:none; cursor:pointer; text-align:left; transition:color .12s ease; }
 .mlp-row:hover .mlp-row-open { color:var(--pine-d); }
 .mlp-row-ch { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); width:46px; flex-shrink:0; }
 .mlp-row:hover .mlp-row-ch { color:var(--pine-d); }
 .mlp-row-title { flex:1; font-family:var(--f-body); font-size:15px; color:var(--ink); }
 .mlp-row:hover .mlp-row-title { color:var(--pine-d); }
-.mlp-row-track { flex-shrink:0; font-family:var(--f-mono); font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--pine-d); background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px 13px; margin-right:4px; cursor:pointer; transition:background .12s ease, border-color .12s ease, color .12s ease; }
+.mlp-row-track { flex-shrink:0; font-family:var(--f-mono); font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--pine-d); background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px 13px; margin-right:10px; cursor:pointer; transition:background .12s ease, border-color .12s ease, color .12s ease; }
 .mlp-row-track:hover { background:#ffffff; border-color:var(--pine); color:var(--pine); }
 
 /* ─── SectionProgress — per-section LU progress for one chapter ─── */

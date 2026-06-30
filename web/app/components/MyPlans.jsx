@@ -1,54 +1,82 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, pad, pretty, gradeUp } from "../lib/format";
+import { getJSON, pretty } from "../lib/format";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAY_FULL = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-/* Build the weekly class list from the readiness payload, scoped to this subject.
- * Each entry: { day, gradeIdx, grade, sectionTag } for every marked cell in the grids. */
+const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
+const gradeSlug = (g) => (g || "").toLowerCase();
+
+/* Build the week as ONE CARD PER subject·grade·section the teacher handles — across ALL subjects
+ * (walks the canonical readiness.subjects[], not the single active projection). A section that
+ * meets on several days is shown once, under its NEXT meeting day (earliest weekday it has a
+ * marked cell). Each entry carries the slugs + section tag so My Week can look up that class's
+ * plans and its per-section pointer. */
 function classesFromReadiness(readiness) {
-  if (!readiness || !readiness.grids || !readiness.grades) return [];
+  const subjects = (readiness && readiness.subjects) || [];
   const out = [];
-  readiness.grids.forEach((grid, gi) => {
-    const g = readiness.grades[gi];
-    if (!g || !Array.isArray(grid)) return;          // guard sparse/edited projections
-    const secs = g.sections || [];
-    grid.forEach((row, r) => {
-      const sec = secs[r];
-      if (!sec) return;                               // grid row without a matching section
-      (row || []).forEach((v, c) => { if (v >= 0) out.push({ day: DAYS[c], dayIdx: c, grade: g.grade, sectionTag: sec.tag }); });
+  subjects.forEach((s) => {
+    const sSlug = subjectSlug(s.name);
+    (s.grades || []).forEach((g, gi) => {
+      const gSlug = gradeSlug(g.grade);
+      (g.sections || []).forEach((sec, si) => {
+        // earliest weekday this section meets (its "next" / upcoming class)
+        const gridRow = ((s.grids || [])[gi] || [])[si] || [];
+        let dayIdx = -1;
+        for (let c = 0; c < DAYS.length; c++) { if (gridRow[c] != null && gridRow[c] >= 0) { dayIdx = c; break; } }
+        out.push({
+          subjectName: s.name, subjectSlug: sSlug, grade: g.grade, gradeSlug: gSlug,
+          sectionTag: sec.tag, dayIdx, day: dayIdx >= 0 ? DAYS[dayIdx] : null,
+        });
+      });
     });
   });
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, user, onSignOut, pendingOpen, onConsumePending }) {
-  const [plans, setPlans] = useState([]);
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
+  // plans for EVERY subject·grade the teacher handles, keyed `${subjectSlug}/${gradeSlug}`.
+  const [plansByKey, setPlansByKey] = useState({});
 
+  // All classes across all subjects (one card per subject·grade·section).
+  const classes = ready ? classesFromReadiness(readiness) : [];
+
+  // Fetch saved plans once per distinct subject·grade the teacher handles.
   useEffect(() => { setOpenPlan(null);
     if (!ready) return;
-    getJSON(`/plans/${subject}/${grade}`).then((d) => setPlans(d.plans || [])).catch(() => setPlans([]));
-  }, [subject, grade, ready]);
+    const seen = new Set();
+    classes.forEach((c) => {
+      const key = `${c.subjectSlug}/${c.gradeSlug}`;
+      if (seen.has(key)) return; seen.add(key);
+      setPlansByKey((prev) => (key in prev ? prev : { ...prev, [key]: undefined }));
+      getJSON(`/plans/${c.subjectSlug}/${c.gradeSlug}`)
+        .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
+        .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, readiness]);
 
   // Deep-link from Track (My Lesson Plans): open a specific SECTION's plan, pointer-enabled.
-  // Only act once the active scope matches the request, so we open against the right subject·grade.
+  // Uses the request's OWN subject/grade (My Week is no longer scoped to one subject·grade).
   useEffect(() => {
     if (!pendingOpen || !ready) return;
-    if (pendingOpen.subject !== subject || pendingOpen.grade !== grade) return;
-    const sectionKey = `${subject}_${grade}_${pendingOpen.sectionTag}`;
+    const { subject: pSub, grade: pGrade, sectionTag, filename } = pendingOpen;
+    if (!pSub || !pGrade || !filename) { onConsumePending && onConsumePending(); return; }
+    const sectionKey = `${pSub}_${pGrade}_${sectionTag}`;
     let live = true;
     setLoading(true);
-    getJSON(`/plans/${subject}/${grade}/${pendingOpen.filename}/view`)
+    getJSON(`/plans/${pSub}/${pGrade}/${filename}/view`)
       .then((d) => { if (live) setOpenPlan({ view: d.view, sectionKey }); })
       .catch(() => {})
       .finally(() => { if (live) { setLoading(false); onConsumePending && onConsumePending(); } });
     return () => { live = false; };
-  }, [pendingOpen, ready, subject, grade, onConsumePending]);
+  }, [pendingOpen, ready, onConsumePending]);
 
   // Readiness incomplete → first the 2a welcome landing, then the readiness grid flow.
   if (!ready) {
@@ -68,15 +96,15 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     return (
       <Readiness
         subject={pretty(subject)}
-        onComplete={(payload) => { onReady && onReady(payload); onNavigate && onNavigate("generate"); }}
+        onComplete={(payload) => { onReady && onReady(payload); /* stay in My Plans → 2b welcome */ }}
       />
     );
   }
 
-  const openLesson = async (p, sectionKey) => {
+  const openLesson = async (sSlug, gSlug, p, sectionKey) => {
     setLoading(true);
     try {
-      const view = (await getJSON(`/plans/${subject}/${grade}/${p.filename}/view`)).view;
+      const view = (await getJSON(`/plans/${sSlug}/${gSlug}/${p.filename}/view`)).view;
       setOpenPlan({ view, sectionKey });
     } finally { setLoading(false); }
   };
@@ -90,73 +118,90 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     const n = Number(window.localStorage.getItem(`lu_pointer_${sectionKey}`));
     return Number.isFinite(n) && n >= 0 ? n + 1 : null;
   };
+  // Which chapter (filename) a section is currently tracking. Written when a chapter is bound to
+  // a class; absent = nothing started yet ("pick a chapter to begin tracking").
+  const currentChapterFile = (sectionKey) => {
+    if (typeof window === "undefined") return null;
+    try { return window.localStorage.getItem(`current_chapter_${sectionKey}`) || null; } catch { return null; }
+  };
 
-  const classes = classesFromReadiness(readiness)
-    // dashboard is scoped to the active grade's sections that match this subject·grade plans
-    .filter((c) => gradeUp(grade) === c.grade);
-  const byDay = DAYS.map((d) => ({ day: d, items: classes.filter((c) => c.day === d) })).filter((x) => x.items.length);
-  const planByChapter = plans; // plans already scoped to subject·grade
-  const firstPlan = plans[0];
+  // One card per section·subject (cards = Σ subjects-per-section), grouped under its next meeting
+  // day in Mon→Sat order. No schedule cell for a class (dayIdx < 0) → an "Unscheduled" bucket last.
+  const dayBuckets = [...DAY_FULL.map((d) => ({ day: d, items: [] })), { day: "Unscheduled", items: [] }];
+  classes.forEach((c) => {
+    const bucket = c.dayIdx >= 0 ? dayBuckets[c.dayIdx] : dayBuckets[dayBuckets.length - 1];
+    bucket.items.push(c);
+  });
+  const byDay = dayBuckets.filter((b) => b.items.length);
 
-  // No classes from readiness (sparse data) → fall back to a simple plans list so the screen
-  // still resolves to the teacher's content.
-  const haveSchedule = byDay.length > 0;
-
-  // 2b — ready but nothing generated yet: forward/panic state, single CTA to Generate.
-  if (!plans.length) {
+  // 2b — ready but the teacher has no classes at all (empty profile).
+  if (!classes.length) {
     return (
       <div>
         <div className="dash-hd">
           <div><div className="kicker kicker-ochre">My Plans · This week</div><div className="dash-title">This week&rsquo;s teaching</div></div>
         </div>
-        <div className="slotcard empty">
+        <div className="slotcard slot-empty">
           <div className="slotrail dim" />
           <div className="slotbody">
-            <div className="slot-toprow"><span className="slot-sec">{gradeUp(grade)} {pretty(subject).toUpperCase()}</span><span className="slot-ptr none">No plan yet</span></div>
-            <div className="slot-title muted">You teach this class — no lesson plan made</div>
-            <div className="slot-meta">Plan the chapter in Generate, and it&rsquo;ll appear here, ready to teach.</div>
+            <div className="slot-title muted">No classes set up yet</div>
+            <div className="slot-meta">Add your classes in My Class, then plan chapters in Generate.</div>
           </div>
-        </div>
-        <div className="dash-cta">
-          <button className="primary" onClick={() => onNavigate && onNavigate("generate")}>Ready to plan your first few chapters? →</button>
-          <div className="dash-cta-note">Opens the Generate tab — choose chapters, set their time, make the plans.</div>
         </div>
       </div>
     );
   }
 
-  // 2c — populated weekly dashboard.
+  // Nothing planned yet (fresh after "Let's begin")? The class cards still show — each as "Pick a
+  // chapter to begin tracking" — with a welcome CTA banner ABOVE them. Cards are never hidden.
+  const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
+
+  // Weekly dashboard: every class she handles, by next meeting day (+ welcome banner when fresh).
   return (
     <div>
       <div className="dash-hd">
         <div><div className="kicker kicker-ochre">My Plans · This week</div><div className="dash-title">This week&rsquo;s teaching</div></div>
-        <div className="dash-count">{classes.length || plans.length} classes<br />{pretty(subject)} · Grade {gradeUp(grade)}</div>
       </div>
 
-      {haveSchedule ? byDay.map(({ day, items }) => (
+      {!anyBound && (
+        <div className="dash-welcome">
+          <div className="dash-welcome-text">
+            <div className="dash-welcome-title">Your week is set up — ready to plan?</div>
+            <div className="dash-welcome-sub">Tap a class below to plan its first chapter.</div>
+          </div>
+        </div>
+      )}
+
+      {byDay.map(({ day, items }) => (
         <div key={day}>
           <div className="daylabel">{day}</div>
           {items.map((c, i) => {
-            const sectionKey = `${subject}_${grade}_${c.sectionTag}`;
+            const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
+            const label = `${c.sectionTag} ${pretty(c.subjectSlug).toUpperCase()}`;
+            const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
+            const file = currentChapterFile(sectionKey);
+            const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
             const lu = pointerFor(sectionKey);
-            const plan = firstPlan; // one chapter in progress per section (saved-plan model)
+
+            // No chapter bound to this class yet → "pick a chapter to begin tracking".
+            // Still a green rail (an open invitation, not a disabled slot) and tappable.
             if (!plan) {
               return (
-                <div className="slotcard empty" key={i}>
-                  <div className="slotrail dim" />
+                <div className="slotcard slot-empty" key={i} onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+                  <div className="slotrail" />
                   <div className="slotbody">
-                    <div className="slot-toprow"><span className="slot-sec">{c.sectionTag} {pretty(subject).toUpperCase()}</span><span className="slot-ptr none">No chapter started</span></div>
-                    <div className="slot-title muted">Pick a chapter to begin</div>
+                    <div className="slot-toprow"><span className="slot-sec">{label}</span><span className="slot-ptr none">No chapter started</span></div>
+                    <div className="slot-title muted">Pick a chapter to begin tracking</div>
                     <div className="slot-meta">Schedule only — no content cued yet</div>
                   </div>
                 </div>
               );
             }
             return (
-              <div className="slotcard" key={i} onClick={() => openLesson(plan, sectionKey)}>
+              <div className="slotcard" key={i} onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
                 <div className="slotrail" />
                 <div className="slotbody">
-                  <div className="slot-toprow"><span className="slot-sec">{c.sectionTag} {pretty(subject).toUpperCase()}</span><span className="slot-ptr">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span></div>
+                  <div className="slot-toprow"><span className="slot-sec">{label}</span><span className="slot-ptr">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span></div>
                   <div className="slot-title">{plan.chapter_title}</div>
                   <div className="slot-meta">tap to see · resumes where you left {c.sectionTag}</div>
                 </div>
@@ -164,26 +209,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
             );
           })}
         </div>
-      )) : (
-        // fallback: no readiness schedule — list saved plans as openable cards
-        <div>
-          <div className="daylabel">Your plans</div>
-          {plans.map((p) => {
-            const sectionKey = `${subject}_${grade}_ch${p.chapter_number}`;
-            const lu = pointerFor(sectionKey);
-            return (
-              <div className="slotcard" key={p.filename} onClick={() => openLesson(p, sectionKey)}>
-                <div className="slotrail" />
-                <div className="slotbody">
-                  <div className="slot-toprow"><span className="slot-sec">CH {pad(p.chapter_number)}</span><span className="slot-ptr">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span></div>
-                  <div className="slot-title">{p.chapter_title}</div>
-                  <div className="slot-meta">tap to open the lesson</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      ))}
 
       <div className="dash-foot">Tap any class to open its lesson. Your place only moves when you tell it to.</div>
     </div>

@@ -11,6 +11,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
+from ...link_resolver import stamp
 from ...normalize import as_list, band_lines, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
@@ -102,7 +103,10 @@ class SocialSciencesSubject:
         )
 
     # ── Assessment → view (grouped by question type) ────────────────────────────
-    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter) -> AssessmentView:
+    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
+                           link_context: Dict[str, Any] = None) -> AssessmentView:
+        # Rule 3 (item-self-sufficient): the item carries its own `period_ref[]` and inline
+        # `implied_lo` — no handoff needed. Stamp those straight onto the uniform contract.
         items = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
         groups: List[AssessmentGroup] = []
         index: Dict[str, AssessmentGroup] = {}
@@ -115,16 +119,20 @@ class SocialSciencesSubject:
             options, answer = normalize_options(it.get("options"))
             guide = (as_list(it.get("look_for")) + as_list(it.get("expected_elements"))
                      + as_list(it.get("scaffold")) + as_list(it.get("format_of_output")))
+            lo = it.get("implied_lo", "")
+            meta = {"weight_label": it.get("weight_label", ""),
+                    "chapter_section": it.get("chapter_section", ""),
+                    "period_ref": it.get("period_ref", ""),
+                    "cognitive_demand": it.get("cognitive_demand", "")}
+            stamp(meta, as_list(it.get("period_ref")), lo)
             index[qtype].items.append(AssessmentItem(
                 prompt=it.get("question_text") or it.get("task", ""),
                 item_type=qtype,
                 options=options, answer=answer,
                 teacher_guide=guide,
+                implied_lo=lo,
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
-                meta={"weight_label": it.get("weight_label", ""),
-                      "chapter_section": it.get("chapter_section", ""),
-                      "period_ref": it.get("period_ref", ""),
-                      "cognitive_demand": it.get("cognitive_demand", "")},
+                meta=meta,
             ))
         return AssessmentView(
             subject="social_sciences", grade=grade,

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API, withUser, projectReadiness } from "../lib/format";
+import useSupportedGrades from "../lib/useSupportedGrades";
 
 /* ───────── MyClasses — the editable teaching-profile drill-down (2026-06-28) ─────────
  * Replaces the old "wizard-as-profile" pattern (re-launching Readiness to edit). This is a
@@ -30,7 +31,8 @@ import { API, withUser, projectReadiness } from "../lib/format";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const ALL_SUBJECTS = ["Science", "Mathematics", "Social Sciences", "English", "The World Around Us"];
-const ALL_GRADES = ["III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+// Grade coverage per subject is NOT hardcoded here — it comes from the shared useSupportedGrades
+// hook (lib/useSupportedGrades), the same source the setup flow uses, so the two can't diverge.
 const SECTION_CHOICES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const DURATION_CHOICES = Array.from({ length: 25 }, (_, i) => 30 + i * 5); // 30,35,…150
 const SECTION_PAGE = 3;
@@ -81,7 +83,12 @@ export default function MyClasses({ readiness, onChange }) {
   const flash = (m) => { setToast(m); window.clearTimeout(flash._t); flash._t = window.setTimeout(() => setToast(""), 1900); };
 
   // ── persist: deep-clone-mutate pattern. `mutate(draft)` edits a clone; we save + re-project. ──
-  const commit = (mutate, msg) => {
+  // `cascade` MUST be true for removals: the server guards destructive edits (subject/grade/
+  // section removal) with a 409 unless cascade is set, since those can orphan saved work. The
+  // DeleteModal is the user's confirmation, so delete handlers pass cascade:true. Without it the
+  // server refuses the delete and the on-disk profile keeps the "removed" subject — which then
+  // reappears on next sign-in. We surface a failed save instead of silently swallowing it.
+  const commit = (mutate, msg, cascade = false) => {
     const draft = clone(subjects);
     mutate(draft);
     setSubjects(draft);
@@ -90,8 +97,11 @@ export default function MyClasses({ readiness, onChange }) {
     fetch(`${API}/readiness`, withUser({
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subjects: draft }),
-    })).catch(() => {}).finally(() => setSaving(false));
+      body: JSON.stringify({ subjects: draft, cascade }),
+    }))
+      .then((r) => { if (!r.ok) throw new Error(String(r.status)); })
+      .catch(() => flash("Couldn’t save that change — please retry."))
+      .finally(() => setSaving(false));
     if (msg) flash(msg);
   };
 
@@ -139,9 +149,11 @@ export default function MyClasses({ readiness, onChange }) {
     });
   };
   // adding a section is handled by AddSectionModal (asks which letter(s) via commit directly).
-  const deleteSubject = (i) => commit((dr) => dr.splice(i, 1), "Subject deleted");
-  const deleteGrade = (gi) => commit((dr) => { dr[path[0]].grades.splice(gi, 1); (dr[path[0]].grids || []).splice(gi, 1); deleteBudgetKey(dr[path[0]], gi); }, "Grade deleted");
-  const deleteSection = (secIdx) => commit((dr) => { dr[path[0]].grades[path[1]].sections.splice(secIdx, 1); (dr[path[0]].grids[path[1]] || []).splice(secIdx, 1); }, "Section deleted");
+  // Deletes are confirmed via DeleteModal, so they cascade (cascade:true) past the server's
+  // destructive-edit guard — otherwise the server 409s and the removal never persists.
+  const deleteSubject = (i) => commit((dr) => dr.splice(i, 1), "Subject deleted", true);
+  const deleteGrade = (gi) => commit((dr) => { dr[path[0]].grades.splice(gi, 1); (dr[path[0]].grids || []).splice(gi, 1); deleteBudgetKey(dr[path[0]], gi); }, "Grade deleted", true);
+  const deleteSection = (secIdx) => commit((dr) => { dr[path[0]].grades[path[1]].sections.splice(secIdx, 1); (dr[path[0]].grids[path[1]] || []).splice(secIdx, 1); }, "Section deleted", true);
 
   // ── render ──
   return (
@@ -458,8 +470,11 @@ function AddSubjectModal({ subjects, onClose, commit, flash }) {
   const [secByGrade, setSecByGrade] = useState({});
   const [sPage, setSPage] = useState({});
 
-  const toggleGrade = (g) => setGrades((a) => a.includes(g) ? a.filter((x) => x !== g) : [...a, g].sort((x, y) => ALL_GRADES.indexOf(x) - ALL_GRADES.indexOf(y)));
-  const goSections = () => { const init = {}; const sp = {}; grades.forEach((g) => { init[g] = ["A", "B"]; sp[g] = 0; }); setSecByGrade(init); setSPage(sp); setStep(3); };
+  // Grades restricted to the chosen subject's coverage (shared hook), in master order.
+  const gradeChoices = useSupportedGrades(name);
+  const toggleGrade = (g) => setGrades((a) => a.includes(g) ? a.filter((x) => x !== g) : [...a, g].sort((x, y) => gradeChoices.indexOf(x) - gradeChoices.indexOf(y)));
+  // No sections pre-selected — the teacher chooses (nothing clicked by default).
+  const goSections = () => { const sp = {}; grades.forEach((g) => { sp[g] = 0; }); setSecByGrade({}); setSPage(sp); setStep(3); };
   const toggleSec = (g, s) => setSecByGrade((m) => { const a = m[g] || []; return { ...m, [g]: a.includes(s) ? a.filter((x) => x !== s) : [...a, s].sort() }; });
   const ready3 = grades.every((g) => (secByGrade[g] || []).length > 0);
 
@@ -491,7 +506,7 @@ function AddSubjectModal({ subjects, onClose, commit, flash }) {
           <div className="modal-kicker add">Add {name} · step 2 of 3</div>
           <h3 className="modal-title">Which grades?</h3>
           <p className="modal-ask">Pick every grade you teach {name} to — choose as many as you like.</p>
-          <PagedPicker choices={ALL_GRADES} page={gPage} setPage={setGPage} pageSize={GRADE_PAGE}
+          <PagedPicker choices={gradeChoices} page={gPage} setPage={setGPage} pageSize={GRADE_PAGE}
             selected={grades} onToggle={toggleGrade} render={(g) => "Grade " + g} />
           <div className="modal-bar"><button className="btn btn-cancel" onClick={onClose}>Cancel</button>
             <button className="btn btn-go" disabled={!grades.length} onClick={goSections}>Next →</button></div>
@@ -517,7 +532,9 @@ function AddSubjectModal({ subjects, onClose, commit, flash }) {
 }
 
 function AddGradeModal({ subj, si, onClose, commit, flash }) {
-  const avail = ALL_GRADES.filter((g) => !subj.grades.some((x) => x.grade === g));
+  // Only grades this subject supports (shared hook), minus the ones already added.
+  const supported = useSupportedGrades(subj.name);
+  const avail = supported.filter((g) => !subj.grades.some((x) => x.grade === g));
   const [gPage, setGPage] = useState(0);
   const [picked, setPicked] = useState(null);
   const [secs, setSecs] = useState([]);   // no sections pre-selected — teacher chooses

@@ -34,6 +34,11 @@ export default function Home() {
   const [navCollapsed, setNavCollapsed] = useState(false); // below-logo sidebar collapse state
   const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | "lessonplans" | null — sidebar-launched view
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
+  // How the Generate tab should open this time:
+  //   { mode: "pick" }                     → show the G1.9 subject·grade picker (multi-choice)
+  //   { mode: "scoped", subject, grade }   → skip picker, go straight in for that subject·grade
+  // Cleared once Generate consumes it. Generate is only ever reached through this handler.
+  const [generateEntry, setGenerateEntry] = useState(null);
 
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
@@ -84,6 +89,32 @@ export default function Home() {
     if (subjectSlug) setSubject(subjectSlug);
     if (gradeSlug) setGrade(gradeSlug);
     setEditFlow(null);
+    setGenerateEntry({ mode: "scoped", subject: subjectSlug, grade: gradeSlug });
+    setTab("generate");
+  };
+
+  // THE single route into Generate (the "Ready to plan…" button + My Week empty cards). With one
+  // subject AND one grade we skip the picker and scope directly; otherwise the G1.9 picker runs.
+  // `opts.subject`/`opts.grade` (slugs) pre-scope and skip the picker (My Week row / My Lesson Plans).
+  const subjectSlugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+  // opts.single === true marks a one-chapter-at-a-time entry (from a My Week card) — Allocate
+  // rewords G4 to "this chapter" and shows the budget anchor. Bulk entries (Generate tab, My
+  // Lesson Plans "Generate") leave it falsy and keep the multi-chapter framing.
+  const onEnterGenerate = (opts = {}) => {
+    const subs = (readiness && readiness.subjects) || [];
+    const single = !!opts.single;
+    if (opts.subject && opts.grade) {
+      setSubject(opts.subject); setGrade(opts.grade);
+      setGenerateEntry({ mode: "scoped", subject: opts.subject, grade: opts.grade, single });
+    } else if (subs.length === 1 && (subs[0].grades || []).length === 1) {
+      const sSlug = subjectSlugify(subs[0].name);
+      const gSlug = (subs[0].grades[0].grade || "").toLowerCase();
+      setSubject(sSlug); setGrade(gSlug);
+      setGenerateEntry({ mode: "scoped", subject: sSlug, grade: gSlug, single });
+    } else {
+      setGenerateEntry({ mode: "pick", single });
+    }
+    setEditFlow(null);
     setTab("generate");
   };
 
@@ -133,7 +164,10 @@ export default function Home() {
         {navOpen && (
           <aside className="bodyrail">
             <button className="rail-collapse" onClick={() => setNavCollapsed(true)} aria-label="Collapse menu">‹</button>
-            <SidebarNav onEdit={setEditFlow} onWeek={() => { setEditFlow(null); setTab("myplans"); }}
+            {/* Any sidebar view (My Class / Calendar / Lesson Plans) leaves the Generate flow and
+                sits under My Plans — reset the tab + clear any pending Generate entry/scope pills. */}
+            <SidebarNav onEdit={(mode) => { setEditFlow(mode); setTab("myplans"); setGenerateEntry(null); }}
+              onWeek={() => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null); }}
               user={user} onSignOut={onSignOut}
               active={editFlow === "profile" ? "profile" : editFlow === "calendar" ? "calendar" : editFlow === "lessonplans" ? "lessonplans" : "week"} />
           </aside>
@@ -148,10 +182,13 @@ export default function Home() {
             )}
             {TABS.map((t) => {
               const locked = t.id === "generate" && !ready;
+              // Direct Generate-tab click = scope-less entry → run the picker (onEnterGenerate
+              // with no opts; it auto-scopes only when there's a single subject AND grade).
+              const go = () => { if (t.id === "generate" && ready) onEnterGenerate(); else setTab(t.id); };
               return (
                 <button key={t.id}
                   className={`tab ${tab === t.id ? "active" : ""} ${locked ? "locked" : ""}`}
-                  onClick={() => setTab(t.id)}>
+                  onClick={go}>
                   {t.label}{locked ? " 🔒" : ""}
                 </button>
               );
@@ -193,9 +230,12 @@ export default function Home() {
               </div>
             ) :
               !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
-              tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness} onNavigate={setTab} /> :
+              tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness}
+                onNavigate={setTab} entry={generateEntry} onScope={(s, g) => { setSubject(s); setGrade(g); }}
+                onConsumeEntry={() => setGenerateEntry(null)} /> :
               <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
-                onReady={onReadyComplete} onNavigate={setTab} user={user} onSignOut={onSignOut}
+                onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
+                user={user} onSignOut={onSignOut}
                 pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)} />}
           </main>
         </div>

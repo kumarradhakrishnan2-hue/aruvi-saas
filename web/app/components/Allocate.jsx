@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pad, API, pretty, withUser } from "../lib/format";
+import { getJSON, pad, API, pretty, gradeUp, withUser } from "../lib/format";
 import PeriodRows, { Stepper, toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
 import ViewModelView from "./ViewModelView";
 
@@ -56,23 +56,55 @@ function buildFinalAllocation(res, byCh, deltas, chapters) {
   return { durations: dur, allocations, totals };
 }
 
-/* Derive the weekly period-type ratio from the readiness payload, for this subject·grade.
- * Returns { [minutes]: count } counting how many cells of each duration the teacher set in
- * her weekly grid (summed across this subject's grades). Falls back to null when readiness
- * data isn't available, in which case G4 uses the period-type rows' own counts as the ratio. */
-function weeklyRatioFromReadiness(readiness) {
-  if (!readiness || !readiness.grids || !readiness.durations) return null;
+/* Derive the weekly period-type ratio for THIS subject·grade from the CANONICAL
+ * readiness.subjects[] (not the active-subject projection, which carries a different subject's
+ * grids/durations). Returns { [minutes]: count } — how many cells of each period length the
+ * teacher marked in this grade's weekly grid. Grid cell values are INDICES into sub.durations
+ * (e.g. durations [45,60] → cell value 0 means 45-min, 1 means 60-min). Returns null when the
+ * data isn't present, in which case G4 falls back to the period-type rows' own counts. */
+function weeklyRatioFromReadiness(readiness, subjectSlug, gradeSlug) {
+  const subs = (readiness && readiness.subjects) || [];
+  const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+  const sub = subs.find((s) => slugify(s.name) === subjectSlug);
+  if (!sub) return null;
+  const gi = (sub.grades || []).findIndex((g) => (g.grade || "").toLowerCase() === gradeSlug);
+  if (gi < 0) return null;
+  const durs = sub.durations || [];
+  const gridG = (sub.grids || [])[gi] || [];
   const ratio = {};
-  readiness.grids.forEach((grid, gi) => {
-    const durs = readiness.durations[gi] || [];
-    grid.forEach((row) => row.forEach((v) => {
-      if (v >= 0 && durs[v] != null) {
-        const m = String(durs[v]);
-        ratio[m] = (ratio[m] || 0) + 1;
-      }
-    }));
-  });
+  gridG.forEach((row) => (row || []).forEach((v) => {
+    if (v != null && v >= 0 && durs[v] != null) {
+      const m = String(durs[v]);
+      ratio[m] = (ratio[m] || 0) + 1;
+    }
+  }));
   return Object.keys(ratio).length ? ratio : null;
+}
+
+/* Annual budget in PERIODS for the scoped subject·grade, read from the CANONICAL
+ * readiness.subjects[] (not the active-subject projection, which may be a different subject).
+ * Mirrors Readiness.computeBudget: budget is { gradeIdx: {method, value} }.
+ *   periods → value directly; weeks → weeklyPeriods×value; days → weeklyPeriods×(days/6);
+ *   estimate/none → weeklyPeriods×30. weeklyPeriods = grid cells for that grade ÷ #sections. */
+function annualBudgetPeriods(readiness, subjectSlug, gradeSlug) {
+  const subs = (readiness && readiness.subjects) || [];
+  const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+  const sub = subs.find((s) => slugify(s.name) === subjectSlug);
+  if (!sub) return null;
+  const gi = (sub.grades || []).findIndex((g) => (g.grade || "").toLowerCase() === gradeSlug);
+  if (gi < 0) return null;
+  const b = (sub.budget || {})[String(gi)];
+  // weekly periods for this grade = marked grid cells ÷ section count
+  const gridG = (sub.grids || [])[gi] || [];
+  const secCount = gridG.length || 1;
+  let cells = 0;
+  gridG.forEach((row) => (row || []).forEach((v) => { if (v != null && v >= 0) cells++; }));
+  const weeklyPeriods = Math.round(cells / secCount);
+  if (!b) return weeklyPeriods ? weeklyPeriods * 30 : null;     // no budget set → estimate
+  if (b.method === "periods") return b.value;
+  if (b.method === "weeks") return weeklyPeriods * b.value;
+  if (b.method === "days") return Math.round(weeklyPeriods * (b.value / 6));
+  return weeklyPeriods ? weeklyPeriods * 30 : null;             // estimate / unknown
 }
 
 /* Split a total period count across period types by a ratio map { [minutes]: weight }.
@@ -93,7 +125,7 @@ function splitByRatio(total, ratio) {
   return out;
 }
 
-export default function Allocate({ subject, grade, readiness, onNavigate }) {
+export default function Allocate({ subject, grade, readiness, onNavigate, singleChapter = false }) {
   const [chapters, setChapters] = useState([]);
   const [basis, setBasis] = useState(null);
   const [rows, setRows] = useState([{ name: "", count: 45, minutes: 45 }, { name: "", count: 60, minutes: 60 }]);
@@ -153,7 +185,7 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
   useEffect(() => {
     setRes(null);
     setStep("periods");
-    setSelected(null);
+    setSelected(new Set());   // inverted G3: start with NOTHING chosen — teacher adds chapters
     setDeltas({});
     setFinalAlloc(null);
     setModifying(false);
@@ -270,7 +302,6 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
     setStep("adjust");
   };
 
-  const toggleAll = () => setSelected(selected === null || selected.size === chapters.length ? new Set() : null);
   const toggleOne = (cn) => {
     setSelected((cur) => {
       const next = new Set(cur === null ? chapters.map((c) => c.chapter_number) : cur);
@@ -289,7 +320,6 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
   const byCh = res ? Object.fromEntries(res.allocations.map((a) => [a.chapter_number, a])) : {};
   const totalHours = toPeriodRows(rows).reduce((s, r) => s + (r.count * r.minutes) / 60, 0);
   const totalPeriods = toPeriodRows(rows).reduce((s, r) => s + r.count, 0);
-  const allChecked = selected === null || selected.size === chapters.length;
 
   const balances = Object.fromEntries(dur.map((m) => [m, balanceFor(deltas, selectedChapters, m)]));
   const balancesOk = dur.every((m) => balances[m] === 0);
@@ -622,45 +652,66 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
           </div>
           <button className="back totalbar-edit" onClick={() => setStep("periods")}>← back to period types</button>
         </div>
-        <p className="h2">Select the chapters you want to include in this year's plan.</p>
-        <p className="h2-sub">Now choose the chapters you plan to cover in this time. Aruvi holds your plan safely, so you can return and plan the rest of the chapters whenever you're ready.</p>
+        <p className="h2">Which chapters do you plan to teach?</p>
+        <p className="h2-sub">Pick the ones coming up — one or a few. Only the chapters you add appear here; this is your plan, not the whole textbook. You can always add more later.</p>
 
-        {!chapters.length ? <div className="empty">No chapter mappings for this subject &amp; grade.</div> : (
+        {!chapters.length ? <div className="empty">No chapter mappings for this subject &amp; grade.</div> : (() => {
+          // Inverted selection (mock G3): a dropdown adds chapters; only chosen ones show below.
+          const chosen = chapters.filter((c) => isSelected(c.chapter_number) && !allocatedChapterNumbers.has(c.chapter_number));
+          const addable = chapters.filter((c) => !isSelected(c.chapter_number) && !allocatedChapterNumbers.has(c.chapter_number));
+          return (
           <>
-            <div className="atable-card">
-              <div className="atable-scroll">
-              <table className="atable atable-combined">
-                <thead>
-                  <tr>
-                    <th className="chk">
-                      <input type="checkbox" checked={allChecked} onChange={toggleAll}
-                        title={allChecked ? "Deselect all" : "Select all"} />
-                    </th>
-                    <th className="chapter-h">Chapter</th>
-                  </tr>
-                </thead>
-                <tbody>{chapters.map((c) => {
-                  const on = isSelected(c.chapter_number);
-                  const isAllocated = allocatedChapterNumbers.has(c.chapter_number);
-                  return (
-                    <tr key={c.chapter_number} className={isAllocated ? "row-allocated" : on ? "" : "row-off"}>
-                      <td className="chk"><input type="checkbox" checked={on} onChange={() => toggleOne(c.chapter_number)} disabled={isAllocated} title={isAllocated ? "Already allocated" : ""} /></td>
-                      <td><span className="chn">CH {pad(c.chapter_number)}</span><span className="ch-title">{c.chapter_title}</span>{isAllocated ? <span className="ch-badge">allocated</span> : null}</td>
-                    </tr>
-                  );
-                })}</tbody>
-              </table>
-              </div>
+            <div className="g3-add">
+              <select className="g3-add-select" value="" onChange={(e) => { if (e.target.value) toggleOne(Number(e.target.value)); }}>
+                <option value="">＋ Add a chapter…</option>
+                {addable.map((c) => <option key={c.chapter_number} value={c.chapter_number}>CH {pad(c.chapter_number)} · {c.chapter_title}</option>)}
+              </select>
             </div>
+
+            <div className="kicker kicker-soft g3-chosen-h">{chosen.length ? `CHOSEN — ${chosen.length} CHAPTER${chosen.length !== 1 ? "S" : ""}` : "NONE CHOSEN YET"}</div>
+            {(() => {
+              // Effort-index forecast: each chapter's suggestion = its share of the WHOLE GRADE's
+              // effort × the annual budget — i.e. weight_c / Σ(all-chapter weights) × annualBudget.
+              // The denominator is ALL chapters in the grade (not just the chosen ones), so a single
+              // chosen chapter gets its true ~11% share, never 100% of the budget. This matches what
+              // the effort index means: "this chapter warrants ~N of your year's periods."
+              const annual = annualBudgetPeriods(readiness, subject, grade);
+              const gradeSumW = chapters.reduce((s, c) => s + (c.weight || 0), 0) || 1;
+              const fc = {};
+              if (annual != null) chosen.forEach((c) => { fc[c.chapter_number] = Math.round(((c.weight || 0) / gradeSumW) * annual); });
+              return chosen.map((c) => (
+                <div className="g3-row" key={c.chapter_number}>
+                  <span className="g3-row-name"><span className="chn">CH {pad(c.chapter_number)}</span>{c.chapter_title}</span>
+                  {annual != null ? <span className="g3-row-sugg">~{fc[c.chapter_number]} periods</span> : null}
+                  <button className="g3-row-remove" onClick={() => toggleOne(c.chapter_number)}>remove</button>
+                </div>
+              ));
+            })()}
+            {!chosen.length ? <div className="g3-empty">Add a chapter above to begin.</div> : null}
+
+            {(() => {
+              const annual = annualBudgetPeriods(readiness, subject, grade);
+              if (!chosen.length || annual == null) return null;
+              const alreadyAllocated = allAllocations.reduce((s, a) => s + (a.totals ? a.totals.periods : 0), 0);
+              const remaining = Math.max(0, annual - alreadyAllocated);
+              return (
+                <div className="g3-fc-note">
+                  Suggested by each chapter&rsquo;s effort index as a share of your {annual}-period annual budget — heavier chapters get more.
+                  {alreadyAllocated ? ` ${alreadyAllocated} already allocated · ${remaining} left for the rest.` : ""}
+                  {" "}<button className="g3-fc-back" onClick={() => setStep("periods")}>Not right? Adjust the total →</button>
+                </div>
+              );
+            })()}
 
             <div className="savebar">
-              <button className="primary" onClick={allocatePeriods} disabled={busy || !selectedChapters.length}>
-                {busy ? "Allocating…" : "Allocate Periods"}
+              <button className="primary" onClick={allocatePeriods} disabled={busy || !chosen.length}>
+                {busy ? "Allocating…" : "Set time for the selected chapters →"}
               </button>
-              {!selectedChapters.length ? <span className="savebar-hint">Select at least one chapter.</span> : null}
+              {!chosen.length ? <span className="savebar-hint">Add at least one chapter.</span> : null}
             </div>
           </>
-        )}
+          );
+        })()}
       </div>
     );
   }
@@ -796,12 +847,18 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
   // ── G4 — how many periods in total → split across period types by the weekly ratio ──
   // Ratio source: the readiness weekly grid when available; otherwise the period-type rows'
   // own counts (so the screen still works before readiness data is threaded in).
-  const ratio = weeklyRatioFromReadiness(readiness) ||
+  const ratio = weeklyRatioFromReadiness(readiness, subject, grade) ||
     Object.fromEntries(toPeriodRows(rows).map((r) => [String(r.minutes), r.count]));
   const ratioTypes = Object.keys(ratio).map(Number).sort((a, b) => b - a); // longest first
   const g4Total = Number(totalPeriodsInput) || 0;
   const g4Split = splitByRatio(g4Total, ratio);
   const g4Minutes = ratioTypes.reduce((s, m) => s + (g4Split[String(m)] || 0) * m, 0);
+
+  // Budget anchor: the annual period budget for this subject·grade, what's already allocated,
+  // and what this entry would consume — so one-chapter-at-a-time stays grounded against the year.
+  const annualBudget = annualBudgetPeriods(readiness, subject, grade);
+  const allocatedPeriods = allAllocations.reduce((s, a) => s + (a.totals ? a.totals.periods : 0), 0);
+  const pct = (n) => (annualBudget ? Math.round((n / annualBudget) * 100) : null);
 
   // Commit the split into `rows` (the internal contract the rest of the flow consumes),
   // then advance to chapter selection.
@@ -811,31 +868,116 @@ export default function Allocate({ subject, grade, readiness, onNavigate }) {
     setStep("select");
   };
 
+  // Periods → hours conversion uses the ACTUAL weekly duration mix, not a single average.
+  // A total of N periods is split across each period length by the weekly ratio (splitByRatio),
+  // then hours = Σ(periods_at_each_length × length) ÷ 60. We also build a readable breakdown
+  // string, e.g. "120 × 45 min + 60 × 60 min", shown in the small print under each box.
+  const breakdown = (split) => ratioTypes
+    .filter((m) => (split[String(m)] || 0) > 0)
+    .map((m) => `${split[String(m)]} × ${m} min`)
+    .join(" + ");
+  const minutesOf = (split) => ratioTypes.reduce((s, m) => s + (split[String(m)] || 0) * m, 0);
+
+  // Annual budget split the same way (the "current allocation" box reuses g4Split/g4Minutes).
+  const annualSplit = annualBudget ? splitByRatio(annualBudget, ratio) : {};
+  const annualMinutes = minutesOf(annualSplit);
+  const annualHours = annualMinutes / 60;
+
+  // Effort-index recommendation: a per-chapter split of the ENTERED total, by each chapter's
+  // share of the whole grade's effort weight (largest-remainder so it sums back to g4Total
+  // exactly → the footer always reconciles). Shown only on a RETURN visit, i.e. once at least
+  // one allocation has already been made for this subject·grade (G3 has run). Hidden in the
+  // single-chapter flow and when chapters carry no weights.
+  const showReco = !singleChapter && allAllocations.length > 0 &&
+    chapters.length > 0 && chapters.some((c) => (c.weight || 0) > 0);
+  const recoRows = (() => {
+    if (!showReco || g4Total < 1) return [];
+    const sumW = chapters.reduce((s, c) => s + (c.weight || 0), 0) || 1;
+    const raw = chapters.map((c) => ({ c, exact: ((c.weight || 0) / sumW) * g4Total }));
+    let assigned = 0;
+    raw.forEach((r) => { r.periods = Math.floor(r.exact); assigned += r.periods; });
+    raw.map((r) => ({ r, frac: r.exact - Math.floor(r.exact) }))
+      .sort((a, b) => b.frac - a.frac)
+      .slice(0, Math.max(0, g4Total - assigned))
+      .forEach((x) => { x.r.periods += 1; });
+    return raw.map((r) => ({ chapter_number: r.c.chapter_number, chapter_title: r.c.chapter_title, periods: r.periods }));
+  })();
+  const recoTotal = recoRows.reduce((s, r) => s + r.periods, 0);
+
   return (
     <div>
-      <p className="h2">How many periods do these chapters get in total?</p>
-      <p className="h2-sub">Your weekly schedule already tells Aruvi how long each period is — just give the total number of periods. Aruvi splits it across your period lengths, then across chapters in the next steps.</p>
+      <p className="h2">{singleChapter
+        ? "How many periods do you plan to teach this chapter?"
+        : showReco
+          ? "Re-allocate periods across these chapters"
+          : "How many periods do these chapters get in total?"}</p>
+      <p className="h2-sub">{singleChapter
+        ? "Start with what feels right. In the next screen, Aruvi will give you its recommendation."
+        : showReco
+          ? "Aruvi has scored each chapter on its effort index. Here is the suggested split for your total — adjust the number below, or carry the recommendation into the next step."
+          : "Your weekly schedule already tells Aruvi how long each period is — just give the total number of periods. Aruvi splits it across your period lengths, then across chapters in the next steps."}</p>
 
-      <div className="g4-grid">
-        <div className="g4-input-card">
-          <div className="g4-input-label">Periods in total</div>
-          <Stepper value={totalPeriodsInput} min={0} onChange={setTotalPeriodsInput} />
-          <div className="g4-input-fine">
-            Split using your weekly mix
-            {ratioTypes.length ? ` (${ratioTypes.map((m) => `${ratio[String(m)]}×${m}min`).join(" : ")})` : ""}.
+      {/* Both budget boxes on top, each a single inline "N periods / N hours" line with the
+          hour calculation in small mono print beneath. */}
+      <div className="g4-boxrow">
+        {annualBudget ? (
+          <div className="budgetsum budgetsum-top">
+            <div className="bsk">annual budget</div>
+            <div className="bsv bsv-xs">{annualBudget} periods <span className="bsv-sl">/</span> {annualHours.toFixed(1)} hours</div>
+            <div className="bsn">{breakdown(annualSplit) || `${annualBudget} periods`}</div>
           </div>
+        ) : null}
+
+        <div className="budgetsum budgetsum-top">
+          <div className="bsk">{singleChapter ? "this chapter" : "current allocation"}</div>
+          <div className="bsv bsv-xs">{g4Total} periods <span className="bsv-sl">/</span> {(g4Minutes / 60).toFixed(1)} hours</div>
+          <div className="bsn">{breakdown(g4Split) || `${g4Total} periods`}</div>
+        </div>
+      </div>
+
+      {/* Stepper row below the boxes — UNCHANGED from before, label simplified to just "periods".
+          On a return visit the effort-index reco table fills the space to its right. */}
+      <div className="g4-midrow">
+        <div className="g4-inrow">
+          <span className="steppermini">
+            <button onClick={() => setTotalPeriodsInput(Math.max(0, (Number(totalPeriodsInput) || 0) - 1))}>–</button>
+            <input type="number" min="0" className="v g4-vinput" value={totalPeriodsInput}
+              onChange={(e) => { const n = parseInt(e.target.value, 10); setTotalPeriodsInput(Number.isFinite(n) && n >= 0 ? n : 0); }}
+              aria-label="Periods in total" />
+            <button onClick={() => setTotalPeriodsInput((Number(totalPeriodsInput) || 0) + 1)}>+</button>
+          </span>
+          <span className="unitlab">periods</span>
         </div>
 
-        <div className="g4-breakdown">
-          <div className="g4-breakdown-h">By period length</div>
-          {ratioTypes.map((m) => (
-            <div className="g4-brow" key={m}>
-              <span className="g4-bk">{m} min <small>× {g4Split[String(m)] || 0}</small></span>
-              <span className="g4-bv">{(((g4Split[String(m)] || 0) * m) / 60).toFixed(1)}h</span>
+        {showReco ? (
+          <div className="g4-reco">
+            <div className="g4-reco-head">
+              <span className="g4-reco-k">effort-index recommendation</span>
+              <span className="g4-reco-d">split for {g4Total}</span>
             </div>
-          ))}
-          <div className="g4-bfoot">{g4Total} periods · ~{(g4Minutes / 60).toFixed(1)}h total</div>
-        </div>
+            <table className="g4-reco-tbl">
+              <thead>
+                <tr><th className="rc-no">Ch.</th><th>Chapter name</th><th className="rc-num">Periods</th></tr>
+              </thead>
+              <tbody>
+                {recoRows.map((r) => (
+                  <tr key={r.chapter_number}>
+                    <td className="rc-no">{pad(r.chapter_number)}</td>
+                    <td className="rc-name">{r.chapter_title}</td>
+                    <td className="rc-num"><span className="rc-pp">{r.periods}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="g4-reco-foot">
+                  <td></td>
+                  <td className="rc-lab">Total suggested</td>
+                  <td className="rc-num"><span className="rc-pp">{recoTotal}</span> <span className="rc-of">/ {g4Total}</span></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        ) : null}
       </div>
 
       <div className="savebar">

@@ -18,6 +18,7 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
 from ...grades import stage_for
+from ...link_resolver import handoff_period_index, period_number_by_field, stamp
 from ...normalize import as_list as _as_list, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
@@ -161,33 +162,60 @@ class ScienceSubject:
             groups=groups,
         )
 
-    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter) -> AssessmentView:
-        items = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
+    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
+                           link_context: Dict[str, Any] = None) -> AssessmentView:
+        # Two container shapes by stage (architecture-plan.md rules 1 & 2):
+        #   • MIDDLE — flat list; each item carries `progression_stage`; join that stage_number
+        #     through the coverage_handoff to its period_numbers (rule 1).
+        #   • SECONDARY — a {…, "questions": [...]} dict; each question carries `section_number`;
+        #     join that through the handoff's section_number → period_numbers (rule 2).
+        # Both bridge via the integer stage/section number — NEVER the messy section_anchor text.
+        ctx = link_context or {}
+        handoff = ctx.get("handoff", []) or []
+        periods = ctx.get("periods", []) or []
+        secondary = isinstance(raw, dict) and "questions" in raw
+        if secondary:
+            items = raw.get("questions", [])
+            join_key, group_key, group_label = "section_number", "section_number", "section_label"
+            period_index = handoff_period_index(handoff, "section_number")
+        else:
+            items = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
+            join_key, group_key, group_label = "progression_stage", "stage_number", "stage_label"
+            period_index = handoff_period_index(handoff, "stage_number")
+            # Older middle plans predate coverage_handoff — fall back to the periods, which carry
+            # the same `progression_stage` integer the items do.
+            if not period_index:
+                period_index = period_number_by_field(periods, "progression_stage")
+
         groups: List[AssessmentGroup] = []
-        by_stage: Dict[int, AssessmentGroup] = {}
+        by_group: Dict[int, AssessmentGroup] = {}
         for it in items or []:
-            stage = it.get("progression_stage")
-            if stage not in by_stage:
+            gnum = it.get(join_key)
+            if gnum not in by_group:
                 g = AssessmentGroup(
-                    type="progression_stage",
-                    label=it.get("stage_label", f"Stage {stage}"),
-                    meta={"stage_number": stage},
+                    type="progression_stage" if not secondary else "section",
+                    label=it.get(group_label, f"{'Section' if secondary else 'Stage'} {gnum}"),
+                    meta={group_key: gnum},
                 )
-                by_stage[stage] = g
+                by_group[gnum] = g
                 groups.append(g)
             guide = (_as_list(it.get("look_for")) + _as_list(it.get("expected_elements"))
                      + _as_list(it.get("scaffold")) + _as_list(it.get("format_of_output")))
             options, answer = normalize_options(it.get("options"))
-            by_stage[stage].items.append(AssessmentItem(
+            lo = it.get("implied_lo_assessed", "")
+            meta = {"competency": it.get("competency", {}),
+                    "cognitive_demand": it.get("cognitive_demand", "")}
+            linked = period_index.get(int(gnum), []) if gnum is not None else []
+            stamp(meta, linked, lo)
+            by_group[gnum].items.append(AssessmentItem(
                 prompt=it.get("question_text") or it.get("task", ""),
                 item_type=it.get("question_type", ""),
                 options=options,
                 answer=answer,
                 teacher_guide=guide,
-                implied_lo=it.get("implied_lo_assessed", ""),
+                implied_lo=lo,
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
-                meta={"competency": it.get("competency", {}),
-                      "cognitive_demand": it.get("cognitive_demand", "")},
+                meta=meta,
             ))
         return AssessmentView(
             subject="science", grade=grade,

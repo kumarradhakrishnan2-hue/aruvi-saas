@@ -40,7 +40,16 @@ class Subject(Protocol):
 
     def assessment_to_view(
         self, raw: Dict[str, Any], *, grade: str, chapter: Dict[str, Any],
-    ) -> AssessmentView: ...
+        link_context: Dict[str, Any] | None = None,
+    ) -> AssessmentView:
+        """Normalize the assessment into the canonical view AND resolve each item's link to
+        the lesson plan's periods (architecture-plan.md §Link resolution). `link_context`, when
+        provided, carries what handoff-bridged/period-field resolvers need:
+            {"periods": [raw period dicts], "handoff": coverage_handoff}
+        Every item ends up with item.meta {linked_periods[], anchor_period, linked_lo} via
+        aruvi_core.link_resolver.stamp(). link_context=None (older callers/tests) → items still
+        normalize, just with empty link metadata."""
+        ...
 
     def chapter_weight(self, mapping: Dict[str, Any]) -> float:
         """The single number that drives Allocate for this chapter — read from the chapter's

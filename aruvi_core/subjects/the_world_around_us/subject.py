@@ -94,7 +94,10 @@ class TheWorldAroundUsSubject:
         )
 
     # ── Assessment → view (grouped by question type) ────────────────────────────
-    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter) -> AssessmentView:
+    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
+                           link_context: Dict[str, Any] = None) -> AssessmentView:
+        # Rule 8 (item-self-sufficient, 1:1): the item carries its own `period_ref[]` + inline
+        # `implied_lo` — same family as SS, stamped directly.
         items = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
         groups: List[AssessmentGroup] = []
         index: Dict[str, AssessmentGroup] = {}
@@ -108,17 +111,20 @@ class TheWorldAroundUsSubject:
             guide = (as_list(it.get("look_for")) + as_list(it.get("expected_elements"))
                      + as_list(it.get("scaffold")) + as_list(it.get("format_of_output"))
                      + as_list(it.get("guide")))
+            lo = it.get("implied_lo", "")
+            meta = {"competency": it.get("competency", {}),
+                    "cognitive_demand": it.get("cognitive_demand", ""),
+                    "performance_task": it.get("performance_task", ""),
+                    "period_ref": it.get("period_ref", "")}
+            stamp(meta, as_list(it.get("period_ref")), lo)
             index[qtype].items.append(AssessmentItem(
                 prompt=it.get("question_text") or it.get("task", ""),
                 item_type=qtype,
                 options=options, answer=answer,
                 teacher_guide=guide,
-                implied_lo=it.get("implied_lo", ""),
+                implied_lo=lo,
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
-                meta={"competency": it.get("competency", {}),
-                      "cognitive_demand": it.get("cognitive_demand", ""),
-                      "performance_task": it.get("performance_task", ""),
-                      "period_ref": it.get("period_ref", "")},
+                meta=meta,
             ))
         return AssessmentView(
             subject="the_world_around_us", grade=grade,

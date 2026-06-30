@@ -1,12 +1,28 @@
 "use client";
+import { useState, useEffect } from "react";
 import Allocate from "./Allocate";
+import { pretty, gradeUp } from "../lib/format";
 
-/* ───────── Generate tab (Phase 1) ─────────
- * The single Generate tab — Allocate is folded in here (no longer a sibling tab).
- * Readiness gates it: when `ready` is false the tab is visible but inert (the G1
- * locked state), pointing the teacher back to My Plans to finish setup. When ready,
- * it hosts the allocation flow. Phase 3 expands this into the full G2 hub + spokes. */
-export default function GenerateTab({ subject, grade, ready, readiness, onNavigate }) {
+/* ───────── Generate tab ─────────
+ * Reached ONLY through page.jsx's onEnterGenerate (the "Ready to plan…" button, My Week empty
+ * cards, My Lesson Plans, My Week rows). `entry` says how to open:
+ *   { mode: "scoped", subject, grade } → skip the picker, go straight to Allocate for that combo
+ *   { mode: "pick" }                   → run the G1.9 picker: choose subject (if >1 taught), then
+ *                                        grade (if the chosen subject has >1), THEN Allocate.
+ * Allocate itself decides the start screen: it opens at G2 (final) when an allocation already
+ * exists for the subject·grade, else begins the fresh G4→G3 flow.
+ *
+ * Readiness still gates the tab — before setup it shows the G1 locked state. */
+
+const subjectSlug = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+const gradeSlugOf = (g) => (g || "").toLowerCase();
+
+export default function GenerateTab({ subject, grade, ready, readiness, onNavigate, entry, onScope, onConsumeEntry }) {
+  // Picker local state: which subject has been chosen (by name) while in "pick" mode. Defaults to
+  // the only subject when there's just one (so "pick" mode then only asks for grade).
+  const subs0 = (readiness && readiness.subjects) || [];
+  const [pickedSubject, setPickedSubject] = useState(subs0.length === 1 ? subs0[0].name : null);
+
   if (!ready) {
     return (
       <div className="gate">
@@ -22,5 +38,73 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
       </div>
     );
   }
-  return <Allocate subject={subject} grade={grade} readiness={readiness} onNavigate={onNavigate} />;
+
+  const subjects = (readiness && readiness.subjects) || [];
+
+  // ── G1.9 picker (only when entry.mode === "pick") ──
+  if (entry && entry.mode === "pick") {
+    // Step 1 — which subject? (only the subjects she teaches)
+    const curSub = pickedSubject != null ? subjects.find((s) => s.name === pickedSubject) : null;
+
+    if (!curSub) {
+      return (
+        <div className="gpick">
+          <div className="gpick-hd">
+            <div className="kicker kicker-ochre">Generate · choose what to plan</div>
+            <h2 className="gpick-q">Which subject do you want to plan for?</h2>
+          </div>
+          <div className="gpick-grid">
+            {subjects.map((s) => (
+              <button className="gpick-card" key={s.name} onClick={() => setPickedSubject(s.name)}>
+                <span className="gpick-card-name">{pretty(subjectSlug(s.name))}</span>
+                <span className="gpick-card-meta">{(s.grades || []).length} grade{(s.grades || []).length !== 1 ? "s" : ""}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Step 2 — which grade? (only the grades she teaches for this subject)
+    const grades = curSub.grades || [];
+    const enter = (gradeRoman) => {
+      const sSlug = subjectSlug(curSub.name);
+      const gSlug = gradeSlugOf(gradeRoman);
+      onScope && onScope(sSlug, gSlug);
+      onConsumeEntry && onConsumeEntry();   // entry consumed → Allocate renders for this scope
+      setPickedSubject(null);
+    };
+    // Single grade for this subject → enter directly (effect, not during render).
+    if (grades.length === 1) return <SingleGradeAutoEnter onEnter={() => enter(grades[0].grade)} />;
+    return (
+      <div className="gpick">
+        <div className="gpick-hd">
+          <div className="kicker kicker-ochre">{pretty(subjectSlug(curSub.name))}</div>
+          <h2 className="gpick-q">For which grade do you want to plan?</h2>
+        </div>
+        <div className="gpick-grid">
+          {grades.map((g) => (
+            <button className="gpick-card" key={g.grade} onClick={() => enter(g.grade)}>
+              <span className="gpick-card-name">Grade {gradeUp(g.grade)}</span>
+              <span className="gpick-card-meta">{(g.sections || []).length} section{(g.sections || []).length !== 1 ? "s" : ""}</span>
+            </button>
+          ))}
+        </div>
+        {subjects.length > 1 && (
+          <button className="back gpick-back" onClick={() => setPickedSubject(null)}>← choose a different subject</button>
+        )}
+      </div>
+    );
+  }
+
+  // ── scoped (or already consumed) → the allocation flow for the active subject·grade ──
+  // singleChapter (from a My Week card) rewords G4 + shows the budget anchor.
+  return <Allocate subject={subject} grade={grade} readiness={readiness} onNavigate={onNavigate}
+    singleChapter={!!(entry && entry.single)} />;
+}
+
+// When a chosen subject has exactly one grade, enter it once (in an effect, never during render).
+function SingleGradeAutoEnter({ onEnter }) {
+  useEffect(() => { onEnter(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  return null;
 }

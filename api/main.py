@@ -311,7 +311,11 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
     chapter = {"chapter_number": saved.get("chapter_number"), "chapter_title": saved.get("chapter_title")}
     g = saved.get("grade", grade)
     lp = sub.lesson_plan_to_view(r.get("lesson_plan", {}), grade=g, chapter=chapter)
-    a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter)
+    _lp = r.get("lesson_plan", {})
+    link_context = {"periods": _lp.get("periods", []),
+                    "handoff": r.get("coverage_handoff", _lp.get("coverage_handoff", []))}
+    a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter,
+                               link_context=link_context)
     return {"meta": chapter, "view": ViewModel(lp, a).to_dict()}
 
 

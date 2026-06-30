@@ -41,6 +41,30 @@ export async function getJSON(path, opts) {
   return r.json();
 }
 
+/* ───────── subject·grade coverage (single source of truth) ─────────
+ * Which grades Aruvi actually has chapter content for, per subject (Science → VI–IX, TWAU →
+ * III–V, …). The authority is the backend (GET /subjects/{slug}/grades, derived from the chapter
+ * dirs). BOTH the setup flow (Readiness) and the editor (MyClasses) must restrict grade choices
+ * to this — defined ONCE here so the rule can't drift between the two screens. */
+export const ALL_GRADES = ["III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+export const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
+
+// Module-level cache so we fetch each subject's supported grades at most once per session.
+const _supportedGradesCache = {};   // { slug: ["VI","VII",…] (uppercase Roman) }
+export async function fetchSupportedGrades(subjectName) {
+  const slug = subjectSlug(subjectName);
+  if (!slug) return [];
+  if (_supportedGradesCache[slug]) return _supportedGradesCache[slug];
+  try {
+    const d = await getJSON(`/subjects/${slug}/grades`);
+    const ups = (d.grades || []).map((g) => String(g).toUpperCase());
+    _supportedGradesCache[slug] = ups;
+    return ups;
+  } catch {
+    return [];
+  }
+}
+
 /* Regenerate the denormalized "active subject" projection from a persisted readiness
  * profile. The API stores ONLY the canonical subjects[] (CLOUD_DATA_MODEL.md §2.1); the
  * current consumers (MyPlans.classesFromReadiness, Allocate.weeklyRatioFromReadiness)
