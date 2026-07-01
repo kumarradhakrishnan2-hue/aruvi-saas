@@ -585,3 +585,42 @@ Rather than asking teachers to configure Aruvi before using it, Aruvi gradually 
 The end state is therefore identical.
 
 Only the journey changes.
+
+### Period Notes
+
+Period Notes are short reflections attached to a specific teaching period and written from the **period view after class**. They remain hidden unless the teacher chooses to add or view them. When a note exists, a small 📝 indicator appears; otherwise nothing is shown, avoiding an always-visible empty field.
+
+Their purpose is to capture execution-level observations: time used, materials, student-specific observations, what to continue next class, and reminders for next year. While writing, teachers can peek at the previous and next period's notes using the existing navigation.
+
+### Chapter Notes
+
+Chapter Notes belong to the **Chapter Organization page**, not the everyday teaching view. This placement makes them naturally opt-in—teachers only encounter them when thinking at the chapter level, not while conducting class.
+
+They are accessed through a single collapsed "Chapter Notes" control. The only active prompt occurs at the end of a chapter, offering the teacher an optional opportunity to record reflections. Otherwise, notes are always pull-based. They are intended for broader observations such as recurring student difficulties, useful external materials, and improvements for future years.
+
+### Writing Experience
+
+Both note types use the same simple writing surface: plain text with voice input, multilingual support, a soft limit of about 250 words, and a mobile-first design. Rich formatting, attachments, and advanced editing are intentionally excluded to keep note-taking lightweight. Mathematical symbol support is deferred to a future version.
+
+### Ownership and Scope
+
+The two note types follow the application's two "altitudes."
+
+* **Period Notes** belong to the individual **section's plan instance**, recording what happened in a particular class (e.g., 6A versus 6B).
+* **Chapter Notes** belong to the shared **lesson plan asset**, capturing insights that apply across all sections using that plan.
+
+This eliminates duplication while naturally separating class-specific observations from lesson-level reflections.
+
+### Persistence
+
+Notes always remain with the record they were created for.
+
+If the same lesson plan is reused, notes accumulate over time. If the plan is regenerated because the textbook or structure changes, the old plan and all its notes remain as a dated historical record. Teachers read last year's notes alongside the new plan rather than migrating them, avoiding incorrect mapping between changed period structures.
+
+### Privacy
+
+Notes are private to the teacher and isolated within the school's tenant. They are never shared with administrators or pooled across users. The product should gently encourage non-identifying references to students. Exporting personal notes is planned for a future release.
+
+### Dependencies
+
+The only significant technical requirement is stable period identifiers within a single plan so Period Notes always reconnect to the correct period. Because notes never migrate between different plan records, cross-year re-anchoring is unnecessary. The only deferred implementation item is enhanced subject-symbol input.

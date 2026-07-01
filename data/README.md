@@ -10,6 +10,10 @@ data/
 ├── content/      ← Bucket A: shared, read-only CONTENT (the IP)
 ├── readiness/    ← Bucket B: per-user/tenant STATE (teaching profiles)
 ├── allocations/  ← Bucket B: per-user/tenant STATE (allocation registers)
+├── runtime_data/ ← cost/usage logs (token_log.csv, ask_aruvi.csv, api_rates.json) —
+│                   lifted from the prototype 2026-07-01, NOT yet wired into any SaaS
+│                   endpoint (no live generation or Ask Aruvi yet); provenance + the rate
+│                   table/log schema to reuse once generation lands
 ├── (saved_plans/, pointers/  ← Bucket B, added as those features land)
 └── *.md, *.png   ← design docs (CLOUD_DATA_MODEL.md, flow chart, etc.) — tracked
 ```

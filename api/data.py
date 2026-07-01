@@ -13,6 +13,29 @@ def _isdir(*parts) -> bool:
     return os.path.isdir(os.path.join(DATA_DIR, *parts))
 
 
+_ncf_norms_cache: Optional[Dict[str, Any]] = None
+
+
+def load_ncf_period_norms() -> Dict[str, Any]:
+    """National Curricular Framework period norms (periods/year by subject·stage), founder-
+    supplied Bucket A content. Cached in-process; file only changes via a manual edit."""
+    global _ncf_norms_cache
+    if _ncf_norms_cache is None:
+        p = os.path.join(DATA_DIR, "allocation_norms", "ncf_period_norms.json")
+        try:
+            _ncf_norms_cache = json.load(open(p)).get("subjects", {})
+        except Exception:
+            _ncf_norms_cache = {}
+    return _ncf_norms_cache
+
+
+def ncf_total_periods(subject: str, stage: str) -> Optional[int]:
+    """The NCF-recommended total periods/year for this subject·stage, or None if the norm
+    table has no figure for that combination (e.g. Science has none for preparatory)."""
+    v = load_ncf_period_norms().get(subject, {}).get(stage)
+    return int(v) if v is not None else None
+
+
 def list_grades(subject: str) -> List[str]:
     base = os.path.join(DATA_DIR, "chapters", subject)
     if not os.path.isdir(base):

@@ -259,12 +259,34 @@ def get_grades(subject: str) -> Dict[str, Any]:
 @app.get("/subjects/{subject}/{grade}/chapters")
 def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
     sub = _subject(subject)
+    mappings = data.load_mappings(subject, grade)
     chapters = [
         {"chapter_number": m.get("chapter_number"),
          "chapter_title": m.get("chapter_title", ""),
          "weight": sub.chapter_weight(m)}
-        for m in data.load_mappings(subject, grade)
+        for m in mappings
     ]
+
+    # NCF-suggested estimated teaching periods per chapter (2026-07-01): the NCF period-norms
+    # table (data/content/allocation_norms/ncf_period_norms.json) gives a subject·stage total
+    # for the year; we distribute that total across this grade's chapters using the exact same
+    # effort-index-weighted allocator the Allocate flow uses, so the per-chapter figure is
+    # consistent with how periods actually get allocated. Whole periods only (the allocator's
+    # largest-remainder method already lands on integers, never fractional periods). None when
+    # the norm table has no figure for this subject·stage (e.g. Science·preparatory).
+    try:
+        stage = stage_for(grade)
+    except UnknownGradeError:
+        stage = None
+    ncf_total = data.ncf_total_periods(subject, stage) if stage else None
+    if ncf_total and mappings:
+        allocs = {a.chapter_number: a.periods for a in allocate_for_subject(subject, mappings, ncf_total)}
+        for c in chapters:
+            c["ncf_estimated_periods"] = allocs.get(c["chapter_number"])
+    else:
+        for c in chapters:
+            c["ncf_estimated_periods"] = None
+
     return {"subject": subject, "grade": grade, "chapters": chapters,
             "allocation_basis": sub.allocation_basis(grade)}
 

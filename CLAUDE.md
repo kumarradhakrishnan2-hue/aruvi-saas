@@ -5,6 +5,65 @@ progress is made. A fresh session starts cold — this file is how context carri
 
 ---
 
+## 0. CURRENT DIRECTION — mobile-first, progressive acquisition (2026-07-01) ★ READ FIRST
+
+The product is **pivoting** from an "upfront-profile-first" flow to a **mobile-first,
+progressive-acquisition** model. Full spec: `docs/Aruvi_Mobile_First_Progressive_Acquisition_Model_v0.2.md`
+(read it in sync with `docs/mobile pics/` — the annotated mobile mockups). This does NOT change
+the engine, the subject plugins, the view model, or the ports/adapters — it **re-sequences the
+interaction order and reflows the web UI mobile-first**. §§1–8 below are unchanged and still true;
+§9 (roadmap) and §11 (web arch) are now read *through the lens of this section*.
+
+**The shift (same destination, different journey):**
+- OLD: Profile → Allocate → Generate → Track (asks for a full teaching profile before any value).
+- NEW: **Generate first lesson → attach it to one or more sections → (optionally) arrange the
+  week → teach → the profile fills in as a by-product.** The teacher never feels she is "building
+  a profile"; it accretes from useful work.
+- Governing principle: **benefit first, data second** — reveal only what helps the teacher's very
+  *next* teaching moment.
+
+**Mobile-first is now the primary design target** (was a standing check under §4; now it *drives*
+the design). Assume a teacher on a vertically-held phone during the school day, one-handed.
+Desktop is a larger rendering of the same mobile model; landscape is not a target. Verify every
+UI change at phone widths **first** (stress-test **360×800**, then check 375 / 390 / 412), desktop
+second. Dev workflow: **Chrome + mobile DevTools device mode** (iPhone SE 375, iPhone 14 390,
+Pixel 7 412, custom 360×800 Android for the Indian budget-phone case); final iPhone pass in real
+iOS Safari for safe-area/`100vh`/sticky quirks Blink won't catch. Live render is local
+(`next dev` can't run in the Cowork sandbox — see §11).
+
+**Two product phases (the big structural change):**
+- **Phase 1 — Guided First Experience:** there is **NO app shell** (no sidebar, no tabs, no nav)
+  until the teacher has (a) generated one lesson, (b) attached it to ≥1 section, and (c) completed
+  *or skipped* weekly arrangement. She simply completes one meaningful task. Screens: Welcome →
+  Subject (one) → Grade (one) → Chapter + NCF-default duration/periods (40 min / 12 periods, with
+  an optional "Want to change?" reusing the duration editor) → generate → "Add to Class" section
+  picker → per-section cards → "Arrange my week? / Maybe later".
+- **Phase 2 — Workspace:** once the first lesson is attached, the shell opens. This is the
+  **activation moment**. Nav is a **hamburger sidebar** (My Class · Calendar · Lesson Plans ·
+  Settings · Help). **My Week becomes Home** (no separate home page); it auto-opens to today's
+  weekday. The **Generate tab disappears** — generation becomes a universal **+ Prepare Lesson**
+  action available wherever appropriate.
+
+**Net-new work** (the audit, 2026-07-01): the shell-less first-run wrapper + activation gate; the
+**section-card fan-out** ("Add to Class" → tick sections → one independent lesson card per section)
+and the **+ Prepare Lesson** universal action (neither exists today — sections are currently
+implicit from the upfront readiness profile); the benefit-first Calendar empty state; a mobile
+bottom-tab bar (My Week / My Class / Calendar / Lesson Plans per the mockups). **Reused, re-sequenced:**
+LessonView, MyPlans (→ My Week/Home), MyLessonPlans (→ repository), MyClasses (→ progressively-filled
+profile), MyCalendar, the duration/section/week-grid pieces of Readiness, Allocate's generate path.
+**Retired as the entry point:** the upfront 6-step `Readiness.jsx` gate (its pieces live on inside
+the progressive flow + My Class). Progressive profile = each first-run step quietly appends to the
+canonical `readiness.subjects[]` (no explicit "build profile" step). See MEMORY.md 2026-07-01 for
+the full component map.
+
+**Also specced in v0.2 (deferred UI, note now):** Period Notes (belong to a section's plan
+instance; pull-based, 📝 indicator, written from the period view after class) and Chapter Notes
+(belong to the shared lesson-plan asset; live on the Chapter Organization page, prompted only at
+chapter end). Plain text + voice + multilingual, ~250-word soft cap, no rich formatting. Needs
+stable period identifiers within a plan; notes never migrate across regenerated plans.
+
+---
+
 ## 1. What this is
 
 The greenfield rebuild of **Aruvi** (NCF-aligned lesson planning + assessment for Indian
@@ -68,6 +127,24 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   the suggested-periods group styling).
 - **Output caching** keyed by (subject, grade, chapter, period_profile, constitution_version)
   is the #1 economic lever at seasonal scale — wire it at the service layer when live gen lands.
+- **NCF period norms — wired into first-run's estimated-periods field (2026-07-01)** —
+  `data/content/allocation_norms/ncf_period_norms.json` (+ the original
+  `NCF_adapted_for_Aruvi.xlsx` kept alongside for provenance) holds the National Curricular
+  Framework's recommended teaching periods per subject per stage
+  (preparatory/middle/secondary, in 40-minute periods/year). This is Bucket A read-only
+  CONTENT (§7), founder-supplied. `api/data.py`'s `ncf_total_periods(subject, stage)` reads
+  it; `GET /subjects/{subject}/{grade}/chapters` (api/main.py) uses `stage_for(grade)` to look
+  up the subject·stage total, then runs the SAME effort-index allocator Allocate.jsx uses
+  (`allocate_for_subject`) to distribute that annual total across the grade's chapters by
+  weight — each chapter comes back with `ncf_estimated_periods` (always a whole number; the
+  allocator's largest-remainder method sums exactly to the NCF total, no separate rounding
+  needed). `FirstRun.jsx`'s chapter step reads this per chosen chapter to set the "Estimated
+  teaching periods" default (falls back to the flat `DEFAULT_PERIODS` placeholder only when
+  the norm table has no figure for that subject·stage, e.g. Science·preparatory,
+  TWAU·middle/secondary, Social Sciences·preparatory — all `null` in the JSON). NOT yet wired
+  into `Allocate.jsx`'s G4 step (its "periods in total" input is still teacher-entered) — that
+  remains a follow-on. Note the English figures are a three-language-formula average
+  (documented in the JSON's `_meta.note_on_languages`), not English-only.
 
 ---
 
@@ -134,6 +211,10 @@ data/                  ★ the single data root (everything that migrates to clo
   readiness/           Bucket B: per-tenant teaching profiles  → {tenant}/{user}/profile.json
   allocations/         Bucket B: per-tenant allocation registers → {tenant}/{user}/{subject}/{grade}/
 docs/                  architecture-plan.md, ALLOCATION_REPORT_*.md, flow PNG, mockups/ (design refs, not loaded by code)
+cowork prompts/        ★ authoring prompts for the `chapter` skill (chapter_summary +
+                       competency_mapping/effort_index, per subject/stage) — copied over
+                       wholesale from Project Aruvi 2026-07-01 (see §10); this is now the
+                       authoritative copy the `chapter` skill reads from, NOT Project Aruvi's.
 CLAUDE.md MEMORY.md CLOUD_DATA_MODEL.md   standing docs (stay at root by convention)
 ```
 
@@ -201,6 +282,12 @@ parity is verified routinely, not just at the eventual Expo milestone.
 ---
 
 ## 9. Status & roadmap
+
+> ⚠️ **Re-prioritized 2026-07-01 by §0 (mobile-first progressive acquisition).** The "Done"
+> capabilities below still stand, but the *sequence* they're presented in changes: the immediate
+> track is now Phase 1 (shell-less guided first experience) + Phase 2 (workspace shell, My Week as
+> Home, + Prepare Lesson). Auth/live-gen/PDFs/payments (the "Next" list) remain, but are read after
+> the mobile-first re-sequencing lands. Treat §0 as the current north star.
 
 **Done:** engine + all 5 subjects (parity-tested) · grade→stage · allocate (multi-row
 schedule) · FastAPI · HTML redesign (warm-editorial) · factors note · allocation-report
@@ -275,12 +362,50 @@ allocate → accept → hub → generate → My Plans dashboard → teach (Learn
 
 `../Project Aruvi` (tag `prototype-final`) is the source of: the constitutions, the
 `mirror/` data, and the behavioural spec for rendering. It still runs independently. Lift
-from it; don't depend on its code. Authoring of new mirror data still happens with the
-prototype's in-house pipeline.
+from it; don't depend on its code.
+
+**Authoring prompts moved home 2026-07-01.** The `cowork prompts/` folder (the `chapter`
+skill's per-subject/stage authoring prompts — chapter_summary + competency_mapping/
+effort_index) was copied wholesale from `../Project Aruvi/cowork prompts/` into this repo's
+own `cowork prompts/` (§5). The `chapter` skill's own source
+(`../Project Aruvi/Aruvi skills/chapter/SKILL.md` — NOT the read-only cached skill copy
+loaded into a live session, which can't be edited from inside Cowork) now resolves its
+subject→prompt-file path table against **this repo's root**, not Project Aruvi's. Edit
+prompts here going forward (e.g. the English middle Step 7d chapter-level effort-signal
+addition, 2026-07-01) — Project Aruvi's copy is now stale and should not be edited. Note the
+prompt files' own internal path tables (chapter PDFs, framework, mirror output — all
+`mnt/data/...`-style) are unchanged; only the root this skill looks under for the prompt
+file itself moved. Authoring of brand-new mirror data (running a chapter through PDFs for
+the first time) still ultimately draws on `../Project Aruvi/knowledge_commons/` for source
+PDFs — that dependency is intentional and not yet migrated (see the open item below).
+
+**Remaining `../Project Aruvi` dependencies, audited 2026-07-01** — everything else is
+either historical/documentation-only or already severed:
+- **Live/runtime:** none. `api/config.py`'s `DATA_DIR` defaults to this repo's own
+  `data/content/` (§7); no env var or sibling folder needed to run the app (confirmed by
+  grep — the only `ARUVI_DATA_DIR=../Project Aruvi/...` reference left was a stale
+  MEMORY.md smoke-test command from before the 2026-06-28 `data/` migration, now corrected).
+- **Authoring-time, still real and NOT yet migrated:** `../Project Aruvi/knowledge_commons/`
+  — the source textbook PDFs, source DOCX constitutions, and framework PDFs the `chapter`
+  skill reads when authoring a brand-new chapter's summary/mapping from scratch. This is the
+  one genuine standing dependency; migrating it (copying `knowledge_commons/` here too) is
+  an open item, not yet done.
+- **Documentation-only (no action needed):** `docs/allocation reports/
+  ALLOCATION_REPORT_DESIGN_NOTES.md`'s comparison notes, and CLAUDE.md's own historical
+  references in §1/§7 (the prototype as authoring source / lifted-IP framing) — these
+  describe provenance, they don't drive any runtime or authoring-time file read.
 
 ---
 
 ## 11. Web app architecture (post 2026-06-27 planning-layer rebuild)
+
+> ⚠️ **Superseding direction 2026-07-01 (§0).** This section describes the *current* two-tab,
+> readiness-gated shell. The mobile-first pivot changes the top-level IA: the **two top tabs
+> (My Plans / Generate) go away**, replaced by a hamburger sidebar + **My Week as Home** and a
+> universal **+ Prepare Lesson** action; the **upfront `Readiness` gate is retired** in favour of
+> a shell-less Phase-1 first-run that only opens the shell once a lesson is attached to a section.
+> The component *inventory* below is still accurate and is the reuse map — read it alongside §0
+> and the 2026-07-01 MEMORY.md audit.
 
 The visual + behavioural spec is `docs/mockups/index.html` (screen-by-screen
 mockups) and `docs/aruvi_saas_full_lifecycle_flow.png` (the conceptual flow). The

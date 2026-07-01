@@ -106,9 +106,25 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     return (<div><button className="back" onClick={onExit}>← back</button><div className="empty">This plan has no learning units.</div></div>);
   }
 
-  // ── Assessment artifact (3b) ──
+  // The unit the teacher is currently on (also the assessment scope — see below).
+  const curUnit = units[cur] || units[0];
+
+  // ── Assessment artifact (3b) — SCOPED to the current learning unit ──
+  // The link resolver (aruvi_core, architecture-plan.md §Link resolution) stamps every item
+  // with meta.linked_periods[] — the period set it belongs to. Each LU here IS one period
+  // (its `number`), so we show ONLY the items whose linked_periods include this unit's period.
+  // This is the fix for "the assessment showed every item": it now tags along with the unit.
   if (showAssess) {
     const a = view.assessment;
+    const pnum = curUnit.number;
+    const allItems = a.groups.flatMap((g) => g.items);
+    // Items linked to THIS unit's period; fall back to all items only if nothing carries link
+    // metadata (e.g. an older view served before the resolver shipped) so we never show nothing
+    // by mistake on legacy data.
+    const anyLinked = allItems.some((it) => Array.isArray(it.meta?.linked_periods) && it.meta.linked_periods.length);
+    const items = anyLinked
+      ? allItems.filter((it) => (it.meta?.linked_periods || []).includes(pnum))
+      : allItems;
     return (
       <div className="assess">
         <div className="assess-hd">
@@ -117,15 +133,17 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
             <span className="assess-tag">ASSESSMENT · TAGS ALONG</span>
           </div>
           <div className="assess-title">{a.chapter_title || lp.chapter_title}</div>
-          <div className="assess-sub">Checks whether the class can transfer what this unit built. Each item names the outcome it tests. No marks, no scoring — a teaching aid.</div>
+          <div className="assess-sub">For <b>{curUnit.title || `Learning Unit ${cur + 1}`}</b> — checks whether the class can transfer what this unit built. Each item names the outcome it tests. No marks, no scoring — a teaching aid.</div>
         </div>
         <div className="assess-body">
-          {a.groups.map((g, gi) => g.items.map((it, ii) => (
-            <div className="assess-card" key={`${gi}-${ii}`}>
-              {it.implied_lo ? (
+          {items.length === 0 ? (
+            <div className="assess-empty">No assessment item tags along with this unit. Move through the unit — items appear at the units that build the outcome they test.</div>
+          ) : items.map((it, ii) => (
+            <div className="assess-card" key={ii}>
+              {(it.meta?.linked_lo || it.implied_lo) ? (
                 <div className="assess-lo">
                   <span className="assess-lo-k">LEARNING OUTCOME</span>
-                  <div className="assess-lo-t">{it.implied_lo}</div>
+                  <div className="assess-lo-t">{it.meta?.linked_lo || it.implied_lo}</div>
                 </div>
               ) : null}
               <div className="assess-qtype">{it.item_type}</div>
@@ -141,7 +159,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
                 </div>
               ) : null}
             </div>
-          )))}
+          ))}
           <button className="assess-backbtn" onClick={() => setShowAssess(false)}>← Back to lesson</button>
         </div>
       </div>
@@ -184,7 +202,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   }
 
   // ── Tracking view (Screen 3) — current unit only + completion model ──
-  const u = units[cur];
+  const u = curUnit;
   const stageKicker = (u.context || "").toUpperCase();
   const total = units.length;
   const done = cur;                          // units completed before the current one

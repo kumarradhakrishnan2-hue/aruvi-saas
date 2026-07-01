@@ -20,6 +20,7 @@ import copy
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
+from ...link_resolver import norm_code, stamp
 from ...normalize import as_list, classify_stimulus, normalize_options
 from ...ports import Prompt
 from ...view_model import (
@@ -193,7 +194,24 @@ class EnglishSubject:
             total_periods=len(periods), groups=sections,
         )
 
-    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter) -> AssessmentView:
+    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
+                           link_context: Dict[str, Any] = None) -> AssessmentView:
+        # Rule 7 — TWO-key period-field join: the item carries (source_section_id, source_spine);
+        # match it to a period where period.section_id == source_section_id AND source_spine is in
+        # period.spines_taught[]. LO comes off the item's own source_lo. Composite index key is
+        # "<section_id>|<spine>".
+        ctx = link_context or {}
+        period_index: Dict[str, List[int]] = {}
+        section_index: Dict[str, List[int]] = {}  # section_id → all its periods (fallback)
+        for p in ctx.get("periods", []) or []:
+            pn = p.get("period_number")
+            sid = norm_code(p.get("section_id"))
+            if pn is None:
+                continue
+            section_index.setdefault(sid, []).append(int(pn))
+            for sp in (p.get("spines_taught") or []):
+                period_index.setdefault(f"{sid}|{norm_code(sp)}", []).append(int(pn))
+
         spine_groups = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
         groups: List[AssessmentGroup] = []
         for sg in spine_groups or []:
@@ -204,19 +222,27 @@ class EnglishSubject:
             )
             for it in sg.get("items", []):
                 options, answer = normalize_options(it.get("options"))
+                lo = it.get("source_lo", "")
+                sid = norm_code(it.get("source_section_id"))
+                key = f"{sid}|{norm_code(it.get('source_spine'))}"
+                meta = {"source_section_id": it.get("source_section_id", ""),
+                        "source_section_title": it.get("source_section_title", ""),
+                        "source_spine": it.get("source_spine", ""),
+                        "transcript_ref": it.get("transcript_ref", ""),
+                        "id": it.get("id", "")}
+                # Exact (section, spine) period; if the LP never teaches that spine in that
+                # section, fall back to ANY period of the section so the item still anchors there.
+                linked = period_index.get(key) or section_index.get(sid, [])
+                stamp(meta, linked, lo)
                 g.items.append(AssessmentItem(
                     prompt=it.get("item_stem", ""),
                     item_type=it.get("question_type", ""),
                     options=options,
                     answer=answer,
                     teacher_guide=as_list(it.get("teacher_guide")),
-                    implied_lo=it.get("source_lo", ""),
+                    implied_lo=lo,
                     visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
-                    meta={"source_section_id": it.get("source_section_id", ""),
-                          "source_section_title": it.get("source_section_title", ""),
-                          "source_spine": it.get("source_spine", ""),
-                          "transcript_ref": it.get("transcript_ref", ""),
-                          "id": it.get("id", "")},
+                    meta=meta,
                 ))
             groups.append(g)
         return AssessmentView(

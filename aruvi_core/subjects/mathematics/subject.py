@@ -16,6 +16,9 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
 from ...grades import stage_for
+from ...link_resolver import (
+    handoff_period_index, norm_code, period_field_index, stamp,
+)
 from ...normalize import as_list, band_lines, classify_stimulus, normalize_options, text_lines
 from ...ports import Prompt
 from ...view_model import (
@@ -126,11 +129,13 @@ class MathematicsSubject:
         )
 
     # ── Assessment → view (dispatch by stage) ───────────────────────────────────
-    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter) -> AssessmentView:
+    def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
+                           link_context: Dict[str, Any] = None) -> AssessmentView:
+        ctx = link_context or {}
         if stage_for(grade) == "secondary":
-            groups = self._secondary_assess(raw)
+            groups = self._secondary_assess(raw, ctx)   # rule 6
         else:
-            groups = self._middle_assess(raw)
+            groups = self._middle_assess(raw, ctx, grade)  # rules 4 (middle) & 5 (prep)
         return AssessmentView(
             subject="mathematics", grade=grade,
             chapter_number=chapter.get("chapter_number", 0),
@@ -138,7 +143,20 @@ class MathematicsSubject:
             groups=groups,
         )
 
-    def _middle_assess(self, raw) -> List[AssessmentGroup]:
+    def _middle_assess(self, raw, ctx, grade) -> List[AssessmentGroup]:
+        # Rules 4 (middle) & 5 (preparatory) — period-field join, no handoff. Each leaf item
+        # carries `section_ref`; match it to the period's own section field:
+        #   MIDDLE  → period.textbook_segments[].ref   ("section 2.1")
+        #   PREP    → period.section_refs[]             ("S2")
+        # Both normalize through norm_code so "section 2.1"/"2.1" and "S2"/"s2" converge.
+        periods = ctx.get("periods", []) or []
+        prep = stage_for(grade) == "preparatory"
+        if prep:
+            extract = lambda p: p.get("section_refs", []) or []
+        else:
+            extract = lambda p: [seg.get("ref", "") for seg in (p.get("textbook_segments") or [])]
+        period_index = period_field_index(periods, extract)
+
         section_groups = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
         out: List[AssessmentGroup] = []
         for sg in section_groups or []:
@@ -149,19 +167,27 @@ class MathematicsSubject:
             )
             for it in sg.get("items", []):
                 options, answer = normalize_options(it.get("options"))
+                ref = it.get("section_ref", "")
+                meta = {"section_ref": ref, "goal": it.get("goal", ""),
+                        "exercise": it.get("exercise", "")}
+                stamp(meta, period_index.get(norm_code(ref), []), None)  # rules 4/5: no LO
                 g.items.append(AssessmentItem(
                     prompt=it.get("prompt", ""),
                     item_type=it.get("question_type", ""),
                     options=options, answer=answer,
                     teacher_guide=as_list(it.get("teacher_guide")),
                     visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
-                    meta={"section_ref": it.get("section_ref", ""), "goal": it.get("goal", ""),
-                          "exercise": it.get("exercise", "")},
+                    meta=meta,
                 ))
             out.append(g)
         return out
 
-    def _secondary_assess(self, raw) -> List[AssessmentGroup]:
+    def _secondary_assess(self, raw, ctx) -> List[AssessmentGroup]:
+        # Rule 6 — handoff-bridged on the INTEGER section_number → period_numbers (NEVER the
+        # section_anchor/section_ref text, per the plan's correction). Falls back to the periods'
+        # section_anchor only if a handoff is absent — but secondary plans carry handoffs.
+        handoff = ctx.get("handoff", []) or []
+        period_index = handoff_period_index(handoff, "section_number")
         questions = raw.get("questions", raw) if isinstance(raw, dict) else raw
         out: List[AssessmentGroup] = []
         index: Dict[str, AssessmentGroup] = {}
@@ -180,15 +206,20 @@ class MathematicsSubject:
             guide = (as_list(q.get("look_for")) + as_list(q.get("expected_elements"))
                      + as_list(q.get("scaffold")) + as_list(q.get("guide"))
                      + as_list(q.get("method_one_line")))
+            sn = q.get("section_number")
+            lo = q.get("implied_lo_assessed", "")
+            meta = {"competency": q.get("competency", {}),
+                    "cognitive_demand": q.get("cognitive_demand", "")}
+            linked = period_index.get(int(sn), []) if sn is not None else []
+            stamp(meta, linked, lo)
             index[key].items.append(AssessmentItem(
                 prompt=q.get("question_text", ""),
                 item_type=q.get("question_type", ""),
                 options=options,
                 answer=str(q.get("expected_answer") or answer),
                 teacher_guide=guide,
-                implied_lo=q.get("implied_lo_assessed", ""),
+                implied_lo=lo,
                 visual_stimulus=classify_stimulus(q.get("visual_stimulus", "")),
-                meta={"competency": q.get("competency", {}),
-                      "cognitive_demand": q.get("cognitive_demand", "")},
+                meta=meta,
             ))
         return out

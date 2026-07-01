@@ -5,6 +5,7 @@ import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import StatePill from "./components/StatePill";
 import Login from "./components/Login";
+import FirstRun from "./components/FirstRun";
 import SidebarNav from "./components/SidebarNav";
 import MyClasses from "./components/MyClasses";
 import MyCalendar from "./components/MyCalendar";
@@ -21,6 +22,14 @@ import MyLessonPlans from "./components/MyLessonPlans";
  * Readiness gates Generate, and is PERSISTED server-side per user (GET/POST /readiness): the
  * teaching profile (subjects/grades/sections/durations) is loaded when a user signs in, so it
  * survives a refresh, a server restart, or a fresh browser — never lost on session cut. */
+/* Activation flag (Phase 1, §0): the shell stays hidden until the teacher has completed the
+ * guided first run. Backed by localStorage per user for now (a stub, like the LU pointer —
+ * migrates to server state once section cards persist). A user who already has a readiness
+ * profile is treated as activated, so existing set-up teachers skip first-run. */
+const activatedKey = (u) => `aruvi_activated_${u}`;
+const getActivated = (u) => { try { return typeof window !== "undefined" && window.localStorage.getItem(activatedKey(u)) === "1"; } catch { return false; } };
+const setActivatedLS = (u) => { try { window.localStorage.setItem(activatedKey(u), "1"); } catch {} };
+
 export default function Home() {
   // null = "haven't checked localStorage yet" (avoids a login-screen flash on refresh).
   const [user, setUserState] = useState(null);
@@ -31,6 +40,8 @@ export default function Home() {
   const [tab, setTab] = useState("myplans");
   const [ready, setReady] = useState(false);      // readiness flag — rehydrated per user from GET /readiness
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
+  const [readinessLoaded, setReadinessLoaded] = useState(false); // has GET /readiness resolved? (gates the first-run decision, avoids a flash)
+  const [activatedFlag, setActivatedFlag] = useState(false);     // localStorage activation flag for this user (Phase 1 gate)
   const [navCollapsed, setNavCollapsed] = useState(false); // below-logo sidebar collapse state
   const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | "lessonplans" | null — sidebar-launched view
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
@@ -49,14 +60,26 @@ export default function Home() {
   // for another after a sign-out/sign-in.
   useEffect(() => {
     if (!user) return;
-    setReady(false); setReadiness(null);
+    setReady(false); setReadiness(null); setReadinessLoaded(false);
+    setActivatedFlag(getActivated(user));
     getJSON("/readiness").then((d) => {
       if (d && d.ready && d.readiness) {
         setReadiness(projectReadiness(d.readiness));
         setReady(true);
       }
-    }).catch(() => {});  // no saved profile / API down → stay in the not-ready setup flow
+    }).catch(() => {})  // no saved profile / API down → stay in the not-ready setup flow
+      .finally(() => setReadinessLoaded(true));
   }, [user]);
+
+  // First-run complete: mark the teacher activated so the shell opens. (This increment flips
+  // the flag and enters the workspace; the generate → preview → section-cards → arrange-week
+  // sequence is wired next — the selection is captured here for that handoff.)
+  const onFirstRunComplete = (selection) => {
+    if (user) setActivatedLS(user);
+    setActivatedFlag(true);
+    if (selection && selection.subject) setSubject(selection.subject);
+    if (selection && selection.grade) setGrade(selection.grade);
+  };
 
   useEffect(() => { if (!user) return;
     getJSON("/subjects").then((d) => { setSubjects(d.subjects); setSubject(d.subjects.includes("science") ? "science" : d.subjects[0]); }).catch(() => {});
@@ -132,13 +155,21 @@ export default function Home() {
   const onEnter = (id) => { setUser(id); setUserState(id); };
   const onSignOut = () => {
     clearUser(); setUserState("");
-    setReady(false); setReadiness(null); setSubjects([]); setSubject(""); setTab("myplans");
+    setReady(false); setReadiness(null); setReadinessLoaded(false); setActivatedFlag(false);
+    setSubjects([]); setSubject(""); setTab("myplans");
   };
 
   // Still restoring from localStorage — render nothing for a beat (no login flash).
   if (user === null) return null;
   // Not signed in → the portal.
   if (!user) return <Login onEnter={onEnter} />;
+  // Signed in, but wait for GET /readiness to resolve before deciding first-run vs shell
+  // (prevents an already-set-up teacher from flashing the guided first run).
+  if (!readinessLoaded) return null;
+  // Phase 1 gate (§0): no app shell until activated. A teacher with an existing readiness
+  // profile counts as activated (skips first-run); a brand-new teacher gets the shell-less
+  // Guided First Experience and no header/tabs/sidebar until she finishes it.
+  if (!ready && !activatedFlag) return <FirstRun user={user} onComplete={onFirstRunComplete} onSignOut={onSignOut} />;
 
   const TABS = [{ id: "myplans", label: "My Plans" }, { id: "generate", label: "Generate" }];
 

@@ -1,5 +1,11 @@
 /* ───────── shared formatting helpers ───────── */
-export const API = "http://localhost:8000";
+/* Derive the API host from whatever host the browser loaded the page from, so this works
+ * unmodified on localhost, on the Mac's LAN IP (mobile testing over WiFi), and later on a
+ * real domain — no hand-editing an IP address per session. */
+export const API =
+  typeof window !== "undefined"
+    ? `http://${window.location.hostname}:8000`
+    : "http://localhost:8000";
 export const ROMAN = ["iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
 export const pretty = (s) => (s || "").split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
