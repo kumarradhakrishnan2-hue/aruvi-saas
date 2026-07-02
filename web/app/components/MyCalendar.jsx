@@ -1,10 +1,14 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
-/* ───────── MyCalendar — read-only weekly timetable (2026-06-28) ─────────
- * The teacher's whole week at a glance. Rows = Grade·Section (e.g. "6A"), columns = the six
- * weekdays. Each filled cell is the class that section meets that day, showing the subject name
- * and the period duration. View-only: editing the schedule lives in My Class → Section day grids.
+/* ───────── MyCalendar — read-only weekly timetable (2026-06-28, transposed 2026-07-02) ─────────
+ * The teacher's whole week at a glance — Grade·Section (e.g. "6A") crossed with the six weekdays.
+ * Each filled cell is the class that section meets that day, showing the subject name and the
+ * period duration. View-only: editing the schedule lives in My Class → Section day grids.
+ *
+ * ORIENTATION is responsive (matches FirstRun's screen-6 WeekGrid): on a phone, days are ROWS
+ * and Grade·Sections are COLUMNS (a short six-row list scrolls better than sideways-scrolling
+ * every day at once); on desktop it's the reverse — sections as rows, days as columns.
  *
  * Built straight off the canonical readiness profile (readiness.subjects[]) — the same shape
  * MyClasses edits:
@@ -13,10 +17,12 @@ import { useState, useMemo } from "react";
  * Because one teacher teaches each section, at most one subject meets a given Grade·Section on a
  * given day, so every cell holds a single class (no stacking needed).
  *
- * COLOUR: each subject gets a colour FAMILY (auto-assigned in encounter order from a fixed
- * palette); within a family, grades are shaded darkest→lightest by grade order, so e.g. Science
- * Grade 6 and Grade 5 are two greens. Computed inline as CSS custom properties so the stylesheet
- * stays generic.
+ * COLOUR (rules tightened 2026-07-02): each subject gets a colour FAMILY (auto-assigned in
+ * encounter order from a fixed palette). Within a family, grades are normally shaded
+ * darkest→lightest by grade order (higher grade = darker), and sections within a grade share
+ * its shade. The one exception: with a SINGLE subject and a SINGLE grade, there's nothing left
+ * to tell sections apart by, so sections instead each get their own hue from the palette rather
+ * than shades of one. Computed inline as CSS custom properties so the stylesheet stays generic.
  *
  * Props: readiness — the projection from page.jsx (carries .subjects[] canonical).
  */
@@ -46,22 +52,54 @@ function shade(fam, idx, total) {
   return { bg, ink };
 }
 
-// Flatten readiness into: rows (one per Grade·Section) + a colour map per (subject,grade).
+// A single fixed-lightness fill for a family — used where SECTIONS need to read as genuinely
+// different colours (not lighter/darker cousins of one hue), which only happens in the one-
+// subject-one-grade case below (there's nothing else left in view to tell sections apart by).
+function familyColor(fam) {
+  const L = 44;
+  const bg = `hsl(${fam.h} ${fam.s}% ${L}%)`;
+  const ink = L < 52 ? "#fbf8f1" : "#23201a";
+  return { bg, ink };
+}
+
+const tagOf = (g, sec) => sec.tag || `${gradeNum(g.grade)}${sec.sec || ""}`;
+
+// Flatten readiness into: rows (one per Grade·Section) + a colour map. Colour rules (2026-07-02):
+//   • one subject, one grade   → each SECTION gets its own hue (nothing else to tell them apart by).
+//   • one subject, many grades → grades shade the subject's one hue (higher grade = darker);
+//     sections within a grade share their grade's shade.
+//   • many subjects            → each subject gets its own hue; grades within it shade that hue
+//     (higher grade = darker); sections within a grade share their grade's shade.
 function buildModel(subjects) {
-  // 1) assign a colour family per subject (encounter order), and shades per grade within it.
-  const colorOf = {};            // `${subject}__${grade}` -> {bg, ink}
-  const legend = [];             // [{ subject, grades:[{grade, bg, ink}] }]
+  const singleSubject = subjects.length === 1;
+  const singleGrade = singleSubject && (subjects[0].grades || []).length === 1;
+
+  // 1) assign colour(s) per subject — keyed by grade normally, or by section in the
+  //    single-subject-single-grade special case (see rules above).
+  const colorOf = {};            // `${subject}__${grade}` (or `…__${sectionTag}`) -> {bg, ink}
+  const legend = [];             // [{ subject, grades:[{grade, bg, ink}] }] — feeds filter chips/totals
   subjects.forEach((s, si) => {
     const fam = FAMILIES[si % FAMILIES.length];
-    const gsorted = [...(s.grades || [])].sort((a, b) => gradeNum(a.grade) - gradeNum(b.grade));
-    // darkest = HIGHEST grade (e.g. "darker green for 6A, lighter for 5B") → reverse for idx
-    const order = [...gsorted].sort((a, b) => gradeNum(b.grade) - gradeNum(a.grade));
     const entry = { subject: s.name, grades: [] };
-    order.forEach((g, idx) => {
-      const sh = shade(fam, idx, order.length);
-      colorOf[`${s.name}__${g.grade}`] = sh;
-      entry.grades.push({ grade: g.grade, ...sh });
-    });
+
+    if (singleGrade) {
+      const g = s.grades[0];
+      const secsSorted = [...(g.sections || [])].sort((a, b) => tagOf(g, a).localeCompare(tagOf(g, b)));
+      secsSorted.forEach((sec, idx) => {
+        colorOf[`${s.name}__${g.grade}__${tagOf(g, sec)}`] = familyColor(FAMILIES[idx % FAMILIES.length]);
+      });
+      const rep = secsSorted.length ? colorOf[`${s.name}__${g.grade}__${tagOf(g, secsSorted[0])}`] : familyColor(fam);
+      entry.grades.push({ grade: g.grade, ...rep });
+    } else {
+      const gsorted = [...(s.grades || [])].sort((a, b) => gradeNum(a.grade) - gradeNum(b.grade));
+      // darkest = HIGHEST grade (e.g. "darker green for 6A, lighter for 5B") → reverse for idx
+      const order = [...gsorted].sort((a, b) => gradeNum(b.grade) - gradeNum(a.grade));
+      order.forEach((g, idx) => {
+        const sh = shade(fam, idx, order.length);
+        colorOf[`${s.name}__${g.grade}`] = sh;
+        entry.grades.push({ grade: g.grade, ...sh });
+      });
+    }
     legend.push(entry);
   });
 
@@ -72,15 +110,16 @@ function buildModel(subjects) {
   subjects.forEach((s) => {
     (s.grades || []).forEach((g, gi) => {
       (g.sections || []).forEach((sec, secIdx) => {
-        const tag = sec.tag || `${gradeNum(g.grade)}${sec.sec || ""}`;
+        const tag = tagOf(g, sec);
         if (!rowMap.has(tag)) rowMap.set(tag, { tag, gradeNum: gradeNum(g.grade), subjSet: new Set(), days: DAYS.map(() => null) });
         const row = rowMap.get(tag);
         const gridRow = ((s.grids || [])[gi] || [])[secIdx] || [];
+        const colorKey = singleGrade ? `${s.name}__${g.grade}__${tag}` : `${s.name}__${g.grade}`;
         DAYS.forEach((_, c) => {
           const di = gridRow[c];
           if (di != null && di >= 0) {
             const mins = (g.durations || [])[di] || 0;
-            const sh = colorOf[`${s.name}__${g.grade}`] || {};
+            const sh = colorOf[colorKey] || {};
             row.days[c] = { subject: s.name, mins, ...sh };
             row.subjSet.add(s.name);
             if (!totals[s.name]) totals[s.name] = { subject: s.name, periods: 0, mins: 0 };
@@ -113,9 +152,28 @@ const fmtHrs = (mins) => {
 const SUBJ_SHORT = { "Social Sciences": "Soc. Sci.", "The World Around Us": "TWAU", "Mathematics": "Maths" };
 const shortSubj = (n) => SUBJ_SHORT[n] || n;
 
+// Same responsive check FirstRun's screen-6 WeekGrid uses (720px, matching the shell's own
+// mobile breakpoint) — drives the row/column transpose below. Defaults to mobile (true) before
+// the window is known, matching the app's mobile-first stance.
+function useIsMobile(bp) {
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== "undefined" ? window.innerWidth <= bp : true));
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia(`(max-width: ${bp}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    if (mq.addEventListener) mq.addEventListener("change", update); else mq.addListener(update);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", update); else mq.removeListener(update);
+    };
+  }, [bp]);
+  return isMobile;
+}
+
 export default function MyCalendar({ readiness }) {
   const subjects = (readiness && readiness.subjects) || [];
   const { rows, legend } = useMemo(() => buildModel(subjects), [subjects]);
+  const isMobile = useIsMobile(720);
 
   const [gradeFilter, setGradeFilter] = useState("all");     // a grade number, or "all"
   const [subjectFilter, setSubjectFilter] = useState("all"); // a subject name, or "all"
@@ -182,29 +240,40 @@ export default function MyCalendar({ readiness }) {
           </div>
 
           <div className="cal-scroll">
+            {/* Transposed by viewport: phone = days as rows / sections as columns (a short
+                six-row list, scrolled once per day); desktop = sections as rows / days as
+                columns (the original layout). .cal-rowhd's existing sticky-left CSS keeps
+                whichever label column is showing pinned in view either way. */}
             <table className="caltable">
               <thead>
                 <tr>
-                  <th className="cal-rowhd">Class</th>
-                  {DAYS.map((d) => <th key={d} className="cal-dayhd">{d}</th>)}
+                  <th className="cal-rowhd">{isMobile ? "Day" : "Class"}</th>
+                  {(isMobile ? shownRows.map((r) => r.tag) : DAYS).map((c) => (
+                    <th key={c} className="cal-dayhd">{c}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {shownRows.map((row) => (
-                  <tr key={row.tag}>
+                {(isMobile ? DAYS : shownRows.map((r) => r.tag)).map((r, ri) => (
+                  <tr key={r}>
                     <th className="cal-rowhd">
-                      <span className="cal-rowhd-tag">{row.tag}</span>
+                      <span className="cal-rowhd-tag">{r}</span>
                     </th>
-                    {row.days.map((cell, c) => (
-                      <td key={c} className="cal-cell">
-                        {cell && (
-                          <div className="cal-box" style={{ background: cell.bg, color: cell.ink }}>
-                            <span className="cal-box-subj">{shortSubj(cell.subject)}</span>
-                            {cell.mins != null && <span className="cal-box-min">{cell.mins} min</span>}
-                          </div>
-                        )}
-                      </td>
-                    ))}
+                    {(isMobile ? shownRows : DAYS).map((_, ci) => {
+                      const rowIdx = isMobile ? ci : ri;
+                      const dayIdx = isMobile ? ri : ci;
+                      const cell = shownRows[rowIdx] ? shownRows[rowIdx].days[dayIdx] : null;
+                      return (
+                        <td key={ci} className="cal-cell">
+                          {cell && (
+                            <div className="cal-box" style={{ background: cell.bg, color: cell.ink }}>
+                              <span className="cal-box-subj">{shortSubj(cell.subject)}</span>
+                              {cell.mins != null && <span className="cal-box-min">{cell.mins} min</span>}
+                            </div>
+                          )}
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>

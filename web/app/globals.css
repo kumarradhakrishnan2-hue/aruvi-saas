@@ -51,6 +51,19 @@ body {
 .hdr-user-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
 .hdr-user-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 4px 0; }
 .hdr-user-logout:hover { color: var(--clay); }
+
+/* ── Phase 2 shell header ("side bar.jpg") — hamburger always-open trigger, centered
+   brand, bell right. Replaces the old logo-row + separate tab row. ── */
+.hdr-shell { justify-content: flex-start; }
+.hdr-shell .hamb { flex-shrink: 0; margin-right: 0; }
+.hdr-brand-center { flex: 1; justify-content: center; text-align: center; }
+.hdr-bell {
+  flex-shrink: 0; font-size: 17px; line-height: 1; background: none; border: none;
+  color: var(--ink-soft); cursor: pointer; padding: 4px; opacity: .55;
+}
+.hdr-bell:hover:not(:disabled) { opacity: 1; color: var(--pine); }
+.hdr-bell:disabled { cursor: default; }
+
 label.fld { display: flex; flex-direction: column; gap: 4px; }
 label.fld > span { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft); }
 select, input[type="number"] {
@@ -188,6 +201,46 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: rela
 .hamb span { display: block; height: 2px; width: 20px; background: var(--pine-d); border-radius: 2px; }
 .hamb:hover span { background: var(--clay); }
 
+/* ── Phase 2 overlay drawer (replaces the old push-layout bodyrail) ──
+   Full-screen backdrop + a fixed-width panel sliding in from the left; closed by clicking
+   the backdrop, the × button, or picking any nav item (page.jsx's goEdit/goWeek/onSignOut
+   all close it). Not a layout participant — content width never shifts when it opens. */
+.drawer-bg { position: fixed; inset: 0; background: rgba(31,42,36,.4); z-index: 30; display: flex; }
+.drawer {
+  width: 280px; max-width: 84vw; height: 100%; background: var(--paper);
+  border-right: 1px solid var(--line); box-shadow: 8px 0 28px -18px rgba(31,42,36,.4);
+  display: flex; flex-direction: column; padding: 0 22px 22px; animation: drawer-in .18s ease;
+}
+@keyframes drawer-in { from { transform: translateX(-16px); opacity: .4; } to { transform: translateX(0); opacity: 1; } }
+.drawer-hd { display: flex; align-items: center; justify-content: space-between; padding: 18px 0 20px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.drawer-close { font-family: var(--f-display); font-size: 24px; line-height: 1; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 0 4px; }
+.drawer-close:hover { color: var(--clay); }
+.drawer .sbn { padding-top: 6px; }
+
+/* subject·grade scope pills — now a standalone strip above Generate's own content, since
+   there's no tab row to anchor them to anymore */
+.hdr-scope-standalone { padding: 14px 34px 0; }
+@media (max-width: 600px) { .hdr-scope-standalone { padding: 12px 18px 0; } }
+
+/* ── Mobile bottom tab bar — My Week / My Class / Calendar / Plans ──
+   Mirrors the drawer's four main destinations for always-on-screen reach on a phone. */
+.bottom-tabs { display: none; }
+@media (max-width: 720px) {
+  .bottom-tabs {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    display: flex; background: var(--paper); border-top: 1px solid var(--line);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+  }
+  .bt-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: .03em; text-transform: uppercase;
+    color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 6px 2px; min-height: 44px;
+  }
+  .bt-item.on { color: var(--pine-d); }
+  .bt-ico { font-size: 17px; line-height: 1; }
+  .bodycontent { padding-bottom: 66px; } /* clear the fixed bottom bar */
+}
+
 /* ── Rail contents (no horizontal row separators) ── */
 /* padding-top drops "My Class" down so it lines up with the subject title on the screen it
    opens (tabs bar ~48px + main's 40px top padding), making the click feel like the label
@@ -199,6 +252,8 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: rela
   display: flex; justify-content: space-between; align-items: center; transition: color .15s ease;
 }
 .sbn-item:hover, .sbn-item.open { color: var(--pine); }
+.sbn-item-label { display: flex; align-items: center; gap: 12px; }
+.sbn-item-ico { font-size: 17px; line-height: 1; width: 20px; text-align: center; flex-shrink: 0; }
 /* active view — same clay rule the top tabs use (vertical → left edge), with pine-d label */
 .sbn-item { border-left: 2px solid transparent; padding-left: 0; transition: color .15s ease, border-color .15s ease; }
 .sbn-item.active { color: var(--pine-d); border-left-color: var(--clay); padding-left: 10px; }
@@ -242,11 +297,17 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: rela
 
 /* ── Rail foot: hairline above, Settings / Help, then user + logout (smaller) ── */
 .sbn-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
-.sbn-foot-item { font-family: var(--f-body); font-size: 16px; color: var(--ink); background: none; border: none; text-align: left; cursor: pointer; padding: 7px 0; }
+.sbn-foot-item { font-family: var(--f-body); font-size: 15px; color: var(--ink); background: none; border: none; text-align: left; cursor: pointer; padding: 7px 0; display: flex; align-items: center; gap: 12px; }
 .sbn-foot-item:hover { color: var(--pine); }
-.sbn-foot-user { margin-top: 18px; }
-.sbn-foot-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
-.sbn-foot-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 4px 0; }
+.sbn-foot-user { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.sbn-foot-user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.sbn-avatar {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--pine); color: #f4efe6; font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; letter-spacing: .02em;
+}
+.sbn-foot-name { font-family: var(--f-mono); font-size: 12px; letter-spacing: .03em; color: var(--pine-d); }
+.sbn-foot-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 4px 0 4px 40px; }
 .sbn-foot-logout:hover { color: var(--clay); }
 
 .sbn-modal-bg { position: fixed; inset: 0; background: rgba(31,42,36,.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
@@ -876,9 +937,15 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* ═══════════ Phase 5 — My Plans dashboard + Lesson view + Assessment ═══════════ */
 /* dashboard */
-.dash-hd { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:6px; }
+.dash-hd { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:6px; }
 .dash-title { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin-top:2px; }
+.dash-sub { font-size:13px; color:var(--ink-soft); margin-top:2px; }
 .dash-count { font-family:var(--f-mono); font-size:11px; text-align:right; line-height:1.5; color:var(--ink-soft); }
+.dash-prepare { flex-shrink:0; white-space:nowrap; }
+@media (max-width: 480px) {
+  .dash-hd { flex-wrap: wrap; }
+  .dash-prepare { padding: 10px 16px; font-size: 11px; }
+}
 .daylabel { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); margin:14px 0 8px; padding-left:2px; }
 .daylabel:first-child { margin-top:0; }
 /* Card = Screen 2c, exact: white card, hairline border, 8px pine rail, 11/14 body padding.
@@ -1181,18 +1248,26 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* table — card-grey surface (prior state), with grid lines on every cell boundary */
 .mycal .cal-scroll { margin-top:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:10px; background:var(--card-bg); }
-.mycal .caltable { border-collapse:separate; border-spacing:0; width:100%; min-width:640px; }
+/* table-layout:fixed with EXPLICIT (not just minimum) column widths, and no forced width:100%
+   (2026-07-02, tightened) — the earlier min-width:640px/width:100% fix stopped columns from
+   collapsing, but with only 1-2 data columns (a single-section mobile view) it still stretched
+   them to fill the whole viewport, wildly wide for a compact "40 min" box. Columns now stay a
+   fixed, phone-friendly size regardless of column count; .cal-scroll's overflow-x:auto still
+   kicks in normally once there are enough columns to genuinely need it. */
+.mycal .caltable { border-collapse:separate; border-spacing:0; table-layout:fixed; }
 .mycal .caltable th, .mycal .caltable td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); }
 .mycal .caltable th:last-child, .mycal .caltable td:last-child { border-right:none; }
 .mycal .caltable tbody tr:last-child th, .mycal .caltable tbody tr:last-child td { border-bottom:none; }
-.mycal .cal-dayhd { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); font-weight:700; padding:11px 8px; text-align:center; }
-.mycal .cal-rowhd { text-align:left; padding:10px 14px; white-space:nowrap; position:sticky; left:0; background:var(--card-bg); z-index:1; }
+.mycal .cal-dayhd { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); font-weight:700; padding:11px 8px; text-align:center; width:104px; }
+.mycal .cal-rowhd { text-align:left; padding:10px 14px; white-space:nowrap; position:sticky; left:0; background:var(--card-bg); z-index:1; width:64px; }
 .mycal thead .cal-rowhd { vertical-align:middle; }
 .mycal thead .cal-rowhd { font-family:var(--f-mono); font-size:12px; font-weight:600; color:var(--pine-d); }
 .mycal .cal-rowhd-tag { display:block; font-family:var(--f-display); font-size:16px; font-weight:700; color:var(--ink); line-height:1.1; }
-.mycal .cal-cell { padding:5px; vertical-align:middle; width:15%; }
-.mycal .cal-box { border-radius:8px; padding:8px 9px; min-height:40px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:1px; }
-.mycal .cal-box-subj { font-family:var(--f-display); font-size:13px; font-weight:600; line-height:1.15; }
+.mycal .cal-cell { padding:5px; vertical-align:middle; width:104px; }
+/* Content runs top-down, right-aligned, instead of vertically centered — a shorter box that
+   doesn't need generous min-height to look balanced. */
+.mycal .cal-box { border-radius:8px; padding:6px 9px; display:flex; flex-direction:column; justify-content:flex-start; align-items:flex-end; text-align:right; gap:1px; }
+.mycal .cal-box-subj { font-family:var(--f-display); font-size:13px; font-weight:600; line-height:1.2; }
 .mycal .cal-box-min { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.02em; opacity:.85; }
 
 /* totals footer — grand total + per-subject tallies (deeper fill, distinct from the table) */
@@ -1311,6 +1386,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   display: flex; flex-direction: column;
   padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
   max-width: 480px; margin: 0 auto;
+  overflow-x: hidden; /* safety net: no step's content may force horizontal scroll */
+  /* Section palette — same tokens the readiness grid (.rd) and My Class (.myclasses) define.
+     CSS custom properties inherit by DOM subtree, not by selector, so WeekGrid's .cell/.wk
+     colour rules (screen 6) need their own copy here or every "on" cell resolves to no colour
+     at all — which is exactly why tapping a cell wasn't visibly changing colour. */
+  --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
+  --sec-c:#9a7321; --sec-c-bg:#f4ecd8; --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
 }
 .fr-brand { text-align: center; padding: 6px 0 18px; position: relative; }
 .fr-brand .brand-row { justify-content: center; font-size: 27px; }
@@ -1342,47 +1424,328 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-step-body, .fr-welcome-body { flex: 1; }
 .fr-q { font-family: var(--f-display); font-weight: 600; font-size: 27px; line-height: 1.18; letter-spacing: -.4px; color: var(--ink); margin: 0 0 6px; }
 .fr-hint { color: var(--ink-soft); margin: 0 0 20px; font-size: 15px; }
-.fr-eyebrow { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin: 0; }
-.fr-eyebrow-val { font-family: var(--f-display); font-size: 17px; color: var(--pine-d); margin: 0 0 14px; }
 
-/* option list — big tap targets (min 52px) */
-.fr-list { display: flex; flex-direction: column; gap: 10px; }
-.fr-opt {
-  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px;
-  padding: 12px 14px; text-align: left; cursor: pointer;
-  background: var(--paper-2); border: 1.5px solid var(--line); border-radius: 12px;
-  font-family: var(--f-body); font-size: 17px; color: var(--ink);
-  transition: border-color .15s ease, background .15s ease;
-}
-.fr-opt:hover { border-color: var(--line-soft); }
-.fr-opt.sel { border-color: var(--pine); background: #f1f6f3; }
 .fr-opt-chip { flex: none; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--paper-sunk); font-family: var(--f-mono); font-weight: 600; font-size: 14px; color: var(--pine-d); }
-.fr-opt-label { flex: 1; }
-.fr-opt-tick { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pine); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; }
 .fr-loading { color: var(--ink-soft); font-style: italic; padding: 8px 2px; }
 
-/* breadcrumb + selects (chapter step) */
+/* RollWheel — the shared one-row selection box (Subject, Grade AND Chapter steps). A single
+   box showing exactly ONE item at a time; rolling (drag/scroll/mouse-wheel/arrow keys) cycles
+   the list through it; scroll-snap settles on a row and whichever item landed IS the pick.
+   It wears a soft version of the SELECTED language (light pine-tinted border + soft green
+   tint) because the box's content is always the current selection. */
+.fr-wheel-shell { margin: 2px 0 18px; position: relative; }
+.fr-wheel {
+  position: relative; height: 64px; /* must match WHEEL_ROW in FirstRun.jsx */
+  overflow-y: auto; overflow-x: hidden;
+  scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  border: 1px solid #c7d9cf; border-radius: 12px; background: #f1f6f3;
+  scrollbar-width: none;
+}
+.fr-wheel::-webkit-scrollbar { display: none; }
+.fr-wheel:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+.fr-wheel-row {
+  box-sizing: border-box; height: 64px; width: 100%; min-width: 0; /* must match WHEEL_ROW */
+  display: flex; align-items: center; gap: 12px; padding: 0 52px 0 14px; /* right room for the bigger cue buttons */
+  scroll-snap-align: start;
+}
+/* built-in scroll cue — stacked ▲▼ at the box's right edge, gently bobbing: the box signals
+   "I move" without words. These are REAL step buttons (one row per tap) — not decoration —
+   so anyone who'd rather tap than drag/scroll-wheel has an obvious, working alternative.
+   Sized to a real finger-friendly tap target (34×34, close to the ~36px targets used
+   elsewhere) with a visible outline so each reads as its own pressable control, and spaced
+   well apart so a thumb can't miss between them or hit both at once. */
+.fr-wheel-cue {
+  position: absolute; right: 7px; top: 50%;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  color: var(--pine); line-height: 1;
+  animation: fr-cue-bob 2.4s ease-in-out infinite;
+}
+/* the button BOX height (not just the gap between boxes) is what was keeping the two glyphs
+   visually far apart — a wide-but-short box keeps the tap target real while letting the ▲▼
+   actually sit close together. */
+.fr-wheel-cue-btn {
+  font-style: normal; font-size: 15px; line-height: 1;
+  width: 34px; height: 26px; padding: 0; margin: 0;
+  background: none; border: none;
+  color: inherit; opacity: .85; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.fr-wheel-cue-btn:hover, .fr-wheel-cue-btn:focus-visible { opacity: 1; outline: none; }
+.fr-wheel-cue-btn:active { opacity: 1; transform: scale(.94); }
+@keyframes fr-cue-bob {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translateY(calc(-50% - 3px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fr-wheel-cue { animation: none; transform: translateY(-50%); }
+}
+.fr-wheel-label {
+  flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--f-body); font-size: 15px; color: var(--ink);
+}
+/* short lists (Subject / Class) read one notch bigger; chapter titles keep 15px + ellipsis */
+.fr-wheel-lg .fr-wheel-label { font-size: 17px; }
+/* the settled row's number chip picks up the pine fill — the brand "locked in" cue */
+.fr-opt-chip.on { background: var(--pine); color: #fdfaf4; }
+
+/* breadcrumb (chapter step) */
 .fr-crumb { display: flex; flex-wrap: wrap; gap: 6px; font-size: 14px; color: var(--ink-soft); margin: 0 0 10px; }
 .fr-crumb strong { color: var(--pine-d); font-weight: 600; }
 .fr-crumb-dot { color: var(--line); }
-.fr-select-wrap { display: flex; flex-direction: column; gap: 5px; margin: 0 0 18px; }
-.fr-select-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
-.fr-select-kicker em { font-style: italic; text-transform: none; letter-spacing: 0; }
-.fr-select, .fr-num {
-  width: 100%; min-height: 50px; padding: 12px 14px; border-radius: 12px;
-  border: 1.5px solid var(--line); background: var(--paper-2); color: var(--ink);
-  font-family: var(--f-body); font-size: 16px;
-}
-.fr-select:focus, .fr-num:focus { outline: none; border-color: var(--pine); }
 
-/* NCF default cards */
+/* NCF default cards — duration / periods, chapter step. Sit grey/read-only showing the
+   default until "Change" is pressed; only one of the two can be open at a time (opening one
+   closes the other, to keep the step's vertical footprint down). While editing, the outer
+   grey card is dropped — the wheel's own green-tinted box (same as the chapter picker) is
+   the only box, so it doesn't nest inside another. */
 .fr-defaults { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
-.fr-default { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 14px 66px 14px 14px; border-radius: 12px; background: var(--paper-sunk); border: 1px solid var(--line-soft); }
+.fr-default { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 12px; background: var(--paper-sunk); border: 1px solid var(--line-soft); }
+.fr-default-editing { background: none; border: none; padding: 14px 0 0; }
 .fr-default-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
-.fr-default-kicker em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--pine); }
+/* kicker line: label left, "NCF recommended" tag pinned to the right end — shared by both the
+   closed row and the open wheel (the kicker sits above either), so the tag is one fixed spot
+   per field rather than following the value around. */
+.fr-default-kicker-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.fr-default-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .fr-default-val { font-family: var(--f-display); font-size: 18px; color: var(--ink); }
-.fr-default-change { position: absolute; right: 10px; bottom: 10px; padding: 4px 6px; }
-.fr-custom { display: flex; flex-direction: column; gap: 4px; padding-top: 4px; }
+.fr-default-val-muted { color: var(--ink-soft); } /* grey — signals "this is a default, not yet chosen" */
+/* live "is this the recommended number right now" tag — tied to the CURRENT value, not to
+   whether the field was ever opened, so it appears/disappears the instant the wheel settles
+   on/off the recommended figure. */
+.fr-tag-recommended { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em; font-style: italic; color: var(--pine); }
+.fr-change-btn {
+  flex: none; background: none; cursor: pointer; border-radius: 20px;
+  border: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--pine-d); padding: 5px 12px;
+}
+.fr-change-btn:hover, .fr-change-btn:focus-visible { border-color: var(--pine); background: var(--paper-sunk); }
+/* wheel replaces the static row while editing; "Done" just closes it back to the grey
+   static state */
+.fr-default-wheel-wrap { position: relative; padding-bottom: 34px; }
+.fr-default-wheel-wrap .fr-wheel-shell { margin: 2px 0 0; }
+.fr-done-btn {
+  position: absolute; right: 0; bottom: 0;
+  background: var(--pine); border: none; cursor: pointer; border-radius: 20px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: #fdfaf4; padding: 6px 14px;
+}
+.fr-done-btn:hover, .fr-done-btn:focus-visible { background: var(--pine-d); }
+
+/* screen 4 — "Lesson plan ready!" celebratory header (centered — distinct from the smaller,
+   left-aligned .fr-ready-note banner style used later on sectionCards). */
+.fr-plan-ready { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; margin: 4px 0 22px; }
+.fr-plan-ready-check {
+  width: 52px; height: 52px; margin-bottom: 6px; border-radius: 50%;
+  background: #e7f1ec; color: var(--pine); font-size: 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+.fr-plan-ready-title { font-family: var(--f-display); font-weight: 600; font-size: 24px; color: var(--ink); margin: 0; }
+.fr-plan-ready-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+/* screen 4 — facts teaser card (never the full plan — see FirstRun.jsx header) */
+.fr-teaser-card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 22px 20px; margin: 4px 0 18px; border-radius: 14px;
+  background: var(--paper-sunk); border: 1px solid var(--line-soft);
+}
+.fr-teaser-title { font-family: var(--f-display); font-weight: 600; font-size: 24px; line-height: 1.2; color: var(--ink); margin: 0; }
+.fr-teaser-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.fr-teaser-stats { display: flex; gap: 26px; margin-top: 10px; }
+.fr-teaser-stat { display: flex; flex-direction: column; align-items: flex-start; }
+.fr-teaser-stat-num { font-family: var(--f-display); font-weight: 600; font-size: 22px; color: var(--pine-d); line-height: 1; }
+.fr-teaser-stat-label { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); margin-top: 3px; }
+
+/* screen 4 — "Teach this lesson to your class" + suggested-class box */
+.fr-teach-heading { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); margin: 4px 0 2px; }
+.fr-suggested-class {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; row-gap: 8px;
+  width: 100%; padding: 14px; margin: 6px 0 6px; border-radius: 12px;
+  background: var(--paper-sunk); border: 1px solid var(--line-soft);
+}
+/* The value can be one class or many ("6A, 6B, 6C, ..."): let it wrap onto its own full-width
+   line rather than clip or push the Add/Edit button off — the button wraps to the next line too
+   (flex-wrap above) instead of getting squeezed. */
+.fr-suggested-class .fr-default-val { flex: 1 1 auto; min-width: 0; word-break: break-word; }
+.fr-default-val-compact { font-size: 14.5px; line-height: 1.4; }
+/* Whole box opens the section picker (Add/Edit is just the visible affordance for the same
+   action) — cursor + hover feedback signal the whole row is tappable, not just the button. */
+.fr-suggested-class-tap { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
+.fr-suggested-class-tap:hover { border-color: var(--pine); background: #f1f6f3; }
+/* Prominent variant for the suggested-class Add/Edit action — solid green fill / white text,
+   distinct from the quieter outlined "Change" pills used for duration/periods. */
+.fr-change-btn-primary { border: none; background: var(--pine); color: #f6f1e7; }
+.fr-change-btn-primary:hover, .fr-change-btn-primary:focus-visible { background: var(--pine-d); color: #f6f1e7; }
+
+/* screen 4 → sectionCards — the small left-aligned confirmation banner style ("Lesson added
+   to N sections", reused on sectionCards below) */
+.fr-ready-note { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; margin: 0 0 22px; border-radius: 12px; background: var(--paper-sunk); border: 1px solid var(--line-soft); }
+.fr-ready-check { flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--pine); color: #fdfaf4; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.fr-ready-text { display: flex; flex-direction: column; gap: 2px; }
+.fr-ready-text strong { font-family: var(--f-display); font-size: 16px; color: var(--ink); }
+.fr-ready-text span { font-size: 14px; color: var(--ink-soft); }
+/* chevron reused on arrange-week's day rows below — "tap to pick from a list" cue */
+.fr-section-chevron { flex: none; color: var(--pine); font-size: 18px; opacity: .7; }
+
+/* "Section Cards are being created…" — the reward beat between Add to Class and sectionCards */
+.fr-celebrate { justify-content: center; }
+.fr-celebrate-body { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.fr-celebrate-spin {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid var(--line-soft); border-top-color: var(--pine);
+  animation: fr-spin .9s linear infinite;
+}
+@keyframes fr-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .fr-celebrate-spin { animation: none; } }
+.fr-celebrate-title { font-family: var(--f-display); font-weight: 600; font-size: 20px; color: var(--ink); margin: 0; }
+
+/* sectionCards — the payoff itself ("My week screen.jpg"): one card per fan-out section, a
+   colour-cycled left stripe (SECTION_ACCENTS in FirstRun.jsx) so multiple cards read as
+   distinct sections at a glance. */
+.fr-sc-heading { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); margin: 4px 0 2px; }
+.fr-sc-list { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 22px; }
+.fr-sc-card {
+  position: relative; display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 16px 16px 22px; border-radius: 12px; overflow: hidden;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+}
+.fr-sc-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--sc-accent, var(--pine)); }
+.fr-sc-chip {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper-sunk); border: 1.5px solid var(--sc-accent, var(--pine));
+  font-family: var(--f-display); font-weight: 600; font-size: 14px; color: var(--sc-accent, var(--pine));
+}
+.fr-sc-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fr-sc-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.fr-sc-title { font-family: var(--f-display); font-weight: 600; font-size: 17px; color: var(--ink); }
+.fr-sc-title.muted { font-weight: 500; font-style: italic; color: var(--ink-soft); }
+.fr-sc-meta { font-size: 13px; color: var(--ink-soft); }
+.fr-sc-ready {
+  align-self: flex-start; margin-top: 4px; font-family: var(--f-mono); font-size: 10.5px;
+  letter-spacing: .04em; color: var(--pine-d); background: #e7f1ec; border-radius: 20px; padding: 3px 10px;
+}
+/* My Week reuses .fr-sc-card as a clickable row (cursor + hover), unlike FirstRun's static reward cards */
+.fr-sc-list .fr-sc-card { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
+.fr-sc-list .fr-sc-card:hover { border-color: var(--sc-accent, var(--pine)); background: #f3ede0; }
+
+/* screen 5 — section picker modal (mirrors MyClasses.jsx's .mc-modal-bg/.mc-modal language) */
+.fr-modal-bg { position: fixed; inset: 0; background: rgba(31, 42, 36, .45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
+.fr-modal { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px 22px; max-width: 420px; width: 100%; max-height: 88vh; overflow: auto; }
+.fr-sec-list { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 20px; }
+.fr-sec-opt {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border-radius: 10px;
+  background: var(--paper-2); border: 1.5px solid var(--line); cursor: pointer; text-align: left;
+  font-family: var(--f-body); font-size: 15px; color: var(--ink);
+}
+.fr-sec-opt.on { background: #f1f6f3; border-color: #c7d9cf; }
+.fr-sec-check { flex: none; width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--line); font-size: 12px; color: var(--pine); }
+.fr-sec-opt.on .fr-sec-check { background: var(--pine); border-color: var(--pine); color: #fdfaf4; }
+
+/* Section picker as a fixed-height "wheel" (2026-07-02) — always exactly 4 rows visible,
+   scroll/swipe for more (letters run A–Z), plus real ▲▼ step buttons for phones since a
+   drag-scroll gesture isn't always obvious. Ticking is independent of scroll position (unlike
+   RollWheel) — any visible row can be tapped, and as many sections as she wants stay picked. */
+.fr-sec-wheel-wrap { margin: 4px 0 20px; display: flex; align-items: flex-start; gap: 12px; }
+/* Wheel + Done live in the SAME column (both block-level, both width:100% of it) so the green
+   Done button's width always equals the section-row list's width — the side arrows sit outside
+   this column entirely, so they can never widen or narrow it. */
+.fr-sec-wheel-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0; }
+.fr-sec-wheel {
+  width: 100%; gap: 0; margin: 0; height: 208px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y proximity; border: 1px solid var(--line-soft); border-radius: 10px;
+  background: var(--paper-2);
+}
+.fr-sec-wheel .fr-sec-opt {
+  flex: none; height: 52px; border-radius: 0; border: none; border-bottom: 1px solid var(--line-soft);
+  background: transparent; scroll-snap-align: start;
+}
+.fr-sec-wheel .fr-sec-opt:last-child { border-bottom: none; }
+.fr-sec-wheel .fr-sec-opt.on { background: #f1f6f3; }
+/* Bare step arrows beside the wheel — no bordered/background box, just the two glyphs sitting
+   directly on the modal body. Height-matched to the wheel only (not the column's Done button),
+   so they read as scrolling the list, not the whole panel. One notch bigger than the shared
+   .fr-wheel-cue-btn (34×26, 15px) used on the other wheels. */
+.fr-sec-arrows-side {
+  flex: none; height: 208px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+}
+.fr-sec-arrow-btn {
+  background: none; border: none; cursor: pointer; color: var(--pine);
+  font-size: 24px; line-height: 1; padding: 6px 8px; min-width: 40px; min-height: 40px;
+  display: flex; align-items: center; justify-content: center; opacity: .85;
+}
+.fr-sec-arrow-btn:hover, .fr-sec-arrow-btn:focus-visible { opacity: 1; color: var(--pine-d); outline: none; }
+.fr-sec-arrow-btn:active { transform: scale(.92); }
+
+/* screen 6 — arrange-week prompt + weekly grid (2026-07-02, redesigned to mirror the mockup):
+   a torn-calendar date badge + headline/subtext up top, a row of three benefit chips along the
+   bottom of the same card, all inside one warm clay-tinted panel with a lifted shadow so it
+   reads as a real pitch, not a passive info box. */
+.fr-arrange-callout {
+  display: flex; flex-direction: column; gap: 16px; padding: 18px; border-radius: 14px;
+  background: rgba(182, 90, 49, .1); border: 1.5px solid rgba(182, 90, 49, .32);
+  box-shadow: 0 6px 18px -10px rgba(182, 90, 49, .5);
+}
+.fr-arrange-top { display: flex; align-items: flex-start; gap: 14px; }
+.fr-arrange-text { display: flex; flex-direction: column; gap: 4px; }
+.fr-arrange-callout strong { font-family: var(--f-display); font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.fr-arrange-accent { color: var(--clay); font-style: italic; }
+.fr-arrange-callout p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+/* torn-calendar date badge — ring holes + a clay month strip + today's real day number */
+.fr-datebadge {
+  position: relative; flex: none; width: 50px; margin-top: 3px; display: flex; flex-direction: column;
+  border-radius: 8px; overflow: hidden; border: 1px solid var(--line-soft);
+  box-shadow: 0 3px 8px -2px rgba(31, 42, 36, .28);
+}
+.fr-datebadge-rings { position: absolute; top: -3px; left: 0; right: 0; display: flex; justify-content: space-around; z-index: 2; }
+.fr-datebadge-rings span { width: 6px; height: 6px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--line); }
+.fr-datebadge-month {
+  background: var(--clay); color: #fff; font-family: var(--f-mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: .06em; text-align: center; padding: 5px 0 3px;
+}
+.fr-datebadge-day {
+  background: var(--paper); color: var(--ink); font-family: var(--f-display); font-weight: 700;
+  font-size: 19px; text-align: center; padding: 3px 0 5px; line-height: 1;
+}
+
+/* the three "why bother" chips along the bottom of the callout */
+.fr-benefit-row { display: flex; gap: 6px; padding-top: 14px; border-top: 1px dashed rgba(182, 90, 49, .35); }
+.fr-benefit {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .01em; color: var(--ink);
+}
+.fr-benefit-badge {
+  width: 30px; height: 30px; border-radius: 50%; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper-sunk); border: 1.5px solid var(--sc-accent, var(--pine));
+  color: var(--sc-accent, var(--pine));
+}
+.fr-link:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Weekly grid (screen 6) — reuses Readiness.jsx's own .wk/.cell table styling so both grids
+   read as the same control. .fr-wk-scroll adds horizontal scroll + a pinned label column/row,
+   needed here (unlike Readiness) because up to 26 sections can appear as columns on a phone. */
+.fr-wk-wrap { position: relative; }
+.fr-wk-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 6px 0 4px; border-radius: 10px; }
+.fr-wk-scroll table.wk { margin-top: 0; min-width: 100%; }
+.fr-wk-scroll table.wk th.rowhd {
+  position: sticky; left: 0; z-index: 2; background: var(--paper); box-shadow: 1px 0 0 var(--line-soft);
+}
+.fr-wk-scroll table.wk thead th { position: sticky; top: 0; z-index: 1; background: var(--paper); }
+.fr-wk-scroll table.wk thead th.rowhd { z-index: 3; }
+.fr-wk-scroll table.wk td, .fr-wk-scroll table.wk th:not(.rowhd) { min-width: 46px; }
+/* Edge arrows — appear only while there's more grid to scroll to on that side (see WeekGrid's
+   scroll-position check), floating above the table so they don't take up row/column space. */
+.fr-wk-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-soft);
+  background: var(--paper); color: var(--pine); font-size: 16px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(31, 42, 36, .18);
+}
+.fr-wk-arrow:hover { color: var(--pine-d); }
+.fr-wk-arrow-l { left: 2px; }
+.fr-wk-arrow-r { right: 2px; }
 
 /* welcome */
 .fr-welcome { justify-content: space-between; }
@@ -1393,9 +1756,6 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-pain-list { list-style: none; display: flex; flex-direction: column; gap: 11px; width: 100%; max-width: 34ch; margin: 22px auto 0; padding: 0; text-align: left; }
 .fr-pain-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.3; color: var(--ink); }
 .fr-pain-tick { flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; background: var(--pine); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-.fr-note { display: flex; flex-direction: column; gap: 3px; text-align: left; width: 100%; padding: 14px 16px; margin-top: 20px; border-radius: 12px; background: var(--paper-sunk); border: 1px solid var(--line-soft); }
-.fr-note-kicker { font-family: var(--f-display); font-weight: 600; font-size: 15px; color: var(--pine-d); }
-.fr-note-body { font-size: 14px; color: var(--ink-soft); }
 
 /* footer CTA — full-width, thumb-friendly */
 .fr-foot { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 20px; }

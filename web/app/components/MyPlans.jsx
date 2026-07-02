@@ -6,6 +6,9 @@ import LessonView from "./LessonView";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const DAY_FULL = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+// Same rotating accent palette FirstRun's section cards use — reused here (not imported, since
+// FirstRun.jsx doesn't export it) so the "Good morning" home cards read as the same visual family.
+const SECTION_ACCENTS = ["var(--pine)", "var(--clay)", "var(--ochre)"];
 
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
@@ -134,12 +137,23 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   });
   const byDay = dayBuckets.filter((b) => b.items.length);
 
+  // "My Week is Home" (§0) — a time-of-day greeting replaces the flat "This week's teaching"
+  // label, and a universal "+ Prepare Lesson" action replaces the old Generate tab everywhere.
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const firstName = (user || "").trim();
+  const prepareLesson = () => onEnterGenerate && onEnterGenerate();
+
   // 2b — ready but the teacher has no classes at all (empty profile).
   if (!classes.length) {
     return (
       <div>
         <div className="dash-hd">
-          <div><div className="kicker kicker-ochre">My Plans · This week</div><div className="dash-title">This week&rsquo;s teaching</div></div>
+          <div>
+            <div className="kicker kicker-ochre">My Week</div>
+            <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
+          </div>
+          <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
         </div>
         <div className="slotcard slot-empty">
           <div className="slotrail dim" />
@@ -156,11 +170,29 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // chapter to begin tracking" — with a welcome CTA banner ABOVE them. Cards are never hidden.
   const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
 
-  // Weekly dashboard: every class she handles, by next meeting day (+ welcome banner when fresh).
+  // Today's bucket floats to the top (Mon=0…Sat=5; Sunday has no modelled school day, so the
+  // buckets stay in their natural Mon→Sat order that day). "Unscheduled" always sorts last.
+  const todayIdx = (new Date().getDay() + 6) % 7;
+  const todayName = todayIdx < 6 ? DAY_FULL[todayIdx] : null;
+  const orderedBuckets = todayName
+    ? [...byDay].sort((a, b) => {
+        const rank = (b0) => (b0.day === "Unscheduled" ? 100 : b0.day === todayName ? -1 : DAY_FULL.indexOf(b0.day));
+        return rank(a) - rank(b);
+      })
+    : byDay;
+
+  let cardIdx = 0;
+
+  // Weekly dashboard: every class she handles, today first (+ welcome banner when fresh).
   return (
     <div>
       <div className="dash-hd">
-        <div><div className="kicker kicker-ochre">My Plans · This week</div><div className="dash-title">This week&rsquo;s teaching</div></div>
+        <div>
+          <div className="kicker kicker-ochre">My Week</div>
+          <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
+          <div className="dash-sub">Here are your lessons for today.</div>
+        </div>
+        <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
       </div>
 
       {!anyBound && (
@@ -172,42 +204,48 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         </div>
       )}
 
-      {byDay.map(({ day, items }) => (
+      {orderedBuckets.map(({ day, items }) => (
         <div key={day}>
-          <div className="daylabel">{day}</div>
-          {items.map((c, i) => {
-            const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
-            const label = `${c.sectionTag} ${pretty(c.subjectSlug).toUpperCase()}`;
-            const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
-            const file = currentChapterFile(sectionKey);
-            const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
-            const lu = pointerFor(sectionKey);
+          <div className="daylabel">{day === todayName ? "Today" : day}</div>
+          <div className="fr-sc-list">
+            {items.map((c, i) => {
+              const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
+              const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
+              const file = currentChapterFile(sectionKey);
+              const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
+              const lu = pointerFor(sectionKey);
+              const accent = SECTION_ACCENTS[cardIdx % SECTION_ACCENTS.length];
+              cardIdx++;
 
-            // No chapter bound to this class yet → "pick a chapter to begin tracking".
-            // Still a green rail (an open invitation, not a disabled slot) and tappable.
-            if (!plan) {
+              // No chapter bound to this class yet → "pick a chapter to begin tracking".
+              // Still tappable — an open invitation, not a disabled slot.
+              if (!plan) {
+                return (
+                  <div className="fr-sc-card" key={i} style={{ "--sc-accent": accent }}
+                    onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+                    <div className="fr-sc-chip">{c.sectionTag}</div>
+                    <div className="fr-sc-body">
+                      <span className="fr-sc-kicker">{pretty(c.subjectSlug)}</span>
+                      <div className="fr-sc-title muted">Pick a chapter to begin tracking</div>
+                      <div className="fr-sc-meta">Schedule only — no content cued yet</div>
+                    </div>
+                  </div>
+                );
+              }
               return (
-                <div className="slotcard slot-empty" key={i} onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
-                  <div className="slotrail" />
-                  <div className="slotbody">
-                    <div className="slot-toprow"><span className="slot-sec">{label}</span><span className="slot-ptr none">No chapter started</span></div>
-                    <div className="slot-title muted">Pick a chapter to begin tracking</div>
-                    <div className="slot-meta">Schedule only — no content cued yet</div>
+                <div className="fr-sc-card" key={i} style={{ "--sc-accent": accent }}
+                  onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
+                  <div className="fr-sc-chip">{c.sectionTag}</div>
+                  <div className="fr-sc-body">
+                    <span className="fr-sc-kicker">{pretty(c.subjectSlug)}</span>
+                    <div className="fr-sc-title">{plan.chapter_title}</div>
+                    <div className="fr-sc-meta">tap to see · resumes where you left {c.sectionTag}</div>
+                    <span className="fr-sc-ready">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span>
                   </div>
                 </div>
               );
-            }
-            return (
-              <div className="slotcard" key={i} onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
-                <div className="slotrail" />
-                <div className="slotbody">
-                  <div className="slot-toprow"><span className="slot-sec">{label}</span><span className="slot-ptr">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span></div>
-                  <div className="slot-title">{plan.chapter_title}</div>
-                  <div className="slot-meta">tap to see · resumes where you left {c.sectionTag}</div>
-                </div>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
       ))}
 
