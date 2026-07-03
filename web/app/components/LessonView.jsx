@@ -83,15 +83,33 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     return Number.isFinite(saved) && saved >= 0 && saved < units.length ? saved : 0;
   });
 
+  // Completion flag (per section) — the ONLY signal that a chapter is fully taught, since the
+  // pointer clamps at the last unit and can't otherwise distinguish "on the last LU" from "done".
+  // My Classes reads `lu_done_${sectionKey}` to shade the card as completed. Mirrored in React
+  // state so marking the chapter complete re-renders the view (confirmation card) immediately.
+  const doneKey = `lu_done_${sectionKey || lp.subject + "_" + lp.grade + "_" + (lp.chapter_title || "")}`;
+  const [doneFlag, setDoneFlag] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try { return window.localStorage.getItem(doneKey) === "1"; } catch { return false; }
+  });
+  const setDone = (v) => {
+    setDoneFlag(v);
+    try {
+      if (v) window.localStorage.setItem(doneKey, "1");
+      else window.localStorage.removeItem(doneKey);
+    } catch {}
+  };
+
   const writePointer = (i) => {
     const clamped = Math.max(0, Math.min(units.length - 1, i));
     setCur(clamped);
     try { window.localStorage.setItem(storageKey, String(clamped)); } catch {}
+    if (clamped < units.length - 1) setDone(false);   // moved back off the last unit → not done
     return clamped;
   };
 
   const markComplete = () => {
-    if (cur >= units.length - 1) { writePointer(units.length - 1); setUndoTo(null); return; }
+    if (cur >= units.length - 1) { writePointer(units.length - 1); setDone(true); setUndoTo(null); return; }
     const from = cur;
     writePointer(cur + 1);
     setUndoTo(from);
@@ -222,9 +240,9 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
       </div>
 
       {/* Progress bar — same segmented look as the section bars in My Lesson Plans / Track. */}
-      <div className="lv-progress" aria-label={`${done} of ${total} learning units complete`}>
+      <div className="lv-progress" aria-label={doneFlag ? `all ${total} learning units complete` : `${done} of ${total} learning units complete`}>
         {Array.from({ length: total }, (_, i) => (
-          <span key={i} className={`lv-seg ${i < cur ? "fill" : i === cur ? "now" : ""}`} />
+          <span key={i} className={`lv-seg ${doneFlag || i < cur ? "fill" : i === cur ? "now" : ""}`} />
         ))}
       </div>
 
@@ -259,7 +277,29 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           </div>
         </div>
       ) : cur >= total - 1 ? (
-        <div className="lv-lastcard">This is the final learning unit of the chapter.</div>
+        doneFlag ? (
+          // Chapter fully taught — the confirmation the section card reads as "completed" (gold).
+          <div className="lv-donecard lv-chapterdone">
+            <div className="lv-donerow">
+              <div className="lv-doneleft">
+                <div className="lv-donemark">✓</div>
+                <div>
+                  <div className="lv-donetitle">Chapter complete</div>
+                  <div className="lv-donesub">Every learning unit is taught. This class now shows as completed on your home screen.</div>
+                </div>
+              </div>
+              <button className="lv-undo" onClick={() => setDone(false)}>↺ Reopen</button>
+            </div>
+          </div>
+        ) : (
+          <div className="lv-markcard">
+            <div className="lv-markinfo">
+              <span className="lv-markicon" aria-hidden="true">ⓘ</span>
+              <span>This is the final learning unit. Marking it complete finishes the chapter for this section.</span>
+            </div>
+            <button className="primary lv-markbtn" onClick={markComplete}>Mark chapter complete</button>
+          </div>
+        )
       ) : (
         <div className="lv-markcard">
           <div className="lv-markinfo">

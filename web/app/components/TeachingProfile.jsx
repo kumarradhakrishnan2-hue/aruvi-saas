@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, ROMAN, projectReadiness, API, withUser } from "../lib/format";
 import { RollWheel, PickWheel } from "./wheels";
 
@@ -45,18 +45,18 @@ const DEFAULT_PPW = 6;
 const METHODS = {
   weeks:   { label: "I know my teaching weeks",   unit: "weeks",          step: 1 },
   periods: { label: "I know my period count",     unit: "periods / year", step: 1 },
-  days:    { label: "I know my working days",     unit: "working days",   step: 6 },
+  days:    { label: "I know my working days",     unit: "working days",   step: 1 },
   auto:    { label: "I’m not sure — estimate it", unit: "",               step: 0 },
 };
 const METHOD_ORDER = ["weeks", "periods", "days", "auto"];
 const defaultValueFor = (method, ppw) =>
-  method === "weeks" ? 36 : method === "periods" ? ppw * 36 : method === "days" ? 180 : 0;
+  method === "weeks" ? 30 : method === "periods" ? ppw * 30 : method === "days" ? 180 : 0;
 const budgetPeriods = (ppw, b) => {
   if (!b) return null;
   if (b.method === "weeks") return ppw * b.value;
   if (b.method === "periods") return b.value;
   if (b.method === "days") return Math.round(ppw * b.value / DAYS_IN_WEEK);
-  return ppw * ESTIMATE_WEEKS;
+  return b.value ? b.value : ppw * ESTIMATE_WEEKS; // auto: NCF total when resolved, else flat fallback
 };
 
 const classNum = (g) => {
@@ -73,6 +73,15 @@ const Bin = () => (
   <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
     strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M3.5 6.5h17M9.5 6.5V4.4h5v2.1M18.8 6.5l-1 14h-11.6l-1-14M10 11v6M14 11v6" />
+  </svg>
+);
+
+// pencil (edit) — stroke inherits color via .tp-icon-btn
+const Pencil = ({ size = 14 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+    strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0 0-2.12l-1.88-1.88a1.5 1.5 0 0 0-2.12 0L4 16v4z" />
+    <path d="M13.5 6.5l4 4" />
   </svg>
 );
 
@@ -106,9 +115,14 @@ const gradeDraftFrom = (rec) => ({
   budget: null,
 });
 
-export default function TeachingProfile({ readiness, onChange }) {
-  const [canon, setCanon] = useState(() => deepCopy((readiness && readiness.subjects) || []));
-  useEffect(() => { setCanon(deepCopy((readiness && readiness.subjects) || [])); }, [readiness]);
+export default function TeachingProfile({ readiness, onChange, onBack }) {
+  // SINGLE SOURCE OF TRUTH: the profile lives in the parent's `readiness` prop. Derive the
+  // canonical subjects[] straight from it — no mirrored local copy. That way an edit (which
+  // routes through persist → onChange → setReadiness) re-renders THIS view and every other
+  // consumer from the exact same object, so edits reflect live the instant they save, exactly
+  // like adds do. `canon` is READ-only here; every mutation deep-copies before touching it, so
+  // deriving (not copying into state) is safe and removes the mirror-state desync.
+  const canon = (readiness && readiness.subjects) || [];
 
   /* view state */
   const [openSubject, setOpenSubject] = useState(null);  // accordion: name of the ONE open subject
@@ -127,6 +141,26 @@ export default function TeachingProfile({ readiness, onChange }) {
   const [pi, setPi] = useState(0);                       // position inside pendingIdxs
   const [classStep, setClassStep] = useState("sections"); // sections | durations | ppw | budget
   const [numCtx, setNumCtx] = useState(null);            // editNums: { si, gi, g(draft), step }
+  const [ncfTotal, setNcfTotal] = useState(null);        // NCF recommended annual periods for the budget "estimate"
+  const [secConfirm, setSecConfirm] = useState(null);    // { removed:[tags] } — warn before an edit-sections save drops sections
+
+  // pin the top block just below the app's sticky header — measure the header so the offset
+  // is exact across desktop/mobile rather than a guessed pixel value
+  const rootRef = useRef(null);
+  useEffect(() => {
+    const setTop = () => {
+      const el = rootRef.current;
+      if (!el) return;
+      const h = (typeof document !== "undefined" && document.querySelector(".hdr")?.offsetHeight) || 60;
+      el.style.setProperty("--tp-sticky-top", `${h}px`);
+      const sticky = el.querySelector(".tp-sticky");
+      const sh = sticky ? sticky.offsetHeight : 0;
+      el.style.setProperty("--tp-sub-top", `${h + sh}px`); // open subject header pins just below the top block
+    };
+    setTop();
+    window.addEventListener("resize", setTop);
+    return () => window.removeEventListener("resize", setTop);
+  }, [canon, editing]);
 
   useEffect(() => {
     getJSON("/subjects").then((d) => setCatalogue((d.subjects || []).map(pretty))).catch(() => setCatalogue([]));
@@ -138,13 +172,23 @@ export default function TeachingProfile({ readiness, onChange }) {
   }, [canon]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const persist = (subjectsOut) => {
-    setCanon(subjectsOut);
+    // Optimistic: push straight to the parent so the view reflects instantly — no local mirror
+    // to keep in step. setReadiness re-renders this component with the new subjects[] (which
+    // `canon` derives from) and every consumer.
+    onChange && onChange(projectReadiness({ subjects: subjectsOut }));
+    // Persist to the server. cascade:true is REQUIRED for any removal (deleting a subject /
+    // class / section, or unticking a section): every destructive edit here is ALREADY behind a
+    // scoped confirm modal, and without cascade the server refuses removals with HTTP 409 and
+    // the write silently fails — so the edit reverts on the next login. Additive / value-only
+    // edits carry nothing to cascade, so the flag is a harmless no-op for them. Surface any
+    // failure rather than swallowing it, so a broken save is never invisible again.
     fetch(`${API}/readiness`, withUser({
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subjects: subjectsOut }),
-    })).catch(() => {});
-    onChange && onChange(projectReadiness({ subjects: subjectsOut }));
+      body: JSON.stringify({ subjects: subjectsOut, cascade: true }),
+    }))
+      .then((res) => { if (!res.ok) console.error("Aruvi: readiness save failed", res.status); })
+      .catch((e) => console.error("Aruvi: readiness save error", e));
   };
 
   /* ── granular removals (each behind its scoped confirm) ── */
@@ -269,6 +313,24 @@ export default function TeachingProfile({ readiness, onChange }) {
     ...d, grades: d.grades.map((g, i) => (i === gIdx ? { ...g, ...patch } : g)),
   }));
 
+  // fetch the NCF-recommended annual periods whenever a budget screen is showing, so the
+  // "estimate" option reflects the National Curricular Framework figure for this subject·grade
+  const inClassBudget = screen === "class" && classStep === "budget";
+  const inEditBudget = screen === "editNums" && numCtx && numCtx.step === "budget";
+  const budgetSubject = inClassBudget ? (draft && draft.name)
+    : inEditBudget ? (canon[numCtx.si] && canon[numCtx.si].name) : null;
+  const budgetGrade = inClassBudget ? (draft && draft.grades[gIdx] && draft.grades[gIdx].grade)
+    : inEditBudget ? (numCtx.g && numCtx.g.grade) : null;
+  useEffect(() => {
+    if (!budgetSubject || !budgetGrade) return;
+    let live = true;
+    setNcfTotal(null);
+    getJSON(`/subjects/${subjectSlugOf(budgetSubject)}/${budgetGrade.toLowerCase()}/ncf-periods`)
+      .then((d) => { if (live) setNcfTotal(d && d.ncf_total_periods != null ? d.ncf_total_periods : null); })
+      .catch(() => { if (live) setNcfTotal(null); });
+    return () => { live = false; };
+  }, [budgetSubject, budgetGrade]);
+
   // finalize the draft into a canonical record and persist (upsert by name)
   const finalizeSubject = (d) => {
     const budget = {};
@@ -298,6 +360,36 @@ export default function TeachingProfile({ readiness, onChange }) {
 
   /* ── spot edits ── */
   const startAddSection = (si, gi) => { setNumCtx({ si, gi }); setPicked([]); setScreen("addSection"); };
+
+  // pencil next to the sections → one screen to add AND remove (keep ≥1; whole-class delete stays on the basket)
+  const startEditSections = (si, gi) => {
+    setNumCtx({ si, gi });
+    setPicked(canon[si].grades[gi].sections.map(secLetter));
+    setScreen("editSections");
+  };
+  // Save intent: if the edit drops any existing sections, warn first (same as the basket removals);
+  // pure additions save straight through.
+  const requestEditSections = () => {
+    const { si, gi } = numCtx;
+    const g = canon[si].grades[gi];
+    const removed = g.sections.map(secLetter).filter((s) => !picked.includes(s));
+    if (removed.length) setSecConfirm({ removed: removed.map((sec) => `${classNum(g.grade)}${sec}`) });
+    else applyEditSections();
+  };
+  const applyEditSections = () => {
+    const { si, gi } = numCtx;
+    const next = deepCopy(canon);
+    const sub = next[si]; const g = sub.grades[gi];
+    const before = g.sections.map(secLetter);
+    const after = [...picked].sort();
+    before.filter((s) => !after.includes(s)).forEach((sec) =>
+      clearSectionState(sub.name, g.grade, `${classNum(g.grade)}${sec}`));
+    g.sections = after.map((sec) => ({ tag: `${classNum(g.grade)}${sec}`, sec }));
+    sub.grids = sub.grades.map((gr) => gr.sections.map(() => Array(DAYS_IN_WEEK).fill(-1)));
+    persist(next);
+    setSecConfirm(null);
+    setScreen("view");
+  };
   const saveAddSection = () => {
     const { si, gi } = numCtx;
     const next = deepCopy(canon);
@@ -312,22 +404,26 @@ export default function TeachingProfile({ readiness, onChange }) {
     setScreen("view");
   };
 
-  const startEditNums = (si, gi) => {
+  const startEditNums = (si, gi, step = "duration") => {
     const sub = canon[si];
     const g = gradeDraftFrom(sub.grades[gi]);
     const b = (sub.budget || {})[gi] ?? (sub.budget || {})[String(gi)];
     if (b) g.budget = { ...b };
-    setNumCtx({ si, gi, g, step: "duration" });
+    setNumCtx({ si, gi, g, step });
     setScreen("editNums");
   };
   const updNum = (patch) => setNumCtx((c) => ({ ...c, g: { ...c.g, ...patch } }));
+  // save from ANY single field-edit screen; unedited fields keep their loaded values
   const saveEditNums = (finalBudget) => {
     const { si, gi, g } = numCtx;
     const next = deepCopy(canon);
     const rec = next[si].grades[gi];
     rec.durations = [...g.durations];
     rec.periods_per_week = g.periods_per_week;
-    next[si].budget = { ...(next[si].budget || {}), [gi]: finalBudget };
+    const budget = finalBudget || g.budget
+      || (next[si].budget || {})[gi] || (next[si].budget || {})[String(gi)]
+      || { method: "auto", value: 0 };
+    next[si].budget = { ...(next[si].budget || {}), [gi]: budget };
     persist(next);
     setScreen("view");
   };
@@ -417,7 +513,7 @@ export default function TeachingProfile({ readiness, onChange }) {
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker}</div>
           <h1 className="fr-q">How long are your {draft.name} periods for Class {classNum(g.grade)}?</h1>
-          <p className="fr-hint">Most schools have one length — pick more if yours mixes them.</p>
+          <p className="fr-hint">If more than one duration, select multiple.</p>
           <PickWheel options={DURATION_CHOICES} selected={g.durations} onToggle={toggle}
             ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={DEFAULT_DURATION}>
             <button type="button" className="primary fr-cta" onClick={() => setClassStep("ppw")}>Continue</button>
@@ -446,15 +542,19 @@ export default function TeachingProfile({ readiness, onChange }) {
 
     /* budget */
     const ppw = g.periods_per_week || DEFAULT_PPW;
-    const b = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
+    const rawB = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
+    const b = rawB.method === "auto"
+      ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
+      : rawB;
     const setMethod = (m) => updGrade({ budget: { method: m, value: defaultValueFor(m, ppw) } });
     const stepValue = (delta) => updGrade({ budget: { ...b, value: Math.max(0, b.value + delta) } });
+    const setValue = (v) => updGrade({ budget: { ...b, value: Math.max(0, v) } });
     const isLast = pi + 1 >= pendingIdxs.length;
     return (
       <div className="tp">
         <div className="kicker kicker-ochre">{kicker}</div>
         <h1 className="fr-q">How long is your teaching year for Class {classNum(g.grade)}?</h1>
-        <p className="fr-hint">Answer whichever way you know it — Aruvi works out the periods.</p>
+        <p className="fr-hint">Pick one method below based on what you know.</p>
         <div className="tp-methods">
           {METHOD_ORDER.map((m) => (
             <button type="button" key={m} className={`tp-method ${b.method === m ? "on" : ""}`} onClick={() => setMethod(m)}>
@@ -465,11 +565,19 @@ export default function TeachingProfile({ readiness, onChange }) {
         {b.method !== "auto" && (
           <div className="tp-val-row">
             <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <span className="tp-val">{b.value} <em>{METHODS[b.method].unit}</em></span>
+            <input type="number" className="tp-val-input" min="0" value={b.value}
+              onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
             <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
+            <span className="tp-val-unit">{METHODS[b.method].unit}</span>
           </div>
         )}
+        {b.method === "auto" && (
+          <p className="tp-estimate-tag">{ncfTotal != null ? `As per NCF, this class is ${ncfTotal} periods` : "No NCF figure for this class"}</p>
+        )}
         <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
+        {b.method === "auto" && (
+          <p className="tp-estimate-sub">(based on a 30-week year)</p>
+        )}
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => { updGrade({ budget: b }); onClassDone(); }}>
             {isLast ? "Save ✓" : "Next class →"}
@@ -521,6 +629,35 @@ export default function TeachingProfile({ readiness, onChange }) {
     );
   }
 
+  if (screen === "editSections") {
+    const { si, gi } = numCtx;
+    const sub = canon[si]; const g = sub.grades[gi];
+    const toggle = (s) => setPicked((a) => (a.includes(s) ? a.filter((x) => x !== s) : [...a, s]));
+    return (
+      <div className="tp">
+        <div className="kicker kicker-ochre">{sub.name} · Class {classNum(g.grade)} · sections</div>
+        <h1 className="fr-q">Edit sections of Class {classNum(g.grade)}</h1>
+        <p className="fr-hint">Tick to keep or add a section, untick to remove one. A removed section loses its bookmark — your lessons stay in the library. To remove the whole class, use the basket on the class.</p>
+        <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle}
+          ariaLabel="Sections" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
+          <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={requestEditSections}>Save</button>
+        </PickWheel>
+        <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+
+        {secConfirm && (
+          <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) setSecConfirm(null); }}>
+            <div className="fr-modal">
+              <h2 className="fr-q">Remove {secConfirm.removed.join(", ")}?</h2>
+              <p className="fr-hint">{secConfirm.removed.length === 1 ? "Its card and bookmark" : "Their cards and bookmarks"} will be removed. Your lessons stay in the library.</p>
+              <button type="button" className="tp-remove-confirm" onClick={applyEditSections}>Yes, remove {secConfirm.removed.join(", ")}</button>
+              <button type="button" className="fr-link fr-center" onClick={() => setSecConfirm(null)}>Keep {secConfirm.removed.length === 1 ? "it" : "them"}</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   if (screen === "editNums") {
     const { si, gi, g, step } = numCtx;
     const sub = canon[si];
@@ -534,11 +671,12 @@ export default function TeachingProfile({ readiness, onChange }) {
       });
       return (
         <div className="tp">
-          <div className="kicker kicker-ochre">{kicker} · 1 of 3</div>
+          <div className="kicker kicker-ochre">{kicker} · duration</div>
           <h1 className="fr-q">How long are the periods?</h1>
+          <p className="fr-hint">If more than one duration, select multiple.</p>
           <PickWheel options={DURATION_CHOICES} selected={g.durations} onToggle={toggle}
             ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={g.durations[0]}>
-            <button type="button" className="primary fr-cta" onClick={() => setNumCtx((c) => ({ ...c, step: "ppw" }))}>Continue</button>
+            <button type="button" className="primary fr-cta" onClick={() => saveEditNums()}>Save</button>
           </PickWheel>
           <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
         </div>
@@ -548,27 +686,32 @@ export default function TeachingProfile({ readiness, onChange }) {
     if (step === "ppw") {
       return (
         <div className="tp">
-          <div className="kicker kicker-ochre">{kicker} · 2 of 3</div>
+          <div className="kicker kicker-ochre">{kicker} · periods / week</div>
           <h1 className="fr-q">How many periods a week?</h1>
           <RollWheel ariaLabel="Periods per week" large value={String(g.periods_per_week)}
             onChange={(v) => updNum({ periods_per_week: Number(v) })}
             items={PPW_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period a week" : "periods a week" }))} />
           <div className="fr-foot">
-            <button className="primary fr-cta" onClick={() => setNumCtx((c) => ({ ...c, step: "budget" }))}>Continue</button>
-            <button className="fr-link" onClick={() => setNumCtx((c) => ({ ...c, step: "duration" }))}>← Back</button>
+            <button className="primary fr-cta" onClick={() => saveEditNums()}>Save</button>
+            <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
           </div>
         </div>
       );
     }
 
     const ppw = g.periods_per_week || DEFAULT_PPW;
-    const b = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
+    const rawB = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
+    const b = rawB.method === "auto"
+      ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
+      : rawB;
     const setMethod = (m) => updNum({ budget: { method: m, value: defaultValueFor(m, ppw) } });
     const stepValue = (delta) => updNum({ budget: { ...b, value: Math.max(0, b.value + delta) } });
+    const setValue = (v) => updNum({ budget: { ...b, value: Math.max(0, v) } });
     return (
       <div className="tp">
-        <div className="kicker kicker-ochre">{kicker} · 3 of 3</div>
+        <div className="kicker kicker-ochre">{kicker} · annual budget</div>
         <h1 className="fr-q">How long is the teaching year?</h1>
+        <p className="fr-hint">Pick one method below based on what you know.</p>
         <div className="tp-methods">
           {METHOD_ORDER.map((m) => (
             <button type="button" key={m} className={`tp-method ${b.method === m ? "on" : ""}`} onClick={() => setMethod(m)}>
@@ -579,50 +722,86 @@ export default function TeachingProfile({ readiness, onChange }) {
         {b.method !== "auto" && (
           <div className="tp-val-row">
             <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <span className="tp-val">{b.value} <em>{METHODS[b.method].unit}</em></span>
+            <input type="number" className="tp-val-input" min="0" value={b.value}
+              onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
             <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
+            <span className="tp-val-unit">{METHODS[b.method].unit}</span>
           </div>
         )}
+        {b.method === "auto" && (
+          <p className="tp-estimate-tag">{ncfTotal != null ? `As per NCF, this class is ${ncfTotal} periods` : "No NCF figure for this class"}</p>
+        )}
         <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
+        {b.method === "auto" && (
+          <p className="tp-estimate-sub">(based on a 30-week year)</p>
+        )}
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => saveEditNums(b)}>Save</button>
-          <button className="fr-link" onClick={() => setNumCtx((c) => ({ ...c, step: "ppw" }))}>← Back</button>
+          <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
         </div>
       </div>
     );
   }
 
   /* ════════════════════ VIEW — the accordion ════════════════════ */
+  // headline totals across the whole profile
+  const stats = (() => {
+    const classSet = new Set(); const secSet = new Set(); let ppw = 0;
+    canon.forEach((s) => (s.grades || []).forEach((g) => {
+      classSet.add(classNum(g.grade));
+      (g.sections || []).forEach((x) => secSet.add(`${classNum(g.grade)}${secLetter(x)}`));
+      ppw += g.periods_per_week || 0;
+    }));
+    return { subjects: canon.length, classes: classSet.size, sections: secSet.size, ppw };
+  })();
+
   return (
-    <div className="tp">
-      <div className="tp-hd">
-        <div>
-          <div className="kicker kicker-ochre">Settings</div>
-          <h1 className="lvl-title">Your teaching profile</h1>
+    <div className="tp" ref={rootRef}>
+      <div className="tp-sticky">
+        {onBack && (
+          <button className="tp-back" onClick={onBack}>← Back to My Classes</button>
+        )}
+        <div className="tp-hd">
+          <div>
+            <h1 className="lvl-title">Your teaching profile</h1>
+            <div className="tp-hd-spacer" aria-hidden="true"></div>
+          </div>
+          {canon.length > 0 && (
+            <button className={`tp-edit-toggle ${editing ? "on" : ""}`} onClick={() => setEditing(!editing)}>
+              {editing ? "Done" : "Edit"}
+            </button>
+          )}
         </div>
+
+        {canon.length === 0 && (
+          <p className="tp-empty">No profile yet — add a subject to begin.</p>
+        )}
+
         {canon.length > 0 && (
-          <button className={`tp-edit-toggle ${editing ? "on" : ""}`} onClick={() => setEditing(!editing)}>
-            {editing ? "Done" : "Edit"}
-          </button>
+          <div className="tp-stats">
+            <div className="tp-stat"><span className="tp-stat-n">{stats.subjects}</span><span className="tp-stat-l">Subjects</span></div>
+            <div className="tp-stat"><span className="tp-stat-n">{stats.classes}</span><span className="tp-stat-l">Classes</span></div>
+            <div className="tp-stat"><span className="tp-stat-n">{stats.sections}</span><span className="tp-stat-l">Sections</span></div>
+            <div className="tp-stat"><span className="tp-stat-n">{stats.ppw}</span><span className="tp-stat-l">Periods / week</span></div>
+          </div>
         )}
       </div>
 
-      {canon.length === 0 && (
-        <p className="tp-empty">No profile yet — add a subject to begin.</p>
-      )}
-
       {canon.map((s, si) => {
         const open = s.name === openSubject;
+        const subPpw = (s.grades || []).reduce((a, g) => a + (g.periods_per_week || 0), 0);
         return (
           <div className={`tp-sub ${open ? "open" : ""}`} key={s.name}>
             <div className="tp-sub-hd" onClick={() => setOpenSubject(open ? null : s.name)}>
-              <span className="tp-sub-name">{s.name}</span>
-              <span className="tp-sub-side">
-                {!open && <span className="tp-sub-count">{(s.grades || []).length} class{(s.grades || []).length === 1 ? "" : "es"}</span>}
+              <span className="tp-sub-left">
+                <span className="tp-sub-name">{s.name}</span>
                 {editing && open && (
                   <button className="tp-bin" aria-label={`Remove ${s.name}`}
                     onClick={(e) => { e.stopPropagation(); setConfirm({ kind: "subject", si }); }}><Bin /></button>
                 )}
+              </span>
+              <span className="tp-sub-side">
+                <span className="tp-sub-ppw">{subPpw} periods / week</span>
                 <span className="tp-caret">{open ? "▾" : "▸"}</span>
               </span>
             </div>
@@ -632,38 +811,59 @@ export default function TeachingProfile({ readiness, onChange }) {
               const b = (s.budget || {})[gi] ?? (s.budget || {})[String(gi)];
               const total = ppw && b ? budgetPeriods(ppw, b) : null;
               return (
-                <div className="tp-grade" key={g.grade}>
-                  <div className="tp-grade-hd">
-                    <span className="tp-grade-name">Class {classNum(g.grade)}</span>
-                    {editing && (
-                      <button className="tp-bin" aria-label={`Remove Class ${classNum(g.grade)}`}
-                        onClick={() => setConfirm({ kind: "grade", si, gi })}><Bin /></button>
-                    )}
-                  </div>
-                  <div className="tp-chips">
-                    {(g.sections || []).map((x) => {
-                      const sec = secLetter(x);
-                      return (
-                        <span className="tp-chip" key={sec}>
-                          {classNum(g.grade)}{sec}
-                          {editing && (
-                            <button className="tp-chip-x" aria-label={`Remove section ${classNum(g.grade)}${sec}`}
-                              onClick={() => setConfirm({ kind: "section", si, gi, sec })}>✕</button>
-                          )}
-                        </span>
-                      );
-                    })}
-                    {editing && (
-                      <button className="tp-add tp-add-sm" onClick={() => startAddSection(si, gi)}>+ section</button>
-                    )}
-                  </div>
-                  <div className="tp-nums">
-                    <span className="tp-nums-txt">
-                      {(g.durations || []).join("/")} min{ppw ? ` · ${ppw}/week` : ""}{total ? ` · ≈${total} periods/yr` : ""}
+                <div className="tp-classcard" key={g.grade}>
+                  <div className="tp-cc-hd">
+                    <span className="tp-cc-left">
+                      <span className="tp-cc-name">Class {classNum(g.grade)}</span>
+                      {editing && (
+                        <button className="tp-bin" aria-label={`Remove Class ${classNum(g.grade)}`}
+                          onClick={() => setConfirm({ kind: "grade", si, gi })}><Bin /></button>
+                      )}
                     </span>
-                    {editing && (
-                      <button className="tp-editlnk" onClick={() => startEditNums(si, gi)}>edit →</button>
-                    )}
+                    <div className="tp-cc-right">
+                      <span className="tp-cc-seclbl">Sections</span>
+                      <div className="tp-chips">
+                        {(g.sections || []).map((x) => {
+                          const sec = secLetter(x);
+                          return (
+                            <span className="tp-chip" key={sec}>{classNum(g.grade)}{sec}</span>
+                          );
+                        })}
+                      </div>
+                      {editing && (
+                        <button className="tp-icon-btn" aria-label={`Edit sections of Class ${classNum(g.grade)}`}
+                          onClick={() => startEditSections(si, gi)}><Pencil /></button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="tp-cc-cols">
+                    <div className="tp-cc-col">
+                      <div className="tp-cc-col-l">Duration
+                        {editing && (
+                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit duration of Class ${classNum(g.grade)}`}
+                            onClick={() => startEditNums(si, gi, "duration")}><Pencil size={12} /></button>
+                        )}
+                      </div>
+                      <div className="tp-cc-col-v">{(g.durations || []).join("/")} min</div>
+                    </div>
+                    <div className="tp-cc-col tp-cc-col--center">
+                      <div className="tp-cc-col-l">Periods / week
+                        {editing && (
+                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit periods per week of Class ${classNum(g.grade)}`}
+                            onClick={() => startEditNums(si, gi, "ppw")}><Pencil size={12} /></button>
+                        )}
+                      </div>
+                      <div className="tp-cc-col-v">{ppw || "—"}</div>
+                    </div>
+                    <div className="tp-cc-col">
+                      <div className="tp-cc-col-l">Annual budget
+                        {editing && (
+                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit annual budget of Class ${classNum(g.grade)}`}
+                            onClick={() => startEditNums(si, gi, "budget")}><Pencil size={12} /></button>
+                        )}
+                      </div>
+                      <div className="tp-cc-col-v">{total ? `${total} periods` : "—"}</div>
+                    </div>
                   </div>
                 </div>
               );

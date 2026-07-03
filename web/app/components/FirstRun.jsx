@@ -400,8 +400,10 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           {!previewBusy && !previewError && previewView && (
             <>
               <div className="fr-plan-ready">
-                <span className="fr-plan-ready-check" aria-hidden="true">✓</span>
-                <h1 className="fr-plan-ready-title">Lesson plan ready!</h1>
+                <div className="fr-plan-ready-head">
+                  <span className="fr-plan-ready-check" aria-hidden="true">✓</span>
+                  <h1 className="fr-plan-ready-title">Lesson plan ready!</h1>
+                </div>
                 <p className="fr-plan-ready-sub">Your lesson has been generated successfully.</p>
               </div>
 
@@ -528,7 +530,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         </div>
       </div>
       <div className="fr-foot">
-        <button className="primary fr-cta" disabled={!chosenChapter} onClick={generate}>Generate Lesson Plan</button>
+        <button className="primary fr-cta prepare-cta" disabled={!chosenChapter} onClick={generate}>Prepare the lesson →</button>
         <button className="fr-link" onClick={() => setStep("grade")}>← Change class</button>
       </div>
     </div>

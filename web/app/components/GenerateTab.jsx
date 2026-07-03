@@ -1,16 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import Allocate from "./Allocate";
+import PrepareLesson from "./PrepareLesson";
 import { pretty, gradeUp } from "../lib/format";
 
 /* ───────── Generate tab ─────────
- * Reached ONLY through page.jsx's onEnterGenerate (the "Ready to plan…" button, My Week empty
- * cards, My Lesson Plans, My Week rows). `entry` says how to open:
- *   { mode: "scoped", subject, grade } → skip the picker, go straight to Allocate for that combo
- *   { mode: "pick" }                   → run the G1.9 picker: choose subject (if >1 taught), then
- *                                        grade (if the chosen subject has >1), THEN Allocate.
- * Allocate itself decides the start screen: it opens at G2 (final) when an allocation already
- * exists for the subject·grade, else begins the fresh G4→G3 flow.
+ * Reached ONLY through page.jsx's onEnterGenerate (the "Ready to plan…" button, My Lesson
+ * Plans "Need a chapter", etc.). `entry` says how to open:
+ *   { mode: "scoped", subject, grade } → skip the picker, go straight to PrepareLesson
+ *   { mode: "pick" }                   → run the picker: choose subject (if >1 taught), then
+ *                                        grade (if the chosen subject has >1), THEN PrepareLesson.
+ *
+ * DECOUPLED FROM ALLOCATION (2026-07-03): the everyday path is now the single-chapter
+ * PrepareLesson flow (pick chapter → periods → generate) — it does NOT require, run, or gate on
+ * the annual-budget allocator. The top-down Allocate + PDF report is kept as its own
+ * independent capability (its home is TBD), not the path to a lesson. See PrepareLesson.jsx.
  *
  * Readiness still gates the tab — before setup it shows the G1 locked state. */
 
@@ -27,7 +30,7 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
     return (
       <div className="gate">
         <div className="gate-lock">🔒</div>
-        <p className="h2 gate-title">Generate unlocks after setup</p>
+        <p className="h2 gate-title">Preparing lessons unlocks after setup</p>
         <p className="gate-sub">
           Aruvi needs your classes and annual budget first — that&rsquo;s how the plans it
           makes can fit your real classes and your real year.
@@ -50,7 +53,7 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
       return (
         <div className="gpick">
           <div className="gpick-hd">
-            <div className="kicker kicker-ochre">Generate · choose what to plan</div>
+            <div className="kicker kicker-ochre">Prepare a lesson · choose what to plan</div>
             <h2 className="gpick-q">Which subject do you want to plan for?</h2>
           </div>
           <div className="gpick-grid">
@@ -97,10 +100,9 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
     );
   }
 
-  // ── scoped (or already consumed) → the allocation flow for the active subject·grade ──
-  // singleChapter (from a My Week card) rewords G4 + shows the budget anchor.
-  return <Allocate subject={subject} grade={grade} readiness={readiness} onNavigate={onNavigate}
-    singleChapter={!!(entry && entry.single)} />;
+  // ── scoped (or already consumed) → the everyday single-chapter generate flow for the
+  // active subject·grade. No allocation gate — pick a chapter, set its periods, generate. ──
+  return <PrepareLesson subject={subject} grade={grade} onNavigate={onNavigate} />;
 }
 
 // When a chosen subject has exactly one grade, enter it once (in an effect, never during render).

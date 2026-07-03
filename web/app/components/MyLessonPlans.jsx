@@ -134,8 +134,8 @@ export default function MyLessonPlans({ readiness, onAllocate, onOpenSection }) 
         )}
         <div className="mlp-allocate">
           <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
-          <button className="mlp-allocate-btn" onClick={() => onAllocate && onAllocate(sSlug, gSlug)}>
-            Generate · Grade {gradeUp(g.grade)} →
+          <button className="mlp-allocate-btn prepare-cta" onClick={() => onAllocate && onAllocate(sSlug, gSlug)}>
+            Prepare a lesson →
           </button>
         </div>
       </div>

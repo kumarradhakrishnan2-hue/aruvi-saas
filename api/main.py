@@ -291,6 +291,21 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
             "allocation_basis": sub.allocation_basis(grade)}
 
 
+@app.get("/subjects/{subject}/{grade}/ncf-periods")
+def get_ncf_periods(subject: str, grade: str) -> Dict[str, Any]:
+    """NCF-recommended total teaching periods for the year for this subject·grade.
+    Used by the teaching-profile budget 'estimate' option so the recommendation is the
+    National Curricular Framework figure, not a flat heuristic. None when the norm table
+    has no value for this subject·stage."""
+    _subject(subject)
+    try:
+        stage = stage_for(grade)
+    except UnknownGradeError:
+        stage = None
+    total = data.ncf_total_periods(subject, stage) if stage else None
+    return {"subject": subject, "grade": grade, "stage": stage, "ncf_total_periods": total}
+
+
 @app.post("/subjects/{subject}/{grade}/allocate")
 def post_allocate(subject: str, grade: str, req: AllocateRequest) -> Dict[str, Any]:
     _subject(subject)

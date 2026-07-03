@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, pretty } from "../lib/format";
+import { getJSON, pretty, pad, gradeUp } from "../lib/format";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
@@ -34,6 +34,8 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
+  const [attachFor, setAttachFor] = useState(null); // { c, sectionKey } — "+" track-a-chapter picker
+  const [untrackFor, setUntrackFor] = useState(null); // { c, sectionKey, plan } — "−" untrack confirm
   // plans for EVERY subject·grade the teacher handles, keyed `${subjectSlug}/${gradeSlug}`.
   const [plansByKey, setPlansByKey] = useState({});
 
@@ -102,9 +104,6 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     } finally { setLoading(false); }
   };
 
-  if (loading) return <div className="spin">Opening plan…</div>;
-  if (openPlan) return <LessonView view={openPlan.view} sectionKey={openPlan.sectionKey} onExit={() => setOpenPlan(null)} />;
-
   // current-LU pointer (per section) from localStorage, for the "On: Learning Unit N" line
   const pointerFor = (sectionKey) => {
     if (typeof window === "undefined") return null;
@@ -117,12 +116,117 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (typeof window === "undefined") return null;
     try { return window.localStorage.getItem(`current_chapter_${sectionKey}`) || null; } catch { return null; }
   };
+  // Completion flag written by LessonView when the last learning unit is marked complete.
+  const isDone = (sectionKey) => {
+    if (typeof window === "undefined") return false;
+    try { return window.localStorage.getItem(`lu_done_${sectionKey}`) === "1"; } catch { return false; }
+  };
+  // Bind an already-prepared chapter to a section and return to the cards view — the originating
+  // section card now shows this chapter (closing the modal re-renders it). We deliberately do NOT
+  // open the lesson: the teacher lands back on My Classes, where she tapped "+", not inside the plan.
+  // The pointer + done flag are PER-SECTION, so switching to a new chapter (e.g. from a completed
+  // one) resets them — the new chapter starts fresh at its first learning unit.
+  const attachChapter = (c, sectionKey, plan) => {
+    try {
+      window.localStorage.setItem(`current_chapter_${sectionKey}`, plan.filename);
+      window.localStorage.removeItem(`lu_pointer_${sectionKey}`);
+      window.localStorage.removeItem(`lu_done_${sectionKey}`);
+    } catch {}
+    setAttachFor(null);
+  };
 
-  // Home header: time-of-day greeting + the universal "+ Prepare Lesson" action.
+  // Clear a section's chapter binding + pointer + done. The chapter itself is untouched (still in
+  // My Lessons); the card returns to the unstarted "Pick a chapter" (grey) state.
+  const clearBinding = (sectionKey) => {
+    try {
+      window.localStorage.removeItem(`current_chapter_${sectionKey}`);
+      window.localStorage.removeItem(`lu_pointer_${sectionKey}`);
+      window.localStorage.removeItem(`lu_done_${sectionKey}`);
+    } catch {}
+  };
+  // Untrack (ongoing/started cards) — the reversal of tracking, via a confirm window.
+  const untrackChapter = (sectionKey) => { clearBinding(sectionKey); setUntrackFor(null); };
+  // Move on from a COMPLETED chapter: one click frees it (card reverts to unstarted grey) and opens
+  // the picker to track the next chapter — no confirm, since a finished chapter has no place to lose.
+  const moveOnFromCompleted = (c, sectionKey) => { clearBinding(sectionKey); setAttachFor({ c, sectionKey }); };
+
+  if (loading) return <div className="spin">Opening plan…</div>;
+  if (openPlan) return <LessonView view={openPlan.view} sectionKey={openPlan.sectionKey} onExit={() => setOpenPlan(null)} />;
+
+  // "+" attach-a-lesson picker — a focused MODAL layered over the cards (not a separate screen),
+  // scoped to ONE subject·class. Lists chapters already prepared for that subject·grade (tap =
+  // attach + open) and offers to prepare a brand-new one. Rendered at the bottom of the main
+  // cards view; see attachModal below.
+  const attachModal = attachFor ? (() => {
+    const { c, sectionKey } = attachFor;
+    const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
+    // Exclude the chapter already bound to this section (e.g. the just-completed one) — she's here
+    // to pick a DIFFERENT chapter, so it should not appear in the list.
+    const boundFile = currentChapterFile(sectionKey);
+    const listPlans = Array.isArray(gradePlans) ? gradePlans.filter((p) => p.filename !== boundFile) : gradePlans;
+    return (
+      <div className="ap-overlay" onClick={() => setAttachFor(null)}>
+        <div className="ap-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="ap-close" aria-label="Close" onClick={() => setAttachFor(null)}>✕</button>
+          <div className="ap-head">
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-title">Track a chapter for this class</div>
+            <div className="ap-sub">Pick a chapter you&rsquo;ve already prepared, or build a new one.</div>
+          </div>
+          <div className="ap-list">
+            {listPlans === undefined ? (
+              <div className="ap-loading">Loading lessons…</div>
+            ) : listPlans.length === 0 ? (
+              <div className="ap-none">No other lessons prepared for this class yet.</div>
+            ) : (
+              listPlans.map((p) => (
+                <button key={p.filename} className="ap-row" onClick={() => attachChapter(c, sectionKey, p)}>
+                  <span className="ap-row-ch">CH {pad(p.chapter_number)}</span>
+                  <span className="ap-row-title">{p.chapter_title}</span>
+                  <span className="ap-row-go">Track →</span>
+                </button>
+              ))
+            )}
+          </div>
+          <div className="mlp-allocate">
+            <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
+            <button className="mlp-allocate-btn prepare-cta"
+              onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+              Prepare a new lesson →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  })() : null;
+
+  // Untrack confirmation — a deliberate window so she's sure. Reversal of tracking; makes the plan
+  // available to track again and clears her place in it.
+  const untrackModal = untrackFor ? (() => {
+    const { c, sectionKey, plan } = untrackFor;
+    const chLabel = `${plan.chapter_number ? `Ch ${plan.chapter_number} — ` : ""}${plan.chapter_title}`;
+    return (
+      <div className="ap-overlay" onClick={() => setUntrackFor(null)}>
+        <div className="ap-modal ap-confirm" onClick={(e) => e.stopPropagation()}>
+          <button className="ap-close" aria-label="Close" onClick={() => setUntrackFor(null)}>✕</button>
+          <div className="ap-head">
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-title">Stop tracking this chapter?</div>
+            <div className="ap-sub">{c.sectionTag} will stop tracking &ldquo;{chLabel}&rdquo;. It will be available to track again for this section.</div>
+          </div>
+          <div className="ap-confirm-actions">
+            <button className="ap-btn-ghost" onClick={() => setUntrackFor(null)}>Keep tracking</button>
+            <button className="ap-btn-danger" onClick={() => untrackChapter(sectionKey)}>Stop tracking</button>
+          </div>
+        </div>
+      </div>
+    );
+  })() : null;
+
+  // Home header: time-of-day greeting (repeat view only — see below).
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const firstName = (user || "").trim();
-  const prepareLesson = () => onEnterGenerate && onEnterGenerate();
 
   // Ready but the teacher has no classes at all (empty profile).
   if (!classes.length) {
@@ -132,13 +236,12 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           <div>
             <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
           </div>
-          <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
         </div>
         <div className="slotcard slot-empty">
           <div className="slotrail dim" />
           <div className="slotbody">
             <div className="slot-title muted">No classes set up yet</div>
-            <div className="slot-meta">Prepare a lesson and add it to a class, or set up your teaching profile from the settings gear above.</div>
+            <div className="slot-meta">Set up your teaching profile from the settings gear above to start planning.</div>
           </div>
         </div>
       </div>
@@ -149,24 +252,26 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // with a welcome CTA banner ABOVE them. Cards are never hidden.
   const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
 
-  /* My Classes home (2026-07-02, approved mockup): a FLAT list of section cards — no day
-   * buckets, no "today", no pace pills. The card answers exactly one question — "where did I
-   * stop with this class?" — via the LU progress rail (done=pine, current=ochre) and the
-   * "LU n of N" line. LU-level only for now (phase-level marking is a later step). */
+  /* My Classes home: a FLAT list of section cards — no day buckets, no "today", no pace pills.
+   * Each card answers one question — "where did I stop with this class?" — via the LU progress
+   * rail and a status shade (grey=not started, green=ongoing, gold=completed) carried on a
+   * left-edge accent bar. FIRST-TIME view (no chapter bound anywhere) drops the greeting and
+   * shows the welcome banner; REPEAT view shows the greeting + "continue where you left off". */
   return (
     <div>
-      <div className="dash-hd">
-        <div>
-          <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
-          <div className="dash-sub">Here is where you stopped with each class.</div>
+      {anyBound && (
+        <div className="dash-hd">
+          <div>
+            <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
+            <div className="dash-sub">Continue where you left off with every class.</div>
+          </div>
         </div>
-        <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
-      </div>
+      )}
 
       {!anyBound && (
         <div className="dash-welcome">
           <div className="dash-welcome-text">
-            <div className="dash-welcome-title">Your classes are set up — ready to plan?</div>
+            <div className="dash-welcome-title">Your classes are set up</div>
             <div className="dash-welcome-sub">Tap a class below to plan its first chapter.</div>
           </div>
         </div>
@@ -179,47 +284,65 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           const file = currentChapterFile(sectionKey);
           const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
 
-          // No chapter bound to this class yet → "pick a chapter to begin".
-          // Still tappable — an open invitation, not a disabled slot.
+          // No chapter bound to this class yet → "pick a chapter to begin" (grey / not started).
+          // The card is NOT tappable-to-generate anymore; the "+" opens the attach picker instead.
           if (!plan) {
             return (
-              <div className="sc-card" key={i}
-                onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+              <div className="sc-card st-new" key={i}>
                 <div className="sc-tag muted">{c.sectionTag}</div>
                 <div className="sc-body">
                   <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
                   <div className="sc-title muted">Pick a chapter to begin</div>
-                  <div className="sc-meta">No lesson attached yet</div>
                 </div>
+                <button className="sc-add" aria-label="Attach a lesson to this class"
+                  onClick={() => setAttachFor({ c, sectionKey })}>+</button>
               </div>
             );
           }
 
           const lu = pointerFor(sectionKey);          // current LU, 1-based (null = untouched)
+          const done = isDone(sectionKey);
           const total = plan.total_units || null;      // LU count from the plans listing
           const ticks = total ? Array.from({ length: total }) : null;
+          const status = done ? "st-done" : lu ? "st-going" : "st-new";
           return (
-            <div className="sc-card" key={i}
+            <div className={`sc-card ${status}`} key={i}
               onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
               <div className="sc-tag">{c.sectionTag}</div>
               <div className="sc-body">
                 <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
                 <div className="sc-title">{plan.chapter_number ? `Ch ${plan.chapter_number} — ` : ""}{plan.chapter_title}</div>
                 {ticks && (
-                  <div className="sc-rail" aria-label={lu ? `Learning Unit ${lu} of ${total}` : `${total} learning units, not started`}>
+                  <div className="sc-rail" aria-label={done ? `${total} learning units, completed` : lu ? `Learning Unit ${lu} of ${total}` : `${total} learning units, not started`}>
                     {ticks.map((_, t) => (
-                      <span key={t} className={`sc-tick ${lu && t < lu - 1 ? "done" : lu && t === lu - 1 ? "cur" : ""}`} />
+                      <span key={t} className={`sc-tick ${done || (lu && t < lu - 1) ? "done" : lu && t === lu - 1 ? "cur" : ""}`} />
                     ))}
                   </div>
                 )}
-                <div className="sc-meta">{lu ? `LU ${lu}${total ? ` of ${total}` : ""}` : "Ready to start"}</div>
               </div>
+              {/* Right-slot actions. COMPLETED → a "Complete" label + "+"; clicking "+" frees the
+                  finished chapter (card reverts to unstarted) and opens the picker for the next one.
+                  STILL TRACKING → "−" untrack, the deliberate reversal via a confirm window.
+                  stopPropagation so neither opens the lesson. */}
+              {done ? (
+                <div className="sc-actions sc-actions-col">
+                  <span className="sc-status-done">Complete</span>
+                  <button className="sc-add" aria-label="Finish with this chapter and track the next"
+                    onClick={(e) => { e.stopPropagation(); moveOnFromCompleted(c, sectionKey); }}>+</button>
+                </div>
+              ) : (
+                <button className="sc-remove" aria-label="Stop tracking this chapter"
+                  onClick={(e) => { e.stopPropagation(); setUntrackFor({ c, sectionKey, plan }); }}>−</button>
+              )}
             </div>
           );
         })}
       </div>
 
       <div className="dash-foot">Tap any class to open its lesson. Your place only moves when you tell it to.</div>
+
+      {attachModal}
+      {untrackModal}
     </div>
   );
 }

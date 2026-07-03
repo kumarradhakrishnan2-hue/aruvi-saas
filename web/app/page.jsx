@@ -56,6 +56,24 @@ export default function Home() {
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
 
+  // Freeze the top chrome (sticky header + tabs, then the My Classes greeting) while the card
+  // list scrolls beneath. Publish the measured header height and header+tabs height as CSS vars
+  // so the sticky offsets stay exact across breakpoints and the two-line brand — no magic numbers.
+  useEffect(() => {
+    const setVars = () => {
+      const root = document.documentElement;
+      const h = document.querySelector(".hdr");
+      const t = document.querySelector(".main-tabs");
+      const hh = h ? Math.round(h.getBoundingClientRect().height) : 0;
+      const th = t ? Math.round(t.getBoundingClientRect().height) : 0;
+      if (h) root.style.setProperty("--hdr-h", `${hh}px`);
+      if (h && t) root.style.setProperty("--nav-h", `${hh + th}px`);
+    };
+    setVars();
+    window.addEventListener("resize", setVars);
+    return () => window.removeEventListener("resize", setVars);
+  }, [ready, tab, editFlow, user]);
+
   // Load this user's readiness profile whenever the signed-in user changes (incl. on the
   // initial restore). The API scopes the read to X-Aruvi-User; we regenerate the active-
   // subject projection the consumers read. Clearing first prevents one user's data flashing
@@ -253,7 +271,7 @@ export default function Home() {
              * signed-out return without rebuilding hits first run naturally (server profile
              * is gone, so GET /readiness comes back empty). */
             <div className="editflow">
-              <TeachingProfile readiness={readiness} onChange={setReadiness} />
+              <TeachingProfile readiness={readiness} onChange={setReadiness} onBack={goClasses} />
             </div>
           ) :
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
