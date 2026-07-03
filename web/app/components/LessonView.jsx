@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import { pushSectionState } from "../lib/sectionState";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -98,6 +99,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
       if (v) window.localStorage.setItem(doneKey, "1");
       else window.localStorage.removeItem(doneKey);
     } catch {}
+    pushSectionState(sectionKey);   // sync completion to the server (cross-device)
   };
 
   const writePointer = (i) => {
@@ -105,6 +107,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     setCur(clamped);
     try { window.localStorage.setItem(storageKey, String(clamped)); } catch {}
     if (clamped < units.length - 1) setDone(false);   // moved back off the last unit → not done
+    pushSectionState(sectionKey);   // sync the advanced pointer to the server (cross-device)
     return clamped;
   };
 

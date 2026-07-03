@@ -1365,8 +1365,43 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 .mlp-empty { font-style:italic; color:var(--ink-soft); font-size:14px; margin:30px 0; }
 
+/* ── My Lessons v2 (2026-07-03): scoped to one subject·grade, My Classes card idiom ──
+   "Your lessons" at dash-title size + Subject/Grade RollWheels pinned in a frozen header;
+   the lesson list (reusing .sc-card sizing) scrolls beneath. */
+.mlp2 { margin-top:-8px; }   /* cancel .editflow's padding-top so "Your lessons" lines up with My Classes' "Good evening" (same .dash-title level + size) */
+.mlp2-frozen { position:sticky; top:var(--nav-h, 118px); z-index:4; background:var(--paper); padding:6px 0 12px; margin-bottom:6px; border-bottom:1px solid var(--line); }
+.mlp2-title { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin:2px 0 0; }
+.mlp2-wheels { display:flex; gap:14px; margin-top:12px; }
+.mlp2-wcol { flex:1; min-width:0; }
+.mlp2-wlbl { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); display:block; margin:0 0 5px; text-align:center; }
+.mlp2-wcol .fr-wheel-shell { margin:0; }
+/* compact box (rowPx=48 on the wheels) + centred value, both Subject and Class */
+.mlp2-static { height:48px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 14px; border:1px solid #c7d9cf; border-radius:12px; background:#f1f6f3; font-family:var(--f-body); font-size:17px; color:var(--ink); }
+.mlp2 .fr-wheel-label { flex:0 1 auto; }
+/* Class wheel: short numbers, centred. */
+.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-row { justify-content:center; padding-left:44px; padding-right:44px; }
+.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-label { text-align:center; }
+/* Subject wheel: starts naturally at the LEFT and the font auto-fits (JS) so a long word like
+   "Mathematics" shows in full, never clipped — even on a narrow phone column. */
+.mlp2 .fr-wheel[aria-label="Subject"] .fr-wheel-row { justify-content:flex-start; padding-left:16px; padding-right:44px; }
+.mlp2 .fr-wheel[aria-label="Subject"] .fr-wheel-label { text-align:left; }
+/* the settled (chosen) value reads bold — the visible row in a RollWheel IS the pick */
+.mlp2 .fr-wheel-row[aria-selected="true"] .fr-wheel-label { font-weight:600; color:var(--ink); }
+.mlp2-static { font-weight:600; }   /* single-option axis is always the chosen value */
+/* Resting "ready to teach" lesson — sage left rail, distinct from My Classes' grey "not started"
+   (a prepared lesson isn't unstarted, it's on the shelf). Teaching-now → st-going (green),
+   all-done → st-done (clay): reused verbatim so the two tabs share one status palette. */
+.sc-card.mlp2-shelf::before { background:#8aa79b; }
+.mlp2-status { display:flex; flex-wrap:wrap; align-items:baseline; font-family:var(--f-mono); font-size:10px; letter-spacing:.02em; color:var(--ink-soft); }
+.mlp2-status .sep { margin:0 6px; color:var(--line); }
+.mlp2-ready { font-family:var(--f-body); font-style:italic; font-size:12.5px; color:var(--ink-soft); }
+.mlp2-open { flex:none; font-family:var(--f-body); font-size:19px; color:var(--ink-soft); padding-left:2px; }
+.sc-card:hover .mlp2-open { color:var(--pine); }
+.mlp2-emptybody { font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); padding:22px 4px; }
+
 @media (max-width: 600px) {
   .mlp .lvl-title { font-size:23px; }
+  .mlp2-title { font-size:20px; }   /* match .dash-title's mobile size so the two tab headers stay identical */
   .mlp-allocate { flex-direction:column; align-items:stretch; }
   .mlp-allocate-btn { width:100%; min-height:44px; }
   .mlp-row-open { min-height:44px; }
@@ -1720,7 +1755,9 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .ap-row:hover { border-color: var(--pine); background: #f3ede0; }
 .ap-row-ch { flex: none; font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; color: var(--pine-d); }
 .ap-row-title { flex: 1; min-width: 0; font-family: var(--f-body); font-size: 15px; color: var(--ink); }
-.ap-row-go { flex: none; font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); }
+/* "Track →" reads as the prominent action on each row — a green (pine) filled pill. */
+.ap-row-go { flex: none; font-family: var(--f-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: #f4efe6; background: var(--pine); padding: 6px 11px; border-radius: 6px; }
+.ap-row:hover .ap-row-go { background: var(--pine-d); }
 /* The "Prepare a new lesson" CTA reuses My Lessons' .mlp-allocate row + .mlp-allocate-btn styling
    verbatim (same font/size/colour). Inside the modal it stays frozen at the bottom while the list scrolls. */
 .ap-modal .mlp-allocate { flex: none; }
@@ -1756,6 +1793,16 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   background: none; border: 1.5px solid var(--line); color: var(--ink-soft);
 }
 .tp-edit-toggle.on { border-color: var(--pine); background: var(--pine); color: #fdfaf4; }
+/* View-mode edit affordance — a prominent solid-pine pencil, the clear invitation to edit. */
+.tp-edit-pencil {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  background: var(--pine); border: none; color: #fdfaf4;
+  box-shadow: 0 2px 11px rgba(30, 92, 74, .3);
+  transition: background .12s ease, box-shadow .12s ease, transform .06s ease;
+}
+.tp-edit-pencil:hover { background: var(--pine-d); box-shadow: 0 3px 15px rgba(30, 92, 74, .4); }
+.tp-edit-pencil:active { transform: scale(.95); }
 .tp-empty { font-family: var(--f-body); font-style: italic; font-size: 14px; color: var(--ink-soft); }
 
 /* headline summary tiles */
@@ -2028,4 +2075,6 @@ button.prepare-cta:disabled, .prepare-cta:disabled {
 }
 /* leading spark — the mark of the singular act */
 button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right: 8px; opacity: .95; vertical-align: .16em; }
+/* First-run "Prepare my first lesson" — a more prominent spark (bumped up ~3 notches). */
+.fr-cta.prepare-cta::before { font-size: 1.5em; margin-right: 11px; vertical-align: -0.06em; }
 

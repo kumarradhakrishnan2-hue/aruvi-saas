@@ -185,3 +185,44 @@ class ReadinessRepository(Protocol):
         """Erase the teacher's readiness profile (the "start setup over" action).
         No-op if none exists yet."""
         ...
+
+
+# ── Section teaching-state persistence (the lesson execution pointer) ───────────
+# Per-section execution state: which chapter a section is tracking (`chapter`), how far
+# along it is (`unit_index`, the current Learning Unit, 0-based), and whether the chapter
+# is fully taught (`done`). This is the ONLY true execution state (CLAUDE.md §11: "status
+# is execution, and lives in My Plans") and today lives ONLY in browser localStorage
+# (current_chapter_* / lu_pointer_* / lu_done_*), so it does NOT follow a teacher across
+# devices — the bug this store fixes. It is the Bucket-B "teaching pointer" of
+# CLOUD_DATA_MODEL.md §2.4, whose target table `lesson_pointer(tenant_id, user_id,
+# section_key, unit_index, updated_at)` is extended here with `chapter` + `done` (the same
+# per-section execution state). localStorage stays as an optimistic cache; the stored row
+# is authoritative for cross-device (exactly §2.4's prescription).
+#
+# Keyed by tenant_id + user_id (auth stubbed → tenant_id == user_id today). `section_key`
+# is the frontend's `${subjectSlug}_${gradeSlug}_${sectionTag}`.
+SectionState = Dict[str, Any]  # {chapter: str, unit_index: Optional[int], done: bool, updated_at: str}
+
+
+@runtime_checkable
+class SectionStateRepository(Protocol):
+    """Persists per-section teaching execution state, keyed by tenant_id + user_id.
+
+    File-based (JSON) implementation for now; a Supabase adapter (the `lesson_pointer`
+    table, extended with `chapter` + `done`) swaps in behind this same port at Phase 4
+    without touching the API routes, engine, or the React components.
+    """
+    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, "SectionState"]:
+        """All tracked sections for this teacher: {section_key: SectionState}.
+        Returns an empty dict if the teacher has tracked nothing yet."""
+        ...
+
+    def save_one(self, tenant_id: str, user_id: str, section_key: str,
+                 chapter: str, unit_index: Optional[int], done: bool) -> None:
+        """Upsert one section's execution state as a full snapshot for that section
+        (the client always sends the complete current state, so no field-merge needed)."""
+        ...
+
+    def delete_one(self, tenant_id: str, user_id: str, section_key: str) -> None:
+        """Remove one section's state — the "untrack" reversal. No-op if absent."""
+        ...

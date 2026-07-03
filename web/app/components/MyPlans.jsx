@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, pad, gradeUp } from "../lib/format";
+import { pushSectionState, pullSectionState } from "../lib/sectionState";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
@@ -36,6 +37,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
   const [attachFor, setAttachFor] = useState(null); // { c, sectionKey } — "+" track-a-chapter picker
   const [untrackFor, setUntrackFor] = useState(null); // { c, sectionKey, plan } — "−" untrack confirm
+  const [, setSyncTick] = useState(0); // bumped after a server pull so cards re-read the refreshed cache
   // plans for EVERY subject·grade the teacher handles, keyed `${subjectSlug}/${gradeSlug}`.
   const [plansByKey, setPlansByKey] = useState({});
 
@@ -56,6 +58,40 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, readiness]);
+
+  // Reconcile section teaching-state (tracked chapter + pointer + done) from the SERVER into the
+  // localStorage cache, so a device shows the same tracking/progress the teacher set elsewhere
+  // (fixes the Chrome-vs-iPhone divergence). localStorage stays the optimistic cache; the server
+  // row is authoritative here. Bump syncTick when done so the cards re-read the cache.
+  //
+  // Re-syncs WITHOUT a manual refresh: on load, whenever the tab regains focus / becomes visible
+  // (the "I just switched to my iPhone" moment), and on a light interval while visible. We skip a
+  // sync while a modal or the lesson view is open so an in-flight action is never clobbered.
+  const uiBusyRef = useRef(false);
+  uiBusyRef.current = !!(attachFor || untrackFor || openPlan);
+  useEffect(() => {
+    if (!ready) return;
+    const keys = classesFromReadiness(readiness)
+      .map((c) => `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`);
+    if (!keys.length) return;
+    let live = true;
+    const sync = () => {
+      if (!live || uiBusyRef.current) return;
+      pullSectionState(keys).then(() => { if (live) setSyncTick((t) => t + 1); });
+    };
+    sync(); // initial reconcile
+    const onVis = () => { if (document.visibilityState === "visible") sync(); };
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("focus", sync);
+    const iv = setInterval(() => { if (document.visibilityState === "visible") sync(); }, 20000);
+    return () => {
+      live = false;
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("focus", sync);
+      clearInterval(iv);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, readiness, user]);
 
   // Deep-link from Track (My Lesson Plans): open a specific SECTION's plan, pointer-enabled.
   // Uses the request's OWN subject/grade (My Week is no longer scoped to one subject·grade).
@@ -132,6 +168,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       window.localStorage.removeItem(`lu_pointer_${sectionKey}`);
       window.localStorage.removeItem(`lu_done_${sectionKey}`);
     } catch {}
+    pushSectionState(sectionKey);   // sync the new binding to the server (cross-device)
     setAttachFor(null);
   };
 
@@ -143,6 +180,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       window.localStorage.removeItem(`lu_pointer_${sectionKey}`);
       window.localStorage.removeItem(`lu_done_${sectionKey}`);
     } catch {}
+    pushSectionState(sectionKey);   // no chapter now → the server row is deleted (untrack)
   };
   // Untrack (ongoing/started cards) — the reversal of tracking, via a confirm window.
   const untrackChapter = (sectionKey) => { clearBinding(sectionKey); setUntrackFor(null); };

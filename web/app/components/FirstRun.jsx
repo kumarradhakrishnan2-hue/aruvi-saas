@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getJSON, pretty, gradeUp, ROMAN } from "../lib/format";
+import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel } from "./wheels";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
@@ -231,7 +232,9 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     try {
       if (previewPlanFile) {
         sections.forEach((s) => {
-          window.localStorage.setItem(`current_chapter_${subject}_${grade}_${tagFor(s)}`, previewPlanFile);
+          const secKey = `${subject}_${grade}_${tagFor(s)}`;
+          window.localStorage.setItem(`current_chapter_${secKey}`, previewPlanFile);
+          pushSectionState(secKey);   // sync the first binding to the server (cross-device)
         });
       }
     } catch {}
@@ -330,7 +333,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           </p>
         </div>
         <div className="fr-foot">
-          <button className="primary fr-cta" onClick={() => setStep("subject")}>Prepare my first lesson →</button>
+          <button className="primary fr-cta prepare-cta" onClick={() => setStep("subject")}>Prepare my first lesson →</button>
           <p className="fr-secure">🛡 Your data is private and secure</p>
         </div>
       </div>

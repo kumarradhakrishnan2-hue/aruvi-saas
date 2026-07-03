@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, ROMAN, projectReadiness, API, withUser } from "../lib/format";
+import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel } from "./wheels";
 
 /* ───────── TeachingProfile — Settings → "Your teaching profile" (rebuilt 2026-07-02) ─────────
@@ -91,7 +92,9 @@ const clearSectionState = (subjName, gradeRoman, tag) => {
   try {
     window.localStorage.removeItem(`lu_pointer_${key}`);
     window.localStorage.removeItem(`current_chapter_${key}`);
+    window.localStorage.removeItem(`lu_done_${key}`);
   } catch {}
+  pushSectionState(key);   // chapter gone → the server drops this section's row too
 };
 
 // budget maps are keyed by grade INDEX — re-key whenever the grade list changes shape
@@ -767,9 +770,13 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
             <div className="tp-hd-spacer" aria-hidden="true"></div>
           </div>
           {canon.length > 0 && (
-            <button className={`tp-edit-toggle ${editing ? "on" : ""}`} onClick={() => setEditing(!editing)}>
-              {editing ? "Done" : "Edit"}
-            </button>
+            editing ? (
+              <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done editing">Done</button>
+            ) : (
+              <button className="tp-edit-pencil" onClick={() => setEditing(true)} aria-label="Edit profile" title="Edit profile">
+                <Pencil size={22} />
+              </button>
+            )
           )}
         </div>
 

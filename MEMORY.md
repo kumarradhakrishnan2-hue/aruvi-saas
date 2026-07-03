@@ -1,5 +1,117 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-07-03 — My Lessons rebuilt to the My Classes idiom + section-state corruption bug fixed
+
+**My Lessons (`MyLessonPlans.jsx`) redesigned, scoped to ONE class at a time.** The founder's
+insight: a teacher opens this tab with one class in mind ("what's left to prepare for VI
+Science"), so showing all grades/subjects at once is cognitive overload — scope to a single
+subject·grade and give the whole body to that list. What shipped:
+- Header **"Your lessons"** at the `dash-title` size (mirrors My Classes' greeting), then
+  **Subject + Grade as the first-run `RollWheel`s** (from `wheels.jsx`) side by side — only the
+  subjects/grades she teaches; a single-option axis shows a static box, not a pointless wheel.
+  Both default to the first entry. Header is a **frozen (sticky) band**; the lesson list scrolls
+  beneath. No scope-repeat header, no "N of M prepared" meta (removed at founder's request).
+- Cards **reuse `.sc-card`** verbatim so size/shape match the "pick a chapter" section cards.
+- **Card colour = teaching lifecycle lifted from section to lesson** (the chosen basis): sage
+  rail = ready to teach (on the shelf, distinct from My Classes' grey "not started" — a prepared
+  lesson isn't unstarted), green (`st-going`) = any section teaching it now, clay (`st-done`) =
+  all engaged sections done and none live. Precedence: teaching-now wins over completed.
+- **Status line is EXHAUSTIVE and single-colour** (founder: don't colour completed differently —
+  looked odd): "Completed 6A, 6C · Teaching now 6B, 6D", completed first; fully done reads all
+  sections. Read from the same server-backed section cache My Classes writes (`readLocalSection`),
+  so the two tabs always agree. Section tags are already stored as "6A" in readiness.
+- **Tap a card = read-only `LessonView` (preview)**; PDF attachment later. NO per-section
+  drill-down (that's the section card's job) and the old **Track button is removed** — attaching
+  a lesson to a section now happens only via the "+" on My Classes cards. `SectionProgress.jsx`
+  is now dead code (like `SidebarNav`/`MyCalendar`). `onOpenSection` prop is unused but still
+  passed by `page.jsx` (harmless). Empty state: "There are no lesson plans prepared for {subject}
+  · {grade} yet." with the Prepare CTA ALWAYS present below, in every state.
+- New CSS lives under `.mlp2-*` in `globals.css` (frozen header, wheel row, static box, sage
+  shelf accent, single-colour status). Verified statically only (sandbox can't `next dev`).
+
+**Founder tweaks to My Lessons — DONE 2026-07-03 (items 1 & 2; item 3 was blank/dropped):**
+1. **"Your lessons" header aligned to My Classes' greeting.** It sat 8px low because My Lessons
+   renders inside `.editflow` (`padding-top:8px`) while My Classes doesn't — cancelled with
+   `.mlp2 { margin-top:-8px }`. Title was already `.dash-title` spec (Fraunces 500 / 23px); added
+   the mobile `.mlp2-title{font-size:20px}` under the 600px breakpoint to match `.dash-title`.
+2. **Compact Subject/Class wheels.** The `RollWheel` height is hard-tied to `WHEEL_ROW=64` (row
+   height === scroll-snap step, or snapping lands between rows), so shrinking the CSS alone would
+   break it. Added a backward-compatible **`rowPx` prop** to `RollWheel` (`wheels.jsx`) that sets
+   both the container + row height AND the scroll math; first-run passes nothing → stays 64. My
+   Lessons passes `rowPx={48}`; `.mlp2-static` reduced to 48 to match. Arrows sit naturally closer
+   at the shorter height.
+3. Founder's list cut off at "3." with no content — nothing to do.
+
+**NAMING CONVENTION (cross-cutting, honour everywhere user-facing) — "Class", plain numbers:**
+The teacher's word is **"Class"**, never "Grade", and the number is **Arabic, never Roman**
+("Class 6", not "Grade VI"). Readiness still STORES the grade as Roman ("VI") — convert to the
+display number only at the UI boundary (`classNum()` map in `MyLessonPlans.jsx`: iii→3 … x→10).
+Wheel layout (refined 2026-07-03): **Class** wheel = short number, **centred**; **Subject** wheel
+= **left-aligned + auto-fit font** (new opt-in `fit` prop on `RollWheel` measures the longest
+option via an offscreen canvas at the base/bold size and shrinks the label so a long word like
+"Mathematics" never clips on a narrow phone column — first-run passes no `fit`, unchanged). The
+settled/chosen value renders **bold** (`.fr-wheel-row[aria-selected] .fr-wheel-label`).
+
+**SCOPE RULE — Subject restricted to hers, Class is NOT (2026-07-03).** In My Lessons the Subject
+wheel offers only `readiness.subjects[]` (what she teaches), but the **Class wheel offers every
+class Aruvi has CONTENT for** in that subject (`useSupportedGrades(subject)` — a superset of her
+taught classes), so she can browse/prepare for a class she doesn't currently teach. Picking a
+class with no prepared LPs falls through to the empty message + always-present Prepare CTA. The
+per-section status line only has sections when the chosen class IS one she teaches
+(`taughtGradeObj`); a non-taught class shows every lesson as "Ready to teach" (no sections).
+
+Apply the Class/plain-number rule to any NEW surface too — the older screens (Allocate, first-run,
+TeachingProfile) still say "Grade"/Roman and are candidates for the same cleanup when next touched.
+
+**Section-state corruption bug (data-loss) — root-caused and fixed.** Symptom: after marking a
+chapter complete, all My Classes cards flashed correct status then reverted to "pick a chapter".
+Cause chain: `markComplete` fires two rapid fire-and-forget POSTs (pointer, then done); the file
+repo did a **non-atomic** read-modify-write of one shared `state.json`, the two writes interleaved
+and left a stray `}` → invalid JSON → server `_read` silently falls back to `{}` → GET returns
+empty → the client reconcile treated "server empty" as "untrack everything" and **deleted every
+local binding**. Fixes (all shipped):
+- **Server writes now atomic** — temp file + `os.replace` (+ fsync) in
+  `section_state_repository_file.py`; concurrent writers can't tear the file. Verified under
+  40×15 concurrent writes.
+- **Process-level `threading.Lock`** around the read-modify-write — atomicity alone still let
+  writes to DIFFERENT sections lose each other's rows (stress: 40→13 survived; with the lock,
+  40→40). One module-level repo instance → the lock is process-wide. Multi-instance deployment
+  moves this to a DB row-lock (Supabase, CLOUD_DATA_MODEL §2.4).
+- **Client reconcile hardened** (`sectionState.js` `pullSectionState`): a WHOLESALE-empty server
+  response now deletes NOTHING (keeps local optimistic state) — only a NON-empty payload clears
+  the keys it omits (genuine cross-device untrack). Guard var `serverEmpty`.
+- Repaired the live corrupt `data/section_state/Kumar1/Kumar1/state.json` (both sections restored
+  via `raw_decode`). **Carry-forward:** the section-state POST is fire-and-forget + full-snapshot;
+  never assume ordering between the pointer and done pushes — the last write wins, so keep
+  `setDone` firing after `writePointer` on the completion path. Restart uvicorn to load the repo
+  change (Python).
+
+**Follow-up 2026-07-03 (same bug, second episode) — RESTART-REQUIRED gotcha + self-heal read.**
+The file corrupted AGAIN after the first repair, and one device (the phone) never recovered while
+the Mac did. Root cause: **a Python server-code change is NOT live until uvicorn is restarted** —
+the running process was still the OLD non-atomic writer, so normal use re-corrupted the file, and
+the OLD `_read` still returned `{}` on the corrupt file. Two lessons, both now permanent:
+- **Always restart the API after editing anything under `api/` or `aruvi_core/`** (no auto-reload
+  in the run recipe). A repaired data file + un-restarted server = it just corrupts again. The web
+  side is different — Next dev hot-reloads, but a fix only reaches a device after that device
+  RELOADS the page (localStorage is per-device; a server repair doesn't heal a client — the client
+  must re-pull the good state into its own cache). A device that can't reach the API (wrong LAN IP,
+  server down) or is signed in under a different **case-sensitive** user id (`Kumar1` ≠ `kumar1`,
+  a different tenant) will look "not recovered".
+- **Self-heal read added** (`section_state_repository_file._read`): on `JSONDecodeError` it now
+  `raw_decode`s the valid leading object instead of returning `{}`, so the classic stray-brace
+  corruption can no longer wipe a device even before the atomic-write fix is deployed. (Note the
+  2nd corruption truncated INSIDE the file, so only 1 of 2 sections survived salvage — the other
+  was restored by hand from the known-good values. Salvage recovers the valid prefix, not
+  necessarily every row.)
+
+**My Lessons remembers its Subject + Class across tab switches (2026-07-03).** The tab reset to
+the first subject/class every time she toggled to My Classes and back, because the component
+unmounts on tab switch and re-initialised to defaults. Fixed by persisting `activeSubject` +
+`activeGrade` to localStorage (`mylessons_subject` / `mylessons_class`), restored on mount (falls
+back to first taught subject/class on first visit; a stale saved class is harmless — the RollWheel
+self-corrects). She flips between the two tabs to pick chapters, so the selection must be sticky.
+
 ## 2026-07-02 — THE CALENDAR PURGE: day-organization is a category error; nav = two centre tabs
 
 A design conversation with the founder overturned the day/week framing that had crept into the

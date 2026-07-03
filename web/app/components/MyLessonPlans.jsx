@@ -1,85 +1,149 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import { getJSON, pad, pretty, gradeUp } from "../lib/format";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { getJSON, pad, pretty } from "../lib/format";
+import { pullSectionState, readLocalSection } from "../lib/sectionState";
+import useSupportedGrades from "../lib/useSupportedGrades";
 import LessonView from "./LessonView";
-import SectionProgress from "./SectionProgress";
+import { RollWheel } from "./wheels";
 
-/* ───────── MyLessonPlans — the technical resource library (2026-06-29) ─────────
- * Mirrors the LESSON VIEWER hierarchy: subject → grade → chapter. This is the teacher's
- * direct view into her made plans as resources — NOT a here-and-now teaching status view
- * (that lives in My Week, which is section/pointer aware). So there is deliberately no
- * section or learning-unit pointer here.
+/* ───────── MyLessonPlans — the lesson library, one class at a time (redesigned 2026-07-03) ─────────
+ * A teacher comes here with ONE class in mind ("what's left to prepare for VI Science"), so the
+ * tab scopes to a single subject·grade and gives the whole body to that list. It mirrors My
+ * Classes structurally: "Your lessons" at the dash-title size, then Subject + Grade as the two
+ * first-run RollWheels (only what she teaches), pinned in a frozen header while the lesson list
+ * scrolls beneath. Cards reuse the .sc-card sizing so the two tabs read as one family.
  *
- * Structure:
- *   • Subject pills — only the subjects she actually teaches (from readiness.subjects[]).
- *     Hidden entirely if she teaches just one subject (nothing to choose).
- *   • Grade tabs — the grades she teaches under the chosen subject, as collapsible panels.
- *     If she teaches only ONE grade, its plans show open directly (no collapse chrome).
- *   • Chapter rows — the saved plans for that subject·grade; each opens in LessonView.
- *   • Per-grade "Need a chapter you don't have yet?" → onAllocate(subjectSlug, gradeSlug),
- *     which jumps to Generate with the allocation table pre-scoped to that combo.
+ * Card colour = teaching lifecycle, lifted from section to lesson (the basis chosen 2026-07-03):
+ *   • sage rail  — no section has taken this chapter yet ("ready to teach", on the shelf)
+ *   • green (st-going) — ANY section is mid-chapter on it ("teaching now" wins — it's live)
+ *   • clay (st-done)   — every engaged section has finished and none is live
+ * The status line is EXHAUSTIVE and single-colour: "Completed 6A, 6C · Teaching now 6B, 6D"
+ * (completed first). No per-section drill-down here — that's the section card's job; tapping a
+ * card just opens the READ-ONLY lesson plan (PDF attachment later). Per-section state is read
+ * from the same server-backed section cache My Classes writes (readLocalSection), so the two
+ * tabs always agree.
  *
- * Data: readiness stores subject as DISPLAY NAME ("Science") and grade as UPPERCASE ROMAN
- * ("VII"); the plans API + the rest of the app use SLUGS ("science", "vii"). We convert at
- * the boundary: subjectSlug = name.toLowerCase().replace(/ /g,"_"); gradeSlug = grade.toLowerCase().
- *
- * Pointer rule (2026-06-29): GRADE-LEVEL READS, SECTION-LEVEL ACTS. Opening a chapter here is
- * PREVIEW ONLY — LessonView gets `preview` so no teaching pointer moves (the library has no
- * section in scope; a pointer here would write a phantom non-section key). Moving a section's
- * pointer happens in My Week. Track's section rows therefore hand off via onOpenSection().
+ * Data: readiness stores subject as DISPLAY NAME ("Science") and grade as UPPERCASE ROMAN ("VI");
+ * the plans API uses SLUGS. We convert at the boundary. Section tags are already stored as "6A".
  *
  * Props:
- *   readiness     — page projection carrying .subjects[] (canonical).
- *   onAllocate    — (subjectSlug, gradeSlug) => void; opens Generate allocation for that combo.
- *   onOpenSection — (subjectSlug, gradeSlug, sectionTag, plan) => void; deep-links into My Week
- *                   to open that section's pointer-enabled plan (passed through to Track).
+ *   readiness  — page projection carrying .subjects[] (canonical).
+ *   onAllocate — (subjectSlug, gradeSlug) => void; opens Generate to prepare a new lesson.
  */
 
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
+// The teacher's word is "Class", shown as a plain number — never "Grade", never Roman numerals.
+// Readiness still STORES the grade as Roman ("VI"); we convert to the display number only here.
+const CLASS_NUM = { iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 };
+const classNum = (g) => CLASS_NUM[(g || "").toLowerCase()] ?? (g || "");
 
-export default function MyLessonPlans({ readiness, onAllocate, onOpenSection }) {
+// Persist the chosen Subject + Class so the tab REMEMBERS where she was when she toggles over to
+// My Classes and back (she flips between the two to pick chapters — resetting to the first
+// subject/class each time is exactly the annoyance to avoid). localStorage → survives the
+// unmount/remount on tab switch AND a full refresh.
+const LS_SUBJECT = "mylessons_subject";
+const LS_CLASS = "mylessons_class";
+const lsGet = (k) => { if (typeof window === "undefined") return null; try { return window.localStorage.getItem(k); } catch { return null; } };
+const lsSet = (k, v) => { if (typeof window === "undefined") return; try { window.localStorage.setItem(k, v); } catch {} };
+
+export default function MyLessonPlans({ readiness, onAllocate }) {
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
-  // The subject in focus (by display name). Default to the first taught subject.
-  const [activeSubject, setActiveSubject] = useState(() => (subjects[0] ? subjects[0].name : ""));
+  // Subject in focus (by display name); class in focus (uppercase Roman). RESTORE the last choice
+  // from localStorage (see LS_* above); fall back to the first taught subject/class on first ever
+  // visit. A stale saved class is harmless — the RollWheel self-corrects if it isn't offered.
+  const [activeSubject, setActiveSubject] = useState(() => {
+    const saved = lsGet(LS_SUBJECT);
+    if (saved && subjects.some((s) => s.name === saved)) return saved;
+    return subjects[0] ? subjects[0].name : "";
+  });
+  const [activeGrade, setActiveGrade] = useState(() => {
+    const saved = lsGet(LS_CLASS);
+    if (saved) return saved;
+    const g = subjects[0] && subjects[0].grades && subjects[0].grades[0];
+    return g ? g.grade : "";
+  });
   // Plans keyed `${subjectSlug}/${gradeSlug}` -> array (or undefined while loading).
   const [plansByKey, setPlansByKey] = useState({});
-  // Which grade panels are expanded (key = gradeSlug). Single-grade subjects ignore this.
-  const [openGrades, setOpenGrades] = useState({});
-  // Open plan in the viewer.
   const [openPlan, setOpenPlan] = useState(null);   // { view }
   const [opening, setOpening] = useState(false);
-  // Track per-section progress for one chapter: { subjectSlug, gradeSlug, sections[], plan }.
-  const [tracking, setTracking] = useState(null);
-
-  // Keep activeSubject valid as the profile changes.
-  useEffect(() => {
-    if (!subjects.length) return;
-    if (!subjects.some((s) => s.name === activeSubject)) setActiveSubject(subjects[0].name);
-  }, [subjects, activeSubject]);
+  const [, setTick] = useState(0);                  // bumped after a section-state sync → re-read
 
   const current = subjects.find((s) => s.name === activeSubject) || subjects[0] || null;
-  const grades = useMemo(() => (current && current.grades) || [], [current]);
-  const singleGrade = grades.length === 1;
+  const grades = useMemo(() => (current && current.grades) || [], [current]);   // HER taught classes
+  // Class is NOT restricted to what she teaches: the wheel offers every class Aruvi has content
+  // for in this subject (a superset of hers). Picking a class with no prepared LPs falls through
+  // to the empty message + Prepare CTA. Her taught class (if this IS one) still supplies the
+  // sections that drive the per-section status; a non-taught class simply has no sections.
+  const supportedGrades = useSupportedGrades(activeSubject);   // Roman, ordered; superset of hers
+  const taughtGradeObj = grades.find((g) => g.grade === activeGrade) || null;
 
-  // Fetch plans for every grade of the active subject (a handful of small calls).
+  const sSlug = current ? subjectSlug(current.name) : "";
+  const gSlug = gradeSlug(activeGrade);
+  const key = sSlug && gSlug ? `${sSlug}/${gSlug}` : "";
+  const plans = key ? plansByKey[key] : undefined;
+
+  // Keep the active subject/grade valid as the profile changes.
   useEffect(() => {
-    if (!current) return;
-    const sSlug = subjectSlug(current.name);
-    grades.forEach((g) => {
-      const gSlug = gradeSlug(g.grade);
-      const key = `${sSlug}/${gSlug}`;
-      setPlansByKey((prev) => (key in prev ? prev : { ...prev, [key]: undefined }));
-      getJSON(`/plans/${sSlug}/${gSlug}`)
-        .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
-        .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
-    });
-    // Single-grade subject opens its only grade automatically.
-    if (singleGrade && grades[0]) setOpenGrades({ [gradeSlug(grades[0].grade)]: true });
-  }, [current, grades, singleGrade]);
+    if (!subjects.length) return;
+    if (!subjects.some((s) => s.name === activeSubject)) {
+      const s0 = subjects[0];
+      const g0 = s0.grades && s0.grades[0] ? s0.grades[0].grade : "";
+      setActiveSubject(s0.name); lsSet(LS_SUBJECT, s0.name);
+      setActiveGrade(g0); lsSet(LS_CLASS, g0);
+    }
+  }, [subjects, activeSubject]);
 
-  const openLesson = async (sSlug, gSlug, p) => {
+  // Fetch the saved plans for the scoped subject·grade (a single small call per combo, cached).
+  useEffect(() => {
+    if (!key) return;
+    setPlansByKey((prev) => (key in prev ? prev : { ...prev, [key]: undefined }));
+    getJSON(`/plans/${sSlug}/${gSlug}`)
+      .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
+      .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
+  }, [key, sSlug, gSlug]);
+
+  // Reconcile this grade's section teaching-state from the server into the localStorage cache so
+  // the status lines match what the teacher set on My Classes / another device. Re-syncs on load,
+  // on tab focus/visibility, and on a light interval — same pattern as My Classes. Skipped while a
+  // plan is open so an in-flight read is never interrupted.
+  const busyRef = useRef(false);
+  busyRef.current = !!openPlan;
+  useEffect(() => {
+    const keys = (taughtGradeObj ? taughtGradeObj.sections || [] : [])
+      .map((s) => `${sSlug}_${gSlug}_${s.tag}`).filter(Boolean);
+    if (!keys.length) return;
+    let live = true;
+    const sync = () => {
+      if (!live || busyRef.current) return;
+      pullSectionState(keys).then(() => { if (live) setTick((t) => t + 1); });
+    };
+    sync();
+    const onVis = () => { if (document.visibilityState === "visible") sync(); };
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("focus", sync);
+    const iv = setInterval(() => { if (document.visibilityState === "visible") sync(); }, 20000);
+    return () => {
+      live = false;
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("focus", sync);
+      clearInterval(iv);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sSlug, gSlug]);
+
+  const onSubject = (name) => {
+    setActiveSubject(name);
+    lsSet(LS_SUBJECT, name);
+    const s = subjects.find((x) => x.name === name);
+    const g = s && s.grades && s.grades[0] ? s.grades[0].grade : "";
+    setActiveGrade(g);
+    lsSet(LS_CLASS, g);
+  };
+  const onGrade = (g) => { setActiveGrade(g); lsSet(LS_CLASS, g); };
+
+  const openLesson = async (p) => {
     setOpening(true);
     try {
       const view = (await getJSON(`/plans/${sSlug}/${gSlug}/${p.filename}/view`)).view;
@@ -87,111 +151,96 @@ export default function MyLessonPlans({ readiness, onAllocate, onOpenSection }) 
     } finally { setOpening(false); }
   };
 
-  if (opening) return <div className="spin">Opening plan…</div>;
-  if (openPlan) return <LessonView view={openPlan.view} onExit={() => setOpenPlan(null)} preview />;
-  if (tracking) return (
-    <SectionProgress
-      subjectSlug={tracking.subjectSlug}
-      gradeSlug={tracking.gradeSlug}
-      grade={tracking.grade}
-      sections={tracking.sections}
-      plan={tracking.plan}
-      onExit={() => setTracking(null)}
-      onOpenSection={onOpenSection}
-    />
-  );
-
-  if (!current) {
-    return <div className="mlp-empty">No subjects set up yet. Finish setup in My Plans to see your lesson plans here.</div>;
-  }
-
-  const sSlug = subjectSlug(current.name);
-
-  const renderGradeBody = (g) => {
-    const gSlug = gradeSlug(g.grade);
-    const key = `${sSlug}/${gSlug}`;
-    const plans = plansByKey[key];
-    const sections = (g.sections || []).map((s) => s.tag).filter(Boolean);
-    return (
-      <div className="mlp-gradebody">
-        {plans === undefined ? (
-          <div className="mlp-loading">Loading plans…</div>
-        ) : plans.length === 0 ? (
-          <div className="mlp-noplans">No plans for this grade yet.</div>
-        ) : (
-          plans.map((p) => (
-            <div key={p.filename} className="mlp-row">
-              <button className="mlp-row-open" onClick={() => openLesson(sSlug, gSlug, p)}>
-                <span className="mlp-row-ch">CH {pad(p.chapter_number)}</span>
-                <span className="mlp-row-title">{p.chapter_title}</span>
-              </button>
-              <button className="mlp-row-track"
-                onClick={() => setTracking({ subjectSlug: sSlug, gradeSlug: gSlug, grade: g.grade, sections, plan: p })}>
-                Track
-              </button>
-            </div>
-          ))
-        )}
-        <div className="mlp-allocate">
-          <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
-          <button className="mlp-allocate-btn prepare-cta" onClick={() => onAllocate && onAllocate(sSlug, gSlug)}>
-            Prepare a lesson →
-          </button>
-        </div>
-      </div>
-    );
+  // Exhaustive per-section state for one chapter: which sections completed it, which are on it now.
+  // A section counts only if it's currently tracking THIS chapter (current_chapter === filename).
+  const statusFor = (plan) => {
+    const completed = [];
+    const live = [];
+    (taughtGradeObj ? taughtGradeObj.sections || [] : []).forEach((s) => {
+      const st = readLocalSection(`${sSlug}_${gSlug}_${s.tag}`);
+      if (st.chapter && st.chapter === plan.filename) (st.done ? completed : live).push(s.tag);
+    });
+    return { completed, live };
   };
 
+  if (opening) return <div className="spin">Opening plan…</div>;
+  if (openPlan) return <LessonView view={openPlan.view} onExit={() => setOpenPlan(null)} preview />;
+
+  if (!current) {
+    return <div className="mlp-empty">No subjects set up yet. Finish setup in My Classes to see your lessons here.</div>;
+  }
+
+  const subjectItems = subjects.map((s) => ({ id: s.name, label: s.name }));
+  // Every supported class for this subject (superset of hers) — not just what she teaches.
+  const gradeItems = supportedGrades.map((g) => ({ id: g, label: `${classNum(g)}` }));
+
+  const prepareCTA = (
+    <div className="mlp-allocate">
+      <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
+      <button className="mlp-allocate-btn prepare-cta" onClick={() => onAllocate && onAllocate(sSlug, gSlug)}>
+        Prepare a new lesson →
+      </button>
+    </div>
+  );
+
   return (
-    <div className="mlp">
-      <div className="lvl-head">
-        <div>
-          <h1 className="lvl-title">Your lessons, by subject and grade</h1>
-          <p className="lvl-sub">Every lesson you&rsquo;ve made — open one to read, or build a new one.</p>
+    <div className="mlp2">
+      <div className="mlp2-frozen">
+        <h1 className="mlp2-title">Your lessons</h1>
+        <div className="mlp2-wheels">
+          <div className="mlp2-wcol">
+            <span className="mlp2-wlbl">Subject</span>
+            {subjectItems.length > 1 ? (
+              <RollWheel items={subjectItems} value={activeSubject} onChange={onSubject} ariaLabel="Subject" large rowPx={48} fit />
+            ) : (
+              <div className="mlp2-static">{current.name}</div>
+            )}
+          </div>
+          <div className="mlp2-wcol">
+            <span className="mlp2-wlbl">Class</span>
+            {gradeItems.length > 1 ? (
+              <RollWheel items={gradeItems} value={activeGrade} onChange={onGrade} ariaLabel="Class" large rowPx={48} />
+            ) : (
+              <div className="mlp2-static">Class {classNum(activeGrade)}</div>
+            )}
+          </div>
         </div>
       </div>
 
-      {subjects.length > 1 && (
-        <div className="mlp-subjects">
-          <span className="mlp-subjects-lbl">Subject</span>
-          {subjects.map((s) => (
-            <button key={s.name}
-              className={`mlp-subj-pill ${s.name === current.name ? "on" : ""}`}
-              onClick={() => setActiveSubject(s.name)}>
-              {pretty(subjectSlug(s.name))}
-            </button>
-          ))}
+      {plans === undefined ? (
+        <div className="mlp-loading">Loading plans…</div>
+      ) : plans.length === 0 ? (
+        <div className="mlp2-emptybody">
+          There are no lesson plans prepared for {pretty(sSlug)} · Class {classNum(activeGrade)} yet.
+        </div>
+      ) : (
+        <div className="sc-list">
+          {plans.map((p) => {
+            const { completed, live } = statusFor(p);
+            const cls = live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
+            return (
+              <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}>
+                <div className="sc-tag">{pad(p.chapter_number)}</div>
+                <div className="sc-body">
+                  <div className="sc-title">{p.chapter_title}</div>
+                  {completed.length || live.length ? (
+                    <div className="mlp2-status">
+                      {completed.length > 0 && <span>Completed {completed.join(", ")}</span>}
+                      {completed.length > 0 && live.length > 0 && <span className="sep">·</span>}
+                      {live.length > 0 && <span>Teaching now {live.join(", ")}</span>}
+                    </div>
+                  ) : (
+                    <div className="mlp2-ready">Ready to teach</div>
+                  )}
+                </div>
+                <span className="mlp2-open" aria-hidden="true">›</span>
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {singleGrade ? (
-        // One grade → show its plans directly, no collapse chrome.
-        <div className="mlp-single">
-          <div className="mlp-grade-head plain">
-            <span className="mlp-grade-name">Grade {gradeUp(grades[0].grade)}</span>
-            <span className="mlp-grade-meta">{pretty(sSlug).toUpperCase()}</span>
-          </div>
-          {renderGradeBody(grades[0])}
-        </div>
-      ) : (
-        grades.map((g) => {
-          const gSlug = gradeSlug(g.grade);
-          const key = `${sSlug}/${gSlug}`;
-          const plans = plansByKey[key];
-          const count = Array.isArray(plans) ? plans.length : null;
-          const isOpen = !!openGrades[gSlug];
-          return (
-            <div className="mlp-panel" key={g.grade}>
-              <button className="mlp-grade-head" onClick={() => setOpenGrades((p) => ({ ...p, [gSlug]: !p[gSlug] }))}>
-                <span className={`mlp-caret ${isOpen ? "open" : ""}`} aria-hidden="true">›</span>
-                <span className="mlp-grade-name">Grade {gradeUp(g.grade)}</span>
-                <span className="mlp-grade-meta">{pretty(sSlug).toUpperCase()}{count != null ? ` · ${count} plan${count !== 1 ? "s" : ""}` : ""}</span>
-              </button>
-              {isOpen && renderGradeBody(g)}
-            </div>
-          );
-        })
-      )}
+      {prepareCTA}
     </div>
   );
 }

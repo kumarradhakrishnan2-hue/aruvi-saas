@@ -29,6 +29,7 @@ from aruvi_core.allocate import allocate_for_subject, allocate_schedule_for_subj
 from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
 from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
+from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -54,6 +55,13 @@ allocation_repo = AllocationRepositoryFileImpl(config.STATE_DIR)
 # mirror in DATA_DIR. File-based for now; the Supabase adapter swaps in at Phase 4 behind
 # the same ReadinessRepository port, replacing this folder. (See CLOUD_DATA_MODEL.md §0/§2.)
 readiness_repo = ReadinessRepositoryFileImpl(config.STATE_DIR)
+
+# Per-section teaching-state repository (which chapter a section tracks + how far along +
+# done). Bucket-B STATE, so it also writes to STATE_DIR (data/section_state/). Moving this
+# off the browser's localStorage is what makes tracking/progress follow a teacher across
+# devices (CLOUD_DATA_MODEL.md §2.4). File-based now; Supabase adapter swaps in at Phase 4
+# behind the same SectionStateRepository port.
+section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
 
 
 # Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User
@@ -533,6 +541,51 @@ def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, s
     """Erase the current teacher's readiness profile (the "start setup over" action)."""
     tenant_id, user_id = identity
     readiness_repo.clear_profile(tenant_id, user_id)
+    return {"status": "cleared"}
+
+
+# ── Section teaching-state (the lesson pointer) — per-user, cross-device ──────────
+# Which chapter each section tracks + how far along (unit_index) + done. Moved off the
+# browser's localStorage so tracking/progress follow a teacher to any device
+# (CLOUD_DATA_MODEL.md §2.4). localStorage remains a client optimistic cache; these rows
+# are authoritative on load/reconcile.
+class SectionStateRequest(BaseModel):
+    """Body for POST /section-state — a full snapshot of ONE section's execution state."""
+    section_key: str
+    chapter: str
+    unit_index: Optional[int] = None
+    done: bool = False
+
+
+@app.get("/section-state")
+def get_section_state(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's tracked sections: {"states": {section_key: {chapter,
+    unit_index, done, updated_at}}}. The app reconciles these into its localStorage cache on
+    load, so a fresh device shows the same tracking/progress the teacher set on another."""
+    tenant_id, user_id = identity
+    return {"states": section_state_repo.load_all(tenant_id, user_id)}
+
+
+@app.post("/section-state")
+def save_section_state(req: SectionStateRequest,
+                       identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Upsert one section's teaching state (full snapshot). Called when a chapter is tracked,
+    the pointer advances, or a chapter is marked complete."""
+    tenant_id, user_id = identity
+    try:
+        section_state_repo.save_one(tenant_id, user_id, req.section_key,
+                                    req.chapter, req.unit_index, req.done)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save section state: {str(e)}")
+    return {"status": "saved"}
+
+
+@app.delete("/section-state/{section_key}")
+def clear_section_state(section_key: str,
+                        identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Remove one section's state — the untrack reversal (and the completed-chapter reset)."""
+    tenant_id, user_id = identity
+    section_state_repo.delete_one(tenant_id, user_id, section_key)
     return {"status": "cleared"}
 
 

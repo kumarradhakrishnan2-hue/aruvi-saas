@@ -1,5 +1,17 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// Shared offscreen canvas for text measurement (auto-fit). One per module — cheap, never in DOM.
+let _fitCanvas = null;
+function _maxLabelWidth(items, font) {
+  if (typeof document === "undefined") return 0;
+  _fitCanvas = _fitCanvas || document.createElement("canvas");
+  const ctx = _fitCanvas.getContext("2d");
+  ctx.font = font;
+  let w = 0;
+  (items || []).forEach((it) => { w = Math.max(w, ctx.measureText(String(it.label)).width); });
+  return w;
+}
 
 /* ───────── wheels — the shared selection boxes (extracted from FirstRun.jsx, 2026-07-02) ─────────
  * ONE UI for collecting values everywhere (first run AND the Settings profile redo — the
@@ -23,10 +35,19 @@ let wheelDemoDone = false;
  * scroll-snap settles on a row and whichever item landed in the box IS the pick — no separate
  * confirm tap. items: [{ id, chip?, label }] · value: id string · onChange(id)
  * large: one-notch-bigger label for short lists; longer lists (chapter titles) stay smaller. */
-export function RollWheel({ items, value, onChange, ariaLabel, large }) {
+// `rowPx` (default WHEEL_ROW=64) sets the single visible row's height AND the scroll-snap step —
+// they MUST stay equal or snapping lands between rows. A caller wanting a more compact wheel
+// (e.g. My Lessons' Subject/Grade) passes a smaller rowPx; first-run passes nothing and keeps 64.
+export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WHEEL_ROW, fit = false }) {
   const ref = useRef(null);
   const settleTimer = useRef(null);
   const idBase = String(ariaLabel || "wheel").toLowerCase().replace(/\W+/g, "-");
+  const rowStyle = rowPx !== WHEEL_ROW ? { height: rowPx } : undefined;
+  // Auto-fit (opt-in): shrink the label font just enough that the LONGEST option shows in full,
+  // never clipped by the box — for long words on narrow columns (e.g. "Mathematics" on a phone).
+  // Measured at the base size (never the already-shrunk inline size, so it can't compound) and at
+  // the bold weight (the settled row is bold), so the visible value always fits.
+  const [fitPx, setFitPx] = useState(null);
 
   // whatever settles in the box becomes the pick
   const onScroll = () => {
@@ -34,7 +55,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large }) {
     settleTimer.current = setTimeout(() => {
       const el = ref.current;
       if (!el || !items.length) return;
-      const idx = Math.min(items.length - 1, Math.max(0, Math.round(el.scrollTop / WHEEL_ROW)));
+      const idx = Math.min(items.length - 1, Math.max(0, Math.round(el.scrollTop / rowPx)));
       if (items[idx]) onChange(String(items[idx].id));
     }, 120);
   };
@@ -44,7 +65,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large }) {
   const step = (dir) => {
     const el = ref.current;
     if (!el) return;
-    el.scrollBy({ top: dir * WHEEL_ROW, behavior: "smooth" });
+    el.scrollBy({ top: dir * rowPx, behavior: "smooth" });
   };
 
   const onKeyDown = (e) => {
@@ -62,7 +83,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large }) {
   useEffect(() => {
     const el = ref.current;
     const idx = items.findIndex((it) => String(it.id) === String(value));
-    if (el && idx >= 0) el.scrollTop = idx * WHEEL_ROW;
+    if (el && idx >= 0) el.scrollTop = idx * rowPx;
   }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // one-time gesture demo (see wheelDemoDone above)
@@ -78,19 +99,45 @@ export function RollWheel({ items, value, onChange, ariaLabel, large }) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Recompute the fit font whenever the option set, the size class, or the viewport changes.
+  useEffect(() => {
+    if (!fit || typeof window === "undefined") return;
+    let cancelled = false;
+    const compute = () => {
+      const el = ref.current;
+      if (!el || cancelled) return;
+      const rowEl = el.querySelector(".fr-wheel-row");
+      const labelEl = el.querySelector(".fr-wheel-label");
+      if (!rowEl || !labelEl) return;
+      const rs = getComputedStyle(rowEl);
+      const family = getComputedStyle(labelEl).fontFamily || "serif";
+      const base = large ? 17 : 15;   // the design base (NOT the possibly-shrunk inline size)
+      const avail = rowEl.clientWidth - parseFloat(rs.paddingLeft || 0) - parseFloat(rs.paddingRight || 0);
+      if (!avail || avail <= 0) return;
+      const maxW = _maxLabelWidth(items, `600 ${base}px ${family}`);
+      const px = maxW > avail ? Math.max(12, Math.floor((base * avail / maxW) * 10) / 10) : base;
+      if (!cancelled) setFitPx(px);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(compute).catch(() => {});
+    return () => { cancelled = true; window.removeEventListener("resize", compute); };
+  }, [fit, items, large, rowPx]);
+
+  const labelStyle = fit && fitPx ? { fontSize: `${fitPx}px` } : undefined;
   const chosen = items.find((it) => String(it.id) === String(value));
   return (
     <div className={`fr-wheel-shell ${large ? "fr-wheel-lg" : ""}`}>
       <div className="fr-wheel" ref={ref} onScroll={onScroll} onKeyDown={onKeyDown}
-        role="listbox" tabIndex={0} aria-label={ariaLabel}
+        role="listbox" tabIndex={0} aria-label={ariaLabel} style={rowStyle}
         aria-activedescendant={chosen ? `${idBase}-opt-${chosen.id}` : undefined}>
         {items.map((it) => {
           const sel = String(value) === String(it.id);
           return (
-            <div key={it.id} id={`${idBase}-opt-${it.id}`}
+            <div key={it.id} id={`${idBase}-opt-${it.id}`} style={rowStyle}
               className="fr-wheel-row" role="option" aria-selected={sel}>
               {it.chip != null && <span className={`fr-opt-chip ${sel ? "on" : ""}`}>{it.chip}</span>}
-              <span className="fr-wheel-label">{it.label}</span>
+              <span className="fr-wheel-label" style={labelStyle}>{it.label}</span>
             </div>
           );
         })}
