@@ -6,9 +6,7 @@ import MyPlans from "./components/MyPlans";
 import StatePill from "./components/StatePill";
 import Login from "./components/Login";
 import FirstRun from "./components/FirstRun";
-import SidebarNav from "./components/SidebarNav";
-import MyClasses from "./components/MyClasses";
-import MyCalendar from "./components/MyCalendar";
+import TeachingProfile from "./components/TeachingProfile";
 import MyLessonPlans from "./components/MyLessonPlans";
 
 /* ───────── app shell ─────────
@@ -18,10 +16,14 @@ import MyLessonPlans from "./components/MyLessonPlans";
  * persistence testable across multiple "teachers" and is the exact seam Phase 4 swaps for
  * Supabase Auth.
  *
- * Two tabs: My Plans (operational home + readiness) and Generate (allocate → generate).
- * Readiness gates Generate, and is PERSISTED server-side per user (GET/POST /readiness): the
- * teaching profile (subjects/grades/sections/durations) is loaded when a user signs in, so it
- * survives a refresh, a server restart, or a fresh browser — never lost on session cut. */
+ * Nav (2026-07-02 restructure): TWO CENTRE TABS — "My Classes" (home: one card per section,
+ * pointer-organized) and "My Lessons" (the plan repository). No sidebar, no hamburger, no
+ * Calendar, no My Week — Aruvi organizes by the section pointer ("where did I stop?"), never
+ * by days (see MEMORY.md 2026-07-02). The teaching profile is parked behind the header's
+ * settings gear. Generate is not a tab — it's reached only through "+ Prepare Lesson".
+ * Readiness is PERSISTED server-side per user (GET/POST /readiness): the teaching profile
+ * (subjects/grades/sections/durations) is loaded when a user signs in, so it survives a
+ * refresh, a server restart, or a fresh browser — never lost on session cut. */
 /* Activation gate (Phase 1, §0): the shell stays hidden until the teacher has completed the
  * guided first run. This USED to be tracked as a separate localStorage flag per user — but
  * that flag was purely client-side and could desync from the server: e.g. deleting a test
@@ -43,8 +45,7 @@ export default function Home() {
   const [ready, setReady] = useState(false);      // readiness flag — rehydrated per user from GET /readiness
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
   const [readinessLoaded, setReadinessLoaded] = useState(false); // has GET /readiness resolved? (gates the first-run decision, avoids a flash)
-  const [sidebarOpen, setSidebarOpen] = useState(false); // hamburger-triggered overlay drawer (Phase 2 shell, "side bar.jpg") — closed by default
-  const [editFlow, setEditFlow] = useState(null);  // "profile" | "calendar" | "lessonplans" | null — sidebar-launched view
+  const [editFlow, setEditFlow] = useState(null);  // "profile" (settings gear) | "lessonplans" (My Lessons tab) | null (My Classes home)
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
   // How the Generate tab should open this time:
   //   { mode: "pick" }                     → show the G1.9 subject·grade picker (multi-choice)
@@ -169,14 +170,17 @@ export default function Home() {
   const onSignOut = () => {
     clearUser(); setUserState("");
     setReady(false); setReadiness(null); setReadinessLoaded(false);
-    setSubjects([]); setSubject(""); setTab("myplans"); setSidebarOpen(false);
+    setSubjects([]); setSubject(""); setTab("myplans"); setEditFlow(null);
   };
 
-  // Sidebar item picked (My Class / Calendar / Lesson Plans / My Week) — same handler for both
-  // the drawer and the mobile bottom-tab bar, since they route to the exact same places.
-  const goEdit = (mode) => { setEditFlow(mode); setTab("myplans"); setGenerateEntry(null); setSidebarOpen(false); };
-  const goWeek = () => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null); setSidebarOpen(false); };
-  const activeNav = editFlow === "profile" ? "profile" : editFlow === "calendar" ? "calendar" : editFlow === "lessonplans" ? "lessonplans" : "week";
+  // The three destinations: the two centre tabs + the settings gear. Each leaves any
+  // in-progress Generate flow and clears its pending entry/scope.
+  const goClasses = () => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null); };
+  const goLessons = () => { setEditFlow("lessonplans"); setTab("myplans"); setGenerateEntry(null); };
+  const goProfile = () => { setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+  // Which centre tab lights up: My Lessons only when the repository is open; the profile
+  // (settings) view lights neither; everything else — home cards, Generate — reads as My Classes.
+  const activeNav = editFlow === "lessonplans" ? "lessons" : editFlow === "profile" ? "none" : "classes";
 
   // Still restoring from localStorage — render nothing for a beat (no login flash).
   if (user === null) return null;
@@ -192,30 +196,33 @@ export default function Home() {
 
   return (
     <>
-      {/* Phase 2 shell header ("side bar.jpg"): hamburger ALWAYS opens the drawer (it's the
-          only nav now — the old My Plans/Generate tab row is gone), brand centered, bell right.
-          Always rendered regardless of tab/editFlow, so there's always a way back to My Week. */}
-      <header className="hdr hdr-shell">
-        <button className="hamb" onClick={() => setSidebarOpen(true)} aria-label="Open menu">
-          <span /><span /><span />
-        </button>
-        <span className="brand-row hdr-brand-center">Aruvi<em>.</em><small>lesson studio</small></span>
-        <button className="hdr-bell" aria-label="Notifications" disabled>🔔</button>
+      {/* Shell header: the brand exactly as the first-run page renders it (Aruvi + red dot,
+          LESSON STUDIO tag beneath); settings gear (→ teaching profile) + log out right. No
+          hamburger, no drawer — the two tabs below the header are the whole nav. */}
+      <header className="hdr">
+        <div className="brand">
+          <span className="brand-row">Aruvi<em>.</em></span>
+          <span className="hdr-brand-tag">lesson studio</span>
+        </div>
+        <div className="hdr-user">
+          <span className="hdr-user-name">{user}</span>
+          <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings">⚙</button>
+          <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
+        </div>
       </header>
 
-      {sidebarOpen && (
-        <div className="drawer-bg" onClick={(e) => { if (e.currentTarget === e.target) setSidebarOpen(false); }}>
-          <aside className="drawer">
-            <div className="drawer-hd">
-              <span className="brand-row">Aruvi<em>.</em><small>lesson studio</small></span>
-              <button className="drawer-close" onClick={() => setSidebarOpen(false)} aria-label="Close menu">×</button>
-            </div>
-            {/* Any sidebar item leaves the Generate flow and sits under My Plans — reset the
-                tab + clear any pending Generate entry/scope pills, then close the drawer. */}
-            <SidebarNav onEdit={goEdit} onWeek={goWeek} user={user} onSignOut={onSignOut} active={activeNav} />
-          </aside>
-        </div>
-      )}
+      {/* The two tabs — the app's entire nav, at the TOP (under the header), active tab
+          marked with the same clay-red underline the original My Plans/Generate tabs used.
+          Nouns only: My Classes (where did I stop?) and My Lessons (the plan repository).
+          "+ Prepare Lesson" is a verb, so it lives as an action inside both views, never here. */}
+      <nav className="tabs main-tabs" aria-label="Primary">
+        <button className={`tab ${activeNav === "classes" ? "active" : ""}`} onClick={goClasses}>
+          My Classes
+        </button>
+        <button className={`tab ${activeNav === "lessons" ? "active" : ""}`} onClick={goLessons}>
+          My Lessons
+        </button>
+      </nav>
 
       <div className="bodycontent">
         {/* Subject·grade scope pills belong to Generate only — no tab row to anchor them to
@@ -230,24 +237,23 @@ export default function Home() {
         )}
 
         <main>
-          {/* Edit-flow views (My Calendar / My Class) require a set-up profile. A not-ready
-           * user is always routed to the My Plans "Let's begin" setup flow instead of a
-           * dead-end empty view — readiness gates these the same way it gates Generate. */}
-          {(editFlow === "calendar" && ready) ? (
-            /* My Calendar — read-only weekly timetable built from the readiness profile. */
-            <div className="editflow">
-              <MyCalendar readiness={readiness} />
-            </div>
-          ) : (editFlow === "lessonplans" && ready) ? (
-            /* My Lesson Plans — technical resource library (subject → grade → chapter). */
+          {/* Edit-flow views (My Lessons / teaching profile) require a set-up profile. A
+           * not-ready user is always routed to the setup flow instead of a dead-end empty
+           * view — readiness gates these the same way it gates Generate. */}
+          {(editFlow === "lessonplans" && ready) ? (
+            /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
-            /* My Class — the editable teaching-profile drill-down (subjects/grades/sections +
-             * time facts). Persists each edit to /readiness and calls onChange to re-project. */
+            /* Teaching profile (via the settings gear) — view + conversational redo (the SAME
+             * first-run UI, answers pre-filled) + delete. The MyClasses drill-down is retired.
+             * Deleting clears pointers (lessons stay) and drops her STRAIGHT into the redo
+             * flow inside this same view — the shell stays open; `ready` is untouched. A
+             * signed-out return without rebuilding hits first run naturally (server profile
+             * is gone, so GET /readiness comes back empty). */
             <div className="editflow">
-              <MyClasses readiness={readiness} onChange={setReadiness} />
+              <TeachingProfile readiness={readiness} onChange={setReadiness} />
             </div>
           ) :
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
@@ -261,22 +267,6 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Mobile bottom-tab bar — the same four destinations as the drawer's main items, always
-          reachable without opening the hamburger on a phone. Hidden on desktop widths (CSS). */}
-      <nav className="bottom-tabs" aria-label="Primary">
-        <button className={`bt-item ${activeNav === "week" ? "on" : ""}`} onClick={goWeek}>
-          <span className="bt-ico" aria-hidden="true">📅</span>My Week
-        </button>
-        <button className={`bt-item ${activeNav === "profile" ? "on" : ""}`} onClick={() => goEdit("profile")}>
-          <span className="bt-ico" aria-hidden="true">👥</span>My Class
-        </button>
-        <button className={`bt-item ${activeNav === "calendar" ? "on" : ""}`} onClick={() => goEdit("calendar")}>
-          <span className="bt-ico" aria-hidden="true">🗓</span>Calendar
-        </button>
-        <button className={`bt-item ${activeNav === "lessonplans" ? "on" : ""}`} onClick={() => goEdit("lessonplans")}>
-          <span className="bt-ico" aria-hidden="true">📖</span>Plans
-        </button>
-      </nav>
     </>
   );
 }

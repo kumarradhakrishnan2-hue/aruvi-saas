@@ -7,6 +7,26 @@ progress is made. A fresh session starts cold — this file is how context carri
 
 ## 0. CURRENT DIRECTION — mobile-first, progressive acquisition (2026-07-01) ★ READ FIRST
 
+> ★★ **AMENDED 2026-07-02 — THE CALENDAR PURGE (overrides every day/week reference below and
+> in §11).** Aruvi never organizes by days. The timetable is cyclic, the pointer is cumulative;
+> the organizing question is "where did I stop?", never "what is due" (full reasoning: MEMORY.md
+> 2026-07-02). Concretely, and now implemented: **no My Week, no Calendar, no arrange-week step,
+> no weekly-grid collection anywhere** (first run OR profile editing). Nav = **two centre tabs
+> on all viewports: My Classes** (home — a flat list of section cards with an LU progress rail;
+> MyPlans.jsx) **and My Lessons** (the plan repository; MyLessonPlans.jsx). No sidebar, no
+> hamburger. The teaching profile is parked behind the header settings gear —
+> **TeachingProfile.jsx** (rebuilt 2026-07-02: an ACCORDION — one subject open at a time — with
+> a MASTER EDIT toggle that reveals red dustbins per subject/class/section, "edit →" for the
+> numbers, and green add buttons; adds run through the first-run wheels from wheels.jsx;
+> NO whole-profile delete or redo — the profile is only edited at a point). The MyClasses.jsx
+> drill-down editor is RETIRED (dead code on disk, like SidebarNav.jsx and MyCalendar.jsx).
+> "+ Prepare Lesson" is a verb — an action inside both views, never a tab. The only
+> time-facts Aruvi keeps are NUMBERS (durations, periods/week — now asked directly and stored
+> as `periods_per_week` on the grade record — and the annual budget via the 4-method
+> estimator) — never a grid of days. Where this section or the v0.2 spec says "My Week
+> becomes Home", "arrange the week", "Calendar", or shows a 4-item bottom bar, read it as
+> superseded by this note.
+
 The product is **pivoting** from an "upfront-profile-first" flow to a **mobile-first,
 progressive-acquisition** model. Full spec: `docs/Aruvi_Mobile_First_Progressive_Acquisition_Model_v0.2.md`
 (read it in sync with `docs/mobile pics/` — the annotated mobile mockups). This does NOT change

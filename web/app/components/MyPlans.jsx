@@ -4,35 +4,25 @@ import { getJSON, pretty } from "../lib/format";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const DAY_FULL = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-// Same rotating accent palette FirstRun's section cards use — reused here (not imported, since
-// FirstRun.jsx doesn't export it) so the "Good morning" home cards read as the same visual family.
-const SECTION_ACCENTS = ["var(--pine)", "var(--clay)", "var(--ochre)"];
-
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
 
-/* Build the week as ONE CARD PER subject·grade·section the teacher handles — across ALL subjects
- * (walks the canonical readiness.subjects[], not the single active projection). A section that
- * meets on several days is shown once, under its NEXT meeting day (earliest weekday it has a
- * marked cell). Each entry carries the slugs + section tag so My Week can look up that class's
- * plans and its per-section pointer. */
+/* ONE CARD PER subject·grade·section the teacher handles — across ALL subjects (walks the
+ * canonical readiness.subjects[], not the single active projection). NO day derivation
+ * (2026-07-02): My Classes is pointer-organized ("where did I stop?"), never day-organized —
+ * the calendar was a category error against the section-pointer model (MEMORY.md). Each entry
+ * carries the slugs + section tag so the card can look up that class's plans and pointer. */
 function classesFromReadiness(readiness) {
   const subjects = (readiness && readiness.subjects) || [];
   const out = [];
   subjects.forEach((s) => {
     const sSlug = subjectSlug(s.name);
-    (s.grades || []).forEach((g, gi) => {
+    (s.grades || []).forEach((g) => {
       const gSlug = gradeSlug(g.grade);
-      (g.sections || []).forEach((sec, si) => {
-        // earliest weekday this section meets (its "next" / upcoming class)
-        const gridRow = ((s.grids || [])[gi] || [])[si] || [];
-        let dayIdx = -1;
-        for (let c = 0; c < DAYS.length; c++) { if (gridRow[c] != null && gridRow[c] >= 0) { dayIdx = c; break; } }
+      (g.sections || []).forEach((sec) => {
         out.push({
           subjectName: s.name, subjectSlug: sSlug, grade: g.grade, gradeSlug: gSlug,
-          sectionTag: sec.tag, dayIdx, day: dayIdx >= 0 ? DAYS[dayIdx] : null,
+          sectionTag: sec.tag,
         });
       });
     });
@@ -128,29 +118,18 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     try { return window.localStorage.getItem(`current_chapter_${sectionKey}`) || null; } catch { return null; }
   };
 
-  // One card per section·subject (cards = Σ subjects-per-section), grouped under its next meeting
-  // day in Mon→Sat order. No schedule cell for a class (dayIdx < 0) → an "Unscheduled" bucket last.
-  const dayBuckets = [...DAY_FULL.map((d) => ({ day: d, items: [] })), { day: "Unscheduled", items: [] }];
-  classes.forEach((c) => {
-    const bucket = c.dayIdx >= 0 ? dayBuckets[c.dayIdx] : dayBuckets[dayBuckets.length - 1];
-    bucket.items.push(c);
-  });
-  const byDay = dayBuckets.filter((b) => b.items.length);
-
-  // "My Week is Home" (§0) — a time-of-day greeting replaces the flat "This week's teaching"
-  // label, and a universal "+ Prepare Lesson" action replaces the old Generate tab everywhere.
+  // Home header: time-of-day greeting + the universal "+ Prepare Lesson" action.
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const firstName = (user || "").trim();
   const prepareLesson = () => onEnterGenerate && onEnterGenerate();
 
-  // 2b — ready but the teacher has no classes at all (empty profile).
+  // Ready but the teacher has no classes at all (empty profile).
   if (!classes.length) {
     return (
       <div>
         <div className="dash-hd">
           <div>
-            <div className="kicker kicker-ochre">My Week</div>
             <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
           </div>
           <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
@@ -159,38 +138,27 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           <div className="slotrail dim" />
           <div className="slotbody">
             <div className="slot-title muted">No classes set up yet</div>
-            <div className="slot-meta">Add your classes in My Class, then plan chapters in Generate.</div>
+            <div className="slot-meta">Prepare a lesson and add it to a class, or set up your teaching profile from the settings gear above.</div>
           </div>
         </div>
       </div>
     );
   }
 
-  // Nothing planned yet (fresh after "Let's begin")? The class cards still show — each as "Pick a
-  // chapter to begin tracking" — with a welcome CTA banner ABOVE them. Cards are never hidden.
+  // Nothing planned yet? The class cards still show — each as "Pick a chapter to begin" —
+  // with a welcome CTA banner ABOVE them. Cards are never hidden.
   const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
 
-  // Today's bucket floats to the top (Mon=0…Sat=5; Sunday has no modelled school day, so the
-  // buckets stay in their natural Mon→Sat order that day). "Unscheduled" always sorts last.
-  const todayIdx = (new Date().getDay() + 6) % 7;
-  const todayName = todayIdx < 6 ? DAY_FULL[todayIdx] : null;
-  const orderedBuckets = todayName
-    ? [...byDay].sort((a, b) => {
-        const rank = (b0) => (b0.day === "Unscheduled" ? 100 : b0.day === todayName ? -1 : DAY_FULL.indexOf(b0.day));
-        return rank(a) - rank(b);
-      })
-    : byDay;
-
-  let cardIdx = 0;
-
-  // Weekly dashboard: every class she handles, today first (+ welcome banner when fresh).
+  /* My Classes home (2026-07-02, approved mockup): a FLAT list of section cards — no day
+   * buckets, no "today", no pace pills. The card answers exactly one question — "where did I
+   * stop with this class?" — via the LU progress rail (done=pine, current=ochre) and the
+   * "LU n of N" line. LU-level only for now (phase-level marking is a later step). */
   return (
     <div>
       <div className="dash-hd">
         <div>
-          <div className="kicker kicker-ochre">My Week</div>
           <div className="dash-title">{greeting}{firstName ? `, ${firstName}` : ""}!</div>
-          <div className="dash-sub">Here are your lessons for today.</div>
+          <div className="dash-sub">Here is where you stopped with each class.</div>
         </div>
         <button className="primary dash-prepare" onClick={prepareLesson}>+ Prepare Lesson</button>
       </div>
@@ -198,56 +166,58 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       {!anyBound && (
         <div className="dash-welcome">
           <div className="dash-welcome-text">
-            <div className="dash-welcome-title">Your week is set up — ready to plan?</div>
+            <div className="dash-welcome-title">Your classes are set up — ready to plan?</div>
             <div className="dash-welcome-sub">Tap a class below to plan its first chapter.</div>
           </div>
         </div>
       )}
 
-      {orderedBuckets.map(({ day, items }) => (
-        <div key={day}>
-          <div className="daylabel">{day === todayName ? "Today" : day}</div>
-          <div className="fr-sc-list">
-            {items.map((c, i) => {
-              const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
-              const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
-              const file = currentChapterFile(sectionKey);
-              const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
-              const lu = pointerFor(sectionKey);
-              const accent = SECTION_ACCENTS[cardIdx % SECTION_ACCENTS.length];
-              cardIdx++;
+      <div className="sc-list">
+        {classes.map((c, i) => {
+          const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
+          const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
+          const file = currentChapterFile(sectionKey);
+          const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
 
-              // No chapter bound to this class yet → "pick a chapter to begin tracking".
-              // Still tappable — an open invitation, not a disabled slot.
-              if (!plan) {
-                return (
-                  <div className="fr-sc-card" key={i} style={{ "--sc-accent": accent }}
-                    onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
-                    <div className="fr-sc-chip">{c.sectionTag}</div>
-                    <div className="fr-sc-body">
-                      <span className="fr-sc-kicker">{pretty(c.subjectSlug)}</span>
-                      <div className="fr-sc-title muted">Pick a chapter to begin tracking</div>
-                      <div className="fr-sc-meta">Schedule only — no content cued yet</div>
-                    </div>
-                  </div>
-                );
-              }
-              return (
-                <div className="fr-sc-card" key={i} style={{ "--sc-accent": accent }}
-                  onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
-                  <div className="fr-sc-chip">{c.sectionTag}</div>
-                  <div className="fr-sc-body">
-                    <span className="fr-sc-kicker">{pretty(c.subjectSlug)}</span>
-                    <div className="fr-sc-title">{plan.chapter_title}</div>
-                    <div className="fr-sc-meta">tap to see · resumes where you left {c.sectionTag}</div>
-                    <span className="fr-sc-ready">{lu ? `On: Learning Unit ${lu}` : "Ready to start"}</span>
-                  </div>
+          // No chapter bound to this class yet → "pick a chapter to begin".
+          // Still tappable — an open invitation, not a disabled slot.
+          if (!plan) {
+            return (
+              <div className="sc-card" key={i}
+                onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+                <div className="sc-tag muted">{c.sectionTag}</div>
+                <div className="sc-body">
+                  <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
+                  <div className="sc-title muted">Pick a chapter to begin</div>
+                  <div className="sc-meta">No lesson attached yet</div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
+              </div>
+            );
+          }
+
+          const lu = pointerFor(sectionKey);          // current LU, 1-based (null = untouched)
+          const total = plan.total_units || null;      // LU count from the plans listing
+          const ticks = total ? Array.from({ length: total }) : null;
+          return (
+            <div className="sc-card" key={i}
+              onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
+              <div className="sc-tag">{c.sectionTag}</div>
+              <div className="sc-body">
+                <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
+                <div className="sc-title">{plan.chapter_number ? `Ch ${plan.chapter_number} — ` : ""}{plan.chapter_title}</div>
+                {ticks && (
+                  <div className="sc-rail" aria-label={lu ? `Learning Unit ${lu} of ${total}` : `${total} learning units, not started`}>
+                    {ticks.map((_, t) => (
+                      <span key={t} className={`sc-tick ${lu && t < lu - 1 ? "done" : lu && t === lu - 1 ? "cur" : ""}`} />
+                    ))}
+                  </div>
+                )}
+                <div className="sc-meta">{lu ? `LU ${lu}${total ? ` of ${total}` : ""}` : "Ready to start"}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       <div className="dash-foot">Tap any class to open its lesson. Your place only moves when you tell it to.</div>
     </div>

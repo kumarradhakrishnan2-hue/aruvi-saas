@@ -146,9 +146,8 @@ export default function MyLessonPlans({ readiness, onAllocate, onOpenSection }) 
     <div className="mlp">
       <div className="lvl-head">
         <div>
-          <div className="kicker kicker-ochre">My lesson plans</div>
-          <h1 className="lvl-title">Your plans, by subject and grade</h1>
-          <p className="lvl-sub">Every plan you&rsquo;ve made — open one to read, or build a new one.</p>
+          <h1 className="lvl-title">Your lessons, by subject and grade</h1>
+          <p className="lvl-sub">Every lesson you&rsquo;ve made — open one to read, or build a new one.</p>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getJSON, pretty, gradeUp, ROMAN } from "../lib/format";
+import { RollWheel, PickWheel } from "./wheels";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
  * The mobile-first, progressive-acquisition entry point (CLAUDE.md §0). Until the teacher has
@@ -16,12 +17,19 @@ import { getJSON, pretty, gradeUp, ROMAN } from "../lib/format";
  * Steps: welcome → subject → grade → chapter (+duration) → preview (screen 4, "Lesson plan
  * ready!" — a FACTS TEASER, not the plan itself, PLUS "teach this lesson" + suggested class;
  * screen 5's section picker is a modal over it; generation is a one-way street, no back button)
- * → creatingCards (reward beat) → sectionCards ("My week screen.jpg" — cards + the arrange-week
- * callout together) → arrangeWeek (optional, screen 6's grid) → handoff, at which point page.jsx
- * opens the real workspace shell (sidebar etc. — "side bar.jpg") for the first time. This is the
- * FULL sequence from the mockups (docs/mobile pics/) and the spec
- * (docs/Aruvi_Mobile_First_Progressive_Acquisition_Model_v0.2.md) — "Associate Lesson with
- * Classes" through "Weekly Arrangement". Design: warm-paper system (§4), authored mobile-first.
+ * → creatingCards (reward beat) → DIRECT handoff: page.jsx opens the real workspace shell
+ * (two tabs + settings header) and she lands on the My Classes home, where the cards just
+ * created ARE the screen. No interstitial in between — an earlier "Go to my classes →"
+ * button was removed (2026-07-02): she can't know what "my classes" means before she has
+ * ever seen the shell, so naming the destination only added confusion. The handoff also
+ * writes each section's current_chapter_* binding so the home cards show the lesson she
+ * just attached, not an empty "pick a chapter" state.
+ *
+ * NO DAY SCHEDULE (2026-07-02): the weekly-arrangement step is GONE. Aruvi organizes by the
+ * section pointer ("where did I stop?"), not by days — the calendar was a category error
+ * against that model (see MEMORY.md 2026-07-02). First run never asks which days she teaches;
+ * the canonical payload still carries a grids[] field for shape-compat, but it is always
+ * all -1 ("no schedule"). Design: warm-paper system (§4), authored mobile-first.
  *
  * The preview step deliberately does NOT render the full lesson plan (ViewModelView) — a saved
  * plan currently stands in for it, and a REAL generated plan will later live in the exact same
@@ -33,9 +41,9 @@ import { getJSON, pretty, gradeUp, ROMAN } from "../lib/format";
  *   user        — signed-in id (for the greeting line, optional)
  *   onComplete(payload) — payload = { subjects: [subjectRecord] }, the CANONICAL readiness
  *     shape (same one Readiness.jsx's buildPayload()/onReadyComplete produce) built from
- *     everything the teacher picked: subject, grade, one section-per-fan-out, the weekly grid
- *     (or none, if she skipped arranging). The caller (page.jsx) persists it via POST
- *     /readiness and flips ready+activated — that's the real activation moment, not a flag.
+ *     everything the teacher picked: subject, grade, one section-per-fan-out. The grids[]
+ *     field ships all -1 (day schedules are never collected). The caller (page.jsx) persists
+ *     it via POST /readiness and flips ready — that's the real activation moment, not a flag.
  *   onExit()    — optional: back out to sign-in (from the welcome step)
  */
 
@@ -44,17 +52,12 @@ const DEFAULT_PERIODS = 12;    // NCF starting point (teaching periods for the c
 // Duration wheel: 20–120 minutes in 5-minute steps. Periods wheel: 1–60 periods, 1 at a time.
 const DURATION_CHOICES = Array.from({ length: 21 }, (_, i) => 20 + i * 5); // 20,25,…120
 const PERIOD_CHOICES = Array.from({ length: 60 }, (_, i) => i + 1);        // 1,2,…60
-const WHEEL_ROW = 64;          // px height of a wheel's single visible row (mobile + desktop, shared with CSS)
-// Screens 5/6: same weekday set every other readiness screen uses (Readiness.jsx/MyPlans.jsx
-// DAYS). Section letters run the full A–Z range so a school with many parallel sections can
-// scroll ("wheel") past the first few and pick any of them — the modal itself scrolls
-// (.fr-modal's max-height + overflow:auto), so no separate wheel widget is needed.
+// DAYS exists ONLY to shape the all--1 grids[] in the activation payload (readiness shape
+// compat) — no day schedule is ever collected or shown. Section letters run the full A–Z
+// range so a school with many parallel sections can scroll ("wheel") past the first few and
+// pick any of them.
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
-// Lesson-card left-edge accent, cycled per card ("My week screen.jpg" uses a different colour
-// per section so a multi-section fan-out reads as distinct cards at a glance). Drawn from the
-// existing warm-paper palette (§4) rather than introducing new colours.
-const SECTION_ACCENTS = ["var(--pine)", "var(--clay)", "var(--ochre)"];
 
 // Teachers say "Class 7", not "Grade VII" — convert the Roman grade slug to its number
 // for display (ROMAN starts at "iii" → 3). Falls back to the Roman form if unmapped.
@@ -63,162 +66,8 @@ const classNum = (g) => {
   return idx >= 0 ? idx + 3 : gradeUp(g);
 };
 
-// One gesture demo per page load: whichever wheel the teacher meets FIRST rocks a few px and
-// settles back, so the box demonstrates its own gesture (words get missed). Later wheels stay still.
-let wheelDemoDone = false;
-
-/* RollWheel — the shared one-row selection box used by the Subject, Grade and Chapter steps.
- * A single box, the footprint of one option row, showing exactly ONE item at a time. Rolling
- * (drag / scroll / mouse-wheel / arrow keys) cycles the list through it; scroll-snap settles
- * on a row and whichever item landed in the box IS the pick — no separate confirm tap.
- * items: [{ id, chip?, label }] · value: id string · onChange(id)
- * large: one-notch-bigger label for short lists (Subject/Class); chapter titles stay smaller. */
-function RollWheel({ items, value, onChange, ariaLabel, large }) {
-  const ref = useRef(null);
-  const settleTimer = useRef(null);
-  const idBase = String(ariaLabel || "wheel").toLowerCase().replace(/\W+/g, "-");
-
-  // whatever settles in the box becomes the pick
-  const onScroll = () => {
-    if (settleTimer.current) clearTimeout(settleTimer.current);
-    settleTimer.current = setTimeout(() => {
-      const el = ref.current;
-      if (!el || !items.length) return;
-      const idx = Math.min(items.length - 1, Math.max(0, Math.round(el.scrollTop / WHEEL_ROW)));
-      if (items[idx]) onChange(String(items[idx].id));
-    }, 120);
-  };
-
-  // moves exactly one row; shared by the keyboard handler AND the ▲▼ cue buttons below, so
-  // tapping a cue behaves identically to pressing an arrow key (settle → onChange fires the same way)
-  const step = (dir) => {
-    const el = ref.current;
-    if (!el) return;
-    el.scrollBy({ top: dir * WHEEL_ROW, behavior: "smooth" });
-  };
-
-  const onKeyDown = (e) => {
-    if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
-  };
-
-  // keep the value valid whenever the list (re)loads — default to the first item
-  useEffect(() => {
-    if (!items.length) return;
-    if (!items.some((it) => String(it.id) === String(value))) onChange(String(items[0].id));
-  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // position the roll on the current pick whenever the wheel (re)mounts or the list changes
-  useEffect(() => {
-    const el = ref.current;
-    const idx = items.findIndex((it) => String(it.id) === String(value));
-    if (el && idx >= 0) el.scrollTop = idx * WHEEL_ROW;
-  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // one-time gesture demo (see wheelDemoDone above)
-  useEffect(() => {
-    if (wheelDemoDone || items.length < 2) return;
-    const el = ref.current;
-    if (!el) return;
-    wheelDemoDone = true;
-    const idx = Math.max(0, items.findIndex((it) => String(it.id) === String(value)));
-    const dir = idx >= items.length - 1 ? -1 : 1; // rock away from the list's edge
-    const t1 = setTimeout(() => el.scrollBy({ top: dir * 22, behavior: "smooth" }), 500);
-    const t2 = setTimeout(() => el.scrollBy({ top: -dir * 22, behavior: "smooth" }), 1000);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const chosen = items.find((it) => String(it.id) === String(value));
-  return (
-    <div className={`fr-wheel-shell ${large ? "fr-wheel-lg" : ""}`}>
-      <div className="fr-wheel" ref={ref} onScroll={onScroll} onKeyDown={onKeyDown}
-        role="listbox" tabIndex={0} aria-label={ariaLabel}
-        aria-activedescendant={chosen ? `${idBase}-opt-${chosen.id}` : undefined}>
-        {items.map((it) => {
-          const sel = String(value) === String(it.id);
-          return (
-            <div key={it.id} id={`${idBase}-opt-${it.id}`}
-              className="fr-wheel-row" role="option" aria-selected={sel}>
-              {it.chip != null && <span className={`fr-opt-chip ${sel ? "on" : ""}`}>{it.chip}</span>}
-              <span className="fr-wheel-label">{it.label}</span>
-            </div>
-          );
-        })}
-      </div>
-      {/* real step buttons, not decoration — a tap-friendly alternative for anyone who'd
-          rather not drag/scroll-wheel the box itself */}
-      <span className="fr-wheel-cue">
-        <button type="button" className="fr-wheel-cue-btn" onClick={() => step(-1)} aria-label={`Previous ${ariaLabel || "option"}`}>▲</button>
-        <button type="button" className="fr-wheel-cue-btn" onClick={() => step(1)} aria-label={`Next ${ariaLabel || "option"}`}>▼</button>
-      </span>
-    </div>
-  );
-}
-
-// Row height for PickWheel's scroll window — 4 rows visible at once (208px / 52px). Independent
-// of RollWheel's WHEEL_ROW since this is a free-scrolling multi-select list, not a snap-to-
-// center single value.
-const PICK_ROW = 52;
-
-/* PickWheel — a reusable fixed-height (exactly 4 rows visible) scrollable multi-select "wheel":
- * drag/swipe through the full option list, or tap the bare ▲▼ arrows beside it to step one row
- * (phones aren't always obviously drag-scrollable). Any visible row toggles on tap, independent
- * of scroll position — no cap on how many can be picked. Shared by SectionPicker (screen 5,
- * letters A–Z) and DurationEditor (screen 6, period lengths) so both look and behave identically
- * — including their Done button, passed in as `children` so it lands in the SAME column as the
- * wheel (its width then always equals the row list's width; the arrows live outside that column
- * entirely, so they never affect it). `initialScrollTo` positions the wheel on mount without
- * that option being pre-picked (e.g. DurationEditor opens scrolled to 40 min either way). */
-function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children }) {
-  const wheelRef = useRef(null);
-  const step = (dir) => {
-    const el = wheelRef.current;
-    if (el) el.scrollBy({ top: dir * PICK_ROW, behavior: "smooth" });
-  };
-  const onKeyDown = (e) => {
-    if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
-  };
-  const showCue = options.length > 4;
-
-  useEffect(() => {
-    const el = wheelRef.current;
-    if (!el || initialScrollTo == null) return;
-    const idx = options.indexOf(initialScrollTo);
-    if (idx >= 0) el.scrollTop = idx * PICK_ROW;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <div className="fr-sec-wheel-wrap">
-      <div className="fr-sec-wheel-col">
-        <div className="fr-sec-list fr-sec-wheel" ref={wheelRef} onKeyDown={onKeyDown} tabIndex={0}
-          role="listbox" aria-label={ariaLabel} aria-multiselectable="true">
-          {options.map((o) => {
-            const on = selected.includes(o);
-            return (
-              <button type="button" key={o} className={`fr-sec-opt ${on ? "on" : ""}`} onClick={() => onToggle(o)}
-                role="option" aria-selected={on}>
-                <span className="fr-sec-check">{on ? "✓" : ""}</span>
-                <span className="fr-sec-label">{labelFor ? labelFor(o) : o}</span>
-              </button>
-            );
-          })}
-        </div>
-        {children}
-      </div>
-      {showCue && (
-        // Bare arrows beside the wheel — no bordered/background box around them, just the two
-        // glyphs sitting directly on the modal body, one notch bigger than the wheel cue buttons
-        // used elsewhere. Height-matched to the wheel only, not the Done button below it.
-        <div className="fr-sec-arrows-side">
-          <button type="button" className="fr-sec-arrow-btn" onClick={() => step(-1)} aria-label="Scroll up">▲</button>
-          <button type="button" className="fr-sec-arrow-btn" onClick={() => step(1)} aria-label="Scroll down">▼</button>
-        </div>
-      )}
-    </div>
-  );
-}
+// RollWheel + PickWheel live in wheels.jsx (extracted 2026-07-02) — the SAME selection UI
+// is reused by the Settings profile redo, per the one-UI rule.
 
 /* SectionPicker — the multi-select overlay behind "Change section" (screen 5, picking from the
  * full A–Z letter list, opened from the suggested-class Add/Edit button). `allowEmpty` is kept
@@ -249,194 +98,9 @@ function SectionPicker({ letters, selected, tagFor, title, allowEmpty, onDone, o
   );
 }
 
-// Is the viewport at/under the same breakpoint the rest of the shell treats as "mobile"
-// (globals.css's .bottom-tabs media query) — drives WeekGrid's row/column transpose below.
-// Defaults to mobile (true) before the window is known, matching the app's mobile-first stance.
-function useIsMobile(bp) {
-  const [isMobile, setIsMobile] = useState(() => (typeof window !== "undefined" ? window.innerWidth <= bp : true));
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia(`(max-width: ${bp}px)`);
-    const update = () => setIsMobile(mq.matches);
-    update();
-    if (mq.addEventListener) mq.addEventListener("change", update); else mq.addListener(update);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", update); else mq.removeListener(update);
-    };
-  }, [bp]);
-  return isMobile;
-}
-
-/* DurationEditor — the list of period lengths the weekly grid cycles through (screen 6's
- * "Class duration(s)" Add/Edit). Deliberately the EXACT same window as SectionPicker (same
- * PickWheel, same layout) — just picking minutes instead of letters: tap a row to add/remove
- * it, no separate "add" step. Opens scrolled to the 40-minute default (DURATION_CHOICES runs
- * 20–120 in 5-minute steps either side of it), not to whatever was last picked. At least one
- * duration must stay selected — a grid with zero durations has nothing to cycle through. */
-function DurationEditor({ durations, onDone, onClose }) {
-  const [list, setList] = useState(durations);
-  const toggle = (d) => setList((a) => {
-    if (a.includes(d)) return a.length > 1 ? a.filter((x) => x !== d) : a;
-    return [...a, d].sort((x, y) => x - y);
-  });
-  return (
-    <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) onClose(); }}>
-      <div className="fr-modal">
-        <h2 className="fr-q">Class duration{list.length > 1 ? "s" : ""}</h2>
-        <PickWheel options={DURATION_CHOICES} selected={list} onToggle={toggle} ariaLabel="Select class durations"
-          labelFor={(d) => `${d} min`} initialScrollTo={DEFAULT_DURATION}>
-          <button type="button" className="primary fr-cta" onClick={() => onDone(list)}>Done</button>
-        </PickWheel>
-      </div>
-    </div>
-  );
-}
-
-/* WeekGrid — the weekly scheduling table (screen 6), same tap-to-cycle-durations mechanics as
- * Readiness.jsx's own grid (.wk/.cell), but transposed by viewport: on a phone, days are ROWS
- * and sections are COLUMNS (a short six-row list she scrolls vertically, one glance per day);
- * on desktop it flips to match Readiness's own layout — sections as rows, days as columns. The
- * label column is pinned (position:sticky, see globals.css .fr-wk-scroll) so it stays in view
- * however many section columns scroll past on a narrow phone. */
-function WeekGrid({ sections, tagFor, days, grid, durations, isMobile, onTap }) {
-  const secLabels = sections.map((s) => tagFor(s));
-  const rowLabels = isMobile ? days : secLabels;
-  const colLabels = isMobile ? secLabels : days;
-  const cornerLabel = isMobile ? "Day" : "Section";
-
-  // Scroll-edge arrows — appear only while there's actually more grid off to that side (e.g.
-  // more sections than fit on a phone's width), and hide themselves once she's scrolled all
-  // the way to that edge. A tap steps the scroll by roughly one column, same distance either way.
-  const scrollRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-  const checkScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
-  useEffect(() => {
-    checkScroll();
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", checkScroll, { passive: true });
-    window.addEventListener("resize", checkScroll);
-    return () => {
-      el.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sections.length, isMobile]);
-  const scrollStep = (dir) => {
-    const el = scrollRef.current;
-    if (el) el.scrollBy({ left: dir * 130, behavior: "smooth" });
-  };
-
-  return (
-    <div className="fr-wk-wrap">
-      <div className="fr-wk-scroll" ref={scrollRef}>
-        <table className="wk fr-wk">
-          <thead>
-            <tr>
-              <th className="rowhd">{cornerLabel}</th>
-              {colLabels.map((c) => <th key={c}>{c}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {rowLabels.map((r, ri) => (
-              <tr key={r}>
-                <th className="rowhd"><span className="rowtag">{r}</span></th>
-                {colLabels.map((c, ci) => {
-                  const secIdx = isMobile ? ci : ri;
-                  const dayIdx = isMobile ? ri : ci;
-                  const v = grid[secIdx] ? grid[secIdx][dayIdx] : -1;
-                  return (
-                    <td key={c}>
-                      <div className={`cell ${v >= 0 ? "on" : ""}`} data-sec={v >= 0 ? secIdx % 4 : undefined}
-                        onClick={() => onTap(secIdx, dayIdx)}>
-                        {v >= 0 ? durations[v] : ""}
-                      </div>
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {canScrollLeft && (
-        <button type="button" className="fr-wk-arrow fr-wk-arrow-l" onClick={() => scrollStep(-1)} aria-label="Scroll to earlier sections">‹</button>
-      )}
-      {canScrollRight && (
-        <button type="button" className="fr-wk-arrow fr-wk-arrow-r" onClick={() => scrollStep(1)} aria-label="Scroll to more sections">›</button>
-      )}
-    </div>
-  );
-}
-
-/* DateBadge — a small torn-calendar-page icon (ring holes + month + day) showing TODAY'S real
- * date, computed live rather than relying on an emoji glyph (some platforms' 📅 emoji happens
- * to render the current date, most don't — this is the reliable version). Used on the
- * arrange-week callout below. */
-function DateBadge() {
-  const now = new Date();
-  const month = now.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
-  const day = now.getDate();
-  return (
-    <div className="fr-datebadge" aria-hidden="true">
-      <span className="fr-datebadge-rings"><span /><span /><span /></span>
-      <span className="fr-datebadge-month">{month}</span>
-      <span className="fr-datebadge-day">{day}</span>
-    </div>
-  );
-}
-
-/* BenefitIcon — hand-drawn single-stroke line glyphs (not stock emoji) for the arrange-week
- * callout's benefit row, so the pitch reads in the same "scholarly planner" register as the
- * rest of the app rather than clashing with default colourful emoji. Each sits in a small
- * outlined circle cycling through the app's three accents (pine/clay/ochre), mirroring the
- * .fr-sc-chip badge language used on the lesson cards above. */
-const BENEFIT_PATHS = {
-  // funnel — narrowing down to what matters (less clutter)
-  clutter: <path d="M4.5 5h15l-5.5 6.2v5.3l-4 1.8v-7.1L4.5 5z" />,
-  // simple clock face — save time
-  time: <><circle cx="12" cy="12" r="7.7" /><path d="M12 7.8V12l3 2.1" /></>,
-  // per-row checkmarks — track each section individually
-  track: <><path d="M9.3 6.5h9.2M9.3 12h9.2M9.3 17.5h9.2" /><path d="M4.3 6.5l1.1 1.1 2-2.2M4.3 12l1.1 1.1 2-2.2M4.3 17.5l1.1 1.1 2-2.2" /></>,
-};
-
-function BenefitIcon({ kind, accent }) {
-  return (
-    <span className="fr-benefit-badge" style={{ "--sc-accent": accent }} aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        {BENEFIT_PATHS[kind]}
-      </svg>
-    </span>
-  );
-}
-
-/* LessonCard — one independent card per fan-out section ("My week screen.jpg"): coloured
- * left stripe, section-tag chip, subject kicker, chapter title, "Chapter N · Learning Unit 1"
- * meta line, "Ready to teach" pill. This is the reward payoff shown right after the
- * creatingCards beat — same visual language My Plans will eventually use for the real cards. */
-function LessonCard({ tag, subjectName, chapterTitle, chapterNumber, accent }) {
-  return (
-    <div className="fr-sc-card" style={{ "--sc-accent": accent }}>
-      <div className="fr-sc-chip">{tag}</div>
-      <div className="fr-sc-body">
-        <span className="fr-sc-kicker">{subjectName}</span>
-        <div className="fr-sc-title">{chapterTitle || "—"}</div>
-        <div className="fr-sc-meta">{chapterNumber ? `Chapter ${chapterNumber} · Learning Unit 1` : "Learning Unit 1"}</div>
-        <span className="fr-sc-ready">Ready to teach</span>
-      </div>
-    </div>
-  );
-}
-
 export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [step, setStep] = useState("welcome");
-  // welcome | subject | grade | chapter | preview | creatingCards | sectionCards | arrangeWeek
+  // welcome | subject | grade | chapter | preview | creatingCards
 
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState("");   // slug
@@ -460,23 +124,10 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // edit box open at a time).
   const [editingField, setEditingField] = useState(null); // null | "duration" | "periods"
 
-  // Screens 4-6: section fan-out + weekly arrangement. `sections` is the letters she's teaching
-  // this lesson to (default one, "A", matching the mockup's default "VI A" before she changes
-  // it).
+  // Section fan-out. `sections` is the letters she's teaching this lesson to (default one,
+  // "A", matching the mockup's default "VI A" before she changes it).
   const [sections, setSections] = useState(["A"]);
   const [sectionPickerOpen, setSectionPickerOpen] = useState(false);
-  // weekGrid[secIdx][dayIdx] = index into durationOptions, or -1 for "no class". Same shape
-  // Readiness.jsx's own weekly grid uses, so the canonical payload built below needs no
-  // reshaping. Kept in sync with `sections` by the effect right below.
-  const [weekGrid, setWeekGrid] = useState(() => sections.map(() => DAYS.map(() => -1)));
-  useEffect(() => {
-    setWeekGrid((prev) => sections.map((_, i) => (prev && prev[i]) || DAYS.map(() => -1)));
-  }, [sections]);
-  // Most teachers have one period length; this stays null until she opens the duration editor
-  // on screen 6, at which point it becomes the real list a grid tap cycles through. Until then
-  // the grid just uses her single already-chosen `durationMin` (from the chapter step).
-  const [durationOptions, setDurationOptions] = useState(null);
-  const [durationEditorOpen, setDurationEditorOpen] = useState(false);
   const [activating, setActivating] = useState(false);      // busy state for the final handoff
 
   // Preview step — live generation is deferred, so "Generate Lesson Plan" pulls the closest
@@ -486,6 +137,9 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [previewView, setPreviewView] = useState(null);
   const [previewNote, setPreviewNote] = useState("");
   const [previewError, setPreviewError] = useState("");
+  // Which saved plan the preview actually used — bound to each section at handoff
+  // (current_chapter_*), so the My Classes home opens on the lesson she just attached.
+  const [previewPlanFile, setPreviewPlanFile] = useState(null);
 
   // Load the subject catalogue once (used on the subject step).
   useEffect(() => {
@@ -536,33 +190,15 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // number + letter, e.g. "6A" — displayed everywhere else as "Section 6A".
   const tagFor = (letter) => `${classNum(grade)}${letter}`;
 
-  // The grid's active duration list — her single chapter-step duration until she opens the
-  // screen-6 editor and turns it into a real (possibly multi-value) list.
-  const durOptions = durationOptions && durationOptions.length ? durationOptions : [durationMin];
-  const isMobile = useIsMobile(720); // WeekGrid's row/column transpose (screen 6)
+  // Her single chapter-step duration — the only duration the first run collects.
+  const durOptions = [durationMin];
 
-  // Tap a weekly-grid cell: cycles empty → duration[0] → duration[1] → … → empty, exactly like
-  // Readiness.jsx's own grid (`tapCell`) — a single duration just toggles on/off.
-  const tapWeekCell = (secIdx, dayIdx) => {
-    setWeekGrid((prev) => {
-      const next = prev.map((row) => [...row]);
-      if (!next[secIdx]) return prev;
-      const v = next[secIdx][dayIdx];
-      const n = durOptions.length;
-      next[secIdx][dayIdx] = v < 0 ? 0 : (v + 1 >= n ? -1 : v + 1);
-      return next;
-    });
-  };
-
-  // Screen 4→6 handoff: build the CANONICAL readiness payload from everything picked across
-  // the whole flow. One subject record, one grade, one section per fan-out choice, a weekly
-  // grid if she arranged one (all -1 / "no schedule" if she didn't — My Plans already has a
-  // graceful fallback for that, per its own doc comment).
+  // Build the CANONICAL readiness payload from everything picked across the whole flow. One
+  // subject record, one grade, one section per fan-out choice. grids[] ships all -1 — day
+  // schedules are never collected (see the header note).
   const buildActivationPayload = () => {
     const secObjs = sections.map((s) => ({ tag: tagFor(s), sec: s }));
-    const grid = sections.map((_, secIdx) =>
-      DAYS.map((_, dayIdx) => (weekGrid[secIdx] ? weekGrid[secIdx][dayIdx] : -1))
-    );
+    const grid = sections.map(() => DAYS.map(() => -1));
     const subjectRecord = {
       name: pretty(subject),
       grades: [{
@@ -576,23 +212,29 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     return { subjects: [subjectRecord] };
   };
 
-  // "Add to Class" (screen 4) fires this: hold on a short "Section Cards are being created…"
-  // beat (screen "creatingCards") so the moment reads as something being built for her, THEN
-  // land on "sectionCards" — her actual reward payoff ("My week screen.jpg": the lesson cards
-  // + the arrange-week callout together). The delay belongs HERE, right when the cards are
-  // created — not at the very end of the flow, so it lands as immediate gratification rather
-  // than a hold-up before she's allowed to finish.
+  // "Create teaching cards" (screen 4) fires this: hold on a short "Section Cards are being
+  // created…" beat (screen "creatingCards") so the moment reads as something being built for
+  // her, then hand off DIRECTLY into the shell — no interstitial, no "go to…" button naming a
+  // destination she has never seen. The My Classes home she lands on IS the reward payoff:
+  // her cards, already showing the lesson she just attached.
   const goCreateCards = () => {
     setStep("creatingCards");
-    setTimeout(() => setStep("sectionCards"), 1800);
+    setTimeout(finishActivation, 1800);
   };
 
-  // Fires from "Maybe later" (on sectionCards or arrangeWeek) or "Set up my week" — the reward
-  // beat already happened at goCreateCards, so this just finalizes: hand the canonical
-  // readiness payload to onComplete. Persistence itself (POST /readiness) is page.jsx's job,
-  // same as the old upfront Readiness wizard did.
+  // Finalize: bind the previewed plan to every fan-out section (current_chapter_* is what the
+  // My Classes home reads to show the chapter on each card — without it she'd land on empty
+  // "pick a chapter" cards), then hand the canonical readiness payload to onComplete.
+  // Persistence itself (POST /readiness) is page.jsx's job, same as the old upfront wizard.
   const finishActivation = () => {
     setActivating(true);
+    try {
+      if (previewPlanFile) {
+        sections.forEach((s) => {
+          window.localStorage.setItem(`current_chapter_${subject}_${grade}_${tagFor(s)}`, previewPlanFile);
+        });
+      }
+    } catch {}
     onComplete && onComplete(buildActivationPayload());
   };
 
@@ -612,6 +254,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     setPreviewError("");
     setPreviewNote("");
     setPreviewView(null);
+    setPreviewPlanFile(null);
     try {
       const plansRes = await getJSON(`/plans/${subject}/${grade}`);
       const plans = plansRes.plans || [];
@@ -628,6 +271,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       }
       const viewRes = await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`);
       setPreviewView(viewRes.view);
+      setPreviewPlanFile(match.filename);
     } catch (e) {
       setPreviewError("Couldn't load a saved plan right now. Try again in a moment.");
     } finally {
@@ -700,7 +344,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         <Brand />
         <Progress active="Subject" />
         <div className="fr-step-body">
-          <h1 className="fr-q">What would you like to teach?</h1>
+          <h1 className="fr-q">What do you teach?</h1>
           <p className="fr-hint">Let’s start with one subject. Roll the box or use the arrows — the subject shown is your pick.</p>
           {subjects.length === 0 && <div className="fr-loading">Loading subjects…</div>}
           {subjects.length > 0 && (
@@ -723,7 +367,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         <Brand />
         <Progress active="Class" />
         <div className="fr-step-body">
-          <h1 className="fr-q">Which class do you want to teach {pretty(subject)} to?</h1>
+          <h1 className="fr-q">Which class do you teach {pretty(subject)} to?</h1>
           <p className="fr-hint">You can add more classes later. Roll the box or use the arrows — the class shown is your pick.</p>
           {grades.length === 0 && <div className="fr-loading">Loading classes…</div>}
           {grades.length > 0 && (
@@ -807,115 +451,18 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     );
   }
 
-  /* ── STEP · CREATING CARDS (the reward beat — a few seconds, then sectionCards) ── */
+  /* ── STEP · CREATING CARDS — the reward beat, then a DIRECT handoff into the shell.
+   * The My Classes home she lands on shows the cards themselves (with the lesson bound),
+   * so no interstitial screen re-describes them or asks her to "go" anywhere. ── */
   if (step === "creatingCards") {
     return (
       <div className="fr-wrap fr-celebrate">
         <Brand />
         <div className="fr-celebrate-body">
           <span className="fr-celebrate-spin" aria-hidden="true" />
-          <h1 className="fr-celebrate-title">Section Cards are being created…</h1>
+          <h1 className="fr-celebrate-title">{activating ? "Setting up your classes…" : "Section Cards are being created…"}</h1>
           <p className="fr-hint">Just a moment while Aruvi sets up your class.</p>
         </div>
-      </div>
-    );
-  }
-
-  /* ── STEP · SECTION CARDS + arrange-week callout together ("My week screen.jpg") ── */
-  if (step === "sectionCards") {
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <div className="fr-step-body">
-          <div className="fr-ready-note">
-            <span className="fr-ready-check">✓</span>
-            <div className="fr-ready-text">
-              <strong>Lesson added to {sections.length} section{sections.length === 1 ? "" : "s"}.</strong>
-              <span>Independent lesson cards created.</span>
-            </div>
-          </div>
-
-          <h2 className="fr-sc-heading">Your lesson cards</h2>
-          <p className="fr-hint">Each section has its own lesson plan.</p>
-          <div className="fr-sc-list">
-            {sections.map((s, i) => (
-              <LessonCard key={s} tag={tagFor(s)} subjectName={pretty(subject)}
-                chapterTitle={chosenChapter ? chosenChapter.chapter_title : ""}
-                chapterNumber={chosenChapter ? chosenChapter.chapter_number : ""}
-                accent={SECTION_ACCENTS[i % SECTION_ACCENTS.length]} />
-            ))}
-          </div>
-
-          <div className="fr-arrange-callout">
-            <div className="fr-arrange-top">
-              <DateBadge />
-              <div className="fr-arrange-text">
-                <strong>Open Aruvi each morning and see <span className="fr-arrange-accent">only today's classes</span>.</strong>
-                <p>Tell Aruvi which days you teach each class, and we'll keep your home screen focused on what's relevant today.</p>
-              </div>
-            </div>
-            <div className="fr-benefit-row">
-              <div className="fr-benefit"><BenefitIcon kind="clutter" accent="var(--pine)" />Less clutter</div>
-              <div className="fr-benefit"><BenefitIcon kind="time" accent="var(--clay)" />Save time</div>
-              <div className="fr-benefit"><BenefitIcon kind="track" accent="var(--ochre)" />Track section</div>
-            </div>
-          </div>
-        </div>
-        <div className="fr-foot">
-          <button className="primary fr-cta" disabled={activating} onClick={() => setStep("arrangeWeek")}>
-            Set up my week →
-          </button>
-          <button className="fr-link fr-center" disabled={activating} onClick={finishActivation}>Maybe later</button>
-        </div>
-      </div>
-    );
-  }
-
-  /* ── STEP 6 · ARRANGE-WEEK GRID (mockup screen 6) — same tap-to-cycle grid as the Readiness
-   * setup wizard, transposed by viewport (days=rows/sections=columns on mobile; sections=rows/
-   * days=columns on desktop, matching Readiness.jsx). A duration Add/Edit box sits above it —
-   * most teachers leave it at the one chapter-step duration; adding a second (or third) one
-   * makes each grid tap cycle through them instead of a plain on/off. ── */
-  if (step === "arrangeWeek") {
-    const durLabel = durOptions.map((d) => `${d} min`).join(", ");
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <div className="fr-step-body">
-          <h1 className="fr-q">Arrange your week</h1>
-          <p className="fr-hint">
-            {durOptions.length > 1
-              ? "Tap a cell to mark a class. Tap again to cycle through your durations, and once more to clear it."
-              : "Tap a cell to mark a class. Tap again to clear it."}
-          </p>
-
-          <span className="fr-default-kicker">Class duration{durOptions.length > 1 ? "s" : ""}</span>
-          <p className="fr-hint">
-            Tell us how long your {pretty(subject)} periods are for Class {classNum(grade)}. This
-            helps Aruvi generate lesson plans that match your classroom.
-          </p>
-          <div className="fr-suggested-class fr-suggested-class-tap" onClick={() => setDurationEditorOpen(true)}>
-            <span className="fr-default-val">{durLabel}</span>
-            <button type="button" className="fr-change-btn fr-change-btn-primary"
-              onClick={(e) => { e.stopPropagation(); setDurationEditorOpen(true); }}>
-              Add/Edit
-            </button>
-          </div>
-
-          <WeekGrid sections={sections} tagFor={tagFor} days={DAYS} grid={weekGrid}
-            durations={durOptions} isMobile={isMobile} onTap={tapWeekCell} />
-        </div>
-        <div className="fr-foot">
-          <button className="primary fr-cta" disabled={activating} onClick={finishActivation}>
-            {activating ? "Setting up…" : "Set up my week"}
-          </button>
-          <button className="fr-link" disabled={activating} onClick={finishActivation}>Maybe later</button>
-        </div>
-        {durationEditorOpen && (
-          <DurationEditor durations={durOptions}
-            onDone={(list) => { setDurationOptions(list); setDurationEditorOpen(false); }}
-            onClose={() => setDurationEditorOpen(false)} />
-        )}
       </div>
     );
   }

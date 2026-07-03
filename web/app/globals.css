@@ -42,7 +42,9 @@ body {
 }
 .brand { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-row { display: flex; align-items: baseline; font-family: var(--f-display); font-weight: 600; font-size: 25px; letter-spacing: -.4px; color: var(--pine-d); }
-.brand em { font-style: italic; color: var(--clay); font-weight: 500; }
+/* The brand dot is the SAME everywhere as the first-run page: upright, red (#c0392b) —
+   one logo, one voice (2026-07-02). */
+.brand-row em, .brand em { font-style: normal; color: #c0392b; font-weight: 500; }
 .brand small { font-family: var(--f-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft); margin-left: 10px; }
 .brand-ncf { font-family: var(--f-body); font-style: italic; font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
 .hdr .sel { margin-left: auto; display: flex; gap: 14px; }
@@ -222,24 +224,15 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: rela
 .hdr-scope-standalone { padding: 14px 34px 0; }
 @media (max-width: 600px) { .hdr-scope-standalone { padding: 12px 18px 0; } }
 
-/* ── Mobile bottom tab bar — My Week / My Class / Calendar / Plans ──
-   Mirrors the drawer's four main destinations for always-on-screen reach on a phone. */
-.bottom-tabs { display: none; }
-@media (max-width: 720px) {
-  .bottom-tabs {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
-    display: flex; background: var(--paper); border-top: 1px solid var(--line);
-    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-  }
-  .bt-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-    font-family: var(--f-mono); font-size: 10px; letter-spacing: .03em; text-transform: uppercase;
-    color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 6px 2px; min-height: 44px;
-  }
-  .bt-item.on { color: var(--pine-d); }
-  .bt-ico { font-size: 17px; line-height: 1; }
-  .bodycontent { padding-bottom: 66px; } /* clear the fixed bottom bar */
-}
+/* ── The two tabs (2026-07-02) — the app's ENTIRE nav, at the TOP under the header ──
+   My Classes · My Lessons, centred, reusing the original .tabs/.tab treatment: the active
+   tab carries the same clay-red underline the old My Plans/Generate tabs used. No sidebar,
+   no hamburger, no other destinations — the settings gear in the header is chrome, not nav. */
+.main-tabs { justify-content: center; }
+
+/* header settings gear — the teaching profile is parked behind it (settings, not a tab) */
+.hdr-gear { font-size: 18px; line-height: 1; background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
+.hdr-gear:hover { color: var(--pine); }
 
 /* ── Rail contents (no horizontal row separators) ── */
 /* padding-top drops "My Class" down so it lines up with the subject title on the screen it
@@ -1401,7 +1394,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-user-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
 .fr-user-logout { background: none; border: none; cursor: pointer; font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--ink-soft); padding: 2px 4px; }
 .fr-user-logout:hover { color: var(--clay); }
-.fr-brand-tag { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+.fr-brand-tag, .hdr-brand-tag { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
 
 /* three-step progress rail */
 .fr-prog { list-style: none; display: flex; align-items: center; gap: 4px; padding: 0 0 22px; margin: 0; }
@@ -1627,6 +1620,112 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* My Week reuses .fr-sc-card as a clickable row (cursor + hover), unlike FirstRun's static reward cards */
 .fr-sc-list .fr-sc-card { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
 .fr-sc-list .fr-sc-card:hover { border-color: var(--sc-accent, var(--pine)); background: #f3ede0; }
+
+/* ── My Classes section card (2026-07-02, approved mockup) ──
+   Serif section tag · subject kicker · chapter title · LU progress rail (LU-level only:
+   done=pine, current=ochre, remaining=hairline) · "LU n of N" meta. Deliberately NO days,
+   NO pace pills, NO comparisons — the card answers one question: where did I stop? */
+.sc-list { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 22px; }
+.sc-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px; border-radius: 12px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  cursor: pointer; transition: border-color .12s ease, background .12s ease;
+}
+.sc-card:hover { border-color: var(--pine); background: #f3ede0; }
+.sc-tag { flex: none; min-width: 42px; font-family: var(--f-display); font-weight: 500; font-size: 21px; color: var(--pine-d); line-height: 1.25; }
+.sc-tag.muted { color: var(--ink-soft); }
+.sc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.sc-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.sc-title { font-family: var(--f-body); font-size: 15.5px; color: var(--ink); }
+.sc-title.muted { font-style: italic; color: var(--ink-soft); }
+.sc-rail { display: flex; gap: 2px; }
+.sc-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--line); }
+.sc-tick.done { background: var(--pine); }
+.sc-tick.cur { background: var(--ochre); }
+.sc-meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); }
+
+/* ── Teaching profile (Settings, rebuilt 2026-07-02) — accordion + master edit ──
+   Subjects are collapsible rows, ONE open at a time. The Edit toggle reveals all mutation
+   controls together: red dustbins per subject/class/section, "edit →" on the numbers line,
+   and the green add buttons. Conversational screens reuse .fr-q/.fr-hint + the wheels. */
+.tp { max-width: 560px; }
+.tp .fr-link { margin-top: 14px; }
+.tp-hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.tp-edit-toggle {
+  flex: none; font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 999px; cursor: pointer;
+  background: none; border: 1.5px solid var(--line); color: var(--ink-soft);
+}
+.tp-edit-toggle.on { border-color: var(--pine); background: var(--pine); color: #fdfaf4; }
+.tp-empty { font-family: var(--f-body); font-style: italic; font-size: 14px; color: var(--ink-soft); }
+
+/* accordion */
+.tp-sub { background: var(--paper-2); border: 1px solid var(--line-soft); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+.tp-sub.open { border-color: var(--line); }
+.tp-sub-hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; }
+.tp-sub-hd:hover { background: #f3ede0; }
+.tp-sub-name { font-family: var(--f-display); font-weight: 600; font-size: 17px; color: var(--ink); }
+.tp-sub-side { display: flex; align-items: center; gap: 10px; }
+.tp-sub-count { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-soft); }
+.tp-caret { font-size: 12px; color: var(--ink-soft); }
+
+/* class block inside the open subject */
+.tp-grade { padding: 10px 14px 12px; border-top: 1px solid var(--line-soft); }
+.tp-grade-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.tp-grade-name { font-family: var(--f-display); font-weight: 500; font-size: 15px; color: var(--pine-d); }
+.tp-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--f-mono); font-size: 11px; color: var(--pine-d);
+  background: #e7f1ec; border-radius: 999px; padding: 4px 10px;
+}
+.tp-chip-x { background: none; border: none; padding: 0; cursor: pointer; font-size: 10px; color: #9db3a5; line-height: 1; }
+.tp-chip-x:hover { color: #c0392b; }
+.tp-nums { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; }
+.tp-nums-txt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--ink-soft); }
+.tp-editlnk { background: none; border: none; padding: 0; cursor: pointer; font-family: var(--f-body); font-style: italic; font-size: 13px; color: var(--clay); }
+.tp-editlnk:hover { color: #c0392b; }
+
+/* the red dustbin */
+.tp-bin { display: inline-flex; align-items: center; background: none; border: none; padding: 3px; cursor: pointer; color: #c0392b; opacity: .75; }
+.tp-bin:hover { opacity: 1; }
+
+/* green add buttons — prominent, shared format at every level */
+.tp-add {
+  display: inline-flex; align-items: center; margin: 10px 14px 14px;
+  font-family: var(--f-display); font-weight: 500; font-size: 13.5px;
+  background: var(--pine); border: none; color: #fdfaf4;
+  border-radius: 999px; padding: 8px 16px; cursor: pointer;
+}
+.tp-add:hover { background: var(--pine-d); }
+.tp-add-sm { margin: 0; padding: 4px 12px; font-size: 12px; }
+.tp-add-subject { margin: 4px 0 0; }
+
+/* scoped remove confirm (inside .fr-modal) */
+.tp-remove-confirm {
+  display: block; width: 100%; margin: 14px 0 4px; padding: 11px; border-radius: 999px;
+  background: none; border: 1.5px solid #c0392b; color: #c0392b; text-align: center;
+  font-family: var(--f-display); font-weight: 500; font-size: 14.5px; cursor: pointer;
+}
+.tp-remove-confirm:hover { background: #f9ecea; }
+/* budget estimator — 4 stacked method choices + a value stepper */
+.tp-methods { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 16px; }
+.tp-method {
+  text-align: left; padding: 12px 14px; border-radius: 10px; cursor: pointer;
+  background: var(--paper-2); border: 1.5px solid var(--line);
+  font-family: var(--f-body); font-size: 15px; color: var(--ink);
+}
+.tp-method.on { background: #f1f6f3; border-color: var(--pine); color: var(--pine-d); }
+.tp-val-row { display: flex; align-items: center; gap: 16px; margin: 0 0 10px; }
+.tp-val-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line);
+  background: var(--paper-2); font-size: 20px; color: var(--pine-d); cursor: pointer; line-height: 1;
+}
+.tp-val-btn:hover { border-color: var(--pine); }
+.tp-val { font-family: var(--f-display); font-weight: 600; font-size: 22px; color: var(--ink); }
+.tp-val em { font-family: var(--f-mono); font-style: normal; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin-left: 6px; }
+.tp-total { font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; color: var(--pine-d); margin: 0 0 8px; }
 
 /* screen 5 — section picker modal (mirrors MyClasses.jsx's .mc-modal-bg/.mc-modal language) */
 .fr-modal-bg { position: fixed; inset: 0; background: rgba(31, 42, 36, .45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }

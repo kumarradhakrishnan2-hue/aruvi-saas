@@ -29,11 +29,11 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
         <div className="gate-lock">🔒</div>
         <p className="h2 gate-title">Generate unlocks after setup</p>
         <p className="gate-sub">
-          Aruvi needs your weekly grid and annual budget first — that&rsquo;s how the plans it
+          Aruvi needs your classes and annual budget first — that&rsquo;s how the plans it
           makes can fit your real classes and your real year.
         </p>
         <button className="primary" onClick={() => onNavigate && onNavigate("myplans")}>
-          Finish setup in My Plans →
+          Finish setup →
         </button>
       </div>
     );

@@ -1,5 +1,130 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-07-02 — THE CALENDAR PURGE: day-organization is a category error; nav = two centre tabs
+
+A design conversation with the founder overturned the day/week framing that had crept into the
+product, and the first slice of the restructure is now implemented. The reasoning, so no future
+session re-invents the calendar:
+
+- **The core insight: the timetable is cyclic, the pointer is cumulative.** A teacher's calendar
+  repeats identically every week; her curriculum progress never repeats. Housing cumulative
+  state (the section pointer) inside a cyclic container (weekday buckets) constantly asserts
+  something the content doesn't — if 6A's card sits under "Monday" and she didn't advance the
+  pointer, the app displays a falsehood that reads as an accusation. Tuesday's content for a
+  section is CONTINGENT on Monday's outcome, so a forward-looking week view can only ever render
+  one truthful day. Aruvi's organizing question is **"where did I stop?"**, never "what is due".
+  An app that makes no claims about her schedule can never be wrong about it (substitutions,
+  exam weeks, sports day — no reconciliation class of bugs exists at all).
+- **How the calendar crept in (genealogy, for vigilance):** time entered legitimately ONCE, as
+  allocation arithmetic (weekly grid → period supply → effort-index distribution). The input
+  then mission-crept into an interface (grid on screen → week view → "My Week is Home" →
+  day-bucketed cards). Watch for this pattern; the only time-facts Aruvi keeps are NUMBERS
+  (periods/week, durations, annual budget), never a grid of days.
+- **Aruvi's product story, restated:** a lesson-plan artifact tool (constitutions = the IP). The
+  section card is her working copy of the plan; the pointer is her pen mark; five cards replace
+  five PDF printouts. The profile accretes as a by-product (progressive acquisition unchanged).
+
+**Implemented this session (deliberately scoped by the founder — no more, no less):**
+1. **FirstRun.jsx** — arrange-week step REMOVED (WeekGrid/DurationEditor/DateBadge/BenefitIcon
+   components deleted; sectionCards is now the final screen, CTA "Go to my classes →"). The
+   canonical payload still ships `grids[]` all -1 for readiness-shape compat; DAYS survives
+   only to shape that.
+2. **page.jsx** — sidebar/hamburger/drawer/My Week/Calendar ALL GONE. Nav = **two centre tabs,
+   all viewports** (`.bottom-tabs` no longer mobile-only): **My Classes** (home, editFlow null)
+   and **My Lessons** (renamed from "Lesson Plans"; = MyLessonPlans). Teaching profile
+   (MyClasses.jsx) parked behind a header **settings gear** (`goProfile`); Generate is reached
+   only via "+ Prepare Lesson" (a verb — never a tab). SidebarNav.jsx + MyCalendar.jsx are now
+   DEAD CODE on disk (unimported), like Generate.jsx.
+3. **MyPlans.jsx (home)** — day buckets/`daylabel`/"today floats first" logic deleted; FLAT
+   list of section cards (`.sc-card` in globals.css): serif section tag · subject kicker ·
+   "Ch N — title" · **LU progress rail** (done=pine, current=ochre, remaining=hairline) ·
+   "LU n of N" meta. NO dates, NO pace pills. Phase-level (within-LU) marking is specced in
+   the conversation but deliberately NOT built yet.
+4. **api/main.py** — `GET /plans/{subject}/{grade}` now enriches each listing with
+   `total_units` (recursive LU count via `_count_units`, same flatten as LessonView.jsx) so
+   the card rail doesn't fetch every view. Verified against real data (science vii ch_02 → 7,
+   english vii ch_01 → 5 incl. nested groups).
+
+**Verified:** acorn-jsx parse clean on all touched JSX (use `web/node_modules/acorn`+`acorn-jsx`
+— no @babel/parser in the sandbox), CSS braces balanced, `py_compile` + tests pass
+(test_api needed `pip install fastapi httpx2 --break-system-packages` in the sandbox; the
+failure was environmental, not ours). Live render + mobile pass still pending locally (§11).
+
+**Approved-but-not-built (from the same conversation, in order):** phase-level pointer ("mark
+the last phase you covered" — needs stable phase IDs at generation time, same requirement as
+Period Notes), pace-against-allocation on the card (periods consumed vs allocated).
+Mockups of all of this live in the Cowork conversation (2026-07-02).
+
+**Same day, second slice — TeachingProfile (Settings) built; MyClasses editor retired:**
+- **Copy:** first run now asks "What do you teach?" / "Which class do you teach {Subject} to?"
+  (statements of fact, not intent). The redo flow uses the plurals ("What subjects…", "Which
+  classes…").
+- **wheels.jsx** (new) — RollWheel + PickWheel extracted from FirstRun.jsx, imported by both
+  FirstRun and TeachingProfile. ONE selection UI everywhere (founder rule: no multiple UI
+  types). CSS class names unchanged (.fr-wheel*/.fr-sec-*), so the extraction is CSS-invisible.
+- **TeachingProfile.jsx** (new, behind the settings gear) — VIEW (read-only cards per subject·
+  class: sections · durations · ppw · ≈periods/yr) + REDO (conversational: subjects multi →
+  per subject: classes multi → per class: sections → durations → periods/week → annual budget
+  4-method estimator; existing answers PRE-TICKED; unticking a subject at Q1 removes it
+  immediately) + DELETE (DELETE /readiness + clears `lu_pointer_*`/`current_chapter_*` from
+  localStorage; lessons stay; page.jsx onDeleted flips ready=false → back through FirstRun).
+- **Checkpoint semantics (founder spec):** each finished subject POSTs the merged canonical
+  subjects[] to /readiness at the "subject saved ✓" interstitial → "Continue to {next} /
+  Finish for now". She can leave AFTER any subject, never mid-subject (mid-subject state is
+  component-local and simply evaporates).
+- **Budget estimator without a grid:** Readiness.jsx's 4 methods derived periods/week from
+  the weekly grid; grids are gone, so the loop asks the number directly and stores it as
+  `periods_per_week` on the grade record (ADDITIVE schema field — older records lack it, all
+  consumers tolerate that). weeks→ppw×w · periods→direct · days→ppw×d/6 · auto→ppw×30.
+- **MyClasses.jsx is now dead code** (retired per founder decision — Settings shows view +
+  Redo + Delete only). page.jsx imports TeachingProfile instead.
+- Verified: acorn-jsx parse clean (page, FirstRun, wheels, TeachingProfile, MyPlans), CSS
+  balanced, DELETE /readiness endpoint confirmed present. Live render still pending locally.
+
+**Same day, third slice — brand + tab placement (founder polish):**
+- **One logo everywhere:** the brand dot is now upright and RED (#c0392b) in every surface
+  (shared `.brand-row em` rule), matching the first-run welcome page; the shell header stacks
+  "Aruvi." over the mono LESSON STUDIO tag exactly like first run.
+- **Tabs moved from bottom to TOP** (under the header), centred (`.tabs.main-tabs`), reusing
+  the ORIGINAL `.tab.active` treatment — clay-red underline — that the old My Plans/Generate
+  tab row used. `.bottom-tabs`/`.bt-item` CSS removed; body no longer pads for a fixed bar.
+- **No tab-name echoes:** the "My Classes" / "My lessons" kickers inside the two tab bodies
+  are removed — the active tab already says where she is.
+
+**Same day, fourth slice — TeachingProfile REBUILT as accordion + granular editing (founder
+iterated past the redo/delete design within hours; the "second slice" description below is
+historical):**
+- **Accordion:** one subject (and its classes) open at a time; collapsed rows show just the
+  name + class count. **Master Edit toggle** (top right) reveals ALL mutation controls at
+  once; view mode is clean data only, no prose.
+- **Granular ops:** red dustbin (inline SVG, #c0392b) per subject / class / section chip;
+  each behind ONE scoped confirm naming exactly what goes + "lessons stay in the library".
+  Removals cascade upward (last section takes its class; last class takes its subject),
+  clear the removed sections' lu_pointer_*/current_chapter_* keys, and RE-KEY the per-index
+  budget map (rekeyBudget — budget is keyed by grade index, so any structural change must
+  re-key or budgets silently attach to the wrong class).
+- **Structure vs values rule:** tree things (subject/class/section) are added/removed in
+  place — green .tp-add buttons (+ section · + add a class · + add a subject, pine bg);
+  numbers (duration · ppw · budget) open the SAME single-question wheel screens, prefilled,
+  as a 3-step edit → Save. Add-a-class asks questions ONLY for the new classes (pendingIdxs
+  mechanism); add-a-subject runs the full per-subject loop with the "saved ✓ — continue /
+  finish for now" checkpoint between multiple additions.
+- **REMOVED: "Delete profile" and "Redo whole profile"** (and the delete→redo flow from the
+  second slice). The profile is only ever edited at a point. Emptying it entirely (deleting
+  the last subject) leaves the "+ add a subject" button; server profile empties via the same
+  POST /readiness full-replace.
+- **Delete profile → straight into rebuild:** after the warning + deletion, she lands
+  DIRECTLY in the same conversational flow "Redo profile" opens (nothing pre-ticked). The
+  shell stays open — `ready` untouched, onDeleted prop removed from TeachingProfile/page.jsx;
+  a signed-out return without rebuilding still hits first run naturally (server profile gone).
+- **First-run handoff is now DIRECT** (founder: a "Go to my classes →" button is meaningless
+  to someone who has never seen the shell). creatingCards beat → finishActivation, landing
+  straight on the My Classes home; the interstitial sectionCards screen + LessonCard component
+  are deleted. **Bug fixed en route:** nothing ever wrote `current_chapter_{sub}_{grade}_{tag}`
+  (MyPlans reads it to bind a chapter to a card), so post-first-run cards showed empty
+  "pick a chapter" states — finishActivation now binds the previewed plan's filename to every
+  fan-out section, so she lands on cards already carrying her lesson.
+
 ## 2026-07-01 — English Grade VIII Unit→true-chapter split (audit found + replaced a stale prior attempt)
 
 Repeated the VI/VII true-chapter split for Grade VIII. Unlike VI/VII, this one started from a

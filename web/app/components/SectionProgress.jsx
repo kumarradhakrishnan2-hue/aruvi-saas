@@ -85,7 +85,7 @@ export default function SectionProgress({ subjectSlug, gradeSlug, grade, section
             return (
               <button className="secprog-row" key={tag}
                 onClick={() => onOpenSection && onOpenSection(subjectSlug, gradeSlug, tag, plan)}
-                title={`Open ${tag} in My Week to move its place`}>
+                title={`Open ${tag} in My Classes to move its place`}>
                 <span className="secprog-sec">{tag}</span>
                 <div className="secprog-bar" aria-label={`${done} of ${t} learning units`}>
                   {Array.from({ length: t }, (_, i) => (

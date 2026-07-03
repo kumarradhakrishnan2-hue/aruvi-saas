@@ -317,10 +317,36 @@ def post_allocate(subject: str, grade: str, req: AllocateRequest) -> Dict[str, A
     raise HTTPException(status_code=422, detail="Provide period_rows or total_periods.")
 
 
+def _count_units(groups) -> int:
+    """Learning Units in a lesson-plan view = periods across (nested) groups — the same
+    flatten LessonView.jsx uses. Counted server-side so plan LISTINGS can drive the
+    My Classes card progress rail without the client fetching every full view."""
+    n = 0
+    for g in groups or []:
+        n += len(getattr(g, "periods", None) or [])
+        n += _count_units(getattr(g, "children", None) or [])
+    return n
+
+
 @app.get("/plans/{subject}/{grade}")
 def get_plans(subject: str, grade: str) -> Dict[str, Any]:
-    _subject(subject)
-    return {"subject": subject, "grade": grade, "plans": data.list_saved_plans(subject, grade)}
+    sub = _subject(subject)
+    plans = data.list_saved_plans(subject, grade)
+    # Enrich each listing with total_units (LU count) for the section-card rail. Best-effort:
+    # a plan that fails to normalize just ships total_units=None and the card skips its rail.
+    for p in plans:
+        p["total_units"] = None
+        try:
+            saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
+            r = saved.get("result", {})
+            chapter = {"chapter_number": saved.get("chapter_number"),
+                       "chapter_title": saved.get("chapter_title")}
+            lp = sub.lesson_plan_to_view(r.get("lesson_plan", {}),
+                                         grade=saved.get("grade", grade), chapter=chapter)
+            p["total_units"] = _count_units(lp.groups)
+        except Exception:
+            pass
+    return {"subject": subject, "grade": grade, "plans": plans}
 
 
 @app.get("/plans/{subject}/{grade}/{filename}/view")
