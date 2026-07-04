@@ -226,3 +226,41 @@ class SectionStateRepository(Protocol):
     def delete_one(self, tenant_id: str, user_id: str, section_key: str) -> None:
         """Remove one section's state — the "untrack" reversal. No-op if absent."""
         ...
+
+
+# ── Plan archive ───────────────────────────────────────────────────────────────────
+# A teacher can ARCHIVE a lesson plan from My Lessons to declutter without ever losing it
+# (there is deliberately NO hard delete — plans carry real generation cost, and the teacher-
+# specific state around them — the LU pointer, notes, section attachments — is irreplaceable;
+# the design decision, 2026-07-04). Archive is a per-tenant FLAG, not a physical move: the
+# plan asset itself is shared read-only CONTENT under DATA_DIR (Bucket A), so archiving cannot
+# relocate it. Instead we record the plan's key `{subject}/{grade}/{filename}` in this Bucket-B
+# store; My Lessons lists un-archived plans, an Archived view lists the rest, and Restore just
+# drops the key. Frozen identity + all back-references = restore is lossless. A plan being
+# actively taught (any section attached) is blocked from archiving in the UI, so archived plans
+# are only ever detached ones.
+#
+# Keyed by tenant_id + user_id (auth stubbed → tenant_id == user_id today). A Supabase adapter
+# (an `archived_at` column on the plan row, or a small `plan_archive` table) swaps in behind
+# this same port at Phase 4 with no change to the API routes or the React components.
+@runtime_checkable
+class PlanArchiveRepository(Protocol):
+    """Persists which saved plans a teacher has archived, keyed by tenant_id + user_id.
+
+    The plan key is the frontend's `${subjectSlug}/${gradeSlug}/${filename}` — the same
+    identity used to load the plan — so archive state binds to the plan without duplicating
+    any of its content.
+    """
+    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
+        """All archived plan keys for this teacher: {plan_key: archived_at_iso}.
+        Returns an empty dict if nothing is archived."""
+        ...
+
+    def archive(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+        """Mark one plan archived (records archived_at). Idempotent — re-archiving a plan
+        that is already archived leaves the original timestamp untouched."""
+        ...
+
+    def restore(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+        """Un-archive one plan — the reversal. No-op if the plan was not archived."""
+        ...

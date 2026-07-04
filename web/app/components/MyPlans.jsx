@@ -2,11 +2,27 @@
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, pad, gradeUp } from "../lib/format";
 import { pushSectionState, pullSectionState } from "../lib/sectionState";
+import { readHistory, recordHistory, hasHistory } from "../lib/sectionHistory";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
+
+// Small "history" glyph (clock + counter-clockwise arrow) for the section card's history button.
+const HistoryIcon = (
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 3v5h5" />
+    <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+);
+// History-status → the label shown on the popup pill.
+const HISTORY_LABEL = { ongoing: "Ongoing", completed: "Completed", untracked: "Untracked" };
+// Back-compat: an earlier build stored the untracked status as "set_aside". Normalize legacy
+// localStorage entries so they still render with a label + slate pill instead of a blank status.
+const normStatus = (s) => (s === "set_aside" ? "untracked" : s);
 
 /* ONE CARD PER subject·grade·section the teacher handles — across ALL subjects (walks the
  * canonical readiness.subjects[], not the single active projection). NO day derivation
@@ -37,6 +53,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
   const [attachFor, setAttachFor] = useState(null); // { c, sectionKey } — "+" track-a-chapter picker
   const [untrackFor, setUntrackFor] = useState(null); // { c, sectionKey, plan } — "−" untrack confirm
+  const [historyFor, setHistoryFor] = useState(null); // { c, sectionKey } — chapter-history popup
   const [, setSyncTick] = useState(0); // bumped after a server pull so cards re-read the refreshed cache
   // plans for EVERY subject·grade the teacher handles, keyed `${subjectSlug}/${gradeSlug}`.
   const [plansByKey, setPlansByKey] = useState({});
@@ -68,7 +85,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // (the "I just switched to my iPhone" moment), and on a light interval while visible. We skip a
   // sync while a modal or the lesson view is open so an in-flight action is never clobbered.
   const uiBusyRef = useRef(false);
-  uiBusyRef.current = !!(attachFor || untrackFor || openPlan);
+  uiBusyRef.current = !!(attachFor || untrackFor || openPlan || historyFor);
   useEffect(() => {
     if (!ready) return;
     const keys = classesFromReadiness(readiness)
@@ -146,6 +163,14 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     const n = Number(window.localStorage.getItem(`lu_pointer_${sectionKey}`));
     return Number.isFinite(n) && n >= 0 ? n + 1 : null;
   };
+  // How many learning units this section has marked complete (= the raw pointer index; 0 when
+  // untouched). This is the anti-noise gate for history: a chapter only enters the log if ≥1 unit
+  // was completed before it left the current slot (teacher's rule — track/untrack is used casually).
+  const unitsDoneFor = (sectionKey) => {
+    if (typeof window === "undefined") return 0;
+    const n = Number(window.localStorage.getItem(`lu_pointer_${sectionKey}`));
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  };
   // Which chapter (filename) a section is currently tracking. Written when a chapter is bound to
   // a class; absent = nothing started yet ("pick a chapter to begin tracking").
   const currentChapterFile = (sectionKey) => {
@@ -182,11 +207,33 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     } catch {}
     pushSectionState(sectionKey);   // no chapter now → the server row is deleted (untrack)
   };
-  // Untrack (ongoing/started cards) — the reversal of tracking, via a confirm window.
-  const untrackChapter = (sectionKey) => { clearBinding(sectionKey); setUntrackFor(null); };
+  // Untrack (ongoing/started cards) — the reversal of tracking, via a confirm window. Logs an
+  // "untracked" history entry ONLY when ≥1 unit was completed (the anti-noise gate); a casual
+  // attach→untrack with no progress leaves no trace. We stamp the progress reached (units done /
+  // total) so the history row can say how far the section got before untracking.
+  const untrackChapter = (sectionKey, plan) => {
+    if (plan && unitsDoneFor(sectionKey) >= 1) {
+      recordHistory(sectionKey, {
+        file: plan.filename, chapter_number: plan.chapter_number, chapter_title: plan.chapter_title,
+        status: "untracked", units_done: unitsDoneFor(sectionKey), total_units: plan.total_units || null,
+        ts: Date.now(),
+      });
+    }
+    clearBinding(sectionKey); setUntrackFor(null);
+  };
   // Move on from a COMPLETED chapter: one click frees it (card reverts to unstarted grey) and opens
   // the picker to track the next chapter — no confirm, since a finished chapter has no place to lose.
-  const moveOnFromCompleted = (c, sectionKey) => { clearBinding(sectionKey); setAttachFor({ c, sectionKey }); };
+  // A completed chapter always earns its history row (all units done).
+  const moveOnFromCompleted = (c, sectionKey, plan) => {
+    if (plan) {
+      recordHistory(sectionKey, {
+        file: plan.filename, chapter_number: plan.chapter_number, chapter_title: plan.chapter_title,
+        status: "completed", units_done: plan.total_units || null, total_units: plan.total_units || null,
+        ts: Date.now(),
+      });
+    }
+    clearBinding(sectionKey); setAttachFor({ c, sectionKey });
+  };
 
   if (loading) return <div className="spin">Opening plan…</div>;
   if (openPlan) return <LessonView view={openPlan.view} sectionKey={openPlan.sectionKey} onExit={() => setOpenPlan(null)} />;
@@ -208,20 +255,22 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           <button className="ap-close" aria-label="Close" onClick={() => setAttachFor(null)}>✕</button>
           <div className="ap-head">
             <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
-            <div className="ap-title">Track a chapter for this class</div>
-            <div className="ap-sub">Pick a chapter you&rsquo;ve already prepared, or build a new one.</div>
+            <div className="ap-title">Track a chapter for this section</div>
+            <div className="ap-sub">Pick a chapter you&rsquo;ve already prepared to track for this section, or build a new one.</div>
           </div>
           <div className="ap-list">
             {listPlans === undefined ? (
               <div className="ap-loading">Loading lessons…</div>
             ) : listPlans.length === 0 ? (
-              <div className="ap-none">No other lessons prepared for this class yet.</div>
+              <div className="ap-none">No other lessons prepared for this section yet.</div>
             ) : (
               listPlans.map((p) => (
                 <button key={p.filename} className="ap-row" onClick={() => attachChapter(c, sectionKey, p)}>
-                  <span className="ap-row-ch">CH {pad(p.chapter_number)}</span>
-                  <span className="ap-row-title">{p.chapter_title}</span>
-                  <span className="ap-row-go">Track →</span>
+                  <span className="ch-meta">
+                    <span className="ch-meta-tx"><b>Ch {pad(p.chapter_number)}</b></span>
+                    <span className="ch-go" aria-hidden="true">›</span>
+                  </span>
+                  <span className="ch-name" title={p.chapter_title}>{p.chapter_title}</span>
                 </button>
               ))
             )}
@@ -254,7 +303,75 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           </div>
           <div className="ap-confirm-actions">
             <button className="ap-btn-ghost" onClick={() => setUntrackFor(null)}>Keep tracking</button>
-            <button className="ap-btn-danger" onClick={() => untrackChapter(sectionKey)}>Stop tracking</button>
+            <button className="ap-btn-danger" onClick={() => untrackChapter(sectionKey, plan)}>Stop tracking</button>
+          </div>
+        </div>
+      </div>
+    );
+  })() : null;
+
+  // Chapter-history popup — an instant in/out list (a function, not a screen). Shows ONE row per
+  // chapter (the log is keyed by file → latest action wins), newest first. The still-bound current
+  // chapter is overlaid live as "Ongoing"/"Completed" ONLY when it has progress (≥1 unit), so a
+  // freshly-attached, untouched chapter never appears (matches the anti-noise gate).
+  const historyModal = historyFor ? (() => {
+    const { c, sectionKey } = historyFor;
+    const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
+    const byFile = {};
+    readHistory(sectionKey).forEach((h) => { byFile[h.file] = { ...h }; });
+    const curFile = currentChapterFile(sectionKey);
+    if (curFile) {
+      const done = isDone(sectionKey);
+      if (done || unitsDoneFor(sectionKey) >= 1) {
+        const cp = Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === curFile) : null;
+        const prev = byFile[curFile];
+        const total = cp ? (cp.total_units || null) : (prev ? prev.total_units : null);
+        byFile[curFile] = {
+          file: curFile,
+          chapter_number: cp ? cp.chapter_number : (prev ? prev.chapter_number : null),
+          chapter_title: cp ? cp.chapter_title : (prev ? prev.chapter_title : ""),
+          status: done ? "completed" : "ongoing",
+          units_done: done ? total : unitsDoneFor(sectionKey),
+          total_units: total,
+          ts: Date.now() + 1,   // current action sorts to the top
+        };
+      }
+    }
+    const rows = Object.values(byFile).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    return (
+      <div className="ap-overlay" onClick={() => setHistoryFor(null)}>
+        <div className="ap-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="ap-close" aria-label="Close" onClick={() => setHistoryFor(null)}>✕</button>
+          <div className="ap-head">
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-title">Section history</div>
+            <div className="ap-sub">Where each chapter stands for this section.</div>
+          </div>
+          <div className="ap-list">
+            {rows.length === 0 ? (
+              <div className="ap-none">No chapters taught yet.</div>
+            ) : (
+              rows.map((r) => {
+                const st = normStatus(r.status);
+                return (
+                <div className="ch-row" key={r.file}>
+                  <div className="ch-meta">
+                    <span className="ch-meta-tx"><b>Ch {r.chapter_number ? pad(r.chapter_number) : "—"}</b></span>
+                    <span className={`ch-pill ch-${st}`}>{HISTORY_LABEL[st] || "Untracked"}</span>
+                  </div>
+                  <div className="ch-name" title={r.chapter_title}>{r.chapter_title}</div>
+                  {r.total_units ? (
+                    <div className="sc-rail ch-rail"
+                      aria-label={`${r.units_done || 0} of ${r.total_units} learning units completed`}>
+                      {Array.from({ length: r.total_units }).map((_, t) => (
+                        <span key={t} className={`sc-tick ${t < (r.units_done || 0) ? "done" : (st === "ongoing" && t === r.units_done ? "cur" : "")}`} />
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -321,6 +438,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
           const file = currentChapterFile(sectionKey);
           const plan = file && Array.isArray(gradePlans) ? gradePlans.find((p) => p.filename === file) : null;
+          const hist = hasHistory(sectionKey);   // any PAST chapters logged → show the history glyph
 
           // No chapter bound to this class yet → "pick a chapter to begin" (grey / not started).
           // The card is NOT tappable-to-generate anymore; the "+" opens the attach picker instead.
@@ -332,8 +450,14 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                   <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
                   <div className="sc-title muted">Pick a chapter to begin</div>
                 </div>
-                <button className="sc-add" aria-label="Attach a lesson to this class"
-                  onClick={() => setAttachFor({ c, sectionKey })}>+</button>
+                <div className="sc-right">
+                  <button className="sc-add" aria-label="Attach a lesson to this section"
+                    onClick={() => setAttachFor({ c, sectionKey })}>+</button>
+                  {hist && (
+                    <button className="sc-hist" aria-label="Section history for this section"
+                      onClick={() => setHistoryFor({ c, sectionKey })}>{HistoryIcon}</button>
+                  )}
+                </div>
               </div>
             );
           }
@@ -348,8 +472,8 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
               <div className="sc-tag">{c.sectionTag}</div>
               <div className="sc-body">
-                <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
-                <div className="sc-title">{plan.chapter_number ? `Ch ${plan.chapter_number} — ` : ""}{plan.chapter_title}</div>
+                <span className="sc-kicker">{pretty(c.subjectSlug)}{plan.chapter_number ? ` · Ch ${plan.chapter_number}` : ""}</span>
+                <div className="sc-title" title={plan.chapter_title}>{plan.chapter_title}</div>
                 {ticks && (
                   <div className="sc-rail" aria-label={done ? `${total} learning units, completed` : lu ? `Learning Unit ${lu} of ${total}` : `${total} learning units, not started`}>
                     {ticks.map((_, t) => (
@@ -366,11 +490,21 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                 <div className="sc-actions sc-actions-col">
                   <span className="sc-status-done">Complete</span>
                   <button className="sc-add" aria-label="Finish with this chapter and track the next"
-                    onClick={(e) => { e.stopPropagation(); moveOnFromCompleted(c, sectionKey); }}>+</button>
+                    onClick={(e) => { e.stopPropagation(); moveOnFromCompleted(c, sectionKey, plan); }}>+</button>
+                  {hist && (
+                    <button className="sc-hist" aria-label="Section history for this section"
+                      onClick={(e) => { e.stopPropagation(); setHistoryFor({ c, sectionKey }); }}>{HistoryIcon}</button>
+                  )}
                 </div>
               ) : (
-                <button className="sc-remove" aria-label="Stop tracking this chapter"
-                  onClick={(e) => { e.stopPropagation(); setUntrackFor({ c, sectionKey, plan }); }}>−</button>
+                <div className="sc-right">
+                  <button className="sc-remove" aria-label="Stop tracking this chapter"
+                    onClick={(e) => { e.stopPropagation(); setUntrackFor({ c, sectionKey, plan }); }}>−</button>
+                  {hist && (
+                    <button className="sc-hist" aria-label="Section history for this section"
+                      onClick={(e) => { e.stopPropagation(); setHistoryFor({ c, sectionKey }); }}>{HistoryIcon}</button>
+                  )}
+                </div>
               )}
             </div>
           );
@@ -381,6 +515,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
 
       {attachModal}
       {untrackModal}
+      {historyModal}
     </div>
   );
 }

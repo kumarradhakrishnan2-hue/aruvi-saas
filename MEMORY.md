@@ -1,5 +1,138 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-07-04 — Archive (not delete) for lesson plans in My Lessons
+
+**Founder decision: there is NO hard delete of a lesson plan — only Archive.** Two reasons that
+compound: (1) a generated plan is the most expensive artifact the teacher owns (prototype ~Rs 23/
+chapter), and the planned output cache means even a "deleted" plan is cheaply regenerable — but
+(2) the cache does NOT hold the teacher-specific state wrapped around the plan (section
+attachments, the LU pointer = where she stopped, period/chapter notes). THAT is irreplaceable, and
+it's the real reason to preserve rather than destroy. So a hard delete was rejected; archive is the
+only removal affordance.
+
+**Archive is a FLAG, not a place.** The plan asset itself is shared read-only CONTENT under
+DATA_DIR (Bucket A) — archiving can't and doesn't relocate it. Instead a per-tenant Bucket-B store
+records the plan's key `{subjectSlug}/{gradeSlug}/{filename}`. My Lessons lists un-archived plans;
+an **Archived** view lists the rest; **Restore** just drops the key. Frozen identity + all
+back-references untouched ⇒ restore is lossless. To the teacher it *looks* like it moved to
+"Archive"; architecturally nothing moved — "Archive" is a second filtered view over one list.
+
+**Attached ⇒ NO archive affordance at all (founder, 2026-07-04 — refined from "block+warn").**
+"Attached" = any section is currently teaching or has completed the chapter (the same signal that
+colours the card; `isAttached()` in MyLessonPlans). The earlier design showed the archive control
+and blocked it with a warning toast; the founder's point was that showing-then-blocking is
+inconsistent — so the archive icon is simply **not rendered** on an attached card. No warning path
+exists. `archivePlan()` keeps a silent `isAttached` guard purely as defensive dead-code. So
+archived plans are only ever detached ones — no orphaned pointers to reason about on restore.
+
+Implementation (all behind existing seams, Supabase-swap-ready at Phase 4):
+- **Port** `PlanArchiveRepository` (ports.py) + **file adapter**
+  `aruvi_core/adapters/plan_archive_repository_file.py` — atomic write, tenant-keyed, stored at
+  `STATE_DIR/plan_archive/{tenant}/{user}/archive.json` as `{plan_key: archived_at_iso}`. Mirrors
+  the section_state repo pattern. `archive()` is idempotent; `restore()` a no-op if absent.
+- **API** (main.py): `GET /plan-archive` (all keys), `POST /plan-archive`, `DELETE /plan-archive`
+  (both take `{subject, grade, filename}`); `GET /plans/{subject}/{grade}` now takes identity and
+  annotates each listing with `archived` + `archived_at`. Phase-4 swap = an `archived_at` column /
+  small `plan_archive` table behind the same port; routes + components unchanged.
+- **UI** (MyLessonPlans.jsx + globals.css) — NO pills (founder). Archive is a "folder" you open and
+  close via ONE symmetric control: an **archive-box icon + count to the right of the title**. In
+  your lessons it's a **closed box** (tap to open the archive); inside, the title switches to
+  **"Archive"** and the same control becomes an **OPEN box** (lid lifted = you're in it) — tapping
+  it closes the box and drops you back to your lessons. This replaced an earlier "‹ Your lessons"
+  back link the founder found confusing. Each *un-attached* active card carries a small
+  **closed-box archive icon at its top-right corner** (absolutely placed; card reserves right
+  padding; the old `›` chevron was dropped); attached cards show NO archive icon. Archived cards
+  carry an explicit **green "Restore" text button** (founder: the undo-arrow glyph was unclear;
+  the word on a solid pine fill is direct). Icons are inline SVG (`ArchiveIcon`/`OpenArchiveIcon`,
+  currentColor). Pressing archive optimistically drops the card from the active list and STAYS on
+  the active page (no view switch) with a brief bottom toast; restore optimistically removes it
+  from the folder and, when the folder empties, `effView` auto-falls-back to active.
+  Revert-on-failure on both.
+- **Scope:** archive affects ONLY the My Lessons library view. Other `/plans` consumers (Generate,
+  PrepareLesson, MyPlans dashboard, SectionProgress) select a plan by chapter/filename and are
+  intentionally left seeing the plan — you can still preview/regenerate an archived chapter; it's
+  just decluttered from the library list. Since attached plans can't be archived, the MyPlans
+  weekly dashboard (driven by section pointers) never surfaces an archived plan anyway.
+- **No purge / no auto-expiry** (superseding the earlier junk-basket-for-1-week idea): the economic
+  argument says keep it. A future explicit, gated "empty archive" would be the only place a true
+  hard delete could ever live — noted, not built.
+- **Verified:** adapter unit test (archive/restore/idempotent/tenant-isolation) green; `api.main`
+  imports + route registered; globals.css brace-balanced; MyLessonPlans.jsx babel-parses. Live
+  render + mobile (~390px) pass still owed per §11 (sandbox can't `next dev`).
+
+## 2026-07-04 — Section history + the long-chapter-title standard + My Lessons wheel tweaks
+
+> **Naming (founder, 2026-07-04):** the feature is **"Section history"** (UI title + glyph label),
+> NOT "Chapter history". Vocabulary: **Class = grade** (7), **Section = the letter within** (7A).
+> The history belongs to a SECTION and lists the CHAPTERS it has taught. "Chapter history" is
+> deliberately RESERVED for a future per-chapter concept — the LP version trail across repeat
+> regenerations of one chapter. The data module stays `sectionHistory.js` (correctly section-scoped).
+> Also swept the class/section slips this exposed: the "+" picker + section-card aria-labels now say
+> "section", not "class".
+
+**Section history — a per-section teaching ledger (the natural completion of "where did I
+stop?").** Before this, a section only held its CURRENT chapter binding + pointer + done flag
+(`sectionState.js`); the moment a chapter left the current slot (untrack, or move-on from a
+completed chapter) that record was DELETED, so the trail of what a section had taught lived
+nowhere. Built:
+- **`web/app/lib/sectionHistory.js`** — a per-section MAP keyed by chapter FILE (so exactly ONE
+  row per chapter and the latest action wins automatically). Value:
+  `{ file, chapter_number, chapter_title, status, units_done, total_units, ts }`,
+  `status ∈ {completed, untracked}` (renamed from "set_aside" 2026-07-04 to match the app's
+  track/untrack vocabulary). `units_done`/`total_units` stamp progress so each row can draw a
+  completion bar.
+  `readHistory` / `recordHistory` / `hasHistory`. **localStorage only for now** (matches the
+  lesson pointer's status, CLAUDE.md §9) — gains a server mirror like `sectionState.js` in Phase 4
+  so history follows the teacher across devices. Deliberately NOT cleared by `clearBinding` —
+  untracking must not erase the record that a chapter was once taught.
+- **The anti-noise gate (founder's rule):** a chapter enters history only when it earned its place
+  — **≥1 learning unit marked complete** before it left. Completed chapters always qualify (all
+  units done); an untracked chapter qualifies only if the pointer advanced ≥1. Casual attach→untrack
+  with no progress logs NOTHING. The gate lives in `MyPlans.jsx` where the pointer is known
+  (`unitsDoneFor()` = raw pointer index): `untrackChapter(sectionKey, plan)` logs `untracked` only
+  if `unitsDoneFor≥1`; `moveOnFromCompleted(c, sectionKey, plan)` always logs `completed`.
+- **UI:** a small history glyph (clock + counter-clockwise arrow SVG, `HistoryIcon`) stacked BELOW
+  the card's action button in a `.sc-right` column, shown ONLY when `hasHistory` is true (the
+  current still-bound chapter is not "history"). Kept **conditional, not always-visible** (founder
+  confirmed "ok now"). Tapping it opens `historyModal` — an instant popup (reuses `.ap-overlay`/
+  `.ap-modal`) listing one row per chapter, newest first, with the current bound chapter overlaid
+  LIVE as "Ongoing"/"Completed" only if it has progress. Statuses carry the section-card palette
+  plus a NEW **slate** code for "Untracked" (`.ch-untracked` #e7ebee/#566169) — a chapter untracked
+  before finishing, distinct from warm completed-clay and cream not-started grey. Each row also
+  shows a completion bar under the name — the section card's `.sc-rail`/`.sc-tick` reused (pine =
+  completed units, ochre = current unit when ongoing), so history and cards read as one surface.
+
+**The long-chapter-title standard (applies everywhere a title renders — cross-cutting).** Long
+NCERT titles were breaking layouts. The fix + its rules:
+- **Root cause = the flexbox trap:** a title in a flex row won't shrink below its own text width
+  unless the parent has `min-width:0`, so it overflowed / shoved action buttons out. `.sc-body`
+  already had `min-width:0`; the `.sc-title` clamp now actually engages.
+- **Anchor on the NUMBER, clamp the title.** The chapter number is the stable identity, so it's
+  folded into the kicker (`Science · Ch 12`) where it never truncates, and the bare title clamps.
+  Section cards + My Lessons share `.sc-title` → **2-line clamp** applied once covers both.
+- **Two title FORMS (founder's standardization):** (1) **popup lists** (the "+" track picker and
+  the history popup — untrack is a single-chapter confirm, exempt) use a **stacked row**: a meta
+  line on top (**just `Ch NN`** now — subject/grade REMOVED 2026-07-04 since the modal header
+  already shows subject·grade·section) with the Track action / status pill pinned to its right end,
+  and the chapter NAME below spanning full width across up to 2 lines, truncated beyond. Shared
+  classes `.ch-row/.ch-meta/.ch-meta-tx/.ch-name/.ch-act/.ch-pill` in `globals.css`; `.ap-row`
+  restructured from the old horizontal `[CH | name | Track]` strip. (2) **screen bodies** (My
+  Lessons) keep their structure, just cap the title at 2 lines.
+- **Never truncate the reading surface** (LessonView shows the full title). Hover `title=""` is a
+  desktop-only extra — NOT relied on (phones have no hover); full text comes from the picker's
+  2-line wrap and from opening the lesson.
+
+**My Lessons wheel tweaks (founder, `.mlp2` scoped):** the **Class number left-aligned** (was
+centred) with a 28px inset — centre-aligned, the number sits under the rolling finger and vanishes;
+inset-left keeps it visible beside the thumb. **▲▼ cue arrows tightened** (`.mlp2 .fr-wheel-cue
+{gap:0}` + `.fr-wheel-cue-btn{height:21px}`) — the button BOX height, not the gap, is what spaces
+the glyphs apart.
+
+All of the above is **static-verified only** (Babel-parse clean via a temp `@babel/parser`, CSS
+braces balanced, class/prop greps) — the sandbox still can't `next dev`. Live render + mobile pass
+(360×800 first) is the founder's local must-do: confirm the history glyph appears after a
+taught-then-untracked chapter, slate reads distinctly, and long titles clamp without shoving.
+
 ## 2026-07-03 — My Lessons rebuilt to the My Classes idiom + section-state corruption bug fixed
 
 **My Lessons (`MyLessonPlans.jsx`) redesigned, scoped to ONE class at a time.** The founder's

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getJSON, pad, pretty } from "../lib/format";
+import { API, getJSON, pad, pretty, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
 import useSupportedGrades from "../lib/useSupportedGrades";
 import LessonView from "./LessonView";
@@ -47,6 +47,27 @@ const LS_CLASS = "mylessons_class";
 const lsGet = (k) => { if (typeof window === "undefined") return null; try { return window.localStorage.getItem(k); } catch { return null; } };
 const lsSet = (k, v) => { if (typeof window === "undefined") return; try { window.localStorage.setItem(k, v); } catch {} };
 
+/* Line-icons, currentColor stroke so they inherit the warm-paper palette. */
+const ArchiveIcon = ({ size = 18 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="4" rx="1" />
+    <path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8" />
+    <path d="M10 12h4" />
+  </svg>
+);
+// The SAME archive box, but OPEN — the lid swung a full 90° UP so it stands vertical, hinged at
+// the box's back corner. Shown when you're inside the archive so the icon reads as "the box is
+// open, you're in it"; tapping it closes it back to your lessons.
+const OpenArchiveIcon = ({ size = 18 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="6.4" y="12" width="12.2" height="8" rx="1.4" />
+    <rect x="3.4" y="2.6" width="3.2" height="9.4" rx="1" />
+    <path d="M10.8 16h4" />
+  </svg>
+);
+
 export default function MyLessonPlans({ readiness, onAllocate }) {
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
@@ -69,6 +90,10 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
   const [openPlan, setOpenPlan] = useState(null);   // { view }
   const [opening, setOpening] = useState(false);
   const [, setTick] = useState(0);                  // bumped after a section-state sync → re-read
+  // Active vs Archived view over the SAME list. Archive is a per-tenant FLAG the server sets
+  // (plan.archived); there is no hard delete. "active" is the default — a teacher lives here.
+  const [view, setView] = useState("active");
+  const [toast, setToast] = useState(null);         // { kind:"ok"|"block", text } | null
 
   const current = subjects.find((s) => s.name === activeSubject) || subjects[0] || null;
   const grades = useMemo(() => (current && current.grades) || [], [current]);   // HER taught classes
@@ -163,6 +188,70 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     return { completed, live };
   };
 
+  // A plan is "attached" if any section is currently teaching or has completed it — the same
+  // signal that colours the card. Attached plans are BLOCKED from archiving (the teacher would
+  // lose the class's pointer/context), so archive is only ever offered on detached plans.
+  const isAttached = (plan) => {
+    const { completed, live } = statusFor(plan);
+    return completed.length > 0 || live.length > 0;
+  };
+
+  // Flip a plan's archived flag in local state (optimistic) so it moves between the two views
+  // instantly, before the server round-trip resolves.
+  const setArchivedFlag = (filename, val) => {
+    setPlansByKey((prev) => {
+      const arr = prev[key];
+      if (!Array.isArray(arr)) return prev;
+      return {
+        ...prev,
+        [key]: arr.map((p) =>
+          p.filename === filename
+            ? { ...p, archived: val, archived_at: val ? new Date().toISOString() : null }
+            : p),
+      };
+    });
+  };
+
+  const body = (p) => ({ subject: sSlug, grade: gSlug, filename: p.filename });
+
+  const archivePlan = (p, e) => {
+    if (e) e.stopPropagation();
+    // Safety only — the archive icon is never rendered for an attached plan, so this can't be
+    // reached from the UI. No warning path: attachment simply removes the affordance.
+    if (isAttached(p)) return;
+    setArchivedFlag(p.filename, true);
+    setToast({ kind: "ok", text: "Moved to Archive — find it in the box above." });
+    fetch(`${API}/plan-archive`, withUser({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body(p)),
+    })).then((r) => { if (!r.ok) throw new Error(); }).catch(() => {
+      setArchivedFlag(p.filename, false);   // revert the optimistic move
+      setToast({ kind: "block", text: "Couldn't archive just now — please try again." });
+    });
+  };
+
+  const restorePlan = (p, e) => {
+    if (e) e.stopPropagation();
+    setArchivedFlag(p.filename, false);
+    setToast({ kind: "ok", text: "Restored to your lessons." });
+    fetch(`${API}/plan-archive`, withUser({
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body(p)),
+    })).then((r) => { if (!r.ok) throw new Error(); }).catch(() => {
+      setArchivedFlag(p.filename, true);
+      setToast({ kind: "block", text: "Couldn't restore just now — please try again." });
+    });
+  };
+
+  // Auto-dismiss the toast after a few seconds.
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 3200);
+    return () => clearTimeout(t);
+  }, [toast]);
+
   if (opening) return <div className="spin">Opening plan…</div>;
   if (openPlan) return <LessonView view={openPlan.view} onExit={() => setOpenPlan(null)} preview />;
 
@@ -183,10 +272,36 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     </div>
   );
 
+  // Split the ONE fetched list into the two views by the server-set archived flag (archive is a
+  // flag, not a separate fetch). Chips only appear once something is archived — no clutter before.
+  const allPlans = Array.isArray(plans) ? plans : [];
+  const activePlans = allPlans.filter((p) => !p.archived);
+  const archivedPlans = allPlans.filter((p) => p.archived);
+  const hasArchived = archivedPlans.length > 0;
+  const effView = hasArchived ? view : "active";   // auto-fall-back when nothing's archived
+  const shown = effView === "archived" ? archivedPlans : activePlans;
+
   return (
     <div className="mlp2">
       <div className="mlp2-frozen">
-        <h1 className="mlp2-title">Your lessons</h1>
+        <div className="mlp2-titlerow">
+          <h1 className="mlp2-title">{effView === "archived" ? "Archive" : "Your lessons"}</h1>
+          {effView === "archived" ? (
+            // Open box = you're inside the archive; tapping it closes the box and drops you back
+            // to your lessons (the one, symmetric way in and out).
+            <button className="mlp2-archfolder open" onClick={() => setView("active")}
+              aria-label="Close archive, back to your lessons" title="Back to your lessons">
+              <OpenArchiveIcon size={22} />
+              <span className="mlp2-archcount">{archivedPlans.length}</span>
+            </button>
+          ) : hasArchived ? (
+            <button className="mlp2-archfolder" onClick={() => setView("archived")}
+              aria-label={`Open archive (${archivedPlans.length})`} title="Archived lessons">
+              <ArchiveIcon size={22} />
+              <span className="mlp2-archcount">{archivedPlans.length}</span>
+            </button>
+          ) : null}
+        </div>
         <div className="mlp2-wheels">
           <div className="mlp2-wcol">
             <span className="mlp2-wlbl">Subject</span>
@@ -209,21 +324,29 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
 
       {plans === undefined ? (
         <div className="mlp-loading">Loading plans…</div>
-      ) : plans.length === 0 ? (
+      ) : shown.length === 0 ? (
         <div className="mlp2-emptybody">
-          There are no lesson plans prepared for {pretty(sSlug)} · Class {classNum(activeGrade)} yet.
+          {effView === "archived"
+            ? "Nothing archived here."
+            : hasArchived
+              ? `Every prepared lesson for ${pretty(sSlug)} · Class ${classNum(activeGrade)} is archived.`
+              : `There are no lesson plans prepared for ${pretty(sSlug)} · Class ${classNum(activeGrade)} yet.`}
         </div>
       ) : (
         <div className="sc-list">
-          {plans.map((p) => {
+          {shown.map((p) => {
             const { completed, live } = statusFor(p);
-            const cls = live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
+            const cls = effView === "archived"
+              ? "mlp2-arch"
+              : live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
             return (
               <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}>
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
                   <div className="sc-title">{p.chapter_title}</div>
-                  {completed.length || live.length ? (
+                  {effView === "archived" ? (
+                    <div className="mlp2-ready">Archived</div>
+                  ) : completed.length || live.length ? (
                     <div className="mlp2-status">
                       {completed.length > 0 && <span>Completed {completed.join(", ")}</span>}
                       {completed.length > 0 && live.length > 0 && <span className="sep">·</span>}
@@ -233,7 +356,17 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
                     <div className="mlp2-ready">Ready to teach</div>
                   )}
                 </div>
-                <span className="mlp2-open" aria-hidden="true">›</span>
+                {effView === "archived" ? (
+                  <button className="mlp2-restore-btn" onClick={(e) => restorePlan(p, e)}
+                    aria-label={`Restore ${p.chapter_title}`}>Restore</button>
+                ) : !isAttached(p) ? (
+                  // No archive affordance on a plan a class is on — attached plans can't be
+                  // archived, so showing (and then blocking) the control would be inconsistent.
+                  <button className="mlp2-iconbtn archive" onClick={(e) => archivePlan(p, e)}
+                    aria-label={`Archive ${p.chapter_title}`} title="Archive">
+                    <ArchiveIcon />
+                  </button>
+                ) : null}
               </div>
             );
           })}
@@ -241,6 +374,10 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
       )}
 
       {prepareCTA}
+
+      {toast && (
+        <div className={`mlp2-toast ${toast.kind}`} role="status">{toast.text}</div>
+      )}
     </div>
   );
 }

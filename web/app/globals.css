@@ -1378,9 +1378,15 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* compact box (rowPx=48 on the wheels) + centred value, both Subject and Class */
 .mlp2-static { height:48px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 14px; border:1px solid #c7d9cf; border-radius:12px; background:#f1f6f3; font-family:var(--f-body); font-size:17px; color:var(--ink); }
 .mlp2 .fr-wheel-label { flex:0 1 auto; }
-/* Class wheel: short numbers, centred. */
-.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-row { justify-content:center; padding-left:44px; padding-right:44px; }
-.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-label { text-align:center; }
+/* Class wheel: short numbers, nudged LEFT (not hard against the edge). Centre-aligned, the number
+   sits right under the finger that's rolling the wheel and disappears; an inset-left position keeps
+   it visible beside the thumb. */
+.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-row { justify-content:flex-start; padding-left:28px; padding-right:44px; }
+.mlp2 .fr-wheel[aria-label="Class"] .fr-wheel-label { text-align:left; }
+/* ▲▼ cue sits a touch tighter in My Lessons — shorter button boxes bring the two glyphs closer
+   (the box height, not the gap, is what spaced them apart) while keeping a real tap target. */
+.mlp2 .fr-wheel-cue { gap:0; }
+.mlp2 .fr-wheel-cue-btn { height:21px; }
 /* Subject wheel: starts naturally at the LEFT and the font auto-fits (JS) so a long word like
    "Mathematics" shows in full, never clipped — even on a narrow phone column. */
 .mlp2 .fr-wheel[aria-label="Subject"] .fr-wheel-row { justify-content:flex-start; padding-left:16px; padding-right:44px; }
@@ -1398,6 +1404,70 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mlp2-open { flex:none; font-family:var(--f-body); font-size:19px; color:var(--ink-soft); padding-left:2px; }
 .sc-card:hover .mlp2-open { color:var(--pine); }
 .mlp2-emptybody { font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); padding:22px 4px; }
+
+/* ── Archive: header row + folder entry ──────────────────────────────────────────────
+   A lesson is archived (decluttered) not deleted — one list, hidden by a per-tenant flag. No
+   pills: the archive is a "folder" you open from the box icon beside the title, and step back
+   out of via the title. */
+.mlp2-titlerow { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+/* The box icon beside "Your lessons" — the entry to the archive folder. A touch more prominent
+   than the per-card icon, with a small count. */
+.mlp2-archfolder {
+  flex:none; display:inline-flex; align-items:center; gap:6px;
+  padding:5px 9px; border-radius:10px; border:1px solid transparent;
+  background:transparent; color:var(--ink-soft); cursor:pointer;
+  transition:border-color .12s ease, color .12s ease, background .12s ease;
+}
+/* Hover only on true hover devices (mouse) so a tap on touch/trackpad can't leave the green
+   "sticky-hover" tinge behind after the box closes. Hover changes only the icon colour — no
+   fill, no border — so nothing here can be confused with, or linger like, the open state. */
+@media (hover: hover) and (pointer: fine) {
+  .mlp2-archfolder:hover { color:var(--pine); }
+}
+/* Open state — the ONLY source of the green fill + border. It's tied to `.open`, which is
+   removed the instant you tap to close, so the tinge and border vanish immediately (not on a
+   later click elsewhere). */
+.mlp2-archfolder.open { border-color:var(--pine); color:var(--pine); background:#eef4f0; }
+.mlp2-archcount { font-family:var(--f-mono); font-size:11px; font-weight:600; letter-spacing:.02em; }
+
+/* Per-card Archive — an icon at the TOP-RIGHT corner of the card. Absolutely placed so it never
+   reflows the title; the card reserves right padding so the title clears it. Quiet by default,
+   warms on hover. Only rendered on plans no class is on (attached ⇒ no affordance). */
+.mlp2 .sc-card:not(.mlp2-arch) { padding-right:44px; }
+.mlp2-iconbtn {
+  position:absolute; top:7px; right:8px; z-index:2;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; padding:0; border-radius:8px;
+  border:1px solid transparent; background:transparent; color:var(--ink-soft); cursor:pointer;
+  transition:border-color .12s ease, color .12s ease, background .12s ease;
+}
+.mlp2-iconbtn:hover { border-color:var(--line); background:var(--paper); }
+.mlp2-iconbtn.archive:hover { color:var(--clay); border-color:var(--clay); background:#fbeee6; }
+
+/* Restore — an explicit, direct word on a solid green fill (clearer than an arrow glyph). Sits at
+   the right of the archived card, vertically centred. */
+.mlp2-restore-btn {
+  flex:none; font-family:var(--f-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+  padding:7px 15px; border-radius:9px; border:1px solid var(--pine);
+  background:var(--pine); color:var(--paper); cursor:pointer;
+  transition:background .12s ease, border-color .12s ease;
+}
+.mlp2-restore-btn:hover { background:var(--pine-d); border-color:var(--pine-d); }
+
+/* Archived card — muted, greyed rail; clearly "set aside" without looking broken. */
+.sc-card.mlp2-arch { background:var(--paper-sunk); }
+.sc-card.mlp2-arch::before { background:#c4bcab; }
+.sc-card.mlp2-arch .sc-title { color:var(--ink-soft); }
+
+/* Transient confirmation / block message. Bottom-centre, non-blocking, auto-dismissed. */
+.mlp2-toast {
+  position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+  max-width:min(90vw, 420px); z-index:40;
+  font-family:var(--f-body); font-size:13.5px; line-height:1.35; text-align:center;
+  padding:11px 18px; border-radius:11px; border:1px solid var(--line);
+  background:var(--ink); color:var(--paper); box-shadow:0 6px 22px rgba(0,0,0,.18);
+}
+.mlp2-toast.block { background:var(--clay); border-color:var(--clay); }
 
 @media (max-width: 600px) {
   .mlp .lvl-title { font-size:23px; }
@@ -1699,7 +1769,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .sc-tag.muted { color: var(--ink-soft); }
 .sc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .sc-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
-.sc-title { font-family: var(--f-body); font-size: 15px; color: var(--ink); }
+/* Chapter title, capped at TWO lines then truncated — the standard everywhere a title sits in card
+   chrome (section cards + My Lessons share this class). The CH number is the anchor (kicker /
+   sc-tag), so a clipped title never loses the chapter's identity; the full text is in title="" and
+   on opening the lesson. .sc-body's min-width:0 (above) is what lets the ellipsis actually engage. */
+.sc-title { font-family: var(--f-body); font-size: 15px; color: var(--ink); line-height: 1.28;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sc-title.muted { font-style: italic; color: var(--ink-soft); }
 .sc-rail { display: flex; gap: 2px; }
 .sc-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--line); }
@@ -1721,6 +1796,16 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .sc-add:hover { background: var(--pine); border-color: var(--pine); color: #fff; }
 .sc-remove { color: var(--clay); }
 .sc-remove:hover { background: var(--clay); border-color: var(--clay); color: #fff; }
+/* Right-slot column — the primary action (+ / −) sits on top, the history glyph tucks BELOW it
+   (shown only when the section has past chapters). Same stacking the completed card already uses. */
+.sc-right { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.sc-hist {
+  flex: none; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink-soft);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+.sc-hist:hover { color: var(--pine); border-color: var(--pine); }
 
 /* ── Attach-a-lesson picker — a MODAL (the "+" snapshot of the lessons view for one class) ── */
 .ap-overlay {
@@ -1746,18 +1831,46 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .ap-sub { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
 .ap-list { flex: 1 1 auto; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; padding-right: 2px; }
 .ap-loading, .ap-none { font-size: 13px; color: var(--ink-soft); font-style: italic; padding: 8px 2px; }
+/* ── Standardized chapter-listing row (shared by the "+" track picker and the history popup) ──
+   A STACKED block, not a horizontal strip: a compact meta line on top — CH no · subject · grade,
+   with the action (Track) or status pill pinned to its right end — and the chapter name BELOW,
+   owning the row's full width across up to two lines (truncated beyond). This reclaims the dead
+   space the old [CH | name | Track] strip left between the number and the action, and gives long
+   NCERT titles room to breathe. Untrack is a single-chapter confirm, not a list, so it's exempt. */
 .ap-row {
-  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
-  padding: 11px 15px; border-radius: 10px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px; align-items: stretch; width: 100%; text-align: left;
+  padding: 11px 14px; border-radius: 10px; cursor: pointer;
   background: var(--paper-2); border: 1px solid var(--line-soft);
   transition: border-color .12s ease, background .12s ease;
 }
 .ap-row:hover { border-color: var(--pine); background: #f3ede0; }
-.ap-row-ch { flex: none; font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; color: var(--pine-d); }
-.ap-row-title { flex: 1; min-width: 0; font-family: var(--f-body); font-size: 15px; color: var(--ink); }
-/* "Track →" reads as the prominent action on each row — a green (pine) filled pill. */
-.ap-row-go { flex: none; font-family: var(--f-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: #f4efe6; background: var(--pine); padding: 6px 11px; border-radius: 6px; }
-.ap-row:hover .ap-row-go { background: var(--pine-d); }
+.ap-row:hover .ch-go { color: var(--pine); }
+/* History rows live directly in .ap-list (no card chrome) — a hairline separates them. */
+.ap-list .ch-row { display: flex; flex-direction: column; gap: 6px; padding: 10px 2px; }
+.ap-list .ch-row + .ch-row { border-top: 1px solid var(--line-soft); }
+/* Top meta line: CH no · subject · grade (left) + action/status (right). Meta text truncates first
+   so the action never gets pushed off; the CH number is emphasised in pine. */
+.ch-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ch-meta-tx { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.ch-meta-tx b { color: var(--pine-d); font-weight: 500; }
+/* Chapter name — full width, two lines max, then truncate. */
+.ch-name { font-family: var(--f-body); font-size: 15px; line-height: 1.28; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* The whole picker row is the button (the header says "pick a chapter… to track"), so no per-row
+   Track pill — just a light chevron as a tap affordance (matches My Lessons' "›"), pine on hover. */
+.ch-go { flex: none; font-family: var(--f-body); font-size: 19px; line-height: 1; color: var(--ink-soft); }
+/* Status pill on history rows — the palette carried verbatim from the section cards, plus the new
+   SLATE code for "untracked" (a chapter untracked before finishing; distinct from both the warm
+   completed-clay and the cream not-started grey). */
+.ch-pill { flex: none; font-family: var(--f-mono); font-size: 8.5px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.ch-ongoing   { background: #e3efe9; color: var(--pine-d); }
+.ch-completed { background: #f6e2d6; color: #a04a25; }
+.ch-untracked { background: #e7ebee; color: #566169; }
+/* Completion bar under a history row's name — reuses the section card's rail (pine = completed
+   units, ochre = the current unit for an ongoing chapter) so history and cards read as one. */
+.ch-rail { margin-top: 6px; }
 /* The "Prepare a new lesson" CTA reuses My Lessons' .mlp-allocate row + .mlp-allocate-btn styling
    verbatim (same font/size/colour). Inside the modal it stays frozen at the bottom while the list scrolls. */
 .ap-modal .mlp-allocate { flex: none; }

@@ -30,6 +30,7 @@ from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
 from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
 from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
+from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -62,6 +63,14 @@ readiness_repo = ReadinessRepositoryFileImpl(config.STATE_DIR)
 # devices (CLOUD_DATA_MODEL.md §2.4). File-based now; Supabase adapter swaps in at Phase 4
 # behind the same SectionStateRepository port.
 section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
+
+# Plan-archive repository — which saved plans a teacher has archived from My Lessons (to
+# declutter without ever hard-deleting a costly, back-referenced plan). A per-tenant FLAG, not
+# a physical move (the plan asset is shared read-only content in DATA_DIR), so it's Bucket-B
+# STATE under STATE_DIR (data/plan_archive/). File-based now; a Supabase adapter (an
+# `archived_at` column / small `plan_archive` table) swaps in at Phase 4 behind the same
+# PlanArchiveRepository port. (Design decision 2026-07-04 — no hard delete anywhere.)
+plan_archive_repo = PlanArchiveRepositoryFileImpl(config.STATE_DIR)
 
 
 # Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User
@@ -352,12 +361,22 @@ def _count_units(groups) -> int:
 
 
 @app.get("/plans/{subject}/{grade}")
-def get_plans(subject: str, grade: str) -> Dict[str, Any]:
+def get_plans(subject: str, grade: str,
+              identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     sub = _subject(subject)
+    tenant_id, user_id = identity
     plans = data.list_saved_plans(subject, grade)
+    # This teacher's archived plan keys for this subject·grade — so each listing carries its
+    # OWN archived flag and the client can split the one list into Active vs Archived views
+    # (archive is a flag, not a separate location; see PlanArchiveRepository). Keys are the
+    # full `${subject}/${grade}/${filename}` the frontend also uses.
+    archived = plan_archive_repo.load_all(tenant_id, user_id)
     # Enrich each listing with total_units (LU count) for the section-card rail. Best-effort:
     # a plan that fails to normalize just ships total_units=None and the card skips its rail.
     for p in plans:
+        pkey = f"{subject}/{grade}/{p['filename']}"
+        p["archived"] = pkey in archived
+        p["archived_at"] = archived.get(pkey)
         p["total_units"] = None
         try:
             saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
@@ -587,6 +606,58 @@ def clear_section_state(section_key: str,
     tenant_id, user_id = identity
     section_state_repo.delete_one(tenant_id, user_id, section_key)
     return {"status": "cleared"}
+
+
+class PlanArchiveRequest(BaseModel):
+    # The plan identity as the frontend keys it: subject slug, grade slug, saved-plan filename.
+    subject: str
+    grade: str
+    filename: str
+
+
+def _plan_key(subject: str, grade: str, filename: str) -> str:
+    """Canonical archive key for a plan. Guards against path-ish junk in the filename so a
+    stored key can never smuggle a traversal into a later lookup."""
+    if "/" in filename or "\\" in filename or ".." in filename:
+        raise HTTPException(status_code=400, detail="Invalid plan filename.")
+    return f"{subject}/{grade}/{filename}"
+
+
+@app.get("/plan-archive")
+def get_plan_archive(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's archived plan keys: {"archived": {plan_key: archived_at_iso}}.
+    The client uses this to render the Archived view (and could split Active/Archived without
+    re-reading each /plans call)."""
+    tenant_id, user_id = identity
+    return {"archived": plan_archive_repo.load_all(tenant_id, user_id)}
+
+
+@app.post("/plan-archive")
+def archive_plan(req: PlanArchiveRequest,
+                 identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Archive one plan (declutter without deleting). The UI blocks this for a plan any section
+    is actively teaching; the server simply records the flag. Idempotent."""
+    tenant_id, user_id = identity
+    key = _plan_key(req.subject, req.grade, req.filename)
+    try:
+        plan_archive_repo.archive(tenant_id, user_id, key)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to archive plan: {str(e)}")
+    return {"status": "archived"}
+
+
+@app.delete("/plan-archive")
+def restore_plan(req: PlanArchiveRequest,
+                 identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Restore one archived plan back into My Lessons. Lossless — the plan's identity and all
+    its back-references never moved. No-op if it wasn't archived."""
+    tenant_id, user_id = identity
+    key = _plan_key(req.subject, req.grade, req.filename)
+    try:
+        plan_archive_repo.restore(tenant_id, user_id, key)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to restore plan: {str(e)}")
+    return {"status": "restored"}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")
