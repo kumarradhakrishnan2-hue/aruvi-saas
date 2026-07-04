@@ -8,7 +8,8 @@ its current home, its future home, and the table shape it maps to.
 Read alongside `CLAUDE.md` §9 (roadmap) and §11 (web architecture). This doc supersedes the
 scattered porting notes for the data question specifically.
 
-Last updated: 2026-06-27 (added the readiness teaching-profile model from the steps 1–4 setup flow).
+Last updated: 2026-07-04 (§2.4 refreshed to the now-server-backed section teaching-state;
+added §2.6 the plan archive — a per-tenant flag, since Aruvi never hard-deletes a lesson plan).
 
 ---
 
@@ -123,17 +124,23 @@ Table: `saved_plan (id, tenant_id, user_id, subject, grade, chapter_number, chap
 result jsonb, created_at)`. Read path `api/main.py:/plans/...` swaps its `data.py` file reads
 for DB reads behind the same `Repository` port.
 
-### 2.4 Teaching pointer (lesson execution)
+### 2.4 Section teaching-state (lesson execution) — ALREADY server-backed
 
-The "current Learning Unit" per section — the only true execution state (CLAUDE.md §11:
-"status is execution, and lives in My Plans").
+Per section: which chapter it tracks, how far along (the "current Learning Unit" pointer), and
+whether it's done. The only true execution state (CLAUDE.md §11: "status is execution, and lives
+in My Plans"). **As of 2026-07-03 this is no longer localStorage-only** — it's persisted through
+the `SectionStateRepository` port (`SectionStateRepositoryFileImpl`, at
+`STATE_DIR/section_state/{tenant}/{user}/state.json`), so tracking + progress already follow a
+teacher across devices; `localStorage` is now just an optimistic cache reconciled from the server
+on load. The file adapter is tenant-keyed today (`tenant_id == user_id` stub).
 
 | Today | Cloud |
 |---|---|
-| `localStorage["lu_pointer_{sectionKey}"]` | `lesson_pointer` table |
+| `SectionStateRepositoryFileImpl` → `state.json` `{section_key: {chapter, unit_index, done, updated_at}}`, plus a `localStorage` mirror | `lesson_pointer` table |
 
-Table: `lesson_pointer (tenant_id, user_id, section_key, unit_index, updated_at)`. `localStorage`
-may stay as an optimistic cache, but the DB row is authoritative for cross-device.
+Table: `lesson_pointer (tenant_id, user_id, section_key, chapter, unit_index, done, updated_at)`
+(the pointer extended with `chapter` + `done` to match the file shape). Migration action: write
+`SectionStateRepositorySupabaseImpl` behind the existing port — no API-route or component change.
 
 ### 2.5 Feedback, token/cost log, Ask-Aruvi log (operational telemetry)
 
@@ -141,6 +148,35 @@ From the prototype runtime (`runtime_data/`, `mirror/feedback/`). Per-tenant onc
 
 Tables: `feedback (tenant_id, user_id, kind, payload jsonb, created_at)`,
 `usage_log (tenant_id, user_id, model, tokens_in, tokens_out, cost_inr, at)`.
+
+### 2.6 Plan archive — a per-tenant flag (Aruvi never hard-deletes a plan) — ALREADY server-backed
+
+**Decision (2026-07-04):** a lesson plan is **archived, never deleted**. Rationale: a generated
+plan is the most expensive artifact a teacher owns, and the teacher-specific state wrapped around
+it (section attachments, the §2.4 pointer, notes) is irreplaceable even when the plan content
+itself is cheaply regenerable from the shared output cache (§1). So the only removal affordance is
+a reversible **archive** — a per-tenant FLAG, not a move. The plan asset stays exactly where it
+lives (today it's shared read-only sample content in `DATA_DIR`; once live-gen lands it's the
+per-tenant `saved_plan` of §2.3); archiving only records the plan's identity in this per-tenant
+store, and My Lessons filters it out of the active list. **Attached plans cannot be archived** (the
+UI shows no archive control), so an archived plan is always detached — nothing to reconcile on
+restore, which is lossless.
+
+Persisted through the `PlanArchiveRepository` port (`PlanArchiveRepositoryFileImpl`, at
+`STATE_DIR/plan_archive/{tenant}/{user}/archive.json`) as `{plan_key: archived_at_iso}`, where
+`plan_key = "{subject}/{grade}/{filename}"` (the same identity used to load the plan). API:
+`GET/POST/DELETE /plan-archive`; `GET /plans/...` annotates each listing with `archived` +
+`archived_at`.
+
+| Today | Cloud |
+|---|---|
+| `PlanArchiveRepositoryFileImpl` → `archive.json` `{plan_key: archived_at}` | Either an `archived_at timestamptz null` **column on `saved_plan`** (cleanest once §2.3 plans are per-tenant), OR a standalone `plan_archive (tenant_id, user_id, plan_key, archived_at)` table while plans are still shared content |
+
+Migration action: write `PlanArchiveRepositorySupabaseImpl` behind the existing port. Prefer the
+`saved_plan.archived_at` column when live-gen makes plans per-tenant (§2.3) — then "restore" is
+just nulling the column and there is no separate table to keep in sync. There is deliberately **no
+purge / TTL**: the archive is permanent-until-restored (the economics argue for keeping it). A
+future explicit, gated "empty archive" would be the ONLY place a true hard delete could ever live.
 
 ---
 
@@ -167,8 +203,10 @@ safe.
    persisted `readiness_profile` instead of the front-end flag.
 2. **Persist the teaching profile** (§2.1): create `readiness_*` tables; have the shell call a
    `POST /readiness` on `onComplete` and load it on sign-in. Drop the lost-on-refresh state.
-3. **Swap repositories behind existing ports** (§2.2–2.4): `AllocationRepositorySupabaseImpl`,
-   saved-plan + pointer adapters. Engine/API routes unchanged.
+3. **Swap repositories behind existing ports** (§2.2–2.6): `AllocationRepositorySupabaseImpl`,
+   saved-plan adapter, `SectionStateRepositorySupabaseImpl` (§2.4), `PlanArchiveRepositorySupabaseImpl`
+   (§2.6 — or fold into a `saved_plan.archived_at` column). Engine/API routes unchanged — all four
+   already call through their ports.
 4. **Move shared content** (§1) to object/vector store via the `Storage` adapter; retire
    `ARUVI_DATA_DIR`.
 5. **Wire the output cache** as shared (NOT per-tenant), keyed by content version (§1 last row).
