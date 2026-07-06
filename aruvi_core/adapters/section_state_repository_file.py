@@ -134,3 +134,18 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
             if section_key in data:
                 data.pop(section_key, None)
                 self._write(tenant_id, user_id, data)
+
+    def clear_all(self, tenant_id: str, user_id: str) -> None:
+        """Erase ALL section teaching-state for this teacher. Used by the 'start setup over'
+        profile reset (DELETE /readiness) so stale bindings can't resurrect into a freshly
+        rebuilt profile — otherwise a section key reused by the new profile inherits the old
+        chapter + pointer. No-op if nothing is stored."""
+        with self._lock:
+            path = self._path(tenant_id, user_id)
+            if not path.exists():
+                return
+            try:
+                path.unlink()
+            except OSError:
+                # mounts that allow overwrite but not unlink → write an empty map instead
+                self._write(tenant_id, user_id, {})

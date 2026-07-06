@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, pretty, gradeUp, ROMAN } from "../lib/format";
+import { getJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
 import { pushSectionState } from "../lib/sectionState";
-import { RollWheel, PickWheel } from "./wheels";
+import { RollWheel, PickWheel, PpwCapture, normPpw, ppwMapSum, DEFAULT_PPW } from "./wheels";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
  * The mobile-first, progressive-acquisition entry point (CLAUDE.md §0). Until the teacher has
@@ -16,15 +16,17 @@ import { RollWheel, PickWheel } from "./wheels";
  * part of the profile later; she never feels she is "building a profile."
  *
  * Steps: welcome → subject → grade → chapter (+duration) → preview (screen 4, "Lesson plan
- * ready!" — a FACTS TEASER, not the plan itself, PLUS "teach this lesson" + suggested class;
- * screen 5's section picker is a modal over it; generation is a one-way street, no back button)
- * → creatingCards (reward beat) → DIRECT handoff: page.jsx opens the real workspace shell
- * (two tabs + settings header) and she lands on the My Classes home, where the cards just
- * created ARE the screen. No interstitial in between — an earlier "Go to my classes →"
- * button was removed (2026-07-02): she can't know what "my classes" means before she has
- * ever seen the shell, so naming the destination only added confusion. The handoff also
- * writes each section's current_chapter_* binding so the home cards show the lesson she
- * just attached, not an empty "pick a chapter" state.
+ * ready!" — a FACTS TEASER, not the plan itself) → FULL-PROFILE ACQUISITION (2026-07-05:
+ * sections → durations → periods/week per duration → annual budget, for this subject·grade;
+ * generation is a one-way street, no back to chapter) → creatingCards (reward beat) → DIRECT
+ * handoff: page.jsx opens the real workspace shell (two tabs + settings header) and she lands on
+ * the My Classes home. No interstitial — an earlier "Go to my classes →" button was removed
+ * (2026-07-02): she can't know what "my classes" means before she has ever seen the shell.
+ *
+ * UNATTACHED cards (2026-07-05): the handoff deposits the lesson in My Lessons (markPrepared) but
+ * does NOT bind it to any section — the home cards land in the "pick a chapter" state, and she
+ * taps "+" on a card to attach the waiting lesson. Auto-binding is what used to make the first
+ * class look "done" and leave the profile orphaned (see MEMORY.md 2026-07-05).
  *
  * NO DAY SCHEDULE (2026-07-02): the weekly-arrangement step is GONE. Aruvi organizes by the
  * section pointer ("where did I stop?"), not by days — the calendar was a category error
@@ -59,6 +61,30 @@ const PERIOD_CHOICES = Array.from({ length: 60 }, (_, i) => i + 1);        // 1,
 // pick any of them.
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
+// The four steps of the post-lesson class set-up, shown as a progress rail so she can see the
+// whole run and that it ends soon.
+const ACQ_STEPS = ["Sections", "Durations", "Periods", "Budget"];
+
+// Annual-budget estimator — mirrors TeachingProfile's (duplicated to keep first run self-contained;
+// the 4-method estimator is the same one the Settings profile uses).
+const DAYS_IN_WEEK = 6;
+const ESTIMATE_WEEKS = 30;
+const METHODS = {
+  weeks:   { label: "I know my teaching weeks",   unit: "weeks",          step: 1 },
+  periods: { label: "I know my period count",     unit: "periods / year", step: 1 },
+  days:    { label: "I know my working days",     unit: "working days",   step: 1 },
+  auto:    { label: "I’m not sure — estimate it", unit: "",               step: 0 },
+};
+const METHOD_ORDER = ["weeks", "periods", "days", "auto"];
+const defaultValueFor = (method, ppw) =>
+  method === "weeks" ? 30 : method === "periods" ? ppw * 30 : method === "days" ? 180 : 0;
+const budgetPeriods = (ppw, b) => {
+  if (!b) return null;
+  if (b.method === "weeks") return ppw * b.value;
+  if (b.method === "periods") return b.value;
+  if (b.method === "days") return Math.round(ppw * b.value / DAYS_IN_WEEK);
+  return b.value ? b.value : ppw * ESTIMATE_WEEKS; // auto: NCF total when resolved, else flat fallback
+};
 
 // Teachers say "Class 7", not "Grade VII" — convert the Roman grade slug to its number
 // for display (ROMAN starts at "iii" → 3). Falls back to the Roman form if unmapped.
@@ -101,7 +127,7 @@ function SectionPicker({ letters, selected, tagFor, title, allowEmpty, onDone, o
 
 export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [step, setStep] = useState("welcome");
-  // welcome | subject | grade | chapter | preview | creatingCards
+  // welcome | subject | grade | chapter | preview | acqSections | acqDurations | acqPpw | acqBudget | creatingCards
 
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState("");   // slug
@@ -131,6 +157,16 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [sectionPickerOpen, setSectionPickerOpen] = useState(false);
   const [activating, setActivating] = useState(false);      // busy state for the final handoff
 
+  // FULL-PROFILE acquisition (2026-07-05) — after the lesson is generated, first run now collects
+  // the whole teaching profile for this subject·grade (sections → durations → periods/week per
+  // duration → annual budget) instead of just naming a section. This is the ONE moment she's
+  // motivated (desperate to see the lesson), so we acquire everything now rather than leave the
+  // first class profile-orphaned. Cards then land UNATTACHED and she taps "+" to attach the lesson.
+  const [durations, setDurations] = useState([DEFAULT_DURATION]);       // acquisition durations (multi)
+  const [ppwByDur, setPpwByDur] = useState({ [DEFAULT_DURATION]: DEFAULT_PPW }); // { [minutes]: count }
+  const [budget, setBudget] = useState(null);                           // { method, value }
+  const [ncfTotal, setNcfTotal] = useState(null);                       // NCF annual periods for the budget "estimate"
+
   // Preview step — live generation is deferred, so "Generate Lesson Plan" pulls the closest
   // matching SAVED plan for this subject·grade·chapter and reads its view model for the teaser
   // facts (periods, assessment items) — see the "preview" step below, not the full document.
@@ -138,8 +174,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [previewView, setPreviewView] = useState(null);
   const [previewNote, setPreviewNote] = useState("");
   const [previewError, setPreviewError] = useState("");
-  // Which saved plan the preview actually used — bound to each section at handoff
-  // (current_chapter_*), so the My Classes home opens on the lesson she just attached.
+  // Which saved plan the preview used — deposited in My Lessons at handoff (markPrepared), but
+  // NOT bound to any section; she attaches it herself via "+" on a card.
   const [previewPlanFile, setPreviewPlanFile] = useState(null);
 
   // Load the subject catalogue once (used on the subject step).
@@ -191,24 +227,58 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // number + letter, e.g. "6A" — displayed everywhere else as "Section 6A".
   const tagFor = (letter) => `${classNum(grade)}${letter}`;
 
-  // Her single chapter-step duration — the only duration the first run collects.
-  const durOptions = [durationMin];
+  // ── acquisition handlers ──
+  const startAcquisition = () => {
+    setDurations([durationMin]);                 // seed durations from the chapter-step choice
+    setPpwByDur({ [durationMin]: DEFAULT_PPW });
+    setBudget(null);
+    setStep("acqSections");
+  };
+  const toggleSection = (s) =>
+    setSections((a) => (a.includes(s) ? a.filter((x) => x !== s) : [...a, s].sort()));
+  const toggleDuration = (d) =>
+    setDurations((a) => (a.includes(d)
+      ? (a.length > 1 ? a.filter((x) => x !== d) : a)   // keep at least one
+      : [...a, d].sort((x, y) => x - y)));
+  const goDurToPpw = () => {
+    const next = normPpw(durations, ppwByDur, DEFAULT_PPW);  // reconcile counts to current durations
+    setPpwByDur(next);
+    setStep("acqPpw");
+  };
+  const setPpwCount = (d, v) => setPpwByDur((m) => {
+    const base = normPpw(durations, m, DEFAULT_PPW);
+    return { ...base, [d]: Math.max(1, Number(v) || 1) };
+  });
 
-  // Build the CANONICAL readiness payload from everything picked across the whole flow. One
-  // subject record, one grade, one section per fan-out choice. grids[] ships all -1 — day
-  // schedules are never collected (see the header note).
+  // NCF annual-periods figure for the budget "estimate" method (only while that screen shows).
+  useEffect(() => {
+    if (step !== "acqBudget" || !subject || !grade) return;
+    let live = true;
+    setNcfTotal(null);
+    getJSON(`/subjects/${subject}/${grade}/ncf-periods`)
+      .then((d) => { if (live) setNcfTotal(d && d.ncf_total_periods != null ? d.ncf_total_periods : null); })
+      .catch(() => { if (live) setNcfTotal(null); });
+    return () => { live = false; };
+  }, [step, subject, grade]);
+
+  // Build the CANONICAL readiness payload — the FULL profile for this one subject·grade: every
+  // chosen section, the durations, the per-duration weekly counts (+ derived periods_per_week),
+  // and the annual budget keyed by grade index 0. grids[] ships all -1 (no day schedule, ever).
   const buildActivationPayload = () => {
     const secObjs = sections.map((s) => ({ tag: tagFor(s), sec: s }));
     const grid = sections.map(() => DAYS.map(() => -1));
+    const ppwMap = normPpw(durations, ppwByDur, DEFAULT_PPW);
     const subjectRecord = {
       name: pretty(subject),
       grades: [{
         grade: gradeUp(grade),
         sections: secObjs,
-        durations: durOptions,
+        durations: [...durations],
+        ppw_by_duration: ppwMap,
+        periods_per_week: ppwMapSum(ppwMap),
       }],
       grids: [grid],
-      budget: {},
+      budget: { 0: budget || { method: "auto", value: 0 } },
     };
     return { subjects: [subjectRecord] };
   };
@@ -217,26 +287,38 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // created…" beat (screen "creatingCards") so the moment reads as something being built for
   // her, then hand off DIRECTLY into the shell — no interstitial, no "go to…" button naming a
   // destination she has never seen. The My Classes home she lands on IS the reward payoff:
-  // her cards, already showing the lesson she just attached.
+  // her section cards (unattached), ready for her to tap "+" and attach the waiting lesson.
   const goCreateCards = () => {
     setStep("creatingCards");
     setTimeout(finishActivation, 1800);
   };
 
-  // Finalize: bind the previewed plan to every fan-out section (current_chapter_* is what the
-  // My Classes home reads to show the chapter on each card — without it she'd land on empty
-  // "pick a chapter" cards), then hand the canonical readiness payload to onComplete.
-  // Persistence itself (POST /readiness) is page.jsx's job, same as the old upfront wizard.
+  // Finalize: deposit the previewed plan in My Lessons (NOT bound to any section) and hand the
+  // full-profile canonical readiness payload to onComplete. Persistence (POST /readiness) is
+  // page.jsx's job, same as the old upfront wizard.
   const finishActivation = () => {
     setActivating(true);
     try {
       if (previewPlanFile) {
-        sections.forEach((s) => {
-          const secKey = `${subject}_${grade}_${tagFor(s)}`;
-          window.localStorage.setItem(`current_chapter_${secKey}`, previewPlanFile);
-          pushSectionState(secKey);   // sync the first binding to the server (cross-device)
-        });
+        // Deposit the lesson in My Lessons — but DELIBERATELY do not bind it to any section.
+        // Cards land UNATTACHED so she taps "+" on a card to attach the waiting lesson. Binding it
+        // here is what used to make the first class look "done" and leave the profile orphaned.
+        markPrepared(subject, grade, previewPlanFile);
       }
+      // Guarantee every card lands UNATTACHED: clear any stale binding for these exact section
+      // keys, both locally AND on the server. A reused section key (e.g. english_iii_3A left over
+      // from an earlier run) otherwise resurrects its old chapter via pullSectionState, so a
+      // "fresh" card shows already attached. First run only runs for an empty profile, so a clear
+      // here is always safe.
+      sections.forEach((s) => {
+        const secKey = `${subject}_${grade}_${tagFor(s)}`;
+        try {
+          window.localStorage.removeItem(`current_chapter_${secKey}`);
+          window.localStorage.removeItem(`lu_pointer_${secKey}`);
+          window.localStorage.removeItem(`lu_done_${secKey}`);
+        } catch {}
+        pushSectionState(secKey);   // no chapter in localStorage now → deletes the server row
+      });
     } catch {}
     onComplete && onComplete(buildActivationPayload());
   };
@@ -283,8 +365,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   };
 
   /* ── shared: three-step progress rail (Subject · Grade · Chapter) ── */
-  const Progress = ({ active }) => {
-    const steps = ["Subject", "Class", "Chapter"];
+  const Progress = ({ active, steps = ["Subject", "Class", "Chapter"] }) => {
     const idx = steps.indexOf(active);
     return (
       <ol className="fr-prog" aria-label="Setup progress">
@@ -425,33 +506,148 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                 </div>
               </div>
 
-              <h2 className="fr-teach-heading">Teach this lesson to your class</h2>
-              <p className="fr-hint">We'll create one teaching card for each class so each can progress independently.</p>
-
-              <span className="fr-default-kicker">{sections.length > 1 ? "Classes" : "Class"}</span>
-              <div className="fr-suggested-class fr-suggested-class-tap" onClick={() => setSectionPickerOpen(true)}>
-                <span className={`fr-default-val ${sections.length > 2 ? "fr-default-val-compact" : ""}`}>
-                  {sections.length ? sections.map((s) => tagFor(s)).join(", ") : "—"}
-                </span>
-                <button type="button" className="fr-change-btn fr-change-btn-primary"
-                  onClick={(e) => { e.stopPropagation(); setSectionPickerOpen(true); }}>
-                  Add/Edit
-                </button>
-              </div>
+              <p className="fr-hint">Your lesson plan needs a home. Help us set up your class to receive the plan.</p>
+              <h2 className="fr-teach-heading">Now let’s set up your class</h2>
             </>
           )}
         </div>
         <div className="fr-foot">
-          <button className="primary fr-cta" disabled={previewBusy || !sections.length} onClick={goCreateCards}>
-            Create teaching cards →
+          <button className="primary fr-cta" disabled={previewBusy || !previewView} onClick={startAcquisition}>
+            Set up my class →
           </button>
-          <p className="fr-secure">You can change this anytime.</p>
+          <p className="fr-secure">Your lesson is safe in My Lessons.</p>
         </div>
-        {sectionPickerOpen && (
-          <SectionPicker letters={SECTION_LETTERS} selected={sections} tagFor={tagFor}
-            onDone={(picked) => { setSections(picked); setSectionPickerOpen(false); }}
-            onClose={() => setSectionPickerOpen(false)} />
-        )}
+      </div>
+    );
+  }
+
+  /* ── PROFILE ACQUISITION (after the lesson is ready) — sections → durations → periods/week →
+   * annual budget, for this one subject·grade. Reuses the shared wheels + PpwCapture. On finish,
+   * cards are created UNATTACHED and the lesson waits in My Lessons for her to tap "+". ── */
+  if (step === "acqSections") {
+    return (
+      <div className="fr-wrap">
+        <Brand />
+        <Progress steps={ACQ_STEPS} active="Sections" />
+        <div className="fr-step-body">
+          <h1 className="fr-q">Which sections of Class {classNum(grade)} do you teach {pretty(subject)} to?</h1>
+          <p className="fr-hint">Each section gets its own class card. Pick all the sections you teach.</p>
+          <PickWheel options={SECTION_LETTERS} selected={sections} onToggle={toggleSection}
+            ariaLabel="Sections" labelFor={(s) => `Section ${tagFor(s)}`}>
+            <button type="button" className="primary fr-cta" disabled={!sections.length}
+              onClick={() => setStep("acqDurations")}>Continue</button>
+          </PickWheel>
+        </div>
+        <div className="fr-foot">
+          <button className="fr-link" onClick={() => setStep("preview")}>← Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "acqDurations") {
+    return (
+      <div className="fr-wrap">
+        <Brand />
+        <Progress steps={ACQ_STEPS} active="Durations" />
+        <div className="fr-step-body">
+          <h1 className="fr-q">How long are your {pretty(subject)} periods for Class {classNum(grade)}?</h1>
+          <p className="fr-hint">Most classes are one length. Add another only if some run longer.</p>
+          <PickWheel options={DURATION_CHOICES} selected={durations} onToggle={toggleDuration}
+            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={durationMin}>
+            <button type="button" className="primary fr-cta" disabled={!durations.length}
+              onClick={goDurToPpw}>Continue</button>
+          </PickWheel>
+        </div>
+        <div className="fr-foot">
+          <button className="fr-link" onClick={() => setStep("acqSections")}>← Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "acqPpw") {
+    const map = normPpw(durations, ppwByDur, DEFAULT_PPW);
+    const multi = durations.length > 1;
+    return (
+      <div className="fr-wrap">
+        <Brand />
+        <Progress steps={ACQ_STEPS} active="Periods" />
+        <div className="fr-step-body">
+          <h1 className="fr-q">{multi
+            ? `How many periods a week does Class ${classNum(grade)} get for ${pretty(subject)} for each duration?`
+            : `How many periods a week does Class ${classNum(grade)} get for ${pretty(subject)}?`}</h1>
+          <p className="fr-hint">{multi
+            ? "This would help us suggest NCF aligned periods needed for a chapter and implement a lesson plan that mirrors your period structure."
+            : "This would help us suggest NCF aligned periods needed for a chapter."}</p>
+          <PpwCapture durations={durations} map={map} onSet={setPpwCount} />
+        </div>
+        <div className="fr-foot">
+          <button type="button" className="primary fr-cta" onClick={() => setStep("acqBudget")}>Continue</button>
+          <button className="fr-link" onClick={() => setStep("acqDurations")}>← Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "acqBudget") {
+    const ppw = ppwMapSum(normPpw(durations, ppwByDur, DEFAULT_PPW));
+    const picked = !!budget;                                   // no method selected until she taps one
+    const bSel = budget && budget.method === "auto"
+      ? { method: "auto", value: ppw * ESTIMATE_WEEKS } : budget;
+    const setMethod = (m) => setBudget({ method: m, value: defaultValueFor(m, ppw) });
+    const stepValue = (delta) => setBudget({ ...bSel, value: Math.max(0, bSel.value + delta) });
+    const setValue = (v) => setBudget({ ...bSel, value: Math.max(0, v) });
+    return (
+      <div className="fr-wrap">
+        <Brand />
+        <Progress steps={ACQ_STEPS} active="Budget" />
+        <div className="fr-step-body">
+          <h1 className="fr-q">How long is your teaching year for Class {classNum(grade)}?</h1>
+          <p className="fr-hint">Pick one method below based on what you know.</p>
+          {/* Each method carries its OWN result below it, so tapping a choice shows the period
+              number right where she chose — and once she's picked, the other methods dim to keep
+              her focused on the one she selected. */}
+          <div className="tp-methods">
+            {METHOD_ORDER.map((m) => {
+              const on = picked && budget.method === m;
+              const dim = picked && !on;
+              return (
+                <div key={m} className="fr-bud-row">
+                  <button type="button" className={`tp-method ${on ? "on" : ""} ${dim ? "fr-dim" : ""}`}
+                    onClick={() => setMethod(m)}>
+                    {METHODS[m].label}
+                  </button>
+                  {on && (
+                    <div className="fr-bud-detail">
+                      {m !== "auto" && (
+                        <div className="tp-val-row">
+                          <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
+                          <input type="number" className="tp-val-input" min="0" value={bSel.value}
+                            onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
+                          <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
+                          <span className="tp-val-unit">{METHODS[m].unit}</span>
+                        </div>
+                      )}
+                      <p className="tp-total">≈ {budgetPeriods(ppw, bSel)} periods for the year, at {ppw} a week</p>
+                      {m === "auto" && (
+                        <p className="tp-estimate-sub">{ncfTotal != null
+                          ? `(based on a 30-week year. Please note however that as per NCF, this class requires ${ncfTotal} periods.)`
+                          : "(based on a 30-week year.)"}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="fr-foot">
+          <button type="button" className="primary fr-cta" disabled={!picked} onClick={goCreateCards}>
+            Set up my class ✓
+          </button>
+          <button className="fr-link" onClick={() => setStep("acqPpw")}>← Back</button>
+        </div>
       </div>
     );
   }
@@ -483,7 +679,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
 
         {chapters.length === 0 && <div className="fr-loading">Loading chapters…</div>}
         {chapters.length > 0 && (
-          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo}
+          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo} rowPx={92}
             items={chapters.map((c) => ({ id: String(c.chapter_number), chip: c.chapter_number, label: c.chapter_title }))} />
         )}
 
@@ -505,6 +701,13 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                 <RollWheel ariaLabel="Class duration" value={String(durationMin)}
                   onChange={(v) => setDurationMin(Number(v))}
                   items={DURATION_CHOICES.map((m) => ({ id: String(m), chip: m, label: "minute classes" }))} />
+                {/* Interim (2026-07-05): first run collects a SINGLE duration on purpose — the
+                    mixed-duration case (per-week count per type → count-multiset at generation)
+                    lands later in gradual profile acquisition, not here (avoids a schema change +
+                    keeps first run benefit-first). This note just reassures her the mix isn't lost. */}
+                <p className="fr-hint fr-dur-note">
+                  Some classes run longer than others. Let’s keep to one duration for now — you can add more later.
+                </p>
                 <button type="button" className="fr-done-btn" onClick={() => setEditingField(null)}>Done</button>
               </div>
             )}

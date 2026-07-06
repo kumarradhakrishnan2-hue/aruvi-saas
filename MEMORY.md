@@ -1,5 +1,213 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-07-06 — PickWheel shows a running "chosen so far" line under the button
+
+**The stray-tick problem (founder).** `PickWheel` (wheels.jsx) shows only 4 rows at a time; a
+teacher picking durations/sections from a later batch can't see her earlier picks and may leave a
+stray tick behind she never meant to keep. Fix: PickWheel now renders a running confirmation UNDER
+the Continue/Done button — `Chosen (N): …` listing the FULL current selection in option order
+(independent of scroll position), or an italic "Nothing chosen yet" empty state. Built once in the
+shared component, so EVERY multi-select flow inherits it (FirstRun acqSections/acqDurations + the
+SectionPicker modal; TeachingProfile add-subject/classes/sections/durations). Uses each caller's
+existing `labelFor` (subjects list is already pretty-mapped, so no labelFor needed there). Opt out
+with `summaryLabel={false}`. CSS: `.fr-pick-summary` / `.fr-pick-summary-empty` in globals.css
+(added under `.fr-sec-wheel-col`), `aria-live="polite"`. Statically verified (esbuild parses
+wheels.jsx clean; CSS braces balanced); live/mobile render still pending per §11.
+
+## 2026-07-05 — First-gen now acquires the FULL profile (reveal-on-attach, unattached cards)
+
+**The orphaned-first-class problem (founder).** The old first-run tail generated a lesson then just
+asked her to NAME a section, auto-attaching a single-duration LP to the fanned-out sections. That
+left the first class looking "done" while its profile was never acquired (defaulted duration, no
+periods/week, no budget) — and once "complete" cards exist, nothing ever pulls her back to finish
+it; she moves on to other classes/subjects and the first class stays orphaned. The one moment she's
+motivated is right after generation (desperate to see the lesson), so we now acquire the WHOLE
+profile there. Founder decisions this session: **reveal-on-attach** (she does NOT see the full LP
+before the profile questions; she sees it after landing in My Classes and tapping "+"), and
+**full profile incl. annual budget** (not a lighter subset).
+
+**New FirstRun tail:** welcome → subject → grade → chapter(+default duration) → preview (facts
+teaser, "your lesson is ready") → **acqSections → acqDurations → acqPpw → acqBudget** (the full
+per-class profile for this subject·grade) → creatingCards → lands in My Classes. The old preview
+section-picker fan-out + `SectionPicker` modal usage are gone (the component is left defined but
+unused). `buildActivationPayload` now emits the full canonical grade record: sections, durations
+(multi), `ppw_by_duration`, derived `periods_per_week`, and `budget: { 0: … }`.
+
+**UNATTACHED cards (the key mechanism).** `finishActivation` deposits the lesson in My Lessons
+(`markPrepared`) but NO LONGER binds it to any section (removed the `current_chapter_*` writes +
+`pushSectionState` import). Cards land in the "pick a chapter" state; MyPlans already renders those
+with a "+" that opens the attach picker listing the deposited lesson. So the reveal path is: acquire
+profile → land → tap "+" → attach → tap card → see LP. MyPlans' `!anyBound` welcome banner now
+guides to "+": "Your lesson is waiting in My Lessons — tap + on a class to start teaching it" (falls
+back to "tap + … to prepare its first lesson" when `anyPlans` is false, e.g. a later subject added
+with nothing generated).
+
+**Reuse:** `PpwCapture` + `normPpw` + `ppwMapSum` + the duration/ppw constants were EXPORTED from
+`wheels.jsx` and FirstRun imports them; the annual-budget estimator (METHODS/defaultValueFor/
+budgetPeriods + NCF `/ncf-periods` fetch) is duplicated into FirstRun (self-contained). **Cleanup
+TODO:** `TeachingProfile.jsx` still carries its OWN identical copies of `PpwCapture`/`normPpw`/
+`ppwMapSum` + those constants — left untouched on purpose to avoid destabilising the working editor;
+migrate it to import from `wheels.jsx` when next in there.
+
+**Stale-binding bug (found via `kumar23`, fixed 2026-07-05).** After the unattached-cards change,
+`kumar23`'s first-gen still showed 3A already attached to "Fun with friends". Cause: the section
+teaching-state (`current_chapter` etc.) is SERVER-backed + localStorage-cached and survives profile
+deletion, so a reused section key (`english_iii_3A`) resurrected its old chapter via
+`pullSectionState` — the new code never binds, but old rows persisted. Three-part fix: (1)
+`finishActivation` now explicitly CLEARS each created section's binding — localStorage keys removed
++ `pushSectionState` (which DELETEs the server row when no chapter is cached) — guaranteeing fresh
+cards regardless of stale state (safe because first-gen only runs for an empty profile); (2)
+**`DELETE /readiness` now also `section_state_repo.clear_all(...)`** (new repo method — unlink the
+state.json, fallback empty-write) so "start setup over" truly resets teaching state; (3) wiped
+`kumar23`'s stale `state.json` → `{}`. **Caveats for the local test:** restart uvicorn (Python
+change) and note that the `serverEmpty` guard in `pullSectionState` KEEPS local cache on a
+wholesale-empty pull — so a device that already cached the 3A binding only clears it by re-running
+first-gen (which now self-clears) or clearing site storage; wiping the server alone won't update
+that device's view.
+
+**Copy/layout refinements (founder, 2026-07-05):** the four acquisition screens now carry a
+4-step **progress rail** (`ACQ_STEPS` = Sections · Durations · Periods · Budget, via the generalised
+`Progress` component) so she sees the run ends soon. Preview lead-in is "Your lesson plan needs a
+home. Help us set up your class to receive the plan." + bold "Now let's set up your class"; CTA is
+**"Set up my class"** (singular, both the preview and the final button). Sections hint: "Pick all
+the sections you teach." Periods question is grade+subject-specific ("How many periods a week does
+Class N get for English[ for each duration]?") with NCF-framed sub-copy. **Budget step restyled:**
+each method carries its OWN result (stepper/estimate + "≈ N periods…") DIRECTLY below it, not one
+shared block at the end — so the number sits where she chose; and once she picks a method the other
+three **dim** (`.fr-dim`, siblings wrapped in `.fr-bud-row` with `.fr-bud-detail`). No method is
+pre-selected (budget starts null); the finish button is disabled until she picks one.
+
+**Verified (static only — sandbox can't `next dev`):** acorn-jsx parse clean on wheels/FirstRun/
+MyPlans/TeachingProfile; globals.css balanced; FirstRun no longer references `pushSectionState`/
+`durOptions`; "Set up my class" is singular everywhere; 4 acquisition progress rails present. Local
++ mobile pass owed (§11): run first-gen end to end (single AND 2-duration), confirm the 4 screens +
+progress rail render, the profile persists, cards land UNATTACHED, the "+" picker lists the deposited
+lesson, and the budget number appears under the chosen method with the others dimmed.
+
+## 2026-07-05 — Period durations & the LLM's time budget: order is dead, counts survive (Issues 1 & 2 resolved)
+
+A design conversation settling how the constitution should receive TIME once the calendar was
+purged. Two problems were on the table and are now resolved; a third (collection UX) is decided
+in principle but deliberately NOT built into first run yet.
+
+**The root diagnosis.** Both problems come from trying to hand the LLM time as a SCALAR — either
+"N periods" (durations unknown) or a single "total time Tm = ΣD·T" (mix and order unknown). A sum
+throws away exactly the structure the problems are about. The fix is to hand the LLM an **ordered
+vector of per-period durations** (e.g. `[40,60,40,40,60,…]`), NOT a scalar. This keeps the proven
+ordered-period constitution instead of migrating it to a gross-time model. **Carry-forward for the
+pending "wire time into the constitutions" task: do NOT wire a scalar total-time Tm — wire a
+per-period duration field/vector. Tm becomes a derived checksum (Σ of the vector), never an input.**
+This supersedes the earlier "give the LLM total time to gross up" drift (which was never wired).
+
+**ISSUE 1 (the mix) — where does T1/T2 come from once the weekly grid is gone?** With a single
+duration D and total T, Tm = D·T trivially. With two durations we know D1,D2 but not the counts
+T1,T2. We must NOT let the LLM pick them (it would go to an extreme — all-short or all-long — i.e.
+iterate on time itself). So the counts must be COLLECTED. Resolution: collect the per-week duration
+split as COUNTS (e.g. 6 periods/week = 4×40 + 2×60); the counts give the ratio.
+
+**ISSUE 2 (clumping / un-teachable layout) — and why ORDER cannot save us.** Even given the counts,
+the LLM could clump all longs together, or place an indivisible 60-min activity where the teacher
+only has a 40-min period. The tempting fix was to collect the ORDERED weekly rhythm per section and
+stamp period *i* → rhythm[i mod k]. **This idea is DEAD, killed by a per-section objection that is
+fatal, not cosmetic:** order is the ONE time-fact that genuinely varies across sections of a grade
+(7A has the subject Mon-P1, 7B Tue-P3, …). Periods/week and the duration split are set by curriculum
++ the school bell schedule → grade-UNIFORM and factually answerable; only the slotting (order)
+differs per section. Since we generate ONE plan per GRADE (per-section generation is too expensive
+and breaks the shared-asset model), a per-grade plan cannot carry a per-section order, and asking
+"what's the order?" is unanswerable when her three sections differ. **The old design's latent sin:
+it collected section-wise day order and then the gross-time constitution grossed it away — paying
+to collect the one fact the model can't consume. Dropping order is what makes the per-grade plan
+CONSISTENT for the first time.** Everything the plan needs (total periods, duration split) is
+grade-level; only the unanswerable thing leaves.
+
+**How Issue 2 is actually handled WITHOUT order:** hand the LLM the **count multiset** ("14 periods:
+11×40, 3×60"). Counts are GIVEN (no free iteration); the LLM only decides WHICH pedagogical moments
+are the long ones — a pedagogical judgment (the sessions that need sustained time: experiment,
+project, extended write), which is arguably BETTER than honoring any one section's calendar accident.
+Feasibility is guaranteed globally (she has exactly 3 long slots over the chapter; the plan has
+exactly 3 long sessions). The only residue is LOCAL (a long session may surface in the plan before
+her next long slot) — handled by the flow pointer + trivial teacher agency, and made cheap by
+**MARKING** the long sessions in the view ("longer session — best in a full period"). Marking is the
+whole mitigation; she never has to split an indivisible activity because it's flagged to wait for a
+slot that fits, and she's guaranteed to have one. Generation assumes each chapter **starts at cycle
+position 0** (no cross-chapter phase tracking — keeps chapters independent, matches "notes never
+migrate across regenerated plans").
+
+**At generation:** allocation stays in period COUNTS (NCF norms → allocator, unchanged). The split
+enters one layer downstream: total periods → split by the grade ratio via **`splitByRatio`
+(largest-remainder, already in Allocate.jsx, already unit-tested, sums exactly)**. The calendar
+purge only removed `splitByRatio`'s INPUT (it used to derive the ratio from the weekly grid via
+`weeklyRatioFromReadiness`); we restore the input as a **direct two-number question** (the duration
+split), not a grid. Small restoration, existing engine.
+
+**Approach A (default) vs B (override).** A = store the grade duration split once, derive the
+per-chapter split by rounding at generation (low friction, reused across section cards + My Lessons).
+B = ask the split at every generation. B's "exactness" is mostly illusory — the split she'd type is
+her weekly ratio × the total, i.e. the arithmetic A already does. **Decision: A is the default;**
+expose B only as an optional per-chapter **"Modify split"** override, reusing the existing Allocate
+**Accept / Modify** idiom (§3).
+
+**Collection UX (decided in principle):** wherever a duration is captured (first gen, direct edit in
+My Profile, or indirect acquisition as she navigates), if she picks >1 duration type, ask the
+per-week COUNT per type RIGHT THERE (40→4, 60→2) — do NOT introduce periods/week as a separate
+number and then ask the split; periods/week = Σ of the per-type counts. This will feed a schema
+where the grade record carries the per-duration weekly counts (ratio) + derived `periods_per_week`.
+
+**BUT — first-run scope decision (founder, this session): do NOT build multi-duration into first
+generation.** It would force a `durations` schema change (today `durations` is a flat number array,
+consumed by Allocate/MyCalendar/MyClasses/TeachingProfile/format.projectReadiness) and add friction
+to a deliberately minimal, benefit-first flow. **Interim shipped:** in `FirstRun.jsx`, when she taps
+"Change" on Class duration, a small `fr-hint fr-dur-note` line now reassures her — "Some classes run
+longer than others. Let’s keep to one duration for now — you can add more later." First run still
+collects a SINGLE duration. The mixed-duration capture (per-week count per type → count multiset at
+generation) + the actual `splitByRatio` wiring land LATER, in gradual profile acquisition, together
+with live generation (the preview currently serves a canned saved plan, so a split can't affect it
+yet anyway).
+
+**Implemented in My Profile (`TeachingProfile.jsx`) this session — the per-duration periods/week
+capture (founder scoped it to My Profile now; first run stays single-duration).** The single
+"periods per week" question is REPLACED by per-duration capture wherever duration is captured
+(the add-a-subject / add-a-class conversational flow AND the spot-edit pencils):
+- **Schema (additive, server-safe):** the grade record gains `ppw_by_duration: { [minutes]: count }`
+  (e.g. `{"40":4,"60":2}`). `periods_per_week` is KEPT as the DERIVED sum, so every existing
+  consumer is untouched (budget estimator, the view totals `stats.ppw`/`subPpw`, the per-class
+  column, `format.projectReadiness`). Confirmed end-to-end: POST /readiness stores `subjects`
+  verbatim and the file adapter's `_PROJECTION_KEYS` strip is TOP-LEVEL only, so a grade-level field
+  rides through save→reload; `projectReadiness` returns `subjects` intact. NO api/adapter/other-
+  component changes were needed — the whole change is `TeachingProfile.jsx` + a `.tp-ppw-*` CSS block.
+- **Two helpers + one component:** `ppwMapSum`, `normPpw(durations, map, fallbackPpw)` (reconciles
+  the map to the CURRENT durations — keep surviving counts, new duration defaults to the total when
+  single / to 1 when multi), and `<PpwCapture>` — the ONE idiom, two shapes: single duration → the
+  same large periods/week wheel as before (no visible change); >1 duration → a two-column table
+  (Duration · a −/number/+ stepper per row, reusing `.tp-val-btn/.tp-val-input`) with a live
+  weekly total. **Total is never asked directly — it's the sum.** Handles up to 3 duration types.
+- **Flow:** the durations step now CHAINS into the per-duration question (add flow: durations→ppw
+  reconciles the map on Continue; spot-edit "duration" screen shows **Continue** when >1 duration —
+  routing to the per-duration ppw screen — and **Save** when only one). Save paths (`finalizeSubject`,
+  `saveEditNums`, the new-grade seed, `gradeDraftFrom`) all write `ppw_by_duration` + the derived
+  `periods_per_week` via `normPpw`/`ppwMapSum`.
+- **View (2026-07-05, final — "Option C" total-forward, empty-row fixed):** the accordion class
+  card's **Periods / week** column shows the weekly TOTAL as the big number, with the per-duration
+  split as a caption directly below it ("6×40 · 1×50") when >1 duration; single-duration shows just
+  the number. **The caption (`.tp-cc-col-cap`) is `position:absolute; top:100%`** so it lives in the
+  card's bottom padding and does NOT stretch the centre column — that height difference (centre 3
+  lines vs Duration/Budget 2 lines) was what left an empty row hanging under the card. `.tp-classcard`
+  padding-bottom bumped 13→16px to hold the caption. (History, so no one re-breaks it: tried
+  positional "4/2" — ambiguous; then the caption in normal flow — caused the empty row; then folding
+  the split into the value line inline — founder wanted the total-forward look back; landed on the
+  absolute-caption version, which keeps total-forward AND removes the empty row.) The weekly total
+  also still shows in the subject header.
+- **Legacy caveat:** a pre-existing MULTI-duration record with no `ppw_by_duration` can't have its
+  old total re-split (we never had the per-type data — that's the whole point), so `normPpw` seeds
+  each type at 1; she re-enters the split once. Single-duration legacy records migrate exactly
+  (`{[dur]: periods_per_week}`).
+
+**Verified (static only — sandbox can't `next dev`):** acorn-jsx parse clean on TeachingProfile.jsx
++ FirstRun.jsx; globals.css brace-balanced (1261/1261). Live render + mobile (360×800 first) owed
+locally per §11: confirm the FirstRun note appears under the duration wheel only in edit mode; and
+in My Profile that picking a 2nd/3rd duration shows the two-column table, the running total is
+right, Save persists across refresh, and the class card reads "40/60 min ↔ 4/2".
+
 ## 2026-07-04 — Archive (not delete) for lesson plans in My Lessons
 
 **Founder decision: there is NO hard delete of a lesson plan — only Archive.** Two reasons that

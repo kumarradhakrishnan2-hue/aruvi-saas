@@ -264,3 +264,32 @@ class PlanArchiveRepository(Protocol):
     def restore(self, tenant_id: str, user_id: str, plan_key: str) -> None:
         """Un-archive one plan — the reversal. No-op if the plan was not archived."""
         ...
+
+
+# Prepared-plans register — which saved plans a teacher has actually PREPARED (generated /
+# attached), keyed by tenant_id + user_id. Live generation is deferred, so the saved-plan
+# library lives in shared read-only CONTENT (Bucket A) and is identical for every teacher;
+# without this register My Lessons would show every sample plan to everyone, breaking the
+# "assets you've gathered over time" premise. This is the per-tenant STATE (Bucket B) that
+# records the teacher's OWN preparations, so the listing can be filtered down to her work.
+# First-run writes its chapter here on activation; the everyday PrepareLesson flow appends on
+# each generate. A Supabase adapter (a `prepared_at` column on the saved-plan row, or once live
+# generation lands, the mere EXISTENCE of the teacher's own generated plan row) swaps in behind
+# this same port at Phase 4 with no change to the API routes or the React components.
+@runtime_checkable
+class PreparedPlansRepository(Protocol):
+    """Persists which saved plans a teacher has prepared, keyed by tenant_id + user_id.
+
+    The plan key is the frontend's `${subjectSlug}/${gradeSlug}/${filename}` — the same
+    identity used to load the plan and to key the archive — so prepared state binds to the plan
+    without duplicating any of its content.
+    """
+    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
+        """All prepared plan keys for this teacher: {plan_key: prepared_at_iso}.
+        Returns an empty dict if she has prepared nothing yet."""
+        ...
+
+    def mark(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+        """Record one plan as prepared (records prepared_at). Idempotent — re-marking a plan
+        already prepared leaves the original timestamp untouched."""
+        ...

@@ -158,8 +158,12 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
  * of scroll position — no cap on how many can be picked. Its Done/Continue button is passed in
  * as `children` so it lands in the SAME column as the wheel (its width then always equals the
  * row list's width; the arrows live outside that column entirely, so they never affect it).
- * `initialScrollTo` positions the wheel on mount without that option being pre-picked. */
-export function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children }) {
+ * `initialScrollTo` positions the wheel on mount without that option being pre-picked.
+ * Because only 4 rows are visible at a time, a teacher who scrolls to pick from a later batch
+ * can't see the earlier ones and may leave a stray tick behind — so a running "chosen so far"
+ * line sits UNDER the Continue/Done button, always listing the full current selection (in option
+ * order) no matter where the wheel is scrolled. Set `summaryLabel={false}` to suppress it. */
+export function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children, summaryLabel = true }) {
   const wheelRef = useRef(null);
   const step = (dir) => {
     const el = wheelRef.current;
@@ -170,6 +174,11 @@ export function PickWheel({ options, selected, onToggle, labelFor, initialScroll
     else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
   };
   const showCue = options.length > 4;
+
+  // Running confirmation of the full current selection, in option order (independent of scroll
+  // position), so a stray tick from an earlier, now-scrolled-away batch stays visible.
+  const chosen = options.filter((o) => selected.includes(o));
+  const summary = chosen.map((o) => (labelFor ? labelFor(o) : String(o))).join(", ");
 
   useEffect(() => {
     const el = wheelRef.current;
@@ -196,6 +205,13 @@ export function PickWheel({ options, selected, onToggle, labelFor, initialScroll
           })}
         </div>
         {children}
+        {summaryLabel && (
+          <p className="fr-pick-summary" role="status" aria-live="polite">
+            {chosen.length
+              ? <>Chosen ({chosen.length}): <b>{summary}</b></>
+              : <span className="fr-pick-summary-empty">Nothing chosen yet — tap the rows above</span>}
+          </p>
+        )}
       </div>
       {showCue && (
         // Bare arrows beside the wheel — no bordered/background box around them, just the two
@@ -205,6 +221,69 @@ export function PickWheel({ options, selected, onToggle, labelFor, initialScroll
           <button type="button" className="fr-sec-arrow-btn" onClick={() => step(1)} aria-label="Scroll down">▼</button>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ───────── periods/week capture — shared by FirstRun's profile acquisition AND (a copy of) the
+ * Settings profile editor. periods/week is stored PER DURATION TYPE (ppw_by_duration:
+ * { [minutes]: count }); the weekly total is their SUM, never asked directly. See MEMORY.md
+ * 2026-07-05. NOTE: TeachingProfile.jsx still carries its OWN identical copy of normPpw/ppwMapSum/
+ * PpwCapture + these constants — migrating it to import from here is a deferred cleanup. ───────── */
+export const DEFAULT_DURATION = 40;
+export const DEFAULT_PPW = 6;
+export const DURATION_CHOICES = Array.from({ length: 21 }, (_, i) => 20 + i * 5); // 20,25,…120 min
+export const PPW_CHOICES = Array.from({ length: 14 }, (_, i) => i + 1);           // 1…14 periods/week
+
+export const ppwMapSum = (m) => Object.keys(m || {}).reduce((a, k) => a + (Number(m[k]) || 0), 0);
+// Reconcile a per-duration weekly-count map to the CURRENT durations: keep each surviving count;
+// a duration with no count yet defaults to the whole total when there's a single type, else to 1.
+export const normPpw = (durations, map, fallbackPpw) => {
+  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
+  const out = {};
+  durs.forEach((d) => {
+    const v = Number((map || {})[d] ?? (map || {})[String(d)]);
+    out[d] = v > 0 ? v : (durs.length === 1 ? (Number(fallbackPpw) || DEFAULT_PPW) : 1);
+  });
+  return out;
+};
+
+// Single duration → the same large periods/week wheel; >1 duration → a two-column table
+// (Duration · a −/number/+ stepper per row, up to three) with a live weekly total.
+export function PpwCapture({ durations, map, onSet }) {
+  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
+  if (durs.length === 1) {
+    const d = durs[0];
+    const val = Number(map[d] ?? map[String(d)]) || DEFAULT_PPW;
+    return (
+      <RollWheel ariaLabel="Periods per week" large value={String(val)}
+        onChange={(v) => onSet(d, Number(v))}
+        items={PPW_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period a week" : "periods a week" }))} />
+    );
+  }
+  const total = durs.reduce((a, d) => a + (Number(map[d] ?? map[String(d)]) || 0), 0);
+  return (
+    <div className="tp-ppw-table">
+      <div className="tp-ppw-row tp-ppw-head">
+        <span className="tp-ppw-dur">Duration</span>
+        <span className="tp-ppw-ct">Periods / week</span>
+      </div>
+      {durs.map((d) => {
+        const val = Number(map[d] ?? map[String(d)]) || 1;
+        return (
+          <div className="tp-ppw-row" key={d}>
+            <span className="tp-ppw-dur">{d} min</span>
+            <span className="tp-ppw-stepper">
+              <button type="button" className="tp-val-btn" aria-label={`Fewer ${d}-minute periods`} onClick={() => onSet(d, Math.max(1, val - 1))}>−</button>
+              <input type="number" className="tp-val-input tp-ppw-input" min="1" value={val}
+                onChange={(e) => onSet(d, Math.max(1, parseInt(e.target.value, 10) || 1))}
+                aria-label={`Periods per week for ${d}-minute classes`} />
+              <button type="button" className="tp-val-btn" aria-label={`More ${d}-minute periods`} onClick={() => onSet(d, val + 1)}>+</button>
+            </span>
+          </div>
+        );
+      })}
+      <p className="tp-ppw-total">= {total} periods a week</p>
     </div>
   );
 }

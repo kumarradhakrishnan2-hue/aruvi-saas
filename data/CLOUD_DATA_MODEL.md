@@ -8,8 +8,11 @@ its current home, its future home, and the table shape it maps to.
 Read alongside `CLAUDE.md` §9 (roadmap) and §11 (web architecture). This doc supersedes the
 scattered porting notes for the data question specifically.
 
-Last updated: 2026-07-04 (§2.4 refreshed to the now-server-backed section teaching-state;
-added §2.6 the plan archive — a per-tenant flag, since Aruvi never hard-deletes a lesson plan).
+Last updated: 2026-07-05 (§2.3 reframed around the **reference-not-copy** decision — the shared
+output cache holds the plan bytes once; a teacher's My Lessons entry references it, it is not a
+per-tenant copy; LPs are immutable/notes-only today so no copy-on-write is needed yet. Added
+§2.7 the prepared-plans register — the per-tenant "what she actually made" store that gates My
+Lessons, built 2026-07-05.) Prior: 2026-07-04 (§2.4 server-backed section state; §2.6 plan archive).
 
 ---
 
@@ -114,15 +117,50 @@ Table: `allocation_register (tenant_id, user_id, subject, grade, allocation json
 Migration action: implement the Supabase adapter; **no engine or API-route change** (the route
 already calls through `engine.get_allocation_register(..., allocation_repo=...)`).
 
-### 2.3 Saved lesson plans + assessments
+### 2.3 Saved lesson plans + assessments — REFERENCE the shared cache, do NOT copy per tenant
+
+**Decision (2026-07-05): a teacher does not own a full copy of the LP. She owns a reference to
+the one shared, cached artifact.** The generated LP+assessment for a given
+`(subject, grade, chapter, period_profile, constitution_version)` is **content** (Bucket A, §1
+last row): deterministic for that key, identical for every teacher, generated once, cached
+forever — the #1 economic lever. Giving each tenant a full copy would throw that lever away
+(N identical blobs for N teachers, and the temptation to regenerate). So the shared cache holds
+the plan bytes **once**; the per-tenant row below is a thin **pointer + overlay**, not the plan.
+
+Why this is safe today: **LPs are immutable — Aruvi allows no edits to a generated plan.** The
+only teacher-authored additions are **notes** (LU-level period notes on the section's plan
+instance; chapter-level notes on the shared lesson-plan asset — both plain-text/voice, per
+CLAUDE.md §0), and notes are per-tenant overlay data that hang off the reference; they never
+mutate the shared artifact. So no divergence, no per-tenant plan bytes.
+
+> **Copy-on-write is the ONLY future trigger for a per-tenant plan copy.** If LP editing is ever
+> introduced, fork on first edit: create a private artifact for that teacher and repoint her
+> reference at the fork, leaving the shared cache entry pristine for everyone else. Until edits
+> exist, this is out of scope — do not build per-tenant plan storage speculatively.
 
 | Today | Cloud |
 |---|---|
-| `mirror/saved_plans/{subject}/{grade}/*.json` (no tenant key) | `saved_plan` table, JSONB `result`, keyed by tenant/user |
+| Shared sample plans `data/content/saved_plans/{subject}/{grade}/*.json` (no tenant key) — served to everyone as previews while live-gen is deferred | Shared `generated_artifact` cache (§1); a per-tenant `lesson` row **references** it by cache key |
 
-Table: `saved_plan (id, tenant_id, user_id, subject, grade, chapter_number, chapter_title,
-result jsonb, created_at)`. Read path `api/main.py:/plans/...` swaps its `data.py` file reads
-for DB reads behind the same `Repository` port.
+Tables (the split that encodes reference-not-copy):
+
+```
+generated_artifact   -- SHARED content (§1), NOT tenant-keyed. The plan bytes, once.
+  (cache_key pk,     -- hash of (subject, grade, chapter, period_profile, constitution_version)
+   view_model jsonb, -- or an object-store pointer for the big blob
+   model_id, created_at)            -- immutable, versioned by constitution_version
+
+lesson               -- per-tenant STATE: her reference + overlay (NOT the plan bytes)
+  (id, tenant_id, user_id, subject, grade, chapter_number, chapter_title,
+   artifact_ref  -> generated_artifact.cache_key,   -- the pointer, not a copy
+   prepared_at,  archived_at,                        -- §2.7 / §2.6 as columns
+   created_at)
+```
+
+Read path `api/main.py:/plans/...` lists the teacher's `lesson` rows and joins the shared
+`generated_artifact` for display — it never lists the shared cache directly (that is exactly the
+2026-07-05 bug §2.7 fixes: a raw content listing leaked every sample plan to every teacher).
+Both sides sit behind the same `Repository` port, so the route is unchanged.
 
 ### 2.4 Section teaching-state (lesson execution) — ALREADY server-backed
 
@@ -178,6 +216,33 @@ just nulling the column and there is no separate table to keep in sync. There is
 purge / TTL**: the archive is permanent-until-restored (the economics argue for keeping it). A
 future explicit, gated "empty archive" would be the ONLY place a true hard delete could ever live.
 
+### 2.7 Prepared-plans register — which shared artifacts a teacher has actually MADE — server-backed
+
+**Decision (2026-07-05):** because live-gen is deferred, the saved-plan library is shared read-only
+CONTENT identical for everyone (§1/§2.3). Listing it directly made **My Lessons show every sample
+plan to every teacher** — a brand-new teacher who prepared only Chapter 4 also saw 5 and 6, which
+breaks the "assets you've gathered over time" premise. Fix: a per-tenant register recording the
+plans she has actually **prepared** (generated / attached). It is the STATE counterpart to the
+shared cache — the same reference idea as §2.3/§2.6 (a per-tenant flag over a shared plan
+identity, never a copy). First-run writes its chapter on activation; the everyday `PrepareLesson`
+flow appends on each generate (exact-match only — a stand-in preview never pollutes the register).
+My Lessons shows only prepared plans, with a belt-and-braces client fallback that a plan any
+section is attached to (§2.4) counts as prepared, so a lesson a class is teaching can never vanish.
+
+Persisted through the `PreparedPlansRepository` port (`PreparedPlansRepositoryFileImpl`, at
+`STATE_DIR/prepared_plans/{tenant}/{user}/prepared.json`) as `{plan_key: prepared_at_iso}`, with
+`plan_key = "{subject}/{grade}/{filename}"` — the same identity used to load the plan and to key
+the archive (§2.6). API: `GET/POST /plans-prepared`; `GET /plans/...` annotates each listing with
+`prepared` + `prepared_at`.
+
+| Today | Cloud |
+|---|---|
+| `PreparedPlansRepositoryFileImpl` → `prepared.json` `{plan_key: prepared_at}` | Once live-gen lands, this collapses into §2.3's `lesson` table: **the existence of a `lesson` row IS "prepared"** — a real generated plan is prepared by definition, so `prepared_at` becomes a column (or just `created_at`) and the standalone register disappears. While plans are still shared content, keep it as `prepared_plan (tenant_id, user_id, plan_key, prepared_at)` behind the port. |
+
+Migration action: write `PreparedPlansRepositorySupabaseImpl` behind the existing port, or fold it
+into §2.3's `lesson` table when plans go per-tenant. This register is not throwaway scaffolding —
+it is the exact seam live generation plugs into (§4 step 5).
+
 ---
 
 ## 3. Identity & tenancy (the new top layer)
@@ -203,13 +268,16 @@ safe.
    persisted `readiness_profile` instead of the front-end flag.
 2. **Persist the teaching profile** (§2.1): create `readiness_*` tables; have the shell call a
    `POST /readiness` on `onComplete` and load it on sign-in. Drop the lost-on-refresh state.
-3. **Swap repositories behind existing ports** (§2.2–2.6): `AllocationRepositorySupabaseImpl`,
+3. **Swap repositories behind existing ports** (§2.2–2.7): `AllocationRepositorySupabaseImpl`,
    saved-plan adapter, `SectionStateRepositorySupabaseImpl` (§2.4), `PlanArchiveRepositorySupabaseImpl`
-   (§2.6 — or fold into a `saved_plan.archived_at` column). Engine/API routes unchanged — all four
-   already call through their ports.
+   (§2.6 — or fold into a `saved_plan.archived_at` column), `PreparedPlansRepositorySupabaseImpl`
+   (§2.7 — or fold into the `lesson` table, where a row's existence IS "prepared"). Engine/API
+   routes unchanged — all already call through their ports.
 4. **Move shared content** (§1) to object/vector store via the `Storage` adapter; retire
    `ARUVI_DATA_DIR`.
 5. **Wire the output cache** as shared (NOT per-tenant), keyed by content version (§1 last row).
+   The per-tenant `lesson` row (§2.3) references it by cache key — reference, never copy; a
+   generated plan's `lesson` row also subsumes the §2.7 prepared register (row exists = prepared).
 6. **Telemetry tables** (§2.5).
 7. **Enable RLS** on every Bucket-B table and test cross-tenant isolation before launch.
 
@@ -219,6 +287,10 @@ safe.
 
 - No teacher-entered data without a `tenant_id` (+ `user_id` for row-owned data).
 - No shared content carrying a tenant key (would break the cache economics and the IP model).
+- A teacher's plan is a **reference** to the shared cache, never a per-tenant copy of the bytes
+  (§2.3). The only future exception is copy-on-write on an LP edit — which doesn't exist yet.
+- My Lessons lists a teacher's **own** `lesson`/prepared rows, never the shared plan cache
+  directly (§2.7) — the guard against the 2026-07-05 "every sample plan shown to everyone" bug.
 - Core/engine never talks to Supabase directly — only through `aruvi_core/ports.py` adapters
   (mirrors the prototype's "provider seam" rule).
 - The denormalized readiness projection (§2.1) is never persisted as its own table.

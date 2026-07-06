@@ -47,6 +47,20 @@ export async function getJSON(path, opts) {
   return r.json();
 }
 
+/* Record a saved plan as PREPARED by this teacher (POST /plans-prepared). Called when she
+ * actually generates/attaches a lesson — first-run activation and the everyday PrepareLesson
+ * flow — so My Lessons lists only her own work, not the whole shared sample library. Fire-and-
+ * forget: the UI never blocks on it, and the flag simply stays false if the write is lost.
+ * subject/grade are SLUGS; filename is the saved-plan file. */
+export function markPrepared(subject, grade, filename) {
+  if (!subject || !grade || !filename) return;
+  fetch(`${API}/plans-prepared`, withUser({
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subject, grade, filename }),
+  })).catch(() => {});
+}
+
 /* ───────── subject·grade coverage (single source of truth) ─────────
  * Which grades Aruvi actually has chapter content for, per subject (Science → VI–IX, TWAU →
  * III–V, …). The authority is the backend (GET /subjects/{slug}/grades, derived from the chapter

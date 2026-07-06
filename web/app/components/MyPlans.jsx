@@ -406,6 +406,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // Nothing planned yet? The class cards still show — each as "Pick a chapter to begin" —
   // with a welcome CTA banner ABOVE them. Cards are never hidden.
   const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
+  // Any lesson already prepared for one of her classes? After first-gen this is TRUE (the lesson
+  // was deposited but left unattached), so the welcome nudge points her at the "+" to attach it.
+  const anyPlans = Object.values(plansByKey).some((v) => Array.isArray(v) && v.length > 0);
 
   /* My Classes home: a FLAT list of section cards — no day buckets, no "today", no pace pills.
    * Each card answers one question — "where did I stop with this class?" — via the LU progress
@@ -426,8 +429,10 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       {!anyBound && (
         <div className="dash-welcome">
           <div className="dash-welcome-text">
-            <div className="dash-welcome-title">Your classes are set up</div>
-            <div className="dash-welcome-sub">Tap a class below to plan its first chapter.</div>
+            <div className="dash-welcome-title">Your classes are ready</div>
+            <div className="dash-welcome-sub">{anyPlans
+              ? <>Your lesson is waiting in My Lessons — tap <b>+</b> on a class to start teaching it.</>
+              : <>Tap <b>+</b> on a class to prepare its first lesson.</>}</div>
           </div>
         </div>
       )}

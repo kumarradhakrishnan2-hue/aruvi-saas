@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, pad, pretty, ROMAN } from "../lib/format";
+import { getJSON, markPrepared, pad, pretty, ROMAN } from "../lib/format";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
 
@@ -74,7 +74,8 @@ export default function PrepareLesson({ subject, grade, onNavigate }) {
     if (!chosen) return;
     setStep("preview"); setBusy(true); setError(""); setNote(""); setView(null);
     try {
-      let match = planFor(chapterNo);
+      const exact = planFor(chapterNo);          // the plan for the chapter she actually chose
+      let match = exact;
       if (!match && plans.length) {
         match = plans[0];
         setNote(`No saved plan for Chapter ${chapterNo} yet — showing Chapter ${match.chapter_number} (${match.chapter_title}) as a stand-in preview.`);
@@ -84,6 +85,9 @@ export default function PrepareLesson({ subject, grade, onNavigate }) {
         return;
       }
       setView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view);
+      // Record it as prepared so it lands in My Lessons — but ONLY when it's the chapter she
+      // actually chose. A stand-in preview (different chapter) must not pollute her repository.
+      if (exact) markPrepared(subject, grade, exact.filename);
     } catch {
       setError("Couldn't load a plan right now. Try again in a moment.");
     } finally {
@@ -118,7 +122,7 @@ export default function PrepareLesson({ subject, grade, onNavigate }) {
         <div className="empty">No chapter mappings for this subject &amp; grade yet.</div>
       ) : (
         <>
-          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo}
+          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo} rowPx={92}
             items={chapters.map((c) => ({ id: String(c.chapter_number), chip: c.chapter_number, label: c.chapter_title }))} />
 
           <div className="g4-midrow">

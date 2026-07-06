@@ -272,9 +272,16 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     </div>
   );
 
-  // Split the ONE fetched list into the two views by the server-set archived flag (archive is a
+  // My Lessons shows ONLY what this teacher has prepared — never the whole shared sample library
+  // (live gen is deferred, so the saved-plan content is identical for every teacher). The server
+  // sets `prepared` per tenant; a plan any section is attached to counts as prepared too, so a
+  // lesson a class is actively teaching can never vanish from the repository even if its prepared
+  // write was lost. Un-prepared sample plans are hidden entirely (the empty-state copy already
+  // reads "no lesson plans prepared … yet").
+  const preparedPlans = (Array.isArray(plans) ? plans : []).filter((p) => p.prepared || isAttached(p));
+  // Split the prepared list into the two views by the server-set archived flag (archive is a
   // flag, not a separate fetch). Chips only appear once something is archived — no clutter before.
-  const allPlans = Array.isArray(plans) ? plans : [];
+  const allPlans = preparedPlans;
   const activePlans = allPlans.filter((p) => !p.archived);
   const archivedPlans = allPlans.filter((p) => p.archived);
   const hasArchived = archivedPlans.length > 0;

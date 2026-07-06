@@ -31,6 +31,7 @@ from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryF
 from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
 from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
 from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
+from aruvi_core.adapters.prepared_plans_repository_file import PreparedPlansRepositoryFileImpl
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -71,6 +72,14 @@ section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
 # `archived_at` column / small `plan_archive` table) swaps in at Phase 4 behind the same
 # PlanArchiveRepository port. (Design decision 2026-07-04 — no hard delete anywhere.)
 plan_archive_repo = PlanArchiveRepositoryFileImpl(config.STATE_DIR)
+
+# Prepared-plans register — which saved plans THIS teacher has actually prepared. Because live
+# generation is deferred, the saved-plan library is shared read-only CONTENT (identical for
+# everyone), so a raw listing shows every sample plan to every teacher. This per-tenant Bucket-B
+# register records her own preparations (first-run writes its chapter; PrepareLesson appends on
+# each generate) so /plans can flag — and My Lessons can filter to — only her work. Swaps to a
+# Supabase-backed store behind the same PreparedPlansRepository port at Phase 4. (2026-07-05)
+prepared_plans_repo = PreparedPlansRepositoryFileImpl(config.STATE_DIR)
 
 
 # Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User
@@ -371,12 +380,19 @@ def get_plans(subject: str, grade: str,
     # (archive is a flag, not a separate location; see PlanArchiveRepository). Keys are the
     # full `${subject}/${grade}/${filename}` the frontend also uses.
     archived = plan_archive_repo.load_all(tenant_id, user_id)
+    # This teacher's PREPARED plan keys for this subject·grade. The saved-plan library is shared
+    # read-only content (live gen deferred), so without this flag My Lessons would show every
+    # sample plan to every teacher. `prepared` lets the client show only what she actually made;
+    # a plan a section is attached to is treated as prepared client-side too (belt-and-braces).
+    prepared = prepared_plans_repo.load_all(tenant_id, user_id)
     # Enrich each listing with total_units (LU count) for the section-card rail. Best-effort:
     # a plan that fails to normalize just ships total_units=None and the card skips its rail.
     for p in plans:
         pkey = f"{subject}/{grade}/{p['filename']}"
         p["archived"] = pkey in archived
         p["archived_at"] = archived.get(pkey)
+        p["prepared"] = pkey in prepared
+        p["prepared_at"] = prepared.get(pkey)
         p["total_units"] = None
         try:
             saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
@@ -557,9 +573,14 @@ def save_readiness(req: ReadinessRequest,
 
 @app.delete("/readiness")
 def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
-    """Erase the current teacher's readiness profile (the "start setup over" action)."""
+    """Erase the current teacher's readiness profile (the "start setup over" action).
+
+    Also wipes the teacher's section teaching-state so a rebuilt profile can't inherit stale
+    chapter bindings for a reused section key (e.g. first-gen would show a card already
+    "attached" to a chapter from a previous run — see MEMORY.md 2026-07-05)."""
     tenant_id, user_id = identity
     readiness_repo.clear_profile(tenant_id, user_id)
+    section_state_repo.clear_all(tenant_id, user_id)
     return {"status": "cleared"}
 
 
@@ -658,6 +679,28 @@ def restore_plan(req: PlanArchiveRequest,
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to restore plan: {str(e)}")
     return {"status": "restored"}
+
+
+@app.get("/plans-prepared")
+def get_prepared_plans(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's prepared plan keys: {"prepared": {plan_key: prepared_at_iso}}."""
+    tenant_id, user_id = identity
+    return {"prepared": prepared_plans_repo.load_all(tenant_id, user_id)}
+
+
+@app.post("/plans-prepared")
+def mark_plan_prepared(req: PlanArchiveRequest,
+                       identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Record one plan as prepared by this teacher — called when she generates/attaches a lesson
+    (first-run activation, or the everyday PrepareLesson flow). Idempotent. This is what lets My
+    Lessons show only her own work rather than the whole shared sample library."""
+    tenant_id, user_id = identity
+    key = _plan_key(req.subject, req.grade, req.filename)
+    try:
+        prepared_plans_repo.mark(tenant_id, user_id, key)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to mark plan prepared: {str(e)}")
+    return {"status": "prepared"}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")
