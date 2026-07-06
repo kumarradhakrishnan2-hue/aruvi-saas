@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pad, API, pretty, gradeUp, withUser } from "../lib/format";
+import { getJSON, pad, API, pretty, gradeUp, userKey, withUser } from "../lib/format";
 import PeriodRows, { Stepper, toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
 import ViewModelView from "./ViewModelView";
 
@@ -153,7 +153,9 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
   // LocalStorage key — now just a same-browser cache for instant paint; the server-side
   // register (app/mirror/allocations/{subject}/{grade}/allocation.json) is the source of
   // truth and is what actually survives an API/web server restart or a fresh browser.
-  const allocationStorageKey = `allocations_${subject}_${grade}`;
+  // Scoped by user ID (A3, 2026-07-06): the allocation cache must not paint another teacher's
+  // numbers on a shared browser before the server register (source of truth) responds.
+  const allocationStorageKey = userKey(`allocations_${subject}_${grade}`);
 
   // Convert the saved server register ({chapter_num: AllocationRecord}) into the same
   // { durations, allocations, totals } shape buildFinalAllocation() produces, so the

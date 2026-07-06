@@ -864,8 +864,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
       ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
       : rawB;
     const setMethod = (m) => updGrade({ budget: { method: m, value: defaultValueFor(m, ppw) } });
-    const stepValue = (delta) => updGrade({ budget: { ...b, value: Math.max(0, b.value + delta) } });
-    const setValue = (v) => updGrade({ budget: { ...b, value: Math.max(0, v) } });
+    // Floor the entered figure at 1 (B3, 2026-07-06) — a 0-period year is never valid.
+    const stepValue = (delta) => updGrade({ budget: { ...b, value: Math.max(1, b.value + delta) } });
+    const setValue = (v) => updGrade({ budget: { ...b, value: Math.max(1, v || 0) } });
     const isLast = pi + 1 >= pendingIdxs.length;
     return (
       <div className="tp">
@@ -882,7 +883,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         {b.method !== "auto" && (
           <div className="tp-val-row">
             <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <input type="number" className="tp-val-input" min="0" value={b.value}
+            <input type="number" className="tp-val-input" min="1" value={b.value}
               onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
             <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
             <span className="tp-val-unit">{METHODS[b.method].unit}</span>
@@ -1036,8 +1037,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
       ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
       : rawB;
     const setMethod = (m) => updNum({ budget: { method: m, value: defaultValueFor(m, ppw) } });
-    const stepValue = (delta) => updNum({ budget: { ...b, value: Math.max(0, b.value + delta) } });
-    const setValue = (v) => updNum({ budget: { ...b, value: Math.max(0, v) } });
+    // Floor the entered figure at 1 (B3, 2026-07-06) — a 0-period year is never valid.
+    const stepValue = (delta) => updNum({ budget: { ...b, value: Math.max(1, b.value + delta) } });
+    const setValue = (v) => updNum({ budget: { ...b, value: Math.max(1, v || 0) } });
     return (
       <div className="tp">
         <div className="kicker kicker-ochre">{kicker} · annual budget</div>
@@ -1053,7 +1055,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         {b.method !== "auto" && (
           <div className="tp-val-row">
             <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <input type="number" className="tp-val-input" min="0" value={b.value}
+            <input type="number" className="tp-val-input" min="1" value={b.value}
               onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
             <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
             <span className="tp-val-unit">{METHODS[b.method].unit}</span>

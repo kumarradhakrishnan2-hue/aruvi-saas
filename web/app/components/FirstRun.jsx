@@ -212,6 +212,28 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // grade's chapters by effort index (api's /chapters endpoint does the maths, same allocator
   // Allocate.jsx uses). Falls back to the flat NCF_DEFAULT_PERIODS placeholder only when the
   // norm table has no figure for this subject·stage (e.g. Science·preparatory).
+  // The NCF estimate for a given chapter number, or the flat placeholder when the norm table
+  // has no figure for this subject·stage.
+  const estimateFor = (no) => {
+    const c = chapters.find((x) => String(x.chapter_number) === String(no));
+    return c && c.ncf_estimated_periods != null ? Math.round(c.ncf_estimated_periods) : DEFAULT_PERIODS;
+  };
+
+  // Pick a chapter AND reset its estimate in the SAME event so both land in one batched render
+  // (B2, 2026-07-06). Previously the estimate was reset in a post-paint effect keyed on chapterNo,
+  // so it trailed the wheel by one render — during fast scrolling that showed a flash of the prior
+  // chapter's estimate before converging. Updating them together removes the trailing cycle.
+  const pickChapter = (no) => {
+    setChapterNo(no);
+    const rec = estimateFor(no);
+    setDefaultPeriods(rec);
+    setPeriods(rec);
+    setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
+  };
+
+  // Still needed for the initial load (chapters arrive AFTER chapterNo is seeded) and any external
+  // chapterNo change: keep the estimate in step. A no-op when pickChapter already set it (same
+  // value → React bails), so it never clobbers a manual "Change periods" edit (chapterNo unchanged).
   useEffect(() => {
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
@@ -219,7 +241,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     setDefaultPeriods(rec);
     setPeriods(rec);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
-  }, [chapterNo, chapters]);
+  }, [chapters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const chosenChapter = chapters.find((c) => String(c.chapter_number) === String(chapterNo));
 
@@ -604,8 +626,13 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     const bSel = budget && budget.method === "auto"
       ? { method: "auto", value: ppw * ESTIMATE_WEEKS } : budget;
     const setMethod = (m) => setBudget({ method: m, value: defaultValueFor(m, ppw) });
-    const stepValue = (delta) => setBudget({ ...bSel, value: Math.max(0, bSel.value + delta) });
-    const setValue = (v) => setBudget({ ...bSel, value: Math.max(0, v) });
+    // Floor the entered figure at 1 (B3, 2026-07-06): a 0-period year is never a real answer
+    // (allocation would hand every chapter 0 periods), so the input simply can't hold 0 — clearing
+    // it or stepping down snaps back to 1. "auto" needs no input (always a positive estimate).
+    const stepValue = (delta) => setBudget({ ...bSel, value: Math.max(1, bSel.value + delta) });
+    const setValue = (v) => setBudget({ ...bSel, value: Math.max(1, v || 0) });
+    // Backstop: if anything still yields a non-positive (or NaN) budget, hold the CTA and warn.
+    const emptyBudget = picked && !(budgetPeriods(ppw, bSel) > 0);
     return (
       <div className="fr-wrap">
         <Brand />
@@ -631,13 +658,16 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                       {m !== "auto" && (
                         <div className="tp-val-row">
                           <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
-                          <input type="number" className="tp-val-input" min="0" value={bSel.value}
+                          <input type="number" className="tp-val-input" min="1" value={bSel.value}
                             onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
                           <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
                           <span className="tp-val-unit">{METHODS[m].unit}</span>
                         </div>
                       )}
                       <p className="tp-total">≈ {budgetPeriods(ppw, bSel)} periods for the year, at {ppw} a week</p>
+                      {m !== "auto" && budgetPeriods(ppw, bSel) <= 0 && (
+                        <p className="fr-bud-warn">Enter how many {METHODS[m].unit} you teach — a year needs at least a few periods.</p>
+                      )}
                       {m === "auto" && (
                         <p className="tp-estimate-sub">{ncfTotal != null
                           ? `(based on a 30-week year. Please note however that as per NCF, this class requires ${ncfTotal} periods.)`
@@ -651,7 +681,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           </div>
         </div>
         <div className="fr-foot">
-          <button type="button" className="primary fr-cta" disabled={!picked} onClick={goCreateCards}>
+          <button type="button" className="primary fr-cta" disabled={!picked || emptyBudget} onClick={goCreateCards}>
             Set up my class ✓
           </button>
           <button className="fr-link" onClick={() => setStep("acqPpw")}>← Back</button>
@@ -687,7 +717,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
 
         {chapters.length === 0 && <div className="fr-loading">Loading chapters…</div>}
         {chapters.length > 0 && (
-          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo} rowPx={92}
+          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={pickChapter} rowPx={92}
             items={chapters.map((c) => ({ id: String(c.chapter_number), chip: c.chapter_number, label: c.chapter_title }))} />
         )}
 

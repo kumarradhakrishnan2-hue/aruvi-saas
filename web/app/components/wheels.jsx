@@ -26,6 +26,34 @@ function _maxLabelWidth(items, font) {
 export const WHEEL_ROW = 64;  // px height of RollWheel's single visible row (shared with CSS)
 export const PICK_ROW = 52;   // px height of one PickWheel row (4 visible at once = 208px)
 
+/* Step a scroll box by exactly one row, robustly (B1, 2026-07-06). The ▲▼ arrow buttons used a
+ * relative scrollBy({behavior:"smooth"}), which some engines silently no-op when smooth-scroll is
+ * throttled — a background/inactive tab, prefers-reduced-motion, or certain mobile browsers — so
+ * the arrows appeared dead there (drag always worked). This computes the ABSOLUTE target row from
+ * the current position, animates to it when motion is allowed, and GUARANTEES the move: a short
+ * fallback snaps scrollTop directly if the smooth scroll didn't take. Also honours reduced-motion
+ * (jump instantly rather than animate). */
+export function stepScroll(el, dir, rowPx, rowCount) {
+  if (!el) return;
+  const cur = Math.round(el.scrollTop / rowPx);
+  const max = Math.max(0, (rowCount || 0) - 1);
+  const target = rowCount ? Math.min(max, Math.max(0, cur + dir)) : cur + dir;
+  const top = target * rowPx;
+  const reduce = typeof window !== "undefined"
+    && typeof window.matchMedia === "function"
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  try {
+    el.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+  } catch {
+    el.scrollTop = top; // very old engines without the options form
+  }
+  // If smooth-scroll was suppressed, the box hasn't landed on the target row shortly after —
+  // snap it there directly so the arrow is never a no-op.
+  setTimeout(() => {
+    if (el && Math.round(el.scrollTop / rowPx) !== target) el.scrollTop = top;
+  }, 240);
+}
+
 // One gesture demo per page load: whichever RollWheel the teacher meets FIRST rocks a few px
 // and settles back, so the box demonstrates its own gesture (words get missed).
 let wheelDemoDone = false;
@@ -62,11 +90,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
 
   // moves exactly one row; shared by the keyboard handler AND the ▲▼ cue buttons below, so
   // tapping a cue behaves identically to pressing an arrow key
-  const step = (dir) => {
-    const el = ref.current;
-    if (!el) return;
-    el.scrollBy({ top: dir * rowPx, behavior: "smooth" });
-  };
+  const step = (dir) => stepScroll(ref.current, dir, rowPx, items.length);
 
   const onKeyDown = (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
@@ -165,10 +189,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
  * order) no matter where the wheel is scrolled. Set `summaryLabel={false}` to suppress it. */
 export function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children, summaryLabel = true }) {
   const wheelRef = useRef(null);
-  const step = (dir) => {
-    const el = wheelRef.current;
-    if (el) el.scrollBy({ top: dir * PICK_ROW, behavior: "smooth" });
-  };
+  const step = (dir) => stepScroll(wheelRef.current, dir, PICK_ROW, options.length);
   const onKeyDown = (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
     else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }

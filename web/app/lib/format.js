@@ -33,6 +33,14 @@ export function clearUser() {
   try { window.localStorage.removeItem(USER_KEY); } catch {}
 }
 
+/* Build a per-user localStorage key so one teacher's client state never bleeds into another's
+ * on a shared browser (A3, 2026-07-06). Mirrors the plus_portal_{user}/expand_*_{user} scheme
+ * already used in MyPlans. Pre-login (no user yet) it falls back to a bare "_" suffix, so the
+ * key is still stable and non-leaking. Use for any per-user client cache/preference key. */
+export function userKey(base) {
+  return `${base}_${getUser() || ""}`;
+}
+
 /* Merge the X-Aruvi-User header into any fetch options, preserving caller-set headers. */
 export function withUser(opts = {}) {
   const user = getUser();

@@ -410,6 +410,10 @@ def get_plans(subject: str, grade: str,
 @app.get("/plans/{subject}/{grade}/{filename}/view")
 def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
     sub = _subject(subject)
+    # Reject path-ish filenames with a 400 up front, matching the archive/prepared endpoints'
+    # _plan_key guard (A4, 2026-07-06). load_saved_plan below also guards (returns None → 404),
+    # but validating here keeps the error code consistent across the plan endpoints.
+    _plan_key(subject, grade, filename)
     saved = data.load_saved_plan(subject, grade, filename)
     if not saved:
         raise HTTPException(status_code=404, detail="Saved plan not found.")

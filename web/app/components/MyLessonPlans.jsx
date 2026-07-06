@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { API, getJSON, pad, pretty, withUser } from "../lib/format";
+import { API, getJSON, pad, pretty, userKey, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
 import LessonView from "./LessonView";
 import { RollWheel } from "./wheels";
@@ -41,8 +41,9 @@ const classNum = (g) => CLASS_NUM[(g || "").toLowerCase()] ?? (g || "");
 // My Classes and back (she flips between the two to pick chapters — resetting to the first
 // subject/class each time is exactly the annoyance to avoid). localStorage → survives the
 // unmount/remount on tab switch AND a full refresh.
-const LS_SUBJECT = "mylessons_subject";
-const LS_CLASS = "mylessons_class";
+// Scoped by user ID (A3, 2026-07-06) so the remembered Subject/Class of one teacher never
+// carries into another's session on a shared browser. Resolved inside the component (per
+// signed-in user), not as a module constant.
 const lsGet = (k) => { if (typeof window === "undefined") return null; try { return window.localStorage.getItem(k); } catch { return null; } };
 const lsSet = (k, v) => { if (typeof window === "undefined") return; try { window.localStorage.setItem(k, v); } catch {} };
 
@@ -68,6 +69,8 @@ const OpenArchiveIcon = ({ size = 18 }) => (
 );
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
+  const LS_SUBJECT = userKey("mylessons_subject");
+  const LS_CLASS = userKey("mylessons_class");
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
   // Subject in focus (by display name); class in focus (uppercase Roman). RESTORE the last choice
