@@ -26,6 +26,18 @@ progress is made. A fresh session starts cold — this file is how context carri
 > estimator) — never a grid of days. Where this section or the v0.2 spec says "My Week
 > becomes Home", "arrange the week", "Calendar", or shows a 4-item bottom bar, read it as
 > superseded by this note.
+>
+> ★ **ADDED 2026-07-06 — the standing "+" profile portal (the gliding path).** The "Do you
+> teach {subject} to other classes?" window appears **once, ever** (after first generation +
+> tour resolution, pinned to the first one-class subject). Once it is resolved (used, ✕-ed, or
+> ignored — a spent appearance never returns), a permanent prominent **"+"** appears in My Classes —
+> its own row, right side, below "Your classes are ready", above the section cards. It opens a
+> Subject · Class · Section chooser routing into TeachingProfile's SAME flows (one-shot
+> `profilePortal` intent in page.jsx), in **manage mode**: enrolled options pre-ticked, untick =
+> removal behind the dustbins' scoped warning — warned, never blocked (keep-≥1-subject still
+> holds). A portal visit always exits to My Classes, never the profile accordion. After the one
+> window, all growth is pull via the + — no further reminders, ever. STATIC-verified only;
+> live + mobile pass pending (MEMORY.md 2026-07-06 top entry).
 
 The product is **pivoting** from an "upfront-profile-first" flow to a **mobile-first,
 progressive-acquisition** model. Full spec: `docs/Aruvi_Mobile_First_Progressive_Acquisition_Model_v0.2.md`

@@ -186,7 +186,7 @@ const gradeDraftFrom = (rec) => {
   };
 };
 
-export default function TeachingProfile({ readiness, onChange, onBack }) {
+export default function TeachingProfile({ readiness, onChange, onBack, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal }) {
   // SINGLE SOURCE OF TRUTH: the profile lives in the parent's `readiness` prop. Derive the
   // canonical subjects[] straight from it — no mirrored local copy. That way an edit (which
   // routes through persist → onChange → setReadiness) re-renders THIS view and every other
@@ -202,7 +202,21 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
 
   /* flow state (conversational screens) */
   // screen: view | pickSubjects | classes | class | subjectDone | addSection | editNums
+  //         | editSections | portalSubject | portalClass
   const [screen, setScreen] = useState("view");
+  // "add" (the gear's + buttons: only NEW options offered) vs "manage" (the My Classes "+"
+  // portal: enrolled options shown pre-ticked; unticking one = removal behind the same scoped
+  // warning the dustbins use — warned, never blocked, since mid-year reassignments are real).
+  const [pickMode, setPickMode] = useState("add");      // pickSubjects screen
+  const [classMode, setClassMode] = useState("add");    // classes screen
+  const [portalGoal, setPortalGoal] = useState(null);   // "class" | "section" — what the portal pick leads to
+  const [portalSi, setPortalSi] = useState(null);       // portal: chosen subject index (section goal)
+  const [subConfirm, setSubConfirm] = useState(null);   // { removes:[names], adds:[names] } — manage-subjects warning
+  const [classConfirm, setClassConfirm] = useState(null); // { removes:[romans], adds:[romans] } — manage-classes warning
+  const [fromPortal, setFromPortal] = useState(false);  // visit began at My Classes' "+" → every exit returns there
+  // Back links still route through setScreen("view"); on a portal visit the bounce effect
+  // (below) forwards that to My Classes, so the label says where she'll actually land.
+  const backLabel = fromPortal ? "← Back to My Classes" : "← Back to profile";
   const [catalogue, setCatalogue] = useState([]);        // all offerable subject display names
   const [queue, setQueue] = useState([]); const [qi, setQi] = useState(0); // addSubject queue
   const [picked, setPicked] = useState([]);              // generic multi-pick buffer
@@ -241,6 +255,47 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
     if (!canon.length) { setOpenSubject(null); return; }
     if (!canon.some((s) => s.name === openSubject)) setOpenSubject(canon[0].name);
   }, [canon]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Arrived from the My Classes "add more classes in this subject" prompt: open that subject
+  // and launch the SAME add-a-class flow the "+ add a class" button uses, then tell the parent
+  // to clear the directive. Guarded to run once (a re-render must not relaunch it).
+  const autoAddDoneRef = useRef(false);
+  useEffect(() => {
+    if (!autoAddClassSubject || autoAddDoneRef.current) return;
+    const si = canon.findIndex((s) => s.name === autoAddClassSubject);
+    if (si < 0) return; // wait until canon carries the subject
+    autoAddDoneRef.current = true;
+    setOpenSubject(autoAddClassSubject);
+    startAddClass(si);
+    onConsumeAutoAdd && onConsumeAutoAdd();
+  }, [autoAddClassSubject, canon]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Arrived from My Classes' standing "+" portal (founder, 2026-07-06): launch the manage
+  // screen for the chosen level — Subject straight in; Class/Section via a subject (and class)
+  // pick first, skipped when there is only one. Same one-shot guard as the auto-add directive.
+  const portalDoneRef = useRef(false);
+  useEffect(() => {
+    if (!portalIntent || portalDoneRef.current || !canon.length) return;
+    portalDoneRef.current = true;
+    setFromPortal(true);
+    if (portalIntent === "subject") startManageSubjects();
+    else if (portalIntent === "class") {
+      if (canon.length === 1) startManageClasses(0);
+      else { setPortalGoal("class"); setScreen("portalSubject"); }
+    } else if (portalIntent === "section") {
+      if (canon.length === 1) portalPickClass(0);
+      else { setPortalGoal("section"); setScreen("portalSubject"); }
+    }
+    onConsumePortal && onConsumePortal();
+  }, [portalIntent, canon]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // A portal-initiated visit ALWAYS ends in My Classes, never on the profile accordion
+  // (founder, 2026-07-06): she came from her cards, so every exit — completing the flow,
+  // cancelling, or any "back" link — returns her there. Every flow ending funnels through
+  // setScreen("view"), so this one bounce covers them all. onBack is page.jsx's goClasses.
+  useEffect(() => {
+    if (fromPortal && screen === "view") onBack && onBack();
+  }, [fromPortal, screen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const persist = (subjectsOut) => {
     // Optimistic: push straight to the parent so the view reflects instantly — no local mirror
@@ -332,7 +387,51 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
   };
 
   /* ── add flows ── */
-  const startAddSubject = () => { setPicked([]); setScreen("pickSubjects"); };
+  const startAddSubject = () => { setPicked([]); setPickMode("add"); setClassMode("add"); setScreen("pickSubjects"); };
+
+  /* ── manage flows (the My Classes "+" portal) — same screens, enrolled options pre-ticked;
+     unticking removes behind ONE scoped warning. Warned, never blocked. ── */
+  const startManageSubjects = () => {
+    setPicked(canon.map((s) => s.name));
+    setPickMode("manage"); setClassMode("add");
+    setScreen("pickSubjects");
+  };
+  const startManageClasses = (si) => {
+    setClassMode("manage");
+    setQueue([canon[si].name]); setQi(0);
+    beginSubjectRun(canon[si].name);
+    setPicked((canon[si].grades || []).map((g) => g.grade)); // pre-tick enrolled (beginSubjectRun clears picked)
+  };
+  // Section goal: subject chosen → straight to editSections when the subject has one class,
+  // else ask which class first.
+  const portalPickClass = (si) => {
+    const sub = canon[si];
+    if ((sub.grades || []).length === 1) startEditSections(si, 0);
+    else { setPortalSi(si); setScreen("portalClass"); }
+  };
+
+  const startSubjectAdds = (adds) => { setClassMode("add"); setQueue(adds); setQi(0); beginSubjectRun(adds[0]); };
+  const onManageSubjectsContinue = () => {
+    const enrolled = canon.map((s) => s.name);
+    const adds = picked.filter((n) => !enrolled.includes(n));
+    const removes = enrolled.filter((n) => !picked.includes(n));
+    if (!adds.length && !removes.length) { setScreen("view"); return; }
+    if (removes.length) setSubConfirm({ removes, adds });
+    else startSubjectAdds(adds);
+  };
+  const applySubjectChanges = () => {
+    const { removes, adds } = subConfirm;
+    const next = deepCopy(canon).filter((s) => {
+      if (!removes.includes(s.name)) return true;
+      s.grades.forEach((g) => g.sections.forEach((x) =>
+        clearSectionState(s.name, g.grade, `${classNum(g.grade)}${secLetter(x)}`)));
+      return false;
+    });
+    persist(next);
+    setSubConfirm(null);
+    if (adds.length) startSubjectAdds(adds);
+    else setScreen("view");
+  };
 
   // seed the conversational run for ONE subject; pending = which grades still get questions
   const beginSubjectRun = (name) => {
@@ -361,23 +460,55 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
   };
 
   const startAddClass = (si) => {
+    setClassMode("add");
     setQueue([canon[si].name]); setQi(0);
     beginSubjectRun(canon[si].name);
   };
 
-  // classes step continue: NEW grades only get questions; existing ones keep their answers
-  const onClassesContinue = () => {
-    const have = draft.grades.map((g) => g.grade);
-    const added = picked.filter((g) => !have.includes(g));
-    const all = [...draft.grades, ...added.map((roman) => ({
+  // classes step continue: NEW grades only get questions; existing ones keep their answers.
+  // Shared by the add path (base = current draft grades) and the manage path (base = the
+  // grades KEPT after a removal confirm).
+  const continueWithGrades = (baseGrades, addedRomans) => {
+    const all = [...baseGrades, ...addedRomans.map((roman) => ({
       grade: roman, sections: [], durations: [DEFAULT_DURATION],
       ppw_by_duration: { [DEFAULT_DURATION]: DEFAULT_PPW },
       periods_per_week: DEFAULT_PPW, budget: null,
     }))].sort((a, b) => byRoman(a.grade, b.grade));
-    const pend = all.map((g, i) => (added.includes(g.grade) ? i : -1)).filter((i) => i >= 0);
+    const pend = all.map((g, i) => (addedRomans.includes(g.grade) ? i : -1)).filter((i) => i >= 0);
     setDraft((d) => ({ ...d, grades: all }));
     setPendingIdxs(pend); setPi(0); setClassStep("sections");
     setScreen("class");
+  };
+  const onClassesContinue = () => {
+    const have = draft.grades.map((g) => g.grade);
+    continueWithGrades(draft.grades, picked.filter((g) => !have.includes(g)));
+  };
+  // Manage-classes continue: unticked enrolled classes = removals (warned first); newly ticked
+  // ones queue the usual per-class questions afterwards.
+  const onManageClassesContinue = () => {
+    const have = draft.grades.map((g) => g.grade);
+    const adds = picked.filter((g) => !have.includes(g));
+    const removes = have.filter((g) => !picked.includes(g));
+    if (!adds.length && !removes.length) { setScreen("view"); return; }
+    if (removes.length) setClassConfirm({ removes, adds });
+    else continueWithGrades(draft.grades, adds);
+  };
+  const applyClassChanges = () => {
+    const { removes, adds } = classConfirm;
+    // Removed classes lose their section bookmarks (draft grade sections are letters).
+    draft.grades.forEach((g) => {
+      if (removes.includes(g.grade)) g.sections.forEach((sec) =>
+        clearSectionState(draft.name, g.grade, `${classNum(g.grade)}${sec}`));
+    });
+    const keep = draft.grades.filter((g) => !removes.includes(g.grade));
+    setClassConfirm(null);
+    if (adds.length) continueWithGrades(keep, adds);
+    else if (keep.length) { finalizeSubject({ ...draft, grades: keep }); setScreen("view"); }
+    else {
+      // last class taken away and nothing added — the subject goes with it (warned in the confirm)
+      persist(deepCopy(canon).filter((s) => s.name !== draft.name));
+      setScreen("view");
+    }
   };
 
   const gIdx = pendingIdxs[pi];
@@ -508,37 +639,109 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
 
   /* ════════════════════ conversational screens ════════════════════ */
 
+  // Portal pick screens — the "+" chose Class or Section; ask which subject (and class) first.
+  if (screen === "portalSubject") {
+    return (
+      <div className="tp">
+        <div className="kicker kicker-ochre">Your teaching · {portalGoal === "class" ? "classes" : "sections"}</div>
+        <h1 className="fr-q">In which subject?</h1>
+        <p className="fr-hint">{portalGoal === "class"
+          ? "Pick the subject whose classes you want to change."
+          : "Pick the subject, then the class whose sections you want to change."}</p>
+        <div className="tp-portal-list">
+          {canon.map((s, si) => (
+            <button key={s.name} type="button" className="tp-portal-row"
+              onClick={() => (portalGoal === "class" ? startManageClasses(si) : portalPickClass(si))}>
+              <span>{s.name}</span><span className="tp-portal-go" aria-hidden="true">›</span>
+            </button>
+          ))}
+        </div>
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
+      </div>
+    );
+  }
+
+  if (screen === "portalClass") {
+    const sub = canon[portalSi];
+    if (!sub) return null;
+    return (
+      <div className="tp">
+        <div className="kicker kicker-ochre">{sub.name} · sections</div>
+        <h1 className="fr-q">Which class?</h1>
+        <p className="fr-hint">Pick the class whose sections you want to change.</p>
+        <div className="tp-portal-list">
+          {sub.grades.map((g, gi) => (
+            <button key={g.grade} type="button" className="tp-portal-row"
+              onClick={() => startEditSections(portalSi, gi)}>
+              <span>Class {classNum(g.grade)}</span><span className="tp-portal-go" aria-hidden="true">›</span>
+            </button>
+          ))}
+        </div>
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
+      </div>
+    );
+  }
+
   if (screen === "pickSubjects") {
-    const options = catalogue.filter((n) => !canon.some((s) => s.name === n));
+    const manage = pickMode === "manage";
+    const enrolled = canon.map((s) => s.name);
+    const options = manage ? catalogue : catalogue.filter((n) => !enrolled.includes(n));
     const toggle = (n) => setPicked((a) => (a.includes(n) ? a.filter((x) => x !== n) : [...a, n]));
     return (
       <div className="tp">
-        <div className="kicker kicker-ochre">Teaching profile · add a subject</div>
-        <h1 className="fr-q">What else do you teach?</h1>
-        <p className="fr-hint">Pick the subject — or several — to add.</p>
+        <div className="kicker kicker-ochre">{manage ? "Your teaching · subjects" : "Teaching profile · add a subject"}</div>
+        <h1 className="fr-q">{manage ? "What do you teach?" : "What else do you teach?"}</h1>
+        <p className="fr-hint">{manage
+          ? "Tick a subject to add it — untick one to remove it. Keep at least one."
+          : "Pick the subject — or several — to add."}</p>
         {options.length === 0 && <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle} ariaLabel="Subjects to add">
-            <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={onSubjectsPicked}>
+          <PickWheel options={options} selected={picked} onToggle={toggle}
+            ariaLabel={manage ? "Your subjects" : "Subjects to add"}>
+            <button type="button" className="primary fr-cta" disabled={!picked.length}
+              onClick={manage ? onManageSubjectsContinue : onSubjectsPicked}>
               Continue
             </button>
           </PickWheel>
         )}
-        <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
+
+        {/* Manage-mode removal warning — one scoped confirm naming exactly what goes, same
+            voice as the dustbins'. Confirming applies removals, then queues any adds. */}
+        {subConfirm && (() => {
+          const names = subConfirm.removes.join(", ");
+          const classesOf = subConfirm.removes.map((n) => {
+            const s = canon.find((x) => x.name === n);
+            return s ? (s.grades || []).map((g) => `Class ${classNum(g.grade)}`).join(", ") : "";
+          }).filter(Boolean).join(" · ");
+          return (
+            <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) setSubConfirm(null); }}>
+              <div className="fr-modal">
+                <h2 className="fr-q">Remove {names}?</h2>
+                <p className="fr-hint">{classesOf || "Its classes"} — all cards and bookmarks — will be removed. Your lessons stay in the library.</p>
+                <button type="button" className="tp-remove-confirm" onClick={applySubjectChanges}>Yes, remove {names}</button>
+                <button type="button" className="fr-link fr-center" onClick={() => setSubConfirm(null)}>Keep {subConfirm.removes.length === 1 ? "it" : "them"}</button>
+              </div>
+            </div>
+          );
+        })()}
       </div>
     );
   }
 
   if (screen === "classes") {
+    const manageC = classMode === "manage";
     const have = draft.grades.map((g) => g.grade);
-    const options = gradeOptions.filter((g) => !have.includes(g));
+    const options = manageC ? gradeOptions : gradeOptions.filter((g) => !have.includes(g));
     const toggle = (roman) => setPicked((a) => (a.includes(roman) ? a.filter((x) => x !== roman) : [...a, roman]));
     const adding = have.length > 0; // add-a-class on an existing subject vs a brand-new subject
     return (
       <div className="tp">
-        <div className="kicker kicker-ochre">{draft.name}{queue.length > 1 ? ` · subject ${qi + 1} of ${queue.length}` : ""}</div>
-        <h1 className="fr-q">{adding ? `Which classes are you adding for ${draft.name}?` : `Which classes do you teach ${draft.name} to?`}</h1>
-        {adding && <p className="fr-hint">Your current classes stay as they are — pick only the new ones.</p>}
+        <div className="kicker kicker-ochre">{manageC ? `${draft.name} · classes` : `${draft.name}${queue.length > 1 ? ` · subject ${qi + 1} of ${queue.length}` : ""}`}</div>
+        <h1 className="fr-q">{manageC ? `Which classes do you teach ${draft.name} to?`
+          : adding ? `Which classes are you adding for ${draft.name}?` : `Which classes do you teach ${draft.name} to?`}</h1>
+        {manageC && <p className="fr-hint">Tick a class to add it — untick one to remove it.</p>}
+        {!manageC && adding && <p className="fr-hint">Your current classes stay as they are — pick only the new ones.</p>}
         {gradeOptions.length === 0 && <div className="fr-loading">Loading classes…</div>}
         {gradeOptions.length > 0 && options.length === 0 && (
           <p className="fr-hint">Every class Aruvi offers for {draft.name} is already in your profile.</p>
@@ -546,12 +749,34 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
         {options.length > 0 && (
           <PickWheel options={options} selected={picked} onToggle={toggle}
             ariaLabel={`Classes for ${draft.name}`} labelFor={(g) => `Class ${classNum(g)}`}>
-            <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={onClassesContinue}>
+            <button type="button" className="primary fr-cta" disabled={manageC ? false : !picked.length}
+              onClick={manageC ? onManageClassesContinue : onClassesContinue}>
               Continue
             </button>
           </PickWheel>
         )}
-        <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+
+        {/* Manage-mode removal warning — names the classes AND their section cards; if nothing
+            is left the subject goes with them (warned, never blocked). */}
+        {classConfirm && (() => {
+          const names = classConfirm.removes.map((r) => `Class ${classNum(r)}`).join(", ");
+          const tags = classConfirm.removes.map((roman) => {
+            const g = draft.grades.find((x) => x.grade === roman);
+            return g && g.sections.length ? g.sections.map((sec) => `${classNum(roman)}${sec}`).join(", ") : `Class ${classNum(roman)}`;
+          }).join(", ");
+          const allGone = classConfirm.removes.length === draft.grades.length && !classConfirm.adds.length;
+          return (
+            <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) setClassConfirm(null); }}>
+              <div className="fr-modal">
+                <h2 className="fr-q">Remove {names} from {draft.name}?</h2>
+                <p className="fr-hint">{tags} — their cards and bookmarks — will be removed.{allGone ? ` No class is left — ${draft.name} goes with it.` : ""} Your lessons stay in the library.</p>
+                <button type="button" className="tp-remove-confirm" onClick={applyClassChanges}>Yes, remove {names}</button>
+                <button type="button" className="fr-link fr-center" onClick={() => setClassConfirm(null)}>Keep {classConfirm.removes.length === 1 ? "it" : "them"}</button>
+              </div>
+            </div>
+          );
+        })()}
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
       </div>
     );
   }
@@ -576,7 +801,7 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
               Continue
             </button>
           </PickWheel>
-          <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+          <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
         </div>
       );
     }
@@ -716,7 +941,7 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
           ariaLabel="Sections to add" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
           <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={saveAddSection}>Save</button>
         </PickWheel>
-        <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
       </div>
     );
   }
@@ -734,7 +959,7 @@ export default function TeachingProfile({ readiness, onChange, onBack }) {
           ariaLabel="Sections" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
           <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={requestEditSections}>Save</button>
         </PickWheel>
-        <button className="fr-link" onClick={() => setScreen("view")}>← Back to profile</button>
+        <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
 
         {secConfirm && (
           <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) setSecConfirm(null); }}>

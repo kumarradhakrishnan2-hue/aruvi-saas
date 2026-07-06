@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import FirstRun from "./components/FirstRun";
 import TeachingProfile from "./components/TeachingProfile";
 import MyLessonPlans from "./components/MyLessonPlans";
+import GuidedTour from "./components/GuidedTour";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -46,12 +47,35 @@ export default function Home() {
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
   const [readinessLoaded, setReadinessLoaded] = useState(false); // has GET /readiness resolved? (gates the first-run decision, avoids a flash)
   const [editFlow, setEditFlow] = useState(null);  // "profile" (settings gear) | "lessonplans" (My Lessons tab) | null (My Classes home)
+  const [profileAutoAdd, setProfileAutoAdd] = useState(null);  // subject NAME to auto-launch the add-a-class flow for (from the My Classes "expand classes" prompt)
+  const [profilePortal, setProfilePortal] = useState(null);  // "subject" | "class" | "section" — one-shot intent from My Classes' standing "+" portal
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
   // How the Generate tab should open this time:
   //   { mode: "pick" }                     → show the G1.9 subject·grade picker (multi-choice)
   //   { mode: "scoped", subject, grade }   → skip picker, go straight in for that subject·grade
   // Cleared once Generate consumes it. Generate is only ever reached through this handler.
   const [generateEntry, setGenerateEntry] = useState(null);
+
+  /* First-run guided tour (restructured 2026-07-06). `tour` is the current step, 1–11 (or null);
+   * the walk is launched from the "Show me how" nudge on My Classes and is GUIDE-DRIVEN: every
+   * step advances with Next / reverses with Back, and the transitions here perform whatever the
+   * step implies (tab navigation, opening the preview, the real attach — done inside MyPlans —
+   * opening the popup, the profile). `tourInfo` carries the target section tag + chapter title
+   * (reported up by MyPlans) so the step copy can name them.
+   *
+   * WHY skip is SESSION-ONLY, not a persisted flag (fixed 2026-07-06, kumar23): the tour offer is
+   * gated by SERVER-DERIVED first-run state — MyPlans shows the nudge only while a lesson is
+   * prepared but nothing is attached yet (`!anyBound && anyPlans`), which self-closes forever the
+   * moment she attaches. A standalone per-user localStorage "tour done" flag is exactly the desync
+   * trap the activation-flag note (top of file) warns about: deleting a test user's profile server-
+   * side left the stale browser flag behind, so the fresh first run never re-offered the guide.
+   * So skipping only hides it for THIS session (in-memory); a fresh login re-derives from the
+   * server. Once attached, the server state itself stops the offer — no client flag needed. */
+  const [tour, setTour] = useState(null);
+  const [tourInfo, setTourInfo] = useState(null);   // { tag, chapter } from MyPlans
+  const [tourDismissed, setTourDismissed] = useState(false);   // session-only; never persisted
+  const finishTour = () => { setTour(null); setTourDismissed(true); };
+  const startTour = () => setTour(1);
 
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
@@ -189,13 +213,49 @@ export default function Home() {
     clearUser(); setUserState("");
     setReady(false); setReadiness(null); setReadinessLoaded(false);
     setSubjects([]); setSubject(""); setTab("myplans"); setEditFlow(null);
+    setTour(null); setTourDismissed(false);
   };
 
   // The three destinations: the two centre tabs + the settings gear. Each leaves any
   // in-progress Generate flow and clears its pending entry/scope.
   const goClasses = () => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null); };
   const goLessons = () => { setEditFlow("lessonplans"); setTab("myplans"); setGenerateEntry(null); };
-  const goProfile = () => { setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+
+  // Tour Next — the guide performs the move each step implies before advancing. The view-level
+  // work (popup at 6/11, attach/unbind at the 6↔7 boundary, lesson at 8–9, demo-complete at
+  // 10–11) is orchestrated by MyPlans/MyLessonPlans off the numeric tourStep; here we only
+  // handle SHELL navigation: 2→3 open My Lessons · 4→5 back to My Classes · 11→12 open the
+  // profile (step 12 rings the settings gear over it) · 12 Done.
+  const tourNext = () => {
+    if (tour === 2) goLessons();
+    else if (tour === 4) goClasses();
+    else if (tour === 11) goProfile();
+    else if (tour === 12) { finishTour(); goClasses(); return; }
+    setTour(tour + 1);
+  };
+  // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
+  // highlight; 5→4 back to My Lessons (the preview re-opens there); 12→11 back to My Classes
+  // (the popup re-opens). Back from step 1 backs out to the nudge.
+  const tourBack = () => {
+    if (tour === 1) { setTour(null); return; }
+    if (tour === 3) goClasses();
+    else if (tour === 5) goLessons();
+    else if (tour === 12) goClasses();
+    setTour(tour - 1);
+  };
+  const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+  // From the My Classes "add more classes in this subject" prompt: open the teaching profile and
+  // auto-launch its existing add-a-class flow scoped to that subject (sections → durations →
+  // periods/week → annual budget per new class). TeachingProfile consumes the directive once.
+  const onExpandClasses = (subjectName) => {
+    setProfileAutoAdd(subjectName); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
+  };
+  // From My Classes' standing "+" portal (founder, 2026-07-06): open the teaching profile with a
+  // one-shot intent — "subject" | "class" | "section" — and TeachingProfile launches the matching
+  // manage screen (add AND remove, same flows the gear uses). Consumed once, like profileAutoAdd.
+  const onProfilePortal = (kind) => {
+    setProfileAutoAdd(null); setProfilePortal(kind); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
+  };
   // Which centre tab lights up: My Lessons only when the repository is open; the profile
   // (settings) view lights neither; everything else — home cards, Generate — reads as My Classes.
   const activeNav = editFlow === "lessonplans" ? "lessons" : editFlow === "profile" ? "none" : "classes";
@@ -224,7 +284,8 @@ export default function Home() {
         </div>
         <div className="hdr-user">
           <span className="hdr-user-name">{user}</span>
-          <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings">⚙</button>
+          <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings"
+            data-tour="settings-gear">⚙</button>
           <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
         </div>
       </header>
@@ -234,10 +295,12 @@ export default function Home() {
           Nouns only: My Classes (where did I stop?) and My Lessons (the plan repository).
           "+ Prepare Lesson" is a verb, so it lives as an action inside both views, never here. */}
       <nav className="tabs main-tabs" aria-label="Primary">
-        <button className={`tab ${activeNav === "classes" ? "active" : ""}`} onClick={goClasses}>
+        <button className={`tab ${activeNav === "classes" ? "active" : ""}`} onClick={goClasses}
+          data-tour="nav-classes">
           My Classes
         </button>
-        <button className={`tab ${activeNav === "lessons" ? "active" : ""}`} onClick={goLessons}>
+        <button className={`tab ${activeNav === "lessons" ? "active" : ""}`} onClick={goLessons}
+          data-tour="nav-lessons">
           My Lessons
         </button>
       </nav>
@@ -261,7 +324,8 @@ export default function Home() {
           {(editFlow === "lessonplans" && ready) ? (
             /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
-              <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection} />
+              <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
+                tourStep={tour} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
             /* Teaching profile (via the settings gear) — view + conversational redo (the SAME
@@ -270,8 +334,10 @@ export default function Home() {
              * flow inside this same view — the shell stays open; `ready` is untouched. A
              * signed-out return without rebuilding hits first run naturally (server profile
              * is gone, so GET /readiness comes back empty). */
-            <div className="editflow">
-              <TeachingProfile readiness={readiness} onChange={setReadiness} onBack={goClasses} />
+            <div className="editflow" data-tour="profile-root">
+              <TeachingProfile readiness={readiness} onChange={setReadiness} onBack={goClasses}
+                autoAddClassSubject={profileAutoAdd} onConsumeAutoAdd={() => setProfileAutoAdd(null)}
+                portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)} />
             </div>
           ) :
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
@@ -281,9 +347,18 @@ export default function Home() {
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
               user={user} onSignOut={onSignOut}
-              pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)} />}
+              pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)}
+              onStartTour={tourDismissed ? undefined : startTour}
+              tourActive={!!tour} tourStep={tour}
+              onTourInfo={setTourInfo} onExpandClasses={onExpandClasses} onProfilePortal={onProfilePortal} />}
         </main>
       </div>
+
+      {/* First-run guided tour overlay — 12 guide-driven steps ("N of 12", Back on every one).
+          Skip closes it for this session. */}
+      {tour && (
+        <GuidedTour step={tour} info={tourInfo} onNext={tourNext} onBack={tourBack} onSkip={finishTour} />
+      )}
 
     </>
   );

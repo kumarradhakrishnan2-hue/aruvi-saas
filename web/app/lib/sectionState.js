@@ -13,6 +13,33 @@ const chapterKey = (sk) => `current_chapter_${sk}`;
 const pointerKey = (sk) => `lu_pointer_${sk}`;
 const doneKey = (sk) => `lu_done_${sk}`;
 
+/* Bind a prepared chapter to a section — the single shared writer for "attach a lesson to a
+ * class", used by BOTH My Classes' "+" and the My Lessons preview's "Attach to a class" CTA so
+ * the two paths can never drift. Writes the optimistic localStorage cache (fresh pointer, not
+ * done) then pushes to the server. Switching to a new chapter resets pointer + done so the new
+ * chapter starts at its first learning unit. */
+export function bindSectionChapter(sectionKey, filename) {
+  if (typeof window === "undefined" || !sectionKey || !filename) return;
+  try {
+    window.localStorage.setItem(chapterKey(sectionKey), filename);
+    window.localStorage.removeItem(pointerKey(sectionKey));
+    window.localStorage.removeItem(doneKey(sectionKey));
+  } catch {}
+  pushSectionState(sectionKey);
+}
+
+/* Clear a section's binding (pointer + done too). The chapter itself is untouched (still in My
+ * Lessons); the card returns to the unstarted "Pick a chapter" state. Shared unbind writer. */
+export function unbindSection(sectionKey) {
+  if (typeof window === "undefined" || !sectionKey) return;
+  try {
+    window.localStorage.removeItem(chapterKey(sectionKey));
+    window.localStorage.removeItem(pointerKey(sectionKey));
+    window.localStorage.removeItem(doneKey(sectionKey));
+  } catch {}
+  pushSectionState(sectionKey);   // no chapter now → the server row is deleted (untrack)
+}
+
 /* Read one section's current state straight from the localStorage cache. */
 export function readLocalSection(sectionKey) {
   if (typeof window === "undefined") return { chapter: null, unit: null, done: false };

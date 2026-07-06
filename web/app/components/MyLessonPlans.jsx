@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pad, pretty, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
-import useSupportedGrades from "../lib/useSupportedGrades";
 import LessonView from "./LessonView";
 import { RollWheel } from "./wheels";
 
@@ -68,7 +67,7 @@ const OpenArchiveIcon = ({ size = 18 }) => (
   </svg>
 );
 
-export default function MyLessonPlans({ readiness, onAllocate }) {
+export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
   // Subject in focus (by display name); class in focus (uppercase Roman). RESTORE the last choice
@@ -80,10 +79,18 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     return subjects[0] ? subjects[0].name : "";
   });
   const [activeGrade, setActiveGrade] = useState(() => {
+    // Default to a class she actually TEACHES for the initial subject. A stale saved class — from
+    // another user in this same browser, or left over from before a profile delete/re-run — must
+    // NOT strand My Lessons on a class where her prepared lessons don't live (the "lesson not in My
+    // Lessons" bug, kumar23 2026-07-06: prepared english/iii was on disk, but My Lessons opened on a
+    // stale Class 7 and showed "no lessons prepared"). Derived from the current server profile, not
+    // trusted from the persisted value. She can still browse other classes via the wheel afterwards.
+    const savedSub = lsGet(LS_SUBJECT);
+    const s0 = (savedSub && subjects.find((s) => s.name === savedSub)) || subjects[0] || null;
+    const taught = (s0 && s0.grades ? s0.grades : []).map((g) => g.grade);
     const saved = lsGet(LS_CLASS);
-    if (saved) return saved;
-    const g = subjects[0] && subjects[0].grades && subjects[0].grades[0];
-    return g ? g.grade : "";
+    if (saved && taught.includes(saved)) return saved;
+    return taught[0] || "";
   });
   // Plans keyed `${subjectSlug}/${gradeSlug}` -> array (or undefined while loading).
   const [plansByKey, setPlansByKey] = useState({});
@@ -96,12 +103,11 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
   const [toast, setToast] = useState(null);         // { kind:"ok"|"block", text } | null
 
   const current = subjects.find((s) => s.name === activeSubject) || subjects[0] || null;
-  const grades = useMemo(() => (current && current.grades) || [], [current]);   // HER taught classes
-  // Class is NOT restricted to what she teaches: the wheel offers every class Aruvi has content
-  // for in this subject (a superset of hers). Picking a class with no prepared LPs falls through
-  // to the empty message + Prepare CTA. Her taught class (if this IS one) still supplies the
-  // sections that drive the per-section status; a non-taught class simply has no sections.
-  const supportedGrades = useSupportedGrades(activeSubject);   // Roman, ordered; superset of hers
+  const grades = useMemo(() => (current && current.grades) || [], [current]);   // HER enrolled classes
+  // The Class wheel is RESTRICTED to the classes she has enrolled for this subject in her profile
+  // (2026-07-06). It never offers a class she hasn't set up — a class shows here only once she adds
+  // it (via the "add another class" flow / teaching profile). Every offered class therefore has
+  // sections that drive the per-section status.
   const taughtGradeObj = grades.find((g) => g.grade === activeGrade) || null;
 
   const sSlug = current ? subjectSlug(current.name) : "";
@@ -109,16 +115,27 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
   const key = sSlug && gSlug ? `${sSlug}/${gSlug}` : "";
   const plans = key ? plansByKey[key] : undefined;
 
-  // Keep the active subject/grade valid as the profile changes.
+  // Keep the active subject AND class valid as the profile changes. The class is now restricted to
+  // her enrolled classes, so a stale saved class (from a prior profile, another user in this
+  // browser, or the old superset wheel) must be snapped back to one she actually teaches — never
+  // left pointing at a class that's no longer in her profile.
   useEffect(() => {
     if (!subjects.length) return;
-    if (!subjects.some((s) => s.name === activeSubject)) {
-      const s0 = subjects[0];
-      const g0 = s0.grades && s0.grades[0] ? s0.grades[0].grade : "";
-      setActiveSubject(s0.name); lsSet(LS_SUBJECT, s0.name);
+    const s = subjects.some((x) => x.name === activeSubject)
+      ? subjects.find((x) => x.name === activeSubject)
+      : subjects[0];
+    if (s.name !== activeSubject) {
+      const g0 = s.grades && s.grades[0] ? s.grades[0].grade : "";
+      setActiveSubject(s.name); lsSet(LS_SUBJECT, s.name);
+      setActiveGrade(g0); lsSet(LS_CLASS, g0);
+      return;
+    }
+    const taught = (s.grades || []).map((g) => g.grade);
+    if (!taught.includes(activeGrade)) {
+      const g0 = taught[0] || "";
       setActiveGrade(g0); lsSet(LS_CLASS, g0);
     }
-  }, [subjects, activeSubject]);
+  }, [subjects, activeSubject, activeGrade]);
 
   // Fetch the saved plans for the scoped subject·grade (a single small call per combo, cached).
   useEffect(() => {
@@ -172,10 +189,24 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     setOpening(true);
     try {
       const view = (await getJSON(`/plans/${sSlug}/${gSlug}/${p.filename}/view`)).view;
-      setOpenPlan({ view });
+      setOpenPlan({ view, plan: p });
     } finally { setOpening(false); }
   };
 
+  // Guided-tour orchestration (steps 3–4 live on this view). The guide DRIVES the preview: on
+  // step 4 it opens the first prepared lesson (the hand "clicked" the row); on any other step —
+  // Back to 3, or Back into this view from step 5 — the state converges idempotently. The first
+  // prepared, unarchived plan is the same one the list's top row shows (step 3's spotlight).
+  useEffect(() => {
+    if (tourStep == null) return;
+    if (tourStep === 4) {
+      if (!openPlan && !opening) {
+        const p = tourPlanOf();   // the most recently prepared lesson (see below)
+        if (p) openLesson(p);
+      }
+    } else if (openPlan) setOpenPlan(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourStep, plans, openPlan, opening]);
   // Exhaustive per-section state for one chapter: which sections completed it, which are on it now.
   // A section counts only if it's currently tracking THIS chapter (current_chapter === filename).
   const statusFor = (plan) => {
@@ -195,6 +226,18 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
     const { completed, live } = statusFor(plan);
     return completed.length > 0 || live.length > 0;
   };
+
+  // The guided tour's plan: her most recently PREPARED lesson — "the lesson you just now
+  // generated" — never an arbitrary library entry (/plans returns the whole shared library;
+  // gp[0] once made the guide walk a chapter she never generated). Steps 3 (row spotlight)
+  // and 4 (auto-open preview) both key off this, so they can never diverge.
+  const tourPlanOf = () => {
+    const arr = (Array.isArray(plans) ? plans : [])
+      .filter((p) => (p.prepared || isAttached(p)) && !p.archived)
+      .sort((a, b) => String(b.prepared_at || "").localeCompare(String(a.prepared_at || "")));
+    return arr[0] || null;
+  };
+  const tourPlan = tourStep != null ? tourPlanOf() : null;
 
   // Flip a plan's archived flag in local state (optimistic) so it moves between the two views
   // instantly, before the server round-trip resolves.
@@ -253,15 +296,23 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
   }, [toast]);
 
   if (opening) return <div className="spin">Opening plan…</div>;
-  if (openPlan) return <LessonView view={openPlan.view} onExit={() => setOpenPlan(null)} preview />;
+  if (openPlan) {
+    // READ-ONLY preview. The old "Attach to a class" CTA + section chooser are RETIRED
+    // (2026-07-06): attaching happens ONLY via the "+" on a My Classes section card → the
+    // track-a-chapter window — one true way, and the tour teaches exactly that.
+    return <LessonView view={openPlan.view} onExit={() => setOpenPlan(null)} preview />;
+  }
 
   if (!current) {
     return <div className="mlp-empty">No subjects set up yet. Finish setup in My Classes to see your lessons here.</div>;
   }
 
   const subjectItems = subjects.map((s) => ({ id: s.name, label: s.name }));
-  // Every supported class for this subject (superset of hers) — not just what she teaches.
-  const gradeItems = supportedGrades.map((g) => ({ id: g, label: `${classNum(g)}` }));
+  // ONLY the classes she has enrolled for this subject, low-to-high — never the content superset.
+  const gradeItems = grades
+    .map((g) => g.grade)
+    .sort((a, b) => classNum(a) - classNum(b))
+    .map((g) => ({ id: g, label: `${classNum(g)}` }));
 
   const prepareCTA = (
     <div className="mlp-allocate">
@@ -341,13 +392,14 @@ export default function MyLessonPlans({ readiness, onAllocate }) {
         </div>
       ) : (
         <div className="sc-list">
-          {shown.map((p) => {
+          {shown.map((p, pi) => {
             const { completed, live } = statusFor(p);
             const cls = effView === "archived"
               ? "mlp2-arch"
               : live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
             return (
-              <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}>
+              <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}
+                data-tour={tourStep === 3 && tourPlan && p.filename === tourPlan.filename ? "lesson-first" : undefined}>
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
                   <div className="sc-title">{p.chapter_title}</div>

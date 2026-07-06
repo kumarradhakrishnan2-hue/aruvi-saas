@@ -43,13 +43,17 @@ function UnitBody({ u, totalMin, assessment, onAssess }) {
         <span className="kicker kicker-soft">PHASES{totalMin ? ` · ${totalMin} MIN TOTAL` : ""}</span>
         {assessment && onAssess ? <span className="lv-assesslink" onClick={onAssess}>assessment here →</span> : null}
       </div>
+      {/* First phase carries data-tour="lesson-phase-1" — tour step 8 hangs its box just below
+          it, so everything from the chapter header down to phase 1 stays visible. */}
       {(u.activities && u.activities.length) ? u.activities.map((act, i) => (
-        <div className="phaserow" key={i}><span className="phasetext">{act}</span></div>
+        <div className="phaserow" key={i} data-tour={i === 0 ? "lesson-phase-1" : undefined}><span className="phasetext">{act}</span></div>
       )) : <div className="empty">No phases recorded for this unit.</div>}
       {u.learning_outcomes?.length ? (
         <div className="lv-lo"><span className="lv-lo-k">Learning outcome</span> {u.learning_outcomes.join("; ")}</div>
       ) : null}
-      {u.teacher_notes?.length ? <div className="lv-tnote">{u.teacher_notes.join(" ")}</div> : null}
+      {/* data-tour="lesson-notes": tour step 8 lifts its box ABOVE this block so the teacher
+          notes + mark-complete tail stay visible below the guide. */}
+      {u.teacher_notes?.length ? <div className="lv-tnote" data-tour="lesson-notes">{u.teacher_notes.join(" ")}</div> : null}
       {u.homework ? <div className="lv-lo"><span className="lv-lo-k">Homework</span> {u.homework}</div> : null}
     </>
   );
@@ -194,8 +198,11 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   if (preview || showFullPlan) {
     const pu = units[previewAt] || units[0];
     return (
-      <div className="lessonview">
-        <button className="back" onClick={showFullPlan ? () => setShowFullPlan(false) : onExit}>
+      // data-tour="preview-root": the guided tour's step-4 spotlight wraps the open preview.
+      <div className="lessonview" data-tour="preview-root">
+        {/* data-tour="preview-back": tour step 4's hand sits here ("go back and attach"). */}
+        <button className="back" data-tour="preview-back"
+          onClick={showFullPlan ? () => setShowFullPlan(false) : onExit}>
           ← back{showFullPlan ? " to teaching" : " to lesson plans"}
         </button>
         <div className="lv-hd">
@@ -218,6 +225,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
         </div>
 
         <UnitBody u={pu} totalMin={pu.meta?.duration_minutes} assessment={null} onAssess={null} />
+        {/* The preview is READ-ONLY: the old "Attach to a class" CTA is retired (2026-07-06) —
+            attaching happens only via the "+" on a My Classes section card. */}
       </div>
     );
   }
@@ -229,7 +238,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   const done = cur;                          // units completed before the current one
 
   return (
-    <div className="lessonview">
+    // data-tour="lesson-root": the guided tour's step-7 spotlight wraps the tracking view.
+    <div className="lessonview" data-tour="lesson-root">
       <button className="back" onClick={onExit}>← back to my plans</button>
       <div className="lv-hd">
         <div className="lv-hd-row">
@@ -300,7 +310,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
               <span className="lv-markicon" aria-hidden="true">ⓘ</span>
               <span>This is the final learning unit. Marking it complete finishes the chapter for this section.</span>
             </div>
-            <button className="primary lv-markbtn" onClick={markComplete}>Mark chapter complete</button>
+            <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark chapter complete</button>
           </div>
         )
       ) : (
@@ -309,7 +319,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
             <span className="lv-markicon" aria-hidden="true">ⓘ</span>
             <span>Marking this unit complete moves the teaching position to the next learning unit for this section.</span>
           </div>
-          <button className="primary lv-markbtn" onClick={markComplete}>Mark this unit complete</button>
+          {/* data-tour="mark-complete": the guided tour's step-8 spotlight + hand sit here. */}
+          <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark this unit complete</button>
         </div>
       )}
     </div>

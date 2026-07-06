@@ -347,7 +347,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       if (!match && plans.length) {
         match = plans[0];
         setPreviewNote(
-          `No saved test plan for Chapter ${chapterNo} yet — showing Chapter ${match.chapter_number} (${match.chapter_title}) as a stand-in preview.`
+          `Live generation isn’t on yet, and there’s no saved test plan for Chapter ${chapterNo} — so Chapter ${match.chapter_number} (“${match.chapter_title}”) is standing in. This stand-in is the lesson that lands in My Lessons.`
         );
       }
       if (!match) {
@@ -491,8 +491,16 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                 <p className="fr-plan-ready-sub">Your lesson has been generated successfully.</p>
               </div>
 
+              {/* UNMISSABLE stand-in disclosure (founder's call 2026-07-06): when the chosen
+                  chapter has no saved test plan, the substitution must be said out loud HERE —
+                  the note used to be set but never rendered on this teaser, while the card
+                  showed the CHOSEN chapter's title over the stand-in's numbers ("I picked
+                  chapter 5 but the system shows 9"). The teaser now always names the plan
+                  actually being deposited. */}
+              {previewNote && <div className="fr-standin" role="note">{previewNote}</div>}
+
               <div className="fr-teaser-card">
-                <h2 className="fr-teaser-title">{chosenChapter ? chosenChapter.chapter_title : previewView.lesson_plan.chapter_title}</h2>
+                <h2 className="fr-teaser-title">{previewNote ? previewView.lesson_plan.chapter_title : (chosenChapter ? chosenChapter.chapter_title : previewView.lesson_plan.chapter_title)}</h2>
                 <p className="fr-teaser-sub">{pretty(subject)} · Class {classNum(grade)}</p>
                 <div className="fr-teaser-stats">
                   <div className="fr-teaser-stat">

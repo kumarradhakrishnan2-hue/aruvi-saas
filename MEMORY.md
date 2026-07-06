@@ -1,5 +1,271 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+## 2026-07-06 (latest) — The standing "+" profile portal: the gliding path to acquisition (STATIC only)
+
+**The problem (founder):** class expansion inside the first subject worked because acquisition
+left HOOKS on screen (unbound section cards, the per-subject expand window). A second subject had
+NO artifact anywhere — My Classes only renders enrolled cards, the My Lessons wheels are
+restricted to the enrolled set, and the only door was the settings gear (data-first). Founder
+rejected a "ghost card" as a back-door ask; instead: **once comfort is established (first gen →
+tour → attach → the expand window has been seen), a permanent, prominent "+" opens** — the
+standing portal for ALL profile change (new subject, new class, new/dropped section). Nudge
+campaigns end; furniture begins.
+
+- **Trigger (founder-precise, REVISED same day):** the expand window ("Do you teach {subject} to
+  other classes?") appears **ONCE, EVER** — after the first generation, once the tour resolves
+  (completed or skipped), pinned to the first one-class subject (`expand_shown_{user}` +
+  `expand_subject_{user}` in localStorage; `expand_session`/`expand_dismiss` keep it up across
+  tab-hops within its one session). The founder's earlier per-subject 3-appearance budget is
+  **superseded**: after this single window, reminding about adding ANYTHING is an irritation —
+  all growth is pull via the +, never push. The + unlocks on any of the window's three endings:
+  (1) she used it (add-class completed; derived: any subject >1 class), (2) she clicked ✕,
+  (3) she ignored it (spent in a past session, never returns). Persistent forever after
+  (per-user `plus_portal_{user}`, sticky even if the profile shrinks back); never competes with
+  the tour (`tourResolved` gate).
+- **Placement (founder-precise, refined same day):** on the REPEAT view (anything bound) the +
+  sits IN the greeting row ("Good evening, {user}!"), right side — no row of its own ("we cannot
+  lose so much real estate"), and it rides the sticky `.dash-hd` so it stays reachable while the
+  cards scroll. On the FIRST-TIME view it keeps its own row BELOW "Your classes are ready" and
+  ABOVE the section cards — classes encompass new subjects too, so the portal governs the whole
+  card list, never sits above the welcome. `.sc-growrow`/`.sc-grow` in globals.css —
+  founder-specified glyph + finish (same day): a plus RINGED BY A CIRCLE with FOUR DOTS outside
+  the ring ("grow in every direction", `GrowIcon` in MyPlans.jsx, pine) on a 46px RAISED TILE with real depth — paper
+  gradient face, inset top-edge highlight, layered contact + ambient shadows, hover lifts,
+  :active flips the light inward (pressed-key feel). Not a flat circle.
+- **Chooser:** tapping + opens an ap-modal ("What would you like to change?") with three rows —
+  Subject · Class · Section. Each routes via page.jsx's one-shot `profilePortal` intent
+  (`onProfilePortal(kind)`, consumed like `profileAutoAdd`) into TeachingProfile, which launches
+  the matching screen ("shared flows, two doors" — same wheels + warnings as the gear; no drift).
+- **Manage modes (NEW in TeachingProfile):** `pickMode`/`classMode` "add" | "manage". Manage =
+  enrolled options PRE-TICKED; unticking = removal behind ONE scoped confirm in the dustbins'
+  voice (names what goes, "your lessons stay in the library") — **warned, never blocked**
+  (founder: mid-year reassignment is real). Subject → manage-pickSubjects (keep ≥1 enforced by
+  the disabled CTA — whole-profile delete stays impossible by design); Class → manage-classes on
+  the same classes screen (removing the last class takes the subject, said in the warning);
+  Section → the existing editSections screen (already add+remove+warn). Class/Section goals pass
+  through light portalSubject/portalClass pick screens, skipped when only one option. Adds after
+  removals queue the normal per-class question flow (`continueWithGrades` extracted so add +
+  manage share it). All removals run `clearSectionState` per section, and `persist` already
+  sends `cascade:true`.
+- **A portal visit ALWAYS ends in My Classes (founder, same day)** — never on the profile
+  accordion. Implemented as ONE seam: every flow ending (completion, cancel, all seven back
+  links) funnels through `setScreen("view")`, and a `fromPortal` bounce effect forwards that to
+  `onBack()` (= page.jsx's goClasses). The back links relabel to "← Back to My Classes" on
+  portal visits (`backLabel`) so they say where she'll actually land; gear visits unchanged.
+- **VERIFIED STATICALLY ONLY** (babel-parse clean ×3, CSS balance 0, prop/hook-order greps; the
+  sandbox can't `next dev`). Live must-do next session: resolve an expand window as a test user →
+  + appears → all three chooser paths, incl. a subject removal WITH attached sections, portal
+  exits landing in My Classes, and the mobile 360×800 pass.
+
+## 2026-07-06 — Tour revised to 12 STEPS + transparent hand + popup-always attach (LIVE-verified)
+
+Second revision pass, same day. All 12 steps + Back boundaries re-verified live as kumar23.
+
+- **APP change:** the section card's "+" now ALWAYS opens the "Track a chapter" picker — the
+  first-run direct-attach shortcut is RETIRED (the card still names the ready chapter). One true
+  way to attach, so the tour teaches the real flow.
+- **NEW step 6:** after the "+" step, the tour OPENS the track-a-chapter popup with the hand on
+  the just-generated lesson row (`data-tour="attach-pop-row"` on listPlans[0]); title "Select a
+  lesson plan to track for Section {tag}". Next from 6 performs the real attach. So: popup at
+  steps 6 AND 11 (at 6 nothing bound → lesson in list; at 11 bound excluded). MyPlans boundaries
+  moved: bind ≥7 / unbind ≤6, lesson open 8–9, demoDone 10–11; page.jsx: 11→12 goProfile.
+- **Hand is now a TRANSPARENT outline SVG** (translucent white fill + ink stroke, custom
+  index-up path in GuidedTour.jsx) — not the filled emoji. Also appears on step 3 (lesson row).
+- **Placement fixes:** step 8's box uses `tipAnchor:["lesson-notes","mark-complete"]` + place
+  "above" + `scrollAnchor:"mark-complete"` so the teacher notes AND Mark-complete stay visible
+  below the box (lv-tnote carries data-tour="lesson-notes"). Step 10's box is pinned to the
+  viewport bottom ("over") so the progress rail and the SECOND section card stay visible; its
+  copy renders the circled + (.gt-plus, a mini .sc-add). Step 12 rings the header SETTINGS GEAR
+  (data-tour="settings-gear") with the profile open behind — "here's where profile lives".
+- **Auto-scroll is INSTANT with ≤5 retries/step** (scrollRef) — smooth scrollIntoView silently
+  no-oped on some layouts and made mid-scroll screenshots look broken. Carry-forward: never use
+  behavior:"smooth" for tour scrolls.
+- **Nudge reworded + new glyph:** title "Allow me to show you how to track sections and handle
+  Lesson plans", sub "It only takes a few steps — I'll walk you through it."; the 👋 emoji is
+  replaced by a stroke-only ROUTE icon (start dot → dashed path → destination, pine, transparent).
+- Chrome `resize_window` stopped constraining the viewport mid-session (stuck ~1120px) — the
+  12-step pass ran at desktop width; round-1's 390px pass validated the mobile geometry (all
+  tour positioning is viewport-clamped). A manual DevTools 360×800 pass remains worthwhile.
+- **Round-3 refinements (same day, live-verified):** step 4 = scrollTop + box LIFTED 130px above
+  the sticky attach bar + hand moved to the "← back to lesson plans" button
+  (data-tour="preview-back") + copy now directs "go back … and attach this plan to section
+  {tag}"; steps 6/7 hands CENTRED on the row/card (cfg.handPos:"center"); step 8 = scrollTop +
+  box hangs below phase 1 (data-tour="lesson-phase-1" on UnitBody's first phaserow) so header →
+  progress bar → phase 1 stay visible; step 10 subtext = "Once all units of the chapter are
+  marked complete by you…" + box lifted 10% of vh (cfg.lift: fraction<1 = vh-fraction, number =
+  px) — 10% balances "well above the bottom" against keeping the second card visible (22%
+  covered card 3B). Default anchor-scroll CENTRES a taller-than-viewport target — full-view
+  steps must set scrollTop:true or the top of the view (back button etc.) scrolls away.
+- **Round-7 — first-run stand-in made LOUD (founder chose "deposit stand-in, say so clearly").**
+  kumar23 picked Maths VIII ch 5; only saved test plan is ch 9 → FirstRun substituted ch 9 AND
+  deposited it (unlike PrepareLesson, which only marks the EXACT chapter). Root causes: the
+  teaser screen SET previewNote but never rendered it, and showed the CHOSEN chapter's title
+  over the stand-in's numbers. Fix: `.fr-standin` ochre notice box on the teaser (names the
+  stand-in and says it's what lands in My Lessons), and the teaser title now names the plan
+  actually deposited. Behavior stays deposit-the-stand-in (keeps activation + tour testable
+  until live gen); PrepareLesson's exact-only rule unchanged. Once live generation lands,
+  the substitution path dies naturally.
+- **Round-6 BUG FIX — "guide switched to a chapter I never generated" (kumar23, 2026-07-06).**
+  `/plans/{subject}/{grade}` returns the WHOLE shared library with per-tenant `prepared`/
+  `prepared_at` flags; My Lessons filtered client-side but **MyPlans consumed the raw list**.
+  Four spots fixed to prepared-only: (1) the tour target plan is now the MOST RECENTLY PREPARED
+  lesson (`latestPrepared`, prepared_at desc) — was `gp[0]`, an arbitrary library entry (kumar23
+  generated Science IX ch 2; the guide walked ch 8 "Journey Inside the Atom", prepared:false);
+  (2) the "+" track-a-chapter popup list; (3) the card's `readyOne` ("Chapter N ready");
+  (4) `anyPlans` (nudge/welcome gate — a raw library entry must never trigger the nudge).
+  MyLessonPlans steps 3–4 now key off the same `tourPlanOf()` (most recent prepared), so the
+  row spotlight and the auto-opened preview can never diverge from the tour's target. RULE:
+  any client list fed to teachers must filter `p.prepared || attached` — never trust the raw
+  /plans order.
+- **Round-5 (same day):** "below"-placed tour boxes are now CLAMPED to the viewport
+  (top ≤ vh−260) — on phones a long chapter title pushed phase 1's underside past the fold and
+  step 8's box rendered off-screen; it now settles onto the plan body. scrollTop pins capped at
+  2 tries so the guide never snap-scrolls against the teacher's own reading. ALSO FOUND (not
+  fixed, plan-DATA issue, out of tour scope): the saved Science IX ch_02 plan renders LU1 with
+  "No phases recorded for this unit" and a "STAGE NONE" kicker — the plan's first unit carries
+  no activities and no stage label through normalization; this is the "garbled" look kumar
+  reported on step 8. Investigate the science secondary saved plan / normalizer next session.
+- **Round-4 (same day):** the My Lessons preview's "Attach to a class" CTA + section chooser are
+  RETIRED app-wide (LessonView attach bar removed, MyLessonPlans attachPick/attachToSection/
+  onAttached deleted) — attaching happens ONLY via the section card's "+" → track-a-chapter
+  window, so tour step 4 no longer shows a button that "does not exist in reality". Step 9
+  subtext → "Track chapter progress of {chapter} with section {tag} unit by unit…"; step 11 →
+  "…the same window shown in step 6…". Live-verified; the tour proved profile-agnostic when
+  kumar23's profile changed to Science IX mid-test (targets/copy followed the new first class).
+
+## 2026-07-06 (later) — Guided tour RESTRUCTURED to 11 guide-driven steps (verified LIVE, mobile Chrome)
+
+Kumar respecified the tour top-to-bottom. The 4-step wait-for-real-taps walk is GONE; the tour is
+now **11 steps, fully guide-driven** — every step has Back · Skip · Next, a "N of 11" counter, and
+Next itself performs the move (nav, open preview, the attach, popup, profile) with a bobbing 👆
+hand showing where the real tap would land. All 11 steps + Back across every view boundary
+verified live at localhost:3000 as kumar23 at 390px.
+
+- **Steps:** 1 My Classes tab → 2 My Lessons tab → 3 the lesson row (guide navigates) → 4 preview
+  auto-opens → 5 hand on the section card's "+" → 6 REAL attach (the activation; Back from 6
+  unbinds) → 7 tracking view opens → 8 hand on Mark-complete (never really clicked) → 9 card
+  DEMOED as Complete + hand on its "+" (render-only — `tourDemoDone` forces the completed look;
+  her real pointer/done untouched) → 10 the "Track a chapter" popup (opened by the tour) →
+  11 the teaching profile, Done.
+- **Architecture:** GuidedTour.jsx is presentational (numeric step, one anchor per step, poll +
+  scrollIntoView, `place: below/above/over` — "over" pins the box to the viewport bottom for
+  full-view targets). page.jsx owns shell transitions (2→3 goLessons, 4→5 goClasses, 10→11
+  goProfile); **MyPlans owns steps 5–10 via IDEMPOTENT state-keyed effects** (bind/unbind at the
+  6/5 boundary, open/close lesson at 7–8, popup at 10, prev-ref cleanup on Skip) — hooks sit ABOVE
+  the !ready early-return (rules of hooks). MyLessonPlans owns 3–4 (auto-open first prepared plan).
+  MyPlans reports `{tag, chapter}` up (onTourInfo) so step copy names them. The old "success"
+  banner step is gone. Anchors: nav-classes/nav-lessons (tabs), lesson-first, preview-root/
+  lesson-root + mark-complete (LessonView), section-add/section-card-target (target card = first
+  class WITH a prepared plan), attach-pop (ap-modal), profile-root (page.jsx editflow div).
+- **Tooltip is the thematic box:** .gt-tip restyled to the SAME sage-pine window as .dash-nudge
+  (#eef4f0, 1.5px pine border, r14) — one visual voice for the whole first-run journey. Dots
+  replaced by a mono "N of 11" counter. .gt-root z-index 70 (ABOVE ap-overlay's 60) so step 10
+  annotates the popup; scrim blocks taps on every step (guide-driven).
+- **Live-verify gotchas:** screenshots taken during the smooth scrollIntoView LOOK broken (blank
+  paper, header mid-screen) — always re-shoot after the scroll settles; the ring transition
+  (.18s) can also lag a capture. `resize_window` 390×844 DID constrain the viewport this time
+  (~304 CSS px content width) — footer needed white-space:nowrap on the three buttons to stay on
+  one line. Test state restored after the run (section-state DELETE + localStorage clear), so
+  kumar23's nudge re-offers the tour on reload.
+
+## 2026-07-06 — Tour refinements + "lesson not in My Lessons" bug (all verified LIVE in Chrome)
+
+Kumar reviewed the tour and asked for changes; also hit a real bug. Verified live at localhost:3000
+as kumar23 (Chrome), steps 1→4 + Back all confirmed on screen.
+
+- **BUG FIX — "I ran a lesson but it's not in My Lessons" (kumar23).** NOT a deposit failure — the
+  plan WAS marked prepared on disk (`data/prepared_plans/kumar23/.../english/iii/ch_01…`). The bug
+  was My Lessons' DEFAULT CLASS: `mylessons_class` localStorage is neither user-namespaced nor
+  validated, so a stale class (from another user in the browser, or from before a profile delete)
+  made the tab open on a class where her prepared lesson doesn't live → "no lessons prepared". Fix
+  (MyLessonPlans.jsx `activeGrade` initializer): default to a class she actually TEACHES for the
+  initial subject, derived from the current server profile — trust the taught-grades list, not the
+  persisted value. Same server-derived principle as the tour-flag fix. Confirmed live: My Lessons
+  now opens English·Class 3 and shows "Fun with Friends — Ready to teach".
+- **Tour changes (all live-verified):** (1) removed the confusing "Tap any class… your place only
+  moves…" `dash-foot`. (2) Nudge is now a distinct sage-pine WINDOW (`.dash-nudge`, speech-bubble
+  tail, pine border — clearly not paper) with a CONVERSATIONAL italic-serif "Show me how →" link,
+  not a solid button. (3) Step 1 CYCLES the spotlight through every section card (`data-tour=
+  "section-card"` on each unbound card; GuidedTour rotates cycleIdx every 1.1s, tooltip anchored to
+  the first card, stable). (4) Step-2 copy = "To attach a lesson plan to a section, you tap the +
+  symbol on its card. But first, let's see where your lesson plans sit." (5) Steps 1–2 have Next;
+  after step 2 there is NO Next — steps 3–4 are real-tap with Back+Skip only. Step-2 Next
+  AUTO-navigates to My Lessons. (6) BACK on every step (except 1) returns to the previous step's
+  animation; back from preview closes the open preview (MyLessonPlans effect on `tourStep==="lesson"`)
+  and re-highlights the lesson. page.jsx `tourNext`/`tourBack` own the transitions.
+- **Also:** the preview "Attach to a class" CTA is now STICKY to the viewport bottom (`.lv-attachbar`
+  position:sticky) so it's always reachable on a long plan and the step-4 spotlight is never below
+  the fold. Verified live.
+- NOTE: `resize_window` to 390 didn't actually constrain the content viewport in this Chrome (still
+  rendered desktop-width), so the true 360×800 phone pass is still worth a manual DevTools device-mode
+  check — but the flow, copy, spotlight, and back-nav are all confirmed working.
+- **BUG FIX — "+ works late" (kumar23, live-confirmed).** Tapping "+" on the first-run ready card
+  wrote the binding (server confirmed) but the card didn't refresh until the next incidental render
+  (20s sync / tab focus) — because the DIRECT-attach path calls `setAttachFor(null)` while attachFor
+  is ALREADY null, so React skips the re-render. Fix (MyPlans `attachChapter`): also
+  `setSyncTick((t)=>t+1)` to force an immediate re-render. Verified live: card now flips to "Fun with
+  Friends" instantly on tap.
+- **Removed the nudge speech-bubble tail** (`.dash-nudge::before`). Kumar flagged it as an "uninvited
+  arrow" on desktop — it was an unrequested flourish I'd added; the nudge is now just the clean
+  rounded sage window. (Reminder for future: don't add decorative flourishes beyond what's asked.)
+
+## 2026-07-06 — First-run GUIDED TOUR: the helping hand from blank cards → first attach
+
+**The blank-landing problem (founder).** After the 2026-07-05 full-profile first run, she lands in
+My Classes on empty section cards (3A, 3B) with the promised lesson one un-obvious tap away (via +
+on a card, or My Lessons → preview). She's blank, doesn't know what to do. Ask Aruvi is the wrong
+tool here — it's PULL (she must know what to ask); the first-run moment needs PUSH. Solution: a
+one-time, skippable coach-mark tour, launched from a "Show me how" nudge, that walks her My Classes
+→ My Lessons → preview → attach. Founder decisions this session: **full 6-step walk** (nudge + 4
+coach-marks + success, not a compressed 3-beat); **+ attaches the ready lesson directly** (first-run
+card copy reconciled from "Pick a chapter to begin" → "Chapter N ready · tap + to add"; picker still
+used when >1 prepared); **wait-for-real-taps** (the tour does NOT auto-drive — she performs the real
+taps, page.jsx advances); Ask Aruvi placement parked for now.
+
+**Built (all STATIC-verified only — esbuild parses clean, CSS balanced; live + 360×800 pass is
+Kumar's must-do next):**
+- `GuidedTour.jsx` (NEW) — presentational coach-mark overlay. Positions by `data-tour` attribute +
+  getBoundingClientRect on a 200ms poll (survives tab switches / late-loading targets). Spotlight =
+  a transparent ring with `box-shadow:0 0 0 9999px rgba(...)` cutout. Scrim is pointer-transparent
+  on action steps (real tap reaches the app), blocking on the one informational step. Steps:
+  card (Next) → lessons (tap My Lessons) → lesson (tap the lesson) → preview (tap Attach). Success
+  is NOT an overlay step — it's a banner in My Classes.
+- `page.jsx` — tour controller (crosses `editFlow`, so it must live here). State `tour`
+  (card|lessons|lesson|preview|success), `tourTag` (attached section, for success copy),
+  `tourDismissed` (SESSION-ONLY, never persisted — see the fix note below). Advances on REAL events:
+  goLessons → lesson; MyLessonPlans onPreviewOpen → preview; onAttached → success (+ goClasses).
+  Success auto-dismisses after 7s. `data-tour="nav-lessons"` on the My Lessons tab.
+
+  ⚠️ **FIX 2026-07-06 (kumar23): the tour offer must be SERVER-DERIVED, not a persisted client
+  flag.** First cut stored "tour done" in localStorage (`aruvi_tour_done_{user}`). Kumar skipped for
+  kumar23, deleted profile+allocations server-side, logged in again → the fresh first run never
+  re-offered the guide, because the stale browser flag survived the server-side delete. This is the
+  identical desync the top-of-page activation-flag note already warns about. Fixed: dropped the
+  persisted flag entirely. The nudge is gated purely by server-derived first-run state (MyPlans:
+  `!anyBound && anyPlans`), which self-closes forever once she attaches; `tourDismissed` is
+  in-memory only (skipping hides it for the session; a fresh login re-derives from the server). The
+  old `aruvi_tour_done_*` localStorage keys are now dead/ignored — no migration needed. Carry-forward:
+  do NOT reintroduce a client-side "onboarded/seen" flag; if skip must persist across sessions, put
+  it on the server profile record so a profile delete clears it too.
+- `MyPlans.jsx` — first-run card copy "Chapter N ready · tap + to add" + direct attach when exactly
+  one prepared plan; `data-tour="add-first"` on the first unbound card's +; "Show me how" nudge
+  card; success banner (step 6). attachChapter/clearBinding now call the shared writers.
+- `MyLessonPlans.jsx` — `data-tour="lesson-first"` on first card (tour only); `onPreviewOpen`
+  callback; "Attach to a class" from the preview opens a section chooser → `bindSectionChapter` →
+  `onAttached(tag)`. Preview attach is a NEW capability (was read-only); gated behind an `onAttach`
+  prop so the in-view "View full lesson plan" preview stays read-only.
+- `LessonView.jsx` — optional `onAttach` renders the "Attach to a class" CTA (`data-tour="attach-cta"`)
+  in My-Lessons preview only.
+- `lib/sectionState.js` — NEW shared `bindSectionChapter` / `unbindSection` writers, so My Classes'
+  "+" and the preview attach can never drift.
+- CSS: `.gt-*` (overlay, z-index 55 — above sticky chrome, below `.ap-overlay` z60 so the section
+  picker layers over the tour), `.dash-nudge*`, `.dash-success*`, `.lv-attachbar/.lv-attach-btn`.
+
+**Open / to confirm with Kumar:** the 'card' step is informational (Next), NOT an action, so she
+isn't nudged into a direct attach that skips the My-Lessons half of the walk — reworded away from
+"tap +". Whether preview-attach should stay general (current) or be gated to first run only. Ask
+Aruvi's post-first-run home (header vs permanent footer) still parked.
+
 ## 2026-07-06 — PickWheel shows a running "chosen so far" line under the button
 
 **The stray-tick problem (founder).** `PickWheel` (wheels.jsx) shows only 4 rows at a time; a
