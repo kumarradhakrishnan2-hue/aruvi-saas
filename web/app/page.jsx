@@ -9,6 +9,7 @@ import FirstRun from "./components/FirstRun";
 import TeachingProfile from "./components/TeachingProfile";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
+import ThemeToggle from "./components/ThemeToggle";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -284,6 +285,7 @@ export default function Home() {
         </div>
         <div className="hdr-user">
           <span className="hdr-user-name">{user}</span>
+          <ThemeToggle />
           <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings"
             data-tour="settings-gear">⚙</button>
           <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>

@@ -642,20 +642,17 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       )}
 
       {!anyBound && (
-        <div className="dash-welcome">
+        <div className="dash-welcome dash-welcome-row">
           <div className="dash-welcome-text">
             <div className="dash-welcome-title">Your classes are ready</div>
             <div className="dash-welcome-sub">{anyPlans
               ? <>Your lesson is waiting in My Lessons — tap <b>+</b> on a class to start teaching it.</>
               : <>Tap <b>+</b> on a class to prepare its first lesson.</>}</div>
           </div>
-        </div>
-      )}
-
-      {!anyBound && plusShow && (
-        <div className="sc-growrow">
-          <button className="sc-grow" aria-label="Add or change subjects, classes, or sections"
-            title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
+          {plusShow && (
+            <button className="sc-grow" aria-label="Add or change subjects, classes, or sections"
+              title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
+          )}
         </div>
       )}
 

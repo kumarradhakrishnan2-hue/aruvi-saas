@@ -14,14 +14,6 @@
   --ochre: #9a7321;
   --danger: #c0392b;
   --card-bg: #f3f1ea;
-  /* semantic surface/edge tokens (light values = former hardcodes; flipped in dark) */
-  --tint-pine: #eef4f0;
-  --tint-pine-2: #f1f6f3;
-  --tint-cream: #f3ede0;
-  --tint-clay: #f6e2d6;
-  --edge: #cbbfa6;
-  --edge-green: #cde0d8;
-  --edge-clay: #ecccb9;
   --f-display: "Fraunces", Georgia, serif;
   --f-body: "Newsreader", Georgia, serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -724,7 +716,7 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .rd-hint { font-style:italic; color:var(--ink-soft); font-size:12.5px; margin-top:12px; }
 .rd-btns { display:flex; gap:10px; margin-top:18px; }
 .rd .ghost { font-family:var(--f-mono); font-size:11.5px; font-weight:600; letter-spacing:.04em; border-radius:7px; padding:11px 15px; cursor:pointer; border:1px solid var(--line); background:#ffffff; color:var(--ink); }
-.rd .ghost:hover { border-color:var(--edge); background:#ffffff; }
+.rd .ghost:hover { border-color:#cbbfa6; background:#ffffff; }
 
 /* duration chips */
 .durwrap { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:8px; }
@@ -733,7 +725,7 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .durchip[data-d="1"] { color:#f7efe9; background:var(--sec-b); border-color:var(--sec-b); }
 .durchip[data-d="2"] { color:#fbf6e9; background:var(--sec-c); border-color:var(--sec-c); }
 .durchip .durx { cursor:pointer; font-size:13px; line-height:1; opacity:.85; }
-.addchip { font-family:var(--f-mono); font-size:14px; font-weight:500; color:var(--pine-d); border:1px dashed #bcd0c4; border-radius:9px; padding:11px 15px; cursor:pointer; background:var(--tint-pine); }
+.addchip { font-family:var(--f-mono); font-size:14px; font-weight:500; color:var(--pine-d); border:1px dashed #bcd0c4; border-radius:9px; padding:11px 15px; cursor:pointer; background:#eef4f0; }
 
 /* ───── conversational collection (steps 1–4: subjects / grades / sections / durations) ───── */
 .rd-microcopy { font-style:italic; font-size:12px; color:var(--ink-soft); text-align:center; margin-top:14px; }
@@ -747,8 +739,8 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
   border:1px solid var(--line); background:var(--paper-2); color:var(--ink); border-radius:9px; padding:12px 15px; cursor:pointer;
   transition:border-color .1s, background .1s, color .1s; text-align:left; }
 .pickcol .pickchip { width:100%; justify-content:flex-start; }
-.pickchip:hover { border-color:var(--edge); }
-.pickchip.on { border-color:var(--pine); background:var(--tint-pine); color:var(--pine-d); }
+.pickchip:hover { border-color:#cbbfa6; }
+.pickchip.on { border-color:var(--pine); background:#eef4f0; color:var(--pine-d); }
 .pickchip .pickmark { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:5px;
   font-size:12px; line-height:1; border:1px solid var(--line); color:var(--ink-soft); background:var(--paper); }
 .pickchip.on .pickmark { background:var(--pine); border-color:var(--pine); color:#fff; }
@@ -762,8 +754,8 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .mdd-control { width:100%; display:flex; align-items:center; gap:10px; cursor:pointer;
   font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--ink);
   border:1px solid var(--line); background:var(--paper-2); border-radius:9px; padding:13px 15px; text-align:left; }
-.mdd-control:hover { border-color:var(--edge); }
-.mdd-control.open { border-color:var(--pine); background:var(--tint-pine); }
+.mdd-control:hover { border-color:#cbbfa6; }
+.mdd-control.open { border-color:var(--pine); background:#eef4f0; }
 .mdd-summary { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--pine-d); }
 .mdd-summary.ph { color:var(--ink-soft); font-style:italic; font-weight:400; }
 .mdd-chev { color:var(--ink-soft); transition:transform .15s ease; }
@@ -775,7 +767,7 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
   padding:13px 15px; border-bottom:1px solid var(--line-soft); }
 .mdd-opt:last-of-type { border-bottom:none; }
 .mdd-opt:hover { background:var(--paper-sunk); }
-.mdd-opt.on { color:var(--pine-d); background:var(--tint-pine); font-weight:500; }
+.mdd-opt.on { color:var(--pine-d); background:#eef4f0; font-weight:500; }
 .mdd-mark { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:5px;
   font-size:12px; line-height:1; border:1px solid var(--line); color:#fff; background:var(--paper); }
 .mdd-opt.on .mdd-mark { background:var(--pine); border-color:var(--pine); }
@@ -784,7 +776,7 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .mdd-pager-l { display:flex; align-items:center; gap:8px; }
 .mdd-pg { font-family:var(--f-mono); font-size:11.5px; letter-spacing:.04em; color:var(--pine-d);
   border:1px solid var(--line); background:var(--paper-2); border-radius:7px; padding:8px 14px; cursor:pointer; }
-.mdd-pg:hover:not(:disabled) { border-color:var(--edge); }
+.mdd-pg:hover:not(:disabled) { border-color:#cbbfa6; }
 .mdd-pg:disabled { opacity:.4; cursor:default; }
 .mdd-pg.done { color:#fff; background:var(--pine); border-color:var(--pine); }
 .mdd-pg.done:hover { background:var(--pine-d); }
@@ -796,7 +788,7 @@ table.wk th.rowhd { text-align:left; width:62px; padding-left:4px; }
 table.wk td { padding:3px; }
 .rowtag { font-family:var(--f-mono); font-size:12px; font-weight:500; padding:4px 0; }
 .cell { height:42px; border-radius:7px; border:1px solid var(--line); background:var(--paper-2); cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--f-mono); font-size:11px; color:transparent; transition:background .08s, border-color .08s; user-select:none; }
-.cell:hover { border-color:var(--edge); }
+.cell:hover { border-color:#cbbfa6; }
 .cell.on { color:#fff; font-weight:500; }
 .cell.on[data-sec="0"] { background:var(--sec-a); border-color:var(--sec-a); }
 .cell.on[data-sec="1"] { background:var(--sec-b); border-color:var(--sec-b); }
@@ -817,8 +809,8 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .rd-method-label { color:var(--ink-soft); margin-bottom:7px; }
 .methodrow { display:flex; flex-direction:column; gap:9px; margin-top:6px; }
 .method { border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper-2); cursor:pointer; transition:border-color .1s, background .1s; }
-.method:hover { border-color:var(--edge); }
-.method.sel { border-color:var(--pine); background:var(--tint-pine); }
+.method:hover { border-color:#cbbfa6; }
+.method.sel { border-color:var(--pine); background:#eef4f0; }
 .method .mt { font-family:var(--f-mono); font-size:12.5px; font-weight:500; color:var(--pine-d); display:flex; justify-content:space-between; align-items:center; gap:10px; }
 .method .mt .chev { color:var(--ink-soft); transition:transform .15s ease; }
 .method.open .mt .chev { transform:rotate(180deg); color:var(--pine); }
@@ -831,7 +823,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .steppermini .v { min-width:40px; text-align:center; font-family:var(--f-display); font-size:18px; color:var(--pine-d); }
 .unitlab { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); }
 .gc-switch { font-family:var(--f-mono); font-size:10.5px; color:var(--pine); cursor:pointer; white-space:nowrap; margin-top:10px; }
-.budgetsum { border:1px solid #cfe0d6; background:var(--tint-pine); border-radius:11px; padding:14px 16px; margin-top:16px; }
+.budgetsum { border:1px solid #cfe0d6; background:#eef4f0; border-radius:11px; padding:14px 16px; margin-top:16px; }
 .budgetsum .bsk { font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--pine); }
 .budgetsum .bsv { font-family:var(--f-display); font-size:23px; color:var(--pine-d); margin-top:4px; }
 .budgetsum .bsv small { font-family:var(--f-body); font-style:italic; font-size:14px; color:var(--ink-soft); white-space:nowrap; }
@@ -959,7 +951,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .slotcard { display:flex; align-items:stretch; min-height:0; background:var(--paper-2); border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:8px; cursor:pointer; transition:background .12s ease, border-color .12s ease; }
 /* empty stays WHITE (same as populated) for figure/ground contrast against the cream page;
    the green rail marks it as an open slot. Hover brings the green tinge. */
-.slotcard:hover { border-color:var(--pine); background:var(--tint-pine); }
+.slotcard:hover { border-color:var(--pine); background:#eef4f0; }
 /* NB: use .slot-empty (NOT .empty) — the generic .empty utility adds 50px padding + centering */
 .slotcard.slot-empty { background:var(--paper-2); }
 .slotrail { width:8px; flex:0 0 8px; background:var(--pine); align-self:stretch; }
@@ -989,7 +981,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .gpick-q { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin:2px 0 0; }
 .gpick-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; }
 .gpick-card { display:flex; flex-direction:column; gap:4px; text-align:left; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; padding:16px 18px; cursor:pointer; transition:background .12s ease, border-color .12s ease; }
-.gpick-card:hover { background:var(--tint-pine); border-color:var(--pine); }
+.gpick-card:hover { background:#eef4f0; border-color:var(--pine); }
 .gpick-card-name { font-family:var(--f-display); font-size:18px; font-weight:500; color:var(--ink); }
 .gpick-card-meta { font-family:var(--f-mono); font-size:10.5px; letter-spacing:.04em; color:var(--ink-soft); }
 .gpick-back { margin-top:16px; }
@@ -1024,21 +1016,21 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .lv-markbtn { white-space:nowrap; }
 .lv-lastcard { margin-top:18px; background:var(--paper-sunk); border:1px solid var(--line); border-radius:10px; padding:14px 16px; font-style:italic; color:var(--ink-soft); font-size:13px; text-align:center; }
 
-.lv-donecard { margin-top:18px; background:var(--tint-pine); border:1px solid var(--edge-green); border-radius:10px; padding:16px; }
+.lv-donecard { margin-top:18px; background:#eef4f0; border:1px solid #cde0d8; border-radius:10px; padding:16px; }
 .lv-donerow { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; }
 .lv-doneleft { display:flex; align-items:flex-start; gap:11px; }
 .lv-donemark { width:26px; height:26px; border-radius:50%; background:#2f7d54; color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
 .lv-donetitle { font-family:var(--f-display); font-weight:600; font-size:16px; color:var(--pine-d); }
 .lv-donesub { font-size:12.5px; color:var(--ink-soft); margin-top:1px; }
-.lv-undo { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine-d); background:#fff; border:1px solid var(--edge-green); border-radius:7px; padding:8px 14px; cursor:pointer; white-space:nowrap; }
+.lv-undo { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine-d); background:#fff; border:1px solid #cde0d8; border-radius:7px; padding:8px 14px; cursor:pointer; white-space:nowrap; }
 .lv-undo:hover { border-color:var(--pine); }
 /* Chapter-complete confirmation — terracotta, matching the "completed" section-card status. */
-.lv-chapterdone { background:var(--tint-clay); border-color:var(--edge-clay); }
+.lv-chapterdone { background:#f6e2d6; border-color:#ecccb9; }
 .lv-chapterdone .lv-donemark { background:var(--clay); }
 .lv-chapterdone .lv-donetitle { color:var(--clay); }
-.lv-chapterdone .lv-undo { color:var(--clay); border-color:var(--edge-clay); }
+.lv-chapterdone .lv-undo { color:var(--clay); border-color:#ecccb9; }
 .lv-chapterdone .lv-undo:hover { border-color:var(--clay); }
-.lv-nextup { margin-top:14px; padding-top:13px; border-top:1px solid var(--edge-green); }
+.lv-nextup { margin-top:14px; padding-top:13px; border-top:1px solid #cde0d8; }
 .lv-nextup-k { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--pine); }
 .lv-nextup-t { font-family:var(--f-display); font-weight:500; font-size:16px; color:var(--ink); margin-top:2px; }
 .lv-nextup-d { font-size:12.5px; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
@@ -1056,16 +1048,16 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 
 /* assessment artifact (Screen 3b) — distinct green scheme */
-.assess { max-width:680px; border:1px solid var(--edge-green); border-radius:14px; overflow:hidden; background:#e7f0ec; }
-.assess-hd { background:#dceae3; padding:14px 20px 13px; border-bottom:1px solid var(--edge-green); }
+.assess { max-width:680px; border:1px solid #cde0d8; border-radius:14px; overflow:hidden; background:#e7f0ec; }
+.assess-hd { background:#dceae3; padding:14px 20px 13px; border-bottom:1px solid #cde0d8; }
 .assess-hd-row { display:flex; justify-content:space-between; align-items:center; }
 .assess-back { font-family:var(--f-mono); font-size:11px; color:#0f6e56; cursor:pointer; }
 .assess-tag { font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; color:#0f6e56; }
 .assess-title { font-family:var(--f-display); font-size:21px; font-weight:500; color:#0c3a2e; margin-top:6px; }
 .assess-sub { font-size:12.5px; color:#3a6253; font-style:italic; margin-top:2px; }
 .assess-body { padding:16px 20px 20px; }
-.assess-empty { background:#fff; border:1px dashed var(--edge-green); border-radius:10px; padding:18px 16px; font-size:13px; font-style:italic; color:#3a6253; line-height:1.5; margin-bottom:11px; }
-.assess-card { background:#fff; border:1px solid var(--edge-green); border-radius:10px; padding:13px 15px; margin-bottom:11px; }
+.assess-empty { background:#fff; border:1px dashed #cde0d8; border-radius:10px; padding:18px 16px; font-size:13px; font-style:italic; color:#3a6253; line-height:1.5; margin-bottom:11px; }
+.assess-card { background:#fff; border:1px solid #cde0d8; border-radius:10px; padding:13px 15px; margin-bottom:11px; }
 .assess-lo { background:#eef6f1; border-left:3px solid #0f6e56; border-radius:5px; padding:7px 10px; margin-bottom:10px; }
 .assess-lo-k { font-family:var(--f-mono); font-size:8.5px; letter-spacing:.12em; color:#0f6e56; }
 .assess-lo-t { font-size:12.5px; color:#1f3a30; margin-top:2px; line-height:1.45; }
@@ -1074,7 +1066,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-opts { margin:10px 0 0; padding-left:20px; }
 .assess-opts li { font-size:13px; color:var(--ink); margin:3px 0; }
 .assess-ans { font-size:13px; color:#0f6e56; font-weight:600; margin-top:8px; }
-.assess-look { margin-top:11px; padding-top:9px; border-top:1px dashed var(--edge-green); }
+.assess-look { margin-top:11px; padding-top:9px; border-top:1px dashed #cde0d8; }
 .assess-look-k { font-family:var(--f-mono); font-size:9px; letter-spacing:.1em; color:#0f6e56; }
 .assess-look-t { font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5; }
 .assess-backbtn { width:100%; margin-top:15px; font-family:var(--f-mono); font-size:12px; background:#0f6e56; color:#eafaf4; border:none; padding:12px; border-radius:8px; cursor:pointer; }
@@ -1139,7 +1131,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* drill rows — hover spotlight (single green accent), no default fill, no logos */
 .myclasses .nodes { display:flex; flex-direction:column; gap:10px; }
 .myclasses .node { display:flex; align-items:center; gap:14px; background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:16px 18px; cursor:pointer; transition:border-color .14s, box-shadow .14s, padding-left .14s, background .14s; }
-.myclasses .node:hover { background:var(--tint-pine); border-color:var(--pine); box-shadow:inset 3px 0 0 var(--pine); padding-left:22px; }
+.myclasses .node:hover { background:#eef4f0; border-color:var(--pine); box-shadow:inset 3px 0 0 var(--pine); padding-left:22px; }
 .myclasses .node:hover .node-name { color:var(--pine-d); }
 .myclasses .node-body { flex:1; min-width:0; }
 .myclasses .node-name { font-family:var(--f-display); font-size:18px; font-weight:600; color:var(--ink); }
@@ -1148,7 +1140,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .myclasses .node-go { font-family:var(--f-mono); font-size:15px; color:var(--ink-soft); flex-shrink:0; }
 .myclasses .node-del { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--clay); background:none; border:1px solid transparent; border-radius:5px; cursor:pointer; padding:6px 9px; flex-shrink:0; }
 .myclasses .node-del:hover { border-color:var(--clay); background:rgba(192,57,43,.06); }
-.myclasses .add-node { display:flex; align-items:center; gap:11px; background:var(--tint-pine); border:1px dashed #bcd0c4; border-radius:10px; padding:15px 18px; cursor:pointer; font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--pine-d); }
+.myclasses .add-node { display:flex; align-items:center; gap:11px; background:#eef4f0; border:1px dashed #bcd0c4; border-radius:10px; padding:15px 18px; cursor:pointer; font-family:var(--f-mono); font-size:13.5px; font-weight:500; color:var(--pine-d); }
 .myclasses .add-node:hover { background:#e4efe8; }
 .myclasses .add-plus { font-size:16px; }
 .myclasses .add-plus-sm { font-size:14px; }
@@ -1182,7 +1174,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .myclasses .dur-chip.alt { background:var(--clay); border-color:var(--clay); }
 .myclasses .dur-chip .x { cursor:pointer; opacity:.85; font-size:12px; }
 .myclasses .dur-add { font-family:var(--f-mono); font-size:13px; font-weight:500; color:var(--ink); background:var(--paper-sunk); border:1px solid var(--line); border-radius:8px; padding:9px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; }
-.myclasses .dur-add:hover { background:#e6e0d4; border-color:var(--edge); }
+.myclasses .dur-add:hover { background:#e6e0d4; border-color:#cbbfa6; }
 .myclasses .dur-empty { font-style:italic; font-size:13px; color:var(--clay); margin-bottom:10px; }
 
 /* section day grid — reuses .wk/.cell; read-only cell variant for view mode */
@@ -1256,7 +1248,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mycal .cal-fgroup-lbl { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
 .mycal .cal-chips { display:flex; gap:8px; flex-wrap:wrap; }
 .mycal .cal-chip { display:inline-flex; align-items:center; gap:7px; font-family:var(--f-mono); font-size:13px; color:var(--ink); background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:8px 15px; cursor:pointer; transition:border-color .12s, background .12s; }
-.mycal .cal-chip:hover { border-color:var(--edge); }
+.mycal .cal-chip:hover { border-color:#cbbfa6; }
 .mycal .cal-chip.on { background:#e7efe9; border-color:var(--pine); color:var(--pine-d); }
 .mycal .cal-chip-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
 
@@ -1319,7 +1311,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* unfilled by default; green spotlight on hover (same language as My Class rows + My Week cards) */
 .mlp-grade-head { width:100%; display:flex; align-items:center; gap:10px; padding:14px 16px; background:transparent; border:none; border-left:3px solid transparent; cursor:pointer; text-align:left; transition:background .12s ease, border-color .12s ease; }
-.mlp-grade-head:hover { background:var(--tint-pine); border-left-color:var(--pine); }
+.mlp-grade-head:hover { background:#eef4f0; border-left-color:var(--pine); }
 .mlp-grade-head:hover .mlp-grade-name { color:var(--pine-d); }
 .mlp-grade-head:hover .mlp-caret { color:var(--pine); }
 .mlp-panel .mlp-grade-head { border-bottom:1px solid transparent; }
@@ -1335,7 +1327,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* row = a 2c-style card: white, hairline border, persistent 8px pine rail at the left edge,
    compact height; green tinge on hover. Built with a left rail via a thick border-left. */
 .mlp-row { display:flex; align-items:center; gap:12px; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; overflow:hidden; margin-bottom:8px; transition:background .12s ease, border-color .12s ease; }
-.mlp-row:hover { background:var(--tint-pine); border-color:var(--pine); }
+.mlp-row:hover { background:#eef4f0; border-color:var(--pine); }
 .mlp-row-open { flex:1; display:flex; align-items:center; gap:12px; padding:11px 14px; background:none; border:none; cursor:pointer; text-align:left; transition:color .12s ease; }
 .mlp-row:hover .mlp-row-open { color:var(--pine-d); }
 .mlp-row-ch { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); width:46px; flex-shrink:0; }
@@ -1352,7 +1344,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .secprog-sub { font-family:var(--f-body); font-style:italic; font-size:13px; color:var(--ink-soft); margin:4px 0 20px; }
 .secprog-rows { display:flex; flex-direction:column; gap:9px; }
 .secprog-row { display:grid; grid-template-columns:48px 1fr auto 16px; align-items:center; gap:16px; width:100%; text-align:left; background:none; border:none; border-radius:8px; padding:8px 10px; margin:0 -10px; cursor:pointer; transition:background .12s ease; }
-.secprog-row:hover { background:var(--tint-pine); }
+.secprog-row:hover { background:#eef4f0; }
 .secprog-go { font-family:var(--f-mono); font-size:13px; color:var(--ink-soft); opacity:0; transition:opacity .12s ease, transform .12s ease; }
 .secprog-row:hover .secprog-go { opacity:1; transform:translateX(2px); }
 .secprog-row:hover .secprog-sec { color:var(--pine-d); }
@@ -1386,7 +1378,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mlp2-wlbl { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); display:block; margin:0 0 5px; text-align:center; }
 .mlp2-wcol .fr-wheel-shell { margin:0; }
 /* compact box (rowPx=48 on the wheels) + centred value, both Subject and Class */
-.mlp2-static { height:48px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 14px; border:1px solid #c7d9cf; border-radius:12px; background:var(--tint-pine-2); font-family:var(--f-body); font-size:17px; color:var(--ink); }
+.mlp2-static { height:48px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 14px; border:1px solid #c7d9cf; border-radius:12px; background:#f1f6f3; font-family:var(--f-body); font-size:17px; color:var(--ink); }
 .mlp2 .fr-wheel-label { flex:0 1 auto; }
 /* Class wheel: short numbers, nudged LEFT (not hard against the edge). Centre-aligned, the number
    sits right under the finger that's rolling the wheel and disappears; an inset-left position keeps
@@ -1437,7 +1429,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Open state — the ONLY source of the green fill + border. It's tied to `.open`, which is
    removed the instant you tap to close, so the tinge and border vanish immediately (not on a
    later click elsewhere). */
-.mlp2-archfolder.open { border-color:var(--pine); color:var(--pine); background:var(--tint-pine); }
+.mlp2-archfolder.open { border-color:var(--pine); color:var(--pine); background:#eef4f0; }
 .mlp2-archcount { font-family:var(--f-mono); font-size:11px; font-weight:600; letter-spacing:.02em; }
 
 /* Per-card Archive — an icon at the TOP-RIGHT corner of the card. Absolutely placed so it never
@@ -1466,7 +1458,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* Archived card — muted, greyed rail; clearly "set aside" without looking broken. */
 .sc-card.mlp2-arch { background:var(--paper-sunk); }
-.sc-card.mlp2-arch::before { background:var(--edge); }
+.sc-card.mlp2-arch::before { background:#c4bcab; }
 .sc-card.mlp2-arch .sc-title { color:var(--ink-soft); }
 
 /* Transient confirmation / block message. Bottom-centre, non-blocking, auto-dismissed. */
@@ -1557,7 +1549,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   position: relative; height: 64px; /* must match WHEEL_ROW in FirstRun.jsx */
   overflow-y: auto; overflow-x: hidden;
   scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
-  border: 1px solid #c7d9cf; border-radius: 12px; background: var(--tint-pine-2);
+  border: 1px solid #c7d9cf; border-radius: 12px; background: #f1f6f3;
   scrollbar-width: none;
 }
 .fr-wheel::-webkit-scrollbar { display: none; }
@@ -1700,7 +1692,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Whole box opens the section picker (Add/Edit is just the visible affordance for the same
    action) — cursor + hover feedback signal the whole row is tappable, not just the button. */
 .fr-suggested-class-tap { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
-.fr-suggested-class-tap:hover { border-color: var(--pine); background: var(--tint-pine-2); }
+.fr-suggested-class-tap:hover { border-color: var(--pine); background: #f1f6f3; }
 /* Prominent variant for the suggested-class Add/Edit action — solid green fill / white text,
    distinct from the quieter outlined "Change" pills used for duration/periods. */
 .fr-change-btn-primary { border: none; background: var(--pine); color: #f6f1e7; }
@@ -1758,7 +1750,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 /* My Week reuses .fr-sc-card as a clickable row (cursor + hover), unlike FirstRun's static reward cards */
 .fr-sc-list .fr-sc-card { cursor: pointer; transition: border-color .12s ease, background .12s ease; }
-.fr-sc-list .fr-sc-card:hover { border-color: var(--sc-accent, var(--pine)); background: var(--tint-cream); }
+.fr-sc-list .fr-sc-card:hover { border-color: var(--sc-accent, var(--pine)); background: #f3ede0; }
 
 /* ── My Classes section card (2026-07-02, approved mockup) ──
    Serif section tag · subject kicker · chapter title · LU progress rail (LU-level only:
@@ -1775,14 +1767,14 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Left-edge accent bar — like the individual lesson-plan cards — coloured by teaching status. */
 .sc-card::before {
   content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-  border-radius: 11px 0 0 11px; background: var(--edge);
+  border-radius: 11px 0 0 11px; background: #c4bcab;
 }
 .sc-card.st-going::before { background: var(--pine); }
 .sc-card.st-done::before  { background: var(--clay); }
 .sc-card.st-new  { background: var(--paper-sunk); }
-.sc-card.st-going { background: var(--tint-pine); }
+.sc-card.st-going { background: #eef4f0; }
 /* Completed — warm terracotta, clearly distinct from the grey-cream unstarted + green ongoing. */
-.sc-card.st-done  { background: var(--tint-clay); border-color: var(--edge-clay); }
+.sc-card.st-done  { background: #f6e2d6; border-color: #ecccb9; }
 .sc-card:hover { border-color: var(--pine); }
 .sc-tag { flex: none; min-width: 40px; font-family: var(--f-display); font-weight: 500; font-size: 20px; color: var(--pine-d); line-height: 1.2; }
 .sc-tag.muted { color: var(--ink-soft); }
@@ -1895,7 +1887,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   background: var(--paper-2); border: 1px solid var(--line-soft);
   transition: border-color .12s ease, background .12s ease;
 }
-.ap-row:hover { border-color: var(--pine); background: var(--tint-cream); }
+.ap-row:hover { border-color: var(--pine); background: #f3ede0; }
 .ap-row:hover .ch-go { color: var(--pine); }
 /* History rows live directly in .ap-list (no card chrome) — a hairline separates them. */
 .ap-list .ch-row { display: flex; flex-direction: column; gap: 6px; padding: 10px 2px; }
@@ -1918,7 +1910,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .ch-pill { flex: none; font-family: var(--f-mono); font-size: 8.5px; letter-spacing: .08em; text-transform: uppercase;
   padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
 .ch-ongoing   { background: #e3efe9; color: var(--pine-d); }
-.ch-completed { background: var(--tint-clay); color: #a04a25; }
+.ch-completed { background: #f6e2d6; color: #a04a25; }
 .ch-untracked { background: #e7ebee; color: #566169; }
 /* Completion bar under a history row's name — reuses the section card's rail (pine = completed
    units, ochre = the current unit for an ongoing chapter) so history and cards read as one. */
@@ -1982,7 +1974,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-sub { background: var(--paper-2); border: 1px solid var(--line-soft); border-radius: 12px; margin-bottom: 10px; }
 .tp-sub.open { border-color: var(--line); }
 .tp-sub-hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; border-radius: 12px; }
-.tp-sub-hd:hover { background: var(--tint-cream); }
+.tp-sub-hd:hover { background: #f3ede0; }
 /* the open subject's header stays pinned just under the frozen top block while its classes scroll */
 .tp-sub.open > .tp-sub-hd { position: sticky; top: var(--tp-sub-top, 200px); z-index: 4; background: var(--paper-2); border-radius: 12px 12px 0 0; }
 .tp-sub-name { font-family: var(--f-display); font-weight: 600; font-size: 17px; color: var(--ink); }
@@ -2052,7 +2044,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   font-family: var(--f-display); font-weight: 500; font-size: 15px; color: var(--ink);
   transition: border-color .12s ease, background .12s ease;
 }
-.tp-portal-row:hover { border-color: var(--pine); background: var(--tint-cream); }
+.tp-portal-row:hover { border-color: var(--pine); background: #f3ede0; }
 .tp-portal-go { color: var(--ink-soft); font-size: 17px; }
 .tp-portal-row:hover .tp-portal-go { color: var(--pine); }
 
@@ -2070,7 +2062,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   background: var(--paper-2); border: 1.5px solid var(--line);
   font-family: var(--f-body); font-size: 15px; color: var(--ink);
 }
-.tp-method.on { background: var(--tint-pine-2); border-color: var(--pine); color: var(--pine-d); }
+.tp-method.on { background: #f1f6f3; border-color: var(--pine); color: var(--pine-d); }
 .tp-val-row { display: flex; align-items: center; gap: 16px; margin: 0 0 10px; }
 .tp-val-btn {
   width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line);
@@ -2112,7 +2104,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   background: var(--paper-2); border: 1.5px solid var(--line); cursor: pointer; text-align: left;
   font-family: var(--f-body); font-size: 15px; color: var(--ink);
 }
-.fr-sec-opt.on { background: var(--tint-pine-2); border-color: #c7d9cf; }
+.fr-sec-opt.on { background: #f1f6f3; border-color: #c7d9cf; }
 .fr-sec-check { flex: none; width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--line); font-size: 12px; color: var(--pine); }
 .fr-sec-opt.on .fr-sec-check { background: var(--pine); border-color: var(--pine); color: #fdfaf4; }
 
@@ -2141,7 +2133,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   background: transparent; scroll-snap-align: start;
 }
 .fr-sec-wheel .fr-sec-opt:last-child { border-bottom: none; }
-.fr-sec-wheel .fr-sec-opt.on { background: var(--tint-pine-2); }
+.fr-sec-wheel .fr-sec-opt.on { background: #f1f6f3; }
 /* Bare step arrows beside the wheel — no bordered/background box, just the two glyphs sitting
    directly on the modal body. Height-matched to the wheel only (not the column's Done button),
    so they read as scrolling the list, not the whole panel. One notch bigger than the shared
@@ -2288,7 +2280,7 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 /* "Show me how" nudge — a distinct-coloured WINDOW below the class list at first run (Screen 1):
    a sage-pine fill (clearly not the paper background) with a small speech-bubble tail pointing up
    at the cards, and a conversational italic-serif invitation rather than a structural button. */
-.dash-nudge { position:relative; background:var(--tint-pine); border:1.5px solid var(--pine); border-radius:14px;
+.dash-nudge { position:relative; background:#eef4f0; border:1.5px solid var(--pine); border-radius:14px;
   padding:15px 17px 14px; margin:20px 0 6px; box-shadow:0 6px 18px rgba(31,42,36,.08); }
 .dash-nudge-row { display:flex; align-items:flex-start; gap:12px; }
 /* The nudge glyph — now a stroke-only route icon (start → dotted path → destination), pine ink. */
@@ -2319,7 +2311,7 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .dash-expand-cta:hover { color:var(--ochre); }
 
 /* Success banner — the activation moment (Screen 6), same freeze position as the welcome. */
-.dash-success { position:sticky; top:var(--nav-h, 118px); z-index:4; background:var(--tint-pine); border:1px solid var(--pine);
+.dash-success { position:sticky; top:var(--nav-h, 118px); z-index:4; background:#eef4f0; border:1px solid var(--pine);
   border-radius:10px; padding:12px 14px; margin-bottom:16px; }
 .dash-success-row { display:flex; align-items:center; gap:12px; }
 .dash-success-mark { flex:none; width:26px; height:26px; border-radius:50%; background:var(--pine); color:#f3efe6;
@@ -2370,7 +2362,7 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 
 /* The tooltip — the SAME thematic sage-pine window as the "Show me how" nudge (.dash-nudge)
    that launches the tour: one visual voice across the whole first-run journey. */
-.gt-tip { position:absolute; pointer-events:auto; background:var(--tint-pine);
+.gt-tip { position:absolute; pointer-events:auto; background:#eef4f0;
   border:1.5px solid var(--pine); border-radius:14px; padding:15px 16px 12px;
   box-shadow:0 10px 30px rgba(31,42,36,.28); }
 .gt-tip-title { font-family:var(--f-display); font-weight:600; font-size:16.5px; color:var(--pine-d); line-height:1.25; }
@@ -2389,143 +2381,3 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   background:var(--pine); border:none; border-radius:8px; padding:8px 12px; cursor:pointer; white-space:nowrap; }
 .gt-next:hover { background:var(--pine-d); }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   DARK MODE — phones only, follows the device's system setting by default,
-   with an optional in-app override (Auto / Light / Dark), see ThemeToggle.jsx.
-
-   The effective theme ("light" | "dark") is resolved in a no-flash script
-   (layout.jsx) that reads the saved preference + the OS setting and writes it to
-   <html data-theme-effective>. CSS keys off THAT single attribute, so there is
-   exactly one copy of the dark rules regardless of how dark was chosen. Still
-   scoped to (max-width: 600px): desktop and >600px viewports are never darkened,
-   and the toggle is hidden there. Additive only — nothing above this line was
-   altered, so the (verified) light theme is byte-identical.
-   ═══════════════════════════════════════════════════════════════════════════ */
-@media (max-width: 600px) {
-
-  /* — Core palette: the backbone. Almost the entire UI reads these vars. — */
-  [data-theme-effective="dark"] {
-    --paper:      #161d19;
-    --paper-2:    #1e2621;
-    --paper-sunk: #11170f;
-    --ink:        #e9e4d7;
-    --ink-soft:   #a29b8c;
-    --line:       #323b35;
-    --line-soft:  #262e29;
-    --pine:       #3f8f76;
-    --pine-d:     #5cae93;
-    --clay:       #cf7f56;
-    --ochre:      #c69c4d;
-    --danger:     #e0705f;
-    --card-bg:    #1d2621;
-    --tint-pine:   #1f2c26;
-    --tint-pine-2: #1f2c26;
-    --tint-cream:  #262b22;
-    --tint-clay:   #2c2019;
-    --edge:        #3d4a43;
-    --edge-green:  #33453d;
-    --edge-clay:   #4a382e;
-  }
-
-  /* Section palette — redefined on the same selectors that own it. */
-  [data-theme-effective="dark"] .rd,
-  [data-theme-effective="dark"] .myclasses,
-  [data-theme-effective="dark"] .fr-wrap {
-    --sec-a:#5cae93; --sec-a-bg:#1c2a24;
-    --sec-b:#cf7f56; --sec-b-bg:#2c211b;
-    --sec-c:#c69c4d; --sec-c-bg:#2a2519;
-    --sec-d:#8fa0c4; --sec-d-bg:#1f232e;
-  }
-
-  [data-theme-effective="dark"] body { background-image: none; }
-
-  /* — Remaining hardcoded pale SURFACES → dark equivalents — */
-  [data-theme-effective="dark"] .rd .ghost:hover,
-  [data-theme-effective="dark"] .lv-undo,
-  [data-theme-effective="dark"] .assess,
-  [data-theme-effective="dark"] .assess-empty,
-  [data-theme-effective="dark"] .assess-card,
-  [data-theme-effective="dark"] .mlp-row-track:hover { background: var(--paper-2); }
-
-  [data-theme-effective="dark"] .hubbudget,
-  [data-theme-effective="dark"] .sc-grow { background: var(--card-bg); }
-
-  [data-theme-effective="dark"] .assess-hd,
-  [data-theme-effective="dark"] .assess-lo,
-  [data-theme-effective="dark"] .ch-ongoing,
-  [data-theme-effective="dark"] .mycal .cal-chip.on,
-  [data-theme-effective="dark"] .fr-plan-ready-check,
-  [data-theme-effective="dark"] .fr-sc-ready,
-  [data-theme-effective="dark"] .fr-wheel,
-  [data-theme-effective="dark"] .myclasses .add-node:hover { background: var(--tint-pine); }
-
-  [data-theme-effective="dark"] .mlp2-iconbtn.archive:hover,
-  [data-theme-effective="dark"] .tp-remove-confirm:hover { background: var(--tint-clay); }
-
-  [data-theme-effective="dark"] .myclasses .dur-add:hover,
-  [data-theme-effective="dark"] .dash-expand,
-  [data-theme-effective="dark"] .fr-standin { background: var(--tint-cream); }
-
-  [data-theme-effective="dark"] .ch-untracked { background: var(--tint-cream); color: var(--ink-soft); }
-
-  /* — Remaining hardcoded BORDERS → theme edges — */
-  [data-theme-effective="dark"] .addchip,
-  [data-theme-effective="dark"] .myclasses .add-node,
-  [data-theme-effective="dark"] .hubdanger { border-color: var(--edge); }
-  [data-theme-effective="dark"] .budgetsum,
-  [data-theme-effective="dark"] .mlp2-static,
-  [data-theme-effective="dark"] .fr-wheel,
-  [data-theme-effective="dark"] .fr-sec-opt.on { border-color: var(--edge-green); }
-  [data-theme-effective="dark"] .g4-reco-tbl td { border-bottom-color: var(--line-soft); }
-  [data-theme-effective="dark"] .myclasses .daycal .cell:not(.on),
-  [data-theme-effective="dark"] .mycal .cal-filterbar,
-  [data-theme-effective="dark"] .mycal .cal-totals { border-color: var(--line); }
-  [data-theme-effective="dark"] .myclasses .daycal .cell:not(.on):hover,
-  [data-theme-effective="dark"] .myclasses .cell.ro:hover { border-color: var(--edge); }
-  [data-theme-effective="dark"] .lv-chapterdone,
-  [data-theme-effective="dark"] .lv-chapterdone .lv-undo,
-  [data-theme-effective="dark"] .sc-card.st-done { border-color: var(--edge-clay); }
-  [data-theme-effective="dark"] .rd-prog .pip { background: var(--line); }
-  [data-theme-effective="dark"] .rd-prog .pip.half { background: linear-gradient(90deg, var(--pine) 50%, var(--line) 50%); }
-
-  /* — Dark hardcoded TEXT → readable on dark — */
-  [data-theme-effective="dark"] .phasetext,
-  [data-theme-effective="dark"] .assess-title,
-  [data-theme-effective="dark"] .assess-lo-t { color: var(--ink); }
-  [data-theme-effective="dark"] .lv-lo,
-  [data-theme-effective="dark"] .assess-sub,
-  [data-theme-effective="dark"] .assess-empty,
-  [data-theme-effective="dark"] .assess-look-t { color: var(--ink-soft); }
-  [data-theme-effective="dark"] .assess-back,
-  [data-theme-effective="dark"] .assess-tag,
-  [data-theme-effective="dark"] .assess-lo-k,
-  [data-theme-effective="dark"] .assess-qtype,
-  [data-theme-effective="dark"] .assess-ans,
-  [data-theme-effective="dark"] .assess-look-k { color: var(--pine-d); }
-  [data-theme-effective="dark"] .assess-lo { border-left-color: var(--pine-d); }
-  [data-theme-effective="dark"] .assess-backbtn { background: var(--pine); }
-  [data-theme-effective="dark"] .filebtn-docx { color: #6ea0e0; }
-  [data-theme-effective="dark"] .ch-completed { color: #dd9068; }
-  [data-theme-effective="dark"] .tab.locked,
-  [data-theme-effective="dark"] .lv-pvbtn.off { color: #7c7663; }
-  [data-theme-effective="dark"] .tp-bin { color: var(--danger); }
-  [data-theme-effective="dark"] .tp-remove-confirm { border-color: var(--danger); color: var(--danger); }
-
-  /* Primary buttons: keep the "hover deepens" feel so the light label stays legible. */
-  [data-theme-effective="dark"] button.primary:hover,
-  [data-theme-effective="dark"] .fr-change-btn-primary:hover,
-  [data-theme-effective="dark"] .fr-change-btn-primary:focus-visible,
-  [data-theme-effective="dark"] .gt-next:hover { background: #357c65; }
-  [data-theme-effective="dark"] .mlp2-restore-btn:hover { background: #357c65; border-color: #357c65; }
-
-  /* The header toggle lives on mobile only (dark is mobile-scoped). */
-  .hdr-theme { display: inline-flex; }
-}
-
-/* Manual theme toggle in the header — hidden on desktop where dark doesn't apply. */
-.hdr-theme { font-size: 16px; line-height: 1; background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
-.hdr-theme:hover { color: var(--pine); }
-@media (min-width: 601px) { .hdr-theme { display: none; } }

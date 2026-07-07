@@ -2391,141 +2391,110 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   DARK MODE — phones only, follows the device's system setting by default,
-   with an optional in-app override (Auto / Light / Dark), see ThemeToggle.jsx.
-
-   The effective theme ("light" | "dark") is resolved in a no-flash script
-   (layout.jsx) that reads the saved preference + the OS setting and writes it to
-   <html data-theme-effective>. CSS keys off THAT single attribute, so there is
-   exactly one copy of the dark rules regardless of how dark was chosen. Still
-   scoped to (max-width: 600px): desktop and >600px viewports are never darkened,
-   and the toggle is hidden there. Additive only — nothing above this line was
-   altered, so the (verified) light theme is byte-identical.
+   DARK MODE — phones only, follows the device's system setting.
+   Scoped to (prefers-color-scheme: dark) AND (max-width: 600px): desktop and
+   light-preference phones are completely unaffected. The design language is
+   unchanged — same "scholarly planner", just on warm dark paper instead of
+   warm cream. Additive only: every rule below is an override, nothing above
+   this line was altered, so the (verified) light theme is byte-identical.
    ═══════════════════════════════════════════════════════════════════════════ */
-@media (max-width: 600px) {
+@media (prefers-color-scheme: dark) and (max-width: 600px) {
 
   /* — Core palette: the backbone. Almost the entire UI reads these vars. — */
-  [data-theme-effective="dark"] {
-    --paper:      #161d19;
-    --paper-2:    #1e2621;
-    --paper-sunk: #11170f;
-    --ink:        #e9e4d7;
-    --ink-soft:   #a29b8c;
-    --line:       #323b35;
-    --line-soft:  #262e29;
-    --pine:       #3f8f76;
-    --pine-d:     #5cae93;
-    --clay:       #cf7f56;
-    --ochre:      #c69c4d;
-    --danger:     #e0705f;
+  :root {
+    --paper:      #161d19;   /* warm dark base */
+    --paper-2:    #1e2621;   /* raised surface (cards, inputs) */
+    --paper-sunk: #11170f;   /* recessed (tracks, step buttons) */
+    --ink:        #e9e4d7;   /* warm off-white body text */
+    --ink-soft:   #a29b8c;   /* muted text */
+    --line:       #323b35;   /* hairline */
+    --line-soft:  #262e29;   /* softer hairline */
+    --pine:       #3f8f76;   /* primary accent (button fills) */
+    --pine-d:     #5cae93;   /* brighter pine — headings + button hover */
+    --clay:       #cf7f56;   /* warm highlight */
+    --ochre:      #c69c4d;   /* warm highlight */
+    --danger:     #e0705f;   /* readable red on dark */
     --card-bg:    #1d2621;
-    --tint-pine:   #1f2c26;
+
+    /* semantic surface/edge tokens flipped for dark */
+    --tint-pine:   #1f2c26;  /* selected / hover pine tint */
     --tint-pine-2: #1f2c26;
-    --tint-cream:  #262b22;
-    --tint-clay:   #2c2019;
-    --edge:        #3d4a43;
-    --edge-green:  #33453d;
-    --edge-clay:   #4a382e;
+    --tint-cream:  #262b22;  /* warm hover tint */
+    --tint-clay:   #2c2019;  /* completed / clay tint */
+    --edge:        #3d4a43;  /* warm hover border */
+    --edge-green:  #33453d;  /* green hairline */
+    --edge-clay:   #4a382e;  /* clay border */
   }
 
-  /* Section palette — redefined on the same selectors that own it. */
-  [data-theme-effective="dark"] .rd,
-  [data-theme-effective="dark"] .myclasses,
-  [data-theme-effective="dark"] .fr-wrap {
+  /* Section palette — redefined on the same selectors that own it (custom
+     properties inherit by DOM subtree, and these local defs out-specify :root). */
+  .rd, .myclasses, .fr-wrap {
     --sec-a:#5cae93; --sec-a-bg:#1c2a24;
     --sec-b:#cf7f56; --sec-b-bg:#2c211b;
     --sec-c:#c69c4d; --sec-c-bg:#2a2519;
     --sec-d:#8fa0c4; --sec-d-bg:#1f232e;
   }
 
-  [data-theme-effective="dark"] body { background-image: none; }
+  /* Noise texture is a light speckle — drop it on dark paper. */
+  body { background-image: none; }
 
   /* — Remaining hardcoded pale SURFACES → dark equivalents — */
-  [data-theme-effective="dark"] .rd .ghost:hover,
-  [data-theme-effective="dark"] .lv-undo,
-  [data-theme-effective="dark"] .assess,
-  [data-theme-effective="dark"] .assess-empty,
-  [data-theme-effective="dark"] .assess-card,
-  [data-theme-effective="dark"] .mlp-row-track:hover { background: var(--paper-2); }
+  .rd .ghost:hover,
+  .lv-undo,
+  .assess, .assess-empty, .assess-card,
+  .mlp-row-track:hover { background: var(--paper-2); }
 
-  [data-theme-effective="dark"] .hubbudget,
-  [data-theme-effective="dark"] .sc-grow { background: var(--card-bg); }
+  .hubbudget { background: var(--card-bg); }
+  .sc-grow  { background: var(--card-bg); }        /* was cream gradient */
 
-  [data-theme-effective="dark"] .assess-hd,
-  [data-theme-effective="dark"] .assess-lo,
-  [data-theme-effective="dark"] .ch-ongoing,
-  [data-theme-effective="dark"] .mycal .cal-chip.on,
-  [data-theme-effective="dark"] .fr-plan-ready-check,
-  [data-theme-effective="dark"] .fr-sc-ready,
-  [data-theme-effective="dark"] .fr-wheel,
-  [data-theme-effective="dark"] .myclasses .add-node:hover { background: var(--tint-pine); }
+  .assess-hd,
+  .assess-lo,
+  .ch-ongoing,
+  .mycal .cal-chip.on,
+  .fr-plan-ready-check,
+  .fr-sc-ready,
+  .fr-wheel,
+  .myclasses .add-node:hover { background: var(--tint-pine); }
 
-  [data-theme-effective="dark"] .mlp2-iconbtn.archive:hover,
-  [data-theme-effective="dark"] .tp-remove-confirm:hover { background: var(--tint-clay); }
+  .mlp2-iconbtn.archive:hover,
+  .tp-remove-confirm:hover { background: var(--tint-clay); }
 
-  [data-theme-effective="dark"] .myclasses .dur-add:hover,
-  [data-theme-effective="dark"] .dash-expand,
-  [data-theme-effective="dark"] .fr-standin { background: var(--tint-cream); }
+  .myclasses .dur-add:hover,
+  .dash-expand,
+  .fr-standin { background: var(--tint-cream); }
 
-  [data-theme-effective="dark"] .ch-untracked { background: var(--tint-cream); color: var(--ink-soft); }
+  .ch-untracked { background: var(--tint-cream); color: var(--ink-soft); }
 
   /* — Remaining hardcoded BORDERS → theme edges — */
-  [data-theme-effective="dark"] .addchip,
-  [data-theme-effective="dark"] .myclasses .add-node,
-  [data-theme-effective="dark"] .hubdanger { border-color: var(--edge); }
-  [data-theme-effective="dark"] .budgetsum,
-  [data-theme-effective="dark"] .mlp2-static,
-  [data-theme-effective="dark"] .fr-wheel,
-  [data-theme-effective="dark"] .fr-sec-opt.on { border-color: var(--edge-green); }
-  [data-theme-effective="dark"] .g4-reco-tbl td { border-bottom-color: var(--line-soft); }
-  [data-theme-effective="dark"] .myclasses .daycal .cell:not(.on),
-  [data-theme-effective="dark"] .mycal .cal-filterbar,
-  [data-theme-effective="dark"] .mycal .cal-totals { border-color: var(--line); }
-  [data-theme-effective="dark"] .myclasses .daycal .cell:not(.on):hover,
-  [data-theme-effective="dark"] .myclasses .cell.ro:hover { border-color: var(--edge); }
-  [data-theme-effective="dark"] .lv-chapterdone,
-  [data-theme-effective="dark"] .lv-chapterdone .lv-undo,
-  [data-theme-effective="dark"] .sc-card.st-done { border-color: var(--edge-clay); }
-  [data-theme-effective="dark"] .rd-prog .pip { background: var(--line); }
-  [data-theme-effective="dark"] .rd-prog .pip.half { background: linear-gradient(90deg, var(--pine) 50%, var(--line) 50%); }
+  .addchip,
+  .myclasses .add-node,
+  .hubdanger { border-color: var(--edge); }
+  .budgetsum,
+  .mlp2-static,
+  .fr-wheel,
+  .fr-sec-opt.on { border-color: var(--edge-green); }
+  .g4-reco-tbl td { border-bottom-color: var(--line-soft); }
+  .myclasses .daycal .cell:not(.on),
+  .mycal .cal-filterbar,
+  .mycal .cal-totals { border-color: var(--line); }
+  .myclasses .daycal .cell:not(.on):hover,
+  .myclasses .cell.ro:hover { border-color: var(--edge); }
+  .lv-chapterdone,
+  .lv-chapterdone .lv-undo,
+  .sc-card.st-done { border-color: var(--edge-clay); }
+  .rd-prog .pip { background: var(--line); }
+  .rd-prog .pip.half { background: linear-gradient(90deg, var(--pine) 50%, var(--line) 50%); }
 
   /* — Dark hardcoded TEXT → readable on dark — */
-  [data-theme-effective="dark"] .phasetext,
-  [data-theme-effective="dark"] .assess-title,
-  [data-theme-effective="dark"] .assess-lo-t { color: var(--ink); }
-  [data-theme-effective="dark"] .lv-lo,
-  [data-theme-effective="dark"] .assess-sub,
-  [data-theme-effective="dark"] .assess-empty,
-  [data-theme-effective="dark"] .assess-look-t { color: var(--ink-soft); }
-  [data-theme-effective="dark"] .assess-back,
-  [data-theme-effective="dark"] .assess-tag,
-  [data-theme-effective="dark"] .assess-lo-k,
-  [data-theme-effective="dark"] .assess-qtype,
-  [data-theme-effective="dark"] .assess-ans,
-  [data-theme-effective="dark"] .assess-look-k { color: var(--pine-d); }
-  [data-theme-effective="dark"] .assess-lo { border-left-color: var(--pine-d); }
-  [data-theme-effective="dark"] .assess-backbtn { background: var(--pine); }
-  [data-theme-effective="dark"] .filebtn-docx { color: #6ea0e0; }
-  [data-theme-effective="dark"] .ch-completed { color: #dd9068; }
-  [data-theme-effective="dark"] .tab.locked,
-  [data-theme-effective="dark"] .lv-pvbtn.off { color: #7c7663; }
-  [data-theme-effective="dark"] .tp-bin { color: var(--danger); }
-  [data-theme-effective="dark"] .tp-remove-confirm { border-color: var(--danger); color: var(--danger); }
-
-  /* Primary buttons: keep the "hover deepens" feel so the light label stays legible. */
-  [data-theme-effective="dark"] button.primary:hover,
-  [data-theme-effective="dark"] .fr-change-btn-primary:hover,
-  [data-theme-effective="dark"] .fr-change-btn-primary:focus-visible,
-  [data-theme-effective="dark"] .gt-next:hover { background: #357c65; }
-  [data-theme-effective="dark"] .mlp2-restore-btn:hover { background: #357c65; border-color: #357c65; }
-
-  /* The header toggle lives on mobile only (dark is mobile-scoped). */
-  .hdr-theme { display: inline-flex; }
+  .phasetext, .assess-title, .assess-lo-t { color: var(--ink); }
+  .lv-lo, .assess-sub, .assess-empty, .assess-look-t { color: var(--ink-soft); }
+  .assess-back, .assess-tag, .assess-lo-k, .assess-qtype,
+  .assess-ans, .assess-look-k { color: var(--pine-d); }
+  .assess-lo { border-left-color: var(--pine-d); }
+  .assess-backbtn { background: var(--pine); }
+  .filebtn-docx { color: #6ea0e0; }
+  .ch-completed { color: #dd9068; }
+  .tab.locked, .lv-pvbtn.off { color: #7c7663; }
+  .tp-bin { color: var(--danger); }
+  .tp-remove-confirm { border-color: var(--danger); color: var(--danger); }
 }
-
-/* Manual theme toggle in the header — hidden on desktop where dark doesn't apply. */
-.hdr-theme { font-size: 16px; line-height: 1; background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
-.hdr-theme:hover { color: var(--pine); }
-@media (min-width: 601px) { .hdr-theme { display: none; } }
