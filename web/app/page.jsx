@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser } from "./lib/format";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
-import StatePill from "./components/StatePill";
 import Login from "./components/Login";
 import FirstRun from "./components/FirstRun";
 import TeachingProfile from "./components/TeachingProfile";
@@ -51,6 +50,11 @@ export default function Home() {
   const [profileAutoAdd, setProfileAutoAdd] = useState(null);  // subject NAME to auto-launch the add-a-class flow for (from the My Classes "expand classes" prompt)
   const [profilePortal, setProfilePortal] = useState(null);  // "subject" | "class" | "section" — one-shot intent from My Classes' standing "+" portal
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
+  // Where a Prepare-a-lesson flow should RETURN once the chapter is prepared. Set when Prepare is
+  // launched from a section's attach popup; consumed by onPrepared to reopen that popup (now
+  // listing the new chapter) instead of dumping the teacher into the lesson plan.
+  const [prepareReturn, setPrepareReturn] = useState(null);  // { subject, grade, sectionTag } | null
+  const [pendingAttach, setPendingAttach] = useState(null);  // {subject,grade,sectionTag,filename} — reopen the attach popup in My Classes
   // How the Generate tab should open this time:
   //   { mode: "pick" }                     → show the G1.9 subject·grade picker (multi-choice)
   //   { mode: "scoped", subject, grade }   → skip picker, go straight in for that subject·grade
@@ -145,7 +149,11 @@ export default function Home() {
   useEffect(() => { if (!subject) return;
     getJSON(`/subjects/${subject}/grades`).then((d) => {
       const gs = [...d.grades].sort((a, b) => ROMAN.indexOf(a) - ROMAN.indexOf(b));
-      setGrades(gs); setGrade(gs.includes("vii") ? "vii" : gs[0] || "");
+      setGrades(gs);
+      // Keep the already-selected grade if it's valid for this subject (e.g. a section card
+      // scoped us to English·VI just before this fires) — only fall back to a default when the
+      // current grade isn't offered for the new subject. Functional update reads the live grade.
+      setGrade((prev) => (gs.includes(prev) ? prev : (gs.includes("vii") ? "vii" : gs[0] || "")));
     }).catch(() => setGrades([]));
   }, [subject]);
 
@@ -169,6 +177,8 @@ export default function Home() {
     if (subjectSlug) setSubject(subjectSlug);
     if (gradeSlug) setGrade(gradeSlug);
     setEditFlow(null);
+    // My Lessons path → deposit only, never auto-attach to a section (no return section).
+    setPrepareReturn(null);
     setGenerateEntry({ mode: "scoped", subject: subjectSlug, grade: gradeSlug });
     setTab("generate");
   };
@@ -194,8 +204,30 @@ export default function Home() {
     } else {
       setGenerateEntry({ mode: "pick", single });
     }
+    // Launched from a section's attach popup → remember where to return once the chapter is
+    // prepared, so onPrepared can reopen that popup instead of opening the lesson plan.
+    setPrepareReturn(opts.returnSection && opts.subject && opts.grade
+      ? { subject: opts.subject, grade: opts.grade, sectionTag: opts.returnSection } : null);
     setEditFlow(null);
     setTab("generate");
+  };
+
+  // A chapter was just prepared in the Generate flow. Don't open the lesson plan.
+  //  • Launched FROM a section card → auto-ATTACH the new lesson to that section and land on My
+  //    Classes, where the card now shows it (MyPlans consumes pendingAttach and binds it).
+  //  • Launched from My Lessons → deposit ONLY: it's already marked prepared, so send her to the
+  //    My Lessons repository where it now appears; no section is touched.
+  // `filename` is the prepared plan.
+  const onPrepared = ({ subject: s, grade: g, filename }) => {
+    setGenerateEntry(null);
+    if (prepareReturn) {
+      setPendingAttach({ ...prepareReturn, filename });
+      setPrepareReturn(null);
+      setEditFlow(null); setTab("myplans");
+    } else {
+      if (s) setSubject(s); if (g) setGrade(g);
+      setEditFlow("lessonplans"); setTab("myplans");
+    }
   };
 
   // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
@@ -308,16 +340,6 @@ export default function Home() {
       </nav>
 
       <div className="bodycontent">
-        {/* Subject·grade scope pills belong to Generate only — no tab row to anchor them to
-            anymore, so they sit as a slim strip at the top of Generate's own content. */}
-        {tab === "generate" && ready && (
-          <div className="hdr-scope hdr-scope-standalone">
-            <StatePill value={subject} options={subjects.map((s) => ({ value: s, label: pretty(s) }))}
-              render={pretty(subject)} onChange={setSubject} />
-            <StatePill value={grade} options={grades.map((g) => ({ value: g, label: gradeUp(g) }))}
-              render={grade ? `Grade ${gradeUp(grade)}` : "—"} onChange={setGrade} />
-          </div>
-        )}
 
         <main>
           {/* Edit-flow views (My Lessons / teaching profile) require a set-up profile. A
@@ -345,11 +367,12 @@ export default function Home() {
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
             tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness}
               onNavigate={setTab} entry={generateEntry} onScope={(s, g) => { setSubject(s); setGrade(g); }}
-              onConsumeEntry={() => setGenerateEntry(null)} /> :
+              onConsumeEntry={() => setGenerateEntry(null)} onPrepared={onPrepared} /> :
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
               user={user} onSignOut={onSignOut}
               pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)}
+              pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourDismissed ? undefined : startTour}
               tourActive={!!tour} tourStep={tour}
               onTourInfo={setTourInfo} onExpandClasses={onExpandClasses} onProfilePortal={onProfilePortal} />}

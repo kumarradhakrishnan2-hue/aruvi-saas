@@ -310,7 +310,11 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
     return <div className="mlp-empty">No subjects set up yet. Finish setup in My Classes to see your lessons here.</div>;
   }
 
-  const subjectItems = subjects.map((s) => ({ id: s.name, label: s.name }));
+  // Subject filter, alphabetical by name (profile order is arbitrary — a stable A–Z list is easier
+  // to scan). Copy before sort so the source subjects[] order is untouched.
+  const subjectItems = subjects
+    .map((s) => ({ id: s.name, label: s.name }))
+    .sort((a, b) => a.label.localeCompare(b.label));
   // ONLY the classes she has enrolled for this subject, low-to-high — never the content superset.
   const gradeItems = grades
     .map((g) => g.grade)

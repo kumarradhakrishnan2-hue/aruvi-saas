@@ -845,6 +845,63 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .g4-vinput:focus { outline:none; border-color:var(--pine); }
 .g4-vinput::-webkit-outer-spin-button, .g4-vinput::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
 
+/* ── Prepare-lesson: periods stepper + standing Suggestion box (effort-index × annual budget) ── */
+.prep-periodrow { position:relative; display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:14px 0 4px; }
+.prep-periodrow .g4-inrow { margin:0; }
+.prep-sugg { margin-left:auto; text-align:right; border-left:1px solid var(--line); padding-left:14px; position:relative; }
+.prep-sugg-hd { display:flex; align-items:center; gap:6px; justify-content:flex-end; }
+.prep-sugg-k { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ochre); }
+.prep-info { width:16px; height:16px; border-radius:50%; border:1px solid #c9b986; background:none; color:var(--ochre);
+  font-family:var(--f-display); font-style:italic; font-size:11px; line-height:13px; text-align:center; cursor:pointer; padding:0; }
+.prep-info:hover { background:var(--paper-sunk); }
+.prep-sugg-body { display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-top:3px; }
+.prep-sugg-val { font-family:var(--f-display); font-size:19px; font-weight:600; color:var(--ochre); }
+.prep-sugg-ok { color:var(--pine); font-size:15px; }
+.prep-use { font-family:var(--f-mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--ochre);
+  background:none; border:1px solid #ddcfa6; border-radius:6px; padding:3px 8px; cursor:pointer; }
+.prep-use:hover { background:var(--paper-sunk); }
+.prep-tip { position:absolute; top:calc(100% + 8px); right:0; width:246px; z-index:6; text-align:left;
+  background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+  box-shadow:0 6px 22px rgba(31,42,36,.16); font-size:13px; line-height:1.5; color:var(--ink); }
+
+/* ── Prepare-lesson: annual-budget meter + legend ── */
+.prep-budget { margin:22px 0 4px; border-top:1px solid var(--line); padding-top:16px; }
+.prep-budget-hd { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.prep-budget-k { font-family:var(--f-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--pine); }
+.prep-budget-tot { font-family:var(--f-mono); font-size:12px; color:var(--ink-soft); }
+.prep-meter { display:flex; height:16px; border-radius:8px; overflow:hidden; margin:11px 0 14px;
+  background:var(--paper-sunk); border:1px solid var(--line); }
+.prep-seg { transition:width .2s ease; }
+.prep-seg-com { background:var(--pine); }
+.prep-seg-new { background:var(--clay); }
+.prep-seg-new.over { background:#a32d2d; }
+.prep-seg-rem { background:transparent; }
+.prep-legend { display:flex; flex-direction:column; gap:2px; }
+.prep-leg { display:flex; align-items:center; gap:9px; font-size:14px; padding:6px 8px; }
+.prep-leg-btn { background:none; border:none; width:100%; text-align:left; cursor:pointer; border-radius:8px; font-family:var(--f-body); color:var(--ink); }
+.prep-leg-btn:hover:not(:disabled) { background:var(--paper-sunk); }
+.prep-leg-btn:disabled { cursor:default; }
+.prep-dot { width:9px; height:9px; border-radius:2px; flex:none; }
+.prep-dot-com { background:var(--pine); }
+.prep-dot-new { background:var(--clay); }
+.prep-dot-rem { background:var(--paper-sunk); border:1px solid #d3d1c7; }
+.prep-leg-lab { flex:1; }
+.prep-leg-lab.clay, .prep-leg-val.clay { color:var(--clay); }
+.prep-leg-lab.muted, .prep-leg-val.muted { color:var(--ink-soft); }
+.prep-leg-val { font-family:var(--f-mono); font-size:13px; color:var(--ink); flex:none; min-width:46px; text-align:right; }
+.prep-leg-info { color:var(--pine); font-size:12px; margin-left:6px; }
+
+/* Prepare-lesson breakdown popup — reuses .ap-overlay/.ap-modal/.ap-head from My Classes */
+.prep-brk-row { display:flex; align-items:baseline; gap:11px; padding:10px 2px; }
+.prep-brk-row + .prep-brk-row { border-top:1px solid var(--line-soft); }
+.prep-brk-ch { font-family:var(--f-mono); font-size:11px; font-weight:500; color:var(--clay); width:46px; flex:none; }
+.prep-brk-name { flex:1; font-size:15px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.prep-brk-p { font-family:var(--f-mono); font-size:13px; color:var(--ink); }
+.prep-brk-total { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 2px 2px;
+  border-top:1px solid #d3d1c7; margin-top:4px; }
+.prep-brk-total span:first-child { font-family:var(--f-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); }
+.prep-brk-total span:last-child { font-family:var(--f-mono); font-size:14px; font-weight:500; color:var(--pine-d); }
+
 /* periods/hours stacked as two lines inside the tight budget boxes — 2 notches smaller
    than the standard .bsv (23px → 19px), hours line sits directly below periods */
 .bsv-sm { font-size:19px; margin-top:2px; }

@@ -72,7 +72,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, onStartTour, tourActive, tourStep, onTourInfo, onExpandClasses, onProfilePortal }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onExpandClasses, onProfilePortal }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
@@ -211,6 +211,11 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // Re-syncs WITHOUT a manual refresh: on load, whenever the tab regains focus / becomes visible
   // (the "I just switched to my iPhone" moment), and on a light interval while visible. We skip a
   // sync while a modal or the lesson view is open so an in-flight action is never clobbered.
+  // Hold the section-state sync while an auto-attach (a lesson just generated from a section card)
+  // is pending: the mount pull could otherwise read the server before the fresh binding's push
+  // lands and clear it. Set during render so it's true before any effect runs.
+  const autoBindHoldRef = useRef(false);
+  autoBindHoldRef.current = !!pendingAttach;
   const uiBusyRef = useRef(false);
   uiBusyRef.current = !!(attachFor || untrackFor || openPlan || historyFor);
   useEffect(() => {
@@ -220,7 +225,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (!keys.length) return;
     let live = true;
     const sync = () => {
-      if (!live || uiBusyRef.current) return;
+      if (!live || uiBusyRef.current || autoBindHoldRef.current) return;
       pullSectionState(keys).then(() => { if (live) setSyncTick((t) => t + 1); });
     };
     sync(); // initial reconcile
@@ -252,6 +257,30 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       .finally(() => { if (live) { setLoading(false); onConsumePending && onConsumePending(); } });
     return () => { live = false; };
   }, [pendingOpen, ready, onConsumePending]);
+
+  // Return from Prepare-a-lesson launched FROM a section card: the chapter was just prepared, so
+  // AUTO-ATTACH it to that section (the card loads it directly — no popup). Refetch this class's
+  // plans first so the card can render the chapter title + progress rail. The sync hold above
+  // keeps the mount pull from clearing the fresh binding before its push lands.
+  useEffect(() => {
+    if (!pendingAttach || !ready) return;
+    const { subject: pSub, grade: pGrade, sectionTag, filename } = pendingAttach;
+    if (!pSub || !pGrade || !sectionTag || !filename) { onConsumeAttach && onConsumeAttach(); return; }
+    const key = `${pSub}/${pGrade}`;
+    const sectionKey = `${pSub}_${pGrade}_${sectionTag}`;
+    let live = true;
+    getJSON(`/plans/${pSub}/${pGrade}`)
+      .then((d) => { if (live) setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })); })
+      .catch(() => {})
+      .finally(() => {
+        if (!live) return;
+        bindSectionChapter(sectionKey, filename);   // auto-attach: localStorage + server push
+        setSyncTick((t) => t + 1);                  // re-read the cache → card shows the chapter
+        onConsumeAttach && onConsumeAttach();
+      });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingAttach, ready]);
 
   /* ── Guided-tour orchestration (steps 5–11 live on this view; 12 steps total, 2026-07-06) ──
    * The tour's TARGET is the first class that already has a prepared plan (the first-run case:
@@ -380,6 +409,19 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (typeof window === "undefined") return null;
     try { return window.localStorage.getItem(`current_chapter_${sectionKey}`) || null; } catch { return null; }
   };
+  // Every chapter filename currently bound to ANY section of this subject·grade. This is the API's
+  // documented "belt-and-braces": a plan a sibling section is actively teaching counts as prepared
+  // even when its `prepared` flag was never written (older bindings, or a lost/absent prepared
+  // record) — so a chapter 7A/7B are teaching is still offered when attaching to a newly-added 7C.
+  const boundFilesForGrade = (sSlug, gSlug) => {
+    const set = new Set();
+    classes.forEach((c) => {
+      if (c.subjectSlug !== sSlug || c.gradeSlug !== gSlug) return;
+      const f = currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`);
+      if (f) set.add(f);
+    });
+    return set;
+  };
   // Completion flag written by LessonView when the last learning unit is marked complete.
   const isDone = (sectionKey) => {
     if (typeof window === "undefined") return false;
@@ -445,8 +487,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // library; My Lessons applies the same filter), excluding the chapter already bound to this
     // section (e.g. the just-completed one) — she's here to pick a DIFFERENT chapter.
     const boundFile = currentChapterFile(sectionKey);
+    const alsoAttachable = boundFilesForGrade(c.subjectSlug, c.gradeSlug); // bound to a sibling section
     const listPlans = Array.isArray(gradePlans)
-      ? gradePlans.filter((p) => p.prepared && p.filename !== boundFile)
+      ? gradePlans.filter((p) => (p.prepared || alsoAttachable.has(p.filename)) && p.filename !== boundFile)
       : gradePlans;
     return (
       <div className="ap-overlay" onClick={() => setAttachFor(null)}>
@@ -481,7 +524,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           <div className="mlp-allocate">
             <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
             <button className="mlp-allocate-btn prepare-cta"
-              onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true })}>
+              onClick={() => onEnterGenerate && onEnterGenerate({ subject: c.subjectSlug, grade: c.gradeSlug, single: true, returnSection: c.sectionTag })}>
               Prepare a new lesson →
             </button>
           </div>

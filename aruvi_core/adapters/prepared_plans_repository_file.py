@@ -3,9 +3,11 @@
 Persists which saved plans a teacher has actually PREPARED as JSON at
 ARUVI_STATE_DIR/prepared_plans/{tenant_id}/{user_id}/prepared.json, shaped as
 
-    { "english/vi/ch_04_....json": "2026-07-05T09:12:00+00:00", ... }
+    { "english/vi/ch_04_....json": {"at": "2026-07-05T09:12:00+00:00", "periods": 22}, ... }
 
-i.e. {plan_key: prepared_at_iso}. The plan_key is the frontend's
+i.e. {plan_key: {at: prepared_at_iso, periods: chosen_periods|null}}. Older registers stored a
+bare ISO string per key ({plan_key: prepared_at_iso}); both shapes are read, and a legacy string
+is upgraded to the record form the next time that plan is marked. The plan_key is the frontend's
 `${subjectSlug}/${gradeSlug}/${filename}` — the same identity used to LOAD the plan and to key
 the archive — so the prepared flag binds to the plan without copying any of its content.
 
@@ -91,14 +93,31 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
                 except OSError:
                     pass
 
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
-        """All prepared plan keys for this teacher: {plan_key: prepared_at_iso}."""
+    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
+        """All prepared plan keys for this teacher. Value is either a legacy prepared_at ISO
+        string, or a record {"at": iso, "periods": int|None} — callers must handle both."""
         return self._read(tenant_id, user_id)
 
-    def mark(self, tenant_id: str, user_id: str, plan_key: str) -> None:
-        """Record one plan as prepared. Idempotent — keeps the original prepared_at if set."""
+    def mark(self, tenant_id: str, user_id: str, plan_key: str, periods=None) -> None:
+        """Record one plan as prepared. prepared_at is set once (idempotent); `periods` (the
+        teacher's chosen period count) is stored as a record and UPDATED on every call so a
+        re-prepare tracks the latest generation. Legacy string values are upgraded in place."""
         with self._lock:
             data = self._read(tenant_id, user_id)
-            if plan_key not in data:
-                data[plan_key] = datetime.now(timezone.utc).isoformat()
+            existing = data.get(plan_key)
+            # Preserve the original prepared_at across shapes (str = legacy, dict = new record).
+            if isinstance(existing, dict):
+                at = existing.get("at") or datetime.now(timezone.utc).isoformat()
+                cur_periods = existing.get("periods")
+            elif isinstance(existing, str):
+                at = existing
+                cur_periods = None
+            else:
+                at = datetime.now(timezone.utc).isoformat()
+                cur_periods = None
+            new_periods = periods if periods is not None else cur_periods
+            record = {"at": at, "periods": new_periods}
+            # Only write when something actually changed (keeps the register churn-free / idempotent).
+            if existing != record:
+                data[plan_key] = record
                 self._write(tenant_id, user_id, data)

@@ -60,13 +60,49 @@ export async function getJSON(path, opts) {
  * flow — so My Lessons lists only her own work, not the whole shared sample library. Fire-and-
  * forget: the UI never blocks on it, and the flag simply stays false if the write is lost.
  * subject/grade are SLUGS; filename is the saved-plan file. */
-export function markPrepared(subject, grade, filename) {
-  if (!subject || !grade || !filename) return;
-  fetch(`${API}/plans-prepared`, withUser({
+export function markPrepared(subject, grade, filename, periods) {
+  if (!subject || !grade || !filename) return Promise.resolve();
+  // `periods` (optional) is the teacher's chosen period count for this chapter — stored server-
+  // side so budget tracking reflects what she allocated, not the served plan's authored length.
+  // Returns the (error-swallowed) promise so callers that need the write to land before they
+  // refetch /plans — e.g. PrepareLesson's auto-attach return — can await it. Fire-and-forget
+  // callers can still ignore the return value.
+  const body = { subject, grade, filename };
+  if (periods != null) body.periods = periods;
+  return fetch(`${API}/plans-prepared`, withUser({
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ subject, grade, filename }),
+    body: JSON.stringify(body),
   })).catch(() => {});
+}
+
+/* Annual budget in PERIODS for a subject·grade, read from the CANONICAL readiness.subjects[]
+ * (not the active-subject projection). Mirrors Readiness.computeBudget / Allocate's copy so the
+ * Prepare screen's budget meter and Allocate agree. budget is { gradeIdx: {method, value} }:
+ *   periods → value directly; weeks → weeklyPeriods×value; days → weeklyPeriods×(days/6);
+ *   estimate/auto/none → weeklyPeriods×30. weeklyPeriods = grid cells for that grade ÷ #sections,
+ *   falling back to the grade's periods_per_week (post calendar-purge profiles). null when the
+ *   subject·grade isn't in the profile or no basis can be derived. */
+export function annualBudgetPeriods(readiness, subjectSlugArg, gradeSlugArg) {
+  const subs = (readiness && readiness.subjects) || [];
+  const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+  const sub = subs.find((s) => slugify(s.name) === subjectSlugArg);
+  if (!sub) return null;
+  const gi = (sub.grades || []).findIndex((g) => (g.grade || "").toLowerCase() === gradeSlugArg);
+  if (gi < 0) return null;
+  const b = (sub.budget || {})[String(gi)];
+  // weekly periods for this grade: marked grid cells ÷ section count, else periods_per_week.
+  const gridG = (sub.grids || [])[gi] || [];
+  const secCount = gridG.length || 1;
+  let cells = 0;
+  gridG.forEach((row) => (row || []).forEach((v) => { if (v != null && v >= 0) cells++; }));
+  let weeklyPeriods = Math.round(cells / secCount);
+  if (!weeklyPeriods) weeklyPeriods = Number((sub.grades[gi] || {}).periods_per_week) || 0;
+  if (!b) return weeklyPeriods ? weeklyPeriods * 30 : null;      // no budget set → estimate
+  if (b.method === "periods") return b.value;
+  if (b.method === "weeks") return weeklyPeriods * b.value;
+  if (b.method === "days") return Math.round(weeklyPeriods * (b.value / 6));
+  return weeklyPeriods ? weeklyPeriods * 30 : null;             // estimate / auto / unknown
 }
 
 /* ───────── subject·grade coverage (single source of truth) ─────────

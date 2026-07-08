@@ -873,29 +873,39 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         <div className="kicker kicker-ochre">{kicker}</div>
         <h1 className="fr-q">How long is your teaching year for Class {classNum(g.grade)}?</h1>
         <p className="fr-hint">Pick one method below based on what you know.</p>
+        {/* Value shown inline under the selected method (2026-07-08), matching first run —
+            no longer parked deep below the whole list. Other methods stay prominent. */}
         <div className="tp-methods">
-          {METHOD_ORDER.map((m) => (
-            <button type="button" key={m} className={`tp-method ${b.method === m ? "on" : ""}`} onClick={() => setMethod(m)}>
-              {METHODS[m].label}
-            </button>
-          ))}
+          {METHOD_ORDER.map((m) => {
+            const on = b.method === m;
+            return (
+              <div key={m} className="fr-bud-row">
+                <button type="button" className={`tp-method ${on ? "on" : ""}`} onClick={() => setMethod(m)}>
+                  {METHODS[m].label}
+                </button>
+                {on && (
+                  <div className="fr-bud-detail">
+                    {m !== "auto" && (
+                      <div className="tp-val-row">
+                        <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
+                        <input type="number" className="tp-val-input" min="1" value={b.value}
+                          onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
+                        <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
+                        <span className="tp-val-unit">{METHODS[m].unit}</span>
+                      </div>
+                    )}
+                    <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
+                    {m === "auto" && (
+                      <p className="tp-estimate-sub">{ncfTotal != null
+                        ? `(based on a 30-week year. As per NCF, this class requires ${ncfTotal} periods.)`
+                        : "(based on a 30-week year.)"}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-        {b.method !== "auto" && (
-          <div className="tp-val-row">
-            <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <input type="number" className="tp-val-input" min="1" value={b.value}
-              onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
-            <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
-            <span className="tp-val-unit">{METHODS[b.method].unit}</span>
-          </div>
-        )}
-        {b.method === "auto" && (
-          <p className="tp-estimate-tag">{ncfTotal != null ? `As per NCF, this class is ${ncfTotal} periods` : "No NCF figure for this class"}</p>
-        )}
-        <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
-        {b.method === "auto" && (
-          <p className="tp-estimate-sub">(based on a 30-week year)</p>
-        )}
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => { updGrade({ budget: b }); onClassDone(); }}>
             {isLast ? "Save ✓" : "Next class →"}
@@ -1045,29 +1055,38 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         <div className="kicker kicker-ochre">{kicker} · annual budget</div>
         <h1 className="fr-q">How long is the teaching year?</h1>
         <p className="fr-hint">Pick one method below based on what you know.</p>
+        {/* Value shown inline under the selected method (2026-07-08), matching first run. */}
         <div className="tp-methods">
-          {METHOD_ORDER.map((m) => (
-            <button type="button" key={m} className={`tp-method ${b.method === m ? "on" : ""}`} onClick={() => setMethod(m)}>
-              {METHODS[m].label}
-            </button>
-          ))}
+          {METHOD_ORDER.map((m) => {
+            const on = b.method === m;
+            return (
+              <div key={m} className="fr-bud-row">
+                <button type="button" className={`tp-method ${on ? "on" : ""}`} onClick={() => setMethod(m)}>
+                  {METHODS[m].label}
+                </button>
+                {on && (
+                  <div className="fr-bud-detail">
+                    {m !== "auto" && (
+                      <div className="tp-val-row">
+                        <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
+                        <input type="number" className="tp-val-input" min="1" value={b.value}
+                          onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
+                        <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
+                        <span className="tp-val-unit">{METHODS[m].unit}</span>
+                      </div>
+                    )}
+                    <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
+                    {m === "auto" && (
+                      <p className="tp-estimate-sub">{ncfTotal != null
+                        ? `(based on a 30-week year. As per NCF, this class requires ${ncfTotal} periods.)`
+                        : "(based on a 30-week year.)"}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-        {b.method !== "auto" && (
-          <div className="tp-val-row">
-            <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[b.method].step)} aria-label="Less">−</button>
-            <input type="number" className="tp-val-input" min="1" value={b.value}
-              onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[b.method].unit} />
-            <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[b.method].step)} aria-label="More">+</button>
-            <span className="tp-val-unit">{METHODS[b.method].unit}</span>
-          </div>
-        )}
-        {b.method === "auto" && (
-          <p className="tp-estimate-tag">{ncfTotal != null ? `As per NCF, this class is ${ncfTotal} periods` : "No NCF figure for this class"}</p>
-        )}
-        <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
-        {b.method === "auto" && (
-          <p className="tp-estimate-sub">(based on a 30-week year)</p>
-        )}
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => saveEditNums(b)}>Save</button>
           <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>

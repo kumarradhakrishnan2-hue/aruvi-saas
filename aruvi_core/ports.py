@@ -284,12 +284,14 @@ class PreparedPlansRepository(Protocol):
     identity used to load the plan and to key the archive — so prepared state binds to the plan
     without duplicating any of its content.
     """
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
-        """All prepared plan keys for this teacher: {plan_key: prepared_at_iso}.
-        Returns an empty dict if she has prepared nothing yet."""
+    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
+        """All prepared plan keys for this teacher, keyed by plan_key. The value is either a
+        legacy prepared_at ISO string, or a record `{"at": iso, "periods": int|None}` once the
+        teacher's chosen period count is stored alongside. Empty dict if nothing prepared yet."""
         ...
 
-    def mark(self, tenant_id: str, user_id: str, plan_key: str) -> None:
-        """Record one plan as prepared (records prepared_at). Idempotent — re-marking a plan
-        already prepared leaves the original timestamp untouched."""
+    def mark(self, tenant_id: str, user_id: str, plan_key: str, periods: "int | None" = None) -> None:
+        """Record one plan as prepared. The prepared_at timestamp is set once (idempotent). When
+        `periods` is given (the teacher's chosen period count for that chapter) it is stored and
+        UPDATED on every call, so re-preparing tracks the latest generation's periods."""
         ...

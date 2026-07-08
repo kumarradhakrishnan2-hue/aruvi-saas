@@ -392,7 +392,14 @@ def get_plans(subject: str, grade: str,
         p["archived"] = pkey in archived
         p["archived_at"] = archived.get(pkey)
         p["prepared"] = pkey in prepared
-        p["prepared_at"] = prepared.get(pkey)
+        # prepared value is either a legacy ISO string or a {"at", "periods"} record.
+        prec = prepared.get(pkey)
+        if isinstance(prec, dict):
+            p["prepared_at"] = prec.get("at")
+            p["prepared_periods"] = prec.get("periods")
+        else:
+            p["prepared_at"] = prec
+            p["prepared_periods"] = None
         p["total_units"] = None
         try:
             saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
@@ -638,6 +645,9 @@ class PlanArchiveRequest(BaseModel):
     subject: str
     grade: str
     filename: str
+    # Optional: the teacher's chosen period count for this chapter (PrepareLesson). Only
+    # /plans-prepared reads it; archive/restore ignore it. None = don't record/change periods.
+    periods: Optional[int] = None
 
 
 def _plan_key(subject: str, grade: str, filename: str) -> str:
@@ -701,7 +711,7 @@ def mark_plan_prepared(req: PlanArchiveRequest,
     tenant_id, user_id = identity
     key = _plan_key(req.subject, req.grade, req.filename)
     try:
-        prepared_plans_repo.mark(tenant_id, user_id, key)
+        prepared_plans_repo.mark(tenant_id, user_id, key, req.periods)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to mark plan prepared: {str(e)}")
     return {"status": "prepared"}

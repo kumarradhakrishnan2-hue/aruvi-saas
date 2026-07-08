@@ -225,9 +225,11 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // chapter's estimate before converging. Updating them together removes the trailing cycle.
   const pickChapter = (no) => {
     setChapterNo(no);
-    const rec = estimateFor(no);
-    setDefaultPeriods(rec);
-    setPeriods(rec);
+    // No NCF recommendation for periods (2026-07-08): first run seeds a neutral flat default,
+    // fully editable. The effort-index/annual-budget suggestion only kicks in from later
+    // generations (PrepareLesson), once the teacher's own budget exists.
+    setDefaultPeriods(DEFAULT_PERIODS);
+    setPeriods(DEFAULT_PERIODS);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   };
 
@@ -237,9 +239,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   useEffect(() => {
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
-    const rec = c.ncf_estimated_periods != null ? Math.round(c.ncf_estimated_periods) : DEFAULT_PERIODS;
-    setDefaultPeriods(rec);
-    setPeriods(rec);
+    setDefaultPeriods(DEFAULT_PERIODS);
+    setPeriods(DEFAULT_PERIODS);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   }, [chapters]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -253,7 +254,10 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const startAcquisition = () => {
     setDurations([durationMin]);                 // seed durations from the chapter-step choice
     setPpwByDur({ [durationMin]: DEFAULT_PPW });
-    setBudget(null);
+    // Pre-pick the 30-week year (choice #1) as the rational default (2026-07-08): combined with
+    // her periods/week it yields a sane budget, so a hurried tap-through still lands somewhere
+    // real. Other methods stay fully prominent (no dimming) so she can switch freely.
+    setBudget({ method: "weeks", value: 30 });
     setStep("acqSections");
   };
   const toggleSection = (s) =>
@@ -646,10 +650,9 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <div className="tp-methods">
             {METHOD_ORDER.map((m) => {
               const on = picked && budget.method === m;
-              const dim = picked && !on;
               return (
                 <div key={m} className="fr-bud-row">
-                  <button type="button" className={`tp-method ${on ? "on" : ""} ${dim ? "fr-dim" : ""}`}
+                  <button type="button" className={`tp-method ${on ? "on" : ""}`}
                     onClick={() => setMethod(m)}>
                     {METHODS[m].label}
                   </button>
@@ -753,7 +756,6 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <div className={`fr-default ${editingField === "periods" ? "fr-default-editing" : ""}`}>
             <span className="fr-default-kicker-row">
               <span className="fr-default-kicker">Estimated periods</span>
-              {periods === defaultPeriods && <span className="fr-tag-recommended">NCF recommended</span>}
             </span>
             {editingField !== "periods" ? (
               <div className="fr-default-row">
@@ -769,6 +771,16 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                   items={PERIOD_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period" : "periods" }))} />
                 <button type="button" className="fr-done-btn" onClick={() => setEditingField(null)}>Done</button>
               </div>
+            )}
+            {/* Soft sanity band (2026-07-08): flag very low/high per-chapter counts, but never
+                block — she can proceed. NCF is used only as a reference for the threshold, never
+                as a pre-filled suggestion. */}
+            {(periods < 5 || periods > 25) && (
+              <p className="fr-bud-warn">
+                {periods < 5
+                  ? "That’s very few periods for a chapter — you can still go ahead."
+                  : "That’s a lot of periods for one chapter — you can still go ahead."}
+              </p>
             )}
           </div>
         </div>
