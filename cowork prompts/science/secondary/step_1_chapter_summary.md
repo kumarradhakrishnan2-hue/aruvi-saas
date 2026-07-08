@@ -30,9 +30,9 @@ Tell Cowork the subject, grade, and chapter scope before starting.
 
 | Item | Path |
 |------|------|
-| Project root (Cowork mount) | mnt/data/ |
-| Chapter PDFs | mnt/data/knowledge_commons/textbooks/science/{grade}/ |
-| Summary output | mnt/data/mirror/chapters/science/{grade}/summaries/ |
+| Content root (aruvi-saas) | data/content/ |
+| Chapter PDFs | data/content/textbooks/science/{grade}/ |
+| Summary output | data/content/chapters/science/{grade}/summaries/ |
 
 Files are named: `Chapter NN - Title.pdf`
 Output files are named: `ch_NN_summary.txt`
@@ -173,7 +173,7 @@ present, omit this paragraph entirely.
 
 ## Step 5 — Save the output
 
-Save to: `mnt/data/mirror/chapters/science/{grade}/summaries/ch_NN_summary.txt`
+Save to: `data/content/chapters/science/{grade}/summaries/ch_NN_summary.txt`
 (NN = zero-padded chapter number, e.g. `ch_08_summary.txt`)
 
 ---

@@ -24,11 +24,11 @@ All chapters    : map all chapters for this grade
 
 | Item | Path |
 |------|------|
-| Project root (Cowork mount) | `mnt/data/` |
-| Chapter summary (input) | `mnt/data/mirror/chapters/the_world_around_us/{grade}/summaries/ch_NN_summary.json` |
-| CG reference | `mnt/data/mirror/framework/the_world_around_us/preparatory/competency_descriptions_twau.json` |
-| Constitution | `mnt/data/mirror/constitutions/competency_mapping/the_world_around_us/preparatory/mapping_constitution_twau.txt` |
-| Mapping output (per chapter) | `mnt/data/mirror/chapters/the_world_around_us/{grade}/mappings/ch_NN_mapping.json` |
+| Content root (aruvi-saas) | `data/content/` |
+| Chapter summary (input) | `data/content/chapters/the_world_around_us/{grade}/summaries/ch_NN_summary.json` |
+| CG reference | `data/content/framework/the_world_around_us/preparatory/competency_descriptions_twau.json` |
+| Constitution | `data/content/constitutions/competency_mapping/the_world_around_us/preparatory/mapping_constitution_twau.txt` |
+| Mapping output (per chapter) | `data/content/chapters/the_world_around_us/{grade}/mappings/ch_NN_mapping.json` |
 
 `{grade}` is the lowercase Roman numeral: `iii`, `iv`, or `v`. All TWAU folders
 use the subject token `the_world_around_us` (matching the app's
@@ -95,7 +95,7 @@ Framework, Position Papers — constitutionally excluded.
 ## Step 3 — Write the mapping JSON
 
 Write one JSON record per chapter to:
-`mnt/data/mirror/chapters/the_world_around_us/{grade}/mappings/ch_NN_mapping.json`
+`data/content/chapters/the_world_around_us/{grade}/mappings/ch_NN_mapping.json`
 
 ```json
 {

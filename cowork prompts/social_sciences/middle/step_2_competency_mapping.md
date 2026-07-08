@@ -31,11 +31,11 @@ All chapters    : map all chapters for this subject and grade
 
 | Item | Path |
 |------|------|
-| Project root (Cowork mount) | mnt/data/ |
-| Chapter summaries | mnt/data/mirror/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt |
-| Curricular Goals | mnt/data/mirror/framework/{subject}/{stage}/cg_{stage}_{subject}.txt |
-| Constitution | mnt/data/mirror/constitutions/competency_mapping/{subject}/mapping_constitution_{subject}.txt |
-| Mapping output (per chapter) | mnt/data/mirror/chapters/{subject}/{grade}/mappings/ch_NN_mapping.json |
+| Content root (aruvi-saas) | data/content/ |
+| Chapter summaries | data/content/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt |
+| Curricular Goals | data/content/framework/{subject}/{stage}/cg_{stage}_{subject}.txt |
+| Constitution | data/content/constitutions/competency_mapping/{subject}/mapping_constitution_{subject}.txt |
+| Mapping output (per chapter) | data/content/chapters/{subject}/{grade}/mappings/ch_NN_mapping.json |
 
 
 ---
@@ -85,18 +85,18 @@ Framework documents, Position Papers — constitutionally excluded.
 ## Step 3 — Write the mapping JSON
 
 Write one JSON record per chapter to:
-`mnt/data/mirror/chapters/{subject}/{grade}/mappings/ch_NN_mapping.json`
+`data/content/chapters/{subject}/{grade}/mappings/ch_NN_mapping.json`
 
 **Field sourcing rules — every field must be derived as specified below:**
 
 | Field | Source | Rule |
 |-------|--------|------|
 | `stage` | Run scope declared at session start | Map grade to stage: III–V → `"foundational"`, VI–VIII → `"middle"`, IX–X → `"secondary"` |
-| `subject` | Folder path | The `{subject}` segment of `mirror/chapters/{subject}/{grade}/summaries/` |
-| `grade` | Folder path | The `{grade}` segment of `mirror/chapters/{subject}/{grade}/summaries/` |
+| `subject` | Folder path | The `{subject}` segment of `data/content/chapters/{subject}/{grade}/summaries/` |
+| `grade` | Folder path | The `{grade}` segment of `data/content/chapters/{subject}/{grade}/summaries/` |
 | `chapter_number` | Summary filename | Parse `NN` from `ch_NN_summary.txt`; strip leading zero; write as integer |
 | `chapter_title` | First line of `ch_NN_summary.txt` | Read the title heading from the top of the summary file; used verbatim |
-| `summary_path` | Constructed | `mirror/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt` using derived values |
+| `summary_path` | Constructed | `data/content/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt` using derived values |
 | `cg` | Step 2 output | Transcribe verbatim from the competency list produced in Step 2 |
 | `c_code` | Step 2 output | Transcribe verbatim from the competency list produced in Step 2 |
 | `weight` | Step 2 output | Transcribe verbatim from the competency list produced in Step 2 |

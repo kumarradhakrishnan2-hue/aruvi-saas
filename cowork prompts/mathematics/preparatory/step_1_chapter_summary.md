@@ -9,8 +9,8 @@ file directly. No API calls.
 
 | Item | Path |
 |---|---|
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/mathematics/{grade}/` |
-| Output | `mnt/data/mirror/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
+| Chapter PDFs | `data/content/textbooks/mathematics/{grade}/` |
+| Output | `data/content/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
 
 `{grade}` is the lowercase Roman numeral folder: `iii`, `iv`, `v`.
 

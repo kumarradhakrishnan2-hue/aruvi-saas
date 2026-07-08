@@ -32,11 +32,11 @@ Tell Cowork the grade and chapter scope before starting.
 
 | Item | Path |
 |------|------|
-| Project root (Cowork mount) | mnt/data/ |
-| Constitution | mnt/data/mirror/constitutions/competency_mapping/{subject}/{stage}/mapping_constitution_{subject}.txt (stage-routed; falls back to the flat .../{subject}/mapping_constitution_{subject}.txt for subjects not yet split by stage) |
-| Chapter PDFs | mnt/data/knowledge_commons/textbooks/science/{grade}/ |
-| Mapping output (per chapter) | mnt/data/mirror/chapters/science/{grade}/mappings/ch_NN_mapping.json |
-| Consolidated output | mnt/data/mirror/chapters/science/{grade}/mappings/chapter_mappings_science_{grade}.json |
+| Content root (aruvi-saas) | data/content/ |
+| Constitution | data/content/constitutions/competency_mapping/{subject}/{stage}/mapping_constitution_{subject}.txt (stage-routed; falls back to the flat .../{subject}/mapping_constitution_{subject}.txt for subjects not yet split by stage) |
+| Chapter PDFs | data/content/textbooks/science/{grade}/ |
+| Mapping output (per chapter) | data/content/chapters/science/{grade}/mappings/ch_NN_mapping.json |
+| Consolidated output | data/content/chapters/science/{grade}/mappings/chapter_mappings_science_{grade}.json |
 
 ---
 
@@ -45,7 +45,7 @@ Tell Cowork the grade and chapter scope before starting.
 For each chapter:
 1. Read `ch_NN_summary.txt` from mirror — this is the sole chapter
    content reference. Do not read the chapter PDF.
-2. Read `cg_{stage}_{subject}.txt` from mirror/framework/ — this is
+2. Read `cg_{stage}_{subject}.txt` from data/content/framework/ — this is
    the Curricular Goals reference. 
 3. Read the mapping constitution for the subject from mirror.
 
@@ -73,7 +73,7 @@ Framework documents, Position Papers — constitutionally excluded.
 
 ### 3a — Locate the PDF
 
-Match chapter number to the file in `knowledge_commons/textbooks/science/{grade}/`.
+Match chapter number to the file in `data/content/textbooks/science/{grade}/`.
 Files are named: `Chapter NN - Title.pdf`
 
 ### 3b — Identify the evidence base
@@ -188,7 +188,7 @@ For each chapter:
   }
 ```
 3. Write the appended record to:
-   `mnt/data/mirror/chapters/science/{grade}/mappings/ch_NN_mapping.json`
+   `data/content/chapters/science/{grade}/mappings/ch_NN_mapping.json`
 
 Do not modify any other field.
 

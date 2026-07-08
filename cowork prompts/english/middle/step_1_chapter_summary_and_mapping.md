@@ -24,12 +24,12 @@ Subject is `english`. Stage is `middle`. Grades VI, VII, VIII.
 
 | Item | Path |
 |------|------|
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/english/{grade}/` |
-| Static spine→CG | `mnt/data/mirror/framework/english/middle/spine_to_cg.json` |
-| NCF CG (context) | `mnt/data/mirror/framework/english/middle/cg_middle_english.txt` |
-| NCF Pedagogy (context) | `mnt/data/mirror/framework/english/middle/pedagogy_middle_english.txt` |
-| Summary output | `mnt/data/mirror/chapters/english/{grade}/summaries/ch_NN_summary.json` |
-| Mapping output | `mnt/data/mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
+| Chapter PDFs | `data/content/textbooks/english/{grade}/` |
+| Static spine→CG | `data/content/framework/english/middle/spine_to_cg.json` |
+| NCF CG (context) | `data/content/framework/english/middle/cg_middle_english.txt` |
+| NCF Pedagogy (context) | `data/content/framework/english/middle/pedagogy_middle_english.txt` |
+| Summary output | `data/content/chapters/english/{grade}/summaries/ch_NN_summary.json` |
+| Mapping output | `data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
 
 ## Step 1 — Chapter title and stage
 
@@ -271,7 +271,7 @@ task/exercise load, not page count).
 
 ### 8a — Attach to summary JSON
 
-Read `mirror/framework/english/middle/spine_to_cg.json`. For each
+Read `data/content/framework/english/middle/spine_to_cg.json`. For each
 spine that is **actually present in this chapter** (i.e. appears as a
 key under any `main_section.spines`), copy that spine's
 `competency_codes` array verbatim into
@@ -288,7 +288,7 @@ has no task objects in any section is, by Step 9, omitted from
 
 After writing the summary JSON, also write a separate mapping file to:
 
-`mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json`
+`data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json`
 
 This file is read by the Allocate tab to display chapters and compute
 period allocation. It must follow the same structure as other subjects'
@@ -299,7 +299,7 @@ mapping files.
 - `stage` (`"middle"`), `subject` (`"english"`), `grade`,
   `chapter_number`, `chapter_title` — copy from the summary JSON.
 - `summary_path` — relative path string:
-  `"mirror/chapters/english/{grade}/summaries/ch_NN_summary.json"`
+  `"data/content/chapters/english/{grade}/summaries/ch_NN_summary.json"`
 - `primary` — build from `spine_to_cg.json`, **restricted to spines
   that are actually present in this chapter** (same union rule as Step
   8a — a spine appears here only if it appears as a key under at
@@ -335,7 +335,7 @@ mapping files.
   "grade": "vii",
   "chapter_number": 1,
   "chapter_title": "Learning Together",
-  "summary_path": "mirror/chapters/english/vii/summaries/ch_01_summary.json",
+  "summary_path": "data/content/chapters/english/vii/summaries/ch_01_summary.json",
   "primary": [
     { "c_code": "C-1.1", "weight": 1 },
     { "c_code": "C-2.1", "weight": 1 },
@@ -479,7 +479,7 @@ Example: `ch_01 — "Learning Together" — sections: 3 (1 prose + 1 poem + 1 in
 
 - No API calls. Cowork reads PDFs and writes JSON directly.
 - No consulting LOs, Syllabus, Assessment Framework, or Position
-  Papers. Pedagogy beyond `mirror/framework/english/middle/` is
+  Papers. Pedagogy beyond `data/content/framework/english/middle/` is
   off-limits.
 - Competency mapping is static-by-stage (Step 8b): `primary` codes
   come from `spine_to_cg.json` only — do NOT generate per-chapter

@@ -24,8 +24,8 @@ Subject is `mathematics`, stage is `secondary`.
 
 | Item | Path |
 |------|------|
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/mathematics/{grade}/` |
-| Output | `mnt/data/mirror/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
+| Chapter PDFs | `data/content/textbooks/mathematics/{grade}/` |
+| Output | `data/content/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
 
 Output file name: `ch_NN_summary.json` (NN = zero-padded chapter number,
 e.g. `ch_02_summary.json`).

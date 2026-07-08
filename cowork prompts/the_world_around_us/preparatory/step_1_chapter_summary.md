@@ -22,9 +22,9 @@ All chapters    : process all chapters for this grade
 
 | Item | Path |
 |------|------|
-| Project root (Cowork mount) | `mnt/data/` |
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/the_world_around_us/{grade}/` |
-| Output | `mnt/data/mirror/chapters/the_world_around_us/{grade}/summaries/ch_NN_summary.json` |
+| Content root (aruvi-saas) | `data/content/` |
+| Chapter PDFs | `data/content/textbooks/the_world_around_us/{grade}/` |
+| Output | `data/content/chapters/the_world_around_us/{grade}/summaries/ch_NN_summary.json` |
 
 `{grade}` is the lowercase Roman numeral folder: `iii`, `iv`, or `v`. All TWAU
 folders use the subject token `the_world_around_us` (matching the app's

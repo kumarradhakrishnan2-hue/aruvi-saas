@@ -21,12 +21,12 @@ Subject `english`, stage `secondary`, grade IX (`ix`).
 
 | Item | Path |
 |------|------|
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/english/{grade}/` |
-| **[DELTA] Transcript appendix** | `mnt/data/knowledge_commons/textbooks/english/{grade}/transcript.pdf` |
-| Static spine→CG | `mnt/data/mirror/framework/english/secondary/spine_to_cg.json` |
-| NCF CG / Pedagogy (context) | `mnt/data/mirror/framework/english/secondary/{cg,pedagogy}_secondary_english.txt` |
-| Summary out | `mnt/data/mirror/chapters/english/{grade}/summaries/ch_NN_summary.json` |
-| Mapping out | `mnt/data/mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
+| Chapter PDFs | `data/content/textbooks/english/{grade}/` |
+| **[DELTA] Transcript appendix** | `data/content/textbooks/english/{grade}/transcript.pdf` |
+| Static spine→CG | `data/content/framework/english/secondary/spine_to_cg.json` |
+| NCF CG / Pedagogy (context) | `data/content/framework/english/secondary/{cg,pedagogy}_secondary_english.txt` |
+| Summary out | `data/content/chapters/english/{grade}/summaries/ch_NN_summary.json` |
+| Mapping out | `data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
 
 ## Step 1 — Title and stage
 Extract `chapter_title` verbatim from the unit-title heading. Set `stage` =
@@ -129,7 +129,7 @@ and bake them HERE so LP/Assessment never open the appendix. Per listening
 cell capture:
 - `transcript_ref` — `"p. NN"`, the PRINTED textbook page from the chapter's
   "(Transcript for teacher on page NN)" note. Provenance only.
-- `transcript_file` — `"knowledge_commons/textbooks/english/{grade}/transcript.pdf"`.
+- `transcript_file` — `"data/content/textbooks/english/{grade}/transcript.pdf"`.
 - `transcript_unit` — e.g. `"Unit 6"`.
 - `transcript_text` — the body, shortened to **150–250 w**, all speakers/
   segments represented, sequence + resolution intact, filler trimmed, speaker
@@ -179,10 +179,10 @@ spine present in this chapter (a key under any `main_section.spines`), copy its
 for absent spines; no per-chapter tags.
 
 **8b — Write mapping JSON** to
-`mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json` (read by the
+`data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json` (read by the
 Allocate tab):
 - `stage`/`subject`/`grade`/`chapter_number`/`chapter_title` — from summary.
-- `summary_path` — `"mirror/chapters/english/{grade}/summaries/ch_NN_summary.json"`.
+- `summary_path` — `"data/content/chapters/english/{grade}/summaries/ch_NN_summary.json"`.
 - `primary` — from `spine_to_cg.json`, restricted to present spines. Walk
   present spines in **canonical order** (reading_for_comprehension, listening,
   speaking, writing, vocabulary_grammar, beyond_text), emit each unique
@@ -201,7 +201,7 @@ Template (Ch 01, all 6 spines present):
   "grade": "ix",
   "chapter_number": 1,
   "chapter_title": "How I Taught My Grandmother to Read",
-  "summary_path": "mirror/chapters/english/ix/summaries/ch_01_summary.json",
+  "summary_path": "data/content/chapters/english/ix/summaries/ch_01_summary.json",
   "primary": [
     { "c_code": "C-2.1", "weight": 1 },
     { "c_code": "C-2.2", "weight": 1 },
@@ -262,7 +262,7 @@ spine. UTF-8. Create `mappings/` if absent; overwrite.
         "listening": {
           "section_name": "Listen and Respond",
           "transcript_ref": "p. 259",
-          "transcript_file": "knowledge_commons/textbooks/english/ix/transcript.pdf",
+          "transcript_file": "data/content/textbooks/english/ix/transcript.pdf",
           "transcript_unit": "Unit 1",
           "transcript_text": "<150–250 w, all segments, labels kept>",
           "tasks_verbatim": []
@@ -283,7 +283,7 @@ spine. UTF-8. Create `mappings/` if absent; overwrite.
       "spines": {
         "reading_for_comprehension": { "section_name": "Reflect and Respond + Reading for Appreciation + Check Your Understanding + Critical Reflection", "tasks_verbatim": [] },
         "vocabulary_grammar":        { "section_name": "Vocabulary in Context", "tasks_verbatim": [] },
-        "listening":                 { "section_name": "Listen and Respond", "transcript_ref": "p. 260", "transcript_file": "knowledge_commons/textbooks/english/ix/transcript.pdf", "transcript_unit": "Unit 1", "transcript_text": "<150–250 w>", "tasks_verbatim": [] },
+        "listening":                 { "section_name": "Listen and Respond", "transcript_ref": "p. 260", "transcript_file": "data/content/textbooks/english/ix/transcript.pdf", "transcript_unit": "Unit 1", "transcript_text": "<150–250 w>", "tasks_verbatim": [] },
         "speaking":                  { "section_name": "Speaking Activity", "tasks_verbatim": [] },
         "writing":                   { "section_name": "Writing Task", "tasks_verbatim": [] },
         "beyond_text":               { "section_name": "Learning Beyond the Text", "tasks_verbatim": [] }
@@ -323,7 +323,7 @@ Example: `ch_06 — "Twin Melodies" — sections: 2 (1 drama + 1 poem) — pages
 ## Constraints
 - No API calls; Cowork reads PDFs and writes JSON directly.
 - No LOs/Syllabus/Assessment Framework/Position Papers; pedagogy beyond
-  `mirror/framework/english/secondary/` is off-limits.
+  `data/content/framework/english/secondary/` is off-limits.
 - [DELTA] Use the secondary subheading table (Step 4), not middle "Let us …".
 - [DELTA] A multi-act play is one `drama` section with `drama_summary`;
   enrichment poems are `beyond_text` tasks, never their own section.

@@ -20,10 +20,10 @@ All chapters    : process every chapter with a summary
 
 | Item | Path |
 |------|------|
-| Summary (input) | `mnt/data/mirror/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
-| CG document | `mnt/data/mirror/framework/mathematics/secondary/cg_secondary_mathematics.txt` |
-| Constitution | `mnt/data/mirror/constitutions/competency_mapping/mathematics/secondary/mapping_constitution_mathematics.txt` |
-| Output | `mnt/data/mirror/chapters/mathematics/{grade}/mappings/ch_NN_mapping.json` |
+| Summary (input) | `data/content/chapters/mathematics/{grade}/summaries/ch_NN_summary.json` |
+| CG document | `data/content/framework/mathematics/secondary/cg_secondary_mathematics.txt` |
+| Constitution | `data/content/constitutions/competency_mapping/mathematics/secondary/mapping_constitution_mathematics.txt` |
+| Output | `data/content/chapters/mathematics/{grade}/mappings/ch_NN_mapping.json` |
 
 ## Procedure
 

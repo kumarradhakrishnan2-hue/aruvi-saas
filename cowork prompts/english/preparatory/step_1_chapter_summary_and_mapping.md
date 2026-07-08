@@ -1,8 +1,8 @@
 # Cowork Session — English (Preparatory): Chapter Summary + Static Competency Mapping
 
 Reads an English chapter PDF for the **Preparatory stage (Grades III–V)** and writes two files per chapter:
-- summary JSON → `mirror/chapters/english/{grade}/summaries/ch_NN_summary.json`
-- mapping JSON → `mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json`
+- summary JSON → `data/content/chapters/english/{grade}/summaries/ch_NN_summary.json`
+- mapping JSON → `data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json`
 
 Cowork reads PDFs and writes JSON directly. No API calls.
 
@@ -14,13 +14,13 @@ Sibling of the middle/secondary prompt (`chapter_summary_competency_mapping_engl
 
 | Item | Path |
 |---|---|
-| Chapter PDFs | `mnt/data/knowledge_commons/textbooks/english/{grade}/` |
-| Spine→CG lookup | `mnt/data/mirror/framework/english/preparatory/spine_to_cg.json` |
-| NCF CG (context) | `mnt/data/mirror/framework/english/preparatory/cg_preparatory_english.txt` |
-| NCF Pedagogy (context) | `mnt/data/mirror/framework/english/preparatory/pedagogy_preparatory_english.txt` |
-| Competency descriptions | `mnt/data/mirror/framework/english/preparatory/competency_descriptions_preparatory.json` |
-| Summary output | `mnt/data/mirror/chapters/english/{grade}/summaries/ch_NN_summary.json` |
-| Mapping output | `mnt/data/mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
+| Chapter PDFs | `data/content/textbooks/english/{grade}/` |
+| Spine→CG lookup | `data/content/framework/english/preparatory/spine_to_cg.json` |
+| NCF CG (context) | `data/content/framework/english/preparatory/cg_preparatory_english.txt` |
+| NCF Pedagogy (context) | `data/content/framework/english/preparatory/pedagogy_preparatory_english.txt` |
+| Competency descriptions | `data/content/framework/english/preparatory/competency_descriptions_preparatory.json` |
+| Summary output | `data/content/chapters/english/{grade}/summaries/ch_NN_summary.json` |
+| Mapping output | `data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json` |
 
 ## Step 1 — Chapter metadata
 
@@ -136,7 +136,7 @@ After computing, re-walk the JSON and confirm counts match actual array lengths.
 
 **7a — In the summary JSON.** For each spine actually present in this chapter (union of `spines` keys across all `main_sections`), copy that spine's `competency_codes` from `spine_to_cg.json` verbatim into `competency_reporting.by_spine`. Do not emit entries for absent spines. Do not generate per-chapter tags.
 
-**7b — Separate mapping JSON** at `mirror/chapters/english/{grade}/mappings/ch_NN_mapping.json`:
+**7b — Separate mapping JSON** at `data/content/chapters/english/{grade}/mappings/ch_NN_mapping.json`:
 
 ```json
 {
@@ -145,7 +145,7 @@ After computing, re-walk the JSON and confirm counts match actual array lengths.
   "grade": "{grade}",
   "chapter_number": <int>,
   "chapter_title": "<verbatim>",
-  "summary_path": "mirror/chapters/english/{grade}/summaries/ch_NN_summary.json",
+  "summary_path": "data/content/chapters/english/{grade}/summaries/ch_NN_summary.json",
   "primary": [ { "c_code": "C-1.1", "weight": 1 }, ... ],
   "incidental": [],
   "spine_load": <int>,
@@ -189,7 +189,7 @@ Each `main_section` carries:
 
 A spine with no tasks is omitted from `spines` entirely (do not emit empty cells). UTF-8. Overwrite.
 
-For a full worked example, see the existing pilot files at `mirror/chapters/english/iii/summaries/ch_01_summary.json` (picture_narrative + poem) and `mirror/chapters/english/v/summaries/ch_01_summary.json` (single poem section with all 5 spines).
+For a full worked example, see the existing pilot files at `data/content/chapters/english/iii/summaries/ch_01_summary.json` (picture_narrative + poem) and `data/content/chapters/english/v/summaries/ch_01_summary.json` (single poem section with all 5 spines).
 
 ## Step 9 — Confirmation line
 
@@ -208,5 +208,5 @@ Example: `ch_01 — "Fun with Friends" — sections: 2 (1 picture_narrative + 1 
 
 ## Constraints
 
-- No consulting LOs, Syllabus, Assessment Framework, or Position Papers. Pedagogy beyond `mirror/framework/english/preparatory/` is off-limits.
+- No consulting LOs, Syllabus, Assessment Framework, or Position Papers. Pedagogy beyond `data/content/framework/english/preparatory/` is off-limits.
 - Two output files per chapter (summary + mapping). Both must be present before moving to the next chapter. Process chapters in order. UTF-8. Overwrite.
