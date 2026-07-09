@@ -11,11 +11,21 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
 from ...link_resolver import stamp
-from ...normalize import as_list, band_lines, classify_stimulus, normalize_options
+from ...normalize import as_list, band_lines, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
 )
+
+# dominant_mode code → spelled-out approach line (prototype's _modeFull map; the
+# canonical Period.approach carries the FULL name, never the acronym).
+_MODE_FULL = {
+    "O&R": "Observe and Record",
+    "HI": "Hands-on Investigation",
+    "D&C": "Discussion and Connection",
+    "C&E": "Create and Express",
+    "R&A": "Reflect and Act",
+}
 
 
 class TheWorldAroundUsSubject:
@@ -78,7 +88,10 @@ class TheWorldAroundUsSubject:
             index[sec].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
+                approach=_MODE_FULL.get(p.get("dominant_mode", ""), p.get("dominant_mode", "")),
                 activities=band_lines(p.get("time_bands")),
+                phases=phases_from(p.get("time_bands")),
+                materials=as_list(p.get("materials")),
                 learning_outcomes=as_list(p.get("implied_lo")),
                 teacher_notes=as_list(p.get("teacher_facilitation_note")),
                 meta={"dominant_mode": p.get("dominant_mode", ""),

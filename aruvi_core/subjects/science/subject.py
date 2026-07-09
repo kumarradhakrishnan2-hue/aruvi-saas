@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Union
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
 from ...grades import stage_for
 from ...link_resolver import handoff_period_index, period_number_by_field, stamp
-from ...normalize import as_list as _as_list, classify_stimulus, normalize_options
+from ...normalize import as_list as _as_list, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -113,6 +113,32 @@ class ScienceSubject:
     # ── Normalization → canonical view model ────────────────────────────────────
     def lesson_plan_to_view(self, raw: Dict[str, Any], *, grade, chapter) -> LessonPlanView:
         lp = raw.get("lesson_plan", raw)
+        periods_raw = lp.get("periods", [])
+
+        # ── Stage dispatch (2026-07-09, "Stage None" ghost fix) ─────────────────
+        # MIDDLE plans carry progression_stage/stage_label per period; SECONDARY
+        # plans (LP Constitution Amendment A4) are section-anchored and FLAT —
+        # no stages at all. Detect by the data (never by grade string): if no
+        # period carries a stage, it's the secondary shape. Previously secondary
+        # periods fell into a single phantom "Stage None" group.
+        is_secondary = periods_raw and not any(
+            p.get("progression_stage") is not None or p.get("stage_label")
+            for p in periods_raw
+        )
+        if is_secondary:
+            groups = self._secondary_lp_groups(raw, periods_raw)
+        else:
+            groups = self._middle_lp_groups(lp, periods_raw)
+
+        return LessonPlanView(
+            subject="science", grade=grade,
+            chapter_number=chapter.get("chapter_number", 0),
+            chapter_title=chapter.get("chapter_title", ""),
+            total_periods=len(periods_raw),
+            groups=groups,
+        )
+
+    def _middle_lp_groups(self, lp: Dict[str, Any], periods_raw: list) -> List[Group]:
         # stage_number -> {label, description, implied_lo}
         stage_meta: Dict[int, Dict[str, str]] = {}
         for cp in lp.get("cognitive_progression", []):
@@ -126,7 +152,7 @@ class ScienceSubject:
 
         groups: List[Group] = []
         by_stage: Dict[int, Group] = {}
-        for p in lp.get("periods", []):
+        for p in periods_raw:
             stage = p.get("progression_stage")
             if stage not in by_stage:
                 meta = stage_meta.get(stage, {})
@@ -139,27 +165,68 @@ class ScienceSubject:
                 )
                 by_stage[stage] = g
                 groups.append(g)  # preserves first-appearance order
-            activities = []
-            if p.get("activity_description"):
-                activities.append(p["activity_description"])
-            activities.extend(_phase_lines(p.get("phases")))
-            by_stage[stage].periods.append(Period(
-                number=p.get("period_number", 0),
-                title=p.get("activity_title", ""),
-                activities=activities,
-                teacher_notes=_as_list(p.get("teacher_notes")),
-                meta={"pedagogical_approach": p.get("pedagogical_approach", ""),
-                      "roles": p.get("roles", ""),
-                      "materials": p.get("materials", ""),
-                      "duration_minutes": p.get("period_duration_minutes")},
-            ))
+            by_stage[stage].periods.append(self._period_from(p))
+        return groups
 
-        return LessonPlanView(
-            subject="science", grade=grade,
-            chapter_number=chapter.get("chapter_number", 0),
-            chapter_title=chapter.get("chapter_title", ""),
-            total_periods=len(lp.get("periods", [])),
-            groups=groups,
+    def _secondary_lp_groups(self, raw: Dict[str, Any], periods_raw: list) -> List[Group]:
+        # Section-anchored flat plan: group by section_anchor (first-appearance
+        # order), one Group per section. implied_lo/section_context live in the
+        # top-level coverage_handoff array — rejoined here by period_number, with
+        # a section_label fallback (same join the assessment path already uses).
+        # Carried as group META for the assessment link only — LO is NEVER
+        # displayed in the lesson plan (founder rule, 2026-07-09).
+        ho_by_period: Dict[Any, Dict[str, Any]] = {}
+        ho_by_label: Dict[str, Dict[str, Any]] = {}
+        lp = raw.get("lesson_plan", raw)
+        for e in (raw.get("coverage_handoff") or lp.get("coverage_handoff") or []):
+            if not isinstance(e, dict):
+                continue
+            for pn in (e.get("period_numbers") or []):
+                ho_by_period[pn] = e
+            if e.get("section_label"):
+                ho_by_label[e["section_label"]] = e
+
+        groups: List[Group] = []
+        by_section: Dict[str, Group] = {}
+        for p in periods_raw:
+            anchor = str(p.get("section_anchor", "")) or "Section"
+            if anchor not in by_section:
+                ho = ho_by_period.get(p.get("period_number")) or ho_by_label.get(anchor) or {}
+                lo = ho.get("implied_lo")
+                if isinstance(lo, list):
+                    lo = " ".join(str(x).strip() for x in lo if x)
+                g = Group(
+                    type="section",
+                    label=anchor,
+                    meta={"section_context": ho.get("section_context", ""),
+                          "implied_lo": lo or ""},
+                )
+                by_section[anchor] = g
+                groups.append(g)
+            by_section[anchor].periods.append(self._period_from(p))
+        return groups
+
+    def _period_from(self, p: Dict[str, Any]) -> Period:
+        activities = []
+        if p.get("activity_description"):
+            activities.append(p["activity_description"])
+        activities.extend(_phase_lines(p.get("phases") or p.get("time_bands")))
+        hw = p.get("homework")
+        homework = "; ".join(_as_list(hw)) if hw else ""
+        return Period(
+            number=p.get("period_number", 0),
+            title=p.get("activity_title", ""),
+            approach=p.get("pedagogical_approach", ""),
+            activities=activities,
+            phases=phases_from(p.get("phases") or p.get("time_bands")),
+            materials=_as_list(p.get("materials")),
+            teacher_notes=_as_list(p.get("teacher_notes")),
+            homework=homework,
+            meta={"pedagogical_approach": p.get("pedagogical_approach", ""),
+                  "roles": p.get("roles", ""),
+                  "materials": p.get("materials", ""),
+                  "visual_aids": p.get("visual_aids", ""),
+                  "duration_minutes": p.get("period_duration_minutes")},
         )
 
     def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,

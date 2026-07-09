@@ -31,10 +31,33 @@ class VisualStimulus:
 
 
 @dataclass
+class Phase:
+    """One timed step within a period — the SINGLE timed spine (layout decision 2026-07-09).
+
+    Raw saved plans carry per-phase minutes as band strings ("0–5", "10-30"); normalization
+    parses them ONCE into integers here (see normalize.parse_minutes_band). `label` keeps the
+    raw band string for provenance/fallback. Display shows the DURATION ("5 min") in the
+    marginal rail — derived as end_min - start_min, never re-parsed downstream. Phases should
+    tile 0 → period duration (validated by normalize.phase_tiling_issues, best-effort carry)."""
+    text: str = ""
+    start_min: Any = None   # int | None (unparseable band)
+    end_min: Any = None     # int | None
+    label: str = ""         # the raw minutes string as generated, e.g. "0–5"
+
+
+@dataclass
 class Period:
     number: int
     title: str = ""
+    approach: str = ""  # canonical "how do I run this period?" line (2026-07-09): Science
+    #                     pedagogical_approach · Maths pedagogical_method · English joined
+    #                     pedagogical_methods · TWAU dominant_mode spelled out · SS/Maths-prep
+    #                     have no source field (empty). Display: "40 min · {approach}".
     activities: List[str] = field(default_factory=list)
+    phases: List[Phase] = field(default_factory=list)   # the timed spine (2026-07-09; activities
+    #                                                     keeps legacy flat lines until the new
+    #                                                     period layout lands in the renderers)
+    materials: List[str] = field(default_factory=list)  # first-class: fixed slot in the anatomy
     teacher_notes: List[str] = field(default_factory=list)
     learning_outcomes: List[str] = field(default_factory=list)
     homework: str = ""

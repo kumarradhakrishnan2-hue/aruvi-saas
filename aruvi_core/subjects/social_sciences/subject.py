@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
 from ...link_resolver import stamp
-from ...normalize import as_list, band_lines, classify_stimulus, normalize_options
+from ...normalize import as_list, band_lines, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -85,10 +85,14 @@ class SocialSciencesSubject:
                                 "weight": comp.get("weight", "")})
                 index[c_code] = g
                 groups.append(g)
+            # NOTE (2026-07-09): SS plans carry NO pedagogical approach/method field —
+            # Period.approach stays empty until the SS LP constitution emits one.
             index[c_code].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
                 activities=band_lines(p.get("time_bands")),
+                phases=phases_from(p.get("time_bands")),
+                materials=as_list(p.get("materials")),
                 learning_outcomes=as_list(p.get("implied_lo")),
                 teacher_notes=as_list(p.get("teacher_notes")),
                 meta={"section_anchor": p.get("section_anchor", ""),

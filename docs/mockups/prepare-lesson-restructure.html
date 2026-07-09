@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prepare a lesson — restructure proposal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+    --ink:#1f2a24; --ink-soft:#6b6a63;
+    --line:#e4ddd0; --line-soft:#ece7dc;
+    --pine:#1e5c4a; --pine-d:#164436;
+    --clay:#b65a31; --ochre:#9a7321;
+    --f-display:"Fraunces",Georgia,serif;
+    --f-body:"Newsreader",Georgia,serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;padding:34px}
+  .kicker{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--pine);font-weight:500}
+  .h1{font-family:var(--f-display);font-weight:600;font-size:27px;letter-spacing:-.4px;color:var(--pine-d);margin:6px 0 4px}
+  .h2{font-family:var(--f-display);font-weight:600;font-size:21px;color:var(--pine-d);margin:0}
+  .sub{color:var(--ink-soft);font-style:italic;margin:2px 0 0;font-size:15px}
+  .page-lead{max-width:820px;margin:0 0 28px}
+  .lay-lab{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px}
+
+  /* ── the proposed screen: main body + side rail ── */
+  .frame{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px 28px;max-width:900px}
+  .grid{display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:start;margin-top:18px}
+  .main .fieldlab{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px}
+
+  /* chapter selector (compact stand-in for the RollWheel) */
+  .chapsel{border:1px solid var(--line);border-radius:12px;background:var(--paper);overflow:hidden;margin-bottom:22px}
+  .chaprow{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line-soft);cursor:pointer}
+  .chaprow:last-child{border-bottom:none}
+  .chaprow.on{background:#f2f6f4}
+  .chapno{font-family:var(--f-mono);font-size:12px;color:var(--pine);border:1px solid var(--line);border-radius:6px;padding:3px 8px;min-width:34px;text-align:center}
+  .chaptit{font-family:var(--f-display);font-size:16px}
+  .chaprow.on .chaptit{color:var(--pine-d)}
+  .chapmuted{color:var(--ink-soft)}
+
+  /* periods stepper */
+  .periodrow{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper-2)}
+  .stepper button{border:none;background:var(--paper-sunk);color:var(--ink);font-size:19px;width:40px;height:44px;cursor:pointer}
+  .stepper input{border:none;width:56px;height:44px;text-align:center;font-family:var(--f-mono);font-size:17px;background:var(--paper-2);color:var(--ink)}
+  .unitlab{font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;color:var(--ink-soft)}
+
+  .cta{display:inline-flex;align-items:center;gap:10px;background:var(--pine);color:#fff;border:none;border-radius:11px;font-family:var(--f-display);font-size:17px;font-weight:600;padding:14px 26px;cursor:pointer}
+  .cta:hover{background:var(--pine-d)}
+  .cta-hint{display:block;color:var(--ink-soft);font-style:italic;font-size:13px;margin-top:9px}
+
+  /* ── side rail cards ── */
+  .rail{display:flex;flex-direction:column;gap:16px}
+  .card{border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:var(--paper)}
+  .card-k{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .card-k .kicker{color:var(--ochre)}
+  .info{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);font-family:var(--f-mono);font-size:11px;line-height:16px;text-align:center;cursor:pointer}
+
+  .sugg-body{display:flex;align-items:baseline;gap:10px}
+  .sugg-val{font-family:var(--f-display);font-size:30px;font-weight:600;color:var(--pine-d)}
+  .sugg-u{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft)}
+  .use{margin-left:auto;background:none;border:1px solid var(--pine);color:var(--pine);border-radius:7px;font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:5px 10px;cursor:pointer}
+  .ok{margin-left:auto;color:var(--pine);font-size:16px}
+  .tip{margin-top:10px;font-size:13px;color:var(--ink-soft);font-style:italic;line-height:1.5}
+
+  .budget-tot{font-family:var(--f-mono);font-size:12px;color:var(--ink)}
+  .meter{height:12px;border-radius:7px;background:var(--paper-sunk);overflow:hidden;display:flex;margin:4px 0 11px}
+  .seg-com{background:var(--pine)}
+  .seg-new{background:var(--clay)}
+  .seg-rem{background:transparent}
+  .legend{display:flex;flex-direction:column;gap:7px}
+  .leg{display:flex;align-items:center;gap:8px;font-size:13px}
+  .dot{width:9px;height:9px;border-radius:2px;flex:none}
+  .dot-com{background:var(--pine)} .dot-new{background:var(--clay)} .dot-rem{background:var(--line);border:1px solid var(--ink-soft)}
+  .leg-lab{color:var(--ink-soft)} .leg-val{margin-left:auto;font-family:var(--f-mono);font-size:12px}
+  .clay{color:var(--clay)}
+  .details{margin-top:11px;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--pine);background:none;border:none;cursor:pointer;padding:0}
+
+  /* ── phone frame ── */
+  .phones{display:flex;gap:40px;flex-wrap:wrap;margin-top:14px}
+  .phone{width:300px;border:10px solid #2a2a28;border-radius:30px;background:var(--paper);overflow:hidden}
+  .phone-in{padding:18px 16px}
+  .phone .h2{font-size:19px}
+  .phone .chapsel{margin-bottom:16px}
+  .phone .chaptit{font-size:15px}
+  .phone .periodrow{margin-bottom:16px}
+  /* mobile: rail collapses to one compact context strip */
+  .strip{border:1px solid var(--line);border-radius:11px;background:var(--paper);padding:12px 13px;margin-bottom:18px}
+  .strip-top{display:flex;align-items:center;gap:10px;font-size:13px}
+  .strip-sugg{font-family:var(--f-mono);font-size:11px;color:var(--ochre);text-transform:uppercase;letter-spacing:.08em}
+  .strip-suggv{font-family:var(--f-display);font-weight:600;color:var(--pine-d);font-size:16px}
+  .strip-use{margin-left:auto;background:none;border:1px solid var(--pine);color:var(--pine);border-radius:6px;font-family:var(--f-mono);font-size:10px;text-transform:uppercase;padding:4px 8px}
+  .strip-meter{height:9px;border-radius:6px;background:var(--paper-sunk);overflow:hidden;display:flex;margin-top:10px}
+  .strip-cap{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10px;color:var(--ink-soft);margin-top:6px}
+  .chev{color:var(--pine)}
+  .phone .cta{width:100%;justify-content:center}
+
+  .note{max-width:820px;margin-top:30px;font-size:14.5px;color:var(--ink-soft)}
+  .note b{color:var(--ink);font-weight:600}
+  hr.rule{border:none;border-top:1px solid var(--line);margin:34px 0}
+</style>
+</head>
+<body>
+
+  <div class="page-lead">
+    <p class="kicker">Aruvi · design proposal</p>
+    <h1 class="h1">Prepare a lesson — restructured</h1>
+    <p class="sub">Suggestion and annual-budget utilisation move out of the main column into a quiet side rail, so chapter → periods → generate stays the single focus.</p>
+  </div>
+
+  <p class="lay-lab">Desktop — main body + side rail</p>
+  <div class="frame">
+    <p class="kicker">Prepare a lesson</p>
+    <p class="h2" style="margin-top:5px">Science · Class 7</p>
+
+    <div class="grid">
+      <!-- MAIN: the focus -->
+      <div class="main">
+        <p class="fieldlab">1 · Chapter</p>
+        <div class="chapsel">
+          <div class="chaprow"><span class="chapno">04</span><span class="chaptit chapmuted">Heat</span></div>
+          <div class="chaprow on"><span class="chapno">05</span><span class="chaptit">Acids, Bases and Salts</span></div>
+          <div class="chaprow"><span class="chapno">06</span><span class="chaptit chapmuted">Physical and Chemical Changes</span></div>
+        </div>
+
+        <p class="fieldlab">2 · Periods for this chapter</p>
+        <div class="periodrow">
+          <span class="stepper"><button>–</button><input value="14" /><button>+</button></span>
+          <span class="unitlab">periods</span>
+        </div>
+
+        <button class="cta">Prepare the lesson →</button>
+        <span class="cta-hint">Builds the lesson plan and its assessment for this chapter.</span>
+      </div>
+
+      <!-- SIDE RAIL: secondary context -->
+      <aside class="rail">
+        <div class="card">
+          <div class="card-k"><span class="kicker">Suggestion</span><span class="info">i</span></div>
+          <div class="sugg-body">
+            <span class="sugg-val">14</span><span class="sugg-u">periods</span>
+            <span class="ok">✓</span>
+          </div>
+          <p class="tip">Your annual budget shared across chapters by effort index. A starting point — change it freely.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-k"><span class="kicker">Your year</span><span class="budget-tot">62 / 180</span></div>
+          <div class="meter">
+            <div class="seg-com" style="width:27%"></div>
+            <div class="seg-new" style="width:8%"></div>
+            <div class="seg-rem" style="width:65%"></div>
+          </div>
+          <div class="legend">
+            <div class="leg"><span class="dot dot-com"></span><span class="leg-lab">Already prepared · 4 chapters</span><span class="leg-val">48</span></div>
+            <div class="leg"><span class="dot dot-new"></span><span class="leg-lab clay">This chapter</span><span class="leg-val clay">+14</span></div>
+            <div class="leg"><span class="dot dot-rem"></span><span class="leg-lab">Left after this</span><span class="leg-val">118</span></div>
+          </div>
+          <button class="details">View breakdown →</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <hr class="rule" />
+
+  <p class="lay-lab">Mobile — rail folds into one compact context strip</p>
+  <div class="phones">
+    <div class="phone">
+      <div class="phone-in">
+        <p class="kicker">Prepare a lesson</p>
+        <p class="h2" style="margin-top:4px">Science · Class 7</p>
+
+        <p class="fieldlab" style="font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 8px">1 · Chapter</p>
+        <div class="chapsel">
+          <div class="chaprow on"><span class="chapno">05</span><span class="chaptit">Acids, Bases and Salts</span></div>
+        </div>
+
+        <p class="fieldlab" style="font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px">2 · Periods</p>
+        <div class="periodrow">
+          <span class="stepper"><button>–</button><input value="14" /><button>+</button></span>
+          <span class="unitlab">periods</span>
+        </div>
+
+        <!-- collapsed context strip: suggestion + budget in one line each -->
+        <div class="strip">
+          <div class="strip-top">
+            <span class="strip-sugg">Suggestion</span>
+            <span class="strip-suggv">14</span>
+            <span class="ok">✓</span>
+          </div>
+          <div class="strip-meter">
+            <div class="seg-com" style="width:27%"></div>
+            <div class="seg-new" style="width:8%"></div>
+          </div>
+          <div class="strip-cap"><span>62 / 180 used</span><span class="chev">Budget ⌄</span></div>
+        </div>
+
+        <button class="cta">Prepare the lesson →</button>
+      </div>
+    </div>
+
+    <div class="phone">
+      <div class="phone-in">
+        <p class="lay-lab" style="margin-bottom:8px">Strip expanded (on tap)</p>
+        <div class="strip" style="margin-bottom:0">
+          <div class="strip-top">
+            <span class="strip-sugg">Suggestion · 14</span>
+            <button class="strip-use">use</button>
+          </div>
+          <p class="tip" style="margin-top:8px">Your budget shared by effort index — a starting point.</p>
+          <div class="strip-meter">
+            <div class="seg-com" style="width:27%"></div>
+            <div class="seg-new" style="width:8%"></div>
+          </div>
+          <div class="legend" style="margin-top:10px">
+            <div class="leg"><span class="dot dot-com"></span><span class="leg-lab">Prepared · 4 ch</span><span class="leg-val">48</span></div>
+            <div class="leg"><span class="dot dot-new"></span><span class="leg-lab clay">This chapter</span><span class="leg-val clay">+14</span></div>
+            <div class="leg"><span class="dot dot-rem"></span><span class="leg-lab">Left</span><span class="leg-val">118</span></div>
+          </div>
+          <div class="strip-cap" style="margin-top:10px"><span>62 / 180 used</span><span class="chev">Budget ⌃</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b>What changes.</b> The chapter list, period stepper, and the Prepare CTA are the only things in the main column — the teacher's eye goes straight down them.
+    <b>Suggestion</b> and <b>Your year</b> (committed / proposed / left) move to a right rail on desktop, present but subordinate.
+    On a phone there is no room for a rail, so both collapse into a single <b>context strip</b> between periods and the CTA: one line for the suggestion, a thin two-tone budget bar with a <i>Budget ⌄</i> toggle that expands to the full legend. Nothing is removed — the same numbers, the same "use" and breakdown actions — it's re-ranked so the decision (which chapter, how many periods, generate) leads and the context follows.
+  </p>
+
+</body>
+</html>

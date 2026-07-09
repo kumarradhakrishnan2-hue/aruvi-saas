@@ -133,6 +133,31 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   (`aruvi_core/view_model.py`). Subject/stage differences (progression-stage vs A/B/C vs
   section→spine vs competency) live as typed/labeled/nestable Groups — NOT in the renderer.
   Visual stimuli are typed (svg / table / prose); never dump raw markup as text.
+- **One timed spine per period (2026-07-09).** `Period.phases` (typed `Phase` with integer
+  start/end minutes, parsed once in `normalize.phases_from`) is THE timed sequence; display
+  shows the duration ("8 min") in the marginal rail. `Period.materials` is first-class.
+  Everything else (tasks, textbook items, visual aids) is an UNTIMED supporting block; Science
+  `roles` are ignored for now. Standard period anatomy: kicker/title/duration → teacher notes →
+  materials → phases → homework → 📝 note-invoke. Spec: `docs/mockups/lesson-period-layout.html`;
+  `activities` still carries legacy flat lines until the renderers adopt phases. Raw bands drift
+  ("0–5"/"0-10"; `phases[]` vs `time_bands[]` — Science secondary uses time_bands) — always
+  parse via `normalize.parse_minutes_band`, never re-split strings.
+- **Standard LP display rules (founder, 2026-07-09; tests: `tests/test_lp_standard.py`):**
+  (a) **LO is NEVER shown in a lesson plan** — reserved for assessment (data still carried:
+  `Period.learning_outcomes` / group meta, for the assessment link only). (b) **`Period.approach`**
+  is the ONE canonical "how do I run this?" line ("40 min · {approach}"): Science
+  `pedagogical_approach` · Maths `pedagogical_method` · English joined `pedagogical_methods` ·
+  TWAU `dominant_mode` SPELLED OUT ("Hands-on Investigation", never "HI"). SS + Maths-prep have
+  NO source field → empty. Founder decision: the source keys are too diverse to flatten — NO
+  constitutional change; `Period.approach` is the single normalization point. (c) **Science secondary is
+  section-anchored flat** — grouped by `section_anchor` (type "section"), LO rejoined from
+  result-level `coverage_handoff` into group meta; the "Stage None" phantom is fixed and must
+  not regress. (d) **English singleton-section collapse** — chapters are split into constituent
+  sections (one section per saved plan), so a lone section wrapper collapses and SPINES are the
+  top-level axis; multi-section legacy plans keep section→spine. (e) Callers pass the **FULL
+  saved `result`** to `lesson_plan_to_view` (plugins unwrap `lesson_plan` themselves) so
+  handoff-dependent subjects work. (f) Prototype homework word-caps are DROPPED (full text);
+  English's inline task-ref substitution into phase text is KEPT (renderer follow-up).
 - **Stage is derived from grade, never a separate input.** Single source:
   `aruvi_core/grades.stage_for(grade)`. Everyone calls it; nobody re-implements the mapping.
 - **Ports & adapters** (`aruvi_core/ports.py`): core depends only on `LLMClient`,

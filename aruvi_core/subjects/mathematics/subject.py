@@ -19,7 +19,9 @@ from ...grades import stage_for
 from ...link_resolver import (
     handoff_period_index, norm_code, period_field_index, stamp,
 )
-from ...normalize import as_list, band_lines, classify_stimulus, normalize_options, text_lines
+from ...normalize import (
+    as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines,
+)
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -112,7 +114,10 @@ class MathematicsSubject:
             index[key].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
+                approach=p.get("pedagogical_method", ""),   # absent in preparatory saves
                 activities=text_lines(p.get("textbook_items_in_class")) + band_lines(bands),
+                phases=phases_from(bands),
+                materials=as_list(p.get("materials")),
                 teacher_notes=as_list(p.get("teacher_notes")),
                 homework=_hw(p.get("homework")),
                 meta={"section_goal": p.get("section_goal", ""),

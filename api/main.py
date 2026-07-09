@@ -406,7 +406,10 @@ def get_plans(subject: str, grade: str,
             r = saved.get("result", {})
             chapter = {"chapter_number": saved.get("chapter_number"),
                        "chapter_title": saved.get("chapter_title")}
-            lp = sub.lesson_plan_to_view(r.get("lesson_plan", {}),
+            # Pass the FULL result (2026-07-09): every plugin unwraps via
+            # raw.get("lesson_plan", raw), and Science secondary needs the
+            # result-level coverage_handoff for its section-group rejoin.
+            lp = sub.lesson_plan_to_view(r,
                                          grade=saved.get("grade", grade), chapter=chapter)
             p["total_units"] = _count_units(lp.groups)
         except Exception:
@@ -427,7 +430,9 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
     r = saved.get("result", {})
     chapter = {"chapter_number": saved.get("chapter_number"), "chapter_title": saved.get("chapter_title")}
     g = saved.get("grade", grade)
-    lp = sub.lesson_plan_to_view(r.get("lesson_plan", {}), grade=g, chapter=chapter)
+    # Full result in (2026-07-09) — see the /plans listing note: plugins unwrap
+    # lesson_plan themselves; Science secondary reads result-level coverage_handoff.
+    lp = sub.lesson_plan_to_view(r, grade=g, chapter=chapter)
     _lp = r.get("lesson_plan", {})
     link_context = {"periods": _lp.get("periods", []),
                     "handoff": r.get("coverage_handoff", _lp.get("coverage_handoff", []))}

@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 12 steps (revised 2026-07-06) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 13 steps (revised 2026-07-09) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 12" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 13" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
  * Steps 9–11 demo the completed state without touching her real progress.
@@ -22,7 +22,8 @@ import { useEffect, useRef, useState } from "react";
  *   10 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
  *                               progress rail AND the second section card stay visible
  *   11 the popup again        — pick the next chapter (bound one excluded)
- *   12 the settings gear      — where the teaching profile lives; Done closes the tour
+ *   12 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
+ *   13 the settings gear      — where the teaching profile lives; Done closes the tour
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -87,6 +88,9 @@ const STEPS = [
   { anchor: "attach-pop", place: "over",
     title: "Select a plan.",
     body: () => "You can use the same window shown in step 6 to select an existing chapter or generate a new plan." },
+  { anchor: "grow-add", place: "below", handPos: "center", hand: true,
+    title: "Add/amend sections, classes and/or subjects.",
+    body: () => "Use this button to quickly add sections, classes or subjects to your teaching profile." },
   { anchor: "settings-gear", place: "below",
     title: "Finally, your teaching profile.",
     body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },

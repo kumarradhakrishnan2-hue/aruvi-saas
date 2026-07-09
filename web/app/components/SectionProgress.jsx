@@ -65,7 +65,7 @@ export default function SectionProgress({ subjectSlug, gradeSlug, grade, section
         <span className="secprog-title">{plan.chapter_title}</span>
         <span className="secprog-meta">
           CH {pad(plan.chapter_number)} · Grade {gradeUp(grade)}
-          {total != null ? ` · ${total} learning unit${total !== 1 ? "s" : ""}` : ""}
+          {total != null ? ` · ${total} unit${total !== 1 ? "s" : ""}` : ""}
         </span>
       </div>
       <p className="secprog-sub">Where each of your Grade {gradeUp(grade)} sections has reached in this chapter.</p>
@@ -87,14 +87,14 @@ export default function SectionProgress({ subjectSlug, gradeSlug, grade, section
                 onClick={() => onOpenSection && onOpenSection(subjectSlug, gradeSlug, tag, plan)}
                 title={`Open ${tag} in My Classes to move its place`}>
                 <span className="secprog-sec">{tag}</span>
-                <div className="secprog-bar" aria-label={`${done} of ${t} learning units`}>
+                <div className="secprog-bar" aria-label={`${done} of ${t} units`}>
                   {Array.from({ length: t }, (_, i) => (
                     <span key={i} className={`secprog-seg ${i < done ? (complete ? "done" : "fill") : ""}`} />
                   ))}
                 </div>
                 <span className="secprog-stat">
                   <span className={`secprog-stat-main ${complete ? "done" : ""}`}>
-                    {done <= 0 ? "Not started" : complete ? "Completed" : `LU ${done} / ${t}`}
+                    {done <= 0 ? "Not started" : complete ? "Completed" : `Unit ${done} / ${t}`}
                   </span>
                   <span className="secprog-stat-sub">{complete ? `${t} / ${t}` : nextLabel}</span>
                 </span>

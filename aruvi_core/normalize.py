@@ -6,9 +6,10 @@ the type.
 """
 from __future__ import annotations
 
+import re
 from typing import Any, List
 
-from .view_model import StimulusType, VisualStimulus
+from .view_model import Phase, StimulusType, VisualStimulus
 
 
 def classify_stimulus(raw: str) -> VisualStimulus:
@@ -81,3 +82,64 @@ def band_lines(bands: Any) -> List[str]:
         elif str(b).strip():
             out.append(str(b))
     return out
+
+
+# ── Phases: the timed spine (layout decision 2026-07-09) ──────────────────────────
+
+_BAND_RE = re.compile(r"(\d+)\s*(?:–|—|-|to)\s*(\d+)")  # "0–5", "0-10", "0 to 5"
+
+
+def parse_minutes_band(raw: Any) -> tuple:
+    """Parse a raw minutes band string into (start_min, end_min) ints.
+
+    The saved-plan library drifts between en-dash ("0–5"), hyphen ("0-10"), em-dash and
+    spaced forms; key names drift too, but the band format is the same. Returns
+    (None, None) when no range is found — the Phase then keeps only its raw `label`."""
+    m = _BAND_RE.search(str(raw or ""))
+    if not m:
+        return None, None
+    start, end = int(m.group(1)), int(m.group(2))
+    if end < start:                      # defensive: a generator typo like "30–4"
+        return None, None
+    return start, end
+
+
+def phases_from(bands: Any) -> List[Phase]:
+    """Normalize raw phases/time_bands ({minutes, description|activity}) into typed Phases.
+
+    This is where the minutes STOP being strings: parsed once, carried as ints. Every
+    subject's timed spine goes through here — 'phases' (Science/English/Maths-prep+middle)
+    and 'time_bands' (SS/TWAU/Maths-secondary) are the same shape apart from the text key."""
+    out: List[Phase] = []
+    for b in bands or []:
+        if isinstance(b, dict):
+            raw_min = str(b.get("minutes", "") or "")
+            text = str(b.get("description") or b.get("activity") or "").strip()
+            if not text and not raw_min:
+                continue
+            start, end = parse_minutes_band(raw_min)
+            out.append(Phase(text=text, start_min=start, end_min=end, label=raw_min))
+        elif str(b).strip():
+            out.append(Phase(text=str(b).strip()))
+    return out
+
+
+def phase_tiling_issues(phases: List[Phase], duration_minutes: Any) -> List[str]:
+    """Best-effort validation that phases tile 0 → the period's duration.
+
+    Returns human-readable issue strings (empty list = clean). Never raises — saved plans
+    are carried as-is; this feeds tests and any future generation-time QA, not rendering."""
+    issues: List[str] = []
+    if not phases:
+        return ["no phases"]
+    parsed = [(p.start_min, p.end_min) for p in phases]
+    if any(s is None or e is None for s, e in parsed):
+        return [f"unparseable band(s): {[p.label for p in phases if p.start_min is None]}"]
+    if parsed[0][0] != 0:
+        issues.append(f"first phase starts at {parsed[0][0]}, not 0")
+    for (s1, e1), (s2, e2) in zip(parsed, parsed[1:]):
+        if s2 != e1:
+            issues.append(f"gap/overlap: {e1} -> {s2}")
+    if duration_minutes and parsed[-1][1] != duration_minutes:
+        issues.append(f"last phase ends at {parsed[-1][1]}, period is {duration_minutes} min")
+    return issues

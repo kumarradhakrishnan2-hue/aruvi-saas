@@ -256,24 +256,27 @@ export default function Home() {
 
   // Tour Next — the guide performs the move each step implies before advancing. The view-level
   // work (popup at 6/11, attach/unbind at the 6↔7 boundary, lesson at 8–9, demo-complete at
-  // 10–11) is orchestrated by MyPlans/MyLessonPlans off the numeric tourStep; here we only
-  // handle SHELL navigation: 2→3 open My Lessons · 4→5 back to My Classes · 11→12 open the
-  // profile (step 12 rings the settings gear over it) · 12 Done.
+  // 10–11, the big "+" grow button surfaced at 12) is orchestrated by MyPlans/MyLessonPlans off
+  // the numeric tourStep; here we only handle SHELL navigation: 2→3 open My Lessons · 4→5 back to
+  // My Classes · 11→12 close the popup back to My Classes home (the "+" step) · 12→13 open the
+  // profile (step 13 rings the settings gear over it) · 13 Done.
   const tourNext = () => {
     if (tour === 2) goLessons();
     else if (tour === 4) goClasses();
-    else if (tour === 11) goProfile();
-    else if (tour === 12) { finishTour(); goClasses(); return; }
+    else if (tour === 11) goClasses();
+    else if (tour === 12) goProfile();
+    else if (tour === 13) { finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
-  // highlight; 5→4 back to My Lessons (the preview re-opens there); 12→11 back to My Classes
-  // (the popup re-opens). Back from step 1 backs out to the nudge.
+  // highlight; 5→4 back to My Lessons (the preview re-opens there); 13→12 back to My Classes
+  // (the grow "+" step; 12→11 re-opens the popup, handled by MyPlans). Back from step 1 backs
+  // out to the nudge.
   const tourBack = () => {
     if (tour === 1) { setTour(null); return; }
     if (tour === 3) goClasses();
     else if (tour === 5) goLessons();
-    else if (tour === 12) goClasses();
+    else if (tour === 13) goClasses();
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };

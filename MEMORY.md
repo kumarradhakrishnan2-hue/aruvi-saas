@@ -1,6 +1,183 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
-## 2026-07-06 (latest) — The standing "+" profile portal: the gliding path to acquisition (STATIC only)
+## 2026-07-09 (newest) — RENDERERS REBUILT to the standard anatomy (STATIC only — live pass pending)
+
+The founder green-lit implementation; both LP renderers now speak the standard anatomy:
+
+- **`LessonView.jsx` rebuilt.** (a) New `UnitBody` = teacher notes (clay margin-note, TOP) →
+  materials (hairline box) → phases with **duration in the marginal rail** ("8 / min", from
+  `Phase.start_min/end_min`; falls back to legacy `activities` lines when a view predates
+  phases) → homework (tinted, full text) — **LO never rendered**. (b) New **`ChapterOrg`
+  altitude** (the front door): section-card language — chapter tick rail (pine taught / ochre
+  now / hairline ahead), one `co-card` per unit under quiet group-kicker dividers, collapsed
+  "Chapter notes" control (placeholder). **Preview opens at chapter altitude** (org page →
+  card tap → read-only unit doc → back to org); tracking defaults to the live unit with a
+  "chapter organization →" link (navigation NEVER moves the pointer). (c) Header durline
+  "**{dur} min · {approach}**". (d) 📝 "Add a note about this class" invoke (tracking only,
+  honest coming-soon reply). (e) All copy says **Unit** (assess-sub, pvnav, aria labels,
+  mark-complete cards; also fixed in MyPlans + SectionProgress aria/labels). PRESERVED
+  contracts: `lu_pointer_/lu_done_` keys, pushSectionState sync, undo model, tour anchors
+  (preview-root/preview-back moved WITH the landing to the org page; lesson-notes now on the
+  top teacher-notes block).
+- **`ViewModelView.jsx`** (Generate/PrepareLesson/Allocate preview doc): same anatomy in
+  `PeriodCard` (durline·approach, notes top, materials box, phase rail, homework tint, no LO,
+  Tags row dropped); group headers show description only (implied_lo stays data).
+- **CSS:** `co-*` + `uv-*` blocks appended to globals.css (tokens only, dark-safe).
+- **Verification: STATIC only** (acorn-jsx parse all components OK, CSS braces balanced,
+  contract greps). ⚠️ Live render + mobile 360px pass on the founder's machine is the
+  immediate must-do: org page (all 6 axes), unit doc, tour steps 4/7/8 anchors, dark mode.
+
+## 2026-07-09 — LP display STANDARDIZED (founder rules) + audits
+
+Founder rules, all implemented (details in CLAUDE.md §3 "Standard LP display rules"; suite now
+14/14 incl. new `tests/test_lp_standard.py`): **LO never in LP** (assessment only; data kept);
+**`Period.approach`** canonical field (TWAU dominant_mode spelled out via `_MODE_FULL`);
+**Science secondary fixed** (section_anchor groups, handoff rejoin — API now passes the FULL
+`result` to `lesson_plan_to_view`, both call sites); **English singleton-section collapse**
+(spines = top axis for split chapters). Homework word-caps dropped; time-plan/lesson-view tabs
+dropped; English inline task-refs kept.
+
+**Audit findings (2026-07-09, 39 plans):**
+- Approach coverage is NOT universal: Science ✓(approach) · Maths middle+secondary ✓(method) ·
+  English ✓(methods dict) · TWAU ✓(dominant_mode) · **Maths PREPARATORY: none** · **SS: none**
+  (SS periods carry competency instead). **FOUNDER DECISION (same day): NO constitutional
+  change** — the field names are too diverse to flatten at source; `Period.approach` is the
+  single normalization point and absorbs the diversity (empty where no source exists).
+- English split confirmed: 14/16 plans were single-section; the 2 stragglers were then SPLIT
+  in-repo (2026-07-09, same session) following the existing `_split_from` precedent (vi/vii/viii
+  splits): Grade III old ch_01 → **ch_01 "Fun with Friends (Picture Reading)" (A, 3 periods) +
+  ch_02 "Colours" (B, 4 periods)**; Grade IX old ch_06 → **ch_11 "Twin Melodies" (A, 7) +
+  ch_12 "A Friend Found in Music" (B, 4)** — titles taken verbatim from the re-split summaries,
+  periods renumbered 1..n, coverage_handoff spine dict + assessment spine groups filtered by
+  section_id, period_rows_snapshot/schedule recomputed from actual durations, stale ix ch_06
+  deleted (its content slot now belongs to "Canvas of Soil"). Library = **41 plans**, all
+  prepared for Kumar1 (register updated); every English plan is now spine-top. Suite 14/14;
+  287/287 phases tile. NOTE: ix ch_06 SUMMARY ("Canvas of Soil") has an empty
+  main_sections_inventory — authoring-pipeline flag, not touched.
+- dominant_mode ≠ free-form approach: it's TWAU's closed 5-mode taxonomy (O&R/HI/D&C/C&E/R&A),
+  but it answers the same teacher question, so it maps into `approach` with full names.
+
+## 2026-07-09 (later) — Prototype UI study: per-subject·stage element decisions (the display spec)
+
+Founder asked how per-subject·stage display elements are decided → studied the prototype
+(`../Project Aruvi`, mounted this session). The decisions live in TWO files:
+**`app/aruvi_streamlit/app.py :: _normalise_lo_handoff`** (lines ~2368–2921 — detects each
+subject·stage by DATA SHAPE, maps raw fields to a common render dict) and
+**`app/lpa_page.html :: renderLPA`** (lines ~2364–2917 — per-subject render paths). Print
+variants in `lp_pdf_generator.py`. The element matrix the prototype settled:
+
+| | axis/grouping | header 4th col | competency/LO bars | materials | homework | notes |
+|---|---|---|---|---|---|---|
+| Science middle | collapsible Stage groups (first open) | pedagogical_approach | NONE (deliberate) | yes | — | Time-plan/Lesson-view TABS; roles in tab 2 |
+| Science secondary | FLAT (section-anchored) | anchored section | LO at END (from coverage_handoff) | **deliberately NONE** | — (field exists, not rendered) | approach bar top; visual_aids row |
+| English | collapsible Section A/B/C groups (+type pill) | TWO cols: spines + ped methods | none | yes | task_brief ≤12 words, after phases | phases substitute task refs inline |
+| Maths (all stages) | flat | section title (secondary centre-aligned) | SUPPRESSED (Rule 8); ped method rides materials row | yes | book_ref+desc ≤15 words | escMath superscripts (x^2) |
+| Social Sciences | flat | anchored section | competency bar TOP (c_code+weight+text); LO at end | yes | — | |
+| TWAU | flat | section_ref | mode bar TOP (dominant_mode FULL name: Observe and Record…); LO at end | yes | — | teacher_facilitation_note → notes slot |
+
+Universal: every header = Period # · duration · activity name · (subject-specific col);
+time slots ("Time | description") universal; teacher notes near end for all. **How to decide
+for a NEW subject·stage: the LP constitution defines what the generator emits; the prototype's
+verdict per element is the mapping above — in the SaaS this translates to (a) the Group
+type/label (the axis), (b) the kicker/4th-column choice, (c) which optional anatomy slots fill.**
+
+**GAP FOUND in our normalizer:** Science SECONDARY plans misroute through the middle path —
+groups come out as **"Stage None"** (progression_stage is absent; secondary is section-anchored
+like Maths secondary), per-period LO/section_context (in coverage_handoff) never extracted, and
+the prototype deliberately renders NO materials for sci-secondary. Fix when renderers adopt
+phases: science normalizer needs a secondary branch (group by section_anchor, LO via handoff
+rejoin — see prototype `_ho_by_period`/`_ho_by_label`). Also note prototype truncation rules
+(homework 12/15 words) vs our full-text mockup, and English's phase-text task-ref substitution
+(`renderEnglishTimeSlots`) — carry or drop deliberately when building the new renderer.
+
+## 2026-07-09 — LP/Assessment layout principles DECIDED + all-plans Kumar1 profile
+
+**Layout discussion with founder (LP first; assessment next session). Decisions, all final:**
+
+- **Standard period anatomy (every subject, every period, same slots, same order):**
+  rail number + axis kicker + title + duration → **Teacher notes** (top — prep reading; italic
+  Newsreader, clay left rule) → **Materials** (hairline box, mono kicker) → **Phases** (the hero,
+  unboxed, time in the marginal rail) → **Homework** (bottom, the one tinted block — ochre wash)
+  → **Period note 📝** as an *invokable input affordance* (a control to tap, never an empty box
+  taking space). Differentiation via typography + hairlines + a single tint — no colored cards.
+- **Phase time display = duration, "5 min"** (not band "0–5") — fits the Learning-Unit concept
+  (periods → LUs, absolute durations per arch-plan §F). Times live in the marginal numbering
+  rail (same signature pattern as period `01` / `Q1`), giving a perfectly aligned time column
+  at 360px with full width left for prose.
+- **One timed spine per period:** phases only. Subject extras (English `tasks_in_class`, Maths
+  textbook items, visual aids) render as *untimed* kicker'd supporting blocks — never a second
+  timeline. **Science `roles` are IGNORED for now** (founder call).
+- **View-model change required first (not yet done):** promote `Phase {start_min, end_min, text}`
+  + `materials: List[str]` to first-class on `Period`; update the 5 normalizers (today
+  `_phase_lines`/`band_lines` DISCARD the minutes into flat strings). Raw saved plans already
+  carry per-phase minutes — parse en-dash "0–5" AND hyphen "0-10", keys `phases[].description`
+  vs `time_bands[].activity` — so this is a normalizer change, NO plan regeneration. Validate
+  phases tile 0 → period_duration_minutes.
+- **Chapter Organization = the chapter's front door** (first open / previews); the recede rule
+  stands — pointer live ⇒ opens at period, "see chapter organization" links back. Chapter Notes
+  slot (collapsed control) reserved on Chapter Org; Period Note slot in the period footer.
+- **Next deliverable:** VM + normalizer change, then static 360×800 mockups in `docs/mockups/`
+  for the standard period view + Chapter Org page; then assessment layout (Q-rail exists).
+
+**IMPLEMENTED same day (the VM/normalizer step + mockups; all decisions above are now code):**
+
+- **`Phase` + `materials` are first-class on `Period`** (`aruvi_core/view_model.py`): Phase
+  {text, start_min, end_min, label(raw band)}. ADDITIVE — `activities` still carries the legacy
+  flat lines so the current UI renders unchanged; the renderers switch to `phases` when the new
+  layout lands (then drop phase lines from activities).
+- **`normalize.py` gains** `parse_minutes_band` (en/em-dash, hyphen, spaced, "to"; reversed →
+  None), `phases_from` (handles the `description` vs `activity` key drift), and
+  `phase_tiling_issues` (0-start, contiguity, ends-at-duration; never raises — feeds tests/QA).
+- **All 5 normalizers populate phases + materials.** Gotcha found: **Science secondary saves
+  carry `time_bands`, not `phases`** (like Maths secondary) — Science now reads
+  `phases or time_bands`. English still ALSO concatenates tasks+phases into activities (legacy).
+- **`tests/test_phases.py`** (stdlib, needs ARUVI_DATA_DIR): parser forms + phases_from +
+  tiling units, then the whole library — **33 plans, 238 periods: 238 with phases, 238 parse,
+  238 tile cleanly (100%)**. Full suite now 12/12 green. `test_link_resolver.py` corpus assert
+  changed from hardcoded-5-subjects to subjects-on-disk (TWAU has no saved plans).
+- **Mockup for founder review: `docs/mockups/lesson-period-layout.html` (v2, 2026-07-09)** — two
+  360×800 frames with real Prime Time (Maths VI ch.5) content, REBUILT after founder feedback to
+  speak the My Classes **section-card language**: (a) Chapter Organization = "the section card,
+  opened up" — chapter head carries the SAME tick rail (pine taught / ochre now / hairline ahead)
+  that the section card shows, and each unit is an sc-style card (11px radius, 4px left accent
+  pine/ochre/edge, tint-cream current with NOW pill, paper-sunk upcoming, serif number); sections
+  are quiet mono dividers, not boxed accordions. (b) Unit view opens with a header card that
+  ECHOES the tapped org card (ochre accent, cream tint, serif 03, mini rail), then the document
+  flows on plain paper: teacher notes → materials → collapsed extras → phases (8/14/11/7 in the
+  rail) → homework → 📝 invoke. **NAMING DECIDED: user-facing copy says "Unit n of N" — never
+  "LU" / "Learning Unit"** (founder: confusing, unnecessary acronym). Applies to app copy
+  (LessonView "Learning Unit N", sc-rail aria, My Classes meta) when renderers adopt the new
+  layout; internal identifiers/CSS may keep lu_/LU. Assessment layout is the NEXT discussion.
+
+**Data/state work done same session:**
+
+- **Deleted 7 saved plans — 4 later RESTORED (the audit was WRONG, see below):** ss/vi ch_06 ×3,
+  ss/viii ch_04_20260520, twau iii/iv/v one each.
+  > **CORRECTION (same day):** the "old-schema / no time bands" flag was a FALSE POSITIVE — the
+  > audit script counted `coverage_handoff[]` rows (which carry `period_number` but rightly no
+  > `time_bands`; they're the LP→assessment link table) as periods. The files' REAL periods all
+  > had clean bands. Lesson: **a dict with `period_number` is not necessarily a period — only
+  > `lesson_plan.periods[]` entries are.** Founder re-uploaded the 3 TWAU files (restored to
+  > data/content/saved_plans), ss/vi ch_06_20260520_161946 was restored from
+  > tests/fixtures/ss_vi_ch06_saved.json, and founder later restored ss/vi ch_06_20260520_190601
+  > + ss/viii ch_04_20260520_195842 from his own copies (both validated clean). Only
+  > ss/vi ch_06_20260520_172638 (a 3rd version of the same chapter) remains lost — immaterial.
+  > **Library = 39 plans, all 5 subjects, every subject·stage covered**; all 39 marked prepared
+  > for Kumar1 (verified via TestClient, 39/39); test_phases: 287/287 periods parse + tile
+  > cleanly; link_resolver: 382 items, 0 orphans, 5 subjects.
+- **Kumar1 profile REPLACED with full-coverage profile** (founder request: see every LP in one
+  place): all 24 subject·grade combos with chapter content — English III–IX, Maths III–IX,
+  Science VI–IX, SS VI–VIII, TWAU III–V — one section each ("{n}A"/sec A, preserving old "A"
+  section tags), durations [40], ppw 6, budget = NCF totals via `ncf_total_periods` (fallback
+  180). Written directly to `data/readiness/Kumar1/Kumar1/profile.json`.
+- **All 33 plans marked prepared for Kumar1** in `data/prepared_plans/Kumar1/Kumar1/prepared.json`
+  ({at, periods} records; the 2 pre-existing timestamps preserved) — My Lessons filters to
+  `prepared || attached`, so this is what makes the shared library visible.
+- **Verified via FastAPI TestClient** (pip-installed fastapi/httpx in sandbox): /readiness
+  returns all 5 subjects · 24 grades; /plans lists 33/33 prepared; 4 spot-check /view calls
+  200 with lesson_plan present. Live browser + mobile pass still pending as ever (§11).
+
+## 2026-07-06 — The standing "+" profile portal: the gliding path to acquisition (STATIC only)
 
 **The problem (founder):** class expansion inside the first subject worked because acquisition
 left HOOKS on screen (unbound section cards, the per-subject expand window). A second subject had

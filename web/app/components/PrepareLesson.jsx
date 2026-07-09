@@ -150,10 +150,10 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   );
 
   const committedTotal = committed.reduce((s, c) => s + c.periods, 0);
-  const left = annualBudget != null ? annualBudget - committedTotal - periods : null;
+  // "Used" / "Available" reflect only what's ACTUALLY committed (already-prepared chapters),
+  // NOT the chapter she's proposing now — that lives in the Suggestion box.
+  const left = annualBudget != null ? annualBudget - committedTotal : null;
   const over = left != null && left < 0;
-  const pctOf = (n) =>
-    annualBudget ? `${Math.max(0, Math.min(100, (n / annualBudget) * 100))}%` : "0%";
 
   // "Prepare the lesson" — records the chapter as prepared, then RETURNS to where she came from
   // (the section's attach popup, or My Lessons) with the new chapter now listed — it does NOT
@@ -218,10 +218,9 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   const setP = (n) => setPeriods(Number.isFinite(n) && n >= 0 ? n : 0);
   return (
     <div>
-      <p className="h2">Prepare a lesson</p>
+      <p className="h2">Prepare a lesson for Class {classNum(grade)} of {pretty(subject)}</p>
       <p className="h2-sub">
-        Pick one chapter and the periods you plan to spend on it. Aruvi builds the lesson plan and
-        its assessment for that chapter — no yearly plan needed.
+        Pick one chapter and enter the periods you plan to spend teaching it.
       </p>
 
       {!chapters.length ? (
@@ -231,78 +230,63 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
           <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo} rowPx={92}
             items={chapters.map((c) => ({ id: String(c.chapter_number), chip: c.chapter_number, label: c.chapter_title }))} />
 
-          <div className="prep-periodrow">
-            <div className="g4-inrow">
-              <span className="steppermini">
+          <div className="prep-block">
+            <div className="prep-left">
+              <p className="prep-fieldlab">Periods for this chapter</p>
+              <span className="steppermini prep-stepper">
                 <button type="button" onClick={() => setP((Number(periods) || 0) - 1)} aria-label="fewer periods">–</button>
                 <input type="number" min="0" className="v g4-vinput" value={periods}
                   onChange={(e) => setP(parseInt(e.target.value, 10))} aria-label="Periods for this chapter" />
                 <button type="button" onClick={() => setP((Number(periods) || 0) + 1)} aria-label="more periods">+</button>
               </span>
-              <span className="unitlab">periods</span>
             </div>
 
             {chosen ? (
-              <div className="prep-sugg">
-                <div className="prep-sugg-hd">
-                  <span className="prep-sugg-k">Suggestion</span>
-                  <button type="button" className="prep-info" aria-label="How the suggestion is made"
-                    onClick={() => setShowInfo((v) => !v)}>i</button>
-                </div>
-                <div className="prep-sugg-body">
-                  <span className="prep-sugg-val">{suggestion}</span>
-                  {periods === suggestion
-                    ? <span className="prep-sugg-ok" aria-label="matches the suggestion">✓</span>
-                    : <button type="button" className="prep-use" onClick={() => setPeriods(suggestion)}>use</button>}
-                </div>
-                {showInfo && (
-                  <div className="prep-tip" role="note">
-                    Aruvi shares your annual budget for this class across its chapters by each
-                    chapter&rsquo;s effort index — heavier chapters get more periods. It&rsquo;s a
-                    starting point, so you can change it freely.
+              <div className="prep-right">
+                <div className="prep-box prep-sugg2">
+                  <div className="prep-sugg-hd">
+                    <span className="prep-sugg-k">Suggestion</span>
+                    <button type="button" className="prep-info" aria-label="How the suggestion is made"
+                      onClick={() => setShowInfo((v) => !v)}>i</button>
                   </div>
-                )}
+                  <div className="prep-sugg-body">
+                    <span className="prep-sugg-val">{suggestion}</span>
+                    {periods === suggestion
+                      ? <span className="prep-sugg-ok" aria-label="matches the suggestion">✓</span>
+                      : <button type="button" className="prep-use" onClick={() => setPeriods(suggestion)}>use</button>}
+                  </div>
+                  {showInfo && (
+                    <div className="prep-tip" role="note">
+                      Aruvi shares your annual budget for this class across its chapters by each
+                      chapter&rsquo;s effort index — heavier chapters get more periods. It&rsquo;s a
+                      starting point, so you can change it freely.
+                    </div>
+                  )}
+                </div>
+
+                {annualBudget != null ? (
+                  <div className="prep-box prep-budget2">
+                    <div className="prep-brow">
+                      <span className="prep-brow-k">Total periods</span>
+                      <span className="prep-brow-v pine">{annualBudget}</span>
+                    </div>
+                    <button type="button" className="prep-brow prep-brow-btn" disabled={!committed.length}
+                      onClick={() => setShowBreakdown(true)}
+                      aria-label={`Used ${committedTotal} periods${committed.length ? " — view breakdown" : ""}`}>
+                      <span className="prep-brow-k">Used{committed.length ? <span className="prep-brow-info" aria-hidden="true"> ⓘ</span> : null}</span>
+                      <span className="prep-brow-v clay">{committedTotal}</span>
+                    </button>
+                    <div className="prep-brow">
+                      <span className="prep-brow-k">Available</span>
+                      <span className={`prep-brow-v${over ? " clay" : ""}`}>{over ? `−${-left}` : left}</span>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </div>
 
-          {annualBudget != null && chosen ? (
-            <div className="prep-budget">
-              <div className="prep-budget-hd">
-                <span className="prep-budget-k">Your year · {pretty(subject)} · Class {classNum(grade)}</span>
-                <span className="prep-budget-tot">{committedTotal + periods} / {annualBudget}</span>
-              </div>
-              <div className="prep-meter" role="img"
-                aria-label={`${committedTotal} periods already committed, ${periods} proposed for this chapter, out of ${annualBudget}`}>
-                <div className="prep-seg prep-seg-com" style={{ width: pctOf(committedTotal) }} />
-                <div className={`prep-seg prep-seg-new${over ? " over" : ""}`} style={{ width: pctOf(periods) }} />
-                <div className="prep-seg prep-seg-rem" style={{ width: pctOf(Math.max(0, left)) }} />
-              </div>
-              <div className="prep-legend">
-                <button type="button" className="prep-leg prep-leg-btn" disabled={!committed.length}
-                  onClick={() => setShowBreakdown(true)}>
-                  <span className="prep-dot prep-dot-com" />
-                  <span className="prep-leg-lab">
-                    Already prepared · {committed.length} chapter{committed.length !== 1 ? "s" : ""}
-                    {committed.length ? <span className="prep-leg-info" aria-hidden="true">ⓘ</span> : null}
-                  </span>
-                  <span className="prep-leg-val">{committedTotal}</span>
-                </button>
-                <div className="prep-leg">
-                  <span className="prep-dot prep-dot-new" />
-                  <span className="prep-leg-lab clay">This chapter (proposed)</span>
-                  <span className="prep-leg-val clay">+{periods}</span>
-                </div>
-                <div className="prep-leg">
-                  <span className="prep-dot prep-dot-rem" />
-                  <span className="prep-leg-lab muted">Left after this lesson</span>
-                  <span className={`prep-leg-val ${over ? "clay" : "muted"}`}>{over ? `over by ${-left}` : left}</span>
-                </div>
-              </div>
-            </div>
-          ) : null}
-
-          <div className="savebar">
+          <div className="savebar savebar-prep">
             <button className="primary prepare-cta" disabled={!chosen} onClick={onPrepareClick}>
               {chosenAlreadyPrepared ? "Prepare again →" : "Prepare the lesson →"}
             </button>

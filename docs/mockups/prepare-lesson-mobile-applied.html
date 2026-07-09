@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prepare a lesson — mobile, restructured</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  :root{
+    --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+    --ink:#1f2a24; --ink-soft:#6b6a63;
+    --line:#e4ddd0; --line-soft:#ece7dc;
+    --pine:#1e5c4a; --pine-d:#164436; --clay:#b65a31; --ochre:#9a7321;
+    --f-display:"Fraunces",Georgia,serif; --f-body:"Newsreader",Georgia,serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#eee7da;color:var(--ink);font-family:var(--f-body);padding:30px;display:flex;justify-content:center}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7a6f5c;margin-bottom:12px}
+
+  .phone{width:340px;border:11px solid #2a2a28;border-radius:34px;background:var(--paper);overflow:hidden}
+  .hdr{display:flex;align-items:center;gap:12px;padding:15px 18px 12px;border-bottom:1px solid var(--line)}
+  .brand{font-family:var(--f-display);font-weight:600;font-size:22px;color:var(--pine-d);letter-spacing:-.4px}
+  .brand b{color:var(--clay)}
+  .brand small{display:block;font-family:var(--f-mono);font-size:8.5px;letter-spacing:.18em;color:var(--ink-soft);text-transform:uppercase;margin-top:1px}
+  .hdr-r{margin-left:auto;display:flex;align-items:center;gap:11px;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--ink-soft)}
+  .hdr-r .u{color:var(--pine-d)}
+  .tabs{display:flex;gap:22px;justify-content:center;padding:13px 0;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px;letter-spacing:.12em}
+  .tab{color:var(--ink-soft)} .tab.on{color:var(--pine-d);border-bottom:2px solid var(--clay);padding-bottom:6px}
+
+  .in{padding:18px 17px 20px}
+  .h2{font-family:var(--f-display);font-weight:600;font-size:26px;color:var(--pine-d);margin:2px 0 3px}
+  .scope{font-family:var(--f-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 16px}
+
+  .fieldlab{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 9px}
+  .chapsel{border:1px solid var(--line);border-radius:13px;background:#f2f6f4;overflow:hidden;margin-bottom:20px}
+  .chaprow{display:flex;align-items:center;gap:13px;padding:16px 15px}
+  .chapno{font-family:var(--f-mono);font-size:15px;color:#fff;background:var(--pine);border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+  .chaptit{font-family:var(--f-display);font-size:18px;color:var(--pine-d)}
+  .chapnav{margin-left:auto;display:flex;flex-direction:column;gap:6px;color:var(--pine)}
+  .chapnav span{font-size:12px}
+
+  /* period row: stepper on the left (vertically centred), two stacked boxes on the right */
+  .prow{display:flex;align-items:center;gap:13px;margin-bottom:22px}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--paper-2);flex:none}
+  .stepper button{border:none;background:var(--paper-2);color:var(--ink);font-size:19px;width:38px;height:50px;cursor:pointer}
+  .stepper input{border:none;border-left:1px solid var(--line);border-right:1px solid var(--line);width:52px;height:50px;text-align:center;font-family:var(--f-mono);font-size:18px;background:var(--paper-2)}
+
+  .side{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .box{border:1px solid var(--line);border-radius:11px;background:var(--paper);padding:10px 12px}
+
+  .sugg-k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);margin-bottom:3px}
+  .sugg-b{display:flex;align-items:baseline;gap:7px}
+  .sugg-v{font-family:var(--f-display);font-weight:600;font-size:22px;color:var(--pine-d);line-height:1}
+  .ok{color:var(--pine);font-size:15px;margin-left:auto}
+  .use{margin-left:auto;background:none;border:1px solid var(--pine);color:var(--pine);border-radius:6px;font-family:var(--f-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px}
+
+  .brow{display:flex;align-items:baseline;justify-content:space-between;padding:3px 0}
+  .brow + .brow{border-top:1px solid var(--line-soft)}
+  .blab{font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+  .bval{font-family:var(--f-mono);font-size:14px;color:var(--ink)}
+  .bval.pine{color:var(--pine-d)} .bval.clay{color:var(--clay)}
+
+  .cta{display:flex;width:100%;align-items:center;justify-content:center;gap:10px;background:var(--clay);color:#fff;border:none;border-radius:12px;font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:18px;cursor:pointer}
+</style>
+</head>
+<body>
+
+  <div class="col">
+    <div class="cap">Prepare a lesson · restructured mobile</div>
+    <div class="phone">
+      <div class="hdr">
+        <div class="brand">Aruvi<b>.</b><small>Lesson Studio</small></div>
+        <div class="hdr-r"><span class="u">kumar23</span><span>☀</span><span>⚙</span><span>LOG OUT</span></div>
+      </div>
+      <div class="tabs"><span class="tab on">MY&nbsp;CLASSES</span><span class="tab">MY&nbsp;LESSONS</span></div>
+      <div class="in">
+        <p class="h2">Prepare a lesson</p>
+        <p class="scope">English · Class 3</p>
+
+        <p class="fieldlab">1 · Chapter</p>
+        <div class="chapsel">
+          <div class="chaprow">
+            <span class="chapno">2</span><span class="chaptit">Badal and Moti</span>
+            <span class="chapnav"><span>▲</span><span>▼</span></span>
+          </div>
+        </div>
+
+        <p class="fieldlab">2 · Periods for this chapter</p>
+        <div class="prow">
+          <span class="stepper"><button>–</button><input value="20" /><button>+</button></span>
+          <div class="side">
+            <div class="box">
+              <div class="sugg-k">Suggestion</div>
+              <div class="sugg-b"><span class="sugg-v">20</span><span class="ok">✓</span></div>
+            </div>
+            <div class="box">
+              <div class="brow"><span class="blab">Total periods</span><span class="bval pine">180</span></div>
+              <div class="brow"><span class="blab">Used</span><span class="bval clay">27</span></div>
+              <div class="brow"><span class="blab">Available</span><span class="bval">153</span></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="cta">✦ Prepare the lesson →</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

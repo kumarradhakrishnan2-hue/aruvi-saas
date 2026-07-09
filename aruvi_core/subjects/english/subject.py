@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
 from ...link_resolver import norm_code, stamp
-from ...normalize import as_list, classify_stimulus, normalize_options
+from ...normalize import as_list, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -175,10 +175,26 @@ class EnglishSubject:
                 sg = Group(type="spine", label=_spine_label(spines), meta={"spine_codes": spines})
                 spine_index[key] = sg
                 sec_index[sid].children.append(sg)
+            # approach: pedagogical_methods is a {spine: method} dict — join the
+            # UNIQUE methods in first-seen order (prototype step 3). Tolerate the
+            # legacy singular pedagogical_method string.
+            ped = p.get("pedagogical_methods")
+            if isinstance(ped, dict) and ped:
+                seen: List[str] = []
+                for m in ped.values():
+                    m = str(m or "").strip()
+                    if m and m not in seen:
+                        seen.append(m)
+                approach = "; ".join(seen)
+            else:
+                approach = str(p.get("pedagogical_method") or "").strip()
             spine_index[key].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
+                approach=approach,
                 activities=_task_lines(p.get("tasks_in_class")) + _phase_lines(p.get("phases")),
+                phases=phases_from(p.get("phases")),
+                materials=as_list(p.get("materials")),
                 teacher_notes=as_list(p.get("teacher_notes")),
                 homework=_homework_text(p.get("homework")),
                 meta={"pedagogical_methods": p.get("pedagogical_methods", {}),
@@ -186,6 +202,20 @@ class EnglishSubject:
                       "spines_taught": spines,
                       "duration_minutes": p.get("period_duration_minutes")},
             ))
+
+        # ── Singleton-section collapse (2026-07-09) ─────────────────────────────
+        # English chapters are now SPLIT into their constituent sections — each
+        # saved plan covers exactly one section, so a lone section Group is a
+        # redundant wrapper level. Collapse it: spines become the top-level axis.
+        # Multi-section plans (older, pre-split saves) keep the full nesting —
+        # structure-driven, never a special case downstream.
+        if len(sections) == 1:
+            return LessonPlanView(
+                subject="english", grade=grade,
+                chapter_number=chapter.get("chapter_number", 0),
+                chapter_title=chapter.get("chapter_title", ""),
+                total_periods=len(periods), groups=sections[0].children,
+            )
 
         return LessonPlanView(
             subject="english", grade=grade,

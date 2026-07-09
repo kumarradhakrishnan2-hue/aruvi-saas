@@ -518,6 +518,8 @@ tr.row-bad .chn { color: var(--danger); }
 
 /* Save Allocation bar */
 .savebar { display: flex; align-items: center; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+/* Prepare-a-lesson "Prepare the lesson" CTA — pushed down two notches from the periods/budget block. */
+.savebar-prep { margin-top: 56px; }
 .savebar-final { justify-content: space-between; }
 .savebar-hint { font-size: 13px; color: var(--ink-soft); }
 
@@ -845,51 +847,42 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .g4-vinput:focus { outline:none; border-color:var(--pine); }
 .g4-vinput::-webkit-outer-spin-button, .g4-vinput::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
 
-/* ── Prepare-lesson: periods stepper + standing Suggestion box (effort-index × annual budget) ── */
-.prep-periodrow { position:relative; display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:14px 0 4px; }
-.prep-periodrow .g4-inrow { margin:0; }
-.prep-sugg { margin-left:auto; text-align:right; border-left:1px solid var(--line); padding-left:14px; position:relative; }
-.prep-sugg-hd { display:flex; align-items:center; gap:6px; justify-content:flex-end; }
-.prep-sugg-k { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ochre); }
-.prep-info { width:16px; height:16px; border-radius:50%; border:1px solid #c9b986; background:none; color:var(--ochre);
-  font-family:var(--f-display); font-style:italic; font-size:11px; line-height:13px; text-align:center; cursor:pointer; padding:0; }
+/* ── Prepare-lesson: periods stepper (left) | divider | Suggestion + budget boxes (right) ── */
+.prep-fieldlab { font-family:var(--f-mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--ink-soft); margin:0 0 10px; }
+.prep-block { display:flex; align-items:stretch; margin:16px 0 4px; }
+.prep-left { flex:1; min-width:0; padding-right:16px; display:flex; flex-direction:column; justify-content:center; }
+.prep-stepper { margin-top:0; }
+.prep-right { flex:0 0 152px; display:flex; flex-direction:column; gap:10px;
+  border-left:1px solid var(--line); padding-left:16px; }
+.prep-box { position:relative; border:1px solid var(--line); border-radius:10px; background:var(--paper); padding:8px 10px; }
+
+.prep-sugg-hd { display:flex; align-items:center; gap:5px; }
+.prep-sugg-k { font-family:var(--f-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--ochre); }
+.prep-info { width:15px; height:15px; border-radius:50%; border:1px solid #c9b986; background:none; color:var(--ochre);
+  font-family:var(--f-display); font-style:italic; font-size:10px; line-height:12px; text-align:center; cursor:pointer; padding:0; }
 .prep-info:hover { background:var(--paper-sunk); }
-.prep-sugg-body { display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-top:3px; }
-.prep-sugg-val { font-family:var(--f-display); font-size:19px; font-weight:600; color:var(--ochre); }
-.prep-sugg-ok { color:var(--pine); font-size:15px; }
-.prep-use { font-family:var(--f-mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--ochre);
-  background:none; border:1px solid #ddcfa6; border-radius:6px; padding:3px 8px; cursor:pointer; }
+.prep-sugg-body { display:flex; align-items:baseline; gap:7px; margin-top:2px; }
+.prep-sugg-val { font-family:var(--f-display); font-size:17px; font-weight:600; color:var(--ochre); }
+.prep-sugg-ok { color:var(--pine); font-size:14px; }
+.prep-use { font-family:var(--f-mono); font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:var(--ochre);
+  background:none; border:1px solid #ddcfa6; border-radius:6px; padding:2px 7px; cursor:pointer; }
 .prep-use:hover { background:var(--paper-sunk); }
-.prep-tip { position:absolute; top:calc(100% + 8px); right:0; width:246px; z-index:6; text-align:left;
+.prep-tip { position:absolute; top:calc(100% + 8px); right:0; width:230px; z-index:6; text-align:left;
   background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
   box-shadow:0 6px 22px rgba(31,42,36,.16); font-size:13px; line-height:1.5; color:var(--ink); }
 
-/* ── Prepare-lesson: annual-budget meter + legend ── */
-.prep-budget { margin:22px 0 4px; border-top:1px solid var(--line); padding-top:16px; }
-.prep-budget-hd { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-.prep-budget-k { font-family:var(--f-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--pine); }
-.prep-budget-tot { font-family:var(--f-mono); font-size:12px; color:var(--ink-soft); }
-.prep-meter { display:flex; height:16px; border-radius:8px; overflow:hidden; margin:11px 0 14px;
-  background:var(--paper-sunk); border:1px solid var(--line); }
-.prep-seg { transition:width .2s ease; }
-.prep-seg-com { background:var(--pine); }
-.prep-seg-new { background:var(--clay); }
-.prep-seg-new.over { background:#a32d2d; }
-.prep-seg-rem { background:transparent; }
-.prep-legend { display:flex; flex-direction:column; gap:2px; }
-.prep-leg { display:flex; align-items:center; gap:9px; font-size:14px; padding:6px 8px; }
-.prep-leg-btn { background:none; border:none; width:100%; text-align:left; cursor:pointer; border-radius:8px; font-family:var(--f-body); color:var(--ink); }
-.prep-leg-btn:hover:not(:disabled) { background:var(--paper-sunk); }
-.prep-leg-btn:disabled { cursor:default; }
-.prep-dot { width:9px; height:9px; border-radius:2px; flex:none; }
-.prep-dot-com { background:var(--pine); }
-.prep-dot-new { background:var(--clay); }
-.prep-dot-rem { background:var(--paper-sunk); border:1px solid #d3d1c7; }
-.prep-leg-lab { flex:1; }
-.prep-leg-lab.clay, .prep-leg-val.clay { color:var(--clay); }
-.prep-leg-lab.muted, .prep-leg-val.muted { color:var(--ink-soft); }
-.prep-leg-val { font-family:var(--f-mono); font-size:13px; color:var(--ink); flex:none; min-width:46px; text-align:right; }
-.prep-leg-info { color:var(--pine); font-size:12px; margin-left:6px; }
+/* budget box — three compact rows: Total periods / Used / Available */
+.prep-brow { display:flex; align-items:baseline; justify-content:space-between; gap:8px; width:100%; padding:3px 0; }
+.prep-brow + .prep-brow { border-top:1px solid var(--line-soft); }
+.prep-brow-btn { background:none; border:none; cursor:pointer; font-family:inherit; text-align:left; border-radius:5px; }
+.prep-brow-btn:hover:not(:disabled) { background:var(--paper-sunk); }
+.prep-brow-btn:disabled { cursor:default; }
+.prep-brow-k { font-family:var(--f-mono); font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); }
+.prep-brow-v { font-family:var(--f-mono); font-size:12px; color:var(--ink); }
+.prep-brow-v.pine { color:var(--pine-d); }
+.prep-brow-v.clay { color:var(--clay); }
+.prep-brow-info { color:var(--pine); }
 
 /* Prepare-lesson breakdown popup — reuses .ap-overlay/.ap-modal/.ap-head from My Classes */
 .prep-brk-row { display:flex; align-items:baseline; gap:11px; padding:10px 2px; }
@@ -1053,11 +1046,27 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* lesson view (Screen 3) */
 .lessonview { max-width:680px; }
+/* Cancel main's top padding (40px desktop / 26px mobile) so the top gap lives INSIDE the
+   sticky header instead (.co-stick/.lv-stick padding-top). That way the half-row of space
+   above the first header row holds when the header is frozen, not just before scrolling. */
+.co-view, .lv-pvview { margin-top:-40px; }
+@media (max-width: 600px) { .co-view, .lv-pvview { margin-top:-26px; } }
 .lv-hd { border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:14px; }
 .lv-hd-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
 .lv-title { font-family:var(--f-display); font-weight:500; font-size:22px; color:var(--ink); margin-top:2px; }
+.lv-title-full { display:block; width:100%; margin-top:0; font-size:24px; }
+/* Stylized red unit number before the unit title (1, 2, 3 …). */
+.lv-unum { font-family:var(--f-display); font-weight:600; font-style:italic; color:var(--clay); margin-right:9px; }
 .lv-count { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); white-space:nowrap; }
 .lv-stage { margin-top:8px; }
+/* Frozen unit-page header: back + title + spine + time/pedagogy + nav stay pinned. */
+.lv-stick { position:sticky; top:var(--nav-h, 118px); z-index:4; background:var(--paper); padding-top:18px; }
+.lv-topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:2px 0 8px; }
+.lv-topspine { margin-top:0; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lv-tpline { display:flex; flex-wrap:wrap; gap:6px 24px; margin-top:6px; }
+.lv-tpline b { font-weight:inherit; color:inherit; }
+/* No divider under time/pedagogy in the unit (preview) view — the nav strip follows directly. */
+.lv-pvview .lv-hd { border-bottom:none; padding-bottom:6px; margin-bottom:10px; }
 .lv-fullsub { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:4px; }
 
 /* segmented progress bar — same language as the section bars in My Lesson Plans / Track */
@@ -1107,6 +1116,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* full lesson plan preview — one unit at a time, back/forward nav */
 .lv-pvnav { display:flex; justify-content:space-between; align-items:center; background:var(--paper-sunk); border:1px solid var(--line); border-radius:8px; padding:9px 13px; margin-bottom:14px; }
+/* Filled nav strip: no border, an ochre fill with light contrasting text, only as tall as the
+   words need. Reused at the end of the lesson body too. */
+.lv-pvnav-thin { padding:5px 13px; border:none; border-radius:6px; background:var(--clay); margin-bottom:12px; }
+.lv-pvnav-thin .lv-pvbtn { color:var(--paper); padding:0; min-height:0; font-size:11px; font-weight:700; line-height:1.4; }
+.lv-pvnav-thin .lv-pvbtn.off { color:rgba(255,255,255,.5); }
+.lv-pvnav-thin .lv-pvmid { color:rgba(250,247,241,.82); font-size:11px; font-weight:700; line-height:1.4; }
+.lv-pvnav-end { margin:16px 0 4px; }
 .lv-pvbtn { font-family:var(--f-mono); font-size:11px; color:var(--pine); background:none; border:none; cursor:pointer; padding:2px 4px; }
 .lv-pvbtn.off { color:#bcae98; cursor:default; }
 .lv-pvmid { font-family:var(--f-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); }
@@ -2586,3 +2602,99 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .hdr-theme { font-size: 16px; line-height: 1; background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
 .hdr-theme:hover { color: var(--pine); }
 @media (min-width: 601px) { .hdr-theme { display: none; } }
+
+/* ══ Standard LP anatomy (2026-07-09; spec docs/mockups/lesson-period-layout.html) ══
+   Two altitudes: Chapter Organization (co-*) — the chapter's front door, speaking the
+   My Classes section-card language (accent bars, tick rail, tinted status) — and the
+   Unit view (uv-*): teacher notes → materials → phases (duration in the rail) →
+   homework → 📝 note-invoke. LO is NEVER rendered in the LP. Copy says "Unit", never LU. */
+
+/* ── Chapter Organization ── */
+/* Frozen chapter-org header: pinned down through the meta row, list scrolls under it. */
+.co-stick { position: sticky; top: var(--nav-h, 118px); z-index: 4; background: var(--paper); padding-top: 18px; padding-bottom: 8px; }
+.co-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 2px 0 8px; }
+.co-topkick { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.back-tr { flex: none; margin: 0; padding: 6px 15px; border: 1px solid var(--pine); border-radius: 999px; font-weight: 600; white-space: nowrap; background: var(--pine); color: var(--paper); }
+.back-tr:hover { color: var(--paper); background: var(--pine-d); border-color: var(--pine-d); }
+.co-head { padding: 4px 0 8px; }
+.co-title { font-family: var(--f-display); font-size: 26px; font-weight: 600; line-height: 1.12; }
+.co-meta { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: .04em; margin: 9px 0 8px; display: flex; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.co-lu { color: var(--ink); }
+.co-break { color: var(--ink-soft); }
+.co-break::before { content: "·"; margin-right: 8px; color: var(--ink-soft); }
+/* Hairline divider under the meta — frozen with the header. */
+.co-headrule { height: 1px; background: var(--clay); margin-top: 8px; }
+.co-rail { display: flex; gap: 2px; }
+.co-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--line); }
+.co-tick.done { background: var(--pine); }
+.co-tick.cur { background: var(--ochre); }
+.co-groupbar { display: flex; align-items: baseline; gap: 10px; padding: 15px 0 8px; }
+.co-groupbar .kicker { flex: 1; line-height: 1.5; }
+.co-count { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); flex: none; }
+.co-list { display: flex; flex-direction: column; gap: 8px; padding: 2px 0 6px; }
+.co-card { position: relative; display: flex; align-items: center; gap: 12px;
+  padding: 10px 13px 10px 16px; border-radius: 11px;
+  background: var(--paper-2); border: 1px solid var(--line-soft); cursor: pointer;
+  transition: border-color .12s ease; }
+.co-card:hover { border-color: var(--pine); background: var(--tint-pine); }
+.co-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  border-radius: 11px 0 0 11px; background: var(--edge); }
+.co-card.done::before { background: var(--pine); }
+.co-card.cur::before { background: var(--ochre); }
+.co-card.cur { background: var(--tint-cream); border-color: var(--edge); }
+.co-card.up { background: var(--paper-sunk); }
+.co-num { flex: none; min-width: 28px; font-family: var(--f-display); font-weight: 600;
+  font-style: italic; font-size: 21px; color: var(--clay); line-height: 1.2; }
+.co-card.up .co-num { color: var(--clay); opacity: .72; }
+.co-body { flex: 1; min-width: 0; }
+.co-utitle { font-family: var(--f-body); font-size: 14.5px; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.co-card.done .co-utitle { color: var(--ink-soft); }
+.co-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.co-dur { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; white-space: nowrap; }
+.co-dur-n { font-family: var(--f-mono); font-size: 16px; font-weight: 600; color: var(--pine); line-height: 1.1; }
+.co-dur-u { font-family: var(--f-mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+.co-mark { font-family: var(--f-mono); font-size: 10px; color: var(--pine); }
+.co-now { font-family: var(--f-mono); font-size: 9px; letter-spacing: .12em; color: var(--paper);
+  background: var(--ochre); border-radius: 9px; padding: 2px 8px; text-transform: uppercase; }
+.co-notes { margin: 16px 0 8px; border: 1px solid var(--line); border-radius: 11px; background: var(--card-bg); }
+.co-notes button { all: unset; display: flex; width: 100%; box-sizing: border-box; align-items: center;
+  gap: 10px; padding: 12px 14px; cursor: pointer; }
+.co-notes .kicker { flex: 1; }
+.co-hint { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); }
+
+/* ── Unit view: the standard anatomy ── */
+.uv-durline { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft);
+  letter-spacing: .04em; margin-top: 6px; }
+.uv-durline b { color: var(--ink); font-weight: 600; }
+.uv-orglink { font-family: var(--f-mono); font-size: 11px; color: var(--pine);
+  letter-spacing: .06em; cursor: pointer; }
+.uv-tnotes { border: 1px solid var(--edge-clay); border-left: 3px solid var(--clay);
+  background: var(--tint-clay); border-radius: 10px; padding: 11px 14px; margin: 16px 0 0; }
+.uv-tnotes .kicker { color: var(--clay); display: block; margin-bottom: 4px; }
+.uv-tnotes p { font-family: var(--f-body); font-style: italic; font-size: 14.5px;
+  line-height: 1.55; color: var(--ink); margin: 0; }
+.uv-slotk { display: block; margin: 18px 0 7px; }
+.uv-mat { border: 1px solid var(--edge); border-radius: 11px; padding: 11px 13px; background: var(--paper-sunk); }
+.uv-mat ul { list-style: none; margin: 0; padding: 0; }
+.uv-mat li { font-size: 14px; line-height: 1.5; padding: 3px 0 3px 16px; position: relative; }
+.uv-mat li::before { content: "—"; position: absolute; left: 0; color: var(--ink-soft); }
+.uv-phases { margin-top: 2px; }
+.uv-phase { display: grid; grid-template-columns: 34px 1fr; gap: 0 10px; padding: 13px 0; }
+.uv-phase + .uv-phase { border-top: 1px solid var(--clay); }
+.uv-ph-time { text-align: left; }
+.uv-ph-n { display: block; font-family: var(--f-mono); font-size: 16px; font-weight: 600;
+  color: var(--pine); line-height: 1.1; }
+.uv-ph-u { display: block; font-family: var(--f-mono); font-size: 9px; letter-spacing: .14em;
+  color: var(--ink-soft); text-transform: uppercase; margin-top: 2px; }
+.uv-ph-t { font-size: 14.5px; line-height: 1.58; margin: 0; }
+.uv-hw { background: var(--tint-cream); border: 1px solid var(--edge); border-radius: 11px;
+  padding: 12px 13px; margin-top: 16px; }
+.uv-hw .kicker { color: var(--ochre); display: block; margin-bottom: 3px; }
+.uv-hw p { font-size: 14.5px; line-height: 1.55; margin: 0; }
+.uv-note { margin: 18px 0 4px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.uv-note button { all: unset; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--pine);
+  border: 1px dashed var(--edge-green); border-radius: 20px; padding: 8px 16px; }
+.uv-note button:hover { background: var(--tint-pine); }
+.uv-notemsg { font-size: 12.5px; color: var(--ink-soft); font-style: italic; }

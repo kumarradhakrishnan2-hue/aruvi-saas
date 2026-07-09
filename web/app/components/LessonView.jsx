@@ -19,8 +19,8 @@ import { pushSectionState } from "../lib/sectionState";
  *
  * Assessment "tags along" as a dedicated green sub-view (tracking mode only). */
 
-// Flatten groups → a single ordered Learning Unit list, carrying the parent group label
-// (progression stage / section / spine) as context for each unit.
+// Flatten groups → a single ordered Unit list, carrying the parent group label
+// (progression stage / section / spine / competency) as context for each unit.
 function flattenUnits(lp) {
   const units = [];
   const walk = (groups, ctx) => {
@@ -34,28 +34,178 @@ function flattenUnits(lp) {
   return units;
 }
 
-// One unit's teaching content (phases + outcomes + notes + homework). Shared by the
-// current-unit tracking view and the preview "full plan" listing.
-function UnitBody({ u, totalMin, assessment, onAssess }) {
+// Phase duration in minutes (end − start, parsed once by the engine); null when unparsed.
+const phaseMin = (ph) =>
+  Number.isFinite(ph?.start_min) && Number.isFinite(ph?.end_min) ? ph.end_min - ph.start_min : null;
+
+/* One unit's teaching content — THE STANDARD ANATOMY (2026-07-09, founder-approved;
+ * spec docs/mockups/lesson-period-layout.html): teacher notes (clay margin-note, TOP)
+ * → materials (hairline box) → phases (duration in the marginal rail) → homework (the
+ * one tinted block, BOTTOM) → 📝 note-invoke (a control, never an empty box).
+ * LO is NEVER rendered here — reserved for assessment. Identical for every subject;
+ * slots simply stay empty where a subject has no data. */
+function UnitBody({ u, assessment, onAssess }) {
+  const phases = (u.phases || []).filter((ph) => ph.text || ph.label);
   return (
     <>
-      <div className="lv-phasehd">
-        <span className="kicker kicker-soft">PHASES{totalMin ? ` · ${totalMin} MIN TOTAL` : ""}</span>
+      {/* 1 · Teacher notes — prep reading, a colleague's margin note.
+          data-tour="lesson-notes": the tour positions its box relative to this block. */}
+      {u.teacher_notes?.length ? (
+        <div className="uv-tnotes" data-tour="lesson-notes">
+          <span className="kicker">Teacher notes</span>
+          <p>{u.teacher_notes.join(" ")}</p>
+        </div>
+      ) : null}
+
+      {/* 2 · Materials — the pre-class checklist. */}
+      {u.materials?.length ? (
+        <>
+          <span className="kicker kicker-soft uv-slotk">Materials</span>
+          <div className="uv-mat"><ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul></div>
+        </>
+      ) : null}
+
+      {/* 3 · Phases — the hero; durations in the marginal rail, one aligned column.
+          First phase carries data-tour="lesson-phase-1" (tour step 8 hangs below it).
+          Legacy fallback: plans normalized before Phase landed render activities lines. */}
+      <div className="lv-phasehd uv-slotk">
+        <span className="kicker">Lesson</span>
         {assessment && onAssess ? <span className="lv-assesslink" onClick={onAssess}>assessment here →</span> : null}
       </div>
-      {/* First phase carries data-tour="lesson-phase-1" — tour step 8 hangs its box just below
-          it, so everything from the chapter header down to phase 1 stays visible. */}
-      {(u.activities && u.activities.length) ? u.activities.map((act, i) => (
+      {phases.length ? (
+        <div className="uv-phases">
+          {phases.map((ph, i) => {
+            const mins = phaseMin(ph);
+            return (
+              <div className="uv-phase" key={i} data-tour={i === 0 ? "lesson-phase-1" : undefined}>
+                <div className="uv-ph-time">
+                  <span className="uv-ph-n">{mins != null ? mins : (ph.label || "—")}</span>
+                  {mins != null ? <span className="uv-ph-u">min</span> : null}
+                </div>
+                <p className="uv-ph-t">{ph.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : (u.activities && u.activities.length) ? u.activities.map((act, i) => (
         <div className="phaserow" key={i} data-tour={i === 0 ? "lesson-phase-1" : undefined}><span className="phasetext">{act}</span></div>
       )) : <div className="empty">No phases recorded for this unit.</div>}
-      {u.learning_outcomes?.length ? (
-        <div className="lv-lo"><span className="lv-lo-k">Learning outcome</span> {u.learning_outcomes.join("; ")}</div>
+
+      {/* 4 · Homework — the single tinted block, full text (no word caps). */}
+      {u.homework ? (
+        <div className="uv-hw">
+          <span className="kicker">Homework</span>
+          <p>{u.homework}</p>
+        </div>
       ) : null}
-      {/* data-tour="lesson-notes": tour step 8 lifts its box ABOVE this block so the teacher
-          notes + mark-complete tail stay visible below the guide. */}
-      {u.teacher_notes?.length ? <div className="lv-tnote" data-tour="lesson-notes">{u.teacher_notes.join(" ")}</div> : null}
-      {u.homework ? <div className="lv-lo"><span className="lv-lo-k">Homework</span> {u.homework}</div> : null}
     </>
+  );
+}
+
+/* The 📝 period-note invoke — a slot reserved by design (v0.2 §Period Notes): pull-based,
+ * occupies nothing until used. The feature itself is deferred; the control answers with a
+ * gentle placeholder so the affordance is honest, not dead. */
+function NoteInvoke() {
+  const [msg, setMsg] = useState(false);
+  return (
+    <div className="uv-note">
+      <button onClick={() => setMsg((v) => !v)}>📝&nbsp; Add a note about this class</button>
+      {msg ? <span className="uv-notemsg">Notes are on their way — coming in an upcoming update.</span> : null}
+    </div>
+  );
+}
+
+/* ── Chapter Organization — the chapter's front door (chapter altitude, arch-plan §E).
+ * The My Classes section card, opened up: the same tick rail expands into one card per
+ * unit (pine = taught · ochre = now · hairline = ahead), grouped under quiet mono
+ * dividers from the plugin's Group tree. Tapping a card is NAVIGATION, never pointer
+ * movement. `pointer` is the live unit index, or null (preview — no place-marker). */
+function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour }) {
+  const [noteMsg, setNoteMsg] = useState(false);
+  // Rebuild the group walk so cards sit under their group bars (flat index kept in sync
+  // with flattenUnits — same traversal order).
+  let idx = -1;
+  const renderGroup = (g, depth, keyPrefix) => {
+    const bars = [];
+    if (g.label) {
+      bars.push(
+        <div className="co-groupbar" key={`${keyPrefix}-bar`}>
+          <span className={`kicker ${depth > 0 ? "" : "kicker-soft"}`}>{g.label}</span>
+        </div>
+      );
+    }
+    if (g.periods?.length) {
+      bars.push(
+        <div className="co-list" key={`${keyPrefix}-list`}>
+          {g.periods.map((p, i) => {
+            idx += 1;
+            const n = idx;
+            const status = pointer == null ? "" : (doneAll || n < pointer) ? "done" : n === pointer ? "cur" : "up";
+            const dur = p.meta?.duration_minutes;
+            return (
+              <div className={`co-card ${status}`} key={i} onClick={() => onOpenUnit(n)}>
+                <span className="co-num">{n + 1}.</span>
+                <div className="co-body"><div className="co-utitle">{p.title || `Unit ${n + 1}`}</div></div>
+                <div className="co-side">
+                  {status === "cur" ? <span className="co-now">now</span> : null}
+                  {dur ? <span className="co-dur"><span className="co-dur-n">{dur}</span><span className="co-dur-u">min</span></span> : null}
+                  {status === "done" ? <span className="co-mark">✓ taught</span> : null}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    (g.children || []).forEach((c, i) => bars.push(...renderGroup(c, depth + 1, `${keyPrefix}-${i}`)));
+    return bars;
+  };
+
+  const total = units.length;
+  const taught = pointer == null ? 0 : doneAll ? total : pointer;
+  // Duration breakdown for the meta line, e.g. "2 units × 35 min · 1 unit × 45 min"
+  // (grouped by each unit's period duration, shortest first).
+  const durCounts = {};
+  units.forEach((u) => { const d = u.meta?.duration_minutes; if (d) durCounts[d] = (durCounts[d] || 0) + 1; });
+  const durBreakdown = Object.entries(durCounts)
+    .sort((a, b) => Number(a[0]) - Number(b[0]))
+    .map(([d, c]) => `${c} unit${c !== 1 ? "s" : ""} × ${d} min`)
+    .join(" · ");
+  return (
+    <div className="lessonview co-view">
+      {/* Frozen header — stays pinned down through the meta row; the unit list scrolls under it.
+          data-tour="preview-back" (preview only): the guided tour's step-4 hand sits on the exit. */}
+      <div className="co-stick">
+        <div className="co-topbar">
+          <span className="kicker kicker-soft co-topkick">{String(lp.subject || "").replace(/_/g, " ")} · {lp.chapter_title ? `Chapter ${lp.chapter_number || ""}`.trim() : ""}</span>
+          <button className="back back-tr" data-tour={backTour} onClick={onBack}>← back</button>
+        </div>
+        <div className="co-head">
+          <div className="co-title">{lp.chapter_title}</div>
+          <div className="co-meta">
+            <span className="co-lu">{total} Learning Unit{total !== 1 ? "s" : ""}</span>
+            {durBreakdown ? <span className="co-break">{durBreakdown}</span> : null}
+          </div>
+          {pointer != null ? (
+            <div className="co-rail" aria-label={`${taught} of ${total} units taught`}>
+              {units.map((_, i) => (
+                <span key={i} className={`co-tick ${doneAll || i < pointer ? "done" : i === pointer ? "cur" : ""}`} />
+              ))}
+            </div>
+          ) : null}
+        </div>
+        {/* Hairline divider under the meta — frozen with the header. */}
+        <div className="co-headrule" aria-hidden="true"></div>
+      </div>
+      {lp.groups.flatMap((g, i) => renderGroup(g, 0, `g${i}`))}
+      {/* Chapter Notes — ONE collapsed, pull-based control (v0.2 §Chapter Notes; deferred). */}
+      <div className="co-notes">
+        <button onClick={() => setNoteMsg((v) => !v)}>
+          <span className="kicker kicker-soft">Chapter notes</span>
+          <span className="co-hint">{noteMsg ? "coming in an upcoming update" : "none yet · ＋"}</span>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -71,6 +221,10 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     return Number.isFinite(saved) && saved >= 0 && saved < units.length ? saved : 0;
   });
   const [showAssess, setShowAssess] = useState(false);
+  // Chapter Organization altitude (the chapter's front door). Preview OPENS here — reading a
+  // plan starts at chapter altitude (arch-plan §E); once a pointer is live (tracking), the unit
+  // view is the default and the org page is one tap away ("chapter organization →").
+  const [showOrg, setShowOrg] = useState(preview);
   // After "Mark complete" we show a confirmation + an Undo that reverts to this index. The undo
   // target is INTENTIONALLY in-session only (not persisted): the pointer itself is the source of
   // truth and already saved, so undo is just a convenience for the immediate "oops, wrong button"
@@ -128,7 +282,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   };
 
   if (!units.length) {
-    return (<div><button className="back" onClick={onExit}>← back</button><div className="empty">This plan has no learning units.</div></div>);
+    return (<div><button className="back" onClick={onExit}>← back</button><div className="empty">This plan has no units.</div></div>);
   }
 
   // The unit the teacher is currently on (also the assessment scope — see below).
@@ -158,7 +312,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
             <span className="assess-tag">ASSESSMENT · TAGS ALONG</span>
           </div>
           <div className="assess-title">{a.chapter_title || lp.chapter_title}</div>
-          <div className="assess-sub">For <b>{curUnit.title || `Learning Unit ${cur + 1}`}</b> — checks whether the class can transfer what this unit built. Each item names the outcome it tests. No marks, no scoring — a teaching aid.</div>
+          <div className="assess-sub">For <b>{curUnit.title || `Unit ${cur + 1}`}</b> — checks whether the class can transfer what this unit built. Each item names the outcome it tests. No marks, no scoring — a teaching aid.</div>
         </div>
         <div className="assess-body">
           {items.length === 0 ? (
@@ -191,40 +345,72 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     );
   }
 
+  // ── Chapter Organization altitude — preview's landing page; one tap away in tracking ──
+  if (showOrg) {
+    return (
+      <div data-tour={preview ? "preview-root" : undefined}>
+        <ChapterOrg
+          lp={lp} units={units}
+          pointer={preview ? null : cur} doneAll={doneFlag}
+          onOpenUnit={(n) => {
+            // Navigation, never pointer movement: open the tapped unit read-only.
+            setPreviewAt(n); setShowOrg(false);
+            if (!preview) setShowFullPlan(true);
+          }}
+          onBack={preview ? onExit : () => setShowOrg(false)}
+          backTour={preview ? "preview-back" : undefined}
+        />
+      </div>
+    );
+  }
+
   // ── Preview / "View full lesson plan" — ONE unit at a time, back/forward navigation ──
-  // Opened from My Lesson Plans (preview prop) or the in-view "View full lesson plan" button
-  // (showFullPlan). Defaults to the current pointer — i.e. the next LU after the one just marked
-  // complete — so the teacher lands where she's teaching, then can page through the whole plan.
+  // Opened from the Chapter Organization page (card tap) or the in-view "View full lesson
+  // plan" button (showFullPlan). Defaults to the current pointer so the teacher lands where
+  // she's teaching, then can page through the whole plan. Read-only: no pointer controls.
   if (preview || showFullPlan) {
     const pu = units[previewAt] || units[0];
+    const dur = pu.meta?.duration_minutes;
+    // The orange-line prev/next strip — rendered pinned in the header AND again at the end of
+    // the lesson body (same row, so the teacher can page on from the bottom).
+    const pvNav = (endClass = "") => (
+      <div className={`lv-pvnav lv-pvnav-thin ${endClass}`}>
+        <button className={`lv-pvbtn ${previewAt <= 0 ? "off" : ""}`}
+          onClick={() => previewAt > 0 && setPreviewAt(previewAt - 1)} disabled={previewAt <= 0}>← Previous unit</button>
+        <span className="lv-pvmid">Unit {previewAt + 1} / {units.length}</span>
+        <button className={`lv-pvbtn ${previewAt >= units.length - 1 ? "off" : ""}`}
+          onClick={() => previewAt < units.length - 1 && setPreviewAt(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
+      </div>
+    );
     return (
       // data-tour="preview-root": the guided tour's step-4 spotlight wraps the open preview.
-      <div className="lessonview" data-tour="preview-root">
-        {/* data-tour="preview-back": tour step 4's hand sits here ("go back and attach"). */}
-        <button className="back" data-tour="preview-back"
-          onClick={showFullPlan ? () => setShowFullPlan(false) : onExit}>
-          ← back{showFullPlan ? " to teaching" : " to lesson plans"}
-        </button>
-        <div className="lv-hd">
-          <div className="lv-hd-row">
-            <div>
-              <div className="kicker kicker-ochre">{lp.chapter_title}</div>
-              <div className="lv-title">{pu.title}</div>
-            </div>
-            <div className="lv-count">Learning Unit {previewAt + 1} of {units.length}</div>
+      <div className="lessonview lv-pvview" data-tour="preview-root">
+        {/* Frozen header — back + title + spine + time/pedagogy + nav all stay pinned; the
+            unit body scrolls under them. data-tour="preview-back": tour step 4's hand sits here. */}
+        <div className="lv-stick">
+          <div className="lv-topbar">
+            {pu.context ? <span className="kicker lv-stage lv-topspine">Spine: {pu.context}</span> : <span />}
+            <button className="back back-tr" data-tour="preview-back"
+              onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
+              ← back
+            </button>
           </div>
-          {pu.context ? <div className="kicker lv-stage">{pu.context.toUpperCase()}</div> : null}
+          <div className="lv-hd">
+            <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
+            {dur || pu.approach ? (
+              <div className="uv-durline lv-tpline">
+                {dur ? <span>Time: {dur} mins</span> : null}
+                {pu.approach ? <span>Pedagogy: {pu.approach}</span> : null}
+              </div>
+            ) : null}
+          </div>
+
+          {pvNav()}
         </div>
 
-        <div className="lv-pvnav">
-          <button className={`lv-pvbtn ${previewAt <= 0 ? "off" : ""}`}
-            onClick={() => previewAt > 0 && setPreviewAt(previewAt - 1)} disabled={previewAt <= 0}>← Previous unit</button>
-          <span className="lv-pvmid">LU {previewAt + 1} / {units.length}</span>
-          <button className={`lv-pvbtn ${previewAt >= units.length - 1 ? "off" : ""}`}
-            onClick={() => previewAt < units.length - 1 && setPreviewAt(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
-        </div>
-
-        <UnitBody u={pu} totalMin={pu.meta?.duration_minutes} assessment={null} onAssess={null} />
+        <UnitBody u={pu} assessment={null} onAssess={null} />
+        {/* Same nav strip at the end of the lesson body — page prev/next from the bottom too. */}
+        {pvNav("lv-pvnav-end")}
         {/* The preview is READ-ONLY: the old "Attach to a class" CTA is retired (2026-07-06) —
             attaching happens only via the "+" on a My Classes section card. */}
       </div>
@@ -234,6 +420,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // ── Tracking view (Screen 3) — current unit only + completion model ──
   const u = curUnit;
   const stageKicker = (u.context || "").toUpperCase();
+  const uDur = u.meta?.duration_minutes;
   const total = units.length;
   const done = cur;                          // units completed before the current one
 
@@ -245,21 +432,31 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
         <div className="lv-hd-row">
           <div>
             <div className="kicker kicker-ochre">{lp.chapter_title}</div>
-            <div className="lv-title">{u.title}</div>
+            <div className="lv-title"><span className="lv-unum">{cur + 1}.</span>{u.title}</div>
           </div>
-          <div className="lv-count">Learning Unit {cur + 1} of {total}</div>
+          <div className="lv-count">Unit {cur + 1} of {total}</div>
         </div>
         {stageKicker ? <div className="kicker lv-stage">{stageKicker}</div> : null}
+        <div className="lv-hd-row">
+          {uDur || u.approach ? (
+            <div className="uv-durline">{uDur ? <b>{uDur} min</b> : null}{uDur && u.approach ? " · " : ""}{u.approach || ""}</div>
+          ) : <span />}
+          {/* Chapter altitude, one tap away — navigation, never pointer movement. */}
+          <span className="uv-orglink" onClick={() => setShowOrg(true)}>chapter organization →</span>
+        </div>
       </div>
 
       {/* Progress bar — same segmented look as the section bars in My Lesson Plans / Track. */}
-      <div className="lv-progress" aria-label={doneFlag ? `all ${total} learning units complete` : `${done} of ${total} learning units complete`}>
+      <div className="lv-progress" aria-label={doneFlag ? `all ${total} units complete` : `${done} of ${total} units complete`}>
         {Array.from({ length: total }, (_, i) => (
           <span key={i} className={`lv-seg ${doneFlag || i < cur ? "fill" : i === cur ? "now" : ""}`} />
         ))}
       </div>
 
-      <UnitBody u={u} totalMin={u.meta?.duration_minutes} assessment={view.assessment} onAssess={() => setShowAssess(true)} />
+      <UnitBody u={u} assessment={view.assessment} onAssess={() => setShowAssess(true)} />
+      {/* 📝 Period note — an invoked control (tracking only: notes belong to the section's
+          plan instance, not the shared asset). */}
+      <NoteInvoke />
 
       {/* Completion action (or the post-complete confirmation + Undo). */}
       {undoTo != null ? (
@@ -269,7 +466,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
               <div className="lv-donemark">✓</div>
               <div>
                 <div className="lv-donetitle">Unit marked complete</div>
-                <div className="lv-donesub">Section is now ready for the next learning unit.</div>
+                <div className="lv-donesub">Section is now ready for the next unit.</div>
               </div>
             </div>
             <button className="lv-undo" onClick={undoComplete}>↺ Undo</button>
@@ -279,7 +476,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           <div className="lv-nextup">
             <span className="lv-nextup-k">Next up</span>
             <div className="lv-nextup-t">{u.title}</div>
-            {u.learning_outcomes?.length ? <div className="lv-nextup-d">{u.learning_outcomes.join("; ")}</div> : null}
+            {/* LO is never shown in the LP (founder rule 2026-07-09) — the next-up card names
+                the unit only; outcomes surface in the assessment artifact. */}
             {/* Before starting the next unit, a teacher often wants to glance at how the rest of
                 the chapter pans out — so the preview lives HERE, paired with Open next unit, not
                 as a standalone utility. It opens at the next (now-current) unit. */}
@@ -298,7 +496,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
                 <div className="lv-donemark">✓</div>
                 <div>
                   <div className="lv-donetitle">Chapter complete</div>
-                  <div className="lv-donesub">Every learning unit is taught. This class now shows as completed on your home screen.</div>
+                  <div className="lv-donesub">Every unit is taught. This class now shows as completed on your home screen.</div>
                 </div>
               </div>
               <button className="lv-undo" onClick={() => setDone(false)}>↺ Reopen</button>
@@ -308,7 +506,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           <div className="lv-markcard">
             <div className="lv-markinfo">
               <span className="lv-markicon" aria-hidden="true">ⓘ</span>
-              <span>This is the final learning unit. Marking it complete finishes the chapter for this section.</span>
+              <span>This is the final unit. Marking it complete finishes the chapter for this section.</span>
             </div>
             <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark chapter complete</button>
           </div>
@@ -317,7 +515,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
         <div className="lv-markcard">
           <div className="lv-markinfo">
             <span className="lv-markicon" aria-hidden="true">ⓘ</span>
-            <span>Marking this unit complete moves the teaching position to the next learning unit for this section.</span>
+            <span>Marking this unit complete moves the teaching position to the next unit for this section.</span>
           </div>
           {/* data-tour="mark-complete": the guided tour's step-8 spotlight + hand sit here. */}
           <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark this unit complete</button>

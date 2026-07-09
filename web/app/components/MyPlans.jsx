@@ -185,8 +185,12 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (plusUnlocked && !plusFlagOn()) unlockPlus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plusUnlocked]);
-  // Never compete with the guided tour; needs the portal callback from page.jsx.
-  const plusShow = plusUnlocked && !tourActive && tourResolved && !!onProfilePortal;
+  // Never compete with the guided tour; needs the portal callback from page.jsx. EXCEPTION: the
+  // tour's step 12 deliberately features this "+" (the grow portal), so it's surfaced then even
+  // though the tour is active — the guide rings it and the transparent hand lands on it.
+  const plusShow = !!onProfilePortal && (
+    tourStep === 12 || (plusUnlocked && !tourActive && tourResolved)
+  );
 
   // Fetch saved plans once per distinct subject·grade the teacher handles.
   useEffect(() => { setOpenPlan(null);
@@ -282,7 +286,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendingAttach, ready]);
 
-  /* ── Guided-tour orchestration (steps 5–11 live on this view; 12 steps total, 2026-07-06) ──
+  /* ── Guided-tour orchestration (steps 5–12 live on this view; 13 steps total, 2026-07-09) ──
+   * Step 12 features the big "+" grow portal on the My Classes home (no bound/popup change — the
+   * card stays attached, the popup closes; plusShow surfaces the "+" for the ring + hand).
    * The tour's TARGET is the first class that already has a prepared plan (the first-run case:
    * exactly one lesson, generated for the section fan-out's subject·grade). All tour moves are
    * IDEMPOTENT and keyed off the numeric tourStep, so Next AND Back both land on a consistent
@@ -608,7 +614,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                   <div className="ch-name" title={r.chapter_title}>{r.chapter_title}</div>
                   {r.total_units ? (
                     <div className="sc-rail ch-rail"
-                      aria-label={`${r.units_done || 0} of ${r.total_units} learning units completed`}>
+                      aria-label={`${r.units_done || 0} of ${r.total_units} units completed`}>
                       {Array.from({ length: r.total_units }).map((_, t) => (
                         <span key={t} className={`sc-tick ${t < (r.units_done || 0) ? "done" : (st === "ongoing" && t === r.units_done ? "cur" : "")}`} />
                       ))}
@@ -678,7 +684,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
             <div className="dash-sub">Continue where you left off with every class.</div>
           </div>
           {plusShow && (
-            <button className="sc-grow" aria-label="Add or change subjects, classes, or sections"
+            <button className="sc-grow" data-tour="grow-add" aria-label="Add or change subjects, classes, or sections"
               title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
           )}
         </div>
@@ -693,7 +699,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               : <>Tap <b>+</b> on a class to prepare its first lesson.</>}</div>
           </div>
           {plusShow && (
-            <button className="sc-grow" aria-label="Add or change subjects, classes, or sections"
+            <button className="sc-grow" data-tour="grow-add" aria-label="Add or change subjects, classes, or sections"
               title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
           )}
         </div>
@@ -710,13 +716,10 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           // No chapter bound to this class yet → "pick a chapter to begin" (grey / not started).
           // The card is NOT tappable-to-generate anymore; the "+" opens the attach picker instead.
           if (!plan) {
-            // When EXACTLY ONE lesson is prepared and nothing's bound (the first-run case), the
-            // card still NAMES that ready chapter — but the "+" ALWAYS opens the track-a-chapter
-            // picker (founder's call, 2026-07-06): even the very first attach goes through the
-            // window, so the teacher learns the one true way of choosing a lesson. The old
-            // direct-attach shortcut is retired.
-            const preparedOnes = Array.isArray(gradePlans) ? gradePlans.filter((p) => p.prepared) : [];
-            const readyOne = preparedOnes.length === 1 ? preparedOnes[0] : null;
+            // The card stays EMPTY even after first-run generation (founder's call, 2026-07-09):
+            // the freshly generated lesson lands ONLY in My Lessons and is never auto-named onto a
+            // section card. The card just reads "Pick a chapter to begin" until she taps "+" and
+            // attaches a lesson herself through the track-a-chapter picker.
             return (
               // On the tour's TARGET card, the "+" carries data-tour="section-add" — step 5's
               // spotlight + hand sit on it ("click the + sign of that section card").
@@ -725,9 +728,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                 <div className="sc-body">
                   <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
                   <div className="sc-title muted">
-                    {readyOne
-                      ? <>Chapter {readyOne.chapter_number} ready · tap <b>+</b> to add</>
-                      : "Pick a chapter to begin"}
+                    Pick a chapter to begin
                   </div>
                 </div>
                 <div className="sc-right">
@@ -759,7 +760,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                 <span className="sc-kicker">{pretty(c.subjectSlug)}{plan.chapter_number ? ` · Ch ${plan.chapter_number}` : ""}</span>
                 <div className="sc-title" title={plan.chapter_title}>{plan.chapter_title}</div>
                 {ticks && (
-                  <div className="sc-rail" aria-label={done ? `${total} learning units, completed` : lu ? `Learning Unit ${lu} of ${total}` : `${total} learning units, not started`}>
+                  <div className="sc-rail" aria-label={done ? `${total} units, completed` : lu ? `Unit ${lu} of ${total}` : `${total} units, not started`}>
                     {ticks.map((_, t) => (
                       <span key={t} className={`sc-tick ${done || (lu && t < lu - 1) ? "done" : lu && t === lu - 1 ? "cur" : ""}`} />
                     ))}

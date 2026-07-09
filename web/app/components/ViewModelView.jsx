@@ -25,8 +25,17 @@ function Tags({ items }) {
   ))}</div>;
 }
 
+// Phase duration (end − start, parsed once by the engine); null when unparsed.
+const phaseMin = (ph) =>
+  Number.isFinite(ph?.start_min) && Number.isFinite(ph?.end_min) ? ph.end_min - ph.start_min : null;
+
+/* THE STANDARD ANATOMY (2026-07-09; spec docs/mockups/lesson-period-layout.html):
+   title + "{dur} min · {approach}" → teacher notes (top) → materials → phases (duration
+   in the rail) → homework. LO is NEVER rendered in the LP — reserved for assessment.
+   Identical for every subject; slots stay empty where a subject has no data. */
 function PeriodCard({ p }) {
   const m = p.meta || {};
+  const phases = (p.phases || []).filter((ph) => ph.text || ph.label);
   return (
     <div className="entry">
       <div className="entry-rail">
@@ -35,12 +44,40 @@ function PeriodCard({ p }) {
       </div>
       <div className="entry-body">
         <div className="entry-title">{p.title}</div>
-        {p.activities?.length ? <ul className="acts">{p.activities.map((a, i) => <li key={i}>{a}</li>)}</ul> : null}
-        {p.learning_outcomes?.length ?
-          <div className="field"><span className="field-k">Learning outcome</span>{p.learning_outcomes.join("; ")}</div> : null}
-        <Tags items={[["Pedagogy", m.pedagogical_method || m.pedagogical_approach], ["Mode", m.dominant_mode], ["Materials", m.materials]]} />
-        {p.teacher_notes?.length ? <div className="tnote">{p.teacher_notes.join(" ")}</div> : null}
-        {p.homework ? <div className="field"><span className="field-k">Homework</span>{p.homework}</div> : null}
+        {m.duration_minutes || p.approach ? (
+          <div className="uv-durline">
+            {m.duration_minutes ? <b>{m.duration_minutes} min</b> : null}
+            {m.duration_minutes && p.approach ? " · " : ""}{p.approach || ""}
+          </div>
+        ) : null}
+        {p.teacher_notes?.length ? (
+          <div className="uv-tnotes"><span className="kicker">Teacher notes</span><p>{p.teacher_notes.join(" ")}</p></div>
+        ) : null}
+        {p.materials?.length ? (
+          <>
+            <span className="kicker kicker-soft uv-slotk">Materials</span>
+            <div className="uv-mat"><ul>{p.materials.map((mt, i) => <li key={i}>{mt}</li>)}</ul></div>
+          </>
+        ) : null}
+        {phases.length ? (
+          <div className="uv-phases">
+            {phases.map((ph, i) => {
+              const mins = phaseMin(ph);
+              return (
+                <div className="uv-phase" key={i}>
+                  <div className="uv-ph-time">
+                    <span className="uv-ph-n">{mins != null ? mins : (ph.label || "—")}</span>
+                    {mins != null ? <span className="uv-ph-u">min</span> : null}
+                  </div>
+                  <p className="uv-ph-t">{ph.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        ) : p.activities?.length ? <ul className="acts">{p.activities.map((a, i) => <li key={i}>{a}</li>)}</ul> : null}
+        {p.homework ? (
+          <div className="uv-hw"><span className="kicker">Homework</span><p>{p.homework}</p></div>
+        ) : null}
       </div>
     </div>
   );
@@ -55,7 +92,8 @@ function Group({ g, nested }) {
         <span className="sec-label">{g.label}</span>
         {m.weight ? <span className="sec-badge">weight {m.weight}</span> : null}
       </div>
-      {m.implied_lo ? <div className="sec-imp">{m.implied_lo}</div> : (m.description ? <div className="sec-imp">{m.description}</div> : null)}
+      {/* LO never in the LP (2026-07-09) — group description only; implied_lo stays data. */}
+      {m.description ? <div className="sec-imp">{m.description}</div> : null}
       {g.periods?.map((p, i) => <PeriodCard key={i} p={p} />)}
       {g.children?.map((c, i) => <Group key={i} g={c} nested />)}
     </section>
