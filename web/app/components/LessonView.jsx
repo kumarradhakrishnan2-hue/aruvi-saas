@@ -523,10 +523,11 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
       ? allItems.filter((it) => (it.meta?.linked_periods || []).includes(pnum))
       : allItems;
     return (
-      <div className="lessonview">
+      <div className="lessonview lv-pvview">
         {/* Back sits ABOVE the green box in a sticky top bar — same vertical level as the
-            lesson-plan back button (shared .lv-stick/.lv-topbar), which also restores the
-            gap under the tabs on mobile. */}
+            lesson-plan back button (shared .lv-pvview/.lv-stick/.lv-topbar): lv-pvview cancels
+            main's top padding so the top gap lives INSIDE the sticky header exactly like the
+            lesson plan, instead of an extra row below the tabs. */}
         <div className="lv-stick">
           <div className="lv-topbar">
             <span />
