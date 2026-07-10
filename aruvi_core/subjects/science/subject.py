@@ -17,6 +17,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
+from ...assessment_norm import from_constitution
 from ...grades import stage_for
 from ...link_resolver import handoff_period_index, period_number_by_field, stamp
 from ...normalize import as_list as _as_list, classify_stimulus, normalize_options, phases_from
@@ -283,6 +284,7 @@ class ScienceSubject:
                 implied_lo=lo,
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
                 meta=meta,
+                normalized=from_constitution(it, meta),  # the §2 uniform contract (3b reads this)
             ))
         return AssessmentView(
             subject="science", grade=grade,

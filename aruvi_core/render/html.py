@@ -13,6 +13,7 @@ from __future__ import annotations
 import html as _html
 from typing import List
 
+from ..normalize import parse_table
 from ..view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView,
     Period, StimulusType, ViewModel, VisualStimulus,
@@ -35,14 +36,13 @@ def _meta_chips(meta: dict) -> str:
 
 
 def _render_table(pipe_text: str) -> str:
-    rows = [ln for ln in pipe_text.splitlines() if ln.strip()]
-    cells = [[c.strip() for c in ln.split("|")] for ln in rows]
-    if not cells:
+    t = parse_table(pipe_text)  # single shared parser (normalize.py) — never re-split here
+    if not t["header"] and not t["rows"]:
         return ""
-    head = "".join(f"<th>{_esc(c)}</th>" for c in cells[0])
+    head = "".join(f"<th>{_esc(c)}</th>" for c in t["header"])
     body = "".join(
         "<tr>" + "".join(f"<td>{_esc(c)}</td>" for c in row) + "</tr>"
-        for row in cells[1:]
+        for row in t["rows"]
     )
     return f'<table class="vs-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>'
 

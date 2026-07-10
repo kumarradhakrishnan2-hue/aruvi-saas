@@ -11,6 +11,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
+from ...assessment_norm import from_constitution
 from ...link_resolver import stamp
 from ...normalize import as_list, band_lines, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
@@ -137,6 +138,7 @@ class SocialSciencesSubject:
                 implied_lo=lo,
                 visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
                 meta=meta,
+                normalized=from_constitution(it, meta),  # the §2 uniform contract (3b reads this)
             ))
         return AssessmentView(
             subject="social_sciences", grade=grade,

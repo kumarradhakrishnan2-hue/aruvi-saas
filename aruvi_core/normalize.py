@@ -13,15 +13,40 @@ from .view_model import Phase, StimulusType, VisualStimulus
 
 
 def classify_stimulus(raw: str) -> VisualStimulus:
-    """SVG > pipe-table > prose. Returns a typed VisualStimulus the renderer keys off."""
+    """SVG > pipe-table > prose. Returns a typed VisualStimulus the renderer keys off.
+
+    Table detection accepts TWO-column tables (one `|` per line), not just 3+ columns:
+    the earlier rule (`any line has >= 2 pipes`) silently mis-typed 2-column tables — very
+    common in assessment stimuli ("Region | Density", "Planet | Weight") — as PROSE, so the
+    renderer dumped raw pipes. A block is a table when it has >= 2 pipe-bearing lines that
+    dominate the block (>= half the non-empty lines). The old single-line >= 2-pipe rule is
+    kept as a strict superset, so no previously-detected table regresses. Verse/prose (no
+    pipes, e.g. EXTRACT_ANALYSIS extracts) stays PROSE."""
     s = (raw or "").strip()
     if not s:
         return VisualStimulus(StimulusType.NONE, "")
     if s.lower().startswith("<svg") and "</svg>" in s.lower():
         return VisualStimulus(StimulusType.SVG, s)
-    if any(line.count("|") >= 2 for line in s.splitlines()):
+    lines = [ln for ln in s.splitlines() if ln.strip()]
+    pipe_lines = [ln for ln in lines if "|" in ln]
+    if (len(pipe_lines) >= 2 and len(pipe_lines) * 2 >= len(lines)) \
+            or any(ln.count("|") >= 2 for ln in lines):
         return VisualStimulus(StimulusType.TABLE, s)
     return VisualStimulus(StimulusType.PROSE, s)
+
+
+def parse_table(raw: str) -> dict:
+    """Split pipe-delimited table text into {'header': [...], 'rows': [[...]]}.
+
+    THE single place a pipe-table string is split into cells — every renderer (HTML/PDF
+    export, the React on-screen view, the assessment 3b view) consumes this structure and
+    NEVER re-splits the raw string itself (the recurring drift-bug class). Row 0 is the
+    header; remaining lines are body rows. Empty/blank lines are dropped."""
+    lines = [ln for ln in (raw or "").splitlines() if ln.strip()]
+    cells = [[c.strip() for c in ln.split("|")] for ln in lines]
+    if not cells:
+        return {"header": [], "rows": []}
+    return {"header": cells[0], "rows": cells[1:]}
 
 
 def normalize_options(raw: Any) -> tuple:

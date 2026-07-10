@@ -1,6 +1,75 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
-## 2026-07-09 (newest) — RENDERERS REBUILT to the standard anatomy (STATIC only — live pass pending)
+## 2026-07-10 (newest) — NORMALIZED ASSESSMENT ITEMS + 3b TEMPLATE RENDERER (STATIC only — live pass pending)
+
+The question-type-registry build order (spec §7) steps 1–3 are DONE; suite **16/16 green**
+(new `tests/test_normalized_item.py`; test_api needs `pip install fastapi httpx` in a fresh
+sandbox).
+
+- **Contract landed** (`aruvi_core/view_model.py`): `QuestionType` enum + `RENDER_TEMPLATE`
+  (type→template map) + `NormalizedItem` dataclass; `AssessmentItem.normalized` carries it.
+  ⚠️ **The registry doc says "11 types" but its own §3/§5 lists — and the corpus — hold
+  TWELVE** (MCQ, TRUE_FALSE, SCR, ECR, OPEN_TASK, PROJECT, WRITING_TASK, FILL_IN, MATCH,
+  ORAL_PROMPT, NUM, EXTRACT_ANALYSIS; all 12 exercised by saved plans). Enum has 12; the
+  spec prose miscounts. Templates: selected_response·scr·ecr·open_task·cloze_match +
+  oral/numeric/passage (T6's three variant bodies keyed flat).
+- **Family builders** (`aruvi_core/assessment_norm.py`): `from_constitution` (Sci/SS/TWAU),
+  `from_maths`, `from_english` — the spec §4 mapping. Called by each plugin's
+  `assessment_to_view` AFTER `stamp()`; link fields mirrored into the normalized item.
+  Discovered/locked: **Maths secondary is a hybrid** (top-level expected_answer/
+  method_one_line + constitution-style `guide{TYPE}` + look_for/expected_elements — builder
+  reads both shapes). **SS + TWAU wrote the guide FLAT by their own constitutions'
+  design** (`guide.what_each_option_reveals` etc. directly under `guide`) while Science
+  nests under the type key — RESOLVED at source per the English-fix playbook (founder
+  directive, same day): **SS assessment constitution → v1.7 and TWAU → v1.3 amended**
+  (Rule 9 + JSON schema blocks now mandate `guide.{TYPE}` nesting, matching Science + the
+  registry §1 shape; new PROHIBITION against flat placement; population-table column header
+  now "guide.{TYPE} keys required"), and **all SS/TWAU saved plans migrated in place** —
+  pure structural relocation (`guide` → `{question_type: guide}`), strict pre-write deep-diff
+  proved zero content change outside the relocation; corpus scan post-migration: 194 nested,
+  0 flat. The builder's flat read is retained as a corpus-unused legacy fallback (mirror of
+  the English `note` tolerance). Also converted the **third English prose-note MCQ** the
+  earlier English migration missed (`english/iii/ch_02_20260526_184454.json` Q-READ-B-1:
+  A:/C:/D: prose parsed into the keyed map, reassembly-verified, note cleared) — the ONLY
+  note-only MCQ left in the corpus is the genuine `[Verification failed]` fallback
+  (ch_02_20260510, which also deliberately flags ALL options correct — test asserts ≥1
+  correct, not ==1). SS/TWAU duplicate SCR/ECR rubrics into the guide, but top-level fields
+  carry them too (top stays the single read). `annotation` prose → `option_reveals["note"]`
+  kept as a true last resort (now fires on nothing). TWAU `observation_rubric`
+  (performance_task=true) added to _OT_GUIDE_KEYS — no corpus item carries it yet.
+  cognitive_demand ""≡absent → None; audio_ref only English+listening; EXTRACT_ANALYSIS
+  extract → `passage`. Note: saved plans + constitutions under data/ are git-ignored — the
+  migration has no VCS trail beyond this entry. Sandbox quirk: overwriting some saved-plan
+  files via the mount hits EPERM — write a `.tmp` sibling + `os.replace`.
+- **Serialization**: `ViewModel.to_dict` prunes normalized blocks — **omitted, not blanked**
+  (keep-set: question_type/template/stem/linked_periods/anchor_period). Maths mid/prep ship
+  with NO `linked_lo` key. **Tables ship PRE-SPLIT** (`{"type":"table","content",
+  "table":{header,rows}}` via parse_table) so no JS re-splits pipes. Verified through the
+  live API: all 41 plans / 382 items serve well-formed normalized blocks (149 selected ·
+  95 scr · 34 open_task · 32 numeric · 30 ecr · 25 cloze · 15 oral · 2 passage; 11 audio
+  cues; 44 pre-split tables).
+- **3b renderer rebuilt** (`LessonView.jsx`): `AssessCard` + ATyped/ABlock/ATicks/AReveals
+  switch on `n.template` ONLY — subject never consulted. Card anatomy: per-item LO (absent
+  not blank) → type + cognitive chip → stem (pre-line) → audio cue ("🔊 Listening passage ·
+  p.NN (read aloud)") → typed stimulus (passage BEFORE stem for EXTRACT_ANALYSIS) → the
+  template's marking surface (options w/ quiet ✓ + what-each-choice-reveals · suggested
+  answer/look-for · answer key · worked answer/method/textbook · speaking rubric · what-to-
+  produce/expected elements + collapsible OPEN_TASK guide `<details>`) → inclusivity.
+  Legacy items (no `normalized`) fall back to the old card. CSS: `.assess-*` additions +
+  dark-theme mirrors in globals.css. Unit-scoping filter unchanged (meta.linked_periods).
+  **3b is reachable from PREVIEW too** (founder, same day): `showAssess` is now a unit
+  INDEX (null = closed) — tracking opens it scoped to `cur`, the unit preview scoped to
+  `previewAt` (§I-ter: preview shows future periods, their assessment comes for free);
+  back returns exactly where she was. Chapter-Org page still has no link (assessment
+  belongs to the period viewer, not chapter altitude).
+- **Verification: STATIC only** (acorn-jsx parse clean, CSS balanced, class/field greps,
+  full pytest suite + API sweep). ⚠️ Live render + mobile 360px pass owed: 3b from
+  "assessment here →" on a Science/Maths/English plan, table overflow, `<details>` tap
+  target, dark mode.
+- **Still deferred to generation milestone** (spec §7.4): constitution exact-counts audit
+  (§J.3) + mirroring the English MCQ reveals rewrite into the generation prompt wrappers.
+
+## 2026-07-09 — RENDERERS REBUILT to the standard anatomy (STATIC only — live pass pending)
 
 The founder green-lit implementation; both LP renderers now speak the standard anatomy:
 

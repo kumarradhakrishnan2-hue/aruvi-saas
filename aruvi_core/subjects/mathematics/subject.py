@@ -15,6 +15,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
+from ...assessment_norm import from_maths
 from ...grades import stage_for
 from ...link_resolver import (
     handoff_period_index, norm_code, period_field_index, stamp,
@@ -183,6 +184,7 @@ class MathematicsSubject:
                     teacher_guide=as_list(it.get("teacher_guide")),
                     visual_stimulus=classify_stimulus(it.get("visual_stimulus", "")),
                     meta=meta,
+                    normalized=from_maths(it, meta),  # the §2 uniform contract (3b reads this)
                 ))
             out.append(g)
         return out
@@ -226,5 +228,6 @@ class MathematicsSubject:
                 implied_lo=lo,
                 visual_stimulus=classify_stimulus(q.get("visual_stimulus", "")),
                 meta=meta,
+                normalized=from_maths(q, meta),  # the §2 uniform contract (3b reads this)
             ))
         return out
