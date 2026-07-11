@@ -72,11 +72,12 @@ const STEPS = [
   { anchor: "section-card-target", handPos: "center", place: "below", hand: true,
     title: "You are now ready to track.",
     body: (i) => `You have successfully attached “${i.chapter}” for section ${i.tag}. Let us click it to see how tracking works.` },
-  // Box hangs just BELOW the first phase, view held at the top — the chapter header, progress
-  // bar and phase 1 all stay visible above it.
-  { anchor: "lesson-root", place: "below", tipAnchor: ["lesson-phase-1"], scrollTop: true,
+  // Box hangs just BELOW the unit's tab bar, view held at the top — the chapter header,
+  // progress bar and the tabs all stay visible above it (tabs replaced the stacked
+  // anatomy 2026-07-10; lesson-phase-1 kept as a fallback for mid-transition renders).
+  { anchor: "lesson-root", place: "below", tipAnchor: ["unit-tabs", "lesson-phase-1"], scrollTop: true,
     title: "You are now ready to use the plan to teach and track progress.",
-    body: () => "The time bound plan gives clear steps, materials used, teacher guidance and assessment items." },
+    body: () => "Everything for a unit sits under four tabs — Overview, Material, Lesson and Assess — with clear timed steps and teacher guidance." },
   { anchor: "mark-complete", place: "above", hand: true,
     title: "Track progress.",
     body: (i) => `Track chapter progress of “${i.chapter}” with section ${i.tag} unit by unit. Upon completion of a unit, click this button to mark it complete.` },

@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState } from "../lib/sectionState";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
@@ -17,9 +17,10 @@ import { pushSectionState } from "../lib/sectionState";
  * Preview mode (opened from My Lesson Plans, or the in-view "View full lesson plan"): every unit
  * stacked top-to-bottom for reading, no pointer, no completion controls.
  *
- * Assessment "tags along" as a dedicated green sub-view — reachable from BOTH the tracking
- * view (scoped to the current unit) and the unit preview (scoped to the previewed unit;
- * §I-ter: preview shows future periods, their assessment comes along for free). */
+ * Assessment "tags along" as the green ASSESS tab of the unit's tab bar (2026-07-10) — present
+ * in BOTH the tracking view (scoped to the current unit) and the unit preview (scoped to the
+ * previewed unit; §I-ter: preview shows future periods, their assessment comes along for free),
+ * and only rendered when the unit actually anchors items. */
 
 // Flatten groups → a single ordered Unit list, carrying the parent group label
 // (progression stage / section / spine / competency) as context for each unit.
@@ -40,40 +41,86 @@ function flattenUnits(lp) {
 const phaseMin = (ph) =>
   Number.isFinite(ph?.start_min) && Number.isFinite(ph?.end_min) ? ph.end_min - ph.start_min : null;
 
-/* One unit's teaching content — THE STANDARD ANATOMY (2026-07-09, founder-approved;
- * spec docs/mockups/lesson-period-layout.html): teacher notes (clay margin-note, TOP)
- * → materials (hairline box) → phases (duration in the marginal rail) → homework (the
- * one tinted block, BOTTOM) → 📝 note-invoke (a control, never an empty box).
- * LO is NEVER rendered here — reserved for assessment. Identical for every subject;
- * slots simply stay empty where a subject has no data. */
-function UnitBody({ u, assessment, onAssess }) {
-  const phases = (u.phases || []).filter((ph) => ph.text || ph.label);
+/* ───────── The TABBED unit anatomy (2026-07-10, founder-directed) ─────────
+ * The 2026-07-09 stacked anatomy is re-organized behind four per-unit tabs so nothing
+ * reads "jumbled" on a phone: the header keeps ONLY the unit number + title, and the
+ * content splits into
+ *   OVERVIEW  — spine (group context) · time · pedagogy as ledger rows + teacher notes
+ *   MATERIAL  — the pre-class checklist
+ *   LESSON    — the timed phase spine (durations in the marginal rail) + homework
+ *   ASSESS    — the unit's anchored assessment items, green language — the tab EXISTS
+ *               only when the unit actually carries items (§I-ter anchor rule)
+ * Overview/Material/Lesson always show (a slot simply says so when empty); LO is still
+ * NEVER rendered in the LP (founder rule 2026-07-09) — it lives on the assess cards.
+ * Spec mockup: docs/mockups/lesson-unit-tabs.html. */
+
+// Which assessment items belong to THIS unit — same §I-ter anchor logic the old 3b
+// sub-view used: an item surfaces once, at its anchor (closing) period; legacy views
+// without anchor metadata fall back to all items so we never hide data by mistake.
+function unitAssessItems(assessment, u) {
+  if (!assessment?.groups?.length) return [];
+  const all = assessment.groups.flatMap((g) => g.items || []);
+  const anyAnchored = all.some((it) => it.meta?.anchor_period != null);
+  return anyAnchored ? all.filter((it) => it.meta?.anchor_period === u.number) : all;
+}
+
+// Row label for the unit's group context, spelled from the plugin's group type.
+const CTX_LABEL = { spine: "Spine", section: "Section", competency: "Competency", stage: "Stage", progression_stage: "Stage" };
+
+function OverviewPanel({ u, chapterTitle }) {
+  const dur = u.meta?.duration_minutes;
+  const rows = [
+    ["Chapter", chapterTitle],
+    [CTX_LABEL[u.groupType] || "Spine", u.context],
+    ["Time", dur ? `${dur} mins` : null],
+    ["Pedagogy", u.approach],
+  ].filter(([, v]) => v);
   return (
     <>
-      {/* 1 · Teacher notes — prep reading, a colleague's margin note.
-          data-tour="lesson-notes": the tour positions its box relative to this block. */}
-      {u.teacher_notes?.length ? (
-        <div className="uv-tnotes" data-tour="lesson-notes">
-          <span className="kicker">Teacher notes</span>
-          <p>{u.teacher_notes.join(" ")}</p>
+      {rows.length ? (
+        <div className="uv-ovrows">
+          {rows.map(([k, v]) => (
+            <div className="uv-ovrow" key={k}>
+              <span className="kicker kicker-soft">{k}</span>
+              <span className="uv-ovval">{v}</span>
+            </div>
+          ))}
         </div>
       ) : null}
-
-      {/* 2 · Materials — the pre-class checklist. */}
-      {u.materials?.length ? (
-        <>
-          <span className="kicker kicker-soft uv-slotk">Materials</span>
-          <div className="uv-mat"><ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul></div>
-        </>
+      {/* Teacher notes moved to the LESSON tab (founder 2026-07-10) — one home only:
+          a collapsed clay teaser ribbon at the top of the phase spine. */}
+      {!rows.length ? (
+        <div className="empty">No overview details recorded for this unit.</div>
       ) : null}
+    </>
+  );
+}
 
-      {/* 3 · Phases — the hero; durations in the marginal rail, one aligned column.
-          First phase carries data-tour="lesson-phase-1" (tour step 8 hangs below it).
+function MaterialPanel({ u }) {
+  if (!u.materials?.length) return <div className="empty">Nothing to prepare — this unit needs no materials.</div>;
+  return <div className="uv-mat"><ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul></div>;
+}
+
+function LessonPanel({ u }) {
+  const phases = (u.phases || []).filter((ph) => ph.text || ph.label);
+  const notes = u.teacher_notes?.length ? u.teacher_notes.join(" ") : null;
+  return (
+    <>
+      {/* Teacher notes — a colleague's margin note, living WHERE IT'S READ: the top of
+          the lesson spine (its only home — founder 2026-07-10). Collapsed to a one-line
+          clay teaser so a verbose note never pushes phase 1 below the fold; one tap
+          expands it in place. data-tour="lesson-notes" kept for tour positioning. */}
+      {notes ? (
+        <details className="uv-tnotes-rib" data-tour="lesson-notes">
+          <summary>
+            <span className="kicker">Teacher notes</span>
+            <span className="uv-tnotes-teaser">{notes}</span>
+          </summary>
+          <p>{notes}</p>
+        </details>
+      ) : null}
+      {/* Phases — the hero; durations in the marginal rail, one aligned column.
           Legacy fallback: plans normalized before Phase landed render activities lines. */}
-      <div className="lv-phasehd uv-slotk">
-        <span className="kicker">Lesson</span>
-        {assessment && onAssess ? <span className="lv-assesslink" onClick={onAssess}>assessment here →</span> : null}
-      </div>
       {phases.length ? (
         <div className="uv-phases">
           {phases.map((ph, i) => {
@@ -93,13 +140,133 @@ function UnitBody({ u, assessment, onAssess }) {
         <div className="phaserow" key={i} data-tour={i === 0 ? "lesson-phase-1" : undefined}><span className="phasetext">{act}</span></div>
       )) : <div className="empty">No phases recorded for this unit.</div>}
 
-      {/* 4 · Homework — the single tinted block, full text (no word caps). */}
+      {/* Homework — the single tinted block, full text (no word caps). */}
       {u.homework ? (
         <div className="uv-hw">
           <span className="kicker">Homework</span>
           <p>{u.homework}</p>
         </div>
       ) : null}
+    </>
+  );
+}
+
+// The unit's assessment tab — flat on the unit's paper (the green box was retired in the
+// same-day revision; assessment keeps its own voice via PINE accents). ONE anchored item
+// renders bare; more than one introduces the one-at-a-time PINE question pager — pine,
+// never clay, so it can't be mistaken for the unit strip. Paging resets the item's tabs
+// to Overview.
+//
+// FROZEN CHROME (founder 2026-07-10): everything down to and including the item tab bar
+// stays pinned — the pager + item tabs sit in ONE sticky group that stacks directly
+// below whatever is already frozen above (in preview, .lv-stick pins the header + UNIT
+// tab bar). The group's `top` is measured at mount (app nav + .lv-stick height when
+// present) since those heights vary with title wrapping. Only panel content scrolls.
+function AssessPanel({ items }) {
+  const [at, setAt] = useState(0);
+  const [itab, setITab] = useState("ov");
+  const grpRef = useRef(null);
+  const idx = Math.min(at, items.length - 1);
+  const many = items.length > 1;
+  const it = items[idx];
+  const n = it?.normalized;
+  const set = n && n.template ? itemTabSet(n) : null;
+  // Guard: if paging lands on an item without the previously-active tab, fall back.
+  const tab = set && set.tabs.some(([id]) => id === itab) ? itab : "ov";
+  const goto = (i) => { setAt(i); setITab("ov"); };
+
+  useEffect(() => {
+    const el = grpRef.current;
+    if (!el || typeof window === "undefined") return;
+    const place = () => {
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118;
+      const stick = document.querySelector(".lv-stick");
+      el.style.top = `${navH + (stick ? stick.offsetHeight : 0)}px`;
+    };
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
+  }, []);
+
+  return (
+    <>
+      <div className="uv-assess-stick" ref={grpRef}>
+        {many ? (
+          <div className="uv-apager">
+            <button className={`uv-apgbtn ${idx <= 0 ? "off" : ""}`} disabled={idx <= 0}
+              onClick={() => goto(idx - 1)}>← Previous</button>
+            <span className="uv-apgmid">Question {idx + 1} / {items.length}</span>
+            <button className={`uv-apgbtn ${idx >= items.length - 1 ? "off" : ""}`} disabled={idx >= items.length - 1}
+              onClick={() => goto(idx + 1)}>Next →</button>
+          </div>
+        ) : null}
+        {set ? (
+          <div className="assess-mtabs" role="tablist">
+            {set.tabs.map(([id, label]) => (
+              <button key={id} role="tab" aria-selected={tab === id}
+                className={`assess-mt${tab === id ? " on" : ""}`}
+                onClick={() => setITab(id)}>{label}</button>
+            ))}
+          </div>
+        ) : null}
+      </div>
+      <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null} key={idx} />
+    </>
+  );
+}
+
+/* Tab state + rendered parts (bar / panel) for a unit. Split so the preview view can pin the
+ * bar inside its frozen header while the panel scrolls beneath. Callers key the consuming
+ * component by unit index so paging to another unit resets the active tab to Overview.
+ * data-tour="unit-tabs": tour step 8's tooltip hangs below the bar. */
+function useUnitTabsParts(u, assessment, chapterTitle) {
+  const items = unitAssessItems(assessment, u);
+  const [tab, setTab] = useState("overview");
+  const tabs = [
+    ["overview", "Overview"],
+    ["material", "Material"],
+    ["lesson", "Lesson"],
+    ...(items.length ? [["assess", "Assess"]] : []),
+  ];
+  const bar = (
+    <div className="uv-tabs" data-tour="unit-tabs" role="tablist">
+      {tabs.map(([id, label]) => (
+        <button
+          key={id} role="tab" aria-selected={tab === id}
+          className={`uv-tab${tab === id ? " on" : ""}`}
+          onClick={() => setTab(id)}
+        >{label}</button>
+      ))}
+    </div>
+  );
+  const panel = (
+    <>
+      {tab === "overview" ? <OverviewPanel u={u} chapterTitle={chapterTitle} /> : null}
+      {tab === "material" ? <MaterialPanel u={u} /> : null}
+      {tab === "lesson" ? <LessonPanel u={u} /> : null}
+      {tab === "assess" ? <AssessPanel items={items} /> : null}
+    </>
+  );
+  return { bar, panel };
+}
+
+// Tracking view: bar + panel together, in normal flow.
+function UnitTabs({ u, assessment, chapterTitle }) {
+  const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle);
+  return <>{bar}{panel}</>;
+}
+
+// Preview view: the header + tab bar are frozen together (one sticky block); only the panel
+// scrolls. `headerContent` is the topbar + name-plate built by the caller.
+function PreviewUnit({ headerContent, u, assessment, chapterTitle }) {
+  const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle);
+  return (
+    <>
+      <div className="lv-stick">
+        {headerContent}
+        {bar}
+      </div>
+      {panel}
     </>
   );
 }
@@ -193,7 +360,7 @@ function AReveals({ reveals }) {
 function ALegacyCard({ it }) {
   return (
     <>
-      <div className="assess-qtype">{it.item_type}</div>
+      <div className="assess-qtype">{qtypeName(it.item_type)}</div>
       <div className="assess-prompt">{it.prompt}</div>
       {it.options?.length ? (
         <ol className="assess-opts">{it.options.map((o, k) => <li key={k}>{o}</li>)}</ol>
@@ -209,93 +376,208 @@ function ALegacyCard({ it }) {
   );
 }
 
-function AssessCard({ it }) {
-  const n = it.normalized;
-  const lo = n ? n.linked_lo : (it.meta?.linked_lo || it.implied_lo);
+/* ── The per-item TAB SET (founder spec 2026-07-10): OVERVIEW · QUESTION · ANSWER ·
+ * INCLUSIVITY — the unit-tabs interaction grammar. Same-day palette revision: the green
+ * artifact box is RETIRED — items sit flat on the unit's paper in the site's pine voice;
+ * what stays distinctly "assessment" is the PINE question pager (vs the clay unit strip)
+ * and pine accents. Slotting by the audience test:
+ *   OVERVIEW    — why it's asked: LO (absent, not blank, when null) · type · cognitive
+ *                 demand · competency. The old always-visible LO strip lives here now.
+ *   QUESTION    — everything said/shown to the class: extract, stem, listening cue,
+ *                 stimulus, PLAIN options (NO correct tick — the phone can face the
+ *                 class), what-to-produce, scaffold, the open-task reading guide
+ *                 (format / demonstrates / reading-the-scaffold; still collapsed),
+ *                 textbook ref.
+ *   ANSWER      — everything student work is checked against: correct option(s) ✓,
+ *                 model answer / key, what-each-choice-reveals, expected elements,
+ *                 look-fors, method line. Tab exists only when any of these is populated.
+ *   INCLUSIVITY — its own tab (class diversity is first-class); exists only when populated.
+ * strong_vs_weak_markers is DATA-ONLY (carried in NormalizedItem, never rendered —
+ * founder 2026-07-10: verbose, and it restates expected elements + look-fors).
+ * Pre-contract items keep the flat legacy card, no tabs. */
+
+// Full-word display names for question types — NEVER acronyms on screen (founder
+// 2026-07-10). Long forms per the registry §3; unknown types fall back to the raw
+// value with underscores spaced.
+const QTYPE_NAME = {
+  MCQ: "Multiple choice question",
+  TRUE_FALSE: "True or false",
+  SCR: "Short constructed response",
+  ECR: "Extended constructed response",
+  OPEN_TASK: "Open task",
+  PROJECT: "Project",
+  WRITING_TASK: "Writing task",
+  FILL_IN: "Fill in the blanks",
+  MATCH: "Match the following",
+  ORAL_PROMPT: "Oral prompt",
+  NUM: "Numerical problem",
+  EXTRACT_ANALYSIS: "Extract analysis",
+};
+const qtypeName = (t) => QTYPE_NAME[t] || String(t || "").replace(/_/g, " ");
+
+function AOverviewPanel({ n, lo }) {
+  const comp = n.competency ? [n.competency.code, n.competency.text].filter(Boolean).join(" — ") : null;
+  // ONLY the outcome's value is right-aligned (founder 2026-07-10); the short values
+  // read left, next to their labels.
   return (
-    <div className="assess-card">
-      {/* LEARNING OUTCOME — per item, above the stem; ABSENT (no label) when null. */}
+    <div className="assess-ovrows">
+      {/* LO leads the panel: "Learning outcome" as a BOLD single-row heading, the
+          outcome text below it as a normal paragraph (founder 2026-07-10). */}
       {lo ? (
-        <div className="assess-lo">
-          <span className="assess-lo-k">LEARNING OUTCOME</span>
-          <div className="assess-lo-t">{lo}</div>
+        <div className="assess-ovlo">
+          <span className="assess-ovk assess-ovk-b">Learning outcome</span>
+          <p className="assess-ovlo-t">{lo}</p>
         </div>
       ) : null}
-      {!n || !n.template ? <ALegacyCard it={it} /> : (
-        <>
-          <div className="assess-metarow">
-            <span className="assess-qtype">{n.question_type.replace(/_/g, " ")}</span>
-            {n.cognitive_demand ? <span className="assess-cog">{n.cognitive_demand}</span> : null}
+      <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Question type</span><span className="assess-ovv">{qtypeName(n.question_type)}</span></div>
+      {n.cognitive_demand ? <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Cognitive demand</span><span className="assess-ovv">{n.cognitive_demand}</span></div> : null}
+      {comp ? <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Competency</span><span className="assess-ovv">{comp}</span></div> : null}
+    </div>
+  );
+}
+
+function AQuestionPanel({ n, opts }) {
+  return (
+    <>
+      {/* T6c (EXTRACT_ANALYSIS): the extract is set off BEFORE the multi-part stem. */}
+      {n.template === "passage" ? <ATyped b={n.passage} passage /> : null}
+      <div className="assess-prompt assess-prompt-tab">{n.stem}</div>
+      {/* Listening input the item can't run without — a cue, never a citation. */}
+      {n.audio_ref ? <span className="assess-audio">🔊 Listening passage · {n.audio_ref} (read aloud)</span> : null}
+      <ATyped b={n.visual_stimulus} />
+      {/* Options are PLAIN here — the tick lives in the ANSWER tab. */}
+      {opts.length ? (
+        <ul className="assess-opts2">
+          {opts.map((o, i) => (
+            <li key={i}>
+              <span className="assess-opt-lab">{o.label}</span>
+              <span>{o.text}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <ATicks k="WHAT TO PRODUCE" items={n.format_of_output} />
+      <ABlock k="SCAFFOLD" text={n.scaffold} />
+      {/* Task-setting part of the open-task guide — belongs to the question process
+          (founder 2026-07-10); stays collapsed so the card isn't a wall on a phone. */}
+      {n.open_task_guide ? (
+        <details className="assess-otg">
+          <summary>READING THIS TASK</summary>
+          <div className="assess-otg-body">
+            <ABlock k="FORMAT" text={[n.open_task_guide.format_type, n.open_task_guide.format_rationale].filter(Boolean).join(" — ")} />
+            <ABlock k="WHAT THIS DEMONSTRATES" text={n.open_task_guide.what_this_demonstrates} />
+            <ABlock k="READING THE SCAFFOLD" text={n.open_task_guide.reading_the_scaffold} />
           </div>
-          {/* T6c (EXTRACT_ANALYSIS): the extract is set off BEFORE the multi-part stem. */}
-          {n.template === "passage" ? <ATyped b={n.passage} passage /> : null}
-          <div className="assess-prompt">{n.stem}</div>
-          {/* Listening input the item can't run without — a cue, never a citation. */}
-          {n.audio_ref ? <span className="assess-audio">🔊 Listening passage · {n.audio_ref} (read aloud)</span> : null}
-          <ATyped b={n.visual_stimulus} />
+        </details>
+      ) : null}
+      <ABlock k="TEXTBOOK" text={n.exercise_ref} />
+    </>
+  );
+}
 
-          {/* ── the marking surface, per template ── */}
-          {n.template === "selected_response" ? (
-            <>
-              <ul className="assess-opts2">
-                {(n.options || []).map((o, i) => (
-                  <li key={i} className={o.is_correct ? "correct" : ""}>
-                    <span className="assess-opt-lab">{o.label || String.fromCharCode(65 + i)}</span>
-                    <span>{o.text}{o.is_correct ? <span className="assess-tickmark"> ✓</span> : null}</span>
-                  </li>
-                ))}
-              </ul>
-              {/* TRUE_FALSE verdict+justification arrives as model_answer, not reveals. */}
-              <ABlock k="ANSWER" text={n.model_answer} />
-              <AReveals reveals={n.option_reveals} />
-            </>
-          ) : n.template === "scr" ? (
-            n.model_answer
-              ? <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
-              : <ATicks k="LOOK FOR" items={n.expected_elements} />
-          ) : n.template === "ecr" ? (
-            <>
-              <ATicks k="LOOK FOR" items={n.look_fors} />
-              <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
-              <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
-              <ABlock k="SCAFFOLD" text={n.scaffold} />
-            </>
-          ) : n.template === "open_task" ? (
-            <>
-              <ATicks k="WHAT TO PRODUCE" items={n.format_of_output} />
-              <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
-              <ATicks k="LOOK FOR" items={n.look_fors} />
-              <ABlock k="SCAFFOLD" text={n.scaffold} />
-              {n.open_task_guide ? (
-                /* the rich OPEN_TASK guide stays collapsed so the card isn't a wall on a phone */
-                <details className="assess-otg">
-                  <summary>TEACHER GUIDE — READING THIS TASK</summary>
-                  <div className="assess-otg-body">
-                    <ABlock k="FORMAT" text={[n.open_task_guide.format_type, n.open_task_guide.format_rationale].filter(Boolean).join(" — ")} />
-                    <ABlock k="WHAT THIS DEMONSTRATES" text={n.open_task_guide.what_this_demonstrates} />
-                    <ABlock k="READING THE SCAFFOLD" text={n.open_task_guide.reading_the_scaffold} />
-                    <ABlock k="STRONG VS WEAK MARKERS" text={n.open_task_guide.strong_vs_weak_markers} />
-                  </div>
-                </details>
-              ) : null}
-            </>
-          ) : n.template === "cloze_match" ? (
-            <ABlock k="ANSWER KEY" text={n.model_answer} />
-          ) : n.template === "oral" ? (
-            <ATicks k="SPEAKING RUBRIC" items={n.expected_elements} />
-          ) : n.template === "numeric" ? (
-            <>
-              <ABlock k="WORKED ANSWER" text={n.model_answer} />
-              <ABlock k="METHOD" text={n.method_one_line} />
-              <ABlock k="TEXTBOOK" text={n.exercise_ref} />
-            </>
-          ) : n.template === "passage" ? (
-            <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
-          ) : null}
-
-          <ABlock k="INCLUSIVITY" text={n.inclusivity} />
+function AAnswerPanel({ n, correct }) {
+  return (
+    <>
+      {correct.length ? (
+        <div className="assess-look">
+          <span className="assess-look-k">CORRECT ANSWER</span>
+          {correct.map((o, i) => (
+            <div className="assess-corr-row" key={i}>
+              <span className="assess-opt-lab">{o.label}</span>
+              <span>{o.text}<span className="assess-tickmark"> ✓</span></span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {n.template === "selected_response" ? (
+        <>
+          {/* TRUE_FALSE verdict+justification arrives as model_answer, not reveals. */}
+          <ABlock k="ANSWER" text={n.model_answer} />
+          <AReveals reveals={n.option_reveals} />
         </>
-      )}
+      ) : n.template === "scr" ? (
+        n.model_answer
+          ? <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
+          : <ATicks k="LOOK FOR" items={n.expected_elements} />
+      ) : n.template === "ecr" ? (
+        <>
+          <ATicks k="LOOK FOR" items={n.look_fors} />
+          <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
+          <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
+        </>
+      ) : n.template === "open_task" ? (
+        <>
+          <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
+          <ATicks k="LOOK FOR" items={n.look_fors} />
+        </>
+      ) : n.template === "cloze_match" ? (
+        <ABlock k="ANSWER KEY" text={n.model_answer} />
+      ) : n.template === "oral" ? (
+        <ATicks k="SPEAKING RUBRIC" items={n.expected_elements} />
+      ) : n.template === "numeric" ? (
+        <>
+          <ABlock k="WORKED ANSWER" text={n.model_answer} />
+          <ABlock k="METHOD" text={n.method_one_line} />
+        </>
+      ) : n.template === "passage" ? (
+        <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
+      ) : null}
+    </>
+  );
+}
+
+// Which tabs a normalized item offers (ANSWER / INCLUSIVITY only when populated),
+// plus the derived option lists both panels need.
+function itemTabSet(n) {
+  const opts = (n.options || []).map((o, i) => ({ ...o, label: o.label || String.fromCharCode(65 + i) }));
+  const correct = opts.filter((o) => o.is_correct);
+  const hasAnswer = !!(correct.length || n.model_answer || n.expected_elements?.length
+    || n.look_fors?.length || Object.keys(n.option_reveals || {}).length || n.method_one_line);
+  return {
+    opts, correct,
+    tabs: [
+      ["ov", "Overview"],
+      ["q", "Question"],
+      ...(hasAnswer ? [["an", "Answer"]] : []),
+      ...(n.inclusivity ? [["inc", "Inclusivity"]] : []),
+    ],
+  };
+}
+
+/* The item's ACTIVE PANEL only — no card chrome, no Q-number/type header (the pager
+ * carries position; type lives in Overview). The item's tab BAR is rendered by
+ * AssessPanel inside the frozen chrome group (see below), so `tab` arrives as a prop.
+ * Legacy pre-contract items keep the old flat white card, whatever the tab. */
+function AssessBody({ it, tab, qn }) {
+  const n = it.normalized;
+  const lo = n ? n.linked_lo : (it.meta?.linked_lo || it.implied_lo);
+  // `qn` (Q1., Q2., …) is set ONLY when the unit anchors more than one item. FLOATED
+  // (never a full row) so it shares the line with each panel's opening words —
+  // Learning outcome / stem / answer / inclusivity — and the teacher always knows
+  // which question the panel belongs to.
+  const qmark = qn ? <span className="assess-qmark">Q{qn}.</span> : null;
+  if (!n || !n.template) {
+    return (
+      <div className="assess-card">
+        {qmark}
+        {lo ? (
+          <div className="assess-lo">
+            <span className="assess-lo-k">LEARNING OUTCOME</span>
+            <div className="assess-lo-t">{lo}</div>
+          </div>
+        ) : null}
+        <ALegacyCard it={it} />
+      </div>
+    );
+  }
+  const { opts, correct } = itemTabSet(n);
+  return (
+    <div className="assess-flat">
+      {qmark}
+      {tab === "ov" ? <AOverviewPanel n={n} lo={lo} /> : null}
+      {tab === "q" ? <AQuestionPanel n={n} opts={opts} /> : null}
+      {tab === "an" ? <AAnswerPanel n={n} correct={correct} /> : null}
+      {tab === "inc" ? <div className="assess-inc">{n.inclusivity}</div> : null}
     </div>
   );
 }
@@ -323,7 +605,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     if (visible && g.label) {
       bars.push(
         <div className="co-groupbar" key={`${keyPrefix}-bar`}>
-          <span className={`kicker ${depth > 0 ? "" : "kicker-soft"}`}>{g.label}</span>
+          <span className="co-subname">{g.label}</span>
         </div>
       );
     }
@@ -358,12 +640,29 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   // (grouped by each unit's period duration, shortest first).
   const durCounts = {};
   units.forEach((u) => { const d = u.meta?.duration_minutes; if (d) durCounts[d] = (durCounts[d] || 0) + 1; });
-  const durBreakdown = Object.entries(durCounts)
+  // Period combination, stacked one per line, e.g. "3 × 40 min" / "4 × 50 min"
+  // (grouped by duration, shortest first).
+  const durParts = Object.entries(durCounts)
     .sort((a, b) => Number(a[0]) - Number(b[0]))
-    .map(([d, c]) => `${c} unit${c !== 1 ? "s" : ""} × ${d} min`)
-    .join(" · ");
+    .map(([d, c]) => `${c} × ${d} min`);
+  // The organizing axis (or axes) of this chapter — the type of the top-level groups, plus any
+  // nested grouping type. Named + explained below the header rule so the teacher knows what the
+  // drop-downs represent.
+  const AXIS_INFO = {
+    stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice."],
+    progression_stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice."],
+    section: ["Sections", "the parts of the chapter, taught in sequence."],
+    competency: ["Competencies", "the skill each group of units builds."],
+    spine: ["Spines", "the language skills the units develop together."],
+  };
+  const axisTypes = [];
+  const collectAxis = (groups) => (groups || []).forEach((g) => {
+    if (g.type && AXIS_INFO[g.type] && !axisTypes.includes(g.type)) axisTypes.push(g.type);
+    collectAxis(g.children);
+  });
+  collectAxis(lp.groups);
   return (
-    <div className="lessonview co-view">
+    <div className="lessonview co-view" data-subject={lp.subject || ""}>
       {/* Frozen header — stays pinned down through the meta row; the unit list scrolls under it.
           data-tour="preview-back" (preview only): the guided tour's step-4 hand sits on the exit. */}
       <div className="co-stick">
@@ -374,8 +673,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         <div className="co-head">
           <div className="co-title">{lp.chapter_title}</div>
           <div className="co-meta">
-            <span className="co-lu">{total} Learning Unit{total !== 1 ? "s" : ""}</span>
-            {durBreakdown ? <span className="co-break">{durBreakdown}</span> : null}
+            {total} Learning Unit{total !== 1 ? "s" : ""}{durParts.length ? ` ${durParts.join(". ")}` : ""}
           </div>
           {pointer != null ? (
             <div className="co-rail" aria-label={`${taught} of ${total} units taught`}>
@@ -388,6 +686,17 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         {/* Hairline divider under the meta — frozen with the header. */}
         <div className="co-headrule" aria-hidden="true"></div>
       </div>
+      {/* Axis legend — names the organizing axis of the drop-downs + a small explanation. */}
+      {axisTypes.length ? (
+        <div className="co-axis">
+          {axisTypes.map((t) => (
+            <div className="co-axis-row" key={t}>
+              <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
+              <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
       {lp.groups.map((g, gi) => {
         const open = openIdx === gi;
         // Render the body (periods + children) for EVERY group so idx advances in order;
@@ -401,9 +710,13 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
               onClick={() => setOpenIdx(open ? -1 : gi)}
               aria-expanded={open}
             >
-              <span className="kicker kicker-soft">{g.label || `Section ${gi + 1}`}</span>
-              <span className="co-count">{cnt} unit{cnt !== 1 ? "s" : ""}</span>
-              <span className="co-chev" aria-hidden="true">{open ? "–" : "+"}</span>
+              <span className="co-acc-name">{g.label || `Section ${gi + 1}`}</span>
+              <span className="co-count">{cnt}</span>
+              <span className="co-chev" aria-hidden="true">
+                <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2.5 4.5L6 8l3.5-3.5" />
+                </svg>
+              </span>
             </button>
             {open ? <div className="co-accbody">{body}</div> : null}
           </div>
@@ -433,11 +746,6 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     const saved = Number(window.localStorage.getItem(storageKey));
     return Number.isFinite(saved) && saved >= 0 && saved < units.length ? saved : 0;
   });
-  // 3b assessment view: null = closed, otherwise the INDEX of the unit it is scoped to.
-  // Opened from the tracking view (scoped to the current unit) AND from preview (scoped to
-  // the previewed unit — §I-ter: preview shows future periods, so future assessment comes
-  // along for free).
-  const [showAssess, setShowAssess] = useState(null);
   // Chapter Organization altitude (the chapter's front door). Preview OPENS here — reading a
   // plan starts at chapter altitude (arch-plan §E); once a pointer is live (tracking), the unit
   // view is the default and the org page is one tap away ("chapter organization →").
@@ -505,53 +813,6 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // The unit the teacher is currently on (also the assessment scope — see below).
   const curUnit = units[cur] || units[0];
 
-  // ── Assessment artifact (3b) — SCOPED to the current learning unit ──
-  // The link resolver (aruvi_core, architecture-plan.md §Link resolution) stamps every item
-  // with meta.linked_periods[] — the period set it belongs to. Each LU here IS one period
-  // (its `number`), so we show ONLY the items whose linked_periods include this unit's period.
-  // This is the fix for "the assessment showed every item": it now tags along with the unit.
-  if (showAssess != null) {
-    const a = view.assessment;
-    const aUnit = units[showAssess] || units[0];
-    const pnum = aUnit.number;
-    const allItems = a.groups.flatMap((g) => g.items);
-    // Items linked to THIS unit's period; fall back to all items only if nothing carries link
-    // metadata (e.g. an older view served before the resolver shipped) so we never show nothing
-    // by mistake on legacy data.
-    const anyLinked = allItems.some((it) => Array.isArray(it.meta?.linked_periods) && it.meta.linked_periods.length);
-    const items = anyLinked
-      ? allItems.filter((it) => (it.meta?.linked_periods || []).includes(pnum))
-      : allItems;
-    return (
-      <div className="lessonview lv-pvview">
-        {/* Back sits ABOVE the green box in a sticky top bar — same vertical level as the
-            lesson-plan back button (shared .lv-pvview/.lv-stick/.lv-topbar): lv-pvview cancels
-            main's top padding so the top gap lives INSIDE the sticky header exactly like the
-            lesson plan, instead of an extra row below the tabs. */}
-        <div className="lv-stick">
-          <div className="lv-topbar">
-            <span />
-            <button className="back back-tr" onClick={() => setShowAssess(null)}>← back</button>
-          </div>
-        </div>
-        <div className="assess assess-standalone">
-          <div className="assess-hd">
-            <div className="assess-hd-row">
-              <span className="assess-tag">ASSESSMENT</span>
-            </div>
-            <div className="assess-title">{a.chapter_title || lp.chapter_title}</div>
-          </div>
-          <div className="assess-body">
-            {items.length === 0 ? (
-              <div className="assess-empty">No assessment item tags along with this unit. Move through the unit — items appear at the units that build the outcome they test.</div>
-            ) : items.map((it, ii) => <AssessCard it={it} key={ii} />)}
-            <button className="assess-backbtn" onClick={() => setShowAssess(null)}>← back</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // ── Chapter Organization altitude — preview's landing page; one tap away in tracking ──
   if (showOrg) {
     return (
@@ -577,7 +838,6 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // she's teaching, then can page through the whole plan. Read-only: no pointer controls.
   if (preview || showFullPlan) {
     const pu = units[previewAt] || units[0];
-    const dur = pu.meta?.duration_minutes;
     // Change the shown unit AND reset scroll to the top of the unit view. Without this, paging
     // from the bottom nav strip leaves the window scrolled down at the frozen header, so the new
     // unit opens mid-way; we land the teacher at the unit's start, just under the pinned header.
@@ -603,36 +863,27 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           onClick={() => previewAt < units.length - 1 && pvGoto(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
       </div>
     );
+    // Header name-plate for the frozen block (the top orange prev/next strip is retired here —
+    // paging now lives only in the bottom strip). data-tour="preview-back": tour step 4's hand.
+    // ONE top row (founder 2026-07-10): the unit name-plate sits UP in the first row,
+    // wrapping as needed, with the back button beside it top-right — no row spent on
+    // the back button alone.
+    const headerContent = (
+      <div className="lv-hd lv-hd-merge">
+        <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
+        <button className="back back-tr" data-tour="preview-back"
+          onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
+          ← back
+        </button>
+      </div>
+    );
     return (
       // data-tour="preview-root": the guided tour's step-4 spotlight wraps the open preview.
       <div className="lessonview lv-pvview" data-tour="preview-root" ref={pvRef}>
-        {/* Frozen header — back + title + spine + time/pedagogy + nav all stay pinned; the
-            unit body scrolls under them. data-tour="preview-back": tour step 4's hand sits here. */}
-        <div className="lv-stick">
-          <div className="lv-topbar">
-            {pu.context ? <span className="kicker lv-stage lv-topspine">Spine: {pu.context}</span> : <span />}
-            <button className="back back-tr" data-tour="preview-back"
-              onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
-              ← back
-            </button>
-          </div>
-          <div className="lv-hd">
-            <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
-            {dur || pu.approach ? (
-              <div className="uv-durline lv-tpline">
-                {dur ? <span><strong>Time</strong>: {dur} mins</span> : null}
-                {pu.approach ? <span><strong>Pedagogy</strong>: {pu.approach}</span> : null}
-              </div>
-            ) : null}
-          </div>
-
-          {pvNav()}
-        </div>
-
-        {/* Assessment is part of the period view in preview too (§I-ter: future periods'
-            assessment comes along for free) — scoped to the unit being previewed. */}
-        <UnitBody u={pu} assessment={view.assessment} onAssess={() => setShowAssess(previewAt)} />
-        {/* Same nav strip at the end of the lesson body — page prev/next from the bottom too. */}
+        {/* Frozen block — header AND the Overview/Material/Lesson/Assess tab bar stay pinned;
+            only the active panel scrolls beneath. Keyed by unit so paging resets to Overview. */}
+        <PreviewUnit key={previewAt} headerContent={headerContent} u={pu} assessment={view.assessment} chapterTitle={lp.chapter_title} />
+        {/* Prev/next paging strip at the end of the lesson body. */}
         {pvNav("lv-pvnav-end")}
         {/* The preview is READ-ONLY: the old "Attach to a class" CTA is retired (2026-07-06) —
             attaching happens only via the "+" on a My Classes section card. */}
@@ -642,8 +893,6 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
 
   // ── Tracking view (Screen 3) — current unit only + completion model ──
   const u = curUnit;
-  const stageKicker = (u.context || "").toUpperCase();
-  const uDur = u.meta?.duration_minutes;
   const total = units.length;
   const done = cur;                          // units completed before the current one
 
@@ -659,11 +908,10 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           </div>
           <div className="lv-count">Unit {cur + 1} of {total}</div>
         </div>
-        {stageKicker ? <div className="kicker lv-stage">{stageKicker}</div> : null}
+        {/* Spine / time / pedagogy moved into the OVERVIEW tab (2026-07-10) — the header
+            keeps only the name-plate + the chapter-altitude link. */}
         <div className="lv-hd-row">
-          {uDur || u.approach ? (
-            <div className="uv-durline">{uDur ? <b>{uDur} min</b> : null}{uDur && u.approach ? " · " : ""}{u.approach || ""}</div>
-          ) : <span />}
+          <span />
           {/* Chapter altitude, one tap away — navigation, never pointer movement. */}
           <span className="uv-orglink" onClick={() => setShowOrg(true)}>chapter organization →</span>
         </div>
@@ -676,7 +924,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
         ))}
       </div>
 
-      <UnitBody u={u} assessment={view.assessment} onAssess={() => setShowAssess(cur)} />
+      <UnitTabs key={cur} u={u} assessment={view.assessment} chapterTitle={lp.chapter_title} />
       {/* 📝 Period note — an invoked control (tracking only: notes belong to the section's
           plan instance, not the shared asset). */}
       <NoteInvoke />

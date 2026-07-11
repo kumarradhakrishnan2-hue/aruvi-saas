@@ -138,7 +138,25 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   shows the duration ("8 min") in the marginal rail. `Period.materials` is first-class.
   Everything else (tasks, textbook items, visual aids) is an UNTIMED supporting block; Science
   `roles` are ignored for now. Standard period anatomy: kicker/title/duration → teacher notes →
-  materials → phases → homework → 📝 note-invoke. Spec: `docs/mockups/lesson-period-layout.html`;
+  materials → phases → homework → 📝 note-invoke. Spec: `docs/mockups/lesson-period-layout.html`.
+  **On screen (2026-07-10) that anatomy sits behind four per-unit TABS** — Overview (chapter ·
+  spine · time · pedagogy as ledger rows) · Material · Lesson (teacher notes as a collapsed
+  clay teaser ribbon on top — their ONLY home — then phases + homework) ·
+  Assess (green cards inline, tab EXISTS only when the unit anchors items; replaced the
+  full-screen 3b sub-view) — the unit header keeps only the clay number + title; spec
+  `docs/mockups/lesson-unit-tabs.html`, impl `LessonView.jsx` (`UnitTabs`, keyed by unit so
+  paging resets to Overview; tour step 8 anchors `data-tour="unit-tabs"`). **Inside ASSESS,
+  each item carries its own four tabs (2026-07-10): Overview (bold "Learning outcome"
+  heading + LO paragraph, then Type · Cognitive demand · Competency ledger rows) ·
+  Question (class-facing:
+  stem/stimulus/PLAIN options — no tick — scaffold, open-task reading guide) · Answer
+  (correct option ✓, model answer/key, choice-reveals, elements, look-fors, method; only
+  when populated) · Inclusivity (own tab, only when populated). Items sit FLAT on the
+  unit's paper (`.assess-flat`; the green box, card chrome and Q{n}/type header are
+  retired — legacy items keep the old card). `strong_vs_weak_markers` is carried but
+  NEVER rendered. A PINE pager (pine ≠ clay unit strip, deliberately) sits directly
+  under the unit tab row only when a unit anchors >1 item. Spec
+  `docs/mockups/assessment-item-tabs.html`.**
   `activities` still carries legacy flat lines until the renderers adopt phases. Raw bands drift
   ("0–5"/"0-10"; `phases[]` vs `time_bands[]` — Science secondary uses time_bands) — always
   parse via `normalize.parse_minutes_band`, never re-split strings.

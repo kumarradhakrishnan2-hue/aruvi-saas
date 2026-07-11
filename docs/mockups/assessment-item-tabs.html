@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi — per-item assessment tabs (design spec, 2026-07-10 rev. 2)</title>
+<!--
+  DESIGN SPEC — the tabbed assessment item (founder-approved 2026-07-10; palette
+  revised same day: the green artifact box is RETIRED — items sit flat on the unit's
+  paper in the site's pine voice). Companion to lesson-unit-tabs.html.
+  Implemented in web/app/components/LessonView.jsx (AssessCard + AOverviewPanel /
+  AQuestionPanel / AAnswerPanel; AssessPanel owns the pager).
+
+  Structure inside the unit's ASSESS tab, top to bottom:
+    1. PINE question pager  — ONLY when the unit anchors MORE THAN ONE item; sits
+       immediately below the unit tab row. Pine (--pine), never clay — clay is the
+       unit strip; the color difference is what tells the two pagers apart.
+    2. Per-item tabs        — OVERVIEW · QUESTION · ANSWER · INCLUSIVITY, the unit-tabs
+       grammar one notch smaller/quieter. No card chrome, no Q-number, no type label
+       in a header (the pager carries position; type lives in Overview).
+    3. The active panel.
+
+  Slotting (the audience test):
+    OVERVIEW    — Outcome (value right-aligned — the ONLY right-aligned row) · Type ·
+                  Cognitive demand · Competency (left-aligned beside their labels)
+    QUESTION    — extract → stem → listening cue → stimulus → PLAIN options (no tick)
+                  → what-to-produce → scaffold → open-task reading guide (collapsed)
+                  → textbook ref
+    ANSWER      — correct option(s) ✓ · model answer/key · what-each-choice-reveals ·
+                  expected elements · look-fors · method (tab only when populated)
+    INCLUSIVITY — its own tab, only when populated
+
+  strong_vs_weak_markers: DATA-ONLY, never rendered. Paging resets tabs to Overview.
+  Legacy pre-contract items keep the old flat white card. Verify at 360×800 first.
+-->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
+:root{--paper:#FAF5EA;--ink:#2A2620;--ink-soft:#8A8272;--pine:#2F5D50;--clay:#A94D22;--line:#E4DCC9;--line-soft:#ece7dc;}
+body{margin:0;background:#efe9db;font-family:'Newsreader',serif;color:var(--ink);display:flex;justify-content:center;padding:28px 12px;}
+.phone{width:360px;background:var(--paper);border:1px solid #d8cfba;border-radius:26px;overflow:hidden;}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;}
+.utabs{display:flex;border-bottom:1px solid var(--line);padding:0 12px;}
+.utab{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;color:var(--ink-soft);padding:9px 0 8px;border-bottom:2px solid transparent;}
+.utab.on{color:var(--clay);border-bottom-color:var(--clay);font-weight:500;}
+.pager{display:flex;justify-content:space-between;align-items:center;background:var(--pine);color:var(--paper);padding:6px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;}
+.pgb{background:none;border:none;color:var(--paper);font-family:inherit;font-size:inherit;text-transform:inherit;cursor:pointer;padding:0;}
+.pgb.off{color:rgba(255,255,255,.42);}
+.pgmid{color:rgba(250,247,241,.85);font-size:10px;letter-spacing:.1em;}
+.mtabs{display:flex;border-bottom:1px solid var(--line);margin:4px 18px 0;}
+.mt{flex:1;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;padding:8px 1px 7px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;}
+.mt.on{color:var(--pine);border-bottom-color:var(--pine);font-weight:500;}
+.panel{padding:14px 18px 18px;min-height:280px;}
+.ovrow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-soft);}
+.ovrow:last-child{border-bottom:none;}
+.ovrowl{justify-content:flex-start;gap:14px;}
+.ovk{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding-top:3px;white-space:nowrap;}
+.ovv{font-size:14px;line-height:1.5;}
+.ovv-r{text-align:right;}
+.stem{font-size:15px;line-height:1.55;margin:0;}
+.opts{list-style:none;margin:10px 0 0;padding:0;}
+.opts li{display:flex;gap:9px;font-size:14px;padding:5px 0;border-bottom:1px solid var(--line-soft);}
+.opts li:last-child{border-bottom:none;}
+.olab{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);padding-top:2px;}
+.gk{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pine);display:block;margin:12px 0 4px;}
+.gk1{margin-top:0;}
+.gt{font-size:13.5px;line-height:1.5;margin:0;}
+.corr{color:var(--pine);font-weight:500;}
+.qmark{float:left;font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:13px;color:var(--pine);margin:0 8px 0 0;line-height:1.5;}
+.ovrow:first-child{padding-top:0;}
+.rev{display:flex;gap:9px;font-size:13px;line-height:1.5;padding:3px 0;}
+.rev b{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--ink-soft);}
+.unav{display:flex;justify-content:space-between;align-items:center;background:var(--clay);color:var(--paper);padding:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div style="display:flex;gap:10px;padding:16px 18px 10px;align-items:baseline;">
+    <span style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:21px;color:var(--clay);">1.</span>
+    <div>
+      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:18px;line-height:1.25;">Picture Walk: Duck, Hen and the Stream</div>
+      <span class="mono" style="font-size:10.5px;color:var(--ink-soft);">Unit 1 of 3</span>
+    </div>
+  </div>
+  <div class="utabs"><span class="utab">Overview</span><span class="utab">Material</span><span class="utab">Lesson</span><span class="utab assess on">Assess</span></div>
+  <div class="pager"><span class="pgb off">← Previous</span><span class="pgmid">Question 1 / 2</span><span class="pgb">Next →</span></div>
+  <div class="mtabs">
+    <button class="mt on" data-p="ov">Overview</button>
+    <button class="mt" data-p="q">Question</button>
+    <button class="mt" data-p="an">Answer</button>
+    <button class="mt" data-p="inc">Inclusivity</button>
+  </div>
+  <div class="panel">
+    <span class="qmark">Q1.</span>
+    <div id="ov">
+      <div class="ovrow" style="display:block;"><span class="ovk" style="display:block;font-weight:700;">Learning outcome</span><p class="ovv" style="margin:4px 0 0;">Distinguishes the young ones of familiar animals using picture cues.</p></div>
+      <div class="ovrow ovrowl"><span class="ovk">Question type</span><span class="ovv">Multiple choice question</span></div>
+      <div class="ovrow ovrowl"><span class="ovk">Cognitive demand</span><span class="ovv">Recall</span></div>
+    </div>
+    <div id="q" hidden>
+      <p class="stem">Look at the picture on page 14. Which of these is the duckling?</p>
+      <ul class="opts">
+        <li><span class="olab">A</span><span>The bird with the red comb</span></li>
+        <li><span class="olab">B</span><span>The small bird swimming behind the duck</span></li>
+        <li><span class="olab">C</span><span>The bird sitting on the eggs</span></li>
+        <li><span class="olab">D</span><span>The bird that says cluck</span></li>
+      </ul>
+    </div>
+    <div id="an" hidden>
+      <span class="gk gk1">Correct answer</span>
+      <p class="gt"><span class="corr">B ✓</span> — the small bird swimming behind the duck.</p>
+      <span class="gk">What each choice reveals</span>
+      <div class="rev"><b>A</b><span>Confuses the hen with the duck family.</span></div>
+      <div class="rev"><b>C</b><span>Reads “young one” as “mother with eggs”.</span></div>
+      <div class="rev"><b>D</b><span>Matches by sound, not the picture cue.</span></div>
+    </div>
+    <div id="inc" hidden>
+      <p class="gt">Let shy readers answer by pointing at the illustration; name the birds in the home language first if needed.</p>
+    </div>
+  </div>
+  <div class="unav"><span>← Previous unit</span><span style="font-size:10px;color:rgba(250,247,241,.85);">Unit 1 / 3</span><span>Next unit →</span></div>
+</div>
+<script>
+document.querySelectorAll('.mt').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.mt').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    ['ov','q','an','inc'].forEach(function(id){document.getElementById(id).hidden=(id!==b.dataset.p);});
+  });
+});
+</script>
+</body>
+</html>

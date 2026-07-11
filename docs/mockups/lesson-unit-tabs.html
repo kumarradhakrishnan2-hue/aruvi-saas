@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi — tabbed unit anatomy (design spec, 2026-07-10)</title>
+<!--
+  DESIGN SPEC — the tabbed Learning-Unit view (founder-approved 2026-07-10).
+  Supersedes the STACKED anatomy of lesson-period-layout.html as the on-screen
+  arrangement (the anatomy itself — notes, materials, phases, homework — is unchanged;
+  only its organization moved behind tabs). Implemented in web/app/components/
+  LessonView.jsx (UnitTabs + Overview/Material/Lesson/Assess panels).
+
+  Structure:
+    header   — unit number + title ONLY (chapter kicker above; unit nav stays put)
+    OVERVIEW — spine (group context) · time · pedagogy ledger rows + teacher notes
+    MATERIAL — the pre-class checklist
+    LESSON   — the timed phase spine (durations in the marginal rail) + homework
+    ASSESS   — the unit's anchored assessment items (green voice); the tab EXISTS
+               only when the unit carries items (§I-ter anchor rule)
+
+  Mobile-first: verify at 360×800 first. The four tabs are equal-width mono kickers,
+  pine underline active, green for ASSESS.
+-->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
+:root{--paper:#FAF5EA;--paper-sunk:#F3ECDC;--ink:#2A2620;--ink-soft:#6b6a63;--pine:#2F5D50;--clay:#A94D22;--ochre:#9a7321;--line:#E4DCC9;--edge-green:#bcd4c7;--green-d:#0f6e56;}
+body{margin:0;background:#efe9db;font-family:'Newsreader',serif;color:var(--ink);display:flex;justify-content:center;padding:28px 12px;}
+.phone{width:360px;background:var(--paper);border:1px solid #d8cfba;border-radius:26px;overflow:hidden;}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.1em;}
+.kick{font-size:10.5px;color:var(--ink-soft);}
+.hd{padding:16px 18px 0;}
+.chap{color:var(--ochre);}
+.title{display:flex;gap:10px;align-items:baseline;margin:6px 0 2px;}
+.unum{font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:22px;color:var(--clay);}
+.utitle{font-family:'Fraunces',serif;font-weight:600;font-size:20px;line-height:1.25;}
+.count{font-size:10.5px;color:var(--ink-soft);}
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:12px 18px 0;}
+.tab{flex:1;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;padding:9px 2px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;}
+.tab.on{color:var(--clay);border-bottom-color:var(--clay);font-weight:700;}
+.panel{padding:14px 18px 18px;min-height:300px;}
+.ovrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid #ece7dc;}
+.ovval{font-size:15px;text-align:right;}
+.tnotes{border:1px solid #e3c4b2;border-left:3px solid var(--clay);background:var(--paper-sunk);padding:10px 13px;margin-top:16px;}
+.tnotes .k{color:var(--clay);display:block;margin-bottom:4px;}
+.tnotes p{font-style:italic;font-size:14.5px;line-height:1.6;margin:0;}
+.mat{border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:var(--paper-sunk);}
+.mat ul{list-style:none;margin:0;padding:0;}
+.mat li{font-size:14px;line-height:1.5;padding:3px 0 3px 16px;position:relative;}
+.mat li::before{content:"—";position:absolute;left:0;color:var(--ink-soft);}
+.phase{display:grid;grid-template-columns:40px 1fr;gap:0 10px;padding:12px 0;}
+.phase+.phase{border-top:1px solid var(--clay);}
+.pmin{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--clay);}
+.pmin small{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+.ptxt{font-size:14px;line-height:1.55;margin:0;}
+.hw{background:#f6efdd;border:1px solid var(--line);border-radius:11px;padding:10px 13px;margin-top:14px;}
+.hw .k{color:var(--ochre);display:block;margin-bottom:3px;}
+.hw p{font-size:14.5px;line-height:1.55;margin:0;}
+.assessbox{background:#e7f0ec;border:1px solid var(--edge-green);border-radius:12px;padding:13px 14px;}
+.atag{display:block;font-size:10px;letter-spacing:.12em;color:var(--green-d);margin-bottom:10px;}
+.acard{background:#fff;border:1px solid var(--edge-green);border-radius:10px;padding:12px 14px;margin-bottom:11px;}
+.acard:last-child{margin-bottom:0;}
+.aq{display:flex;gap:10px;font-size:14px;line-height:1.5;}
+.aq .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green-d);padding-top:2px;}
+.nav{display:flex;justify-content:space-between;align-items:center;background:var(--clay);color:var(--paper);padding:9px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="hd">
+    <span class="mono kick chap">Duck, Hen and the Stream</span>
+    <div class="title"><span class="unum">1.</span><span class="utitle">Picture Walk: Duck, Hen and the Stream</span></div>
+    <span class="mono count">Unit 1 of 3</span>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-p="ov">Overview</button>
+    <button class="tab" data-p="ma">Material</button>
+    <button class="tab" data-p="le">Lesson</button>
+    <button class="tab assess" data-p="as">Assess</button>
+  </div>
+  <div class="panel">
+    <div id="ov">
+      <div class="ovrow"><span class="mono kick">Spine</span><span class="ovval" style="color:var(--pine);font-weight:500;">Reading</span></div>
+      <div class="ovrow"><span class="mono kick">Time</span><span class="ovval">35 mins</span></div>
+      <div class="ovrow"><span class="mono kick">Pedagogy</span><span class="ovval">Picture-reading</span></div>
+      <div class="tnotes"><span class="mono kick k">Teacher notes</span>
+        <p>Watch for students who confuse ducklings and chicks — use the illustrations to distinguish them before the guided reading begins.</p></div>
+    </div>
+    <div id="ma" hidden>
+      <div class="mat"><ul>
+        <li>Textbook, pp. 12–15 (stream illustrations)</li>
+        <li>Picture cards — duck, hen, duckling, chick</li>
+        <li>Word strips: “duckling” / “chick”</li>
+        <li>Board and chalk</li>
+      </ul></div>
+    </div>
+    <div id="le" hidden>
+      <div class="phase"><span class="pmin">5<small>min</small></span><p class="ptxt">Settling and recap — recall the pond scene from the previous unit.</p></div>
+      <div class="phase"><span class="pmin">10<small>min</small></span><p class="ptxt">Picture walk — walk through the illustrations; students predict the story.</p></div>
+      <div class="phase"><span class="pmin">10<small>min</small></span><p class="ptxt">Guided reading — read aloud, pausing at each picture-cue word.</p></div>
+      <div class="phase"><span class="pmin">8<small>min</small></span><p class="ptxt">Pair retell using the picture cards.</p></div>
+      <div class="phase"><span class="pmin">2<small>min</small></span><p class="ptxt">Wrap-up.</p></div>
+      <div class="hw"><span class="mono kick k">Homework</span><p>Draw the stream and label the duck and the hen.</p></div>
+    </div>
+    <div id="as" hidden>
+      <div class="assessbox">
+        <span class="mono atag">Assessment · this unit</span>
+        <div class="acard"><div class="aq"><span class="n">Q1</span><span>Show two picture cards — ask each pair to name which is the duckling and which is the chick.</span></div></div>
+        <div class="acard"><div class="aq"><span class="n">Q2</span><span>Ask: where does the stream go? Accept any answer grounded in the illustrations.</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="nav"><span>← Previous unit</span><span>Unit 1 / 3</span><span>Next unit →</span></div>
+</div>
+<script>
+document.querySelectorAll('.tab').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    ['ov','ma','le','as'].forEach(function(id){document.getElementById(id).hidden=(id!==b.dataset.p);});
+  });
+});
+</script>
+</body>
+</html>

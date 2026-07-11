@@ -1,6 +1,160 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
-## 2026-07-10 (newest) — NORMALIZED ASSESSMENT ITEMS + 3b TEMPLATE RENDERER (STATIC only — live pass pending)
+## 2026-07-10 (newest) — PER-ITEM ASSESSMENT TABS: Overview · Question · Answer · Inclusivity (STATIC only — live + mobile pass pending)
+
+> ★ **REV. 2, same day (founder) — palette + layout revision, supersedes the green-box
+> details below.** The green artifact box, the "ASSESSMENT · THIS UNIT" tag, the white
+> card chrome and the Q{n}/type header are ALL RETIRED for normalized items — the item
+> sits FLAT on the unit's paper in the site palette (`.assess-flat` wrapper re-palettes
+> the shared ABlock/ATicks/AReveals/options/otg pieces to pine via CSS overrides; the
+> shared classes themselves are untouched — legacy cards still use them green-on-white).
+> Order inside the ASSESS tab: **PINE question pager** (top, immediately below the unit
+> tab row, ONLY when >1 item; pine — NEVER clay — is what distinguishes it from the clay
+> unit strip) → per-item tabs (pine underline, one notch smaller than the unit bar) →
+> panel. Overview ledger: ONLY the Outcome value is right-aligned (`.assess-ovv-r`);
+> Type / **"Cognitive demand"** (label renamed from "Demand") / Competency read left
+> beside their labels (`.assess-ovrow-l`). Dark mode: the new rows/tabs use theme tokens
+> (`--line`/`--line-soft`/`--pine`), so the earlier hardcoded-green dark overrides for
+> them were removed. Spec `docs/mockups/assessment-item-tabs.html` rewritten to rev. 2.
+> Single-item units render the bare tabs directly under the unit bar (two pine underline
+> bars adjacent — flagged to founder, accepted pending live look).
+>
+> ★ **REV. 3, same day (founder) — the UNIT tab bar's active underline is now CLAY**
+> (`.uv-tab.on` → `var(--clay)`). Color grammar: **CLAY = unit level** (unit tabs +
+> clay unit strip), **PINE = assessment level** (question pager + per-item tabs) — this
+> also dissolves the adjacent-twin-bars concern from rev. 2. Both mockup specs updated.
+>
+> (A rev. 4 — pine underline on the ASSESS unit tab alone + assessment Overview labels
+> matched to the unit kicker — was applied and then **UNDONE at founder request the same
+> day**; final state is rev. 3: all four unit tabs clay, `.assess-ovk` mono 10px / .1em /
+> ink-soft. Don't reintroduce without a fresh ask.)
+>
+> ★ **REV. 11 (founder) — preview header merged to one row.** The unit view's back
+> button no longer costs the top row: the topbar (empty span + back) is gone; the
+> name-plate moved UP into row one — title left (`flex:1, min-width:0`, wraps freely),
+> `← back` beside it top-right (`.lv-hd-merge`; data-tour="preview-back" rides along).
+> Tour step 4's hand still finds the button. Tracking view header untouched.
+>
+> ★ **REV. 10 (founder) — teacher notes moved to the LESSON tab, one home only.**
+> Rationale (discussed in-session): notes are read WITH the lesson (prep + mid-class
+> reminder), not with the Overview ledger — but a full clay block would push phase 1
+> below the fold. Resolution: a **collapsed clay teaser ribbon** at the top of the
+> lesson spine (`.uv-tnotes-rib`, `<details>` — kicker + first words ellipsized on one
+> line, +/– affordance, expands in place to the full italic margin note; same clay
+> voice as the classic `.uv-tnotes`). OverviewPanel no longer renders notes at all
+> (its empty-state check drops the notes clause); `data-tour="lesson-notes"` moved
+> with the ribbon. NOTE: founder's local Overview now also carries a "Chapter" row.
+>
+> ★ **REV. 9→9b (founder):** when a unit anchors **>1 item**, a **"Q{n}." marker**
+> (`.assess-qmark`, italic display serif, pine) appears on EVERY panel. 9b: it is
+> **13px (two notches down from 16) and FLOATED left** — shares the row with the
+> panel's opening words (Learning outcome / stem / answer / inclusivity), never a full
+> row of its own. Single-item units show no marker (`qn` prop on `AssessBody`, set only
+> when `many`); legacy cards get the same marker. Float-vs-first-line vertical
+> alignment (padding-top:3px compromise across the four panels' differing top offsets)
+> is a live-pass tuning point.
+>
+> ★ **REV. 8 (founder):** the Overview's "Type" label is now **"Question type"**, and
+> question-type VALUES always render as full words, never acronyms — `QTYPE_NAME` map in
+> LessonView.jsx (MCQ → "Multiple choice question", SCR → "Short constructed response",
+> ECR → "Extended constructed response", TRUE_FALSE → "True or false", FILL_IN → "Fill
+> in the blanks", MATCH → "Match the following", NUM → "Numerical problem", ORAL_PROMPT
+> → "Oral prompt", EXTRACT_ANALYSIS → "Extract analysis", plus Open task / Project /
+> Writing task); unknown types fall back to underscore-spaced raw. Applied to the legacy
+> card's type line too (`qtypeName(it.item_type)`).
+>
+> ★ **REV. 7 (founder) — frozen assess chrome + one text size.** (a) Under ASSESS,
+> everything down to and including the item tab bar stays pinned: `AssessPanel` now owns
+> the item-tab state (lifted out of the card — `AssessCard` became `AssessBody`, active
+> panel only; `itemTabSet()` computes the tab list) and renders pager + item tabs in ONE
+> sticky `.uv-assess-stick` group whose `top` is measured at mount (app nav + preview's
+> `.lv-stick` height — variable with title wrap; re-measured on resize). Integrates with
+> the founder's own local split of UnitTabs into `useUnitTabsParts` + `PreviewUnit`
+> (which pins the UNIT bar inside `.lv-stick` in preview) — so in preview the frozen
+> stack is header → unit tabs → pager → item tabs; in tracking the pager + item tabs
+> pin at nav height. z-index 3 (below .lv-stick's 4). (b) QUESTION and ANSWER share one
+> text size — stem, options, answer blocks, ticks, reveal rows all 13.5px (stem was 15,
+> options 14, blocks 13).
+>
+> ★ **REV. 5→6 (founder, final):** the assessment Overview's LO is no longer a
+> label/value ledger row — **"Learning outcome" is a BOLD single-row heading**
+> (`.assess-ovk-b`) **with the outcome text below it as a normal left paragraph**
+> (`.assess-ovlo`/`.assess-ovlo-t`; the brief two-line-label + right-aligned-value
+> form of rev. 5 was superseded within the hour — `.assess-ovv-r` is gone). Type /
+> Cognitive demand / Competency stay as left-reading ledger rows. Specs + CLAUDE.md §3
+> synced.
+
+Founder-directed follow-on to the unit tabs (same day): inside the unit's green ASSESS
+tab, EVERY normalized item now carries its own four-tab set — same interaction grammar,
+one notch quieter, assessment green. Spec `docs/mockups/assessment-item-tabs.html`;
+impl `LessonView.jsx` (`AssessCard` + `AOverviewPanel`/`AQuestionPanel`/`AAnswerPanel`).
+
+- **Slotting (the audience test, agreed in-session):** OVERVIEW = why it's asked (LO —
+  absent-not-blank when null, the old always-visible `.assess-lo` strip retired into
+  this tab — · type · cognitive demand · competency, as green ledger rows
+  `.assess-ovrow`). QUESTION = everything said/shown to the class: extract → stem →
+  listening cue → stimulus → **PLAIN options, NO correct tick** (founder: the phone can
+  face the class) → what-to-produce → scaffold → the open-task reading guide (format /
+  what-this-demonstrates / reading-the-scaffold — still a collapsed `<details>`) →
+  textbook ref (numeric's `exercise_ref` is task-setting, moved out of the marking
+  surface). ANSWER = everything work is checked against: correct option(s) ✓
+  (`.assess-corr-row`), model answer / key, **what-each-choice-reveals (moved here from
+  the guide slot — diagnosis happens at marking time)**, expected elements, look-fors,
+  method line; tab EXISTS only when populated. INCLUSIVITY = its own tab (founder:
+  class diversity is first-class); exists only when populated.
+- **`strong_vs_weak_markers` is DATA-ONLY** (founder 2026-07-10): carried in
+  NormalizedItem, never rendered — verbose (~70 words in the Science VI magnets
+  example, `saved_plans/science/vi/ch_04_20260522_130837.json` item 11) and largely a
+  restatement of expected elements + look-fors. Same carry-don't-render pattern as LO
+  in the LP, Science roles, homework caps. 16 saved plans carry the field.
+- **Pager gated on item count** (`AssessPanel`): >1 anchored item → the green
+  one-question-at-a-time strip (`.uv-apager`, the assessment's version of the clay
+  unit pager; card keyed by index so paging resets its tabs to Overview). Exactly 1
+  item → plain card, no pager chrome.
+- Card header is now `Q{n}` (italic display serif, green) + "TYPE · demand" mono —
+  the old `.assess-metarow` type/cog pills are gone. Legacy (pre-contract) items keep
+  the flat card + LO strip, no tabs. Dark mode: `.assess-mtabs`/`.assess-ovrow`
+  borders → `--edge-green` in the dark border block.
+- Verified STATICALLY only (esbuild clean, CSS balanced, strong_vs_weak referenced
+  only in the design comment). **Live render + 360 px pass pending** — check tabs
+  inside tabs (unit bar vs card bar) legibility, and a real multi-item unit for the
+  pager (most units anchor 1–3 items per the §I-ter anchor rule).
+
+## 2026-07-10 — TABBED UNIT ANATOMY: Overview · Material · Lesson · Assess (STATIC only — live + mobile pass pending)
+
+Founder-directed restructure of the Learning-Unit view (the LP screen read "jumbled"):
+the 2026-07-09 stacked anatomy is UNCHANGED in content but re-organized behind four
+per-unit tabs (`UnitTabs` + panel components in `LessonView.jsx`; spec mockup
+`docs/mockups/lesson-unit-tabs.html`).
+
+- **Header keeps only the name-plate** — clay unit number + title (+ chapter kicker,
+  unit count / pv-nav). Spine, time and pedagogy MOVED OUT of both the tracking header
+  (old stage-kicker + durline) and the preview sticky header (old `lv-topspine`
+  "Spine:…" + `lv-tpline` Time/Pedagogy) into the OVERVIEW tab as ledger rows
+  (`.uv-ovrow`: mono label left — group-type spelled via `CTX_LABEL`, e.g. spine→Spine,
+  section→Section — serif value right) above the clay teacher-notes block. The preview
+  topbar now shows the chapter-title kicker instead of the spine.
+- **LESSON tab** = the timed phase spine + homework only (nothing to scroll past
+  mid-class). MATERIAL = the checklist (quiet empty line when a unit needs nothing).
+  Overview/Material/Lesson always render; **ASSESS exists only when the unit anchors
+  items** (`unitAssessItems` — the same §I-ter anchor logic the retired 3b sub-view
+  used, legacy no-anchor fallback preserved). The ASSESS panel renders the SAME
+  green cards (`AssessCard` untouched) inline in `.uv-assess`; the full-screen
+  3b artifact branch + `showAssess` state are REMOVED (its `.assess-*` CSS remains —
+  cards still use most of it). `UnitTabs` is keyed by unit index (`key={cur}` /
+  `key={previewAt}`) so paging resets to Overview.
+- **Tab bar** `.uv-tabs`: four equal-width mono-kicker buttons, pine underline when
+  active, green for ASSESS; sized to hold at 360 px without scrolling. Dark mode:
+  `.uv-assess` added to the paper-2 surface list.
+- **GuidedTour step 8** re-anchored: tipAnchor `["unit-tabs", "lesson-phase-1"]`
+  (`data-tour="unit-tabs"` on the bar; body copy now names the four tabs).
+  `lesson-notes` / `lesson-phase-1` data-tour attrs kept on their blocks.
+- Verified STATICALLY only (esbuild-parse clean both files, CSS braces balanced,
+  no stale refs to UnitBody/showAssess, external callers unaffected — MyPlans/
+  MyLessonPlans pass only view/sectionKey/onExit/preview). **Live render + 360 px
+  mobile pass is the immediate must-do**; check the tour step-8 placement live.
+
+## 2026-07-10 — NORMALIZED ASSESSMENT ITEMS + 3b TEMPLATE RENDERER (STATIC only — live pass pending)
 
 The question-type-registry build order (spec §7) steps 1–3 are DONE; suite **16/16 green**
 (new `tests/test_normalized_item.py`; test_api needs `pip install fastapi httpx` in a fresh
