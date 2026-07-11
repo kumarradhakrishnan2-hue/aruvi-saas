@@ -97,6 +97,31 @@ def test_backward_compat_no_context():
     print("OK — backward compatible: assessment_to_view works with no link_context.")
 
 
+def test_english_n_to_n_positional_pairing():
+    """Regression (2026-07-11): when one (section, spine) is taught across several periods
+    with ONE item per topic-period, each item must anchor to its OWN period — not collapse
+    onto the shared closing anchor. English IV 'Together We Can' teaches section A word_work
+    across P4 (Collective Nouns) and P5 (Position Words); its two items (MATCH, FILL_IN)
+    must split 4/5, while the genuine one-item span (oracy over P2–P3) stays a set anchored
+    at its close."""
+    fp = os.path.join(PLANS, "english", "iv", "ch_01_20260525_205451.json")
+    saved = json.load(open(fp)); r = saved["result"]
+    sub = subjects.get("english")
+    ch = {"chapter_number": saved.get("chapter_number"), "chapter_title": saved.get("chapter_title")}
+    a = sub.assessment_to_view(r.get("assessment_items", []), grade=saved.get("grade", "iv"),
+                               chapter=ch, link_context=_link_context(r))
+    by_id = {it.meta.get("id"): it.meta for it in _items(a)}
+    assert by_id["Q-WW-A-1"]["linked_periods"] == [4], by_id["Q-WW-A-1"]
+    assert by_id["Q-WW-A-1"]["anchor_period"] == 4
+    assert by_id["Q-WW-A-2"]["linked_periods"] == [5], by_id["Q-WW-A-2"]
+    assert by_id["Q-WW-A-2"]["anchor_period"] == 5
+    # the real span is untouched — one oracy item still spans P2–P3, anchored at close
+    assert by_id["Q-ORACY-A-1"]["linked_periods"] == [2, 3]
+    assert by_id["Q-ORACY-A-1"]["anchor_period"] == 3
+    print("OK — English N-to-N pairing: word_work items split P4/P5; oracy span intact.")
+
+
 if __name__ == "__main__":
     test_every_item_resolves_zero_orphans()
     test_backward_compat_no_context()
+    test_english_n_to_n_positional_pairing()

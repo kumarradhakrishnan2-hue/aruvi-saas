@@ -210,7 +210,8 @@ function AssessPanel({ items }) {
           </div>
         ) : null}
       </div>
-      <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null} key={idx} />
+      <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null}
+        onNext={many && idx < items.length - 1 ? () => goto(idx + 1) : null} key={idx} />
     </>
   );
 }
@@ -321,6 +322,40 @@ function ABlock({ k, text }) {
   );
 }
 
+// A numbered/lettered part list — {marker, text} rows, marker in the mono margin. The
+// SPLIT is done ONCE in the engine (assessment_norm.split_parts), never here — the
+// renderer only renders whatever list the normalizer produced, so any subject/notation
+// the normalizer understands lands the same way. Shared by the question stem and the
+// answer key.
+function APartsList({ lead, parts }) {
+  return (
+    <>
+      {lead ? <p className="assess-parts-lead">{lead}</p> : null}
+      <div className="assess-ansrows">
+        {parts.map((p, i) => (
+          <div className="assess-ansrow" key={i}>
+            {p.marker ? <span className="assess-ans-lab">{p.marker}</span> : null}
+            <span className="assess-ans-t">{p.text}</span>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// A labelled answer block. Renders the engine-structured multi-part key (n.answer_parts)
+// as rows when present; otherwise the plain model_answer prose.
+function AAnswerBlock({ k, n }) {
+  if (!n || !n.model_answer) return null;
+  if (!n.answer_parts?.length) return <ABlock k={k} text={n.model_answer} />;
+  return (
+    <div className="assess-look">
+      <span className="assess-look-k">{k}</span>
+      <APartsList lead={n.answer_lead} parts={n.answer_parts} />
+    </div>
+  );
+}
+
 // A labelled tick-list (LOOK FOR / EXPECTED ELEMENTS / SPEAKING RUBRIC / WHAT TO PRODUCE).
 function ATicks({ k, items }) {
   if (!items?.length) return null;
@@ -335,9 +370,14 @@ function ATicks({ k, items }) {
 // "What each choice reveals" — label → misconception rows. The "note" key is the
 // tolerated legacy prose fallback (un-migrated English MCQs, older SS/TWAU annotations)
 // and renders as a plain paragraph, not a labelled row.
-function AReveals({ reveals }) {
+function AReveals({ reveals, opts = [] }) {
   const entries = Object.entries(reveals || {});
+  // Which choice's wording is popped open (label), or null. Lets the teacher relate a
+  // "what this reveals" line back to the actual choice text (founder 2026-07-11).
+  const [shown, setShown] = useState(null);
   if (!entries.length) return null;
+  const optFor = (lab) => opts.find((o) => o.label === lab) || null;
+  const popped = shown ? optFor(shown) : null;
   return (
     <div className="assess-look">
       <span className="assess-look-k">WHAT EACH CHOICE REVEALS</span>
@@ -348,10 +388,28 @@ function AReveals({ reveals }) {
             : (
               <div className="assess-revrow" key={i}>
                 <span className="assess-rev-lab">{lab}</span>
-                <span>{txt}</span>
+                <span>
+                  {txt}
+                  {optFor(lab) ? (
+                    <button type="button" className="assess-rev-choice" onClick={() => setShown(lab)}>
+                      Choice {lab}
+                    </button>
+                  ) : null}
+                </span>
               </div>
             ))}
       </div>
+      {/* Choice-wording popup — Aruvi paper/ink/pine, ✕ pinned top-LEFT. Backdrop click
+          or ✕ closes. */}
+      {popped ? (
+        <div className="assess-choicepop" role="dialog" aria-modal="true" onClick={() => setShown(null)}>
+          <div className="assess-choicepop-box" onClick={(e) => e.stopPropagation()}>
+            <button className="assess-choicepop-x" aria-label="Close" onClick={() => setShown(null)}>✕</button>
+            <span className="assess-choicepop-lab">Choice {shown}</span>
+            <p className="assess-choicepop-t">{popped.text}</p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -421,32 +479,71 @@ function AOverviewPanel({ n, lo }) {
   // read left, next to their labels.
   return (
     <div className="assess-ovrows">
-      {/* LO leads the panel: "Learning outcome" as a BOLD single-row heading, the
-          outcome text below it as a normal paragraph (founder 2026-07-10). */}
+      {/* Every field leads with a BOLD single-row heading, its value below as a normal
+          paragraph — the same block layout as Learning outcome. Order (founder 2026-07-11):
+          Competency → Learning outcome → Question type → Cognitive demand. */}
+      {comp ? (
+        <div className="assess-ovlo">
+          <span className="assess-ovk assess-ovk-b">Competency</span>
+          <p className="assess-ovlo-t">{comp}</p>
+        </div>
+      ) : null}
       {lo ? (
         <div className="assess-ovlo">
           <span className="assess-ovk assess-ovk-b">Learning outcome</span>
           <p className="assess-ovlo-t">{lo}</p>
         </div>
       ) : null}
-      <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Question type</span><span className="assess-ovv">{qtypeName(n.question_type)}</span></div>
-      {n.cognitive_demand ? <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Cognitive demand</span><span className="assess-ovv">{n.cognitive_demand}</span></div> : null}
-      {comp ? <div className="assess-ovrow assess-ovrow-l"><span className="assess-ovk">Competency</span><span className="assess-ovv">{comp}</span></div> : null}
+      <div className="assess-ovlo">
+        <span className="assess-ovk assess-ovk-b">Question type</span>
+        <p className="assess-ovlo-t">{qtypeName(n.question_type)}</p>
+      </div>
+      {n.cognitive_demand ? (
+        <div className="assess-ovlo">
+          <span className="assess-ovk assess-ovk-b">Cognitive demand</span>
+          <p className="assess-ovlo-t">{n.cognitive_demand}</p>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 function AQuestionPanel({ n, opts }) {
+  // TRUE_FALSE: statements are stored twice at source (in the stem AND as options). The
+  // engine folds them into `tf_statements`; show that ONCE as the statement list and NEVER
+  // the options block (which would repeat every statement). The instruction line is stem_lead.
+  const isTF = n.template === "true_false" && n.tf_statements?.length;
   return (
     <>
       {/* T6c (EXTRACT_ANALYSIS): the extract is set off BEFORE the multi-part stem. */}
       {n.template === "passage" ? <ATyped b={n.passage} passage /> : null}
-      <div className="assess-prompt assess-prompt-tab">{n.stem}</div>
+      {isTF ? (
+        <div className="assess-prompt assess-prompt-tab">
+          {n.stem_lead || n.stem ? <p className="assess-parts-lead">{n.stem_lead || n.stem}</p> : null}
+          <div className="assess-ansrows">
+            {n.tf_statements.map((s, i) => (
+              <div className="assess-ansrow" key={i}>
+                {s.marker ? <span className="assess-ans-lab">{s.marker}</span> : null}
+                <span className="assess-ans-t">{s.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : n.stem_parts?.length ? (
+        /* When the engine found a numbered/lettered list inside the stem, render the intro
+           then the parts as rows; otherwise the plain stem prose. */
+        <div className="assess-prompt assess-prompt-tab">
+          <APartsList lead={n.stem_lead} parts={n.stem_parts} />
+        </div>
+      ) : (
+        <div className="assess-prompt assess-prompt-tab">{n.stem}</div>
+      )}
       {/* Listening input the item can't run without — a cue, never a citation. */}
       {n.audio_ref ? <span className="assess-audio">🔊 Listening passage · {n.audio_ref} (read aloud)</span> : null}
       <ATyped b={n.visual_stimulus} />
-      {/* Options are PLAIN here — the tick lives in the ANSWER tab. */}
-      {opts.length ? (
+      {/* Options are PLAIN here — the tick lives in the ANSWER tab. TRUE_FALSE never shows
+          them (the statements above ARE the options; showing both duplicates every line). */}
+      {opts.length && !isTF ? (
         <ul className="assess-opts2">
           {opts.map((o, i) => (
             <li key={i}>
@@ -475,7 +572,36 @@ function AQuestionPanel({ n, opts }) {
   );
 }
 
-function AAnswerPanel({ n, correct }) {
+function AAnswerPanel({ n, correct, opts = [] }) {
+  // TRUE_FALSE: one verdict + reason per statement, from the engine's collapsed key. This
+  // REPLACES both the "CORRECT ANSWER" tick-list (which showed only the true statements, a
+  // misleading half-answer) and the standalone suggested-answer prose (already folded in).
+  if (n.template === "true_false" && n.tf_statements?.length) {
+    // Each statement's verdict comes from the engine key; the justification is inline when
+    // it aligned 1:1, otherwise `model_answer` survives as the whole suggested-answer prose
+    // (shown once, below) so no reason is ever dropped.
+    return (
+      <>
+        <div className="assess-look">
+          <span className="assess-look-k">ANSWER KEY</span>
+          <div className="assess-ansrows">
+            {n.tf_statements.map((s, i) => (
+              <div className="assess-tf-row" key={i}>
+                {s.marker ? <span className="assess-ans-lab">{s.marker}</span> : null}
+                <span className="assess-ans-t">
+                  <span className={s.verdict ? "assess-tf-t" : "assess-tf-f"}>
+                    {s.verdict ? "True" : "False"}
+                  </span>
+                  {s.reason ? <> — {s.reason}</> : null}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {n.model_answer ? <ABlock k="SUGGESTED ANSWER" text={n.model_answer} /> : null}
+      </>
+    );
+  }
   return (
     <>
       {correct.length ? (
@@ -492,18 +618,18 @@ function AAnswerPanel({ n, correct }) {
       {n.template === "selected_response" ? (
         <>
           {/* TRUE_FALSE verdict+justification arrives as model_answer, not reveals. */}
-          <ABlock k="ANSWER" text={n.model_answer} />
-          <AReveals reveals={n.option_reveals} />
+          <AAnswerBlock k="ANSWER" n={n} />
+          <AReveals reveals={n.option_reveals} opts={opts} />
         </>
       ) : n.template === "scr" ? (
         n.model_answer
-          ? <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
+          ? <AAnswerBlock k="SUGGESTED ANSWER" n={n} />
           : <ATicks k="LOOK FOR" items={n.expected_elements} />
       ) : n.template === "ecr" ? (
         <>
           <ATicks k="LOOK FOR" items={n.look_fors} />
           <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
-          <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />
+          <AAnswerBlock k="SUGGESTED ANSWER" n={n} />
         </>
       ) : n.template === "open_task" ? (
         <>
@@ -511,12 +637,12 @@ function AAnswerPanel({ n, correct }) {
           <ATicks k="LOOK FOR" items={n.look_fors} />
         </>
       ) : n.template === "cloze_match" ? (
-        <ABlock k="ANSWER KEY" text={n.model_answer} />
+        <AAnswerBlock k="ANSWER KEY" n={n} />
       ) : n.template === "oral" ? (
         <ATicks k="SPEAKING RUBRIC" items={n.expected_elements} />
       ) : n.template === "numeric" ? (
         <>
-          <ABlock k="WORKED ANSWER" text={n.model_answer} />
+          <AAnswerBlock k="WORKED ANSWER" n={n} />
           <ABlock k="METHOD" text={n.method_one_line} />
         </>
       ) : n.template === "passage" ? (
@@ -532,7 +658,8 @@ function itemTabSet(n) {
   const opts = (n.options || []).map((o, i) => ({ ...o, label: o.label || String.fromCharCode(65 + i) }));
   const correct = opts.filter((o) => o.is_correct);
   const hasAnswer = !!(correct.length || n.model_answer || n.expected_elements?.length
-    || n.look_fors?.length || Object.keys(n.option_reveals || {}).length || n.method_one_line);
+    || n.look_fors?.length || Object.keys(n.option_reveals || {}).length || n.method_one_line
+    || n.tf_statements?.length);
   return {
     opts, correct,
     tabs: [
@@ -548,9 +675,21 @@ function itemTabSet(n) {
  * carries position; type lives in Overview). The item's tab BAR is rendered by
  * AssessPanel inside the frozen chrome group (see below), so `tab` arrives as a prop.
  * Legacy pre-contract items keep the old flat white card, whatever the tab. */
-function AssessBody({ it, tab, qn }) {
+function AssessBody({ it, tab, qn, onNext }) {
   const n = it.normalized;
   const lo = n ? n.linked_lo : (it.meta?.linked_lo || it.implied_lo);
+  // A light nudge so a teacher who reaches the bottom of an item doesn't miss that the unit
+  // anchors more questions. Placed at the END of the Answer AND Inclusivity panels — the two
+  // tabs a teacher tends to finish on (Answer almost always; Inclusivity is often skipped, so
+  // the link rides both to catch either exit). Null on the last question / single-item units.
+  const nextQ = onNext ? (
+    <div className="assess-nextq-wrap">
+      <span className="assess-nextq" role="button" tabIndex={0} onClick={onNext}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNext(); } }}>
+        Next question →
+      </span>
+    </div>
+  ) : null;
   // `qn` (Q1., Q2., …) is set ONLY when the unit anchors more than one item. FLOATED
   // (never a full row) so it shares the line with each panel's opening words —
   // Learning outcome / stem / answer / inclusivity — and the teacher always knows
@@ -576,8 +715,77 @@ function AssessBody({ it, tab, qn }) {
       {qmark}
       {tab === "ov" ? <AOverviewPanel n={n} lo={lo} /> : null}
       {tab === "q" ? <AQuestionPanel n={n} opts={opts} /> : null}
-      {tab === "an" ? <AAnswerPanel n={n} correct={correct} /> : null}
-      {tab === "inc" ? <div className="assess-inc">{n.inclusivity}</div> : null}
+      {tab === "an" ? <>{<AAnswerPanel n={n} correct={correct} opts={opts} />}{nextQ}</> : null}
+      {tab === "inc" ? <><div className="assess-inc">{n.inclusivity}</div>{nextQ}</> : null}
+    </div>
+  );
+}
+
+/* ── Chapter Notes — the notebook popup (arch-plan §I-bis). The teacher's ONE writable
+ * surface on an otherwise read-only plan: a school-ruled notebook keyed to the PLAN ASSET
+ * (subject·grade·chapter, section-independent) so the SAME note surfaces in preview (My
+ * Lessons) and in tracking — one record at two altitudes, nothing to sync. Grey guidance
+ * rides the ruled lines as the field's placeholder → vanishes on the first keystroke. Soft
+ * 400-word cap (the counter turns clay past it, never blocks). localStorage today; migrates
+ * to the per-tenant overlay (CLOUD_DATA_MODEL §2.3) at Phase 4, alongside the pointer. */
+const CN_CAP = 400;
+const cnWordCount = (s) => { const t = (s || "").trim(); return t ? t.split(/\s+/).length : 0; };
+const CN_GUIDE =
+  "For next year, jot what you'll want to remember:\n" +
+  "  · where the class generally struggled\n" +
+  "  · materials you brought in beyond the book\n" +
+  "  · what to do differently next time";
+// "Subject · Grade" for the modal header — subject title-cased, grade in Roman numerals.
+const CN_ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+function cnSubjectGrade(lp) {
+  const subj = String(lp.subject || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).trim();
+  const gm = String(lp.grade || "").match(/\d+/);
+  const grade = gm
+    ? (CN_ROMAN[parseInt(gm[0], 10)] || gm[0])
+    : String(lp.grade || "").replace(/grade|class/gi, "").trim().toUpperCase();
+  return [subj, grade].filter(Boolean).join(" · ");
+}
+
+function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClose }) {
+  const [text, setText] = useState(initial || "");
+  const taRef = useRef(null);
+  useEffect(() => { taRef.current?.focus(); }, []);
+  const wc = cnWordCount(text);
+  // Hard cap: block input that would push past 400 words; deletions/edits still allowed
+  // (only reject when the new value grows the count beyond the cap).
+  const changeText = (e) => {
+    const v = e.target.value;
+    if (cnWordCount(v) > CN_CAP && cnWordCount(v) > wc) return;
+    setText(v);
+  };
+  return (
+    <div className="cn-modal-bg" onClick={onClose}>
+      <div className="cn-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="cn-head">
+          <div className="cn-head-t">
+            <div className="kicker kicker-soft">Chapter notes</div>
+            <div className="cn-title">{chapterTitle}</div>
+            {subjectGrade ? <div className="cn-sg">{subjectGrade}</div> : null}
+            <div className="cn-scope">Shared across every section on this plan</div>
+          </div>
+          <button className="cn-x" aria-label="Close" onClick={onClose}>✕</button>
+        </div>
+        <textarea
+          ref={taRef}
+          className="cn-paper"
+          spellCheck={false}
+          value={text}
+          onChange={changeText}
+          placeholder={CN_GUIDE}
+        />
+        <div className="cn-foot">
+          <div className="cn-foot-l">
+            <button className="cn-speak" onClick={() => taRef.current?.focus()}>🎙&nbsp;Speak</button>
+            <span className={`cn-count${wc >= CN_CAP ? " over" : ""}`}>{wc} / {CN_CAP} words</span>
+          </div>
+          <button className="cn-save" onClick={() => onSave(text)}>Save</button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -588,7 +796,24 @@ function AssessBody({ it, tab, qn }) {
  * dividers from the plugin's Group tree. Tapping a card is NAVIGATION, never pointer
  * movement. `pointer` is the live unit index, or null (preview — no place-marker). */
 function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour }) {
-  const [noteMsg, setNoteMsg] = useState(false);
+  // Chapter Notes state — asset-keyed (NOT the per-section pointer key), so preview and
+  // tracking, and every section, read/write ONE shared note (arch-plan §I-bis).
+  const notesKey = `chapter_notes_${lp.subject}_${lp.grade}_${lp.chapter_title || ""}`;
+  const [noteText, setNoteText] = useState("");
+  const [notesOpen, setNotesOpen] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setNoteText(window.localStorage.getItem(notesKey) || "");
+  }, [notesKey]);
+  const saveNote = (t) => {
+    setNoteText(t);
+    if (typeof window !== "undefined") {
+      if (t.trim()) window.localStorage.setItem(notesKey, t);
+      else window.localStorage.removeItem(notesKey);
+    }
+    setNotesOpen(false);
+  };
+  const hasNote = !!noteText.trim();
   // Each top-level group is a collapsible drop-down; only ONE is open at a time (accordion).
   // The first group opens by default; opening another closes the rest (re-tapping the open
   // one collapses it). -1 = all closed.
@@ -667,7 +892,12 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           data-tour="preview-back" (preview only): the guided tour's step-4 hand sits on the exit. */}
       <div className="co-stick">
         <div className="co-topbar">
-          <span className="kicker kicker-soft co-topkick">{String(lp.subject || "").replace(/_/g, " ")} · {lp.chapter_title ? `Chapter ${lp.chapter_number || ""}`.trim() : ""}</span>
+          {/* {subject} · {class as Roman} · Ch. NN (founder 2026-07-10). */}
+          <span className="kicker kicker-soft co-topkick">
+            {String(lp.subject || "").replace(/_/g, " ")}
+            {lp.grade ? ` · ${String(lp.grade).replace(/grade|class/gi, "").trim().toUpperCase()}` : ""}
+            {lp.chapter_number ? ` · Ch. ${String(lp.chapter_number).padStart(2, "0")}` : ""}
+          </span>
           <button className="back back-tr" data-tour={backTour} onClick={onBack}>← back</button>
         </div>
         <div className="co-head">
@@ -685,18 +915,20 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         </div>
         {/* Hairline divider under the meta — frozen with the header. */}
         <div className="co-headrule" aria-hidden="true"></div>
+        {/* Axis legend — names the organizing axis of the drop-downs + a small explanation.
+            Frozen WITH the header (founder 2026-07-11): the note on the axis stays pinned
+            as the unit list scrolls beneath it. */}
+        {axisTypes.length ? (
+          <div className="co-axis">
+            {axisTypes.map((t) => (
+              <div className="co-axis-row" key={t}>
+                <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
+                <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
-      {/* Axis legend — names the organizing axis of the drop-downs + a small explanation. */}
-      {axisTypes.length ? (
-        <div className="co-axis">
-          {axisTypes.map((t) => (
-            <div className="co-axis-row" key={t}>
-              <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
-              <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
-            </div>
-          ))}
-        </div>
-      ) : null}
       {lp.groups.map((g, gi) => {
         const open = openIdx === gi;
         // Render the body (periods + children) for EVERY group so idx advances in order;
@@ -704,7 +936,9 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         const body = renderGroup({ periods: g.periods, children: g.children, type: g.type }, 0, `g${gi}`, open);
         const cnt = countUnits(g);
         return (
-          <div className="co-acc" key={gi}>
+          // The OPEN axis is the filled one; closed axes render unfilled/white so the
+          // options read as options (founder 2026-07-10).
+          <div className={`co-acc${open ? " open" : ""}`} key={gi}>
             <button
               className={`co-acchead${open ? " open" : ""}`}
               onClick={() => setOpenIdx(open ? -1 : gi)}
@@ -722,13 +956,27 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           </div>
         );
       })}
-      {/* Chapter Notes — ONE collapsed, pull-based control (v0.2 §Chapter Notes; deferred). */}
-      <div className="co-notes">
-        <button onClick={() => setNoteMsg((v) => !v)}>
+      {/* Chapter Notes — ONE collapsed, pull-based control opening the notebook popup
+          (arch-plan §I-bis). Mark + teaser when a note exists; quiet "＋" when empty. */}
+      <div className={`co-notes${hasNote ? " has" : ""}`}>
+        <button onClick={() => setNotesOpen(true)}>
           <span className="kicker kicker-soft">Chapter notes</span>
-          <span className="co-hint">{noteMsg ? "coming in an upcoming update" : "none yet · ＋"}</span>
+          {hasNote ? (
+            <span className="co-note-teaser">{noteText.trim()}</span>
+          ) : (
+            <span className="co-hint">none yet · ＋</span>
+          )}
         </button>
       </div>
+      {notesOpen ? (
+        <ChapterNotesModal
+          chapterTitle={lp.chapter_title}
+          subjectGrade={cnSubjectGrade(lp)}
+          initial={noteText}
+          onSave={saveNote}
+          onClose={() => setNotesOpen(false)}
+        />
+      ) : null}
     </div>
   );
 }

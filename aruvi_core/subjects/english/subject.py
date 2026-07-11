@@ -244,6 +244,35 @@ class EnglishSubject:
                 period_index.setdefault(f"{sid}|{norm_code(sp)}", []).append(int(pn))
 
         spine_groups = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
+
+        # Rule 7 refinement (2026-07-11): the coarse (section, spine) join can't tell a REAL
+        # span (one item re-tested across periods — a genuine set, e.g. one oracy item over
+        # periods 2–3) from SEVERAL items that merely share a spine, one per topic-period
+        # (e.g. word_work taught as Collective Nouns in P4 and Position Words in P5, with a
+        # MATCH item and a FILL_IN item). The old code gave every item the union of periods
+        # and collapsed them all onto the closing anchor, surfacing the collective-nouns item
+        # under the prepositions period. Fix: when a key has N items AND exactly N periods
+        # (N ≥ 2), pair them POSITIONALLY (items are authored in section/topic order, periods
+        # are in teaching order) so each item anchors to its own period. Every other shape —
+        # one item / many periods (a true span), or a count mismatch — keeps the full set and
+        # the existing anchor-at-close behavior, so the stamp step is never changed.
+        key_items: Dict[str, List[dict]] = {}
+        for sg in spine_groups or []:
+            for it in sg.get("items", []) or []:
+                k = f"{norm_code(it.get('source_section_id'))}|{norm_code(it.get('source_spine'))}"
+                key_items.setdefault(k, []).append(it)
+        key_periods: Dict[str, List[List[int]]] = {}  # key → period-list aligned to key_items[key]
+        for k, its in key_items.items():
+            sid = k.split("|", 1)[0]
+            exact = period_index.get(k)
+            uniq = sorted(set(exact)) if exact else []
+            if exact and len(its) >= 2 and len(its) == len(uniq):
+                key_periods[k] = [[p] for p in uniq]              # N-to-N: one period per item
+            else:
+                span = exact if exact else section_index.get(sid, [])
+                key_periods[k] = [span for _ in its]              # true span / fallback: shared set
+        key_pos: Dict[str, int] = {}
+
         groups: List[AssessmentGroup] = []
         for sg in spine_groups or []:
             g = AssessmentGroup(
@@ -261,9 +290,12 @@ class EnglishSubject:
                         "source_spine": it.get("source_spine", ""),
                         "transcript_ref": it.get("transcript_ref", ""),
                         "id": it.get("id", "")}
-                # Exact (section, spine) period; if the LP never teaches that spine in that
-                # section, fall back to ANY period of the section so the item still anchors there.
-                linked = period_index.get(key) or section_index.get(sid, [])
+                # Period membership from the paired index above: a singleton in the N-to-N
+                # case, else the exact (section, spine) set, else ANY period of the section
+                # (fallback) so the item still anchors somewhere.
+                pos = key_pos.get(key, 0)
+                key_pos[key] = pos + 1
+                linked = key_periods[key][pos]
                 stamp(meta, linked, lo)
                 g.items.append(AssessmentItem(
                     prompt=it.get("item_stem", ""),

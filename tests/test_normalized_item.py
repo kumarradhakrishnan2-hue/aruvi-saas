@@ -162,6 +162,44 @@ def test_serialization_omits_not_blanks():
     print(f"OK — serialization: {checked} normalized items pruned (omitted, not blanked) & JSON-safe.")
 
 
+def test_split_parts_structures_prose_once():
+    """A numbered/lettered list packed into ONE prose string is parsed into (lead, parts)
+    in the engine (assessment_norm.split_parts) — the renderer never re-guesses. Both the
+    stem and the answer key use it; genuine lists split, lone numbers / scattered figures
+    / inner parens do not."""
+    from aruvi_core.assessment_norm import split_parts
+    # plain numbered list with a lead + word box (the English IV FILL_IN stem shape)
+    lead, parts = split_parts("Fill in the blank from the box.\n[Box: a, b]\n"
+                              "1. The park is ___ the school. 2. The desk is ___ them.")
+    assert lead.startswith("Fill in the blank"), lead
+    assert [p["marker"] for p in parts] == ["1.", "2."]
+    assert parts[0]["text"] == "The park is ___ the school."
+    # lettered sub-parts with inner parens in the maths — inner ")" is NOT a marker
+    lead, parts = split_parts("(a) 5 + 6 = 11. (b) 50 – (12 + 9) = 29. (c) done.")
+    assert [p["marker"] for p in parts] == ["(a)", "(b)", "(c)"]
+    assert "(12 + 9)" in parts[1]["text"]
+    # NOT lists — must stay whole (empty parts)
+    assert split_parts("15. It is the least common multiple of 3 and 5.")[1] == []
+    assert split_parts("Factors of 8: 1, 2, 4, 8. Factors of 21: 1, 3, 7, 21.")[1] == []
+    assert split_parts("A single sentence answer with no parts.")[1] == []
+
+    # end-to-end on the real English IV 'Together We Can' FILL_IN item (Q-WW-A-2)
+    fp = os.path.join(PLANS, "english", "iv", "ch_01_20260525_205451.json")
+    saved = json.load(open(fp)); r = saved["result"]
+    a = subjects.get("english").assessment_to_view(
+        r["assessment_items"], grade="iv",
+        chapter={"chapter_number": 1, "chapter_title": saved.get("chapter_title")},
+        link_context={"periods": r["lesson_plan"]["periods"]})
+    n = next(it.normalized for g in a.groups for it in g.items
+             if it.normalized and it.normalized.id == "Q-WW-A-2")
+    assert len(n.stem_parts) == 4, n.stem_parts
+    assert "[Box:" in n.stem_lead
+    assert [p["text"] for p in n.answer_parts] == ["near", "between", "in front of", "behind"]
+    print("OK — split_parts: stem & answer keys structured once in the engine; "
+          "non-lists left whole.")
+
+
 if __name__ == "__main__":
     test_normalized_contract_well_formed()
     test_serialization_omits_not_blanks()
+    test_split_parts_structures_prose_once()

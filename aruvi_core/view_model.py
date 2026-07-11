@@ -50,7 +50,10 @@ class QuestionType(str, Enum):
 # switch stays flat). Adding a future type = map it here + declare its populated fields.
 RENDER_TEMPLATE: Dict[str, str] = {
     QuestionType.MCQ: "selected_response",            # T1
-    QuestionType.TRUE_FALSE: "selected_response",     # T1
+    QuestionType.TRUE_FALSE: "true_false",            # T1b — own template (statements+verdicts,
+    #                                                   collapsed once in assessment_norm to kill
+    #                                                   the stem/options + ticks/prose duplication;
+    #                                                   degrades to selected_response with no options)
     QuestionType.SCR: "scr",                          # T2
     QuestionType.ECR: "ecr",                          # T3
     QuestionType.OPEN_TASK: "open_task",              # T4
@@ -142,12 +145,28 @@ class NormalizedItem:
     id: Optional[str] = None
     # ── the question ──
     stem: str = ""
+    # Structured stem when the prose packs a numbered/lettered list into one string
+    # (parsed ONCE in assessment_norm.split_parts, never at render time). `stem_lead` is
+    # the intro before the first marker; `stem_parts` is [{marker, text}]. Empty when the
+    # stem is plain prose — the renderer then shows `stem` as-is.
+    stem_lead: str = ""
+    stem_parts: List[Dict[str, str]] = field(default_factory=list)
     visual_stimulus: Optional[Dict[str, Any]] = None
     passage: Optional[Dict[str, Any]] = None      # EXTRACT_ANALYSIS extract (routed, never a generic stimulus)
     options: List[Dict[str, Any]] = field(default_factory=list)  # [{label,text,is_correct}] — selected-response only
+    # TRUE_FALSE ONLY: the per-statement key, collapsed ONCE in assessment_norm.tf_statements
+    # from the doubly-stored source (statements live in BOTH item_stem and options; verdicts in
+    # BOTH each option's is_correct AND the suggested-answer prose). Each row is
+    # {marker, text, verdict: bool, reason}. When populated the renderer reads THIS and shows
+    # the statements/verdicts exactly once — `options` is then carried-but-not-rendered.
+    tf_statements: List[Dict[str, Any]] = field(default_factory=list)
     audio_ref: Optional[str] = None    # English listening-spine transcript_ref ("p.NN"); NEVER merged with exercise_ref
     # ── the answer / marking surface ──
     model_answer: Optional[str] = None
+    # Structured answer key — same parse as the stem, for multi-part keys packed into one
+    # string ("(a) … (b) …" / "1. … 2. …"). Empty → renderer shows `model_answer` as prose.
+    answer_lead: str = ""
+    answer_parts: List[Dict[str, str]] = field(default_factory=list)
     expected_elements: List[str] = field(default_factory=list)
     option_reveals: Dict[str, str] = field(default_factory=dict)  # label → misconception ("note" key = legacy prose fallback)
     look_fors: List[str] = field(default_factory=list)

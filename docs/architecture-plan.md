@@ -589,12 +589,41 @@ Two tiers, plainly named (the name is the spec):
   next-year precautions / better planning. Reflective, long-horizon — futuristic; valued by the
   committed teacher, never in the everyday teacher's way.
 
-**The writing surface (both tiers).** Typed, **voice-supported, multilingual**; ~250-word soft
-cap; **mobile-first**. **No rich text, color, tables, or attachments** — a plain note field. The
-constraints *are* the feature (a mini-editor becomes a thing to fuss over → a chore). Voice and
-multilingual mostly ride the device keyboard/dictation (so "support" = not breaking Unicode / IME
-/ dictation). **Maths/Science subject symbols are deferred** — v1 is plain Unicode text; a
-symbol palette / shorthand is a known later enhancement (the one non-trivial input build).
+**The writing surface (both tiers).** Typed, **voice-supported, multilingual**; ~400-word soft
+cap (raised from 250, 2026-07-11 — chapter reflection wants a little more room; still *soft* —
+the counter turns clay past the cap, never blocks); **mobile-first**. **No rich text, color,
+tables, or attachments** — a plain note field. The constraints *are* the feature (a mini-editor
+becomes a thing to fuss over → a chore). Voice and multilingual mostly ride the device keyboard/
+dictation (so "support" = not breaking Unicode / IME / dictation). **Maths/Science subject
+symbols are deferred** — v1 is plain Unicode text; a symbol palette / shorthand is a known later
+enhancement (the one non-trivial input build).
+
+**Chapter Notes writing surface — the notebook popup (specced + built 2026-07-11).** Tapping the
+collapsed "Chapter notes" affordance on the Chapter Organization page opens a **modal styled as a
+school-ruled notebook**: a cream writing pane with faint horizontal rule lines and a single clay
+margin rule, warm-paper system throughout (Newsreader body on the lines, mono kicker header,
+Fraunces chapter title). Anatomy:
+- **Disappearing grey guidance.** The three lesson-shaped uses (where the class generally
+  struggled · materials brought in beyond the book · what to do differently next time) render as
+  **light-grey guidance text sitting on the ruled lines** — implemented as the field's own
+  placeholder, so it **vanishes on the first keystroke** (agreed: gently steer, never nag; the
+  guide is gone the moment she writes anything). It steers her toward cross-section, lesson-shaped
+  reflection and away from class-specific/student content (which belongs in Period Notes).
+- **Live word count, bottom-left**, `N / 400 words`; turns clay past 400 (soft cap, not a block).
+- **Save is the pine primary**, always enabled; a "Speak" chip flags voice/dictation support.
+- **Writable-island framing.** An italic subline — "Yours to keep · shared across every section on
+  this plan" — does double duty: marks this as the teacher's own writable layer (the surrounding
+  plan is read-only in preview) AND states the asset-level scope, so in tracking she is not misled
+  into reading it as one section's note.
+
+**Same note, both surfaces — a consequence of the key, not a second build.** Because Chapter Notes
+key to the **plan asset** (subject·grade·chapter, *section-independent*) and the affordance lives
+on the shared Chapter Organization page — which **preview (My Lessons) lands on and tracking
+reaches one tap away** — the note read/written in preview and the note read/written in tracking are
+**literally the same record**. There is nothing to sync: one asset-keyed note surfaced at two
+altitudes. (Impl note 2026-07-11: persisted to a section-independent key — deliberately NOT the
+per-section pointer key — so it never pools per section; localStorage today, migrating to the
+per-tenant overlay in `CLOUD_DATA_MODEL.md §2.3` at Phase 4 alongside the pointer.)
 
 **The two tiers key to two different things — and the key follows the altitude.** A generated
 plan is the teacher's **owned, kept asset**, shared across sections that use it (one Optics

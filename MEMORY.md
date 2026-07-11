@@ -1,6 +1,61 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
-## 2026-07-10 (newest) — PER-ITEM ASSESSMENT TABS: Overview · Question · Answer · Inclusivity (STATIC only — live + mobile pass pending)
+## 2026-07-11 (newest) — Assessment sub-part parsing lives ONCE in the engine + English N-to-N item→period pairing (STATIC + full suite green; live pass pending)
+
+Two structural fixes to the assessment path today, both driven by the same principle:
+**a change is only "once, everywhere" if it operates on a MODELED structure in the canonical
+view model — not on prose whose surface form varies by authoring convention.** Render-time
+heuristics silently miss any notation they weren't written for.
+
+**1. Numbered/lettered sub-parts are now parsed ONCE, in normalization — never at render time.**
+- **The problem (recurring):** answer keys AND question stems pack multi-part lists into ONE
+  prose string — Maths `(a) … (b) … (c) …`, English FILL_IN `1. … 2. … 3. …` (often with a
+  lead-in + `[Box: …]`). The renderer printed them as a paragraph. A first fix put a regex
+  splitter in the React renderer (`splitAnswerParts`) — but that only knew `(a)/(b)/(1)`, so
+  English's `1. 2. 3.` still rendered as a blob (English IV *Together We Can*, P5 Q-WW-A-2).
+  Classic authoring-convention coupling.
+- **The fix (structural):** `assessment_norm.split_parts(text) → (lead, [{marker,text}])` is the
+  ONE place notation knowledge lives (parenthesized `(a)/(i)/(1)` with opening-paren required;
+  plain `1. 2. 3.` only when the run starts at 1 — guards against a lone `15. …` answer or
+  scattered figures `Factors of 8: … 8. … 21.`). `_finish()` — the shared tail EVERY subject
+  normalizer already calls — runs it on both `stem` and `model_answer`, populating new
+  `NormalizedItem` fields: `stem_lead`/`stem_parts`, `answer_lead`/`answer_parts`
+  (`view_model.py`). Pruned on the wire when empty.
+- **Renderer is now dumb:** `APartsList` in `LessonView.jsx` renders whatever list it's handed
+  (question stem + answer block both use it). The JS `splitAnswerParts` heuristic is **DELETED**.
+  ⚠️ **Do NOT re-add a render-side splitter.** If a NEW notation ever appears, extend
+  `split_parts` in the engine — every subject and both surfaces pick it up automatically.
+- **Corpus effect:** structured 95 stems + 46 answers across 382 items (incl. multi-part science
+  `(a)/(b)/(c)`); non-lists left whole. Tests: `test_normalized_item.py`
+  ::`test_split_parts_structures_prose_once` (unit cases + real English item);
+  serialization-prune + full suite still green (16/16, `test_api` needs `pip install fastapi
+  httpx --break-system-packages` in the sandbox).
+
+**2. English item→period link: N items ↔ N periods now pair POSITIONALLY (anchor step unchanged).**
+- **The bug:** the Rule-7 `(section, spine)` join is coarse. When ONE (section,spine) is taught
+  across several topic-periods each with its OWN item (English IV: section A `word_work` over
+  P4 *Collective Nouns* + P5 *Position Words*, with a MATCH item and a FILL_IN item), the join
+  gave BOTH items the union `[4,5]` and `stamp()` anchored both at the close (5). So P5 showed
+  the collective-nouns item (mismatch) and P4 showed nothing.
+- **Key distinction (founder):** the anchor mechanism is for a REAL span — one item re-tested
+  across periods (e.g. one oracy item over P2–P3, correct). The word_work case is a FALSE set:
+  two items, each belonging to one period. Fix = stop building the false set, not touch anchoring.
+- **The fix (`subjects/english/subject.py` `assessment_to_view`):** group items by key; when a key
+  has N items AND exactly N periods (N≥2), pair positionally (authoring order ↔ teaching order)
+  → each item gets a singleton, anchors to its own period. Every other shape (1 item / many
+  periods = true span, or a count mismatch) keeps the full set + existing anchor-at-close.
+  `stamp()` is never changed. Result: Q-WW-A-1→P4, Q-WW-A-2→P5; oracy `[2,3]→3` intact.
+  Test: `test_link_resolver.py`::`test_english_n_to_n_positional_pairing` (382 items / 41 plans,
+  0 orphans still hold).
+- **Standing caveat:** positional pairing assumes items are authored in teaching order (true across
+  the current corpus). The fully-robust version needs a period/task ref on the item, which the
+  data doesn't carry today — revisit if a plan ever authors items out of order.
+
+Both are SERVER-SIDE Python — a running uvicorn won't pick them up until restarted
+(`python3 -m uvicorn api.main:app --port 8000`) + browser hard-refresh. Sandbox can't run the
+live server (§11), so live + mobile render check on English IV *Together We Can* P4/P5 is pending.
+
+## 2026-07-10 — PER-ITEM ASSESSMENT TABS: Overview · Question · Answer · Inclusivity (STATIC only — live + mobile pass pending)
 
 > ★ **REV. 2, same day (founder) — palette + layout revision, supersedes the green-box
 > details below.** The green artifact box, the "ASSESSMENT · THIS UNIT" tag, the white
@@ -28,6 +83,16 @@
 > matched to the unit kicker — was applied and then **UNDONE at founder request the same
 > day**; final state is rev. 3: all four unit tabs clay, `.assess-ovk` mono 10px / .1em /
 > ink-soft. Don't reintroduce without a fresh ask.)
+>
+> ★ **REV. 12 (founder) — Chapter Organization polish.** (a) Accordion axes: the OPEN
+> axis stays filled (warm `--paper`) while CLOSED axes are the **SAGE TINT** —
+> `--tint-pine` fill + `--edge-green` border, pine border on hover (candidate A of
+> three shown; white was tried first but matched the unit capsules and read confusing;
+> clay rejected — it's the unit-level color; sunk paper rejected — reads disabled).
+> Pine tint = "this responds to touch". `.co-acc.open` class added in ChapterOrg JSX.
+> (b) The org page top kicker is now `{subject} · {CLASS} · Ch. NN` — class as
+> uppercase Roman only (any "grade"/"class" word stripped from the value), chapter
+> zero-padded "Ch. 01" (was "{subject} · Chapter N").
 >
 > ★ **REV. 11 (founder) — preview header merged to one row.** The unit view's back
 > button no longer costs the top row: the topbar (empty span + back) is gone; the

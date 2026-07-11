@@ -1130,7 +1130,9 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    the outcome text below it as a normal paragraph — then the Type / Cognitive demand /
    Competency ledger rows, values left beside their labels. */
 /* No top padding — the LO heading must share the float line with the Q{n} marker. */
-.assess-ovlo { padding:0 0 9px; border-bottom:1px solid var(--line-soft); }
+.assess-ovlo { padding:9px 0; border-bottom:1px solid var(--line-soft); }
+.assess-ovrows > .assess-ovlo:first-child { padding-top:0; }
+.assess-ovrows > .assess-ovlo:last-child { border-bottom:none; padding-bottom:0; }
 .assess-ovlo-t { font-family:var(--f-body); font-size:14px; color:var(--ink); line-height:1.5; margin:4px 0 0; }
 .assess-ovk-b { display:block; font-weight:700; }
 .assess-ovrow { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); }
@@ -1153,6 +1155,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Correct-option row(s) in the ANSWER tab. */
 .assess-corr-row { display:flex; gap:8px; font-size:13.5px; color:var(--ink); line-height:1.5; padding:2px 0; }
 .assess-inc { font-size:13.5px; color:var(--ink); line-height:1.55; }
+/* End-of-item nudge to the next question (Answer + Inclusivity tabs, multi-item units only).
+   Deliberately light: a hairline sets it apart from the content, mono pine text points forward
+   like the pager's "Next →". Right-aligned = forward. */
+.assess-nextq-wrap { margin-top:14px; padding-top:10px; border-top:1px solid var(--line); text-align:right; }
+.assess-nextq { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--pine); cursor:pointer; }
+.assess-nextq:hover { color:var(--pine-d); }
 /* Flat re-palette of the shared item pieces (ABlock/ATicks/AReveals/options/otg) when
    rendered on paper instead of inside the old white green-edged card. */
 /* QUESTION and ANSWER share ONE text size (founder 2026-07-10): stem, options, answer
@@ -1281,9 +1289,40 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-ticks li { position:relative; font-size:12px; color:#3a4540; margin:3px 0; padding-left:16px; line-height:1.5; }
 .assess-ticks li::before { content:"✓"; position:absolute; left:0; color:#0f6e56; font-size:10px; }
 /* what-each-choice-reveals rows ("note" key = legacy prose fallback, no label rail) */
+/* Multi-part answer keys — each "(a)/(b)/(1)/(i)" sub-answer on its own row (founder
+   2026-07-11): marker in the margin, body beside it. */
+.assess-ansrows { margin-top:4px; }
+.assess-ansrow { display:flex; gap:9px; font-size:14px; color:var(--ink); margin:5px 0; line-height:1.5; }
+.assess-ans-lab { font-family:var(--f-mono); font-size:11px; color:#0f6e56; min-width:22px; flex:none; padding-top:2px; }
+.assess-ans-t { flex:1; }
+/* TRUE_FALSE answer-key rows: same layout as a numbered answer row, with the verdict word
+   set in mono so True/False scans as the answer, reason following as prose. */
+.assess-tf-row { display:flex; gap:9px; font-size:14px; color:var(--ink); margin:5px 0; line-height:1.5; }
+.assess-tf-t { font-family:var(--f-mono); font-size:12px; font-weight:600; color:#0f6e56; }
+.assess-tf-f { font-family:var(--f-mono); font-size:12px; font-weight:600; color:var(--clay); }
+/* Intro line before a numbered/lettered list (e.g. a FILL_IN lead + word box, or a
+   multi-part question setup) — prose above the rows. */
+.assess-parts-lead { margin:0 0 7px; white-space:pre-line; }
 .assess-rev { margin-top:3px; }
 .assess-revrow { display:flex; gap:8px; font-size:12px; color:#3a4540; margin:4px 0; line-height:1.5; }
 .assess-rev-lab { font-family:var(--f-mono); font-size:10px; color:#0f6e56; min-width:14px; flex:none; padding-top:1px; }
+/* "Choice X" chip at the end of a reveal line — taps open the choice-wording popup so
+   the teacher can relate the misconception to the actual option (founder 2026-07-11). */
+.assess-rev-choice { display:inline; margin-left:6px; padding:1px 7px; border:1px solid var(--edge-green); border-radius:999px;
+  background:#eef6f1; color:#0f6e56; font-family:var(--f-mono); font-size:9.5px; letter-spacing:.04em; text-transform:uppercase;
+  cursor:pointer; white-space:nowrap; vertical-align:baseline; }
+.assess-rev-choice:hover { background:var(--edge-green); color:#f3efe6; }
+/* Choice-wording popup — Aruvi paper/ink, pine accent, ✕ pinned TOP-LEFT (per request). */
+.assess-choicepop { position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:rgba(31,42,36,.42); backdrop-filter:blur(2px); }
+.assess-choicepop-box { position:relative; width:100%; max-width:380px; background:var(--paper); border:1px solid var(--line);
+  border-radius:14px; padding:40px 22px 22px; box-shadow:0 24px 60px -24px rgba(31,42,36,.5); }
+.assess-choicepop-x { position:absolute; top:12px; left:12px; width:30px; height:30px; border-radius:50%;
+  border:1px solid var(--line); background:var(--paper-2); color:var(--ink-soft); font-size:13px; line-height:1;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.assess-choicepop-x:hover { color:var(--clay); border-color:var(--clay); }
+.assess-choicepop-lab { display:block; font-family:var(--f-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--pine); }
+.assess-choicepop-t { margin:7px 0 0; font-family:var(--f-body); font-size:15px; line-height:1.55; color:var(--ink); }
 /* listening cue — an input the item can't run without, not a citation */
 .assess-audio { display:inline-block; margin-top:8px; font-family:var(--f-mono); font-size:10px; letter-spacing:.05em; color:#0f6e56; background:#eef6f1; border:1px dashed var(--edge-green); border-radius:6px; padding:4px 9px; }
 /* OPEN_TASK rich guide — collapsed by default so the card isn't a wall on a phone */
@@ -2799,9 +2838,13 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-count { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft); flex: none; }
 
 /* Chapter Organization drop-downs — one open at a time (accordion). Each stage is its own
-   rounded card; the header carries a line-art glyph + normal-case name (Option-B mockup). */
-.co-acc { background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
-  margin-bottom: 12px; overflow: hidden; }
+   rounded card; the header carries a line-art glyph + normal-case name (Option-B mockup).
+   The OPEN axis is FILLED (warm paper); closed axes sit unfilled/white so the choices
+   read as choices (founder 2026-07-10). */
+.co-acc { background: var(--tint-pine); border: 1px solid var(--edge-green); border-radius: 14px;
+  margin-bottom: 12px; overflow: hidden; transition: background .12s ease, border-color .12s ease; }
+.co-acc:hover { border-color: var(--pine); }
+.co-acc.open { background: var(--paper); border-color: var(--line); }
 .co-acchead { display: flex; align-items: center; gap: 12px; width: 100%; box-sizing: border-box;
   padding: 15px 16px; background: none; border: none; text-align: left; cursor: pointer;
   font: inherit; color: inherit; }
@@ -2855,7 +2898,54 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-notes button { all: unset; display: flex; width: 100%; box-sizing: border-box; align-items: center;
   gap: 10px; padding: 12px 14px; cursor: pointer; }
 .co-notes .kicker { flex: 1; }
-.co-hint { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); }
+.co-hint { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); white-space: nowrap; }
+/* has-note state: kicker shrinks, a one-line italic teaser fills the middle, "edit" trails. */
+.co-notes.has .kicker { flex: none; }
+.co-note-teaser { flex: 1; min-width: 0; font-family: var(--f-body); font-style: italic;
+  font-size: 13px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Chapter Notes — the notebook popup (arch-plan §I-bis) ──
+   School-ruled notebook in the warm-paper system: faint horizontal rules + one clay margin
+   rule; grey guidance rides the lines as the field placeholder (vanishes on first keystroke);
+   soft 400-word counter (clay past cap); pine Save. z-index 60 clears the sticky chrome. */
+.cn-modal-bg { position: fixed; inset: 0; background: rgba(31,42,36,.42); display: flex;
+  align-items: center; justify-content: center; padding: 20px; z-index: 60; }
+.cn-modal { background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+  width: 100%; max-width: 468px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+.cn-head { display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; padding: 18px 22px 14px; border-bottom: 1px solid var(--line-soft); }
+.cn-title { font-family: var(--f-display); font-size: 16px; font-weight: 600; color: var(--pine-d);
+  letter-spacing: -.3px; margin-top: 3px; }
+.cn-sg { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-soft); margin-top: 4px; }
+.cn-scope { font-family: var(--f-body); font-style: italic; font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; }
+.cn-x { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 14px; padding: 4px; line-height: 1; }
+.cn-x:hover { color: var(--clay); }
+.cn-paper { border: none; resize: none; width: 100%; box-sizing: border-box; height: 232px;
+  background: repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
+  background-color: var(--paper-2);
+  background-attachment: local;
+  font-family: var(--f-body); font-size: 16px; line-height: 32px; color: var(--ink);
+  padding: 5px 22px 0; letter-spacing: .1px; }
+.cn-paper:focus { outline: none; }
+.cn-paper::placeholder { color: #b3ab9c; opacity: 1; font-style: italic; font-size: 13px; }
+.cn-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 22px 16px; border-top: 1px solid var(--line-soft); }
+.cn-foot-l { display: flex; align-items: center; gap: 14px; }
+.cn-speak { all: unset; cursor: pointer; display: inline-flex; align-items: center;
+  border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; color: var(--ink-soft);
+  font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; }
+.cn-speak:hover { border-color: var(--ink-soft); }
+.cn-count { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); }
+.cn-count.over { color: var(--clay); }
+.cn-save { all: unset; cursor: pointer; background: var(--pine); color: var(--paper);
+  border-radius: 5px; padding: 9px 20px; font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .06em; text-transform: uppercase; }
+.cn-save:hover { background: var(--pine-d); }
+@media (max-width: 600px) {
+  .cn-paper { height: 204px; }
+  .cn-foot { flex-wrap: wrap; }
+  .cn-foot-l { gap: 10px; }
+}
 
 /* ── Unit view: the standard anatomy ── */
 .uv-durline { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft);
