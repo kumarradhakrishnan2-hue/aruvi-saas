@@ -539,7 +539,16 @@ function AQuestionPanel({ n, opts }) {
         <div className="assess-prompt assess-prompt-tab">{n.stem}</div>
       )}
       {/* Listening input the item can't run without — a cue, never a citation. */}
-      {n.audio_ref ? <span className="assess-audio">🔊 Listening passage · {n.audio_ref} (read aloud)</span> : null}
+      {n.audio_ref ? (
+        <div className="assess-audio">
+          <svg className="assess-audio-ico" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 10v4" /><path d="M8 7v10" /><path d="M12 4v16" /><path d="M16 8v8" /><path d="M20 11v2" />
+          </svg>
+          <span className="assess-audio-t"><i>Listening passage</i>
+            <span className="assess-audio-ref"> — {n.audio_ref}, read aloud</span></span>
+        </div>
+      ) : null}
       <ATyped b={n.visual_stimulus} />
       {/* Options are PLAIN here — the tick lives in the ANSWER tab. TRUE_FALSE never shows
           them (the statements above ARE the options; showing both duplicates every line). */}
@@ -577,29 +586,33 @@ function AAnswerPanel({ n, correct, opts = [] }) {
   // REPLACES both the "CORRECT ANSWER" tick-list (which showed only the true statements, a
   // misleading half-answer) and the standalone suggested-answer prose (already folded in).
   if (n.template === "true_false" && n.tf_statements?.length) {
-    // Each statement's verdict comes from the engine key; the justification is inline when
-    // it aligned 1:1, otherwise `model_answer` survives as the whole suggested-answer prose
-    // (shown once, below) so no reason is ever dropped.
+    const hasReasons = n.tf_statements.some((s) => s.reason);
+    // Fallback shape: the suggested-answer prose could NOT be split into per-statement reasons
+    // (grouped like "Statements 2, 3 and 4 are TRUE", or an odd format), so the engine kept the
+    // whole prose with the key's reasons empty. That prose already states every verdict — show
+    // it ALONE, never beside a bare verdict list (that pairing was the residual duplication).
+    if (!hasReasons && n.model_answer) {
+      return <ABlock k="SUGGESTED ANSWER" text={n.model_answer} />;
+    }
+    // Aligned shape: the key carries marker · verdict · reason and IS the whole answer
+    // (model_answer was folded away in the engine). Bare-verdict list only if neither survives.
     return (
-      <>
-        <div className="assess-look">
-          <span className="assess-look-k">ANSWER KEY</span>
-          <div className="assess-ansrows">
-            {n.tf_statements.map((s, i) => (
-              <div className="assess-tf-row" key={i}>
-                {s.marker ? <span className="assess-ans-lab">{s.marker}</span> : null}
-                <span className="assess-ans-t">
-                  <span className={s.verdict ? "assess-tf-t" : "assess-tf-f"}>
-                    {s.verdict ? "True" : "False"}
-                  </span>
-                  {s.reason ? <> — {s.reason}</> : null}
+      <div className="assess-look">
+        <span className="assess-look-k">ANSWER KEY</span>
+        <div className="assess-ansrows">
+          {n.tf_statements.map((s, i) => (
+            <div className="assess-tf-row" key={i}>
+              {s.marker ? <span className="assess-ans-lab">{s.marker}</span> : null}
+              <span className="assess-ans-t">
+                <span className={s.verdict ? "assess-tf-t" : "assess-tf-f"}>
+                  {s.verdict ? "True" : "False"}
                 </span>
-              </div>
-            ))}
-          </div>
+                {s.reason ? <> — {s.reason}</> : null}
+              </span>
+            </div>
+          ))}
         </div>
-        {n.model_answer ? <ABlock k="SUGGESTED ANSWER" text={n.model_answer} /> : null}
-      </>
+      </div>
     );
   }
   return (
@@ -638,6 +651,23 @@ function AAnswerPanel({ n, correct, opts = [] }) {
         </>
       ) : n.template === "cloze_match" ? (
         <AAnswerBlock k="ANSWER KEY" n={n} />
+      ) : n.template === "match" ? (
+        n.match_pairs?.length ? (
+          <div className="assess-look">
+            <span className="assess-look-k">ANSWER KEY</span>
+            <div className="assess-ansrows">
+              {n.match_pairs.map((p, i) => (
+                <div className="assess-match-row" key={i}>
+                  <span className="assess-match-l">{p.left}</span>
+                  <span className="assess-match-arw" aria-hidden="true">→</span>
+                  <span className="assess-match-r">{p.right}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <AAnswerBlock k="ANSWER KEY" n={n} />
+        )
       ) : n.template === "oral" ? (
         <ATicks k="SPEAKING RUBRIC" items={n.expected_elements} />
       ) : n.template === "numeric" ? (
@@ -659,7 +689,7 @@ function itemTabSet(n) {
   const correct = opts.filter((o) => o.is_correct);
   const hasAnswer = !!(correct.length || n.model_answer || n.expected_elements?.length
     || n.look_fors?.length || Object.keys(n.option_reveals || {}).length || n.method_one_line
-    || n.tf_statements?.length);
+    || n.tf_statements?.length || n.match_pairs?.length);
   return {
     opts, correct,
     tabs: [

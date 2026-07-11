@@ -180,6 +180,22 @@ def tf_statements(options: List[Dict[str, Any]],
     return out, not aligned
 
 
+def match_pairs_from(answer_key: Any) -> List[Dict[str, Any]]:
+    """Structured MATCH answer → [{left, right}] rows. The pairing lives ONLY in
+    teacher_guide.answer_key (an authored array of {left, right}); unlike TRUE_FALSE's
+    is_correct, a MATCH item has NO other machine-readable source for the pairing, and the
+    prose suggested_answer is written too many ways to parse reliably — so we read the
+    explicit key and nothing else. Empty/absent → [] and the renderer keeps the prose."""
+    out: List[Dict[str, Any]] = []
+    for p in answer_key or []:
+        if isinstance(p, dict):
+            left = _clean(p.get("left"))
+            right = _clean(p.get("right"))
+            if left or right:
+                out.append({"left": left or "", "right": right or ""})
+    return out
+
+
 def _finish(n: NormalizedItem) -> NormalizedItem:
     """Shared tail: template lookup + EXTRACT_ANALYSIS passage routing + structuring any
     numbered/lettered list packed into the stem or the answer key (once, for every family)."""
@@ -312,4 +328,6 @@ def from_english(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
         option_reveals=reveals,
         cognitive_demand=_clean(it.get("cognitive_demand")),   # ""/absent → None (all English)
     )
+    if qt == "MATCH":
+        n.match_pairs = match_pairs_from(tg.get("answer_key"))
     return _finish(_link(n, meta))

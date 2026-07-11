@@ -1170,12 +1170,11 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-flat .assess-look-k { font-size:10px; }
 .assess-flat .assess-look-k, .assess-flat .assess-opt-lab, .assess-flat .assess-rev-lab,
 .assess-flat .assess-tickmark, .assess-flat .assess-otg summary,
-.assess-flat .assess-audio, .assess-flat .assess-ticks li::before { color:var(--pine); }
+.assess-flat .assess-ticks li::before { color:var(--pine); }
 .assess-flat .assess-look-t, .assess-flat .assess-ticks li,
 .assess-flat .assess-revrow { font-size:13.5px; color:var(--ink); }
 .assess-flat .assess-opts2 li { font-size:13.5px; padding:5px 0; margin:0; border-bottom:1px solid var(--line-soft); }
 .assess-flat .assess-opts2 li:last-child { border-bottom:none; }
-.assess-flat .assess-audio { background:var(--tint-pine); border-color:var(--edge-green); }
 .assess-flat .assess-otg { border-color:var(--line); background:var(--paper-sunk); }
 
 .lv-phasehd { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
@@ -1295,6 +1294,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-ansrow { display:flex; gap:9px; font-size:14px; color:var(--ink); margin:5px 0; line-height:1.5; }
 .assess-ans-lab { font-family:var(--f-mono); font-size:11px; color:#0f6e56; min-width:22px; flex:none; padding-top:2px; }
 .assess-ans-t { flex:1; }
+/* MATCH answer-key rows: left entry → its correct match, the arrow in pine so the pairing
+   scans at a glance. Wraps gracefully on a phone (the right cell keeps the remaining width). */
+.assess-match-row { display:flex; align-items:baseline; gap:8px; font-size:14px; color:var(--ink); margin:5px 0; line-height:1.5; }
+.assess-match-l { font-weight:500; flex:none; max-width:45%; }
+.assess-match-arw { font-family:var(--f-mono); color:var(--pine); flex:none; }
+.assess-match-r { flex:1; color:var(--ink); }
 /* TRUE_FALSE answer-key rows: same layout as a numbered answer row, with the verdict word
    set in mono so True/False scans as the answer, reason following as prose. */
 .assess-tf-row { display:flex; gap:9px; font-size:14px; color:var(--ink); margin:5px 0; line-height:1.5; }
@@ -1323,8 +1328,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-choicepop-x:hover { color:var(--clay); border-color:var(--clay); }
 .assess-choicepop-lab { display:block; font-family:var(--f-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--pine); }
 .assess-choicepop-t { margin:7px 0 0; font-family:var(--f-body); font-size:15px; line-height:1.55; color:var(--ink); }
-/* listening cue — an input the item can't run without, not a citation */
-.assess-audio { display:inline-block; margin-top:8px; font-family:var(--f-mono); font-size:10px; letter-spacing:.05em; color:#0f6e56; background:#eef6f1; border:1px dashed var(--edge-green); border-radius:6px; padding:4px 9px; }
+/* listening cue — an input the item can't run without, not a citation. Margin-note voice:
+   a pine left rule + an ink sound-wave glyph, italic-serif label, mono reference. */
+.assess-audio { display:flex; align-items:center; gap:8px; margin-top:9px; padding:3px 0 3px 11px; border-left:3px solid var(--pine); }
+.assess-audio-ico { flex:none; color:var(--ink); }
+.assess-audio-t { font-family:var(--f-body); font-size:13.5px; color:var(--ink); }
+.assess-audio-t i { font-style:italic; }
+.assess-audio-ref { font-family:var(--f-mono); font-size:11px; letter-spacing:.03em; color:var(--ink-soft); }
 /* OPEN_TASK rich guide — collapsed by default so the card isn't a wall on a phone */
 .assess-otg { margin-top:11px; border:1px solid var(--edge-green); border-radius:8px; background:#f4f9f6; }
 .assess-otg summary { cursor:pointer; padding:8px 12px; font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; color:#0f6e56; list-style-position:inside; }
@@ -2773,12 +2783,10 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   [data-theme-effective="dark"] .assess-opt-lab,
   [data-theme-effective="dark"] .assess-rev-lab,
   [data-theme-effective="dark"] .assess-tickmark,
-  [data-theme-effective="dark"] .assess-audio,
   [data-theme-effective="dark"] .assess-cog,
   [data-theme-effective="dark"] .assess-otg summary,
   [data-theme-effective="dark"] .assess-table th { color: var(--pine-d); }
   [data-theme-effective="dark"] .assess-ticks li::before { color: var(--pine-d); }
-  [data-theme-effective="dark"] .assess-audio { background: var(--tint-pine); }
   [data-theme-effective="dark"] .filebtn-docx { color: #6ea0e0; }
   [data-theme-effective="dark"] .ch-completed { color: #dd9068; }
   [data-theme-effective="dark"] .tab.locked,

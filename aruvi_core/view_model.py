@@ -60,7 +60,10 @@ RENDER_TEMPLATE: Dict[str, str] = {
     QuestionType.PROJECT: "open_task",                # T4
     QuestionType.WRITING_TASK: "open_task",           # T4
     QuestionType.FILL_IN: "cloze_match",              # T5
-    QuestionType.MATCH: "cloze_match",                # T5
+    QuestionType.MATCH: "match",                      # T5b — own template: pairs render as
+    #                                                   left→right rows from a structured
+    #                                                   answer_key (kills the answer-as-prose
+    #                                                   blob); degrades to prose with no key
     QuestionType.ORAL_PROMPT: "oral",                 # T6a
     QuestionType.NUM: "numeric",                      # T6b
     QuestionType.EXTRACT_ANALYSIS: "passage",         # T6c
@@ -160,6 +163,11 @@ class NormalizedItem:
     # {marker, text, verdict: bool, reason}. When populated the renderer reads THIS and shows
     # the statements/verdicts exactly once — `options` is then carried-but-not-rendered.
     tf_statements: List[Dict[str, Any]] = field(default_factory=list)
+    # MATCH ONLY: the structured pairing key from teacher_guide.answer_key. Each row is
+    # {left, right} — the app renders these as left→right rows instead of the free-form
+    # suggested_answer prose (which varies too much to structure reliably). Empty when the
+    # item carries no answer_key → renderer falls back to the model_answer prose.
+    match_pairs: List[Dict[str, Any]] = field(default_factory=list)
     audio_ref: Optional[str] = None    # English listening-spine transcript_ref ("p.NN"); NEVER merged with exercise_ref
     # ── the answer / marking surface ──
     model_answer: Optional[str] = None
