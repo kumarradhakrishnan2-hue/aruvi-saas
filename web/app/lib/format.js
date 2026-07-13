@@ -10,6 +10,12 @@ export const ROMAN = ["iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
 export const pretty = (s) => (s || "").split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 export const gradeUp = (g) => (g || "").replace(/grade/i, "").trim().toUpperCase();
+// Teacher-facing label: teachers say "Class 7", not "Grade VII". Roman grade slug → Arabic class
+// number (ROMAN[0] "iii" → 3). Falls back to the upper-cased input for anything unrecognised.
+export const classNum = (g) => {
+  const idx = ROMAN.indexOf((g || "").toLowerCase());
+  return idx >= 0 ? idx + 3 : (g || "").toUpperCase();
+};
 export const kickerOf = (t) => (t || "").replace(/_/g, " ").toUpperCase();
 export const pad = (n) => String(n ?? "").padStart(2, "0");
 

@@ -810,7 +810,16 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
         />
         <div className="cn-foot">
           <div className="cn-foot-l">
-            <button className="cn-speak" onClick={() => taRef.current?.focus()}>🎙&nbsp;Speak</button>
+            <button className="cn-speak" onClick={() => taRef.current?.focus()}>
+              <svg className="cn-speak-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="9" y="2" width="6" height="12" rx="3" />
+                <path d="M5 11a7 7 0 0 0 14 0" />
+                <line x1="12" y1="18" x2="12" y2="22" />
+                <line x1="8" y1="22" x2="16" y2="22" />
+              </svg>
+              Speak
+            </button>
             <span className={`cn-count${wc >= CN_CAP ? " over" : ""}`}>{wc} / {CN_CAP} words</span>
           </div>
           <button className="cn-save" onClick={() => onSave(text)}>Save</button>

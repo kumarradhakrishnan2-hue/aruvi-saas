@@ -638,6 +638,13 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
 .back { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--pine); background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 18px; }
 .back:hover { color: var(--clay); }
 
+/* PrepareLesson chapter step — title row with a right-aligned back button, small scope line under it. */
+.prep-hdr-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.prep-hdr-row .h2 { margin: 0; }
+.prep-hdr-row .back { margin: 0; flex: none; white-space: nowrap; }
+.prep-scope { margin: 7px 0 0; color: var(--ink); }
+.prep-instr { margin: 8px 0 22px; }
+
 /* "Modify Allocation" — orange fill signals a temporary/unsaved-state action, distinct from
  * the primary "Accept Allocation" button beside it. */
 .modify-btn {
@@ -2939,10 +2946,11 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .cn-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 12px 22px 16px; border-top: 1px solid var(--line-soft); }
 .cn-foot-l { display: flex; align-items: center; gap: 14px; }
-.cn-speak { all: unset; cursor: pointer; display: inline-flex; align-items: center;
+.cn-speak { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; color: var(--ink-soft);
   font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; }
 .cn-speak:hover { border-color: var(--ink-soft); }
+.cn-speak-mic { width: 13px; height: 13px; flex: none; }
 .cn-count { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); }
 .cn-count.over { color: var(--clay); }
 .cn-save { all: unset; cursor: pointer; background: var(--pine); color: var(--paper);

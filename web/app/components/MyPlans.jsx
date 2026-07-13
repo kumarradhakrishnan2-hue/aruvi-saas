@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pretty, pad, gradeUp } from "../lib/format";
+import { getJSON, pretty, pad, classNum } from "../lib/format";
 import { pullSectionState, bindSectionChapter, unbindSection } from "../lib/sectionState";
 import { readHistory, recordHistory, hasHistory } from "../lib/sectionHistory";
 import Readiness from "./Readiness";
@@ -503,7 +503,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         <div className="ap-modal" data-tour="attach-pop" onClick={(e) => e.stopPropagation()}>
           <button className="ap-close" aria-label="Close" onClick={() => setAttachFor(null)}>✕</button>
           <div className="ap-head">
-            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Class {classNum(c.grade)} · {c.sectionTag}</div>
             <div className="ap-title">Track a chapter for this section</div>
             <div className="ap-sub">Pick a chapter you&rsquo;ve already prepared to track for this section, or build a new one.</div>
           </div>
@@ -549,7 +549,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         <div className="ap-modal ap-confirm" onClick={(e) => e.stopPropagation()}>
           <button className="ap-close" aria-label="Close" onClick={() => setUntrackFor(null)}>✕</button>
           <div className="ap-head">
-            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Class {classNum(c.grade)} · {c.sectionTag}</div>
             <div className="ap-title">Stop tracking this chapter?</div>
             <div className="ap-sub">{c.sectionTag} will stop tracking &ldquo;{chLabel}&rdquo;. It will be available to track again for this section.</div>
           </div>
@@ -595,7 +595,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         <div className="ap-modal" onClick={(e) => e.stopPropagation()}>
           <button className="ap-close" aria-label="Close" onClick={() => setHistoryFor(null)}>✕</button>
           <div className="ap-head">
-            <div className="ap-kicker">{pretty(c.subjectSlug)} · Grade {gradeUp(c.grade)} · {c.sectionTag}</div>
+            <div className="ap-kicker">{pretty(c.subjectSlug)} · Class {classNum(c.grade)} · {c.sectionTag}</div>
             <div className="ap-title">Section history</div>
             <div className="ap-sub">Where each chapter stands for this section.</div>
           </div>

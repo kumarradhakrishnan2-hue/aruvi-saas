@@ -1,5 +1,5 @@
 "use client";
-import { pretty, gradeUp, kickerOf } from "../lib/format";
+import { pretty, classNum, kickerOf } from "../lib/format";
 
 /* ───────── view-model renderer (the document) ───────── */
 function Stimulus({ vs }) {
@@ -135,7 +135,7 @@ export default function ViewModelView({ view }) {
   return (
     <div className="doc">
       <DocHead kicker="Lesson Plan" title={lp.chapter_title}
-        meta={<>{pretty(lp.subject)} <span>·</span> Grade {gradeUp(lp.grade)} <span>·</span> {lp.total_periods} periods</>} />
+        meta={<>{pretty(lp.subject)} <span>·</span> Class {classNum(lp.grade)} <span>·</span> {lp.total_periods} periods</>} />
       <div className="rule-hero" />
       {lp.groups.map((g, i) => <Group key={i} g={g} />)}
       <div style={{ marginTop: 50 }} />

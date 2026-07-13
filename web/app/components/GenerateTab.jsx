@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PrepareLesson from "./PrepareLesson";
-import { pretty, gradeUp } from "../lib/format";
+import { pretty, classNum } from "../lib/format";
 
 /* ───────── Generate tab ─────────
  * Reached ONLY through page.jsx's onEnterGenerate (the "Ready to plan…" button, My Lesson
@@ -88,7 +88,7 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
         <div className="gpick-grid">
           {grades.map((g) => (
             <button className="gpick-card" key={g.grade} onClick={() => enter(g.grade)}>
-              <span className="gpick-card-name">Grade {gradeUp(g.grade)}</span>
+              <span className="gpick-card-name">Class {classNum(g.grade)}</span>
               <span className="gpick-card-meta">{(g.sections || []).length} section{(g.sections || []).length !== 1 ? "s" : ""}</span>
             </button>
           ))}

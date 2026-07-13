@@ -218,8 +218,12 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   const setP = (n) => setPeriods(Number.isFinite(n) && n >= 0 ? n : 0);
   return (
     <div>
-      <p className="h2">Prepare a lesson for Class {classNum(grade)} of {pretty(subject)}</p>
-      <p className="h2-sub">
+      <div className="prep-hdr-row">
+        <p className="h2">Prepare a lesson plan</p>
+        <button className="back back-tr" onClick={() => onNavigate && onNavigate("myplans")}>← back</button>
+      </div>
+      <div className="ap-kicker prep-scope">{pretty(subject)} · Class {classNum(grade)}</div>
+      <p className="h2-sub prep-instr">
         Pick one chapter and enter the periods you plan to spend teaching it.
       </p>
 
