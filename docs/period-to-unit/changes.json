@@ -1,0 +1,111 @@
+{
+  "change_set": "period-to-unit / Lever A (generation-source narrative rename)",
+  "date": "2026-07-13",
+  "scope": "narrative-only",
+  "scope_note": "Teacher-facing prose swapped period -> unit. Schema field names (period_number, period_duration_minutes, period_numbers, periods[], period_ref) and scheduling/allocation vocabulary (period schedule, period budget, period count, per-period, period allocation) are RETAINED as 'period' by decision.",
+  "status": "COMPLETE across the board (conservative). Awaiting: (1) constitution version bumps decision; (2) Lever B display-time cleaner (separate).",
+  "reversal": {
+    "full": "For each file, replay every 'swap' entry as after -> before, and delete each 'insert' entry's appended block. Restores byte-for-byte. `git checkout -- <path>` is the equivalent one-shot.",
+    "partial": "Filter entries by file, by op, or by id and replay only that subset."
+  },
+  "verification": {
+    "files_changed": 10,
+    "insertions": 45,
+    "deletions": 15,
+    "schema_or_scheduling_tokens_removed": 0,
+    "method": "git diff reviewed; grep confirmed no '-' line removed any period_number/period_duration/period_ref/period schedule/period budget/period count/per-period token."
+  },
+  "not_changed_deliberately": {
+    "assessment_constitutions": "twau/prep, ss/middle, science/middle, science/secondary, mathematics/secondary — inspected; every 'period' is a schema key (period_number, period_ref, period_numbers) or scheduling ('stage period allocation', 'period budget', 'one item per period'). No teacher-facing lesson prose. Assessment items do not carry temporal cross-references, so no anchor added. Widen later if desired.",
+    "chapter_summary_prompts": "science/secondary, english/{middle,prep,secondary}, maths/{middle,prep} — inspected; 'period' appears only as scheduling/authoring-meta ('allocate periods across sections', 'in-period task', 'beyond-period', 'period budgeting'). Not teacher-facing lesson prose. No change.",
+    "twau_competency_mapping": "inspected; 'the periods that teach those sections' / 'period-level CG assignment' are scheduling/structural. No change."
+  },
+  "vocab_anchor_text": {
+    "standard": "VOCABULARY (teacher-facing naming): The atomic teaching chunk is called a \"unit\" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. \"the previous unit\", \"this unit\"). The token \"period\" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write \"period\" in prose the teacher reads.",
+    "twau_variant": "same as standard but 'teacher_notes' replaced by 'teacher_facilitation_note'."
+  },
+  "files": [
+    {
+      "path": "data/content/constitutions/lesson_plan/science/middle/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 3,
+      "swaps": [
+        {"id": "sci-mid-01", "before": "helping them run the period well", "after": "helping them run the unit well"},
+        {"id": "sci-mid-02", "before": "Briefly connect this period to the previous one — recap what was covered\n  and how this period builds on it. The first period instead orients the", "after": "Briefly connect this unit to the previous one — recap what was covered\n  and how this unit builds on it. The first unit instead orients the"},
+        {"id": "sci-mid-03", "before": "Grounded in this period's activity and the chapter summary only", "after": "Grounded in this unit's activity and the chapter summary only"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/science/secondary/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 3,
+      "swaps": [
+        {"id": "sci-sec-01", "before": "helping them run the period well. It is a required,", "after": "helping them run the unit well. It is a required,"},
+        {"id": "sci-sec-02", "before": "Connect this period to the one before it — what was covered, how this builds\n  on it. The first period instead orients the teacher to the chapter's entry", "after": "Connect this unit to the one before it — what was covered, how this builds\n  on it. The first unit instead orients the teacher to the chapter's entry"},
+        {"id": "sci-sec-03", "before": "period's section and the chapter summary.\n3. MUST NOT restate the period's activity text verbatim", "after": "unit's section and the chapter summary.\n3. MUST NOT restate the unit's activity text verbatim"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/mathematics/secondary/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 1,
+      "swaps": [
+        {"id": "mat-sec-01", "before": "A brief recap of what the previous period covered and how it connects to this\n  one (omit for the first period).", "after": "A brief recap of what the previous unit covered and how it connects to this\n  one (omit for the first unit)."}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/mathematics/middle/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 1,
+      "swaps": [
+        {"id": "mat-mid-01", "before": "    the previous period", "after": "    the previous unit", "note": "teacher_notes schema comment: 'recap what the previous period covered'"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/mathematics/preparatory/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 1,
+      "swaps": [
+        {"id": "mat-prep-01", "before": "Recap prior period; flag one", "after": "Recap prior unit; flag one"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/english/middle/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 1,
+      "swaps": [
+        {"id": "eng-mid-01", "before": "period; preview into next.", "after": "unit; preview into next.", "note": "teacher_notes schema comment: 'Transition from prior period; preview into next'"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/english/preparatory/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 1,
+      "swaps": [
+        {"id": "eng-prep-01", "before": "transition from prior period;", "after": "transition from prior unit;"}
+      ]
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/english/secondary/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 0,
+      "swaps": [],
+      "note": "teacher_notes guidance says 'transition from prior / preview next' with no 'period' token; anchor line governs the wording."
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/social_sciences/middle/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "narrative_swaps": 0,
+      "swaps": [],
+      "note": "No teacher_notes cross-reference guidance; only 'this period's activity' in an activity_title schema comment (kept, schema). Anchor governs future prose."
+    },
+    {
+      "path": "data/content/constitutions/lesson_plan/the_world_around_us/preparatory/lesson_plan_constitution.txt",
+      "anchor_inserted": true,
+      "anchor_variant": "twau (teacher_facilitation_note)",
+      "narrative_swaps": 0,
+      "swaps": [],
+      "note": "teacher_facilitation_note has no chunk cross-reference; 'this period' appears only in schema field comments (implied_lo, section_context, textbook_anchor) — kept, structural. Anchor governs future prose."
+    }
+  ]
+}

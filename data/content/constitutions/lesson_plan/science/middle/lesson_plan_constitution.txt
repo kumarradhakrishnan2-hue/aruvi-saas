@@ -12,6 +12,9 @@ OUTPUTS REQUIRED:
 3. One implied LO per arc stage
 4. Coverage Handoff JSON array — Amendment A4 (sole input to assessment constitution; output field: coverage_handoff)
 
+VOCABULARY (teacher-facing naming):
+The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, period_numbers, periods[]) and (b) the scheduling/allocation budget (period schedule, period count). Never write "period" in prose the teacher reads.
+
 ================================================================================
 RULE 1 — COGNITIVE PROGRESSION DERIVATION (before any period assignment)
 
@@ -113,14 +116,14 @@ MUST NOT fold coverage_handoff into lesson_plan — it is a sibling key at the t
 RULE 10 — TEACHER NOTES — PER-PERIOD TEACHING GUIDANCE
 
 Every period MUST carry a `teacher_notes` field: 2–3 sentences of flowing
-prose addressed to the teacher, helping them run the period well. It is a
+prose addressed to the teacher, helping them run the unit well. It is a
 required field — never blank.
 
 Write as natural prose. MUST NOT begin with the word "Transition" or any
 section/phase label. Weave in the following content priorities naturally
 (not as a labelled list):
-- Briefly connect this period to the previous one — recap what was covered
-  and how this period builds on it. The first period instead orients the
+- Briefly connect this unit to the previous one — recap what was covered
+  and how this unit builds on it. The first unit instead orients the
   teacher to the chapter's starting point.
 - Flag one common misconception or error to watch for, drawn from the
   chapter summary's own content. MUST NOT fabricate misconceptions not
@@ -129,7 +132,7 @@ section/phase label. Weave in the following content priorities naturally
   question, or a checkpoint that signals students are ready to move on.
 
 CONSTRAINTS:
-- Grounded in this period's activity and the chapter summary only — no
+- Grounded in this unit's activity and the chapter summary only — no
   external examples, no invented phenomena (consistent with Rule 3).
 - MUST NOT reference C-codes, competency codes, progression-stage numbers,
   or any internal ID in teacher-facing prose (consistent with Rule 8's bar

@@ -1,5 +1,8 @@
 ARUVI · LESSON PLAN GENERATION CONSTITUTION · SCIENCE · SECONDARY STAGE · VERSION 1.0
 
+VOCABULARY (teacher-facing naming):
+The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+
 Subject group : science
 Stage         : Secondary Stage
 Grades        : ix · x
@@ -233,15 +236,15 @@ RULE 10 · TEACHER NOTES — PER-PERIOD TEACHING GUIDANCE
 
 MANDATE
 Every period MUST carry a `teacher_notes` field: 2–3 sentences of flowing prose
-addressed to the teacher, helping them run the period well. It is a required,
+addressed to the teacher, helping them run the unit well. It is a required,
 teacher-facing field — never blank — and is bound by Rule 7 (no internal
 machinery).
 
 Write as natural prose. MUST NOT begin with the word "Transition" or any
 section/phase label. Weave in these content priorities naturally, not as a
 labelled list:
-- Connect this period to the one before it — what was covered, how this builds
-  on it. The first period instead orients the teacher to the chapter's entry
+- Connect this unit to the one before it — what was covered, how this builds
+  on it. The first unit instead orients the teacher to the chapter's entry
   point.
 - Flag one common misconception or error to watch for, drawn from the chapter
   summary's own content. MUST NOT fabricate misconceptions not grounded in the
@@ -253,8 +256,8 @@ PROHIBITION
 1. MUST NOT contain C-codes, CG codes, effort-index terms, rule numbers, schema
    field names, or any internal identifier (Rule 7 applies in full).
 2. MUST NOT introduce phenomena, examples, or procedures not anchored in the
-   period's section and the chapter summary.
-3. MUST NOT restate the period's activity text verbatim — teacher_notes guides
+   unit's section and the chapter summary.
+3. MUST NOT restate the unit's activity text verbatim — teacher_notes guides
    how to run the activity, it does not re-describe it.
 MUST NOT duplicate implied_lo, section_context, cg, or c_code inside any period
 object — they live exclusively in the handoff.
