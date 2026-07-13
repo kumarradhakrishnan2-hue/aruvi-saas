@@ -1,0 +1,146 @@
+ARUVI
+
+Competency Mapping Constitution
+
+Knowledge Commons - Chapter-to-Competency Mapping
+
+Subject Group: the_world_around_us
+Stage: Preparatory (Grades III, IV, V)
+Task: chapter_to_competency_mapping
+Fetch Key: competency_constitution_the_world_around_us
+
+----------------------------------------------------------------------
+
+DESIGN PRINCIPLE
+
+The World Around Us (TWAU) is organically interdisciplinary: every chapter
+integrates the natural environment and the human-cultural response to it,
+and typically engages 3 to 5 Curricular-Goal competencies at comparable
+depth. There is no dominant competency within a chapter. Accordingly, TWAU
+uses a FLATTENED weight structure: every competency that the chapter's
+architecture genuinely develops receives Weight 1 (Present). Time allocation
+is driven by the chapter's effort_index, not by competency weights — so this
+constitution does not perform weight differentiation. It performs ONE job
+rigorously: deciding, by the two-pass discipline below, which C-codes a
+chapter genuinely develops.
+
+----------------------------------------------------------------------
+
+RULE 1 - Pass 1: Transformation Inventory (C-code-blind)
+
+Before consulting the CG document or any framework document, the system
+MUST read the chapter summary section by section and produce an explicit
+transformation inventory. For each named section in the summary, the system
+states: what cognitive operation does this section require the student to
+perform, and on what content object? Each statement is anchored to its named
+section. The inventory is complete when every named section has been
+addressed. No C-codes are consulted, inferred, or pattern-matched during
+Pass 1. The CG document is prohibited until the inventory is complete.
+
+----------------------------------------------------------------------
+
+RULE 2 - Pass 2: Architectural Container and Matching
+
+Pass 2 opens with the CG reference (competency_descriptions_twau.json). For
+each transformation statement in the inventory, the system MUST identify its
+architectural container — the named section or activity block within which
+the supporting content sits — before attempting any C-code match. When
+matching a transformation statement to a C-code, the system MUST read the
+full C-code definition and consider every distinct demand it contains. A
+transformation statement satisfies a C-code if the chapter's architecture
+addresses the demand that the statement directly corresponds to. Where a
+C-code contains more than one distinct demand, the system MUST verify each
+demand independently against the transformation inventory before accepting
+or rejecting the match.
+
+For every accepted match, the system MUST record the named sections whose
+Pass-1 transformation supports that c_code — the c_code's sections[] list.
+This MUST include every section that genuinely develops the competency, not
+only the single strongest one. sections[] is the durable, section-level record
+of the transformation inventory: the lesson plan reads it to bind CG codes to
+the periods that teach those sections, so it must be complete and accurate.
+
+----------------------------------------------------------------------
+
+RULE 3 - Vocabulary-Match Rejection
+
+The system WILL reject any match where the only connection between a
+transformation statement and a C-code is shared vocabulary — the chapter's
+architecture must compel the student to execute the specific cognitive
+operation the C-code defines. The system WILL further reject any match where
+the C-code's concept appears only incidentally inside a named section or
+activity whose primary subject is something else; incidental mention is not
+architectural engagement. This rejection applies to content-level vocabulary.
+It does not override a match that is confirmed by Pass 2's full C-code
+reading and architectural container identification.
+
+----------------------------------------------------------------------
+
+RULE 4 - Flattened Weight and Hard Cap (TWAU departure from Social Sciences)
+
+Every C-code that passes Pass 2 (Rule 2) and survives Rule 3 receives
+Weight 1 (Present). There is NO Weight 3 / Weight 2 distinction, NO
+dissolution test, NO sub-discipline restriction, NO positional tie-break,
+and NO proportional-emphasis (Rule-4-style) hierarchy. All matched C-codes
+are treated at comparable depth.
+
+HARD CAP: A chapter MUST yield no more than 6 matched C-codes. If the
+two-pass process produces more than 6 candidates, apply the following
+prioritisation to reduce to 6 (or fewer):
+
+  Priority 1 — THEMATIC SPINE: The C-code whose CG directly names the
+    chapter's central natural phenomenon or system (e.g. C-2.1 for a water
+    chapter, C-4.1 for a biodiversity chapter). Accept the single strongest
+    spine code; do not accept a second spine code on the same subject.
+
+  Priority 2 — DEDICATED SECTION: C-codes developed by an entire named
+    section of the chapter (not a single activity). Prefer these over codes
+    supported by only one task or one sidebar.
+
+  Priority 3 — MULTI-SECTION SPREAD: Among remaining candidates, prefer
+    C-codes whose sections[] spans two or more sections over those confined
+    to one section.
+
+  Priority 4 — EXPLICIT CG NAMING: If the C-code's own definition explicitly
+    names the chapter's content (e.g. "water cycle", "food chain",
+    "rainwater"), prefer it over a code that matches only by general category.
+
+  Tiebreak — DROP OVERLAP: When two C-codes cover substantially the same
+    cognitive operation (e.g. C-6.1 inquiry and C-7.1 scientific method;
+    C-1.1 observe natural components and C-4.1 observe biodiversity), retain
+    the one with the stronger architectural container and drop the other.
+
+chapter_weight equals the final count of matched C-codes (≤ 6, since all
+weights are 1).
+
+Every matched C-code also carries its sections[] (Rule 2): the summary section
+titles it develops. Weight does not vary, but section coverage does — and that
+section binding is what drives period-level CG assignment downstream.
+
+----------------------------------------------------------------------
+
+RULE 5 - chapter_title Validation
+
+Before writing the mapping JSON, the system MUST confirm that the
+chapter_title it will write exactly matches the chapter_title field of the
+source summary JSON. A mismatch between the summary's title and the mapping's
+title is a silent error and is prohibited. If the titles do not match, the
+system MUST halt for that chapter and not write a mapping file.
+
+----------------------------------------------------------------------
+
+RULE 6 - Prohibited Documents
+
+The following documents MUST NOT be referenced or consulted at any point
+during mapping:
+
+  - Learning Outcomes — grade-bound milestones, not structural
+    chapter-purpose determinants
+  - Pedagogy documents — govern instructional execution, not competency
+    identification
+  - Syllabus documents — govern content scope and sequence, not cognitive
+    transformation mapping
+  - Assessment Framework documents — govern evaluation design, not
+    foundational competency identification
+  - Position Papers — foundational philosophy, not specific competency
+    mapping
