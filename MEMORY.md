@@ -204,6 +204,45 @@ must confirm · source entry.
     `page_ref` (section-range fallback when absent), and NO homework brief is emitted locator-less —
     across prep, middle, and secondary. (src: 2026-07-13 review; rule predates this note.)
 
+12. **English assessment FILL_IN table anti-duplication rule — added to all three stages** —
+    Rule 9 (Visual Stimulus) in `assessment/english/{preparatory,middle,secondary}` now carries an
+    explicit FILL_IN clause paralleling the existing MATCH one: a FILL_IN item with a
+    `visual_stimulus` table must carry that table (header + every data/blank row) ENTIRELY in
+    `visual_stimulus`, never reproduced as pipe-markdown / plain text / paraphrased list in
+    `item_stem`; combined with Rule 4's "one cloze set; no Part A/B" a FILL_IN item owns at most
+    ONE table. Versions bumped **prep 1.0→1.1, middle 3.2→3.3, secondary 1.1→1.2**. Cause: the
+    anti-duplication prohibition had only ever been written for MATCH (and MCQ/TRUE_FALSE options),
+    never FILL_IN — so `english/vii/ch_02` **Q-VG-B-1** (generated 2026-05-10, pre-amendment) had
+    its Part A antonym table inlined as pipe-markdown in `item_stem` AND partially in
+    `visual_stimulus`, plus an illegal Part A/B split. *Validated synthetically:* constitution text
+    edited; TWO offending saved items back-filled in place and the whole 41-file corpus re-scanned
+    (0 inline-table-in-stem remaining, JSON clean) — the rule was NOT exercised by a generation run.
+    The back-fills: **Q-VG-B-1 (FILL_IN, vii/ch_02)** reduced to Part A only (stem = instruction
+    only, table lives in `visual_stimulus`, Part B dropped, `suggested_answer` trimmed);
+    **Q-LIS-B-1 (MATCH, vii/ch_05)** had its duplicated (a)–(d) event list stripped from the stem
+    (events remain only in the `visual_stimulus` table). *Pre-warm must confirm:* live English
+    FILL_IN generation emits table-bearing items with the table ONLY in `visual_stimulus` and an
+    instruction-only stem, one table per item, no Part A/B — prep, middle, secondary. (src:
+    2026-07-13 "FILL_IN table anti-duplication".)
+
+13. **"no Part A/B" decoupled from the visual rule — the ban was a proxy, now narrowed** —
+    the blanket "one skill, one task, no Part A/B" (items 8 & 12) was traced to its origin: it
+    was never a pedagogical principle but the *mechanism* invoked to guarantee the real
+    rendering rule ("a FILL_IN owns at most ONE `visual_stimulus`"; the schema slot is single).
+    It over-caught **purely textual** multi-part items (e.g. `english/viii/ch_06` **Q-VG-C-1** —
+    synonyms Part A + expressions Part B, both prose word-boxes, `visual_stimulus:""`, renders
+    A & B cleanly). Rule 4's FILL_IN line + Rule 9's combination clause in
+    `assessment/english/{preparatory,middle,secondary}` rewritten to split the two: HARD rule =
+    ≤1 visual + no inlining (kept); the A/B ban is now **narrowed** — "a FILL_IN MAY carry
+    multiple parts (A/B) ONLY if every part is textual/prose; any part needing its own table or
+    visual must be a separate item." Versions bumped **prep 1.1→1.2, middle 3.3→3.4, secondary
+    1.2→1.3**. *Validated:* constitution text edited only — NOT run live, and the corpus was NOT
+    re-swept (Q-VG-C-1 is now legal under the new rule, so it needs no back-fill; items 8/12's
+    old "no Part A/B" wording in this list is now superseded for the textual case). *Pre-warm
+    must confirm:* live English FILL_IN generation keeps tables solely in `visual_stimulus`,
+    emits at most one visual, and only splits into A/B parts when all parts are textual. ⚠
+    Founder-directed change (2026-07-13), reconstructed rationale — confirm intent.
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
