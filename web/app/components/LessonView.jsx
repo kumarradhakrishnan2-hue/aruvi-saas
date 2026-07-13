@@ -914,13 +914,17 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     .map(([d, c]) => `${c} × ${d} min`);
   // The organizing axis (or axes) of this chapter — the type of the top-level groups, plus any
   // nested grouping type. Named + explained below the header rule so the teacher knows what the
-  // drop-downs represent.
+  // drop-downs represent. Each blurb carries a DEFINITE BUT MILD nod to the NCF (founder
+  // 2026-07-13): the reference is made only where the axis genuinely reflects NCF pedagogy —
+  // Science's staged inquiry (§4.6.1), the NCF's competency-based design (Social Sciences), and
+  // the integrated language-skills the NCF asks of languages (English spine). Section is the
+  // most structural axis, so its nod is the lightest (graded, build-from-the-familiar sequencing).
   const AXIS_INFO = {
-    stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice."],
-    progression_stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice."],
-    section: ["Sections", "the parts of the chapter, taught in sequence."],
-    competency: ["Competencies", "the skill each group of units builds."],
-    spine: ["Spines", "the language skills the units develop together."],
+    stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice — the staged, inquiry-led sequence the NCF asks of Science."],
+    progression_stage: ["Stages", "the learning progression each group moves through, from first contact to confident practice — the staged, inquiry-led sequence the NCF asks of Science."],
+    section: ["Sections", "the parts of the chapter, taught in the graded, build-from-the-familiar sequence the NCF encourages."],
+    competency: ["Competencies", "the skill each group of units builds — the competency-based design at the heart of the NCF."],
+    spine: ["Spines", "the language skills the units develop together, in the integrated way the NCF asks languages to be taught."],
   };
   const axisTypes = [];
   const collectAxis = (groups) => (groups || []).forEach((g) => {
