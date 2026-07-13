@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState } from "../lib/sectionState";
+import { userKey } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -837,7 +838,9 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
 function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour }) {
   // Chapter Notes state — asset-keyed (NOT the per-section pointer key), so preview and
   // tracking, and every section, read/write ONE shared note (arch-plan §I-bis).
-  const notesKey = `chapter_notes_${lp.subject}_${lp.grade}_${lp.chapter_title || ""}`;
+  // Per-user scope (userKey appends _{user}) so chapter notes never bleed across teachers on
+  // a shared browser — the asset key alone (subject·grade·chapter) is identical across users.
+  const notesKey = userKey(`chapter_notes_${lp.subject}_${lp.grade}_${lp.chapter_title || ""}`);
   const [noteText, setNoteText] = useState("");
   const [notesOpen, setNotesOpen] = useState(false);
   useEffect(() => {

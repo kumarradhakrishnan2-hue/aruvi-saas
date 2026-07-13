@@ -8,7 +8,11 @@ its current home, its future home, and the table shape it maps to.
 Read alongside `CLAUDE.md` §9 (roadmap) and §11 (web architecture). This doc supersedes the
 scattered porting notes for the data question specifically.
 
-Last updated: 2026-07-05 (§2.3 reframed around the **reference-not-copy** decision — the shared
+Last updated: 2026-07-13 (added **§2.8 teacher notes** — chapter + period notes, the per-tenant
+overlay §2.3 named but never enumerated as a migration item; records the 2026-07-13 per-user
+localStorage scope fix for the cross-user chapter-notes leak, and the `plan_note` table + planned
+`PlanNoteRepository` port that brings notes to parity with §2.4/§2.6/§2.7 before Supabase). Prior:
+2026-07-05 (§2.3 reframed around the **reference-not-copy** decision — the shared
 output cache holds the plan bytes once; a teacher's My Lessons entry references it, it is not a
 per-tenant copy; LPs are immutable/notes-only today so no copy-on-write is needed yet. Added
 §2.7 the prepared-plans register — the per-tenant "what she actually made" store that gates My
@@ -243,6 +247,51 @@ Migration action: write `PreparedPlansRepositorySupabaseImpl` behind the existin
 into §2.3's `lesson` table when plans go per-tenant. This register is not throwaway scaffolding —
 it is the exact seam live generation plugs into (§4 step 5).
 
+### 2.8 Teacher notes (chapter notes + period notes) — the overlay on a plan reference — localStorage-only, NOT yet server-backed
+
+**These are the per-tenant overlay named in §2.3** ("the only teacher-authored additions are
+notes … per-tenant overlay data that hang off the reference"). Two kinds, per CLAUDE.md §0:
+
+- **Chapter notes** — belong to the shared lesson-plan ASSET (the chapter), one shared note read/
+  written by every section teaching that chapter. Written from the Chapter Organization page
+  (`LessonView.jsx` `ChapterOrg`).
+- **Period notes** — belong to a SECTION's plan instance (a specific Learning Unit within a
+  section's teaching), pull-based, 📝 indicator, written from the period view after class. Specced
+  in CLAUDE.md §0 but **UI still deferred** — note the data home now so it lands tenant-clean.
+
+**Current status (2026-07-13): localStorage-only, and until today NOT even per-user scoped.**
+Chapter notes were keyed `chapter_notes_{subject}_{grade}_{chapter}` with no user in the key, so
+on a shared browser one teacher's notes leaked into another's view (Kumar23 → Kumar1). Fixed by
+wrapping the key with `userKey()` (`lib/format.js`), which appends the signed-in user —
+`chapter_notes_{subject}_{grade}_{chapter}_{user}`. This is a **client-side isolation stopgap
+only**; the notes still do not survive a device change and are not a tenant-keyed server record.
+Unlike the §2.4 pointer / §2.6 archive / §2.7 register, notes have **no port + file adapter yet** —
+this is the one remaining piece of true teacher-authored STATE still living only in the browser.
+
+| Today | Cloud |
+|---|---|
+| Chapter notes: `localStorage["chapter_notes_{subject}_{grade}_{chapter}_{user}"]` (per-user scoped client stopgap, no server record). Period notes: not built. | `plan_note` table, per-tenant, keyed off the plan reference (§2.3) — never mutating the shared artifact |
+
+Table (one shape covers both kinds via a nullable period identifier):
+
+```
+plan_note   -- per-tenant STATE: the overlay that hangs off a plan reference (§2.3)
+  (id, tenant_id, user_id,
+   artifact_ref -> generated_artifact.cache_key,   -- the chapter/plan the note hangs off
+   scope text 'chapter'|'period',                  -- which kind
+   section_key text null,                          -- null for chapter notes; set for period notes
+   period_id  text null,                            -- null for chapter notes; the stable LU id for period notes
+   body text, updated_at)
+```
+
+Migration action: introduce a `PlanNoteRepository` port + `PlanNoteRepositoryFileImpl`
+(`STATE_DIR/plan_notes/{tenant}/{user}/notes.json`) — the SAME tenant-keyed file pattern as §2.4/
+§2.6/§2.7 — so notes reach parity with the other execution state BEFORE Supabase, then write
+`PlanNoteRepositorySupabaseImpl` behind it. **Requires stable period identifiers within a plan**
+(CLAUDE.md §0: notes never migrate across regenerated plans) — the `period_id` must be derived from
+plan structure, not array index. Chapter notes only need `artifact_ref`; period notes also need
+`section_key` + `period_id`. This is the natural next step after the client-side per-user fix above.
+
 ---
 
 ## 3. Identity & tenancy (the new top layer)
@@ -273,6 +322,9 @@ safe.
    (§2.6 — or fold into a `saved_plan.archived_at` column), `PreparedPlansRepositorySupabaseImpl`
    (§2.7 — or fold into the `lesson` table, where a row's existence IS "prepared"). Engine/API
    routes unchanged — all already call through their ports.
+   - **First, close the §2.8 gap**: notes are the one piece of teacher STATE with no port yet.
+     Add `PlanNoteRepository` (+ file impl) so chapter/period notes are server-backed & tenant-keyed
+     like the rest, THEN write its Supabase impl. Retire the localStorage-only note store.
 4. **Move shared content** (§1) to object/vector store via the `Storage` adapter; retire
    `ARUVI_DATA_DIR`.
 5. **Wire the output cache** as shared (NOT per-tenant), keyed by content version (§1 last row).
@@ -285,7 +337,8 @@ safe.
 
 ## 5. Invariants to keep checking (grep-able)
 
-- No teacher-entered data without a `tenant_id` (+ `user_id` for row-owned data).
+- No teacher-entered data without a `tenant_id` (+ `user_id` for row-owned data). Notes (§2.8)
+  are the current exception — localStorage-only, per-user scoped as a stopgap; server-back before launch.
 - No shared content carrying a tenant key (would break the cache economics and the IP model).
 - A teacher's plan is a **reference** to the shared cache, never a per-tenant copy of the bytes
   (§2.3). The only future exception is copy-on-write on an LP edit — which doesn't exist yet.

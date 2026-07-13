@@ -1,5 +1,215 @@
 # Aruvi-SaaS — Accumulated Learnings & Carry-Forward Notes
 
+---
+
+## ★ AMENDMENTS TO BE TESTED — the pre-warming checklist (standing; keep updated) ★
+
+**Why this list exists.** We have been changing prompts and constitutions and then validating
+those changes NOT by running them, but by **back-writing the summaries / saved plans
+synthetically** (hand-edits, in-place migrations, split scripts, corpus rewrites). That proves
+the *renderers, normalizers and view model* are happy with the target shape — it does NOT prove
+the **generator actually emits that shape** when it runs live. Every amendment below is owed a
+real generation check. **Run this whole list when the pre-warming runs sweep the entire
+subject portfolio** (live LLM generation, all subjects × stages × chapters). Tick items off
+there; add any new synthetic amendment here the moment it is made, don't let it hide inside a
+dated entry.
+
+Each item: what changed · how it was validated so far (synthetic) · what a live pre-warm run
+must confirm · source entry.
+
+1. **SS + TWAU assessment constitutions bumped for `guide.{TYPE}` nesting** — SS assessment
+   constitution → **v1.7**, TWAU → **v1.3**: Rule 9 + the JSON-schema blocks now MANDATE
+   `guide.{question_type}` nesting (matching Science + registry §1), with a new PROHIBITION
+   against flat `guide.what_each_option_reveals` placement; population-table header changed to
+   "guide.{TYPE} keys required". *Validated synthetically:* all SS/TWAU saved plans were
+   migrated in place (pure structural relocation, deep-diff-clean; corpus scan 194 nested / 0
+   flat) — the constitution text itself was never exercised by a generation run. *Pre-warm must
+   confirm:* live SS + TWAU assessment generation actually emits `guide.{TYPE}`-nested rubrics,
+   never flat. (src: 2026-07-10 "Normalized assessment items + 3b renderer".)
+
+2. **English MCQ option-reveals rewrite — owed into the generation prompt wrappers** — the
+   corpus MCQs had their prose-`note` option analyses rewritten into the keyed
+   `what_each_option_reveals` map (last stragglers cleaned 2026-07-10). *Validated
+   synthetically:* only the saved plans were rewritten; **mirroring the rewrite into the
+   generation prompt wrappers is explicitly still deferred** (spec §7.4). *Pre-warm must
+   confirm:* the English generation prompt itself produces keyed reveals (not prose notes) so
+   new plans don't reintroduce the old shape. (src: 2026-07-10, "still deferred to generation
+   milestone".)
+
+3. **Constitution exact-counts audit (spec §J.3)** — deferred to the generation milestone: the
+   per-type item-count expectations in the constitutions have not been reconciled against what
+   the generator emits. *Pre-warm must confirm:* generated assessments hit the constitutions'
+   exact counts per type. (src: 2026-07-10, "still deferred to generation milestone".)
+
+4. **English Unit→true-chapter splits (Grades VI, VII, VIII; plus III & IX)** — the 5 Unit-level
+   summaries/mappings/saved-plans per grade were cut into true per-section chapters by
+   `split_english_chapters.py` + hand `section_id` walks (periods renumbered, coverage_handoff /
+   assessment_items filtered, NCF totals reconciled). *Validated synthetically:* structural
+   splitting + JSON/period/tiling checks only — **none of the split chapters was regenerated
+   through the chapter pipeline or the LP generator.** *Pre-warm must confirm:* generating these
+   true chapters from scratch yields coherent, single-section plans consistent with the split
+   artifacts (title format `"<section> (<unit>)"`, per-chapter period spread, spine-top axis).
+   (src: 2026-07-01 VI/VII/VIII entries; 2026-07-09 III/IX same-session split.)
+
+5. **English-middle Step 7d effort-index calibration reused across grades unverified** — the
+   `task_density` tier cutoffs (≤2.0 / 2.1–2.9 / ≥3.0) calibrated on Grade VI were **reused
+   unchanged for VII and VIII** despite each grade's raw distribution differing (VIII's fit is
+   admittedly weak — pins most chapters at tier 3). The prompt file
+   `cowork prompts/english/middle/step_1_chapter_summary_and_mapping.md` Step 7d still carries
+   only the "Verified 2026-07-01 (Grade VI)" note and the flagged (unfixed) doc gap that
+   task_density needs a per-grade raw-distribution audit before reuse. *Validated
+   synthetically:* effort_signals were computed by the split script, not by a live authoring
+   run. *Pre-warm must confirm:* re-running the chapter authoring pipeline reproduces the
+   integer-tier `effort_signals` shape and a sane `effort_index` spread per grade; recalibrate
+   cutoffs if a grade collapses to a near-binary signal. (Also the standing English-middle Step
+   7d chapter-level effort-signal addition, CLAUDE.md §10 / 2026-07-01, is prompt-only and
+   untested by a live run.)
+
+6. **"Wire time into the constitutions" — not yet built; carry-forward binds its shape** — once
+   built, the constitutions must receive time as an **ordered per-period duration vector**
+   (e.g. `[40,60,40,…]`), NOT a scalar total Tm (Tm becomes a derived checksum = Σ of the
+   vector). The count-multiset budget ("14 periods: 11×40, 3×60") + MARKING the long sessions
+   ("longer session — best in a full period") is the intended generation contract; each chapter
+   starts at cycle position 0 (no cross-chapter phase tracking). *Nothing wired yet* — this is a
+   constitution change still to be made. *Pre-warm must confirm (once wired):* the generator
+   consumes the duration vector, produces exactly the right number of long sessions, and marks
+   them; feasibility holds globally. (src: 2026-07-05 "Period durations & the LLM's time
+   budget".)
+
+7. **`Period.approach` — confirmed NO constitutional change (verify the empties are acceptable
+   live)** — founder decided NOT to flatten the diverse per-subject "how do I run this?" source
+   keys at source; `Period.approach` absorbs the diversity in normalization and is empty where
+   no source field exists (Maths-preparatory, SS). Not an amendment to a constitution, but note
+   it here so a pre-warm reviewer doesn't mistake the empty approach line for a generation bug:
+   *confirm* Maths-prep and SS plans legitimately render no approach line, and every other
+   subject·stage carries one. (src: 2026-07-09 "LP display standardized".)
+
+8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
+   (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,
+   edited 2026-07-13). The current mandated shapes:
+   - **FILL_IN** — "Blanks in ONE cloze set; one skill, one task (**no Part A/B**)";
+     `teacher_guide.suggested_answer` = each blank's answer **numbered to its blank**. It is a
+     CLOSED type (Rule 5), so answer-verification (Rule 6) + the Rule-7 fallback apply.
+   - **MATCH** — answer stored as a STRUCTURED, machine-parseable `answer_key`: an array of
+     `{left, right}` objects, one per pair (`left` = Column A text matching the
+     `visual_stimulus` table; `right` = the Column B match, or a position number for an
+     ordering task), PLUS a short `suggested_answer` fallback string (e.g. "1-c, 2-a, 3-b").
+     **Never a prose paragraph or inline-glossed pairs.** The pipe-table lives entirely in
+     `visual_stimulus`; `item_stem` carries ONLY the task instruction (e.g. "Match each animal
+     with its young one.") and must NOT repeat the column entries.
+   *Validated synthetically:* the constitution text was edited; no live English-prep generation
+   was run against it (there is in fact NO English-prep saved-plan corpus on disk to have even
+   back-checked it against — grades I/II have no chapters yet). *Pre-warm must confirm:* live
+   English-prep generation emits single-cloze-set FILL_IN with per-blank numbered answers, and
+   MATCH with a structured `{left,right}` `answer_key` (+ fallback string) and a clean pipe-table
+   stimulus. ⚠️ **Confirm the exact intent with the founder** — this item was reconstructed from
+   the current constitution file, not from a logged change description.
+
+9. **★ WHOLE recent constitution-edit WAVE (Jul 12–13) is untracked and untested ★** — item 8 is
+   one instance of a broader batch. Memory's newest dated entry is 2026-07-11, but 11 constitution
+   files were edited AFTER it and appear in NO memory entry. All are git-ignored (**no diff trail
+   exists — the baseline is gone**), so the per-file lines below are the load-bearing **emit
+   contract to ASSERT at generation**, not a verified before/after. None has been through a live
+   run. The version string in each header is the only edit fingerprint; where a footer disagrees
+   it's flagged. Confirm intent with the founder per file.
+
+   **English — assessment (spine-keyed; one item per spine-cell `implied_lo`; items ordered by
+   `section_id` A→B→C):**
+   - `assessment/english/preparatory` · **v1.0** (07-13 07:29) — types MCQ·SCR·MATCH·FILL_IN·
+     TRUE_FALSE·ORAL_PROMPT·WRITING_TASK·PROJECT; **ECR BANNED**. Check: MATCH structured
+     `answer_key` `[{left,right}]` + `"1-c,2-a,3-b"` fallback; FILL_IN one cloze set / per-blank
+     numbered; MCQ `suggested_answer:""` + `what_each_option_reveals` (one per INCORRECT option,
+     `note` reserved for Rule-7 fallback only); Rule-7 failed item still emitted with `item_stem:""`.
+   - `assessment/english/middle` · **v3.1** (07-13 07:41) — same shapes as prep **plus ECR + PROJECT**;
+     TRUE_FALSE answer format "N. True/False — justification", one per line (no grouping). Check the
+     same MATCH/FILL_IN/MCQ contracts + spine default map (Reading/Listening/Speaking/Writing/
+     VocGram/Beyond-text).
+   - `assessment/english/secondary` · **v1.0, forked from middle v3.1** (07-13 07:29) — every
+     addition is tagged `[SECONDARY DELTA]`: new **EXTRACT_ANALYSIS** type (verbatim extract in
+     `visual_stimulus` + 1–3 analytical sub-Qs); prefer EXTRACT_ANALYSIS/ECR for analytical LOs;
+     drama anchors; **listening transcript baked into the summary** (generator does NOT open the
+     appendix). Check the deltas actually fire on a secondary drama/poem chapter.
+
+   **English — lesson plan (periods array + `coverage_handoff` keyed by spine):**
+   - `lesson_plan/english/preparatory` · **v1.0** (07-12 14:06)
+   - `lesson_plan/english/middle` · **header v1.5 / footer still says v1.4 — STALE FOOTER, fix it**
+     (07-12 14:06). Check Rule 4 methods are drawn STRICTLY from the per-spine NCF list (generator
+     must not invent), no spine's method repeats across >2 consecutive periods; Rule 2 allocation
+     capacity-first, proportional by section.
+   - `lesson_plan/english/secondary` · **v1.0, forked from middle v1.5** (07-12 14:07) — Rule 3 task
+     selection + Rule 4 methods carry secondary additions (reported speech, sentence-type
+     conversion, phrasal verbs, etc.). Check those methods appear and stay within the permitted list.
+
+   **Mathematics — assessment (MCQ needs exactly 4 options / one `is_correct` / populated
+   `what_each_option_reveals`; `teacher_guide.expected_answer` + `method_one_line`):**
+   - `assessment/mathematics/preparatory` · **v1.1** (07-12 20:55) — intent sections A–D
+     (Explore/Reason/Practise/Solve), one item per handoff task; types **MCQ·SCR·NUM only (ECR
+     banned)**. Check the A→D section schema + NUM emitted for `solve`.
+   - `assessment/mathematics/middle` · **v3.2** (07-12 20:55) — three sections Recall/Reason/Apply;
+     types MCQ·SCR·ECR·NUM by `goal`. Check goal→type default mapping.
+   - `assessment/mathematics/secondary` · **v1.0** (07-12 20:54) — cognitive-demand HINGE drives
+     format (Recall/Understanding→MCQ · Application→NUM/SCR · Analysis/Evaluation→ECR ·
+     integrative `co_central`→OPEN_TASK from the Maths menu); **exactly one item per `implied_lo`**
+     (no bonus/wrap items); guide block per question. Check: `effort_index` does NOT leak into
+     assessment format/count/demand (explicit prohibition).
+
+   **Science — assessment:**
+   - `assessment/science/middle` · **v1.2** (07-12 20:55) — table-formatted; **stage-position
+     architecture** governs format (First stage = 2×MCQ; Middle stages = 2 MCQ + 1 SCR; Final
+     stage = 2 MCQ + 1 ECR + 1 Open Task); format is set by stage position, NOT the implied-LO
+     type; guide block per Rule 9; only the two inputs (coverage_handoff + summary). Check the
+     stage-position counts come out right end-to-end.
+   - `assessment/science/secondary` · **v1.0** (07-12 20:54) — same cognitive-demand→format hinge
+     as Maths secondary, with a Science open-task menu (Rule 8) + reasoning floor. Check demand-tag
+     drives format and the open task appears for integrative LOs.
+
+   *Pre-warm rule:* treat **every** constitution touched since 2026-07-11 as UNTESTED — the
+   pre-warming sweep must generate live for each subject·stage above and diff the emitted JSON
+   against these contracts. Whenever a constitution is edited going forward, add a line here (what
+   changed + what to check) at edit time and bump BOTH the header and footer version — `data/`
+   carries no VCS trail, so this list is the only record.
+
+10. **English assessment Rule 4 — "NAME THE REFERENCED WORD" added (middle + secondary)** —
+    `assessment/english/middle` **v3.1 → v3.2** and `assessment/english/secondary` **v1.0 → v1.1**
+    (both header + footer bumped; edited 2026-07-13). New two-line clause appended inside Rule 4:
+    when an item requires the student to perform a cognitive act on a specific word/words within a
+    larger sentence, the stem MUST state that word/those words explicitly in parentheses — never
+    indicate them by underlining/bold/italics (typographic emphasis has no representation in the
+    item JSON and is silently lost, leaving the question unanswerable). **Preparatory deliberately
+    excluded.** *Why:* saved plan `english/vii/ch_01_20260510_175736.json` item **Q-VG-A-1** (SCR,
+    prep/adverb tagging) says "the underlined word" but carries no underline and empty
+    `visual_stimulus` — the target token was unrecoverable. Decided against a `marked_text`/stimulus
+    schema type (over-engineers a plain-text problem, adds tokens); the parenthetical naming is the
+    right-sized fix and this is a generator-time rule, not a cowork-authoring-prompt issue.
+    *Validated synthetically:* constitution text edited only; no live generation run against it, and
+    the existing corpus still contains the defect (Q-VG-A-1 is `"verified": true`). *Pre-warm must
+    confirm:* live English middle + secondary assessment generation, on any in-text word-identification
+    LO (Vocabulary/Grammar prep-vs-adverb, article/tense tagging, etc.), emits the referenced word
+    named in the stem and never relies on emphasis. *Also owed:* a one-off corpus rewrite pass to
+    repair already-saved items of this family (cheap text patch — parenthetical annotation, no
+    regeneration), and optionally a normalizer/validation guard flagging any item whose stem says
+    "underlined/circled/highlighted" while `visual_stimulus` is empty. (src: 2026-07-13.)
+
+11. **English LP homework `task_brief` MUST carry a "(p.NN)" page locator** — Rule 8 (Homework) +
+    Rule 9 (Phase Narration / `task_brief` format) in ALL THREE English lesson-plan constitutions
+    (`lesson_plan/english/{preparatory,middle,secondary}`). Every homework item's `task_brief` must
+    read `"<Subheading> (p.NN): <plain brief>"` — identical to an in-class brief — with the page
+    taken from the task's `page_ref` and a **fallback to the section's page range** when the task
+    has none. Rationale in-text: "a homework item a teacher cannot locate is a defect." This is the
+    earlier homework-page-reference amendment; it was folded into the Jul-12 LP-constitution wave
+    (item 9 lists these files' versions but its check bullets cover only Rule 4 methods + Rule 2
+    allocation — NOT this locator), so it had no explicit test entry until now. *Validated
+    synthetically:* constitution text only; no live LP generation run against it. *Pre-warm must
+    confirm:* generated English LP homework items every carry a `(p.NN)` locator sourced from
+    `page_ref` (section-range fallback when absent), and NO homework brief is emitted locator-less —
+    across prep, middle, and secondary. (src: 2026-07-13 review; rule predates this note.)
+
+> Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
+> **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
+> index of "changed but not run". Keep it current.
+
+---
+
 ## 2026-07-11 (newest) — Assessment sub-part parsing lives ONCE in the engine + English N-to-N item→period pairing (STATIC + full suite green; live pass pending)
 
 Two structural fixes to the assessment path today, both driven by the same principle:
