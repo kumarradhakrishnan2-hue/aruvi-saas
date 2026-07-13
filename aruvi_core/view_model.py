@@ -15,6 +15,8 @@ from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
+from .unitize import unitize_lesson_plan_dict
+
 
 class StimulusType(str, Enum):
     """The renderer keys visual handling off this type — never off subject."""
@@ -276,4 +278,8 @@ class ViewModel:
                                         if k in keep or v not in (None, "", [], {})}
                 else:
                     it.pop("normalized", None)
+        # Lever B (2026-07-13): display-time 'period' -> 'unit' in teacher-facing narrative.
+        # Rescues historic saved plans (born saying 'period') without backfilling storage —
+        # the engine's view model stays literal; only the served/rendered text is cleaned.
+        unitize_lesson_plan_dict(d.get("lesson_plan"))
         return d

@@ -14,6 +14,7 @@ import html as _html
 from typing import List
 
 from ..normalize import parse_table
+from ..unitize import unitize
 from ..view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView,
     Period, StimulusType, ViewModel, VisualStimulus,
@@ -58,20 +59,22 @@ def _render_stimulus(vs: VisualStimulus) -> str:
 
 
 def _render_period(p: Period) -> str:
+    # Lever B (2026-07-13): teacher-facing narrative is unitized at this display sink so the
+    # PDF/export matches the screen (ViewModel.to_dict does the same for the React path).
     parts = [f'<div class="period"><div class="period-hd">'
-             f'<span class="pnum">P{_esc(p.number)}</span> {_esc(p.title)}']
+             f'<span class="pnum">P{_esc(p.number)}</span> {_esc(unitize(p.title))}']
     dur = (p.meta or {}).get("duration_minutes")
     if dur:
         parts.append(f'<span class="dur">{_esc(dur)} min</span>')
     parts.append("</div>")
     if p.activities:
-        parts.append("<ul class='acts'>" + "".join(f"<li>{_esc(a)}</li>" for a in p.activities) + "</ul>")
+        parts.append("<ul class='acts'>" + "".join(f"<li>{_esc(unitize(a))}</li>" for a in p.activities) + "</ul>")
     if p.learning_outcomes:
         parts.append("<div class='lo'><b>LO:</b> " + "; ".join(_esc(x) for x in p.learning_outcomes) + "</div>")
     if p.teacher_notes:
-        parts.append("<div class='tn'><b>Teacher notes:</b> " + " ".join(_esc(x) for x in p.teacher_notes) + "</div>")
+        parts.append("<div class='tn'><b>Teacher notes:</b> " + " ".join(_esc(unitize(x)) for x in p.teacher_notes) + "</div>")
     if p.homework:
-        parts.append(f"<div class='hw'><b>Homework:</b> {_esc(p.homework)}</div>")
+        parts.append(f"<div class='hw'><b>Homework:</b> {_esc(unitize(p.homework))}</div>")
     parts.append("</div>")
     return "".join(parts)
 

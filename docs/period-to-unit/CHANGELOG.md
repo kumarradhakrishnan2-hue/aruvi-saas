@@ -1,9 +1,65 @@
-# period → unit — Lever A change log (generation source)
+# period → unit — change log
+
+Two levers, same goal (the teacher reads "unit", never "period"):
+
+- **Lever A** — rename in the **generation source** (constitutions + prompts) so *new / pre-warmed*
+  plans are born saying "unit". Documented below.
+- **Lever B** — a **display-time cleaner** that rescues the **historic** saved plans without
+  backfilling storage. Documented in the next section.
+
+---
+
+## Lever B — display-time cleaner (`aruvi_core/unitize.py`)
+
+**What it does.** Rewrites the *teaching-chunk* sense of "period" to "unit" at the two display
+sinks only — `ViewModel.to_dict()` (the JSON the API serves to the React app) and
+`render/html.py` (PDF/export). The saved plans on disk and the engine's normalized view model
+stay **literally "period"**; only what reaches the teacher's eyes says "unit". No backfill, fully
+reversible (delete two call sites + the module).
+
+**Why pattern-scoped, not a find-replace.** "period" is overloaded. The cleaner converts ONLY
+when context marks a teaching chunk — a chunk determiner immediately before
+(this/that/the/each/previous/next/first/last/closing/subsequent/consecutive/… period), a number
+immediately after ("Period 1", "Periods 1–2"), or a duration immediately before ("40-minute
+period"). It deliberately does **not** touch:
+
+- domain science — "periodic table", "the period of a pendulum", "period of rigidification"
+- punctuation — "end the sentence with a period"
+- scheduling — "35 minutes × 3 periods" (and it never sees `period_schedule_display` anyway)
+- ambiguous — bare "a period of time"; and it errs toward *leaving* "first period of the chapter"
+  (the "period of X" guard) rather than risk corrupting "period of oscillation".
+
+Capitalisation and plurals are preserved ("Period"→"Unit", "periods"→"units").
+
+**Fields cleaned** (teacher-facing narrative only): period `title`, `activities`,
+`teacher_notes`, `materials`, `homework`, and each phase's `text`. **Never** touched: schema keys,
+group labels, `meta` (carried-not-interpreted extras), scheduling fields.
+
+**Verification (2026-07-13).**
+
+- `tests/test_unitize.py` — 10 convert cases + 11 keep/trap cases, idempotency, walker-scope
+  (confirms keys/meta/labels untouched), and a corpus corruption scan.
+- Dry-run over all **41 saved plans**: 343 narrative strings changed, **0 corruption**
+  (no "unit of …", "unitic", "time unit").
+- End-to-end on a real historic plan (science vii ch_02): the served view model turned 9
+  "Period N" references into "Unit N" (teacher_notes, materials, activity/phase text) while the
+  file on disk stayed literal. 6 "Period N" remain only in `period.meta` duplicates, which the
+  renderers never display (they read first-class `p.materials`; roles are ignored).
+- Full existing suite: **17/17 green** (incl. `test_api`, which exercises the `to_dict` path).
+
+**Known conservative miss:** "the first/final period of the chapter" (means the first/final unit)
+is left as "period", because it is structurally identical to the time-sense "period of X" the
+guard protects. A missed swap is mild; a wrong swap corrupts science prose — the asymmetry is
+intentional.
+
+---
+
+## Lever A — generation source (constitutions + prompts)
 
 **What this is.** Lever A renames the teaching chunk from "period" to "unit" **in the
 generation source** (constitutions + authoring prompts), so that *newly generated / pre-warmed*
 lesson plans are born saying "unit" in the prose the teacher reads. Historic saved plans are
-**not** touched here — that is Lever B (a display-time cleaner), done separately.
+handled by Lever B (above).
 
 **Scope: narrative-only (agreed 2026-07-13).** Only teacher-facing prose is swapped. Two things
 are deliberately **kept** as "period":
