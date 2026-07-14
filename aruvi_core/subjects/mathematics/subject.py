@@ -29,9 +29,27 @@ from ...view_model import (
 )
 
 
+def _hw_line(it: Any) -> str:
+    """One homework display line. Middle/prep homework items are dicts carrying a
+    `book_ref` (which itself holds the section + page, e.g. "Figure it Out Q8,
+    section 5.1 p.111") alongside the `description` — keep BOTH so the teacher can
+    locate the task, appending the locator when it is not already inside the text.
+    Secondary homework items are plain strings with the page baked in — passed through
+    untouched. (Fixes the dropped page/section locator; see MEMORY 'amendments to be tested'.)
+    The locator is wrapped in `**…**` (markdown bold) so the renderers can weight the reference
+    on its own — the teacher's eye lands on "where in the book" without re-reading the task."""
+    if isinstance(it, dict):
+        desc = str(it.get("description") or it.get("text") or "").strip()
+        ref = str(it.get("book_ref") or "").strip()
+        if ref and desc:
+            return desc if ref in desc else f"{desc} (**{ref}**)"
+        return f"**{ref}**" if ref and not desc else desc
+    return str(it).strip()
+
+
 def _hw(v: Any) -> str:
     if isinstance(v, list):
-        return "; ".join(text_lines(v))
+        return "; ".join(line for line in (_hw_line(it) for it in v) if line)
     return v or ""
 
 
@@ -93,26 +111,68 @@ class MathematicsSubject:
 
     # ── Lesson plan → view (dispatch by stage) ──────────────────────────────────
     def lesson_plan_to_view(self, raw: Dict[str, Any], *, grade, chapter) -> LessonPlanView:
-        periods = raw.get("lesson_plan", raw).get("periods", [])
+        lp = raw.get("lesson_plan", raw)
+        periods = lp.get("periods", [])
         secondary = stage_for(grade) == "secondary"
+        # SECONDARY section titles live in the result-level coverage_handoff (one entry per
+        # section: section_ref + section_title + period_numbers), NOT on the period — the
+        # period carries only the bare anchor ("2.1"). Rejoin here so the group label reads
+        # "2.1 — Introduction" instead of a naked number: period_number-primary with an
+        # anchor fallback, the same join the prototype's app.py maths-secondary branch and
+        # this repo's science._secondary_lp_groups already use. (Callers pass the FULL saved
+        # result, per the §3e LP-standard rule, so the handoff is present here.)
+        ho_by_period: Dict[Any, Dict[str, Any]] = {}
+        ho_by_ref: Dict[str, Dict[str, Any]] = {}
+        if secondary:
+            for e in (raw.get("coverage_handoff") or lp.get("coverage_handoff") or []):
+                if not isinstance(e, dict):
+                    continue
+                for pn in (e.get("period_numbers") or []):
+                    ho_by_period[pn] = e
+                ref = str(e.get("section_ref") or e.get("section_label") or "")
+                if ref:
+                    ho_by_ref[ref] = e
+        # Group by CONTIGUOUS RUNS of the same section, never a first-appearance merge:
+        # secondary plans deliberately RETURN to a section later (ix ch_02: 2.3 at periods
+        # 3 and 9, 2.6 at 6–8 and 10 — teach, then revisit/consolidate). A dict-merge pulled
+        # the revisit up next to the first visit, so the flattened Learning-Unit rail (and
+        # the pointer!) read 1,2,3,9,4,… — the prototype renders periods[] flat in
+        # period_number order, and that teaching order is the contract (founder 2026-07-14).
+        # A revisited section simply appears as its own group again.
         groups: List[Group] = []
-        index: Dict[str, Group] = {}
+        prev_key: Any = object()  # sentinel ≠ any real key
+        seen_keys: set = set()    # anchors already opened once — a re-opening is a REVISIT
         for p in periods:
             if secondary:
-                key = label = str(p.get("section_anchor", ""))
+                key = str(p.get("section_anchor", ""))
+                ho = ho_by_period.get(p.get("period_number")) or ho_by_ref.get(key) or {}
+                title = str(ho.get("section_title") or "").strip()
+                # Founder rule 2026-07-14: the section NUMBER is noise in the label — show the
+                # name alone ("Introduction", not "2.1 — Introduction"); the anchor is kept in
+                # meta (and remains the grouping key) and shows only when no title exists.
+                label = title or key
                 bands = p.get("time_bands")
-                gmeta = {"section_anchor": key}
+                gmeta = {"section_anchor": key, "section_title": title}
             else:
                 seg = (p.get("textbook_segments") or [{}])[0]
                 key = str(seg.get("ref", "")) or "lesson"
-                label = " — ".join(x for x in (seg.get("ref"), seg.get("title")) if x) or "Lesson"
+                # Same founder rule for MIDDLE: title alone ("Simple Expressions", not
+                # "section 2.1 — Simple Expressions"); the ref stays in meta + key, and is
+                # the label only when the segment has no title.
+                label = str(seg.get("title") or "").strip() or str(seg.get("ref") or "") or "Lesson"
                 bands = p.get("phases")
                 gmeta = {"ref": seg.get("ref", "")}
-            if key not in index:
-                g = Group(type="section", label=label, meta=gmeta)
-                index[key] = g
-                groups.append(g)
-            index[key].periods.append(Period(
+            if key != prev_key:
+                # A section re-opened later in the plan is intentional (consolidation /
+                # deferred depth — see MEMORY 2026-07-14). Say so on the label, so the
+                # teacher reads the repeat as deliberate, not a mistake (founder 2026-07-14).
+                if key in seen_keys:
+                    label = f"{label} (Revisit)"
+                    gmeta["revisit"] = True
+                groups.append(Group(type="section", label=label, meta=gmeta))
+                prev_key = key
+                seen_keys.add(key)
+            groups[-1].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
                 approach=p.get("pedagogical_method", ""),   # absent in preparatory saves
@@ -125,6 +185,15 @@ class MathematicsSubject:
                       "pedagogical_method": p.get("pedagogical_method", ""),
                       "materials": p.get("materials", ""),
                       "visual_aids": p.get("visual_aids", ""),
+                      # Prep has NO section axis (all periods collapse to a single "Lesson"
+                      # group), so the renderer's Overview "Section" row would otherwise read
+                      # "Lesson" for every unit. Carry the period's OWN anchored section — the
+                      # proxy for the axis — so the Overview shows the real section it covers
+                      # (titles preferred, S-codes as fallback). Empty for middle/secondary,
+                      # where the group label already IS the section and the renderer falls
+                      # back to it.
+                      "section_label": " · ".join(p.get("section_titles") or [])
+                                       or " · ".join(p.get("section_refs") or []),
                       "duration_minutes": p.get("period_duration_minutes")},
             ))
         return LessonPlanView(

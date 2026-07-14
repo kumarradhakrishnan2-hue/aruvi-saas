@@ -122,7 +122,7 @@ When verification fails:
 - `teacher_guide.expected_answer`   = ""
 - `teacher_guide.method_one_line`   = ""
 - `teacher_guide.what_each_option_reveals` = {}
-- `teacher_guide.inclusivity`       = `"[Verification failed] Refer to the book exercise(s) anchored to " + section_ref + "."`
+- `teacher_guide.inclusivity`       = `{ "support": "Refer to the book exercise(s) anchored to " + section_ref + ".", "challenge": "" }`  (verification failed)
 
 The `exercise` companion block is still emitted from the handoff
 anchor (if any), so the teacher always has a textbook fallback.
@@ -155,8 +155,11 @@ Every non-fallback item carries `teacher_guide` as a JSON object:
     reveals. For non-MCQ items, this is an empty object {}.
 
   teacher_guide.inclusivity:
-    One sentence (≤ 25 words) covering BOTH a support for the
-    struggling student AND a challenge. Vary the surface
+    An OBJECT with two keys, each ONE short clause (together ≤ 25 words):
+      "support"   = the aid for the struggling student.
+      "challenge" = the extension for the confident student.
+    Write each as a bare clause — do NOT prefix it with a "Support:" /
+    "Challenge:" label (the renderer supplies emphasis). Vary the surface
     form across items so the assessment does not read canned. Stay
     within the per-goal intent below:
       recall → support = let the student look back at taught
@@ -187,6 +190,11 @@ Permitted formats:
 - Pipe-delimited table: 2+ lines, every line contains "|", first row
   is the header. Use only for tabular data the student must read or
   fill in.
+
+- Number line: one line tagged `number_line:` then the ticks split by "|",
+  each cell a number (labelled tick) or "..." (blank tick the student marks);
+  endpoints must be numbers. E.g. `number_line: -3 | ... | 0 | ... | 3`.
+  Keep the task wording in `prompt`. Do not emit a number line as a pipe-table.
 
 - Empty string "": no visual stimulus. This is the default for almost
   all geometry items — the figure, if needed, is reached via the
@@ -303,7 +311,7 @@ ASSESSMENT JSON SCHEMA
           "prompt":          string,            // generated; "" only on Rule 5 fallback.
                                                 // MCQ: choices live ONLY in options[] —
                                                 // do NOT inline/letter/repeat them here
-          "visual_stimulus": string,            // "" or pipe-table only
+          "visual_stimulus": string,            // "" , pipe-table, or number_line:
 
           "options":         [ {"label": string,
                                 "text":  string,
@@ -314,8 +322,8 @@ ASSESSMENT JSON SCHEMA
             "method_one_line":          string,
             "what_each_option_reveals": { "A": string, "B": string,
                                           "C": string, "D": string } | {},
-            "inclusivity":              string
-          },
+            "inclusivity":              { "support": string,
+                                          "challenge": string },
 
           "exercise": {
             "book_ref":    string,                          // "" when no anchor

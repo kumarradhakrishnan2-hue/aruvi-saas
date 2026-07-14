@@ -1162,6 +1162,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Correct-option row(s) in the ANSWER tab. */
 .assess-corr-row { display:flex; gap:8px; font-size:13.5px; color:var(--ink); line-height:1.5; padding:2px 0; }
 .assess-inc { font-size:13.5px; color:var(--ink); line-height:1.55; }
+.assess-inc-row + .assess-inc-row { margin-top:.5rem; }
 /* End-of-item nudge to the next question (Answer + Inclusivity tabs, multi-item units only).
    Deliberately light: a hairline sets it apart from the content, mono pine text points forward
    like the pager's "Next →". Right-aligned = forward. */
@@ -1179,6 +1180,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-flat .assess-tickmark, .assess-flat .assess-otg summary,
 .assess-flat .assess-ticks li::before { color:var(--pine); }
 .assess-flat .assess-look-t, .assess-flat .assess-ticks li,
+.assess-flat .assess-scaf-row,
 .assess-flat .assess-revrow { font-size:13.5px; color:var(--ink); }
 .assess-flat .assess-opts2 li { font-size:13.5px; padding:5px 0; margin:0; border-bottom:1px solid var(--line-soft); }
 .assess-flat .assess-opts2 li:last-child { border-bottom:none; }
@@ -1269,6 +1271,11 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-look { margin-top:11px; padding-top:9px; border-top:1px dashed var(--edge-green); }
 .assess-look-k { font-family:var(--f-mono); font-size:9px; letter-spacing:.1em; color:#0f6e56; }
 .assess-look-t { font-size:12px; color:#3a4540; margin-top:3px; line-height:1.5; }
+/* scaffold template — each authored line / numbered step on its OWN row (never a run-on
+   paragraph); pre-wrap keeps the fill-blank spacing ("Name: ___   Role: ___"). */
+.assess-scaf { margin-top:3px; }
+.assess-scaf-row { font-size:12px; color:#3a4540; line-height:1.5; margin:4px 0; white-space:pre-wrap; }
+.assess-scaf-gap { height:7px; }
 .assess-backbtn { width:100%; margin-top:15px; font-family:var(--f-mono); font-size:12px; background:none; color:#0f6e56; border:1px solid #0f6e56; padding:12px; border-radius:8px; cursor:pointer; }
 .assess-backbtn:hover { background:#0f6e56; color:#eafaf4; }
 
@@ -1290,6 +1297,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-table { width:100%; border-collapse:collapse; font-size:12px; }
 .assess-table th, .assess-table td { border:1px solid var(--edge-green); padding:5px 8px; text-align:left; vertical-align:top; }
 .assess-table th { background:#eef6f1; font-family:var(--f-mono); font-size:10px; letter-spacing:.04em; color:#0f6e56; }
+/* maths number line — an axis with ticks, drawn (never a grid) */
+.assess-vs-nl { background:#f4f9f6; border:1px solid var(--edge-green); border-radius:8px; padding:10px 12px; }
+.assess-nl-svg { display:block; width:100%; max-width:360px; height:auto; margin:0 auto; }
+.assess-nl-axis, .assess-nl-tick { stroke:#0f6e56; stroke-width:1.5; stroke-linecap:round; }
+.assess-nl-arrow { fill:#0f6e56; }
+.assess-nl-lab { fill:#1f3a30; font-family:var(--f-mono); font-size:11px; }
+.assess-nl-instr { margin-top:6px; font-size:12px; font-style:italic; color:#3a4540; text-align:center; }
 /* tick-lists (look-for / expected elements / rubric / what-to-produce) */
 .assess-ticks { list-style:none; margin:3px 0 0; padding:0; }
 .assess-ticks li { position:relative; font-size:12px; color:#3a4540; margin:3px 0; padding-left:16px; line-height:1.5; }
@@ -2767,7 +2781,8 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   [data-theme-effective="dark"] .lv-lo,
   [data-theme-effective="dark"] .assess-sub,
   [data-theme-effective="dark"] .assess-empty,
-  [data-theme-effective="dark"] .assess-look-t { color: var(--ink-soft); }
+  [data-theme-effective="dark"] .assess-look-t,
+  [data-theme-effective="dark"] .assess-scaf-row { color: var(--ink-soft); }
   [data-theme-effective="dark"] .assess-back,
   [data-theme-effective="dark"] .assess-tag,
   [data-theme-effective="dark"] .assess-lo-k,
@@ -2793,6 +2808,12 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   [data-theme-effective="dark"] .assess-cog,
   [data-theme-effective="dark"] .assess-otg summary,
   [data-theme-effective="dark"] .assess-table th { color: var(--pine-d); }
+  [data-theme-effective="dark"] .assess-vs-nl { background: var(--tint-pine); }
+  [data-theme-effective="dark"] .assess-nl-axis,
+  [data-theme-effective="dark"] .assess-nl-tick { stroke: var(--pine-d); }
+  [data-theme-effective="dark"] .assess-nl-arrow { fill: var(--pine-d); }
+  [data-theme-effective="dark"] .assess-nl-lab { fill: var(--ink-soft); }
+  [data-theme-effective="dark"] .assess-nl-instr { color: var(--ink-soft); }
   [data-theme-effective="dark"] .assess-ticks li::before { color: var(--pine-d); }
   [data-theme-effective="dark"] .filebtn-docx { color: #6ea0e0; }
   [data-theme-effective="dark"] .ch-completed { color: #dd9068; }
@@ -2877,6 +2898,19 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-acchead:hover .co-chev { color: var(--pine); }
 .co-acchead.open .co-chev { transform: rotate(180deg); color: var(--ink); }
 .co-accbody { padding: 0 16px 8px; }
+/* Maths-prep flat unit list (no axis): a fixed-height "wheel" window (~4 units). Units beyond
+   the fold are reached by scrolling INSIDE this region (founder 2026-07-13, replacing the
+   click-to-reveal link). Thin rail + a soft bottom fade hint "more below". */
+.co-flatwrap { position: relative; margin-top: 2px; }
+.co-flatscroll { max-height: 260px; overflow-y: auto; overscroll-behavior: contain;
+  padding-right: 6px; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: var(--edge-green) transparent; }
+.co-flatscroll::-webkit-scrollbar { width: 6px; }
+.co-flatscroll::-webkit-scrollbar-thumb { background: var(--edge-green); border-radius: 999px; }
+.co-flatscroll::-webkit-scrollbar-track { background: transparent; }
+.co-flatfade { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--paper)); }
+@media (max-width: 600px) { .co-flatscroll { max-height: 348px; } }
 /* Units inside an open stage — unfilled outlined capsules. */
 .co-list { display: flex; flex-direction: column; gap: 8px; padding: 2px 0 6px; }
 .co-card { position: relative; display: flex; align-items: center; gap: 12px;

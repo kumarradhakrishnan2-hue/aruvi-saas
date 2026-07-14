@@ -243,13 +243,178 @@ must confirm · source entry.
     emits at most one visual, and only splits into A/B parts when all parts are textual. ⚠
     Founder-directed change (2026-07-13), reconstructed rationale — confirm intent.
 
+14. **Maths number-line stimulus — explicit `number_line:` type added to prep + middle Rule 7** —
+    prep/middle maths assessment constitutions permitted only a pipe-table or "" for
+    `visual_stimulus` and prohibited SVG, so a number line had nowhere legal to go; the generator
+    shoehorned it into a header-less pipe row (`| 200 | ... | ... | ... | 260 |` + a pipe-less
+    parenthetical), which the shared classifier correctly types TABLE → the renderer boxed it
+    (reported: `mathematics/iii/ch_06` **Q-C-3/Q-C-4**). Fix: a 4-line bullet added to Rule 7
+    "Permitted" in **preparatory + middle** (schema comment `"" , pipe-table, or number_line:`) —
+    a stimulus tagged `number_line:` then ticks split by "|", each cell a number (labelled tick)
+    or "..." (blank tick), endpoints numeric, task wording stays in `prompt`, never a faked table.
+    Secondary NOT changed (it already permits SVG figures, VS-2). Engine side (already built,
+    earlier this session): `StimulusType.NUMBER_LINE`; maths-only `_maths_number_line` reads ONLY
+    the `number_line:` tag (declared intent, no guessing) — the earlier single-numeric-pipe-row
+    heuristic was DROPPED once the corpus was tagged, so an untagged numeric row now stays an
+    ordinary table rather than being silently re-typed; SVG number-line renderer `ANumberLine` in
+    `LessonView.jsx`. Q-C-3/Q-C-4 back-filled to the tagged form. *Validated synthetically:* tagged + legacy + spaced/negative variants all
+    parse to number_line; corpus typing unchanged (43 table, 2 number_line; Q-C-1 tile table stays
+    table); full suite 17/17. *Pre-warm must confirm:* live prep/middle maths generation emits
+    number lines in the tagged `number_line:` form (not as a pipe-table), one line, instruction in
+    `prompt`. (src: 2026-07-13, founder-directed.)
+
+15. **Maths homework locator restored at the RENDERER (middle) + prep homework field INTRODUCED
+    (constitution)** — two coupled changes, founder-directed 2026-07-14. *The problem:* middle
+    maths homework items are dicts carrying the page + section in a dedicated `book_ref`
+    (e.g. `"Figure it Out Q8, section 5.1 p.111"`) alongside `description`, but the maths
+    normalizer `_hw` → `text_lines` picked ONLY `description` and silently DROPPED `book_ref` /
+    `source_section` — so a teacher saw "Guna erased numbers from a Venn diagram…" with no way to
+    locate it (reported: `mathematics/vi/ch_05_20260523_170838` Period 2, item E-14). Note this is
+    a RENDER-layer drop, NOT a generation defect — the data was always complete (contrast the
+    English homework amendment, item 11, which bakes `(p.NN)` into the text at generation). *Fixes:*
+    (a) **`_hw` rewritten** (`aruvi_core/subjects/mathematics/subject.py`, new `_hw_line` helper):
+    for dict items keep BOTH — `"{description} (**{book_ref}**)"`, appending the locator only when it
+    is not already inside the text; string items (secondary, page baked in) pass through untouched;
+    empty/absent → dropped. Covers all three stages by shape, not by stage-branch: middle dicts
+    (live now), prep dicts (future — see (b)), secondary strings (unchanged). **The locator is
+    wrapped in `**…**` (markdown bold) so the reference alone (e.g. "Figure it Out Q11, section 5.2
+    p.115") renders weighted** — new shared React helper `boldMarks()` in `web/app/lib/format.js`
+    (splits `**…**` → `<strong>`) wired into BOTH homework renderers (`LessonView.jsx` unit LESSON
+    tab + `ViewModelView.jsx`); export/print parity via new `_esc_bold()` in `render/html.py`
+    (escape → `**…**`→`<b>`). NB `format.js` now contains JSX (fine for Next's SWC on `.js`) —
+    STATIC-verified only (no `next dev` in sandbox), so the bold spans need a live/mobile eyeball. (b) **Prep LP
+    constitution given a homework field** it never had — new **RULE 9 | HOMEWORK IS OPTIONAL AND
+    UN-OWNED** (mirrors middle Rule 9) + `"homework": [ <same shape as tasks_in_class entry> ]`
+    added to the `<period>` JSON schema, `book_ref` mandatory. Prep uses the same `book_ref` dict
+    idiom as middle, so `_hw` already renders it correctly the day prep starts emitting it. *Validated
+    synthetically:* `_hw` unit-checked on real middle Period-2 data (locator now present), secondary
+    string (unchanged), a synthetic prep dict (`Activity 3, p.107` appended), empty list, and an
+    already-contains-ref guard (no double-append); `tests/test_maths_port.py` green. *Pre-warm must
+    confirm:* (i) live middle maths LP homework renders `description (book_ref)` with the page +
+    section visible AND the reference bold, never description-only; (ii) newly-generated PREP maths LPs actually EMIT a
+    `homework[]` array in the new dict shape with a populated `book_ref`, and it renders with the
+    locator; (iii) secondary maths homework (plain strings) is unchanged. (src: 2026-07-14,
+    founder-directed.)
+
+16. **Middle-maths `teacher_guide.inclusivity` made STRUCTURED `{support, challenge}`** (was a
+    single free string). Audit finding: Rule 6 mandates "vary the surface form … not canned", so
+    generated inclusivity legitimately drifts (ch_09 VIII uses verb-form "challenge them", "hesitant/
+    confident/advanced", 2 items with neither keyword) — renderer keyword-bolding of "struggling"/
+    "challenge:" is therefore unreliable by design. Fix: `assessment/mathematics/middle` Rule 6 +
+    JSON schema + verification-fail default now emit an object with two bare-clause keys (no
+    "Support:"/"Challenge:" label prefix — renderer supplies emphasis). *Follow-on NOT yet done:*
+    `assessment_norm.from_maths` still reads `inclusivity` as a string, and `LessonView.InclusivityText`
+    still keyword-matches — both must adopt the `{support, challenge}` object (bold the two known
+    parts, drop the regex) before this renders. Prep/secondary maths left as string for now. *Pre-warm
+    must confirm:* live middle-maths assessment emits `inclusivity` as `{support, challenge}`, each a
+    label-less clause. (src: 2026-07-14, founder-directed.)
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
 
 ---
 
-## 2026-07-11 (newest) — Assessment sub-part parsing lives ONCE in the engine + English N-to-N item→period pairing (STATIC + full suite green; live pass pending)
+## 2026-07-14 (newest) — Maths-secondary LP section TITLES rejoined from coverage_handoff (suite green)
+Reported: maths secondary (e.g. ix ch_02_20260618_102702.json) showed bare section numbers
+("2.1") as LP group labels, while the prototype showed the section names. Cause: secondary maths
+periods carry only `section_anchor`; the human title lives in the result-level
+`coverage_handoff` (`section_ref` + `section_title` + `period_numbers`) and
+`MathematicsSubject.lesson_plan_to_view` never joined it — the prototype's app.py
+maths-secondary branch DOES (`_ho_by_period` primary / anchor fallback →
+`section_title: ho.section_title or anchor`). Fix (aruvi_core/subjects/mathematics/subject.py):
+same rejoin as science's `_secondary_lp_groups` — build ho_by_period (period_numbers) +
+ho_by_ref (section_ref, with section_label fallback) from `raw.get("coverage_handoff") or
+lp.get(...)` (works because callers pass the FULL saved result, §3e); secondary group label is
+now the section NAME (founder amendment same day: the section NUMBER is noise in maths LP
+labels — secondary shows `"Introduction"`, middle shows `"Simple Expressions"`; the anchor/ref
+stays the grouping KEY and lives in group meta, surfacing as the label only when no title
+exists), and group meta carries `section_anchor` + `section_title`. Shared-section chapters
+join correctly (ix ch_02: 2.3 → periods [3,9], 2.6 → [6,7,8,10]). Prep ("Lesson" +
+per-period section_label meta) verified unchanged. Label flows to the UI
+via `u.context` → Overview "Section" row + chapter-organization accordion, and to the export
+renderer via `Group.label` — no renderer change needed. Tests: maths_port, lp_standard,
+view_model, render all green. Live + mobile pass pending as usual.
+**Same day — SECONDARY PERIOD SEQUENCING: contiguous-run grouping replaces first-appearance
+merge (maths + science).** Reported: ix maths ch_02's unit order differed between prototype
+and SaaS. The prototype renders `periods[]` flat in period_number order; SaaS grouped by
+`section_anchor` via a first-appearance dict, so REVISIT periods (the plan returns to 2.3 at
+period 9 and 2.6 at period 10, after teaching in between) were pulled up into the earlier
+group — the flattened LU rail (and the POINTER) read 1,2,3,**9**,4… steering the teacher into
+a consolidation revisit out of sequence. Founder rule: **the plan's period_number teaching
+order is the contract.** Fix in BOTH `mathematics.lesson_plan_to_view` and
+`science._secondary_lp_groups`: group by contiguous runs of the same anchor (new group
+whenever the anchor changes; a revisited section appears again as its own group). Science had
+the same latent bug live (ix ch_02 revisits §2.3.1 at period 10). Verified: maths ix ch_02 →
+1–10 in order, ch_07 → 1–11 (its consolidation period 11 had shown as unit 8); science
+ix ch_02 → 1–11; middle/prep orders unchanged; maths, science, lp_standard, view_model,
+render, allocate suites all green.
+**Made STRUCTURAL (same day):** a corpus sweep found Social Sciences ALSO reordering (5
+plans — interleaved competencies; viii ch_04 read 1,3,10,2,5,…), so
+`social_sciences.lesson_plan_to_view` got the same contiguous-run grouping (a competency the
+plan returns to appears again as its own group), and **NEW standing test
+`tests/test_unit_order.py`** sweeps EVERY saved plan in the corpus asserting flattened
+view-model order == the plan's periods[] teaching order (same depth-first walk as
+LessonView's flattenUnits) — any translator regression, or a new subject repeating the
+first-appearance-merge idiom, fails the suite the day its first plan is saved. All 41 plans
+pass; all port suites green. English + science-middle kept their dict-merge idiom (no corpus
+violations today) — the test is the guard, not a rewrite.
+**"(Revisit)" marker (same day, founder):** a repeated section heading on the chapter-org page
+could read as a mistake — so when a maths/science SECTION group re-opens for an anchor already
+seen, the engine appends " (Revisit)" to the group label (+ `meta.revisit: true`), done in the
+translators so the export renderer inherits it. Marked only on exact-anchor repeats: science
+ix ch_02 period 10 gets it, period 11 does not (its anchor "…(Nucleus sub-section)" is a
+DIFFERENT anchor, i.e. deferred depth, not a repeat). SS competency repeats deliberately NOT
+marked — content marches forward there; only the tag repeats, so "Revisit" would be false.
+Constitutions untouched (founder: tightening the revisit rule risks unintended consequences).
+**Same day — maths-prep axis legend (LessonView.jsx):** the chapter-organization axis legend
+was gated `axisTypes.length && !mathsFlat`, so maths PREP (the flat single-"Lesson" case) was
+the ONE subject·stage with no axis description. Founder: it must not vanish. Fix: mathsFlat
+gets its own legend row — name "Units", blurb "one continuous run of learning units in the
+textbook's own teaching order — the activity-led, play-way flow the NCF asks of the
+preparatory stage. Tap a unit to open it." (tap hint differs from the accordion's "Click each
+card to access units underneath" because flat cards ARE units). Babel-parse clean; STATIC
+only — live + mobile pass pending.
+
+## 2026-07-14 — Scaffold row-split: fill-in templates no longer run together in one paragraph (full suite green; live pass pending)
+Reported bug: TWAU (and any constitution/maths-family) assessment SCAFFOLD blocks rendered as
+one continuous paragraph — numbered/step items ran together. Cause: `n.scaffold` was carried as
+raw text and rendered inside `.assess-look-t`, which collapses whitespace, so authored `\n`
+breaks vanished; and the TWAU V ch05 shape packs "Step 1 — … Step 2 — … Step 3 — …" inline with
+NO newlines at all. Fix follows the split-once-in-the-engine rule (like `split_parts`): new
+`assessment_norm.split_scaffold_lines()` → `NormalizedItem.scaffold_lines` (set in `_finish`, so
+every family gets it). Authored newlines are always row breaks; a single line packing a
+sequential `Step N` / `(N)` / `N.` run (≥2) is additionally split; a blank authored line survives
+as `""` (Part A / Part B spacer); a lone unnumbered line / empty → `[]` (renderer falls back to
+plain prose, e.g. the Science single-paragraph scaffold). Renderer: new `AScaffold` in
+`LessonView.jsx` (replaces the `<ABlock k="SCAFFOLD">` call) renders rows via `.assess-scaf-row`
+(`white-space:pre-wrap` keeps fill-blank spacing like "Name: ___   Role: ___"); flat + dark
+overrides added. Verified against all real corpus scaffold shapes (rangoli parens, name-rows,
+inline steps, newline steps, Part A/B, science prose). Full suite **17/17 green** (added
+`test_split_scaffold_lines_breaks_rows`); JSX babel-parses clean, CSS balanced. STATIC only — the
+sandbox can't `next dev`; live + mobile render check still owed.
+
+## 2026-07-13 — Table-in-stem dedup: structural strip in the normalizer (full suite green)
+
+An assessment stem that packs a table AS raw pipe-markdown (`| 283 | ___ | 285 | ___ |`)
+while ALSO carrying it in `visual_stimulus` made the figures render TWICE — once as raw pipe
+prose in the stem, once as the typed table. Reported on `mathematics/iii/ch_06_20260603_180712`
+**Q-C-1**. Fixed STRUCTURALLY (not by back-editing the JSON) at the shared normalization point,
+mirroring the maths-MCQ `expected_answer` drop: new `assessment_norm._dedupe_stem_table(n)`,
+called first in `_finish()` so it runs for EVERY family. If the stem's pipe lines classify as a
+TABLE, they are stripped from the stem; when no `visual_stimulus` carries the table yet, the
+stem's table is PROMOTED into `visual_stimulus` (never overwriting an authored one — that copy
+is authoritative and usually more complete, e.g. Q-C-1's has the `Tile 1..6` header). Non-table
+stems (a stray single pipe) are untouched. Corpus scan found 4 affected items, all now
+instruction-only stems + table in `visual_stimulus`: **Q-C-1 / Q-C-3** (iii/ch_06 SCR, dup
+stripped), **Q-B-2** (vii/ch_04 ECR, matchstick table stripped, before/after prose kept),
+**TWAU iv/ch_07 OPEN_TASK** (empty Floaters/Sinkers grid promoted — it had no `visual_stimulus`).
+Reads clean without regeneration. Full suite **17/17 green** (test_api needs `pip install
+fastapi httpx` in the sandbox). Render path unchanged (renderer already types tables / shows
+instruction-only stems), so no UI/mobile change. Parallels the English FILL_IN anti-duplication
+rule (item 12 in the pre-warm checklist) but does it in the engine, not the constitution + data.
+
+## 2026-07-11 — Assessment sub-part parsing lives ONCE in the engine + English N-to-N item→period pairing (STATIC + full suite green; live pass pending)
 
 Two structural fixes to the assessment path today, both driven by the same principle:
 **a change is only "once, everywhere" if it operates on a MODELED structure in the canonical

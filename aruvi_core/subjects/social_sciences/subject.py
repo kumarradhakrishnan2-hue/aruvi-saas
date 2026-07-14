@@ -72,23 +72,29 @@ class SocialSciencesSubject:
     # ── Lesson plan → view (grouped by competency) ──────────────────────────────
     def lesson_plan_to_view(self, raw: Dict[str, Any], *, grade, chapter) -> LessonPlanView:
         periods = raw.get("lesson_plan", raw).get("periods", [])
+        # Group by CONTIGUOUS RUNS of the same competency, never a first-appearance merge:
+        # SS plans interleave competencies (viii ch_04 raw order 1..11 flattened to
+        # 1,3,10,2,5,… under the old dict merge), and the flattened Learning-Unit rail —
+        # and the POINTER — must follow the plan's own period_number teaching sequence
+        # (founder rule 2026-07-14, set on maths secondary; the order is the contract,
+        # enforced corpus-wide by tests/test_unit_order.py). A competency the plan returns
+        # to later simply appears again as its own group.
         groups: List[Group] = []
-        index: Dict[str, Group] = {}
+        prev_code: Any = object()  # sentinel ≠ any real c_code
         for p in periods:
             comp = p.get("competency") or {}
             c_code = comp.get("c_code", "") or "general"
-            if c_code not in index:
+            if c_code != prev_code:
                 label = comp.get("c_code", "General")
                 if comp.get("competency_text"):
                     label = f"{label} — {comp['competency_text']}"
-                g = Group(type="competency", label=label,
-                          meta={"c_code": comp.get("c_code", ""), "cg": comp.get("cg", ""),
-                                "weight": comp.get("weight", "")})
-                index[c_code] = g
-                groups.append(g)
+                groups.append(Group(type="competency", label=label,
+                                    meta={"c_code": comp.get("c_code", ""), "cg": comp.get("cg", ""),
+                                          "weight": comp.get("weight", "")}))
+                prev_code = c_code
             # NOTE (2026-07-09): SS plans carry NO pedagogical approach/method field —
             # Period.approach stays empty until the SS LP constitution emits one.
-            index[c_code].periods.append(Period(
+            groups[-1].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
                 activities=band_lines(p.get("time_bands")),

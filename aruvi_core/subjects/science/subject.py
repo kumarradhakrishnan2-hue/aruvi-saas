@@ -187,24 +187,36 @@ class ScienceSubject:
             if e.get("section_label"):
                 ho_by_label[e["section_label"]] = e
 
+        # Group by CONTIGUOUS RUNS of the same anchor, never a first-appearance merge:
+        # secondary plans deliberately RETURN to a section later (science ix ch_02 revisits
+        # §2.3.1 at period 10, after 2.4/2.5). A dict-merge pulled the revisit up next to the
+        # first visit, reordering the flattened Learning-Unit rail (and the pointer) away from
+        # the plan's own period_number teaching sequence — that sequence is the contract
+        # (founder 2026-07-14; found on maths secondary, same fix in mathematics/subject.py).
         groups: List[Group] = []
-        by_section: Dict[str, Group] = {}
+        prev_anchor: Any = object()  # sentinel ≠ any real anchor
+        seen_anchors: set = set()    # anchors already opened once — a re-opening is a REVISIT
         for p in periods_raw:
             anchor = str(p.get("section_anchor", "")) or "Section"
-            if anchor not in by_section:
+            if anchor != prev_anchor:
                 ho = ho_by_period.get(p.get("period_number")) or ho_by_label.get(anchor) or {}
                 lo = ho.get("implied_lo")
                 if isinstance(lo, list):
                     lo = " ".join(str(x).strip() for x in lo if x)
-                g = Group(
+                # A section re-opened later in the plan is intentional (consolidation /
+                # deferred depth). Say so on the label, so the teacher reads the repeat
+                # as deliberate, not a mistake (founder 2026-07-14; same in mathematics).
+                revisit = anchor in seen_anchors
+                groups.append(Group(
                     type="section",
-                    label=anchor,
+                    label=f"{anchor} (Revisit)" if revisit else anchor,
                     meta={"section_context": ho.get("section_context", ""),
-                          "implied_lo": lo or ""},
-                )
-                by_section[anchor] = g
-                groups.append(g)
-            by_section[anchor].periods.append(self._period_from(p))
+                          "implied_lo": lo or "",
+                          **({"revisit": True} if revisit else {})},
+                ))
+                prev_anchor = anchor
+                seen_anchors.add(anchor)
+            groups[-1].periods.append(self._period_from(p))
         return groups
 
     def _period_from(self, p: Dict[str, Any]) -> Period:

@@ -199,7 +199,29 @@ def test_split_parts_structures_prose_once():
           "non-lists left whole.")
 
 
+def test_split_scaffold_lines_breaks_rows():
+    """A fill-in scaffold template is split into display ROWS once in the engine
+    (assessment_norm.split_scaffold_lines) so numbered/step items never run together in one
+    paragraph. Authored newlines break rows; an inline 'Step N'/'(N)'/'N.' run on a single
+    line splits too; blank lines survive as spacers; a lone unnumbered line stays prose."""
+    from aruvi_core.assessment_norm import split_scaffold_lines as s
+    # inline "Step N —" run, NO newlines (the TWAU V ch05 bug) → one row per step
+    rows = s("Step 1 — Think of your state. Step 2 — Choose one. Step 3 — Sketch both.")
+    assert [r[:6] for r in rows] == ["Step 1", "Step 2", "Step 3"], rows
+    # authored newlines are always row breaks (each on its own row)
+    assert len(s("Name: _ Role: _\nName: _ Role: _\nName: _ Role: _")) == 3
+    # newline + parenthesized items
+    assert s("Lead line\n(1) first\n(2) second") == ["Lead line", "(1) first", "(2) second"]
+    # blank authored line kept as a spacer (Part A / Part B)
+    assert "" in s("Part A:\nQ1: _\nQ2: _\n\nPart B:\nDo the sorting task now here.")
+    # a single unnumbered line / empty → no rows (renderer shows plain prose)
+    assert s("Use the colour rules you recorded to complete the last column now.") == []
+    assert s("") == []
+    print("OK — split_scaffold_lines: scaffolds row-split once in the engine; prose left whole.")
+
+
 if __name__ == "__main__":
     test_normalized_contract_well_formed()
     test_serialization_omits_not_blanks()
     test_split_parts_structures_prose_once()
+    test_split_scaffold_lines_breaks_rows()

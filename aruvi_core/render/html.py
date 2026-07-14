@@ -25,6 +25,14 @@ def _esc(s) -> str:
     return _html.escape(str(s if s is not None else ""))
 
 
+def _esc_bold(s) -> str:
+    """Escape, then turn `**…**` markdown-bold spans into <b>…</b>. The maths homework
+    normalizer wraps the textbook locator in `**…**` so the reference alone renders bold;
+    this keeps screen ↔ print parity (the React renderers use lib/format.boldMarks)."""
+    import re as _re
+    return _re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", _esc(s))
+
+
 def _meta_chips(meta: dict) -> str:
     """Render selected, human-useful meta as small chips (weight, implied LO, stage no…)."""
     keep = ("weight", "implied_lo", "stage_number", "description", "spine_code", "section_id")
@@ -74,7 +82,7 @@ def _render_period(p: Period) -> str:
     if p.teacher_notes:
         parts.append("<div class='tn'><b>Teacher notes:</b> " + " ".join(_esc(unitize(x)) for x in p.teacher_notes) + "</div>")
     if p.homework:
-        parts.append(f"<div class='hw'><b>Homework:</b> {_esc(unitize(p.homework))}</div>")
+        parts.append(f"<div class='hw'><b>Homework:</b> {_esc_bold(unitize(p.homework))}</div>")
     parts.append("</div>")
     return "".join(parts)
 

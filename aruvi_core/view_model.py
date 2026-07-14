@@ -23,6 +23,7 @@ class StimulusType(str, Enum):
     NONE = "none"
     SVG = "svg"        # e.g. Mathematics geometry figures
     TABLE = "table"    # pipe-delimited / structured rows (Science, SS)
+    NUMBER_LINE = "number_line"  # Maths: an ordered tick line (labels + blank ticks), NOT a grid
     PROSE = "prose"    # fallback descriptive text
 
 
@@ -181,11 +182,18 @@ class NormalizedItem:
     option_reveals: Dict[str, str] = field(default_factory=dict)  # label → misconception ("note" key = legacy prose fallback)
     look_fors: List[str] = field(default_factory=list)
     scaffold: Optional[str] = None
+    # A fill-in scaffold split into display ROWS so a numbered/step template never runs
+    # together in one paragraph (parsed ONCE in assessment_norm.split_scaffold_lines,
+    # never at render time). Authored newlines are row breaks; an inline "Step N"/"(N)"/
+    # "N." run on a single line is split too; a blank authored line is kept as "" (spacer).
+    # Empty → the renderer shows `scaffold` as plain prose.
+    scaffold_lines: List[str] = field(default_factory=list)
     method_one_line: Optional[str] = None
     format_of_output: List[str] = field(default_factory=list)
     open_task_guide: Optional[Dict[str, str]] = None   # OPEN_TASK only: format_type/format_rationale/
     #                                                    what_this_demonstrates/reading_the_scaffold/strong_vs_weak_markers
-    exercise_ref: Optional[str] = None  # Maths exercise.book_ref (+ description)
+    exercise_ref: Optional[str] = None  # Maths exercise.book_ref — the BOOK ITEM (rendered bold)
+    exercise_desc: Optional[str] = None  # Maths exercise.description — the task text after the ref
     inclusivity: Optional[str] = None
     # ── context (quiet meta, never structural labels) ──
     cognitive_demand: Optional[str] = None   # absent key OR "" in source → None (same state)

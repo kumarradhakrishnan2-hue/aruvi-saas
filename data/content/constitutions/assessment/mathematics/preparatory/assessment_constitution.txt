@@ -178,6 +178,10 @@ tabular data the student must read or fill.
 Permitted:
 - Pipe-delimited table: 2+ lines, every line contains "|", first row is
   the header.
+- Number line: one line tagged `number_line:` then the ticks split by "|",
+  each cell a number (labelled tick) or "..." (blank tick the student marks);
+  endpoints must be numbers. E.g. `number_line: 200 | ... | ... | ... | 260`.
+  Keep the task wording in `prompt`. Do not emit a number line as a pipe-table.
 - Empty string "" — the default. A figure the student must look at is
   reached via the textbook (the prompt may say "Refer to the picture in
   <section> of your book") or via the exercise companion.
@@ -243,7 +247,7 @@ ASSESSMENT JSON SCHEMA
           "prompt":          string,            // "" only on Rule 5 fallback.
                                                 // MCQ: choices live ONLY in options[] —
                                                 // do NOT inline/letter/repeat them here
-          "visual_stimulus": string,            // "" or pipe-table only
+          "visual_stimulus": string,            // "" , pipe-table, or number_line:
 
           "options": [ { "label": string, "text": string,
                          "is_correct": boolean } ],   // [] unless MCQ

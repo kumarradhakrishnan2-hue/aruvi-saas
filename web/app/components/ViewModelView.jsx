@@ -1,5 +1,5 @@
 "use client";
-import { pretty, classNum, kickerOf } from "../lib/format";
+import { pretty, classNum, kickerOf, boldMarks } from "../lib/format";
 
 /* ───────── view-model renderer (the document) ───────── */
 function Stimulus({ vs }) {
@@ -76,7 +76,7 @@ function PeriodCard({ p }) {
           </div>
         ) : p.activities?.length ? <ul className="acts">{p.activities.map((a, i) => <li key={i}>{a}</li>)}</ul> : null}
         {p.homework ? (
-          <div className="uv-hw"><span className="kicker">Homework</span><p>{p.homework}</p></div>
+          <div className="uv-hw"><span className="kicker">Homework</span><p>{boldMarks(p.homework)}</p></div>
         ) : null}
       </div>
     </div>

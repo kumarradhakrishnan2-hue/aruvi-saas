@@ -145,6 +145,65 @@ def split_parts(text: Any) -> "tuple[str, List[Dict[str, str]]]":
     return "", []
 
 
+_STEP_MARK = re.compile(r"(?:^|\s)Step\s+\d+\b", re.I)
+# Any parenthesized sub-marker — number, letter or roman: (1)/(a)/(i). Opening paren
+# required so a closing paren inside maths ("50 – (12 + 9)") is never read as a marker.
+_PAREN_ANY = re.compile(r"(?<!\w)\((?:[a-z]|[ivxlcdm]+|\d+)\)", re.I)
+# A plain single-letter marker "A." / "A)" (the A,B,C / a,b,c list notation).
+_LETTER_MARK = re.compile(r"(?:^|\s)([A-Za-z])[.)]\s")
+
+
+def _is_letter_run(letters: List[str]) -> bool:
+    """True when single-letter markers form A,B,C… or a,b,c… — a run starting at A/a. The
+    start + sequence check keeps stray capitals ("A. Kumar M. Singh") from splitting."""
+    seq = [c.lower() for c in letters]
+    return all(ord(c) == ord("a") + i for i, c in enumerate(seq))
+
+
+def _split_inline_scaffold(line: str) -> List[str]:
+    """A single scaffold line that packs a sequential run of ≥2 markers (no newline) → one
+    row per marker. Notations handled: 'Step N …'; any parenthesized marker '(1)/(a)/(i) …';
+    a plain numbered run 'N. …' (starting at 1); a plain lettered run 'A./A) …' (starting at
+    A or a). Otherwise the line is returned whole."""
+    if len(_STEP_MARK.findall(line)) >= 2:
+        return [s.strip() for s in re.split(r"(?=(?:^|\s)Step\s+\d+\b)", line, flags=re.I) if s.strip()]
+    if len(_PAREN_ANY.findall(line)) >= 2:
+        return [s.strip() for s in re.split(r"(?=(?<!\w)\((?:[a-z]|[ivxlcdm]+|\d+)\))", line, flags=re.I) if s.strip()]
+    nums = [int(m.group(1)) for m in re.finditer(r"(?:^|\s)(\d+)\.\s", line)]
+    if len(nums) >= 2 and all(v == i + 1 for i, v in enumerate(nums)):
+        return [s.strip() for s in re.split(r"(?=(?:^|\s)\d+\.\s)", line) if s.strip()]
+    letters = [m.group(1) for m in _LETTER_MARK.finditer(line)]
+    if len(letters) >= 2 and _is_letter_run(letters):
+        return [s.strip() for s in re.split(r"(?=(?:^|\s)[A-Za-z][.)]\s)", line) if s.strip()]
+    return [line]
+
+
+def split_scaffold_lines(text: Any) -> List[str]:
+    """Break a fill-in scaffold template into display ROWS so numbered/step items never run
+    together in one paragraph (founder 2026-07-14: TWAU scaffolds were rendering continuous).
+    Authored newlines are always row breaks; a scaffold that packs a sequential
+    'Step N' / '(N)' / 'N.' run into ONE line (no newline) is additionally split so each item
+    is its own row. A blank authored line is kept as an empty-string spacer (Part A / Part B).
+    Returns [] when there is nothing multi-row to show (empty, or a single unnumbered line) —
+    the renderer then falls back to plain prose."""
+    if not isinstance(text, str) or not text.strip():
+        return []
+    rows: List[str] = []
+    for raw in text.split("\n"):
+        ln = raw.strip()
+        if not ln:
+            rows.append("")
+            continue
+        rows.extend(_split_inline_scaffold(ln))
+    while rows and rows[0] == "":
+        rows.pop(0)
+    while rows and rows[-1] == "":
+        rows.pop()
+    if sum(1 for r in rows if r) <= 1:
+        return []
+    return rows
+
+
 # Leading "True/False —" (or S/D, Yes/No, Same/Different) verdict word on a justification
 # line — stripped because the verdict is already carried structurally (from is_correct). A
 # separator (dash/colon) is REQUIRED so a reason that merely starts with such a word
@@ -196,14 +255,44 @@ def match_pairs_from(answer_key: Any) -> List[Dict[str, Any]]:
     return out
 
 
+def _dedupe_stem_table(n: NormalizedItem) -> None:
+    """Strip an embedded pipe-table out of the stem — the recurring markup-as-prose bug.
+
+    Some saved maths (and English) items pack a table into the stem AS raw pipe-markdown
+    (e.g. `| 283 | ___ | 285 | ___ |`) while ALSO carrying it — usually more completely,
+    with its header row — in `visual_stimulus`. The renderer shows the stem verbatim, so the
+    figures appear TWICE: once as raw pipe text, once as the typed table. A table belongs in
+    `visual_stimulus`, never as prose in the stem (mirrors normalize.py's typed-stimulus rule
+    and the English FILL_IN anti-duplication constitution rule). So: if the stem's pipe lines
+    form a table, drop them from the stem; when no stimulus carries the table yet, promote the
+    stem's table into `visual_stimulus` (never overwrite a stimulus that already exists — the
+    authored one is authoritative and typically more complete). Structural, at the same
+    normalization point maths MCQ / English were stabilized — every saved plan reads clean
+    without regeneration."""
+    stem = n.stem or ""
+    if "|" not in stem:
+        return
+    lines = stem.splitlines()
+    pipe_lines = [ln for ln in lines if "|" in ln]
+    block = typed_block("\n".join(pipe_lines))
+    if not block or block.get("type") != StimulusType.TABLE.value:
+        return  # the pipe lines are not a table — leave the stem untouched
+    n.stem = re.sub(r"\n{2,}", "\n", "\n".join(ln for ln in lines if "|" not in ln)).strip()
+    if not n.visual_stimulus:
+        n.visual_stimulus = block
+
+
 def _finish(n: NormalizedItem) -> NormalizedItem:
-    """Shared tail: template lookup + EXTRACT_ANALYSIS passage routing + structuring any
-    numbered/lettered list packed into the stem or the answer key (once, for every family)."""
+    """Shared tail: table-in-stem dedup + template lookup + EXTRACT_ANALYSIS passage routing +
+    structuring any numbered/lettered list packed into the stem or the answer key (once, for
+    every family)."""
+    _dedupe_stem_table(n)
     n.template = RENDER_TEMPLATE.get(n.question_type, "")
     if n.question_type == "EXTRACT_ANALYSIS" and n.visual_stimulus:
         n.passage, n.visual_stimulus = n.visual_stimulus, None
     n.stem_lead, n.stem_parts = split_parts(n.stem)
     n.answer_lead, n.answer_parts = split_parts(n.model_answer)
+    n.scaffold_lines = split_scaffold_lines(n.scaffold)
     if n.question_type == "TRUE_FALSE":
         stmts, keep_prose = tf_statements(n.options, n.model_answer)
         if stmts:
@@ -272,6 +361,52 @@ def from_constitution(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedIte
     return _finish(_link(n, meta))
 
 
+_NUM_RE = re.compile(r"-?\d+(?:\.\d+)?$")
+_PLACEHOLDER_RE = re.compile(r"^[.…_\-\s]+$")   # "...", "…", "___", "-", blank tick
+
+
+_NL_TAG = re.compile(r"^\s*number[_ ]?line\s*:\s*", re.I)   # constitution Rule 7 form
+
+
+def _nl_block(raw: str, cells: List[str], instruction: str) -> Optional[Dict[str, Any]]:
+    """Build a number_line stimulus from parsed tick cells; None if the cells are not a valid
+    number line (>=3 cells, >=2 numeric, every cell numeric-or-placeholder)."""
+    if len(cells) < 3 or sum(1 for c in cells if _NUM_RE.match(c)) < 2:
+        return None
+    if not all(_NUM_RE.match(c) or _PLACEHOLDER_RE.match(c) for c in cells):
+        return None
+    nl: Dict[str, Any] = {"ticks": [{"label": c if _NUM_RE.match(c) else ""} for c in cells]}
+    if instruction:
+        nl["instruction"] = instruction
+    return {"type": StimulusType.NUMBER_LINE.value, "content": raw, "number_line": nl}
+
+
+def _maths_number_line(raw: Any) -> Optional[Dict[str, Any]]:
+    """MATHS-ONLY: re-type a number-line stimulus into an ordered tick line the renderer draws as
+    a line, not a grid (the SHARED classifier stays subject-agnostic).
+
+    The stimulus is the constitution Rule 7 form — a line tagged `number_line:` then the ticks
+    split by "|" (each a number = labelled tick, or "..." = blank tick). Intent is DECLARED at
+    source, so we read the tag and never guess: an untagged pipe row is left to the ordinary table
+    typing (a header-less numeric row is non-compliant per Rule 7 and simply shows as a table,
+    rather than being silently re-typed)."""
+    if not isinstance(raw, str):
+        return None
+    m = _NL_TAG.match(raw)
+    if not m:
+        return None
+    parts = raw[m.end():].splitlines()
+    cells = [c.strip() for c in (parts[0] if parts else "").split("|") if c.strip()]
+    instruction = " ".join(ln.strip() for ln in parts[1:] if ln.strip()).strip()
+    return _nl_block(raw, cells, instruction)
+
+
+def _maths_typed_block(raw: Any) -> Optional[Dict[str, Any]]:
+    """Stimulus typing for the maths family: try the number-line override first, else fall back
+    to the shared typing (svg / table / prose)."""
+    return _maths_number_line(raw) or typed_block(raw)
+
+
 def from_maths(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
     """Mathematics, all stages. Middle/prep carry the teacher_guide dict; SECONDARY is the
     hybrid (top-level expected_answer/method_one_line + constitution-style guide{TYPE} +
@@ -286,9 +421,16 @@ def from_maths(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
         question_type=qt,
         id=_clean(it.get("id")),
         stem=str(it.get("prompt") or it.get("question_text") or it.get("task") or ""),
-        visual_stimulus=typed_block(it.get("visual_stimulus")),
+        visual_stimulus=_maths_typed_block(it.get("visual_stimulus")),
         options=structured_options(it.get("options")),
-        model_answer=_clean(tg.get("expected_answer")) or _clean(it.get("expected_answer")),
+        # MCQ answer = the ✓ option + what-each-choice-reveals (as English/constitution do).
+        # Maths generation ALSO emits `expected_answer` ("Option A — …") for MCQ, which just
+        # restates the ticked option and triplicates the Answer tab (CORRECT ANSWER · ANSWER ·
+        # reveals). Drop it for MCQ — structural, at the same normalization point English was
+        # stabilized — so every saved maths MCQ reads clean without regeneration. Kept for
+        # every other type (NUM worked answer, SCR/ECR suggested answer, TRUE_FALSE verdict).
+        model_answer=(None if qt == "MCQ"
+                      else _clean(tg.get("expected_answer")) or _clean(it.get("expected_answer"))),
         expected_elements=as_list(it.get("expected_elements")),
         option_reveals=_reveals(tg.get("what_each_option_reveals")) or _reveals(gd.get("what_each_option_reveals")),
         look_fors=as_list(it.get("look_for")),
@@ -296,7 +438,11 @@ def from_maths(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
         method_one_line=_clean(tg.get("method_one_line")) or _clean(it.get("method_one_line")),
         format_of_output=as_list(it.get("format_of_output")),
         open_task_guide=_ot_guide(gd) if qt == "OPEN_TASK" else None,
-        exercise_ref=(f"{ref} — {desc}" if ref and desc else ref or desc),
+        # book_ref (the BOOK ITEM) and description carried SEPARATELY, not pre-joined: the ref
+        # itself can contain " — " (e.g. "Let us Play — Flag game, p.69"), so a joined string is
+        # unsplittable downstream. The renderer bolds the ref and shows the description after.
+        exercise_ref=ref,
+        exercise_desc=desc,
         inclusivity=_clean(tg.get("inclusivity")) or _clean(gd.get("inclusivity")),
         cognitive_demand=_clean(it.get("cognitive_demand")),   # present secondary only; ""/absent → None
         competency=_competency(it.get("competency")),

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState } from "../lib/sectionState";
-import { userKey } from "../lib/format";
+import { userKey, boldMarks } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -70,9 +70,15 @@ const CTX_LABEL = { spine: "Spine", section: "Section", competency: "Competency"
 
 function OverviewPanel({ u, chapterTitle }) {
   const dur = u.meta?.duration_minutes;
+  // Axis row value: normally the group label (u.context). But where "section" is only a PROXY
+  // for the axis and the grouping collapsed (maths prep → a single "Lesson" group), the plugin
+  // hands the period its OWN anchored section in meta.section_label — use it so the row shows the
+  // real section, not "Lesson". No-op elsewhere (TWAU's context already IS the section; maths
+  // middle/secondary leave section_label empty and fall back to the group label).
+  const axisVal = u.meta?.section_label || u.context;
   const rows = [
     ["Chapter", chapterTitle],
-    [CTX_LABEL[u.groupType] || "Spine", u.context],
+    [CTX_LABEL[u.groupType] || "Spine", axisVal],
     ["Time", dur ? `${dur} mins` : null],
     ["Pedagogy", u.approach],
   ].filter(([, v]) => v);
@@ -145,7 +151,7 @@ function LessonPanel({ u }) {
       {u.homework ? (
         <div className="uv-hw">
           <span className="kicker">Homework</span>
-          <p>{u.homework}</p>
+          <p>{boldMarks(u.homework)}</p>
         </div>
       ) : null}
     </>
@@ -163,7 +169,7 @@ function LessonPanel({ u }) {
 // below whatever is already frozen above (in preview, .lv-stick pins the header + UNIT
 // tab bar). The group's `top` is measured at mount (app nav + .lv-stick height when
 // present) since those heights vary with title wrapping. Only panel content scrolls.
-function AssessPanel({ items }) {
+function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
   const [at, setAt] = useState(0);
   const [itab, setITab] = useState("ov");
   const grpRef = useRef(null);
@@ -211,7 +217,7 @@ function AssessPanel({ items }) {
           </div>
         ) : null}
       </div>
-      <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null}
+      <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary}
         onNext={many && idx < items.length - 1 ? () => goto(idx + 1) : null} key={idx} />
     </>
   );
@@ -223,6 +229,13 @@ function AssessPanel({ items }) {
  * data-tour="unit-tabs": tour step 8's tooltip hangs below the bar. */
 function useUnitTabsParts(u, assessment, chapterTitle) {
   const items = unitAssessItems(assessment, u);
+  // Inclusivity keyword-bolding is stage-specific: middle maths writes differentiation as
+  // "…struggling student…; challenge: …", so those two words are weighted (see InclusivityText).
+  // Secondary maths writes it as "Support: … Challenge: …" — both labels weighted, each on its
+  // own row.
+  const g = String(assessment?.grade || "").toLowerCase().replace(/grade|class/g, "").trim();
+  const mathsMiddle = assessment?.subject === "mathematics" && ["vi", "vii", "viii"].includes(g);
+  const mathsSecondary = assessment?.subject === "mathematics" && ["ix", "x"].includes(g);
   const [tab, setTab] = useState("overview");
   const tabs = [
     ["overview", "Overview"],
@@ -246,7 +259,7 @@ function useUnitTabsParts(u, assessment, chapterTitle) {
       {tab === "overview" ? <OverviewPanel u={u} chapterTitle={chapterTitle} /> : null}
       {tab === "material" ? <MaterialPanel u={u} /> : null}
       {tab === "lesson" ? <LessonPanel u={u} /> : null}
-      {tab === "assess" ? <AssessPanel items={items} /> : null}
+      {tab === "assess" ? <AssessPanel items={items} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary} /> : null}
     </>
   );
   return { bar, panel };
@@ -295,10 +308,38 @@ function NoteInvoke() {
  * the contract shipped fall back to the legacy card. Tables arrive PRE-SPLIT from the
  * engine (normalize.parse_table) — this renderer never re-splits pipe strings. */
 
-// Typed stimulus/passage block — same typing as LP visuals (svg / table / prose).
+// A maths number line — an ordered tick line (labels + blank ticks) the engine parsed from a
+// pipe row, drawn as an axis with ticks, NOT a grid. Blank ticks are the positions a student
+// marks; the instruction sits below.
+function ANumberLine({ nl }) {
+  const ticks = nl?.ticks || [];
+  if (!ticks.length) return null;
+  const W = 320, padX = 26, y = 26, n = ticks.length;
+  const step = n > 1 ? (W - 2 * padX) / (n - 1) : 0;
+  const x = (i) => padX + i * step;
+  return (
+    <div className="assess-vs assess-vs-nl">
+      <svg viewBox={`0 0 ${W} 52`} className="assess-nl-svg" role="img" aria-label="Number line">
+        <line x1={padX - 12} y1={y} x2={W - padX + 12} y2={y} className="assess-nl-axis" />
+        <polygon points={`${padX - 12},${y} ${padX - 4},${y - 4} ${padX - 4},${y + 4}`} className="assess-nl-arrow" />
+        <polygon points={`${W - padX + 12},${y} ${W - padX + 4},${y - 4} ${W - padX + 4},${y + 4}`} className="assess-nl-arrow" />
+        {ticks.map((t, i) => (
+          <g key={i}>
+            <line x1={x(i)} y1={y - 6} x2={x(i)} y2={y + 6} className="assess-nl-tick" />
+            {t.label ? <text x={x(i)} y={y + 20} className="assess-nl-lab" textAnchor="middle">{t.label}</text> : null}
+          </g>
+        ))}
+      </svg>
+      {nl.instruction ? <div className="assess-nl-instr">{nl.instruction}</div> : null}
+    </div>
+  );
+}
+
+// Typed stimulus/passage block — same typing as LP visuals (svg / table / number_line / prose).
 function ATyped({ b, passage = false }) {
   if (!b || !b.content) return null;
   if (b.type === "svg") return <div className="assess-vs assess-vs-svg" dangerouslySetInnerHTML={{ __html: b.content }} />;
+  if (b.type === "number_line" && b.number_line) return <ANumberLine nl={b.number_line} />;
   if (b.type === "table" && b.table) {
     return (
       <div className="assess-vs">
@@ -319,6 +360,28 @@ function ABlock({ k, text }) {
     <div className="assess-look">
       <span className="assess-look-k">{k}</span>
       <div className="assess-look-t">{text}</div>
+    </div>
+  );
+}
+
+// A fill-in scaffold template. The SPLIT into rows is done ONCE in the engine
+// (assessment_norm.split_scaffold_lines) so a numbered/step template never runs together in
+// one paragraph — the renderer just lays out whatever rows it produced (blank string = a
+// spacer between blocks, e.g. Part A / Part B). Falls back to plain prose when unsplit.
+function AScaffold({ n }) {
+  if (!n.scaffold) return null;
+  const lines = n.scaffold_lines;
+  if (!lines?.length) return <ABlock k="SCAFFOLD" text={n.scaffold} />;
+  return (
+    <div className="assess-look">
+      <span className="assess-look-k">SCAFFOLD</span>
+      <div className="assess-scaf">
+        {lines.map((ln, i) =>
+          ln
+            ? <div className="assess-scaf-row" key={i}>{ln}</div>
+            : <div className="assess-scaf-gap" key={i} aria-hidden="true" />
+        )}
+      </div>
     </div>
   );
 }
@@ -564,7 +627,7 @@ function AQuestionPanel({ n, opts }) {
         </ul>
       ) : null}
       <ATicks k="WHAT TO PRODUCE" items={n.format_of_output} />
-      <ABlock k="SCAFFOLD" text={n.scaffold} />
+      <AScaffold n={n} />
       {/* Task-setting part of the open-task guide — belongs to the question process
           (founder 2026-07-10); stays collapsed so the card isn't a wall on a phone. */}
       {n.open_task_guide ? (
@@ -577,7 +640,17 @@ function AQuestionPanel({ n, opts }) {
           </div>
         </details>
       ) : null}
-      <ABlock k="TEXTBOOK" text={n.exercise_ref} />
+      {n.exercise_ref || n.exercise_desc ? (
+        <div className="assess-look">
+          <span className="assess-look-k">TEXTBOOK EXERCISE</span>
+          <div className="assess-look-t">
+            {/* The book item (book_ref) is bold; the task description follows in normal weight. */}
+            {n.exercise_ref ? <strong className="assess-book-item">{n.exercise_ref}</strong> : null}
+            {n.exercise_ref && n.exercise_desc ? " — " : null}
+            {n.exercise_desc}
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
@@ -636,14 +709,20 @@ function AAnswerPanel({ n, correct, opts = [] }) {
           <AReveals reveals={n.option_reveals} opts={opts} />
         </>
       ) : n.template === "scr" ? (
-        n.model_answer
-          ? <AAnswerBlock k="SUGGESTED ANSWER" n={n} />
-          : <ATicks k="LOOK FOR" items={n.expected_elements} />
+        <>
+          {n.model_answer
+            ? <AAnswerBlock k="SUGGESTED ANSWER" n={n} />
+            : <ATicks k="LOOK FOR" items={n.expected_elements} />}
+          {/* Maths-only "how to solve" — method_one_line is null for other families, so
+              ABlock renders nothing (no subject branch needed). */}
+          <ABlock k="METHOD" text={n.method_one_line} />
+        </>
       ) : n.template === "ecr" ? (
         <>
           <ATicks k="LOOK FOR" items={n.look_fors} />
           <ATicks k="EXPECTED ELEMENTS" items={n.expected_elements} />
           <AAnswerBlock k="SUGGESTED ANSWER" n={n} />
+          <ABlock k="METHOD" text={n.method_one_line} />
         </>
       ) : n.template === "open_task" ? (
         <>
@@ -702,11 +781,54 @@ function itemTabSet(n) {
   };
 }
 
+/* Inclusivity prose with differentiation cues bolded. Three families:
+ *   • Colon-LABELS ("Support: …; stretch: …", maths prep) — only a token followed by ":" is
+ *     emphasised (a bare "support" in another subject's note stays plain) and it is normalised
+ *     to a capitalised form so the pair reads matched. Middle maths adds "challenge:" here.
+ *   • In-prose KEYWORD ("…a struggling student…", middle maths) — bolded WHERE it sits, casing
+ *     left untouched (it is an adjective mid-sentence, not a label). Middle-maths only, via
+ *     `mathsMiddle`, so no other subject's inclusivity prose is touched.
+ *   • Secondary maths ("Support: … Challenge: …", via `mathsSecondary`) — both labels are
+ *     colon-labelled/weighted, and the note is broken so each label starts its OWN row rather
+ *     than running on continuously. */
+function InclusivityText({ text, mathsMiddle = false, mathsSecondary = false }) {
+  if (!text) return null;
+  const labels = mathsMiddle ? "support|stretch|challenge"
+    : mathsSecondary ? "support|challenge"
+    : "support|stretch";
+  // Bold colon-labels (title-cased) + middle-maths in-prose "struggling" within one chunk.
+  const render = (chunk, keyBase) => {
+    const parts = [`\\b(?:${labels})\\b(?=\\s*:)`];             // colon-labelled → title-cased
+    if (mathsMiddle) parts.push(`\\b(?:struggling)\\b`);        // in-prose keyword → bold in place
+    const re = new RegExp(`(${parts.join("|")})`, "gi");
+    const out = [];
+    let last = 0, m, k = 0;
+    while ((m = re.exec(chunk)) !== null) {
+      if (m.index > last) out.push(chunk.slice(last, m.index));
+      const w = m[0];
+      const isLabel = new RegExp(`^(?:${labels})$`, "i").test(w);  // labels capitalise; keywords don't
+      const shown = isLabel ? w.charAt(0).toUpperCase() + w.slice(1).toLowerCase() : w;
+      out.push(<strong key={`${keyBase}-${k++}`}>{shown}</strong>);
+      last = m.index + w.length;
+    }
+    out.push(chunk.slice(last));
+    return out;
+  };
+  // Secondary maths: split before each "Support:"/"Challenge:" so the two land on separate rows.
+  if (mathsSecondary) {
+    const rows = text.split(/(?=\b(?:support|challenge)\s*:)/i).map((s) => s.trim()).filter(Boolean);
+    if (rows.length > 1) {
+      return <>{rows.map((r, i) => <div key={i} className="assess-inc-row">{render(r, i)}</div>)}</>;
+    }
+  }
+  return <>{render(text, 0)}</>;
+}
+
 /* The item's ACTIVE PANEL only — no card chrome, no Q-number/type header (the pager
  * carries position; type lives in Overview). The item's tab BAR is rendered by
  * AssessPanel inside the frozen chrome group (see below), so `tab` arrives as a prop.
  * Legacy pre-contract items keep the old flat white card, whatever the tab. */
-function AssessBody({ it, tab, qn, onNext }) {
+function AssessBody({ it, tab, qn, onNext, mathsMiddle = false, mathsSecondary = false }) {
   const n = it.normalized;
   const lo = n ? n.linked_lo : (it.meta?.linked_lo || it.implied_lo);
   // A light nudge so a teacher who reaches the bottom of an item doesn't miss that the unit
@@ -747,7 +869,7 @@ function AssessBody({ it, tab, qn, onNext }) {
       {tab === "ov" ? <AOverviewPanel n={n} lo={lo} /> : null}
       {tab === "q" ? <AQuestionPanel n={n} opts={opts} /> : null}
       {tab === "an" ? <>{<AAnswerPanel n={n} correct={correct} opts={opts} />}{nextQ}</> : null}
-      {tab === "inc" ? <><div className="assess-inc">{n.inclusivity}</div>{nextQ}</> : null}
+      {tab === "inc" ? <><div className="assess-inc"><InclusivityText text={n.inclusivity} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary} /></div>{nextQ}</> : null}
     </div>
   );
 }
@@ -830,6 +952,23 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
   );
 }
 
+/* Science SECONDARY section anchors carry a leading NCF section number, in either notation:
+ * a bare number ("8.1 Rediscovering the Roots of Atomic Theory", "8.2 … / 8.2.1 …") or a
+ * "Section N.N — Title" label ("Section 2.1 — The Challenge of Studying Cells"). On the
+ * Chapter Organization page the title alone is enough — strip the number (and any leading
+ * "Section" word / dash separator) from each " / "-joined segment. A pure-number anchor with
+ * no title (e.g. "2.1") keeps its number; a trailing " (Revisit)" is preserved
+ * (founder 2026-07-14). */
+function sectionTitleOnly(label) {
+  if (!label) return label;
+  const cleaned = label.split(" / ").map((seg) => {
+    const s = seg.trim();
+    const stripped = s.replace(/^(?:Section\s+)?\d+(?:\.\d+)*\s*[—–:.)-]?\s*/i, "").trim();
+    return stripped || s;   // number-only segment → keep as-is
+  }).join(" / ");
+  return cleaned || label;
+}
+
 /* ── Chapter Organization — the chapter's front door (chapter altitude, arch-plan §E).
  * The My Classes section card, opened up: the same tick rail expands into one card per
  * unit (pine = taught · ochre = now · hairline = ahead), grouped under quiet mono
@@ -860,6 +999,17 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   // The first group opens by default; opening another closes the rest (re-tapping the open
   // one collapses it). -1 = all closed.
   const [openIdx, setOpenIdx] = useState(0);
+  // Maths PREPARATORY is the one subject·stage with no real section axis: its periods carry
+  // many-to-many markers (S2+S3, S3+S4…) that can't cleanly nest, so the normalizer collapses
+  // every period into a single fallback group labelled "Lesson" (see mathematics/subject.py).
+  // For that one case we DON'T show the pointless one-item accordion — we render the units flat
+  // under the chapter header inside a fixed-height "wheel" window (~4 units); units beyond the
+  // fold are reached by scrolling INSIDE that region (founder 2026-07-13, replacing the earlier
+  // click-to-reveal link). "Lesson" (the exact fallback string) is unique to the maths middle/
+  // prep branch and only actually fires for prep, so it's a safe, precise signature.
+  const mathsFlat = lp.subject === "mathematics" && (lp.groups || []).length === 1
+    && lp.groups[0]?.label === "Lesson";
+  const FLAT_SHOWN = 4;   // units shown before the window starts scrolling
   // Total units under a group (its own periods + all descendants) — shown on the group header.
   const countUnits = (g) => (g.periods?.length || 0) + (g.children || []).reduce((s, c) => s + countUnits(c), 0);
   // Rebuild the group walk so cards sit under their group bars (flat index kept in sync
@@ -872,7 +1022,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     if (visible && g.label) {
       bars.push(
         <div className="co-groupbar" key={`${keyPrefix}-bar`}>
-          <span className="co-subname">{g.label}</span>
+          <span className="co-subname">{lp.subject === "science" && g.type === "section" ? sectionTitleOnly(g.label) : g.label}</span>
         </div>
       );
     }
@@ -963,8 +1113,18 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         <div className="co-headrule" aria-hidden="true"></div>
         {/* Axis legend — names the organizing axis of the drop-downs + a small explanation.
             Frozen WITH the header (founder 2026-07-11): the note on the axis stays pinned
-            as the unit list scrolls beneath it. */}
-        {axisTypes.length ? (
+            as the unit list scrolls beneath it. Maths PREP (the flat case) has no group
+            axis, but the legend must not simply vanish (founder 2026-07-14) — it gets its
+            own row describing the flat organization, with a tap hint that matches flat
+            cards (each card IS a unit; there is nothing "underneath"). */}
+        {mathsFlat ? (
+          <div className="co-axis">
+            <div className="co-axis-row">
+              <span className="co-axis-name">Units</span>
+              <span className="co-axis-blurb">one continuous run of learning units in the textbook&apos;s own teaching order — the activity-led, play-way flow the NCF asks of the preparatory stage. Tap a unit to open it.</span>
+            </div>
+          </div>
+        ) : axisTypes.length ? (
           <div className="co-axis">
             {axisTypes.map((t) => (
               <div className="co-axis-row" key={t}>
@@ -975,7 +1135,41 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           </div>
         ) : null}
       </div>
-      {lp.groups.map((g, gi) => {
+      {mathsFlat ? (
+        /* Maths prep — no axis: units flat under the header (no "Lesson" bucket header —
+           founder 2026-07-13: remove the word). Beyond 4 units the list lives in a capped
+           "wheel" window that scrolls internally; a soft bottom fade hints "more below".
+           Flat idx = card order, so pointer status maps 1:1 to the unit. */
+        (() => {
+          const periods = lp.groups[0].periods || [];
+          const list = (
+            <div className="co-list">
+              {periods.map((p, i) => {
+                const n = i;
+                const status = pointer == null ? "" : (doneAll || n < pointer) ? "done" : n === pointer ? "cur" : "up";
+                const dur = p.meta?.duration_minutes;
+                return (
+                  <div className={`co-card ${status}`} key={i} onClick={() => onOpenUnit(n)}>
+                    <span className="co-num">{n + 1}.</span>
+                    <div className="co-body"><div className="co-utitle">{p.title || `Unit ${n + 1}`}</div></div>
+                    <div className="co-side">
+                      {status === "cur" ? <span className="co-now">now</span> : null}
+                      {dur ? <span className="co-dur"><span className="co-dur-n">{dur}</span><span className="co-dur-u">min</span></span> : null}
+                      {status === "done" ? <span className="co-mark">✓ taught</span> : null}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+          return periods.length > FLAT_SHOWN ? (
+            <div className="co-flatwrap">
+              <div className="co-flatscroll">{list}</div>
+              <div className="co-flatfade" aria-hidden="true" />
+            </div>
+          ) : list;
+        })()
+      ) : lp.groups.map((g, gi) => {
         const open = openIdx === gi;
         // Render the body (periods + children) for EVERY group so idx advances in order;
         // the group's own label becomes the clickable header, so skip it in the body walk.
@@ -990,7 +1184,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
               onClick={() => setOpenIdx(open ? -1 : gi)}
               aria-expanded={open}
             >
-              <span className="co-acc-name">{g.label || `Section ${gi + 1}`}</span>
+              <span className="co-acc-name">{(lp.subject === "science" && g.type === "section" ? sectionTitleOnly(g.label) : g.label) || `Section ${gi + 1}`}</span>
               <span className="co-count">{cnt}</span>
               <span className="co-chev" aria-hidden="true">
                 <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

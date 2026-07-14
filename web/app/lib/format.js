@@ -47,6 +47,25 @@ export function userKey(base) {
   return `${base}_${getUser() || ""}`;
 }
 
+/* Render a string with `**…**` markdown-bold spans as React nodes. Used for homework lines,
+ * where the maths normalizer wraps the textbook locator (e.g. "Figure it Out Q11, section 5.2
+ * p.115") in `**…**` so the reference alone reads bold. Plain strings (no markers) return as-is.
+ * Returns an array of strings / <strong> elements suitable for direct use as React children. */
+export function boldMarks(text) {
+  const s = String(text ?? "");
+  if (!s.includes("**")) return s;
+  const out = [];
+  const re = /\*\*([^*]+)\*\*/g;
+  let last = 0, m, i = 0;
+  while ((m = re.exec(s)) !== null) {
+    if (m.index > last) out.push(s.slice(last, m.index));
+    out.push(<strong key={i++}>{m[1]}</strong>);
+    last = re.lastIndex;
+  }
+  if (last < s.length) out.push(s.slice(last));
+  return out;
+}
+
 /* Merge the X-Aruvi-User header into any fetch options, preserving caller-set headers. */
 export function withUser(opts = {}) {
   const user = getUser();

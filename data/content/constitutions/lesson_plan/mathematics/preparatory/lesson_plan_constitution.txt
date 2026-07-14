@@ -233,6 +233,17 @@ Additional rules:
   subject to the same indispensable/non-duplicating test as any other task.
 
 ================================================================================
+RULE 9 | HOMEWORK IS OPTIONAL AND UN-OWNED
+================================================================================
+
+`homework` per period is `[]` by default. Populate with 1–2 items only
+when the in-class time-box overflows or the generator judges reinforcement
+useful. Each homework item carries the same shape as a `tasks_in_class`
+entry (id, intent, method, section_ref, `book_ref`, description) — the
+`book_ref` is mandatory so the teacher can locate the task in the textbook.
+Homework is not consumed by the assessment generator downstream.
+
+================================================================================
 LP JSON SCHEMA
 ================================================================================
 
@@ -280,6 +291,7 @@ LP JSON SCHEMA
       "description":    string                  // copied from summary task
     }
   ],
+  "homework": [ <same shape as tasks_in_class entry> ],  // [] by default (Rule 9)
   "phases": [
     { "minutes": string, "description": string }  // narration via book_ref (Rule 6)
   ],
