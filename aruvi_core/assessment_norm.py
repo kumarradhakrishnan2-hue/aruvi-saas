@@ -354,7 +354,9 @@ def from_constitution(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedIte
         scaffold=_clean(it.get("scaffold")),
         format_of_output=as_list(it.get("format_of_output")),
         open_task_guide=_ot_guide(gd) if qt == "OPEN_TASK" else None,
-        inclusivity=_clean(gd.get("inclusivity")),
+        # SS edge-model assessments (and TWAU) carry inclusivity as a TOP-LEVEL item field;
+        # older/other shapes tuck it in the guide block. Read top level first, guide as fallback.
+        inclusivity=_clean(it.get("inclusivity")) or _clean(gd.get("inclusivity")),
         cognitive_demand=_clean(it.get("cognitive_demand")),
         competency=_competency(it.get("competency")),
     )

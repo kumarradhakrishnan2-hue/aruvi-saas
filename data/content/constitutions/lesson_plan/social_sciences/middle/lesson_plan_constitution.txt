@@ -1,4 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · MIDDLE · VERSION 2.6
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · MIDDLE · VERSION 2.7
 
 VOCABULARY
 The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit"). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
@@ -108,12 +108,14 @@ PROHIBITION
 RULE 9 · APPROACH DIVERSITY
 
 MANDATE
-Vary pedagogical approach across units, matching approach to section content and the competencies being developed. The attached Pedagogy document is the sole authority for valid approaches; each choice must be defensible from the content.
+Vary pedagogical approach across units, matching approach to section content and the competencies being developed. The attached Pedagogy document is the sole authority for valid approaches; each choice must be defensible from the content. Record in pedagogical_approaches only the DISTINCTIVE approach(es) a unit runs — the method that sets this period apart — named verbatim from the Pedagogy document. This is a faithful record of the choice this rule already makes, not a fresh label.
 
 PROHIBITION
 1. MUST NOT repeat the same activity type across consecutive units.
 2. MUST NOT use approach categories outside the attached Pedagogy document.
 3. MUST NOT choose an approach for variety alone.
+4. MUST NOT list "Conversations, discussions, and debates" (or plain discussion/talk) in pedagogical_approaches — it is a baseline feature of every Social Science period, not a distinguishing approach. Name it only when a formal, structured DEBATE is the period's defining vehicle.
+5. MUST NOT compress a unit that genuinely runs several distinctive approaches to a single label — pedagogical_approaches is a list; [] only when the unit is genuinely diffuse.
 
 ================================================================================
 RULE 10 · TEACHER NOTES
@@ -157,7 +159,7 @@ INTEGRITY CONSTRAINTS (system level — override any other instruction)
 ================================================================================
 AMENDMENT A1 — FULL LP JSON SCHEMA
 
-Populate every field. Empty strings/arrays are permitted only where a rule defines them (homework, competency_edges, competency_gap_note, section_coverage_note).
+Populate every field. Empty strings/arrays are permitted only where a rule defines them (homework, pedagogical_approaches, competency_edges, competency_gap_note, section_coverage_note).
 visual_aids: name any visual resource the activity naturally requires; null if none. MUST NOT invent requirements.
 Edges carry no period_number: an edge's unit is the period that contains it — nesting is the linkage the assessment inherits.
 
@@ -181,6 +183,7 @@ Edges carry no period_number: an edge's unit is the period that contains it — 
         "visual_aids": "string | null",
         "time_bands": [ { "minutes": "string e.g. 0-8", "activity": "string" } ],
         "section_context": "string — 10–12 word content label for this unit",
+        "pedagogical_approaches": ["string — approach(es) this unit runs, verbatim from the Pedagogy document; [] if genuinely diffuse"],
         "teacher_notes": "string — 2–3 sentences, required, teacher-facing; see Rule 10",
         "homework": ["string"],
         "competency_edges": [

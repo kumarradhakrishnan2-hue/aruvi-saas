@@ -89,6 +89,10 @@ for s, g, fn, raw_periods, lp in views:
     if s == "english":
         has_src = any(p.get("pedagogical_methods") or p.get("pedagogical_method")
                       for p in raw_periods)
+    elif s == "social_sciences":
+        # v2.7 (2026-07-15) emits pedagogical_approaches (list, joined by the port);
+        # older SS plans carry no source field → approach stays "".
+        has_src = any(p.get("pedagogical_approaches") for p in raw_periods)
     else:
         has_src = any(p.get(SRC.get(s, "—")) for p in raw_periods)
     got = sum(1 for p in vps if p.approach)

@@ -334,7 +334,65 @@ must confirm · source entry.
 
 ---
 
-## 2026-07-14 (newest) — Maths-secondary LP section TITLES rejoined from coverage_handoff (suite green)
+## 2026-07-15 (newest) — SS Chapter Organization = the bipartite FLOW VIEW (edge model; full suite 18/18 green; live + mobile pass pending)
+The rewritten middle-SS constitutions (docs/middle_ss_constitution_rewrite_brief.md; LP v2.7+
+emits `competency_edges[]` per period — zero/one/many (unit × competency) edges, each owning one
+implied LO + cognitive demand) make competency a MANY-TO-MANY overlay, not a spine: a 3-edge unit
+would live in three accordion folders, a 0-edge unit in none. Founder explored four visual
+concepts on the real vii ch_04 edge plan (`docs/mockups/ss-chapter-organization.html` — teaching
+rail + tags / loom threads / two lenses / bipartite flow) and picked **Concept 4, the flow view**,
+with amendments: (a) weight tier is NEVER a colour — plain name + the allocation report's dots
+(●●● Central · ●● Substantive · ● Present); colour is reserved for competency IDENTITY;
+(b) tapping either side opens an inline POPUP below the tapped element (competency → its full
+text; unit → number · full title · minutes) — so navigation moved INTO the unit popup as
+"open unit →"; (c) NO tick rail in the header for this view (unit rows already carry
+taught/now states). Implemented:
+- **SS port (`social_sciences/subject.py`):** edge-model plans detected by `competency_edges` →
+  `_edge_model_lp()` emits ONE flat `Group(type="unit", label="Units", meta.edge_model)` in the
+  plan's own teaching order; edges carried VERBATIM on `Period.meta.competency_edges`;
+  `learning_outcomes` gathers the edges' LOs (data for the assessment link, never LP display);
+  `inclusivity` + `section_context` carried in meta; chapter-level `competency_gap_note` rides
+  `LessonPlanView.meta`. Old single-`competency` plans keep the contiguous-run competency
+  accordion unchanged (viii ch_04 verified). `_join_approaches` factored out (shared by both
+  branches). NOTE: `as_list()` stringifies dicts — never use it on edge lists.
+- **Renderer (`LessonView.jsx` `SSFlowBody`, gated by `ssFlow` in `ChapterOrg`):** units left
+  (47%, pre-colon short titles, done/cur states, "—" on zero-edge units), competency ledger right
+  (33%, code coloured by identity, tier name + dots, "N of 11 units"), SVG cubic-bézier ribbons
+  between (measured via `useLayoutEffect` + refs, re-measured on focus change since popups push
+  layout, and on window resize). Ribbons are CONNECTIONS, never time (a unit's minutes are never
+  divided across edges — weights are emphasis, not arithmetic): width = tier (5/3.5/2.5), rest
+  opacity .28, focused .75, others .05. Tap-to-focus on either side; gap note renders as a dashed
+  quiet card only when non-empty; mono hint line when nothing focused. Axis legend row: "The map".
+  Identity palette: pine, clay, ochre + NEW tokens `--ss-slate`/`--ss-plum` (:root + dark palette
+  block — dark works free via var redefinition); 6th+ competency falls back to ink-soft.
+  `OverviewPanel` axis row extended: groupType "unit" + section_anchor → "Section" row (same rule
+  as the old SS competency suppression).
+- **Tests:** new fixture `tests/fixtures/ss_vii_ch04_edge_saved.json`; `test_ss_port.py` gains
+  edge-model parity tests (flat unit group in teaching order; edges carried with count parity;
+  zero-edge units allowed; gap note in meta). FIXED pre-existing failure: `test_lp_standard.py`'s
+  approach SRC map never learned SS v2.7's `pedagogical_approaches` (list) — the vii edge plan
+  failed "approach unexpectedly set" BEFORE this work; now handled like English's list case.
+  Full suite **18/18 green**; `test_unit_order` passes 38 plans incl. the flat SS group.
+  JSX babel-parses clean, CSS balanced. STATIC only — sandbox can't `next dev`; live render +
+  mobile (360×800 first) pass pending, incl. ribbon geometry on real iOS Safari.
+- **REV (founder, same day):** (a) the header FREEZE ends at the hairline rule for the SS flow
+  view only — the axis blurb ("The map …") + Notes tab now SCROLL with the unit list there
+  (`axisWrap` extracted in ChapterOrg, placed inside co-stick for every other subject,
+  after it for ssFlow); (b) competency card is STACKED — code on top, tier name in the middle,
+  PROMINENT dots at the bottom (10px/4px tracking) — and the "N of 11 units" count is REMOVED
+  (the ribbons say where it lives); (c) **popup style = "lifted note + identity rule"**
+  (founder-picked from three shown options; the sunk-paper fill read dull) — paper-white card,
+  soft lift shadow, 3px LEFT rule carrying the tapped competency's thread colour, unit popups
+  taking their STATE colour on the rule (clay = now, pine = taught, hairline = ahead; echoes
+  the Chapter Notes notebook's clay margin rule); (d) **"open unit →" moved to the TOP of the
+  unit popup** as a plain pine text link (a solid pine-filled pill variant was tried then
+  UNDONE, founder same day). Mockup Concept 4 synced. NOTE a "row opens / edge-dots
+  focus" tap-contract variant was built then UNDONE (founder, same day) — unit-row tap stays
+  FOCUS + popup, with navigation inside the popup as "open unit →". If tap-to-open ever comes
+  back, the reverted approach (per-edge identity-coloured dots cluster as the focus handle)
+  is in this chat's history / git if needed.
+
+## 2026-07-14 — Maths-secondary LP section TITLES rejoined from coverage_handoff (suite green)
 Reported: maths secondary (e.g. ix ch_02_20260618_102702.json) showed bare section numbers
 ("2.1") as LP group labels, while the prototype showed the section names. Cause: secondary maths
 periods carry only `section_anchor`; the human title lives in the result-level

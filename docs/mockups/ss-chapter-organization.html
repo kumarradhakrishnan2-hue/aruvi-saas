@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SS Chapter Organization — visual concepts (edge model)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --paper:#faf7f1; --paper-2:#ffffff; --paper-sunk:#f1ece2;
+  --ink:#1f2a24; --ink-soft:#6b6a63;
+  --line:#e4ddd0; --line-soft:#ece7dc;
+  --pine:#1e5c4a; --pine-d:#164436; --clay:#b65a31; --ochre:#9a7321;
+  --slate:#56708f; --plum:#7d5878;          /* proposed additions for competency threads */
+  --f-display:"Fraunces",Georgia,serif;
+  --f-body:"Newsreader",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dd;color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55}
+.kicker{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--pine);font-weight:500}
+
+/* ── gallery scaffolding ─────────────────────────────────────────── */
+.page{max-width:1340px;margin:0 auto;padding:40px 24px 80px}
+.page-head{max-width:760px;margin-bottom:8px}
+.page-head h1{font-family:var(--f-display);font-weight:500;font-size:30px;margin:6px 0 12px}
+.page-head p{color:var(--ink-soft);font-size:15.5px;margin:0 0 10px}
+.gallery{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start;margin-top:34px}
+.concept{width:391px}
+.concept-note{padding:0 8px 14px}
+.concept-note .kicker{color:var(--clay)}
+.concept-note h2{font-family:var(--f-display);font-weight:500;font-size:21px;margin:4px 0 8px}
+.concept-note p{font-size:14.5px;color:var(--ink-soft);margin:0}
+.frame{width:391px;background:var(--paper);border:1px solid #d3cab8;border-radius:28px;
+  padding:16px 0 26px;box-shadow:0 18px 40px rgba(60,50,30,.14)}
+
+/* ── shared chapter header (mirrors co-stick) ────────────────────── */
+.co-top{display:flex;justify-content:space-between;align-items:center;padding:6px 18px 0}
+.co-back{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft)}
+.co-head{padding:10px 18px 4px}
+.co-title{font-family:var(--f-display);font-weight:500;font-size:22px;line-height:1.2}
+.co-meta{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);margin-top:7px}
+.co-rail{display:flex;gap:4px;margin-top:10px}
+.co-tick{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.co-tick.done{background:var(--pine)}
+.co-tick.cur{background:var(--clay)}
+.co-rule{border-top:1px solid var(--line);margin:12px 18px 0}
+.axis{padding:10px 18px 4px;font-size:13px;color:var(--ink-soft)}
+.axis b{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--pine);font-weight:500;margin-right:8px}
+
+/* ── unit cards (shared) ─────────────────────────────────────────── */
+.u-card{display:flex;gap:10px;align-items:flex-start;padding:11px 16px 11px 6px;margin:6px 12px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:opacity .15s}
+.u-card.done{background:var(--paper);border-color:var(--line-soft)}
+.u-card.cur{border-color:var(--clay);box-shadow:0 0 0 1px var(--clay) inset}
+.u-num{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);width:26px;text-align:right;flex:none;padding-top:3px}
+.u-body{flex:1;min-width:0}
+.u-title{font-family:var(--f-display);font-weight:500;font-size:15px;line-height:1.3}
+.u-sec{font-family:var(--f-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-soft);margin-top:4px}
+.u-side{flex:none;text-align:right;font-family:var(--f-mono);font-size:10px;color:var(--ink-soft);padding-top:3px}
+.u-side .now{color:var(--clay);font-weight:500}
+.u-side .taught{color:var(--pine)}
+.dim{opacity:.28}
+
+/* competency chips */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.chip{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;padding:2px 7px;border-radius:9px;
+  border:1px solid;background:transparent;line-height:1.5}
+.chip.central{color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:6px;padding:8px 18px 6px}
+.legend .chip{cursor:pointer;font-size:10px;padding:3px 9px}
+.legend .chip.off{opacity:.35}
+.legend-hint{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-soft);letter-spacing:.08em;padding:0 18px 4px}
+.quiet{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-soft);letter-spacing:.06em}
+
+/* ── concept 2: the loom ─────────────────────────────────────────── */
+.loom-row{display:flex;align-items:stretch;margin:0 12px}
+.lanes{flex:none;width:70px;display:flex}
+.lane{flex:1;position:relative}
+.lane .wire{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);opacity:.85}
+.lane .wire.start{top:50%}
+.lane .wire.end{bottom:50%}
+.lane .node{position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+  transform:translate(-50%,-50%);border:2px solid var(--paper);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.loom-row .u-card{flex:1;margin:6px 0}
+.loom-heads{display:flex;padding:6px 12px 2px}
+.loom-heads .spacer{flex:1}
+.heads-lanes{flex:none;width:70px;display:flex}
+.head{flex:1;display:flex;justify-content:center}
+.head button{font-family:var(--f-mono);font-size:8.5px;border:none;background:transparent;cursor:pointer;
+  writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;padding:2px 0;color:var(--ink-soft)}
+.head button.on{font-weight:700}
+.loom-foot{padding:10px 18px 0;font-size:13px;color:var(--ink-soft)}
+
+/* ── concept 3: two lenses ───────────────────────────────────────── */
+.lens-toggle{display:flex;gap:6px;margin:12px 18px 4px;background:var(--paper-sunk);border-radius:11px;padding:4px}
+.lens-toggle button{flex:1;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;
+  border:none;border-radius:8px;padding:7px 4px;background:transparent;color:var(--ink-soft);cursor:pointer}
+.lens-toggle button.on{background:var(--paper-2);color:var(--pine);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:500}
+.skill-card{margin:8px 12px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.skill-head{padding:12px 16px 12px;cursor:pointer}
+.skill-kick{display:flex;align-items:center;gap:8px}
+.skill-kick .code{font-family:var(--f-mono);font-size:11px;font-weight:500}
+.skill-kick .tier{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.16em;
+  padding:2px 8px;border-radius:8px;color:#fff}
+.skill-kick .cnt{margin-left:auto;font-family:var(--f-mono);font-size:10px;color:var(--ink-soft)}
+.skill-text{font-size:14.5px;line-height:1.45;margin-top:7px}
+.mini-rail{display:flex;gap:3px;margin-top:10px}
+.mini-rail span{flex:1;height:6px;border-radius:2px;background:var(--line-soft)}
+.skill-body{border-top:1px solid var(--line-soft);padding:4px 16px 10px}
+.edge-row{padding:10px 0;border-bottom:1px solid var(--line-soft);cursor:pointer}
+.edge-row:last-child{border-bottom:none}
+.edge-u{font-family:var(--f-mono);font-size:10px;color:var(--ink-soft)}
+.edge-u b{color:var(--ink);font-weight:500}
+.edge-lo{font-style:italic;font-size:13.5px;line-height:1.45;margin-top:4px;color:#3c463f}
+.edge-dem{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--ochre);margin-top:4px}
+.gapnote{margin:12px 18px 0;padding:10px 14px;border:1px dashed var(--line);border-radius:10px;
+  font-size:13px;color:var(--ink-soft);font-style:italic}
+
+/* ── concept 4: bipartite flow ───────────────────────────────────── */
+.flow-wrap{position:relative;display:flex;justify-content:space-between;padding:8px 12px 4px;align-items:stretch}
+.flow-units{width:47%;display:flex;flex-direction:column;gap:6px}
+.flow-u{position:relative;z-index:2;display:flex;align-items:center;gap:7px;height:36px;padding:0 8px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:opacity .15s}
+.flow-u.done{background:var(--paper);border-color:var(--line-soft)}
+.flow-u.cur{border-color:var(--clay);box-shadow:0 0 0 1px var(--clay) inset}
+.flow-u b{font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--ink-soft);flex:none}
+.flow-u em{font-family:var(--f-display);font-style:normal;font-weight:500;font-size:12px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.flow-u .noedge{font-family:var(--f-mono);font-size:10px;color:var(--line);flex:none}
+.flow-comps{width:33%;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.flow-c{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:11px;
+  padding:9px 10px;cursor:pointer;transition:opacity .15s}
+.wdots-big{font-size:10px;letter-spacing:4px}
+.flow-c .code{font-family:var(--f-mono);font-size:11px;font-weight:500}
+.flow-c .cnt{font-family:var(--f-mono);font-size:9px;color:var(--ink-soft);margin-top:5px}
+/* weight tier — plain name + allocation-report dots (never colour) */
+.tierblock{display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;margin-left:8px;vertical-align:middle}
+.tiername{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft)}
+.wdots{font-size:7px;letter-spacing:3px;color:var(--ink);line-height:1}
+/* tap popup — competency text / unit details, pushed inline below the tapped element */
+.flow-pop{position:relative;z-index:2;background:var(--paper-2);border:1px solid var(--line);
+  border-left:3px solid var(--line);border-radius:7px;box-shadow:0 3px 10px rgba(60,50,30,.10);
+  padding:8px 11px;font-size:12px;line-height:1.45;color:#3c463f;margin:-2px 0 2px}
+.flow-pop b{font-family:var(--f-mono);font-size:10px;font-weight:500}
+.openlink{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;
+  color:var(--pine);cursor:pointer;margin-bottom:6px}
+.flow-svg{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+.flow-foot{padding:10px 18px 0;font-size:13px;color:var(--ink-soft)}
+
+/* footnotes */
+.notes{max-width:820px;margin-top:56px;background:var(--paper);border:1px solid #d3cab8;border-radius:16px;padding:26px 30px}
+.notes h2{font-family:var(--f-display);font-weight:500;font-size:20px;margin:0 0 10px}
+.notes p{font-size:14.5px;color:#4a4a42;margin:0 0 10px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page-head">
+    <span class="kicker">Aruvi · Chapter Organization · Social Sciences (edge model)</span>
+    <h1>Competency is not a spine — it is a weave</h1>
+    <p>Under the rewritten middle-SS constitutions, a unit carries <em>zero, one, or several</em>
+    competency edges, and each mapped competency reaches many units. Grouping units under
+    competency accordions (the current SS org page) becomes dishonest: a unit with three edges
+    would live in three folders, and a unit with none would live nowhere. These concepts keep the
+    plan's teaching order as the one true spine and treat competency as an <em>overlay</em>.
+    All four are drawn from the real edge-model plan — Grade VII, Ch. 4,
+    <em>New Beginnings — Cities and States</em> (11 units, pointer on unit 5).</p>
+  </div>
+
+  <div class="gallery">
+
+    <!-- ── CONCEPT 1 ─────────────────────────────────────────────── -->
+    <div class="concept">
+      <div class="concept-note">
+        <span class="kicker">Concept 1 · quietest</span>
+        <h2>Teaching rail + skill tags</h2>
+        <p>The accordion goes away for SS. Units sit flat in teaching order (the pointer's home);
+        each card carries small competency tags coloured by weight tier — Central filled, others
+        outlined. Tapping a tag in the legend lights that competency's units: the
+        one-to-many view on demand, zero new geometry.</p>
+      </div>
+      <div class="frame" id="c1"></div>
+    </div>
+
+    <!-- ── CONCEPT 2 ─────────────────────────────────────────────── -->
+    <div class="concept">
+      <div class="concept-note">
+        <span class="kicker">Concept 2 · signature</span>
+        <h2>The loom — threads in the margin</h2>
+        <p>The marginal rail is Aruvi's signature; here it becomes a loom. Each competency is a
+        vertical thread beside the unit list; a dot marks a unit that genuinely builds it. Threads
+        enter at their first unit and leave at their last, so the chapter's competency arc is
+        <em>visible as shape</em> — C-2.1 runs nearly the whole chapter, C-5.1 touches one unit.
+        Tap a thread head to isolate it.</p>
+      </div>
+      <div class="frame" id="c2"></div>
+    </div>
+
+    <!-- ── CONCEPT 3 ─────────────────────────────────────────────── -->
+    <div class="concept">
+      <div class="concept-note">
+        <span class="kicker">Concept 3 · two lenses</span>
+        <h2>In class / What it builds</h2>
+        <p>A lens toggle instead of one forced axis. <em>In class</em> is the flat teaching rail.
+        <em>What it builds</em> inverts the graph: the chapter's final competency set as a ledger —
+        each competency with its weight tier, a mini unit-rail showing exactly which units realise
+        it, and its edges (LO + cognitive demand) on open. This is also where a
+        <code>competency_gap_note</code> would live.</p>
+      </div>
+      <div class="frame" id="c3"></div>
+    </div>
+
+    <!-- ── CONCEPT 4 ─────────────────────────────────────────────── -->
+    <div class="concept">
+      <div class="concept-note">
+        <span class="kicker">Concept 4 · bipartite flow</span>
+        <h2>Units ↔ Competencies, both ends visible</h2>
+        <p>The Sankey idea, adapted for the edge model and a portrait phone. Ribbons are
+        <em>connections, not quantities</em> — a unit's 40 minutes is never split across its edges
+        (weights are emphasis, never arithmetic), so ribbon width follows tier, and competency
+        cards count units, not minutes. Weight tier is the plain name with the allocation
+        report's dots beneath (●●● Central · ●● Substantive · ● Present) — never a colour.
+        All ribbons rest faint; tap either end and only its ribbons draw, with a popup below the
+        tapped card: the competency's full text, or the unit's number, name and time.
+        Zero-edge units show a quiet “—”.</p>
+      </div>
+      <div class="frame" id="c4"></div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <h2>Data-handling notes (all concepts)</h2>
+    <p><b>Zero-edge units are first-class.</b> Units 5, 10 and 11 carry no edges — they are taught
+    (consolidation, review, present-day connection) but generate no LO. They render as plain cards:
+    no tag ≠ not taught. Never invent a "General" bucket for them.</p>
+    <p><b>Teaching order stays the contract.</b> The flat rail is the same flattenUnits walk the
+    pointer uses (test_unit_order.py); competency is always an overlay, never a regrouping.</p>
+    <p><b>Weight tiers, never weight integers — and never colour.</b> Central / Substantive /
+    Present on screen as plain names with the allocation report's dot convention beneath
+    (●●● / ●● / ●). Colour stays reserved for competency <em>identity</em> (threads, ribbons,
+    codes), so tier and identity never compete for the same channel.</p>
+    <p><b>Section anchors become the card's context line.</b> The v2.7 plans carry real
+    <code>section_anchor</code>s, but at ~1 section per unit an accordion of sections is chrome
+    without payoff — shown here as the small mono line under each title instead.</p>
+    <p><b>Thread colours.</b> C-2.1 pine, C-3.1 clay, C-3.2 ochre, plus two proposed muted tokens
+    (slate, plum) for the 4th/5th competency. SS mappings run ~5 primaries, so five hues suffice;
+    beyond that, tier colouring (Concept 1) degrades gracefully.</p>
+    <p><b>Old-model plans</b> (single <code>competency</code> per period, e.g. viii ch_04) keep the
+    current contiguous-run competency accordion — the port branches on which key the period carries.</p>
+    <p><b>Why not a true Sankey.</b> Sankey grammar promises conservation of flow — a quantity
+    partitioned downstream. Edges aren't quantities: a 3-edge unit does not split its 40 minutes,
+    and per-competency minute totals would double-count (this chapter would show ~3× its real
+    time). Concept 4 keeps the bipartite geometry but demotes ribbons to <em>connections</em>
+    (width = tier), counts units instead of minutes, and uses tap-to-focus so 14 crossing ribbons
+    stay legible at 360 px.</p>
+    <p><b>Combination worth considering:</b> Concept 3's toggle with Concept 2's loom as the
+    "In class" lens — the weave while teaching, the ledger when reflecting.</p>
+  </div>
+</div>
+
+<script>
+/* ── real data: social_sciences · vii · ch_04 (saved 2026-07-15, LP constitution v2.7) ── */
+const COMPS = {
+  "C-2.1":{w:3,tier:"Central",    color:"var(--pine)",  hex:"#1e5c4a", text:"Explains and analyses major changes in the past and their impact on society"},
+  "C-3.1":{w:2,tier:"Substantive",color:"var(--clay)",  hex:"#b65a31", text:"Analyses the effect of changes in early society — agriculture, technology, and shifts in habitation, work, and social structures"},
+  "C-3.2":{w:1,tier:"Present",    color:"var(--ochre)", hex:"#9a7321", text:"Identifies reasons behind harmony and conflict among social groups and communities, and their impact on societies"},
+  "C-4.1":{w:1,tier:"Present",    color:"var(--slate)", hex:"#56708f", text:"Collects, organises, and interprets information about social, cultural, economic, and political institutions"},
+  "C-5.1":{w:1,tier:"Present",    color:"var(--plum)",  hex:"#7d5878", text:"Identifies, explains, and raises questions about different forms of inequality, prejudice, and discrimination"},
+};
+const UNITS = [
+  {n:1, t:"The Long Silence: Mapping India's Urban Gap", s:"From First to Second Urbanisation",
+   e:[["C-2.1","Analysis","Students can compare contrasting phases of urban development using archaeological and literary evidence to explain causes of change."]]},
+  {n:2, t:"From Clans to Kingdoms: Building the Mahājanapada Map", s:"Janapadas and Mahājanapadas",
+   e:[["C-2.1","Understanding","Students can explain how expanding trade and agricultural conditions drove the consolidation of small states into larger political units."]]},
+  {n:3, t:"Defending the City: Reading Capital Architecture as Political Text", s:"Capitals of the Mahājanapadas",
+   e:[["C-2.1","Analysis","Students can interpret how urban defensive architecture reflected the political and military priorities of early states."]]},
+  {n:4, t:"Monarchy or Republic? Simulating the Assembly", s:"Early Democratic Traditions",
+   e:[["C-2.1","Analysis","Students can distinguish between monarchic and republican governance models by examining institutional roles and their historical significance."],
+      ["C-3.2","Application","Students can identify institutional mechanisms — assemblies, councils, collective vote — designed to manage conflicts over political authority."],
+      ["C-4.1","Understanding","Students can describe how deliberative institutions like sabhā and samiti shaped political authority and collective decision-making."]]},
+  {n:5, t:"Governance in Practice: Connecting Institutions to Urban Life", s:"Early Democratic Traditions", e:[]},
+  {n:6, t:"Iron Changes Everything: Evaluating a Technological Revolution", s:"More Innovations",
+   e:[["C-2.1","Evaluation","Students can assess how technological innovation in iron production transformed agriculture and warfare during this period."],
+      ["C-3.1","Evaluation","Students can evaluate how iron tool technology changed the scale and nature of agricultural and military labour."]]},
+  {n:7, t:"Coins as Evidence: Reconstructing Trade from Material Artefacts", s:"Coins and Trade",
+   e:[["C-2.1","Understanding","Students can explain how the introduction of coinage reflected and accelerated expanding trade networks across the Subcontinent."],
+      ["C-4.1","Understanding","Students can explain how coinage functioned as an economic institution that standardised exchange and enabled inter-regional trade."]]},
+  {n:8, t:"Sorting Society: Analysing the Varṇa–Jāti System", s:"The Varṇa–Jāti System",
+   e:[["C-3.1","Understanding","Students can explain how occupational identity was transmitted across generations and how the system shifted from flexibility to rigidity."],
+      ["C-3.2","Analysis","Students can trace how a social classification system evolved into a source of structured inequality and group conflict."],
+      ["C-5.1","Evaluation","Students can evaluate how a social system that began with occupational roles became a source of inequality and discrimination over time."]]},
+  {n:9, t:"Connecting the Subcontinent: Trade Routes and Southern Cities", s:"Developments Elsewhere in India",
+   e:[["C-2.1","Analysis","Students can trace how trade routes and urban growth connected distant regions of the Subcontinent into an integrated cultural and economic network."]]},
+  {n:10,t:"The Chapter in Review: Constructing a Causal Web", s:"Developments Elsewhere in India", e:[]},
+  {n:11,t:"Then and Now: Connecting Ancient Urban Patterns to the Present", s:"From First to Second Urbanisation", e:[]},
+];
+const POINTER = 4;                              // units 1–4 taught, unit 5 = now
+const CODES = Object.keys(COMPS);
+const unitsOf = c => UNITS.filter(u => u.e.some(e => e[0]===c)).map(u => u.n);
+
+/* ── shared header ── */
+function header(){
+  return `
+  <div class="co-top"><span class="kicker" style="color:var(--ink-soft)">social sciences·VII·Ch. 04</span>
+    <span class="co-back">← back</span></div>
+  <div class="co-head">
+    <div class="co-title">New Beginnings — Cities and States</div>
+    <div class="co-meta">11 Learning Units · 11 × 40 min</div>
+    <div class="co-rail">${UNITS.map((_,i)=>
+      `<span class="co-tick ${i<POINTER?'done':i===POINTER?'cur':''}"></span>`).join('')}</div>
+  </div>
+  <div class="co-rule"></div>`;
+}
+function status(i){ return i<POINTER ? 'done' : i===POINTER ? 'cur' : ''; }
+function side(i){
+  if(i===POINTER) return `<span class="now">now</span>`;
+  if(i<POINTER)   return `<span class="taught">✓ taught</span>`;
+  return `<span>40<br>min</span>`;
+}
+/* weight tier → allocation-report dots: ●●● Central · ●● Substantive · ● Present */
+const TIER_DOTS = {Central:3, Substantive:2, Present:1};
+const dots = tier => `<span class="wdots">${'●'.repeat(TIER_DOTS[tier])}</span>`;
+const tierBlock = tier => `<span class="tierblock"><span class="tiername">${tier}</span>${dots(tier)}</span>`;
+function chip(c, small){
+  const k = COMPS[c];
+  return `<span class="chip" data-c="${c}" style="color:${k.hex};border-color:${k.hex};">${c}</span>`;
+}
+
+/* ── concept 1: flat rail + tags, legend tap-to-highlight ── */
+(function(){
+  const el = document.getElementById('c1');
+  let active = null;
+  function render(){
+    el.innerHTML = header() + `
+    <div class="axis"><b>Units</b>the chapter in its own teaching order. Tags show the NCF
+      competencies each unit genuinely builds — the competency-based design at the heart of the NCF.</div>
+    <div class="legend-hint">TAP A COMPETENCY TO SEE WHERE IT LIVES</div>
+    <div class="legend">${CODES.map(c=>{
+      const k=COMPS[c];
+      const on = active===null || active===c;
+      return `<span class="chip ${on?'':'off'}" data-c="${c}" style="color:${k.hex};border-color:${k.hex};cursor:pointer">${c} · ${k.tier} ${dots(k.tier)}</span>`;
+    }).join('')}</div>
+    ${UNITS.map((u,i)=>{
+      const hit = active===null || u.e.some(e=>e[0]===active);
+      return `<div class="u-card ${status(i)} ${hit?'':'dim'}">
+        <span class="u-num">${u.n}.</span>
+        <div class="u-body">
+          <div class="u-title">${u.t}</div>
+          <div class="u-sec">${u.s}</div>
+          ${u.e.length?`<div class="chips">${u.e.map(e=>chip(e[0])).join('')}</div>`:''}
+        </div>
+        <div class="u-side">${side(i)}</div>
+      </div>`;
+    }).join('')}`;
+    el.querySelectorAll('.legend .chip').forEach(ch=>
+      ch.addEventListener('click',()=>{ active = active===ch.dataset.c ? null : ch.dataset.c; render(); }));
+  }
+  render();
+})();
+
+/* ── concept 2: the loom ── */
+(function(){
+  const el = document.getElementById('c2');
+  let active = null;
+  const span = {}; CODES.forEach(c=>{ const us=unitsOf(c); span[c]=[Math.min(...us),Math.max(...us)]; });
+  function render(){
+    el.innerHTML = header() + `
+    <div class="axis"><b>The weave</b>each thread is one NCF competency; a dot marks a unit that
+      genuinely builds it. Some units carry several threads; some carry none — both are by design.</div>
+    <div class="loom-heads">
+      <div class="heads-lanes">${CODES.map(c=>`
+        <div class="head"><button data-c="${c}" class="${active===c?'on':''}"
+          style="color:${COMPS[c].hex}">${c}</button></div>`).join('')}</div>
+      <div class="spacer"></div>
+    </div>
+    ${UNITS.map((u,i)=>{
+      const hit = active===null || u.e.some(e=>e[0]===active);
+      return `<div class="loom-row">
+        <div class="lanes">${CODES.map(c=>{
+          const [a,b]=span[c], n=u.n, k=COMPS[c];
+          const faded = active!==null && active!==c;
+          if(n<a || n>b) return `<div class="lane"></div>`;
+          const isEdge = u.e.some(e=>e[0]===c);
+          const wire = `<span class="wire ${n===a?'start':''} ${n===b?'end':''}"
+            style="background:${k.hex};${faded?'opacity:.12':''}"></span>`;
+          const node = isEdge ? `<span class="node" style="background:${k.hex};${faded?'opacity:.15':''}"></span>` : '';
+          return `<div class="lane">${wire}${node}</div>`;
+        }).join('')}</div>
+        <div class="u-card ${status(i)} ${hit?'':'dim'}">
+          <span class="u-num" style="width:20px">${u.n}.</span>
+          <div class="u-body"><div class="u-title" style="font-size:14px">${u.t}</div>
+            <div class="u-sec">${u.s}</div></div>
+          <div class="u-side">${side(i)}</div>
+        </div>
+      </div>`;
+    }).join('')}
+    <div class="loom-foot">${active
+      ? `<span class="quiet">${active} · ${COMPS[active].tier.toUpperCase()}</span> ${dots(COMPS[active].tier)}<br>${COMPS[active].text} — built in ${unitsOf(active).length} of 11 units.`
+      : `<span class="quiet">TAP A THREAD HEAD TO FOLLOW ONE COMPETENCY</span>`}</div>`;
+    el.querySelectorAll('.head button').forEach(b=>
+      b.addEventListener('click',()=>{ active = active===b.dataset.c ? null : b.dataset.c; render(); }));
+  }
+  render();
+})();
+
+/* ── concept 3: two lenses ── */
+(function(){
+  const el = document.getElementById('c3');
+  let lens = 'build';      // open on the interesting lens for the mockup
+  let openCard = 'C-2.1';
+  function render(){
+    let body = '';
+    if(lens==='teach'){
+      body = `
+      <div class="axis"><b>Units</b>the chapter in its own teaching order — tap a unit to open it.</div>
+      ${UNITS.map((u,i)=>`
+        <div class="u-card ${status(i)}">
+          <span class="u-num">${u.n}.</span>
+          <div class="u-body"><div class="u-title">${u.t}</div><div class="u-sec">${u.s}</div>
+            ${u.e.length?`<div class="chips">${u.e.map(e=>chip(e[0])).join('')}</div>`:''}</div>
+          <div class="u-side">${side(i)}</div>
+        </div>`).join('')}`;
+    } else {
+      const ordered = CODES.slice().sort((a,b)=>COMPS[b].w-COMPS[a].w || unitsOf(b).length-unitsOf(a).length);
+      body = `
+      <div class="axis"><b>Skills</b>what this chapter builds — the NCF competencies it develops,
+        and exactly where each one lives. Tap a unit inside to jump to it.</div>
+      ${ordered.map(c=>{
+        const k=COMPS[c], us=unitsOf(c), open = openCard===c;
+        return `<div class="skill-card">
+          <div class="skill-head" data-c="${c}">
+            <div class="skill-kick">
+              <span class="code" style="color:${k.hex}">${c}</span>
+              ${tierBlock(k.tier)}
+              <span class="cnt">${us.length} of 11 units</span>
+            </div>
+            <div class="skill-text">${k.text}</div>
+            <div class="mini-rail">${UNITS.map(u=>
+              `<span style="${us.includes(u.n)?`background:${k.hex}`:''}"></span>`).join('')}</div>
+          </div>
+          ${open?`<div class="skill-body">${UNITS.flatMap(u=>u.e.filter(e=>e[0]===c).map(e=>`
+            <div class="edge-row">
+              <div class="edge-u">UNIT <b>${String(u.n).padStart(2,'0')}</b> · ${u.t}</div>
+              <div class="edge-lo">${e[2]}</div>
+              <div class="edge-dem">${e[1]}</div>
+            </div>`)).join('')}</div>`:''}
+        </div>`;
+      }).join('')}
+      <div class="gapnote">Every mapped competency found a genuine home in this chapter.
+        <span class="quiet">(COMPETENCY_GAP_NOTE — SHOWN ONLY WHEN THE PLAN RECORDS ONE)</span></div>`;
+    }
+    el.innerHTML = header() + `
+      <div class="lens-toggle">
+        <button class="${lens==='teach'?'on':''}" data-l="teach">In class</button>
+        <button class="${lens==='build'?'on':''}" data-l="build">What it builds</button>
+      </div>` + body;
+    el.querySelectorAll('.lens-toggle button').forEach(b=>
+      b.addEventListener('click',()=>{ lens=b.dataset.l; render(); }));
+    el.querySelectorAll('.skill-head').forEach(h=>
+      h.addEventListener('click',()=>{ openCard = openCard===h.dataset.c ? null : h.dataset.c; render(); }));
+  }
+  render();
+})();
+
+/* ── concept 4: bipartite flow (connection ribbons, tap-to-focus) ── */
+(function(){
+  const el = document.getElementById('c4');
+  let focus = null;                       // null | {t:'c'|'u', id}
+  const TIER_W = {Central:5, Substantive:3.5, Present:2.5};
+  const shortTitle = t => t.split(':')[0];
+  function render(){
+    el.innerHTML = header() + `
+    <div class="axis"><b>The map</b>every line connects a unit to a competency it genuinely builds.
+      Tap either side to follow its connections. Lines are links, never time — a unit's minutes
+      are never divided across its competencies.</div>
+    <div class="flow-wrap" id="flowwrap">
+      <div class="flow-units">${UNITS.map((u,i)=>{
+        const dimmed = focus && (
+          (focus.t==='c' && !u.e.some(e=>e[0]===focus.id)) ||
+          (focus.t==='u' && focus.id!==u.n));
+        const open = focus && focus.t==='u' && focus.id===u.n;
+        const stc = status(i)==='cur' ? 'var(--clay)' : status(i)==='done' ? 'var(--pine)' : 'var(--line)';
+        return `<div class="flow-u ${status(i)} ${dimmed?'dim':''}" data-u="${u.n}">
+          <b>${String(u.n).padStart(2,'0')}</b><em>${shortTitle(u.t)}</em>
+          ${u.e.length?'':'<span class="noedge">—</span>'}</div>` +
+        (open ? `<div class="flow-pop" style="border-left-color:${stc}"><span class="openlink">open unit →</span><b>${String(u.n).padStart(2,'0')}</b> · ${u.t} · 40 min${
+            u.e.length ? '' : '<br><span class="quiet">TAUGHT IN FULL — BUILDS NO COMPETENCY EDGE, BY DESIGN</span>'}</div>` : '');
+      }).join('')}</div>
+      <div class="flow-comps">${CODES.map(c=>{
+        const k=COMPS[c], us=unitsOf(c);
+        const dimmed = focus && (
+          (focus.t==='c' && focus.id!==c) ||
+          (focus.t==='u' && !us.includes(focus.id)));
+        const open = focus && focus.t==='c' && focus.id===c;
+        return `<div class="flow-c ${dimmed?'dim':''}" data-c="${c}" style="border-color:${k.hex}55">
+          <span class="code" style="color:${k.hex}">${c}</span>
+          <span class="tiername">${k.tier}</span>
+          <span class="wdots wdots-big">${'●'.repeat(TIER_DOTS[k.tier])}</span></div>` +
+        (open ? `<div class="flow-pop" style="border-left-color:${k.hex}">${k.text}</div>` : '');
+      }).join('')}</div>
+      <svg class="flow-svg" id="flowsvg"></svg>
+    </div>
+    <div class="flow-foot">${focus ? '' : `<span class="quiet">TAP A UNIT OR A COMPETENCY TO FOLLOW ITS CONNECTIONS</span>`}</div>`;
+    /* draw ribbons after layout: measure both columns relative to the wrap */
+    const wrap = el.querySelector('#flowwrap'), svg = el.querySelector('#flowsvg');
+    if(wrap && svg && wrap.getBoundingClientRect){
+      const wr = wrap.getBoundingClientRect();
+      const uPos = {}, cPos = {};
+      wrap.querySelectorAll('.flow-u').forEach(r=>{ const b=r.getBoundingClientRect();
+        uPos[r.dataset.u]={x:b.right-wr.left, y:b.top-wr.top+b.height/2}; });
+      wrap.querySelectorAll('.flow-c').forEach(r=>{ const b=r.getBoundingClientRect();
+        cPos[r.dataset.c]={x:b.left-wr.left, y:b.top-wr.top+b.height/2}; });
+      const paths=[];
+      UNITS.forEach(u=>u.e.forEach(e=>{
+        const c=e[0], a=uPos[u.n], b=cPos[c]; if(!a||!b) return;
+        const hot = !focus || (focus.t==='c'&&focus.id===c) || (focus.t==='u'&&focus.id===u.n);
+        const dx=(b.x-a.x)*0.5;
+        paths.push(`<path d="M${a.x},${a.y} C${a.x+dx},${a.y} ${b.x-dx},${b.y} ${b.x},${b.y}"
+          fill="none" stroke="${COMPS[c].hex}" stroke-width="${TIER_W[COMPS[c].tier]}"
+          stroke-opacity="${hot?(focus?0.75:0.28):0.05}" stroke-linecap="round"/>`);
+      }));
+      svg.setAttribute('width', wr.width); svg.setAttribute('height', wr.height);
+      svg.innerHTML = paths.join('');
+    }
+    el.querySelectorAll('.flow-u').forEach(r=>r.addEventListener('click',()=>{
+      const n=Number(r.dataset.u);
+      focus = (focus && focus.t==='u' && focus.id===n) ? null : {t:'u', id:n}; render(); }));
+    el.querySelectorAll('.flow-c').forEach(r=>r.addEventListener('click',()=>{
+      focus = (focus && focus.t==='c' && focus.id===r.dataset.c) ? null : {t:'c', id:r.dataset.c}; render(); }));
+  }
+  render();
+})();
+</script>
+</body>
+</html>

@@ -165,9 +165,12 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   `Period.learning_outcomes` / group meta, for the assessment link only). (b) **`Period.approach`**
   is the ONE canonical "how do I run this?" line ("40 min · {approach}"): Science
   `pedagogical_approach` · Maths `pedagogical_method` · English joined `pedagogical_methods` ·
-  TWAU `dominant_mode` SPELLED OUT ("Hands-on Investigation", never "HI"). SS + Maths-prep have
-  NO source field → empty. Founder decision: the source keys are too diverse to flatten — NO
-  constitutional change; `Period.approach` is the single normalization point. (c) **Science secondary is
+  TWAU `dominant_mode` SPELLED OUT ("Hands-on Investigation", never "HI"). SS now emits
+  **`pedagogical_approaches`** — a list of 1-to-few approaches verbatim from the NCF Pedagogy doc
+  (SS middle LP constitution **v2.7**, 2026-07-15); the SS port JOINS them with "; " into
+  `Period.approach` (same pattern as English), so the Overview "Pedagogy" row now populates for SS
+  like every other subject. Maths-prep still has NO source field → empty. Founder decision: the
+  source keys are too diverse to flatten — `Period.approach` is the single normalization point. (c) **Science secondary is
   section-anchored flat** — grouped by `section_anchor` (type "section"), LO rejoined from
   result-level `coverage_handoff` into group meta; the "Stage None" phantom is fixed and must
   not regress. (d) **English singleton-section collapse** — chapters are split into constituent

@@ -69,9 +69,22 @@ class SocialSciencesSubject:
                 raise ValueError("SS assessment has no items.")
         return raw
 
-    # ── Lesson plan → view (grouped by competency) ──────────────────────────────
+    # ── Lesson plan → view ───────────────────────────────────────────────────────
+    # TWO plan generations live in the corpus (constitution rewrite, 2026-07-15 —
+    # docs/middle_ss_constitution_rewrite_brief.md):
+    #   OLD (pre-v3): each period carries ONE `competency` → grouped by contiguous
+    #        competency runs (below, unchanged).
+    #   EDGE MODEL (v3+): each period carries `competency_edges[]` — zero, one, or many
+    #        (unit × competency) edges, each owning one implied LO + cognitive demand.
+    #        Competency is no longer a spine (a 3-edge unit would live in three folders;
+    #        a 0-edge unit in none), so the view is ONE flat "unit" group in the plan's
+    #        own teaching order, with the edges carried on Period.meta. The renderer
+    #        (ChapterOrg's SS flow view) draws the unit↔competency graph from those edges.
     def lesson_plan_to_view(self, raw: Dict[str, Any], *, grade, chapter) -> LessonPlanView:
-        periods = raw.get("lesson_plan", raw).get("periods", [])
+        inner = raw.get("lesson_plan", raw)
+        periods = inner.get("periods", [])
+        if any("competency_edges" in p for p in periods):
+            return self._edge_model_lp(raw, inner, periods, grade=grade, chapter=chapter)
         # Group by CONTIGUOUS RUNS of the same competency, never a first-appearance merge:
         # SS plans interleave competencies (viii ch_04 raw order 1..11 flattened to
         # 1,3,10,2,5,… under the old dict merge), and the flattened Learning-Unit rail —
@@ -92,18 +105,23 @@ class SocialSciencesSubject:
                                     meta={"c_code": comp.get("c_code", ""), "cg": comp.get("cg", ""),
                                           "weight": comp.get("weight", "")}))
                 prev_code = c_code
-            # NOTE (2026-07-09): SS plans carry NO pedagogical approach/method field —
-            # Period.approach stays empty until the SS LP constitution emits one.
+            appr = p.get("pedagogical_approaches")
+            approach = self._join_approaches(appr)
+            hw = p.get("homework")
+            homework = "; ".join(as_list(hw)) if hw else ""
             groups[-1].periods.append(Period(
                 number=p.get("period_number", 0),
                 title=p.get("activity_title", ""),
+                approach=approach,
                 activities=band_lines(p.get("time_bands")),
                 phases=phases_from(p.get("time_bands")),
                 materials=as_list(p.get("materials")),
                 learning_outcomes=as_list(p.get("implied_lo")),
                 teacher_notes=as_list(p.get("teacher_notes")),
+                homework=homework,
                 meta={"section_anchor": p.get("section_anchor", ""),
                       "materials": p.get("materials", ""),
+                      "pedagogical_approaches": appr or [],
                       "duration_minutes": p.get("period_duration_minutes")},
             ))
         return LessonPlanView(
@@ -111,6 +129,67 @@ class SocialSciencesSubject:
             chapter_number=chapter.get("chapter_number", 0),
             chapter_title=chapter.get("chapter_title", ""),
             total_periods=len(periods), groups=groups,
+        )
+
+    # approach (2026-07-15): SS LP constitution v2.7 emits pedagogical_approaches —
+    # a list of one-to-few approaches (verbatim from the Pedagogy doc). Join the
+    # unique values in order into the canonical Period.approach line. Older SS plans
+    # without the field leave approach empty (unchanged behaviour).
+    @staticmethod
+    def _join_approaches(appr: Any) -> str:
+        if isinstance(appr, list):
+            seen: List[str] = []
+            for a in appr:
+                a = str(a or "").strip()
+                if a and a not in seen:
+                    seen.append(a)
+            return "; ".join(seen)
+        return str(appr or "").strip()
+
+    def _edge_model_lp(self, raw: Dict[str, Any], inner: Dict[str, Any],
+                       periods: List[Dict[str, Any]], *, grade, chapter) -> LessonPlanView:
+        """Edge-model plans (competency_edges per period) → ONE flat 'unit' group.
+
+        Teaching order is the contract (tests/test_unit_order.py); competency is an
+        OVERLAY carried per-period as meta["competency_edges"] (verbatim edge dicts:
+        c_code / cg / weight / competency_text / implied_lo / cognitive_demand).
+        Period.learning_outcomes gathers the edges' LOs — carried for the assessment
+        link, never displayed in the LP (founder rule 2026-07-09). A unit with no
+        edges is taught but generates no LO — by design, never bucketed as 'General'.
+        The chapter-level competency_gap_note (brief §2.5) rides LessonPlanView.meta."""
+        group = Group(type="unit", label="Units", meta={"edge_model": True})
+        for p in periods:
+            raw_edges = p.get("competency_edges") or []
+            edges = [e for e in raw_edges if isinstance(e, dict)] if isinstance(raw_edges, list) else []
+            appr = p.get("pedagogical_approaches")
+            hw = p.get("homework")
+            group.periods.append(Period(
+                number=p.get("period_number", 0),
+                title=p.get("activity_title", ""),
+                approach=self._join_approaches(appr),
+                activities=band_lines(p.get("time_bands")),
+                phases=phases_from(p.get("time_bands")),
+                materials=as_list(p.get("materials")),
+                learning_outcomes=[str(e.get("implied_lo", "")).strip()
+                                   for e in edges if e.get("implied_lo")],
+                teacher_notes=as_list(p.get("teacher_notes")),
+                homework="; ".join(as_list(hw)) if hw else "",
+                meta={"section_anchor": p.get("section_anchor", ""),
+                      "section_context": p.get("section_context", ""),
+                      "materials": p.get("materials", ""),
+                      "pedagogical_approaches": appr or [],
+                      "inclusivity": p.get("inclusivity", ""),
+                      "competency_edges": edges,
+                      "duration_minutes": p.get("period_duration_minutes")},
+            ))
+        gap = str(inner.get("competency_gap_note")
+                  or raw.get("competency_gap_note") or "").strip()
+        return LessonPlanView(
+            subject="social_sciences", grade=grade,
+            chapter_number=chapter.get("chapter_number", 0),
+            chapter_title=chapter.get("chapter_title", ""),
+            total_periods=len(periods), groups=[group],
+            meta={"competency_gap_note": gap, "edge_model": True},
         )
 
     # ── Assessment → view (grouped by question type) ────────────────────────────

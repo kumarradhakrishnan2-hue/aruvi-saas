@@ -12,6 +12,9 @@
   --pine-d: #164436;
   --clay: #b65a31;
   --ochre: #9a7321;
+  /* competency-identity extensions (SS flow view — 4th/5th competency threads) */
+  --ss-slate: #56708f;
+  --ss-plum: #7d5878;
   --danger: #c0392b;
   --card-bg: #f3f1ea;
   /* semantic surface/edge tokens (light values = former hardcodes; flipped in dark) */
@@ -2706,6 +2709,8 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
     --pine-d:     #5cae93;
     --clay:       #cf7f56;
     --ochre:      #c69c4d;
+    --ss-slate:   #8fa0c4;
+    --ss-plum:    #a884a2;
     --danger:     #e0705f;
     --card-bg:    #1d2621;
     --tint-pine:   #1f2c26;
@@ -2964,6 +2969,60 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   background: var(--ochre); border-radius: 9px; padding: 2px 8px; text-transform: uppercase; }
 /* (Old .co-notes foot card retired 2026-07-14 — the control now lives in the axis gutter
    as .co-notetab above; the notebook popup below is unchanged.) */
+
+/* ── Chapter Organization — Social Sciences FLOW VIEW (edge model, 2026-07-15) ──
+   Units in teaching order (left) ↔ the chapter's competency set (right); SVG ribbons
+   between are the (unit × competency) edges. Ribbons are CONNECTIONS, never time —
+   width follows the weight tier; the tier itself shows as plain name + the allocation
+   report's dots (●●●/●●/●), NEVER a colour. Colour is reserved for competency identity
+   (--pine/--clay/--ochre plus the two flow additions --ss-slate/--ss-plum, set in :root
+   and the dark palette block). Spec: docs/mockups/ss-chapter-organization.html (C4). */
+.cof-wrap { position: relative; display: flex; justify-content: space-between;
+  align-items: stretch; gap: 4px; padding: 8px 14px 4px; }
+.cof-svg { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
+.cof-units { width: 47%; display: flex; flex-direction: column; gap: 6px;
+  position: relative; z-index: 2; }
+.cof-comps { width: 33%; display: flex; flex-direction: column; justify-content: space-between;
+  gap: 10px; position: relative; z-index: 2; }
+.cof-u { display: flex; align-items: center; gap: 7px; min-height: 38px; padding: 4px 8px;
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 9px;
+  cursor: pointer; transition: opacity .15s; }
+.cof-u.done { background: var(--paper); border-color: var(--line-soft); }
+.cof-u.cur { border-color: var(--clay); box-shadow: 0 0 0 1px var(--clay) inset; }
+.cof-num { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); flex: none; }
+.cof-u.done .cof-num { color: var(--pine); }
+.cof-utitle { font-family: var(--f-display); font-weight: 500; font-size: 12.5px;
+  line-height: 1.25; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; }
+.cof-noedge { font-family: var(--f-mono); font-size: 10px; color: var(--line); flex: none; }
+/* Competency card — stacked (founder 2026-07-15): code on top, tier name in the middle,
+   PROMINENT allocation-report dots at the bottom. No unit count. */
+.cof-c { display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 11px;
+  padding: 9px 10px; cursor: pointer; transition: opacity .15s; }
+.cof-code { font-family: var(--f-mono); font-size: 12px; font-weight: 500; }
+.cof-tiername { font-family: var(--f-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: .13em; color: var(--ink-soft); }
+.cof-dots { font-size: 10px; letter-spacing: 4px; color: var(--ink); line-height: 1; }
+.cof-u.dim, .cof-c.dim { opacity: .3; }
+/* Lifted-note popup (founder style A, 2026-07-15): paper-white card + soft lift shadow +
+   3px LEFT identity rule (colour set inline — the tapped competency's thread colour, or the
+   unit's state colour). Echoes the Chapter Notes notebook's clay margin rule. */
+.cof-pop { position: relative; z-index: 2; background: var(--paper-2);
+  border: 1px solid var(--line); border-left: 3px solid var(--line); border-radius: 7px;
+  box-shadow: 0 3px 10px rgba(60, 50, 30, .10); padding: 8px 11px; margin: 4px 0 2px;
+  font-size: 12.5px; line-height: 1.45; }
+.cof-pop-k { font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
+.cof-pop-quiet { font-family: var(--f-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--ink-soft); margin-top: 5px; }
+/* "open unit →" — plain pine text link at the TOP of the unit popup. */
+.cof-open { all: unset; display: block; margin: 0 0 6px; font-family: var(--f-mono);
+  font-size: 10.5px; letter-spacing: .06em; color: var(--pine); cursor: pointer; }
+.cof-open:hover { color: var(--pine-d); }
+.cof-gap { margin: 10px 14px 0; padding: 9px 12px; border: 1px dashed var(--line);
+  border-radius: 10px; font-size: 13px; font-style: italic; color: var(--ink-soft); }
+.cof-hint { margin: 10px 18px 0; font-family: var(--f-mono); font-size: 9.5px;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
 
 /* ── Chapter Notes — the notebook popup (arch-plan §I-bis) ──
    School-ruled notebook in the warm-paper system: faint horizontal rules + one clay margin

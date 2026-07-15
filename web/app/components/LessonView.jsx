@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState } from "../lib/sectionState";
 import { userKey, boldMarks } from "../lib/format";
 
@@ -82,7 +82,11 @@ function OverviewPanel({ u, chapterTitle }) {
   // suppress that competency axis and show the period's own textbook SECTION (section_anchor)
   // instead — a stable, honest "where are we in the chapter?" label. Other subjects keep their
   // native axis (spine / section / stage).
-  const isSS = u.groupType === "competency";
+  // Same rule for SS EDGE-MODEL plans (flat "unit" group, competencies as per-unit edges):
+  // the group axis carries no honest label, so the Overview shows the unit's own
+  // section_anchor there too.
+  const isSS = u.groupType === "competency"
+    || (u.groupType === "unit" && u.meta?.section_anchor);
   const axisRow = isSS
     ? ["Section", u.meta?.section_anchor]
     : [CTX_LABEL[u.groupType] || "Spine", axisVal];
@@ -989,6 +993,166 @@ function truncateWords(text, n) {
   return words.slice(0, n).join(" ") + " …";
 }
 
+/* ── Social Sciences FLOW VIEW (edge model, founder-picked concept 2026-07-15;
+ * spec docs/mockups/ss-chapter-organization.html, Concept 4). Under the rewritten SS
+ * constitutions a unit carries ZERO/ONE/MANY competency edges, so competency is no longer
+ * a grouping spine — the Chapter Organization body becomes a bipartite map: units (the
+ * teaching order, left) ↔ the chapter's competency set (right), SVG ribbons between.
+ * Ribbons are CONNECTIONS, never time — a unit's minutes are never divided across its
+ * edges (weights are emphasis, not arithmetic) — so ribbon width follows the weight TIER
+ * (Central/Substantive/Present, shown as plain name + the allocation report's dots, never
+ * a tier colour; colour is reserved for competency IDENTITY). Tap either side to focus:
+ * only that node's ribbons draw, a popup opens below it (competency → its full text;
+ * unit → number · full title · minutes, plus the "open unit →" navigation — tap-to-focus
+ * replaces tap-to-open here, so navigation moved INTO the popup). Zero-edge units show a
+ * quiet "—": taught in full, builds no LO, by design (rewrite brief §2.5). */
+const SS_TIER_OF = (w) => (Number(w) >= 3 ? "Central" : Number(w) === 2 ? "Substantive" : "Present");
+const SS_TIER_DOTS = { Central: "●●●", Substantive: "●●", Present: "●" };
+const SS_RIBBON_W = { Central: 5, Substantive: 3.5, Present: 2.5 };
+// Identity palette, assigned in ledger order (weight desc, reach desc): pine, clay, ochre,
+// then the two SS-flow additions (slate, plum). SS mappings run ~5 primaries; a 6th+
+// competency falls back to ink-soft rather than inventing more hues.
+const SS_FLOW_COLORS = ["var(--pine)", "var(--clay)", "var(--ochre)", "var(--ss-slate)", "var(--ss-plum)", "var(--ink-soft)"];
+
+function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
+  const [focus, setFocus] = useState(null);           // null | {t:'u'|'c', id}
+  const wrapRef = useRef(null);
+  const [paths, setPaths] = useState([]);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  // The chapter's competency ledger, derived from the units' edges (weight desc, then
+  // reach desc, then code) — the SAME set the mapping settled; never re-selected here.
+  const comps = useMemo(() => {
+    const map = new Map();
+    units.forEach((u, i) => (u.meta?.competency_edges || []).forEach((e) => {
+      if (!e || !e.c_code) return;
+      if (!map.has(e.c_code)) {
+        map.set(e.c_code, { code: e.c_code, weight: Number(e.weight) || 1,
+          text: e.competency_text || "", units: [] });
+      }
+      map.get(e.c_code).units.push(i);
+    }));
+    const list = [...map.values()];
+    list.sort((a, b) => b.weight - a.weight || b.units.length - a.units.length
+      || String(a.code).localeCompare(String(b.code)));
+    list.forEach((c, k) => {
+      c.tier = SS_TIER_OF(c.weight);
+      c.color = SS_FLOW_COLORS[Math.min(k, SS_FLOW_COLORS.length - 1)];
+    });
+    return list;
+  }, [units]);
+  const byCode = useMemo(() => Object.fromEntries(comps.map((c) => [c.code, c])), [comps]);
+
+  // Ribbons: measured AFTER layout (popups push content, so re-measure on every focus
+  // change) — from each unit row's right edge to its competency card's left edge.
+  const measure = () => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const wr = wrap.getBoundingClientRect();
+    const uPos = {}, cPos = {};
+    wrap.querySelectorAll("[data-cof-u]").forEach((r) => {
+      const b = r.getBoundingClientRect();
+      uPos[r.getAttribute("data-cof-u")] = { x: b.right - wr.left, y: b.top - wr.top + b.height / 2 };
+    });
+    wrap.querySelectorAll("[data-cof-c]").forEach((r) => {
+      const b = r.getBoundingClientRect();
+      cPos[r.getAttribute("data-cof-c")] = { x: b.left - wr.left, y: b.top - wr.top + b.height / 2 };
+    });
+    const out = [];
+    units.forEach((u, i) => (u.meta?.competency_edges || []).forEach((e) => {
+      const a = uPos[i], b = cPos[e.c_code], comp = byCode[e.c_code];
+      if (!a || !b || !comp) return;
+      const hot = !focus || (focus.t === "c" && focus.id === e.c_code) || (focus.t === "u" && focus.id === i);
+      const dx = (b.x - a.x) * 0.5;
+      out.push({ d: `M${a.x},${a.y} C${a.x + dx},${a.y} ${b.x - dx},${b.y} ${b.x},${b.y}`,
+        color: comp.color, w: SS_RIBBON_W[comp.tier], o: hot ? (focus ? 0.75 : 0.28) : 0.05 });
+    }));
+    setPaths(out);
+    setSize({ w: wr.width, h: wr.height });
+  };
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useLayoutEffect(() => { measure(); }, [focus, units, comps]);
+  useEffect(() => {
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  const pad2 = (n) => String(n).padStart(2, "0");
+  return (
+    <>
+      <div className="cof-wrap" ref={wrapRef}>
+        <svg className="cof-svg" width={size.w} height={size.h} aria-hidden="true">
+          {paths.map((p, k) => (
+            <path key={k} d={p.d} fill="none" style={{ stroke: p.color }}
+              strokeWidth={p.w} strokeOpacity={p.o} strokeLinecap="round" />
+          ))}
+        </svg>
+        <div className="cof-units">
+          {units.map((u, i) => {
+            const st = pointer == null ? "" : (doneAll || i < pointer) ? "done" : i === pointer ? "cur" : "";
+            const edges = u.meta?.competency_edges || [];
+            const dimmed = focus && ((focus.t === "c" && !edges.some((e) => e.c_code === focus.id))
+              || (focus.t === "u" && focus.id !== i));
+            const open = focus && focus.t === "u" && focus.id === i;
+            return (
+              <div key={i}>
+                <div className={`cof-u ${st}${dimmed ? " dim" : ""}`} data-cof-u={i}
+                  onClick={() => setFocus(open ? null : { t: "u", id: i })}>
+                  <span className="cof-num">{pad2(i + 1)}</span>
+                  <span className="cof-utitle">{(u.title || `Unit ${i + 1}`).split(":")[0]}</span>
+                  {edges.length ? null : <span className="cof-noedge">—</span>}
+                </div>
+                {/* Lifted-note popup (founder-picked style A, 2026-07-15): paper-white card,
+                    soft lift shadow, 3px LEFT identity rule — unit popups take their STATE
+                    colour (clay = now, pine = taught, hairline = ahead). "open unit →"
+                    rides the TOP of the box (founder same day). */}
+                {open ? (
+                  <div className="cof-pop" style={{ borderLeftColor:
+                    st === "cur" ? "var(--clay)" : st === "done" ? "var(--pine)" : "var(--line)" }}>
+                    <button className="cof-open"
+                      onClick={(ev) => { ev.stopPropagation(); onOpenUnit(i); }}>open unit →</button>
+                    <span className="cof-pop-k">{pad2(i + 1)}</span> · {u.title || `Unit ${i + 1}`}
+                    {u.meta?.duration_minutes ? ` · ${u.meta.duration_minutes} min` : ""}
+                    {!edges.length ? (
+                      <div className="cof-pop-quiet">Taught in full — builds no competency edge, by design</div>
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+        <div className="cof-comps">
+          {comps.map((c) => {
+            const dimmed = focus && ((focus.t === "c" && focus.id !== c.code)
+              || (focus.t === "u" && !c.units.includes(focus.id)));
+            const open = focus && focus.t === "c" && focus.id === c.code;
+            return (
+              <div key={c.code}>
+                {/* Stacked card (founder 2026-07-15): code → tier name → prominent dots.
+                    No unit count — the ribbons say where it lives. */}
+                <div className={`cof-c${dimmed ? " dim" : ""}`} data-cof-c={c.code}
+                  onClick={() => setFocus(open ? null : { t: "c", id: c.code })}>
+                  <span className="cof-code" style={{ color: c.color }}>{c.code}</span>
+                  <span className="cof-tiername">{c.tier}</span>
+                  <span className="cof-dots">{SS_TIER_DOTS[c.tier]}</span>
+                </div>
+                {/* Competency popup: the left rule takes the tapped thread's identity colour. */}
+                {open ? (
+                  <div className="cof-pop" style={{ borderLeftColor: c.color }}>{c.text}</div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {gapNote ? <div className="cof-gap">{gapNote}</div> : null}
+      {!focus ? <div className="cof-hint">Tap a unit or a competency to follow its connections</div> : null}
+    </>
+  );
+}
+
 /* ── Chapter Organization — the chapter's front door (chapter altitude, arch-plan §E).
  * The My Classes section card, opened up: the same tick rail expands into one card per
  * unit (pine = taught · ochre = now · hairline = ahead), grouped under quiet mono
@@ -1029,6 +1193,12 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   // prep branch and only actually fires for prep, so it's a safe, precise signature.
   const mathsFlat = lp.subject === "mathematics" && (lp.groups || []).length === 1
     && lp.groups[0]?.label === "Lesson";
+  // Social Sciences EDGE-MODEL plans (competency_edges per unit; SS port emits ONE flat
+  // "unit" group flagged meta.edge_model) render the bipartite FLOW VIEW instead of the
+  // accordion — competency is a many-to-many overlay there, not a grouping axis. Old
+  // single-competency SS plans keep the competency accordion below unchanged.
+  const ssFlow = lp.subject === "social_sciences" && (lp.groups || []).length === 1
+    && !!lp.groups[0]?.meta?.edge_model;
   const FLAT_SHOWN = 4;   // units shown before the window starts scrolling
   // Total units under a group (its own periods + all descendants) — shown on the group header.
   const countUnits = (g) => (g.periods?.length || 0) + (g.children || []).reduce((s, c) => s + countUnits(c), 0);
@@ -1102,6 +1272,47 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     collectAxis(g.children);
   });
   collectAxis(lp.groups);
+  /* Axis legend — names the organizing axis + a small explanation. Maths PREP (the flat
+     case) has no group axis, but the legend must not simply vanish (founder 2026-07-14) —
+     it gets its own row; same for the SS flow view ("The map"). The legend shares its row
+     with the Chapter Notes bookmark: the text column is narrowed, freeing a committed right
+     gutter the tab rides (founder 2026-07-14). Normally frozen with the header
+     (founder 2026-07-11); in the SS flow view it SCROLLS instead (founder 2026-07-15) —
+     see the placement below. */
+  const axisWrap = (
+    <div className="co-axiswrap">
+      <div className="co-axis">
+        {ssFlow ? (
+          <div className="co-axis-row">
+            <span className="co-axis-name">The map</span>
+            <span className="co-axis-blurb">every line connects a unit to an NCF competency it genuinely builds — the competency-based design at the heart of the NCF. Lines are links, never time. Tap either side to follow its connections.</span>
+          </div>
+        ) : mathsFlat ? (
+          <div className="co-axis-row">
+            <span className="co-axis-name">Units</span>
+            <span className="co-axis-blurb">one continuous run of learning units in the textbook&apos;s own teaching order — the activity-led, play-way flow the NCF asks of the preparatory stage. Tap a unit to open it.</span>
+          </div>
+        ) : axisTypes.length ? (
+          axisTypes.map((t) => (
+            <div className="co-axis-row" key={t}>
+              <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
+              <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
+            </div>
+          ))
+        ) : null}
+      </div>
+      {/* Vertical bookmark in the gutter — no icon/dot (kept short so it doesn't outrun
+          the paragraph height); always the solid ochre fill. */}
+      <button
+        className="co-notetab"
+        onClick={() => setNotesOpen(true)}
+        aria-label={hasNote ? "Chapter notes — edit" : "Chapter notes — add"}
+        title={hasNote ? noteText.trim() : "Chapter notes"}
+      >
+        <span className="co-notetab-label">Notes</span>
+      </button>
+    </div>
+  );
   return (
     <div className="lessonview co-view" data-subject={lp.subject || ""}>
       {/* Frozen header — stays pinned down through the meta row; the unit list scrolls under it.
@@ -1111,8 +1322,8 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           {/* {subject} · {class as Roman} · Ch. NN (founder 2026-07-10). */}
           <span className="kicker kicker-soft co-topkick">
             {String(lp.subject || "").replace(/_/g, " ")}
-            {lp.grade ? ` · ${String(lp.grade).replace(/grade|class/gi, "").trim().toUpperCase()}` : ""}
-            {lp.chapter_number ? ` · Ch. ${String(lp.chapter_number).padStart(2, "0")}` : ""}
+            {lp.grade ? `·${String(lp.grade).replace(/grade|class/gi, "").trim().toUpperCase()}` : ""}
+            {lp.chapter_number ? `·Ch. ${String(lp.chapter_number).padStart(2, "0")}` : ""}
           </span>
           <button className="back back-tr" data-tour={backTour} onClick={onBack}>← back</button>
         </div>
@@ -1121,7 +1332,9 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           <div className="co-meta">
             {total} Learning Unit{total !== 1 ? "s" : ""}{durParts.length ? ` ${durParts.join(". ")}` : ""}
           </div>
-          {pointer != null ? (
+          {/* No tick rail in the SS flow view (founder 2026-07-15): the unit rows already
+              carry taught/now states, so the header progress bar is redundant there. */}
+          {pointer != null && !ssFlow ? (
             <div className="co-rail" aria-label={`${taught} of ${total} units taught`}>
               {units.map((_, i) => (
                 <span key={i} className={`co-tick ${doneAll || i < pointer ? "done" : i === pointer ? "cur" : ""}`} />
@@ -1131,47 +1344,22 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         </div>
         {/* Hairline divider under the meta — frozen with the header. */}
         <div className="co-headrule" aria-hidden="true"></div>
-        {/* Axis legend — names the organizing axis of the drop-downs + a small explanation.
-            Frozen WITH the header (founder 2026-07-11): the note on the axis stays pinned
-            as the unit list scrolls beneath it. Maths PREP (the flat case) has no group
-            axis, but the legend must not simply vanish (founder 2026-07-14) — it gets its
-            own row describing the flat organization, with a tap hint that matches flat
-            cards (each card IS a unit; there is nothing "underneath"). */}
-        {/* Axis legend + the Chapter Notes bookmark share one row: the legend is narrowed to
-            a text column, freeing a committed right gutter for the note tab. An axis (or the
-            flat-units note) renders in EVERY subject·grade case, so the gutter is guaranteed
-            real estate — the tab rides it, frozen with the header (founder 2026-07-14, moved
-            up from the page foot where it was getting lost below the units; maths middle had
-            no notes control at all before this and is now covered like every other combo). */}
-        <div className="co-axiswrap">
-          <div className="co-axis">
-            {mathsFlat ? (
-              <div className="co-axis-row">
-                <span className="co-axis-name">Units</span>
-                <span className="co-axis-blurb">one continuous run of learning units in the textbook&apos;s own teaching order — the activity-led, play-way flow the NCF asks of the preparatory stage. Tap a unit to open it.</span>
-              </div>
-            ) : axisTypes.length ? (
-              axisTypes.map((t) => (
-                <div className="co-axis-row" key={t}>
-                  <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
-                  <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
-                </div>
-              ))
-            ) : null}
-          </div>
-          {/* Vertical bookmark in the gutter — no icon/dot (kept short so it doesn't outrun
-              the paragraph height); always the solid ochre fill. */}
-          <button
-            className="co-notetab"
-            onClick={() => setNotesOpen(true)}
-            aria-label={hasNote ? "Chapter notes — edit" : "Chapter notes — add"}
-            title={hasNote ? noteText.trim() : "Chapter notes"}
-          >
-            <span className="co-notetab-label">Notes</span>
-          </button>
-        </div>
+        {/* Axis legend + Notes tab: frozen with the header for every subject EXCEPT the SS
+            flow view (founder 2026-07-15) — there the freeze ends at the hairline above, and
+            the "The map" blurb + Notes tab scroll away with the unit list (rendered after
+            co-stick below). */}
+        {ssFlow ? null : axisWrap}
       </div>
-      {mathsFlat ? (
+      {ssFlow ? axisWrap : null}
+      {ssFlow ? (
+        <SSFlowBody
+          units={units}
+          pointer={pointer}
+          doneAll={doneAll}
+          onOpenUnit={onOpenUnit}
+          gapNote={(lp.meta && lp.meta.competency_gap_note) || ""}
+        />
+      ) : mathsFlat ? (
         /* Maths prep — no axis: units flat under the header (no "Lesson" bucket header —
            founder 2026-07-13: remove the word). Beyond 4 units the list lives in a capped
            "wheel" window that scrolls internally; a soft bottom fade hints "more below".
