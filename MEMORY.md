@@ -386,7 +386,22 @@ taught/now states). Implemented:
   taking their STATE colour on the rule (clay = now, pine = taught, hairline = ahead; echoes
   the Chapter Notes notebook's clay margin rule); (d) **"open unit →" moved to the TOP of the
   unit popup** as a plain pine text link (a solid pine-filled pill variant was tried then
-  UNDONE, founder same day). Mockup Concept 4 synced. NOTE a "row opens / edge-dots
+  UNDONE, founder same day); (e) **unit focus also opens its connected competencies' popups**
+  in the right column — **always FULL text; NO automatic wheeling** (final rule, converged
+  over FOUR same-day founder iterations and settled by a LIVE Claude-in-Chrome verification:
+  three successive measured criteria — vs unit column, vs unit column with a single-popup
+  exemption, vs viewport allowance — ALL over-triggered, because competency texts run 6–13
+  lines against ~30–85px of column slack, and on phone-width viewports (verified at 280×629
+  device emulation) any height threshold trips for every multi-edge unit, capping exactly
+  the text the teacher opened to read). Popups in this layout PUSH the cards — a box can
+  never physically hit another — so the page simply grows and scrolls. The wheel apparatus
+  (`wheelOn` state, `focusTo` reset, `.cof-pop-wheel/-scroll/-fade` CSS, the mockup's
+  `render(second)` two-pass) is KEPT DORMANT in code should a genuine collision case appear;
+  nothing sets wheelOn today. Ribbons stay correct because measure re-runs on focus +
+  wheelOn change. Live-verified 2026-07-15 in Chrome (localhost:3000, Kumar1, SS vii ch_04):
+  flow view renders, freeze ends at the hairline, zero-edge "—" on units 10/11, unit-8 focus
+  highlights 3 ribbons + opens 3 full competency texts + unit popup with top "open unit →".
+  Mockup Concept 4 synced. NOTE a "row opens / edge-dots
   focus" tap-contract variant was built then UNDONE (founder, same day) — unit-row tap stays
   FOCUS + popup, with navigation inside the popup as "open unit →". If tap-to-open ever comes
   back, the reverted approach (per-edge identity-coloured dots cluster as the focus handle)

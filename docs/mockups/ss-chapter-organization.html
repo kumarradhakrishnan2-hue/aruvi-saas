@@ -147,6 +147,11 @@ body{margin:0;background:#efe9dd;color:var(--ink);font-family:var(--f-body);font
 .flow-pop b{font-family:var(--f-mono);font-size:10px;font-weight:500}
 .openlink{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;
   color:var(--pine);cursor:pointer;margin-bottom:6px}
+.pop-wheel{padding:0;overflow:hidden}
+.pop-scroll{max-height:74px;overflow-y:auto;overscroll-behavior:contain;padding:8px 11px 14px;
+  scrollbar-width:thin}
+.pop-fade{position:absolute;left:3px;right:1px;bottom:1px;height:16px;pointer-events:none;
+  border-radius:0 0 7px 7px;background:linear-gradient(to bottom,transparent,var(--paper-2))}
 .flow-svg{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
 .flow-foot{padding:10px 18px 0;font-size:13px;color:var(--ink-soft)}
 
@@ -469,13 +474,13 @@ function chip(c, small){
 (function(){
   const el = document.getElementById('c4');
   let focus = null;                       // null | {t:'c'|'u', id}
+  let wheelOn = false;                    // wheel = measured FALLBACK, not the default
   const TIER_W = {Central:5, Substantive:3.5, Present:2.5};
   const shortTitle = t => t.split(':')[0];
-  function render(){
+  function render(second){
     el.innerHTML = header() + `
     <div class="axis"><b>The map</b>every line connects a unit to a competency it genuinely builds.
-      Tap either side to follow its connections. Lines are links, never time — a unit's minutes
-      are never divided across its competencies.</div>
+      Tap either side to follow its connections.</div>
     <div class="flow-wrap" id="flowwrap">
       <div class="flow-units">${UNITS.map((u,i)=>{
         const dimmed = focus && (
@@ -495,15 +500,21 @@ function chip(c, small){
           (focus.t==='c' && focus.id!==c) ||
           (focus.t==='u' && !us.includes(focus.id)));
         const open = focus && focus.t==='c' && focus.id===c;
+        const openViaUnit = !open && focus && focus.t==='u' && us.includes(focus.id);
         return `<div class="flow-c ${dimmed?'dim':''}" data-c="${c}" style="border-color:${k.hex}55">
           <span class="code" style="color:${k.hex}">${c}</span>
           <span class="tiername">${k.tier}</span>
           <span class="wdots wdots-big">${'●'.repeat(TIER_DOTS[k.tier])}</span></div>` +
-        (open ? `<div class="flow-pop" style="border-left-color:${k.hex}">${k.text}</div>` : '');
+        (open || (openViaUnit && !wheelOn)
+         ? `<div class="flow-pop" style="border-left-color:${k.hex}">${k.text}</div>`
+         : openViaUnit ? `<div class="flow-pop pop-wheel" style="border-left-color:${k.hex}">
+             <div class="pop-scroll">${k.text}</div><div class="pop-fade"></div></div>` : '');
       }).join('')}</div>
       <svg class="flow-svg" id="flowsvg"></svg>
     </div>
     <div class="flow-foot">${focus ? '' : `<span class="quiet">TAP A UNIT OR A COMPETENCY TO FOLLOW ITS CONNECTIONS</span>`}</div>`;
+    /* No automatic wheeling (founder, live-verified 2026-07-15): popups push, the page
+       grows; boxes never collide. wheelOn stays false — the wheel CSS is kept dormant. */
     /* draw ribbons after layout: measure both columns relative to the wrap */
     const wrap = el.querySelector('#flowwrap'), svg = el.querySelector('#flowsvg');
     if(wrap && svg && wrap.getBoundingClientRect){
@@ -526,9 +537,10 @@ function chip(c, small){
       svg.innerHTML = paths.join('');
     }
     el.querySelectorAll('.flow-u').forEach(r=>r.addEventListener('click',()=>{
-      const n=Number(r.dataset.u);
+      const n=Number(r.dataset.u); wheelOn=false;
       focus = (focus && focus.t==='u' && focus.id===n) ? null : {t:'u', id:n}; render(); }));
     el.querySelectorAll('.flow-c').forEach(r=>r.addEventListener('click',()=>{
+      wheelOn=false;
       focus = (focus && focus.t==='c' && focus.id===r.dataset.c) ? null : {t:'c', id:r.dataset.c}; render(); }));
   }
   render();

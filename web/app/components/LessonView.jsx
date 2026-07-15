@@ -1017,8 +1017,17 @@ const SS_FLOW_COLORS = ["var(--pine)", "var(--clay)", "var(--ochre)", "var(--ss-
 function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
   const [focus, setFocus] = useState(null);           // null | {t:'u'|'c', id}
   const wrapRef = useRef(null);
+  const unitsColRef = useRef(null);
+  const compsColRef = useRef(null);
   const [paths, setPaths] = useState([]);
   const [size, setSize] = useState({ w: 0, h: 0 });
+  // Wheeling is a FALLBACK, not the default (founder 2026-07-15): a unit-focus popup shows
+  // its FULL text unless the open boxes would outgrow the unit column ("hit" the cards
+  // below) — only then do the popups collapse to capped scroll-wheels. Detected by a
+  // measure pass: render full first; if the competency column's content ends up taller
+  // than the unit column's, flip wheelOn and re-render. Reset on every focus change.
+  const [wheelOn, setWheelOn] = useState(false);
+  const focusTo = (f) => { setWheelOn(false); setFocus(f); };
 
   // The chapter's competency ledger, derived from the units' edges (weight desc, then
   // reach desc, then code) — the SAME set the mapping settled; never re-selected here.
@@ -1048,6 +1057,12 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
   const measure = () => {
     const wrap = wrapRef.current;
     if (!wrap) return;
+    // NO automatic wheeling (founder, live-verified 2026-07-15): popups in this layout PUSH
+    // the cards — a box can never physically hit another — and on phone-width viewports the
+    // competency texts are long enough that ANY height threshold (unit column, viewport)
+    // trips for every multi-edge unit, capping texts the teacher wanted to read. So open
+    // popups always show FULL text; the page grows and scrolls. The wheel markup/CSS
+    // (`wheelOn`, .cof-pop-wheel) is kept dormant should a genuine collision case appear.
     const wr = wrap.getBoundingClientRect();
     const uPos = {}, cPos = {};
     wrap.querySelectorAll("[data-cof-u]").forEach((r) => {
@@ -1071,7 +1086,7 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
     setSize({ w: wr.width, h: wr.height });
   };
   /* eslint-disable react-hooks/exhaustive-deps */
-  useLayoutEffect(() => { measure(); }, [focus, units, comps]);
+  useLayoutEffect(() => { measure(); }, [focus, units, comps, wheelOn]);
   useEffect(() => {
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
@@ -1088,7 +1103,7 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
               strokeWidth={p.w} strokeOpacity={p.o} strokeLinecap="round" />
           ))}
         </svg>
-        <div className="cof-units">
+        <div className="cof-units" ref={unitsColRef}>
           {units.map((u, i) => {
             const st = pointer == null ? "" : (doneAll || i < pointer) ? "done" : i === pointer ? "cur" : "";
             const edges = u.meta?.competency_edges || [];
@@ -1098,7 +1113,7 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
             return (
               <div key={i}>
                 <div className={`cof-u ${st}${dimmed ? " dim" : ""}`} data-cof-u={i}
-                  onClick={() => setFocus(open ? null : { t: "u", id: i })}>
+                  onClick={() => focusTo(open ? null : { t: "u", id: i })}>
                   <span className="cof-num">{pad2(i + 1)}</span>
                   <span className="cof-utitle">{(u.title || `Unit ${i + 1}`).split(":")[0]}</span>
                   {edges.length ? null : <span className="cof-noedge">—</span>}
@@ -1123,24 +1138,34 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
             );
           })}
         </div>
-        <div className="cof-comps">
+        <div className="cof-comps" ref={compsColRef}>
           {comps.map((c) => {
             const dimmed = focus && ((focus.t === "c" && focus.id !== c.code)
               || (focus.t === "u" && !c.units.includes(focus.id)));
             const open = focus && focus.t === "c" && focus.id === c.code;
+            // Focusing a UNIT also opens the popups of every competency it connects to
+            // (founder 2026-07-15). They show FULL text; only when the open boxes would
+            // outgrow the unit column (the measured wheelOn fallback above) do they cap
+            // into scroll-wheels. A direct competency tap is always full-height.
+            const openViaUnit = !open && focus && focus.t === "u" && c.units.includes(focus.id);
             return (
               <div key={c.code}>
                 {/* Stacked card (founder 2026-07-15): code → tier name → prominent dots.
                     No unit count — the ribbons say where it lives. */}
                 <div className={`cof-c${dimmed ? " dim" : ""}`} data-cof-c={c.code}
-                  onClick={() => setFocus(open ? null : { t: "c", id: c.code })}>
+                  onClick={() => focusTo(open ? null : { t: "c", id: c.code })}>
                   <span className="cof-code" style={{ color: c.color }}>{c.code}</span>
                   <span className="cof-tiername">{c.tier}</span>
                   <span className="cof-dots">{SS_TIER_DOTS[c.tier]}</span>
                 </div>
                 {/* Competency popup: the left rule takes the tapped thread's identity colour. */}
-                {open ? (
+                {open || (openViaUnit && !wheelOn) ? (
                   <div className="cof-pop" style={{ borderLeftColor: c.color }}>{c.text}</div>
+                ) : openViaUnit ? (
+                  <div className="cof-pop cof-pop-wheel" style={{ borderLeftColor: c.color }}>
+                    <div className="cof-pop-scroll">{c.text}</div>
+                    <div className="cof-pop-fade" aria-hidden="true" />
+                  </div>
                 ) : null}
               </div>
             );
@@ -1285,7 +1310,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         {ssFlow ? (
           <div className="co-axis-row">
             <span className="co-axis-name">The map</span>
-            <span className="co-axis-blurb">every line connects a unit to an NCF competency it genuinely builds — the competency-based design at the heart of the NCF. Lines are links, never time. Tap either side to follow its connections.</span>
+            <span className="co-axis-blurb">every line connects a unit to an NCF competency it genuinely builds — the competency-based design at the heart of the NCF. Tap either side to follow its connections.</span>
           </div>
         ) : mathsFlat ? (
           <div className="co-axis-row">

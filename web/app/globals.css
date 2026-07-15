@@ -3012,6 +3012,19 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   border: 1px solid var(--line); border-left: 3px solid var(--line); border-radius: 7px;
   box-shadow: 0 3px 10px rgba(60, 50, 30, .10); padding: 8px 11px; margin: 4px 0 2px;
   font-size: 12.5px; line-height: 1.45; }
+/* Wheel variant — the FALLBACK when a unit-focus's open popups would outgrow the unit
+   column (measured; full text otherwise): a capped window that scrolls inside (the
+   maths-prep .co-flatscroll idiom), thin rail + bottom fade. */
+.cof-pop-wheel { padding: 0; overflow: hidden; }
+.cof-pop-scroll { max-height: 74px; overflow-y: auto; overscroll-behavior: contain;
+  padding: 8px 11px 14px; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: var(--edge-green) transparent; }
+.cof-pop-scroll::-webkit-scrollbar { width: 4px; }
+.cof-pop-scroll::-webkit-scrollbar-thumb { background: var(--edge-green); border-radius: 999px; }
+.cof-pop-scroll::-webkit-scrollbar-track { background: transparent; }
+.cof-pop-fade { position: absolute; left: 3px; right: 1px; bottom: 1px; height: 16px;
+  pointer-events: none; border-radius: 0 0 7px 7px;
+  background: linear-gradient(to bottom, transparent, var(--paper-2)); }
 .cof-pop-k { font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
 .cof-pop-quiet { font-family: var(--f-mono); font-size: 9px; text-transform: uppercase;
   letter-spacing: .1em; color: var(--ink-soft); margin-top: 5px; }
