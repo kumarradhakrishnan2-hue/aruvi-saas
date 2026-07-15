@@ -309,6 +309,25 @@ must confirm · source entry.
     must confirm:* live middle-maths assessment emits `inclusivity` as `{support, challenge}`, each a
     label-less clause. (src: 2026-07-14, founder-directed.)
 
+17. **Social Sciences (middle) LP constitution — `teacher_notes` INTRODUCED (v1.5 → v1.6)** —
+    SS-middle was the ONLY subject/stage whose LP constitution never asked for teacher notes:
+    the pipeline already carried them (`social_sciences/subject.py:104` reads `teacher_notes`,
+    view model + `LessonView` ribbon render them) but the constitution had no rule and no schema
+    field, so the Lesson-tab notes ribbon was always empty for SS. Added **RULE 11 · TEACHER
+    NOTES — PER-UNIT GUIDANCE** (2–3 sentences; link to previous unit / one chapter-grounded
+    confusion, never fabricated / optional facilitation pointer; MUST NOT restate the activity,
+    cite C-codes, or open with "Transition"/a section label — ported from Science-middle Rule 10
+    and adapted to SS content) + a `teacher_notes` field in the A3 period schema (placed before
+    `competency`). *Validated synthetically:* the 4 saved SS plans (VI ch6 ×7, VII ch4 ×7, VIII
+    ch4 ×11, VIII ch5 ×10 = **35 periods**) were **backfilled in place** with hand-authored,
+    chapter-grounded notes (`outputs/backfill_ss_notes.py`); JSON valid, every period non-blank,
+    all 35 confirmed flowing through `SocialSciencesSubject.lesson_plan_to_view` into the view
+    model; `test_ss_port` + `test_lp_standard` still green. The constitution text itself was
+    never exercised by a generation run, and the backfilled notes are synthetic (not generator
+    output). *Pre-warm must confirm:* live SS-middle LP generation actually emits a non-blank
+    Rule-11 `teacher_notes` per period, and the emitted notes obey the constraints (no verbatim
+    activity restatement, no C-codes, no "Transition" opener). (src: 2026-07-14, founder-directed.)
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.

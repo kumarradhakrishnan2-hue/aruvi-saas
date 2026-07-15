@@ -1103,9 +1103,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .uv-tab.on { color:var(--clay); border-bottom-color:var(--clay); font-weight:700; }
 /* Overview ledger — mono label left, serif value right, hairline rules. */
 .uv-ovrows { margin-bottom:16px; }
-.uv-ovrow { display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+/* Left-aligned ledger (founder 2026-07-14): label column + value read from the left, never
+   pinned to the right edge — so the chapter name (and every value) is left-aligned across
+   all subjects and classes, consistent with the assessment overview. */
+.uv-ovrow { display:flex; justify-content:flex-start; align-items:baseline; gap:12px;
   padding:9px 0; border-bottom:1px solid var(--line-soft); }
-.uv-ovval { font-family:var(--f-body); font-size:15px; color:var(--ink); text-align:right; min-width:0; }
+.uv-ovrow .kicker { flex:none; min-width:84px; }
+.uv-ovval { flex:1; font-family:var(--f-body); font-size:15px; color:var(--ink); text-align:left; min-width:0; }
 /* Mobile: drop the overview value column one notch. */
 @media (max-width: 600px) { .uv-ovval { font-size:13.5px; } }
 /* ── The ASSESS tab panel (2026-07-10 revision): flat on the unit's paper — the green
@@ -1140,7 +1144,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-ovlo { padding:9px 0; border-bottom:1px solid var(--line-soft); }
 .assess-ovrows > .assess-ovlo:first-child { padding-top:0; }
 .assess-ovrows > .assess-ovlo:last-child { border-bottom:none; padding-bottom:0; }
-.assess-ovlo-t { font-family:var(--f-body); font-size:14px; color:var(--ink); line-height:1.5; margin:4px 0 0; }
+.assess-ovlo-t { font-family:var(--f-body); font-size:14px; color:var(--ink); line-height:1.5; margin:4px 0 0; text-align:left; }
 .assess-ovk-b { display:block; font-weight:700; }
 .assess-ovrow { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); }
 /* No-LO items (Maths middle/prep) open with a ledger row — it too must share the
@@ -2862,11 +2866,22 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--line); }
 .co-tick.done { background: var(--pine); }
 .co-tick.cur { background: var(--ochre); }
-/* Axis legend under the red header rule — names the drop-down axis + a small explanation. */
-.co-axis { margin: 12px 0 16px; display: flex; flex-direction: column; gap: 5px; }
+/* Axis legend under the red header rule — names the drop-down axis + a small explanation.
+   The legend + the Chapter Notes bookmark share one row: the paragraph is a narrowed text
+   column (co-axis flexes), the tab a fixed gutter on the right (founder 2026-07-14). */
+.co-axiswrap { display: flex; align-items: center; gap: 12px; margin: 12px 0 16px; }
+.co-axis { flex: 1; min-width: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
 .co-axis-row { font-family: var(--f-body); font-size: 13px; line-height: 1.5; }
 .co-axis-name { color: var(--pine); font-weight: 600; margin-right: 7px; }
 .co-axis-blurb { color: var(--ink-soft); }
+/* Chapter Notes bookmark — vertical mono label in the axis gutter. No icon/dot (keeps it
+   short so it doesn't outrun the paragraph); always the solid ochre fill. */
+.co-notetab { all: unset; box-sizing: border-box; flex: none; align-self: stretch;
+  min-height: 58px; width: 28px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ochre); border-radius: 8px; background: var(--ochre); cursor: pointer; }
+.co-notetab:hover { background: #876419; border-color: #876419; }
+.co-notetab-label { writing-mode: vertical-rl; text-orientation: mixed; font-family: var(--f-mono);
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; color: #fbf6ea; }
 
 /* Nested sub-stage label (children below a top-level stage) — normal case, not a caps kicker. */
 .co-groupbar { display: flex; align-items: baseline; gap: 10px; padding: 12px 0 6px; }
@@ -2886,9 +2901,13 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   font: inherit; color: inherit; }
 .co-acc-name { flex: 1; font-family: var(--f-display); font-size: 18px; font-weight: 400;
   color: var(--ink); line-height: 1.2; }
+/* Social Sciences: competency heading two notches smaller than other subjects
+   (founder 2026-07-14) — the competency labels run long, so ease their weight on the page. */
+.co-view[data-subject="social_sciences"] .co-acc-name { font-size: 16px; }
 /* Mobile: stage / competency heading labels down two notches. */
 @media (max-width: 600px) {
   .co-acc-name { font-size: 15px; }
+  .co-view[data-subject="social_sciences"] .co-acc-name { font-size: 13px; }
   .co-subname { font-size: 9px; }
 }
 .co-acchead .co-count { align-self: center; }
@@ -2943,15 +2962,8 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-mark { font-family: var(--f-mono); font-size: 10px; color: var(--pine); }
 .co-now { font-family: var(--f-mono); font-size: 9px; letter-spacing: .12em; color: var(--paper);
   background: var(--ochre); border-radius: 9px; padding: 2px 8px; text-transform: uppercase; }
-.co-notes { margin: 16px 0 8px; border: 1px solid var(--line); border-radius: 11px; background: var(--card-bg); }
-.co-notes button { all: unset; display: flex; width: 100%; box-sizing: border-box; align-items: center;
-  gap: 10px; padding: 12px 14px; cursor: pointer; }
-.co-notes .kicker { flex: 1; }
-.co-hint { font-family: var(--f-mono); font-size: 10px; color: var(--ink-soft); white-space: nowrap; }
-/* has-note state: kicker shrinks, a one-line italic teaser fills the middle, "edit" trails. */
-.co-notes.has .kicker { flex: none; }
-.co-note-teaser { flex: 1; min-width: 0; font-family: var(--f-body); font-style: italic;
-  font-size: 13px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* (Old .co-notes foot card retired 2026-07-14 — the control now lives in the axis gutter
+   as .co-notetab above; the notebook popup below is unchanged.) */
 
 /* ── Chapter Notes — the notebook popup (arch-plan §I-bis) ──
    School-ruled notebook in the warm-paper system: faint horizontal rules + one clay margin

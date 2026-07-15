@@ -76,9 +76,19 @@ function OverviewPanel({ u, chapterTitle }) {
   // real section, not "Lesson". No-op elsewhere (TWAU's context already IS the section; maths
   // middle/secondary leave section_label empty and fall back to the group label).
   const axisVal = u.meta?.section_label || u.context;
+  // Social Sciences groups periods by COMPETENCY, so the group axis would surface a single
+  // "Competency" here — misleading, because a period routinely carries several competencies
+  // (the Assess tab proves it: items anchored to one period span multiple c-codes). For SS we
+  // suppress that competency axis and show the period's own textbook SECTION (section_anchor)
+  // instead — a stable, honest "where are we in the chapter?" label. Other subjects keep their
+  // native axis (spine / section / stage).
+  const isSS = u.groupType === "competency";
+  const axisRow = isSS
+    ? ["Section", u.meta?.section_anchor]
+    : [CTX_LABEL[u.groupType] || "Spine", axisVal];
   const rows = [
     ["Chapter", chapterTitle],
-    [CTX_LABEL[u.groupType] || "Spine", axisVal],
+    axisRow,
     ["Time", dur ? `${dur} mins` : null],
     ["Pedagogy", u.approach],
   ].filter(([, v]) => v);
@@ -969,6 +979,16 @@ function sectionTitleOnly(label) {
   return cleaned || label;
 }
 
+/* Social Sciences competency labels run long ("C-2.1 — Explains and analyses major changes
+ * in the past and their impact on society"). On the Chapter Organization page we show only
+ * the first N whitespace tokens (the C-X.Y code counts as one) + an ellipsis while the
+ * competency accordion is COLLAPSED; opening it reveals the full text (founder 2026-07-14). */
+function truncateWords(text, n) {
+  const words = String(text || "").trim().split(/\s+/);
+  if (words.length <= n) return text;
+  return words.slice(0, n).join(" ") + " …";
+}
+
 /* ── Chapter Organization — the chapter's front door (chapter altitude, arch-plan §E).
  * The My Classes section card, opened up: the same tick rail expands into one card per
  * unit (pine = taught · ochre = now · hairline = ahead), grouped under quiet mono
@@ -1117,23 +1137,39 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
             axis, but the legend must not simply vanish (founder 2026-07-14) — it gets its
             own row describing the flat organization, with a tap hint that matches flat
             cards (each card IS a unit; there is nothing "underneath"). */}
-        {mathsFlat ? (
+        {/* Axis legend + the Chapter Notes bookmark share one row: the legend is narrowed to
+            a text column, freeing a committed right gutter for the note tab. An axis (or the
+            flat-units note) renders in EVERY subject·grade case, so the gutter is guaranteed
+            real estate — the tab rides it, frozen with the header (founder 2026-07-14, moved
+            up from the page foot where it was getting lost below the units; maths middle had
+            no notes control at all before this and is now covered like every other combo). */}
+        <div className="co-axiswrap">
           <div className="co-axis">
-            <div className="co-axis-row">
-              <span className="co-axis-name">Units</span>
-              <span className="co-axis-blurb">one continuous run of learning units in the textbook&apos;s own teaching order — the activity-led, play-way flow the NCF asks of the preparatory stage. Tap a unit to open it.</span>
-            </div>
-          </div>
-        ) : axisTypes.length ? (
-          <div className="co-axis">
-            {axisTypes.map((t) => (
-              <div className="co-axis-row" key={t}>
-                <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
-                <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
+            {mathsFlat ? (
+              <div className="co-axis-row">
+                <span className="co-axis-name">Units</span>
+                <span className="co-axis-blurb">one continuous run of learning units in the textbook&apos;s own teaching order — the activity-led, play-way flow the NCF asks of the preparatory stage. Tap a unit to open it.</span>
               </div>
-            ))}
+            ) : axisTypes.length ? (
+              axisTypes.map((t) => (
+                <div className="co-axis-row" key={t}>
+                  <span className="co-axis-name">{AXIS_INFO[t][0]}</span>
+                  <span className="co-axis-blurb">{AXIS_INFO[t][1]} Click each card to access units underneath.</span>
+                </div>
+              ))
+            ) : null}
           </div>
-        ) : null}
+          {/* Vertical bookmark in the gutter — no icon/dot (kept short so it doesn't outrun
+              the paragraph height); always the solid ochre fill. */}
+          <button
+            className="co-notetab"
+            onClick={() => setNotesOpen(true)}
+            aria-label={hasNote ? "Chapter notes — edit" : "Chapter notes — add"}
+            title={hasNote ? noteText.trim() : "Chapter notes"}
+          >
+            <span className="co-notetab-label">Notes</span>
+          </button>
+        </div>
       </div>
       {mathsFlat ? (
         /* Maths prep — no axis: units flat under the header (no "Lesson" bucket header —
@@ -1175,6 +1211,11 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
         // the group's own label becomes the clickable header, so skip it in the body walk.
         const body = renderGroup({ periods: g.periods, children: g.children, type: g.type }, 0, `g${gi}`, open);
         const cnt = countUnits(g);
+        // Header label: Science strips the section number; SS competencies are truncated to
+        // 12 words while COLLAPSED (full text on open) to cut clutter (founder 2026-07-14).
+        const rawLabel = (lp.subject === "science" && g.type === "section" ? sectionTitleOnly(g.label) : g.label) || `Section ${gi + 1}`;
+        const shownLabel = (lp.subject === "social_sciences" && g.type === "competency" && !open)
+          ? truncateWords(rawLabel, 12) : rawLabel;
         return (
           // The OPEN axis is the filled one; closed axes render unfilled/white so the
           // options read as options (founder 2026-07-10).
@@ -1184,7 +1225,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
               onClick={() => setOpenIdx(open ? -1 : gi)}
               aria-expanded={open}
             >
-              <span className="co-acc-name">{(lp.subject === "science" && g.type === "section" ? sectionTitleOnly(g.label) : g.label) || `Section ${gi + 1}`}</span>
+              <span className="co-acc-name">{shownLabel}</span>
               <span className="co-count">{cnt}</span>
               <span className="co-chev" aria-hidden="true">
                 <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -1196,18 +1237,8 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           </div>
         );
       })}
-      {/* Chapter Notes — ONE collapsed, pull-based control opening the notebook popup
-          (arch-plan §I-bis). Mark + teaser when a note exists; quiet "＋" when empty. */}
-      <div className={`co-notes${hasNote ? " has" : ""}`}>
-        <button onClick={() => setNotesOpen(true)}>
-          <span className="kicker kicker-soft">Chapter notes</span>
-          {hasNote ? (
-            <span className="co-note-teaser">{noteText.trim()}</span>
-          ) : (
-            <span className="co-hint">none yet · ＋</span>
-          )}
-        </button>
-      </div>
+      {/* Chapter Notes now lives in the axis gutter above (the notebook popup still opens
+          from there — arch-plan §I-bis; moved out of the page foot 2026-07-14). */}
       {notesOpen ? (
         <ChapterNotesModal
           chapterTitle={lp.chapter_title}
