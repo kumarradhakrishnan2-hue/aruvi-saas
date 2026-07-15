@@ -445,17 +445,19 @@ from it; don't depend on its code.
 **Authoring prompts moved home 2026-07-01.** The `cowork prompts/` folder (the `chapter`
 skill's per-subject/stage authoring prompts — chapter_summary + competency_mapping/
 effort_index) was copied wholesale from `../Project Aruvi/cowork prompts/` into this repo's
-own `cowork prompts/` (§5). The `chapter` skill's own source
-(`../Project Aruvi/Aruvi skills/chapter/SKILL.md` — NOT the read-only cached skill copy
-loaded into a live session, which can't be edited from inside Cowork) now resolves its
-subject→prompt-file path table against **this repo's root**, not Project Aruvi's. Edit
-prompts here going forward (e.g. the English middle Step 7d chapter-level effort-signal
-addition, 2026-07-01) — Project Aruvi's copy is now stale and should not be edited. Note the
-prompt files' own internal path tables (chapter PDFs, framework, mirror output — all
-`mnt/data/...`-style) are unchanged; only the root this skill looks under for the prompt
-file itself moved. Authoring of brand-new mirror data (running a chapter through PDFs for
-the first time) still ultimately draws on `../Project Aruvi/knowledge_commons/` for source
-PDFs — that dependency is intentional and not yet migrated (see the open item below).
+own `cowork prompts/` (§5). **The `chapter` skill's own source ALSO moved home 2026-07-15:
+`.claude/skills/chapter/SKILL.md` in THIS repo** (founder decision; `../Project Aruvi/Aruvi
+skills/chapter/SKILL.md` is now the stale copy — edit here. The read-only cached skill loaded
+into a live session can't be edited from inside Cowork; re-paste into Settings > Capabilities
+after any edit). It resolves its subject→prompt-file path table against **this repo's root**,
+not Project Aruvi's. Edit prompts here going forward (e.g. the English middle Step 7d
+chapter-level effort-signal addition, 2026-07-01) — Project Aruvi's copy is now stale and
+should not be edited. **Pipeline I/O also fully lives here as of 2026-07-15:** textbook PDFs
+sit at `textbooks/{subject}/{grade}/` (repo root — the one true PDF home; Project Aruvi's
+`knowledge_commons/textbooks/` no longer exists on disk), outputs deliver to
+`data/content/chapters/{subject}/{grade}/{summaries,mappings}/`, and the skill's new "Data
+paths" section instructs translating any older prompt's `mnt/data/...` path table to these.
+SS secondary (Grade IX) added to the skill the same day (see MEMORY.md 2026-07-15).
 
 **Remaining `../Project Aruvi` dependencies, audited 2026-07-01** — everything else is
 either historical/documentation-only or already severed:

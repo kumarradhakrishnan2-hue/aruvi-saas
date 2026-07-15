@@ -548,6 +548,7 @@ const QTYPE_NAME = {
   ORAL_PROMPT: "Oral prompt",
   NUM: "Numerical problem",
   EXTRACT_ANALYSIS: "Extract analysis",
+  SOURCE_INTERPRETATION: "Source interpretation",
 };
 const qtypeName = (t) => QTYPE_NAME[t] || String(t || "").replace(/_/g, " ");
 
@@ -1096,6 +1097,15 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
   const pad2 = (n) => String(n).padStart(2, "0");
   return (
     <>
+      {/* The ONE navigation affordance of the map (founder 2026-07-15): a link pinned above
+          the unit column, just under the axis blurb — appears when a unit is focused and
+          opens it. Replaces the per-popup "open unit →", which users struggled to find
+          inside the graphic. */}
+      {focus && focus.t === "u" ? (
+        <button className="cof-opentop" onClick={() => onOpenUnit(focus.id)}>
+          open unit {pad2(focus.id + 1)} →
+        </button>
+      ) : null}
       <div className="cof-wrap" ref={wrapRef}>
         <svg className="cof-svg" width={size.w} height={size.h} aria-hidden="true">
           {paths.map((p, k) => (
@@ -1120,13 +1130,12 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
                 </div>
                 {/* Lifted-note popup (founder-picked style A, 2026-07-15): paper-white card,
                     soft lift shadow, 3px LEFT identity rule — unit popups take their STATE
-                    colour (clay = now, pine = taught, hairline = ahead). "open unit →"
-                    rides the TOP of the box (founder same day). */}
+                    colour (clay = now, pine = taught, hairline = ahead). Navigation does
+                    NOT live here (founder same day): "open unit →" was too hard to find
+                    inside the graphic — it sits ABOVE the unit column instead. */}
                 {open ? (
                   <div className="cof-pop" style={{ borderLeftColor:
                     st === "cur" ? "var(--clay)" : st === "done" ? "var(--pine)" : "var(--line)" }}>
-                    <button className="cof-open"
-                      onClick={(ev) => { ev.stopPropagation(); onOpenUnit(i); }}>open unit →</button>
                     <span className="cof-pop-k">{pad2(i + 1)}</span> · {u.title || `Unit ${i + 1}`}
                     {u.meta?.duration_minutes ? ` · ${u.meta.duration_minutes} min` : ""}
                     {!edges.length ? (

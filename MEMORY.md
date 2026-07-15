@@ -334,7 +334,36 @@ must confirm · source entry.
 
 ---
 
-## 2026-07-15 (newest) — SS Chapter Organization = the bipartite FLOW VIEW (edge model; full suite 18/18 green; live + mobile pass pending)
+## 2026-07-15 (newest) — SS SECONDARY joins the chapter pipeline; all pipeline paths now resolve inside aruvi-saas
+Social Sciences secondary (Grade IX) is now runnable end-to-end for chapter summary + competency
+mapping. What landed: (a) the `chapter` skill SOURCE (`../Project Aruvi/Aruvi skills/chapter/
+SKILL.md`) updated — SS is middle/secondary (the "middle only" reject is gone; preparatory-SS
+still rejects → TWAU; Grade X rejects until its PDFs land), SS secondary prompt-map row added,
+and a NEW "Data paths" table: **all pipeline I/O resolves inside aruvi-saas** — PDFs
+`textbooks/{subject}/{grade}/`, outputs `data/content/chapters/{subject}/{grade}/{summaries|
+mappings}/`, CG `data/content/framework/{subject}/{stage}/`, constitutions stage-routed under
+`data/content/constitutions/...`; older prompts' `mnt/data/...` internal tables are translated,
+never written to Project Aruvi. **The skill's authoritative home is now THIS repo:
+`.claude/skills/chapter/SKILL.md`** (founder decision 2026-07-15 — "the chapter skill in Aruvi
+SaaS is the right one to use"; copied from the updated Project Aruvi source, which is now the
+stale copy — edit here going forward). ⚠️ The live CACHED skill in Settings > Capabilities is
+still the old version until the founder re-pastes this file there. (b) Both SS secondary prompts (`cowork prompts/
+social_sciences/secondary/step_1_chapter_summary.md` + `step_2_competency_mapping.md` — the
+step_2 already existed, contrary to the skill's old claim) had their path tables repointed from
+`mnt/data/mirror|knowledge_commons` to the aruvi-saas paths above. Note the ix textbook files
+are lowercase `chapter NN - Title.pdf` — step_1 now says match case-insensitively. (c) Output
+folders `data/content/chapters/social_sciences/ix/{summaries,mappings}/` created (empty). The
+mapping constitution is one dual-stage document (middle/secondary copies identical, diff-verified);
+the CG documents differ per stage — never carry middle C-codes into a secondary run. Textbook
+corpus discovery: `textbooks/` at the aruvi-saas ROOT (outside `data/content/`) is the one true
+PDF home for ALL subjects (english/maths/science/SS/TWAU per grade incl. ix) — Project Aruvi's
+`knowledge_commons/textbooks/` no longer exists on disk, so CLAUDE.md §10's "authoring still
+draws on Project Aruvi knowledge_commons" is stale for textbooks (framework source PDFs do still
+live there).
+
+---
+
+## 2026-07-15 — SS Chapter Organization = the bipartite FLOW VIEW (edge model; full suite 18/18 green; live + mobile pass pending)
 The rewritten middle-SS constitutions (docs/middle_ss_constitution_rewrite_brief.md; LP v2.7+
 emits `competency_edges[]` per period — zero/one/many (unit × competency) edges, each owning one
 implied LO + cognitive demand) make competency a MANY-TO-MANY overlay, not a spine: a 3-edge unit
@@ -401,7 +430,30 @@ taught/now states). Implemented:
   wheelOn change. Live-verified 2026-07-15 in Chrome (localhost:3000, Kumar1, SS vii ch_04):
   flow view renders, freeze ends at the hairline, zero-edge "—" on units 10/11, unit-8 focus
   highlights 3 ribbons + opens 3 full competency texts + unit popup with top "open unit →".
-  Mockup Concept 4 synced. NOTE a "row opens / edge-dots
+  Mockup Concept 4 synced.
+- **Axis blurb trim (founder, same day):** removed the "Lines are links, never time."
+  sentence from "The map" legend (app + mockup).
+- **Navigation moved OUT of the popup (founder, same day, live-verified):** users struggled
+  to find "open unit →" inside the graphic — the per-popup link is REMOVED; instead ONE
+  `.cof-opentop` link ("open unit NN →") renders above the unit column, directly under the
+  axis blurb, only while a unit is focused, and opens that unit. Unit popups now carry just
+  number · title · minutes (+ the zero-edge quiet note). Mockup synced.
+- **TRIED AND ROLLED BACK IN FULL (founder, same day) — mobile map overlay + freeze trim.**
+  Two companion changes were built, live-verified, then UNDONE at founder request: (a) a
+  mobile-only (≤600px) full-screen map overlay — inline map as non-interactive preview, tap
+  opened a portaled full-screen popup with ✕, body scroll locked, "open unit →" closed and
+  navigated; (b) a freeze trim where only the Aruvi app header stayed pinned (tabs + org
+  header scrolled; chapter title 23 → 17px via a `body[data-ssflow-org]` flag). The org page
+  keeps the INLINE interactive map and the standard co-stick freeze (ending at the hairline
+  under the meta). If the overlay idea returns, two hard-won findings from the attempt:
+  (1) `<main>` is a stacking context (position:relative; z-index:1) BELOW the z-6 sticky
+  header — any position:fixed overlay rendered inside main paints UNDER the header regardless
+  of its own z-index; portal to document.body (the app's other in-place fixed modals —
+  chapter-notes, mc-modal, choice-pop — may share this defect, unaudited); (2) `--hdr-h`
+  (measured in page.jsx) is the right top offset to keep the app header visible above an
+  overlay. Incidental keeps from the live pass: edge-model Overview rows confirmed live
+  (Section "The Varṇa–Jāti System" + Pedagogy "Issues-based learning" on unit 8's tabs).
+  NOTE a "row opens / edge-dots
   focus" tap-contract variant was built then UNDONE (founder, same day) — unit-row tap stays
   FOCUS + popup, with navigation inside the popup as "open unit →". If tap-to-open ever comes
   back, the reverted approach (per-edge identity-coloured dots cluster as the focus handle)

@@ -29,9 +29,9 @@ Tell Cowork the subject, grade, and chapter scope before starting.
 
 | Item | Path |
 |------|------|
-| Content root (aruvi-saas) | data/content/ |
-| Chapter PDFs | data/content/textbooks/{subject}/{grade}/ |
-| Summary output | data/content/chapters/{subject}/{grade}/summaries/ |
+| Project root (Cowork mount) | mnt/data/ |
+| Chapter PDFs | mnt/data/knowledge_commons/textbooks/{subject}/{grade}/ |
+| Summary output | mnt/data/mirror/chapters/{subject}/{grade}/summaries/ |
 
 Files are named: `Chapter NN - Title.pdf`
 Output files are named: `ch_NN_summary.txt`
@@ -74,8 +74,12 @@ appearing in the summary even if the topic is familiar.
 
 ## Step 4 — Write the summary
 
-Write a summary of 800–1200 words addressing every heading identified
-in Step 2, in the order they appear.
+Write a summary addressing every heading identified in Step 2, in the order
+they appear. Length is content-driven, not capped: a typical chapter lands at
+roughly **900–1900 words** — lighter Grade VI chapters may sit near 800–1200,
+and a heading-dense Grade VII/VIII chapter may run to ~2000 or beyond (figures
+derived from existing middle-stage summaries). Cover every heading; do not pad
+or compress to hit a word figure.
 
 For each heading write 2–4 sentences covering:
 - What the section teaches
@@ -99,7 +103,7 @@ For each heading write 2–4 sentences covering:
 
 ## Step 5 — Save the output
 
-Save to: `data/content/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt`
+Save to: `mnt/data/mirror/chapters/{subject}/{grade}/summaries/ch_NN_summary.txt`
 (NN = zero-padded chapter number, e.g. `ch_09_summary.txt`)
 
 ---

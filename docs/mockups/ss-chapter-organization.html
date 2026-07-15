@@ -481,6 +481,7 @@ function chip(c, small){
     el.innerHTML = header() + `
     <div class="axis"><b>The map</b>every line connects a unit to a competency it genuinely builds.
       Tap either side to follow its connections.</div>
+    ${focus && focus.t==='u' ? `<div class="openlink" style="margin:0 18px 8px">open unit ${String(focus.id).padStart(2,'0')} →</div>` : ''}
     <div class="flow-wrap" id="flowwrap">
       <div class="flow-units">${UNITS.map((u,i)=>{
         const dimmed = focus && (
@@ -491,7 +492,7 @@ function chip(c, small){
         return `<div class="flow-u ${status(i)} ${dimmed?'dim':''}" data-u="${u.n}">
           <b>${String(u.n).padStart(2,'0')}</b><em>${shortTitle(u.t)}</em>
           ${u.e.length?'':'<span class="noedge">—</span>'}</div>` +
-        (open ? `<div class="flow-pop" style="border-left-color:${stc}"><span class="openlink">open unit →</span><b>${String(u.n).padStart(2,'0')}</b> · ${u.t} · 40 min${
+        (open ? `<div class="flow-pop" style="border-left-color:${stc}"><b>${String(u.n).padStart(2,'0')}</b> · ${u.t} · 40 min${
             u.e.length ? '' : '<br><span class="quiet">TAUGHT IN FULL — BUILDS NO COMPETENCY EDGE, BY DESIGN</span>'}</div>` : '');
       }).join('')}</div>
       <div class="flow-comps">${CODES.map(c=>{

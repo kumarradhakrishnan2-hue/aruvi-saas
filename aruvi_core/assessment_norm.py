@@ -52,9 +52,11 @@ def _clean(v: Any) -> Optional[str]:
 
 
 def typed_block(raw: Any) -> Optional[Dict[str, Any]]:
-    """Type a raw stimulus string exactly like LP visuals (classify_stimulus), with
-    pipe-tables pre-split via parse_table so the wire shape is renderer-ready."""
-    vs = classify_stimulus(raw if isinstance(raw, str) else "")
+    """Type a raw stimulus exactly like LP visuals (classify_stimulus), with pipe-tables
+    pre-split via parse_table so the wire shape is renderer-ready. Accepts both the plain
+    string and the structured {type, payload} shape — classify_stimulus handles both — so
+    a dict stimulus (SS secondary source_text extracts) is no longer coerced away to ''."""
+    vs = classify_stimulus(raw if isinstance(raw, (str, dict)) else "")
     if vs.type == StimulusType.NONE:
         return None
     d: Dict[str, Any] = {"type": vs.type.value, "content": vs.content}
@@ -288,7 +290,7 @@ def _finish(n: NormalizedItem) -> NormalizedItem:
     every family)."""
     _dedupe_stem_table(n)
     n.template = RENDER_TEMPLATE.get(n.question_type, "")
-    if n.question_type == "EXTRACT_ANALYSIS" and n.visual_stimulus:
+    if n.question_type in ("EXTRACT_ANALYSIS", "SOURCE_INTERPRETATION") and n.visual_stimulus:
         n.passage, n.visual_stimulus = n.visual_stimulus, None
     n.stem_lead, n.stem_parts = split_parts(n.stem)
     n.answer_lead, n.answer_parts = split_parts(n.model_answer)
@@ -342,13 +344,26 @@ def from_constitution(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedIte
         note = _clean(it.get("annotation"))
         if note:
             reveals = {"note": note}
+    # SOURCE_INTERPRETATION (SS secondary v2.7) packs its real questions in a structured
+    # `sub_questions[]` and its marking surface in `guide.<TYPE>.sub_question_expectations`.
+    # Fold the sub-questions into the stem as a "(a) … (b) …" list so the existing split_parts
+    # machinery structures them into stem_parts (no new field / renderer path), and surface the
+    # per-part expectations as expected_elements — the passage template's marking block.
+    stem = str(it.get("question_text") or it.get("task") or "")
+    subs = it.get("sub_questions")
+    if isinstance(subs, list) and subs:
+        parts = [f"({s.get('label') or chr(97 + i)}) {str(s.get('text') or '').strip()}"
+                 for i, s in enumerate(subs) if isinstance(s, dict) and s.get("text")]
+        if parts:
+            stem = (stem + "\n" + "\n".join(parts)).strip() if stem else "\n".join(parts)
+    expected = as_list(it.get("expected_elements")) or as_list(gd.get("sub_question_expectations"))
     n = NormalizedItem(
         question_type=qt,
         id=_clean(it.get("id")),
-        stem=str(it.get("question_text") or it.get("task") or ""),
+        stem=stem,
         visual_stimulus=typed_block(it.get("visual_stimulus")),
         options=structured_options(it.get("options")),
-        expected_elements=as_list(it.get("expected_elements")),
+        expected_elements=expected,
         option_reveals=reveals,
         look_fors=as_list(it.get("look_for")),
         scaffold=_clean(it.get("scaffold")),

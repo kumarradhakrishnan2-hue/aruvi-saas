@@ -46,6 +46,9 @@ class QuestionType(str, Enum):
     ORAL_PROMPT = "ORAL_PROMPT"
     NUM = "NUM"
     EXTRACT_ANALYSIS = "EXTRACT_ANALYSIS"
+    SOURCE_INTERPRETATION = "SOURCE_INTERPRETATION"  # SS secondary (v2.7): a primary-source
+    #                                                  extract + multi-part sub-questions;
+    #                                                  renders on the same T6c passage template
 
 
 # The registry's type → render-template collapse (spec §3: 6 card templates; T6 is one
@@ -70,6 +73,7 @@ RENDER_TEMPLATE: Dict[str, str] = {
     QuestionType.ORAL_PROMPT: "oral",                 # T6a
     QuestionType.NUM: "numeric",                      # T6b
     QuestionType.EXTRACT_ANALYSIS: "passage",         # T6c
+    QuestionType.SOURCE_INTERPRETATION: "passage",    # T6c — same extract-then-parts card
 }
 
 
@@ -158,7 +162,7 @@ class NormalizedItem:
     stem_lead: str = ""
     stem_parts: List[Dict[str, str]] = field(default_factory=list)
     visual_stimulus: Optional[Dict[str, Any]] = None
-    passage: Optional[Dict[str, Any]] = None      # EXTRACT_ANALYSIS extract (routed, never a generic stimulus)
+    passage: Optional[Dict[str, Any]] = None      # EXTRACT_ANALYSIS / SOURCE_INTERPRETATION extract (routed, never a generic stimulus)
     options: List[Dict[str, Any]] = field(default_factory=list)  # [{label,text,is_correct}] — selected-response only
     # TRUE_FALSE ONLY: the per-statement key, collapsed ONCE in assessment_norm.tf_statements
     # from the doubly-stored source (statements live in BOTH item_stem and options; verdicts in

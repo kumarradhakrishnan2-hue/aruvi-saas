@@ -46,6 +46,23 @@ def test_svg_and_empty():
     assert classify_stimulus(None).type == StimulusType.NONE
 
 
+def test_structured_dict_stimulus():
+    """SS secondary (v2.7+) emits a {type, payload} stimulus. classify_stimulus must route
+    by declared type and preserve the payload — never crash on a dict (the old bug)."""
+    src = {"type": "source_text",
+           "payload": "The Uttaramerur inscription lays down conditions for the assembly."}
+    vs = classify_stimulus(src)
+    assert vs.type == StimulusType.PROSE
+    assert vs.content == src["payload"]
+    # declared svg / table win by type; empty payload → NONE; unknown type falls back to heuristics
+    assert classify_stimulus({"type": "svg", "payload": "<svg></svg>"}).type == StimulusType.SVG
+    assert classify_stimulus({"type": "table", "payload": "A | B\n1 | 2"}).type == StimulusType.TABLE
+    assert classify_stimulus({"type": "source_text", "payload": ""}).type == StimulusType.NONE
+    assert classify_stimulus({"type": "", "payload": "X | Y\n1 | 2"}).type == StimulusType.TABLE
+    # non-string/non-dict is treated as empty, not a crash
+    assert classify_stimulus(123).type == StimulusType.NONE
+
+
 def test_parse_table_structure():
     t = parse_table("Planet | Weight (N)\nEarth | 10\nMoon | 1.6")
     assert t["header"] == ["Planet", "Weight (N)"]

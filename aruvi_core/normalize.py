@@ -12,7 +12,7 @@ from typing import Any, List
 from .view_model import Phase, StimulusType, VisualStimulus
 
 
-def classify_stimulus(raw: str) -> VisualStimulus:
+def classify_stimulus(raw) -> VisualStimulus:
     """SVG > pipe-table > prose. Returns a typed VisualStimulus the renderer keys off.
 
     Table detection accepts TWO-column tables (one `|` per line), not just 3+ columns:
@@ -21,8 +21,29 @@ def classify_stimulus(raw: str) -> VisualStimulus:
     renderer dumped raw pipes. A block is a table when it has >= 2 pipe-bearing lines that
     dominate the block (>= half the non-empty lines). The old single-line >= 2-pipe rule is
     kept as a strict superset, so no previously-detected table regresses. Verse/prose (no
-    pipes, e.g. EXTRACT_ANALYSIS extracts) stays PROSE."""
-    s = (raw or "").strip()
+    pipes, e.g. EXTRACT_ANALYSIS extracts) stays PROSE.
+
+    Accepts the STRUCTURED `{"type", "payload"}` stimulus shape too (SS secondary,
+    constitution v2.7 onward: `source_text` primary-source extracts, and any future
+    explicitly-typed visual). This is the single normalization point every subject port and
+    assessment_norm funnel through, so dict support lands once for all subjects and both
+    renderers. A declared type wins; an unknown/absent one falls back to the string
+    heuristics on the payload. Non-string, non-dict input is treated as empty (NONE) rather
+    than crashing."""
+    if isinstance(raw, dict):
+        payload = raw.get("payload", raw.get("content", ""))
+        payload = payload if isinstance(payload, str) else ""
+        t = str(raw.get("type", "")).strip().lower()
+        if not payload.strip():
+            return VisualStimulus(StimulusType.NONE, "")
+        if t == "svg":
+            return VisualStimulus(StimulusType.SVG, payload)
+        if t == "table":
+            return VisualStimulus(StimulusType.TABLE, payload)
+        if t in ("source_text", "source", "extract", "prose", "text", "passage", "quote"):
+            return VisualStimulus(StimulusType.PROSE, payload)
+        raw = payload  # unknown/absent declared type → let the string heuristics decide
+    s = (raw if isinstance(raw, str) else "").strip()
     if not s:
         return VisualStimulus(StimulusType.NONE, "")
     if s.lower().startswith("<svg") and "</svg>" in s.lower():
