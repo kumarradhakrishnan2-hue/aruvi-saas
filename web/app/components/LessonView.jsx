@@ -232,7 +232,7 @@ function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
         ) : null}
       </div>
       <AssessBody it={it} tab={tab} qn={many ? idx + 1 : null} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary}
-        onNext={many && idx < items.length - 1 ? () => goto(idx + 1) : null} key={idx} />
+        onNext={many && idx < items.length - 1 ? () => goto(idx + 1) : null} onTab={setITab} key={idx} />
     </>
   );
 }
@@ -552,48 +552,40 @@ const QTYPE_NAME = {
 };
 const qtypeName = (t) => QTYPE_NAME[t] || String(t || "").replace(/_/g, " ");
 
-function AOverviewPanel({ n, lo }) {
+function AOverviewPanel({ n, lo, nav }) {
   const comp = n.competency ? [n.competency.code, n.competency.text].filter(Boolean).join(" — ") : null;
-  // ONLY the outcome's value is right-aligned (founder 2026-07-10); the short values
-  // read left, next to their labels.
+  // Every field leads with a BOLD single-row heading, its value below as a normal paragraph.
+  // Order (founder 2026-07-11): Competency → Learning outcome → Question type → Cognitive
+  // demand. Built as a list so the forward nav ("Question →") can ride the LAST field's value
+  // row — sharing the line when the value is short, wrapping below (still right) when it fills.
+  const rows = [];
+  if (comp) rows.push(["Competency", comp]);
+  if (lo) rows.push(["Learning outcome", lo]);
+  rows.push(["Question type", qtypeName(n.question_type)]);
+  if (n.cognitive_demand) rows.push(["Cognitive demand", n.cognitive_demand]);
   return (
     <div className="assess-ovrows">
-      {/* Every field leads with a BOLD single-row heading, its value below as a normal
-          paragraph — the same block layout as Learning outcome. Order (founder 2026-07-11):
-          Competency → Learning outcome → Question type → Cognitive demand. */}
-      {comp ? (
-        <div className="assess-ovlo">
-          <span className="assess-ovk assess-ovk-b">Competency</span>
-          <p className="assess-ovlo-t">{comp}</p>
+      {rows.map(([k, v], i) => (
+        <div className="assess-ovlo" key={i}>
+          <span className="assess-ovk assess-ovk-b">{k}</span>
+          <div className="assess-ovlo-main">
+            <p className="assess-ovlo-t">{v}</p>
+            {i === rows.length - 1 ? nav : null}
+          </div>
         </div>
-      ) : null}
-      {lo ? (
-        <div className="assess-ovlo">
-          <span className="assess-ovk assess-ovk-b">Learning outcome</span>
-          <p className="assess-ovlo-t">{lo}</p>
-        </div>
-      ) : null}
-      <div className="assess-ovlo">
-        <span className="assess-ovk assess-ovk-b">Question type</span>
-        <p className="assess-ovlo-t">{qtypeName(n.question_type)}</p>
-      </div>
-      {n.cognitive_demand ? (
-        <div className="assess-ovlo">
-          <span className="assess-ovk assess-ovk-b">Cognitive demand</span>
-          <p className="assess-ovlo-t">{n.cognitive_demand}</p>
-        </div>
-      ) : null}
+      ))}
     </div>
   );
 }
 
-function AQuestionPanel({ n, opts }) {
+function AQuestionPanel({ n, opts, nav }) {
   // TRUE_FALSE: statements are stored twice at source (in the stem AND as options). The
   // engine folds them into `tf_statements`; show that ONCE as the statement list and NEVER
   // the options block (which would repeat every statement). The instruction line is stem_lead.
   const isTF = n.template === "true_false" && n.tf_statements?.length;
   return (
-    <>
+    <div className="assess-qnavwrap">
+      <div className="assess-qnavmain">
       {/* T6c (EXTRACT_ANALYSIS): the extract is set off BEFORE the multi-part stem. */}
       {n.template === "passage" ? <ATyped b={n.passage} passage /> : null}
       {isTF ? (
@@ -666,7 +658,9 @@ function AQuestionPanel({ n, opts }) {
           </div>
         </div>
       ) : null}
-    </>
+      </div>
+      {nav}
+    </div>
   );
 }
 
@@ -843,20 +837,20 @@ function InclusivityText({ text, mathsMiddle = false, mathsSecondary = false }) 
  * carries position; type lives in Overview). The item's tab BAR is rendered by
  * AssessPanel inside the frozen chrome group (see below), so `tab` arrives as a prop.
  * Legacy pre-contract items keep the old flat white card, whatever the tab. */
-function AssessBody({ it, tab, qn, onNext, mathsMiddle = false, mathsSecondary = false }) {
+function AssessBody({ it, tab, qn, onNext, onTab, mathsMiddle = false, mathsSecondary = false }) {
   const n = it.normalized;
   const lo = n ? n.linked_lo : (it.meta?.linked_lo || it.implied_lo);
   // A light nudge so a teacher who reaches the bottom of an item doesn't miss that the unit
   // anchors more questions. Placed at the END of the Answer AND Inclusivity panels — the two
   // tabs a teacher tends to finish on (Answer almost always; Inclusivity is often skipped, so
   // the link rides both to catch either exit). Null on the last question / single-item units.
+  // Bare inline element (founder 2026-07-16) so it rides the panel's LAST row, dropping to
+  // its own right-aligned line only when that row is full — same as the forward tab nav.
   const nextQ = onNext ? (
-    <div className="assess-nextq-wrap">
-      <span className="assess-nextq" role="button" tabIndex={0} onClick={onNext}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNext(); } }}>
-        Next question →
-      </span>
-    </div>
+    <span className="assess-tabnav" role="button" tabIndex={0} onClick={onNext}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNext(); } }}>
+      Next question →
+    </span>
   ) : null;
   // `qn` (Q1., Q2., …) is set ONLY when the unit anchors more than one item. FLOATED
   // (never a full row) so it shares the line with each panel's opening words —
@@ -877,14 +871,37 @@ function AssessBody({ it, tab, qn, onNext, mathsMiddle = false, mathsSecondary =
       </div>
     );
   }
-  const { opts, correct } = itemTabSet(n);
+  const set = itemTabSet(n);
+  const { opts, correct } = set;
+  const hasTab = (id) => set.tabs.some(([t]) => t === id);
+  // Forward tab nav (founder 2026-07-16): a right-aligned link carrying the teacher to the
+  // next window — Overview → Question, Question → Answer. Same pine-mono look as "Next
+  // question →". A BARE inline element so it can ride the panel's LAST row, dropping to its
+  // own right-aligned line only when that row is already full (CSS: flex-wrap). Shown only
+  // when the target tab exists.
+  const tabNav = (id, label) => (onTab && hasTab(id) ? (
+    <span className="assess-tabnav" role="button" tabIndex={0} onClick={() => onTab(id)}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onTab(id); } }}>
+      {label} →
+    </span>
+  ) : null);
   return (
     <div className="assess-flat">
       {qmark}
-      {tab === "ov" ? <AOverviewPanel n={n} lo={lo} /> : null}
-      {tab === "q" ? <AQuestionPanel n={n} opts={opts} /> : null}
-      {tab === "an" ? <>{<AAnswerPanel n={n} correct={correct} opts={opts} />}{nextQ}</> : null}
-      {tab === "inc" ? <><div className="assess-inc"><InclusivityText text={n.inclusivity} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary} /></div>{nextQ}</> : null}
+      {tab === "ov" ? <AOverviewPanel n={n} lo={lo} nav={tabNav("q", "Question")} /> : null}
+      {tab === "q" ? <AQuestionPanel n={n} opts={opts} nav={tabNav("an", "Answer")} /> : null}
+      {tab === "an" ? (
+        <div className="assess-qnavwrap">
+          <div className="assess-qnavmain"><AAnswerPanel n={n} correct={correct} opts={opts} /></div>
+          {nextQ}
+        </div>
+      ) : null}
+      {tab === "inc" ? (
+        <div className="assess-qnavwrap">
+          <div className="assess-qnavmain assess-inc"><InclusivityText text={n.inclusivity} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary} /></div>
+          {nextQ}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1264,6 +1281,10 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
               {dur ? <span className="co-dur"><span className="co-dur-n">{dur}</span><span className="co-dur-u">min</span></span> : null}
               {status === "done" ? <span className="co-mark">✓ taught</span> : null}
             </div>
+            {/* "→" at the capsule's right end — signals the card leads into the unit
+                (founder 2026-07-16, matching the SS map's per-row arrow). The whole card
+                is the click target, so this is a non-interactive cue. */}
+            <span className="co-go" aria-hidden="true">→</span>
           </div>
         );
       });
@@ -1413,6 +1434,8 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
                       {dur ? <span className="co-dur"><span className="co-dur-n">{dur}</span><span className="co-dur-u">min</span></span> : null}
                       {status === "done" ? <span className="co-mark">✓ taught</span> : null}
                     </div>
+                    {/* "→" at the capsule's right end (founder 2026-07-16) — same cue as above. */}
+                    <span className="co-go" aria-hidden="true">→</span>
                   </div>
                 );
               })}

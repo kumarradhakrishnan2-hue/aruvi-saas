@@ -1149,6 +1149,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-ovrows > .assess-ovlo:last-child { border-bottom:none; padding-bottom:0; }
 .assess-ovlo-t { font-family:var(--f-body); font-size:14px; color:var(--ink); line-height:1.5; margin:4px 0 0; text-align:left; }
 .assess-ovk-b { display:block; font-weight:700; }
+/* Last Overview field shares its value row with the forward nav: the value sits left, the
+   "Question →" link rides the right. flex-wrap drops the nav to its own right-aligned line
+   ONLY when the value already fills the row. */
+.assess-ovlo-main { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:14px; }
+.assess-ovlo-main > .assess-ovlo-t { flex:0 1 auto; min-width:0; }
+.assess-ovlo-main > .assess-tabnav { margin-left:auto; align-self:flex-end; }
 .assess-ovrow { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); }
 /* No-LO items (Maths middle/prep) open with a ledger row — it too must share the
    float line with the Q{n} marker. */
@@ -1170,12 +1176,18 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-corr-row { display:flex; gap:8px; font-size:13.5px; color:var(--ink); line-height:1.5; padding:2px 0; }
 .assess-inc { font-size:13.5px; color:var(--ink); line-height:1.55; }
 .assess-inc-row + .assess-inc-row { margin-top:.5rem; }
-/* End-of-item nudge to the next question (Answer + Inclusivity tabs, multi-item units only).
-   Deliberately light: a hairline sets it apart from the content, mono pine text points forward
-   like the pager's "Next →". Right-aligned = forward. */
-.assess-nextq-wrap { margin-top:14px; padding-top:10px; border-top:1px solid var(--line); text-align:right; }
-.assess-nextq { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--pine); cursor:pointer; }
-.assess-nextq:hover { color:var(--pine-d); }
+/* Inline forward nav — the shared voice for BOTH the tab-forward links (Overview → Question,
+   Question → Answer) AND "Next question →". A bare inline element so it can share the panel's
+   last row, dropping below (still right) only when that row is full (retired the old bordered
+   .assess-nextq-wrap 2026-07-16). */
+.assess-tabnav { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--pine); cursor:pointer; white-space:nowrap; }
+.assess-tabnav:hover { color:var(--pine-d); }
+/* Question panel wraps its (full-width) content and the "Answer →" nav in one flex row; the
+   content fills the width, so the nav settles onto its own right-aligned line beneath it —
+   the "row is full, use the next row" case. A short question keeps the nav on the same line. */
+.assess-qnavwrap { display:flex; flex-wrap:wrap; align-items:flex-end; }
+.assess-qnavmain { flex:1 1 auto; min-width:0; }
+.assess-qnavwrap > .assess-tabnav { margin-left:auto; margin-top:10px; }
 /* Flat re-palette of the shared item pieces (ABlock/ATicks/AReveals/options/otg) when
    rendered on paper instead of inside the old white green-edged card. */
 /* QUESTION and ANSWER share ONE text size (founder 2026-07-10): stem, options, answer
@@ -2967,6 +2979,14 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .co-mark { font-family: var(--f-mono); font-size: 10px; color: var(--pine); }
 .co-now { font-family: var(--f-mono); font-size: 9px; letter-spacing: .12em; color: var(--paper);
   background: var(--ochre); border-radius: 9px; padding: 2px 8px; text-transform: uppercase; }
+/* "→" cue at the capsule's right end (founder 2026-07-16) — a quiet leads-to-unit signal,
+   echoing the SS map's per-row arrow. The whole card is the click target; the arrow only
+   hints, brightening with the card on hover. */
+.co-go { flex: none; font-family: var(--f-mono); font-size: 15px; line-height: 1;
+  color: var(--ink-soft); transition: color .12s ease, transform .12s ease; }
+.co-card:hover .co-go { color: var(--pine); transform: translateX(2px); }
+.co-card.cur .co-go { color: var(--ochre); }
+.co-card.done .co-go { color: var(--pine); }
 /* (Old .co-notes foot card retired 2026-07-14 — the control now lives in the axis gutter
    as .co-notetab above; the notebook popup below is unchanged.) */
 

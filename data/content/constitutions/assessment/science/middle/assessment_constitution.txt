@@ -2,7 +2,7 @@ ARUVI · PEDAGOGICAL PLATFORM
 
 Chapter Assessment Constitution — Science
 
-Version 1.2 · Ten rules governing AI assessment generation for Science · Inputs: coverage_handoff + Chapter Summary
+Version 1.3 · Ten rules governing AI assessment generation for Science · Inputs: coverage_handoff + Chapter Summary
 
 +----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Rule 1 · Governing Purpose |                                                                                                                                                                                                                                                                           |
@@ -98,6 +98,10 @@ Version 1.2 · Ten rules governing AI assessment generation for Science · Input
 |                                | · recall of a related but incorrect detail from the same chapter section                                                                                                 |
 +--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | PROHIBITION                    | The system MUST NOT use true/false format. The system MUST NOT generate distractors that are implausible, arbitrary, or sourced from outside the chapter.                |
+|                                |                                                                                                                                                                          |
+|                                | The system MUST NOT place the correct answer at the same label across consecutive items; is_correct MUST be distributed across A-D so no single letter dominates a       |
+|                                | chapter.                                                                                                                                                                 |
+|                                |                                                                                                                                                                          |
 +--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 +-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

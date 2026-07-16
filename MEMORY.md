@@ -328,6 +328,33 @@ must confirm · source entry.
     Rule-11 `teacher_notes` per period, and the emitted notes obey the constraints (no verbatim
     activity restatement, no C-codes, no "Transition" opener). (src: 2026-07-14, founder-directed.)
 
+18. **MCQ correct-answer POSITION rule added — Science + SS assessment constitutions (all four
+    middle+secondary files)** — audit finding (2026-07-16, founder-reported): within a single
+    chapter's assessment every MCQ shares the SAME correct position, so the correct letter is
+    constant for the whole chapter. Scan of the saved corpus: **SS is worst — all four chapters
+    single-letter** (`social_sciences/ix/ch_05` 11/11 → A / pos 0; `vii/ch_04` 10/10 → A; `viii/ch_04`
+    14/14 → A; `vi/ch_06` 16/16 → B / pos 1). **Science 4 of 6 chapters pure single-letter**
+    (`science/ix/ch_02` & `ix/ch_08` all B; `vi/ch_04` & `vii/ch_11` all A; `vii/ch_02`, `viii/ch_05`
+    one-letter-dominant). **Mathematics is the healthy counter-example** (genuinely mixed within
+    chapters — proves this is a *generation artifact*, not a schema constraint); English/TWAU have
+    too few MCQs per chapter to judge (English also mixes numeric "1"/"2" vs letter labels — a
+    separate normalization inconsistency, noted, not fixed). *Fix:* a MUST-NOT added to Rule 7 in
+    each file — the correct option must vary in position across the assessment; distribute
+    `is_correct` across labels A–D so no single letter dominates a chapter; never place the correct
+    answer at the same label across consecutive items. Placement per file: **SS middle** (Rule 7 ·
+    MCQ Distractor Design, prohibition line) **v2.2→2.3**; **SS secondary** (Rule 7 · MCQ Design,
+    new prohibition item 3) **v1.0→1.1**; **Science secondary** (Rule 7 · MCQ Distractor Design,
+    leaning on its existing "position carries no signal" language) **v1.0→1.1** (header+footer);
+    **Science middle** (Rule 7 prohibition cell, re-padded into the ASCII table) **v1.2→1.3**. The
+    "exactly one `is_correct`, labels A–D" schema rule was left untouched. *Validated:* constitution
+    text edited + version-bumped ONLY — NOT run live, and **the existing corpus was NOT back-filled**
+    (SS IX ch5 etc. still carry the clustered answers). *Pre-warm must confirm:* live SS + Science
+    MCQ generation spreads the correct position ~uniformly across A–D, no chapter clustering on one
+    letter, no same-label runs. *Also owed:* a one-off corpus repair pass (deterministic
+    position-shuffle of the already-saved SS/Science MCQs, re-tagging `is_correct` + the option
+    order) to fix the clustered plans retroactively — separate from generation. (src: 2026-07-16,
+    founder-reported audit.)
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
