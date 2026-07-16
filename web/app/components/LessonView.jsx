@@ -1097,15 +1097,8 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
   const pad2 = (n) => String(n).padStart(2, "0");
   return (
     <>
-      {/* The ONE navigation affordance of the map (founder 2026-07-15): a link pinned above
-          the unit column, just under the axis blurb — appears when a unit is focused and
-          opens it. Replaces the per-popup "open unit →", which users struggled to find
-          inside the graphic. */}
-      {focus && focus.t === "u" ? (
-        <button className="cof-opentop" onClick={() => onOpenUnit(focus.id)}>
-          open unit {pad2(focus.id + 1)} →
-        </button>
-      ) : null}
+      {/* Navigation now lives on each unit row (the per-title "→", founder 2026-07-16). The
+          old top-pinned "open unit NN →" button is retired — the row arrows replace it. */}
       <div className="cof-wrap" ref={wrapRef}>
         <svg className="cof-svg" width={size.w} height={size.h} aria-hidden="true">
           {paths.map((p, k) => (
@@ -1127,6 +1120,11 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
                   <span className="cof-num">{pad2(i + 1)}</span>
                   <span className="cof-utitle">{(u.title || `Unit ${i + 1}`).split(":")[0]}</span>
                   {edges.length ? null : <span className="cof-noedge">—</span>}
+                  {/* Direct open — a "→" beside the title jumps straight into the unit
+                      (founder 2026-07-16), independent of tap-to-focus (which draws ribbons).
+                      stopPropagation so the row's focus handler doesn't also fire. */}
+                  <button className="cof-uopen" aria-label={`Open unit ${pad2(i + 1)}`}
+                    onClick={(e) => { e.stopPropagation(); onOpenUnit(i); }}>→</button>
                 </div>
                 {/* Lifted-note popup (founder-picked style A, 2026-07-15): paper-white card,
                     soft lift shadow, 3px LEFT identity rule — unit popups take their STATE

@@ -2995,6 +2995,14 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   line-height: 1.25; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
   white-space: nowrap; }
 .cof-noedge { font-family: var(--f-mono); font-size: 10px; color: var(--line); flex: none; }
+/* "→" — a direct open-unit affordance beside each unit title (founder 2026-07-16); jumps
+   straight into the unit, separate from tap-to-focus. Quiet pine, brightens on hover. */
+.cof-uopen { all: unset; flex: none; cursor: pointer; font-family: var(--f-mono);
+  font-size: 14px; line-height: 1; color: var(--ink-soft); padding: 4px 2px; margin: -4px -2px;
+  border-radius: 6px; transition: color .15s; }
+.cof-uopen:hover { color: var(--pine); }
+.cof-u.cur .cof-uopen { color: var(--clay); }
+.cof-u.done .cof-uopen { color: var(--pine); }
 /* Competency card — stacked (founder 2026-07-15): code on top, tier name in the middle,
    PROMINENT allocation-report dots at the bottom. No unit count. */
 .cof-c { display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
@@ -3028,13 +3036,8 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .cof-pop-k { font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
 .cof-pop-quiet { font-family: var(--f-mono); font-size: 9px; text-transform: uppercase;
   letter-spacing: .1em; color: var(--ink-soft); margin-top: 5px; }
-/* "open unit →" — plain pine text link at the TOP of the unit popup. */
-/* "open unit NN →" — the map's one navigation affordance: above the unit column, under the
-   axis blurb; rendered only while a unit is focused (founder 2026-07-15 — the per-popup
-   link was too hard to find inside the graphic). */
-.cof-opentop { all: unset; display: block; margin: 0 18px 8px; font-family: var(--f-mono);
-  font-size: 11px; letter-spacing: .06em; color: var(--pine); cursor: pointer; }
-.cof-opentop:hover { color: var(--pine-d); }
+/* (retired 2026-07-16) the top-pinned "open unit NN →" button — navigation moved to the
+   per-unit-row "→" arrow (.cof-uopen). */
 .cof-gap { margin: 10px 14px 0; padding: 9px 12px; border: 1px dashed var(--line);
   border-radius: 10px; font-size: 13px; font-style: italic; color: var(--ink-soft); }
 .cof-hint { margin: 10px 18px 0; font-family: var(--f-mono); font-size: 9.5px;
