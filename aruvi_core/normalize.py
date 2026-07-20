@@ -67,6 +67,15 @@ def parse_table(raw: str) -> dict:
     cells = [[c.strip() for c in ln.split("|")] for ln in lines]
     if not cells:
         return {"header": [], "rows": []}
+    # WORD BANK (no header): a grid where every cell is a single word — a box of words for a
+    # cloze / matching / word-choice task. These have no column semantics, so the first row is
+    # NOT a header and must not render bold/filled (every word is the same hierarchy). Data
+    # tables always carry at least one multi-word cell (their column labels), so they keep the
+    # header. Gated to 3+ columns so ordinary two-column tables (Word | Meaning) are untouched.
+    flat = [c for row in cells for c in row if c]
+    max_cols = max((len(r) for r in cells), default=0)
+    if len(cells) >= 2 and max_cols >= 3 and flat and all(" " not in c for c in flat):
+        return {"header": [], "rows": cells}
     return {"header": cells[0], "rows": cells[1:]}
 
 

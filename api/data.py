@@ -84,6 +84,25 @@ def load_competency_descriptions(subject: str, grade: str) -> Dict[str, str]:
     return out
 
 
+def load_english_spine_map(grade: str) -> Dict[str, Any]:
+    """The standardized English spine → section → competency map (spine_to_cg.json) for the
+    grade's stage. English carries the SAME competencies in every chapter, so the LP presents
+    this fixed spine table instead of the per-chapter targeted competencies other subjects
+    generate. Returns {} if the file is missing (LP then omits the competency table)."""
+    from aruvi_core.grades import stage_for, UnknownGradeError
+    try:
+        stage = stage_for(grade)
+    except UnknownGradeError:
+        return {}
+    p = os.path.join(DATA_DIR, "framework", "english", stage, "spine_to_cg.json")
+    if not os.path.isfile(p):
+        return {}
+    try:
+        return json.load(open(p))
+    except Exception:
+        return {}
+
+
 def _flatten_descriptions(doc: Dict[str, Any]) -> Dict[str, str]:
     """Flatten a competency-descriptions doc to {code: description}, tolerating the
     three schemas in the data:

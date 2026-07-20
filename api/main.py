@@ -802,6 +802,157 @@ def export_allocation_pdf(req: AllocationReportRequest) -> StreamingResponse:
         raise HTTPException(status_code=500, detail=f"PDF export failed: {e}  [{where}]")
 
 
+def _pdf_response(pdf_bytes: bytes, fname: str) -> StreamingResponse:
+    return StreamingResponse(
+        iter([pdf_bytes]),
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{fname}"'},
+    )
+
+
+def _plan_view_bundle(subject: str, grade: str, filename: str):
+    """Assemble the render-ready view (lesson_plan + assessment) plus the chapter's
+    targeted competencies and the plan's saved date from a saved plan — the server-side
+    enrichment the LP / assessment / integrated PDF exporters need (mirrors
+    get_plan_view + _build_report). Returns (view, competencies, plan_date, chapter)."""
+    from datetime import datetime
+    from aruvi_core.export_lesson_pdf import targeted_competencies
+
+    sub = _subject(subject)
+    _plan_key(subject, grade, filename)
+    saved = data.load_saved_plan(subject, grade, filename)
+    if not saved:
+        raise HTTPException(status_code=404, detail="Saved plan not found.")
+    r = saved.get("result", {})
+    chapter = {"chapter_number": saved.get("chapter_number"), "chapter_title": saved.get("chapter_title")}
+    g = saved.get("grade", grade)
+    lp = sub.lesson_plan_to_view(r, grade=g, chapter=chapter)
+    _lp = r.get("lesson_plan", {})
+    link_context = {"periods": _lp.get("periods", []),
+                    "handoff": r.get("coverage_handoff", _lp.get("coverage_handoff", []))}
+    a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter,
+                               link_context=link_context)
+    view = ViewModel(lp, a).to_dict()
+
+    mappings = data.load_mappings(subject, grade)
+    mbc = {int(m["chapter_number"]): m for m in mappings if m.get("chapter_number") is not None}
+    descriptions = data.load_competency_descriptions(subject, grade)
+    cn = saved.get("chapter_number")
+    comps = targeted_competencies(mbc.get(int(cn), {}) if cn is not None else {}, descriptions)
+
+    # English uses a STANDARDIZED spine → section → competency table (same competencies every
+    # chapter), so it gets `spines` instead of the per-chapter `comps`. Other subjects: spines=None.
+    spines = None
+    if subject == "english":
+        spine_map = data.load_english_spine_map(grade)
+        if spine_map:
+            from aruvi_core.export_lesson_pdf import english_competency_spines
+            spines = english_competency_spines(spine_map, descriptions)
+
+    plan_date = None
+    sa = saved.get("saved_at")
+    if sa:
+        try:
+            plan_date = datetime.fromisoformat(sa)
+        except ValueError:
+            pass
+    return view, comps, spines, plan_date, chapter
+
+
+_DOCX_MT = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+
+def _binary_response(data: bytes, fname: str, media_type: str, *, inline: bool = False) -> StreamingResponse:
+    disp = "inline" if inline else "attachment"
+    return StreamingResponse(
+        iter([data]),
+        media_type=media_type,
+        headers={"Content-Disposition": f'{disp}; filename="{fname}"'},
+    )
+
+
+def _export_plan(subject: str, grade: str, filename: str, kind: str,
+                 answers: bool, unit: Optional[int], fmt: str,
+                 inline: bool = False) -> StreamingResponse:
+    """Shared handler for the lesson-plan / assessment / integrated downloads
+    (per subject·grade·chapter, section-agnostic). `answers` gates the assessment
+    answer layer; `unit` scopes integrated to one unit; `fmt` is "pdf" | "docx".
+    `inline=True` (PDF only) serves Content-Disposition: inline so the browser/mobile
+    OS opens it in its native PDF viewer instead of force-downloading."""
+    fmt = (fmt or "pdf").lower()
+    if fmt not in ("pdf", "docx"):
+        raise HTTPException(status_code=400, detail=f"Unknown format: {fmt}")
+    is_pdf = fmt == "pdf"
+    ext = "pdf" if is_pdf else "docx"
+    mt = "application/pdf" if is_pdf else _DOCX_MT
+    inl = inline and is_pdf  # inline only makes sense for PDF
+    try:
+        view, comps, spines, plan_date, chapter = _plan_view_bundle(subject, grade, filename)
+        cn = chapter.get("chapter_number")
+        base = f"grade-{grade}-{_safe_name(subject)}-ch{cn}"
+        if kind == "lesson":
+            if is_pdf:
+                from aruvi_core.export_lesson_pdf import export_lesson_plan_pdf as fn
+            else:
+                from aruvi_core.export_docx import export_lesson_plan_docx as fn
+            data = fn(view, competencies=comps, competency_spines=spines, plan_date=plan_date)
+            return _binary_response(data, f"lesson-plan-{base}.{ext}", mt, inline=inl)
+        if kind == "assessment":
+            if is_pdf:
+                from aruvi_core.export_assessment_pdf import export_assessment_pdf as fn
+            else:
+                from aruvi_core.export_docx import export_assessment_docx as fn
+            data = fn(view, include_answers=answers, plan_date=plan_date)
+            suffix = "-answers" if answers else ""
+            return _binary_response(data, f"assessment-{base}{suffix}.{ext}", mt, inline=inl)
+        if kind == "integrated":
+            if is_pdf:
+                from aruvi_core.export_integrated_pdf import export_integrated_pdf as fn
+            else:
+                from aruvi_core.export_docx import export_integrated_docx as fn
+            data = fn(view, include_answers=answers, unit_number=unit,
+                      competencies=comps, competency_spines=spines, plan_date=plan_date)
+            u = f"-unit{unit}" if unit is not None else ""
+            suffix = "-answers" if answers else ""
+            return _binary_response(data, f"integrated-{base}{u}{suffix}.{ext}", mt, inline=inl)
+        raise HTTPException(status_code=404, detail=f"Unknown export kind: {kind}")
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        print(f"\n[export {kind}/{fmt}] FAILED:\n" + tb, flush=True)
+        last = tb.strip().splitlines()
+        where = next((l.strip() for l in reversed(last) if "aruvi" in l or "api/" in l), "")
+        raise HTTPException(status_code=500, detail=f"Export failed: {e}  [{where}]")
+
+
+@app.get("/api/plans/{subject}/{grade}/{filename}/export/lesson")
+def export_plan_lesson(subject: str, grade: str, filename: str,
+                       format: str = "pdf", inline: int = 0) -> StreamingResponse:
+    """Whole-chapter Lesson Plan (PDF or DOCX). `inline=1` opens PDF in the native viewer."""
+    return _export_plan(subject, grade, filename, "lesson", answers=False, unit=None,
+                        fmt=format, inline=bool(inline))
+
+
+@app.get("/api/plans/{subject}/{grade}/{filename}/export/assessment")
+def export_plan_assessment(subject: str, grade: str, filename: str,
+                           answers: int = 0, format: str = "pdf", inline: int = 0) -> StreamingResponse:
+    """Whole-chapter Assessment (PDF or DOCX). `answers=1` includes the answer layer."""
+    return _export_plan(subject, grade, filename, "assessment", answers=bool(answers), unit=None,
+                        fmt=format, inline=bool(inline))
+
+
+@app.get("/api/plans/{subject}/{grade}/{filename}/export/integrated")
+def export_plan_integrated(subject: str, grade: str, filename: str,
+                           answers: int = 0, unit: Optional[int] = None,
+                           format: str = "pdf", inline: int = 0) -> StreamingResponse:
+    """Integrated Lesson Plan + Assessment (PDF or DOCX). `answers=1` includes answers;
+    `unit=N` scopes to a single unit (else the whole chapter)."""
+    return _export_plan(subject, grade, filename, "integrated", answers=bool(answers), unit=unit,
+                        fmt=format, inline=bool(inline))
+
+
 @app.post("/api/allocation/export-docx")
 def export_allocation_docx(req: AllocationReportRequest) -> StreamingResponse:
     """Export the allocation report as a DOCX (Word) binary."""

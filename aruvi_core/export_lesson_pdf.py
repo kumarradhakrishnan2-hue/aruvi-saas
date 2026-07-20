@@ -40,17 +40,20 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from .report_competency import grade_roman, subject_display
+from .pdf_fonts import font_face_css
 
 
 # ── enrichment helpers (pure; the endpoint/sample calls these) ──────────────
 
 def targeted_competencies(mapping: Dict[str, Any],
                           descriptions: Dict[str, str]) -> List[Dict[str, str]]:
-    """The chapter's targeted competencies as [{c_code, text}], text = the glossary
-    description (falls back to the mapping justification). Reads the mapping's
-    ``primary`` list (science/SS/… effort-index shape), then the competency-weight
-    shape (``core_competencies`` / ``adjunct_competencies``). De-duplicated, order
-    preserved."""
+    """The chapter's targeted competencies as [{c_code, text, justification}]: text = the
+    glossary description, justification = the mapping's chapter-level rationale for why this
+    competency applies (rendered as a sub-line in the report; the on-screen view omits it).
+    Reads the mapping's ``primary`` list (science/SS/… effort-index shape), then the
+    competency-weight shape (``core_competencies`` / ``adjunct_competencies``). De-duplicated,
+    order preserved. When there's no glossary description the justification stands in for the
+    text and is NOT repeated as a sub-line."""
     out: List[Dict[str, str]] = []
     seen = set()
     for key in ("primary", "core_competencies", "adjunct_competencies"):
@@ -64,8 +67,10 @@ def targeted_competencies(mapping: Dict[str, Any],
             if not code or code in seen:
                 continue
             seen.add(code)
-            text = descriptions.get(code) or c.get("justification") or ""
-            out.append({"c_code": code, "text": text})
+            desc = descriptions.get(code)
+            just = c.get("justification") or ""
+            out.append({"c_code": code, "text": desc or just,
+                        "justification": ("" if not desc else just)})
     return out
 
 
@@ -173,7 +178,8 @@ def _total_minutes(lp: Dict[str, Any]) -> int:
 # ── PDF rendering (xhtml2pdf) ───────────────────────────────────────────────
 
 GREY_HEAD = "#f1ece2"     # warm paper-sunk — table header rows
-GREY_BAND = "#f4f2ee"     # stage / period bands
+GREY_BAND = "#f4f2ee"     # period bands (the lighter of the two)
+KRAFT = "#ebe3d3"         # stage bands — a stronger warm fill, no rules
 PINE = "#164436"          # brand masthead + body accent (codes + stage numbers)
 INK = "#1a1917"
 LINE = "#dddddd"
@@ -194,6 +200,7 @@ def render_lesson_pdf_html(
     view: Dict[str, Any],
     *,
     competencies: Optional[List[Dict[str, str]]] = None,
+    competency_spines: Optional[List[Dict[str, Any]]] = None,
     activity_desc_by_period: Optional[Dict[int, str]] = None,
     plan_date: Optional[datetime] = None,
     generated_at: Optional[datetime] = None,
@@ -213,11 +220,30 @@ def render_lesson_pdf_html(
     duration_str = _duration_breakdown(lp)
 
     meta_table = _metadata_table(ch_no, ch_title, total_periods, duration_str)
-    comp_table = _competency_table(competencies)
-    stage_table = _stage_table(groups)
-    body = _stages_body(groups)
+    comp_table = _english_competency_table(competency_spines) if competency_spines else _competency_table(competencies)
+    # English's spine competency table already lists the spines, so the progression-spine table is
+    # redundant there — suppress it. Mathematics has no meaningful progression axis either (prep
+    # collapses to a single "Lesson" group; middle/secondary sections carry no cross-chapter
+    # progression), so suppress it for maths as well (founder 2026-07-20). Secondary Science is
+    # section-anchored and FLAT (no progression_stage per period — see science subject.py), so its
+    # only "progression" table would just re-list the chapter sections; suppress it there too
+    # (founder 2026-07-20). Detect by the data, not the grade string: secondary science emits
+    # top-level groups typed "section" where middle science emits "progression_stage"/"stage".
+    # Other subjects keep it.
+    _science_sectioned = (
+        lp.get("subject", "") == "science"
+        and bool(groups)
+        and groups[0].get("type") == "section"
+    )
+    _no_progression = (
+        bool(competency_spines)
+        or lp.get("subject", "") == "mathematics"
+        or _science_sectioned
+    )
+    stage_table = "" if _no_progression else _stage_table(groups)
+    body = _stages_body(groups, lp.get("subject", ""))
 
-    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>{font_face_css()}
   @page {{
     size: a4 portrait; margin: 1.5cm 1.3cm 1.4cm 1.3cm;
     @frame footer {{ -pdf-frame-content: footerContent; bottom: 0.7cm; margin-left: 1.3cm; margin-right: 1.3cm; height: 0.6cm; }}
@@ -243,12 +269,16 @@ def render_lesson_pdf_html(
   .gv-title {{ font-family: Georgia, serif; font-weight: bold; color: {INK}; }}
   .ccode {{ color: {PINE}; font-weight: bold; text-align: center; }}
   .snum {{ color: {PINE}; font-weight: bold; text-align: center; }}
+  .ecg-sp {{ font-weight: bold; vertical-align: middle; text-align: center; }}
+  .ecg-sec {{ vertical-align: middle; }}
+  .cjust {{ font-size: 7pt; font-style: italic; color: #6b6a63; margin-top: 3px; line-height: 1.4; }}
   .axis-note td {{ font-size: 7pt; font-style: italic; color: #555; text-align: left; }}
 
   .stage-band {{ width: 100%; margin-top: 14px; margin-bottom: 8px; }}
-  .stage-band td {{ background-color: {GREY_BAND}; border-top: 1.25px solid {INK}; border-bottom: 1.25px solid {INK};
-                    padding: 7px 8px; text-align: center; }}
-  .stage-band .st {{ font-family: Georgia, serif; font-size: 9.5pt; font-weight: bold; color: {INK}; }}
+  .stage-band td {{ background-color: {KRAFT}; padding: 8px 12px; text-align: left; }}
+  .stage-band .st-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 1px;
+                       text-transform: uppercase; color: {PINE}; }}
+  .stage-band .st {{ font-family: Georgia, serif; font-size: 10.5pt; font-weight: bold; color: {INK}; }}
 
   .period-band {{ width: 100%; margin-top: 12px; }}
   .period-band td {{ background-color: {GREY_BAND}; border-top: 0.75px solid #e2ddd2; border-bottom: 0.75px solid #e2ddd2;
@@ -256,7 +286,7 @@ def render_lesson_pdf_html(
   .pb-n {{ font-weight: bold; color: {INK}; font-size: 8.5pt; }}
   .pb-dur {{ color: #555; font-size: 8pt; }}
   .pb-title {{ font-family: Georgia, serif; font-weight: bold; color: {INK}; font-size: 9pt; }}
-  .pb-ped {{ font-size: 7pt; color: #555; font-style: italic; }}
+  .pb-ped {{ font-size: 9pt; color: #555; font-style: italic; }}
   .pb-ped-k {{ font-weight: bold; font-style: normal; color: {INK}; }}
 
   .p-line {{ font-size: 7.5pt; color: #2a2a2a; margin-top: 6px; margin-bottom: 2px; line-height: 1.45; }}
@@ -315,6 +345,22 @@ def _metadata_table(ch_no, ch_title, total_periods, duration_str) -> str:
 def _competency_table(comps: List[Dict[str, str]]) -> str:
     if not comps:
         return ""
+    # When the mapping carries a chapter-level rationale, show it in a THIRD column, in the same
+    # font/size as the competency text (report-only depth; the on-screen view omits it).
+    if any(c.get("justification") for c in comps):
+        rows = "".join(
+            f'<tr><td class="ccode" width="10%">{_esc(c["c_code"])}</td>'
+            f'<td class="gv gv-l" width="42%">{_esc(c["text"])}</td>'
+            f'<td class="gv gv-l">{_esc(c.get("justification"))}</td></tr>'
+            for c in comps
+        )
+        return (
+            '<table class="grid"><tr>'
+            '<td class="gh" width="10%">C No.</td>'
+            '<td class="gh gh-l" width="42%">Targeted NCF competencies</td>'
+            '<td class="gh gh-l">Justification</td></tr>'
+            f'{rows}</table>'
+        )
     rows = "".join(
         f'<tr><td class="ccode" width="12%">{_esc(c["c_code"])}</td>'
         f'<td class="gv gv-l">{_esc(c["text"])}</td></tr>'
@@ -325,6 +371,57 @@ def _competency_table(comps: List[Dict[str, str]]) -> str:
         '<td class="gh" width="12%">C No.</td>'
         '<td class="gh gh-l">Targeted NCF competencies</td></tr>'
         f'{rows}</table>'
+    )
+
+
+def english_competency_spines(spine_to_cg: Dict[str, Any],
+                              descriptions: Dict[str, str]) -> List[Dict[str, Any]]:
+    """English's STANDARDIZED spine competency map as [{spine, section, rows:[{c_code,text}]}].
+    English carries the SAME competencies in every chapter, so instead of a per-chapter targeted
+    list it presents the fixed spine → section → competency table from
+    framework/english/{stage}/spine_to_cg.json (order preserved: Oracy, Reading, Writing, …)."""
+    out: List[Dict[str, Any]] = []
+    for sp in (spine_to_cg or {}).get("spines", {}).values():
+        rows = [{"c_code": c, "text": descriptions.get(c, "")} for c in sp.get("competency_codes", []) or []]
+        if not rows:
+            continue
+        out.append({
+            "spine": sp.get("label", ""),
+            "section": ", ".join(sp.get("textbook_section_names", []) or []),
+            "rows": rows,
+        })
+    return out
+
+
+def _english_competency_table(spines: List[Dict[str, Any]]) -> str:
+    """English's 4-column competency table: Spine · Section Name · Code · Competency, with the
+    Spine and Section cells spanning their competency rows."""
+    if not spines:
+        return ""
+    body = ""
+    for sp in spines:
+        rws = sp.get("rows", [])
+        n = len(rws)
+        first, rest = rws[0], rws[1:]
+        body += (
+            '<tr>'
+            f'<td class="gv gv-l ecg-sp" rowspan="{n}">{_esc(sp.get("spine"))}</td>'
+            f'<td class="gv gv-l ecg-sec" rowspan="{n}">{_esc(sp.get("section"))}</td>'
+            f'<td class="ccode" width="9%">{_esc(first.get("c_code"))}</td>'
+            f'<td class="gv gv-l">{_esc(first.get("text"))}</td></tr>'
+        )
+        for r in rest:
+            body += (
+                f'<tr><td class="ccode">{_esc(r.get("c_code"))}</td>'
+                f'<td class="gv gv-l">{_esc(r.get("text"))}</td></tr>'
+            )
+    return (
+        '<table class="grid"><tr>'
+        '<td class="gh" width="14%">Spine</td>'
+        '<td class="gh" width="24%">Section Name</td>'
+        '<td class="gh" width="9%">Code</td>'
+        '<td class="gh gh-l">Competency</td></tr>'
+        f'{body}</table>'
     )
 
 
@@ -352,16 +449,21 @@ def _stage_table(groups: List[Dict[str, Any]]) -> str:
     )
 
 
-def _stages_body(groups: List[Dict[str, Any]]) -> str:
+def _stages_body(groups: List[Dict[str, Any]], subject: str = "") -> str:
     word = _group_word(groups)
+    # Mathematics shows no section/stage band above its periods — the units render as one flat
+    # run (founder 2026-07-20); every other subject keeps its organizing band.
+    show_band = subject != "mathematics"
     out = ""
     seen = 0  # running period count across the whole chapter — first one carries the "Pedagogy:" label
     for i, g in enumerate(groups, 1):
-        out += (
-            f'<table class="stage-band"><tr><td>'
-            f'<span class="st">{_esc(word)} {i}: {_esc(g.get("label"))}</span>'
-            f'</td></tr></table>'
-        )
+        if show_band:
+            out += (
+                f'<table class="stage-band"><tr><td>'
+                f'<span class="st-k">{_esc(word)} {i}</span><br/>'
+                f'<span class="st">{_esc(g.get("label"))}</span>'
+                f'</td></tr></table>'
+            )
         for p in g.get("periods", []) or []:
             seen += 1
             out += _period_block(p, is_first=(seen == 1))
@@ -439,6 +541,7 @@ def export_lesson_plan_pdf(
     view: Dict[str, Any],
     *,
     competencies: Optional[List[Dict[str, str]]] = None,
+    competency_spines: Optional[List[Dict[str, Any]]] = None,
     activity_desc_by_period: Optional[Dict[int, str]] = None,
     plan_date: Optional[datetime] = None,
     generated_at: Optional[datetime] = None,
@@ -449,7 +552,8 @@ def export_lesson_plan_pdf(
     from xhtml2pdf import pisa
 
     html_str = render_lesson_pdf_html(
-        view, competencies=competencies, activity_desc_by_period=activity_desc_by_period,
+        view, competencies=competencies, competency_spines=competency_spines,
+        activity_desc_by_period=activity_desc_by_period,
         plan_date=plan_date, generated_at=generated_at,
     )
     buf = BytesIO()

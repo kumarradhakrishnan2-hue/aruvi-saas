@@ -355,11 +355,14 @@ function ATyped({ b, passage = false }) {
   if (b.type === "svg") return <div className="assess-vs assess-vs-svg" dangerouslySetInnerHTML={{ __html: b.content }} />;
   if (b.type === "number_line" && b.number_line) return <ANumberLine nl={b.number_line} />;
   if (b.type === "table" && b.table) {
+    // A word bank (no column semantics) arrives with an empty header — render every cell the
+    // same, with no bold/filled header row. Data tables keep their header.
+    const header = b.table.header || [];
     return (
       <div className="assess-vs">
         <table className="assess-table">
-          <thead><tr>{b.table.header.map((c, i) => <th key={i}>{c}</th>)}</tr></thead>
-          <tbody>{b.table.rows.map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}</tbody>
+          {header.length ? <thead><tr>{header.map((c, i) => <th key={i}>{c}</th>)}</tr></thead> : null}
+          <tbody>{(b.table.rows || []).map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}</tbody>
         </table>
       </div>
     );

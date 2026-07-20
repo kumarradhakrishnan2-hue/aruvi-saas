@@ -68,6 +68,137 @@ const OpenArchiveIcon = ({ size = 18 }) => (
   </svg>
 );
 
+/* Report line-icon (a document with lines) — the only glyph in the flow; the modal itself is
+   icon-free by design. */
+const ReportIcon = ({ size = 17 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+    <path d="M14 3v5h5" /><path d="M9 13h6" /><path d="M9 17h6" />
+  </svg>
+);
+
+const REPORT_COMPS = [
+  { id: "lesson", title: "Lesson Plan", desc: "Teaching plan, activities, steps and resources" },
+  { id: "assessment", title: "Assessment", desc: "Questions and instructions" },
+  { id: "integrated", title: "Lesson Plan + Assessment", desc: "Teaching plan together with assessment" },
+];
+
+/* Reports modal (2026-07-17) — the LPA/report download surface, per our placement decision:
+ * opened from the report icon at the bottom-left of a My Lessons plan card (subject·class·chapter,
+ * section-agnostic). Single-select composition (Lesson Plan default · Assessment · Lesson Plan +
+ * Assessment); the "include answers" tick appears ONLY for the two that contain assessment and
+ * defaults off — the answer layer is a separate server-side render (answers=1), so a clean copy
+ * can never carry answers. Format PDF (default) or Word. Preview renders the PDF inline; Download
+ * fetches the CHOSEN format. Served by GET /api/plans/{subject}/{grade}/{filename}/export/{kind}. */
+function ReportModal({ sSlug, gSlug, filename, onClose }) {
+  const [comp, setComp] = useState("lesson");
+  const [answers, setAnswers] = useState(false);
+  const [fmt, setFmt] = useState("pdf");
+  const [busy, setBusy] = useState(false);
+  const showAnswers = comp === "assessment" || comp === "integrated";
+
+  const buildUrl = (format) => {
+    let url = `${API}/api/plans/${sSlug}/${gSlug}/${filename}/export/${comp}?format=${format}`;
+    if (showAnswers && answers) url += "&answers=1";
+    return url;
+  };
+
+  // Download the report as a file via a blob + `download` attribute. The download attribute means
+  // the browser SAVES rather than navigates, so Aruvi stays available (no trap) — including in the
+  // Home-Screen PWA. On desktop it lands in Downloads; on iPhone in Files, where you open and share.
+  // KNOWN iOS LIMIT: over plain http, iOS references the saved file by a blob: URL, so when you open
+  // it and share, it may attach that link instead of the file. Sharing the actual file needs HTTPS
+  // (the Web Share file API). There is no http workaround that both avoids the trap AND shares the
+  // file — that trade-off is enforced by iOS.
+  const download = async () => {
+    setBusy(true);
+    try {
+      const resp = await fetch(buildUrl(fmt), withUser({ method: "GET" }));
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const blob = await resp.blob();
+      const cd = resp.headers.get("content-disposition") || "";
+      const m = cd.match(/filename="([^"]+)"/);
+      const name = m ? m[1] : `report.${fmt === "pdf" ? "pdf" : "docx"}`;
+      const u = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = u; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(u), 8000);
+      onClose();
+    } catch (e) {
+      alert(`Couldn't create the report.\n\n${e?.message || "Is the Aruvi engine running on :8000?"}`);
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="rpt-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
+      <div className="rpt-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="rpt-hd">
+          <span className="rpt-title">Reports</span>
+          <button className="rpt-x" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        <p className="rpt-sub">Create a report of this lesson or its assessment.</p>
+
+        <div className="rpt-opts">
+          {REPORT_COMPS.map((c) => {
+            const on = comp === c.id;
+            const canAns = c.id === "assessment" || c.id === "integrated";
+            return (
+              <div key={c.id} className={`rpt-opt${on ? " on" : ""}`} role="button" tabIndex={0}
+                onClick={() => setComp(c.id)}>
+                <div className="rpt-opt-row">
+                  <span className="rpt-opt-body">
+                    <span className="rpt-opt-t">{c.title}</span>
+                    <span className="rpt-opt-d">{c.desc}</span>
+                  </span>
+                  <span className="rpt-radio" aria-hidden="true" />
+                </div>
+                {on && canAns ? (
+                  // The answers tick lives INSIDE the chosen box (Assessment / LP+A only) —
+                  // stops propagation so toggling it never re-fires the card's select.
+                  <label className="rpt-ans" onClick={(e) => e.stopPropagation()}>
+                    <input type="checkbox" checked={answers}
+                      onChange={(e) => setAnswers(e.target.checked)} />
+                    <span className="rpt-ans-t">Include answers / model responses</span>
+                  </label>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="rpt-kicker">Format</div>
+        <div className="rpt-fmt">
+          <button type="button" className={`rpt-fmt-btn${fmt === "pdf" ? " on" : ""}`} onClick={() => setFmt("pdf")}>PDF</button>
+          <button type="button" className={`rpt-fmt-btn${fmt === "docx" ? " on" : ""}`} onClick={() => setFmt("docx")}>Word</button>
+        </div>
+
+        <div className="rpt-foot">
+          <button className="rpt-btn" onClick={onClose} type="button">Cancel</button>
+          <button className="rpt-btn rpt-primary" onClick={download} disabled={busy} type="button">
+            {busy ? "Preparing…" : `Download ${fmt === "pdf" ? "PDF" : "Word"}`}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* The report trigger on a card — a small icon at the bottom-left; opens the Reports modal. */
+function ReportButton({ sSlug, gSlug, filename }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button className="sc-report" onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+        aria-label="Create a report" title="Reports"><ReportIcon /></button>
+      {open ? (
+        <ReportModal sSlug={sSlug} gSlug={gSlug} filename={filename} onClose={() => setOpen(false)} />
+      ) : null}
+    </>
+  );
+}
+
 export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
@@ -425,14 +556,19 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
                 {effView === "archived" ? (
                   <button className="mlp2-restore-btn" onClick={(e) => restorePlan(p, e)}
                     aria-label={`Restore ${p.chapter_title}`}>Restore</button>
-                ) : !isAttached(p) ? (
-                  // No archive affordance on a plan a class is on — attached plans can't be
-                  // archived, so showing (and then blocking) the control would be inconsistent.
-                  <button className="mlp2-iconbtn archive" onClick={(e) => archivePlan(p, e)}
-                    aria-label={`Archive ${p.chapter_title}`} title="Archive">
-                    <ArchiveIcon />
-                  </button>
-                ) : null}
+                ) : (
+                  <>
+                    {/* Archive in the top-right corner; report trigger in the bottom-right. Attached
+                        plans can't be archived, so that control is simply absent for them. */}
+                    {!isAttached(p) ? (
+                      <button className="mlp2-iconbtn archive" onClick={(e) => archivePlan(p, e)}
+                        aria-label={`Archive ${p.chapter_title}`} title="Archive">
+                        <ArchiveIcon />
+                      </button>
+                    ) : null}
+                    <ReportButton sSlug={sSlug} gSlug={gSlug} filename={p.filename} />
+                  </>
+                )}
               </div>
             );
           })}

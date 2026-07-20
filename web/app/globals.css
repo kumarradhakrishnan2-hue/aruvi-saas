@@ -1745,7 +1745,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Per-card Archive — an icon at the TOP-RIGHT corner of the card. Absolutely placed so it never
    reflows the title; the card reserves right padding so the title clears it. Quiet by default,
    warms on hover. Only rendered on plans no class is on (attached ⇒ no affordance). */
-.mlp2 .sc-card:not(.mlp2-arch) { padding-right:44px; }
+/* Reserve right padding for the icon column AND floor the card at three rows tall (2026-07-17):
+   Archive sits top-right, the report trigger bottom-right, both in that same right column. On a
+   short card (one-line title + status = two rows) they crowd; a min-height of three rows keeps a
+   clear vertical gap between them. ~3 body rows (2 title lines @1.28·15px + a status line) + the
+   card's 20px vertical padding. */
+.mlp2 .sc-card:not(.mlp2-arch) { padding-right:44px; min-height:82px; box-sizing:border-box; }
 .mlp2-iconbtn {
   position:absolute; top:7px; right:8px; z-index:2;
   display:inline-flex; align-items:center; justify-content:center;
@@ -1755,6 +1760,69 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .mlp2-iconbtn:hover { border-color:var(--line); background:var(--paper); }
 .mlp2-iconbtn.archive:hover { color:var(--clay); border-color:var(--clay); background:#fbeee6; }
+
+/* Report trigger — bottom-right corner, transparent like the archive icon (2026-07-17).
+   Archive sits top-right; report sits bottom-right. */
+.sc-report {
+  position:absolute; bottom:7px; right:8px; z-index:2;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; padding:0; border-radius:8px;
+  border:1px solid transparent; background:transparent; color:var(--ink-soft); cursor:pointer;
+  transition:border-color .12s ease, color .12s ease, background .12s ease;
+}
+.sc-report:hover { border-color:var(--line); background:var(--paper); color:var(--pine); }
+
+/* ── Reports modal ─────────────────────────────────────── */
+.rpt-overlay {
+  position:fixed; inset:0; z-index:100; background:rgba(31,42,36,.42);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.rpt-modal {
+  width:100%; max-width:440px; max-height:92vh; overflow:auto;
+  background:var(--paper); border:1px solid var(--line); border-radius:16px;
+  box-shadow:0 30px 60px -24px rgba(31,42,36,.6); padding:22px 22px 18px;
+  display:flex; flex-direction:column;
+}
+.rpt-hd { display:flex; align-items:center; gap:10px; }
+.rpt-title { flex:1; font-family:var(--f-display); font-weight:600; font-size:23px; color:var(--pine-d); }
+.rpt-title-sm { font-size:18px; text-align:center; }
+.rpt-x { background:none; border:none; font-size:15px; color:var(--ink-soft); cursor:pointer; padding:4px; line-height:1; }
+.rpt-x:hover { color:var(--clay); }
+.rpt-back { background:none; border:none; font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--pine-d); cursor:pointer; padding:4px 0; }
+.rpt-sub { font-size:14px; color:var(--ink-soft); margin:4px 0 12px; }
+.rpt-kicker { font-family:var(--f-mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); margin:14px 0 8px; }
+.rpt-opts { display:flex; flex-direction:column; gap:9px; }
+.rpt-opt {
+  display:flex; flex-direction:column; text-align:left; cursor:pointer; width:100%;
+  background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:13px 15px;
+  transition:border-color .12s ease, background .12s ease;
+}
+.rpt-opt.on { border-color:var(--pine); background:var(--tint-pine); }
+.rpt-opt-row { display:flex; align-items:center; gap:12px; }
+.rpt-opt-body { flex:1; display:flex; flex-direction:column; gap:3px; min-width:0; }
+.rpt-opt-t { font-family:var(--f-display); font-weight:600; font-size:16px; color:var(--ink); }
+.rpt-opt-d { font-size:12.5px; color:var(--ink-soft); line-height:1.35; }
+.rpt-radio { flex:none; width:20px; height:20px; border-radius:50%; border:1.5px solid var(--edge); background:var(--paper-2); position:relative; }
+.rpt-opt.on .rpt-radio { border-color:var(--pine); background:var(--pine); }
+.rpt-opt.on .rpt-radio::after { content:""; position:absolute; inset:5px; border-radius:50%; background:var(--paper); }
+/* answers tick nested inside the selected option box, divided by a hairline */
+.rpt-ans { display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:12px; padding-top:11px; border-top:1px solid var(--line); }
+.rpt-ans input { width:16px; height:16px; accent-color:var(--pine); }
+.rpt-ans-t { font-size:13.5px; color:var(--ink); }
+.rpt-fmt { display:flex; gap:9px; }
+.rpt-fmt-btn { flex:1; font-family:var(--f-mono); font-size:12px; letter-spacing:.05em; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); color:var(--ink-soft); cursor:pointer; }
+.rpt-fmt-btn.on { border-color:var(--pine); background:var(--tint-pine); color:var(--pine-d); font-weight:600; }
+.rpt-foot { display:flex; align-items:center; gap:10px; margin-top:20px; }
+.rpt-btn { flex:1; font-family:var(--f-mono); font-size:12px; letter-spacing:.04em; padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); color:var(--ink); cursor:pointer; text-align:center; }
+.rpt-btn:hover { border-color:var(--ink-soft); }
+.rpt-primary { background:var(--pine); border-color:var(--pine); color:var(--paper); font-weight:600; }
+.rpt-primary:hover { background:var(--pine-d); border-color:var(--pine-d); }
+.rpt-primary:disabled { opacity:.6; cursor:default; }
+.rpt-share { display:block; width:100%; flex:none; margin-top:9px; }
+.rpt-view { display:block; width:100%; text-align:center; margin-top:11px; padding:2px; background:none; border:none;
+  font-family:var(--f-body); font-style:italic; font-size:12.5px; color:var(--ink-soft); cursor:pointer; text-decoration:underline; }
+.rpt-view:hover { color:var(--pine); }
+.rpt-view:disabled { opacity:.6; cursor:default; }
 
 /* Restore — an explicit, direct word on a solid green fill (clearer than an arrow glyph). Sits at
    the right of the archived card, vertically centred. */

@@ -113,10 +113,11 @@ def test_normalized_contract_well_formed():
                 if n.question_type == "EXTRACT_ANALYSIS":
                     assert n.passage and not n.visual_stimulus, \
                         f"{where}: EXTRACT_ANALYSIS extract not routed to passage"
-                # typed blocks: tables pre-split
+                # typed blocks: tables pre-split (header OR rows — a word bank has no header)
                 for blk in (n.visual_stimulus, n.passage):
                     if blk and blk["type"] == "table":
-                        assert blk.get("table", {}).get("header"), \
+                        tbl = blk.get("table", {})
+                        assert tbl.get("header") or tbl.get("rows"), \
                             f"{where}: table stimulus not pre-split"
                 # NUM richness (worked answer + method — the T6b card)
                 if n.question_type == "NUM":

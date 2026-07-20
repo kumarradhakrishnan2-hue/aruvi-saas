@@ -23,6 +23,7 @@ from .report_competency import (
     CompetencyAllocationReport, ChapterReport,
     grade_roman, subject_display, date_long, executive_summary_paragraphs,
 )
+from .pdf_fonts import font_face_css
 
 
 # ── HTML template ──────────────────────────────────────────────────────────
@@ -243,7 +244,7 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
     alloc_table = _pdf_allocation_table(report, types, esc)
     comp_blocks = "".join(_pdf_chapter_block(ch, types, report.is_effort, esc) for ch in report.chapters)
 
-    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>{font_face_css()}
   @page {{
     size: a4 portrait; margin: 1.6cm 1.3cm 1.4cm 1.3cm;
     @frame footer {{ -pdf-frame-content: footerContent; bottom: 0.7cm; margin-left: 1.3cm; margin-right: 1.3cm; height: 0.6cm; }}
