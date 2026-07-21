@@ -61,7 +61,7 @@ export default function Home() {
   // Cleared once Generate consumes it. Generate is only ever reached through this handler.
   const [generateEntry, setGenerateEntry] = useState(null);
 
-  /* First-run guided tour (restructured 2026-07-06). `tour` is the current step, 1–11 (or null);
+  /* First-run guided tour (restructured 2026-07-06; extended to 15 steps 2026-07-21). `tour` is the current step, 1–15 (or null);
    * the walk is launched from the "Show me how" nudge on My Classes and is GUIDE-DRIVEN: every
    * step advances with Next / reverses with Back, and the transitions here perform whatever the
    * step implies (tab navigation, opening the preview, the real attach — done inside MyPlans —
@@ -255,28 +255,29 @@ export default function Home() {
   const goLessons = () => { setEditFlow("lessonplans"); setTab("myplans"); setGenerateEntry(null); };
 
   // Tour Next — the guide performs the move each step implies before advancing. The view-level
-  // work (popup at 6/11, attach/unbind at the 6↔7 boundary, lesson at 8–9, demo-complete at
-  // 10–11, the big "+" grow button surfaced at 12) is orchestrated by MyPlans/MyLessonPlans off
-  // the numeric tourStep; here we only handle SHELL navigation: 2→3 open My Lessons · 4→5 back to
-  // My Classes · 11→12 close the popup back to My Classes home (the "+" step) · 12→13 open the
-  // profile (step 13 rings the settings gear over it) · 13 Done.
+  // work (report/archive buttons at 4/5 on My Lessons, popup at 8/13, attach/unbind at the 8↔9
+  // boundary, lesson at 10–11, demo-complete at 12–13, the big "+" grow button surfaced at 14) is
+  // orchestrated by MyPlans/MyLessonPlans off the numeric tourStep; here we only handle SHELL
+  // navigation: 2→3 open My Lessons · 6→7 back to My Classes · 13→14 close the popup back to My
+  // Classes home (the "+" step) · 14→15 open the profile (step 15 rings the settings gear over it)
+  // · 15 Done.
   const tourNext = () => {
     if (tour === 2) goLessons();
-    else if (tour === 4) goClasses();
-    else if (tour === 11) goClasses();
-    else if (tour === 12) goProfile();
-    else if (tour === 13) { finishTour(); goClasses(); return; }
+    else if (tour === 6) goClasses();
+    else if (tour === 13) goClasses();
+    else if (tour === 14) goProfile();
+    else if (tour === 15) { finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
-  // highlight; 5→4 back to My Lessons (the preview re-opens there); 13→12 back to My Classes
-  // (the grow "+" step; 12→11 re-opens the popup, handled by MyPlans). Back from step 1 backs
-  // out to the nudge.
+  // highlight; 7→6 back to My Lessons (the preview re-opens there); 15→14 back to My Classes
+  // (the grow "+" step; 14→13 re-opens the popup, handled by MyPlans). Steps 4/5/6 stay within My
+  // Lessons so need no shell move. Back from step 1 backs out to the nudge.
   const tourBack = () => {
     if (tour === 1) { setTour(null); return; }
     if (tour === 3) goClasses();
-    else if (tour === 5) goLessons();
-    else if (tour === 13) goClasses();
+    else if (tour === 7) goLessons();
+    else if (tour === 15) goClasses();
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
@@ -382,7 +383,7 @@ export default function Home() {
         </main>
       </div>
 
-      {/* First-run guided tour overlay — 12 guide-driven steps ("N of 12", Back on every one).
+      {/* First-run guided tour overlay — 15 guide-driven steps ("N of 15", Back on every one).
           Skip closes it for this session. */}
       {tour && (
         <GuidedTour step={tour} info={tourInfo} onNext={tourNext} onBack={tourBack} onSkip={finishTour} />

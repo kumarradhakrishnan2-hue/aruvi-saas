@@ -240,7 +240,7 @@ function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
 /* Tab state + rendered parts (bar / panel) for a unit. Split so the preview view can pin the
  * bar inside its frozen header while the panel scrolls beneath. Callers key the consuming
  * component by unit index so paging to another unit resets the active tab to Overview.
- * data-tour="unit-tabs": tour step 8's tooltip hangs below the bar. */
+ * data-tour="unit-tabs": tour step 10's tooltip hangs below the bar. */
 function useUnitTabsParts(u, assessment, chapterTitle) {
   const items = unitAssessItems(assessment, u);
   // Inclusivity keyword-bolding is stage-specific: middle maths writes differentiation as
@@ -1372,7 +1372,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   return (
     <div className="lessonview co-view" data-subject={lp.subject || ""}>
       {/* Frozen header — stays pinned down through the meta row; the unit list scrolls under it.
-          data-tour="preview-back" (preview only): the guided tour's step-4 hand sits on the exit. */}
+          data-tour="preview-back" (preview only): the guided tour's step-6 hand sits on the exit. */}
       <div className="co-stick">
         <div className="co-topbar">
           {/* {subject} · {class as Roman} · Ch. NN (founder 2026-07-10). */}
@@ -1629,7 +1629,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
       </div>
     );
     // Header name-plate for the frozen block (the top orange prev/next strip is retired here —
-    // paging now lives only in the bottom strip). data-tour="preview-back": tour step 4's hand.
+    // paging now lives only in the bottom strip). data-tour="preview-back": tour step 6's hand.
     // ONE top row (founder 2026-07-10): the unit name-plate sits UP in the first row,
     // wrapping as needed, with the back button beside it top-right — no row spent on
     // the back button alone.
@@ -1643,7 +1643,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
       </div>
     );
     return (
-      // data-tour="preview-root": the guided tour's step-4 spotlight wraps the open preview.
+      // data-tour="preview-root": the guided tour's step-6 spotlight wraps the open preview.
       <div className="lessonview lv-pvview" data-tour="preview-root" ref={pvRef}>
         {/* Frozen block — header AND the Overview/Material/Lesson/Assess tab bar stay pinned;
             only the active panel scrolls beneath. Keyed by unit so paging resets to Overview. */}
@@ -1662,7 +1662,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   const done = cur;                          // units completed before the current one
 
   return (
-    // data-tour="lesson-root": the guided tour's step-7 spotlight wraps the tracking view.
+    // data-tour="lesson-root": the guided tour's step-10 spotlight wraps the tracking view.
     <div className="lessonview" data-tour="lesson-root">
       <button className="back" onClick={onExit}>← back to my plans</button>
       <div className="lv-hd">
@@ -1753,7 +1753,7 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
             <span className="lv-markicon" aria-hidden="true">ⓘ</span>
             <span>Marking this unit complete moves the teaching position to the next unit for this section.</span>
           </div>
-          {/* data-tour="mark-complete": the guided tour's step-8 spotlight + hand sit here. */}
+          {/* data-tour="mark-complete": the guided tour's step-11 spotlight + hand sit here. */}
           <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark this unit complete</button>
         </div>
       )}

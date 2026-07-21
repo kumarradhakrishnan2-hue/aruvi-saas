@@ -199,12 +199,13 @@ function ReportModal({ sSlug, gSlug, filename, onClose }) {
   );
 }
 
-/* The report trigger on a card — a small icon at the bottom-left; opens the Reports modal. */
-function ReportButton({ sSlug, gSlug, filename }) {
+/* The report trigger on a card — a small icon at the bottom-left; opens the Reports modal.
+   `dataTour` tags this button as the guided tour's step-4 anchor on the tour's target card. */
+function ReportButton({ sSlug, gSlug, filename, dataTour }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button className="sc-report" onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+      <button className="sc-report" data-tour={dataTour} onClick={(e) => { e.stopPropagation(); setOpen(true); }}
         aria-label="Create a report" title="Reports"><ReportIcon /></button>
       {open ? (
         <ReportModal sSlug={sSlug} gSlug={gSlug} filename={filename} onClose={() => setOpen(false)} />
@@ -352,13 +353,14 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
     } finally { setOpening(false); }
   };
 
-  // Guided-tour orchestration (steps 3–4 live on this view). The guide DRIVES the preview: on
-  // step 4 it opens the first prepared lesson (the hand "clicked" the row); on any other step —
-  // Back to 3, or Back into this view from step 5 — the state converges idempotently. The first
-  // prepared, unarchived plan is the same one the list's top row shows (step 3's spotlight).
+  // Guided-tour orchestration (steps 3–6 live on this view: 3 the lesson row, 4 the report button,
+  // 5 the archive button, 6 the open preview). The guide DRIVES the preview: on step 6 it opens the
+  // first prepared lesson (the hand "clicked" the row); on any other step — Back to 3/4/5, or Back
+  // into this view from step 7 — the state converges idempotently. The first prepared, unarchived
+  // plan is the same one the list's top row shows (step 3's spotlight).
   useEffect(() => {
     if (tourStep == null) return;
-    if (tourStep === 4) {
+    if (tourStep === 6) {
       if (!openPlan && !opening) {
         const p = tourPlanOf();   // the most recently prepared lesson (see below)
         if (p) openLesson(p);
@@ -589,6 +591,9 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
             const cls = effView === "archived"
               ? "mlp2-arch"
               : live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
+            // The guided tour's target card (the just-generated lesson). Steps 4/5 ring its
+            // report/archive buttons — tagged only on this card and only at the matching step.
+            const isTourCard = tourPlan && p.filename === tourPlan.filename;
             return (
               <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}
                 data-tour={tourStep === 3 && tourPlan && p.filename === tourPlan.filename ? "lesson-first" : undefined}>
@@ -616,11 +621,13 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
                         plans can't be archived, so that control is simply absent for them. */}
                     {!isAttached(p) ? (
                       <button className="mlp2-iconbtn archive" onClick={(e) => archivePlan(p, e)}
-                        aria-label={`Archive ${p.chapter_title}`} title="Archive">
+                        aria-label={`Archive ${p.chapter_title}`} title="Archive"
+                        data-tour={isTourCard && tourStep === 5 ? "lesson-archive" : undefined}>
                         <ArchiveIcon />
                       </button>
                     ) : null}
-                    <ReportButton sSlug={sSlug} gSlug={gSlug} filename={p.filename} />
+                    <ReportButton sSlug={sSlug} gSlug={gSlug} filename={p.filename}
+                      dataTour={isTourCard && tourStep === 4 ? "lesson-report" : undefined} />
                   </>
                 )}
               </div>

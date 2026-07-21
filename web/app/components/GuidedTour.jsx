@@ -1,29 +1,31 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 13 steps (revised 2026-07-09) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 15 steps (revised 2026-07-21) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 13" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 15" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
- * Steps 9–11 demo the completed state without touching her real progress.
+ * Steps 11–13 demo the completed state without touching her real progress.
  *
  * Step model (1-based; page.jsx owns shell navigation, MyPlans/MyLessonPlans own view state):
  *    1 My Classes tab         — where your classes sit
  *    2 My Lessons tab         — where your generated lesson plans sit
- *    3 the lesson row + hand  — the plan she just generated
- *    4 the open preview       — hand "clicked" the row; the preview is open
- *    5 section card's "+"     — hand on +; Next opens the picker (the app itself now ALWAYS
+ *    3 the lesson row + hand  — the plan she just generated (hand centred on the card)
+ *    4 the report button + hand — generate PDF reports of the lesson plan / assessment
+ *    5 the archive button + hand — archive a lesson plan (restore it anytime)
+ *    6 the open preview       — hand "clicked" the row; the preview is open
+ *    7 section card's "+"     — hand on +; Next opens the picker (the app itself now ALWAYS
  *                               routes + through the window — no direct attach)
- *    6 the track-a-chapter popup, hand on the just-generated lesson row — Next attaches it
- *    7 the attached card      — success; Next opens it
- *    8 the tracking view      — box lifted above the notes/mark-complete tail so both stay visible
- *    9 Mark-complete + hand   — demo only, never really clicked
- *   10 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
+ *    8 the track-a-chapter popup, hand on the just-generated lesson row — Next attaches it
+ *    9 the attached card      — success; Next opens it
+ *   10 the tracking view      — box lifted above the notes/mark-complete tail so both stay visible
+ *   11 Mark-complete + hand   — demo only, never really clicked
+ *   12 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
  *                               progress rail AND the second section card stay visible
- *   11 the popup again        — pick the next chapter (bound one excluded)
- *   12 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
- *   13 the settings gear      — where the teaching profile lives; Done closes the tour
+ *   13 the popup again        — pick the next chapter (bound one excluded)
+ *   14 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
+ *   15 the settings gear      — where the teaching profile lives; Done closes the tour
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -54,9 +56,17 @@ const STEPS = [
   { anchor: "nav-lessons", place: "below",
     title: "This is where your generated lesson plans sit.",
     body: () => "On the ‘My Lessons’ tab you can access all your generated lesson plans as well as generate new ones." },
-  { anchor: "lesson-first", place: "below", hand: true,
+  { anchor: "lesson-first", place: "below", hand: true, handPos: "center",
     title: "See the lesson plan you just now generated.",
     body: () => "You can filter your lesson plans by subject and class to see them all in one place." },
+  // Step 4 — the report button on the just-generated lesson card. Hand centred on the icon.
+  { anchor: "lesson-report", place: "below", hand: true, handPos: "center",
+    title: "Generate PDF reports",
+    body: () => "You can generate PDF reports of Lesson plan and assessment by clicking this button." },
+  // Step 5 — the archive button on the lesson card. Hand centred on the icon.
+  { anchor: "lesson-archive", place: "below", hand: true, handPos: "center",
+    title: "You can archive a Lesson plan",
+    body: () => "Push those lesson plans you no more want to see into the archive box. Restore it back anytime you need it." },
   // Box LIFTED above the sticky "Attach to a class" bar (lift 130) so the bottom stays visible;
   // the hand sits on the "← back to lesson plans" button the copy points at.
   { anchor: "preview-root", handAnchor: "preview-back", place: "over", lift: 130, hand: true,
@@ -88,7 +98,7 @@ const STEPS = [
     body: () => <>Once all units of the chapter are marked complete by you, you are ready to teach another chapter. All you need is to click <Plus />.</> },
   { anchor: "attach-pop", place: "over",
     title: "Select a plan.",
-    body: () => "You can use the same window shown in step 6 to select an existing chapter or generate a new plan." },
+    body: () => "You can use the same window shown in step 8 to select an existing chapter or generate a new plan." },
   { anchor: "grow-add", place: "below", handPos: "center", hand: true,
     title: "Add/amend sections, classes and/or subjects.",
     body: () => "Use this button to quickly add sections, classes or subjects to your teaching profile." },
