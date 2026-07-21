@@ -1685,6 +1685,9 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mlp2-title { font-family:var(--f-display); font-weight:500; font-size:23px; color:var(--ink); margin:2px 0 0; }
 .mlp2-wheels { display:flex; gap:14px; margin-top:12px; }
 .mlp2-wcol { flex:1; min-width:0; }
+/* Subject box wider than Class at 2:1 — Subject gains a third of its width, taken from Class. */
+.mlp2-wheels .mlp2-wcol:first-child { flex:2; }
+.mlp2-wheels .mlp2-wcol:last-child { flex:1; }
 .mlp2-wlbl { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft); display:block; margin:0 0 5px; text-align:center; }
 .mlp2-wcol .fr-wheel-shell { margin:0; }
 /* compact box (rowPx=48 on the wheels) + centred value, both Subject and Class */
@@ -3225,3 +3228,84 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
   border: 1px dashed var(--edge-green); border-radius: 20px; padding: 8px 16px; }
 .uv-note button:hover { background: var(--tint-pine); }
 .uv-notemsg { font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   YEAR PLAN + peek wheels + Lessons|Year Plan toggle  (My Lessons, 2026-07-21)
+   The restructured "allocation report": a living, mobile Year-Plan pane on the My Lessons tab.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Peek wheel: a plain WHITE box showing ONLY the item currently in use — no dimmed neighbours
+      (founder ask, 2026-07-21). A single compact row, font two notches larger, and one cycling ▼.
+      Opt-in via the `peek` prop; FirstRun's wheels are untouched. ── */
+.fr-wheel-shell.peek { overflow: hidden; border: 1px solid #c7d9cf; border-radius: 10px; background: #fff; }
+.fr-wheel.peek { border: none; border-radius: 0; background: transparent; }
+/* larger label (Class numbers use this size; the Subject wheel's auto-fit sets its own inline size
+   ~two notches up and shrinks only if a name is too long to fit). */
+.fr-wheel.peek .fr-wheel-label { font-size: 19px; font-weight: 600; color: var(--ink); }
+[data-theme-effective="dark"] .fr-wheel-shell.peek { background: #1f2c26; border-color: #2f4139; }
+/* single down-arrow cue (no ▲/▼ pair to stack). */
+.fr-wheel-cue.single { flex-direction: row; }
+
+/* ── Year-Plan entry button on the title row (replaces the old Lessons|Year Plan tab). Groups
+      with the archive control on the right; the year button hides while the archive is open. ── */
+.mlp2-titleleft { display: flex; align-items: center; gap: 8px; }
+.mlp2-yearbtn { display: inline-flex; align-items: center; justify-content: center; padding: 5px; border: none; border-radius: 8px; background: none; color: var(--ink-soft); cursor: pointer; }
+.mlp2-yearbtn:hover { color: var(--ink); }
+.mlp2-yearbtn.on { color: var(--clay); background: none; }
+.mlp2-yearbtn:focus-visible { outline: 2px solid var(--pine); outline-offset: 1px; }
+
+/* ── Year Plan view ── */
+.yp { --yp-card: #fff; padding: 4px 18px 10px; }
+[data-theme-effective="dark"] .yp { --yp-card: #1f2c26; }
+.yp-loading, .yp-empty { padding: 28px 12px; text-align: center; color: var(--ink-soft); font-family: var(--f-body); }
+
+/* Frozen plan head: exec + tiles + column header stay put while the chapter rows scroll beneath.
+   Sticks directly under My Lessons' own frozen header, whose measured height is --mlp2-frozen-h. */
+.yp-head { position: sticky; top: calc(var(--nav-h, 118px) + var(--mlp2-frozen-h, 132px)); z-index: 3; background: var(--paper); }
+.yp-exec { margin-top: 8px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; background: #f7ebe3; }
+[data-theme-effective="dark"] .yp-exec { background: #2a221d; }
+.yp-exec-h { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0; background: none; border: none; cursor: pointer; }
+.yp-exec-k { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.yp-exec-chev { color: var(--ink-soft); font-size: 13px; line-height: 1; transition: transform .15s ease; }
+.yp-exec-chev.open { transform: rotate(180deg); }
+.yp-exec p { margin: 8px 0 0; font-family: var(--f-body); font-style: italic; font-size: 14px; line-height: 1.62; color: var(--ink); }
+.yp-exec b { font-style: normal; font-weight: 600; }
+.yp-help { margin: 14px 2px 0; font-family: var(--f-body); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+
+.yp-budget { margin-top: 14px; }
+.yp-tiles { display: flex; gap: 8px; }
+.yp-tile { flex: 1; padding: 9px 6px 8px; text-align: center; border: 1px solid var(--line); border-radius: 11px; background: var(--yp-card); }
+.yp-tile-n { font-family: var(--f-display); font-weight: 600; font-size: 23px; line-height: 1; color: var(--ink); }
+.yp-tile.commit .yp-tile-n { color: var(--pine); }
+.yp-tile.left .yp-tile-n { color: var(--clay); }
+.yp-tile-l { margin-top: 5px; font-family: var(--f-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.yp-bar { margin-top: 11px; height: 9px; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--tint-pine-2); }
+.yp-bar > i { display: block; height: 100%; background: var(--pine); }
+.yp-cap { margin: 8px 2px 0; font-family: var(--f-body); font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); }
+
+.yp-colhd { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: end; margin-top: 15px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.yp-c { font-family: var(--f-mono); font-size: 8.5px; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); text-align: right; }
+.yp-c.chap { text-align: left; }
+
+.yp-row { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: start; padding: 6px 0 6px; border-bottom: 1px solid var(--line); }
+.yp-row.pend { opacity: .7; }
+.yp-cell-ch { display: flex; gap: 9px; align-items: baseline; min-width: 0; }
+.yp-cn { flex: none; font-family: var(--f-mono); font-size: 11px; color: var(--ink); }
+.yp-cname { min-width: 0; font-family: var(--f-display); font-weight: 500; font-size: 11px; line-height: 1.25; color: var(--ink); }
+.yp-sug { text-align: right; font-family: var(--f-display); font-size: 19px; color: var(--ink); }
+.yp-planw { display: flex; flex-direction: column; align-items: flex-end; }
+.yp-plan { font-family: var(--f-display); font-size: 19px; font-weight: 600; color: var(--ink); }
+.yp-plan.yp-set { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+.yp-dash { color: var(--line); font-weight: 400; }
+.yp-delta { margin-top: 3px; font-family: var(--f-mono); font-size: 9px; letter-spacing: .03em; color: var(--clay); }
+.yp-pend { margin-top: 3px; font-family: var(--f-mono); font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); opacity: .85; }
+
+.yp-tot { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: baseline; margin-top: 2px; padding: 12px 0 4px; border-top: 2px solid var(--ink); }
+.yp-tot-l { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.yp-tot-n { text-align: right; font-family: var(--f-display); font-weight: 600; font-size: 18px; }
+.yp-tot-n.sug { color: var(--ink); }
+.yp-tot-n.plan { color: var(--ink); }
+.yp-foot-note { margin: 6px 2px 0; font-family: var(--f-body); font-size: 11px; line-height: 1.5; color: var(--ink-soft); }
+
+.yp-prepare { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 16px; padding: 13px 2px; border: none; border-top: 1px solid var(--line); background: none; cursor: pointer; font-family: var(--f-body); font-size: 14px; color: var(--clay); }
+.yp-arr { font-size: 16px; color: var(--clay); }

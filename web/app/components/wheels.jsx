@@ -66,11 +66,24 @@ let wheelDemoDone = false;
 // `rowPx` (default WHEEL_ROW=64) sets the single visible row's height AND the scroll-snap step —
 // they MUST stay equal or snapping lands between rows. A caller wanting a more compact wheel
 // (e.g. My Lessons' Subject/Grade) passes a smaller rowPx; first-run passes nothing and keeps 64.
-export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WHEEL_ROW, fit = false }) {
+export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WHEEL_ROW, fit = false, peek = false }) {
   const ref = useRef(null);
   const settleTimer = useRef(null);
   const idBase = String(ariaLabel || "wheel").toLowerCase().replace(/\W+/g, "-");
   const rowStyle = rowPx !== WHEEL_ROW ? { height: rowPx } : undefined;
+  // Peek mode (My Lessons Subject/Class): a single compact WHITE row showing ONLY the item in use
+  // — no dimmed neighbours (founder ask, 2026-07-21). Same one-row footprint as the base wheel;
+  // the styling (white box, larger font, single cycling ▼) is all in CSS + the label sizing below.
+  const wheelStyle = rowStyle;
+  // Continuous wheeling (peek): render the list THREE times and ride the middle copy, recentring
+  // after each settle, so dragging/scrolling wraps around forever — matching the ▼ arrow (which
+  // already cycles). Only in peek with >1 item; the base wheel (FirstRun) is untouched.
+  const N = items.length;
+  const loop = peek && N > 1;
+  const selIdx = items.findIndex((it) => String(it.id) === String(value));
+  const renderItems = loop
+    ? Array.from({ length: 3 * N }, (_, i) => ({ ...items[i % N], _i: i }))
+    : items.map((it, i) => ({ ...it, _i: i }));
   // Auto-fit (opt-in): shrink the label font just enough that the LONGEST option shows in full,
   // never clipped by the box — for long words on narrow columns (e.g. "Mathematics" on a phone).
   // Measured at the base size (never the already-shrunk inline size, so it can't compound) and at
@@ -82,15 +95,50 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
     if (settleTimer.current) clearTimeout(settleTimer.current);
     settleTimer.current = setTimeout(() => {
       const el = ref.current;
-      if (!el || !items.length) return;
-      const idx = Math.min(items.length - 1, Math.max(0, Math.round(el.scrollTop / rowPx)));
-      if (items[idx]) onChange(String(items[idx].id));
+      if (!el || !N) return;
+      if (loop) {
+        const raw = Math.round(el.scrollTop / rowPx);
+        const real = ((raw % N) + N) % N;
+        if (items[real]) onChange(String(items[real].id));
+        // Silently hop back into the middle copy whenever we've drifted into the first/last one,
+        // so there's always another copy to keep scrolling into (seamless — the recentred row
+        // shows the identical item).
+        if (raw < N || raw >= 2 * N) el.scrollTop = (N + real) * rowPx;
+      } else {
+        const idx = Math.min(N - 1, Math.max(0, Math.round(el.scrollTop / rowPx)));
+        if (items[idx]) onChange(String(items[idx].id));
+      }
     }, 120);
   };
 
   // moves exactly one row; shared by the keyboard handler AND the ▲▼ cue buttons below, so
   // tapping a cue behaves identically to pressing an arrow key
   const step = (dir) => stepScroll(ref.current, dir, rowPx, items.length);
+
+  // Peek mode's single down arrow: advance to the next item and WRAP from the last back to the
+  // first (founder ask, 2026-07-21). Index off the CURRENT value (not the live scrollTop, which
+  // may be mid-animation) and commit the pick via onChange immediately, so the selection always
+  // changes on tap even if the smooth-scroll is throttled; then move the box to match.
+  const stepCycle = () => {
+    if (!N) return;
+    const curIdx = Math.max(0, items.findIndex((it) => String(it.id) === String(value)));
+    const next = (curIdx + 1) % N;
+    onChange(String(items[next].id));   // commit immediately so a throttled scroll never no-ops
+    const el = ref.current;
+    if (!el) return;
+    const reduce = typeof window !== "undefined" && typeof window.matchMedia === "function"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (loop) {
+      // Ride one row further DOWN the middle/last copy; onScroll recentres. Always down, so the
+      // wrap (last → first) is a smooth continuation rather than a jump back up.
+      try { el.scrollBy({ top: rowPx, behavior: reduce ? "auto" : "smooth" }); }
+      catch { el.scrollTop = el.scrollTop + rowPx; }
+    } else {
+      const top = next * rowPx;
+      try { el.scrollTo({ top, behavior: reduce ? "auto" : "smooth" }); }
+      catch { el.scrollTop = top; }
+    }
+  };
 
   const onKeyDown = (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
@@ -107,7 +155,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
   useEffect(() => {
     const el = ref.current;
     const idx = items.findIndex((it) => String(it.id) === String(value));
-    if (el && idx >= 0) el.scrollTop = idx * rowPx;
+    if (el && idx >= 0) el.scrollTop = (loop ? N + idx : idx) * rowPx;
   }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // one-time gesture demo (see wheelDemoDone above)
@@ -135,7 +183,7 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
       if (!rowEl || !labelEl) return;
       const rs = getComputedStyle(rowEl);
       const family = getComputedStyle(labelEl).fontFamily || "serif";
-      const base = large ? 17 : 15;   // the design base (NOT the possibly-shrunk inline size)
+      const base = (large ? 17 : 15) + (peek ? 12 : 0);   // peek Subject reads ~six notches larger; design base (NOT the shrunk inline size)
       const avail = rowEl.clientWidth - parseFloat(rs.paddingLeft || 0) - parseFloat(rs.paddingRight || 0);
       if (!avail || avail <= 0) return;
       const maxW = _maxLabelWidth(items, `600 ${base}px ${family}`);
@@ -146,19 +194,18 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
     window.addEventListener("resize", compute);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(compute).catch(() => {});
     return () => { cancelled = true; window.removeEventListener("resize", compute); };
-  }, [fit, items, large, rowPx]);
+  }, [fit, items, large, rowPx, peek]);
 
   const labelStyle = fit && fitPx ? { fontSize: `${fitPx}px` } : undefined;
-  const chosen = items.find((it) => String(it.id) === String(value));
   return (
-    <div className={`fr-wheel-shell ${large ? "fr-wheel-lg" : ""}`}>
-      <div className="fr-wheel" ref={ref} onScroll={onScroll} onKeyDown={onKeyDown}
-        role="listbox" tabIndex={0} aria-label={ariaLabel} style={rowStyle}
-        aria-activedescendant={chosen ? `${idBase}-opt-${chosen.id}` : undefined}>
-        {items.map((it) => {
+    <div className={`fr-wheel-shell ${large ? "fr-wheel-lg" : ""} ${peek ? "peek" : ""}`}>
+      <div className={`fr-wheel ${peek ? "peek" : ""}`} ref={ref} onScroll={onScroll} onKeyDown={onKeyDown}
+        role="listbox" tabIndex={0} aria-label={ariaLabel} style={wheelStyle}
+        aria-activedescendant={selIdx >= 0 ? `${idBase}-opt-${loop ? N + selIdx : selIdx}` : undefined}>
+        {renderItems.map((it) => {
           const sel = String(value) === String(it.id);
           return (
-            <div key={it.id} id={`${idBase}-opt-${it.id}`} style={rowStyle}
+            <div key={it._i} id={`${idBase}-opt-${it._i}`} style={rowStyle}
               className="fr-wheel-row" role="option" aria-selected={sel}>
               {it.chip != null && <span className={`fr-opt-chip ${sel ? "on" : ""}`}>{it.chip}</span>}
               <span className="fr-wheel-label" style={labelStyle}>{it.label}</span>
@@ -168,9 +215,18 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
       </div>
       {/* real step buttons, not decoration — a tap-friendly alternative for anyone who'd
           rather not drag/scroll-wheel the box itself */}
-      <span className="fr-wheel-cue">
-        <button type="button" className="fr-wheel-cue-btn" onClick={() => step(-1)} aria-label={`Previous ${ariaLabel || "option"}`}>▲</button>
-        <button type="button" className="fr-wheel-cue-btn" onClick={() => step(1)} aria-label={`Next ${ariaLabel || "option"}`}>▼</button>
+      <span className={`fr-wheel-cue ${peek ? "single" : ""}`}>
+        {peek ? (
+          // One down arrow: steps forward and wraps last → first, so the whole list is reachable
+          // by tapping the same control (no up arrow).
+          <button type="button" className="fr-wheel-cue-btn" onClick={stepCycle}
+            aria-label={`Next ${ariaLabel || "option"}`}>▼</button>
+        ) : (
+          <>
+            <button type="button" className="fr-wheel-cue-btn" onClick={() => step(-1)} aria-label={`Previous ${ariaLabel || "option"}`}>▲</button>
+            <button type="button" className="fr-wheel-cue-btn" onClick={() => step(1)} aria-label={`Next ${ariaLabel || "option"}`}>▼</button>
+          </>
+        )}
       </span>
     </div>
   );

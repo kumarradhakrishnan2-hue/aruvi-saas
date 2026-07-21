@@ -54,7 +54,39 @@ GREY_LINE = "#dddddd"
 CTX_WORD = {
     "progression_stage": "Stage", "stage": "Stage", "section": "Section",
     "competency": "Competency", "spine": "Spine", "unit": "Unit",
+    "question_type": "Question type",
 }
+
+# Full, teacher-facing names for the internal question-type codes. Social Sciences and TWAU
+# assessments group by question type (AssessmentGroup type="question_type", label=<raw code>);
+# the report must never surface the raw acronym (founder 2026-07-20). Names verified against the
+# subject assessment constitutions (e.g. "SCR — Short Constructed Response").
+QUESTION_TYPE_NAMES = {
+    "MCQ": "Multiple Choice Question",
+    "SCR": "Short Constructed Response",
+    "ECR": "Extended Constructed Response",
+    "NUM": "Numerical Answer",
+    "OPEN_TASK": "Open Task",
+    "ORAL_PROMPT": "Oral Prompt",
+    "FILL_IN": "Fill in the Blanks",
+    "WRITING_TASK": "Writing Task",
+    "MATCH": "Matching",
+    "TRUE_FALSE": "True or False",
+    "PROJECT": "Project",
+    "SOURCE_INTERPRETATION": "Source Interpretation",
+    "EXTRACT_ANALYSIS": "Extract Analysis",
+    "ITEM": "Question",
+}
+
+
+def question_type_full(code: Any) -> str:
+    """Full, teacher-facing name for an internal question-type code
+    ("MCQ" → "Multiple Choice Question"). Unknown/future codes fall back to a
+    title-cased, de-underscored form so a raw token never reaches the page."""
+    key = str(code or "").strip()
+    if not key:
+        return "Question"
+    return QUESTION_TYPE_NAMES.get(key.upper(), key.replace("_", " ").title())
 
 
 # ── intro paragraph (common across subjects; one word adapts + two riders) ───
@@ -337,12 +369,22 @@ def _groups_body(groups: List[Dict[str, Any]], include_answers: bool) -> str:
     out = ""
     qn = 0
     for i, g in enumerate(groups, 1):
-        word = CTX_WORD.get(g.get("type", ""), "Stage")
-        snum = (g.get("meta", {}) or {}).get("stage_number", i)
+        gtype = g.get("type", "")
+        if gtype == "question_type":
+            # SS / TWAU group by question type — the band carries a "QUESTION TYPE" kicker (no
+            # number: question types aren't a numbered progression) over the FULL type name, not
+            # the raw "STAGE n / MCQ" the generic path produced (founder 2026-07-20).
+            kicker = "Question type"
+            title = question_type_full(g.get("label"))
+        else:
+            word = CTX_WORD.get(gtype, "Stage")
+            snum = (g.get("meta", {}) or {}).get("stage_number", i)
+            kicker = f"{word} {snum}"
+            title = g.get("label")
         out += (
             f'<table class="stage-band"><tr><td>'
-            f'<span class="st-k">{_esc(word.upper())} {_esc(snum)}</span><br/>'
-            f'<span class="st">{_esc(g.get("label"))}</span>'
+            f'<span class="st-k">{_esc(kicker.upper())}</span><br/>'
+            f'<span class="st">{_esc(title)}</span>'
             f'</td></tr></table>'
         )
         for it in g.get("items", []) or []:

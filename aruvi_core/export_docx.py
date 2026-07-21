@@ -33,7 +33,7 @@ from .export_lesson_pdf import (
     targeted_competencies, _duration_breakdown, _group_word as _lp_group_word,
     _phase_duration, AXIS_INFO,
 )
-from .export_assessment_pdf import intro_paragraph, CTX_WORD
+from .export_assessment_pdf import intro_paragraph, CTX_WORD, question_type_full
 from .export_integrated_pdf import _items_by_anchor, _iter_group_periods
 
 # ── palette ──────────────────────────────────────────────────────────────────
@@ -249,12 +249,21 @@ def _lp_front(doc, lp, competencies, spines=None):
     # Secondary Science is section-anchored and FLAT (no per-period progression_stage — see science
     # subject.py), so its progression table would only re-list the chapter sections; skip it there
     # too (founder 2026-07-20). Detect by the data, not the grade string: secondary science emits
-    # top-level groups typed "section", middle science "progression_stage"/"stage". Shared by both
-    # the plain LP and integrated DOCX (mirrors export_lesson_pdf._no_progression).
+    # top-level groups typed "section", middle science "progression_stage"/"stage". Social Sciences'
+    # v3 edge-model plan collapses to ONE flat "unit" group ("Units"), so its progression table
+    # would print a single meaningless "Unit 1 · Units" row — skip it there too (founder 2026-07-20).
+    # Shared by both the plain LP and integrated DOCX (mirrors export_lesson_pdf._no_progression).
     _science_sectioned = (
         lp.get("subject", "") == "science" and bool(groups) and groups[0].get("type") == "section"
     )
-    if groups and not spines and lp.get("subject", "") != "mathematics" and not _science_sectioned:
+    _ss_flat_units = (
+        lp.get("subject", "") == "social_sciences" and bool(groups) and groups[0].get("type") == "unit"
+    )
+    # The World Around Us (prep only) is section-anchored with no progression axis, so its
+    # progression table would just re-list the chapter sections — skip it there too (founder 2026-07-20).
+    _twau = lp.get("subject", "") == "the_world_around_us"
+    if (groups and not spines and lp.get("subject", "") != "mathematics"
+            and not _science_sectioned and not _ss_flat_units and not _twau):
         word = _lp_group_word(groups)
         t = doc.add_table(rows=1 + len(groups) + 1, cols=2); _hairlines(t)
         _bg(t.cell(0, 0), "F1ECE2"); _run(t.cell(0, 0).paragraphs[0], f"{word} No.", bold=True, size=7.5, color=SOFT, caps=True)
@@ -491,9 +500,15 @@ def export_lesson_plan_docx(view, *, competencies=None, competency_spines=None, 
     _header(doc, "Lesson plan", grade_roman(lp.get("grade", "")), subject_display(lp.get("subject", "")),
             generated_at or plan_date or datetime.now())
     _lp_front(doc, lp, competencies or [], spines=competency_spines)
-    word = _lp_group_word(lp.get("groups", []) or [])
-    # Mathematics renders its units flat — no section/stage band (founder 2026-07-20).
-    _show_band = lp.get("subject", "") != "mathematics"
+    _groups = lp.get("groups", []) or []
+    word = _lp_group_word(_groups)
+    # Mathematics renders its units flat — no section/stage band (founder 2026-07-20). Social
+    # Sciences' v3 edge-model plan is likewise ONE flat "unit" group ("Units") with no axis — its
+    # band would read a bare "UNIT 1 · Units" over every period — so suppress it there too.
+    _ss_flat_units = (
+        lp.get("subject", "") == "social_sciences" and bool(_groups) and _groups[0].get("type") == "unit"
+    )
+    _show_band = lp.get("subject", "") != "mathematics" and not _ss_flat_units
     first = True
     for i, g in enumerate(lp.get("groups", []) or [], 1):
         if _show_band:
@@ -515,9 +530,17 @@ def export_assessment_docx(view, *, include_answers=False, assessment_type="Form
     _run(_para(doc, space_after=4), intro_paragraph(av.get("subject", ""), groups, av.get("grade")), size=9, color=BODY)
     qn = 0
     for i, g in enumerate(groups, 1):
-        word = CTX_WORD.get(g.get("type", ""), "Stage")
-        _shaded_band(doc, GHEAD_HEX, f"{word.upper()} {(g.get('meta',{}) or {}).get('stage_number', i)}",
-                     G_ACCENT, g.get("label", ""), G_DARK, title_size=11)
+        gtype = g.get("type", "")
+        if gtype == "question_type":
+            # SS / TWAU group by question type — "QUESTION TYPE" kicker (no number) over the FULL
+            # type name, not the raw "STAGE n / MCQ" the generic path produced (founder 2026-07-20).
+            kicker = "QUESTION TYPE"
+            title = question_type_full(g.get("label"))
+        else:
+            word = CTX_WORD.get(gtype, "Stage")
+            kicker = f"{word.upper()} {(g.get('meta',{}) or {}).get('stage_number', i)}"
+            title = g.get("label", "")
+        _shaded_band(doc, GHEAD_HEX, kicker, G_ACCENT, title, G_DARK, title_size=11)
         for it in g.get("items", []) or []:
             qn += 1
             _assess_item(doc, it, qn, include_answers)
@@ -536,8 +559,13 @@ def export_integrated_docx(view, *, include_answers=False, unit_number=None, com
     _run(_para(doc, space_after=4), intro_paragraph(lp.get("subject", ""), groups, lp.get("grade")), size=9, color=BODY)
     by_anchor = _items_by_anchor(av)
     word = _lp_group_word(groups)
-    # Mathematics renders its units flat — no section/stage band (founder 2026-07-20).
-    _show_band = lp.get("subject", "") != "mathematics"
+    # Mathematics renders its units flat — no section/stage band (founder 2026-07-20). Social
+    # Sciences' v3 edge-model plan is likewise ONE flat "unit" group ("Units") with no axis — its
+    # band would read a bare "UNIT 1 · Units" over every period — so suppress it there too.
+    _ss_flat_units = (
+        lp.get("subject", "") == "social_sciences" and bool(groups) and groups[0].get("type") == "unit"
+    )
+    _show_band = lp.get("subject", "") != "mathematics" and not _ss_flat_units
     qn = 0; first = True
     for i, g in enumerate(groups, 1):
         periods = _iter_group_periods(g)

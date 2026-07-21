@@ -50,13 +50,15 @@ def targeted_competencies(mapping: Dict[str, Any],
     """The chapter's targeted competencies as [{c_code, text, justification}]: text = the
     glossary description, justification = the mapping's chapter-level rationale for why this
     competency applies (rendered as a sub-line in the report; the on-screen view omits it).
-    Reads the mapping's ``primary`` list (science/SS/… effort-index shape), then the
-    competency-weight shape (``core_competencies`` / ``adjunct_competencies``). De-duplicated,
+    Reads the mapping's ``primary`` list (science effort-index shape), the competency-weight
+    shape (``core_competencies`` / ``adjunct_competencies``), and the Social Sciences
+    competency-mapping shape (``competencies`` — the v3 SS middle/secondary key). De-duplicated,
     order preserved. When there's no glossary description the justification stands in for the
-    text and is NOT repeated as a sub-line."""
+    text and is NOT repeated as a sub-line. (Key set mirrors report_competency.build_report, so
+    the LP/integrated reports list the same competencies the allocation report does.)"""
     out: List[Dict[str, str]] = []
     seen = set()
-    for key in ("primary", "core_competencies", "adjunct_competencies"):
+    for key in ("primary", "core_competencies", "adjunct_competencies", "competencies"):
         block = mapping.get(key)
         if not isinstance(block, list):
             continue
@@ -229,16 +231,31 @@ def render_lesson_pdf_html(
     # only "progression" table would just re-list the chapter sections; suppress it there too
     # (founder 2026-07-20). Detect by the data, not the grade string: secondary science emits
     # top-level groups typed "section" where middle science emits "progression_stage"/"stage".
-    # Other subjects keep it.
+    # Social Sciences has no progression/spine axis at all — the v3 edge-model plan collapses to
+    # ONE flat "unit" group (type="unit", label "Units"; see social_sciences subject.py), so the
+    # progression table would just print a single meaningless "Unit 1 · Units" row. Suppress it
+    # there too (founder 2026-07-20). Detect by the data — the flat single "unit" group — not the
+    # grade string, so any legacy competency-grouped SS plan is unaffected. Other subjects keep it.
     _science_sectioned = (
         lp.get("subject", "") == "science"
         and bool(groups)
         and groups[0].get("type") == "section"
     )
+    _ss_flat_units = (
+        lp.get("subject", "") == "social_sciences"
+        and bool(groups)
+        and groups[0].get("type") == "unit"
+    )
+    # The World Around Us (preparatory only) is section-anchored with no progression axis —
+    # its stage table would just re-list the chapter sections; suppress it there too
+    # (founder 2026-07-20).
+    _twau = lp.get("subject", "") == "the_world_around_us"
     _no_progression = (
         bool(competency_spines)
         or lp.get("subject", "") == "mathematics"
         or _science_sectioned
+        or _ss_flat_units
+        or _twau
     )
     stage_table = "" if _no_progression else _stage_table(groups)
     body = _stages_body(groups, lp.get("subject", ""))
@@ -452,8 +469,15 @@ def _stage_table(groups: List[Dict[str, Any]]) -> str:
 def _stages_body(groups: List[Dict[str, Any]], subject: str = "") -> str:
     word = _group_word(groups)
     # Mathematics shows no section/stage band above its periods — the units render as one flat
-    # run (founder 2026-07-20); every other subject keeps its organizing band.
-    show_band = subject != "mathematics"
+    # run (founder 2026-07-20); every other subject keeps its organizing band. Social Sciences'
+    # v3 edge-model plan is likewise ONE flat "unit" group ("Units") with no axis — its band would
+    # read a bare "UNIT 1 · Units" over every period — so suppress the band there too, letting the
+    # periods run flat like maths (founder 2026-07-20). Detected by the flat single "unit" group,
+    # not the grade string, so any legacy competency-grouped SS plan keeps its bands.
+    _ss_flat_units = (
+        subject == "social_sciences" and bool(groups) and groups[0].get("type") == "unit"
+    )
+    show_band = subject != "mathematics" and not _ss_flat_units
     out = ""
     seen = 0  # running period count across the whole chapter — first one carries the "Pedagogy:" label
     for i, g in enumerate(groups, 1):

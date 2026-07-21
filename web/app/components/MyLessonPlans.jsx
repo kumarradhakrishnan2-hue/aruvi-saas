@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pad, pretty, userKey, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
 import LessonView from "./LessonView";
+import YearPlan from "./YearPlan";
 import { RollWheel } from "./wheels";
 
 /* ───────── MyLessonPlans — the lesson library, one class at a time (redesigned 2026-07-03) ─────────
@@ -32,6 +33,10 @@ import { RollWheel } from "./wheels";
 
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
+// Display abbreviation for the compact Subject wheel: the full "The World Around Us" is shown as
+// "TWAU". Only the visible label is shortened — the subject id/slug used everywhere else is the
+// full name, so selection, plans, and API calls are unaffected.
+const subjectLabel = (name) => (/world around us/i.test(name || "") ? "TWAU" : name);
 // The teacher's word is "Class", shown as a plain number — never "Grade", never Roman numerals.
 // Readiness still STORES the grade as Roman ("VI"); we convert to the display number only here.
 const CLASS_NUM = { iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 };
@@ -75,6 +80,15 @@ const ReportIcon = ({ size = 17 }) => (
        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
     <path d="M14 3v5h5" /><path d="M9 13h6" /><path d="M9 17h6" />
+  </svg>
+);
+
+/* Year-Plan glyph — varying-length horizontal bars, reading as "periods spread across chapters"
+   (an allocation/plan symbol, deliberately NOT a calendar). Sits at the right of the title row. */
+const YearPlanIcon = ({ size = 22 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M4 6h15" /><path d="M4 12h9" /><path d="M4 18h12" />
   </svg>
 );
 
@@ -202,6 +216,7 @@ function ReportButton({ sSlug, gSlug, filename }) {
 export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
+  const LS_PANE = userKey("mylessons_pane");
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
   // Subject in focus (by display name); class in focus (uppercase Roman). RESTORE the last choice
@@ -234,6 +249,11 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   // Active vs Archived view over the SAME list. Archive is a per-tenant FLAG the server sets
   // (plan.archived); there is no hard delete. "active" is the default — a teacher lives here.
   const [view, setView] = useState("active");
+  // Which pane is showing: the prepared-chapter card list ("lessons") or the whole-year "plan"
+  // (YearPlan) — the same Subject·Class scope, two lenses. Persisted per user so a flip survives
+  // the unmount/remount on tab switch and a full refresh (mirrors LS_SUBJECT/LS_CLASS above).
+  const [pane, setPane] = useState(() => (lsGet(LS_PANE) === "plan" ? "plan" : "lessons"));
+  const onPane = (p) => { setPane(p); lsSet(LS_PANE, p); };
   const [toast, setToast] = useState(null);         // { kind:"ok"|"block", text } | null
 
   const current = subjects.find((s) => s.name === activeSubject) || subjects[0] || null;
@@ -284,6 +304,11 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   // the status lines match what the teacher set on My Classes / another device. Re-syncs on load,
   // on tab focus/visibility, and on a light interval — same pattern as My Classes. Skipped while a
   // plan is open so an in-flight read is never interrupted.
+  // Refs to publish the frozen header's height (see effect below) so the Year Plan's own head can
+  // stick directly beneath it.
+  const rootRef = useRef(null);
+  const frozenRef = useRef(null);
+
   const busyRef = useRef(false);
   busyRef.current = !!openPlan;
   useEffect(() => {
@@ -429,6 +454,20 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
     return () => clearTimeout(t);
   }, [toast]);
 
+  // Publish the sticky frozen header's live height as --mlp2-frozen-h so the Year Plan's own head
+  // (exec + tiles + column line) can stick RIGHT BELOW it — the plan then freezes down to the
+  // Chapter/Suggested/Your-plan line while its rows scroll. Re-measures on any header resize.
+  useEffect(() => {
+    const fz = frozenRef.current, root = rootRef.current;
+    if (!fz || !root) return;
+    const set = () => root.style.setProperty("--mlp2-frozen-h", `${fz.offsetHeight}px`);
+    set();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(set);
+    ro.observe(fz);
+    return () => ro.disconnect();
+  });
+
   if (opening) return <div className="spin">Opening plan…</div>;
   if (openPlan) {
     // READ-ONLY preview. The old "Attach to a class" CTA + section chooser are RETIRED
@@ -444,7 +483,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   // Subject filter, alphabetical by name (profile order is arbitrary — a stable A–Z list is easier
   // to scan). Copy before sort so the source subjects[] order is untouched.
   const subjectItems = subjects
-    .map((s) => ({ id: s.name, label: s.name }))
+    .map((s) => ({ id: s.name, label: subjectLabel(s.name) }))
     .sort((a, b) => a.label.localeCompare(b.label));
   // ONLY the classes she has enrolled for this subject, low-to-high — never the content superset.
   const gradeItems = grades
@@ -478,11 +517,24 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const shown = effView === "archived" ? archivedPlans : activePlans;
 
   return (
-    <div className="mlp2">
-      <div className="mlp2-frozen">
+    <div className="mlp2" ref={rootRef}>
+      <div className="mlp2-frozen" ref={frozenRef}>
         <div className="mlp2-titlerow">
-          <h1 className="mlp2-title">{effView === "archived" ? "Archive" : "Your lessons"}</h1>
-          {effView === "archived" ? (
+          <div className="mlp2-titleleft">
+            <h1 className="mlp2-title">{pane === "plan" ? "Year Plan" : effView === "archived" ? "Archive" : "Your lessons"}</h1>
+            {/* Year-Plan toggle — sits right beside the title; hidden while the archive is open,
+                and back once Your lessons is active. Toggles the whole-year pane. */}
+            {!(pane === "lessons" && effView === "archived") && (
+              <button className={`mlp2-yearbtn${pane === "plan" ? " on" : ""}`}
+                onClick={() => onPane(pane === "plan" ? "lessons" : "plan")}
+                aria-label={pane === "plan" ? "Back to your lessons" : "Year plan"}
+                title={pane === "plan" ? "Your lessons" : "Year plan"}>
+                <YearPlanIcon size={24} />
+              </button>
+            )}
+          </div>
+          {/* Archive control stays on the right of the row. */}
+          {pane === "plan" ? null : effView === "archived" ? (
             // Open box = you're inside the archive; tapping it closes the box and drops you back
             // to your lessons (the one, symmetric way in and out).
             <button className="mlp2-archfolder open" onClick={() => setView("active")}
@@ -500,17 +552,15 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
         </div>
         <div className="mlp2-wheels">
           <div className="mlp2-wcol">
-            <span className="mlp2-wlbl">Subject</span>
             {subjectItems.length > 1 ? (
-              <RollWheel items={subjectItems} value={activeSubject} onChange={onSubject} ariaLabel="Subject" large rowPx={48} fit />
+              <RollWheel items={subjectItems} value={activeSubject} onChange={onSubject} ariaLabel="Subject" large rowPx={72} fit peek />
             ) : (
-              <div className="mlp2-static">{current.name}</div>
+              <div className="mlp2-static">{subjectLabel(current.name)}</div>
             )}
           </div>
           <div className="mlp2-wcol">
-            <span className="mlp2-wlbl">Class</span>
             {gradeItems.length > 1 ? (
-              <RollWheel items={gradeItems} value={activeGrade} onChange={onGrade} ariaLabel="Class" large rowPx={48} />
+              <RollWheel items={gradeItems} value={activeGrade} onChange={onGrade} ariaLabel="Class" large rowPx={72} peek />
             ) : (
               <div className="mlp2-static">Class {classNum(activeGrade)}</div>
             )}
@@ -518,6 +568,10 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
         </div>
       </div>
 
+      {pane === "plan" ? (
+        <YearPlan subjectName={current.name} sSlug={sSlug} gSlug={gSlug} readiness={readiness} onAllocate={onAllocate} />
+      ) : (
+      <>
       {plans === undefined ? (
         <div className="mlp-loading">Loading plans…</div>
       ) : shown.length === 0 ? (
@@ -576,6 +630,8 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
       )}
 
       {prepareCTA}
+      </>
+      )}
 
       {toast && (
         <div className={`mlp2-toast ${toast.kind}`} role="status">{toast.text}</div>

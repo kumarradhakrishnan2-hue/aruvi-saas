@@ -92,7 +92,14 @@ def _integrated_body(view: Dict[str, Any], include_answers: bool,
     by_anchor = _items_by_anchor(av)
     word = _group_word(groups)
     # Mathematics renders its units as one flat run — no section/stage band (founder 2026-07-20).
-    _show_band = lp.get("subject", "") != "mathematics"
+    # Social Sciences' v3 edge-model plan is likewise ONE flat "unit" group ("Units") with no axis,
+    # so its band would read a bare "UNIT 1 · Units" over every period — suppress it there too,
+    # letting the periods run flat like maths. Detected by the flat single "unit" group, not the
+    # grade string, so any legacy competency-grouped SS plan keeps its bands.
+    _ss_flat_units = (
+        lp.get("subject", "") == "social_sciences" and bool(groups) and groups[0].get("type") == "unit"
+    )
+    _show_band = lp.get("subject", "") != "mathematics" and not _ss_flat_units
 
     placed_ids = set()
     qn = 0
@@ -291,15 +298,27 @@ def render_integrated_pdf_html(
             # maths too (founder 2026-07-20). Secondary Science is section-anchored and FLAT
             # (no per-period progression_stage — see science subject.py), so its stage table
             # would only re-list the chapter sections; suppress it there too (founder
-            # 2026-07-20). Detect by the data, not the grade string: secondary science emits
-            # top-level groups typed "section", middle science "progression_stage"/"stage".
-            # Other non-English subjects keep it. (Mirrors export_lesson_pdf._no_progression.)
+            # 2026-07-20). Social Sciences' v3 edge-model plan collapses to ONE flat "unit" group
+            # ("Units"), so its stage table would just print a single meaningless "Unit 1 · Units"
+            # row — suppress it there too (founder 2026-07-20). Detect by the data, not the grade
+            # string: secondary science emits top-level groups typed "section", middle science
+            # "progression_stage"/"stage", flat SS emits a single "unit" group. Other non-English
+            # subjects keep it. (Mirrors export_lesson_pdf._no_progression.)
             _science_sectioned = (
                 subject_slug == "science"
                 and bool(groups)
                 and groups[0].get("type") == "section"
             )
-            if subject_slug != "mathematics" and not _science_sectioned:
+            _ss_flat_units = (
+                subject_slug == "social_sciences"
+                and bool(groups)
+                and groups[0].get("type") == "unit"
+            )
+            # The World Around Us (prep only) is section-anchored with no progression axis, so
+            # its stage table would just re-list the chapter sections — suppress it too (founder 2026-07-20).
+            _twau = subject_slug == "the_world_around_us"
+            if (subject_slug != "mathematics" and not _science_sectioned
+                    and not _ss_flat_units and not _twau):
                 front += _stage_table(groups)
     front += f'<p class="intro">{_esc(intro_paragraph(subject_slug, groups, lp.get("grade")))}</p>'
 
