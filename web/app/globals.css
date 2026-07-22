@@ -3309,3 +3309,16 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 
 .yp-prepare { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 16px; padding: 13px 2px; border: none; border-top: 1px solid var(--line); background: none; cursor: pointer; font-family: var(--f-body); font-size: 14px; color: var(--clay); }
 .yp-arr { font-size: 16px; color: var(--clay); }
+
+
+/* ───────── Ask Aruvi "?" — pinned to the right of the centred My Classes/My Lessons tab row.
+   .main-tabs is position:sticky (a positioned ancestor), so this anchors to it without
+   disturbing the centred tabs. ───────── */
+.ask-q { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--paper-2); color: var(--pine); font-family: var(--f-mono);
+  font-size: 15px; line-height: 1; cursor: pointer; display: inline-flex;
+  align-items: center; justify-content: center; }
+.ask-q:hover { border-color: var(--pine); color: var(--pine-d); }
+.ask-q:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+@media (max-width: 600px) { .ask-q { right: 12px; width: 28px; height: 28px; font-size: 14px; } }

@@ -9,6 +9,7 @@ import TeachingProfile from "./components/TeachingProfile";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
 import ThemeToggle from "./components/ThemeToggle";
+import AskAruvi from "./ask-aruvi/AskAruvi";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -60,6 +61,7 @@ export default function Home() {
   //   { mode: "scoped", subject, grade }   → skip picker, go straight in for that subject·grade
   // Cleared once Generate consumes it. Generate is only ever reached through this handler.
   const [generateEntry, setGenerateEntry] = useState(null);
+  const [askOpen, setAskOpen] = useState(false);   // Ask Aruvi Q&A screen (? on the tab row)
 
   /* First-run guided tour (restructured 2026-07-06; extended to 15 steps 2026-07-21). `tour` is the current step, 1–15 (or null);
    * the walk is launched from the "Show me how" nudge on My Classes and is GUIDE-DRIVEN: every
@@ -341,6 +343,14 @@ export default function Home() {
           data-tour="nav-lessons">
           My Lessons
         </button>
+        {/* Ask Aruvi — permanent "?" at the right of the tab row; opens the deterministic Q&A screen. */}
+        <button className="ask-q" onClick={() => setAskOpen(true)} aria-label="Ask Aruvi" title="Ask Aruvi">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M16 9.2v6c0 1 .7 1.7 1.8 1.8" />
+            <path d="M16 11.4a3.7 3.7 0 1 0 0 4.2" />
+            <circle cx="19" cy="17.2" r="1.5" fill="#c0392b" stroke="none" />
+          </svg>
+        </button>
       </nav>
 
       <div className="bodycontent">
@@ -388,6 +398,9 @@ export default function Home() {
       {tour && (
         <GuidedTour step={tour} info={tourInfo} onNext={tourNext} onBack={tourBack} onSkip={finishTour} />
       )}
+
+      {/* Ask Aruvi Q&A — full-screen deterministic helpline (browse + keyword search). */}
+      {askOpen && <AskAruvi onClose={() => setAskOpen(false)} />}
 
     </>
   );
