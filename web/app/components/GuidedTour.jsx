@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 15 steps (revised 2026-07-21) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 16 steps (revised 2026-07-22) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 15" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 16" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
  * Steps 11–13 demo the completed state without touching her real progress.
@@ -25,7 +25,8 @@ import { useEffect, useRef, useState } from "react";
  *                               progress rail AND the second section card stay visible
  *   13 the popup again        — pick the next chapter (bound one excluded)
  *   14 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
- *   15 the settings gear      — where the teaching profile lives; Done closes the tour
+ *   15 the settings gear      — where the teaching profile lives
+ *   16 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search; Done closes the tour
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -105,6 +106,10 @@ const STEPS = [
   { anchor: "settings-gear", place: "below",
     title: "Finally, your teaching profile.",
     body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },
+  // Step 16 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
+  { anchor: "ask-aruvi", place: "below", hand: true, handPos: "center",
+    title: "Use Ask Aruvi to answer your queries",
+    body: () => "Get answers for up to 100 questions across 5 categories and use intelligent search to narrow your query." },
 ];
 const TOTAL = STEPS.length;
 

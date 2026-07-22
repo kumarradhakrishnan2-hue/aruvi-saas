@@ -3311,14 +3311,13 @@ button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right:
 .yp-arr { font-size: 16px; color: var(--clay); }
 
 
-/* ───────── Ask Aruvi "?" — pinned to the right of the centred My Classes/My Lessons tab row.
+/* ───────── Ask Aruvi mark — the bare stream-a glyph pinned to the right of the centred
+   My Classes/My Lessons tab row. No circle chrome: the symbol stands on its own, prominent.
    .main-tabs is position:sticky (a positioned ancestor), so this anchors to it without
    disturbing the centred tabs. ───────── */
-.ask-q { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
-  width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line);
-  background: var(--paper-2); color: var(--pine); font-family: var(--f-mono);
-  font-size: 15px; line-height: 1; cursor: pointer; display: inline-flex;
-  align-items: center; justify-content: center; }
-.ask-q:hover { border-color: var(--pine); color: var(--pine-d); }
-.ask-q:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
-@media (max-width: 600px) { .ask-q { right: 12px; width: 28px; height: 28px; font-size: 14px; } }
+.ask-q { position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+  border: none; background: none; color: var(--pine); line-height: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; padding: 2px; }
+.ask-q:hover { color: var(--pine-d); }
+.ask-q:focus-visible { outline: 2px solid var(--pine); outline-offset: 3px; border-radius: 6px; }
+@media (max-width: 600px) { .ask-q { right: 18px; } }

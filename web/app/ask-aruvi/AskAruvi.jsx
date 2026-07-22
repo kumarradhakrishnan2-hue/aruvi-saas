@@ -56,10 +56,10 @@ export default function AskAruvi({ onClose }) {
         <div className="aa-top">
           <div className="aa-title">
             <span className="aa-q" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 9.2v6c0 1 .7 1.7 1.8 1.8" />
-                <path d="M16 11.4a3.7 3.7 0 1 0 0 4.2" />
-                <circle cx="19" cy="17.2" r="1.5" fill="#e8b4a0" stroke="none" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 6.5c6 1 6 5 3.5 7.5S6 18 6 18" />
+                <path d="M10.5 14c3.5 0 5.5-1.8 6.5-4" />
+                <circle cx="17.3" cy="8.6" r="1.6" fill="#e8b4a0" stroke="none" />
               </svg>
             </span>
             <span>Ask Aruvi</span>

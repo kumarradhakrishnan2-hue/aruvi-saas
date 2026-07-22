@@ -63,7 +63,7 @@ export default function Home() {
   const [generateEntry, setGenerateEntry] = useState(null);
   const [askOpen, setAskOpen] = useState(false);   // Ask Aruvi Q&A screen (? on the tab row)
 
-  /* First-run guided tour (restructured 2026-07-06; extended to 15 steps 2026-07-21). `tour` is the current step, 1–15 (or null);
+  /* First-run guided tour (restructured 2026-07-06; extended to 16 steps 2026-07-22). `tour` is the current step, 1–16 (or null);
    * the walk is launched from the "Show me how" nudge on My Classes and is GUIDE-DRIVEN: every
    * step advances with Next / reverses with Back, and the transitions here perform whatever the
    * step implies (tab navigation, opening the preview, the real attach — done inside MyPlans —
@@ -262,13 +262,14 @@ export default function Home() {
   // orchestrated by MyPlans/MyLessonPlans off the numeric tourStep; here we only handle SHELL
   // navigation: 2→3 open My Lessons · 6→7 back to My Classes · 13→14 close the popup back to My
   // Classes home (the "+" step) · 14→15 open the profile (step 15 rings the settings gear over it)
-  // · 15 Done.
+  // · 15→16 back to My Classes (the Ask Aruvi mark) · 16 Done.
   const tourNext = () => {
     if (tour === 2) goLessons();
     else if (tour === 6) goClasses();
     else if (tour === 13) goClasses();
     else if (tour === 14) goProfile();
-    else if (tour === 15) { finishTour(); goClasses(); return; }
+    else if (tour === 15) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
+    else if (tour === 16) { finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
@@ -280,6 +281,7 @@ export default function Home() {
     if (tour === 3) goClasses();
     else if (tour === 7) goLessons();
     else if (tour === 15) goClasses();
+    else if (tour === 16) goProfile();   // back to the settings-gear step (profile open)
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
@@ -344,11 +346,11 @@ export default function Home() {
           My Lessons
         </button>
         {/* Ask Aruvi — permanent "?" at the right of the tab row; opens the deterministic Q&A screen. */}
-        <button className="ask-q" onClick={() => setAskOpen(true)} aria-label="Ask Aruvi" title="Ask Aruvi">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M16 9.2v6c0 1 .7 1.7 1.8 1.8" />
-            <path d="M16 11.4a3.7 3.7 0 1 0 0 4.2" />
-            <circle cx="19" cy="17.2" r="1.5" fill="#c0392b" stroke="none" />
+        <button className="ask-q" onClick={() => setAskOpen(true)} aria-label="Ask Aruvi" title="Ask Aruvi" data-tour="ask-aruvi">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M7 6.5c6 1 6 5 3.5 7.5S6 18 6 18" />
+            <path d="M10.5 14c3.5 0 5.5-1.8 6.5-4" />
+            <circle cx="17.3" cy="8.6" r="1.6" fill="#c0392b" stroke="none" />
           </svg>
         </button>
       </nav>
