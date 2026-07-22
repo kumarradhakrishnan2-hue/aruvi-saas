@@ -1111,7 +1111,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     <div className="tp" ref={rootRef}>
       <div className="tp-sticky">
         {onBack && (
-          <button className="tp-back" onClick={onBack}>← Back to My Classes</button>
+          <div style={{ textAlign: "right", marginTop: "-8px", marginBottom: "12px" }}>
+            <button className="back back-tr" onClick={onBack}>← back</button>
+          </div>
         )}
         <div className="tp-hd">
           <div>
