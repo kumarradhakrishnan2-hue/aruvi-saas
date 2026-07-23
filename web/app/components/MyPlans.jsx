@@ -186,10 +186,10 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plusUnlocked]);
   // Never compete with the guided tour; needs the portal callback from page.jsx. EXCEPTION: the
-  // tour's step 14 deliberately features this "+" (the grow portal), so it's surfaced then even
+  // tour's step 15 deliberately features this "+" (the grow portal), so it's surfaced then even
   // though the tour is active — the guide rings it and the transparent hand lands on it.
   const plusShow = !!onProfilePortal && (
-    tourStep === 14 || (plusUnlocked && !tourActive && tourResolved)
+    tourStep === 15 || (plusUnlocked && !tourActive && tourResolved)
   );
 
   // Fetch saved plans once per distinct subject·grade the teacher handles.
@@ -286,16 +286,16 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendingAttach, ready]);
 
-  /* ── Guided-tour orchestration (steps 7–14 live on this view; 15 steps total, 2026-07-21) ──
-   * Step 14 features the big "+" grow portal on the My Classes home (no bound/popup change — the
+  /* ── Guided-tour orchestration (steps 8–15 live on this view; 17 steps total, 2026-07-23) ──
+   * Step 15 features the big "+" grow portal on the My Classes home (no bound/popup change — the
    * card stays attached, the popup closes; plusShow surfaces the "+" for the ring + hand).
    * The tour's TARGET is the first class that already has a prepared plan (the first-run case:
    * exactly one lesson, generated for the section fan-out's subject·grade). All tour moves are
    * IDEMPOTENT and keyed off the numeric tourStep, so Next AND Back both land on a consistent
-   * state:  ≤8 unbound (Back from 9 undoes the attach) · 8 the track-a-chapter popup is open
-   * (the picker moment — mirrors the app's always-through-the-window attach) · ≥9 bound (the
-   * REAL attach — the activation) · 10–11 the tracking lesson view is open · 12–13 the card DEMOS
-   * the completed state (render-only — her real pointer/done are never touched) · 13 the popup
+   * state:  ≤9 unbound (Back from 10 undoes the attach) · 9 the track-a-chapter popup is open
+   * (the picker moment — mirrors the app's always-through-the-window attach) · ≥10 bound (the
+   * REAL attach — the activation) · 11–12 the tracking lesson view is open · 13–14 the card DEMOS
+   * the completed state (render-only — her real pointer/done are never touched) · 14 the popup
    * again (now excluding the bound chapter). Skip mid-flight → prev-ref cleanup closes it all.
    * NOTE: these hooks sit ABOVE the !ready early-return (rules of hooks); helper fns declared
    * further down (openLesson, currentChapterFile) resolve at effect run-time, which is fine. */
@@ -321,7 +321,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     return null;
   })();
   const tourIdx = tourTarget ? tourTarget.idx : -1;
-  const tourDemoDone = tourStep === 12 || tourStep === 13;   // demo-complete rendering only
+  const tourDemoDone = tourStep === 13 || tourStep === 14;   // demo-complete rendering only
 
   // Report the target's name + chapter up so the step copy can say "attach {chapter} to {tag}".
   useEffect(() => {
@@ -335,21 +335,21 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     if (tourStep == null || !tourTarget) return;
     const { c, sectionKey, plan } = tourTarget;
     const bound = currentChapterFile(sectionKey);
-    if (tourStep >= 9 && bound !== plan.filename) {
-      bindSectionChapter(sectionKey, plan.filename);   // the real attach (step 8 → 9)
+    if (tourStep >= 10 && bound !== plan.filename) {
+      bindSectionChapter(sectionKey, plan.filename);   // the real attach (step 9 → 10)
       setSyncTick((t) => t + 1);
-    } else if (tourStep <= 8 && bound) {
-      unbindSection(sectionKey);                        // Back from 9 → 8 undoes it
+    } else if (tourStep <= 9 && bound) {
+      unbindSection(sectionKey);                        // Back from 10 → 9 undoes it
       setSyncTick((t) => t + 1);
     }
-    // Steps 10–11: the tracking lesson view is open; any other step closes it.
-    if (tourStep === 10 || tourStep === 11) {
+    // Steps 11–12: the tracking lesson view is open; any other step closes it.
+    if (tourStep === 11 || tourStep === 12) {
       if (!openPlan && !loading) openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey);
     } else if (openPlan) setOpenPlan(null);
-    // Steps 8 and 13: the "Track a chapter for this section" popup; any other step closes it.
-    // (At 8 nothing is bound, so the just-generated lesson is IN the list — the hand points at
-    // it; at 13 the bound chapter is excluded, matching the "pick the NEXT chapter" moment.)
-    if (tourStep === 8 || tourStep === 13) {
+    // Steps 9 and 14: the "Track a chapter for this section" popup; any other step closes it.
+    // (At 9 nothing is bound, so the just-generated lesson is IN the list — the hand points at
+    // it; at 14 the bound chapter is excluded, matching the "pick the NEXT chapter" moment.)
+    if (tourStep === 9 || tourStep === 14) {
       if (!attachFor) setAttachFor({ c, sectionKey });
     } else if (attachFor) setAttachFor(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps

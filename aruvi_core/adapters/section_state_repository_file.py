@@ -3,7 +3,7 @@
 Persists per-section teaching execution state as JSON at
 ARUVI_DATA_DIR/section_state/{tenant_id}/{user_id}/state.json, shaped as
 
-    { section_key: {chapter, unit_index, done, updated_at}, ... }
+    { section_key: {chapter, unit_index, done, bookmark_unit, bookmark_phase, updated_at}, ... }
 
 This is the Bucket-B "teaching pointer" (CLOUD_DATA_MODEL.md §2.4) lifted OFF browser
 localStorage so a teacher's tracking + progress follow her across devices. localStorage
@@ -115,14 +115,22 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
         return self._read(tenant_id, user_id)
 
     def save_one(self, tenant_id: str, user_id: str, section_key: str,
-                 chapter: str, unit_index: Optional[int], done: bool) -> None:
-        """Upsert one section's execution state (full snapshot for that section)."""
+                 chapter: str, unit_index: Optional[int], done: bool,
+                 bookmark_unit: Optional[int] = None,
+                 bookmark_phase: Optional[int] = None) -> None:
+        """Upsert one section's execution state (full snapshot for that section).
+
+        `bookmark_unit`/`bookmark_phase` (0-based, both None when unset) carry the teacher's
+        phase place-marker on the same row — default None so existing callers/tests that don't
+        pass them store no bookmark, unchanged."""
         with self._lock:
             data = self._read(tenant_id, user_id)
             data[section_key] = {
                 "chapter": chapter,
                 "unit_index": unit_index,
                 "done": bool(done),
+                "bookmark_unit": bookmark_unit,
+                "bookmark_phase": bookmark_phase,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
             self._write(tenant_id, user_id, data)

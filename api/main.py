@@ -611,13 +611,19 @@ class SectionStateRequest(BaseModel):
     chapter: str
     unit_index: Optional[int] = None
     done: bool = False
+    # The teacher's ONE phase bookmark on this section's chapter (both 0-based, both None when
+    # unset). Optional so an older client that doesn't send them is unaffected; they ride the
+    # same row so they migrate to Supabase with the pointer (CLOUD_DATA_MODEL.md §2.4).
+    bookmark_unit: Optional[int] = None
+    bookmark_phase: Optional[int] = None
 
 
 @app.get("/section-state")
 def get_section_state(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """All of this teacher's tracked sections: {"states": {section_key: {chapter,
-    unit_index, done, updated_at}}}. The app reconciles these into its localStorage cache on
-    load, so a fresh device shows the same tracking/progress the teacher set on another."""
+    unit_index, done, bookmark_unit, bookmark_phase, updated_at}}}. The app reconciles these
+    into its localStorage cache on load, so a fresh device shows the same tracking/progress
+    (and bookmark) the teacher set on another."""
     tenant_id, user_id = identity
     return {"states": section_state_repo.load_all(tenant_id, user_id)}
 
@@ -626,11 +632,12 @@ def get_section_state(identity: tuple = Depends(_current_identity)) -> Dict[str,
 def save_section_state(req: SectionStateRequest,
                        identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Upsert one section's teaching state (full snapshot). Called when a chapter is tracked,
-    the pointer advances, or a chapter is marked complete."""
+    the pointer advances, a chapter is marked complete, or the teacher moves her bookmark."""
     tenant_id, user_id = identity
     try:
         section_state_repo.save_one(tenant_id, user_id, req.section_key,
-                                    req.chapter, req.unit_index, req.done)
+                                    req.chapter, req.unit_index, req.done,
+                                    req.bookmark_unit, req.bookmark_phase)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save section state: {str(e)}")
     return {"status": "saved"}

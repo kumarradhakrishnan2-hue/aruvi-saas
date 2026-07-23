@@ -63,7 +63,7 @@ export default function Home() {
   const [generateEntry, setGenerateEntry] = useState(null);
   const [askOpen, setAskOpen] = useState(false);   // Ask Aruvi Q&A screen (? on the tab row)
 
-  /* First-run guided tour (restructured 2026-07-06; extended to 16 steps 2026-07-22). `tour` is the current step, 1–16 (or null);
+  /* First-run guided tour (restructured 2026-07-06; extended to 17 steps 2026-07-23). `tour` is the current step, 1–17 (or null);
    * the walk is launched from the "Show me how" nudge on My Classes and is GUIDE-DRIVEN: every
    * step advances with Next / reverses with Back, and the transitions here perform whatever the
    * step implies (tab navigation, opening the preview, the real attach — done inside MyPlans —
@@ -257,31 +257,31 @@ export default function Home() {
   const goLessons = () => { setEditFlow("lessonplans"); setTab("myplans"); setGenerateEntry(null); };
 
   // Tour Next — the guide performs the move each step implies before advancing. The view-level
-  // work (report/archive buttons at 4/5 on My Lessons, popup at 8/13, attach/unbind at the 8↔9
-  // boundary, lesson at 10–11, demo-complete at 12–13, the big "+" grow button surfaced at 14) is
-  // orchestrated by MyPlans/MyLessonPlans off the numeric tourStep; here we only handle SHELL
-  // navigation: 2→3 open My Lessons · 6→7 back to My Classes · 13→14 close the popup back to My
-  // Classes home (the "+" step) · 14→15 open the profile (step 15 rings the settings gear over it)
-  // · 15→16 back to My Classes (the Ask Aruvi mark) · 16 Done.
+  // work (report/archive buttons at 4/5 on My Lessons, "open the lesson" card at 6 + preview at 7,
+  // popup at 9/14, attach/unbind at the 9↔10 boundary, lesson at 11–12, demo-complete at 13–14, the
+  // big "+" grow button surfaced at 15) is orchestrated by MyPlans/MyLessonPlans off the numeric
+  // tourStep; here we only handle SHELL navigation: 2→3 open My Lessons · 7→8 back to My Classes ·
+  // 14→15 close the popup back to My Classes home (the "+" step) · 15→16 open the profile (step 16
+  // rings the settings gear over it) · 16→17 back to My Classes (the Ask Aruvi mark) · 17 Done.
   const tourNext = () => {
     if (tour === 2) goLessons();
-    else if (tour === 6) goClasses();
-    else if (tour === 13) goClasses();
-    else if (tour === 14) goProfile();
-    else if (tour === 15) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
-    else if (tour === 16) { finishTour(); goClasses(); return; }
+    else if (tour === 7) goClasses();
+    else if (tour === 14) goClasses();
+    else if (tour === 15) goProfile();
+    else if (tour === 16) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
+    else if (tour === 17) { finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
-  // highlight; 7→6 back to My Lessons (the preview re-opens there); 15→14 back to My Classes
-  // (the grow "+" step; 14→13 re-opens the popup, handled by MyPlans). Steps 4/5/6 stay within My
+  // highlight; 8→7 back to My Lessons (the preview re-opens there); 16→15 back to My Classes
+  // (the grow "+" step; 15→14 re-opens the popup, handled by MyPlans). Steps 4/5/6/7 stay within My
   // Lessons so need no shell move. Back from step 1 backs out to the nudge.
   const tourBack = () => {
     if (tour === 1) { setTour(null); return; }
     if (tour === 3) goClasses();
-    else if (tour === 7) goLessons();
-    else if (tour === 15) goClasses();
-    else if (tour === 16) goProfile();   // back to the settings-gear step (profile open)
+    else if (tour === 8) goLessons();
+    else if (tour === 16) goClasses();
+    else if (tour === 17) goProfile();   // back to the settings-gear step (profile open)
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
@@ -395,7 +395,7 @@ export default function Home() {
         </main>
       </div>
 
-      {/* First-run guided tour overlay — 15 guide-driven steps ("N of 15", Back on every one).
+      {/* First-run guided tour overlay — 17 guide-driven steps ("N of 17", Back on every one).
           Skip closes it for this session. */}
       {tour && (
         <GuidedTour step={tour} info={tourInfo} onNext={tourNext} onBack={tourBack} onSkip={finishTour} />

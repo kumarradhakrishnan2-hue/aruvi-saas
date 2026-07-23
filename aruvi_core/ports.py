@@ -201,7 +201,13 @@ class ReadinessRepository(Protocol):
 #
 # Keyed by tenant_id + user_id (auth stubbed → tenant_id == user_id today). `section_key`
 # is the frontend's `${subjectSlug}_${gradeSlug}_${sectionTag}`.
-SectionState = Dict[str, Any]  # {chapter: str, unit_index: Optional[int], done: bool, updated_at: str}
+SectionState = Dict[str, Any]  # {chapter: str, unit_index: Optional[int], done: bool,
+                               #  bookmark_unit: Optional[int], bookmark_phase: Optional[int],
+                               #  updated_at: str}
+# `bookmark_unit`/`bookmark_phase` (both 0-based, both null when unset) are the teacher's ONE
+# place-marker on this section's chapter — a phase of the in-progress unit she drags to mark
+# what she's finished / plans to begin next. It rides this SAME per-section row so it migrates
+# to Supabase with the pointer at Phase 4, no new table (2026-07-23).
 
 
 @runtime_checkable
@@ -218,9 +224,13 @@ class SectionStateRepository(Protocol):
         ...
 
     def save_one(self, tenant_id: str, user_id: str, section_key: str,
-                 chapter: str, unit_index: Optional[int], done: bool) -> None:
+                 chapter: str, unit_index: Optional[int], done: bool,
+                 bookmark_unit: Optional[int] = None,
+                 bookmark_phase: Optional[int] = None) -> None:
         """Upsert one section's execution state as a full snapshot for that section
-        (the client always sends the complete current state, so no field-merge needed)."""
+        (the client always sends the complete current state, so no field-merge needed).
+        `bookmark_unit`/`bookmark_phase` default to None so pre-bookmark callers/tests are
+        unaffected; passing them stores the teacher's phase place-marker on the same row."""
         ...
 
     def delete_one(self, tenant_id: str, user_id: str, section_key: str) -> None:

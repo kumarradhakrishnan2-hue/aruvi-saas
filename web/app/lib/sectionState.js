@@ -12,6 +12,12 @@ import { API, withUser, getJSON } from "./format";
 const chapterKey = (sk) => `current_chapter_${sk}`;
 const pointerKey = (sk) => `lu_pointer_${sk}`;
 const doneKey = (sk) => `lu_done_${sk}`;
+// The teacher's ONE bookmark on this section's chapter — a place-marker on a phase of the
+// in-progress unit (LessonView's PhaseBookmark). Stored as "unit:phase" (both 0-based).
+// Rides the SAME per-section row + push/pull path as the pointer, so it migrates to Supabase
+// with it at Phase 4 (CLOUD_DATA_MODEL.md §2.4) — no separate plumbing. One bookmark per
+// section-chapter (founder decision 2026-07-23).
+const bookmarkKey = (sk) => `lu_bookmark_${sk}`;
 
 /* Bind a prepared chapter to a section — the single shared writer for "attach a lesson to a
  * class", used by BOTH My Classes' "+" and the My Lessons preview's "Attach to a class" CTA so
@@ -24,6 +30,7 @@ export function bindSectionChapter(sectionKey, filename) {
     window.localStorage.setItem(chapterKey(sectionKey), filename);
     window.localStorage.removeItem(pointerKey(sectionKey));
     window.localStorage.removeItem(doneKey(sectionKey));
+    window.localStorage.removeItem(bookmarkKey(sectionKey));   // fresh chapter → no bookmark yet
   } catch {}
   pushSectionState(sectionKey);
 }
@@ -36,8 +43,37 @@ export function unbindSection(sectionKey) {
     window.localStorage.removeItem(chapterKey(sectionKey));
     window.localStorage.removeItem(pointerKey(sectionKey));
     window.localStorage.removeItem(doneKey(sectionKey));
+    window.localStorage.removeItem(bookmarkKey(sectionKey));
   } catch {}
   pushSectionState(sectionKey);   // no chapter now → the server row is deleted (untrack)
+}
+
+/* Read this section's bookmark from the localStorage cache → {unit, phase} (both 0-based),
+ * or null if none set. */
+export function readLocalBookmark(sectionKey) {
+  if (typeof window === "undefined" || !sectionKey) return null;
+  try {
+    const raw = window.localStorage.getItem(bookmarkKey(sectionKey));
+    if (!raw) return null;
+    const [u, p] = String(raw).split(":");
+    const unit = Number(u), phase = Number(p);
+    if (!Number.isFinite(unit) || !Number.isFinite(phase)) return null;
+    return { unit, phase };
+  } catch {
+    return null;
+  }
+}
+
+/* Move (or clear) this section's bookmark. Writes the optimistic localStorage cache then
+ * pushes the whole section snapshot to the server (same fire-and-forget path as the pointer).
+ * Pass unit=null (or phase=null) to clear it. */
+export function writeLocalBookmark(sectionKey, unit, phase) {
+  if (typeof window === "undefined" || !sectionKey) return;
+  try {
+    if (unit == null || phase == null) window.localStorage.removeItem(bookmarkKey(sectionKey));
+    else window.localStorage.setItem(bookmarkKey(sectionKey), `${unit}:${phase}`);
+  } catch {}
+  pushSectionState(sectionKey);
 }
 
 /* Read one section's current state straight from the localStorage cache. */
@@ -61,6 +97,7 @@ export function readLocalSection(sectionKey) {
 export function pushSectionState(sectionKey) {
   if (typeof window === "undefined" || !sectionKey) return;
   const { chapter, unit, done } = readLocalSection(sectionKey);
+  const bm = readLocalBookmark(sectionKey);
   try {
     if (!chapter) {
       fetch(`${API}/section-state/${encodeURIComponent(sectionKey)}`,
@@ -75,6 +112,11 @@ export function pushSectionState(sectionKey) {
         chapter,
         unit_index: unit === null || unit === "" ? null : Number(unit),
         done: !!done,
+        // The bookmark rides the same snapshot (null when unset). An older API that doesn't
+        // know these fields simply ignores them (Pydantic drops extras) — the cache still holds
+        // the bookmark; cross-device sync of it lights up once the field lands server-side.
+        bookmark_unit: bm ? bm.unit : null,
+        bookmark_phase: bm ? bm.phase : null,
       }),
     })).catch(() => {});
   } catch {}
@@ -113,12 +155,24 @@ export async function pullSectionState(sectionKeys) {
         }
         if (st.done) window.localStorage.setItem(doneKey(sk), "1");
         else window.localStorage.removeItem(doneKey(sk));
+        // Bookmark rides the same row — but ADOPT it only when the server actually carries one.
+        // When the server row has NO bookmark (an API that doesn't persist the fields yet, or a
+        // row written before this feature), we must NOT wipe the local optimistic value: doing
+        // so erased the teacher's saved phase on every sign-in, so it snapped back to the top of
+        // the unit. Same spirit as the serverEmpty guard above — keep local truth until the
+        // server has something real to override it with. A bound chapter always carries a
+        // bookmark locally; the only legitimate clear is unbind/bind, which deletes the whole
+        // row (the untrack branch below).
+        if (st.bookmark_unit != null && st.bookmark_phase != null) {
+          window.localStorage.setItem(bookmarkKey(sk), `${st.bookmark_unit}:${st.bookmark_phase}`);
+        }
       } else if (!serverEmpty) {
         // Server has state for OTHER sections but not this one → a genuine untrack; clear local.
         // (Skipped entirely when serverEmpty — see the guard above.)
         window.localStorage.removeItem(chapterKey(sk));
         window.localStorage.removeItem(pointerKey(sk));
         window.localStorage.removeItem(doneKey(sk));
+        window.localStorage.removeItem(bookmarkKey(sk));
       }
     } catch {}
   });

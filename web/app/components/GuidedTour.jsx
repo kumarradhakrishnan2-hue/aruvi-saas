@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 16 steps (revised 2026-07-22) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 17 steps (revised 2026-07-23) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 16" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 17" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
- * Steps 11–13 demo the completed state without touching her real progress.
+ * Steps 12–14 demo the completed state without touching her real progress.
  *
  * Step model (1-based; page.jsx owns shell navigation, MyPlans/MyLessonPlans own view state):
  *    1 My Classes tab         — where your classes sit
@@ -14,19 +14,20 @@ import { useEffect, useRef, useState } from "react";
  *    3 the lesson row + hand  — the plan she just generated (hand centred on the card)
  *    4 the report button + hand — generate PDF reports of the lesson plan / assessment
  *    5 the archive button + hand — archive a lesson plan (restore it anytime)
- *    6 the open preview       — hand "clicked" the row; the preview is open
- *    7 section card's "+"     — hand on +; Next opens the picker (the app itself now ALWAYS
+ *    6 open the lesson + hand — the same card as step 3; Next opens the preview
+ *    7 the open preview       — the preview is now open (no hand)
+ *    8 section card's "+"     — hand on +; Next opens the picker (the app itself now ALWAYS
  *                               routes + through the window — no direct attach)
- *    8 the track-a-chapter popup, hand on the just-generated lesson row — Next attaches it
- *    9 the attached card      — success; Next opens it
- *   10 the tracking view      — box lifted above the notes/mark-complete tail so both stay visible
- *   11 Mark-complete + hand   — demo only, never really clicked
- *   12 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
+ *    9 the track-a-chapter popup, hand on the just-generated lesson row — Next attaches it
+ *   10 the attached card      — success; Next opens it
+ *   11 the tracking view      — box lifted above the notes/mark-complete tail so both stay visible
+ *   12 Mark-complete + hand   — demo only, never really clicked
+ *   13 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
  *                               progress rail AND the second section card stay visible
- *   13 the popup again        — pick the next chapter (bound one excluded)
- *   14 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
- *   15 the settings gear      — where the teaching profile lives
- *   16 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search; Done closes the tour
+ *   14 the popup again        — pick the next chapter (bound one excluded)
+ *   15 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
+ *   16 the settings gear      — where the teaching profile lives
+ *   17 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search; Done closes the tour
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -68,12 +69,17 @@ const STEPS = [
   { anchor: "lesson-archive", place: "below", hand: true, handPos: "center",
     title: "You can archive a Lesson plan",
     body: () => "Push those lesson plans you no more want to see into the archive box. Restore it back anytime you need it." },
-  // Box LIFTED above the sticky "Attach to a class" bar (lift 130) so the bottom stays visible;
-  // the hand sits on the "← back to lesson plans" button the copy points at.
-  { anchor: "preview-root", handAnchor: "preview-back", place: "over", lift: 130, hand: true,
+  // Step 6 — "open the lesson": rings the same lesson card as step 3 (identical anchor + centred
+  // hand). Next opens the preview (MyLessonPlans drives that off tourStep === 7).
+  { anchor: "lesson-first", place: "below", hand: true, handPos: "center",
+    title: "Let us open the lesson",
+    body: () => "click on the lesson card to open a particular lesson" },
+  // Box LIFTED above the sticky "Attach to a class" bar (lift 130) so the bottom stays visible.
+  // No hand here — the copy no longer asks her to tap anything; Next moves on to My Classes.
+  { anchor: "preview-root", place: "over", lift: 130,
     scrollTop: true,
     title: "Let us open the plan to have a quick view.",
-    body: (i) => `You may review a lesson plan in its entirety here anytime. Let us go back to My Classes by clicking ‘← back to lesson plans’ now and attach this plan to section ${i.tag}.` },
+    body: (i) => `You may review a lesson plan in its entirety here anytime. We will now attach this lesson to section ${i.tag} from the ‘My Classes’ tab.` },
   { anchor: "section-add", place: "below", hand: true,
     title: "Let us attach a lesson plan to a section.",
     body: (i) => `You want to attach “${i.chapter}” to section ${i.tag}. Click the + sign of that section card.` },
@@ -104,7 +110,7 @@ const STEPS = [
     title: "Add/amend sections, classes and/or subjects.",
     body: () => "Use this button to quickly add sections, classes or subjects to your teaching profile." },
   { anchor: "settings-gear", place: "below",
-    title: "Finally, your teaching profile.",
+    title: "Your teaching profile.",
     body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },
   // Step 16 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
   { anchor: "ask-aruvi", place: "below", hand: true, handPos: "center",

@@ -353,14 +353,15 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
     } finally { setOpening(false); }
   };
 
-  // Guided-tour orchestration (steps 3–6 live on this view: 3 the lesson row, 4 the report button,
-  // 5 the archive button, 6 the open preview). The guide DRIVES the preview: on step 6 it opens the
-  // first prepared lesson (the hand "clicked" the row); on any other step — Back to 3/4/5, or Back
-  // into this view from step 7 — the state converges idempotently. The first prepared, unarchived
-  // plan is the same one the list's top row shows (step 3's spotlight).
+  // Guided-tour orchestration (steps 3–7 live on this view: 3 the lesson row, 4 the report button,
+  // 5 the archive button, 6 "open the lesson" — same card as 3, hand on it — and 7 the open
+  // preview). The guide DRIVES the preview: on step 7 it opens the first prepared lesson (the hand
+  // "clicked" the card at step 6); on any other step — Back to 3/4/5/6, or Back into this view from
+  // step 8 — the state converges idempotently. The first prepared, unarchived plan is the same one
+  // the list's top row shows (steps 3 and 6's spotlight).
   useEffect(() => {
     if (tourStep == null) return;
-    if (tourStep === 6) {
+    if (tourStep === 7) {
       if (!openPlan && !opening) {
         const p = tourPlanOf();   // the most recently prepared lesson (see below)
         if (p) openLesson(p);
@@ -390,8 +391,8 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
 
   // The guided tour's plan: her most recently PREPARED lesson — "the lesson you just now
   // generated" — never an arbitrary library entry (/plans returns the whole shared library;
-  // gp[0] once made the guide walk a chapter she never generated). Steps 3 (row spotlight)
-  // and 4 (auto-open preview) both key off this, so they can never diverge.
+  // gp[0] once made the guide walk a chapter she never generated). Steps 3 and 6 (row/card
+  // spotlight) and 7 (auto-open preview) all key off this, so they can never diverge.
   const tourPlanOf = () => {
     const arr = (Array.isArray(plans) ? plans : [])
       .filter((p) => (p.prepared || isAttached(p)) && !p.archived)
@@ -596,7 +597,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
             const isTourCard = tourPlan && p.filename === tourPlan.filename;
             return (
               <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}
-                data-tour={tourStep === 3 && tourPlan && p.filename === tourPlan.filename ? "lesson-first" : undefined}>
+                data-tour={(tourStep === 3 || tourStep === 6) && tourPlan && p.filename === tourPlan.filename ? "lesson-first" : undefined}>
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
                   <div className="sc-title">{p.chapter_title}</div>

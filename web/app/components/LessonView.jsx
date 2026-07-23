@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { pushSectionState } from "../lib/sectionState";
+import { pushSectionState, readLocalBookmark, writeLocalBookmark } from "../lib/sectionState";
 import { userKey, boldMarks } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
@@ -122,17 +122,119 @@ function MaterialPanel({ u }) {
   return <div className="uv-mat"><ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul></div>;
 }
 
-function LessonPanel({ u }) {
+/* ───────── The phase BOOKMARK — the teacher's one place-marker on the chapter ─────────
+ * A clay arrow (the SAME colour as the unit-title number, .lv-unum → var(--clay)) living in
+ * the phase spine's left time rail: tail beside the mono minutes, tip pointing right at the
+ * beginning of the phase. The teacher highlights it and drags it up/down; on release it
+ * animates to the NEAREST phase and never rests between two. It marks whatever she wants —
+ * what she finished, or what she'll begin next session (founder spec 2026-07-23).
+ *
+ * Scope + persistence: ONE bookmark per section-chapter. Its unit is always the in-progress
+ * (pointer) unit — "Mark unit complete" advances the pointer and the arrow reappears at the
+ * top phase of the next unit (handled in LessonView). Only the phase index is dragged here;
+ * the caller persists it via sectionState.writeLocalBookmark, riding the same per-section row
+ * as the pointer so it follows the teacher across devices and migrates to Supabase with it
+ * (CLOUD_DATA_MODEL.md §2.4).
+ *
+ * Positioning is measured, not hard-coded: it anchors to each phase's .uv-ph-time centre
+ * (offsetTop within the position:relative .uv-phases), so it lands exactly beside the minutes
+ * whatever the phase text wraps to. */
+function PhaseBookmark({ phaseCount, phase, onMove }) {
+  const elRef = useRef(null);
+  const [dragging, setDragging] = useState(false);
+  const [top, setTop] = useState(null);   // px within .uv-phases; null until first measure
+
+  // Vertical centre (relative to .uv-phases) of every phase's time cell — the snap targets.
+  const timeCentres = () => {
+    const wrap = elRef.current?.parentElement;   // .uv-phases (position:relative)
+    if (!wrap) return [];
+    return Array.from(wrap.querySelectorAll(".uv-phase .uv-ph-time"))
+      .map((t) => t.offsetTop + t.offsetHeight / 2);
+  };
+
+  // Rest at the current phase; re-measure on layout changes and viewport resize.
+  useLayoutEffect(() => {
+    if (dragging) return;
+    const place = () => {
+      const c = timeCentres();
+      if (c.length) setTop(c[Math.min(phase, c.length - 1)]);
+    };
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, phaseCount, dragging]);
+
+  const startDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try { elRef.current?.setPointerCapture?.(e.pointerId); } catch {}
+    setDragging(true);
+  };
+  const onMoveDrag = (e) => {
+    if (!dragging) return;
+    const wrap = elRef.current?.parentElement;
+    const c = timeCentres();
+    if (!wrap || !c.length) return;
+    const y = e.clientY - wrap.getBoundingClientRect().top;
+    setTop(Math.max(c[0], Math.min(c[c.length - 1], y)));   // clamp to the spine
+  };
+  const endDrag = (e) => {
+    if (!dragging) return;
+    const c = timeCentres();
+    if (c.length && top != null) {
+      let best = 0, bestD = Infinity;
+      c.forEach((cy, i) => { const d = Math.abs(cy - top); if (d < bestD) { bestD = d; best = i; } });
+      setTop(c[best]);                 // snap home to the chosen phase
+      if (best !== phase) onMove(best);
+    }
+    setDragging(false);
+    try { elRef.current?.releasePointerCapture?.(e.pointerId); } catch {}
+  };
+  // Keyboard nudge — focus the arrow, then ↑/↓ to step it phase by phase.
+  const onKey = (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      const next = e.key === "ArrowUp" ? Math.max(0, phase - 1) : Math.min(phaseCount - 1, phase + 1);
+      if (next !== phase) onMove(next);
+    }
+  };
+
+  return (
+    <button
+      ref={elRef}
+      type="button"
+      className={`uv-bkmk${dragging ? " dragging" : ""}`}
+      style={{ top: top == null ? 0 : top, visibility: top == null ? "hidden" : "visible" }}
+      onPointerDown={startDrag}
+      onPointerMove={onMoveDrag}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onKeyDown={onKey}
+      aria-label={`Lesson bookmark — on phase ${phase + 1} of ${phaseCount}; drag or use arrow keys to move`}
+      title="Your bookmark — drag to the phase you want to mark"
+    >
+      {/* One CHUNKY solid arrow (no thin stem — too fine to grab on a phone; founder
+          2026-07-23). Short fat body by the time, big head pointing right at the phase start. */}
+      <svg viewBox="0 0 32 28" width="30" height="26" aria-hidden="true">
+        <path d="M3 10 H15 V3 L30 14 L15 25 V18 H3 Z" fill="currentColor"
+          stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      </svg>
+    </button>
+  );
+}
+
+function LessonPanel({ u, bookmark = null }) {
   const phases = (u.phases || []).filter((ph) => ph.text || ph.label);
   const notes = u.teacher_notes?.length ? u.teacher_notes.join(" ") : null;
   return (
     <>
       {/* Teacher notes — a colleague's margin note, living WHERE IT'S READ: the top of
-          the lesson spine (its only home — founder 2026-07-10). Collapsed to a one-line
-          clay teaser so a verbose note never pushes phase 1 below the fold; one tap
-          expands it in place. data-tour="lesson-notes" kept for tour positioning. */}
+          the lesson spine (its only home — founder 2026-07-10). Open in FULL by default
+          across My Classes and My Lessons (founder 2026-07-23); one tap collapses it to a
+          one-line clay teaser. data-tour="lesson-notes" kept for tour positioning. */}
       {notes ? (
-        <details className="uv-tnotes-rib" data-tour="lesson-notes">
+        <details className="uv-tnotes-rib" data-tour="lesson-notes" open>
           <summary>
             <span className="kicker">Teacher notes</span>
             <span className="uv-tnotes-teaser">{notes}</span>
@@ -144,6 +246,15 @@ function LessonPanel({ u }) {
           Legacy fallback: plans normalized before Phase landed render activities lines. */}
       {phases.length ? (
         <div className="uv-phases">
+          {/* The teacher's bookmark — tracking view, in-progress unit only (bookmark != null).
+              Anchored to the phase time cells; drag to move, snaps to the nearest phase. */}
+          {bookmark ? (
+            <PhaseBookmark
+              phaseCount={phases.length}
+              phase={Math.min(bookmark.phase, phases.length - 1)}
+              onMove={bookmark.onMove}
+            />
+          ) : null}
           {phases.map((ph, i) => {
             const mins = phaseMin(ph);
             return (
@@ -241,7 +352,7 @@ function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
  * bar inside its frozen header while the panel scrolls beneath. Callers key the consuming
  * component by unit index so paging to another unit resets the active tab to Overview.
  * data-tour="unit-tabs": tour step 10's tooltip hangs below the bar. */
-function useUnitTabsParts(u, assessment, chapterTitle) {
+function useUnitTabsParts(u, assessment, chapterTitle, lessonFooter = null, defaultTab = "overview", bookmark = null) {
   const items = unitAssessItems(assessment, u);
   // Inclusivity keyword-bolding is stage-specific: middle maths writes differentiation as
   // "…struggling student…; challenge: …", so those two words are weighted (see InclusivityText).
@@ -250,7 +361,7 @@ function useUnitTabsParts(u, assessment, chapterTitle) {
   const g = String(assessment?.grade || "").toLowerCase().replace(/grade|class/g, "").trim();
   const mathsMiddle = assessment?.subject === "mathematics" && ["vi", "vii", "viii"].includes(g);
   const mathsSecondary = assessment?.subject === "mathematics" && ["ix", "x"].includes(g);
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useState(defaultTab);
   const tabs = [
     ["overview", "Overview"],
     ["material", "Material"],
@@ -272,23 +383,21 @@ function useUnitTabsParts(u, assessment, chapterTitle) {
     <>
       {tab === "overview" ? <OverviewPanel u={u} chapterTitle={chapterTitle} /> : null}
       {tab === "material" ? <MaterialPanel u={u} /> : null}
-      {tab === "lesson" ? <LessonPanel u={u} /> : null}
+      {/* lessonFooter (tracking only): the "Mark this unit complete" action lives HERE — at the
+          END of the Lesson tab, the natural close of a period — so it stops appearing under every
+          tab. Passed only for the pointer/just-completed unit; null everywhere else. */}
+      {tab === "lesson" ? <><LessonPanel u={u} bookmark={bookmark} />{lessonFooter}</> : null}
       {tab === "assess" ? <AssessPanel items={items} mathsMiddle={mathsMiddle} mathsSecondary={mathsSecondary} /> : null}
     </>
   );
   return { bar, panel };
 }
 
-// Tracking view: bar + panel together, in normal flow.
-function UnitTabs({ u, assessment, chapterTitle }) {
-  const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle);
-  return <>{bar}{panel}</>;
-}
-
 // Preview view: the header + tab bar are frozen together (one sticky block); only the panel
-// scrolls. `headerContent` is the topbar + name-plate built by the caller.
-function PreviewUnit({ headerContent, u, assessment, chapterTitle }) {
-  const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle);
+// scrolls. `headerContent` is the topbar + name-plate built by the caller. Shared by My Lessons
+// preview, the read-only "View full lesson plan", AND the My Classes tracking view.
+function PreviewUnit({ headerContent, u, assessment, chapterTitle, lessonFooter = null, defaultTab = "overview", bookmark = null }) {
+  const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle, lessonFooter, defaultTab, bookmark);
   return (
     <>
       <div className="lv-stick">
@@ -297,19 +406,6 @@ function PreviewUnit({ headerContent, u, assessment, chapterTitle }) {
       </div>
       {panel}
     </>
-  );
-}
-
-/* The 📝 period-note invoke — a slot reserved by design (v0.2 §Period Notes): pull-based,
- * occupies nothing until used. The feature itself is deferred; the control answers with a
- * gentle placeholder so the affordance is honest, not dead. */
-function NoteInvoke() {
-  const [msg, setMsg] = useState(false);
-  return (
-    <div className="uv-note">
-      <button onClick={() => setMsg((v) => !v)}>📝&nbsp; Add a note about this class</button>
-      {msg ? <span className="uv-notemsg">Notes are on their way — coming in an upcoming update.</span> : null}
-    </div>
   );
 }
 
@@ -912,17 +1008,20 @@ function AssessBody({ it, tab, qn, onNext, onTab, mathsMiddle = false, mathsSeco
 /* ── Chapter Notes — the notebook popup (arch-plan §I-bis). The teacher's ONE writable
  * surface on an otherwise read-only plan: a school-ruled notebook keyed to the PLAN ASSET
  * (subject·grade·chapter, section-independent) so the SAME note surfaces in preview (My
- * Lessons) and in tracking — one record at two altitudes, nothing to sync. Grey guidance
- * rides the ruled lines as the field's placeholder → vanishes on the first keystroke. Soft
- * 400-word cap (the counter turns clay past it, never blocks). localStorage today; migrates
- * to the per-tenant overlay (CLOUD_DATA_MODEL §2.3) at Phase 4, alongside the pointer. */
-const CN_CAP = 400;
+ * Lessons) and in tracking — one record at two altitudes, nothing to sync. It now DOUBLES as
+ * the section notebook too (the separate per-unit section note was removed 2026-07-23 — one
+ * surface, less to confuse). Grey guidance rides the ruled lines as the field's placeholder →
+ * vanishes on the first keystroke. Soft 500-word cap (the counter turns clay past it, never
+ * blocks). localStorage today; migrates to the per-tenant overlay (CLOUD_DATA_MODEL §2.3) at
+ * Phase 4, alongside the pointer. */
+const CN_CAP = 500;
 const cnWordCount = (s) => { const t = (s || "").trim(); return t ? t.split(/\s+/).length : 0; };
 const CN_GUIDE =
   "For next year, jot what you'll want to remember:\n" +
   "  · where the class generally struggled\n" +
   "  · materials you brought in beyond the book\n" +
-  "  · what to do differently next time";
+  "  · what to do differently next time\n" +
+  "  · anything specific to a section you want to recall";
 // "Subject · Grade" for the modal header — subject title-cased, grade in Roman numerals.
 const CN_ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
 function cnSubjectGrade(lp) {
@@ -1231,10 +1330,40 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     setNotesOpen(false);
   };
   const hasNote = !!noteText.trim();
+  // Total units under a group (its own periods + all descendants) — shown on the group header,
+  // and used to work out which top-level group holds the current pointer unit.
+  const countUnits = (g) => (g.periods?.length || 0) + (g.children || []).reduce((s, c) => s + countUnits(c), 0);
+  // Which top-level group holds the pointer (current) unit — so opening chapter-org from a unit
+  // lands on the group you're teaching, not always the first (founder 2026-07-23; the SS flow
+  // view already surfaces "now" because it lists every unit flat). Null pointer (My Lessons
+  // preview) → first group, unchanged.
+  const groupOfPointer = () => {
+    if (pointer == null) return 0;
+    let acc = 0;
+    const gs = lp.groups || [];
+    for (let gi = 0; gi < gs.length; gi++) {
+      const c = countUnits(gs[gi]);
+      if (pointer < acc + c) return gi;
+      acc += c;
+    }
+    return 0;
+  };
   // Each top-level group is a collapsible drop-down; only ONE is open at a time (accordion).
-  // The first group opens by default; opening another closes the rest (re-tapping the open
-  // one collapses it). -1 = all closed.
-  const [openIdx, setOpenIdx] = useState(0);
+  // Defaults to the group holding the current unit (falls back to the first); opening another
+  // closes the rest (re-tapping the open one collapses it). -1 = all closed.
+  const [openIdx, setOpenIdx] = useState(groupOfPointer);
+  // On open, bring the current ("now") unit into view — matching the SS flow view, which
+  // already surfaces its highlighted unit. Runs once after mount; the right accordion group is
+  // already expanded (groupOfPointer), so the card is in the DOM. Only in tracking (pointer set).
+  useEffect(() => {
+    if (pointer == null || typeof window === "undefined") return;
+    const id = requestAnimationFrame(() => {
+      const el = document.querySelector(".co-view .co-card.cur, .co-view .cof-u.cur");
+      if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" });
+    });
+    return () => cancelAnimationFrame(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // Maths PREPARATORY is the one subject·stage with no real section axis: its periods carry
   // many-to-many markers (S2+S3, S3+S4…) that can't cleanly nest, so the normalizer collapses
   // every period into a single fallback group labelled "Lesson" (see mathematics/subject.py).
@@ -1252,8 +1381,6 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   const ssFlow = lp.subject === "social_sciences" && (lp.groups || []).length === 1
     && !!lp.groups[0]?.meta?.edge_model;
   const FLAT_SHOWN = 4;   // units shown before the window starts scrolling
-  // Total units under a group (its own periods + all descendants) — shown on the group header.
-  const countUnits = (g) => (g.periods?.length || 0) + (g.children || []).reduce((s, c) => s + countUnits(c), 0);
   // Rebuild the group walk so cards sit under their group bars (flat index kept in sync
   // with flattenUnits — same traversal order). `visible` gates rendering but NOT the flat
   // index: idx advances across every period of every group (open or collapsed) so a unit's
@@ -1559,6 +1686,9 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     return clamped;
   };
 
+  // Mark complete advances the POINTER (cur) but keeps the paged view (previewAt) on the just-
+  // completed unit, so the confirmation surfaces in place at the end of that unit's Lesson tab.
+  // "Open next unit →" is what moves the view forward (below).
   const markComplete = () => {
     if (cur >= units.length - 1) { writePointer(units.length - 1); setDone(true); setUndoTo(null); return; }
     const from = cur;
@@ -1567,16 +1697,72 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   };
   const undoComplete = () => {
     if (undoTo == null) return;
-    writePointer(undoTo);
+    writePointer(undoTo);   // pointer back to the un-completed unit (previewAt already there)
     setUndoTo(null);
   };
+
+  // ── The teacher's ONE phase bookmark (tracking only) ──────────────────────────────
+  // It always sits on the in-progress unit (cur). Within that unit she drags it phase to
+  // phase and it stays put; when "Mark unit complete" advances cur, it reappears at the top
+  // phase (0) of the next unit. Only the phase index lives in React here — it persists to the
+  // per-section state row (sectionState.writeLocalBookmark, keyed by sectionKey), so it rides
+  // to the server + Supabase alongside the pointer (CLOUD_DATA_MODEL.md §2.4). bkmk === null
+  // means "no bookmark surface" (no section bound — e.g. the read-only preview modes).
+  // Initialise from the saved bookmark for the current unit — READ ONLY, never a write, so a
+  // cold open (after logout, or before a cross-device pull has landed) can't clobber the saved
+  // phase. It defaults to the top phase only when nothing is stored for this unit.
+  const [bkmkPhase, setBkmkPhase] = useState(() => {
+    if (!sectionKey) return 0;
+    const b = readLocalBookmark(sectionKey);
+    return b && b.unit === cur ? b.phase : 0;
+  });
+  // Reset to the top phase ONLY on a genuine unit change (pointer advanced by "Mark complete",
+  // or undone) — tracked via a ref so it does NOT fire on mount. On mount prevCur === cur, so a
+  // freshly-opened view keeps its restored phase instead of overwriting it with 0.
+  const prevCurRef = useRef(cur);
+  useEffect(() => {
+    if (!sectionKey) return;
+    if (prevCurRef.current === cur) return;   // mount / no real change → leave the saved phase
+    prevCurRef.current = cur;
+    const b = readLocalBookmark(sectionKey);
+    if (b && b.unit === cur) {
+      setBkmkPhase(b.phase);            // returning to a unit → where she left it
+    } else {
+      setBkmkPhase(0);                  // advanced to a new unit → top level, by default
+      writeLocalBookmark(sectionKey, cur, 0);   // persist the reset so the server row agrees
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cur, sectionKey]);
+  const moveBookmark = (phase) => {
+    setBkmkPhase(phase);
+    writeLocalBookmark(sectionKey, cur, phase);
+  };
+  // Cross-device catch-up. On a SECOND device the reconcile (pullSectionState) may write the
+  // saved bookmark into the cache AFTER this view has mounted — or the teacher may move it on
+  // her desktop while the phone is still showing the unit. Re-read the cache when the tab
+  // regains focus, restores from Safari's bfcache, or another tab writes it, so the arrow moves
+  // to the saved phase instead of sitting at the top. Read-only (never writes), so it can't
+  // clobber; it only adopts a stored bookmark that belongs to the current unit.
+  useEffect(() => {
+    if (!sectionKey) return;
+    const resync = () => {
+      const b = readLocalBookmark(sectionKey);
+      if (b && b.unit === cur) setBkmkPhase((p) => (p === b.phase ? p : b.phase));
+    };
+    window.addEventListener("focus", resync);
+    window.addEventListener("pageshow", resync);
+    window.addEventListener("storage", resync);
+    return () => {
+      window.removeEventListener("focus", resync);
+      window.removeEventListener("pageshow", resync);
+      window.removeEventListener("storage", resync);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cur, sectionKey]);
 
   if (!units.length) {
     return (<div><button className="back" onClick={onExit}>← back</button><div className="empty">This plan has no units.</div></div>);
   }
-
-  // The unit the teacher is currently on (also the assessment scope — see below).
-  const curUnit = units[cur] || units[0];
 
   // ── Chapter Organization altitude — preview's landing page; one tap away in tracking ──
   if (showOrg) {
@@ -1586,11 +1772,12 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
           lp={lp} units={units}
           pointer={preview ? null : cur} doneAll={doneFlag}
           onOpenUnit={(n) => {
-            // Navigation, never pointer movement: open the tapped unit read-only.
+            // Navigation, never pointer movement. Tracking (My Classes): return to the paging
+            // unit view at that unit (mark-complete still shows only on the pointer unit).
+            // Preview (My Lessons): open the read-only preview at that unit.
             setPreviewAt(n); setShowOrg(false);
-            if (!preview) setShowFullPlan(true);
           }}
-          onBack={preview ? onExit : () => setShowOrg(false)}
+          onBack={onExit}
           backTour={preview ? "preview-back" : undefined}
         />
       </div>
@@ -1601,33 +1788,47 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // Opened from the Chapter Organization page (card tap) or the in-view "View full lesson
   // plan" button (showFullPlan). Defaults to the current pointer so the teacher lands where
   // she's teaching, then can page through the whole plan. Read-only: no pointer controls.
+  // ── Paging helpers — shared by My Lessons preview, the read-only "View full lesson plan"
+  //    preview, AND the My Classes tracking view (all three use the same one-unit-at-a-time
+  //    paging layout; tracking just adds the note tab + the pointer's mark-complete box). ──
+  const pu = units[previewAt] || units[0];
+  // Change the shown unit AND reset scroll to the top of the unit view. Without this, paging
+  // from the bottom nav strip leaves the window scrolled down at the frozen header, so the new
+  // unit opens mid-way; we land the teacher at the unit's start, just under the pinned header.
+  const pvGoto = (n) => {
+    setPreviewAt(n);
+    setUndoTo(null);   // paging away dismisses a just-completed confirmation; the new pointer
+                       // unit then shows its own "Mark this unit complete" bar
+    if (typeof window === "undefined") return;
+    requestAnimationFrame(() => {
+      const el = pvRef.current;
+      if (!el) { window.scrollTo({ top: 0 }); return; }
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118;
+      const y = el.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top: Math.max(0, y) });
+    });
+  };
+  // Chapter-organization navigation — works from every unit-view mode: drop the read-only
+  // full-plan flag (if it was set) and raise the org altitude.
+  const goOrg = () => { setShowFullPlan(false); setShowOrg(true); };
+  // The unit strip (bottom of the lesson body). LEFT is backward navigation: on Unit 1 (no
+  // previous unit) it becomes chapter-org navigation (founder 2026-07-23); on every other unit
+  // it pages to the previous unit, as before. CENTRE is "Unit N / total", RIGHT is next unit.
+  const pvNav = (endClass = "") => (
+    <div className={`lv-pvnav lv-pvnav-thin ${endClass}`}>
+      {previewAt <= 0 ? (
+        <button className="lv-pvbtn" onClick={goOrg}>‹ Chapter org.</button>
+      ) : (
+        <button className="lv-pvbtn" onClick={() => pvGoto(previewAt - 1)}>← Previous unit</button>
+      )}
+      <span className="lv-pvmid">Unit {previewAt + 1} / {units.length}</span>
+      <button className={`lv-pvbtn ${previewAt >= units.length - 1 ? "off" : ""}`}
+        onClick={() => previewAt < units.length - 1 && pvGoto(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
+    </div>
+  );
+
+  // ── Read-only paging — My Lessons preview + the in-view "View full lesson plan" ──
   if (preview || showFullPlan) {
-    const pu = units[previewAt] || units[0];
-    // Change the shown unit AND reset scroll to the top of the unit view. Without this, paging
-    // from the bottom nav strip leaves the window scrolled down at the frozen header, so the new
-    // unit opens mid-way; we land the teacher at the unit's start, just under the pinned header.
-    const pvGoto = (n) => {
-      setPreviewAt(n);
-      if (typeof window === "undefined") return;
-      requestAnimationFrame(() => {
-        const el = pvRef.current;
-        if (!el) { window.scrollTo({ top: 0 }); return; }
-        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118;
-        const y = el.getBoundingClientRect().top + window.scrollY - navH;
-        window.scrollTo({ top: Math.max(0, y) });
-      });
-    };
-    // The orange-line prev/next strip — rendered pinned in the header AND again at the end of
-    // the lesson body (same row, so the teacher can page on from the bottom).
-    const pvNav = (endClass = "") => (
-      <div className={`lv-pvnav lv-pvnav-thin ${endClass}`}>
-        <button className={`lv-pvbtn ${previewAt <= 0 ? "off" : ""}`}
-          onClick={() => previewAt > 0 && pvGoto(previewAt - 1)} disabled={previewAt <= 0}>← Previous unit</button>
-        <span className="lv-pvmid">Unit {previewAt + 1} / {units.length}</span>
-        <button className={`lv-pvbtn ${previewAt >= units.length - 1 ? "off" : ""}`}
-          onClick={() => previewAt < units.length - 1 && pvGoto(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
-      </div>
-    );
     // Header name-plate for the frozen block (the top orange prev/next strip is retired here —
     // paging now lives only in the bottom strip). data-tour="preview-back": tour step 6's hand.
     // ONE top row (founder 2026-07-10): the unit name-plate sits UP in the first row,
@@ -1656,107 +1857,78 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     );
   }
 
-  // ── Tracking view (Screen 3) — current unit only + completion model ──
-  const u = curUnit;
+  // ── My Classes tracking view — the SAME one-unit-at-a-time paging layout as My Lessons
+  //    (frozen header + Overview/Material/Lesson/Assess tabs + prev/next), landing on the
+  //    pointer unit. The one tracking-only element is the "Mark this unit complete" action,
+  //    now handed to the LESSON tab as its footer (see below) so a teacher meets it once, at
+  //    the natural end of the period — not under every tab. Segmented progress bar retired. ──
   const total = units.length;
-  const done = cur;                          // units completed before the current one
+  // The unit the completion UI belongs to: the pointer normally, or the just-completed unit
+  // while its confirmation is up (previewAt is held there until "Open next unit"). The UI is
+  // handed to the Lesson tab of THAT unit only; every other unit (and every other tab) is
+  // read-only, so "Mark complete" no longer appears under Overview / Material / Assess.
+  const actUnit = undoTo != null ? undoTo : cur;
+  const trackHeader = (
+    <div className="lv-hd lv-hd-merge">
+      <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
+      {/* Back raises the chapter-org altitude (like My Lessons), NOT straight to section cards
+          (founder 2026-07-23) — the org page's own back exits to the cards. */}
+      <button className="back back-tr" onClick={goOrg}>← back</button>
+    </div>
+  );
+
+  // The completion action / confirmation / chapter-complete card. Rendered at the END of the
+  // Lesson tab (via lessonFooter). Deliberately minimal (founder 2026-07-23): just the bar to
+  // mark, and a "✓ Unit complete · Undo" row once marked — the teacher learns the effect quickly,
+  // so the explanatory line is dropped. Advancing to the next unit is the pv strip's "Next unit →".
+  const completionUI = undoTo != null ? (
+    <div className="lv-donecard">
+      <div className="lv-donerow">
+        <div className="lv-doneleft">
+          <div className="lv-donemark">✓</div>
+          <div className="lv-donetitle">Unit complete</div>
+        </div>
+        <button className="lv-undo" onClick={undoComplete}>↺ Undo</button>
+      </div>
+    </div>
+  ) : cur >= total - 1 ? (
+    doneFlag ? (
+      // Chapter fully taught — the confirmation the section card reads as "completed" (gold).
+      <div className="lv-donecard lv-chapterdone">
+        <div className="lv-donerow">
+          <div className="lv-doneleft">
+            <div className="lv-donemark">✓</div>
+            <div className="lv-donetitle">Chapter complete</div>
+          </div>
+          <button className="lv-undo" onClick={() => setDone(false)}>↺ Reopen</button>
+        </div>
+      </div>
+    ) : (
+      // Final unit: marking finishes the chapter for this section.
+      <div className="lv-markcard">
+        <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark chapter complete</button>
+      </div>
+    )
+  ) : (
+    // data-tour="mark-complete": the guided tour's step-11 spotlight + hand sit here.
+    <div className="lv-markcard">
+      <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark this unit complete</button>
+    </div>
+  );
 
   return (
     // data-tour="lesson-root": the guided tour's step-10 spotlight wraps the tracking view.
-    <div className="lessonview" data-tour="lesson-root">
-      <button className="back" onClick={onExit}>← back to my plans</button>
-      <div className="lv-hd">
-        <div className="lv-hd-row">
-          <div>
-            <div className="kicker kicker-ochre">{lp.chapter_title}</div>
-            <div className="lv-title"><span className="lv-unum">{cur + 1}.</span>{u.title}</div>
-          </div>
-          <div className="lv-count">Unit {cur + 1} of {total}</div>
-        </div>
-        {/* Spine / time / pedagogy moved into the OVERVIEW tab (2026-07-10) — the header
-            keeps only the name-plate + the chapter-altitude link. */}
-        <div className="lv-hd-row">
-          <span />
-          {/* Chapter altitude, one tap away — navigation, never pointer movement. */}
-          <span className="uv-orglink" onClick={() => setShowOrg(true)}>chapter organization →</span>
-        </div>
-      </div>
-
-      {/* Progress bar — same segmented look as the section bars in My Lesson Plans / Track. */}
-      <div className="lv-progress" aria-label={doneFlag ? `all ${total} units complete` : `${done} of ${total} units complete`}>
-        {Array.from({ length: total }, (_, i) => (
-          <span key={i} className={`lv-seg ${doneFlag || i < cur ? "fill" : i === cur ? "now" : ""}`} />
-        ))}
-      </div>
-
-      <UnitTabs key={cur} u={u} assessment={view.assessment} chapterTitle={lp.chapter_title} />
-      {/* 📝 Period note — an invoked control (tracking only: notes belong to the section's
-          plan instance, not the shared asset). */}
-      <NoteInvoke />
-
-      {/* Completion action (or the post-complete confirmation + Undo). */}
-      {undoTo != null ? (
-        <div className="lv-donecard">
-          <div className="lv-donerow">
-            <div className="lv-doneleft">
-              <div className="lv-donemark">✓</div>
-              <div>
-                <div className="lv-donetitle">Unit marked complete</div>
-                <div className="lv-donesub">Section is now ready for the next unit.</div>
-              </div>
-            </div>
-            <button className="lv-undo" onClick={undoComplete}>↺ Undo</button>
-          </div>
-          {/* After marking complete, the pointer has ALREADY advanced — so units[cur] IS the next
-              unit. "Open next unit" just dismisses this confirmation to reveal its teaching view. */}
-          <div className="lv-nextup">
-            <span className="lv-nextup-k">Next up</span>
-            <div className="lv-nextup-t">{u.title}</div>
-            {/* LO is never shown in the LP (founder rule 2026-07-09) — the next-up card names
-                the unit only; outcomes surface in the assessment artifact. */}
-            {/* Before starting the next unit, a teacher often wants to glance at how the rest of
-                the chapter pans out — so the preview lives HERE, paired with Open next unit, not
-                as a standalone utility. It opens at the next (now-current) unit. */}
-            <div className="lv-nextbtns">
-              <button className="primary lv-nextbtn" onClick={() => setUndoTo(null)}>Open next unit →</button>
-              <span className="lv-previewlink" onClick={() => { setPreviewAt(cur); setShowFullPlan(true); }}>Preview full chapter →</span>
-            </div>
-          </div>
-        </div>
-      ) : cur >= total - 1 ? (
-        doneFlag ? (
-          // Chapter fully taught — the confirmation the section card reads as "completed" (gold).
-          <div className="lv-donecard lv-chapterdone">
-            <div className="lv-donerow">
-              <div className="lv-doneleft">
-                <div className="lv-donemark">✓</div>
-                <div>
-                  <div className="lv-donetitle">Chapter complete</div>
-                  <div className="lv-donesub">Every unit is taught. This class now shows as completed on your home screen.</div>
-                </div>
-              </div>
-              <button className="lv-undo" onClick={() => setDone(false)}>↺ Reopen</button>
-            </div>
-          </div>
-        ) : (
-          <div className="lv-markcard">
-            <div className="lv-markinfo">
-              <span className="lv-markicon" aria-hidden="true">ⓘ</span>
-              <span>This is the final unit. Marking it complete finishes the chapter for this section.</span>
-            </div>
-            <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark chapter complete</button>
-          </div>
-        )
-      ) : (
-        <div className="lv-markcard">
-          <div className="lv-markinfo">
-            <span className="lv-markicon" aria-hidden="true">ⓘ</span>
-            <span>Marking this unit complete moves the teaching position to the next unit for this section.</span>
-          </div>
-          {/* data-tour="mark-complete": the guided tour's step-11 spotlight + hand sit here. */}
-          <button className="primary lv-markbtn" data-tour="mark-complete" onClick={markComplete}>Mark this unit complete</button>
-        </div>
-      )}
+    <div className="lessonview lv-pvview" data-tour="lesson-root" ref={pvRef}>
+      {/* Frozen block — header + tab bar pinned; only the active panel scrolls (My Lessons look).
+          The completion UI is the Lesson tab's footer, and only for the active unit — so
+          "Mark this unit complete" is met once, at the end of the lesson, not under every tab. */}
+      {/* My Classes opens on the LESSON tab (teaching mode), not Overview (founder 2026-07-23) —
+          which also lands the mark-complete footer in view on open. My Lessons stays on Overview. */}
+      <PreviewUnit key={previewAt} headerContent={trackHeader} u={pu} assessment={view.assessment}
+        chapterTitle={lp.chapter_title} lessonFooter={previewAt === actUnit ? completionUI : null} defaultTab="lesson"
+        bookmark={sectionKey && previewAt === cur ? { phase: bkmkPhase, onMove: moveBookmark } : null} />
+      {/* Unit strip (chapter-org on the left, Unit N/total, next unit). */}
+      {pvNav("lv-pvnav-end")}
     </div>
   );
 }
