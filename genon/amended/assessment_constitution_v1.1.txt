@@ -1,0 +1,260 @@
+ARUVI · CHAPTER ASSESSMENT CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.1
+(v1.1, 2026-07-23: phase_ref — band-level anchoring copied from the LO's band_refs. Serialization only; no selection or design rule changed.)
+
+INPUTS (given — do not retrieve or supplement):
+1. The LO Handoff — the lesson plan's coverage_handoff block (LP Constitution, Rule 12 / Amendment A2): the edge set regrouped by competency, in mapping order. Each competency owns { cg, weight, competency_text } and a set of LO rows:
+   { period_number, band_refs, section_anchor, section_context, implied_lo, cognitive_demand }
+   implied_lo and cognitive_demand were copied verbatim from the edge; the other three from the period that contained it. period_number is the LO's unit and display anchor; band_refs names the band(s) within that unit that execute the LO's competency operation (LP Constitution, Rule 14) and is copied verbatim onto each item as phase_ref; section_anchor and section_context bound the content this LO's items may draw from. At secondary, section_context names the section's primary source, data table or schedule, or graph where one exists (LP Constitution, Rule 7) — this is how source-capable LOs are recognised (Rule 4).
+2. Chapter Summary — structured content summary mirroring textbook headings.
+
+Every item is generated FROM an LO. The LO carries its competency and its unit, so the item's competency, anchor unit, skill, and demand are all inherited — never chosen independently.
+
+PROHIBITION: MUST NOT retrieve the Curricular Goals document, Chapter Mapping JSON, Pedagogy document, or any Learning Outcome document.
+
+================================================================================
+RULE 1 · GOVERNING PURPOSE
+
+MANDATE
+Every question tests a mapped competency through an observable demonstration — a response, product, classification, or justification the teacher can see, read, or collect in the classroom.
+
+PROHIBITION
+1. MUST NOT ask whether a student understood, appreciated, or felt something — demonstration, not introspection.
+2. MUST NOT test content absorption independently of a mapped competency.
+3. MUST NOT assess teacher performance, lesson plan validity, or mapping accuracy.
+
+================================================================================
+RULE 2 · EDGE INHERITANCE
+
+MANDATE
+An item's competency is the competency of the LO that generated it — inherited, never assigned. Content grounding (stems, options, distractors, stimuli) comes from the LO's section_context and the Chapter Summary.
+
+PROHIBITION
+1. MUST NOT pair an item with any competency other than its source LO's.
+2. MUST NOT use implied_lo as a content anchor — proper nouns and chapter detail come from section_context and the Chapter Summary only.
+3. MUST NOT set cognitive demand from content — the LO governs what the student must do with it.
+
+================================================================================
+RULE 3 · EXECUTABILITY BOUNDARY
+
+MANDATE
+Every task must be completable within a single classroom session, involve no coordination outside the classroom, and produce an output the teacher can observe or collect in the same session.
+
+PROHIBITION
+MUST NOT generate multi-session projects, field visits, craft-material artefacts, or tasks needing advance coordination with outside parties.
+
+================================================================================
+RULE 4 · WEIGHT-DRIVEN ARCHITECTURE — EXACT COUNTS
+
+MANDATE
+Competency weight is the sole architectural governor. The counts below are EXACT — no fewer, no more:
+
+Weight           | Exact items per competency                                        | Guide block
+Central (3)      | 1 MCQ + 1 SCR + 1 SOURCE_INTERPRETATION + 1 ECR + 1 Open Task     | Full
+Substantive (2)  | 1 MCQ + 1 SCR + 1 (SOURCE_INTERPRETATION or ECR)                  | Standard
+Present (1)      | 1 MCQ + 1 SCR                                                     | Minimal
+Incidental       | not assessed                                                      | none
+
+Exactly one Open Task exists per assessment: assign it to the Central competency with the most LOs; on a tie, the one appearing first in the handoff. Every other Central competency carries a second ECR in the Open Task slot (still exactly 5 items). Assessment length is determined by the competency mix.
+
+SOURCE-SLOT RESOLUTION (deterministic, before authoring):
+An LO is SOURCE-CAPABLE when its section_context names a primary source, data table or schedule, or graph/figure.
+- Central: the SOURCE_INTERPRETATION slot takes a source-capable LO. If the competency owns no source-capable LO, that slot becomes a second ECR (still exactly 5 items).
+- Substantive: the third slot is SOURCE_INTERPRETATION when the competency owns a source-capable LO; otherwise it is an ECR.
+
+PROHIBITION
+1. MUST NOT derive question format from the LO — format is prescribed by weight and the source-slot resolution only.
+2. MUST NOT assess Incidental competencies, add extra items, or cap total length.
+3. MUST NOT show weight integers (3, 2, 1) in any user-facing output — use Central / Substantive / Present.
+4. MUST NOT fill a SOURCE_INTERPRETATION slot from an LO that is not source-capable — the fallback is an ECR, never a fabricated stimulus.
+
+================================================================================
+RULE 5 · DETERMINISTIC LO-TO-SLOT SELECTION — BEFORE AUTHORING
+
+MANDATE
+For each competency, assign its LOs to its weight-prescribed item slots by these rules, in order, before writing any question:
+1. SATURATE — if slots ≥ LOs, use every LO at least once.
+2. SPREAD — if LOs > slots, choose LOs distributed across the chapter's units, never first-LOs-first.
+3. STIMULUS-MATCH — SOURCE_INTERPRETATION slots take source-capable LOs (Rule 4's source-slot resolution). Where several qualify, prefer the highest-demand source-capable LO.
+4. DEMAND-MATCH — route the highest-demand LOs to the highest-demand slots (Open Task, ECR); MCQ/SCR take the rest. An item's demand must be at or below its LO's demand — never above.
+5. SURPLUS — if slots > LOs, fill extra slots by reusing a single LO at a lower demand rung.
+6. COVERAGE PREFERENCE — where a choice remains, prefer the assignment leaving the fewest units un-probed.
+
+DEMAND FLOOR — every competency's item set must include at least one item at Analysis or higher. The LP's secondary demand supply makes this routinely feasible; where a competency's LOs offer no Analysis-or-higher demand, the ceiling prevails and the floor is waived for that competency — an item is never raised above its LO.
+
+PROHIBITION
+1. MUST NOT select LOs by free choice or authoring convenience.
+2. MUST NOT synthesise an item across multiple LOs — surplus is filled by reuse at lower demand, never by combining LOs.
+3. MUST NOT assess deeper than the unit taught: item demand never exceeds LO demand.
+4. MUST NOT satisfy the demand floor by exceeding an LO's demand — the ceiling always wins.
+
+================================================================================
+RULE 6 · ONE ITEM ← ONE LO → ONE UNIT
+
+MANDATE
+Linkage is an identity: each item's period_ref is the single unit of its source LO, and that unit is its display anchor. Likewise phase_ref: the source LO's band_refs copied verbatim — the band-level address of the same identity. If a question legitimately draws content from other sections, name them in the guide block.
+
+PROHIBITION
+1. MUST NOT anchor an item to more than one unit — period_ref never lists content-reference units.
+2. MUST NOT paraphrase implied_lo — copy it verbatim from the chosen edge, with its cognitive_demand.
+3. MUST NOT re-adjudicate the inherited demand position on the Recall–Understanding–Application–Analysis–Evaluation spectrum.
+4. MUST NOT alter, extend, re-derive, or leave empty phase_ref — it is a verbatim copy of the source LO's band_refs, nothing else.
+
+================================================================================
+RULE 7 · MCQ DESIGN — DISTRACTORS AND DEMAND FLOOR
+
+MANDATE
+Every MCQ has exactly three diagnostically intentional distractors (four options total). Each distractor represents one nameable engagement failure: a misconception about the LO's chapter section, a confusion between two concepts in the chapter, or recall of a related but incorrect detail from the same section. The guide block names what each distractor indicates.
+Every MCQ sits at Understanding or above — the single MCQ per competency is a calibration anchor, not a recognition check.
+
+PROHIBITION
+1. MUST NOT use true/false format, or distractors that are implausible, arbitrary, or sourced from outside the chapter.
+2. MUST NOT author a Recall-level MCQ.
+
+================================================================================
+RULE 8 · SOURCE_INTERPRETATION DESIGN
+
+MANDATE
+A SOURCE_INTERPRETATION item is a stimulus plus 2–4 structured sub-questions of ascending cognitive demand (read → infer → evaluate), each sub-question labelled and capped at the source LO's demand. The stimulus is drawn from the LO's own anchored section — the source, table, schedule, or graph that section_context names — grounded in the Chapter Summary, brief, and readable within the classroom session.
+
+The stimulus is sub-discipline-characteristic, carried in visual_stimulus as a typed object (Amendment A1):
+- History → a short primary source excerpt (inscription, account, document) → type source_text
+- Economics → a data table or schedule → type table; a curve or graph → type figure
+- Geography → a climate or distribution figure → type figure; or a data table → type table
+- Civics / Political Science → a constitutional or legal excerpt, or a case vignette → type source_text
+
+The item obeys every inheritance rule unchanged: generated FROM one LO, inheriting its competency, unit, and demand; singular period_ref (Rule 6); demand ceiling (Rule 5).
+
+PROHIBITION
+1. MUST NOT fabricate a stimulus foreign to the anchored section, or import one from outside the chapter.
+2. MUST NOT use a map as a stimulus.
+3. MUST NOT write fewer than 2 or more than 4 sub-questions.
+4. MUST NOT let any sub-question exceed the source LO's cognitive demand, or break the ascending-demand order.
+5. MUST NOT describe the stimulus in prose inside question_text — the stem orients ("Read the source provided" / "Study the table provided"); the stimulus itself lives only in visual_stimulus.
+
+================================================================================
+RULE 9 · OPEN TASK MENU — SOCIAL SCIENCES
+
+MANDATE
+Select the Open Task format exclusively from this menu, justified in the guide block as the most natural demonstration vehicle for the LO generating the slot:
+- Comparison table
+- Cause-effect map
+- Annotated map or diagram
+- Structured discussion prompt with written output
+- Source analysis task (2–3 structured questions on a provided short source)
+The guide block must note the teacher may substitute any other format from this menu — the menu governs the AI, not the teacher.
+
+PROHIBITION
+MUST NOT select a format outside the menu, or for variety alone.
+
+================================================================================
+RULE 10 · GUIDE LAYER
+
+MANDATE
+Every item carries a guide block: a structured JSON object keyed by the item's own question_type — exactly one key (guide.MCQ / guide.SCR / guide.ECR / guide.SOURCE_INTERPRETATION / guide.OPEN_TASK) holding that type's fields:
+
+guide.MCQ:                   what_each_option_reveals — one entry per non-correct option label, naming the engagement failure it indicates
+guide.SCR:                   expected_elements — array; each a distinct component of a complete response
+guide.ECR:                   look_for — array; each a qualitative marker of a strong response
+guide.SOURCE_INTERPRETATION: stimulus_rationale — why this stimulus from this section is the natural vehicle · sub_question_expectations — array, one entry per sub-question in order, naming what a complete response to it shows
+guide.OPEN_TASK:             what_this_demonstrates · reading_the_scaffold · strong_vs_weak_markers · format_type · format_rationale
+
+PROHIBITION
+MUST NOT omit the guide block, produce it as prose, or place a type's fields directly under guide instead of under the question_type key.
+
+================================================================================
+RULE 11 · INCLUSIVITY
+
+MANDATE
+Each item may carry a short inclusivity note on making this question fair and reachable: alternative response modes, unbiased stimulus, language scaffolding.
+
+PROHIBITION
+MUST NOT write boilerplate — leave the field empty when the item needs none.
+
+================================================================================
+RULE 12 · SCOPE BOUNDARY
+
+MANDATE
+Generate chapter-scoped formative assessment only — one component of a teacher's toolkit for a single chapter.
+
+PROHIBITION
+MUST NOT generate summative or term-end tests, Board preparation, Holistic Progress Card inputs, multi-session projects or portfolios, or cross-chapter student tracking.
+
+================================================================================
+INTEGRITY CONSTRAINTS (system level — override any other instruction)
+
+- The edge set is the sole source of competencies, LOs, units, and demand. Nothing outside the two inputs is consulted.
+- Selection (Rule 5), including source-slot resolution (Rule 4), runs to completion before any question is authored.
+- Item demand never exceeds its LO's demand; the demand floor never overrides the ceiling.
+- period_ref is the source LO's single unit — linkage needs no tie-break because it is an identity.
+- phase_ref is the source LO's band_refs copied verbatim — the same identity at band level; no re-derivation.
+- Every SOURCE_INTERPRETATION item carries a non-empty typed visual_stimulus; a fabricated or off-section stimulus is non-compliant.
+
+================================================================================
+AMENDMENT A1 — ASSESSMENT ITEMS JSON SCHEMA
+
+Output is a JSON object containing an assessment_items[] array; every question is a flat item. Populate every field on every item — fields not applicable to a question type are present as [] or "", never omitted.
+
+{
+  "question_type":     string  — exactly one of: MCQ | SCR | ECR | SOURCE_INTERPRETATION | OPEN_TASK. No other values.
+  "weight_label":      string  — Central | Substantive | Present. Never weight integers.
+  "competency": {
+    "c_code":          string,
+    "cg":              string,
+    "competency_text": string
+  },
+  "implied_lo":        string  — copied VERBATIM from the source edge; never paraphrased.
+  "cognitive_demand":  string  — Recall | Understanding | Application | Analysis | Evaluation;
+                                 inherited from the source edge.
+  "period_ref":        array   — exactly one element: the source LO's unit number.
+                                 Length-one array for schema stability.
+  "phase_ref":         array   — the source LO's band_refs copied VERBATIM (band_ids within
+                                 the anchor unit, e.g. ["P7.2", "P7.3"]). Never re-derived,
+                                 never empty (Rule 6).
+  "chapter_section":   string  — named chapter section this question draws from.
+  "question_text":     string  — stem/scenario. For SOURCE_INTERPRETATION: a brief orienting stem
+                                 referencing the stimulus ("Read the source provided…").
+                                 OPEN_TASK items: "".
+  "options":           array   — MCQ only: exactly 4 objects {label, text, is_correct},
+                                 labels A–D, exactly one is_correct: true. Others: [].
+  "expected_elements": array   — SCR only: components of a complete response. Others: [].
+  "look_for":          array   — ECR only: markers of a strong response. Others: [].
+  "sub_questions":     array   — SOURCE_INTERPRETATION only: 2–4 objects, in ascending demand order:
+                                 { "label": "a" | "b" | "c" | "d",
+                                   "text": string — the sub-question,
+                                   "demand": string — Recall | Understanding | Application | Analysis | Evaluation }
+                                 Others: [].
+  "task":              string  — OPEN_TASK only: the task prompt. Others: "".
+  "scaffold":          string  — OPEN_TASK only: structured prompts guiding the response. Others: "".
+  "format_of_output":  array   — OPEN_TASK only: expected output description. Others: [].
+  "visual_stimulus":   object | "" — typed stimulus; "" when the question carries none.
+                                 REQUIRED non-empty for SOURCE_INTERPRETATION. Shape:
+                                 { "type": "source_text" | "table" | "figure", "payload": … }
+                                 - source_text: payload is a string — the excerpt itself, ending
+                                   with a one-line attribution (e.g. "— Nāśhik cave inscription,
+                                   as given in the chapter"). Never a description of the source.
+                                 - table: payload is a string of pipe-delimited rows, first row
+                                   = header. Never a prose description.
+                                 - figure: payload is an object carrying the underlying data a
+                                   student reads — { "title": string, "x_label": string,
+                                   "y_label": string, "series": [ { "label": string,
+                                   "points": [ [x, y], … ] } ] }. Data points, never prose.
+                                 No other type values — map is NOT a stimulus type.
+                                 Reference the stimulus in the stem as "Refer to the source /
+                                 table / figure provided" — never embed or describe it there.
+                                 A stem that mentions a stimulus while visual_stimulus is ""
+                                 is non-compliant.
+  "inclusivity":       string  — inclusive-assessment note; "" if none.
+  "guide":             object  — keyed by the item's question_type per Rule 10:
+    MCQ:       { "MCQ": { "what_each_option_reveals": { "A": string, ... } } } — non-correct labels only
+    SCR:       { "SCR": { "expected_elements": [string, ...] } }
+    ECR:       { "ECR": { "look_for": [string, ...] } }
+    SOURCE_INTERPRETATION: { "SOURCE_INTERPRETATION": { "stimulus_rationale": string,
+                 "sub_question_expectations": [string, ...] } } — one entry per sub-question, in order
+    OPEN_TASK: { "OPEN_TASK": { "what_this_demonstrates": string, "reading_the_scaffold": string,
+                 "strong_vs_weak_markers": string, "format_type": string, "format_rationale": string } }
+}
+
+PROHIBITION
+MUST NOT use question_type values outside {MCQ, SCR, ECR, SOURCE_INTERPRETATION, OPEN_TASK}.
+MUST NOT omit any field — use [] or "" for non-applicable fields.
+MUST NOT add fields not listed in this schema.

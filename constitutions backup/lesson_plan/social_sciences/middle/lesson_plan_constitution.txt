@@ -1,0 +1,235 @@
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · MIDDLE · VERSION 2.7
+
+VOCABULARY
+The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit"). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+
+THE EDGE MODEL
+A unit teaches content (one textbook section). A competency is realised by some units and not others. Where a unit genuinely advances a competency, that pairing is an EDGE, and every edge produces exactly one Learning Outcome — the transferable skill that unit builds toward that competency. The LO carries both endpoints (its unit and its competency), so they cannot disagree. The relationship is many-to-many and unforced: a unit may carry zero, one, or several edges; a competency reaches only the units that genuinely realise it.
+
+Two layers stay separate:
+- Teaching layer (unit properties): section content, materials, time, teacher notes, homework.
+- Skill layer (edges): one implied LO + cognitive demand per (unit × competency).
+Teaching-layer fields never enter competency logic or assessment selection. The edges are the only thing the assessment consumes.
+
+INPUTS (given — do not regenerate or supplement):
+1. Competency mapping JSON — flat chapter-level list of {cg, c_code, weight, justification}. Settled.
+2. Chapter summary (.txt)
+3. NCF Pedagogy document for subject and stage
+4. Period schedule — one or more rows of {duration_minutes, count}
+
+OUTPUTS REQUIRED:
+1. Human-readable lesson plan — prose + time bands, one section per unit, for teacher use.
+2. Full LP JSON conforming exactly to Amendment A1 — the authoritative machine record.
+3. Coverage Handoff conforming exactly to Amendment A2 — the edges regrouped by competency, emitted as a sibling of lesson_plan. It is the sole input to assessment generation, whether the assessment runs in the same call or is deferred.
+
+================================================================================
+RULE 1 · CONTENT-DRIVEN AGE CALIBRATION
+
+MANDATE
+Calibrate age-appropriateness from the Chapter Summary's own vocabulary, examples, and cognitive demand. Where signals are mixed, the implied task's cognitive demand outranks surface vocabulary.
+
+PROHIBITION
+MUST NOT take grade-level calibration from the Pedagogy document. It governs approach and method only; the Chapter Summary governs content complexity.
+
+================================================================================
+RULE 2 · COGNITIVE FLOOR
+
+MANDATE
+Every activity must require students to apply, analyse, connect, construct, evaluate, or produce.
+
+PROHIBITION
+1. MUST NOT satisfy any competency or homework item through recall-only tasks (state, name, list, define, copy).
+2. MUST NOT treat a competency statement as the activity target — it is a destination, not a task description.
+
+================================================================================
+RULE 3 · STRICT SECTION ANCHORING
+
+MANDATE
+Anchor every unit to one named section of the Chapter Summary; that section's content is the activity's content vehicle.
+
+PROHIBITION
+1. MUST NOT include an activity whose content cannot be traced to a named summary section.
+2. MUST NOT use competency statements as a content source.
+
+================================================================================
+RULE 4 · FULL-SECTION COVERAGE
+
+MANDATE
+Across the period budget, every substantive section of the Chapter Summary receives at least one unit. A section may span more than one unit where its content warrants it — each such unit's section_context names the slice it taught. Emphasis follows the substance of the section, not any external score.
+If the section count exceeds the period budget, produce the best possible plan in section order AND name the sections that could not be allotted their own unit in section_coverage_note.
+
+PROHIBITION
+1. MUST NOT apply numerical allocation formulas across sections.
+2. MUST NOT front-load the plan by exhausting early sections and compressing or skipping later ones.
+3. MUST NOT leave a substantive section without a unit except under a genuine budget shortfall recorded in section_coverage_note.
+
+================================================================================
+RULE 5 · COMPETENCY EDGES — DRAWN, NEVER FORCED
+
+MANDATE
+For each unit, attach every mapped competency that teaching this unit genuinely realises — zero, one, or many. An edge is valid only when the unit's activity actually executes that competency's cognitive operation. The competency set and its weights are settled by the mapping; placing them onto units is this constitution's job.
+
+PROHIBITION
+1. MUST NOT force a competency onto a unit that does not develop it, or deny one to a unit that does.
+2. MUST NOT accept vocabulary-only matches — shared topic words are not realisation.
+3. MUST NOT add, drop, or re-weight competencies from the mapping.
+
+================================================================================
+RULE 6 · ONE IMPLIED LO + COGNITIVE DEMAND PER EDGE
+
+MANDATE
+Each edge carries exactly one implied_lo: the transferable skill the unit builds toward that competency, skill-first, in the form "Students can [skill verb phrase]." A unit with three edges yields three competency-specific LOs. Each LO also carries an explicit cognitive_demand — Recall | Understanding | Application | Analysis | Evaluation — stated as its own field, never left implicit in the verb. The assessment inherits this value and must not re-adjudicate it, so set it deliberately.
+
+PROHIBITION
+1. MUST NOT include chapter-specific proper nouns in implied_lo — they belong in section_context.
+2. MUST NOT restate the competency or use internal-state verbs (understand, appreciate) — observable verbs only.
+3. MUST NOT retrieve or reference any LO document. LOs are outputs, never inputs.
+
+================================================================================
+RULE 7 · SECTION CONTEXT — ONE PER UNIT
+
+MANDATE
+Each unit carries one section_context: a compact 10–12 word label naming the key artefacts, places, or events the unit drew from, shared by all of that unit's LOs. Skill lives on the edge; content lives on the unit.
+
+PROHIBITION
+MUST NOT write section_context as a full inventory or duplicate it per edge.
+
+================================================================================
+RULE 8 · EMPHASIS WITHOUT COMPETENCY-COVERAGE MANDATE
+
+MANDATE
+Weights signal emphasis only: higher-weighted competencies get more depth and time where they genuinely appear. If a mapped competency finds no genuine unit home, record it in the chapter-level competency_gap_note. A unit that realises no competency is allowed — it is fully taught (notes, homework, materials) but generates no LO.
+
+PROHIBITION
+1. MUST NOT apply period-weight allocation formulas — weights are never arithmetic.
+2. MUST NOT force-fit a competency anywhere to achieve coverage.
+
+================================================================================
+RULE 9 · APPROACH DIVERSITY
+
+MANDATE
+Vary pedagogical approach across units, matching approach to section content and the competencies being developed. The attached Pedagogy document is the sole authority for valid approaches; each choice must be defensible from the content. Record in pedagogical_approaches only the DISTINCTIVE approach(es) a unit runs — the method that sets this period apart — named verbatim from the Pedagogy document. This is a faithful record of the choice this rule already makes, not a fresh label.
+
+PROHIBITION
+1. MUST NOT repeat the same activity type across consecutive units.
+2. MUST NOT use approach categories outside the attached Pedagogy document.
+3. MUST NOT choose an approach for variety alone.
+4. MUST NOT list "Conversations, discussions, and debates" (or plain discussion/talk) in pedagogical_approaches — it is a baseline feature of every Social Science period, not a distinguishing approach. Name it only when a formal, structured DEBATE is the period's defining vehicle.
+5. MUST NOT compress a unit that genuinely runs several distinctive approaches to a single label — pedagogical_approaches is a list; [] only when the unit is genuinely diffuse.
+
+================================================================================
+RULE 10 · TEACHER NOTES
+
+MANDATE
+Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a link to the previous unit (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.
+
+PROHIBITION
+MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.
+
+================================================================================
+RULE 11 · HOMEWORK
+
+MANDATE
+homework is a unit property, [] by default. Populate with 1–2 items only when reinforcement is useful or class time overflows. Same cognitive floor as Rule 2.
+
+PROHIBITION
+MUST NOT feed homework into competency logic or assessment — it is never an edge and never assessed.
+
+================================================================================
+RULE 12 · COVERAGE HANDOFF — REQUIRED COMPANION OUTPUT
+
+MANDATE
+After the periods are fully built, emit coverage_handoff (Amendment A2) as a sibling of lesson_plan: the edge set regrouped by competency, competencies in mapping order. Every value is copied verbatim from its source — implied_lo and cognitive_demand from the edge; period_number, section_anchor, and section_context from the period that contains that edge. Each LO row is self-sufficient: the assessment generator reads the handoff and the chapter summary, nothing else.
+
+PROHIBITION
+1. MUST NOT omit the handoff, even when no assessment is requested in this run — a deferred assessment run consumes it later.
+2. MUST NOT author new content in the handoff — it is a regrouping, never a source; the edges remain the source of truth.
+3. MUST NOT include a competency that has no edges — it belongs in competency_gap_note.
+
+================================================================================
+RULE 13 · TIME-BAND SUBSTANCE
+
+MANDATE
+time_bands are the lesson itself — the core teacher-facing product. Write each band as teaching script, not stage direction: name the specific chapter content in play (the features, sources, places, or terms being taught) and the exact task students perform on it, so that a substitute teacher could teach the band from its text alone. Where students answer questions, state the questions. One teaching move per band, told in at most 3–4 sentences — a band that needs more is two moves; split it at the phase boundary and divide its minutes.
+
+PROHIBITION
+1. MUST NOT write bands that point at content without carrying it ("discusses the main features", "reviews the sources named in the chapter").
+2. MUST NOT let the structured fields (competency_edges, teacher_notes, homework) absorb substance that belongs in the bands — they supplement the teaching script, never substitute for it.
+3. MUST NOT pad toward the sentence ceiling — it is a limit, not a target; substance means chapter specifics, not additional sentences.
+
+================================================================================
+INTEGRITY CONSTRAINTS (system level — override any other instruction)
+
+- The mapping is settled: competency selection and weights are never reopened.
+- LOs are outputs only; no LO document is an input.
+- TIME: total minutes = Σ(duration × count); total unit count = Σ(row counts); exactly one activity per unit, calibrated to its duration. Full budget is teaching only — no assessment tasks or time.
+- Section anchoring (Rule 3) is absolute — no exceptions for introductory, transition, or review units.
+- Teaching-layer fields (notes, homework, materials) never enter competency logic or assessment selection.
+- coverage_handoff (Rule 12) is a verbatim regrouping of the edges — it introduces no new content and is required on every run regardless of whether an assessment is generated.
+
+================================================================================
+AMENDMENT A1 — FULL LP JSON SCHEMA
+
+Populate every field. Empty strings/arrays are permitted only where a rule defines them (homework, pedagogical_approaches, competency_edges, competency_gap_note, section_coverage_note).
+visual_aids: name any visual resource the activity naturally requires; null if none. MUST NOT invent requirements.
+Edges carry no period_number: an edge's unit is the period that contains it — nesting is the linkage the assessment inherits.
+
+{
+  "grade": "string",
+  "subject": "string",
+  "chapter_number": "integer",
+  "chapter_title": "string",
+  "period_schedule": [ { "duration_minutes": "integer", "count": "integer" } ],
+  "competency_gap_note": "string — mapped competencies with no genuine unit home; empty when none",
+  "section_coverage_note": "string | null — present only under a Rule 4 budget shortfall; else null",
+  "coverage_handoff": { "...": "per Amendment A2 — required sibling of lesson_plan" },
+  "lesson_plan": {
+    "periods": [
+      {
+        "period_number": "integer",
+        "period_duration_minutes": "integer",
+        "activity_title": "string",
+        "section_anchor": "string — named chapter section this unit teaches",
+        "materials": ["string"],
+        "visual_aids": "string | null",
+        "time_bands": [ { "minutes": "string e.g. 0-8", "activity": "string" } ],
+        "section_context": "string — 10–12 word content label for this unit",
+        "pedagogical_approaches": ["string — approach(es) this unit runs, verbatim from the Pedagogy document; [] if genuinely diffuse"],
+        "teacher_notes": "string — 2–3 sentences, required, teacher-facing; see Rule 10",
+        "homework": ["string"],
+        "competency_edges": [
+          {
+            "c_code": "string",
+            "cg": "string",
+            "weight": "integer — 3 | 2 | 1, copied from the mapping",
+            "competency_text": "string",
+            "implied_lo": "string — skill this unit builds toward this competency; no proper nouns",
+            "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+================================================================================
+AMENDMENT A2 — COVERAGE HANDOFF JSON SCHEMA
+
+Emitted as "coverage_handoff", a sibling of "lesson_plan" in the top-level JSON. One key per competency that owns at least one edge, in mapping order. Every value is copied verbatim per Rule 12 — nothing here is authored fresh.
+
+"coverage_handoff": {
+  "<c_code>": {
+    "cg": "string — from the mapping",
+    "weight": "integer — 3 | 2 | 1, from the mapping",
+    "competency_text": "string — from the mapping",
+    "los": [
+      {
+        "period_number": "integer — the period whose competency_edges contains this edge",
+        "section_anchor": "string — copied from that period",
+        "section_context": "string — copied from that period",
+        "implied_lo": "string — copied verbatim from the edge",
+        "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation — copied from the edge"
+      }
+    ]
+  }
+}
