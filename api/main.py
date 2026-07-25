@@ -293,6 +293,24 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
         for m in mappings
     ]
 
+    # ── Single-source allocation math (founder, 2026-07-25): the master plan
+    # (data/content/allocation_norms/master_plan.json, derived from the allocation
+    # workbook) is authoritative for BOTH the numerator (chapter effort weight) and
+    # the denominator (FULL syllabus weight — including placeholder chapters with no
+    # content yet). Suggestions = weight / syllabus_total_weight × the TEACHER'S OWN
+    # annual budget; the canonical's authoring schedule (e.g. 21×50) never enters it.
+    combo = data.master_combo(subject, grade)
+    syllabus_total_weight = None
+    if combo:
+        by_ch = {row.get("chapter"): row for row in combo.get("chapters", [])}
+        for c in chapters:
+            row = by_ch.get(c["chapter_number"])
+            if row and row.get("weight") is not None:
+                c["weight"] = row["weight"]
+        syllabus_total_weight = combo.get("total_effort_weight")
+    if not syllabus_total_weight:   # no master-plan combo → listed chapters are all we know
+        syllabus_total_weight = sum((c.get("weight") or 0) for c in chapters) or None
+
     # NCF-suggested estimated teaching periods per chapter (2026-07-01): the NCF period-norms
     # table (data/content/allocation_norms/ncf_period_norms.json) gives a subject·stage total
     # for the year; we distribute that total across this grade's chapters using the exact same
@@ -305,7 +323,13 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
     except UnknownGradeError:
         stage = None
     ncf_total = data.ncf_total_periods(subject, stage) if stage else None
-    if ncf_total and mappings:
+    if ncf_total and combo and syllabus_total_weight:
+        # Master-plan denominator: each chapter's NCF estimate is its share of the FULL
+        # syllabus weight — stable as placeholder chapters gain content.
+        for c in chapters:
+            w = c.get("weight") or 0
+            c["ncf_estimated_periods"] = round(w / syllabus_total_weight * ncf_total) or None
+    elif ncf_total and mappings:
         allocs = {a.chapter_number: a.periods for a in allocate_for_subject(subject, mappings, ncf_total)}
         for c in chapters:
             c["ncf_estimated_periods"] = allocs.get(c["chapter_number"])
@@ -314,6 +338,7 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
             c["ncf_estimated_periods"] = None
 
     return {"subject": subject, "grade": grade, "chapters": chapters,
+            "syllabus_total_weight": syllabus_total_weight,
             "allocation_basis": sub.allocation_basis(grade)}
 
 
@@ -740,6 +765,122 @@ def generate(subject: str, grade: str) -> JSONResponse:
                  "detail": "Live generation is wired but intentionally deferred; "
                            "view a saved plan instead."},
     )
+
+
+# ── genon: deterministic adaptation from pre-warmed canonicals (step 6, 2026-07-25) ──
+# One certified canonical per chapter (authored at the class-standard duration) is
+# compiled once into a phase stream (Bucket-A content, api/data.py). A teacher's
+# duration matrix partitions that stream in milliseconds — no LLM, Rs. 0 — into a
+# saved plan registered to HER prepared-plans list, so it appears in My Lessons
+# like any generated lesson. Optional tier-1 seam polish is the only LLM step.
+
+class GenonRowInput(BaseModel):
+    duration: int          # minutes per period
+    count: int             # how many periods of this duration
+
+
+class GenonPlanRequest(BaseModel):
+    rows: List[GenonRowInput]
+    polish: bool = False   # tier-1 LLM seam polish (needs ANTHROPIC_API_KEY server-side)
+
+
+@app.get("/genon/{subject}/{grade}/chapters")
+def genon_available(subject: str, grade: str) -> Dict[str, Any]:
+    """Chapter numbers with a certified canonical for this subject·grade — the frontend
+    uses this to decide when Prepare can run the deterministic path. canonical_minutes
+    (per chapter) lets it warn when a duration mix dips under the 0.6 coverage floor."""
+    _subject(subject)
+    chs = data.genon_chapters(subject, grade)
+    minutes: Dict[str, int] = {}
+    for ch in chs:
+        c = data.load_genon_canonical(subject, grade, ch) or {}
+        row = (c.get("period_rows_snapshot") or [{}])[0]
+        if row.get("duration") and row.get("count"):
+            minutes[str(ch)] = int(row["duration"]) * int(row["count"])
+    return {"subject": subject, "grade": grade, "chapters": chs, "canonical_minutes": minutes}
+
+
+@app.post("/genon/{subject}/{grade}/{chapter_number}/plan")
+def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPlanRequest,
+                    identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Partition the chapter's canonical stream to the teacher's duration matrix, save the
+    adapted plan, and register it as prepared for this teacher (it pops up in My Lessons)."""
+    from aruvi_core.genon import build_plan
+    from aruvi_core.genon.partition import PartitionError
+    from aruvi_core.genon.polish import run_polish
+
+    _subject(subject)
+    tenant_id, user_id = identity
+    matrix = [(r.duration, r.count) for r in req.rows if r.duration > 0 and r.count > 0]
+    if not matrix:
+        raise HTTPException(status_code=400, detail="At least one duration row is required.")
+    total_periods = sum(c for _, c in matrix)
+    if total_periods > 60:
+        raise HTTPException(status_code=400, detail="Period count implausibly large.")
+
+    canonical = data.load_genon_canonical(subject, grade, chapter_number)
+    if canonical is None:
+        raise HTTPException(status_code=404,
+                            detail="No canonical for this chapter yet.")
+
+    # ── identity rule (founder, 2026-07-25): a request whose matrix equals the
+    # canonical's standard row (aggregated across rows of the same duration) is the
+    # canonical — register THAT file as prepared, save no copy. It goes by its
+    # chapter name alone; only amended durations get a small "a min × Y" line.
+    std = (canonical.get("period_rows_snapshot") or [{}])[0]
+    agg: Dict[int, int] = {}
+    for d_, c_ in matrix:
+        agg[d_] = agg.get(d_, 0) + c_
+    if agg == {int(std.get("duration", -1)): int(std.get("count", -2))}:
+        filename = canonical["filename"]
+        try:
+            prepared_plans_repo.mark(tenant_id, user_id, _plan_key(subject, grade, filename),
+                                     total_periods)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
+        return {
+            "status": "prepared", "identity": True,
+            "filename": filename,
+            "chapter_number": chapter_number,
+            "chapter_title": canonical.get("chapter_title"),
+            "periods": total_periods,
+            "compression": {"ratio": 1.0, "regime": "canonical"},
+            "seam_periods": [], "coverage_note": None, "polish": None,
+        }
+
+    stream = data.load_genon_stream(subject, grade, chapter_number)
+    try:
+        plan = build_plan(stream, matrix)
+    except PartitionError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    polish_info = None
+    if req.polish:
+        try:
+            polish_info = run_polish(plan)      # in-place; container text only
+        except Exception as e:                  # polish is an enhancement, never a blocker
+            polish_info = {"skipped": True, "reason": str(e)}
+
+    filename = data.save_generated_plan(subject, grade, plan)
+    key = _plan_key(subject, grade, filename)
+    prepared_periods = total_periods
+    try:
+        prepared_plans_repo.mark(tenant_id, user_id, key, prepared_periods)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Plan saved but not registered: {e}")
+
+    g = plan["genon"]
+    return {
+        "status": "prepared",
+        "filename": filename,
+        "chapter_number": chapter_number,
+        "chapter_title": plan.get("chapter_title"),
+        "periods": total_periods,
+        "compression": g["compression"],
+        "seam_periods": g["seam_periods_tier0_polished"],
+        "coverage_note": plan["result"].get("section_coverage_note"),
+        "polish": polish_info,
+    }
 
 
 def _safe_name(s: str) -> str:

@@ -601,6 +601,9 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
                   <div className="sc-title">{p.chapter_title}</div>
+                  {/* Adapted-duration plans carry their matrix in small letters below the name
+                      (e.g. "45 min × 12"); the canonical schedule shows no line (2026-07-25). */}
+                  {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
                   {effView === "archived" ? (
                     <div className="mlp2-ready">Archived</div>
                   ) : completed.length || live.length ? (

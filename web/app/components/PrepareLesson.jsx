@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { getJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
 
@@ -46,15 +46,45 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   const [showBreakdown, setShowBreakdown] = useState(false); // committed-chapters popup
   const [warnRegen, setWarnRegen] = useState(false);       // re-preparing an already-prepared chapter
 
+  /* ── genon (2026-07-25): chapters with a pre-warmed canonical stream ──
+   * For these, Prepare runs the DETERMINISTIC path: the teacher's duration rows go to
+   * POST /genon/{subject}/{grade}/{ch}/plan, the server partitions the certified canonical
+   * in milliseconds (no LLM), saves + registers the plan, and it pops up in My Lessons.
+   * `rows` is the duration matrix [{duration, count}]; `polish` asks the server for the
+   * optional tier-1 AI pass that smooths transition notes on split units. */
+  const [genonChs, setGenonChs] = useState([]);            // chapter numbers with a canonical
+  const [canonMinutes, setCanonMinutes] = useState({});    // {chapter: canonical total minutes}
+  const [rows, setRows] = useState([]);                    // [{duration, count}]
+  const [polish, setPolish] = useState(false);
+  const [syllabusW, setSyllabusW] = useState(null);        // FULL syllabus weight (master plan)
+
   // Load chapters (+ effort weight + NCF estimate) and saved plans for the scope.
   useEffect(() => {
     setStep("chapter"); setChapterNo(""); setView(null); setError(""); setNote("");
     setChapters([]); setPlans([]); setShowInfo(false); setShowBreakdown(false); setWarnRegen(false);
     getJSON(`/subjects/${subject}/${grade}/chapters`)
-      .then((d) => setChapters(d.chapters || [])).catch(() => setChapters([]));
+      .then((d) => { setChapters(d.chapters || []); setSyllabusW(d.syllabus_total_weight || null); })
+      .catch(() => { setChapters([]); setSyllabusW(null); });
     getJSON(`/plans/${subject}/${grade}`)
       .then((d) => setPlans(d.plans || [])).catch(() => setPlans([]));
+    getJSON(`/genon/${subject}/${grade}/chapters`)
+      .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); })
+      .catch(() => { setGenonChs([]); setCanonMinutes({}); });
   }, [subject, grade]);
+
+  // Is the deterministic (genon) path available for the chosen chapter?
+  const genonAvailable = !!chapterNo && genonChs.includes(Number(chapterNo));
+
+  // The class's period durations from the canonical readiness profile (grade-level first,
+  // subject-level fallback) — seeds the duration rows so the teacher edits, never re-enters.
+  const classDurations = useMemo(() => {
+    const subs = (readiness && readiness.subjects) || [];
+    const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
+    const sub = subs.find((s) => slugify(s.name) === subject);
+    const g = sub && (sub.grades || []).find((x) => (x.grade || "").toLowerCase() === grade);
+    const durs = (g && g.durations) || (sub && sub.durations) || [];
+    return durs.length ? durs.map(Number).filter((n) => n > 0) : [40];
+  }, [readiness, subject, grade]);
 
   // Annual budget (periods) for this subject·grade, from the canonical readiness profile.
   const annualBudget = useMemo(
@@ -62,10 +92,13 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     [readiness, subject, grade]
   );
 
-  // Total effort weight across all chapters — the denominator of each chapter's budget share.
+  // Denominator of each chapter's budget share: the FULL syllabus weight from the master
+  // allocation plan (includes placeholder chapters with no content yet — founder rule,
+  // 2026-07-25), falling back to the listed chapters' sum only when no master plan exists.
+  // Dividing by the listed sum alone inflates every suggestion until the full book lands.
   const sumW = useMemo(
-    () => chapters.reduce((s, c) => s + (Number(c.weight) || 0), 0),
-    [chapters]
+    () => Number(syllabusW) || chapters.reduce((s, c) => s + (Number(c.weight) || 0), 0),
+    [syllabusW, chapters]
   );
 
   // Aruvi's suggested periods for a chapter: its effort-index SHARE of the teacher's OWN annual
@@ -91,8 +124,27 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
     setPeriods(suggestionFor(c));
+    // Seed the genon duration rows: one row, her class's first duration × the suggestion.
+    setRows([{ duration: classDurations[0] || 40, count: suggestionFor(c) }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chapterNo, chapters, annualBudget, sumW]);
+
+  // On the genon path the duration rows are the source of truth — keep the `periods`
+  // state (budget meter + prepared-periods tracking) equal to their total.
+  useEffect(() => {
+    if (!genonAvailable || !rows.length) return;
+    const total = rows.reduce((s, r) => s + (Number(r.count) || 0), 0);
+    setPeriods(total);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows, genonAvailable]);
+
+  const setRowAt = (i, patch) =>
+    setRows((rs) => rs.map((r, k) => (k === i ? { ...r, ...patch } : r)));
+  const addRow = () =>
+    setRows((rs) => [...rs, {
+      duration: classDurations[rs.length % classDurations.length] || 40, count: 1,
+    }]);
+  const dropRow = (i) => setRows((rs) => rs.filter((_, k) => k !== i));
 
   // Files currently ATTACHED to a section of this class (localStorage bindings) — so a chapter a
   // class is actively teaching counts toward the budget even if its `prepared` write was lost
@@ -171,6 +223,28 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
 
   const doGenerate = async () => {
     if (!chosen) return;
+    // ── genon path: deterministic adaptation from the chapter's certified canonical ──
+    if (genonAvailable) {
+      const matrix = rows
+        .map((r) => ({ duration: Number(r.duration) || 0, count: Number(r.count) || 0 }))
+        .filter((r) => r.duration > 0 && r.count > 0);
+      if (!matrix.length) { setError("Add at least one duration row."); return; }
+      setBusy(true); setError(""); setNote("");
+      try {
+        const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
+          { rows: matrix, polish });
+        if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
+        // No return handler → show the freshly adapted plan.
+        setStep("preview");
+        if (resp.coverage_note) setNote(resp.coverage_note);
+        setView((await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`)).view);
+      } catch {
+        setError("Couldn't build the lesson plan right now. Try again in a moment.");
+      } finally {
+        setBusy(false);
+      }
+      return;
+    }
     const exact = planFor(chapterNo);            // the plan for the chapter she actually chose
     if (exact) {
       setBusy(true);
@@ -236,13 +310,70 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
 
           <div className="prep-block">
             <div className="prep-left">
-              <p className="prep-fieldlab">Periods for this chapter</p>
-              <span className="steppermini prep-stepper">
-                <button type="button" onClick={() => setP((Number(periods) || 0) - 1)} aria-label="fewer periods">–</button>
-                <input type="number" min="0" className="v g4-vinput" value={periods}
-                  onChange={(e) => setP(parseInt(e.target.value, 10))} aria-label="Periods for this chapter" />
-                <button type="button" onClick={() => setP((Number(periods) || 0) + 1)} aria-label="more periods">+</button>
-              </span>
+              {genonAvailable ? (
+                /* genon: the teacher's real duration mix — each row `count × duration min`.
+                 * Total periods derives from the rows (kept in sync with the budget meter). */
+                <>
+                  <p className="prep-fieldlab">Periods for this chapter</p>
+                  {rows.map((r, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                      <input type="number" min="1" className="v g4-vinput" value={r.count}
+                        onChange={(e) => setRowAt(i, { count: parseInt(e.target.value, 10) || 0 })}
+                        aria-label={`Periods at duration ${i + 1}`} />
+                      <span aria-hidden="true">×</span>
+                      <input type="number" min="5" step="5" className="v g4-vinput" value={r.duration}
+                        onChange={(e) => setRowAt(i, { duration: parseInt(e.target.value, 10) || 0 })}
+                        aria-label={`Minutes per period ${i + 1}`} />
+                      <span className="prep-fieldlab" style={{ margin: 0 }}>min</span>
+                      {rows.length > 1 ? (
+                        <button type="button" className="prep-use" onClick={() => dropRow(i)}
+                          aria-label="remove this duration row">−</button>
+                      ) : null}
+                    </div>
+                  ))}
+                  <button type="button" className="prep-use" onClick={addRow}>+ different duration</button>
+                  <label style={{ display: "block", marginTop: 10, fontSize: 13 }}>
+                    <input type="checkbox" checked={polish} onChange={(e) => setPolish(e.target.checked)} />
+                    {" "}Smooth unit transitions with AI
+                  </label>
+                  {(() => {
+                    // Coverage hint against the chapter's certified plan: below 60% of its
+                    // minutes, trailing sections can't be scheduled; 60–80% is compressed.
+                    const cm = Number(canonMinutes[String(chapterNo)]) || 0;
+                    if (!cm) return null;
+                    const totalMin = rows.reduce((s, r) => s + (Number(r.duration) || 0) * (Number(r.count) || 0), 0);
+                    if (!totalMin) return null;
+                    const ratio = totalMin / cm;
+                    if (ratio < 0.6) return (
+                      <p className="prep-fieldlab" style={{ marginTop: 8, color: "var(--clay)" }}>
+                        This time won&rsquo;t cover the whole chapter — later sections will be left
+                        out. Full coverage needs at least {Math.ceil(0.6 * cm / (Number(rows[0]?.duration) || 40))} periods
+                        of {Number(rows[0]?.duration) || 40} min.
+                      </p>
+                    );
+                    if (ratio < 0.8) return (
+                      <p className="prep-fieldlab" style={{ marginTop: 8 }}>
+                        Tighter than the chapter&rsquo;s full plan — activities will be compressed
+                        to fit.
+                      </p>
+                    );
+                    return null;
+                  })()}
+                  <p className="prep-fieldlab" style={{ marginTop: 8 }}>
+                    Instant — adapted from this chapter&rsquo;s certified plan.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="prep-fieldlab">Periods for this chapter</p>
+                  <span className="steppermini prep-stepper">
+                    <button type="button" onClick={() => setP((Number(periods) || 0) - 1)} aria-label="fewer periods">–</button>
+                    <input type="number" min="0" className="v g4-vinput" value={periods}
+                      onChange={(e) => setP(parseInt(e.target.value, 10))} aria-label="Periods for this chapter" />
+                    <button type="button" onClick={() => setP((Number(periods) || 0) + 1)} aria-label="more periods">+</button>
+                  </span>
+                </>
+              )}
             </div>
 
             {chosen ? (
@@ -257,7 +388,10 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
                     <span className="prep-sugg-val">{suggestion}</span>
                     {periods === suggestion
                       ? <span className="prep-sugg-ok" aria-label="matches the suggestion">✓</span>
-                      : <button type="button" className="prep-use" onClick={() => setPeriods(suggestion)}>use</button>}
+                      : <button type="button" className="prep-use"
+                          onClick={() => genonAvailable
+                            ? setRows([{ duration: classDurations[0] || 40, count: suggestion }])
+                            : setPeriods(suggestion)}>use</button>}
                   </div>
                   {showInfo && (
                     <div className="prep-tip" role="note">

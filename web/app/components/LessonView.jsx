@@ -350,9 +350,11 @@ function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
 
 /* Tab state + rendered parts (bar / panel) for a unit. Split so the preview view can pin the
  * bar inside its frozen header while the panel scrolls beneath. Callers key the consuming
- * component by unit index so paging to another unit resets the active tab to Overview.
+ * component by unit index, so paging to another unit resets the active tab to the default —
+ * LESSON (founder, 2026-07-25): a unit opens on the teaching script itself, and Next lands
+ * there too; Overview/Material are reference tabs a teacher visits deliberately.
  * data-tour="unit-tabs": tour step 10's tooltip hangs below the bar. */
-function useUnitTabsParts(u, assessment, chapterTitle, lessonFooter = null, defaultTab = "overview", bookmark = null) {
+function useUnitTabsParts(u, assessment, chapterTitle, lessonFooter = null, defaultTab = "lesson", bookmark = null) {
   const items = unitAssessItems(assessment, u);
   // Inclusivity keyword-bolding is stage-specific: middle maths writes differentiation as
   // "…struggling student…; challenge: …", so those two words are weighted (see InclusivityText).
@@ -396,7 +398,7 @@ function useUnitTabsParts(u, assessment, chapterTitle, lessonFooter = null, defa
 // Preview view: the header + tab bar are frozen together (one sticky block); only the panel
 // scrolls. `headerContent` is the topbar + name-plate built by the caller. Shared by My Lessons
 // preview, the read-only "View full lesson plan", AND the My Classes tracking view.
-function PreviewUnit({ headerContent, u, assessment, chapterTitle, lessonFooter = null, defaultTab = "overview", bookmark = null }) {
+function PreviewUnit({ headerContent, u, assessment, chapterTitle, lessonFooter = null, defaultTab = "lesson", bookmark = null }) {
   const { bar, panel } = useUnitTabsParts(u, assessment, chapterTitle, lessonFooter, defaultTab, bookmark);
   return (
     <>

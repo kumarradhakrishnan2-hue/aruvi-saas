@@ -151,7 +151,9 @@ def list_saved_plans(subject: str, grade: str) -> List[Dict[str, Any]]:
                 try:
                     s = json.load(open(os.path.join(d, f)))
                     out.append({"filename": f, "chapter_number": s.get("chapter_number"),
-                                "chapter_title": s.get("chapter_title"), "saved_at": s.get("saved_at")})
+                                "chapter_title": s.get("chapter_title"), "saved_at": s.get("saved_at"),
+                                "is_canonical": s.get("plan_status") == "canonical",
+                                "duration_label": duration_label(s)})
                 except Exception:
                     pass
     out.sort(key=lambda p: (p.get("chapter_number") or 0, p.get("saved_at") or ""))
@@ -166,3 +168,133 @@ def load_saved_plan(subject: str, grade: str, filename: str) -> Optional[Dict[st
     if not os.path.isfile(p):
         return None
     return json.load(open(p))
+
+
+# ── master allocation plan (2026-07-25) ─────────────────────────────────────────
+# data/content/allocation_norms/master_plan.json — derived from the founder's
+# allocation workbook (ncf_chapterwise_period_allocation.xlsx) by genon/master_plan.py.
+# It knows the FULL syllabus per subject·grade, INCLUDING placeholder chapters that
+# have no content yet — so it is the single source for allocation numerators
+# (chapter effort weight) and denominators (total syllabus weight). The mappings-
+# derived chapter list must never be the denominator: it only sees chapters with
+# content, which inflates every suggestion until the full book lands.
+
+_ROMAN_BY_SLUG = {"iii": "III", "iv": "IV", "v": "V", "vi": "VI", "vii": "VII",
+                  "viii": "VIII", "ix": "IX", "x": "X"}
+_master_plan_cache: Optional[tuple] = None   # (mtime, doc)
+
+
+def load_master_plan() -> Optional[Dict[str, Any]]:
+    global _master_plan_cache
+    p = os.path.join(DATA_DIR, "allocation_norms", "master_plan.json")
+    if not os.path.isfile(p):
+        return None
+    mtime = os.path.getmtime(p)
+    if _master_plan_cache and _master_plan_cache[0] == mtime:
+        return _master_plan_cache[1]
+    doc = json.load(open(p))
+    _master_plan_cache = (mtime, doc)
+    return doc
+
+
+def master_combo(subject: str, grade: str) -> Optional[Dict[str, Any]]:
+    """The master plan's record for a subject·grade (grade as slug, e.g. 'ix')."""
+    doc = load_master_plan()
+    if not doc:
+        return None
+    roman = _ROMAN_BY_SLUG.get((grade or "").lower())
+    return (doc.get("combos") or {}).get(f"{subject}|{roman}") if roman else None
+
+
+# ── genon canonicals (relocated 2026-07-25, founder decision) ───────────────────
+# data/content/ is the home of ALL crucial server content, and saved_plans/ is the
+# home of lesson plans — so the certified canonicals live THERE, as ordinary
+# saved-plan files named ch_NN_canonical.json (plan_status "canonical"). The genon/
+# folder holds engine code only, never content. The phase stream is DERIVED: it is
+# compiled on demand from the canonical (strict v0.3) and memo-cached per file
+# mtime — no separate stream artifact on disk.
+
+def duration_label(saved: Dict[str, Any]) -> Optional[str]:
+    """Small-letter duration line for ADAPTED plans, e.g. "45 min × 12" or
+    "40 min × 10 · 30 min × 4". The canonical (and any plan whose matrix matches
+    the canonical's standard row) shows no label — it goes by its chapter name
+    alone (founder naming rule, 2026-07-25)."""
+    g = saved.get("genon") or {}
+    matrix = g.get("matrix")
+    if not matrix:
+        return None
+    return " · ".join(f"{m['duration']} min × {m['count']}" for m in matrix)
+
+
+def _canonical_path(subject: str, grade: str, chapter_number: int) -> str:
+    return os.path.join(DATA_DIR, "saved_plans", subject, grade,
+                        f"ch_{int(chapter_number):02d}_canonical.json")
+
+
+def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[float]:
+    p = _canonical_path(subject, grade, chapter_number)
+    return os.path.getmtime(p) if os.path.isfile(p) else None
+
+
+def genon_chapters(subject: str, grade: str) -> List[int]:
+    """Chapter numbers with a certified canonical for this subject·grade."""
+    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    out: List[int] = []
+    if os.path.isdir(d):
+        for f in sorted(os.listdir(d)):
+            if f.startswith("ch_") and f.endswith("_canonical.json"):
+                try:
+                    out.append(int(f[3:5]))
+                except ValueError:
+                    pass
+    return out
+
+
+def load_genon_canonical(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
+    p = _canonical_path(subject, grade, chapter_number)
+    if not os.path.isfile(p):
+        return None
+    return json.load(open(p))
+
+
+_stream_cache: Dict[str, Any] = {}   # path -> (mtime, stream)
+
+
+def load_genon_stream(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
+    """The chapter's phase stream, compiled (strict, declared-only) from its canonical.
+    Memo-cached per file mtime, so the millisecond partition path never pays the
+    compile twice for an unchanged canonical."""
+    p = _canonical_path(subject, grade, chapter_number)
+    if not os.path.isfile(p):
+        return None
+    mtime = os.path.getmtime(p)
+    hit = _stream_cache.get(p)
+    if hit and hit[0] == mtime:
+        return hit[1]
+    from aruvi_core.genon import compile_stream
+    stream = compile_stream(json.load(open(p)))
+    _stream_cache[p] = (mtime, stream)
+    return stream
+
+
+def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any]) -> str:
+    """Persist a genon-adapted plan into the saved-plans library; returns the filename.
+
+    Adapted plans join the same library the viewer/exporters read; per-teacher
+    visibility comes from the prepared-plans register, not from where the file sits.
+    """
+    from datetime import datetime
+    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    os.makedirs(d, exist_ok=True)
+    nn = f"{int(plan.get('chapter_number') or 0):02d}"
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"ch_{nn}_{ts}.json"
+    seq = 1
+    while os.path.exists(os.path.join(d, filename)):   # same-second uniqueness
+        filename = f"ch_{nn}_{ts}_{seq}.json"
+        seq += 1
+    plan["filename"] = filename
+    plan["saved_at"] = datetime.now().isoformat(timespec="seconds")
+    with open(os.path.join(d, filename), "w") as f:
+        json.dump(plan, f, ensure_ascii=False, indent=2)
+    return filename

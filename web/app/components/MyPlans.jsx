@@ -507,7 +507,10 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
             <div className="ap-title">Track a chapter for this section</div>
             <div className="ap-sub">Pick a chapter you&rsquo;ve already prepared to track for this section, or build a new one.</div>
           </div>
-          <div className="ap-list">
+          {/* More than two prepared chapters → the list caps at TWO visible rows and wheels
+              (drag / scroll) through the rest, so the modal never grows tall enough to push
+              its header — and the ✕ — off-screen. */}
+          <div className={`ap-list${Array.isArray(listPlans) && listPlans.length > 2 ? " ap-list-capped" : ""}`}>
             {listPlans === undefined ? (
               <div className="ap-loading">Loading lessons…</div>
             ) : listPlans.length === 0 ? (
@@ -518,11 +521,16 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                 // it ("select the lesson you just generated").
                 <button key={p.filename} className="ap-row" data-tour={pi === 0 ? "attach-pop-row" : undefined}
                   onClick={() => attachChapter(c, sectionKey, p)}>
+                  {/* One line, one sentence: "Ch. 05: Force and Pressure" (founder 2026-07-25).
+                      The number keeps its pine emphasis — .ch-no carries the colour the old
+                      .ch-meta-tx b had — and the title follows it in ink after the colon. */}
                   <span className="ch-meta">
-                    <span className="ch-meta-tx"><b>Ch {pad(p.chapter_number)}</b></span>
+                    <span className="ch-name" title={p.chapter_title}>
+                      <b className="ch-no">Ch. {pad(p.chapter_number)}:</b> {p.chapter_title}
+                    </span>
                     <span className="ch-go" aria-hidden="true">›</span>
                   </span>
-                  <span className="ch-name" title={p.chapter_title}>{p.chapter_title}</span>
+                  {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
                 </button>
               ))
             )}
@@ -543,7 +551,8 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // available to track again and clears her place in it.
   const untrackModal = untrackFor ? (() => {
     const { c, sectionKey, plan } = untrackFor;
-    const chLabel = `${plan.chapter_number ? `Ch ${plan.chapter_number} — ` : ""}${plan.chapter_title}`;
+    // Same chapter phrasing as the "+" picker: "Ch. 05: Force and Pressure".
+    const chLabel = `${plan.chapter_number ? `Ch. ${pad(plan.chapter_number)}: ` : ""}${plan.chapter_title}`;
     return (
       <div className="ap-overlay" onClick={() => setUntrackFor(null)}>
         <div className="ap-modal ap-confirm" onClick={(e) => e.stopPropagation()}>
@@ -607,11 +616,14 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                 const st = normStatus(r.status);
                 return (
                 <div className="ch-row" key={r.file}>
+                  {/* "Ch. 05: Force and Pressure" — same one-line phrasing as the "+" picker,
+                      status pill still pinned to the right end of that line. */}
                   <div className="ch-meta">
-                    <span className="ch-meta-tx"><b>Ch {r.chapter_number ? pad(r.chapter_number) : "—"}</b></span>
+                    <span className="ch-name" title={r.chapter_title}>
+                      <b className="ch-no">Ch. {r.chapter_number ? pad(r.chapter_number) : "—"}:</b> {r.chapter_title}
+                    </span>
                     <span className={`ch-pill ch-${st}`}>{HISTORY_LABEL[st] || "Untracked"}</span>
                   </div>
-                  <div className="ch-name" title={r.chapter_title}>{r.chapter_title}</div>
                   {r.total_units ? (
                     <div className="sc-rail ch-rail"
                       aria-label={`${r.units_done || 0} of ${r.total_units} units completed`}>

@@ -2256,7 +2256,18 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .ap-kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ochre); }
 .ap-title { font-family: var(--f-display); font-weight: 500; font-size: 21px; color: var(--ink); margin-top: 4px; }
 .ap-sub { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
-.ap-list { flex: 1 1 auto; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; padding-right: 2px; }
+.ap-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; padding-right: 2px; }
+/* Capped chapter picker (the section card's "+" popup, 2026-07-25): with many prepared chapters
+   the modal used to grow until its top (and the ✕) clipped off-screen. The list now shows AT MOST
+   TWO rows and wheels (scroll / drag, snap-assisted) through the rest. min-height:0 above is the
+   flexbox shrink fix that keeps every ap-modal inside its 82vh cap regardless of content. */
+.ap-list-capped { flex: 0 1 auto; max-height: 160px; scroll-snap-type: y proximity; }
+.ap-list-capped .ap-row { flex: none; height: 76px; overflow: hidden; scroll-snap-align: start;
+  justify-content: center; }   /* one-line chapter rows sit centred in the fixed-height slot */
+/* Adapted-duration line under a lesson's name (cards + the "+" picker): the matrix in small
+   letters, e.g. "45 min × 12" / "40 min × 10 · 30 min × 4". Canonical-schedule plans have none. */
+.sc-durline { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .06em;
+  color: var(--ink-soft); margin-top: 2px; }
 .ap-loading, .ap-none { font-size: 13px; color: var(--ink-soft); font-style: italic; padding: 8px 2px; }
 /* ── Standardized chapter-listing row (shared by the "+" track picker and the history popup) ──
    A STACKED block, not a horizontal strip: a compact meta line on top — CH no · subject · grade,
@@ -2284,6 +2295,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Chapter name — full width, two lines max, then truncate. */
 .ch-name { font-family: var(--f-body); font-size: 15px; line-height: 1.28; color: var(--ink);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* Chapter rows read as ONE sentence — "Ch. 05: Force and Pressure" (founder 2026-07-25) — so the
+   name now sits ON the meta line, taking the space the old stacked CH-number line used, with the
+   chevron / status pill still pinned right. .ch-name outside .ch-meta (the "+" portal rows) is
+   untouched. .ch-no keeps the number in the same pine the old .ch-meta-tx b gave it. */
+.ch-meta > .ch-name { flex: 1 1 auto; min-width: 0; }
+.ch-no { color: var(--pine-d); font-weight: 500; }
 /* The whole picker row is the button (the header says "pick a chapter… to track"), so no per-row
    Track pill — just a light chevron as a tap affordance (matches My Lessons' "›"), pine on hover. */
 .ch-go { flex: none; font-family: var(--f-body); font-size: 19px; line-height: 1; color: var(--ink-soft); }

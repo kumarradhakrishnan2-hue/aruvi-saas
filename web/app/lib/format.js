@@ -80,6 +80,19 @@ export async function getJSON(path, opts) {
   return r.json();
 }
 
+/* POST a JSON body and parse the JSON response (X-Aruvi-User attached like getJSON).
+ * Added for the genon adaptation endpoint (PrepareLesson → POST /genon/.../plan); generic
+ * on purpose — any future JSON POST should use this instead of hand-rolling fetch. */
+export async function postJSON(path, body) {
+  const r = await fetch(API + path, withUser({
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body || {}),
+  }));
+  if (!r.ok) throw new Error(`${r.status}`);
+  return r.json();
+}
+
 /* Record a saved plan as PREPARED by this teacher (POST /plans-prepared). Called when she
  * actually generates/attaches a lesson — first-run activation and the everyday PrepareLesson
  * flow — so My Lessons lists only her own work, not the whole shared sample library. Fire-and-

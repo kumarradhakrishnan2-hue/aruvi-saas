@@ -86,6 +86,123 @@ byte-identically from amended/originals/.
 counts (~4–5/period at 50 min) and non-uniform role sequences; residual
 uniformity would implicate the 40→50 duration change, not wording.
 
+## UPDATE 2026-07-25 (later) — step 6 WIRED: genon inside Aruvi SaaS, end to end
+
+- **aruvi_core/genon/** (new engine package): compile.py = compiler **v0.3 STRICT
+  declared-only** (rejects pre-v1.1 plans — 171 named violations on the old ch 5;
+  no inference code in the product); partition.py = the lab v0.3 ported verbatim
+  (PartitionError instead of SystemExit); polish.py = tier-1 seam polish
+  (pure build/apply + run_polish; skips gracefully without ANTHROPIC_API_KEY).
+- **Canonical artifacts (Bucket A)**: data/content/canonical/social_sciences/ix/
+  ch_05_canonical.json (the 21×50 v1.1 canonical + provenance block) and
+  ch_05_stream.json (63 phases, declared). The API partitions the STREAM;
+  recompile only on compiler version bumps.
+- **API**: GET /genon/{subject}/{grade}/chapters (availability);
+  POST /genon/{subject}/{grade}/{ch}/plan {rows:[{duration,count}], polish} —
+  partitions in ms, saves into the saved-plans library (same-second filename
+  uniquifier), registers in the caller's prepared-plans → **pops up in My
+  Lessons**. Guards: 400 empty rows / >60 periods, 404 no canonical, 500 wrapped
+  PartitionError. Polish failures never block the plan (skipped+reason).
+- **Web (PrepareLesson.jsx + format.js postJSON)**: when the chosen chapter has a
+  canonical, the periods stepper becomes a **duration-rows editor** (count ×
+  minutes, add/remove rows, seeded from the profile's class durations × the
+  effort-index suggestion; budget meter syncs to row totals) + "Smooth unit
+  transitions with AI" checkbox (polish flag). Non-canonical chapters keep the
+  old saved-plan path untouched. STATIC verification only (esbuild parse clean) —
+  per CLAUDE.md §11 live render must be checked locally.
+- **E2E TESTED in sandbox** (FastAPI TestClient, full engine + real SS plugin):
+  compile→partition zones (21×50 rescale · 15×50/21×35 role-weighted · 12×45 at
+  ratio 0.514 drops 3 trailing units · 10×40+4×30 drops 4) · plan appears
+  prepared with correct periods · view model renders (12 periods, 32 items) ·
+  tenant isolation holds. NOTE: 16×35 needed split-fallback — the 3-band
+  coarseness of the current canonical biting; rerun after the v1.1.1 regen.
+- Against the 21×50 canonical (1050 min), the old test matrices are now DEEP
+  compression (12×45 = 0.514) — teachers near the recommended 21 periods sit in
+  the comfortable zones; the master plan's floor (13×50) is where dropping begins.
+
+## UPDATE 2026-07-25 (cleanup) — canonicals LIVE IN saved_plans; naming rules
+
+Founder layout doctrine: **data/content/ holds all crucial server content; canonicals
+are saved plans, so they live in data/content/saved_plans/{subject}/{grade}/ as
+ch_NN_canonical.json (plan_status "canonical"). genon/ holds engine code ONLY —
+no content.** Executed:
+- ALL previous saved plans cleared (founder has backups; on-disk copies moved to
+  _to_delete/saved_plans_old/ — 47 files incl. the three 07-23 hand-deployed genon
+  plans and every subject's samples). Old prepared-register entries now dangle
+  harmlessly (missing files simply don't list).
+- SS IX ch 5 canonical (21×50, v1.1) restructured into saved-plan shape and placed
+  at saved_plans/social_sciences/ix/ch_05_canonical.json. data/content/canonical/
+  and genon/out content moved to _to_delete/ (empty dirs remain — delete cannot run
+  over the bridge; remove them with _to_delete).
+- **No stream artifact on disk**: api/data.py compiles the stream on demand from
+  the canonical (strict v0.3) with an mtime-keyed memo cache.
+- **Naming rules (simulation)**: a request whose duration matrix equals the
+  canonical's standard row (rows aggregated by duration) registers THE CANONICAL
+  itself as prepared — no copy, no prefix; it goes by its chapter name alone.
+  Amended durations save an adapted copy whose card/picker shows the matrix in
+  small letters below the name ("45 min × 12" / "40 min × 10 · 30 min × 4") —
+  listing field duration_label, CSS .sc-durline.
+- E2E re-verified: identity (incl. split same-duration rows) → canonical, no file;
+  variations → labelled copies; canonical renders 21 periods through the view.
+
+## UPDATE 2026-07-25 (allocation single-sourcing) — master plan moved to content; denominator fix
+
+Bug found by founder: Prepare suggested 43 periods for SS IX ch 5 at budget 240 —
+the app divided by the LISTED chapters' weight (107, only chs 1–9 have mappings)
+instead of the FULL syllabus weight (215 incl. the 9 NCERT placeholders). Doctrine
+locked: **master_plan.json lives in data/content/allocation_norms/ (with the
+workbook + NCF norms) and is the single source for allocation numerators and
+denominators. Suggestion = weight / syllabus_total_weight × the TEACHER'S OWN
+annual budget. The canonical schedule (21×50) is ONLY the authoring golden rule —
+it never drives her suggestion; what she actually allocates × her duration types
+feeds the partition rules.** Implemented:
+- genon/master_plan.py repathed: reads the workbook from, and writes
+  master_plan.{json,md} to, data/content/allocation_norms/ (genon copies retired).
+- /subjects/{s}/{g}/chapters: weights overridden from the master plan, response
+  carries syllabus_total_weight; NCF estimates use the same full denominator.
+- PrepareLesson: suggestion divides by syllabus_total_weight (240→21, 200→18);
+  plus a coverage hint from /genon canonical_minutes — under 60% of the canonical's
+  minutes warns that trailing sections drop (with the minimum period count at her
+  duration), 60–80% notes compression.
+
+## UPDATE 2026-07-25 (polish) — validator built; checkbox STAYS for testing
+
+Founder decision: the "Smooth unit transitions with AI" checkbox remains OPT-IN
+during the testing phase (always-on reconsidered later — the flip is a small
+policy change in genon_make_plan). The owed **polish validator** is now built
+into aruvi_core/genon/polish.run_polish: every delta is code-checked (teacher_note
+within word budget +10%; where a seam note is needed, the note must OPEN with a
+≤24-word continuation clause — exactly the failure modes that got Haiku
+rejected). Invalid deltas get ONE retry naming the violations; periods still
+failing keep tier-0 text (recorded in seam_polish.tier0_kept). This is the
+prerequisite for reconsidering Haiku. Unit-tested; needs one live keyed run.
+
+## UPDATE 2026-07-25 (deixis) — LP constitution → v1.1.2: temporal self-containment
+
+Founder finding from the first partitioned plans: band text in the 21×50 canonical
+carries deixis — "today" (P1.1, P4.1, P10.2) and 11 unit cross-references ("next
+unit" P4.3/P5.3/P6.3/P14.3, "previous unit" P3.1/P6.1/P8.1/P13.1…) — which
+re-orients the teacher from FLOW to DAY (against the calendar purge) and breaks
+under repartition; forward promises are worst (the promised unit may merge or
+drop). Doctrine locked: **content is timeless; navigation belongs to container
+text the engine owns** (titles, seam notes, teacher notes).
+
+v1.1.2 applied LIVE (founder-approved; register only, no pedagogical change):
+- Rule 13 prohibition 5: band text MUST NOT use calendar words or cross-unit
+  references — each band speaks in the present of its own activity; sequence
+  lives in structure; unit linking lives only in teacher_notes.
+- Rule 10 prohibition: teacher notes MUST NOT use calendar words or forward
+  references — the previous-unit link is the ONLY cross-unit reference, always
+  backward. (Backward links are safe: polish re-anchors them per partition.)
+- A proposed deterministic deixis detector for the certification gate was
+  DECLINED by founder — the constitution rule alone governs; the one-time
+  canonical review catches residue.
+- make_amendments.py reproduces v1.1.2 byte-identically from originals/.
+- Current ch 5 canonical (generated under v1.1.1) still carries the 14 band
+  instances — regeneration under v1.1.2 pairs with the pending v1.1.1
+  band-structure verification: ONE run (`one social_sciences ix 5`) checks both
+  (varied band counts + zero deixis).
+
 **Next actions**: rotate the 07-23 API key → control test
 (`one social_sciences ix 5 --lp-const genon/amended/originals/... --assess-const
 ... --tag control_v10`) → shape-check vs a historic saved plan → first v1.1

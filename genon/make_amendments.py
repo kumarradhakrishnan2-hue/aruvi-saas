@@ -39,11 +39,14 @@ lp = (SRC / "lesson_plan_constitution_v1.0.txt").read_text()
 lp = edit(
     lp,
     "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.0",
-    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.1.1\n"
+    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.1.2\n"
     "(v1.1, 2026-07-24: Rule 14 — band identity, role, and edge band anchoring; time input = single standard row. "
     "Serialization and input-shape only; no pedagogical rule changed.)\n"
     "(v1.1.1, 2026-07-25: Rule 14 role guidance made definitional — arc framing removed, roles judged on a "
-    "best-effort basis. Labeling only; band structure and all other rules unchanged.)",
+    "best-effort basis. Labeling only; band structure and all other rules unchanged.)\n"
+    "(v1.1.2, 2026-07-25: temporal self-containment — band text carries no calendar words and no cross-unit "
+    "references; teacher notes' previous-unit link is the only cross-unit reference, always backward, never "
+    "in calendar time. Register only; no pedagogical rule changed.)",
 )
 
 # --- time input: single standard row (HANDOVER Decision 2) ---
@@ -60,6 +63,30 @@ lp = edit(
     "- TIME: total minutes = Σ(duration × count); total unit count = Σ(row counts); exactly one activity per unit, calibrated to its duration.",
     "- TIME: the schedule is a single standard row; total minutes = duration × count; total unit count = count; "
     "exactly one activity per unit, calibrated to the standard duration.",
+)
+
+# --- v1.1.2: temporal self-containment (2026-07-25) ---
+# Found live: the 21x50 canonical carried "today" and "next unit" inside band text
+# (P1.1/P4.1/P10.2 temporal; 11 positional) — deixis that re-orients the teacher from
+# flow to day and breaks under repartition. Doctrine: content is TIMELESS; navigation
+# belongs to container text the engine owns.
+lp = edit(
+    lp,
+    'MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.',
+    'MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.\n'
+    "MUST NOT use calendar words (today, yesterday, this week, next class) or forward references "
+    "(the next unit, in the next…, we shall see) — the Rule-10 link to the previous unit is the ONLY "
+    "cross-unit reference, and it always looks backward.",
+)
+
+lp = edit(
+    lp,
+    "4. MUST NOT invent a parallel activity prompt where the section's own captured apparatus box already supplies one that serves the unit's purpose.",
+    "4. MUST NOT invent a parallel activity prompt where the section's own captured apparatus box already supplies one that serves the unit's purpose.\n"
+    "5. MUST NOT anchor band text in calendar time or unit position — no calendar words (today, "
+    "yesterday, this week, next class) and no cross-unit references (the previous unit, the next unit, "
+    "as we saw, in the next…). Each band speaks in the present of its own activity; sequence lives in "
+    "the plan's structure, and unit-to-unit linking lives only in teacher_notes (Rule 10).",
 )
 
 # --- Rule 14 ---
@@ -147,7 +174,7 @@ lp = edit(
     "}",
 )
 
-(OUT / "lesson_plan_constitution_v1.1.1.txt").write_text(lp)
+(OUT / "lesson_plan_constitution_v1.1.2.txt").write_text(lp)
 
 # ---------------- Assessment constitution: v1.1 -> v1.2 ----------------
 ac = (SRC / "assessment_constitution_v1.1_pre_phase_ref.txt").read_text()
@@ -211,6 +238,6 @@ ac = edit(
 )
 
 (OUT / "assessment_constitution_v1.2.txt").write_text(ac)
-print("LP  v1.1.1:", len(lp), "chars")
+print("LP  v1.1.2:", len(lp), "chars")
 print("AC  v1.2:", len(ac), "chars")
 print("written to", OUT)

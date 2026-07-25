@@ -12,7 +12,10 @@ import math
 
 import openpyxl
 
-WB = "/tmp/work.xlsx"  # the cleaned workbook (committed to device this session)
+from pathlib import Path
+REPO = Path(__file__).resolve().parent.parent          # aruvi-saas/
+NORMS = REPO / "data" / "content" / "allocation_norms"
+WB = str(NORMS / "ncf_chapterwise_period_allocation.xlsx")
 DROP_THRESHOLD = 0.6
 
 # budget-sheet subject label -> repo subject key; Chapters-sheet label -> same key
@@ -117,7 +120,7 @@ out = {
     },
     "combos": plan,
 }
-with open("/tmp/master_plan.json", "w") as f:
+with open(NORMS / "master_plan.json", "w") as f:
     json.dump(out, f, indent=2, ensure_ascii=False)
 
 # ---- human-readable md ----
@@ -133,7 +136,7 @@ L.append(f"floor_minutes = {DROP_THRESHOLD} × periods × duration; 'floor P' be
 L.append("expressed in standard-duration periods (rounded up).")
 L.append("")
 L.append("Source: `data/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx`")
-L.append("(budget + Chapters sheets, cleaned 2026-07-24). Regenerate with `master_plan.py`.")
+L.append("(budget + Chapters sheets, cleaned 2026-07-24). Regenerate with `genon/master_plan.py` (writes here, to allocation_norms).")
 L.append("")
 if skipped:
     L.append("**Not planned:** " + "; ".join(f"{s} {c} ({why})" for s, c, why in skipped) + ".")
@@ -164,7 +167,7 @@ for key, p in plan.items():
         L.append("combo's numbers will shift when the real chapters land; do not author")
         L.append("canonicals for ⚠ rows.")
         L.append("")
-with open("/tmp/master_plan.md", "w") as f:
+with open(NORMS / "master_plan.md", "w") as f:
     f.write("\n".join(L))
 
 print("combos planned:", len(plan), "| skipped:", len(skipped))
