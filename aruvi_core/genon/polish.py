@@ -83,14 +83,19 @@ def apply_polish(plan: dict, delta: dict) -> list:
     changed = []
     for d in delta.get("periods", []):
         p = by_n[int(d["n"])]
+        touched = False
         if d.get("title"):
             p["activity_title"] = d["title"].strip()
+            touched = True
         if d.get("teacher_note"):
             p["teacher_notes"] = d["teacher_note"].strip()
+            touched = True
         elif d.get("seam_note") and p["teacher_notes"].startswith("This period continues"):
             head, _, rest = p["teacher_notes"].partition("\n\n")
             p["teacher_notes"] = d["seam_note"].strip() + "\n\n" + rest
-        changed.append(int(d["n"]))
+            touched = True
+        if touched:                     # an all-null entry means "keep mine" — not a polish
+            changed.append(int(d["n"]))
     return changed
 
 
@@ -162,7 +167,9 @@ def run_polish(plan: dict) -> dict:
 
     t0 = time.time()
     in_tok = out_tok = 0
-    valid, rejected = [], {}
+    accepted: dict = {}         # n -> validated delta entry; merged ACROSS attempts
+    rejected: dict = {}         # n -> reason, for periods still unresolved
+    parse_failures = 0
     user = base_user
     for attempt in range(2):
         resp = client.messages.create(
@@ -176,21 +183,38 @@ def run_polish(plan: dict) -> dict:
         try:
             delta = json.loads(text[text.find("{"): text.rfind("}") + 1])
         except Exception:
-            rejected = {f["n"]: "unparseable delta" for f in flagged}
-            delta = {"periods": []}
-        valid, rejected = validate_delta(flagged, delta)
+            delta = None
+        if delta is None:
+            # A garbled reply must NOT read as "nothing needed changing": every period
+            # not already accepted stays rejected, so the loop retries and the record
+            # carries the reason.
+            parse_failures += 1
+            rejected = {f["n"]: "unparseable delta" for f in flagged
+                        if f["n"] not in accepted}
+        else:
+            valid, rejected = validate_delta(flagged, delta)
+            for d in valid:
+                accepted[int(d["n"])] = d       # round-1 wins survive a partial retry
+            rejected = {n: r for n, r in rejected.items() if n not in accepted}
         if not rejected:
             break
-        # one retry, naming what failed; keep whatever already validated
+        # one retry, naming what failed. Only the failures need resending — the
+        # accepted entries are held above, so a partial reply loses nothing.
         user = (base_user + "\n\nYour previous delta failed validation on these periods — "
-                + json.dumps(rejected) + ". Fix ONLY these, respecting the word budgets and "
-                "the ≤20-word opening continuation clause, and return the full JSON delta again.")
-    changed = apply_polish(plan, {"periods": valid})
+                + json.dumps(rejected) + ". Return a JSON delta covering ONLY these periods, "
+                "corrected, respecting the word budgets and the ≤20-word opening "
+                "continuation clause. The periods not listed are already accepted.")
+    changed = apply_polish(plan, {"periods": [accepted[n] for n in sorted(accepted)]})
     wall = time.time() - t0
     cost = (in_tok / 1000 * IN_1K + out_tok / 1000 * OUT_1K) * INR
     rec = {
-        "tier": 1, "model": MODEL, "periods_polished": changed,
-        "tier0_kept": sorted(rejected), "wall_seconds": round(wall, 1),
+        "tier": 1, "model": MODEL,
+        "flagged": [f["n"] for f in flagged],   # candidates, so polished + kept always adds up
+        "periods_polished": changed,
+        "tier0_kept": sorted(rejected),
+        "tier0_reasons": {str(k): v for k, v in rejected.items()},
+        "parse_failures": parse_failures,
+        "wall_seconds": round(wall, 1),
         "input_tokens": in_tok, "output_tokens": out_tok, "cost_inr": round(cost, 2),
     }
     plan.setdefault("genon", {})["seam_polish"] = rec

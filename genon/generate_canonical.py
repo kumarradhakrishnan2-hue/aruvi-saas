@@ -50,10 +50,10 @@ GENERATION_MODEL = "claude-sonnet-4-6"
 MAX_TOKENS_LPA = 64000
 MAX_TOKENS_LP_ONLY = 32000
 
-# ₹ economics (HANDOVER): $3/M input, $15/M output, ₹95/$ — override via flags.
+# ₹ economics (HANDOVER): $3/M input, $15/M output, ₹92/$ — override via flags.
 USD_PER_M_INPUT = 3.0
 USD_PER_M_OUTPUT = 15.0
-INR_PER_USD = 95.0
+INR_PER_USD = 92.0
 
 FOLDER_TO_SUBJECT = {
     "social_sciences": "Social Science",
@@ -76,7 +76,8 @@ def std_duration(grade_folder: str) -> int:
 
 
 def master_plan_entry(subject_folder: str, grade_folder: str, chapter: int) -> dict | None:
-    mp = HERE / "master_plan.json"
+    # master_plan.json lives with the other allocation sources (founder layout, 2026-07-25)
+    mp = REPO / "data" / "content" / "allocation_norms" / "master_plan.json"
     if not mp.exists():
         return None
     combos = json.loads(mp.read_text(encoding="utf-8"))["combos"]
