@@ -1,5 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.1
-(v1.1, 2026-07-23: Rule 14 — band identity, role, and edge band anchoring. Serialization only; no pedagogical rule changed.)
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.0
 
 VOCABULARY
 The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit"). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
@@ -163,26 +162,6 @@ PROHIBITION
 4. MUST NOT invent a parallel activity prompt where the section's own captured apparatus box already supplies one that serves the unit's purpose.
 
 ================================================================================
-RULE 14 · BAND IDENTITY, ROLE, AND EDGE BAND ANCHORING — SERIALIZATION ONLY
-
-MANDATE
-This rule changes how the finished plan is REPORTED, never how it is planned. Author every unit exactly as Rules 1–13 direct; then label what was authored:
-1. band_id — every time band carries a stable identifier "P<period_number>.<ordinal>" (the first band of unit 7 is "P7.1").
-2. role — every time band declares the function its text already performs, exactly one of:
-   hook — opens the unit's arc: provocation, recall bridge, orienting question.
-   development — carries teaching forward: reading, source work, construction, structured discussion that advances content.
-   consolidation — gathers, closes, or fixes what the unit built: synthesis, resolution, wrap-up writing.
-   Judge role from the band's own text, not its position. A unit may legitimately open without a hook or carry two consolidations — report what is there.
-3. band_refs — every competency edge names the band_id(s) OF ITS OWN UNIT whose activity actually executes that competency's cognitive operation, applying Rule 5's genuineness test band by band. At least one band; several when the operation genuinely spans bands.
-4. The coverage handoff copies each edge's band_refs verbatim onto its LO row (Amendment A2).
-
-PROHIBITION
-1. MUST NOT alter, add, reorder, or retime any band to fit a role pattern — roles label the authored plan; they are never a template for it.
-2. MUST NOT default band_refs to all bands of the unit — the genuineness test is applied per band.
-3. MUST NOT let band_refs reach outside the unit that owns the edge.
-4. MUST NOT use role values outside {hook, development, consolidation}.
-
-================================================================================
 INTEGRITY CONSTRAINTS (system level — override any other instruction)
 
 - The mapping is settled: competency selection and weights are never reopened.
@@ -217,7 +196,7 @@ Edges carry no period_number: an edge's unit is the period that contains it — 
         "section_anchor": "string — named chapter section this unit teaches",
         "materials": ["string"],
         "visual_aids": "string | null",
-        "time_bands": [ { "band_id": "string — \"P<period_number>.<ordinal>\", e.g. \"P7.2\" (Rule 14)", "minutes": "string e.g. 0-8", "activity": "string", "role": "hook | development | consolidation (Rule 14)" } ],
+        "time_bands": [ { "minutes": "string e.g. 0-8", "activity": "string" } ],
         "section_context": "string — 10–12 word content label for this unit; names the section's source/table/graph/map when present (Rule 7)",
         "pedagogical_approaches": ["string — approach(es) this unit runs, verbatim from the Pedagogy document; [] if genuinely diffuse"],
         "teacher_notes": "string — 2–3 sentences, required, teacher-facing; see Rule 10",
@@ -229,8 +208,7 @@ Edges carry no period_number: an edge's unit is the period that contains it — 
             "weight": "integer — 3 | 2 | 1, copied from the mapping",
             "competency_text": "string",
             "implied_lo": "string — skill this unit builds toward this competency; no proper nouns",
-            "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation",
-            "band_refs": ["string — band_id(s) of this unit whose activity executes this competency (Rule 14)"]
+            "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation"
           }
         ]
       }
@@ -254,8 +232,7 @@ Emitted as "coverage_handoff", a sibling of "lesson_plan" in the top-level JSON.
         "section_anchor": "string — copied from that period",
         "section_context": "string — copied from that period",
         "implied_lo": "string — copied verbatim from the edge",
-        "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation — copied from the edge",
-        "band_refs": ["string — copied verbatim from the edge (Rule 14)"]
+        "cognitive_demand": "Recall | Understanding | Application | Analysis | Evaluation — copied from the edge"
       }
     ]
   }

@@ -2153,3 +2153,19 @@ as VI (`"<section title> (<unit title>)"`).
 ### Text updates (2026-06-22)
 - Changed "AI Suggested Allocation" → "Suggested allocation" (line 248, Allocate.jsx)
 - Changed period-definition subtitle to "To begin, set the total number of periods available and how long each period type lasts below." (line 370, Allocate.jsx)
+
+
+---
+
+## 2026-07-23 — Gen-on-gen (genon) architecture settled + partition v0.3 shipped
+
+Full state, locked decisions, agreed 8-step plan, deployed test plans (Kumar1), and
+open items are in **genon/HANDOVER.md — the next genon session MUST read it first.**
+Headlines: phase-centric pipeline (canonical → compile → phase stream → deterministic
+partition → optional Sonnet seam polish); canonical durations 40/≤VII, 45/VIII, 50/IX,
+single row, duration mix never reaches the generator; three-regime compression
+(rescale ≥0.8 · role-weighted 0.6–0.8 · drop trailing units <0.6 with Rule-4-style
+coverage note); golden-8 link resolution relocates to compile-time unchanged; corpus
+back-fill to v1.1 schema approved but NOT done (pre-warm checklist entry owed when run);
+SS-secondary v1.1 constitution drafts in genon/amended/. Adaptation economics measured:
+partition Rs.0/ms + polish Rs.1.75–3.88/14–36s vs Rs.67.6/minutes original generation.
