@@ -1,12 +1,11 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.2.1
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.2
 (v1.1, 2026-07-24: Rule 14 — band identity, role, and edge band anchoring; time input = single standard row. Serialization and input-shape only; no pedagogical rule changed.)
 (v1.1.1, 2026-07-25: Rule 14 role guidance made definitional — arc framing removed, roles judged on a best-effort basis. Labeling only; band structure and all other rules unchanged.)
 (v1.1.2, 2026-07-25: temporal self-containment — band text carries no calendar words and no cross-unit references; teacher notes' previous-unit link is the only cross-unit reference, always backward, never in calendar time. Register only; no pedagogical rule changed.)
 (v1.2, 2026-07-25: roles leave the bands — Rule 14 carries identity and anchoring only; a new Rule 15 classifies every band's role in a single role_handoff emitted after the plan is complete, so authoring is never shaped by the role taxonomy. Serialization only; no pedagogical rule changed.)
-(v1.2.1, 2026-07-26: teacher notes become position-free — the continuity link names the content it builds on, never a unit's position; positional orientation belongs exclusively to the platform, which alone knows where a timetable places each boundary. Register only; no pedagogical rule changed.)
 
 VOCABULARY
-The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit"). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
 
 THE EDGE MODEL
 A unit teaches content (one textbook section). A competency is realised by some units and not others. Where a unit genuinely advances a competency, that pairing is an EDGE, and every edge produces exactly one Learning Outcome — the transferable skill that unit builds toward that competency. The LO carries both endpoints (its unit and its competency), so they cannot disagree. The relationship is many-to-many and unforced: a unit may carry zero, one, or several edges; a competency reaches only the units that genuinely realise it.
@@ -128,11 +127,11 @@ PROHIBITION
 RULE 10 · TEACHER NOTES
 
 MANDATE
-Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a continuity link to the content already taught — named by that content itself, never by its position (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.
+Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a link to the previous unit (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.
 
 PROHIBITION
 MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.
-MUST NOT use calendar words (today, yesterday, this week, next class) or positional references of any direction — the previous unit, this unit, the next unit, last time, in the next…. Continuity is expressed by naming the content it builds on (“Having traced the Vedic political vocabulary, …”), never by pointing at units: only the platform knows where a teacher's timetable places each boundary.
+MUST NOT use calendar words (today, yesterday, this week, next class) or forward references (the next unit, in the next…, we shall see) — the Rule-10 link to the previous unit is the ONLY cross-unit reference, and it always looks backward.
 
 ================================================================================
 RULE 11 · HOMEWORK

@@ -42,6 +42,10 @@ kinds of container text, nothing else:
    are certified content, keep one per unit; (c) one facilitation pointer or hook.
    Drop repetition and connective padding first. Every fact must come from the current
    note — condense only, never add. No "[Next unit]" or bracketed markers.
+   Strip positional references — "the previous unit", "this unit", "the next unit" —
+   and express the same continuity by NAMING the content instead ("Having traced the
+   Vedic political vocabulary, …"). Position language is true only in the opening
+   continuation clause, which comes from the actual partition.
    HARD REQUIREMENT: when needs_seam_note is true, the teacher_note MUST BEGIN with one
    short continuation clause (max 20 words) saying where the previous session stopped
    and what to resume — this outranks everything else in the priority order.
@@ -185,9 +189,8 @@ def run_polish(plan: dict) -> dict:
         except Exception:
             delta = None
         if delta is None:
-            # A garbled reply must NOT read as "nothing needed changing": every period
-            # not already accepted stays rejected, so the loop retries and the record
-            # carries the reason.
+            # A garbled reply must NOT read as "nothing needed changing": every period not
+            # already accepted stays rejected, so the loop retries and the record says why.
             parse_failures += 1
             rejected = {f["n"]: "unparseable delta" for f in flagged
                         if f["n"] not in accepted}
@@ -198,12 +201,14 @@ def run_polish(plan: dict) -> dict:
             rejected = {n: r for n, r in rejected.items() if n not in accepted}
         if not rejected:
             break
-        # one retry, naming what failed. Only the failures need resending — the
-        # accepted entries are held above, so a partial reply loses nothing.
+        # One retry, naming what failed. ONLY the failures are resent — the accepted
+        # entries are held above, so a partial reply loses nothing and the second call
+        # costs a fraction of the first (the old "full delta again" wording doubled
+        # both input AND output token spend to fix a single period).
         user = (base_user + "\n\nYour previous delta failed validation on these periods — "
                 + json.dumps(rejected) + ". Return a JSON delta covering ONLY these periods, "
                 "corrected, respecting the word budgets and the ≤20-word opening "
-                "continuation clause. The periods not listed are already accepted.")
+                "continuation clause. The periods not listed are already accepted — do not resend them.")
     changed = apply_polish(plan, {"periods": [accepted[n] for n in sorted(accepted)]})
     wall = time.time() - t0
     cost = (in_tok / 1000 * IN_1K + out_tok / 1000 * OUT_1K) * INR

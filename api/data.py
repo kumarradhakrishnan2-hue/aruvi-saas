@@ -231,9 +231,87 @@ def _canonical_path(subject: str, grade: str, chapter_number: int) -> str:
                         f"ch_{int(chapter_number):02d}_canonical.json")
 
 
+def append_token_log(call_type: str, subject: str, grade: str, chapter_number,
+                     chapter_title: str, input_tokens: int, output_tokens: int,
+                     cost_inr: float) -> None:
+    """Append a paid-run row to the founder's unified cost notebook —
+    THIS repo's runtime_data/token_log.csv (fresh log started 2026-07-25, seeded
+    with the first ch 5 canonical run; the pre-genon prototype history is archived
+    alongside as token_log_old.csv). BEST-EFFORT ONLY: any error is swallowed —
+    serving the teacher never waits on bookkeeping."""
+    try:
+        import csv
+        from datetime import datetime
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        path = os.environ.get("ARUVI_TOKEN_LOG") or os.path.join(
+            repo_root, "runtime_data", "token_log.csv")
+        if not os.path.isfile(path):
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                f.write("timestamp,call_type,subject,grade,chapter_number,chapter_title,"
+                        "input_tokens,output_tokens,total_tokens,cost_inr,"
+                        "cache_write_input_tokens,cache_read_input_tokens\n")
+        with open(path, "a", newline="", encoding="utf-8") as f:
+            csv.writer(f).writerow([
+                datetime.now().isoformat(timespec="seconds"), call_type, subject, grade,
+                chapter_number, chapter_title, input_tokens, output_tokens,
+                int(input_tokens) + int(output_tokens), round(float(cost_inr), 4), 0, 0,
+            ])
+    except Exception:
+        pass
+
+
 def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[float]:
     p = _canonical_path(subject, grade, chapter_number)
     return os.path.getmtime(p) if os.path.isfile(p) else None
+
+
+# ── deterministic plan keys (founder decision 2026-07-26) ───────────────────────
+# An adapted plan is a CACHE ENTRY, not an event: its filename is derived from what
+# actually determines its bytes — chapter, duration matrix, canonical version, engine
+# version, and whether the seam polish was applied. Same request from any teacher ->
+# same key -> the entry is served, not regenerated (partition is free; the polish
+# tokens are the spend the cache saves). Per-teacher visibility stays where it
+# belongs: the prepared-plans register (CLOUD_DATA_MODEL §2.3, reference-not-copy).
+# This is the on-disk stand-in for the Bucket-A output cache in §1, so the Supabase
+# migration is a storage swap, not a redesign.
+
+GENON_ENGINE_VERSION = "03"     # BUMP when compile/partition/polish change the OUTPUT
+
+
+def norm_matrix(matrix) -> str:
+    """Duration matrix -> canonical string. Rows are aggregated by duration and sorted
+    longest-first, so 17x50 and 10x50+7x50 yield the SAME key — a teacher must not miss
+    her own cache entry because of how she typed the rows."""
+    agg: Dict[int, int] = {}
+    for d_, c_ in matrix:
+        d_, c_ = int(d_), int(c_)
+        if d_ > 0 and c_ > 0:
+            agg[d_] = agg.get(d_, 0) + c_
+    return "-".join(f"{d}m{agg[d]}" for d in sorted(agg, reverse=True))
+
+
+def canonical_version(canonical: Dict[str, Any]) -> str:
+    """Short stable id for the canonical a plan derives from: its ledger timestamp when
+    the generator stamped one, else a content hash. Regenerating the canonical therefore
+    produces a NEW key — a teacher mid-chapter never has her plan rewritten underneath
+    her; the new plan is a new entry, offered, not substituted."""
+    gc = canonical.get("genon_canonical") or {}
+    ts = "".join(ch for ch in str(gc.get("ledger_ts") or "") if ch.isalnum())
+    if ts:
+        return ts
+    import hashlib
+    blob = json.dumps(canonical.get("result"), ensure_ascii=False, sort_keys=True).encode()
+    return hashlib.sha1(blob).hexdigest()[:12]
+
+
+def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any],
+                        polished: bool) -> str:
+    """e.g. ch_05_50m16_e03_c20260726112240_p.json  (16 x 50 min, engine v0.3,
+    that canonical run, seam-polished). Never collides with ch_NN_canonical.json."""
+    return (f"ch_{int(chapter_number):02d}_{norm_matrix(matrix)}"
+            f"_e{GENON_ENGINE_VERSION}_c{canonical_version(canonical)}"
+            f"{'_p' if polished else ''}.json")
 
 
 def genon_chapters(subject: str, grade: str) -> List[int]:
@@ -277,22 +355,28 @@ def load_genon_stream(subject: str, grade: str, chapter_number: int) -> Optional
     return stream
 
 
-def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any]) -> str:
+def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any],
+                       filename: Optional[str] = None) -> str:
     """Persist a genon-adapted plan into the saved-plans library; returns the filename.
 
     Adapted plans join the same library the viewer/exporters read; per-teacher
     visibility comes from the prepared-plans register, not from where the file sits.
+
+    `filename` is the deterministic key (genon_plan_filename) — the same request
+    rewrites the same entry rather than accumulating near-identical copies. Without
+    one, the legacy timestamp naming applies.
     """
     from datetime import datetime
     d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
     os.makedirs(d, exist_ok=True)
-    nn = f"{int(plan.get('chapter_number') or 0):02d}"
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"ch_{nn}_{ts}.json"
-    seq = 1
-    while os.path.exists(os.path.join(d, filename)):   # same-second uniqueness
-        filename = f"ch_{nn}_{ts}_{seq}.json"
-        seq += 1
+    if not filename:
+        nn = f"{int(plan.get('chapter_number') or 0):02d}"
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"ch_{nn}_{ts}.json"
+        seq = 1
+        while os.path.exists(os.path.join(d, filename)):   # same-second uniqueness
+            filename = f"ch_{nn}_{ts}_{seq}.json"
+            seq += 1
     plan["filename"] = filename
     plan["saved_at"] = datetime.now().isoformat(timespec="seconds")
     with open(os.path.join(d, filename), "w") as f:

@@ -39,14 +39,20 @@ lp = (SRC / "lesson_plan_constitution_v1.0.txt").read_text()
 lp = edit(
     lp,
     "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.0",
-    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.1.2\n"
+    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.2.1\n"
     "(v1.1, 2026-07-24: Rule 14 — band identity, role, and edge band anchoring; time input = single standard row. "
     "Serialization and input-shape only; no pedagogical rule changed.)\n"
     "(v1.1.1, 2026-07-25: Rule 14 role guidance made definitional — arc framing removed, roles judged on a "
     "best-effort basis. Labeling only; band structure and all other rules unchanged.)\n"
     "(v1.1.2, 2026-07-25: temporal self-containment — band text carries no calendar words and no cross-unit "
     "references; teacher notes' previous-unit link is the only cross-unit reference, always backward, never "
-    "in calendar time. Register only; no pedagogical rule changed.)",
+    "in calendar time. Register only; no pedagogical rule changed.)\n"
+    "(v1.2, 2026-07-25: roles leave the bands — Rule 14 carries identity and anchoring only; a new Rule 15 "
+    "classifies every band's role in a single role_handoff emitted after the plan is complete, so authoring "
+    "is never shaped by the role taxonomy. Serialization only; no pedagogical rule changed.)\n"
+    "(v1.2.1, 2026-07-26: teacher notes become position-free — the continuity link names the content it "
+    "builds on, never a unit's position; positional orientation belongs exclusively to the platform, which "
+    "alone knows where a timetable places each boundary. Register only; no pedagogical rule changed.)",
 )
 
 # --- time input: single standard row (HANDOVER Decision 2) ---
@@ -89,26 +95,66 @@ lp = edit(
     "the plan's structure, and unit-to-unit linking lives only in teacher_notes (Rule 10).",
 )
 
+# --- v1.2.1: position-free teacher notes (2026-07-26) ---
+# Founder finding: under partition, stacked notes juggle multiple positional anchors
+# ("previous unit… this unit…" × N), and after a seam "the previous unit" can describe
+# content taught minutes earlier in the SAME sitting — anachronistic. Continuity is now
+# expressed by NAMING the content; position words originate only in the engine's seam
+# clause, where the actual partition makes them true.
+lp = edit(
+    lp,
+    'The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit").',
+    'The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework).',
+)
+
+lp = edit(
+    lp,
+    "Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a link to the previous unit (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.",
+    "Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a continuity link "
+    "to the content already taught — named by that content itself, never by its position (the first unit "
+    "orients to the chapter's start), one common confusion drawn only from the chapter summary, and "
+    "optionally a facilitation pointer.",
+)
+
+lp = edit(
+    lp,
+    "MUST NOT use calendar words (today, yesterday, this week, next class) or forward references "
+    "(the next unit, in the next…, we shall see) — the Rule-10 link to the previous unit is the ONLY "
+    "cross-unit reference, and it always looks backward.",
+    "MUST NOT use calendar words (today, yesterday, this week, next class) or positional references of any "
+    "direction — the previous unit, this unit, the next unit, last time, in the next…. Continuity is "
+    "expressed by naming the content it builds on (“Having traced the Vedic political vocabulary, …”), "
+    "never by pointing at units: only the platform knows where a teacher's timetable places each boundary.",
+)
+
 # --- Rule 14 ---
 RULE14 = """================================================================================
-RULE 14 · BAND IDENTITY, ROLE, AND EDGE BAND ANCHORING — SERIALIZATION ONLY
+RULE 14 · BAND IDENTITY AND EDGE BAND ANCHORING — SERIALIZATION ONLY
 
 MANDATE
 This rule changes how the finished plan is REPORTED, never how it is planned. Author every unit exactly as Rules 1–13 direct; then label what was authored:
 1. band_id — every time band carries a stable identifier "P<period_number>.<ordinal>" (the first band of unit 7 is "P7.1").
-2. role — every time band declares the function its text already performs, based on the following guidance, applied on a best-effort basis:
+2. band_refs — every competency edge names the band_id(s) OF ITS OWN UNIT whose activity actually executes that competency's cognitive operation, applying Rule 5's genuineness test band by band. At least one band; several when the operation genuinely spans bands.
+3. The coverage handoff copies each edge's band_refs verbatim onto its LO row (Amendment A2).
+
+PROHIBITION
+1. MUST NOT default band_refs to all bands of the unit — the genuineness test is applied per band.
+2. MUST NOT let band_refs reach outside the unit that owns the edge.
+
+================================================================================
+RULE 15 · ROLE HANDOFF — REQUIRED COMPANION OUTPUT
+
+MANDATE
+After the lesson plan and coverage handoff are fully built, emit role_handoff as a sibling of lesson_plan: a flat classification covering EVERY band_id in the plan, in plan order. Each band is classified by the function its already-written text performs, exactly one of:
    hook — a provocation, recall bridge, or orienting question.
    development — reading, source work, construction, structured discussion that advances content.
    consolidation — synthesis, resolution, wrap-up writing.
-   Judge role from the band's own text, not its position.
-3. band_refs — every competency edge names the band_id(s) OF ITS OWN UNIT whose activity actually executes that competency's cognitive operation, applying Rule 5's genuineness test band by band. At least one band; several when the operation genuinely spans bands.
-4. The coverage handoff copies each edge's band_refs verbatim onto its LO row (Amendment A2).
+Judge each band from its own text alone. This is a reading of the finished plan, never an input to it.
 
 PROHIBITION
-1. MUST NOT alter, add, reorder, or retime any band to fit a role pattern — roles label the authored plan; they are never a template for it.
-2. MUST NOT default band_refs to all bands of the unit — the genuineness test is applied per band.
-3. MUST NOT let band_refs reach outside the unit that owns the edge.
-4. MUST NOT use role values outside {hook, development, consolidation}.
+1. MUST NOT shape, size, order, or count any band in anticipation of this classification — the plan is authored complete under Rules 1–13 before this rule reads it.
+2. MUST NOT use values outside {hook, development, consolidation}.
+3. MUST NOT omit, invent, or duplicate a band_id — role_handoff covers exactly the bands the plan contains.
 
 """
 lp = edit(
@@ -135,8 +181,7 @@ lp = edit(
     lp,
     '"time_bands": [ { "minutes": "string e.g. 0-8", "activity": "string" } ],',
     '"time_bands": [ { "band_id": "string — \\"P<period_number>.<ordinal>\\", e.g. \\"P7.2\\" (Rule 14)", '
-    '"minutes": "string e.g. 0-8", "activity": "string", '
-    '"role": "hook | development | consolidation (Rule 14)" } ],',
+    '"minutes": "string e.g. 0-8", "activity": "string" } ],',
 )
 
 lp = edit(
@@ -158,6 +203,13 @@ lp = edit(
     "}",
 )
 
+lp = edit(
+    lp,
+    '''  "coverage_handoff": { "...": "per Amendment A2 — required sibling of lesson_plan" },''',
+    '''  "coverage_handoff": { "...": "per Amendment A2 — required sibling of lesson_plan" },
+  "role_handoff": { "P<unit>.<n>": "hook | development | consolidation — one entry per band, in plan order (Rule 15)" },''',
+)
+
 # --- A2 schema edit ---
 lp = edit(
     lp,
@@ -174,7 +226,7 @@ lp = edit(
     "}",
 )
 
-(OUT / "lesson_plan_constitution_v1.1.2.txt").write_text(lp)
+(OUT / "lesson_plan_constitution_v1.2.1.txt").write_text(lp)
 
 # ---------------- Assessment constitution: v1.1 -> v1.2 ----------------
 ac = (SRC / "assessment_constitution_v1.1_pre_phase_ref.txt").read_text()
@@ -238,6 +290,6 @@ ac = edit(
 )
 
 (OUT / "assessment_constitution_v1.2.txt").write_text(ac)
-print("LP  v1.1.2:", len(lp), "chars")
+print("LP  v1.2.1:", len(lp), "chars")
 print("AC  v1.2:", len(ac), "chars")
 print("written to", OUT)

@@ -36,15 +36,18 @@ def _parse_band(s):
     return int(a), int(b)
 
 
-def _check_declarations(periods, items):
+def _check_declarations(periods, items, role_handoff):
+    """role source (LP v1.2): the Rule-15 role_handoff sibling; v1.1.x canonicals
+    carried roles inline on each band — accept either, require one per band."""
     problems = []
     for p in periods:
         n = p.get("period_number")
         for i, tb in enumerate(p.get("time_bands") or []):
             if not tb.get("band_id"):
                 problems.append(f"P{n} band {i+1}: missing band_id")
-            if tb.get("role") not in VALID_ROLES:
-                problems.append(f"P{n} band {i+1}: role {tb.get('role')!r}")
+            role = role_handoff.get(tb.get("band_id")) or tb.get("role")
+            if role not in VALID_ROLES:
+                problems.append(f"P{n} band {i+1}: role {role!r}")
         band_ids = {tb.get("band_id") for tb in p.get("time_bands") or []}
         for e in p.get("competency_edges") or []:
             refs = e.get("band_refs")
@@ -63,8 +66,9 @@ def compile_stream(plan: dict) -> dict:
     result = plan.get("result", plan)
     periods = result["lesson_plan"]["periods"]
     items_in = result.get("assessment_items", []) or []
+    role_handoff = result.get("role_handoff") or plan.get("role_handoff") or {}
 
-    problems = _check_declarations(periods, items_in)
+    problems = _check_declarations(periods, items_in, role_handoff)
     if problems:
         raise GenonDeclarationError(problems)
 
@@ -79,7 +83,7 @@ def compile_stream(plan: dict) -> dict:
                 "phase_id": tb["band_id"],
                 "seq": seq,
                 "minutes": z - a,
-                "role": tb["role"],
+                "role": role_handoff.get(tb["band_id"]) or tb["role"],
                 "activity": tb["activity"],
                 "unit": unum,
             })
@@ -109,7 +113,7 @@ def compile_stream(plan: dict) -> dict:
             "chapter_number": plan.get("chapter_number"),
             "chapter_title": plan.get("chapter_title"),
             "source_file": plan.get("filename"),
-            "role_provenance": "declared",
+            "role_provenance": "declared (role_handoff)" if role_handoff else "declared (inline)",
             "authored_matrix": plan.get("period_rows_snapshot")
                 or plan.get("period_schedule")
                 or (result.get("period_schedule") if isinstance(result, dict) else None),

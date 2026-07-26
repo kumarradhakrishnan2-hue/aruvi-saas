@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // Shared offscreen canvas for text measurement (auto-fit). One per module — cheap, never in DOM.
 let _fitCanvas = null;
@@ -243,41 +243,144 @@ export function RollWheel({ items, value, onChange, ariaLabel, large, rowPx = WH
  * can't see the earlier ones and may leave a stray tick behind — so a running "chosen so far"
  * line sits UNDER the Continue/Done button, always listing the full current selection (in option
  * order) no matter where the wheel is scrolled. Set `summaryLabel={false}` to suppress it. */
-export function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children, summaryLabel = true }) {
+/* `trailing` turns the wheel into a two-column picker: each row keeps its tick + label on the
+ * left and renders `trailing(option, isSelected)` on the right. It exists so the duration
+ * question can carry its own periods/week split inline (founder, 2026-07-26) instead of pushing
+ * the teacher to a second screen — one question, one format. When it is supplied the row becomes
+ * a <div> wrapper rather than a <button>, because the trailing cell holds its own control and a
+ * button cannot nest inside a button. `trailingHeader` labels the column, and
+ * `summaryFor` overrides `labelFor` in the running "Chosen (n)" line so it can carry the split
+ * ("40 min × 3, 45 min × 4") rather than just naming the lengths. `leadingHeader` names the LEFT
+ * column once a trailing one exists — with two columns in play the left needs saying out loud
+ * ("Duration"), where a single-column wheel never did.
+ *
+ * ★ CLUSTERING (founder, 2026-07-26). Ticked options gather into one run in ascending order, and
+ * the wheel rests with the LOWEST of them as its first visible row. Only four or five rows show at
+ * a time, so in a fixed order a teacher who taught 6A and 6R, or 40 min and 90 min, could never see
+ * both picks at once and had to wheel back and forth to check what she had. The cluster forms at
+ * the lowest pick's OWN slot rather than at the head of the list, so the options before it are
+ * still there, one wheel-up away, and the list below resumes past her highest pick. See
+ * clusterOrder for what that drops and how to get it back. Applies to every wheel — subjects, classes, sections, durations — because they all
+ * come through here. Pass `cluster={false}` to opt out. */
+/* The clustering rule. Chosen options gather into ONE run, in natural (ascending) order, sitting
+ * at the natural slot of the LOWEST chosen one — not at the top of the array. Whatever naturally
+ * precedes that item stays above it, still reachable by wheeling up. Below the cluster, the list
+ * resumes only AFTER the LATEST (highest) chosen one: the unchosen options she has already scrolled
+ * past, between her lowest and highest pick, are dropped from the wheel (founder, 2026-07-26).
+ * Picking runs upward in practice — 40 then 45, 6A then 6C — so the rows worth showing next are the
+ * ones beyond her furthest pick, and carrying the skipped middle just pads the window.
+ *
+ *   20 25 30 35 40 45 50 55 60   ·  pick 50, then 30
+ *   20 25 [30 50] 55 60          ·  cluster at 30's slot; 20/25 above; 35 40 45 dropped
+ *          ▲ first visible row
+ *
+ * TRADE-OFF, deliberate: a middle value cannot be added while it is hidden — to reach 45 here she
+ * unticks 50 and the middle reappears, since this is recomputed from `selected` every render and
+ * nothing is remembered. Untick is therefore the escape hatch, not a dead end.
+ *
+ * Returns { ordered, start } — start is the row index the wheel should rest on. */
+export function clusterOrder(options, selected) {
+  const opts = options || [];
+  const sel = opts.filter((x) => (selected || []).includes(x));
+  if (!sel.length) return { ordered: opts, start: 0 };
+  const lowest = opts.indexOf(sel[0]);                       // natural slot of the lowest chosen
+  const highest = opts.indexOf(sel[sel.length - 1]);         // ...and of the latest/highest
+  const before = opts.filter((x, i) => i < lowest && !sel.includes(x));
+  const after = opts.filter((x, i) => i > highest && !sel.includes(x));
+  return { ordered: before.concat(sel, after), start: before.length };
+}
+
+export function PickWheel({ options, selected, onToggle, labelFor, initialScrollTo, ariaLabel, children,
+                            summaryLabel = true, trailing, trailingHeader, leadingHeader, summaryFor,
+                            cluster = true }) {
   const wheelRef = useRef(null);
-  const step = (dir) => stepScroll(wheelRef.current, dir, PICK_ROW, options.length);
+  /* Bounds and the ▲▼ cue key off the VISIBLE list, not `options`: clustering drops the unchosen
+   * rows between her lowest and highest pick, so the wheel can be materially shorter than the
+   * option list. Using options.length here let the arrows scroll into empty space past the end,
+   * and kept the arrows on show for a list that no longer needed them. */
+  const { ordered } = useMemo(
+    () => (cluster ? clusterOrder(options, selected) : { ordered: options, start: 0 }),
+    [options, selected, cluster]);
+  const step = (dir) => stepScroll(wheelRef.current, dir, PICK_ROW, ordered.length);
   const onKeyDown = (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
     else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
   };
-  const showCue = options.length > 4;
+  const showCue = ordered.length > 4;
+
+  /* Every toggle re-rests the wheel on the cluster's first row, so "the lowest pick is the top
+   * row" holds as an invariant rather than only at the moment of choosing. Without it the reorder
+   * is invisible from a scrolled position — she taps 90 min low down, it moves into the cluster
+   * off screen, and all she sees is the row vanish from under her finger. It also resets the tap
+   * origin after every pick, so the next tap starts somewhere known instead of on a list that has
+   * just shifted (founder, 2026-07-26). Unticking usually moves nothing: the rest position only
+   * changes when the LOWEST chosen one is the one let go. */
+  const restOn = (row) => {
+    const el = wheelRef.current;
+    if (!el) return;
+    const reduce = typeof window !== "undefined" && typeof window.matchMedia === "function"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // One frame, so the reordered rows are committed before the scroll animates.
+    requestAnimationFrame(() => {
+      const top = row * PICK_ROW;
+      try { el.scrollTo({ top, behavior: reduce ? "auto" : "smooth" }); }
+      catch { el.scrollTop = top; }
+    });
+  };
+  const pick = (o, wasOn) => {
+    onToggle(o);
+    if (!cluster) return;
+    // Rest on the NEXT selection's cluster, not the current one — onToggle's state lands later.
+    const next = wasOn ? selected.filter((x) => x !== o) : selected.concat([o]);
+    restOn(clusterOrder(options, next).start);
+  };
 
   // Running confirmation of the full current selection, in option order (independent of scroll
   // position), so a stray tick from an earlier, now-scrolled-away batch stays visible.
   const chosen = options.filter((o) => selected.includes(o));
-  const summary = chosen.map((o) => (labelFor ? labelFor(o) : String(o))).join(", ");
+  const summary = chosen.map((o) => (summaryFor ? summaryFor(o) : labelFor ? labelFor(o) : String(o))).join(", ");
 
   useEffect(() => {
     const el = wheelRef.current;
     if (!el || initialScrollTo == null) return;
-    const idx = options.indexOf(initialScrollTo);
+    // An existing selection wins: open resting on her cluster, not on a seeded suggestion.
+    const { start } = cluster ? clusterOrder(options, selected) : { start: 0 };
+    const idx = (selected || []).length ? start : ordered.indexOf(initialScrollTo);
     if (idx >= 0) el.scrollTop = idx * PICK_ROW;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="fr-sec-wheel-wrap">
-      <div className="fr-sec-wheel-col">
+    <div className={`fr-sec-wheel-wrap${trailingHeader ? " has-trail" : ""}`}>
+      <div className={`fr-sec-wheel-col${trailingHeader ? " has-trail" : ""}`}>
+        {trailing && trailingHeader ? (
+          <div className="fr-sec-colhead" aria-hidden="true">
+            <span>{leadingHeader}</span><span>{trailingHeader}</span>
+          </div>
+        ) : null}
         <div className="fr-sec-list fr-sec-wheel" ref={wheelRef} onKeyDown={onKeyDown} tabIndex={0}
           role="listbox" aria-label={ariaLabel} aria-multiselectable="true">
-          {options.map((o) => {
+          {ordered.map((o) => {
             const on = selected.includes(o);
+            if (!trailing) {
+              return (
+                <button type="button" key={o} className={`fr-sec-opt ${on ? "on" : ""}`} onClick={() => pick(o, on)}
+                  role="option" aria-selected={on}>
+                  <span className="fr-sec-check">{on ? "✓" : ""}</span>
+                  <span className="fr-sec-label">{labelFor ? labelFor(o) : o}</span>
+                </button>
+              );
+            }
             return (
-              <button type="button" key={o} className={`fr-sec-opt ${on ? "on" : ""}`} onClick={() => onToggle(o)}
-                role="option" aria-selected={on}>
-                <span className="fr-sec-check">{on ? "✓" : ""}</span>
-                <span className="fr-sec-label">{labelFor ? labelFor(o) : o}</span>
-              </button>
+              <div key={o} className={`fr-sec-optrow ${on ? "on" : ""}`} role="option" aria-selected={on}>
+                <button type="button" className={`fr-sec-opt fr-sec-opt-grow ${on ? "on" : ""}`}
+                  onClick={() => pick(o, on)}
+                  aria-label={`${labelFor ? labelFor(o) : o}${on ? " (selected)" : ""}`}>
+                  <span className="fr-sec-check">{on ? "✓" : ""}</span>
+                  <span className="fr-sec-label">{labelFor ? labelFor(o) : o}</span>
+                </button>
+                <span className="fr-sec-trail">{trailing(o, on)}</span>
+              </div>
             );
           })}
         </div>
@@ -302,65 +405,206 @@ export function PickWheel({ options, selected, onToggle, labelFor, initialScroll
   );
 }
 
-/* ───────── periods/week capture — shared by FirstRun's profile acquisition AND (a copy of) the
- * Settings profile editor. periods/week is stored PER DURATION TYPE (ppw_by_duration:
- * { [minutes]: count }); the weekly total is their SUM, never asked directly. See MEMORY.md
- * 2026-07-05. NOTE: TeachingProfile.jsx still carries its OWN identical copy of normPpw/ppwMapSum/
- * PpwCapture + these constants — migrating it to import from here is a deferred cleanup. ───────── */
+/* ───────── periods/week capture — the ONE implementation, shared by FirstRun's profile
+ * acquisition and the Settings profile editor (TeachingProfile.jsx imports from here as of
+ * 2026-07-26; its private byte-identical copy is deleted). periods/week is stored PER DURATION
+ * TYPE (ppw_by_duration: { [minutes]: count }); the weekly total is their SUM. See MEMORY.md
+ * 2026-07-05.
+ *
+ * ★ TOTAL-PRESERVING SPLIT (founder, 2026-07-26). The old model made a second duration ADDITIVE:
+ * adding 45 min to a class already set at 8 × 50 min seeded the new row at a hardcoded 1 and the
+ * week silently became 9 — which then rode all the way through annualBudgetPeriods() as
+ * 9 × 30 = 270 periods a year. Wrong: a teacher who names a second period length is telling us
+ * how her SAME week is split, not that she gained a class.
+ *
+ * ★ FLIPPED QUESTION ORDER (founder, 2026-07-26). periods/week is asked BEFORE duration, in every
+ * flow. She states the size of her week once, unattached to any length; the duration question then
+ * carries the split inline as a second column (PickWheel's `trailing`), so the separate
+ * periods-per-duration screen is gone. Because the week is stated first, the ANCHOR is simply the
+ * LOWEST length she ticks — no "which length owns the week" question arises. The one exception is
+ * editing durations from the profile WITHOUT restating the total, where the stored `ppw_anchor` is
+ * preserved so an 8 × 50 class does not silently become 8 × 45 the moment she adds 45.
+ *
+ * So the weekly total is INVARIANT under any duration change. One duration is the ANCHOR and it
+ * carries the REMAINDER: anchor = total − Σ(others).
+ * A newly added duration starts at 0. Bumping it to 1 takes 1 from the anchor; removing a
+ * duration gives its periods back to the anchor. The anchor is persisted as `ppw_anchor` on the
+ * grade record so it survives the ascending sort applied to `durations` (durations[0] is the
+ * SMALLEST length, which is emphatically not the same thing as the original one). ───────── */
 export const DEFAULT_DURATION = 40;
 export const DEFAULT_PPW = 6;
 export const DURATION_CHOICES = Array.from({ length: 21 }, (_, i) => 20 + i * 5); // 20,25,…120 min
 export const PPW_CHOICES = Array.from({ length: 14 }, (_, i) => i + 1);           // 1…14 periods/week
 
 export const ppwMapSum = (m) => Object.keys(m || {}).reduce((a, k) => a + (Number(m[k]) || 0), 0);
-// Reconcile a per-duration weekly-count map to the CURRENT durations: keep each surviving count;
-// a duration with no count yet defaults to the whole total when there's a single type, else to 1.
-export const normPpw = (durations, map, fallbackPpw) => {
-  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
+
+const _durs = (durations) => {
+  const a = (durations || []).map(Number).filter((n) => n > 0);
+  return a.length ? a : [DEFAULT_DURATION];
+};
+const _get = (map, d) => Number((map || {})[d] ?? (map || {})[String(d)]) || 0;
+
+/* Which duration carries the remainder. The stored `anchor` wins whenever it is still one of
+ * the current durations; otherwise fall back to the duration holding the largest count (right
+ * after a second length is added that IS the original, since it still holds the whole week),
+ * and finally to the first. Deriving it rather than trusting array order is what keeps the
+ * behaviour correct after `durations` is sorted ascending by the pickers. */
+/* The anchor under the flipped order: the shortest length she has ticked. Deterministic, needs no
+ * memory of tick order, and matches how the split column reads top-down. */
+export const lowestDuration = (durations) => Math.min(..._durs(durations));
+
+export const ppwAnchor = (durations, map, anchor) => {
+  const durs = _durs(durations);
+  if (anchor != null && durs.includes(Number(anchor))) return Number(anchor);
+  let best = durs[0], bestV = -1;
+  durs.forEach((d) => { const v = _get(map, d); if (v > bestV) { best = d; bestV = v; } });
+  return best;
+};
+
+/* Reconcile a per-duration map to the CURRENT durations while HOLDING THE WEEKLY TOTAL FIXED.
+ * The total is the sum of the incoming map (which still holds any just-removed duration's
+ * count, so removals flow back to the anchor), or `fallbackPpw` on a cold start. Every
+ * non-anchor duration keeps its own count or starts at 0; the anchor absorbs the rest. */
+export const normPpw = (durations, map, fallbackPpw, anchor) => {
+  const durs = _durs(durations);
+  const prev = map || {};
+  const prevTotal = ppwMapSum(prev);
+  const total = prevTotal > 0 ? prevTotal : Math.max(1, Number(fallbackPpw) || DEFAULT_PPW);
+  const a = ppwAnchor(durs, prev, anchor);
   const out = {};
-  durs.forEach((d) => {
-    const v = Number((map || {})[d] ?? (map || {})[String(d)]);
-    out[d] = v > 0 ? v : (durs.length === 1 ? (Number(fallbackPpw) || DEFAULT_PPW) : 1);
-  });
+  let others = 0;
+  durs.forEach((d) => { if (d !== a) { const n = Math.max(0, _get(prev, d)); out[d] = n; others += n; } });
+  out[a] = Math.max(0, total - others);
+  if (ppwMapSum(out) <= 0) out[a] = 1;            // a week of zero periods is never an answer
   return out;
 };
 
-// Single duration → the same large periods/week wheel; >1 duration → a two-column table
-// (Duration · a −/number/+ stepper per row, up to three) with a live weekly total.
-export function PpwCapture({ durations, map, onSet }) {
-  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
-  if (durs.length === 1) {
-    const d = durs[0];
-    const val = Number(map[d] ?? map[String(d)]) || DEFAULT_PPW;
-    return (
-      <RollWheel ariaLabel="Periods per week" large value={String(val)}
-        onChange={(v) => onSet(d, Number(v))}
-        items={PPW_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period a week" : "periods a week" }))} />
-    );
-  }
-  const total = durs.reduce((a, d) => a + (Number(map[d] ?? map[String(d)]) || 0), 0);
+/* Set ONE non-anchor duration's weekly count, holding the total fixed — the anchor absorbs the
+ * delta. Clamped so the anchor can never go negative. Setting the anchor itself is a no-op here
+ * (it is derived); use setPpwTotal to change the size of the week. */
+export const setPpwSplit = (durations, map, anchor, d, v) => {
+  const durs = _durs(durations);
+  const base = normPpw(durs, map, DEFAULT_PPW, anchor);
+  const a = ppwAnchor(durs, base, anchor);
+  if (Number(d) === a) return base;
+  const total = ppwMapSum(base);
+  const fixed = durs.reduce((s, x) => (x === a || x === Number(d) ? s : s + base[x]), 0);
+  const n = Math.min(Math.max(0, Math.round(Number(v) || 0)), Math.max(0, total - fixed));
+  return { ...base, [Number(d)]: n, [a]: total - fixed - n };
+};
+
+/* Change the SIZE of the week (the one control that legitimately moves the total). The split of
+ * the non-anchor durations is preserved where it still fits; the anchor takes the remainder. */
+export const setPpwTotal = (durations, map, anchor, total) => {
+  const durs = _durs(durations);
+  const base = normPpw(durs, map, DEFAULT_PPW, anchor);
+  const a = ppwAnchor(durs, base, anchor);
+  const want = Math.max(1, Math.round(Number(total) || 0));
+  const out = { ...base };
+  let others = 0;
+  durs.forEach((d) => {
+    if (d === a) return;
+    const n = Math.min(out[d], Math.max(0, want - others));   // shrink the split to fit a smaller week
+    out[d] = n; others += n;
+  });
+  out[a] = Math.max(0, want - others);
+  if (ppwMapSum(out) <= 0) out[a] = 1;
+  return out;
+};
+
+/* The weekly TOTAL — one number, asked before any duration is named, so it belongs to her week
+ * rather than to a period length. The per-duration split is no longer its own screen: it rides
+ * along as PickWheel's trailing column on the duration question (see PpwSplitCell). */
+export function PpwTotalWheel({ value, onChange }) {
   return (
-    <div className="tp-ppw-table">
-      <div className="tp-ppw-row tp-ppw-head">
-        <span className="tp-ppw-dur">Duration</span>
-        <span className="tp-ppw-ct">Periods / week</span>
-      </div>
-      {durs.map((d) => {
-        const val = Number(map[d] ?? map[String(d)]) || 1;
-        return (
-          <div className="tp-ppw-row" key={d}>
-            <span className="tp-ppw-dur">{d} min</span>
-            <span className="tp-ppw-stepper">
-              <button type="button" className="tp-val-btn" aria-label={`Fewer ${d}-minute periods`} onClick={() => onSet(d, Math.max(1, val - 1))}>−</button>
-              <input type="number" className="tp-val-input tp-ppw-input" min="1" value={val}
-                onChange={(e) => onSet(d, Math.max(1, parseInt(e.target.value, 10) || 1))}
-                aria-label={`Periods per week for ${d}-minute classes`} />
-              <button type="button" className="tp-val-btn" aria-label={`More ${d}-minute periods`} onClick={() => onSet(d, val + 1)}>+</button>
-            </span>
-          </div>
-        );
-      })}
-      <p className="tp-ppw-total">= {total} periods a week</p>
-    </div>
+    <RollWheel ariaLabel="Periods per week" large value={String(Number(value) || DEFAULT_PPW)}
+      onChange={(v) => onChange(Number(v))}
+      items={PPW_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period a week" : "periods a week" }))} />
+  );
+}
+
+/* One cell of that split column. The ANCHOR (lowest ticked length) shows a derived, NON-EDITABLE
+ * remainder — a bare number, no label: the column heading already says what it is, and the word
+ * "rest" only competed with the figure (founder, 2026-07-26). Every other ticked length gets a
+ * 0…total picker, and moving it moves the anchor by the same amount, so the week never changes
+ * size. Unticked rows and the single-length case show nothing — the column only earns its space
+ * once a second length is ticked.
+ *
+ * ★ NOT a native <select> (2026-07-26). On macOS the popup list of a <select> is drawn by the OS,
+ * so `option { background }` is ignored outright and the menu stays system-grey however the chip
+ * is styled — the palette simply cannot reach it. This is a real listbox instead, so the open menu
+ * carries the warm-paper system like everything else. It is position:FIXED because the duration
+ * wheel is an overflow:auto scroller that would otherwise clip it, and it closes on select, on
+ * Escape, on an outside press, and on any scroll or resize (rather than chase the anchor rect).
+ *
+ * The closed chip is a form field only while it is still ASKING: at 0 it reads as a pine-bordered
+ * box, and the moment she picks a number it settles into the row (surface, border and figure take
+ * the row's own colours, caret dims) so answered rows read as a plain column of figures beside the
+ * anchor's. Both are centred in a fixed-width column under the heading, in the same mono face. */
+export function PpwSplitCell({ duration, selected, map, total, isAnchor, onSet, show }) {
+  const [open, setOpen] = useState(false);
+  const [rect, setRect] = useState(null);
+  const btnRef = useRef(null);
+  const popRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    const onDown = (e) => {
+      if (popRef.current && popRef.current.contains(e.target)) return;
+      if (btnRef.current && btnRef.current.contains(e.target)) return;
+      setOpen(false);
+    };
+    const onKey = (e) => { if (e.key === "Escape") { e.stopPropagation(); setOpen(false); } };
+    document.addEventListener("mousedown", onDown, true);
+    document.addEventListener("keydown", onKey, true);
+    window.addEventListener("resize", close);
+    window.addEventListener("scroll", close, true);
+    return () => {
+      document.removeEventListener("mousedown", onDown, true);
+      document.removeEventListener("keydown", onKey, true);
+      window.removeEventListener("resize", close);
+      window.removeEventListener("scroll", close, true);
+    };
+  }, [open]);
+
+  if (!show || !selected) return null;
+  const v = _get(map, duration);
+  if (isAnchor) return <span className="fr-ppw-num">{v}</span>;
+
+  const choices = Array.from({ length: (Number(total) || 0) + 1 }, (_, i) => i);
+  const toggle = (e) => {
+    e.stopPropagation();
+    if (open) { setOpen(false); return; }
+    const r = btnRef.current && btnRef.current.getBoundingClientRect();
+    if (r) {
+      // Flip above when there isn't room below — the wheel often sits low on a phone.
+      const h = Math.min(choices.length, 5) * 36 + 10;
+      const below = window.innerHeight - r.bottom;
+      setRect({ left: r.left, width: r.width, top: below > h + 8 ? r.bottom + 5 : r.top - h - 5 });
+    }
+    setOpen(true);
+  };
+  const pick = (e, n) => { e.stopPropagation(); onSet(duration, n); setOpen(false); };
+
+  return (
+    <span className={`fr-ppw-selwrap${v > 0 ? " answered" : ""}${open ? " open" : ""}`}>
+      <button type="button" ref={btnRef} className="fr-ppw-sel" onClick={toggle}
+        aria-haspopup="listbox" aria-expanded={open}
+        aria-label={`Periods a week at ${duration} minutes: ${v}`}>
+        {v}
+      </button>
+      {open && rect ? (
+        <div ref={popRef} className="fr-ppw-pop" role="listbox" style={{ top: rect.top, left: rect.left }}
+          onClick={(e) => e.stopPropagation()}>
+          {choices.map((n) => (
+            <button type="button" key={n} role="option" aria-selected={n === v}
+              className={`fr-ppw-opt${n === v ? " on" : ""}`} onClick={(e) => pick(e, n)}>
+              {n}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </span>
   );
 }

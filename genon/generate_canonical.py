@@ -107,15 +107,25 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
     if not parsed.get("coverage_handoff"):
         problems.append("coverage_handoff missing/empty")
     if expect_v11:
+        # LP v1.2: role lives in the Rule-15 role_handoff sibling; earlier v1.1.x
+        # canonicals carried it inline on each band — accept either, require one.
+        rh = parsed.get("role_handoff") or {}
+        all_ids = []
         for p in periods:
             for b in p.get("time_bands", []):
                 if not b.get("band_id"):
                     problems.append(f"P{p.get('period_number')}: band missing band_id")
-                if b.get("role") not in ("hook", "development", "consolidation"):
-                    problems.append(f"P{p.get('period_number')}: band role {b.get('role')!r}")
+                else:
+                    all_ids.append(b["band_id"])
+                role = rh.get(b.get("band_id")) or b.get("role")
+                if role not in ("hook", "development", "consolidation"):
+                    problems.append(f"P{p.get('period_number')}: band {b.get('band_id')} role {role!r}")
             for e in p.get("competency_edges", []):
                 if not e.get("band_refs"):
                     problems.append(f"P{p.get('period_number')}: edge {e.get('c_code')} missing band_refs")
+        extra = [k for k in rh if k not in all_ids]
+        if extra:
+            problems.append(f"role_handoff names unknown bands: {extra[:5]}")
         for c_code, blk in (parsed.get("coverage_handoff") or {}).items():
             for lo in blk.get("los", []):
                 if not lo.get("band_refs"):
@@ -133,6 +143,30 @@ def log_ledger(row: dict) -> None:
         if new:
             w.writeheader()
         w.writerow(row)
+
+
+# The founder's unified cost notebook (2026-07-25): every paid run ALSO appends to
+# THIS repo's runtime_data/token_log.csv (fresh log started 2026-07-25, seeded with
+# the first ch 5 canonical run; the pre-genon prototype history is archived
+# alongside as token_log_old.csv). Best-effort — bookkeeping never breaks a run.
+TOKEN_LOG = REPO / "runtime_data" / "token_log.csv"
+_TOKEN_LOG_HEADER = ("timestamp,call_type,subject,grade,chapter_number,chapter_title,"
+                     "input_tokens,output_tokens,total_tokens,cost_inr,"
+                     "cache_write_input_tokens,cache_read_input_tokens")
+
+
+def log_token_log(call_type, subject, grade, ch, title, it, ot, cost_inr) -> None:
+    try:
+        TOKEN_LOG.parent.mkdir(parents=True, exist_ok=True)
+        if not TOKEN_LOG.exists():
+            TOKEN_LOG.write_text(_TOKEN_LOG_HEADER + "\n", encoding="utf-8")
+        with TOKEN_LOG.open("a", newline="", encoding="utf-8") as f:
+            csv.writer(f).writerow([
+                datetime.now().isoformat(timespec="seconds"), call_type, subject, grade,
+                ch, title, it, ot, it + ot, round(cost_inr, 4), 0, 0,
+            ])
+    except Exception:
+        pass
 
 
 def cmd_one(args) -> int:
@@ -217,10 +251,26 @@ def cmd_one(args) -> int:
             if now - last >= 1.0:
                 last = now
                 mm, ss = divmod(int(now - t0), 60)
-                done = "".join(parts).count('"period_number"')
+                sofar = "".join(parts)
+                # Stage-aware progress: periods → coverage handoff → role handoff →
+                # assessment items (schema emission order). period_number also appears
+                # on handoff LO rows, so the period counter is capped at the schedule;
+                # items are counted by their period_ref key, which only items carry.
+                ai = sofar.find('"assessment_items"')
+                if ai != -1:
+                    n_items = sofar.count('"period_ref"', ai)
+                    stage = f"periods {count}/{count} · assessment item {n_items}"
+                elif '"role_handoff"' in sofar:
+                    stage = f"periods {count}/{count} · role handoff"
+                elif '"coverage_handoff"' in sofar:
+                    n_los = max(0, sofar.count('"period_number"') - count)
+                    stage = f"periods {count}/{count} · handoff LO {n_los}"
+                else:
+                    done = sofar.count('"period_number"')
+                    stage = f"period {min(done, count)}/{count}"
                 sys.stderr.write(
                     f"\r  streaming: {chars:>8,} chars · ~{chars // 4:>6,} tokens · "
-                    f"period {min(done, count)}/{count} · {mm:02d}:{ss:02d} "
+                    f"{stage} · {mm:02d}:{ss:02d}   "
                 )
                 sys.stderr.flush()
         sys.stderr.write("\n")
@@ -233,13 +283,34 @@ def cmd_one(args) -> int:
     raw_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_raw.txt"
     raw_path.write_text(full, encoding="utf-8")
 
-    problems, parsed = ["output is not valid JSON"], None
-    try:
-        parsed = json.loads(strip_fences(full))
+    # Parse — with bounded auto-repair for the model's one known serialization
+    # glitch: naked (unescaped) double quotes inside a JSON string (the 2026-07-26
+    # run lost its canonical to 4 of them). Each repair escapes exactly ONE quote
+    # pair — provably content-neutral — and is recorded in the ledger. Any other
+    # defect still fails hard: nothing else is auto-touched.
+    text = strip_fences(full)
+    parsed, problems, repairs = None, [], []
+    for _ in range(10):
+        try:
+            parsed = json.loads(text)
+            break
+        except json.JSONDecodeError as e:
+            q1 = text.rfind('"', 0, e.pos)
+            q2 = text.find('"', e.pos)
+            if q1 == -1 or q2 == -1 or q2 - q1 > 300:
+                problems = [f"JSON parse error: {e}"]
+                break
+            repairs.append(text[q1 + 1:q2][:50])
+            text = text[:q1] + '\\"' + text[q1 + 1:q2] + '\\"' + text[q2 + 1:]
+    if parsed is not None:
         problems = validate(parsed, count, expect_v11)
-    except json.JSONDecodeError as e:
-        problems = [f"JSON parse error: {e}"]
+        if repairs:
+            print(f"  auto-repaired {len(repairs)} naked inner quote(s): "
+                  + "; ".join(repr(r) for r in repairs[:4]))
+    elif not problems:
+        problems = ["output is not valid JSON"]
     status = "ok" if not problems else "problems"
+    repair_note = [f"auto-repaired {len(repairs)} naked quotes"] if repairs else []
     if parsed is not None:
         canon_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_canonical.json"
         canon_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -248,6 +319,8 @@ def cmd_one(args) -> int:
     for p in problems:
         print(f"  ⚠ {p}")
 
+    log_token_log("canonical_generation", subject_folder, grade_folder, ch, title,
+                  it, ot, cost_inr)
     log_ledger({
         "ts": ts, "mode": "one", "tag": args.tag or "", "model": args.model,
         "subject": subject_folder, "grade": grade_folder, "chapter": ch,
@@ -255,7 +328,7 @@ def cmd_one(args) -> int:
         "constitution": "v1.1" if expect_v11 else "pre-genon",
         "input_tokens": it, "output_tokens": ot,
         "cost_inr": round(cost_inr, 2), "seconds": round(elapsed, 1),
-        "status": status, "problems": "; ".join(problems)[:400],
+        "status": status, "problems": "; ".join(repair_note + problems)[:400],
         "raw_file": raw_path.name,
     })
     return 0 if status == "ok" else 1

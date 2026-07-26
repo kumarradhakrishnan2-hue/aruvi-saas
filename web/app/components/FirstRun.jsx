@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { getJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
 import { pushSectionState } from "../lib/sectionState";
-import { RollWheel, PickWheel, PpwCapture, normPpw, ppwMapSum, DEFAULT_PPW } from "./wheels";
+import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, setPpwSplit,
+         setPpwTotal, lowestDuration, DEFAULT_PPW } from "./wheels";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
  * The mobile-first, progressive-acquisition entry point (CLAUDE.md §0). Until the teacher has
@@ -63,7 +64,9 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
 // The four steps of the post-lesson class set-up, shown as a progress rail so she can see the
 // whole run and that it ends soon.
-const ACQ_STEPS = ["Sections", "Durations", "Periods", "Budget"];
+// Periods BEFORE durations (founder, 2026-07-26) — she sizes her week first, then names the
+// lengths, and the split between them rides on the duration screen itself.
+const ACQ_STEPS = ["Sections", "Periods", "Durations", "Budget"];
 
 // Annual-budget estimator — mirrors TeachingProfile's (duplicated to keep first run self-contained;
 // the 4-method estimator is the same one the Settings profile uses).
@@ -164,6 +167,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // first class profile-orphaned. Cards then land UNATTACHED and she taps "+" to attach the lesson.
   const [durations, setDurations] = useState([DEFAULT_DURATION]);       // acquisition durations (multi)
   const [ppwByDur, setPpwByDur] = useState({ [DEFAULT_DURATION]: DEFAULT_PPW }); // { [minutes]: count }
+  const [weekTotal, setWeekTotal] = useState(DEFAULT_PPW);              // periods a week, asked FIRST
   const [budget, setBudget] = useState(null);                           // { method, value }
   const [ncfTotal, setNcfTotal] = useState(null);                       // NCF annual periods for the budget "estimate"
 
@@ -254,6 +258,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const startAcquisition = () => {
     setDurations([durationMin]);                 // seed durations from the chapter-step choice
     setPpwByDur({ [durationMin]: DEFAULT_PPW });
+    setWeekTotal(DEFAULT_PPW);
     // Pre-pick the 30-week year (choice #1) as the rational default (2026-07-08): combined with
     // her periods/week it yields a sane budget, so a hurried tap-through still lands somewhere
     // real. Other methods stay fully prominent (no dimming) so she can switch freely.
@@ -262,19 +267,20 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   };
   const toggleSection = (s) =>
     setSections((a) => (a.includes(s) ? a.filter((x) => x !== s) : [...a, s].sort()));
+  // Ticking a length never changes the SIZE of the week — only how it is divided. The anchor (the
+  // lowest ticked length) always holds the remainder, so a newly ticked length starts at 0 and an
+  // untick hands its periods straight back.
   const toggleDuration = (d) =>
     setDurations((a) => (a.includes(d)
-      ? (a.length > 1 ? a.filter((x) => x !== d) : a)   // keep at least one
+      ? (a.length > 1 ? a.filter((x) => x !== d) : a)                 // keep at least one
       : [...a, d].sort((x, y) => x - y)));
-  const goDurToPpw = () => {
-    const next = normPpw(durations, ppwByDur, DEFAULT_PPW);  // reconcile counts to current durations
-    setPpwByDur(next);
-    setStep("acqPpw");
+  // Leaving the weekly-total screen: apply the number she just set to whatever split exists.
+  const goPpwToDur = () => {
+    setPpwByDur((m) => setPpwTotal(durations, m, lowestDuration(durations), weekTotal));
+    setStep("acqDurations");
   };
-  const setPpwCount = (d, v) => setPpwByDur((m) => {
-    const base = normPpw(durations, m, DEFAULT_PPW);
-    return { ...base, [d]: Math.max(1, Number(v) || 1) };
-  });
+  const setPpwCount = (d, v) =>
+    setPpwByDur((m) => setPpwSplit(durations, m, lowestDuration(durations), d, v));
 
   // NCF annual-periods figure for the budget "estimate" method (only while that screen shows).
   useEffect(() => {
@@ -293,7 +299,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const buildActivationPayload = () => {
     const secObjs = sections.map((s) => ({ tag: tagFor(s), sec: s }));
     const grid = sections.map(() => DAYS.map(() => -1));
-    const ppwMap = normPpw(durations, ppwByDur, DEFAULT_PPW);
+    const ppwMap = normPpw(durations, ppwByDur, weekTotal, lowestDuration(durations));
     const subjectRecord = {
       name: pretty(subject),
       grades: [{
@@ -301,6 +307,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         sections: secObjs,
         durations: [...durations],
         ppw_by_duration: ppwMap,
+        ppw_anchor: lowestDuration(durations),
         periods_per_week: ppwMapSum(ppwMap),
       }],
       grids: [grid],
@@ -555,8 +562,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     );
   }
 
-  /* ── PROFILE ACQUISITION (after the lesson is ready) — sections → durations → periods/week →
-   * annual budget, for this one subject·grade. Reuses the shared wheels + PpwCapture. On finish,
+  /* ── PROFILE ACQUISITION (after the lesson is ready) — sections → periods/week → durations
+   * (carrying the split inline) → annual budget, for this one subject·grade. On finish,
    * cards are created UNATTACHED and the lesson waits in My Lessons for her to tap "+". ── */
   if (step === "acqSections") {
     return (
@@ -569,7 +576,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <PickWheel options={SECTION_LETTERS} selected={sections} onToggle={toggleSection}
             ariaLabel="Sections" labelFor={(s) => `Section ${tagFor(s)}`}>
             <button type="button" className="primary fr-cta" disabled={!sections.length}
-              onClick={() => setStep("acqDurations")}>Continue</button>
+              onClick={() => setStep("acqPpw")}>Continue</button>
           </PickWheel>
         </div>
         <div className="fr-foot">
@@ -579,53 +586,62 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     );
   }
 
-  if (step === "acqDurations") {
+  if (step === "acqPpw") {
     return (
       <div className="fr-wrap">
         <Brand />
-        <Progress steps={ACQ_STEPS} active="Durations" />
+        <Progress steps={ACQ_STEPS} active="Periods" />
         <div className="fr-step-body">
-          <h1 className="fr-q">How long are your {pretty(subject)} periods for Class {classNum(grade)}?</h1>
-          <p className="fr-hint">Most classes are one length. Add another only if some run longer.</p>
-          <PickWheel options={DURATION_CHOICES} selected={durations} onToggle={toggleDuration}
-            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={durationMin}>
-            <button type="button" className="primary fr-cta" disabled={!durations.length}
-              onClick={goDurToPpw}>Continue</button>
-          </PickWheel>
+          <h1 className="fr-q">How many periods a week does Class {classNum(grade)} get for {pretty(subject)}?</h1>
+          <p className="fr-hint">This would help us suggest NCF aligned periods needed for a chapter.</p>
+          <PpwTotalWheel value={weekTotal} onChange={setWeekTotal} />
         </div>
         <div className="fr-foot">
+          <button type="button" className="primary fr-cta" onClick={goPpwToDur}>Continue</button>
           <button className="fr-link" onClick={() => setStep("acqSections")}>← Back</button>
         </div>
       </div>
     );
   }
 
-  if (step === "acqPpw") {
-    const map = normPpw(durations, ppwByDur, DEFAULT_PPW);
+  if (step === "acqDurations") {
+    /* The split lives HERE, as a second column, instead of on a screen of its own: she has just
+     * said how big her week is, so ticking a second length is a question about DIVIDING it. The
+     * lowest ticked length is the non-editable remainder; the others are 0…total dropdowns. */
+    const anchor = lowestDuration(durations);
+    const map = normPpw(durations, ppwByDur, weekTotal, anchor);
     const multi = durations.length > 1;
     return (
       <div className="fr-wrap">
         <Brand />
-        <Progress steps={ACQ_STEPS} active="Periods" />
+        <Progress steps={ACQ_STEPS} active="Durations" />
         <div className="fr-step-body">
-          <h1 className="fr-q">{multi
-            ? `How many periods a week does Class ${classNum(grade)} get for ${pretty(subject)} for each duration?`
-            : `How many periods a week does Class ${classNum(grade)} get for ${pretty(subject)}?`}</h1>
+          <h1 className="fr-q">How long are your {pretty(subject)} periods for Class {classNum(grade)}?</h1>
           <p className="fr-hint">{multi
-            ? "This would help us suggest NCF aligned periods needed for a chapter and implement a lesson plan that mirrors your period structure."
-            : "This would help us suggest NCF aligned periods needed for a chapter."}</p>
-          <PpwCapture durations={durations} map={map} onSet={setPpwCount} />
+            ? `Split your ${weekTotal} periods between the lengths — the shortest one takes whatever is left over.`
+            : "Most classes are one length. Add another only if some run longer."}</p>
+          <PickWheel options={DURATION_CHOICES} selected={durations} onToggle={toggleDuration}
+            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={durationMin}
+            leadingHeader={multi ? "Duration" : null}
+            trailingHeader={multi ? "Periods / week" : null}
+            summaryFor={multi ? (d) => `${d} min × ${map[d] || 0}` : null}
+            trailing={(d, on) => (
+              <PpwSplitCell duration={d} selected={on} map={map} total={weekTotal}
+                isAnchor={d === anchor} onSet={setPpwCount} show={multi} />
+            )}>
+            <button type="button" className="primary fr-cta" disabled={!durations.length}
+              onClick={() => setStep("acqBudget")}>Continue</button>
+          </PickWheel>
         </div>
         <div className="fr-foot">
-          <button type="button" className="primary fr-cta" onClick={() => setStep("acqBudget")}>Continue</button>
-          <button className="fr-link" onClick={() => setStep("acqDurations")}>← Back</button>
+          <button className="fr-link" onClick={() => setStep("acqPpw")}>← Back</button>
         </div>
       </div>
     );
   }
 
   if (step === "acqBudget") {
-    const ppw = ppwMapSum(normPpw(durations, ppwByDur, DEFAULT_PPW));
+    const ppw = ppwMapSum(normPpw(durations, ppwByDur, weekTotal, lowestDuration(durations)));
     const picked = !!budget;                                   // no method selected until she taps one
     const bSel = budget && budget.method === "auto"
       ? { method: "auto", value: ppw * ESTIMATE_WEEKS } : budget;
@@ -687,7 +703,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <button type="button" className="primary fr-cta" disabled={!picked || emptyBudget} onClick={goCreateCards}>
             Set up my class ✓
           </button>
-          <button className="fr-link" onClick={() => setStep("acqPpw")}>← Back</button>
+          <button className="fr-link" onClick={() => setStep("acqDurations")}>← Back</button>
         </div>
       </div>
     );

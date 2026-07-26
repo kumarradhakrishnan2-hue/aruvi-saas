@@ -805,7 +805,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
                     identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Partition the chapter's canonical stream to the teacher's duration matrix, save the
     adapted plan, and register it as prepared for this teacher (it pops up in My Lessons)."""
-    from aruvi_core.genon import build_plan
+    from aruvi_core.genon import build_plan, GenonDeclarationError
     from aruvi_core.genon.partition import PartitionError
     from aruvi_core.genon.polish import run_polish
 
@@ -848,9 +848,39 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             "seam_periods": [], "coverage_note": None, "polish": None,
         }
 
-    stream = data.load_genon_stream(subject, grade, chapter_number)
+    # ── the plan is a CACHE ENTRY, addressed by what determines its bytes ──────────
+    # (chapter, normalised matrix, canonical version, engine version, polished). A hit
+    # is served without partitioning and — the point — without spending polish tokens
+    # again; it also makes an accidental double-click free instead of paying twice for
+    # the same 100-second call. Per-teacher visibility still comes from the register.
+    filename = data.genon_plan_filename(chapter_number, matrix, canonical, bool(req.polish))
+    hit = data.load_saved_plan(subject, grade, filename)
+    if hit is not None:
+        try:
+            prepared_plans_repo.mark(tenant_id, user_id, _plan_key(subject, grade, filename),
+                                     total_periods)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
+        hg = hit.get("genon") or {}
+        return {
+            "status": "prepared", "cached": True,
+            "filename": filename,
+            "chapter_number": chapter_number,
+            "chapter_title": hit.get("chapter_title"),
+            "periods": total_periods,
+            "compression": hg.get("compression"),
+            "seam_periods": hg.get("seam_periods_tier0_polished") or [],
+            "coverage_note": (hit.get("result") or {}).get("section_coverage_note"),
+            "polish": hg.get("seam_polish"),
+        }
+
     try:
+        stream = data.load_genon_stream(subject, grade, chapter_number)
         plan = build_plan(stream, matrix)
+    except GenonDeclarationError as e:
+        # the canonical is not v1.1-declared: name the content problem instead of
+        # letting it escape as a bare 500 with nothing for anyone to read
+        raise HTTPException(status_code=500, detail=f"Canonical cannot be compiled: {e}")
     except PartitionError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -858,10 +888,16 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     if req.polish:
         try:
             polish_info = run_polish(plan)      # in-place; container text only
+            if polish_info.get("input_tokens"):  # paid run → founder's cost notebook
+                data.append_token_log("seam_polish", subject, grade, chapter_number,
+                                      plan.get("chapter_title", ""),
+                                      polish_info["input_tokens"],
+                                      polish_info["output_tokens"],
+                                      polish_info.get("cost_inr", 0))
         except Exception as e:                  # polish is an enhancement, never a blocker
             polish_info = {"skipped": True, "reason": str(e)}
 
-    filename = data.save_generated_plan(subject, grade, plan)
+    data.save_generated_plan(subject, grade, plan, filename=filename)
     key = _plan_key(subject, grade, filename)
     prepared_periods = total_periods
     try:
@@ -871,7 +907,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
 
     g = plan["genon"]
     return {
-        "status": "prepared",
+        "status": "prepared", "cached": False,
         "filename": filename,
         "chapter_number": chapter_number,
         "chapter_title": plan.get("chapter_title"),

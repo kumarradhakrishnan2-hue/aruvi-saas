@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
@@ -50,12 +50,18 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
    * For these, Prepare runs the DETERMINISTIC path: the teacher's duration rows go to
    * POST /genon/{subject}/{grade}/{ch}/plan, the server partitions the certified canonical
    * in milliseconds (no LLM), saves + registers the plan, and it pops up in My Lessons.
-   * `rows` is the duration matrix [{duration, count}]; `polish` asks the server for the
-   * optional tier-1 AI pass that smooths transition notes on split units. */
+   * `rows` is the duration matrix [{duration, count}]. The tier-1 seam polish is NO LONGER a
+   * teacher-facing choice (founder, 2026-07-26): every run is polished, so what she gets is
+   * always the finished article. The cost of that is contained by the server's cache — a repeat
+   * of the same (chapter × matrix) is served from disk without spending polish tokens again, and
+   * a matrix equal to the canonical's own returns the certified plan untouched. */
   const [genonChs, setGenonChs] = useState([]);            // chapter numbers with a canonical
   const [canonMinutes, setCanonMinutes] = useState({});    // {chapter: canonical total minutes}
-  const [rows, setRows] = useState([]);                    // [{duration, count}]
-  const [polish, setPolish] = useState(false);
+  // A polished adaptation is a ~1-2 minute paid call. Without a hard guard a second click
+  // fires a SECOND request: on 2026-07-26 that cost a full duplicate polish (Rs. 12.73)
+  // whose plan was never even saved. The ref blocks re-entry even if a click slips past
+  // the disabled button (modal path, keyboard, double-fire).
+  const inFlight = useRef(false);
   const [syllabusW, setSyllabusW] = useState(null);        // FULL syllabus weight (master plan)
 
   // Load chapters (+ effort weight + NCF estimate) and saved plans for the scope.
@@ -75,16 +81,45 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   // Is the deterministic (genon) path available for the chosen chapter?
   const genonAvailable = !!chapterNo && genonChs.includes(Number(chapterNo));
 
-  // The class's period durations from the canonical readiness profile (grade-level first,
-  // subject-level fallback) — seeds the duration rows so the teacher edits, never re-enters.
-  const classDurations = useMemo(() => {
+  // The class's period LENGTHS and the weekly ratio she teaches them in, from the canonical
+  // readiness profile (grade-level first, subject-level fallback).
+  //
+  // ★ Duration is not ASKED here at all (founder, 2026-07-26). A period length is a fact about
+  // her school's timetable, not a per-chapter decision — the bell decides it, she doesn't. This
+  // page shows one control, the period count; the lengths come from the profile and are only
+  // echoed back as small print. A duration field here silently diverged from the profile (Prepare
+  // said 50, My Classes still said 45) and made the budget meter incoherent, since "periods" then
+  // meant two different things on one screen. A genuinely new length is a profile edit.
+  const classProfile = useMemo(() => {
     const subs = (readiness && readiness.subjects) || [];
     const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");
     const sub = subs.find((s) => slugify(s.name) === subject);
     const g = sub && (sub.grades || []).find((x) => (x.grade || "").toLowerCase() === grade);
-    const durs = (g && g.durations) || (sub && sub.durations) || [];
-    return durs.length ? durs.map(Number).filter((n) => n > 0) : [40];
+    const raw = (g && g.durations) || (sub && sub.durations) || [];
+    const durations = raw.length ? raw.map(Number).filter((n) => n > 0) : [40];
+    return { durations, ppw: (g && g.ppw_by_duration) || {} };
   }, [readiness, subject, grade]);
+  const classDurations = classProfile.durations;
+
+  /* Seed the duration rows for a chapter of `n` periods by splitting n across her declared
+   * lengths in the SAME weekly ratio she teaches them (largest remainder, so the parts sum to n
+   * exactly). Dumping all n on `durations[0]` — which is the shortest length after the profile's
+   * ascending sort, not her main one — is what made a 45/50 class read as "45 min" flat. */
+  const seedRows = (n) => {
+    const ppw = classProfile.ppw || {};
+    const active = classDurations.filter((d) => (Number(ppw[d] ?? ppw[String(d)]) || 0) > 0);
+    const fallback = [{ duration: classDurations[0] || 40, count: n }];
+    if (active.length < 2) return active.length === 1 ? [{ duration: active[0], count: n }] : fallback;
+    const tot = active.reduce((s, d) => s + (Number(ppw[d] ?? ppw[String(d)]) || 0), 0);
+    const parts = active.map((d) => {
+      const x = (n * (Number(ppw[d] ?? ppw[String(d)]) || 0)) / tot;
+      return { d, c: Math.floor(x), frac: x - Math.floor(x) };
+    });
+    let rem = n - parts.reduce((s, p) => s + p.c, 0);
+    [...parts].sort((a, b) => b.frac - a.frac).forEach((p) => { if (rem > 0) { p.c++; rem--; } });
+    const out = parts.filter((p) => p.c > 0).map((p) => ({ duration: p.d, count: p.c }));
+    return out.length ? out : fallback;
+  };
 
   // Annual budget (periods) for this subject·grade, from the canonical readiness profile.
   const annualBudget = useMemo(
@@ -124,27 +159,19 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
     setPeriods(suggestionFor(c));
-    // Seed the genon duration rows: one row, her class's first duration × the suggestion.
-    setRows([{ duration: classDurations[0] || 40, count: suggestionFor(c) }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chapterNo, chapters, annualBudget, sumW]);
 
-  // On the genon path the duration rows are the source of truth — keep the `periods`
-  // state (budget meter + prepared-periods tracking) equal to their total.
-  useEffect(() => {
-    if (!genonAvailable || !rows.length) return;
-    const total = rows.reduce((s, r) => s + (Number(r.count) || 0), 0);
-    setPeriods(total);
+  /* ★ ONE control on this page (founder, 2026-07-26): a period stepper, nothing else. The
+   * duration matrix the server needs is DERIVED from that number — her declared lengths, in the
+   * weekly ratio she teaches them — and only reported back to her as small print underneath
+   * ("6 × 45 min · 3 × 50 min"). She already told Aruvi her period lengths when she set the class
+   * up; asking again here was a second place for the same fact to live, and a second place for it
+   * to disagree with the profile. */
+  const rows = useMemo(() => seedRows(Math.max(0, Number(periods) || 0)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows, genonAvailable]);
-
-  const setRowAt = (i, patch) =>
-    setRows((rs) => rs.map((r, k) => (k === i ? { ...r, ...patch } : r)));
-  const addRow = () =>
-    setRows((rs) => [...rs, {
-      duration: classDurations[rs.length % classDurations.length] || 40, count: 1,
-    }]);
-  const dropRow = (i) => setRows((rs) => rs.filter((_, k) => k !== i));
+    [periods, classProfile]);
+  const mixLabel = rows.map((r) => `${r.count} × ${r.duration} min`).join(" · ");
 
   // Files currently ATTACHED to a section of this class (localStorage bindings) — so a chapter a
   // class is actively teaching counts toward the budget even if its `prepared` write was lost
@@ -222,6 +249,12 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   };
 
   const doGenerate = async () => {
+    if (!chosen || inFlight.current) return;
+    inFlight.current = true;
+    try { await runGenerate(); } finally { inFlight.current = false; }
+  };
+
+  const runGenerate = async () => {
     if (!chosen) return;
     // ── genon path: deterministic adaptation from the chapter's certified canonical ──
     if (genonAvailable) {
@@ -232,7 +265,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       setBusy(true); setError(""); setNote("");
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
-          { rows: matrix, polish });
+          { rows: matrix, polish: true });
         if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
         // No return handler → show the freshly adapted plan.
         setStep("preview");
@@ -310,70 +343,34 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
 
           <div className="prep-block">
             <div className="prep-left">
-              {genonAvailable ? (
-                /* genon: the teacher's real duration mix — each row `count × duration min`.
-                 * Total periods derives from the rows (kept in sync with the budget meter). */
-                <>
-                  <p className="prep-fieldlab">Periods for this chapter</p>
-                  {rows.map((r, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                      <input type="number" min="1" className="v g4-vinput" value={r.count}
-                        onChange={(e) => setRowAt(i, { count: parseInt(e.target.value, 10) || 0 })}
-                        aria-label={`Periods at duration ${i + 1}`} />
-                      <span aria-hidden="true">×</span>
-                      <input type="number" min="5" step="5" className="v g4-vinput" value={r.duration}
-                        onChange={(e) => setRowAt(i, { duration: parseInt(e.target.value, 10) || 0 })}
-                        aria-label={`Minutes per period ${i + 1}`} />
-                      <span className="prep-fieldlab" style={{ margin: 0 }}>min</span>
-                      {rows.length > 1 ? (
-                        <button type="button" className="prep-use" onClick={() => dropRow(i)}
-                          aria-label="remove this duration row">−</button>
-                      ) : null}
-                    </div>
-                  ))}
-                  <button type="button" className="prep-use" onClick={addRow}>+ different duration</button>
-                  <label style={{ display: "block", marginTop: 10, fontSize: 13 }}>
-                    <input type="checkbox" checked={polish} onChange={(e) => setPolish(e.target.checked)} />
-                    {" "}Smooth unit transitions with AI
-                  </label>
-                  {(() => {
-                    // Coverage hint against the chapter's certified plan: below 60% of its
-                    // minutes, trailing sections can't be scheduled; 60–80% is compressed.
-                    const cm = Number(canonMinutes[String(chapterNo)]) || 0;
-                    if (!cm) return null;
-                    const totalMin = rows.reduce((s, r) => s + (Number(r.duration) || 0) * (Number(r.count) || 0), 0);
-                    if (!totalMin) return null;
-                    const ratio = totalMin / cm;
-                    if (ratio < 0.6) return (
-                      <p className="prep-fieldlab" style={{ marginTop: 8, color: "var(--clay)" }}>
-                        This time won&rsquo;t cover the whole chapter — later sections will be left
-                        out. Full coverage needs at least {Math.ceil(0.6 * cm / (Number(rows[0]?.duration) || 40))} periods
-                        of {Number(rows[0]?.duration) || 40} min.
-                      </p>
-                    );
-                    if (ratio < 0.8) return (
-                      <p className="prep-fieldlab" style={{ marginTop: 8 }}>
-                        Tighter than the chapter&rsquo;s full plan — activities will be compressed
-                        to fit.
-                      </p>
-                    );
-                    return null;
-                  })()}
-                  <p className="prep-fieldlab" style={{ marginTop: 8 }}>
-                    Instant — adapted from this chapter&rsquo;s certified plan.
+              <p className="prep-fieldlab">Periods for this chapter</p>
+              <span className="steppermini prep-stepper">
+                <button type="button" onClick={() => setP((Number(periods) || 0) - 1)} aria-label="fewer periods">–</button>
+                <input type="number" min="0" className="v g4-vinput" value={periods}
+                  onChange={(e) => setP(parseInt(e.target.value, 10))} aria-label="Periods for this chapter" />
+                <button type="button" onClick={() => setP((Number(periods) || 0) + 1)} aria-label="more periods">+</button>
+              </span>
+              {genonAvailable && mixLabel ? <p className="prep-mix">{mixLabel}</p> : null}
+              {genonAvailable ? (() => {
+                /* The ONE warning worth showing (founder, 2026-07-26): below 60% of the certified
+                 * plan's minutes, trailing sections cannot be scheduled at all. The 60–80%
+                 * "compressed" note is dropped — compression is normal, not news. We deliberately
+                 * do NOT name which sections go: Aruvi teaches the textbook in its own order, so
+                 * "the later ones" is something she can already deduce. The minimum is expressed
+                 * in periods like the ones she actually has — i.e. against the average length of
+                 * HER mix, not a single hardcoded length. */
+                const cm = Number(canonMinutes[String(chapterNo)]) || 0;
+                const totalMin = rows.reduce((s, r) => s + (Number(r.duration) || 0) * (Number(r.count) || 0), 0);
+                const totalP = rows.reduce((s, r) => s + (Number(r.count) || 0), 0);
+                if (!cm || !totalMin || !totalP) return null;
+                if (totalMin / cm >= 0.6) return null;
+                return (
+                  <p className="prep-floor">
+                    If below minimum period of {Math.ceil((0.6 * cm) / (totalMin / totalP))}, some
+                    later sections may be dropped.
                   </p>
-                </>
-              ) : (
-                <>
-                  <p className="prep-fieldlab">Periods for this chapter</p>
-                  <span className="steppermini prep-stepper">
-                    <button type="button" onClick={() => setP((Number(periods) || 0) - 1)} aria-label="fewer periods">–</button>
-                    <input type="number" min="0" className="v g4-vinput" value={periods}
-                      onChange={(e) => setP(parseInt(e.target.value, 10))} aria-label="Periods for this chapter" />
-                    <button type="button" onClick={() => setP((Number(periods) || 0) + 1)} aria-label="more periods">+</button>
-                  </span>
-                </>
-              )}
+                );
+              })() : null}
             </div>
 
             {chosen ? (
@@ -389,9 +386,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
                     {periods === suggestion
                       ? <span className="prep-sugg-ok" aria-label="matches the suggestion">✓</span>
                       : <button type="button" className="prep-use"
-                          onClick={() => genonAvailable
-                            ? setRows([{ duration: classDurations[0] || 40, count: suggestion }])
-                            : setPeriods(suggestion)}>use</button>}
+                          onClick={() => setPeriods(suggestion)}>use</button>}
                   </div>
                   {showInfo && (
                     <div className="prep-tip" role="note">
@@ -425,14 +420,26 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
           </div>
 
           <div className="savebar savebar-prep">
-            <button className="primary prepare-cta" disabled={!chosen} onClick={onPrepareClick}>
-              {chosenAlreadyPrepared ? "Prepare again →" : "Prepare the lesson →"}
+            <button className="primary prepare-cta" disabled={!chosen || busy} onClick={onPrepareClick}>
+              {busy
+                ? <span className="prep-working"><span className="prep-spin" aria-hidden="true" />
+                    Building the lesson…</span>
+                : chosenAlreadyPrepared ? "Prepare again →" : "Prepare the lesson →"}
             </button>
-            {!chosen
-              ? <span className="savebar-hint">Pick a chapter to continue.</span>
-              : chosenAlreadyPrepared
-                ? <span className="savebar-hint">Already prepared — preparing again replaces the tracked version.</span>
-                : null}
+            {busy
+              ? <span className="savebar-hint" aria-live="polite">
+                  {/* INTERIM copy (2026-07-26) — final wording parked with the founder. Polish
+                      now runs on every uncached mix, so the two-minute case is the honest worst
+                      case; identity and cache hits still return immediately. */}
+                  {genonAvailable
+                    ? "This can take up to two minutes. Don't leave the page."
+                    : "Working on it…"}
+                </span>
+              : !chosen
+                ? <span className="savebar-hint">Pick a chapter to continue.</span>
+                : chosenAlreadyPrepared
+                  ? <span className="savebar-hint">Already prepared — preparing again replaces the tracked version.</span>
+                  : null}
           </div>
         </>
       )}
@@ -452,7 +459,8 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
             </div>
             <div className="ap-confirm-actions">
               <button className="ap-btn-ghost" onClick={() => setWarnRegen(false)}>Cancel</button>
-              <button className="ap-btn-danger" onClick={() => { setWarnRegen(false); doGenerate(); }}>Prepare again</button>
+              <button className="ap-btn-danger" disabled={busy}
+                      onClick={() => { setWarnRegen(false); doGenerate(); }}>Prepare again</button>
             </div>
           </div>
         </div>

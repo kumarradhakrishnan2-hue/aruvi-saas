@@ -2,7 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, ROMAN, projectReadiness, API, withUser } from "../lib/format";
 import { pushSectionState } from "../lib/sectionState";
-import { RollWheel, PickWheel } from "./wheels";
+import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, ppwAnchor,
+         setPpwSplit, setPpwTotal, lowestDuration,
+         DEFAULT_DURATION, DEFAULT_PPW, DURATION_CHOICES } from "./wheels";
 
 /* ───────── TeachingProfile — Settings → "Your teaching profile" (rebuilt 2026-07-02) ─────────
  * The ONE profile editor, reached through the header settings gear.
@@ -36,12 +38,8 @@ import { RollWheel, PickWheel } from "./wheels";
  */
 
 const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
-const DURATION_CHOICES = Array.from({ length: 21 }, (_, i) => 20 + i * 5); // 20,25,…120 min
-const PPW_CHOICES = Array.from({ length: 14 }, (_, i) => i + 1);           // 1…14 periods/week
 const DAYS_IN_WEEK = 6;
 const ESTIMATE_WEEKS = 30;
-const DEFAULT_DURATION = 40;
-const DEFAULT_PPW = 6;
 
 const METHODS = {
   weeks:   { label: "I know my teaching weeks",   unit: "weeks",          step: 1 },
@@ -65,67 +63,12 @@ const classNum = (g) => {
   return idx >= 0 ? idx + 3 : g;
 };
 
-/* ── periods/week is now stored PER DURATION TYPE (ppw_by_duration: { [minutes]: count }) ──
- * We no longer ask a single "periods per week" number: where a class has >1 duration type,
- * the teacher gives the weekly count for EACH duration and the total is their sum (the ratio
- * that will split a chapter's periods at generation — see MEMORY.md 2026-07-05). `periods_per_week`
- * is kept on the record as that DERIVED sum, so every existing consumer (budget estimator, view
- * totals, format.projectReadiness) is unchanged. */
-const ppwMapSum = (m) => Object.keys(m || {}).reduce((a, k) => a + (Number(m[k]) || 0), 0);
-// Reconcile a per-duration weekly-count map to the CURRENT set of durations: keep the count for
-// each surviving duration; a duration with no count yet defaults to the whole total when there's
-// only one type (single-duration = the old single number), else to 1 (a real type teaches ≥1/wk).
-const normPpw = (durations, map, fallbackPpw) => {
-  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
-  const out = {};
-  durs.forEach((d) => {
-    const v = Number((map || {})[d] ?? (map || {})[String(d)]);
-    out[d] = v > 0 ? v : (durs.length === 1 ? (Number(fallbackPpw) || DEFAULT_PPW) : 1);
-  });
-  return out;
-};
-
-/* Per-duration periods/week capture — ONE selection idiom, two shapes:
- *   • single duration → the same large periods/week wheel as before (no visible change);
- *   • >1 duration     → a two-column table (Duration · Periods/week stepper), one row per type
- *     (up to three), with the running weekly total shown live. Total is NEVER asked directly. */
-function PpwCapture({ durations, map, onSet }) {
-  const durs = (durations && durations.length) ? durations : [DEFAULT_DURATION];
-  if (durs.length === 1) {
-    const d = durs[0];
-    const val = Number(map[d] ?? map[String(d)]) || DEFAULT_PPW;
-    return (
-      <RollWheel ariaLabel="Periods per week" large value={String(val)}
-        onChange={(v) => onSet(d, Number(v))}
-        items={PPW_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period a week" : "periods a week" }))} />
-    );
-  }
-  const total = durs.reduce((a, d) => a + (Number(map[d] ?? map[String(d)]) || 0), 0);
-  return (
-    <div className="tp-ppw-table">
-      <div className="tp-ppw-row tp-ppw-head">
-        <span className="tp-ppw-dur">Duration</span>
-        <span className="tp-ppw-ct">Periods / week</span>
-      </div>
-      {durs.map((d) => {
-        const val = Number(map[d] ?? map[String(d)]) || 1;
-        return (
-          <div className="tp-ppw-row" key={d}>
-            <span className="tp-ppw-dur">{d} min</span>
-            <span className="tp-ppw-stepper">
-              <button type="button" className="tp-val-btn" aria-label={`Fewer ${d}-minute periods`} onClick={() => onSet(d, Math.max(1, val - 1))}>−</button>
-              <input type="number" className="tp-val-input tp-ppw-input" min="1" value={val}
-                onChange={(e) => onSet(d, Math.max(1, parseInt(e.target.value, 10) || 1))}
-                aria-label={`Periods per week for ${d}-minute classes`} />
-              <button type="button" className="tp-val-btn" aria-label={`More ${d}-minute periods`} onClick={() => onSet(d, val + 1)}>+</button>
-            </span>
-          </div>
-        );
-      })}
-      <p className="tp-ppw-total">= {total} periods a week</p>
-    </div>
-  );
-}
+/* periods/week is stored PER DURATION TYPE (ppw_by_duration: { [minutes]: count }); the weekly
+ * total is their DERIVED sum on `periods_per_week`, so every existing consumer (budget
+ * estimator, view totals, format.projectReadiness) is unchanged. The helpers and the capture
+ * table now live in wheels.jsx as the SINGLE implementation — this file used to carry a
+ * byte-identical private copy, which is exactly how the additive-second-duration bug survived
+ * in two places at once (founder, 2026-07-26). Do not re-fork them. */
 
 const subjectSlugOf = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const deepCopy = (x) => JSON.parse(JSON.stringify(x));
@@ -175,12 +118,13 @@ const rekeyBudget = (oldGrades, oldBudget, newGrades) => {
 // per-grade draft used inside the conversational screens: sections as plain letters
 const gradeDraftFrom = (rec) => {
   const durations = (rec.durations && rec.durations.length) ? [...rec.durations] : [DEFAULT_DURATION];
-  const ppw_by_duration = normPpw(durations, rec.ppw_by_duration, rec.periods_per_week);
+  const ppw_by_duration = normPpw(durations, rec.ppw_by_duration, rec.periods_per_week, rec.ppw_anchor);
   return {
     grade: rec.grade,
     sections: (rec.sections || []).map(secLetter),
     durations,
     ppw_by_duration,
+    ppw_anchor: ppwAnchor(durations, ppw_by_duration, rec.ppw_anchor),
     periods_per_week: ppwMapSum(ppw_by_duration),
     budget: null,
   };
@@ -472,6 +416,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     const all = [...baseGrades, ...addedRomans.map((roman) => ({
       grade: roman, sections: [], durations: [DEFAULT_DURATION],
       ppw_by_duration: { [DEFAULT_DURATION]: DEFAULT_PPW },
+      ppw_anchor: DEFAULT_DURATION,
       periods_per_week: DEFAULT_PPW, budget: null,
     }))].sort((a, b) => byRoman(a.grade, b.grade));
     const pend = all.map((g, i) => (addedRomans.includes(g.grade) ? i : -1)).filter((i) => i >= 0);
@@ -541,12 +486,13 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     const rec = {
       name: d.name,
       grades: d.grades.map((g) => {
-        const ppwMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
+        const ppwMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, g.ppw_anchor);
         return {
           grade: g.grade,
           sections: g.sections.map((sec) => ({ tag: `${classNum(g.grade)}${sec}`, sec })),
           durations: [...g.durations],
           ppw_by_duration: ppwMap,
+          ppw_anchor: ppwAnchor(g.durations, ppwMap, g.ppw_anchor),
           periods_per_week: ppwMapSum(ppwMap),
         };
       }),
@@ -611,7 +557,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     setScreen("view");
   };
 
-  const startEditNums = (si, gi, step = "duration") => {
+  const startEditNums = (si, gi, step = "ppw") => {
     const sub = canon[si];
     const g = gradeDraftFrom(sub.grades[gi]);
     const b = (sub.budget || {})[gi] ?? (sub.budget || {})[String(gi)];
@@ -625,9 +571,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     const { si, gi, g } = numCtx;
     const next = deepCopy(canon);
     const rec = next[si].grades[gi];
-    const ppwMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
+    const ppwMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, g.ppw_anchor);
     rec.durations = [...g.durations];
     rec.ppw_by_duration = ppwMap;
+    rec.ppw_anchor = ppwAnchor(g.durations, ppwMap, g.ppw_anchor);
     rec.periods_per_week = ppwMapSum(ppwMap);
     const budget = finalBudget || g.budget
       || (next[si].budget || {})[gi] || (next[si].budget || {})[String(gi)]
@@ -695,8 +642,14 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           ? "Tick a subject to add it — untick one to remove it. Keep at least one."
           : "Pick the subject — or several — to add."}</p>
         {options.length === 0 && <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>}
+        {/* ★ NO CLUSTERING on this wheel (founder, 2026-07-26). It opens with the enrolled entries
+            already ticked, and its whole purpose is to reveal what she does NOT yet have. The cluster
+            rule hides unchosen options between the lowest and highest pick — which on Kumar1
+            (English · Science · Social Sciences · The World Around Us ticked) silently swallowed
+            Mathematics, the one subject the screen existed to offer. Clustering is for building a
+            selection UP from nothing in a long list, never for add/remove over a full catalogue. */}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle}
+          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={false}
             ariaLabel={manage ? "Your subjects" : "Subjects to add"}>
             <button type="button" className="primary fr-cta" disabled={!picked.length}
               onClick={manage ? onManageSubjectsContinue : onSubjectsPicked}>
@@ -746,8 +699,11 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         {gradeOptions.length > 0 && options.length === 0 && (
           <p className="fr-hint">Every class Aruvi offers for {draft.name} is already in your profile.</p>
         )}
+        {/* Same reason as the subject wheel: manage mode pre-ticks the enrolled classes, so
+            clustering would hide exactly the grades she came to add (VI + IX ticked → VII and VIII
+            vanish). */}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle}
+          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={false}
             ariaLabel={`Classes for ${draft.name}`} labelFor={(g) => `Class ${classNum(g)}`}>
             <button type="button" className="primary fr-cta" disabled={manageC ? false : !picked.length}
               onClick={manageC ? onManageClassesContinue : onClassesContinue}>
@@ -797,11 +753,34 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           <PickWheel options={SECTION_LETTERS} selected={g.sections} onToggle={toggle}
             ariaLabel={`Sections of Class ${classNum(g.grade)}`} labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
             <button type="button" className="primary fr-cta" disabled={!g.sections.length}
-              onClick={() => setClassStep("durations")}>
+              onClick={() => setClassStep("ppw")}>
               Continue
             </button>
           </PickWheel>
           <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
+        </div>
+      );
+    }
+
+    if (classStep === "ppw") {
+      /* Asked BEFORE duration (founder, 2026-07-26): she sizes her week once, unattached to any
+       * period length, and the duration screen then divides it. */
+      const total = ppwMapSum(normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, g.ppw_anchor));
+      const setTotal = (t) => {
+        const next = setPpwTotal(g.durations, normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, g.ppw_anchor),
+                                 g.ppw_anchor, t);
+        updGrade({ ppw_by_duration: next, periods_per_week: ppwMapSum(next) });
+      };
+      return (
+        <div className="tp">
+          <div className="kicker kicker-ochre">{kicker}</div>
+          <h1 className="fr-q">How many periods a week does Class {classNum(g.grade)} get for {draft.name}?</h1>
+          <p className="fr-hint">A number, not a timetable — Aruvi never asks which days.</p>
+          <PpwTotalWheel value={total} onChange={setTotal} />
+          <div className="fr-foot">
+            <button className="primary fr-cta" onClick={() => setClassStep("durations")}>Continue</button>
+            <button className="fr-link" onClick={() => setClassStep("sections")}>← Back</button>
+          </div>
         </div>
       );
     }
@@ -812,47 +791,38 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           ? (g.durations.length > 1 ? g.durations.filter((x) => x !== d) : g.durations)
           : [...g.durations, d].sort((x, y) => x - y),
       });
-      return (
-        <div className="tp">
-          <div className="kicker kicker-ochre">{kicker}</div>
-          <h1 className="fr-q">How long are your {draft.name} periods for Class {classNum(g.grade)}?</h1>
-          <p className="fr-hint">If more than one duration, select multiple.</p>
-          <PickWheel options={DURATION_CHOICES} selected={g.durations} onToggle={toggle}
-            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={DEFAULT_DURATION}>
-            <button type="button" className="primary fr-cta" onClick={() => {
-              // Reconcile the per-duration weekly-count map to whatever durations she just chose,
-              // so the next screen (and the budget total) reflect the current set immediately.
-              const nextMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
-              updGrade({ ppw_by_duration: nextMap, periods_per_week: ppwMapSum(nextMap) });
-              setClassStep("ppw");
-            }}>Continue</button>
-          </PickWheel>
-          <button className="fr-link" onClick={() => setClassStep("sections")}>← Back</button>
-        </div>
-      );
-    }
-
-    if (classStep === "ppw") {
-      const map = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
+      /* She has just stated the size of her week, so the split belongs HERE as a second column —
+       * no separate screen. The lowest ticked length is the non-editable remainder. */
+      const anchor = lowestDuration(g.durations);
+      const map = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, anchor);
+      const total = ppwMapSum(map);
       const multi = (g.durations || []).length > 1;
       const setCount = (d, v) => {
-        const next = { ...map, [d]: Math.max(1, Number(v) || 1) };
+        const next = setPpwSplit(g.durations, map, anchor, d, v);
         updGrade({ ppw_by_duration: next, periods_per_week: ppwMapSum(next) });
       };
       return (
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker}</div>
-          <h1 className="fr-q">{multi
-            ? `How many periods a week for each duration?`
-            : `How many periods a week does Class ${classNum(g.grade)} get for ${draft.name}?`}</h1>
+          <h1 className="fr-q">How long are your {draft.name} periods for Class {classNum(g.grade)}?</h1>
           <p className="fr-hint">{multi
-            ? "One row per duration — Aruvi adds them up. No timetable, just counts."
-            : "A number, not a timetable — Aruvi never asks which days."}</p>
-          <PpwCapture durations={g.durations} map={map} onSet={setCount} />
-          <div className="fr-foot">
-            <button className="primary fr-cta" onClick={() => setClassStep("budget")}>Continue</button>
-            <button className="fr-link" onClick={() => setClassStep("durations")}>← Back</button>
-          </div>
+            ? `Split your ${total} periods between the lengths — the shortest one takes whatever is left over.`
+            : "If more than one duration, select multiple."}</p>
+          <PickWheel options={DURATION_CHOICES} selected={g.durations} onToggle={toggle}
+            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={DEFAULT_DURATION}
+            leadingHeader={multi ? "Duration" : null}
+            trailingHeader={multi ? "Periods / week" : null}
+            summaryFor={multi ? (d) => `${d} min × ${map[d] || 0}` : null}
+            trailing={(d, on) => (
+              <PpwSplitCell duration={d} selected={on} map={map} total={total}
+                isAnchor={d === anchor} onSet={setCount} show={multi} />
+            )}>
+            <button type="button" className="primary fr-cta" onClick={() => {
+              updGrade({ ppw_by_duration: map, ppw_anchor: anchor, periods_per_week: total });
+              setClassStep("budget");
+            }}>Continue</button>
+          </PickWheel>
+          <button className="fr-link" onClick={() => setClassStep("ppw")}>← Back</button>
         </div>
       );
     }
@@ -910,7 +880,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           <button className="primary fr-cta" onClick={() => { updGrade({ budget: b }); onClassDone(); }}>
             {isLast ? "Save ✓" : "Next class →"}
           </button>
-          <button className="fr-link" onClick={() => setClassStep("ppw")}>← Back</button>
+          <button className="fr-link" onClick={() => setClassStep("durations")}>← Back</button>
         </div>
       </div>
     );
@@ -966,7 +936,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         <div className="kicker kicker-ochre">{sub.name} · Class {classNum(g.grade)} · sections</div>
         <h1 className="fr-q">Edit sections of Class {classNum(g.grade)}</h1>
         <p className="fr-hint">Tick to keep or add a section, untick to remove one. A removed section loses its bookmark — your lessons stay in the library. To remove the whole class, use the basket on the class.</p>
-        <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle}
+        {/* Pre-ticked over the whole A–Z list, so clustering would hide B…Q for a class that has
+            A and R — the sections she is most likely to be adding. */}
+        <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle} cluster={false}
           ariaLabel="Sections" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
           <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={requestEditSections}>Save</button>
         </PickWheel>
@@ -997,44 +969,66 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           ? (g.durations.length > 1 ? g.durations.filter((x) => x !== d) : g.durations)
           : [...g.durations, d].sort((x, y) => x - y),
       });
+      /* This screen is only ever reached THROUGH the periods/week total (the standalone duration
+       * pencil is gone), so she has just restated the size of her week and the anchor is the
+       * lowest ticked length — the same rule as first run. No stored-anchor exception is needed
+       * any more, because there is no longer a way to change lengths without passing the total. */
+      const anchor = lowestDuration(g.durations);
+      const map = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, anchor);
+      const total = ppwMapSum(map);
       const multi = g.durations.length > 1;
+      const setCount = (d, v) => {
+        const next = setPpwSplit(g.durations, map, anchor, d, v);
+        updNum({ ppw_by_duration: next, periods_per_week: ppwMapSum(next) });
+      };
       return (
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker} · duration</div>
           <h1 className="fr-q">How long are the periods?</h1>
-          <p className="fr-hint">If more than one duration, select multiple.</p>
+          <p className="fr-hint">{multi
+            ? `Split your ${total} periods between the lengths — ${anchor} min takes whatever is left over.`
+            : "If more than one duration, select multiple."}</p>
           <PickWheel options={DURATION_CHOICES} selected={g.durations} onToggle={toggle}
-            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={g.durations[0]}>
-            {multi ? (
-              // >1 duration → go on to ask the weekly count per type (reconcile the map first)
-              <button type="button" className="primary fr-cta" onClick={() => {
-                const nextMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
-                setNumCtx((c) => ({ ...c, g: { ...c.g, ppw_by_duration: nextMap, periods_per_week: ppwMapSum(nextMap) }, step: "ppw" }));
-              }}>Continue</button>
-            ) : (
-              <button type="button" className="primary fr-cta" onClick={() => saveEditNums()}>Save</button>
-            )}
+            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={g.durations[0]}
+            leadingHeader={multi ? "Duration" : null}
+            trailingHeader={multi ? "Periods / week" : null}
+            summaryFor={multi ? (d) => `${d} min × ${map[d] || 0}` : null}
+            trailing={(d, on) => (
+              <PpwSplitCell duration={d} selected={on} map={map} total={total}
+                isAnchor={d === anchor} onSet={setCount} show={multi} />
+            )}>
+            {/* Step 2 of 2 — the lengths and their split together, so this is where it saves. */}
+            <button type="button" className="primary fr-cta"
+              onClick={() => { updNum({ ppw_by_duration: map, ppw_anchor: anchor, periods_per_week: total }); saveEditNums(); }}>
+              Save
+            </button>
           </PickWheel>
-          <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
+          <button className="fr-link" onClick={() => setNumCtx((c) => ({ ...c, step: "ppw" }))}>← Back</button>
         </div>
       );
     }
 
     if (step === "ppw") {
-      const map = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week);
-      const multi = (g.durations || []).length > 1;
-      const setCount = (d, v) => {
-        const next = { ...map, [d]: Math.max(1, Number(v) || 1) };
+      /* Step 1 of 2 behind the periods/week pencil: the weekly TOTAL. It is now the ONLY way
+       * into the period lengths — the standalone duration pencil is gone, because the size of the
+       * week and its division are one answer, not two. Continue → step "duration". */
+      const anchor = ppwAnchor(g.durations, g.ppw_by_duration, g.ppw_anchor);
+      const map = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, anchor);
+      const setTotal = (t) => {
+        const next = setPpwTotal(g.durations, map, anchor, t);
         updNum({ ppw_by_duration: next, periods_per_week: ppwMapSum(next) });
       };
       return (
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker} · periods / week</div>
-          <h1 className="fr-q">{multi ? "How many periods a week for each duration?" : "How many periods a week?"}</h1>
-          {multi && <p className="fr-hint">One row per duration — Aruvi adds them up.</p>}
-          <PpwCapture durations={g.durations} map={map} onSet={setCount} />
+          <h1 className="fr-q">How many periods a week?</h1>
+          <p className="fr-hint">A number, not a timetable — you&rsquo;ll set the period lengths next.</p>
+          <PpwTotalWheel value={ppwMapSum(map)} onChange={setTotal} />
           <div className="fr-foot">
-            <button className="primary fr-cta" onClick={() => saveEditNums()}>Save</button>
+            {/* Always continues into the duration screen — that is where the lengths and their
+                split are set, and it is the only way in now. */}
+            <button className="primary fr-cta"
+              onClick={() => setNumCtx((c) => ({ ...c, step: "duration" }))}>Continue</button>
             <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
           </div>
         </div>
@@ -1168,15 +1162,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
               const ppw = g.periods_per_week;
               const b = (s.budget || {})[gi] ?? (s.budget || {})[String(gi)];
               const total = ppw && b ? budgetPeriods(ppw, b) : null;
-              // Periods/week: total-forward number, with the per-duration split as a caption right
-              // below it ("6×40 · 1×50"). The caption is ABSOLUTELY positioned (.tp-cc-col-cap) so
-              // it sits in the card's bottom padding instead of making the centre column taller than
-              // Duration/Budget — that height difference was what left an empty row under the card.
-              // Single-duration classes show just the number, no caption.
               const durs = g.durations || [];
               const pmap = g.ppw_by_duration || {};
-              const perWeekBreakdown = durs.length > 1
-                ? durs.map((d) => `${pmap[d] ?? pmap[String(d)] ?? "—"}×${d}`).join(" · ")
+              /* Periods/week is stated as the SPLIT itself — "7 × 50 min, 1 × 60 min" — not as a
+               * bare total with the lengths parked in a separate column (founder, 2026-07-26).
+               * The number on its own never answered the question a teacher actually asks of this
+               * card ("what does my week look like?"), and the Duration column was only ever the
+               * other half of this one sentence. Dropping that column is what buys the room. A
+               * single-length class reads the same way ("8 × 45 min"), so there is one format. */
+              const perWeek = durs.length
+                ? durs.map((d) => `${pmap[d] ?? pmap[String(d)] ?? 0} × ${d} min`).join(", ")
                 : null;
               return (
                 <div className="tp-classcard" key={g.grade}>
@@ -1205,15 +1200,6 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                     </div>
                   </div>
                   <div className="tp-cc-cols">
-                    <div className="tp-cc-col">
-                      <div className="tp-cc-col-l">Duration
-                        {editing && (
-                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit duration of Class ${classNum(g.grade)}`}
-                            onClick={() => startEditNums(si, gi, "duration")}><Pencil size={12} /></button>
-                        )}
-                      </div>
-                      <div className="tp-cc-col-v">{(g.durations || []).join("/")} min</div>
-                    </div>
                     <div className="tp-cc-col tp-cc-col--center">
                       <div className="tp-cc-col-l">Periods / week
                         {editing && (
@@ -1221,8 +1207,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                             onClick={() => startEditNums(si, gi, "ppw")}><Pencil size={12} /></button>
                         )}
                       </div>
-                      <div className="tp-cc-col-v">{ppw || "—"}</div>
-                      {perWeekBreakdown && <div className="tp-cc-col-cap">{perWeekBreakdown}</div>}
+                      <div className="tp-cc-col-v">{perWeek || (ppw ? `${ppw} a week` : "—")}</div>
                     </div>
                     <div className="tp-cc-col">
                       <div className="tp-cc-col-l">Annual budget

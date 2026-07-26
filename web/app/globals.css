@@ -878,6 +878,13 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .prep-use { font-family:var(--f-mono); font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:var(--ochre);
   background:none; border:1px solid #ddcfa6; border-radius:6px; padding:2px 7px; cursor:pointer; }
 .prep-use:hover { background:var(--paper-sunk); }
+/* Prepare Lesson · ONE control (a period stepper). The duration mix is derived from her profile
+   and only echoed back underneath as small print, e.g. "6 × 45 min · 3 × 50 min". */
+.prep-mix { font-family:var(--f-mono); font-size:11px; letter-spacing:.04em; color:var(--ink-soft);
+  margin:8px 2px 0; }
+/* The single sub-0.6 coverage warning — quiet grey, not an alarm. */
+.prep-floor { font-family:var(--f-body); font-style:italic; font-size:12.5px; line-height:1.55;
+  color:var(--ink-soft); margin:10px 2px 0; max-width:34em; }
 .prep-tip { position:absolute; top:calc(100% + 8px); right:0; width:230px; z-index:6; text-align:left;
   background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
   box-shadow:0 6px 22px rgba(31,42,36,.16); font-size:13px; line-height:1.5; color:var(--ink); }
@@ -2409,12 +2416,18 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-cc-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .tp-cc-seclbl { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
 .tp-cc-actions { display: flex; align-items: center; gap: 12px; }
-.tp-cc-cols { display: grid; grid-template-columns: 0.8fr 1.1fr 1.1fr; gap: 6px; }
+/* TWO columns since 2026-07-26 — the Duration column is gone and periods/week states the split
+   itself ("7 × 50 min, 1 × 60 min"), so it gets the room the third column used to take. The old
+   absolutely-positioned .tp-cc-col-cap caption retired with it. */
+.tp-cc-cols { display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; }
 .tp-cc-col-l { display: flex; align-items: center; gap: 3px; white-space: nowrap; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); }
 .tp-cc-col-v { font-family: var(--f-body); font-size: 13.5px; color: var(--ink); margin-top: 3px; }
-.tp-cc-col-cap { position: absolute; left: 0; right: 0; top: 100%; margin-top: 1px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .02em; color: var(--pine-d); }
-.tp-cc-col--center { text-align: center; position: relative; }
-.tp-cc-col--center .tp-cc-col-l { justify-content: center; }
+.tp-cc-col--center { text-align: left; }
+.tp-cc-col--center .tp-cc-col-l { justify-content: flex-start; }
+/* Narrow phones: the split can run to two lines, so stack rather than squeeze it. */
+@media (max-width: 400px) {
+  .tp-cc-cols { grid-template-columns: 1fr; gap: 8px; }
+}
 .tp-icon-xs { padding: 1px; }
 
 /* the red dustbin */
@@ -2494,6 +2507,14 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-ppw-stepper { display: flex; align-items: center; gap: 10px; }
 .tp-ppw-input { width: 56px; font-size: 18px; }
 .tp-ppw-total { font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; color: var(--pine-d); margin: 8px 2px 0; text-align: right; }
+/* The ANCHOR row of a multi-duration split: a derived remainder, not an input (wheels.jsx). */
+.tp-ppw-rest { display: flex; align-items: baseline; gap: 8px; }
+.tp-ppw-rest b { font-family: var(--f-mono); font-size: 18px; color: var(--ink); }
+.tp-ppw-rest small { font-family: var(--f-body); font-style: italic; font-size: 11.5px; color: var(--ink-soft); }
+.tp-ppw-totalrow { background: var(--paper-2); }
+.tp-ppw-totalrow .tp-ppw-dur { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
+.tp-ppw-note { font-family: var(--f-body); font-style: italic; font-size: 11.5px; line-height: 1.5;
+  color: var(--ink-soft); margin: 8px 2px 0; }
 
 /* screen 5 — section picker modal (mirrors MyClasses.jsx's .mc-modal-bg/.mc-modal language) */
 .fr-modal-bg { position: fixed; inset: 0; background: rgba(31, 42, 36, .45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
@@ -2534,6 +2555,89 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .fr-sec-wheel .fr-sec-opt:last-child { border-bottom: none; }
 .fr-sec-wheel .fr-sec-opt.on { background: var(--tint-pine-2); }
+/* ── two-column PickWheel (2026-07-26): the duration question carries its own periods/week
+   split as a trailing column, so there is no separate periods-per-duration screen. The row is a
+   <div> wrapper (a <select> cannot live inside a <button>), with the tick+label button growing
+   to fill the left side and the split cell pinned right. */
+/* The split column is a FIXED width so the heading, every dropdown and the anchor's bare number
+   all centre on the same axis — one column of figures, not a heading with two kinds of control
+   hanging off it. */
+.fr-sec-wheel-col { --ppw-col: 96px; }
+.fr-sec-colhead { display: flex; align-items: center; padding: 0 12px 6px 14px; }
+.fr-sec-colhead span { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--ink-soft); }
+.fr-sec-colhead span:first-child { flex: 1; min-width: 0; }
+.fr-sec-colhead span:last-child { flex: none; width: var(--ppw-col); text-align: center; }
+.fr-sec-wheel .fr-sec-optrow {
+  flex: none; display: flex; align-items: center; height: 52px; padding-right: 12px;
+  border-bottom: 1px solid var(--line-soft); scroll-snap-align: start;
+}
+.fr-sec-wheel .fr-sec-optrow:last-child { border-bottom: none; }
+.fr-sec-wheel .fr-sec-optrow.on { background: var(--tint-pine-2); }
+/* ★ The row wrapper is the ONLY snap target. The base .fr-sec-wheel .fr-sec-opt rule also sets
+   scroll-snap-align, and leaving it on the inner button made every row TWO nested snap points —
+   the scroller then fought itself, so drags felt sticky and the ▲▼ arrows landed and were pulled
+   back (founder: "up and down is not easy", 2026-07-26). Must stay `none`. */
+.fr-sec-wheel .fr-sec-optrow .fr-sec-opt { flex: 1; min-width: 0; height: 100%; border-bottom: none;
+  background: transparent; scroll-snap-align: none; }
+.fr-sec-wheel .fr-sec-optrow .fr-sec-opt.on { background: transparent; }
+.fr-sec-trail { flex: none; width: var(--ppw-col); display: flex; align-items: center; justify-content: center; min-height: 28px; }
+/* Grey column rule between the two columns — drawn per row so it runs the full height of the
+   wheel without a separate absolutely-positioned element, plus a matching segment on the header.
+   Gated on .has-trail so a single-column PickWheel (sections, and a one-length class) never
+   shows a divider with nothing on the other side of it. */
+.has-trail .fr-sec-trail { height: 100%; border-left: 1px solid var(--line); }
+.has-trail .fr-sec-colhead span:last-child { border-left: 1px solid var(--line); align-self: stretch;
+  display: flex; align-items: center; justify-content: center; }
+/* Five rows visible instead of four while the split column is in play — the same 21 lengths to
+   scroll, but each row now carries a second control, so the window earns the extra height. The
+   side arrows height-match off the same flag on the wrap. */
+.fr-sec-wheel-wrap.has-trail .fr-sec-wheel { height: 260px; }
+.fr-sec-wheel-wrap.has-trail .fr-sec-arrows-side { height: 260px; }
+
+/* The anchor cell (lowest length) — a derived remainder, deliberately not an input, and no label:
+   the column heading already names it. Its face is the reference the dropdowns match. */
+.fr-ppw-num { font-family: var(--f-mono); font-size: 16px; color: var(--ink); text-align: center; }
+
+/* The dropdown looks like a field only while it is still asking (0). Once answered it takes the
+   row's own colour and the caret dims, so answered rows read as plain figures beside the anchor. */
+/* Palette. The chip is a form field only while it is still ASKING: unanswered it is a pine-
+   bordered box with the figure in --pine-d; answered it dissolves into the row so the figures read
+   as one column with the anchor's. Tokens only — all of these flip under
+   [data-theme-effective="dark"].
+   NOTE the control is a BUTTON + listbox, not a <select>: on macOS a <select>'s popup is drawn by
+   the OS and ignores `option { background }` entirely, so the palette could never reach the open
+   menu. See PpwSplitCell in wheels.jsx. */
+.fr-ppw-selwrap { position: relative; display: inline-flex; align-items: center; border-radius: 8px;
+  border: 1.5px solid var(--pine); background: var(--paper-2);
+  transition: background .15s, border-color .15s; }
+.fr-ppw-selwrap::after { content: "\25BE"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  font-size: 10px; color: var(--pine); pointer-events: none; transition: opacity .15s; }
+.fr-ppw-selwrap:focus-within, .fr-ppw-selwrap.open { border-color: var(--pine-d); box-shadow: 0 0 0 2px var(--tint-pine); }
+/* Answered → settles into the row: surface and edge go transparent, caret dims, figure to --ink. */
+.fr-ppw-selwrap.answered { background: transparent; border-color: transparent; }
+.fr-ppw-selwrap.answered::after { opacity: .4; }
+.fr-ppw-selwrap.answered .fr-ppw-sel { color: var(--ink); }
+.fr-ppw-selwrap.answered.open { border-color: var(--pine-d); }
+.fr-ppw-sel {
+  font-family: var(--f-mono); font-size: 16px; color: var(--pine-d); cursor: pointer;
+  background: transparent; border: none; border-radius: 8px;
+  width: 62px; padding: 5px 18px 5px 12px; text-align: center;
+}
+.fr-ppw-sel:focus { outline: none; }
+/* The open menu — position:FIXED so the wheel's overflow:auto cannot clip it. */
+.fr-ppw-pop {
+  position: fixed; z-index: 60; min-width: 62px; max-height: 190px; overflow-y: auto;
+  display: flex; flex-direction: column; padding: 4px;
+  background: var(--paper-2); border: 1.5px solid var(--edge-green); border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(31, 42, 36, .16);
+}
+.fr-ppw-opt {
+  font-family: var(--f-mono); font-size: 15px; color: var(--ink); background: transparent;
+  border: none; border-radius: 6px; padding: 7px 14px; cursor: pointer; text-align: center; min-width: 54px;
+}
+.fr-ppw-opt:hover { background: var(--tint-pine); }
+.fr-ppw-opt.on { background: var(--pine); color: var(--paper-2); }
 /* Bare step arrows beside the wheel — no bordered/background box, just the two glyphs sitting
    directly on the modal body. Height-matched to the wheel only (not the column's Done button),
    so they read as scrolling the list, not the whole panel. One notch bigger than the shared
@@ -2670,6 +2774,19 @@ button.prepare-cta:disabled, .prepare-cta:disabled {
 }
 /* leading spark — the mark of the singular act */
 button.prepare-cta::before, .prepare-cta::before { content: "✦"; margin-right: 8px; opacity: .95; vertical-align: .16em; }
+/* In-flight state for the Prepare CTA. A genon adaptation is instant, but the optional
+   seam-polish pass is a ~1-2 minute LLM call — without a visible spinner the teacher
+   assumes nothing happened and clicks again (which used to fire a second paid request).
+   The star glyph is suppressed while working so the spinner reads as the only signal. */
+button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: none; margin-right: 0; }
+.prep-working { display: inline-flex; align-items: center; gap: 9px; }
+.prep-spin {
+  width: 13px; height: 13px; flex: none; border-radius: 50%;
+  border: 2px solid currentColor; border-top-color: transparent;
+  animation: prep-spin 720ms linear infinite;
+}
+@keyframes prep-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .prep-spin { animation-duration: 2.4s; } }
 /* First-run "Prepare my first lesson" — a more prominent spark (bumped up ~3 notches). */
 .fr-cta.prepare-cta::before { font-size: 1.5em; margin-right: 11px; vertical-align: -0.06em; }
 

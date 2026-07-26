@@ -17,6 +17,9 @@ The ONLY deviations, each mechanical and declared:
    exposed as functions returning (system_prompt_blocks, user_message_blocks).
    The non-English inline block is wrapped as _build_lpa_prompts_standard —
    its body is the verbatim inline code.
+4. (2026-07-25, LP v1.2) "role_handoff": <per LP Constitution> added to the
+   top-level output sketch in both schema branches — the sketch must track
+   Amendment A1's top level or the model drops constitution-mandated siblings.
 Nothing else changed. If you edit a prompt string here you are no longer
 generating "the same way" — don't.
 """
@@ -210,6 +213,7 @@ def _build_lpa_prompts_standard(
   "period_schedule": <derived from teacher period schedule above>,
   "lesson_plan": {{ "periods": [ <one object per period per LP constitution> ] }},
   "coverage_handoff": <per LP Constitution>,
+  "role_handoff": <per LP Constitution>,
   "assessment_items": <per Assessment Constitution>
 }}"""
         _intro_line = "Follow the Lesson Plan Constitution and Assessment Constitution exactly."
@@ -222,7 +226,8 @@ def _build_lpa_prompts_standard(
   "chapter_title": "{chapter.get('chapter_title', '')}",
   "period_schedule": <derived from teacher period schedule above>,
   "lesson_plan": {{ "periods": [ <one object per period per LP constitution> ] }},
-  "coverage_handoff": <per LP Constitution>
+  "coverage_handoff": <per LP Constitution>,
+  "role_handoff": <per LP Constitution>
 }}"""
         _intro_line = "Follow the Lesson Plan Constitution exactly."
         _task_line  = "Generate a complete lesson plan for the following chapter."
