@@ -11,6 +11,7 @@ Data comes from local disk (api/data.py) for now; live generation and the DB com
 """
 from __future__ import annotations
 
+import os
 from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -779,6 +780,17 @@ class GenonRowInput(BaseModel):
     count: int             # how many periods of this duration
 
 
+# ── SEAM POLISH KILL-SWITCH (founder, 2026-07-26) ─────────────────────────────────────────
+# OFF across the board until the founder reopens it: every teacher-facing generation is a PURE
+# PARTITION of the certified canonical — deterministic, instant, free. This is the SERVER gate and
+# it is the one that guards the money: a request may still ask for polish (a stale browser tab, a
+# curl, a test), and it is refused here regardless. The UI has its own switch
+# (web/app/lib/format.js SEAM_POLISH_ENABLED); BOTH must be opened to spend a rupee.
+# To reopen server-side: set ARUVI_SEAM_POLISH=1 in the API environment.
+def _seam_polish_allowed() -> bool:
+    return os.environ.get("ARUVI_SEAM_POLISH", "").strip().lower() in ("1", "true", "yes", "on")
+
+
 class GenonPlanRequest(BaseModel):
     rows: List[GenonRowInput]
     polish: bool = False   # tier-1 LLM seam polish (needs ANTHROPIC_API_KEY server-side)
@@ -853,7 +865,8 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     # is served without partitioning and — the point — without spending polish tokens
     # again; it also makes an accidental double-click free instead of paying twice for
     # the same 100-second call. Per-teacher visibility still comes from the register.
-    filename = data.genon_plan_filename(chapter_number, matrix, canonical, bool(req.polish))
+    filename = data.genon_plan_filename(chapter_number, matrix, canonical,
+                                        bool(req.polish) and _seam_polish_allowed())
     hit = data.load_saved_plan(subject, grade, filename)
     if hit is not None:
         try:
@@ -885,7 +898,11 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         raise HTTPException(status_code=500, detail=str(e))
 
     polish_info = None
-    if req.polish:
+    # Honour the kill-switch BEFORE anything is spent. `want_polish` also feeds the cache key
+    # below, so a polish-off run addresses the unpolished artefact and never serves, or
+    # overwrites, a polished one.
+    want_polish = bool(req.polish) and _seam_polish_allowed()
+    if want_polish:
         try:
             polish_info = run_polish(plan)      # in-place; container text only
             if polish_info.get("input_tokens"):  # paid run → founder's cost notebook

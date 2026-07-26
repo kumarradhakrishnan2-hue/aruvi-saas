@@ -642,14 +642,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           ? "Tick a subject to add it — untick one to remove it. Keep at least one."
           : "Pick the subject — or several — to add."}</p>
         {options.length === 0 && <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>}
-        {/* ★ NO CLUSTERING on this wheel (founder, 2026-07-26). It opens with the enrolled entries
-            already ticked, and its whole purpose is to reveal what she does NOT yet have. The cluster
-            rule hides unchosen options between the lowest and highest pick — which on Kumar1
-            (English · Science · Social Sciences · The World Around Us ticked) silently swallowed
-            Mathematics, the one subject the screen existed to offer. Clustering is for building a
-            selection UP from nothing in a long list, never for add/remove over a full catalogue. */}
+        {/* ★ Clustering is keyed to the MODE, not the screen (founder, 2026-07-26).
+            ADD  → options already exclude what she has and `picked` starts empty, so she is building
+                   a selection up from nothing: cluster, exactly as on the section and duration wheels.
+            MANAGE → the full catalogue with her enrolled entries pre-ticked, and the whole point is
+                   to reveal what she does NOT have. Clustering hides unchosen options between the
+                   lowest and highest pick, which on Kumar1 (English · Science · Social Sciences ·
+                   The World Around Us ticked) silently swallowed Mathematics — the one subject the
+                   screen existed to offer. Never cluster an add/remove wheel over a full list. */}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={false}
+          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={!manage}
             ariaLabel={manage ? "Your subjects" : "Subjects to add"}>
             <button type="button" className="primary fr-cta" disabled={!picked.length}
               onClick={manage ? onManageSubjectsContinue : onSubjectsPicked}>
@@ -699,11 +701,12 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         {gradeOptions.length > 0 && options.length === 0 && (
           <p className="fr-hint">Every class Aruvi offers for {draft.name} is already in your profile.</p>
         )}
-        {/* Same reason as the subject wheel: manage mode pre-ticks the enrolled classes, so
-            clustering would hide exactly the grades she came to add (VI + IX ticked → VII and VIII
-            vanish). */}
+        {/* Same mode rule as the subject wheel. Adding (including the add-subject run, where the
+            list starts empty) clusters; managing does not, because it pre-ticks the enrolled classes
+            and clustering would hide exactly the grades she came to add — VI + IX ticked makes VII
+            and VIII vanish. */}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={false}
+          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={!manageC}
             ariaLabel={`Classes for ${draft.name}`} labelFor={(g) => `Class ${classNum(g)}`}>
             <button type="button" className="primary fr-cta" disabled={manageC ? false : !picked.length}
               onClick={manageC ? onManageClassesContinue : onClassesContinue}>

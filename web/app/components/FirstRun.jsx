@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, SEAM_POLISH_ENABLED } from "../lib/format";
 import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, setPpwSplit,
          setPpwTotal, lowestDuration, DEFAULT_PPW } from "./wheels";
@@ -181,6 +181,14 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // Which saved plan the preview used — deposited in My Lessons at handoff (markPrepared), but
   // NOT bound to any section; she attaches it herself via "+" on a card.
   const [previewPlanFile, setPreviewPlanFile] = useState(null);
+  /* genon in FIRST RUN (founder, 2026-07-26). This screen used to look only for a pre-saved plan
+   * and, finding none, said "no saved test plans available yet" — even for a chapter that HAS a
+   * certified canonical and could be built deterministically in milliseconds. Same wiring as
+   * PrepareLesson: her one duration × her period count is the matrix, the server partitions the
+   * canonical, saves it, and registers it as prepared. The saved-plan fallback stays for chapters
+   * with no canonical yet. */
+  const [genonChs, setGenonChs] = useState([]);          // chapter numbers with a canonical
+  const [canonMinutes, setCanonMinutes] = useState({});  // {chapter: canonical total minutes}
 
   // Load the subject catalogue once (used on the subject step).
   useEffect(() => {
@@ -205,11 +213,17 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
 
   // Chapters for the chosen subject·grade.
   useEffect(() => {
-    if (!subject || !grade) { setChapters([]); return; }
+    if (!subject || !grade) { setChapters([]); setGenonChs([]); setCanonMinutes({}); return; }
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => {
       setChapters(d.chapters || []);
     }).catch(() => setChapters([]));
+    getJSON(`/genon/${subject}/${grade}/chapters`)
+      .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); })
+      .catch(() => { setGenonChs([]); setCanonMinutes({}); });
   }, [subject, grade]);
+
+  // Can this chapter be built deterministically from a certified canonical?
+  const genonAvailable = !!chapterNo && genonChs.includes(Number(chapterNo));
 
   // Estimated teaching periods for the chosen chapter — sourced from the NCF period-norms
   // table (data/content/allocation_norms/ncf_period_norms.json), distributed across this
@@ -374,6 +388,20 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     setPreviewView(null);
     setPreviewPlanFile(null);
     try {
+      // ── genon path: build THIS chapter from its certified canonical, at her chosen shape ──
+      if (genonAvailable) {
+        try {
+          const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
+            { rows: [{ duration: durationMin, count: periods }], polish: SEAM_POLISH_ENABLED });
+          const viewRes = await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`);
+          setPreviewView(viewRes.view);
+          setPreviewPlanFile(resp.filename);
+          if (resp.coverage_note) setPreviewNote(resp.coverage_note);
+          return;
+        } catch {
+          // Fall through to the saved-plan preview rather than dead-end her first ever lesson.
+        }
+      }
       const plansRes = await getJSON(`/plans/${subject}/${grade}`);
       const plans = plansRes.plans || [];
       let match = plans.find((p) => String(p.chapter_number) === String(chapterNo));
@@ -512,6 +540,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       <div className="fr-wrap">
         <Brand />
         <div className="fr-step-body">
+          {/* Seam polish is OFF (format.SEAM_POLISH_ENABLED) — a genon build is a pure partition,
+              so there is nothing to warn her about. Restore the wait note if it is reopened. */}
           {previewBusy && <div className="fr-loading">Building your lesson plan…</div>}
           {!previewBusy && previewError && <div className="empty">{previewError}</div>}
           {!previewBusy && !previewError && previewView && (
@@ -798,6 +828,23 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                   : "That’s a lot of periods for one chapter — you can still go ahead."}
               </p>
             )}
+            {(() => {
+              /* The same sub-0.6 coverage floor Prepare Lesson shows, applied to her very first
+               * lesson: below 60% of the certified plan's minutes the trailing sections cannot be
+               * scheduled at all. Only meaningful for a chapter that HAS a canonical to measure
+               * against, and deliberately silent about WHICH sections go — Aruvi teaches the
+               * textbook in its own order, so "the later ones" is something she can deduce. */
+              const cm = Number(canonMinutes[String(chapterNo)]) || 0;
+              const totalMin = (Number(durationMin) || 0) * (Number(periods) || 0);
+              if (!genonAvailable || !cm || !totalMin) return null;
+              if (totalMin / cm >= 0.6) return null;
+              return (
+                <p className="prep-floor">
+                  If below minimum period of {Math.ceil((0.6 * cm) / (Number(durationMin) || 40))},
+                  some later sections may be dropped.
+                </p>
+              );
+            })()}
           </div>
         </div>
       </div>

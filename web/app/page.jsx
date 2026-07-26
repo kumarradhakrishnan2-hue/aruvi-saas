@@ -81,7 +81,9 @@ export default function Home() {
   const [tour, setTour] = useState(null);
   const [tourInfo, setTourInfo] = useState(null);   // { tag, chapter } from MyPlans
   const [tourDismissed, setTourDismissed] = useState(false);   // session-only; never persisted
-  const finishTour = () => { setTour(null); setTourDismissed(true); };
+  // Also closes Ask Aruvi: Skip can be pressed on step 18 while the panel is open, and the
+  // tour must never leave the shell in a state it opened.
+  const finishTour = () => { setAskOpen(false); setTour(null); setTourDismissed(true); };
   const startTour = () => setTour(1);
 
   // On mount, restore the signed-in user from localStorage (survives refresh).
@@ -262,14 +264,18 @@ export default function Home() {
   // big "+" grow button surfaced at 15) is orchestrated by MyPlans/MyLessonPlans off the numeric
   // tourStep; here we only handle SHELL navigation: 2→3 open My Lessons · 7→8 back to My Classes ·
   // 14→15 close the popup back to My Classes home (the "+" step) · 15→16 open the profile (step 16
-  // rings the settings gear over it) · 16→17 back to My Classes (the Ask Aruvi mark) · 17 Done.
+  // rings the settings gear over it) · 16→17 back to My Classes (the Ask Aruvi mark) · 17→18 OPEN
+  // Ask Aruvi so step 18 rings the real panel · 18→19 close it again for the centred "Welcome to
+  // Aruvi" sign-off · 19 Done → My Classes.
   const tourNext = () => {
     if (tour === 2) goLessons();
     else if (tour === 7) goClasses();
     else if (tour === 14) goClasses();
     else if (tour === 15) goProfile();
     else if (tour === 16) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
-    else if (tour === 17) { finishTour(); goClasses(); return; }
+    else if (tour === 17) setAskOpen(true);     // show her the panel itself, not just its mark
+    else if (tour === 18) setAskOpen(false);    // clear the screen for the sign-off
+    else if (tour === 19) { setAskOpen(false); finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
@@ -282,6 +288,8 @@ export default function Home() {
     else if (tour === 8) goLessons();
     else if (tour === 16) goClasses();
     else if (tour === 17) goProfile();   // back to the settings-gear step (profile open)
+    else if (tour === 18) setAskOpen(false);  // 18→17: the mark on the tab row, panel closed
+    else if (tour === 19) setAskOpen(true);   // 19→18: re-open the panel the step rings
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };

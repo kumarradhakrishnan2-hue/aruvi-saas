@@ -706,14 +706,56 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         <div className="dash-welcome dash-welcome-row">
           <div className="dash-welcome-text">
             <div className="dash-welcome-title">Your classes are ready</div>
-            <div className="dash-welcome-sub">{anyPlans
-              ? <>Your lesson is waiting in My Lessons — tap <b>+</b> on a class to start teaching it.</>
-              : <>Tap <b>+</b> on a class to prepare its first lesson.</>}</div>
+            {/* Reassurance while the tour is still on offer; the instruction only after she has
+                taken it or skipped it (tourResolved). Telling a teacher to tap "+" the second her
+                classes appear is an instruction she has no context for yet. */}
+            <div className="dash-welcome-sub">{
+              anyPlans && !tourResolved
+                ? <>Your first lesson is saved in My Lessons — it will wait there for you.</>
+                : anyPlans
+                  ? <>Your lesson is waiting in My Lessons — tap <b>+</b> on a class to start teaching it.</>
+                  : <>Tap <b>+</b> on a class to prepare its first lesson.</>
+            }</div>
           </div>
           {plusShow && (
             <button className="sc-grow" data-tour="grow-add" aria-label="Add or change subjects, classes, or sections"
               title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
           )}
+        </div>
+      )}
+
+      {/* ★ THE TOUR COMES FIRST (founder, 2026-07-26). This used to sit BELOW the card list,
+          under a welcome box that told her to "tap + on a class" — so the first thing she read was
+          an instruction, and with more than one section it did not even say which card to tap. The
+          lesson is already safe in My Lessons; attaching it is a deliberate act she can do any
+          time. So the invitation now sits directly under the welcome, above the cards, and says
+          out loud that the lesson will wait. The "+" instruction is held back until the tour is
+          resolved (taken or skipped) — see the welcome sub above. */}
+      {!anyBound && anyPlans && !tourActive && onStartTour && (
+        /* The WHOLE window is the target (founder, 2026-07-26) — a teacher reading an invitation
+           should not have to hunt for the small link at the bottom of it. It is a real button for
+           assistive tech too: role + tabIndex + Enter/Space, with ONE accessible name covering the
+           lot. The "Show me how →" line is now a plain <span>: a button inside a button is invalid
+           markup, and a direct hit on it would have fired onStartTour twice. */
+        <div className="dash-nudge dash-nudge-click" role="button" tabIndex={0}
+          aria-label="Show me how — start the guided walkthrough"
+          onClick={() => onStartTour()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+              e.preventDefault(); onStartTour();
+            }
+          }}>
+          <div className="dash-nudge-row">
+            <span className="dash-nudge-hand" aria-hidden="true">{RouteIcon}</span>
+            <div className="dash-nudge-text">
+              <div className="dash-nudge-title">Let me show you around first</div>
+              <div className="dash-nudge-sub">
+                A short walk through tracking sections and handling lesson plans. Your lesson stays
+                safe in My Lessons — you can add it to a class whenever you&rsquo;re ready.
+              </div>
+            </div>
+          </div>
+          <span className="dash-nudge-cta" aria-hidden="true">Show me how&nbsp;&rarr;</span>
         </div>
       )}
 
@@ -809,23 +851,6 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           );
         })}
       </div>
-
-      {/* First-run helping hand — a gentle, one-time nudge shown only while nothing is attached
-          yet and a lesson is waiting. A distinct-coloured "window" (not the paper background), a
-          conversational invitation rather than a hard CTA. "Show me how" launches the guided walk
-          (page.jsx owns the tour state). Gone once she's attached her first lesson or skipped. */}
-      {!anyBound && anyPlans && !tourActive && onStartTour && (
-        <div className="dash-nudge" role="note">
-          <div className="dash-nudge-row">
-            <span className="dash-nudge-hand" aria-hidden="true">{RouteIcon}</span>
-            <div className="dash-nudge-text">
-              <div className="dash-nudge-title">Allow me to show you how to track sections and handle Lesson plans</div>
-              <div className="dash-nudge-sub">It only takes a few steps — I&rsquo;ll walk you through it.</div>
-            </div>
-          </div>
-          <button className="dash-nudge-cta" onClick={() => onStartTour()}>Show me how&nbsp;&rarr;</button>
-        </div>
-      )}
 
       {/* Progressive acquisition — the ONE "grow" invitation, ever (see the expandTarget note
           above): shown once after the first generation + tour, pinned to the first one-class

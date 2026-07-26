@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods,
+         SEAM_POLISH_ENABLED } from "../lib/format";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
 
@@ -265,7 +266,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       setBusy(true); setError(""); setNote("");
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
-          { rows: matrix, polish: true });
+          { rows: matrix, polish: SEAM_POLISH_ENABLED });
         if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
         // No return handler → show the freshly adapted plan.
         setStep("preview");
@@ -428,12 +429,10 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
             </button>
             {busy
               ? <span className="savebar-hint" aria-live="polite">
-                  {/* INTERIM copy (2026-07-26) — final wording parked with the founder. Polish
-                      now runs on every uncached mix, so the two-minute case is the honest worst
-                      case; identity and cache hits still return immediately. */}
-                  {genonAvailable
-                    ? "This can take up to two minutes. Don't leave the page."
-                    : "Working on it…"}
+                  {/* Seam polish is OFF (format.SEAM_POLISH_ENABLED), so a genon build is a pure
+                      partition — milliseconds. No wait warning is warranted; restore one here if
+                      the polish switch is ever reopened. */}
+                  Working on it…
                 </span>
               : !chosen
                 ? <span className="savebar-hint">Pick a chapter to continue.</span>

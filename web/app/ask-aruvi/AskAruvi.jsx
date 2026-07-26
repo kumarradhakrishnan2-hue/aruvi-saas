@@ -50,7 +50,8 @@ export default function AskAruvi({ onClose }) {
 
   return (
     <div className="aa-scrim" role="dialog" aria-modal="true" aria-label="Ask Aruvi">
-      <div className="aa-panel">
+      {/* data-tour: guided-tour step 18 rings the OPEN panel (page.jsx opens it on 17→18). */}
+      <div className="aa-panel" data-tour="ask-aruvi-root">
 
         {/* fixed title bar */}
         <div className="aa-top">

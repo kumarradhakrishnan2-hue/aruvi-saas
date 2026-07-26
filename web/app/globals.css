@@ -2809,6 +2809,14 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   font-family:var(--f-body); font-style:italic; font-size:15.5px; font-weight:500; color:var(--pine);
   cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
 .dash-nudge-cta:hover { color:var(--pine-d); }
+/* The whole invitation is the hit target (MyPlans: role=button + tabIndex). Cursor and the lift on
+   hover/focus say so; the CTA line brightens with the card so it still reads as the action even
+   though it is now just a <span>. */
+.dash-nudge-click { cursor:pointer; transition:background .15s, border-color .15s, transform .12s; }
+.dash-nudge-click:hover { background:var(--tint-pine-2); border-color:var(--pine-d); }
+.dash-nudge-click:active { transform:scale(.994); }
+.dash-nudge-click:hover .dash-nudge-cta { color:var(--pine-d); }
+.dash-nudge-click:focus-visible { outline:none; border-color:var(--pine-d); box-shadow:0 0 0 3px var(--tint-pine); }
 
 /* "Add more classes in this subject" prompt — the progressive-acquisition invitation shown
    below the cards once she's teaching one class of one subject. A warm ochre-on-cream window
@@ -2888,6 +2896,13 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 /* "3 of 11" step counter — mono, quiet, bottom-left of the box. */
 .gt-count { font-family:var(--f-mono); font-size:11px; letter-spacing:.05em; color:var(--ink-soft); white-space:nowrap; }
 .gt-tip-actions { display:flex; align-items:center; gap:4px; }
+/* Step 19 — the centred "Welcome to Aruvi" sign-off. No anchor, no hand: the scrim dims the whole
+   screen and this card sits dead centre on both axes (GuidedTour cfg.center). Display face, larger
+   than a normal tooltip title, and the footer stacks so the card reads as a card, not a pointer. */
+.gt-tip-welcome { text-align:center; padding:28px 22px 18px; }
+.gt-tip-welcome .gt-tip-title { font-size:27px; line-height:1.18; letter-spacing:-.2px; }
+.gt-tip-welcome .gt-tip-foot { flex-direction:column; gap:12px; margin-top:20px; }
+.gt-tip-welcome .gt-count { order:2; }
 .gt-back { font-family:var(--f-mono); font-size:11.5px; letter-spacing:.03em; color:var(--ink-soft);
   background:transparent; border:none; cursor:pointer; padding:7px 6px; white-space:nowrap; }
 .gt-back:hover { color:var(--ink); }

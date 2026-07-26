@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 17 steps (revised 2026-07-23) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 19 steps (revised 2026-07-26) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 17" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 19" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
  * Steps 12–14 demo the completed state without touching her real progress.
@@ -27,7 +27,9 @@ import { useEffect, useRef, useState } from "react";
  *   14 the popup again        — pick the next chapter (bound one excluded)
  *   15 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
  *   16 the settings gear      — where the teaching profile lives
- *   17 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search; Done closes the tour
+ *   17 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search
+ *   18 Ask Aruvi OPEN          — page.jsx opens the panel on 17→18; the box rings the panel itself
+ *   19 "Welcome to Aruvi"      — a centred sign-off, no anchor, no hand; Done lands on My Classes
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -112,10 +114,20 @@ const STEPS = [
   { anchor: "settings-gear", place: "below",
     title: "Your teaching profile.",
     body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },
-  // Step 16 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
+  // Step 17 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
   { anchor: "ask-aruvi", place: "below", hand: true, handPos: "center",
     title: "Use Ask Aruvi to answer your queries",
     body: () => "Get answers for up to 100 questions across 5 categories and use intelligent search to narrow your query." },
+  // Step 18 — the panel is now OPEN (page.jsx opened it on Next from 17), so she sees the thing
+  // itself rather than a mark that promises it. "over" because the target IS the whole modal.
+  { anchor: "ask-aruvi-root", place: "over",
+    title: "Use Ask Aruvi to answer your queries",
+    body: () => "Use either the categories or the intelligent search to look for answers to your queries." },
+  // Step 19 — the sign-off. No anchor and no hand: nothing to point at, so the scrim dims the whole
+  // screen and the greeting sits dead centre. `center` is the third placement mode (see tipStyle).
+  { anchor: null, place: "center", center: true, welcome: true,
+    title: "Welcome to Aruvi",
+    body: null },
 ];
 const TOTAL = STEPS.length;
 
@@ -200,7 +212,10 @@ export default function GuidedTour({ step, info, onNext, onBack, onSkip }) {
   const vh = typeof window !== "undefined" ? window.innerHeight : 800;
   const tw = Math.min(vw * 0.88, 330);
   let tipStyle;
-  if (cfg.place === "over" || !tipBox) {
+  if (cfg.center) {
+    // Dead centre, both axes — the sign-off card, anchored to nothing.
+    tipStyle = { top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
+  } else if (cfg.place === "over" || !tipBox) {
     const lift = cfg.lift ? (cfg.lift < 1 ? Math.round(vh * cfg.lift) : cfg.lift) : 18;
     tipStyle = { bottom: lift, left: "50%", transform: "translateX(-50%)" };
   } else {
@@ -242,9 +257,10 @@ export default function GuidedTour({ step, info, onNext, onBack, onSkip }) {
         <div className="gt-hand" style={handStyle} aria-hidden="true"><Hand /></div>
       )}
 
-      <div className="gt-tip" style={{ ...tipStyle, width: tw }} role="dialog" aria-label="Getting started">
+      <div className={`gt-tip${cfg.welcome ? " gt-tip-welcome" : ""}`} style={{ ...tipStyle, width: tw }}
+        role="dialog" aria-label="Getting started">
         <div className="gt-tip-title">{title}</div>
-        <div className="gt-tip-body">{cfg.body(i)}</div>
+        {cfg.body ? <div className="gt-tip-body">{cfg.body(i)}</div> : null}
         <div className="gt-tip-foot">
           <span className="gt-count">{step} of {TOTAL}</span>
           <span className="gt-tip-actions">
