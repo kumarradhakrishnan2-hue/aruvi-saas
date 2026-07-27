@@ -206,6 +206,66 @@ def master_combo(subject: str, grade: str) -> Optional[Dict[str, Any]]:
     return (doc.get("combos") or {}).get(f"{subject}|{roman}") if roman else None
 
 
+# ── the calibrated standard: durations + per-chapter recommendations ────────────
+# Founder decision 2026-07-26. Two different tables were being conflated:
+#
+#   ncf_period_norms.json   — the NCF adaptation. Annual totals by subject·STAGE,
+#                             expressed in a flat 40-minute period (see its _meta.unit).
+#   master_plan.json        — OUR calibrated standard. Annual budgets by subject·CLASS
+#                             from the founder's workbook, spread per chapter by effort
+#                             weight, at class-banded standard durations (40 ≤VII / 45
+#                             VIII / 50 IX — genon/master_plan.py's std_duration, the
+#                             same bands the certified canonicals were authored at,
+#                             e.g. SS IX ch 5 = 21×50).
+#
+# The two disagree, sometimes badly (SS IX: 245 calibrated periods vs 150 NCF; TWAU
+# preparatory the other way, 140 vs 300). Everything a teacher sees as a DEFAULT now
+# reads the master plan first and falls back to the NCF norms only where the master
+# plan has no row for that subject·class. The NCF figure is still surfaced alongside
+# on the budget screen — it is a published norm, not a bug — but it no longer drives
+# any default.
+
+# Class X has no master-plan row yet (no chapter weights in the workbook), but it sits
+# in the same secondary band as IX, so the DURATION band extends to it. Period counts
+# for X still fall back to the NCF norms until the workbook carries its chapters.
+_STANDARD_DURATION_BY_CLASS = {"III": 40, "IV": 40, "V": 40, "VI": 40, "VII": 40,
+                               "VIII": 45, "IX": 50, "X": 50}
+FALLBACK_STANDARD_DURATION = 40   # unknown grade → the NCF flat period
+
+
+def standard_duration_minutes(grade: str, subject: Optional[str] = None) -> int:
+    """The calibrated standard class duration in minutes for this grade. Prefers the
+    master plan's own `standard_duration_minutes` for the subject·class (so the file
+    stays authoritative if a band ever moves), else the class band, else 40."""
+    if subject:
+        combo = master_combo(subject, grade)
+        if combo and combo.get("standard_duration_minutes"):
+            return int(combo["standard_duration_minutes"])
+    roman = _ROMAN_BY_SLUG.get((grade or "").lower())
+    return _STANDARD_DURATION_BY_CLASS.get(roman, FALLBACK_STANDARD_DURATION)
+
+
+def master_annual_budget(subject: str, grade: str) -> Optional[int]:
+    """The calibrated annual period budget for this subject·class, or None when the
+    master plan has no row for it."""
+    combo = master_combo(subject, grade)
+    v = (combo or {}).get("annual_budget_periods")
+    return int(v) if v is not None else None
+
+
+def master_recommended_periods(subject: str, grade: str) -> Dict[Any, int]:
+    """{chapter_number: recommended_periods} from the master plan — the calibrated
+    per-chapter figure (its share of the annual budget by effort weight, largest
+    remainder). Empty dict when there is no row for this subject·class."""
+    combo = master_combo(subject, grade)
+    out: Dict[Any, int] = {}
+    for row in (combo or {}).get("chapters", []) or []:
+        n, p = row.get("chapter"), row.get("recommended_periods")
+        if n is not None and p is not None:
+            out[n] = int(p)
+    return out
+
+
 # ── genon canonicals (relocated 2026-07-25, founder decision) ───────────────────
 # data/content/ is the home of ALL crucial server content, and saved_plans/ is the
 # home of lesson plans — so the certified canonicals live THERE, as ordinary

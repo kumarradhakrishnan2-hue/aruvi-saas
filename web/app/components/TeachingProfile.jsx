@@ -170,7 +170,12 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
   const [pi, setPi] = useState(0);                       // position inside pendingIdxs
   const [classStep, setClassStep] = useState("sections"); // sections | durations | ppw | budget
   const [numCtx, setNumCtx] = useState(null);            // editNums: { si, gi, g(draft), step }
-  const [ncfTotal, setNcfTotal] = useState(null);        // NCF recommended annual periods for the budget "estimate"
+  // Annual-period figures for the budget "estimate" method. `recTotal` is Aruvi's CALIBRATED
+  // budget for this subject·class (master_plan.json) and leads the line; `ncfTotal` is the
+  // published NCF norm, shown alongside (founder, 2026-07-26 — show both). Kept identical to
+  // FirstRun's copy of the same screen.
+  const [ncfTotal, setNcfTotal] = useState(null);        // NCF published annual periods
+  const [recTotal, setRecTotal] = useState(null);        // Aruvi's calibrated annual periods
   const [secConfirm, setSecConfirm] = useState(null);    // { removed:[tags] } — warn before an edit-sections save drops sections
 
   // pin the top block just below the app's sticky header — measure the header so the offset
@@ -473,11 +478,30 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     if (!budgetSubject || !budgetGrade) return;
     let live = true;
     setNcfTotal(null);
+    setRecTotal(null);
     getJSON(`/subjects/${subjectSlugOf(budgetSubject)}/${budgetGrade.toLowerCase()}/ncf-periods`)
-      .then((d) => { if (live) setNcfTotal(d && d.ncf_total_periods != null ? d.ncf_total_periods : null); })
-      .catch(() => { if (live) setNcfTotal(null); });
+      .then((d) => {
+        if (!live || !d) return;
+        setNcfTotal(d.ncf_total_periods != null ? d.ncf_total_periods : null);
+        setRecTotal(d.recommended_total_periods != null ? d.recommended_total_periods : null);
+      })
+      .catch(() => { if (live) { setNcfTotal(null); setRecTotal(null); } });
     return () => { live = false; };
   }, [budgetSubject, budgetGrade]);
+
+  /* The "I'm not sure — estimate it" sub-line. Aruvi's calibrated annual budget for this
+     subject·class leads; the published NCF norm sits in brackets behind it when it differs.
+     Rendered in two places (class set-up and the numbers editor) — one helper, one wording. */
+  const estimateSubLine = () => {
+    const parts = ["based on a 30-week year"];
+    if (recTotal != null) {
+      parts.push(`Aruvi recommends ${recTotal} periods a year for this class`
+        + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : ""));
+    } else if (ncfTotal != null) {
+      parts.push(`as per NCF, this class requires ${ncfTotal} periods`);
+    }
+    return `(${parts.join(". ")}.)`;
+  };
 
   // finalize the draft into a canonical record and persist (upsert by name)
   const finalizeSubject = (d) => {
@@ -869,9 +893,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                     )}
                     <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
                     {m === "auto" && (
-                      <p className="tp-estimate-sub">{ncfTotal != null
-                        ? `(based on a 30-week year. As per NCF, this class requires ${ncfTotal} periods.)`
-                        : "(based on a 30-week year.)"}</p>
+                      <p className="tp-estimate-sub">{estimateSubLine()}</p>
                     )}
                   </div>
                 )}
@@ -1074,9 +1096,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                     )}
                     <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
                     {m === "auto" && (
-                      <p className="tp-estimate-sub">{ncfTotal != null
-                        ? `(based on a 30-week year. As per NCF, this class requires ${ncfTotal} periods.)`
-                        : "(based on a 30-week year.)"}</p>
+                      <p className="tp-estimate-sub">{estimateSubLine()}</p>
                     )}
                   </div>
                 )}

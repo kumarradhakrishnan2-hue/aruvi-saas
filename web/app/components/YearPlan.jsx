@@ -29,7 +29,8 @@ import { annualBudgetPeriods, getJSON, pad } from "../lib/format";
  * own choices, updated whenever she prepares a lesson — reflection, never a verdict on her pace.
  *
  * Data: GET /subjects/{s}/{g}/chapters → {chapters:[{chapter_number,chapter_title,weight,
- * ncf_estimated_periods}], allocation_basis}; GET /plans/{s}/{g} → prepared + prepared_periods
+ * recommended_periods, recommended_source, ncf_estimated_periods}], standard_duration_minutes,
+ * annual_budget_periods, allocation_basis}; GET /plans/{s}/{g} → prepared + prepared_periods
  * per chapter; budget from readiness via annualBudgetPeriods().
  *
  * NOTE — duration combos (40m/60m split per chapter) are not shown yet: prepared_periods stores
@@ -99,13 +100,16 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
       if (p.prepared_periods != null) committedByCh[p.chapter_number] = p.prepared_periods;
     });
 
-    // Budget: her configured annual budget; fall back to the NCF year total when unset.
-    const ncfSum = chs.reduce((s, c) => s + (c.ncf_estimated_periods || 0), 0);
+    // Budget: her configured annual budget; fall back to Aruvi's CALIBRATED year total when unset
+    // (2026-07-26 — was the NCF sum). `recommended_periods` is the master plan's per-chapter
+    // figure, with the API falling back to the NCF estimate itself where no master-plan row exists,
+    // so this one field is the single number the whole product defaults to.
+    const recSum = chs.reduce((s, c) => s + (c.recommended_periods || 0), 0);
     let budget = annualBudgetPeriods(readiness, sSlug, gSlug);
-    if (!budget) budget = ncfSum || null;
+    if (!budget) budget = recSum || null;
 
-    // Suggested per chapter: distribute the budget by weight; fall back to the NCF per-chapter
-    // estimate when weights or budget are unavailable.
+    // Suggested per chapter: distribute the budget by weight; fall back to the calibrated
+    // per-chapter recommendation when weights or budget are unavailable.
     const weights = chs.map((c) => (typeof c.weight === "number" && c.weight > 0 ? c.weight : 0));
     const wSum = weights.reduce((a, b) => a + b, 0);
     const sugByCh = {};
@@ -113,7 +117,7 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
       const dist = largestRemainder(budget, weights);
       chs.forEach((c, i) => { sugByCh[c.chapter_number] = dist[i]; });
     } else {
-      chs.forEach((c) => { sugByCh[c.chapter_number] = c.ncf_estimated_periods ?? null; });
+      chs.forEach((c) => { sugByCh[c.chapter_number] = c.recommended_periods ?? null; });
     }
 
     const rows = chs.map((c) => {

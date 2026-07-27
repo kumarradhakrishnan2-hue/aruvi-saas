@@ -12,7 +12,9 @@ import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, 
  * pre-activation surface and renders full-screen on its own.
  *
  * Principle: benefit first, data second. We ask ONE subject, ONE grade, ONE chapter — the
- * minimum to generate a first lesson — with NCF defaults (40 min / 12 periods) pre-filled and
+ * minimum to generate a first lesson — with the CALIBRATED defaults pre-filled (2026-07-26:
+ * the class's standard duration and the master plan's period count for that chapter; the old
+ * flat 40 min / 12 periods is now only a fallback) and
  * only revealed for editing if the teacher taps "Want to change?". Each answer quietly becomes
  * part of the profile later; she never feels she is "building a profile."
  *
@@ -51,8 +53,19 @@ import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, 
  *   onExit()    — optional: back out to sign-in (from the welcome step)
  */
 
-const DEFAULT_DURATION = 40;   // NCF starting point (minutes per class)
-const DEFAULT_PERIODS = 12;    // NCF starting point (teaching periods for the chapter)
+// ── The calibrated standard (founder, 2026-07-26) ──
+// Both defaults on the chapter step now come from OUR calibrated master plan
+// (data/content/allocation_norms/master_plan.json), served by GET /subjects/{s}/{g}/chapters
+// as `standard_duration_minutes` (class-banded: 40 for ≤VII, 45 for VIII, 50 for IX–X) and
+// per-chapter `recommended_periods` (share of the calibrated annual budget by effort weight).
+// That is the same basis the certified canonicals were authored at — SS IX ch 5 is 21×50 —
+// so the first lesson she is about to generate and the default she is shown finally agree.
+// Before this, first run seeded a flat 12 × 40 min for every chapter of every class, which
+// contradicted the canonical by a wide margin (480 min vs 1050 min on that chapter).
+// The constants below are now only the pre-fetch seed / last-resort fallback for a
+// subject·class the master plan and the NCF norm table both have nothing for.
+const DEFAULT_DURATION = 40;   // fallback only (minutes per class)
+const DEFAULT_PERIODS = 12;    // fallback only (teaching periods for the chapter)
 // Duration wheel: 20–120 minutes in 5-minute steps. Periods wheel: 1–60 periods, 1 at a time.
 const DURATION_CHOICES = Array.from({ length: 21 }, (_, i) => 20 + i * 5); // 20,25,…120
 const PERIOD_CHOICES = Array.from({ length: 60 }, (_, i) => i + 1);        // 1,2,…60
@@ -143,12 +156,15 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
 
   const [durationMin, setDurationMin] = useState(DEFAULT_DURATION);
   const [periods, setPeriods] = useState(DEFAULT_PERIODS);
-  // Estimated periods' recommendation is chapter-specific (NCF period-norms × effort index),
-  // so it's tracked separately from the live `periods` value — the "NCF recommended" tag
-  // compares the CURRENT value against this, live, on every wheel move: land back on the
-  // recommended number and the tag reappears, move off it and the tag drops. Duration's
-  // recommendation is the flat DEFAULT_DURATION constant, so no extra state is needed there.
+  // Estimated periods' recommendation is chapter-specific (calibrated master plan, effort-weighted
+  // share of the class's annual budget), so it's tracked separately from the live `periods` value —
+  // the "Aruvi recommended" periods tag compares the CURRENT value against this, live, on every wheel move:
+  // land back on the recommended number and the tag reappears, move off it and the tag drops.
   const [defaultPeriods, setDefaultPeriods] = useState(DEFAULT_PERIODS);
+  // The calibrated class duration for this subject·grade, from the same /chapters response
+  // (40 ≤VII / 45 VIII / 50 IX–X). Tracked in state for the identical live-tag comparison —
+  // it is no longer a flat constant, so it cannot be compared against DEFAULT_DURATION.
+  const [stdDuration, setStdDuration] = useState(DEFAULT_DURATION);
   // Both fields sit grey/read-only showing their default until "Change" is pressed, which
   // opens that field's wheel picker (the other field's wheel, if open, closes — only one
   // edit box open at a time).
@@ -169,7 +185,11 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [ppwByDur, setPpwByDur] = useState({ [DEFAULT_DURATION]: DEFAULT_PPW }); // { [minutes]: count }
   const [weekTotal, setWeekTotal] = useState(DEFAULT_PPW);              // periods a week, asked FIRST
   const [budget, setBudget] = useState(null);                           // { method, value }
-  const [ncfTotal, setNcfTotal] = useState(null);                       // NCF annual periods for the budget "estimate"
+  // Annual-period figures for the budget "estimate" screen. `recTotal` is Aruvi's calibrated
+  // budget for this subject·class and leads the line; `ncfTotal` is the published NCF norm,
+  // shown alongside it (founder, 2026-07-26 — show both, don't hide the norm).
+  const [ncfTotal, setNcfTotal] = useState(null);
+  const [recTotal, setRecTotal] = useState(null);
 
   // Preview step — live generation is deferred, so "Generate Lesson Plan" pulls the closest
   // matching SAVED plan for this subject·grade·chapter and reads its view model for the teaser
@@ -216,6 +236,12 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     if (!subject || !grade) { setChapters([]); setGenonChs([]); setCanonMinutes({}); return; }
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => {
       setChapters(d.chapters || []);
+      // Calibrated class duration for this class band — seeds BOTH the chapter-step default and
+      // (via startAcquisition) the durations she carries into the profile. Falls back to 40 only
+      // if the API is old or the response is malformed.
+      const sd = Number(d.standard_duration_minutes) || DEFAULT_DURATION;
+      setStdDuration(sd);
+      setDurationMin(sd);
     }).catch(() => setChapters([]));
     getJSON(`/genon/${subject}/${grade}/chapters`)
       .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); })
@@ -225,16 +251,21 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // Can this chapter be built deterministically from a certified canonical?
   const genonAvailable = !!chapterNo && genonChs.includes(Number(chapterNo));
 
-  // Estimated teaching periods for the chosen chapter — sourced from the NCF period-norms
-  // table (data/content/allocation_norms/ncf_period_norms.json), distributed across this
-  // grade's chapters by effort index (api's /chapters endpoint does the maths, same allocator
-  // Allocate.jsx uses). Falls back to the flat NCF_DEFAULT_PERIODS placeholder only when the
-  // norm table has no figure for this subject·stage (e.g. Science·preparatory).
-  // The NCF estimate for a given chapter number, or the flat placeholder when the norm table
-  // has no figure for this subject·stage.
+  // Recommended teaching periods for the chosen chapter — the CALIBRATED figure from the master
+  // plan (`recommended_periods` on /chapters; its share of this class's calibrated annual budget
+  // by effort weight, at the class's standard duration). The API already falls back to the NCF
+  // period-norms estimate where the master plan has no row, and tells us which it used via
+  // `recommended_source`; the flat DEFAULT_PERIODS is the last resort when neither table has a
+  // figure (e.g. Science·preparatory).
+  //
+  // This reverses the 2026-07-08 "neutral flat default" decision, which seeded 12 periods for
+  // every chapter of every class. That was neutral only in the sense of being uniformly wrong:
+  // on a chapter with a certified canonical it contradicted the plan first run was about to
+  // generate. A recommendation the teacher can roll off in one gesture beats a placeholder.
   const estimateFor = (no) => {
     const c = chapters.find((x) => String(x.chapter_number) === String(no));
-    return c && c.ncf_estimated_periods != null ? Math.round(c.ncf_estimated_periods) : DEFAULT_PERIODS;
+    const rec = c && c.recommended_periods != null ? Math.round(c.recommended_periods) : null;
+    return rec && rec > 0 ? rec : DEFAULT_PERIODS;
   };
 
   // Pick a chapter AND reset its estimate in the SAME event so both land in one batched render
@@ -243,11 +274,9 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // chapter's estimate before converging. Updating them together removes the trailing cycle.
   const pickChapter = (no) => {
     setChapterNo(no);
-    // No NCF recommendation for periods (2026-07-08): first run seeds a neutral flat default,
-    // fully editable. The effort-index/annual-budget suggestion only kicks in from later
-    // generations (PrepareLesson), once the teacher's own budget exists.
-    setDefaultPeriods(DEFAULT_PERIODS);
-    setPeriods(DEFAULT_PERIODS);
+    const est = estimateFor(no);
+    setDefaultPeriods(est);
+    setPeriods(est);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   };
 
@@ -257,8 +286,9 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   useEffect(() => {
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
-    setDefaultPeriods(DEFAULT_PERIODS);
-    setPeriods(DEFAULT_PERIODS);
+    const est = estimateFor(chapterNo);
+    setDefaultPeriods(est);
+    setPeriods(est);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   }, [chapters]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -296,14 +326,20 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const setPpwCount = (d, v) =>
     setPpwByDur((m) => setPpwSplit(durations, m, lowestDuration(durations), d, v));
 
-  // NCF annual-periods figure for the budget "estimate" method (only while that screen shows).
+  // Annual-periods figures for the budget "estimate" method (only while that screen shows).
+  // Both are read: Aruvi's calibrated budget leads, the NCF norm is shown next to it.
   useEffect(() => {
     if (step !== "acqBudget" || !subject || !grade) return;
     let live = true;
     setNcfTotal(null);
+    setRecTotal(null);
     getJSON(`/subjects/${subject}/${grade}/ncf-periods`)
-      .then((d) => { if (live) setNcfTotal(d && d.ncf_total_periods != null ? d.ncf_total_periods : null); })
-      .catch(() => { if (live) setNcfTotal(null); });
+      .then((d) => {
+        if (!live || !d) return;
+        setNcfTotal(d.ncf_total_periods != null ? d.ncf_total_periods : null);
+        setRecTotal(d.recommended_total_periods != null ? d.recommended_total_periods : null);
+      })
+      .catch(() => { if (live) { setNcfTotal(null); setRecTotal(null); } });
     return () => { live = false; };
   }, [step, subject, grade]);
 
@@ -718,9 +754,21 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                         <p className="fr-bud-warn">Enter how many {METHODS[m].unit} you teach — a year needs at least a few periods.</p>
                       )}
                       {m === "auto" && (
-                        <p className="tp-estimate-sub">{ncfTotal != null
-                          ? `(based on a 30-week year. Please note however that as per NCF, this class requires ${ncfTotal} periods.)`
-                          : "(based on a 30-week year.)"}</p>
+                        /* Show BOTH figures (founder, 2026-07-26): Aruvi's calibrated annual budget
+                           for this subject·class leads, the published NCF norm sits in brackets
+                           behind it. They are counted in different period lengths at secondary
+                           (ours 50 min, NCF's flat 40), so neither alone tells the whole story —
+                           and hiding the norm would look like we were contradicting it silently. */
+                        <p className="tp-estimate-sub">{(() => {
+                          const parts = ["based on a 30-week year"];
+                          if (recTotal != null) {
+                            parts.push(`Aruvi recommends ${recTotal} periods a year for this class`
+                              + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : ""));
+                          } else if (ncfTotal != null) {
+                            parts.push(`as per NCF, this class requires ${ncfTotal} periods`);
+                          }
+                          return `(${parts.join(". ")}.)`;
+                        })()}</p>
                       )}
                     </div>
                   )}
@@ -755,7 +803,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     );
   }
 
-  /* ── STEP 3 · CHAPTER (+ NCF default duration/periods) ── */
+  /* ── STEP 3 · CHAPTER (+ calibrated default duration/periods) ── */
   return (
     <div className="fr-wrap">
       <Brand />
@@ -774,7 +822,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <div className={`fr-default ${editingField === "duration" ? "fr-default-editing" : ""}`}>
             <span className="fr-default-kicker-row">
               <span className="fr-default-kicker">Class duration</span>
-              {durationMin === DEFAULT_DURATION && <span className="fr-tag-recommended">NCF recommended</span>}
+              {durationMin === stdDuration && <span className="fr-tag-recommended">NCF recommended</span>}
             </span>
             {editingField !== "duration" ? (
               <div className="fr-default-row">
@@ -802,6 +850,12 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <div className={`fr-default ${editingField === "periods" ? "fr-default-editing" : ""}`}>
             <span className="fr-default-kicker-row">
               <span className="fr-default-kicker">Estimated periods</span>
+              {/* The two tags read differently ON PURPOSE (founder, 2026-07-26). The DURATION bands
+                  (40 ≤VII / 45 VIII / 50 IX) trace back to the NCF-adapted workbook, so that field
+                  keeps the NCF attribution. The PERIOD count is genuinely our own calibration —
+                  the master plan's effort-weighted share of this class's annual budget — so it is
+                  credited to Aruvi. Do not "harmonise" these two strings. */}
+              {periods === defaultPeriods && <span className="fr-tag-recommended">Aruvi recommended</span>}
             </span>
             {editingField !== "periods" ? (
               <div className="fr-default-row">
@@ -819,9 +873,12 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
               </div>
             )}
             {/* Soft sanity band (2026-07-08): flag very low/high per-chapter counts, but never
-                block — she can proceed. NCF is used only as a reference for the threshold, never
-                as a pre-filled suggestion. */}
-            {(periods < 5 || periods > 25) && (
+                block — she can proceed. Suppressed while she is sitting ON the recommendation
+                (2026-07-26): a handful of genuinely short chapters are calibrated below 5 periods
+                (English III ch 5/10/14, English VI ch 16, Science VI ch 1), and warning her about
+                a number Aruvi itself just proposed reads as a bug. The band only speaks once she
+                has rolled the wheel away from the recommendation. */}
+            {periods !== defaultPeriods && (periods < 5 || periods > 25) && (
               <p className="fr-bud-warn">
                 {periods < 5
                   ? "That’s very few periods for a chapter — you can still go ahead."

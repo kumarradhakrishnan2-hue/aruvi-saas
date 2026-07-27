@@ -312,13 +312,25 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
     if not syllabus_total_weight:   # no master-plan combo → listed chapters are all we know
         syllabus_total_weight = sum((c.get("weight") or 0) for c in chapters) or None
 
-    # NCF-suggested estimated teaching periods per chapter (2026-07-01): the NCF period-norms
-    # table (data/content/allocation_norms/ncf_period_norms.json) gives a subject·stage total
-    # for the year; we distribute that total across this grade's chapters using the exact same
-    # effort-index-weighted allocator the Allocate flow uses, so the per-chapter figure is
-    # consistent with how periods actually get allocated. Whole periods only (the allocator's
-    # largest-remainder method already lands on integers, never fractional periods). None when
-    # the norm table has no figure for this subject·stage (e.g. Science·preparatory).
+    # ── Recommended periods per chapter — CALIBRATED FIRST (founder, 2026-07-26) ──
+    # `recommended_periods` is the number every default in the product shows. It comes from
+    # the master plan's own per-chapter figure — its share of the CALIBRATED annual budget at
+    # the class's standard duration, the same basis the certified canonicals were authored at
+    # (SS IX ch 5 = 21 periods × 50 min). Only when the master plan has no row for this
+    # subject·class do we fall back to the NCF period-norms table (ncf_period_norms.json —
+    # annual totals by subject·STAGE in flat 40-minute periods), distributed by the same
+    # effort-index allocator the Allocate flow uses. The two tables genuinely disagree
+    # (SS IX: 245 calibrated vs 150 NCF), which is why the first-run default used to
+    # contradict the canonical it was about to generate.
+    #
+    # `ncf_estimated_periods` is retained ALONGSIDE, computed exactly as before, as the
+    # published-norm reference the budget screen shows next to ours — it no longer drives any
+    # default. `recommended_source` says which table won, so the UI never has to guess.
+    #
+    # NCF per-chapter estimate (2026-07-01, unchanged): distribute the subject·stage annual
+    # total across this grade's chapters with the same effort-index-weighted allocator, whole
+    # periods only (largest remainder already lands on integers). None where the norm table
+    # has no figure for this subject·stage (e.g. Science·preparatory).
     try:
         stage = stage_for(grade)
     except UnknownGradeError:
@@ -338,24 +350,47 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
         for c in chapters:
             c["ncf_estimated_periods"] = None
 
+    calibrated = data.master_recommended_periods(subject, grade)
+    for c in chapters:
+        cal = calibrated.get(c["chapter_number"])
+        if cal:
+            c["recommended_periods"], c["recommended_source"] = cal, "master_plan"
+        elif c.get("ncf_estimated_periods"):
+            c["recommended_periods"], c["recommended_source"] = c["ncf_estimated_periods"], "ncf"
+        else:
+            c["recommended_periods"], c["recommended_source"] = None, None
+
     return {"subject": subject, "grade": grade, "chapters": chapters,
             "syllabus_total_weight": syllabus_total_weight,
+            "standard_duration_minutes": data.standard_duration_minutes(grade, subject),
+            "annual_budget_periods": data.master_annual_budget(subject, grade),
             "allocation_basis": sub.allocation_basis(grade)}
 
 
 @app.get("/subjects/{subject}/{grade}/ncf-periods")
 def get_ncf_periods(subject: str, grade: str) -> Dict[str, Any]:
-    """NCF-recommended total teaching periods for the year for this subject·grade.
-    Used by the teaching-profile budget 'estimate' option so the recommendation is the
-    National Curricular Framework figure, not a flat heuristic. None when the norm table
-    has no value for this subject·stage."""
+    """Annual teaching-period figures for this subject·grade, for the budget estimator.
+
+    `recommended_total_periods` is Aruvi's CALIBRATED annual budget (master_plan.json, from
+    the founder's allocation workbook) — the figure to lead with. `ncf_total_periods` is the
+    published NCF norm for the subject·stage, shown ALONGSIDE for transparency and used as
+    the fallback when the master plan has no row for this class (2026-07-26).
+    `recommended_source` says which one `recommended_total_periods` came from.
+    `standard_duration_minutes` is the calibrated class length the budget is counted in
+    (40 for ≤VII, 45 for VIII, 50 for IX–X) — the NCF figure is always in 40-min periods,
+    so the two are not directly comparable at secondary."""
     _subject(subject)
     try:
         stage = stage_for(grade)
     except UnknownGradeError:
         stage = None
-    total = data.ncf_total_periods(subject, stage) if stage else None
-    return {"subject": subject, "grade": grade, "stage": stage, "ncf_total_periods": total}
+    ncf_total = data.ncf_total_periods(subject, stage) if stage else None
+    budget = data.master_annual_budget(subject, grade)
+    return {"subject": subject, "grade": grade, "stage": stage,
+            "ncf_total_periods": ncf_total,
+            "recommended_total_periods": budget if budget is not None else ncf_total,
+            "recommended_source": "master_plan" if budget is not None else ("ncf" if ncf_total else None),
+            "standard_duration_minutes": data.standard_duration_minutes(grade, subject)}
 
 
 @app.post("/subjects/{subject}/{grade}/allocate")

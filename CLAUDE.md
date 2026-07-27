@@ -205,6 +205,28 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   the suggested-periods group styling).
 - **Output caching** keyed by (subject, grade, chapter, period_profile, constitution_version)
   is the #1 economic lever at seasonal scale — wire it at the service layer when live gen lands.
+- **The calibrated standard is the default (2026-07-26)** — two period tables live under
+  `data/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
+  by subject·**stage**, in flat **40-minute** periods) and `master_plan.json` (OUR calibration —
+  the founder's allocation workbook via `genon/master_plan.py`, by subject·**class**, at
+  **class-banded durations: 40 ≤VII · 45 VIII · 50 IX**, with a precomputed per-chapter
+  `recommended_periods`). SS IX is 245 calibrated periods vs 150 NCF; TWAU preparatory 140 vs
+  300. The bands are the basis the certified canonicals were authored at (SS IX ch 5 = 21×50).
+  **Every default a teacher sees now reads the master plan first, NCF norms only as fallback.**
+  `api/data.py` exposes `standard_duration_minutes(grade, subject=None)` (class X extends the
+  50-min band; counts still fall back to NCF there), `master_annual_budget`,
+  `master_recommended_periods`. `GET /subjects/{s}/{g}/chapters` returns `recommended_periods` +
+  `recommended_source` (`master_plan`|`ncf`|null) per chapter plus top-level
+  `standard_duration_minutes` / `annual_budget_periods`; `GET …/ncf-periods` adds
+  `recommended_total_periods`. `ncf_estimated_periods` is RETAINED, unchanged — it is a
+  published norm, shown alongside ours on the budget screen, and drives nothing. Consumers:
+  `FirstRun.jsx` (chapter step — the DURATION tag stays "NCF recommended" (its bands are
+  NCF-derived), the new PERIODS tag reads "Aruvi recommended"; this reverses the
+  2026-07-08 flat-12 "neutral default", which was never reading a table at all),
+  `YearPlan.jsx`, `TeachingProfile.jsx`. Test: `tests/test_calibrated_defaults.py`.
+  STATIC + unit-verified only — live + mobile pass pending. Full reasoning: MEMORY.md 2026-07-26.
+- ★ **SUPERSEDED 2026-07-26 by the bullet above** — kept as history: this is how the NCF
+  norms were wired in, and it is still the FALLBACK path when the master plan has no row.
 - **NCF period norms — wired into first-run's estimated-periods field (2026-07-01)** —
   `data/content/allocation_norms/ncf_period_norms.json` (+ the original
   `NCF_adapted_for_Aruvi.xlsx` kept alongside for provenance) holds the National Curricular
