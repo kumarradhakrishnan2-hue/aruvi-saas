@@ -363,7 +363,14 @@ def canonical_version(canonical: Dict[str, Any]) -> str:
     gc = canonical.get("genon_canonical") or {}
     ts = "".join(ch for ch in str(gc.get("ledger_ts") or "") if ch.isalnum())
     if ts:
-        return ts
+        # ledger_ts identifies the GENERATION RUN. A companion table amended afterwards
+        # (a Rule-16 back-fill onto a pre-v1.3 canonical) changes the bytes a partition
+        # produces without changing the run, so it needs its own revision in the key —
+        # otherwise the amended canonical is served from a cache entry cut before it.
+        # Canonicals generated under v1.3 emit unit_handoff in the run itself and carry
+        # no handoff_rev, so their keys stay clean.
+        rev = "".join(ch for ch in str(gc.get("handoff_rev") or "") if ch.isalnum())
+        return f"{ts}h{rev}" if rev else ts
     import hashlib
     blob = json.dumps(canonical.get("result"), ensure_ascii=False, sort_keys=True).encode()
     return hashlib.sha1(blob).hexdigest()[:12]

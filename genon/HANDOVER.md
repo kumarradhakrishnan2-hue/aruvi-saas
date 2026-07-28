@@ -496,14 +496,47 @@ DECISION 1's rationale ("on a miss the only spend is polish") is spent: **adapta
 ₹0 and deterministic end to end**, and the cache demotes to a latency nicety over a
 millisecond partition.
 
+**Rule 16 AMENDED same day, before any canonical was generated under it (founder).** The
+first back-fill exposed the failure mode on the OTHER side of the conjunction ban: refusing
+to splice pushes an author into abstraction, and 7 of 20 titles named no content at all
+("Who Could Take Part", "What Surplus Made Possible"). Elegant, and useless to a teacher
+scanning a chapter for her place in it — Sonnet's conjoined titles were the worse sentences
+but the better index entries. The mandate now requires the title to **name at least one
+concrete element the two units actually teach** — a place, source, institution, text, or term
+— and prohibition 1 says so explicitly with both offenders quoted. Amended IN PLACE rather
+than minted as v1.3.1: same day, zero canonicals generated under v1.3, so the register would
+carry a version nothing was ever produced from.
+
+The gate is code, not exhortation: `handoff_vocab()` builds each unit's citable stems from its
+title, section_anchor and section_context; `validate_unit_handoff` rejects a title sharing no
+4-character stem with either. Stops "Early Indian" passing as content (stoplisted) while
+letting Vedas/Vedic/Veda count as one. Re-authored: "How Authority Reached the Village" →
+**"How Saptāṁga Rule Reached the Provinces"**, "Who Could Take Part" → **"Who the Yajña
+Excluded, Who Bhakti Admitted"**, "What Surplus Made Possible" → **"What Agricultural Surplus
+Set Moving"**, and four more. 6 of 16 titles change in the 16×50; band text, timings and
+polish-flags (0) are untouched.
+
+**Cache-key consequence, and the fix it forced.** `canonical_version` keyed off `ledger_ts`,
+which identifies the GENERATION RUN — so amending a companion table afterwards changed the
+bytes a partition produces without changing the key, and the amended canonical would have been
+served from an entry cut before it. `genon_canonical.handoff_rev` now appends to the version
+(`c20260726112240h2`); canonicals generated under v1.3 emit unit_handoff in the run itself,
+carry no handoff_rev, and keep clean keys. This is DECISION 4 ("a regenerated canonical yields
+a NEW key") extended to cover post-hoc amendment, which it did not previously reach.
+**The pre-amendment `ch_05_50m16_e04_c20260726112240.json` is therefore orphaned** — moved to
+`_to_delete/`; its prepared-register entry dangles harmlessly. Re-run Prepare 16×50 for the
+current text.
+
 **LP constitution → v1.3 (Rule 16 · UNIT HANDOFF).** Companion output, same shape as Rule 15's
 role_handoff: emitted AFTER the plan, coverage handoff and role handoff are complete, so
 autoregressive ordering guarantees the units are committed tokens before any handoff is written —
 the handoff cannot bend the arcs it summarises. `unit_handoff` keyed `"<a>-<b>"` → {title,
 teacher_notes}. Prohibitions worth knowing: **conjunctions banned outright in titles** ("and",
 "&", "with", ", then", "into", "plus", "/", spliced dash) — a title reconstructable by
-concatenating the two source titles has failed; no completion language (the platform may place
-only part of either unit); Rule 10's calendar/positional ban applies unchanged; ≤90 words.
+concatenating the two source titles has failed — and equally **abstraction banned**, a title
+naming no content from either unit fails the same prohibition; no completion language (the
+platform may place only part of either unit); Rule 10's calendar/positional ban applies
+unchanged; ≤90 words.
 make_amendments.py reproduces v1.3 byte-identically from originals/ and the assessment
 constitution still reproduces byte-identically (unchanged).
 

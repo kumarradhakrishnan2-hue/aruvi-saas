@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from aruvi_core.genon.partition import (                              # noqa: E402
-    select_container_text, validate_unit_handoff)
+    handoff_vocab, select_container_text, validate_unit_handoff)
 
 FAILED = []
 
@@ -73,6 +73,29 @@ for joiner in (", then ", " into ", " & ", " with ", " / ", " — "):
     bad["2-3"] = {"title": f"Title 2{joiner}Title 3", "teacher_notes": "n"}
     check(f"joiner {joiner!r} rejected",
           any("banned joiner" in p for p in validate_unit_handoff(bad, 5)))
+
+# ── the concreteness gate (Rule 16 prohibition 1) ─────────────────────────────
+PERIODS = [
+    {"period_number": 1, "activity_title": "Society vs State", "section_anchor": "Understanding Early Indian Society",
+     "section_context": "society versus state, custom and law"},
+    {"period_number": 2, "activity_title": "The Vedas as Evidence", "section_anchor": "The Beginnings",
+     "section_context": "Vedic corpus, oral transmission, Sapta-Sindhu"},
+]
+VOCAB = handoff_vocab(PERIODS)
+PAIR = {"1-2": {"title": "", "teacher_notes": "n"}}
+
+
+def concreteness(title):
+    PAIR["1-2"]["title"] = title
+    return [p for p in validate_unit_handoff(PAIR, 2, VOCAB) if "names no content" in p]
+
+
+check("a title citing a unit's own term passes", not concreteness("Reading the Vedic Corpus as Evidence"))
+check("stems match across inflections (Vedas/Vedic)", not concreteness("What the Vedas Can Show"))
+check("a purely abstract title is rejected", concreteness("Who Could Take Part"))
+check("'Early Indian' alone does not rescue it", concreteness("How Early Indian Life Began"))
+check("no vocab supplied -> gate is skipped", not [p for p in validate_unit_handoff(
+      {"1-2": {"title": "Who Could Take Part", "teacher_notes": "n"}}, 2) if "names no content" in p])
 
 over = dict(HANDOFF)
 over["2-3"] = {"title": "Fine Title", "teacher_notes": "word " * 120}

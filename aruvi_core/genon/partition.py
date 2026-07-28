@@ -180,8 +180,45 @@ def select_container_text(unit_handoff, units_map, src_units):
 # to prevent, so both are caught here rather than discovered in a teacher's plan.
 HANDOFF_JOINERS = (" and ", " & ", ", then ", " into ", " plus ", " with ", " / ", " — ", " -- ")
 
+# Rule 16 prohibition 1 — the failure mode on the OTHER side of the conjunction ban.
+# Refusing to splice two titles pushes an author toward abstraction, and "Who Could Take
+# Part" is as useless to a teacher scanning her chapter as "A, then B" is. The gate: the
+# title must share a content word with the two units' own curated labels (title, section
+# anchor, section context). Matching is on a 4-character stem so Veda/Vedas/Vedic count as
+# one; the stoplist holds function words and the chapter-agnostic scaffolding that would
+# otherwise let a title pass on "Early Indian" alone.
+_TITLE_STOP = frozenset("""
+a an the of and or to in on for from with as at by is are was were be been it its this that these those
+what how who where when why which whose not no into out up down over under across through against toward
+early indian india students student teacher unit units chapter section period life own
+two three four five made possible held together take part seen outward reading role roles
+""".split())
 
-def validate_unit_handoff(uh, n_units: int) -> list[str]:
+
+def _content_words(text):
+    import re
+    out = set()
+    for w in re.findall(r"[^\W\d_]+", str(text or ""), re.UNICODE):
+        w = w.lower().rstrip("s")
+        if len(w) >= 4 and w not in _TITLE_STOP:
+            out.add(w[:4])
+    return out
+
+
+def handoff_vocab(periods) -> dict:
+    """unit number -> the stems a Rule-16 title may cite for that unit."""
+    vocab = {}
+    for p in periods or []:
+        n = p.get("period_number")
+        vocab[n] = _content_words(" ".join([
+            str(p.get("activity_title") or ""),
+            str(p.get("section_anchor") or ""),
+            str(p.get("section_context") or ""),
+        ]))
+    return vocab
+
+
+def validate_unit_handoff(uh, n_units: int, vocab: dict = None) -> list[str]:
     if not uh:
         return ["unit_handoff missing (Rule 16)"]
     problems = []
@@ -195,12 +232,15 @@ def validate_unit_handoff(uh, n_units: int) -> list[str]:
     if list(uh) != [k for k in want if k in uh]:
         problems.append("unit_handoff entries out of plan order")
     for k in want:
+        a, b = (int(x) for x in k.split("-"))
         e = uh.get(k) or {}
         title, note = (e.get("title") or "").strip(), (e.get("teacher_notes") or "").strip()
         if not title:
             problems.append(f"unit_handoff {k}: missing title")
         elif any(j in f" {title} " for j in HANDOFF_JOINERS):
             problems.append(f"unit_handoff {k}: title uses a banned joiner — {title!r}")
+        elif vocab and not (_content_words(title) & (vocab.get(a, set()) | vocab.get(b, set()))):
+            problems.append(f"unit_handoff {k}: title names no content from either unit — {title!r}")
         if not note:
             problems.append(f"unit_handoff {k}: missing teacher_notes")
         elif len(note.split()) > 99:            # 90-word budget + 10% grace
