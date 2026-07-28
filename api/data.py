@@ -336,7 +336,11 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # This is the on-disk stand-in for the Bucket-A output cache in §1, so the Supabase
 # migration is a storage swap, not a redesign.
 
-GENON_ENGINE_VERSION = "03"     # BUMP when compile/partition/polish change the OUTPUT
+GENON_ENGINE_VERSION = "04"     # BUMP when compile/partition/polish change the OUTPUT
+# 04 (2026-07-28): container text is SELECTED from the canonical's Rule-16 unit_handoff
+# instead of composed at partition time. Titles and teacher notes change for every period
+# that spans a unit boundary, so every pre-existing e03 key is stale by construction —
+# the bump is what stops a teacher being served yesterday's mechanical join from cache.
 
 
 def norm_matrix(matrix) -> str:
@@ -367,8 +371,8 @@ def canonical_version(canonical: Dict[str, Any]) -> str:
 
 def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any],
                         polished: bool) -> str:
-    """e.g. ch_05_50m16_e03_c20260726112240_p.json  (16 x 50 min, engine v0.3,
-    that canonical run, seam-polished). Never collides with ch_NN_canonical.json."""
+    """e.g. ch_05_50m16_e04_c20260726112240.json  (16 x 50 min, engine v0.4,
+    that canonical run). Never collides with ch_NN_canonical.json."""
     return (f"ch_{int(chapter_number):02d}_{norm_matrix(matrix)}"
             f"_e{GENON_ENGINE_VERSION}_c{canonical_version(canonical)}"
             f"{'_p' if polished else ''}.json")

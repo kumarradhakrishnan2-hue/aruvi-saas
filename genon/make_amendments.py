@@ -39,7 +39,7 @@ lp = (SRC / "lesson_plan_constitution_v1.0.txt").read_text()
 lp = edit(
     lp,
     "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.0",
-    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.2.1\n"
+    "ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.3\n"
     "(v1.1, 2026-07-24: Rule 14 — band identity, role, and edge band anchoring; time input = single standard row. "
     "Serialization and input-shape only; no pedagogical rule changed.)\n"
     "(v1.1.1, 2026-07-25: Rule 14 role guidance made definitional — arc framing removed, roles judged on a "
@@ -52,7 +52,11 @@ lp = edit(
     "is never shaped by the role taxonomy. Serialization only; no pedagogical rule changed.)\n"
     "(v1.2.1, 2026-07-26: teacher notes become position-free — the continuity link names the content it "
     "builds on, never a unit's position; positional orientation belongs exclusively to the platform, which "
-    "alone knows where a timetable places each boundary. Register only; no pedagogical rule changed.)",
+    "alone knows where a timetable places each boundary. Register only; no pedagogical rule changed.)\n"
+    "(v1.3, 2026-07-28: a new Rule 16 emits unit_handoff — a title and a teacher note for every adjacent "
+    "pair of units, authored after the plan is complete, so the platform can name and annotate a sitting "
+    "that spans a unit boundary without an LLM in the request path. Companion output only; no pedagogical "
+    "rule changed.)",
 )
 
 # --- time input: single standard row (HANDOVER Decision 2) ---
@@ -163,6 +167,41 @@ lp = edit(
     RULE14 + "================================================================================\nINTEGRITY CONSTRAINTS",
 )
 
+# --- v1.3: Rule 16 · unit handoff (2026-07-28) ---
+# Founder design. The plan is authored at one standard duration; a teacher's timetable
+# cuts it somewhere else, and a sitting then routinely holds the tail of one unit and the
+# head of the next. Until now the platform either joined the two titles mechanically
+# ("A — continued, then B") or paid an LLM at request time to repair the join. Neither is
+# right: the join is not a title, and the repair puts a model, a latency and a failure
+# path in front of every teacher. A plan of N units has only N-1 adjacent joints, so the
+# whole space is enumerable — author it once, here, where both units are fully in view.
+RULE16 = """================================================================================
+RULE 16 · UNIT HANDOFF — REQUIRED COMPANION OUTPUT
+
+MANDATE
+After the lesson plan, the coverage handoff, and the role handoff are complete, emit unit_handoff as a sibling of lesson_plan: one entry for every ADJACENT pair of units, keyed "<earlier>-<later>" in plan order. A plan of N units yields exactly N-1 entries — units 1&2, 2&3, … (N-1)&N.
+
+This plan is authored at one standard duration. A teacher's timetable divides it elsewhere, so a single sitting will often carry the closing stretch of one unit and the opening stretch of the next. Each entry is the container text for one such joint, written once, here, where both units are fully in view — their bands, notes, section anchors, and the chapter summary. The platform selects the entry; it never composes one.
+
+Each entry carries two fields:
+- title — what the two units are jointly about: the single object of study that spans them, named as a teacher would name that sitting. Under 70 characters where that costs nothing.
+- teacher_notes — one flowing note, at most 90 words, in the register of Rule 10. It opens by naming the content the sitting pivots on (the move from the one body of material to the other), then carries each unit's own named confusion, then at most one facilitation pointer. Everything in it comes from the two units' own text.
+
+PROHIBITION
+1. MUST NOT form the title by joining the two unit titles. Conjunctions and joiners are banned outright — "and", "&", "with", ", then", "into", "plus", a slash, or a dash used to splice two labels. A title that can be reconstructed by concatenating the two source titles has failed this rule; name the shared object instead.
+2. MUST NOT assume either unit runs to completion in the sitting — the platform may place only part of one, or of both. No completion language ("having finished", "by the end of", "once all four are covered"), no counts of what was got through.
+3. MUST NOT use calendar words or positional references — Rule 10's prohibition applies here unchanged, and "period", "session", "last time", "the previous unit" are all outside the register.
+4. MUST NOT author new content: every fact, confusion, source, and task named must already appear in the two units' bands, notes, or the chapter summary.
+5. MUST NOT shape, size, order, or count any unit in anticipation of this rule — the plan is authored complete under Rules 1–13, and read by Rules 15 and 16 afterwards.
+6. MUST NOT omit an adjacent pair, emit a non-adjacent pair, or emit the entries out of plan order.
+
+"""
+lp = edit(
+    lp,
+    "================================================================================\nINTEGRITY CONSTRAINTS",
+    RULE16 + "================================================================================\nINTEGRITY CONSTRAINTS",
+)
+
 # --- A1 schema edits ---
 lp = edit(
     lp,
@@ -210,6 +249,14 @@ lp = edit(
   "role_handoff": { "P<unit>.<n>": "hook | development | consolidation — one entry per band, in plan order (Rule 15)" },''',
 )
 
+# --- v1.3: A1 gains the unit_handoff sibling ---
+lp = edit(
+    lp,
+    '''  "role_handoff": { "P<unit>.<n>": "hook | development | consolidation — one entry per band, in plan order (Rule 15)" },''',
+    '''  "role_handoff": { "P<unit>.<n>": "hook | development | consolidation — one entry per band, in plan order (Rule 15)" },
+  "unit_handoff": { "<n>-<n+1>": { "title": "string — the two units' shared object of study, never a join of their titles", "teacher_notes": "string — one note, ≤90 words, Rule 10 register" } },''',
+)
+
 # --- A2 schema edit ---
 lp = edit(
     lp,
@@ -226,7 +273,7 @@ lp = edit(
     "}",
 )
 
-(OUT / "lesson_plan_constitution_v1.2.1.txt").write_text(lp)
+(OUT / "lesson_plan_constitution_v1.3.txt").write_text(lp)
 
 # ---------------- Assessment constitution: v1.1 -> v1.2 ----------------
 ac = (SRC / "assessment_constitution_v1.1_pre_phase_ref.txt").read_text()
@@ -290,6 +337,6 @@ ac = edit(
 )
 
 (OUT / "assessment_constitution_v1.2.txt").write_text(ac)
-print("LP  v1.2.1:", len(lp), "chars")
+print("LP  v1.3:", len(lp), "chars")
 print("AC  v1.2:", len(ac), "chars")
 print("written to", OUT)

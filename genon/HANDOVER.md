@@ -452,11 +452,105 @@ writes it (ports.py:58 classes feedback as tenant data). Stale `out/*.html` demo
 moved to `_to_delete/out_html_stale/`. Empty `data/content/canonical/` and `out/` remain —
 the Cowork bridge cannot delete, founder to remove along with `_to_delete/` itself.
 
-**Next actions**: restart uvicorn → re-run 16×50 WITH polish (fixed retry: expect one
-call, ~₹6, ~60s) → diagnose P3 from `tier0_reasons` → fix `_first_clause` truncation +
-the tier-0 seam template wording → decide Haiku 4.5 (validator prerequisite is met) →
-decide always-on polish → rotate the 07-23 API key (STILL OWED) → then next chapters
-per the (A) verdict above.
+**Next actions** — SUPERSEDED by the 2026-07-28 update below; the polish-tuning branch
+(diagnose P3, fix `_first_clause`, decide Haiku, decide always-on) is CLOSED because polish
+left the request path. Still owed regardless: **rotate the 07-23 API key**.
+
+## UPDATE 2026-07-28 — LP → v1.3: UNIT HANDOFF. The LLM leaves the request path.
+
+Founder design, and it retires tier-1 polish as a teacher-facing step. Container text for a
+period that spans a unit boundary is no longer composed at request time and then repaired by
+a model; it is **authored once inside the canonical and selected by index arithmetic**.
+
+**The counting argument that makes it work.** The DP cuts a linear phase stream, so a period
+is always a CONTIGUOUS run of units — non-contiguity is structurally impossible, not merely
+unobserved. A plan of N units therefore has only N-1 adjacent joints, and every period is one
+of three cases: one unit (its own authored text), two units (that pair's entry), three or more
+(the LAST adjacent pair). **O(N), not O(N²)** — 20 entries for ch 5's 21 units, authored in the
+canonical call, ~2.7k output tokens on a 50k run. Sweep over 46 matrices (50/45/40 × 12–24 plus
+7 mixed; 810 periods): 48.1% single-unit · 49.9% pairs · 2.0% triples · **zero misses**, zero
+partition failures. Among multi-unit periods that is 96.2% exact-fit.
+
+**Triple rule (founder): use the LATER pair.** In a (6,7,8) span unit 7 is present in full by
+construction, so the only question is which neighbour joins it; unit 6 contributes a tail
+fragment while 8 carries the new substance. (7,8) names where the weight is. No triple entries,
+no quads, no combinatorics.
+
+**Cut-invariance is deliberate, and it is what the rule had to solve.** A pair note cannot know
+how much of either unit the period holds — 81% of unit-appearances inside multi-unit periods are
+partial. So the note never says where the teacher is; it says what the sitting pivots on, NAMED
+BY CONTENT ("What kingship was supposed to be gives way to the apparatus that made it work").
+That is v1.2.1's doctrine applied to container text, and it is true at every cut. The deterministic
+seam clause is therefore **deleted, not fixed** — which closes both owed tier-0 defects by removal:
+`_first_clause` (the ". " split that truncated to "Display Fig.") and the template's "This period
+continues the unit begun last time" (period language + a calendar word, forbidden by the very
+constitution the engine enforces on the model). The "\n\n[Next unit] " note concatenation goes too.
+
+**Polish self-disables — no code change needed.** `build_polish_request` flags on `", then "` /
+`"— continued"` in the title and `"This period continues"` in the notes. None of those strings can
+now exist, so `flagged == []` and `run_polish` returns its labelled no-op. Verified across all 46
+sweep matrices: **0 periods flagged, ₹0, 0s, no API key dependency in the request path.** The
+checkbox, the two-minute spinner, the validator/retry/`parse_failures` machinery and the
+tier-0-kept fallback all remain in the code but are now unreachable for a v1.3 canonical.
+DECISION 1's rationale ("on a miss the only spend is polish") is spent: **adaptation is now
+₹0 and deterministic end to end**, and the cache demotes to a latency nicety over a
+millisecond partition.
+
+**LP constitution → v1.3 (Rule 16 · UNIT HANDOFF).** Companion output, same shape as Rule 15's
+role_handoff: emitted AFTER the plan, coverage handoff and role handoff are complete, so
+autoregressive ordering guarantees the units are committed tokens before any handoff is written —
+the handoff cannot bend the arcs it summarises. `unit_handoff` keyed `"<a>-<b>"` → {title,
+teacher_notes}. Prohibitions worth knowing: **conjunctions banned outright in titles** ("and",
+"&", "with", ", then", "into", "plus", "/", spliced dash) — a title reconstructable by
+concatenating the two source titles has failed; no completion language (the platform may place
+only part of either unit); Rule 10's calendar/positional ban applies unchanged; ≤90 words.
+make_amendments.py reproduces v1.3 byte-identically from originals/ and the assessment
+constitution still reproduces byte-identically (unchanged).
+
+**Engine → e04.** `select_container_text` + `validate_unit_handoff` live together in
+aruvi_core/genon/partition.py so the two halves of the contract cannot drift; compile.py carries
+`unit_handoff` into the stream and reports `meta.unit_handoff_coverage`; generate_canonical's
+certification gate now REJECTS a canonical with a missing pair, a non-adjacent pair, a
+spliced title, or an over-budget note. A canonical predating Rule 16 still yields a plan —
+degraded to a " / " join, every miss recorded in `genon.handoff_missing` and named in
+`genon.container_text`, so a degraded plan can never be mistaken for a good one.
+`GENON_ENGINE_VERSION` 03 → **04**: titles and notes change for every boundary-spanning period,
+so every e03 key is stale by construction and the bump is what stops cache serving yesterday's
+mechanical join. `genon.seam_periods_tier0_polished` → `mid_unit_openings` (reporting only now —
+container text no longer varies with it); api/main.py's `seam_periods` reads the new key.
+
+**ch 05 BACK-FILLED (20/20) and A/B VERIFIED against the Sonnet twin.** The 16×50 rebuild is
+byte-identical to the e03 build in band text, timings, assessment items and coverage handoff —
+only container text moved. Titles are the clearest win, because Sonnet was still conjoining:
+
+| | tier-0 | sonnet ₹6.10 | Rule 16 ₹0 |
+|---|---|---|---|
+| P6 | The Saptāṁga State… — continued, then Provincial Administration… | Saptāṁga Administration **and** Provincial Governance | How Authority Reached the Village |
+| P13 | Agriculture, Irrigation… — continued, then Trade Routes, Ports… | Irrigation and Agriculture **into** Trade Routes and Ports | What Surplus Made Possible |
+| P16 | Unity in Diversity… — continued, then Chapter Synthesis… | Cultural Integration **into** Chapter Synthesis | Judging Continuity Against Change |
+
+15 of Sonnet's 16 titles are "A and B" or "A into B" — the thin two-excerpt payload could not do
+better. **P3 is the proof of the failure mode disappearing**: it was the one period Sonnet failed
+to polish, so it shipped tier-0 with the truncated quote and a 179-word stacked note. Under Rule 16
+it is a 75-word note and "Reading Politics Out of the Vedic Texts", like every other period — there
+is no "unpolished" state left to fall into. Notes land at 68–78 words against Sonnet's 63–89.
+
+**Back-fill provenance**: the 20 entries were authored 2026-07-28 against the certified canonical,
+NOT emitted by run 20260726_112240; recorded in `genon_canonical.handoff_backfill`. Plan content
+untouched. Canonicals generated under v1.3 emit unit_handoff in the authoring call. The A/B twins
+(`…_e03_…json` and `…_p.json`) are KEPT as the control — do not delete them.
+
+**Deliberately NOT done**: renaming band_id `P<unit>.<n>` → `U<unit>.<n>`. The smell is real and
+cost this session a round trip ("P6.2" reads as period 6 band 2; it means unit 6 phase 2), but
+band_id is load-bearing identity across band_refs, phase_ref, role_handoff and every assessment
+item — a rename is a canonical-version bump across the whole portfolio, not a tidy-up. The Rule-16
+key uses bare unit numbers ("6-7"), so the new surface does not inherit the smell.
+
+**Next actions**: restart uvicorn (engine + api both changed) → live-render check on
+PrepareLesson per CLAUDE.md §11 (the "Smoothing unit transitions…" spinner and its two-minute hint
+are now dead copy for canonical chapters — decide whether the checkbox disappears or stays as a
+no-op) → run the ch 5 regen under v1.3 to confirm the model emits unit_handoff in-call and passes
+the gate → then Rule 16 into the remaining 24 subject·class constitutions as part of step 3.
 
 ## Decisions LOCKED this session
 
@@ -599,13 +693,13 @@ ch_05_20260726_123508 — the latter is the DOUBLE-CLICK duplicate: it registere
 
 - Hook 3-min floor in deep compression (8→3 min): terse — judgment call for founder in
   step-5 report. Dev pacing can normalize to 0.79 (< 0.8 floor) — make invariant hard.
-- Polish validator — ✅ BUILT 2026-07-25, hardened 2026-07-26 (merge-across-retries,
-  parse-failure reporting). Haiku's stated prerequisite is therefore MET; the switch
-  itself is still undecided.
-- Tier-0 seam text owes two fixes: `_first_clause` splits on ". " and truncates on
-  abbreviations ("Display Fig."), and the template writes "This period continues … begun
-  last time" — period language + calendar word, which polish.py's SYSTEM forbids the LLM
-  from writing. Sonnet currently papers over the first one unaided.
+- Polish validator — ✅ BUILT 2026-07-25, hardened 2026-07-26. The Haiku-vs-Sonnet question
+  is now MOOT for the teacher path (no request-time model at all); the code stays for the
+  degraded pre-v1.3-canonical case and for the lab CLI.
+- Tier-0 seam text: ✅ CLOSED 2026-07-28 by DELETION, not repair — `_first_clause`, the
+  "This period continues … begun last time" template and the "[Next unit]" note join are all
+  gone with the tier-0 composer (LP v1.3 Rule 16). Nothing in the request path writes
+  container text any more; it is selected from the canonical.
 - Polish cost history is SPLIT across two files: the app path logs to
   runtime_data/token_log.csv (`seam_polish` rows), the CLI to genon/ledger.csv
   (`mode=polish`). Unify before the step-8 cost report.

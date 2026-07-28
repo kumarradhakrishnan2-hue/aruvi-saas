@@ -917,7 +917,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             "chapter_title": hit.get("chapter_title"),
             "periods": total_periods,
             "compression": hg.get("compression"),
-            "seam_periods": hg.get("seam_periods_tier0_polished") or [],
+            "seam_periods": hg.get("mid_unit_openings") or [],
             "coverage_note": (hit.get("result") or {}).get("section_coverage_note"),
             "polish": hg.get("seam_polish"),
         }
@@ -965,7 +965,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         "chapter_title": plan.get("chapter_title"),
         "periods": total_periods,
         "compression": g["compression"],
-        "seam_periods": g["seam_periods_tier0_polished"],
+        "seam_periods": g["mid_unit_openings"],
         "coverage_note": plan["result"].get("section_coverage_note"),
         "polish": polish_info,
     }

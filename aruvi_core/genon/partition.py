@@ -116,16 +116,6 @@ def integerise(parts, dur):
     return mins
 
 
-def _first_clause(text, limit=110):
-    """First sentence of a band's activity, trimmed — used verbatim in tier-0 seam notes."""
-    t = str(text or "").strip()
-    for stop in (". ", "? ", "! "):
-        i = t.find(stop)
-        if 0 < i < limit:
-            return t[: i + 1]
-    return (t[:limit].rsplit(" ", 1)[0] + "…") if len(t) > limit else t
-
-
 def uniq(seq):
     out = []
     for x in seq:
@@ -134,14 +124,89 @@ def uniq(seq):
     return out
 
 
-def _tier0_title(units_map, src_units, opens_mid):
-    parts = []
-    for k, u in enumerate(src_units):
-        t = units_map[u]["activity_title"]
-        if k == 0 and opens_mid:
-            t += " \u2014 continued"
-        parts.append(t)
-    return parts[0] if len(parts) == 1 else ", then ".join(parts)
+# ── container text: SELECTED, never composed (LP v1.3 Rule 16, 2026-07-28) ──
+#
+# A period is always a CONTIGUOUS run of units — the DP cuts a linear phase stream, so
+# non-contiguity is structurally impossible. Every period therefore falls into one of
+# three cases, and the canonical's N-1 adjacent-pair table covers all of them:
+#
+#   1 unit    -> the unit's own authored title and notes, untouched.
+#   2 units   -> the (a,b) entry: written for exactly this joint.
+#   3+ units  -> the LAST adjacent pair in the span. In a three-unit period the middle
+#                unit is present in full while the opening unit contributes only its
+#                tail, so (b,c) names where the substance is; (a,b) would name a fragment.
+#
+# The entry is deliberately CUT-INVARIANT: it does not know how much of either unit this
+# period holds, and must not pretend to (Rule 16 prohibition 2). Orientation is carried
+# by naming the content the sitting pivots on, which stays true at every cut — the
+# doctrine LP v1.2.1 settled for authored notes, applied here to container text.
+#
+# What this replaced: a mechanical "A — continued, then B" title; a seam clause reading
+# "This period continues the unit begun last time, which closed with: <quoted band
+# fragment>" (period language plus a calendar word — both forbidden by the very
+# constitution this engine enforces on the model, and the quote truncated on any
+# abbreviation, "Display Fig."); and a "[Next unit]" note concatenation. All three then
+# had to be repaired by an LLM at request time, at cost, latency, and risk of failure.
+# The fallbacks below fire ONLY for a canonical predating Rule 16, and every miss is
+# recorded in genon.handoff_missing so a degraded plan is never mistaken for a good one.
+
+
+def select_container_text(unit_handoff, units_map, src_units):
+    """Title + teacher notes for one period. Returns (title, notes, key, hit).
+
+    key is the handoff entry consulted, or None for the single-unit case (which needs
+    no handoff). hit is False when a key was needed but the table did not supply it.
+    """
+    if len(src_units) == 1:
+        u = units_map[src_units[0]]
+        return u["activity_title"], u["teacher_notes"], None, True
+    a, b = src_units[-2], src_units[-1]      # last adjacent pair — see note above
+    entry = (unit_handoff or {}).get("%d-%d" % (a, b)) or {}
+    title = (entry.get("title") or "").strip()
+    notes = (entry.get("teacher_notes") or "").strip()
+    key = "%d-%d" % (a, b)
+    if title and notes:
+        return title, notes, key, True
+    srcs = [units_map[u] for u in src_units]
+    return (title or " / ".join(units_map[u]["activity_title"] for u in src_units),
+            notes or "\n\n".join(s["teacher_notes"] for s in srcs if s["teacher_notes"]),
+            key, False)
+
+# Rule 16 (LP v1.3): what the table must contain. Lives beside the selector that
+# consumes it so the two halves of the contract cannot drift. Called by the
+# generator's certification gate —
+# a canonical without it forces the partitioner onto its degraded join fallback, and a
+# title that is merely the two source titles spliced is the exact failure the rule exists
+# to prevent, so both are caught here rather than discovered in a teacher's plan.
+HANDOFF_JOINERS = (" and ", " & ", ", then ", " into ", " plus ", " with ", " / ", " — ", " -- ")
+
+
+def validate_unit_handoff(uh, n_units: int) -> list[str]:
+    if not uh:
+        return ["unit_handoff missing (Rule 16)"]
+    problems = []
+    want = [f"{i}-{i+1}" for i in range(1, n_units)]
+    missing = [k for k in want if k not in uh]
+    if missing:
+        problems.append(f"unit_handoff missing {len(missing)} pair(s): {missing[:5]}")
+    extra = [k for k in uh if k not in want]
+    if extra:
+        problems.append(f"unit_handoff has non-adjacent/unknown pairs: {extra[:5]}")
+    if list(uh) != [k for k in want if k in uh]:
+        problems.append("unit_handoff entries out of plan order")
+    for k in want:
+        e = uh.get(k) or {}
+        title, note = (e.get("title") or "").strip(), (e.get("teacher_notes") or "").strip()
+        if not title:
+            problems.append(f"unit_handoff {k}: missing title")
+        elif any(j in f" {title} " for j in HANDOFF_JOINERS):
+            problems.append(f"unit_handoff {k}: title uses a banned joiner — {title!r}")
+        if not note:
+            problems.append(f"unit_handoff {k}: missing teacher_notes")
+        elif len(note.split()) > 99:            # 90-word budget + 10% grace
+            problems.append(f"unit_handoff {k}: teacher_notes {len(note.split())} words > 90")
+    return problems
+
 
 
 
@@ -214,6 +279,7 @@ def build_plan(stream, matrix):
     kept, eff, demoted, dropped_units, cinfo = plan_compression(stream, sum(durations))
     phases = [dict(p, minutes=eff[p["phase_id"]]) for p in kept]
     units = {u["unit"]: u for u in stream["units"] if u["unit"] not in dropped_units}
+    unit_handoff = stream.get("unit_handoff") or {}
 
     ranges = None
     tol_used = None
@@ -232,7 +298,8 @@ def build_plan(stream, matrix):
 
     new_periods = []
     phase_to_period = {}
-    seams = []
+    mid_unit_openings = []          # periods that open inside a unit — reporting only
+    handoff_used, handoff_missing = [], []
     for n, (parts, dur) in enumerate(zip(period_parts, durations), 1):
         mins = integerise(parts, dur)
         cur = 0
@@ -246,27 +313,22 @@ def build_plan(stream, matrix):
             phase_to_period[ph["phase_id"]] = n  # last period touching this phase
             cur += m
         src_units = uniq([phases[idx]["unit"] for idx, _, _ in parts])
-        prev_unit_open = phases[parts[0][0]]["unit"]
-        opens_mid = parts[0][0] > 0 and phases[parts[0][0] - 1]["unit"] == prev_unit_open
-        seam = None
-        if opens_mid:
-            prev_act = phases[parts[0][0] - 1]["activity"]
-            seam = ("This period continues the unit begun last time, which closed with: "
-                    f"\u201c{_first_clause(prev_act)}\u201d Briefly revisit that before resuming.")
-            seams.append(n)
+        # opens_mid is now REPORTING ONLY — the container text no longer varies with it.
+        # It stays because it is the honest measure of how hard a matrix cuts the chapter.
+        if parts[0][0] > 0 and phases[parts[0][0] - 1]["unit"] == phases[parts[0][0]]["unit"]:
+            mid_unit_openings.append(n)
         contrib = {}
         for (idx, _, _), m in zip(parts, mins):
             contrib[phases[idx]["unit"]] = contrib.get(phases[idx]["unit"], 0) + m
         primary = max(contrib, key=contrib.get)
         srcs = [units[u] for u in src_units]
-        notes = [s["teacher_notes"] for s in srcs if s["teacher_notes"]]
-        teacher_notes = "\n\n[Next unit] ".join(notes)
-        if seam:
-            teacher_notes = seam + "\n\n" + teacher_notes
+        title, teacher_notes, hkey, hit = select_container_text(unit_handoff, units, src_units)
+        if hkey is not None:
+            (handoff_used if hit else handoff_missing).append(hkey)
         new_periods.append({
             "period_number": n,
             "period_duration_minutes": dur,
-            "activity_title": _tier0_title(units, src_units, opens_mid),
+            "activity_title": title,
             "section_anchor": " / ".join(uniq([s["section_anchor"] for s in srcs])),
             "materials": uniq([m for s in srcs for m in s["materials"]]),
             "visual_aids": "; ".join(uniq([s["visual_aids"] for s in srcs
@@ -341,8 +403,13 @@ def build_plan(stream, matrix):
             "compression": cinfo,
             "stream_source": stream["meta"].get("source_file"),
             "matrix": [{"duration": d, "count": c} for d, c in matrix],
-            "seam_periods_tier0_polished": seams,
-            "seam_llm_pass_available": True,
+            "mid_unit_openings": mid_unit_openings,
+            "handoff_used": handoff_used,
+            "handoff_missing": handoff_missing,
+            "container_text": ("selected from unit_handoff (LP v1.3 Rule 16)"
+                               if not handoff_missing else
+                               "PARTIAL — %d period(s) fell back to a mechanical join; "
+                               "this canonical predates Rule 16" % len(handoff_missing)),
             "split_fallback_used": split_used,
             "fill_tolerance_used": tol_used,
         },

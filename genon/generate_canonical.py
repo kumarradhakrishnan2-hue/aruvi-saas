@@ -39,6 +39,9 @@ from pathlib import Path
 
 import prompt_assembly as pa
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from aruvi_core.genon.partition import validate_unit_handoff  # noqa: E402
+
 HERE = Path(__file__).resolve().parent           # genon/
 REPO = HERE.parent                                # aruvi-saas/
 OUT_DIR = HERE / "out" / "canonical"
@@ -133,6 +136,7 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
         for item in parsed.get("assessment_items", []) or []:
             if isinstance(item, dict) and not item.get("phase_ref"):
                 problems.append(f"assessment item {item.get('id', '?')} missing phase_ref")
+        problems.extend(validate_unit_handoff(parsed.get("unit_handoff"), len(periods)))
     return problems[:40]
 
 
