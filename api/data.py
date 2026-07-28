@@ -336,7 +336,11 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # This is the on-disk stand-in for the Bucket-A output cache in §1, so the Supabase
 # migration is a storage swap, not a redesign.
 
-GENON_ENGINE_VERSION = "04"     # BUMP when compile/partition/polish change the OUTPUT
+GENON_ENGINE_VERSION = "05"     # BUMP when compile/partition/polish change the OUTPUT
+# 05 (2026-07-28): a mixed-duration matrix is sequenced as a repeating WEEK with the
+# longer periods at maximum dispersion, instead of row-by-row (all 50s, then all 60s).
+# Every period boundary moves, so every mixed-matrix e04 key is stale by construction.
+# Single-duration matrices are unaffected in content but re-key with the bump.
 # 04 (2026-07-28): container text is SELECTED from the canonical's Rule-16 unit_handoff
 # instead of composed at partition time. Titles and teacher notes change for every period
 # that spans a unit boundary, so every pre-existing e03 key is stale by construction —

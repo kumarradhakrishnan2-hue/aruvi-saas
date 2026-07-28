@@ -207,8 +207,112 @@ def plan_compression(stream, target):
     return kept, eff, demoted, dropped_units, info
 
 
+
+
+# ── duration ordering: the week, not the row (2026-07-28) ────────────────────
+#
+# A duration matrix is a BAG, not a sequence. Expanding it row by row —
+# [d] * c for each row — serves every 50-minute period first and every
+# 60-minute period last, which is not a timetable any teacher has ever had.
+# Her timetable is a WEEKLY pattern that repeats: 7 fifties and 2 sixties, the
+# same nine slots every week. The matrix she submits is that week's ratio
+# scaled to the chapter's budget (18 periods -> 14 x 50 + 4 x 60 = two weeks),
+# so the sequence the partitioner cuts against must repeat the week too.
+#
+# We do not know WHERE in the week the long period falls: the profile records
+# which durations she teaches and how many of each, not their weekday order,
+# and even if it did we would not know which weekday she opens the chapter on.
+# So within a week the longer durations are placed at MAXIMUM DISPERSION — the
+# arrangement that is least wrong under that ignorance, and the one that keeps
+# the long sittings from clumping:
+#
+#   * the shortest duration opens the week;
+#   * longer durations sit in the interior, never at either edge;
+#   * they are never adjacent to one another, and the short runs between them
+#     are as equal as the arithmetic allows.
+#
+# 14 x 50 + 4 x 60 therefore becomes, per week and twice over:
+#   50 50 60 50 50 50 60 50 50 | 50 50 60 50 50 50 60 50 50
+#
+# This is an approximation and is meant to be one. What it buys is the thing
+# the exact answer would also buy: a plan whose sittings vary in length the way
+# her real week varies, instead of a flat block that suddenly changes gear.
+
+
+def _spread(n, k):
+    """Split n items into k+1 gaps as evenly as possible.
+
+    The remainder goes to the MIDDLE gaps and works outward, so the widest run
+    of short periods sits in the interior and the sequence stays symmetric:
+    n=7, k=2 -> [2, 3, 2], not [3, 2, 2].
+    """
+    gaps = [n // (k + 1)] * (k + 1)
+    rem = n - sum(gaps)
+    middle_out = sorted(range(k + 1), key=lambda i: (abs(i - k / 2.0), i))
+    for i in middle_out[:rem]:
+        gaps[i] += 1
+    return gaps
+
+
+def _disperse(base, extra):
+    """Insert `extra` into `base` at maximum dispersion, interior placement.
+
+    With len(base) >= len(extra) every inserted item lands strictly inside the
+    sequence and no two are adjacent. When `extra` is the longer list that is
+    arithmetically impossible, so the roles flip and the majority carries —
+    adjacency there is a fact about the teacher's week, not a choice we made.
+    """
+    if not extra:
+        return list(base)
+    if not base:
+        return list(extra)
+    if len(base) < len(extra):
+        base, extra = extra, base
+    gaps = _spread(len(base), len(extra))
+    out, idx = [], 0
+    for i, g in enumerate(gaps[:-1]):
+        out.extend(base[idx:idx + g])
+        idx += g
+        out.append(extra[i])
+    out.extend(base[idx:])
+    return out
+
+
+def order_durations(matrix):
+    """Duration matrix -> the ordered period sequence the partitioner cuts against.
+
+    Rows are aggregated by duration (a teacher may type 10x50 + 4x50), the
+    weekly cycle is recovered as counts / gcd(counts), the cycle is arranged by
+    ascending duration with each longer group dispersed into what precedes it,
+    and the cycle repeats. A single-duration matrix is unchanged.
+    """
+    agg = {}
+    for d, c in matrix:
+        d, c = int(d), int(c)
+        if d > 0 and c > 0:
+            agg[d] = agg.get(d, 0) + c
+    if not agg:
+        return []
+    durs = sorted(agg)                      # ascending — the shortest opens the week
+    if len(durs) == 1:
+        return [durs[0]] * agg[durs[0]]
+    weeks = 0
+    for d in durs:                          # gcd of the counts = repeats of one week
+        weeks = _gcd(weeks, agg[d])
+    cycle = []
+    for d in durs:
+        cycle = _disperse(cycle, [d] * (agg[d] // weeks))
+    return cycle * weeks
+
+
+def _gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+
 def build_plan(stream, matrix):
-    durations = [d for d, c in matrix for _ in range(c)]
+    durations = order_durations(matrix)
     kept, eff, demoted, dropped_units, cinfo = plan_compression(stream, sum(durations))
     phases = [dict(p, minutes=eff[p["phase_id"]]) for p in kept]
     units = {u["unit"]: u for u in stream["units"] if u["unit"] not in dropped_units}
@@ -335,10 +439,11 @@ def build_plan(stream, matrix):
             "section_coverage_note": coverage_note or None,
         },
         "genon": {
-            "engine": "partition v0.3 (deterministic, role-aware, 3-regime compression)",
+            "engine": "partition v0.4 (deterministic, role-aware, 3-regime compression, weekly duration order)",
             "compression": cinfo,
             "stream_source": stream["meta"].get("source_file"),
             "matrix": [{"duration": d, "count": c} for d, c in matrix],
+            "duration_sequence": durations,   # the weekly order actually cut against
             "seam_periods_tier0_polished": seams,
             "seam_llm_pass_available": True,
             "split_fallback_used": split_used,
