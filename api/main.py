@@ -46,6 +46,13 @@ app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
 
+# ── Test-campaign tracker (docs/testing.md §6a) ─────────────────────────────────
+# Campaign tick-offs / comments / defects persisted in Aruvi itself
+# (data/testing/campaign_state.json); UI at docs/testing_tracker.html or
+# GET /api/testing/tracker. Campaign tooling only — no teacher-facing surface.
+from .testing_campaign import router as _testing_router  # noqa: E402
+app.include_router(_testing_router)
+
 # Initialize the allocation repository. The allocation register is per-user/tenant STATE
 # (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/allocations/) — NOT the read-only
 # content dir. (Previously it wrote into the prototype content mirror; moved here so all

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aruvi — Test Campaign Tracker</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#1a2332; --muted:#64748b; --line:#e2e8f0;
+    --pass:#15803d; --pass-bg:#dcfce7; --fail:#b91c1c; --fail-bg:#fee2e2;
+    --na:#64748b; --na-bg:#e2e8f0; --blocked:#b45309; --blocked-bg:#fef3c7;
+    --pending:#94a3b8; --pending-bg:#f1f5f9; --accent:#1d4ed8; --accent-bg:#dbeafe;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--ink)}
+  header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line);
+         padding:10px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  header h1{font-size:16px;margin:0 14px 0 0;white-space:nowrap}
+  header .sub{color:var(--muted);font-size:12px;margin-right:auto}
+  input,select,textarea,button{font:inherit;color:inherit}
+  input[type=text],select,textarea{border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff}
+  button{border:1px solid var(--line);border-radius:6px;padding:5px 10px;background:#fff;cursor:pointer}
+  button:hover{border-color:#b6c2d2}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  #connDot{width:9px;height:9px;border-radius:50%;background:var(--pending);display:inline-block;margin-right:4px}
+  #connDot.ok{background:var(--pass)} #connDot.bad{background:var(--fail)}
+  nav{display:flex;gap:4px;padding:10px 18px 0}
+  nav button{border-radius:8px 8px 0 0;border-bottom:none;background:#eef1f5}
+  nav button.active{background:var(--panel);font-weight:600;border-color:var(--line)}
+  main{padding:14px 18px 60px;max-width:1280px;margin:0 auto}
+  section.tab{display:none;background:var(--panel);border:1px solid var(--line);border-radius:0 10px 10px 10px;padding:16px}
+  section.tab.active{display:block}
+  h2{font-size:15px;margin:4px 0 10px} h3{font-size:13px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
+  th{background:#f1f5f9;font-weight:600;font-size:12px}
+  .cell{cursor:pointer;text-align:center;font-size:11px;font-weight:600;min-width:34px;user-select:none}
+  .cell:hover{outline:2px solid var(--accent)}
+  .s-pending{background:var(--pending-bg);color:var(--pending)}
+  .s-pass{background:var(--pass-bg);color:var(--pass)}
+  .s-fail{background:var(--fail-bg);color:var(--fail)}
+  .s-na{background:var(--na-bg);color:var(--na)}
+  .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .hasnote::after{content:"✎";font-size:9px;margin-left:2px;opacity:.7}
+  .rowlabel{white-space:nowrap;font-weight:600}
+  .rowlabel small{color:var(--muted);font-weight:400}
+  .pill{display:inline-block;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:600}
+  .actor-K{background:#ede9fe;color:#5b21b6}.actor-C{background:#cffafe;color:#155e75}.actor-B{background:#fef9c3;color:#854d0e}
+  .summary{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:130px}
+  .stat b{font-size:20px;display:block}
+  .stat span{color:var(--muted);font-size:12px}
+  .bar{height:6px;background:var(--pending-bg);border-radius:3px;margin-top:6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--pass)}
+  /* drawer */
+  #ovl{display:none;position:fixed;inset:0;background:rgba(15,23,42,.35);z-index:30}
+  #drawer{display:none;position:fixed;top:0;right:0;bottom:0;width:min(560px,95vw);background:var(--panel);
+          z-index:31;box-shadow:-8px 0 30px rgba(0,0,0,.15);padding:18px;overflow:auto}
+  #drawer h2{margin-top:0}
+  .statusbtns{display:flex;gap:6px;margin:10px 0}
+  .statusbtns button{font-weight:600}
+  .statusbtns button.sel-pass{background:var(--pass-bg);border-color:var(--pass);color:var(--pass)}
+  .statusbtns button.sel-fail{background:var(--fail-bg);border-color:var(--fail);color:var(--fail)}
+  .statusbtns button.sel-na{background:var(--na-bg);border-color:var(--na);color:var(--na)}
+  .statusbtns button.sel-blocked{background:var(--blocked-bg);border-color:var(--blocked);color:var(--blocked)}
+  .statusbtns button.sel-pending{background:var(--pending-bg);border-color:var(--pending);color:var(--pending)}
+  textarea{width:100%;min-height:90px}
+  .exit{background:#f8fafc;border-left:3px solid var(--accent);padding:8px 10px;font-size:13px;
+        white-space:pre-wrap;border-radius:0 6px 6px 0;margin:8px 0}
+  .meta{color:var(--muted);font-size:12px;margin-top:8px}
+  .provgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .provgrid label{font-size:12px;color:var(--muted);display:block}
+  .provgrid input{width:100%}
+  #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1a2332;color:#fff;
+         padding:8px 16px;border-radius:8px;opacity:0;transition:opacity .25s;z-index:40;font-size:13px}
+  .warn{background:var(--blocked-bg);color:var(--blocked);border:1px solid #f5d78e;border-radius:8px;
+        padding:8px 12px;margin-bottom:12px;display:none}
+  .defsev-S1{color:var(--fail);font-weight:700}.defsev-S2{color:#c2410c;font-weight:700}
+  .defsev-S3{color:var(--blocked)}.defsev-S4{color:var(--muted)}
+  .small{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Aruvi · Test Campaign Tracker</h1>
+  <span class="sub">docs/testing.md v1.0 — 25 combos · state lives in Aruvi (<code>/api/testing/campaign</code>)</span>
+  <label class="small">API <input type="text" id="apiBase" size="20" value="http://localhost:8000"></label>
+  <label class="small">I am <select id="who"><option>Kumar</option><option>Claude</option></select></label>
+  <span><span id="connDot"></span><span id="connTxt" class="small">…</span></span>
+  <button onclick="loadState()">Reload</button>
+  <button onclick="exportJSON()">Export JSON</button>
+  <button onclick="exportCSV()">Export comments CSV</button>
+</header>
+
+<nav>
+  <button data-tab="overview" class="active">Overview</button>
+  <button data-tab="step0">Step 0</button>
+  <button data-tab="stages">Stage prep</button>
+  <button data-tab="combos">Per-combo matrix</button>
+  <button data-tab="cross">Cross-cutting</button>
+  <button data-tab="defects">Defect register</button>
+</nav>
+
+<main>
+  <div class="warn" id="offlineWarn">API unreachable — changes are held in this page only.
+    Keep it open, fix the API, then hit <b>Push all to server</b>: <button onclick="pushAll()">Push all to server</button></div>
+
+  <section class="tab active" id="tab-overview">
+    <div class="summary" id="statCards"></div>
+    <h2>Campaign at a glance</h2>
+    <div id="glance"></div>
+    <p class="small">Click any cell anywhere to open it: read the exit criterion, set
+      Pass / Fail / N-A / Blocked, and leave a comment. Everything saves to
+      <code>data/testing/campaign_state.json</code> through the API. Legend:
+      <span class="pill s-pass">pass</span> <span class="pill s-fail">fail</span>
+      <span class="pill s-na">n/a</span> <span class="pill s-blocked">blocked</span>
+      <span class="pill s-pending">pending</span> · ✎ = has a comment.</p>
+  </section>
+
+  <section class="tab" id="tab-step0">
+    <h2>Step 0 — campaign preconditions (once, before anything else)</h2>
+    <table id="step0Tbl"></table>
+  </section>
+
+  <section class="tab" id="tab-stages">
+    <h2>Per-stage preparation — constitutions amend per STAGE, before any class in it is certified</h2>
+    <p class="small">P1 amend LP constitution (A1–A5, A7) · P2 assessment <code>phase_ref</code> (A6) ·
+      P3 <code>phases[]→time_bands[]</code> (Group B only; auto N/A for Group A) · P4 changelog sidecar ·
+      SIGN Claude sign-off. <b>Ordering rule:</b> a stage's classes stay blocked until SIGN is green.</p>
+    <table id="stagesTbl"></table>
+  </section>
+
+  <section class="tab" id="tab-combos">
+    <h2>The 25-combo cycle — rows in suggested execution order (§11)</h2>
+    <p class="small">PREP mirrors the stage sign-off. PROV opens the provenance & cost panel (C2/§6).
+      A combo certifies when C1–C13 are all pass/n-a and SIGN is set.</p>
+    <table id="combosTbl"></table>
+  </section>
+
+  <section class="tab" id="tab-cross">
+    <h2>Cross-cutting — run once, re-run on any material change</h2>
+    <table id="crossTbl"></table>
+  </section>
+
+  <section class="tab" id="tab-defects">
+    <h2>Defect register</h2>
+    <p class="small">S1 chain broken / tenancy leak (stops the combo) · S2 teacher-visible wrongness
+      (blocks certification) · S3 contract drift (certify with owner) · S4 cosmetic.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <button class="primary" onclick="editDefect(null)">＋ New defect</button>
+    </div>
+    <table id="defTbl"></table>
+  </section>
+</main>
+
+<div id="ovl" onclick="closeDrawer()"></div>
+<div id="drawer"></div>
+<div id="toast"></div>
+
+<script>
+/* ───────────────────────── checklist definitions (from docs/testing.md) ───────────── */
+const STEP0 = [
+ ["0.1","K","Remove the polish path","Strip GenonPlanRequest.polish, _seam_polish_allowed()/ARUVI_SEAM_POLISH, the want_polish block + run_polish import, polish keys in all 3 responses (api/main.py); the polished param + '_p' suffix (api/data.py); SEAM_POLISH_ENABLED + reads (web/app/lib/format.js).","EXIT: grep shows no live polish reference; API starts clean; pytest green. Artefact: the diff."],
+ ["0.2","K","Bump GENON_ENGINE_VERSION 06 → 07","api/data.py, dated comment: polish removed, cache-key shape loses the _p variant. All C10 filename assertions use e07.","EXIT: a fresh partition writes a _e07_ file; no new file carries _p."],
+ ["0.3","K","Archive the legacy _p file","Move data/content/saved_plans/social_sciences/ix/ch_05_50m16_e03_c20260726112240_p.json → backup/.","EXIT: find data/content/saved_plans -name \"*_p.json\" returns nothing."],
+ ["0.4","K","Deploy this tracker","api/testing_campaign.py + 2-line include in api/main.py; open docs/testing_tracker.html against the API.","EXIT: a tick made here survives an API restart (data/testing/campaign_state.json)."],
+ ["0.5","K","Provision Kumar1 / Kumar23","Two X-Aruvi-User identities, each with a readiness profile covering the subjects under test.","EXIT: GET /readiness ready:true for both; profiles differ."],
+ ["0.6","C","Re-verify the 25-combo matrix","Count chapters per combo from data/content/chapters/; confirm ~317 chapters and that class X has no content anywhere.","EXIT: §1 table matches disk, or corrected with a dated note. Artefact: count table (paste in comment)."],
+ ["0.7","K","Cost baseline","runtime_data/token_log.csv exists with header; ANTHROPIC_API_KEY present in the generation environment.","EXIT: a test row appends and reads back."],
+];
+const STAGES = [
+ {key:"social_sciences/secondary", group:"ref", note:"v1.5 — the reference, DONE (record sign-off retroactively at the pilot)"},
+ {key:"social_sciences/middle",    group:"A",  note:"v2.7 · competency_edges — A2 is a true copy-paste"},
+ {key:"science/secondary",        group:"A",  note:"v1.0 · implied_lo — forces the A2 per-subject decision + X3"},
+ {key:"mathematics/secondary",    group:"A",  note:"v1.0 · implied_lo"},
+ {key:"the_world_around_us/preparatory", group:"A", note:"v1.2 · implied_lo"},
+ {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → time_bands (P3); A3 is a pure addition"},
+ {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] + core_/adjunct_competencies"},
+ {key:"mathematics/preparatory",  group:"B",  note:"v1.1 · phases[] + core_/adjunct_competencies"},
+ {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[]"},
+ {key:"english/middle",           group:"B",  note:"v1.5 · phases[] (stale footer fixed at P4)"},
+ {key:"english/secondary",        group:"B",  note:"v1.0 · phases[] (fork of middle v1.5)"},
+];
+const PSTEPS = [
+ ["P1","K","Amend LP constitution","A1 single standard period row · A2 Rule 14 band_id + band anchoring (per-subject decision outside SS!) · A3 Rule 15 role_handoff · A4 Rule 16 unit_handoff · A5+A7 THE SELF-CONTAINED REGISTER ported as ONE block.","EXIT: all present, VERSION bumped, diff shows no pedagogical rule changed."],
+ ["P2","K","Amend assessment constitution","A6: every item carries phase_ref (band_ref per SS·secondary v1.2 reference). Depends on P1/A2.","EXIT: VERSION bumped; schema mandates phase_ref."],
+ ["P3","K","phases[] → time_bands[] (Group B only)","Rename the array AND description→activity; the compiler reads exactly time_bands / activity. Constitutions are amended — no compile.py adapter.","EXIT: schema emits time_bands{band_id,minutes,activity}; no phases[ remains."],
+ ["P4","K","History to sidecar CHANGELOG.md","Amendment notes go beside the file, never in it; the VERSION line stays.","EXIT: no version-history block in the constitution; CHANGELOG lists every bump."],
+ ["SIGN","C","Stage sign-off","Read the amended pair against the reference + rollout brief; per amendment: present / absent / deviates-with-reason; the A2 decision recorded.","EXIT: written note per amendment; classes in this stage unblock."],
+];
+const CSTEPS = [
+ ["C1","K","Generate the chain","Summary → mapping → LP canonical → assessment under the amended constitutions; install ch_NN_canonical.json (plan_status canonical, ledger_ts stamped); supply the four JSONs to Claude.","EXIT: GET /genon/{s}/{g}/chapters lists the chapter; canonical_minutes = standard duration × period count."],
+ ["C2","C","Cost the chain","Per stage (summary/mapping/canonical/assessment): wall s, tokens in/out, cost ₹; chapter total ₹ — the number that prices the ~317-chapter pre-warm. Fill the PROV panel.","EXIT: all 4×4 cells + total recorded; missing cells recorded as missing."],
+ ["C3","C","Canonical vs constitution, rule by rule","A table rule# → pass/fail/subjective-pass with quoted evidence — cite rule numbers, never a general impression. Register/tone calls are subjective: say so and quote the strings judged.","EXIT: every rule number appears; every fail becomes a defect."],
+ ["C4","C","MEMORY.md 18 amendment items, live","Test each item applicable to this combo (see §4 map; item 6 = closed-by-design under A1 — confirm with founder once).","EXIT: per item pass/fail/n-a-here + one line of live evidence; fails → defects."],
+ ["C5","K","The five partitions","Uniform matrices at 115 / 100 / 85 / 75 / 55% of the canonical budget. Expect: stretch · identity:true (no file saved!) · rescale · role-weighted · unit-drop + section_coverage_note. Kumar1 runs two, Kumar23 three — record which.","EXIT: 5×200; regimes as expected; four ch_NN_<matrix>_e07_c<ver>.json files."],
+ ["C6","K","Mixed-duration weekly matrix","≥1 realistic weekly mix for this class among the 5 budgets; record the ratio.","EXIT: 200; file written; ratio + regime recorded."],
+ ["C7","C","Partition compliance","(1) band minutes tile each sitting exactly · (2) unit order preserved · (3) register scan (word-list then judged quotes) on all titles/notes · (4) 55% carries section_coverage_note · (5) C6 week repeats, long periods interior + non-adjacent · (6) 3+-unit sittings in genon.wide_spans, container title names the heaviest pair never a ≤5-min scrap.","EXIT: all six on every file, or defects."],
+ ["C8","C","LLM-need flags","Every point where quality begs an LLM call, each with the deterministic alternative to try first.","EXIT: the (possibly empty) list, in the comment."],
+ ["C9","C","Assessment anchoring after re-cut","75% + 55% plans: each item's phase_ref resolves to its own unit; an item whose anchor unit dropped at 55% carries its scheduling note, never mis-anchors.","EXIT: zero mis-anchored; dropped-unit items all noted."],
+ ["C10","C","Storage conventions","(1) filename grammar (matrix longest-first, e07, c<ledger_ts[+hrev]>) · (2) repeat request → cached:true, mtime unchanged · (3) e06 files untouched beside e07 (bump re-keys, never overwrites) · (4) delete + re-run → byte-identical minus saved_at (jq del diff empty).","EXIT: all four hold."],
+ ["C11","C","Partition wall time","Cache-miss request timed (curl -w %{time_total}).","EXIT: < 5 s (over 5 s = defect); record the figure either way."],
+ ["C12","B","Exports render","C6 plan: lesson/assessment/integrated × pdf+docx + allocation pdf+docx — this subject's view-model shape (science·ix section-grouped; science middle stage-grouped; english spine-nested).","EXIT: 8 files clean — no blanks, no raw JSON, answers=1 renders the answer layer."],
+ ["C13","B","Failure paths read like sentences","(1) canonical minus one band_id → 500 'Canonical cannot be compiled: …' naming it · (2) >60 periods → 400 'Period count implausibly large.' · (3) no canonical → 404 'No canonical for this chapter yet.'","EXIT: the 3 codes + readable details; no stack leak in any body."],
+ ["SIGN","B","Combo sign-off","All C-steps pass/n-a, PROV complete, defects closed or accepted-with-owner.","EXIT: the row turns green."],
+];
+const COMBOS = [ // suggested execution order (§11); pilot first
+ ["social_sciences","ix","social_sciences/secondary","PILOT — regenerate ch 5 under v1.5 (discharges the P6.1 re-certification)"],
+ ["social_sciences","vi","social_sciences/middle",""],["social_sciences","vii","social_sciences/middle",""],["social_sciences","viii","social_sciences/middle",""],
+ ["science","ix","science/secondary","first implied_lo subject — do X3 before certifying"],
+ ["mathematics","ix","mathematics/secondary",""],
+ ["the_world_around_us","iii","the_world_around_us/preparatory",""],["the_world_around_us","iv","the_world_around_us/preparatory",""],["the_world_around_us","v","the_world_around_us/preparatory",""],
+ ["science","vi","science/middle",""],["science","vii","science/middle",""],["science","viii","science/middle",""],
+ ["mathematics","vi","mathematics/middle",""],["mathematics","vii","mathematics/middle",""],["mathematics","viii","mathematics/middle",""],
+ ["mathematics","iii","mathematics/preparatory",""],["mathematics","iv","mathematics/preparatory",""],["mathematics","v","mathematics/preparatory",""],
+ ["english","ix","english/secondary","fork-parent deltas (item 9) while fresh"],
+ ["english","vi","english/middle",""],["english","vii","english/middle",""],["english","viii","english/middle","weak task_density fit — see X2"],
+ ["english","iii","english/preparatory",""],["english","iv","english/preparatory",""],["english","v","english/preparatory",""],
+];
+const CROSS = [
+ ["X1","B","Tenancy — every surface, plus the authorization case","With Kumar1/Kumar23: (1) plans-prepared isolated · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state progress+bookmark isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: Kumar23 fetches Kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists (confirmed) — client-side only, test as such.","EXIT: 1–5 zero leakage; 6 & 7 recorded with a founder decision."],
+ ["X2","C","Effort index vs the calibrated standard","Year Plan page values == GET /subjects/{s}/{g}/chapters == master_plan.json (calibrated first, NCF alongside-only). English vi–viii: also report the raw task_density distribution per grade — the VI-calibrated cutoffs are the thing under test (MEMORY item 5); a near-binary grade → defect against the calibration, owner founder.","EXIT: sampled grades match; English distribution report exists."],
+ ["X3","K","Generalise compile.py::_check_declarations","Beyond competency_edges, to whichever object carries band refs per subject (do before the first non-SS stage certifies). Engine change → version bump → §9 cheap re-check of anything certified.","EXIT: a canonical whose implied_lo rows lack band refs fails compilation with a named problem."],
+];
+const PROVFIELDS = [["chapter","Chapter #"],["model","Model"],["date","Run date"],
+ ["lp_ver","LP constitution ver"],["as_ver","Assessment const. ver"],["engine","Engine ver (07)"],
+ ["ledger_ts","Canonical ledger_ts"],["handoff_rev","handoff_rev"],["files","Plan filename(s)"]];
+const PROVSTAGES = ["summary","mapping","lp_canonical","assessment"];
+const STATUSES = ["pass","fail","na","blocked","pending"];
+
+/* ───────────────────────── state + API ─────────────────────────────────────────── */
+let S = null;                 // server-shaped state
+let dirty = [];               // queued item posts while offline
+const $ = id => document.getElementById(id);
+const api = () => $("apiBase").value.replace(/\/+$/,"");
+const who = () => $("who").value;
+function toast(m){const t=$("toast");t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1800);}
+function setConn(ok,msg){$("connDot").className=ok?"ok":"bad";$("connTxt").textContent=msg;
+  $("offlineWarn").style.display=ok?"none":"block";}
+
+async function loadState(){
+  try{
+    const r = await fetch(api()+"/api/testing/campaign");
+    if(!r.ok) throw new Error(r.status);
+    S = await r.json(); setConn(true,"connected · saved "+(S.updated_at||"never"));
+  }catch(e){
+    if(!S) S = {step0:{},stages:{},combos:{},cross:{},defects:[]};
+    setConn(false,"offline");
+  }
+  renderAll();
+}
+function item(scope,key,step){ return ((S[scope]||{})[key]||{})[step] || {}; }
+async function saveItem(scope,key,step,patch){
+  const bucket=(S[scope][key]=S[scope][key]||{}); const it=(bucket[step]=bucket[step]||{});
+  Object.assign(it,patch); it.at=new Date().toISOString().slice(0,19);
+  try{
+    const r=await fetch(api()+"/api/testing/campaign/item",{method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({scope,key,step,patch})});
+    if(!r.ok) throw new Error(r.status);
+    setConn(true,"connected · saved just now"); toast("Saved "+step);
+  }catch(e){ dirty.push({scope,key,step,patch}); setConn(false,"offline — "+dirty.length+" unsaved"); }
+  renderAll();
+}
+async function saveDefect(d){
+  try{
+    const r=await fetch(api()+"/api/testing/campaign/defect",{method:"POST",
+      headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});
+    if(!r.ok) throw new Error(r.status);
+    const j=await r.json();
+    if(d.delete){ S.defects=S.defects.filter(x=>x.id!==d.id); }
+    else{ const i=S.defects.findIndex(x=>x.id===j.defect.id);
+          if(i>=0) S.defects[i]=j.defect; else S.defects.push(j.defect); }
+    toast(d.delete?"Deleted":"Saved "+(j.defect?j.defect.id:"")); setConn(true,"connected");
+  }catch(e){ toast("API unreachable — defect NOT saved"); }
+  renderAll();
+}
+async function pushAll(){
+  const q=dirty.slice(); dirty=[];
+  for(const it of q){ await saveItem(it.scope,it.key,it.step,it.patch); }
+  toast("Pushed");
+}
+function exportJSON(){
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:"application/json"}));
+  a.download="campaign_state_"+new Date().toISOString().slice(0,10)+".json"; a.click();
+}
+function exportCSV(){
+  const rows=[["kind","id","scope","key","step","status","severity","by/owner","at","title","comment","evidence","notes"]];
+  for(const scope of ["step0","stages","combos","cross"])
+    for(const[key,steps]of Object.entries(S[scope]||{}))
+      for(const[step,it]of Object.entries(steps||{}))
+        rows.push([step==="provenance"?"provenance":"item","",scope,key,step,it.status||"","",
+                   it.by||"",it.at||"","",step==="provenance"?JSON.stringify(it):(it.comment||""),it.evidence||"",""]);
+  for(const d of S.defects||[])
+    rows.push(["defect",d.id||"","",d.combo||"",d.step||"",d.status||"",d.severity||"",d.owner||"",d.at||"",
+               d.title||"","",d.evidence||"",d.notes||""]);
+  const csv=rows.map(r=>r.map(c=>'"'+String(c==null?"":c).replace(/"/g,'""')+'"').join(",")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download="campaign_comments_"+new Date().toISOString().slice(0,10)+".csv"; a.click();
+}
+
+/* ───────────────────────── rendering ───────────────────────────────────────────── */
+function cellHtml(scope,key,step,label){
+  const it=item(scope,key,step); const st=it.status||"pending";
+  const note=(it.comment&&it.comment.trim())?" hasnote":"";
+  return `<td class="cell s-${st}${note}" title="${st}${it.by?" · "+it.by:""}"
+    onclick="openStep('${scope}','${key}','${step}')">${label||step}</td>`;
+}
+function actorPill(a){return `<span class="pill actor-${a}">${a==="K"?"Kumar":a==="C"?"Claude":"Both"}</span>`;}
+function stageSigned(stKey){ return (item("stages",stKey,"SIGN").status||"")==="pass"; }
+function comboKey(c){ return c[0]+"/"+c[1]; }
+
+function renderAll(){
+  if(!S) return;
+  // step 0
+  $("step0Tbl").innerHTML = "<tr><th>#</th><th>Actor</th><th>Step</th><th style='width:60px'>Status</th></tr>"+
+    STEP0.map(s=>`<tr><td>${s[0]}</td><td>${actorPill(s[1])}</td>
+      <td><b>${s[2]}</b><div class="small">${s[3]}</div></td>${cellHtml("step0","campaign",s[0],"●")}</tr>`).join("");
+  // stages
+  $("stagesTbl").innerHTML = "<tr><th>Stage</th><th>Group</th>"+
+    PSTEPS.map(p=>`<th>${p[0]}</th>`).join("")+"<th>Classes</th></tr>"+
+    STAGES.map(st=>{
+      const cells=PSTEPS.map(p=>{
+        if(p[0]==="P3"&&st.group!=="B") return `<td class="cell s-na" title="Group ${st.group} — time_bands already">n/a</td>`;
+        return cellHtml("stages",st.key,p[0]);
+      }).join("");
+      const unlocked=stageSigned(st.key);
+      return `<tr><td class="rowlabel">${st.key}<br><small>${st.note}</small></td>
+        <td>${st.group==="ref"?"—":st.group}</td>${cells}
+        <td class="small">${unlocked?"✅ unblocked":"⛔ blocked until SIGN"}</td></tr>`;
+    }).join("");
+  // combos
+  $("combosTbl").innerHTML = "<tr><th>#</th><th>Combo</th><th>PREP</th>"+
+    CSTEPS.map(c=>`<th>${c[0]}</th>`).join("")+"<th>PROV</th></tr>"+
+    COMBOS.map((c,i)=>{
+      const key=comboKey(c); const prep=stageSigned(c[2]);
+      const cells=CSTEPS.map(cs=>cellHtml("combos",key,cs[0])).join("");
+      const prov=item("combos",key,"provenance");
+      const provOk=prov&&prov.total_cost_inr!=null;
+      return `<tr><td>${i+1}</td><td class="rowlabel">${c[0]} · ${c[1]}
+        ${c[3]?`<br><small>${c[3]}</small>`:""}</td>
+        <td class="cell ${prep?"s-pass":"s-blocked"}" onclick="switchTab('stages')">${prep?"✓":"⛔"}</td>
+        ${cells}
+        <td class="cell ${provOk?"s-pass":"s-pending"}" onclick="openProv('${key}')">${provOk?"₹"+prov.total_cost_inr:"…"}</td></tr>`;
+    }).join("");
+  // cross
+  $("crossTbl").innerHTML = "<tr><th>#</th><th>Actor</th><th>Check</th><th style='width:60px'>Status</th></tr>"+
+    CROSS.map(x=>`<tr><td>${x[0]}</td><td>${actorPill(x[1])}</td>
+      <td><b>${x[2]}</b><div class="small">${x[3]}</div></td>${cellHtml("cross","campaign",x[0],"●")}</tr>`).join("");
+  // defects
+  const defs=(S.defects||[]).slice().sort((a,b)=>(a.id<b.id?-1:1));
+  $("defTbl").innerHTML = "<tr><th>ID</th><th>Combo</th><th>Step</th><th>Sev</th><th>Title / evidence</th><th>Owner</th><th>Status</th><th>Opened</th><th></th></tr>"+
+    (defs.length?defs.map(d=>`<tr><td>${d.id}</td><td>${d.combo||""}</td><td>${d.step||""}</td>
+      <td class="defsev-${d.severity}">${d.severity}</td>
+      <td><b>${esc(d.title)}</b><div class="small">${esc(d.evidence)}</div><div class="small">${esc(d.notes)}</div></td>
+      <td>${esc(d.owner)}</td><td>${d.status}</td><td class="small">${(d.opened||"").slice(0,10)}</td>
+      <td><button onclick='editDefect(${JSON.stringify(d.id)})'>edit</button></td></tr>`).join("")
+     :"<tr><td colspan=9 class='small'>No defects recorded yet.</td></tr>");
+  renderOverview();
+}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function renderOverview(){
+  let done=0,total=0,fails=0;
+  const count=(scope,key,ids)=>ids.forEach(id=>{total++;const st=item(scope,key,id).status;
+    if(st==="pass"||st==="na")done++; if(st==="fail")fails++;});
+  count("step0","campaign",STEP0.map(s=>s[0]));
+  STAGES.forEach(st=>count("stages",st.key,PSTEPS.filter(p=>!(p[0]==="P3"&&st.group!=="B")).map(p=>p[0])));
+  COMBOS.forEach(c=>count("combos",comboKey(c),CSTEPS.map(x=>x[0])));
+  count("cross","campaign",CROSS.map(x=>x[0]));
+  const openDef=(S.defects||[]).filter(d=>!["closed","accepted"].includes(d.status));
+  const certified=COMBOS.filter(c=>CSTEPS.every(cs=>["pass","na"].includes(item("combos",comboKey(c),cs[0]).status))).length;
+  let cost=0; COMBOS.forEach(c=>{const p=item("combos",comboKey(c),"provenance");
+    if(p&&p.total_cost_inr!=null)cost+=Number(p.total_cost_inr)||0;});
+  $("statCards").innerHTML=
+    `<div class="stat"><b>${certified} / 25</b><span>combos certified</span>
+       <div class="bar"><i style="width:${certified*4}%"></i></div></div>
+     <div class="stat"><b>${done} / ${total}</b><span>steps ticked (pass or n/a)</span>
+       <div class="bar"><i style="width:${total?Math.round(done/total*100):0}%"></i></div></div>
+     <div class="stat"><b style="color:var(--fail)">${fails}</b><span>failing steps</span></div>
+     <div class="stat"><b style="color:${openDef.length?"var(--blocked)":"var(--pass)"}">${openDef.length}</b>
+       <span>open defects (${openDef.filter(d=>d.severity==="S1").length}×S1, ${openDef.filter(d=>d.severity==="S2").length}×S2)</span></div>
+     <div class="stat"><b>₹ ${cost.toFixed(0)}</b><span>chapter-chain spend so far (C2 totals)</span></div>`;
+  $("glance").innerHTML="<table><tr><th>Combo</th><th>Progress</th></tr>"+
+    COMBOS.map(c=>{const key=comboKey(c);
+      const cells=CSTEPS.map(cs=>{const st=item("combos",key,cs[0]).status||"pending";
+        return `<td class="cell s-${st}" style="min-width:20px;padding:2px"
+          onclick="openStep('combos','${key}','${cs[0]}')" title="${cs[0]}">·</td>`;}).join("");
+      return `<tr><td class="rowlabel">${c[0]} · ${c[1]}</td><td><table><tr>${cells}</tr></table></td></tr>`;}).join("")+"</table>";
+}
+
+/* ───────────────────────── drawer: step detail ─────────────────────────────────── */
+function defFor(scope,step){
+  const pool = scope==="step0"?STEP0.map(s=>[s[0],s[1],s[2],s[3],s[4]])
+             : scope==="stages"?PSTEPS : scope==="cross"?CROSS.map(x=>[x[0],x[1],x[2],x[3],""]) : CSTEPS;
+  return pool.find(p=>p[0]===step) || [step,"B",step,"",""];
+}
+function openStep(scope,key,step){
+  const d=defFor(scope,step); const it=item(scope,key,step); const st=it.status||"pending";
+  $("drawer").innerHTML=`
+    <button style="float:right" onclick="closeDrawer()">✕ close</button>
+    <h2>${step} — ${esc(d[2])}</h2>
+    <p class="small">${actorPill(d[1])} &nbsp; <b>${key}</b> &nbsp; <span class="small">${scope}</span></p>
+    <div class="small">${d[3]||""}</div>
+    ${d[4]?`<div class="exit">${esc(d[4])}</div>`:""}
+    <div class="statusbtns">${STATUSES.map(s=>
+      `<button class="${s===st?"sel-"+s:""}" onclick="pickStatus(this,'${s}')">${s}</button>`).join("")}</div>
+    <label class="small">Comment / evidence (rule tables, filenames, quotes, timings)</label>
+    <textarea id="drComment">${esc(it.comment||"")}</textarea>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button class="primary" onclick="commitStep('${scope}','${key}','${step}')">Save</button>
+      <button onclick="prefillDefect('${key}','${step}')">File defect from this…</button>
+    </div>
+    <p class="meta">${it.by?`last saved by ${esc(it.by)} at ${esc(it.at||"")}`:"never saved"}</p>`;
+  window._pickedStatus=st; showDrawer();
+}
+function pickStatus(btn,s){ window._pickedStatus=s;
+  btn.parentElement.querySelectorAll("button").forEach(b=>b.className="");
+  btn.className="sel-"+s; }
+function commitStep(scope,key,step){
+  saveItem(scope,key,step,{status:window._pickedStatus,comment:$("drComment").value,by:who()});
+  closeDrawer();
+}
+
+/* ───────────────────────── drawer: provenance panel ────────────────────────────── */
+function openProv(key){
+  const p=item("combos",key,"provenance");
+  const st=(p.stages)||{};
+  $("drawer").innerHTML=`
+    <button style="float:right" onclick="closeDrawer()">✕ close</button>
+    <h2>Provenance & cost — ${key}</h2>
+    <p class="small">§6: a result that cannot be attributed to a version is not a result.</p>
+    <div class="provgrid">${PROVFIELDS.map(f=>
+      `<div><label>${f[1]}</label><input id="pv_${f[0]}" value="${esc(p[f[0]]||"")}"></div>`).join("")}</div>
+    <h3>Per-stage cost (C2)</h3>
+    <table><tr><th>Stage</th><th>Wall s</th><th>Tokens in</th><th>Tokens out</th><th>Cost ₹</th></tr>
+    ${PROVSTAGES.map(sg=>{const r=st[sg]||{};
+      return `<tr><td>${sg}</td>
+        <td><input size=6 id="pv_${sg}_wall" value="${esc(r.wall_s||"")}"></td>
+        <td><input size=8 id="pv_${sg}_tin" value="${esc(r.tokens_in||"")}"></td>
+        <td><input size=8 id="pv_${sg}_tout" value="${esc(r.tokens_out||"")}"></td>
+        <td><input size=7 id="pv_${sg}_cost" value="${esc(r.cost_inr||"")}"></td></tr>`;}).join("")}
+    </table>
+    <p class="small">Partition wall time (C11, s): <input size=8 id="pv_part_wall" value="${esc(p.partition_wall_s||"")}">
+       · C5 identity by: <input size=8 id="pv_who5" value="${esc(p.c5_split||"")}" placeholder="K1: 2 / K23: 3"></p>
+    <div style="margin-top:10px"><button class="primary" onclick="commitProv('${key}')">Save provenance</button></div>
+    <p class="meta">${p.at?`last saved ${esc(p.at)}`:"never saved"}</p>`;
+  showDrawer();
+}
+function commitProv(key){
+  const patch={by:who(),stages:{}}; let total=0,any=false;
+  PROVFIELDS.forEach(f=>patch[f[0]]=$("pv_"+f[0]).value.trim());
+  PROVSTAGES.forEach(sg=>{
+    const r={wall_s:$("pv_"+sg+"_wall").value.trim(),tokens_in:$("pv_"+sg+"_tin").value.trim(),
+             tokens_out:$("pv_"+sg+"_tout").value.trim(),cost_inr:$("pv_"+sg+"_cost").value.trim()};
+    patch.stages[sg]=r; const c=parseFloat(r.cost_inr); if(!isNaN(c)){total+=c;any=true;}
+  });
+  patch.partition_wall_s=$("pv_part_wall").value.trim();
+  patch.c5_split=$("pv_who5").value.trim();
+  if(any) patch.total_cost_inr=Math.round(total*100)/100;
+  saveItem("combos",key,"provenance",patch); closeDrawer();
+}
+
+/* ───────────────────────── drawer: defect form ─────────────────────────────────── */
+function prefillDefect(combo,step){ closeDrawer(); switchTab("defects"); editDefect(null,{combo,step}); }
+function editDefect(id,pre){
+  const d=id?(S.defects||[]).find(x=>x.id===id)||{}:(pre||{});
+  $("drawer").innerHTML=`
+    <button style="float:right" onclick="closeDrawer()">✕ close</button>
+    <h2>${id?("Defect "+id):"New defect"}</h2>
+    <div class="provgrid">
+      <div><label>Combo / scope</label><input id="df_combo" value="${esc(d.combo||"")}" placeholder="english/iii · stage:science/middle · campaign"></div>
+      <div><label>Step</label><input id="df_step" value="${esc(d.step||"")}" placeholder="C7"></div>
+      <div><label>Severity</label><select id="df_sev">${["S1","S2","S3","S4"].map(s=>
+        `<option ${d.severity===s?"selected":""}>${s}</option>`).join("")}</select></div>
+      <div><label>Owner</label><input id="df_owner" value="${esc(d.owner||"")}"></div>
+      <div><label>Status</label><select id="df_status">${["open","fixing","fixed-awaiting-recheck","closed","accepted"]
+        .map(s=>`<option ${d.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
+    </div>
+    <label class="small">Title</label><input id="df_title" style="width:100%" value="${esc(d.title||"")}">
+    <label class="small">Evidence (file / response / quote)</label><textarea id="df_evi">${esc(d.evidence||"")}</textarea>
+    <label class="small">Notes</label><textarea id="df_notes">${esc(d.notes||"")}</textarea>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button class="primary" onclick="commitDefect(${JSON.stringify(id)})">Save</button>
+      ${id?`<button onclick="if(confirm('Delete ${id}? Prefer status=closed.'))saveDefect({id:'${id}',delete:true});closeDrawer()">Delete</button>`:""}
+    </div>`;
+  showDrawer();
+}
+function commitDefect(id){
+  saveDefect({id:id||null,combo:$("df_combo").value.trim(),step:$("df_step").value.trim(),
+    severity:$("df_sev").value,title:$("df_title").value.trim(),evidence:$("df_evi").value,
+    owner:$("df_owner").value.trim(),status:$("df_status").value,notes:$("df_notes").value});
+  closeDrawer();
+}
+
+/* ───────────────────────── shell ───────────────────────────────────────────────── */
+function showDrawer(){$("ovl").style.display="block";$("drawer").style.display="block";}
+function closeDrawer(){$("ovl").style.display="none";$("drawer").style.display="none";}
+function switchTab(name){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+  document.querySelectorAll("section.tab").forEach(s=>s.classList.toggle("active",s.id==="tab-"+name));
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+loadState();
+</script>
+</body>
+</html>
