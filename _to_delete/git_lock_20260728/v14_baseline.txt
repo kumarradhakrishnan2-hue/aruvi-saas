@@ -1,14 +1,14 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.5
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.4
+(v1.1, 2026-07-24: Rule 14 — band identity, role, and edge band anchoring; time input = single standard row. Serialization and input-shape only; no pedagogical rule changed.)
+(v1.1.1, 2026-07-25: Rule 14 role guidance made definitional — arc framing removed, roles judged on a best-effort basis. Labeling only; band structure and all other rules unchanged.)
+(v1.1.2, 2026-07-25: temporal self-containment — band text carries no calendar words and no cross-unit references; teacher notes' previous-unit link is the only cross-unit reference, always backward, never in calendar time. Register only; no pedagogical rule changed.)
+(v1.2, 2026-07-25: roles leave the bands — Rule 14 carries identity and anchoring only; a new Rule 15 classifies every band's role in a single role_handoff emitted after the plan is complete, so authoring is never shaped by the role taxonomy. Serialization only; no pedagogical rule changed.)
+(v1.2.1, 2026-07-26: teacher notes become position-free — the continuity link names the content it builds on, never a unit's position; positional orientation belongs exclusively to the platform, which alone knows where a timetable places each boundary. Register only; no pedagogical rule changed.)
+(v1.4, 2026-07-28: duration independence — band text, teacher notes, and unit_handoff notes may no longer name a duration or clock quantity. The plan is authored at one standard duration and cut into sittings that may differ in length from it and from one another, and every band's minutes are rescaled to fit; text that states its own duration goes stale silently. Register only; no pedagogical rule changed.)
+(v1.3, 2026-07-28: a new Rule 16 emits unit_handoff — a title and a teacher note for every adjacent pair of units, authored after the plan is complete, so the platform can name and annotate a sitting that spans a unit boundary without an LLM in the request path. The title must refuse the conjunction AND name concrete content — abstraction is the other way to fail it. Companion output only; no pedagogical rule changed.)
 
 VOCABULARY
-The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
-
-THE SELF-CONTAINED REGISTER (binds Rules 10, 13, and 16)
-Every teacher-facing string here is authored without knowing which sitting will carry it, where in that sitting it falls, or how long that sitting runs: the plan is written at one standard duration, and the platform cuts it to each teacher's timetable, rescaling every band to fit. A string that names its own time or place is therefore wrong as often as it is right, and wrong silently. So no band, note, or handoff entry may name —
-- CALENDAR TIME: today, yesterday, this week, next class.
-- POSITION, in any direction: the previous unit, this unit, the next unit, last time, as we saw, in the next….
-- CLOCK QUANTITY: for three minutes, in the last ten minutes, the remaining time, the whole period, half the session. Where a task is genuinely brief or genuinely long, say so in kind — "a quick individual list", "an extended reading" — never in number.
-Continuity is carried by naming the content it builds on (“Having traced the Vedic political vocabulary, …”), never by pointing at a unit: only the platform knows where a teacher's timetable places each boundary.
+The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
 
 THE EDGE MODEL
 A unit teaches content (one textbook section). A competency is realised by some units and not others. Where a unit genuinely advances a competency, that pairing is an EDGE, and every edge produces exactly one Learning Outcome — the transferable skill that unit builds toward that competency. The LO carries both endpoints (its unit and its competency), so they cannot disagree. The relationship is many-to-many and unforced: a unit may carry zero, one, or several edges; a competency reaches only the units that genuinely realise it.
@@ -134,7 +134,8 @@ Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose wea
 
 PROHIBITION
 MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.
-MUST NOT breach THE SELF-CONTAINED REGISTER.
+MUST NOT use calendar words (today, yesterday, this week, next class) or positional references of any direction — the previous unit, this unit, the next unit, last time, in the next…. Continuity is expressed by naming the content it builds on (“Having traced the Vedic political vocabulary, …”), never by pointing at units: only the platform knows where a teacher's timetable places each boundary.
+MUST NOT name a duration or clock quantity (Rule 13 prohibition 6) — the note never says how long anything takes, and never how much of the sitting a task will occupy.
 
 ================================================================================
 RULE 11 · HOMEWORK
@@ -160,13 +161,16 @@ PROHIBITION
 RULE 13 · TIME-BAND SUBSTANCE
 
 MANDATE
-time_bands are the lesson itself — the core teacher-facing product. Write each band as teaching script, not stage direction: name the specific chapter content in play (the features, sources, places, or terms being taught) and the exact task students perform on it, so that a substitute teacher could teach the band from its text alone. Where students answer questions, state the questions. One teaching move per band, told in at most 3–4 sentences — a ceiling, not a target: substance means chapter specifics, not additional sentences. A band that needs more is two moves; split it at the phase boundary and divide its minutes.
-Where the Chapter Summary records the section's own in-flow apparatus box — the inline "(THINK ABOUT IT)" / "(LET'S EXPLORE)" capture — use that box's task as the activity's scaffold or organising prompt. Never invent a parallel prompt where the section's own box already serves the unit's purpose — this anchors the lesson to the book the teacher actually holds.
+time_bands are the lesson itself — the core teacher-facing product. Write each band as teaching script, not stage direction: name the specific chapter content in play (the features, sources, places, or terms being taught) and the exact task students perform on it, so that a substitute teacher could teach the band from its text alone. Where students answer questions, state the questions. One teaching move per band, told in at most 3–4 sentences — a band that needs more is two moves; split it at the phase boundary and divide its minutes.
+Where the Chapter Summary records the section's own in-flow apparatus box — the inline "(THINK ABOUT IT)" / "(LET'S EXPLORE)" capture — use that box's task as the activity's scaffold or organising prompt rather than inventing a parallel one. This anchors the lesson to the book the teacher actually holds.
 
 PROHIBITION
 1. MUST NOT write bands that point at content without carrying it ("discusses the main features", "reviews the sources named in the chapter").
 2. MUST NOT let the structured fields (competency_edges, teacher_notes, homework) absorb substance that belongs in the bands — they supplement the teaching script, never substitute for it.
-3. MUST NOT breach THE SELF-CONTAINED REGISTER. Each band speaks in the present of its own activity; sequence lives in the plan's structure, and unit-to-unit linking lives only in teacher_notes (Rule 10).
+3. MUST NOT pad toward the sentence ceiling — it is a limit, not a target; substance means chapter specifics, not additional sentences.
+4. MUST NOT invent a parallel activity prompt where the section's own captured apparatus box already supplies one that serves the unit's purpose.
+5. MUST NOT anchor band text in calendar time or unit position — no calendar words (today, yesterday, this week, next class) and no cross-unit references (the previous unit, the next unit, as we saw, in the next…). Each band speaks in the present of its own activity; sequence lives in the plan's structure, and unit-to-unit linking lives only in teacher_notes (Rule 10).
+6. MUST NOT name a duration, a clock quantity, or a share of the sitting anywhere in band text — no "for three minutes", "in the last ten minutes", "for the remaining time", "the whole period", "half the session". The band's minutes live on the rail, and the platform sets them: this plan is authored at one standard duration but cut into sittings that may differ in length, and every band is rescaled to fit the one it lands in. A band that states its own duration is therefore wrong as often as it is right, and wrong silently. Where a task is genuinely brief or genuinely long, say so in kind — "a quick individual list", "an extended reading" — never in number.
 
 ================================================================================
 RULE 14 · BAND IDENTITY AND EDGE BAND ANCHORING — SERIALIZATION ONLY
@@ -202,19 +206,20 @@ RULE 16 · UNIT HANDOFF — REQUIRED COMPANION OUTPUT
 MANDATE
 After the lesson plan, the coverage handoff, and the role handoff are complete, emit unit_handoff as a sibling of lesson_plan: one entry for every ADJACENT pair of units, keyed "<earlier>-<later>" in plan order. A plan of N units yields exactly N-1 entries — units 1&2, 2&3, … (N-1)&N.
 
-A teacher's timetable cuts this plan into sittings that do not align with its units, so a sitting will often carry the closing stretch of one unit and the opening stretch of the next — and where the budget is tight, parts of three or more. Each entry is the container text for one such joint, written here, where both units are fully in view: their bands, notes, section anchors, and the chapter summary. The platform selects an entry; it never composes one, so each must stand alone.
+This plan is authored at one standard duration; a teacher's timetable divides it into sittings that may differ in length from that duration and from one another. So a single sitting will often carry the closing stretch of one unit and the opening stretch of the next — and where the budget is tight it may hold parts of three or more, in which case the platform draws on the pair carrying most of that sitting's minutes. Each entry is the container text for one such joint, written once, here, where both units are fully in view — their bands, notes, section anchors, and the chapter summary. The platform selects the entry; it never composes one. Write every entry to stand on its own: it cannot know which sitting will use it, or how long that sitting runs.
 
 Each entry carries two fields:
-- title — what the two units are jointly about: the single object of study that spans them, named as a teacher would name that sitting. Under 70 characters where that costs nothing.
+- title — what the two units are jointly about: the single object of study that spans them, named as a teacher would name that sitting. It MUST name at least one concrete element drawn from the two units — a place, source, institution, text, or term they actually teach — wherever the shared object admits one; a title built only from abstractions is elegant and useless for finding one's place in a chapter. Under 70 characters where that costs nothing.
 - teacher_notes — one flowing note, at most 90 words, in the register of Rule 10. It opens by naming the content the sitting pivots on (the move from the one body of material to the other), then carries each unit's own named confusion, then at most one facilitation pointer. Everything in it comes from the two units' own text.
 
 PROHIBITION
-1. MUST NOT miss the shared object, in either direction. NOT BY SPLICING: conjunctions and joiners are banned outright — "and", "&", "with", ", then", "into", "plus", a slash, or a dash used to splice two labels — and a title reconstructable by concatenating the two source titles has failed. NOT BY ABSTRACTION either: refusing the conjunction is not licence to name nothing, and "Who Could Take Part" or "What Surplus Made Possible" fail as surely as a splice does. The title MUST name at least one concrete element the two units actually teach — a place, source, institution, text, or term — wherever the shared object admits one.
-2. MUST NOT assume either unit runs to completion in the sitting — the platform may place only part of one, or of both. No completion language ("having finished", "by the end of", "once all four are covered"), no counts of what was got through.
-3. MUST NOT breach THE SELF-CONTAINED REGISTER.
-4. MUST NOT author new content: every fact, confusion, source, and task named must already appear in the two units' bands, notes, or the chapter summary.
-5. MUST NOT shape, size, order, or count any unit in anticipation of this rule — Rule 15 prohibition 1, applied here.
-6. MUST NOT omit an adjacent pair, emit a non-adjacent pair, or emit the entries out of plan order.
+1. MUST NOT retreat into abstraction to avoid joining: refusing the conjunction is not licence to name nothing. "Who Could Take Part" and "What Surplus Made Possible" name no content and fail this rule as surely as a splice does.
+2. MUST NOT form the title by joining the two unit titles. Conjunctions and joiners are banned outright — "and", "&", "with", ", then", "into", "plus", a slash, or a dash used to splice two labels. A title that can be reconstructed by concatenating the two source titles has failed this rule; name the shared object instead.
+3. MUST NOT assume either unit runs to completion in the sitting — the platform may place only part of one, or of both. No completion language ("having finished", "by the end of", "once all four are covered"), no counts of what was got through.
+4. MUST NOT use calendar words or positional references — Rule 10's prohibition applies here unchanged, and "period", "session", "last time", "the previous unit" are all outside the register. Clock quantities are equally out (Rule 13 prohibition 6): the note never states how long the sitting, or any part of it, runs.
+5. MUST NOT author new content: every fact, confusion, source, and task named must already appear in the two units' bands, notes, or the chapter summary.
+6. MUST NOT shape, size, order, or count any unit in anticipation of this rule — the plan is authored complete under Rules 1–13, and read by Rules 15 and 16 afterwards.
+7. MUST NOT omit an adjacent pair, emit a non-adjacent pair, or emit the entries out of plan order.
 
 ================================================================================
 INTEGRITY CONSTRAINTS (system level — override any other instruction)

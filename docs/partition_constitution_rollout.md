@@ -1,11 +1,14 @@
 # Rolling the partition approach out to the remaining subjects & stages
 
 **What this is.** SS·secondary is the only constitution that has been amended for the
-partition engine (v1.1 → v1.3, 2026-07-24 → 07-28). This brief states what those
+partition engine (v1.1 → v1.5, 2026-07-24 → 07-28). This brief states what those
 amendments actually bought, what the engine demands as a hard contract, where each of the
 other ten LP constitutions stands against it, and what remains to be decided per subject.
 
 Written 2026-07-28, after the weekly duration-ordering change (partition v0.4).
+Revised the same day: A8 withdrawn on measurement, the container-text selector re-decided,
+SS·secondary amended to v1.4 and consolidated to v1.5. Engine now at partition v0.5 /
+`GENON_ENGINE_VERSION = "06"`.
 Evidence: `aruvi_core/genon/compile.py`, `aruvi_core/genon/partition.py`, the eleven
 `data/content/constitutions/lesson_plan/*/*/lesson_plan_constitution.txt`, the eleven
 assessment constitutions, and the live SS·IX ch 5 canonical (21 units, 84 bands).
@@ -44,7 +47,7 @@ afterwards — which is exactly why v1.2 moved them out of the bands into `role_
 
 | Subject · stage | Ver | band_id | band_refs | role_handoff | unit_handoff | band field | skill layer |
 |---|---|---|---|---|---|---|---|
-| **social_sciences · secondary** | **1.3** | **✓** | **✓** | **✓** | **✓** | `time_bands` | `competency_edges` |
+| **social_sciences · secondary** | **1.5** | **✓** | **✓** | **✓** | **✓** | `time_bands` | `competency_edges` |
 | social_sciences · middle | 2.7 | — | — | — | — | `time_bands` | `competency_edges` |
 | science · secondary | 1.0 | — | — | — | — | `time_bands` | `implied_lo`, no edges |
 | mathematics · secondary | 1.0 | — | — | — | — | `time_bands` | `implied_lo`, no edges |
@@ -79,7 +82,8 @@ a branch wearing a disguise. Six constitutions is a bigger edit but leaves one s
 ## 3. The amendment set
 
 In dependency order. A1–A4 are the SS·secondary template; A5 is register; A6 is the
-assessment side; A7 is new (§4).
+assessment side; A7 is new (§4). **A7 is done for SS·secondary (v1.4); everything below is
+outstanding for the other ten.**
 
 ### A1 · Period schedule = exactly ONE standard row
 
@@ -140,15 +144,28 @@ Soft in the compiler, hard in certification. Without it the partitioner falls ba
 mechanical join and `genon.container_text` reports PARTIAL — a degraded plan that still
 serves, which is precisely why certification has to catch it instead.
 
-### A5 · Register — temporal and positional self-containment
+### A5 · Register — temporal, positional and duration self-containment
 
-Two prohibitions, from v1.1.2 and v1.2.1:
+**Port this as ONE block, not as three prohibitions.** SS·secondary accumulated the same
+ban in Rules 10, 13 and 16, with a different example list each time; v1.5 factored it into
+a named block sitting beside VOCABULARY, which the three rules reference in a single line
+each. That cut those rules by 392 words before the block's own 196, and it states the
+principle the bans all descend from:
 
-- **Bands** (Rule 13): no calendar words, no cross-unit references. Each band speaks in the
-  present of its own activity.
-- **Teacher notes** (Rule 10): continuity is expressed by naming the content it builds on,
-  never by pointing at a unit's position. Only the platform knows where a timetable places
-  a boundary.
+> THE SELF-CONTAINED REGISTER — every teacher-facing string is authored without knowing
+> which sitting will carry it, where in that sitting it falls, or how long that sitting
+> runs. So none may name calendar time, position in any direction, or clock quantity.
+
+Copy the block verbatim into each subject as it is amended, then reference it from that
+subject's notes rule, band rule and (once A4 lands) handoff rule. Adding the three
+prohibitions separately is how SS·secondary got into the state v1.5 had to undo.
+
+**And keep the amendment note out of the file.** SS·secondary had accumulated an eight-line
+version block above VOCABULARY — 425 words, ~573 tokens, read by the model on every
+generation call and actionable by none of it. It now lives in `CHANGELOG.md` beside the
+constitution; the `VERSION` line stays in the file, since certification records which
+version a canonical was authored under. Checked across all twenty-two constitutions: only
+SS·secondary had grown one, so this is a habit to avoid rather than a sweep to run.
 
 Zero of the other ten constitutions carry either. Several actively contradict them —
 english·middle's schema comment instructs "Transition from prior unit; preview into next",
@@ -170,51 +187,80 @@ Depends on A2 — the band ids have to exist before an item can name one.
 
 Partition v0.4 sequences a mixed matrix as a repeating week with the longer periods at
 maximum dispersion, so **sittings inside a single plan now differ in length**, not just in
-where they start. Two consequences no constitution currently covers.
+where they start.
 
-### A7 · Duration-independent band text
+### A7 · Duration-independent band text — DONE for SS·secondary (v1.4, 2026-07-28)
 
 Band minutes are not preserved. Compression rescales them through three regimes; the live
 SS·IX ch 5 plan at 16×50 against a 21×50 canonical ran role-weighted at 0.762, so a band
 can lose a quarter of its authored time. Band text that names its own duration goes stale
-silently — and there is already one instance in the certified canonical:
+silently — and there is one instance in the certified canonical:
 
 > P6.1 — "Students write individually for **three minutes**, then …"
 
-Proposed, as a Rule 13 prohibition alongside the calendar-words one:
+SS·secondary v1.4 adds Rule 13 prohibition 6 (no duration, clock quantity, or share of the
+sitting in band text; say "a quick individual list", never a number), mirrors it into
+Rule 10's teacher-notes prohibition and Rule 16 prohibition 4, and corrects Rule 16's
+rationale paragraph — the plan is authored at one standard duration and cut into sittings
+that may differ in length from it and from one another.
 
-> MUST NOT name any duration, clock quantity, or share of the sitting in band text —
-> no "for three minutes", "in the last ten minutes", "for the remaining time", "the whole
-> period", "half the session". The rail carries the minutes and the platform sets them;
-> band text carries the teaching move alone. Where a task is genuinely brief, say so in
-> kind ("a quick individual list") and not in number.
+**Outstanding for SS·secondary:** ch 5 carries the P6.1 violation and needs re-certifying
+against v1.4. Nothing in the engine catches it; the prohibition binds the author, not the
+partitioner.
 
-Same prohibition belongs in Rule 16's `teacher_notes` and in Rule 10.
+### A8 · WITHDRAWN
 
-### A8 · Sittings of unequal length within one plan
+A8 proposed a separate prohibition on assuming equal-length sittings. Measurement withdrew
+it. Rule 16 prohibition 3 already forbids assuming either unit runs to completion, and
+prohibition 4 bans positional references outright — no sentence violates A8 while passing
+those. The duration effect is real but small: across 25 matrices on ch 5, 60-minute
+sittings straddle a unit boundary 68% of the time against 59–61% at 40/45/50 min. Not
+enough to carry a rule. What survives of A8 is the Rule 16 rationale wording, folded into
+A7 above.
 
-Rule 16's prohibition 3 already forbids assuming a unit runs to completion. With v0.4 a
-stronger statement is warranted, because a single plan's sittings now genuinely vary:
+### The finding that replaced it — container-text pair selection
 
-> A sitting's length is not fixed within a plan. Container text MUST NOT assume how much
-> of either unit the sitting holds, nor that consecutive sittings are of equal length.
+Testing A8 surfaced something worth more. The hypothesis was that mixing durations would
+produce more 3+-unit sittings; it does not. **Wide spans are driven by the compression
+ratio, not the mix** — uniform 12×50 produced four of them, more than any mixed matrix.
 
-This one applies to SS·secondary too — it is the first amendment the template itself needs.
+And in a 3+-unit sitting, `select_container_text` took the LAST adjacent pair, justified in
+the code by "the opening unit contributes only its tail, so (b,c) names where the
+substance is." That premise fails:
 
----
+```
+P3 (50m) spans units 4, 5, 6 — minutes {4: 14, 5: 32, 6: 4}
+   entry used : 5-6   →  names a four-minute scrap
+   unit 4 contributes 14 minutes and goes unnamed
+```
+
+Two of that plan's four wide spans went the same way, and none of it was reported —
+`handoff_missing` was empty and `container_text` logged a clean Rule-16 hit.
+
+**Fixed in partition v0.5** (engine, not constitution): the selector now takes the adjacent
+pair carrying the most of the sitting's minutes, ties to the later pair. It changes P3 and
+P9 (each to a pair covering 46–47 of 50 minutes) and agrees with the old rule on P2 and P8,
+so nothing that was already right moved. Wide spans are now reported in `genon.wide_spans`
+with the minutes per unit and which units the container text does not name.
+
+Carry this forward as a *review* item rather than an amendment: when each subject reaches
+A4, check its wide-span behaviour at a tight period budget before certifying — a title
+naming a three-minute scrap is not a Rule 16 failure the validator can see.
 
 ## 5. Suggested sequencing
 
+Constitution by constitution, not in sweeps.
+
+0. ~~**A7 into SS·secondary** (→ v1.4).~~ Done 2026-07-28. **Re-certify ch 5 against it** —
+   the P6.1 duration phrase is still in the certified canonical.
 1. **A1 everywhere.** Cheapest, highest leverage, no dependency. Ten one-paragraph edits;
    it stops new canonicals being authored in a shape the partitioner has to undo.
-2. **A7 + A8 into SS·secondary** (→ v1.4), and re-certify ch 5. Small, and it closes a
-   known defect in the only certified chapter.
-3. **Group A, one subject at a time: A2 → A3 → A5 → A4 → A6.** Take SS·middle first —
+2. **Group A, one subject at a time: A2 → A3 → A5 → A4 → A6.** Take SS·middle first —
    it shares the edge model, so A2 really is a copy-paste there and the rest follows the
    template exactly. It is the cheapest possible proof that the template ports.
-4. **Decide the Group B band shape** (rename in six constitutions vs. adapter in
+3. **Decide the Group B band shape** (rename in six constitutions vs. adapter in
    `compile.py`) before touching any of them.
-5. **Generalise `_check_declarations`** beyond `competency_edges` at the same time as the
+4. **Generalise `_check_declarations`** beyond `competency_edges` at the same time as the
    first non-SS A2, so the gate stops passing subjects it never inspected.
 
 One caution on A1: it changes the authored duration for chapters whose canonicals already
@@ -222,3 +268,6 @@ exist, so `canonical_version` moves and every derived plan re-keys. That is corr
 behaviour — a teacher mid-chapter is offered the new plan, never substituted into it — but
 it means the re-certification cost is real and should be spent subject by subject, not in
 one sweep.
+
+Carry A7 into every subject as it is amended — it is register, it costs one prohibition, and
+it is cheapest to add beside A5, which it sits next to.

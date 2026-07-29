@@ -132,9 +132,23 @@ def uniq(seq):
 #
 #   1 unit    -> the unit's own authored title and notes, untouched.
 #   2 units   -> the (a,b) entry: written for exactly this joint.
-#   3+ units  -> the LAST adjacent pair in the span. In a three-unit period the middle
-#                unit is present in full while the opening unit contributes only its
-#                tail, so (b,c) names where the substance is; (a,b) would name a fragment.
+#   3+ units  -> the adjacent pair carrying the MOST MINUTES in this sitting.
+#
+# That last case was decided the other way at first — take the LAST pair, on the reasoning
+# that in a three-unit period the middle unit runs in full while the opening one contributes
+# only its tail, so (b,c) names where the substance is. Measured against the SS·IX ch 5
+# canonical (2026-07-28), the premise fails often enough to matter. At 12 x 50 the DP cut
+# P3 as units 4·5·6 with minutes 14 · 32 · 4: the last pair (5,6) names a four-minute scrap
+# and leaves the fourteen-minute opening unnamed, while (4,5) covers 46 of the 50 minutes.
+# Two of that plan's four wide spans went the same way. Weighting by minutes picks the
+# heavier pair in those and agrees with the old rule everywhere else, so nothing that was
+# already right changes. Ties go to the later pair — the sitting's direction of travel.
+#
+# Wide spans are also REPORTED now (genon.wide_spans). They are driven by the compression
+# ratio, not by the duration mix: a low period count forces more units into each sitting.
+# Whatever pair is chosen, a third unit's content goes unnamed in the container text, and
+# that used to pass as a clean Rule-16 hit with nothing said. It is a fact about how hard
+# the matrix cuts the chapter and belongs beside mid_unit_openings, not hidden.
 #
 # The entry is deliberately CUT-INVARIANT: it does not know how much of either unit this
 # period holds, and must not pretend to (Rule 16 prohibition 2). Orientation is carried
@@ -151,16 +165,36 @@ def uniq(seq):
 # recorded in genon.handoff_missing so a degraded plan is never mistaken for a good one.
 
 
-def select_container_text(unit_handoff, units_map, src_units):
+def heaviest_pair(src_units, minutes_by_unit):
+    """The adjacent pair in this sitting carrying the most of its minutes.
+
+    src_units is contiguous in plan order. Ties go to the later pair, which is both the
+    sitting's direction of travel and what the previous last-pair rule would have chosen.
+    """
+    best = None
+    for i in range(len(src_units) - 1):
+        a, b = src_units[i], src_units[i + 1]
+        w = (minutes_by_unit or {}).get(a, 0) + (minutes_by_unit or {}).get(b, 0)
+        if best is None or w >= best[0]:
+            best = (w, a, b)
+    return best[1], best[2]
+
+
+def select_container_text(unit_handoff, units_map, src_units, minutes_by_unit=None):
     """Title + teacher notes for one period. Returns (title, notes, key, hit).
 
     key is the handoff entry consulted, or None for the single-unit case (which needs
     no handoff). hit is False when a key was needed but the table did not supply it.
+    minutes_by_unit decides which pair a 3+-unit sitting draws on; omitting it falls
+    back to the last pair, so a caller that has no minutes still gets the old behaviour.
     """
     if len(src_units) == 1:
         u = units_map[src_units[0]]
         return u["activity_title"], u["teacher_notes"], None, True
-    a, b = src_units[-2], src_units[-1]      # last adjacent pair — see note above
+    if minutes_by_unit:
+        a, b = heaviest_pair(src_units, minutes_by_unit)
+    else:
+        a, b = src_units[-2], src_units[-1]
     entry = (unit_handoff or {}).get("%d-%d" % (a, b)) or {}
     title = (entry.get("title") or "").strip()
     notes = (entry.get("teacher_notes") or "").strip()
@@ -444,6 +478,7 @@ def build_plan(stream, matrix):
     phase_to_period = {}
     mid_unit_openings = []          # periods that open inside a unit — reporting only
     handoff_used, handoff_missing = [], []
+    wide_spans = []                 # sittings holding 3+ units — reporting only
     for n, (parts, dur) in enumerate(zip(period_parts, durations), 1):
         mins = integerise(parts, dur)
         cur = 0
@@ -466,9 +501,17 @@ def build_plan(stream, matrix):
             contrib[phases[idx]["unit"]] = contrib.get(phases[idx]["unit"], 0) + m
         primary = max(contrib, key=contrib.get)
         srcs = [units[u] for u in src_units]
-        title, teacher_notes, hkey, hit = select_container_text(unit_handoff, units, src_units)
+        title, teacher_notes, hkey, hit = select_container_text(unit_handoff, units,
+                                                                src_units, contrib)
         if hkey is not None:
             (handoff_used if hit else handoff_missing).append(hkey)
+        if len(src_units) > 2:
+            named = {int(x) for x in hkey.split("-")} if hkey else set()
+            wide_spans.append({
+                "period": n, "units": list(src_units), "entry": hkey,
+                "minutes_by_unit": {u: contrib[u] for u in src_units},
+                "unnamed_units": [u for u in src_units if u not in named],
+            })
         new_periods.append({
             "period_number": n,
             "period_duration_minutes": dur,
@@ -543,7 +586,7 @@ def build_plan(stream, matrix):
             "section_coverage_note": coverage_note or None,
         },
         "genon": {
-            "engine": "partition v0.4 (deterministic, role-aware, 3-regime compression, weekly duration order)",
+            "engine": "partition v0.5 (deterministic, role-aware, 3-regime compression, weekly duration order, minutes-weighted container text)",
             "compression": cinfo,
             "stream_source": stream["meta"].get("source_file"),
             "matrix": [{"duration": d, "count": c} for d, c in matrix],
@@ -551,6 +594,7 @@ def build_plan(stream, matrix):
             "mid_unit_openings": mid_unit_openings,
             "handoff_used": handoff_used,
             "handoff_missing": handoff_missing,
+            "wide_spans": wide_spans,
             "container_text": ("selected from unit_handoff (LP v1.3 Rule 16)"
                                if not handoff_missing else
                                "PARTIAL — %d period(s) fell back to a mechanical join; "

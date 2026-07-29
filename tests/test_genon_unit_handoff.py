@@ -2,8 +2,14 @@
 """Rule 16 (LP v1.3) — container text is SELECTED from the canonical, never composed.
 
 Covers the selector's three cases (single unit / adjacent pair / 3+ units taking the
-LAST pair), the degraded fallback for a canonical predating Rule 16, and the
-certification validator that keeps a spliced title out of a certified canonical.
+pair that carries the most MINUTES of the sitting), the degraded fallback for a canonical
+predating Rule 16, and the certification validator that keeps a spliced title out of a
+certified canonical.
+
+The 3+ case was decided as "last pair" in v1.3 and re-decided by measurement on 2026-07-28
+(partition v0.5): at 12 x 50 the SS-IX ch 5 plan cut P3 as units 4-5-6 with minutes
+14 / 32 / 4, where the last pair names a four-minute scrap. The cases below are that plan's
+real shapes.
 
 Stdlib only, no network, no spend:  python3 tests/test_genon_unit_handoff.py
 """
@@ -13,7 +19,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from aruvi_core.genon.partition import (                              # noqa: E402
-    handoff_vocab, select_container_text, validate_unit_handoff)
+    handoff_vocab, heaviest_pair, select_container_text, validate_unit_handoff)
 
 FAILED = []
 
@@ -38,12 +44,28 @@ t, notes, key, hit = select_container_text(HANDOFF, UNITS, [2, 3])
 check("adjacent pair takes its own entry", (t, notes) == ("Joint 23", "Pair note 23"), (t, notes))
 check("pair reports the key it used", key == "2-3" and hit, (key, hit))
 
-t, notes, key, hit = select_container_text(HANDOFF, UNITS, [2, 3, 4])
-check("three units take the LAST adjacent pair", key == "3-4", key)
-check("three units get that pair's text", (t, notes) == ("Joint 34", "Pair note 34"), (t, notes))
+# 3+ units: the pair carrying the most minutes of the sitting (partition v0.5).
+# P3 of the 12 x 50 plan — the opening tail outweighs the closing scrap.
+t, notes, key, hit = select_container_text(HANDOFF, UNITS, [2, 3, 4], {2: 14, 3: 32, 4: 4})
+check("three units take the HEAVIEST adjacent pair", key == "2-3", key)
+check("three units get that pair's text", (t, notes) == ("Joint 23", "Pair note 23"), (t, notes))
 
-t, notes, key, hit = select_container_text(HANDOFF, UNITS, [1, 2, 3, 4])
-check("four units take the last pair too", key == "3-4" and t == "Joint 34", (key, t))
+# P2 of the same plan — here the heaviest pair IS the last one; the old rule was right.
+t, notes, key, hit = select_container_text(HANDOFF, UNITS, [2, 3, 4], {2: 9, 3: 26, 4: 15})
+check("heaviest pair agrees with the last pair when it should", key == "3-4", key)
+
+t, notes, key, hit = select_container_text(HANDOFF, UNITS, [1, 2, 3, 4], {1: 4, 2: 6, 3: 20, 4: 20})
+check("four units weigh every adjacent pair", key == "3-4" and t == "Joint 34", (key, t))
+
+check("a tie goes to the later pair", heaviest_pair([1, 2, 3], {1: 10, 2: 10, 3: 10}) == (2, 3),
+      heaviest_pair([1, 2, 3], {1: 10, 2: 10, 3: 10}))
+check("the heaviest pair is always adjacent and in order",
+      heaviest_pair([5, 6, 7, 8], {5: 30, 6: 2, 7: 2, 8: 25}) == (5, 6),
+      heaviest_pair([5, 6, 7, 8], {5: 30, 6: 2, 7: 2, 8: 25}))
+check("no minutes supplied -> the old last-pair behaviour",
+      select_container_text(HANDOFF, UNITS, [2, 3, 4])[2] == "3-4")
+check("a two-unit sitting is unaffected by minutes",
+      select_container_text(HANDOFF, UNITS, [2, 3], {2: 1, 3: 49})[2] == "2-3")
 
 # ── degraded path: a canonical with no Rule-16 table still yields a plan ───────
 t, notes, key, hit = select_container_text({}, UNITS, [2, 3])
