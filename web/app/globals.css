@@ -2379,17 +2379,37 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* accordion */
 .tp-sub { background: var(--paper-2); border: 1px solid var(--line-soft); border-radius: 12px; margin-bottom: 10px; }
-.tp-sub.open { border-color: var(--line); }
 .tp-sub-hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; border-radius: 12px; }
 .tp-sub-hd:hover { background: var(--tint-cream); }
-/* the open subject's header stays pinned just under the frozen top block while its classes scroll */
-.tp-sub.open > .tp-sub-hd { position: sticky; top: var(--tp-sub-top, 200px); z-index: 4; background: var(--paper-2); border-radius: 12px 12px 0 0; }
+/* The open subject's header stays pinned just under the frozen top block while its classes
+ * scroll. It also has to READ as the header of what follows, not as one more card in the
+ * stack: on a white sheet a white header sitting directly on white class cards left the
+ * subject name and its classes looking like one undifferentiated block (founder, 2026-07-29).
+ * So the open row ALONE takes a tinted band + clay spine + a ruled edge under it — the class
+ * cards keep --paper-2, and the boundary between "which subject" and "its classes" is drawn.
+ * Everything here is a semantic token, so the same separation survives the dark flip. */
+.tp-sub.open { border-color: var(--edge-green); }
+.tp-sub.open > .tp-sub-hd {
+  position: sticky; top: var(--tp-sub-top, 200px); z-index: 4;
+  background: var(--tint-pine); border-radius: 12px 12px 0 0;
+  padding-left: 17px;                              /* room for the spine */
+  border-bottom: 1px solid var(--edge-green);
+  box-shadow: 0 6px 12px -10px rgba(0, 0, 0, .45);
+}
+.tp-sub.open > .tp-sub-hd::before {
+  content: ""; position: absolute; left: 0; top: 13px; bottom: 13px;
+  width: 3px; border-radius: 0 3px 3px 0; background: var(--clay);
+}
+.tp-sub.open > .tp-sub-hd:hover { background: var(--tint-pine); }
 .tp-sub-name { font-family: var(--f-display); font-weight: 600; font-size: 17px; color: var(--ink); }
+.tp-sub.open > .tp-sub-hd .tp-sub-name { color: var(--pine-d); }
 .tp-sub-left { display: flex; align-items: center; gap: 8px; }
 .tp-sub-side { display: flex; align-items: center; gap: 10px; }
 .tp-sub-count { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-soft); }
 .tp-sub-ppw { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em; color: var(--pine-d); white-space: nowrap; }
-.tp-caret { font-size: 12px; color: var(--ink-soft); }
+/* plain glyph, just a size up from the old 12px so the "this row opens" cue is legible */
+.tp-caret { font-size: 15px; line-height: 1; color: var(--ink-soft); flex-shrink: 0; }
+.tp-sub.open .tp-caret { color: var(--pine-d); }
 
 /* class block inside the open subject */
 .tp-grade { padding: 10px 14px 12px; border-top: 1px solid var(--line-soft); }
@@ -2410,6 +2430,8 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* rich class card inside the open subject */
 .tp-classcard { padding: 12px 14px 16px; border-top: 1px solid var(--line-soft); }
+/* the open header already rules its own bottom edge — the first class card must not double it */
+.tp-sub.open > .tp-sub-hd + .tp-classcard { border-top: none; }
 .tp-cc-hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
 .tp-cc-name { font-family: var(--f-display); font-weight: 500; font-size: 15px; color: var(--pine-d); white-space: nowrap; }
 .tp-cc-left { display: flex; align-items: center; gap: 8px; }

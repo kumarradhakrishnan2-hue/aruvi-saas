@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods,
-         SEAM_POLISH_ENABLED } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
 
@@ -51,17 +50,16 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
    * For these, Prepare runs the DETERMINISTIC path: the teacher's duration rows go to
    * POST /genon/{subject}/{grade}/{ch}/plan, the server partitions the certified canonical
    * in milliseconds (no LLM), saves + registers the plan, and it pops up in My Lessons.
-   * `rows` is the duration matrix [{duration, count}]. The tier-1 seam polish is NO LONGER a
-   * teacher-facing choice (founder, 2026-07-26): every run is polished, so what she gets is
-   * always the finished article. The cost of that is contained by the server's cache — a repeat
-   * of the same (chapter × matrix) is served from disk without spending polish tokens again, and
-   * a matrix equal to the canonical's own returns the certified plan untouched. */
+   * `rows` is the duration matrix [{duration, count}]. The seam-polish path was REMOVED at
+   * test-campaign step 0 (docs/testing.md §2, 2026-07-29): every run is a pure partition,
+   * deterministic and free. A repeat of the same (chapter × matrix) is served from the disk
+   * cache, and a matrix equal to the canonical's own returns the certified plan untouched. */
   const [genonChs, setGenonChs] = useState([]);            // chapter numbers with a canonical
   const [canonMinutes, setCanonMinutes] = useState({});    // {chapter: canonical total minutes}
-  // A polished adaptation is a ~1-2 minute paid call. Without a hard guard a second click
-  // fires a SECOND request: on 2026-07-26 that cost a full duplicate polish (Rs. 12.73)
-  // whose plan was never even saved. The ref blocks re-entry even if a click slips past
-  // the disabled button (modal path, keyboard, double-fire).
+  // Re-entry guard, kept although a partition is free and instant: a second click during
+  // an in-flight request would still double-register and can race the preview swap. The
+  // ref blocks re-entry even if a click slips past the disabled button (modal path,
+  // keyboard, double-fire).
   const inFlight = useRef(false);
   const [syllabusW, setSyllabusW] = useState(null);        // FULL syllabus weight (master plan)
 
@@ -266,7 +264,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       setBusy(true); setError(""); setNote("");
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
-          { rows: matrix, polish: SEAM_POLISH_ENABLED });
+          { rows: matrix });
         if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
         // No return handler → show the freshly adapted plan.
         setStep("preview");
@@ -429,9 +427,8 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
             </button>
             {busy
               ? <span className="savebar-hint" aria-live="polite">
-                  {/* Seam polish is OFF (format.SEAM_POLISH_ENABLED), so a genon build is a pure
-                      partition — milliseconds. No wait warning is warranted; restore one here if
-                      the polish switch is ever reopened. */}
+                  {/* A genon build is a pure partition — milliseconds. No wait warning
+                      is warranted (the seam-polish path was removed at campaign step 0). */}
                   Working on it…
                 </span>
               : !chosen

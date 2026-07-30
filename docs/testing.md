@@ -24,13 +24,19 @@ amendments in `MEMORY.md` §"★ AMENDMENTS TO BE TESTED" against live generatio
 
 | Subject | Stage: preparatory (III–V) | middle (VI–VIII) | secondary (IX) | Chapters |
 |---|---|---|---|---|
-| english | iii, iv, v | vi, vii, viii | ix | 103 |
-| mathematics | iii, iv, v | vi, vii, viii | ix | 90 |
+| english | iii, iv, v | vi, vii, viii | ix | 101 |
+| mathematics | iii, iv, v | vi, vii, viii | ix | 98 |
 | science | — | vi, vii, viii | ix | 50 |
-| social_sciences | — | vi, vii, viii | ix | 42 |
+| social_sciences | — | vi, vii, viii | ix | 49 |
 | the_world_around_us | iii, iv, v | — | — | 32 |
 
-Chapter counts are as recorded 2026-07-28; step 0.6 re-verifies them before the sweep.
+Chapter counts **corrected at step 0.6 (2026-07-29)** by counting `*_mapping.json` under
+`data/content/chapters/<subject>/<grade>/mappings/` — total **330**, vs the ~317 the
+authoring prompt carried (english 101 not 103; mathematics 98 not 90; social_sciences 49
+not 42; science and TWAU unchanged). Per-grade: english 17/12/10/16/15/15/16, mathematics
+14/14/15/10/15/14/16, science 12/12/13/13, SS 14/12/14/9, TWAU 12/10/10. Class X confirmed
+absent everywhere. One flag: mathematics/ix has 16 mappings but only 8 `*_summary.json`
+files — reconcile before that combo's C1 (chapters without a summary cannot run the chain).
 
 **Out of scope.**
 - **Class X** — maps to secondary in `aruvi_core/grades.py` but has no content in any
@@ -81,10 +87,11 @@ include in `api/main.py`; open `docs/testing_tracker.html` (or `GET /api/testing
 against the running API. **Exit:** a tick made in the browser survives an API restart
 (state at `data/testing/campaign_state.json`). **Artefact:** the state file.
 
-**0.5 [Kumar] Provision the two test identities.** `Kumar1` and `Kumar23` (sent as
-`X-Aruvi-User`; tenant_id == user_id). Each gets a readiness profile covering the subjects
-under test. **Exit:** `GET /readiness` with each header returns `ready: true` and the two
-profiles differ. **Artefact:** the two readiness JSONs.
+**0.5 [Kumar] Provision the three test identities.** `kumar1`, `kumar2` and `kumar3`
+(sent as `X-Aruvi-User`; tenant_id == user_id; all-lowercase is the standard — the local
+filesystem is case-insensitive, so mixed-case variants would collide). Each gets a
+readiness profile covering the subjects under test. **Exit:** `GET /readiness` with each
+header returns `ready: true`. **Artefact:** the three readiness JSONs.
 
 **0.6 [Claude] Re-verify the matrix.** Count chapters per combo from
 `data/content/chapters/<subject>/<grade>/summaries/` (or mappings) and confirm the 25 combos
@@ -186,8 +193,9 @@ with ≥3 sections); C1–C4 may additionally be run on more chapters when pre-w
 certification is on the cycle chapter. Record the chapter number in the tracker.
 
 All API calls: base `http://localhost:8000`, identity via `X-Aruvi-User`. The five partition
-runs (C5) split across identities: **Kumar1 runs two, Kumar23 runs three** — this is what
-makes C10/X1 meaningful. Record which ran which.
+runs (C5/C6) split across identities as the standard: **kumar1 runs 115% and 100%
+(identity); kumar2 runs 75% and 55%; kumar3 runs 85% — as the mixed-duration weekly matrix
+(C6)** — this is what makes C10/X1 meaningful.
 
 **C1 [Kumar] Generate the chain.** Run the chapter pipeline (summary → competency mapping),
 then the LP canonical, then the assessment, under the stage's amended constitutions. Install
@@ -238,27 +246,27 @@ MEMORY.md.
 the live artefacts; fails become defects. **Artefact:** the item table.
 
 **C5 [Kumar] The five partitions.** Let the canonical be N periods × D minutes (canonical
-minutes M = N·D). Run `POST /genon/{subject}/{grade}/{ch}/plan` with uniform matrices at D
-minutes and counts `round(p·N)` for p = **115%, 100%, 85%, 75%, 55%** — one per compression
-regime plus identity:
+minutes M = N·D). Run `POST /genon/{subject}/{grade}/{ch}/plan` five times at ~**115%,
+100%, 85%, 75%, 55%** of M — one per compression regime plus identity. The standard
+identity split and shapes:
 
-| % | Expected regime (`genon.compression.regime`) |
-|---|---|
-| 115 | stretch (ratio > 1.0) |
-| 100 | **identity** — separate route: response `identity: true`, the canonical's own
-filename, **no new file saved** |
-| 85 | rescale (0.8–1.0) |
-| 75 | role-weighted (0.6–0.8; `DEV_PACE_FLOOR` 0.8) |
-| 55 | unit-drop (below `COVERAGE_FLOOR` 0.6) — must populate `section_coverage_note` |
+| % | Identity | Matrix shape | Expected regime (`genon.compression.regime`) |
+|---|---|---|---|
+| 115 | kumar1 | uniform at D, count `round(1.15·N)` | stretch (ratio > 1.0) |
+| 100 | kumar1 | exactly the canonical's own row (N × D) | **identity** — separate route: response `identity: true`, the canonical's own filename, **no new file saved** |
+| 85 | kumar3 | **the C6 mixed-duration weekly mix** (below), total minutes ≈ 0.85·M | rescale (0.8–1.0) |
+| 75 | kumar2 | uniform at D, count `round(0.75·N)` | role-weighted (0.6–0.8; `DEV_PACE_FLOOR` 0.8) |
+| 55 | kumar2 | uniform at D, count `round(0.55·N)` | unit-drop (below `COVERAGE_FLOOR` 0.6) — must populate `section_coverage_note` |
 
-Two runs from `Kumar1`, three from `Kumar23` (record which). **Exit:** five 200-responses;
-each reports the expected regime; identity saved no copy; the other four wrote
-`ch_NN_<matrix>_e07_c<ver>.json` files. **Artefact:** the five responses + four files.
+**Exit:** five 200-responses; each reports the expected regime; identity saved no copy; the
+other four wrote `ch_NN_<matrix>_e07_c<ver>.json` files. **Artefact:** the five responses +
+four files.
 
-**C6 [Kumar] Mixed-duration matrix.** At least one realistic weekly mix for this class among
-the five budgets (e.g. VIII: 45-min standard + one/two longer periods; pick a real timetable
-ratio and record it). **Exit:** 200; file written; ratio and regime recorded.
-**Artefact:** response + file.
+**C6 [Kumar as kumar3] Mixed-duration matrix — the 85% run.** A realistic weekly mix for
+this class whose total minutes land the ratio in 0.8–1.0 (e.g. VIII: 45-min standard rows +
+one/two longer periods in a real timetable ratio; record the mix). This run doubles as
+C5's rescale row and is the plan C7.5 (weekly ordering) and C12 (exports) inspect.
+**Exit:** 200; file written; mix, ratio and regime recorded. **Artefact:** response + file.
 
 **C7 [Claude] Partition compliance.** On the C5/C6 plan files:
 1. **Tiling** — in every sitting, band minutes sum exactly to the sitting's duration.
@@ -337,19 +345,20 @@ defects either closed or accepted-with-owner. The combo row turns green.
 
 ## 5. Cross-cutting checklist (run once; re-run on any material change)
 
-**X1 [both] Tenancy, every surface built so far.** With `Kumar1` and `Kumar23` (each having
+**X1 [both] Tenancy, every surface built so far.** With `kumar1`, `kumar2` and `kumar3`
+(each having
 run their C5 share):
 1. `GET /plans-prepared` — each sees exactly the keys they created; no overlap beyond plans
    both prepared.
-2. `GET /plan-archive` + archive/restore — Kumar1 archives a plan; Kumar23's listing is
+2. `GET /plan-archive` + archive/restore — kumar1 archives a plan; kumar2's listing is
    unaffected; restore returns it; `GET /plans/{s}/{g}` shows per-caller `archived` flags.
-3. `GET/POST/DELETE /section-state` — progress + bookmark isolated per user; Kumar23 never
-   sees Kumar1's bookmark.
+3. `GET/POST/DELETE /section-state` — progress + bookmark isolated per user; kumar2 never
+   sees kumar1's bookmark.
 4. `GET /readiness` — the two profiles stay distinct; the 409-cascade guard fires for a
    destructive edit and cascades only with `cascade: true`.
 5. Allocation — `save_allocation` / `GET allocation` / `DELETE` isolated per user for the
    same subject·grade.
-6. **The authorization case, not just visibility:** as Kumar23, fetch a plan only Kumar1
+6. **The authorization case, not just visibility:** as kumar2, fetch a plan only kumar1
    prepared, by filename: `GET /plans/{s}/{g}/{filename}/view` and the three export routes.
    These take a filename and do not consult the prepared-plans register. **Expected under
    the current design:** the fetch succeeds — plan files are shared Bucket-A content and

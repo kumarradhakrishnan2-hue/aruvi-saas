@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, SEAM_POLISH_ENABLED } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
 import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, setPpwSplit,
          setPpwTotal, lowestDuration, DEFAULT_PPW } from "./wheels";
@@ -428,7 +428,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       if (genonAvailable) {
         try {
           const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
-            { rows: [{ duration: durationMin, count: periods }], polish: SEAM_POLISH_ENABLED });
+            { rows: [{ duration: durationMin, count: periods }] });
           const viewRes = await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`);
           setPreviewView(viewRes.view);
           setPreviewPlanFile(resp.filename);
@@ -576,8 +576,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       <div className="fr-wrap">
         <Brand />
         <div className="fr-step-body">
-          {/* Seam polish is OFF (format.SEAM_POLISH_ENABLED) — a genon build is a pure partition,
-              so there is nothing to warn her about. Restore the wait note if it is reopened. */}
+          {/* A genon build is a pure partition (the seam-polish path was removed at campaign
+              step 0), so there is nothing to warn her about. */}
           {previewBusy && <div className="fr-loading">Building your lesson plan…</div>}
           {!previewBusy && previewError && <div className="empty">{previewError}</div>}
           {!previewBusy && !previewError && previewView && (

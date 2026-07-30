@@ -83,15 +83,9 @@ export async function getJSON(path, opts) {
 /* POST a JSON body and parse the JSON response (X-Aruvi-User attached like getJSON).
  * Added for the genon adaptation endpoint (PrepareLesson → POST /genon/.../plan); generic
  * on purpose — any future JSON POST should use this instead of hand-rolling fetch. */
-/* ───────── SEAM POLISH KILL-SWITCH (founder, 2026-07-26) ─────────
- * OFF across the board until the founder says otherwise. Every teacher-facing generation is a
- * PURE PARTITION of the certified canonical: deterministic, instant, and free. Flip this to true
- * to bring the tier-1 LLM seam pass back — it is the single client-side switch, imported by both
- * PrepareLesson and FirstRun, so neither can drift from the other.
- * NOTE the server carries its own independent gate (api/main.py, ARUVI_SEAM_POLISH) — flipping
- * this alone will NOT spend tokens until that one is opened too. Two switches on purpose: this
- * one is a UI default, that one is the money. */
-export const SEAM_POLISH_ENABLED = false;
+/* NOTE (test campaign step 0, docs/testing.md §2, 2026-07-29): the seam-polish path —
+ * SEAM_POLISH_ENABLED here and the ARUVI_SEAM_POLISH server gate — was REMOVED, not
+ * merely off. Every generation is a pure partition of the certified canonical. */
 
 export async function postJSON(path, body) {
   const r = await fetch(API + path, withUser({

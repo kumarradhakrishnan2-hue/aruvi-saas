@@ -5,7 +5,8 @@ Guards:
   1. matrix normalisation — 17x50 and 10x50+7x50 and 7x50+10x50 all key the same,
      so a teacher never misses her own entry because of how she typed the rows;
   2. every key component actually changes the key (chapter, matrix, canonical
-     version, engine version, polished flag);
+     version, engine version) — the polished flag was removed with the polish
+     path at test-campaign step 0 (docs/testing.md §2, 2026-07-29);
   3. regenerating the canonical yields a NEW key — an existing plan is never
      silently overwritten under a teacher mid-chapter;
   4. save -> load round trip with an explicit filename (the cache fill + hit),
@@ -37,7 +38,7 @@ def check(label, cond, detail=""):
 
 CANON = {"genon_canonical": {"ledger_ts": "20260726_112240"},
          "result": {"lesson_plan": {"periods": []}}}
-key = lambda ch, m, c=CANON, p=False: data.genon_plan_filename(ch, m, c, p)
+key = lambda ch, m, c=CANON: data.genon_plan_filename(ch, m, c)
 
 # ── 1. matrix normalisation ─────────────────────────────────────────────────
 k17 = key(5, [(50, 17)])
@@ -49,14 +50,13 @@ check("longest duration leads the label", "40m10-30m4" in key(5, [(30, 4), (40, 
       key(5, [(30, 4), (40, 10)]))
 check("zero/negative rows are ignored",
       key(5, [(50, 17), (0, 9), (45, 0)]) == k17)
-check("readable shape", k17 == "ch_05_50m17_e06_c20260726112240.json", k17)
+check("readable shape", k17 == "ch_05_50m17_e07_c20260726112240.json", k17)
 
 # ── 2. every component moves the key ───────────────────────────────────────
 check("chapter changes the key", key(6, [(50, 17)]) != k17)
 check("period count changes the key", key(5, [(50, 16)]) != k17)
 check("duration changes the key", key(5, [(45, 17)]) != k17)
-check("polish flag changes the key", key(5, [(50, 17)], CANON, True) != k17)
-check("polished suffix is explicit", key(5, [(50, 17)], CANON, True).endswith("_p.json"))
+check("no _p variant exists any more", not k17.endswith("_p.json"), k17)
 
 # ── 3. canonical identity ──────────────────────────────────────────────────
 other = {"genon_canonical": {"ledger_ts": "20260726_183000"}, "result": CANON["result"]}
@@ -73,10 +73,10 @@ live = data.load_genon_canonical("social_sciences", "ix", 5)
 if live is None:
     print("SKIP  live-canonical checks (no ch 5 canonical on disk)")
 else:
-    lk = data.genon_plan_filename(5, [(50, 16)], live, True)
-    check("live canonical keys cleanly", lk.startswith("ch_05_50m16_e06_c") and lk.endswith("_p.json"), lk)
+    lk = data.genon_plan_filename(5, [(50, 16)], live)
+    check("live canonical keys cleanly", lk.startswith("ch_05_50m16_e07_c") and lk.endswith(".json"), lk)
     check("key is deterministic across calls",
-          lk == data.genon_plan_filename(5, [(50, 16)], live, True))
+          lk == data.genon_plan_filename(5, [(50, 16)], live))
 
     with tempfile.TemporaryDirectory() as tmp:
         real = data.DATA_DIR

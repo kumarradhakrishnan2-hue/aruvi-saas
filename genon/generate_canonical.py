@@ -142,6 +142,78 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
     return problems[:40]
 
 
+def const_version(path) -> str:
+    """The VERSION number from a constitution's first line, e.g. '1.5'."""
+    try:
+        import re
+        first = Path(path).read_text(encoding="utf-8").splitlines()[0]
+        m = re.search(r"VERSION\s+([\d.]+)", first)
+        return m.group(1) if m else "?"
+    except Exception:
+        return "?"
+
+
+def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: int,
+                      ts: str, duration: int, count: int, const_label: str,
+                      status: str, problems: list[str]) -> Path:
+    """Drop the generated canonical STRAIGHT into the saved-plans library, wrapped in
+    the saved-plan shape the API reads (mirrors ch_05_canonical.json) — the live
+    environment has no certification gate, so genon/out and the library are written
+    simultaneously (founder decision, 2026-07-29). The validator still RUNS and its
+    findings ride along in genon_canonical.validation + the ledger; they are review
+    input (testing.md C3), never a block. A pre-existing canonical is archived to
+    backup/saved_plans/ (never deleted) — its ledger_ts keys retire with it."""
+    lib = REPO / "data" / "content" / "saved_plans" / subject_folder / grade_folder
+    lib.mkdir(parents=True, exist_ok=True)
+    fname = f"ch_{ch:02d}_canonical.json"
+    dest = lib / fname
+    if dest.exists():
+        bdir = REPO / "backup" / "saved_plans" / subject_folder / grade_folder
+        bdir.mkdir(parents=True, exist_ok=True)
+        try:
+            old_ts = (json.loads(dest.read_text(encoding="utf-8"))
+                      .get("genon_canonical") or {}).get("ledger_ts") or "unknown"
+        except Exception:
+            old_ts = "unparsed"
+        dest.replace(bdir / f"ch_{ch:02d}_canonical_{old_ts}.json")
+    total = duration * count
+    doc = {
+        "filename": fname,
+        "saved_at": datetime.now().isoformat(timespec="seconds"),
+        "plan_status": "canonical",
+        "chapter_number": ch,
+        "chapter_title": parsed.get("chapter_title", ""),
+        "grade": parsed.get("grade") or f"Grade {ROMAN[grade_folder]}",
+        "subject": parsed.get("subject") or FOLDER_TO_SUBJECT[subject_folder],
+        "period_rows_snapshot": [{"id": 0, "duration": duration, "count": count}],
+        "period_schedule_display": (f"Period schedule:\n  Row 1: {duration} minutes × "
+                                    f"{count} periods = {total} minutes\n"
+                                    f"Total: {count} periods · {total // 60}h {total % 60}min"),
+        "genon_canonical": {
+            "generated": datetime.now().strftime("%Y-%m-%d"),
+            "schedule": f"{count}x{duration}",
+            "constitution": const_label,
+            "source": f"generate_canonical.py one {subject_folder} {grade_folder} {ch}",
+            "ledger_ts": ts,
+            "validation": ("clean" if status == "ok" else
+                           f"{len(problems)} problem(s) — see genon/ledger.csv {ts}; "
+                           f"review input for testing.md C3, not a block"),
+        },
+        "result": {
+            "lesson_plan": parsed.get("lesson_plan", {}),
+            "period_schedule": parsed.get("period_schedule"),
+            "coverage_handoff": parsed.get("coverage_handoff", {}),
+            "role_handoff": parsed.get("role_handoff", {}),
+            "unit_handoff": parsed.get("unit_handoff", {}),
+            "assessment_items": parsed.get("assessment_items", []) or [],
+            "competency_gap_note": parsed.get("competency_gap_note", ""),
+            "section_coverage_note": parsed.get("section_coverage_note"),
+        },
+    }
+    dest.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    return dest
+
+
 def log_ledger(row: dict) -> None:
     new = not LEDGER.exists()
     with LEDGER.open("a", newline="", encoding="utf-8") as f:
@@ -212,6 +284,9 @@ def cmd_one(args) -> int:
 
     lp_text = Path(paths["lp_constitution"]).read_text(encoding="utf-8")
     expect_v11 = "RULE 14" in lp_text
+    lp_v = const_version(paths["lp_constitution"])
+    as_v = "" if args.lp_only else const_version(paths["assessment_const"])
+    const_label = f"LP v{lp_v}" + (f" / assessment v{as_v}" if as_v else " (LP only)")
     sys_chars = sum(len(b["text"]) for b in system_blocks)
     usr_chars = sum(len(b["text"]) for b in user_blocks)
     print(f"{subject} · {grade} · ch {ch} — {count} × {duration} min "
@@ -321,6 +396,15 @@ def cmd_one(args) -> int:
         canon_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_canonical.json"
         canon_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"  saved    : {canon_path}")
+        # Simultaneous install into the live library (founder, 2026-07-29): the live
+        # environment has no certification gate. Skipped for --lp-only (incomplete
+        # artefact), --tag (control runs must not touch the library), --no-install.
+        if not args.lp_only and not args.tag and not args.no_install:
+            installed = install_canonical(parsed, subject_folder, grade_folder, ch,
+                                          ts, duration, count, const_label,
+                                          status, problems)
+            print(f"  installed: {installed}"
+                  + ("" if status == "ok" else "  (validator findings recorded, not blocking)"))
     print(f"  tokens   : {it:,} in / {ot:,} out · ₹{cost_inr:.2f} · {elapsed:.1f}s · {status}")
     for p in problems:
         print(f"  ⚠ {p}")
@@ -331,7 +415,7 @@ def cmd_one(args) -> int:
         "ts": ts, "mode": "one", "tag": args.tag or "", "model": args.model,
         "subject": subject_folder, "grade": grade_folder, "chapter": ch,
         "schedule": f"{count}x{duration}", "lp_only": args.lp_only,
-        "constitution": "v1.1" if expect_v11 else "pre-genon",
+        "constitution": const_label,
         "input_tokens": it, "output_tokens": ot,
         "cost_inr": round(cost_inr, 2), "seconds": round(elapsed, 1),
         "status": status, "problems": "; ".join(repair_note + problems)[:400],
@@ -355,6 +439,8 @@ def main() -> int:
     one.add_argument("--assess-const", help="override assessment constitution path")
     one.add_argument("--model", default=GENERATION_MODEL)
     one.add_argument("--tag", help="filename/ledger tag, e.g. control_v10")
+    one.add_argument("--no-install", action="store_true",
+                     help="write genon/out only; skip the simultaneous library install")
     one.add_argument("--dry", action="store_true", help="assemble + dump prompt, no API call")
     one.set_defaults(fn=cmd_one)
     args = ap.parse_args()

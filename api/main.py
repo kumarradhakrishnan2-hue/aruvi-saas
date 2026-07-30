@@ -11,7 +11,6 @@ Data comes from local disk (api/data.py) for now; live generation and the DB com
 """
 from __future__ import annotations
 
-import os
 from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -45,13 +44,6 @@ app = FastAPI(title="Aruvi API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
-
-# ── Test-campaign tracker (docs/testing.md §6a) ─────────────────────────────────
-# Campaign tick-offs / comments / defects persisted in Aruvi itself
-# (data/testing/campaign_state.json); UI at docs/testing_tracker.html or
-# GET /api/testing/tracker. Campaign tooling only — no teacher-facing surface.
-from .testing_campaign import router as _testing_router  # noqa: E402
-app.include_router(_testing_router)
 
 # Initialize the allocation repository. The allocation register is per-user/tenant STATE
 # (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/allocations/) — NOT the read-only
@@ -815,27 +807,17 @@ def generate(subject: str, grade: str) -> JSONResponse:
 # compiled once into a phase stream (Bucket-A content, api/data.py). A teacher's
 # duration matrix partitions that stream in milliseconds — no LLM, Rs. 0 — into a
 # saved plan registered to HER prepared-plans list, so it appears in My Lessons
-# like any generated lesson. Optional tier-1 seam polish is the only LLM step.
+# like any generated lesson. There is NO LLM anywhere in this path: the seam-polish
+# option was REMOVED at test-campaign step 0 (docs/testing.md §2, 2026-07-29) — every
+# teacher-facing generation is a pure partition of the certified canonical.
 
 class GenonRowInput(BaseModel):
     duration: int          # minutes per period
     count: int             # how many periods of this duration
 
 
-# ── SEAM POLISH KILL-SWITCH (founder, 2026-07-26) ─────────────────────────────────────────
-# OFF across the board until the founder reopens it: every teacher-facing generation is a PURE
-# PARTITION of the certified canonical — deterministic, instant, free. This is the SERVER gate and
-# it is the one that guards the money: a request may still ask for polish (a stale browser tab, a
-# curl, a test), and it is refused here regardless. The UI has its own switch
-# (web/app/lib/format.js SEAM_POLISH_ENABLED); BOTH must be opened to spend a rupee.
-# To reopen server-side: set ARUVI_SEAM_POLISH=1 in the API environment.
-def _seam_polish_allowed() -> bool:
-    return os.environ.get("ARUVI_SEAM_POLISH", "").strip().lower() in ("1", "true", "yes", "on")
-
-
 class GenonPlanRequest(BaseModel):
     rows: List[GenonRowInput]
-    polish: bool = False   # tier-1 LLM seam polish (needs ANTHROPIC_API_KEY server-side)
 
 
 @app.get("/genon/{subject}/{grade}/chapters")
@@ -861,7 +843,6 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     adapted plan, and register it as prepared for this teacher (it pops up in My Lessons)."""
     from aruvi_core.genon import build_plan, GenonDeclarationError
     from aruvi_core.genon.partition import PartitionError
-    from aruvi_core.genon.polish import run_polish
 
     _subject(subject)
     tenant_id, user_id = identity
@@ -899,16 +880,14 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             "chapter_title": canonical.get("chapter_title"),
             "periods": total_periods,
             "compression": {"ratio": 1.0, "regime": "canonical"},
-            "seam_periods": [], "coverage_note": None, "polish": None,
+            "seam_periods": [], "coverage_note": None,
         }
 
     # ── the plan is a CACHE ENTRY, addressed by what determines its bytes ──────────
-    # (chapter, normalised matrix, canonical version, engine version, polished). A hit
-    # is served without partitioning and — the point — without spending polish tokens
-    # again; it also makes an accidental double-click free instead of paying twice for
-    # the same 100-second call. Per-teacher visibility still comes from the register.
-    filename = data.genon_plan_filename(chapter_number, matrix, canonical,
-                                        bool(req.polish) and _seam_polish_allowed())
+    # (chapter, normalised matrix, canonical version, engine version). A hit is
+    # served without partitioning; an accidental double-click is free. Per-teacher
+    # visibility still comes from the register.
+    filename = data.genon_plan_filename(chapter_number, matrix, canonical)
     hit = data.load_saved_plan(subject, grade, filename)
     if hit is not None:
         try:
@@ -926,7 +905,6 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             "compression": hg.get("compression"),
             "seam_periods": hg.get("mid_unit_openings") or [],
             "coverage_note": (hit.get("result") or {}).get("section_coverage_note"),
-            "polish": hg.get("seam_polish"),
         }
 
     try:
@@ -938,23 +916,6 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         raise HTTPException(status_code=500, detail=f"Canonical cannot be compiled: {e}")
     except PartitionError as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-    polish_info = None
-    # Honour the kill-switch BEFORE anything is spent. `want_polish` also feeds the cache key
-    # below, so a polish-off run addresses the unpolished artefact and never serves, or
-    # overwrites, a polished one.
-    want_polish = bool(req.polish) and _seam_polish_allowed()
-    if want_polish:
-        try:
-            polish_info = run_polish(plan)      # in-place; container text only
-            if polish_info.get("input_tokens"):  # paid run → founder's cost notebook
-                data.append_token_log("seam_polish", subject, grade, chapter_number,
-                                      plan.get("chapter_title", ""),
-                                      polish_info["input_tokens"],
-                                      polish_info["output_tokens"],
-                                      polish_info.get("cost_inr", 0))
-        except Exception as e:                  # polish is an enhancement, never a blocker
-            polish_info = {"skipped": True, "reason": str(e)}
 
     data.save_generated_plan(subject, grade, plan, filename=filename)
     key = _plan_key(subject, grade, filename)
@@ -974,7 +935,6 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         "compression": g["compression"],
         "seam_periods": g["mid_unit_openings"],
         "coverage_note": plan["result"].get("section_coverage_note"),
-        "polish": polish_info,
     }
 
 

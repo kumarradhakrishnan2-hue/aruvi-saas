@@ -1,4 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.5
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.7
 
 VOCABULARY
 The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -204,9 +204,9 @@ After the lesson plan, the coverage handoff, and the role handoff are complete, 
 
 A teacher's timetable cuts this plan into sittings that do not align with its units, so a sitting will often carry the closing stretch of one unit and the opening stretch of the next — and where the budget is tight, parts of three or more. Each entry is the container text for one such joint, written here, where both units are fully in view: their bands, notes, section anchors, and the chapter summary. The platform selects an entry; it never composes one, so each must stand alone.
 
-Each entry carries two fields:
-- title — what the two units are jointly about: the single object of study that spans them, named as a teacher would name that sitting. Under 70 characters where that costs nothing.
+Each entry carries two fields, authored and emitted in this order:
 - teacher_notes — one flowing note, at most 90 words, in the register of Rule 10. It opens by naming the content the sitting pivots on (the move from the one body of material to the other), then carries each unit's own named confusion, then at most one facilitation pointer. Everything in it comes from the two units' own text.
+- title — DERIVED, never invented: the note's opening pivot restated as one noun phrase, under 70 characters where that costs nothing. Author it after the note, from the note: a reader must be able to find the title inside the note's first sentence, and a title that cannot be read back out of the note has failed. The note is the synthesis; the title is its compression. Where the pivot's content is plural, the title names its COLLECTIVE, never the list — "the five weather elements", "household carbon habits", "the floods' human causes" — an enumeration carrying joiners inside the title fails exactly as a splice of the two units does.
 
 PROHIBITION
 1. MUST NOT miss the shared object, in either direction. NOT BY SPLICING: conjunctions and joiners are banned outright — "and", "&", "with", ", then", "into", "plus", a slash, or a dash used to splice two labels — and a title reconstructable by concatenating the two source titles has failed. NOT BY ABSTRACTION either: refusing the conjunction is not licence to name nothing, and "Who Could Take Part" or "What Surplus Made Possible" fail as surely as a splice does. The title MUST name at least one concrete element the two units actually teach — a place, source, institution, text, or term — wherever the shared object admits one.
@@ -244,7 +244,7 @@ period_schedule: exactly one row — the class-standard duration × count (INPUT
   "section_coverage_note": "string | null — present only under a Rule 4 budget shortfall; else null",
   "coverage_handoff": { "...": "per Amendment A2 — required sibling of lesson_plan" },
   "role_handoff": { "P<unit>.<n>": "hook | development | consolidation — one entry per band, in plan order (Rule 15)" },
-  "unit_handoff": { "<n>-<n+1>": { "title": "string — the two units' shared object of study, never a join of their titles", "teacher_notes": "string — one note, ≤90 words, Rule 10 register" } },
+  "unit_handoff": { "<n>-<n+1>": { "teacher_notes": "string — one note, ≤90 words, Rule 10 register; opens by naming the pivot", "title": "string — emitted AFTER teacher_notes and derived from its opening pivot: one noun phrase, readable back out of the note's first sentence; never a join of the two units' titles" } },
   "lesson_plan": {
     "periods": [
       {

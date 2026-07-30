@@ -74,6 +74,12 @@
   .provgrid input{width:100%}
   #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1a2332;color:#fff;
          padding:8px 16px;border-radius:8px;opacity:0;transition:opacity .25s;z-index:40;font-size:13px}
+  #tip{position:fixed;display:none;z-index:50;max-width:400px;background:#1a2332;color:#e8edf5;
+       border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.45;box-shadow:0 6px 24px rgba(0,0,0,.3);
+       pointer-events:none}
+  #tip b{color:#fff}
+  #tip .tipexit{display:block;margin-top:6px;padding-top:6px;border-top:1px solid #3a4a63;color:#a8e6b8}
+  th.hh{cursor:help;text-decoration:underline dotted #94a3b8;text-underline-offset:3px}
   .warn{background:var(--blocked-bg);color:var(--blocked);border:1px solid #f5d78e;border-radius:8px;
         padding:8px 12px;margin-bottom:12px;display:none}
   .defsev-S1{color:var(--fail);font-weight:700}.defsev-S2{color:#c2410c;font-weight:700}
@@ -157,6 +163,7 @@
 <div id="ovl" onclick="closeDrawer()"></div>
 <div id="drawer"></div>
 <div id="toast"></div>
+<div id="tip"></div>
 
 <script>
 /* ───────────────────────── checklist definitions (from docs/testing.md) ───────────── */
@@ -165,7 +172,7 @@ const STEP0 = [
  ["0.2","K","Bump GENON_ENGINE_VERSION 06 → 07","api/data.py, dated comment: polish removed, cache-key shape loses the _p variant. All C10 filename assertions use e07.","EXIT: a fresh partition writes a _e07_ file; no new file carries _p."],
  ["0.3","K","Archive the legacy _p file","Move data/content/saved_plans/social_sciences/ix/ch_05_50m16_e03_c20260726112240_p.json → backup/.","EXIT: find data/content/saved_plans -name \"*_p.json\" returns nothing."],
  ["0.4","K","Deploy this tracker","api/testing_campaign.py + 2-line include in api/main.py; open docs/testing_tracker.html against the API.","EXIT: a tick made here survives an API restart (data/testing/campaign_state.json)."],
- ["0.5","K","Provision Kumar1 / Kumar23","Two X-Aruvi-User identities, each with a readiness profile covering the subjects under test.","EXIT: GET /readiness ready:true for both; profiles differ."],
+ ["0.5","K","Provision kumar1 / kumar2 / kumar3","Three X-Aruvi-User identities (all-lowercase standard), each with a readiness profile covering the subjects under test.","EXIT: GET /readiness ready:true for all three."],
  ["0.6","C","Re-verify the 25-combo matrix","Count chapters per combo from data/content/chapters/; confirm ~317 chapters and that class X has no content anywhere.","EXIT: §1 table matches disk, or corrected with a dated note. Artefact: count table (paste in comment)."],
  ["0.7","K","Cost baseline","runtime_data/token_log.csv exists with header; ANTHROPIC_API_KEY present in the generation environment.","EXIT: a test row appends and reads back."],
 ];
@@ -194,8 +201,8 @@ const CSTEPS = [
  ["C2","C","Cost the chain","Per stage (summary/mapping/canonical/assessment): wall s, tokens in/out, cost ₹; chapter total ₹ — the number that prices the ~317-chapter pre-warm. Fill the PROV panel.","EXIT: all 4×4 cells + total recorded; missing cells recorded as missing."],
  ["C3","C","Canonical vs constitution, rule by rule","A table rule# → pass/fail/subjective-pass with quoted evidence — cite rule numbers, never a general impression. Register/tone calls are subjective: say so and quote the strings judged.","EXIT: every rule number appears; every fail becomes a defect."],
  ["C4","C","MEMORY.md 18 amendment items, live","Test each item applicable to this combo (see §4 map; item 6 = closed-by-design under A1 — confirm with founder once).","EXIT: per item pass/fail/n-a-here + one line of live evidence; fails → defects."],
- ["C5","K","The five partitions","Uniform matrices at 115 / 100 / 85 / 75 / 55% of the canonical budget. Expect: stretch · identity:true (no file saved!) · rescale · role-weighted · unit-drop + section_coverage_note. Kumar1 runs two, Kumar23 three — record which.","EXIT: 5×200; regimes as expected; four ch_NN_<matrix>_e07_c<ver>.json files."],
- ["C6","K","Mixed-duration weekly matrix","≥1 realistic weekly mix for this class among the 5 budgets; record the ratio.","EXIT: 200; file written; ratio + regime recorded."],
+ ["C5","K","The five partitions","115 / 100 / 85 / 75 / 55% of the canonical budget — one per regime plus identity. STANDARD SPLIT: kumar1 → 115 (stretch) + 100 (identity:true, no file saved!); kumar2 → 75 (role-weighted) + 55 (unit-drop + section_coverage_note); kumar3 → 85 as the C6 mixed-duration weekly mix (rescale).","EXIT: 5×200; regimes as expected; four ch_NN_<matrix>_e07_c<ver>.json files."],
+ ["C6","K","Mixed-duration weekly matrix — the 85% run (kumar3)","A realistic weekly mix whose total minutes ≈ 85% of canonical (ratio 0.8–1.0, rescale). Doubles as C5's 85% row; C7.5 and C12 inspect this plan. Record the mix.","EXIT: 200; file written; mix, ratio + regime recorded."],
  ["C7","C","Partition compliance","(1) band minutes tile each sitting exactly · (2) unit order preserved · (3) register scan (word-list then judged quotes) on all titles/notes · (4) 55% carries section_coverage_note · (5) C6 week repeats, long periods interior + non-adjacent · (6) 3+-unit sittings in genon.wide_spans, container title names the heaviest pair never a ≤5-min scrap.","EXIT: all six on every file, or defects."],
  ["C8","C","LLM-need flags","Every point where quality begs an LLM call, each with the deterministic alternative to try first.","EXIT: the (possibly empty) list, in the comment."],
  ["C9","C","Assessment anchoring after re-cut","75% + 55% plans: each item's phase_ref resolves to its own unit; an item whose anchor unit dropped at 55% carries its scheduling note, never mis-anchors.","EXIT: zero mis-anchored; dropped-unit items all noted."],
@@ -219,7 +226,7 @@ const COMBOS = [ // suggested execution order (§11); pilot first
  ["english","iii","english/preparatory",""],["english","iv","english/preparatory",""],["english","v","english/preparatory",""],
 ];
 const CROSS = [
- ["X1","B","Tenancy — every surface, plus the authorization case","With Kumar1/Kumar23: (1) plans-prepared isolated · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state progress+bookmark isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: Kumar23 fetches Kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists (confirmed) — client-side only, test as such.","EXIT: 1–5 zero leakage; 6 & 7 recorded with a founder decision."],
+ ["X1","B","Tenancy — every surface, plus the authorization case","With kumar1/kumar2: (1) plans-prepared isolated · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state progress+bookmark isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: kumar2 fetches kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists (confirmed) — client-side only, test as such.","EXIT: 1–5 zero leakage; 6 & 7 recorded with a founder decision."],
  ["X2","C","Effort index vs the calibrated standard","Year Plan page values == GET /subjects/{s}/{g}/chapters == master_plan.json (calibrated first, NCF alongside-only). English vi–viii: also report the raw task_density distribution per grade — the VI-calibrated cutoffs are the thing under test (MEMORY item 5); a near-binary grade → defect against the calibration, owner founder.","EXIT: sampled grades match; English distribution report exists."],
  ["X3","K","Generalise compile.py::_check_declarations","Beyond competency_edges, to whichever object carries band refs per subject (do before the first non-SS stage certifies). Engine change → version bump → §9 cheap re-check of anything certified.","EXIT: a canonical whose implied_lo rows lack band refs fails compilation with a named problem."],
 ];
@@ -321,7 +328,7 @@ function renderAll(){
       <td><b>${s[2]}</b><div class="small">${s[3]}</div></td>${cellHtml("step0","campaign",s[0],"●")}</tr>`).join("");
   // stages
   $("stagesTbl").innerHTML = "<tr><th>Stage</th><th>Group</th>"+
-    PSTEPS.map(p=>`<th>${p[0]}</th>`).join("")+"<th>Classes</th></tr>"+
+    PSTEPS.map(p=>`<th class="hh" data-scope="stages" data-step="${p[0]}">${p[0]}</th>`).join("")+"<th>Classes</th></tr>"+
     STAGES.map(st=>{
       const cells=PSTEPS.map(p=>{
         if(p[0]==="P3"&&st.group!=="B") return `<td class="cell s-na" title="Group ${st.group} — time_bands already">n/a</td>`;
@@ -334,7 +341,7 @@ function renderAll(){
     }).join("");
   // combos
   $("combosTbl").innerHTML = "<tr><th>#</th><th>Combo</th><th>PREP</th>"+
-    CSTEPS.map(c=>`<th>${c[0]}</th>`).join("")+"<th>PROV</th></tr>"+
+    CSTEPS.map(c=>`<th class="hh" data-scope="combos" data-step="${c[0]}">${c[0]}</th>`).join("")+"<th>PROV</th></tr>"+
     COMBOS.map((c,i)=>{
       const key=comboKey(c); const prep=stageSigned(c[2]);
       const cells=CSTEPS.map(cs=>cellHtml("combos",key,cs[0])).join("");
@@ -386,8 +393,8 @@ function renderOverview(){
   $("glance").innerHTML="<table><tr><th>Combo</th><th>Progress</th></tr>"+
     COMBOS.map(c=>{const key=comboKey(c);
       const cells=CSTEPS.map(cs=>{const st=item("combos",key,cs[0]).status||"pending";
-        return `<td class="cell s-${st}" style="min-width:20px;padding:2px"
-          onclick="openStep('combos','${key}','${cs[0]}')" title="${cs[0]}">·</td>`;}).join("");
+        return `<td class="cell s-${st}" style="min-width:20px;padding:2px" title="${cs[0]} · ${st}"
+          onclick="openStep('combos','${key}','${cs[0]}')">·</td>`;}).join("");
       return `<tr><td class="rowlabel">${c[0]} · ${c[1]}</td><td><table><tr>${cells}</tr></table></td></tr>`;}).join("")+"</table>";
 }
 
@@ -444,7 +451,7 @@ function openProv(key){
         <td><input size=7 id="pv_${sg}_cost" value="${esc(r.cost_inr||"")}"></td></tr>`;}).join("")}
     </table>
     <p class="small">Partition wall time (C11, s): <input size=8 id="pv_part_wall" value="${esc(p.partition_wall_s||"")}">
-       · C5 identity by: <input size=8 id="pv_who5" value="${esc(p.c5_split||"")}" placeholder="K1: 2 / K23: 3"></p>
+       · C5 identity by: <input size=8 id="pv_who5" value="${esc(p.c5_split||"")}" placeholder="k1: 115+100 / k2: 75+55 / k3: 85mix"></p>
     <div style="margin-top:10px"><button class="primary" onclick="commitProv('${key}')">Save provenance</button></div>
     <p class="meta">${p.at?`last saved ${esc(p.at)}`:"never saved"}</p>`;
   showDrawer();
@@ -504,6 +511,31 @@ function switchTab(name){
 }
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+
+/* ── hover hint: point at any C/P step header or cell to see what the step is ── */
+const ACTOR={K:"Kumar",C:"Claude",B:"Both"};
+function tipHtml(scope,step,st){
+  const d=defFor(scope,step);
+  const desc=(d[3]||"").length>260?(d[3].slice(0,257)+"…"):(d[3]||"");
+  return `<b>${step} · ${ACTOR[d[1]]||d[1]} — ${esc(d[2])}</b>`+
+         (st?` <span style="opacity:.75">(${esc(st)})</span>`:"")+
+         (desc?`<div style="margin-top:4px">${esc(desc)}</div>`:"")+
+         (d[4]?`<span class="tipexit">${esc(d[4])}</span>`:"");
+}
+document.addEventListener("mouseover",e=>{
+  const el=e.target.closest("th[data-step]"); const tip=$("tip");   // headers only —
+  if(!el){tip.style.display="none";return;}                         // cells stay quiet
+  tip.innerHTML=tipHtml(el.dataset.scope,el.dataset.step,"");
+  tip.style.display="block";
+});
+document.addEventListener("mousemove",e=>{
+  const tip=$("tip"); if(tip.style.display!=="block")return;
+  const w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=e.clientX+14,y=e.clientY+16;
+  if(x+w>innerWidth-8)x=e.clientX-w-14;
+  if(y+h>innerHeight-8)y=e.clientY-h-16;
+  tip.style.left=Math.max(4,x)+"px"; tip.style.top=Math.max(4,y)+"px";
+});
 loadState();
 </script>
 </body>

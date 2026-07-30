@@ -329,14 +329,17 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # ── deterministic plan keys (founder decision 2026-07-26) ───────────────────────
 # An adapted plan is a CACHE ENTRY, not an event: its filename is derived from what
 # actually determines its bytes — chapter, duration matrix, canonical version, engine
-# version, and whether the seam polish was applied. Same request from any teacher ->
-# same key -> the entry is served, not regenerated (partition is free; the polish
-# tokens are the spend the cache saves). Per-teacher visibility stays where it
-# belongs: the prepared-plans register (CLOUD_DATA_MODEL §2.3, reference-not-copy).
-# This is the on-disk stand-in for the Bucket-A output cache in §1, so the Supabase
-# migration is a storage swap, not a redesign.
+# version. Same request from any teacher -> same key -> the entry is served, not
+# regenerated. Per-teacher visibility stays where it belongs: the prepared-plans
+# register (CLOUD_DATA_MODEL §2.3, reference-not-copy). This is the on-disk stand-in
+# for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
+# not a redesign.
 
-GENON_ENGINE_VERSION = "06"     # BUMP when compile/partition/polish change the OUTPUT
+GENON_ENGINE_VERSION = "07"     # BUMP when compile/partition change the OUTPUT
+# 07 (2026-07-29): the seam-polish path is REMOVED (test campaign step 0, docs/testing.md
+# §2) — no LLM anywhere in the partition path, and the cache-key shape loses the `_p`
+# variant. Plan bytes are unchanged for unpolished runs, but the key namespace changes,
+# so every e06 entry is retired rather than overwritten.
 # 06 (2026-07-28): a sitting holding 3+ units draws its container text from the adjacent
 # pair carrying the most of its MINUTES, not the last pair. Titles and notes change on
 # wide spans, which appear wherever the compression ratio is tight.
@@ -383,13 +386,11 @@ def canonical_version(canonical: Dict[str, Any]) -> str:
     return hashlib.sha1(blob).hexdigest()[:12]
 
 
-def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any],
-                        polished: bool) -> str:
-    """e.g. ch_05_50m16_e04_c20260726112240.json  (16 x 50 min, engine v0.4,
+def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any]) -> str:
+    """e.g. ch_05_50m16_e07_c20260726112240.json  (16 x 50 min, engine 07,
     that canonical run). Never collides with ch_NN_canonical.json."""
     return (f"ch_{int(chapter_number):02d}_{norm_matrix(matrix)}"
-            f"_e{GENON_ENGINE_VERSION}_c{canonical_version(canonical)}"
-            f"{'_p' if polished else ''}.json")
+            f"_e{GENON_ENGINE_VERSION}_c{canonical_version(canonical)}.json")
 
 
 def genon_chapters(subject: str, grade: str) -> List[int]:
