@@ -181,6 +181,60 @@ anchor unit was dropped under the coverage floor rather than silently mis-anchor
 
 Depends on A2 — the band ids have to exist before an item can name one.
 
+### A9 · MCQ option order — a convention, not a choice
+
+> Option ORDER is a convention, never a choice. Author the four options first; then, as the
+> LAST step before emitting the item, arrange all four — the correct one included, never led
+> with — alphabetically from the first word at which they differ, ascending where they are
+> numeric, and label them A–D in that order. Uneven letters across a chapter are coincidence,
+> not a defect.
+
+Plus the matching prohibition, which replaces the 2026-07-16 one outright: *MUST NOT depart
+from the arrangement to move the correct answer toward or away from any label.*
+
+**Why this exists.** MEMORY item 18 added a prohibition to four assessment constitutions
+(SS + Science, middle and secondary) telling the model to spread `is_correct` across A–D and
+never repeat a label across consecutive items. The first live generation under it — SS·IX ch 3,
+2026-07-29 — put **5 of 6 correct answers on B, four of them consecutively**. The prohibition
+asks the model to randomise, which a language model cannot do; and its wording was ambiguous
+anyway, since MCQs are interleaved among other item types, so "consecutive items" names
+nothing definite. The convention removes the decision instead of restating the ban: position
+becomes a function of the option text, blind to correctness, so there is nothing to cluster.
+Letter counts may still come out uneven by coincidence of content — the amended clause says so
+explicitly, because a model that "corrects" a coincidental cluster is choosing positions again.
+
+This is the same failure family as Rule 16's spliced titles (§4 below, and LP v1.6/v1.7): a
+negative prohibition aimed at a generation artefact does not steer. The fix is always an
+affirmative mechanism the model can execute — derive, or arrange — never a stronger ban.
+
+**Scope: all eleven assessment constitutions.** Every one mandates MCQs, so every one needs
+the clause. It has **no dependency on A2 or A6** — it touches neither band ids nor anchoring —
+so it can land in the same pass as A6 or on its own, whichever is cheaper. Mathematics is the
+healthy counter-example in the corpus audit (genuinely mixed positions), which is an argument
+for the convention rather than against it: the property becomes structural instead of
+incidental. Note also the standing corpus-repair debt from MEMORY item 18 — the already-saved
+SS and Science plans still carry clustered answers, and the repair pass should now reorder them
+into convention order rather than shuffling them at random.
+
+**How it is checked.** Not by counting letters. The audit is mechanical: are the four options
+in arrangement order? A chapter whose correct answers happen to fall B, B, B, C, D, B is
+compliant if the arrangement was followed, and non-compliant if it was not, whatever the
+spread looks like.
+
+**What the probe found — read this before porting.** `genon/test_mcq_convention.py` (Rs 6 a
+run) authored the six SS·IX ch 3 MCQs under the first draft of the clause. Only 2 of 6 came
+out arranged, but the failures were highly informative and are why the wording above says what
+it says. Three of the four failures had the SAME shape: the three distractors were correctly
+sorted among themselves and the correct option was pulled to A — the model sorts what it
+regards as the list and leads with the answer it thought of first. The B-cluster of the old
+prohibition had simply become an A-cluster (labels A,B,B,A,C,A against the certified run's
+B,B,B,B,C,B). Hence "the correct one included, never led with", and hence naming the
+arrangement as the last step before emission rather than a property of the authored list. The
+fourth failure was different: every option opened with the same long stem ("Because…", "The
+frigid zones lie…"), putting the alphabetical key thirty characters in — hence "from the first
+word at which they differ". Expect both failure modes in every subject; parallel option
+construction is a quality feature, so the shared-stem case will be common.
+
 ---
 
 ## 4. What the duration-ordering change adds — including to SS·secondary
@@ -262,6 +316,10 @@ Constitution by constitution, not in sweeps.
    `compile.py`) before touching any of them.
 4. **Generalise `_check_declarations`** beyond `competency_edges` at the same time as the
    first non-SS A2, so the gate stops passing subjects it never inspected.
+5. **A9 into all eleven assessment constitutions.** No dependency, one short clause each,
+   and it repairs a rule that is currently failing live in four of them. Fold it into each
+   subject's A6 pass; do the four MEMORY-item-18 files first, since those are the ones whose
+   prohibition is known not to hold.
 
 One caution on A1: it changes the authored duration for chapters whose canonicals already
 exist, so `canonical_version` moves and every derived plan re-keys. That is correct

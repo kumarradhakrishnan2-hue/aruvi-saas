@@ -1,7 +1,7 @@
 {
   "version": 1,
   "campaign": "aruvi-25-combo-certification",
-  "updated_at": "2026-07-30T00:40:00",
+  "updated_at": "2026-07-30T11:00:00",
   "step0": {
     "campaign": {
       "0.1": {
@@ -58,7 +58,7 @@
       },
       "P2": {
         "status": "pass",
-        "comment": "Assessment constitution v1.2: phase_ref mandated as verbatim copy of the source LO's band_refs (Rule 6 mandate + prohibition 4, Amendment A1 schema 'never empty', integrity constraint). Depends correctly on A2 via the coverage handoff. Rule 7 prohibition 3 (MCQ position spread, MEMORY item 18) also present.",
+        "comment": "Assessment constitution v1.2: phase_ref mandated as verbatim copy of the source LO's band_refs (Rule 6 mandate + prohibition 4, Amendment A1 schema 'never empty', integrity constraint). Depends correctly on A2 via the coverage handoff. Rule 7 prohibition 3 (MCQ position spread, MEMORY item 18) also present. | v1.3 (2026-07-30): MCQ position by ordering convention (ARV-D-003). Clause trimmed 2026-07-30; A9 added to the rollout brief for the other ten.",
         "by": "Claude",
         "at": "2026-07-29T19:40:00"
       },
@@ -78,7 +78,7 @@
         "status": "pass",
         "comment": "Stage sign-off recorded retroactively per the pilot note (docs/testing.md section 10): all amendments present or n/a with reasons above; A2 decision n/a here (SS carries competency_edges natively). SS-secondary classes (ix) unblocked - pilot may start at C1. | RE-TOUCHED for v1.6 (2026-07-29): Rule 16 titles are now DERIVED from the note's opening pivot, and the A1 schema swaps unit_handoff emission order (teacher_notes before title) so derivation flows with generation. Grounds: first live run spliced 10/11 titles while every note found its pivot; the old schema forced titles to be emitted before the notes they should compress. Prohibitions unchanged. Ports subject-agnostically via A4 (no 'object of study' epistemology). | v1.7 (2026-07-29): plural pivots titled by collective, never enumerated - probe-driven iteration.",
         "by": "Claude",
-        "at": "2026-07-29T22:55:00"
+        "at": "2026-07-30T09:20:00"
       }
     }
   },
@@ -189,13 +189,13 @@
       "step": "C3",
       "title": "MCQ correct-answer clustering: 5/6 on B, 4 consecutive",
       "evidence": "MCQ correct positions across the assessment: B,B,B,B,C,B. Assessment constitution v1.2 Rule 7 prohibition 3 bans same-label runs and single-letter dominance.",
-      "notes": "MEMORY item 18's exact failure mode RECURRING LIVE after the constitutional amendment - the prohibition alone does not steer position, mirroring the Rule-16 title finding. Candidate deterministic fix: position-shuffle at save time (engine/tooling), which C8 doctrine prefers over more prompt text. Also fixable by backfill shuffle on this chapter.",
+      "notes": "Founder decisions 2026-07-30: (1) NO deterministic shuffle in generate_canonical.py - post-processing stays content-neutral (Pandora's box). (2) Assessment constitution v1.2 -> v1.3: MCQ position becomes an AFFIRMATIVE ordering convention (alphabetical by option text / ascending for numeric), correct answer takes the label that falls out; ambiguous 'consecutive items' prohibition replaced with 'never adjust the arrangement'. Rationale: convention is signal-free (exploit-proof) though letter counts may still cluster by chance - the audit criterion changes from 'letters spread' to 'convention followed', which is mechanically checkable. Empirical: ch 3's six MCQs under the convention -> B,B,B,C,D,B (chance cluster, compliant). RECHECK: next live generation should show options in convention order; ch 3 MCQ backfill to convention order pending founder call. | 2026-07-30: clause trimmed (mandate 81->43 words, prohibition 32->18) and written in; docs/partition_constitution_rollout.md gains A9 (MCQ option order — a convention, not a choice) with scope = ALL ELEVEN assessment constitutions, no dependency on A2/A6, and sequencing step 5 (do the four MEMORY-item-18 files first). Probe genon/test_mcq_convention.py added (~Rs 6): authors the 6 MCQs from the existing LO rows under the live Rule 7 and checks arrangement mechanically (labels A-D in order; texts alphabetical / numeric ascending; guide letters consistent). AUDIT CRITERION IS ARRANGEMENT, NOT SPREAD. | MCQ PROBE RUN 1 (v1.3, Rs 5.93): 2/6 arranged. Diagnosis: 3 of 4 failures had the distractors correctly sorted with the CORRECT option pulled to A - the B-cluster became an A-cluster (A,B,B,A,C,A vs certified B,B,B,B,C,B). 4th failure: all options shared a long stem ('Because...'), burying the alphabetical key. v1.3 -> v1.4: arrangement named as the LAST step before emitting, correct option explicitly included and 'never led with', key = 'first word at which they differ'. Rollout A9 updated with the quote and the two failure modes. Re-probe pending.",
       "combo": "social_sciences/ix",
       "owner": "Kumar",
-      "status": "open",
+      "status": "fixing",
       "opened": "2026-07-30T00:40:00",
       "closed": null,
-      "at": "2026-07-30T00:40:00"
+      "at": "2026-07-30T11:00:00"
     },
     {
       "id": "ARV-D-004",
