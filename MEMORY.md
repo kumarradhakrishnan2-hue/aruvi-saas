@@ -361,7 +361,92 @@ must confirm · source entry.
 
 ---
 
-## 2026-07-26 (newest) — THE CALIBRATED STANDARD IS NOW THE DEFAULT (first run was showing 12×40 for every chapter of every class)
+## 2026-07-31 (newest) — THE VARIANT-CANONICAL PIVOT: partition engine retired, serve engine lands (genon e08; SS·sec LP → v1.8)
+
+**The founder's verdict on the first realistic partition (SS·IX ch 3 at 9×50, e06) killed the
+partition architecture, and the evidence supported it completely:** every one of the nine
+sittings straddled a unit joint (handoff_used 9/9), so every teacher note was a Rule-16
+pivot-note and the authored unit notes appeared zero times; three sittings ended on the NEXT
+unit's hook (the boundary CUT_COST punishes hardest — the fill-tolerance window overrides role
+cost by construction); role-weighted compression scaled every dev band by exactly 0.8 and every
+hook/cons by 0.714 — a uniform percentage, not a pedagogical judgment. Root cause: **the
+pedagogy's quantum is the unit-arc; the engine's quantum was the phase.** Full reasoning,
+settled rules, and the demolition manifest: **`docs/variant_canonical_architecture.md`** (the
+standing spec for this architecture — read it before touching genon).
+
+**The replacement (all landed today, suite-verified):**
+- **Architecture:** a chapter = a LIBRARY of variant canonicals (same section list authored at
+  2–3 period counts, each a complete plan + its own assessment, at the class-standard
+  duration). Serving = SELECTION: next-highest variant (full richness; surrender only above the
+  top, declared); **X−1+1 form** (first X−1 units verbatim, one whole unit per sitting; slot X
+  from the fill ladder); **ladder** = exact fill > superset (minimal overlap, "revision
+  runway") > longest suffix (closure kept, gap named + handed over) > truncation (founder's
+  11-vs-12 ruling: never skip inside the chosen plan). Section arithmetic on the shared
+  registry (chapter summary's section list, verbatim anchors) is the join key. Per-variant
+  assessments compose for free (borrowed closing unit brings its own items, band ids
+  namespaced F…). Proportional per-unit duration scaling is the ONLY arithmetic left; weekly
+  dispersion ordering kept from v0.4.
+- **Reverse deduction:** `aruvi_core/genon/variant_solver.py` solves the variant counts +
+  MANDATED CLOSING SPANS from the top canonical before the compact variants are authored
+  (covering condition: inter-variant gaps ≤ σ, the largest defensible closing span;
+  demand-weighted toward master_plan recommended_periods) and emits the per-chapter
+  adaptation table (X → full/partial/truncation) — a certification artifact and a future
+  budget-time UI surface.
+- **Code:** `serve.py` (new engine) + `variant_solver.py`; `compile.py` → v0.5 (roles optional
+  passthrough, unit_handoff no longer read; SECOND PASS same day: the BAND LAYER left the
+  declaration surface too — band ids DERIVED positionally, never demanded of the model;
+  assessment anchoring is UNIT-level via unit_ref, normalized from period_ref — 'linkage is
+  an identity' — with legacy phase_ref fallback, so ch 3/ch 5 still compile+serve. LP
+  constitution → v1.9 (Rule 14 removed; schema loses band_id/band_refs), assessment → v1.5
+  (phase_ref removed, reversing v1.2). A2 joins A3/A4 as CANCELLED for the ten un-amended
+  constitutions; X3 (generalise _check_declarations) is VOID; A6 reduces to confirming each
+  subject's items carry their anchor unit. Brief §6a records the reasoning);
+  `partition.py` + `polish.py` moved to `_to_delete/`; `GENON_ENGINE_VERSION` → **"08"**
+  (every e07 entry stale); `load_genon_library`/`load_genon_streams` (variant files
+  `ch_NN_canonical_pKK.json`); genon route serves the library — identity generalised to any
+  variant's std row, cache keyed by the CHOSEN variant's version, response gains a `serve`
+  block (`compression`/`seam_periods` keys kept frontend-compatible; seams always []).
+- **Constitution:** SS·secondary LP **v1.8** — Rules 15 (role_handoff) + 16 (unit_handoff)
+  REMOVED with their A1 schema keys; SELF-CONTAINED REGISTER rebound to Rules 10+13 with the
+  whole-unit rationale (position/calendar/clock bans all still stand — a unit may be served
+  beside a companion variant's units); Rule 14 kept. CHANGELOG has the dated row. Assessment
+  constitution untouched. **A3/A4 are CANCELLED for the ten un-amended constitutions**; A1,
+  A2, A5/A7, A6 and Group-B P3 all stand; NEW V-series (V1 variant brief · V2 shared registry
+  · V3 closing mandate · V4 per-variant assessment) ready-to-port in the brief §7.
+- **Tests:** NEW `test_genon_serve.py` (synthetic 3-variant library: selection, all four
+  ladder rungs, surrender, tiling at 40/60, assessment remap + namespacing, dispersion) and
+  `test_variant_solver.py` (covering condition, σ degradation, weighting) — both green;
+  `test_genon_unit_handoff.py` retired to `_to_delete/`; duration-order test repointed to
+  serve (green); plan-key test asserts e08 (green). NOTE (pre-existing, NOT from this pivot):
+  test_api / test_link_resolver / test_lp_standard / test_normalized_item / test_stimulus
+  fail on missing english/science sample saved plans under data/content/saved_plans — they
+  fail identically on the pre-pivot tree; reconcile against CLAUDE.md §8's 11/11 note.
+- **testing.md impact (template change owed, brief §9):** P1 loses A3/A4, gains V1–V4; C1
+  generates per variant with the solver between top and compacts; C5 becomes a serve-table
+  sweep (identity per variant / exact / superset / suffix / surrender + C6 mix); C7 drops
+  seam + wide-span checks; C10 asserts e08 + chosen-variant keys. Corpus pre-warm at 3
+  variants ≈ **₹20–35k batch** (July token log: ₹60/canonical live mean; compacts smaller;
+  assessments extra but fractional). Pilot (SS·IX ch 5): run the solver, author variants,
+  read borrowed seams aloud before porting.
+- **docs/partition_constitution_rollout.md REWRITTEN (same day):** now carries ONLY what
+  still ports — the serve-era hard contract S1–S5; A1 · A5/A7 register · A6-as-confirmation ·
+  A9 (+ the item-18 corpus-repair debt) · P3 · P4 · the V-series (V1–V4, incl. the English
+  registry-definition question); A2/A3/A4/X3 recorded as cancelled with a pointer to the
+  brief. Filename kept for testing.md references; "partition" in the name is historical.
+- **Register re-cut to v1.10 (same day, founder challenge):** the backward-position ban's
+  engine justification died with the partition (X−1 units serve in canonical order), so the
+  register now carries exactly three bans, each traced to a live mechanism — clock quantity
+  (rule-4 scaling falsifies numbers), forward reference/completion language (X varies, so ANY
+  unit may be terminal or precede a companion variant's unit — this ban is GLOBAL, not a tail
+  concern), calendar time (Calendar Purge doctrine). Backward references freed; content-named
+  continuity stays as best practice. Rollout brief's A5/A7 entry now ports v1.10.
+- **Open (founder):** floor + σ per subject·stage; 4th-variant threshold for big chapters
+  (ch 5 is 21 units); adaptation-table UI (deferred); retire `compression`/`seam_periods`
+  response keys at the next web pass; apply §9 to testing.md itself.
+
+---
+
+## 2026-07-26 — THE CALIBRATED STANDARD IS NOW THE DEFAULT (first run was showing 12×40 for every chapter of every class)
 
 **The report.** Founder: "the first time plan default was showing periods not in line with the
 calibrated standard we created." Confirmed, and it was worse than a drift — first run was not

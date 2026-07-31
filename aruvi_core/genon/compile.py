@@ -1,22 +1,28 @@
-"""Aruvi phase-stream compiler — v0.3, STRICT declared-only.
+"""Aruvi phase-stream compiler — v0.5, STRICT declared-only.
 
 A pure REWRITER: canonical plan JSON -> phase stream. Writes no content — every
-string is copied verbatim; it only re-addresses content (phase IDs, roles,
-durations, unit table as the reference partition, assessment phase_refs).
+string is copied verbatim; it only re-addresses content (band minutes, the unit
+table as the served atoms, assessment anchor units).
 Subject-agnostic: never branches on subject.
 
-v0.3 doctrine (2026-07-25): declarations are REQUIRED. Every time band must
-carry band_id + role, every competency edge band_refs, every assessment item
-phase_ref — as the v1.1+ LP / v1.2+ assessment constitutions mandate. A plan
-missing any declaration raises GenonDeclarationError listing every violation.
+v0.5 doctrine (2026-07-31, second pass of the variant-serve pivot): THE BAND
+LAYER IS NO LONGER A DECLARATION. band_id, band_refs and phase_ref existed so a
+unit SPLIT across sittings could be re-addressed band by band; whole-unit
+serving makes the unit the anchor, and the unit's period_number is already on
+every assessment item (period_ref — "linkage is an identity"). So: band ids are
+DERIVED positionally here ("P<unit>.<ordinal>"; a declared band_id is accepted
+and used, never required); roles are optional passthrough; band_refs and
+phase_ref are passthrough. The ONE remaining item requirement: every assessment
+item must resolve to a known unit (period_ref, else legacy phase_ref via the
+declared band ids) — normalized onto the item as unit_ref, which is what the
+serve engine consumes. A plan whose items cannot be anchored raises
+GenonDeclarationError listing every violation.
 The lab compiler's inference path (v0.2) is deliberately NOT ported: no
-heuristic code in the product engine, no back-support for pre-v1.1 plans.
+heuristic code in the product engine.
 """
 from __future__ import annotations
 
 import json
-
-VALID_ROLES = {"hook", "development", "consolidation"}
 
 
 class GenonDeclarationError(ValueError):
@@ -36,28 +42,23 @@ def _parse_band(s):
     return int(a), int(b)
 
 
-def _check_declarations(periods, items, role_handoff):
-    """role source (LP v1.2): the Rule-15 role_handoff sibling; v1.1.x canonicals
-    carried roles inline on each band — accept either, require one per band."""
+def _anchor_items(items, band_unit, unit_numbers):
+    """Normalize each item's anchor to unit_ref (a list of unit numbers).
+    Source of truth: period_ref (the identity); legacy fallback: phase_ref
+    mapped through the declared band ids. Returns the problem list."""
     problems = []
-    for p in periods:
-        n = p.get("period_number")
-        for i, tb in enumerate(p.get("time_bands") or []):
-            if not tb.get("band_id"):
-                problems.append(f"P{n} band {i+1}: missing band_id")
-            role = role_handoff.get(tb.get("band_id")) or tb.get("role")
-            if role not in VALID_ROLES:
-                problems.append(f"P{n} band {i+1}: role {role!r}")
-        band_ids = {tb.get("band_id") for tb in p.get("time_bands") or []}
-        for e in p.get("competency_edges") or []:
-            refs = e.get("band_refs")
-            if not refs:
-                problems.append(f"P{n} edge {e.get('c_code')}: missing band_refs")
-            elif not set(refs) <= band_ids:
-                problems.append(f"P{n} edge {e.get('c_code')}: band_refs outside unit")
     for it in items:
-        if isinstance(it, dict) and not it.get("phase_ref"):
-            problems.append(f"assessment item {it.get('id', '?')}: missing phase_ref")
+        if not isinstance(it, dict):
+            continue
+        units = [u for u in (it.get("period_ref") or [])
+                 if isinstance(u, int) and u in unit_numbers]
+        if not units:
+            units = sorted({band_unit[r] for r in (it.get("phase_ref") or [])
+                            if r in band_unit})
+        if not units:
+            problems.append(f"assessment item {it.get('id', '?')}: "
+                            "no resolvable anchor unit (period_ref/phase_ref)")
+        it["unit_ref"] = units
     return problems
 
 
@@ -67,28 +68,24 @@ def compile_stream(plan: dict) -> dict:
     periods = result["lesson_plan"]["periods"]
     items_in = result.get("assessment_items", []) or []
     role_handoff = result.get("role_handoff") or plan.get("role_handoff") or {}
-    unit_handoff = result.get("unit_handoff") or plan.get("unit_handoff") or {}
-
-    problems = _check_declarations(periods, items_in, role_handoff)
-    if problems:
-        raise GenonDeclarationError(problems)
 
     phases, units = [], []
     seq = 0
     for p in periods:
         unum = p["period_number"]
         unit_phase_ids = []
-        for tb in p["time_bands"]:
+        for i, tb in enumerate(p["time_bands"]):
             a, z = _parse_band(tb["minutes"])
+            bid = tb.get("band_id") or f"P{unum}.{i + 1}"   # derived, never demanded
             phases.append({
-                "phase_id": tb["band_id"],
+                "phase_id": bid,
                 "seq": seq,
                 "minutes": z - a,
-                "role": role_handoff.get(tb["band_id"]) or tb["role"],
+                "role": role_handoff.get(bid) or tb.get("role"),
                 "activity": tb["activity"],
                 "unit": unum,
             })
-            unit_phase_ids.append(tb["band_id"])
+            unit_phase_ids.append(bid)
             seq += 1
         units.append({
             "unit": unum,
@@ -106,27 +103,26 @@ def compile_stream(plan: dict) -> dict:
         })
 
     items = [json.loads(json.dumps(it)) for it in items_in]
+    band_unit = {ph["phase_id"]: ph["unit"] for ph in phases}
+    problems = _anchor_items(items, band_unit, {u["unit"] for u in units})
+    if problems:
+        raise GenonDeclarationError(problems)
 
     stream = {
-        "stream_format": "aruvi-phase-stream v0.3 (declared-only)",
+        "stream_format": "aruvi-phase-stream v0.5 (unit-anchored)",
         "meta": {
             "subject": plan.get("subject"), "grade": plan.get("grade"),
             "chapter_number": plan.get("chapter_number"),
             "chapter_title": plan.get("chapter_title"),
             "source_file": plan.get("filename"),
-            "role_provenance": "declared (role_handoff)" if role_handoff else "declared (inline)",
-            # Rule 16 coverage, reported not enforced: a canonical predating LP v1.3 has
-            # no table, and the partitioner degrades to a join rather than refusing to
-            # serve. Certification (generate_canonical.validate) is where absence is a
-            # failure; here it is only a fact about the stream.
-            "unit_handoff_coverage": "%d/%d" % (len(unit_handoff), max(len(periods) - 1, 0)),
+            "role_provenance": ("declared (role_handoff)" if role_handoff
+                                else "inline-or-absent (optional since serve v1.0)"),
             "authored_matrix": plan.get("period_rows_snapshot")
                 or plan.get("period_schedule")
                 or (result.get("period_schedule") if isinstance(result, dict) else None),
         },
         "phases": phases,
-        "units": units,                      # the reference partition
-        "unit_handoff": unit_handoff,        # Rule 16: "<a>-<b>" -> {title, teacher_notes}
+        "units": units,                      # the served atoms: one sitting = one unit
         "coverage_handoff": result.get("coverage_handoff", {}),
         "assessment_items": items,
     }

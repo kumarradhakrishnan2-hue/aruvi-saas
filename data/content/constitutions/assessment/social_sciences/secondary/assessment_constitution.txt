@@ -1,9 +1,9 @@
-ARUVI · CHAPTER ASSESSMENT CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.4
+ARUVI · CHAPTER ASSESSMENT CONSTITUTION · SOCIAL SCIENCES · SECONDARY STAGE · VERSION 1.5
 
 INPUTS (given — do not retrieve or supplement):
 1. The LO Handoff — the lesson plan's coverage_handoff block (LP Constitution, Rule 12 / Amendment A2): the edge set regrouped by competency, in mapping order. Each competency owns { cg, weight, competency_text } and a set of LO rows:
-   { period_number, band_refs, section_anchor, section_context, implied_lo, cognitive_demand }
-   implied_lo, cognitive_demand, and band_refs were copied verbatim from the edge; the other three from the period that contained it. period_number is the LO's unit and display anchor; band_refs names the band(s) within that unit that execute the LO's competency operation (LP Constitution, Rule 14) and is copied verbatim onto each item as phase_ref; section_anchor and section_context bound the content this LO's items may draw from. At secondary, section_context names the section's primary source, data table or schedule, or graph where one exists (LP Constitution, Rule 7) — this is how source-capable LOs are recognised (Rule 4).
+   { period_number, section_anchor, section_context, implied_lo, cognitive_demand }
+   implied_lo and cognitive_demand were copied verbatim from the edge; the other three from the period that contained it. period_number is the LO's unit — the item's anchor, copied onto it as period_ref (whole-unit serving resolves anchors at unit level; no band-level address exists); section_anchor and section_context bound the content this LO's items may draw from. At secondary, section_context names the section's primary source, data table or schedule, or graph where one exists (LP Constitution, Rule 7) — this is how source-capable LOs are recognised (Rule 4).
 2. Chapter Summary — structured content summary mirroring textbook headings.
 
 Every item is generated FROM an LO. The LO carries its competency and its unit, so the item's competency, anchor unit, skill, and demand are all inherited — never chosen independently.
@@ -90,13 +90,12 @@ PROHIBITION
 RULE 6 · ONE ITEM ← ONE LO → ONE UNIT
 
 MANDATE
-Linkage is an identity: each item's period_ref is the single unit of its source LO, and that unit is its display anchor. Likewise phase_ref: the source LO's band_refs copied verbatim — the band-level address of the same identity. If a question legitimately draws content from other sections, name them in the guide block.
+Linkage is an identity: each item's period_ref is the single unit of its source LO, and that unit is its display anchor. If a question legitimately draws content from other sections, name them in the guide block.
 
 PROHIBITION
 1. MUST NOT anchor an item to more than one unit — period_ref never lists content-reference units.
 2. MUST NOT paraphrase implied_lo — copy it verbatim from the chosen edge, with its cognitive_demand.
 3. MUST NOT re-adjudicate the inherited demand position on the Recall–Understanding–Application–Analysis–Evaluation spectrum.
-4. MUST NOT alter, extend, re-derive, or leave empty phase_ref — it is a verbatim copy of the source LO's band_refs, nothing else.
 
 ================================================================================
 RULE 7 · MCQ DESIGN — DISTRACTORS AND DEMAND FLOOR
@@ -187,7 +186,6 @@ INTEGRITY CONSTRAINTS (system level — override any other instruction)
 - Selection (Rule 5), including source-slot resolution (Rule 4), runs to completion before any question is authored.
 - Item demand never exceeds its LO's demand; the demand floor never overrides the ceiling.
 - period_ref is the source LO's single unit — linkage needs no tie-break because it is an identity.
-- phase_ref is the source LO's band_refs copied verbatim — the same identity at band level; no re-derivation.
 - Every SOURCE_INTERPRETATION item carries a non-empty typed visual_stimulus; a fabricated or off-section stimulus is non-compliant.
 
 ================================================================================
@@ -208,9 +206,6 @@ Output is a JSON object containing an assessment_items[] array; every question i
                                  inherited from the source edge.
   "period_ref":        array   — exactly one element: the source LO's unit number.
                                  Length-one array for schema stability.
-  "phase_ref":         array   — the source LO's band_refs copied VERBATIM (band_ids within
-                                 the anchor unit, e.g. ["P7.2", "P7.3"]). Never re-derived,
-                                 never empty (Rule 6).
   "chapter_section":   string  — named chapter section this question draws from.
   "question_text":     string  — stem/scenario. For SOURCE_INTERPRETATION: a brief orienting stem
                                  referencing the stimulus ("Read the source provided…").

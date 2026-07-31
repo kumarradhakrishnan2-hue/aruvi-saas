@@ -335,7 +335,16 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "07"     # BUMP when compile/partition change the OUTPUT
+GENON_ENGINE_VERSION = "08"     # BUMP when compile/serve change the OUTPUT
+# 08 (2026-07-31): THE PARTITION ENGINE IS RETIRED — replaced by the variant-serve
+# engine (docs/variant_canonical_architecture.md). A chapter is a library of variant
+# canonicals; a request is served by next-highest selection, the X-1+1 slot-fill
+# ladder, and proportional per-unit duration scaling. No DP, no compression regimes,
+# no role weighting, no handoff text. Every e07 entry is stale by construction.
+# Same-day second pass (no e08 artefact existed yet, so no re-bump): the band
+# declaration layer is retired too — compile v0.5 derives band ids positionally and
+# anchors assessment items at UNIT level (unit_ref from period_ref, legacy phase_ref
+# fallback); serve v1.1 consumes unit_ref.
 # 07 (2026-07-29): the seam-polish path is REMOVED (test campaign step 0, docs/testing.md
 # §2) — no LLM anywhere in the partition path, and the cache-key shape loses the `_p`
 # variant. Plan bytes are unchanged for unpolished runs, but the key namespace changes,
@@ -414,14 +423,44 @@ def load_genon_canonical(subject: str, grade: str, chapter_number: int) -> Optio
     return json.load(open(p))
 
 
+def load_genon_library(subject: str, grade: str, chapter_number: int) -> List[Dict[str, Any]]:
+    """The chapter's VARIANT LIBRARY: the top canonical (ch_NN_canonical.json) plus
+    any compact variants (ch_NN_canonical_pKK.json — the same section list authored
+    at KK periods). Sorted by period count, richest first. Empty when no canonical."""
+    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    out: List[Dict[str, Any]] = []
+    top = load_genon_canonical(subject, grade, chapter_number)
+    if top is not None:
+        out.append(top)
+    prefix = f"ch_{int(chapter_number):02d}_canonical_p"
+    if os.path.isdir(d):
+        for f in sorted(os.listdir(d)):
+            if f.startswith(prefix) and f.endswith(".json"):
+                out.append(json.load(open(os.path.join(d, f))))
+
+    def _count(c):
+        row = (c.get("period_rows_snapshot") or c.get("period_schedule")
+               or (c.get("result") or {}).get("period_schedule") or [{}])
+        row = row[0] if isinstance(row, list) else {}
+        return int(row.get("count") or row.get("period_count")
+                   or len(((c.get("result") or {}).get("lesson_plan") or {}).get("periods") or []))
+
+    out.sort(key=_count, reverse=True)
+    return out
+
+
 _stream_cache: Dict[str, Any] = {}   # path -> (mtime, stream)
 
 
 def load_genon_stream(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
-    """The chapter's phase stream, compiled (strict, declared-only) from its canonical.
-    Memo-cached per file mtime, so the millisecond partition path never pays the
+    """The top canonical's phase stream, compiled (strict, declared-only).
+    Memo-cached per file mtime, so the millisecond serve path never pays the
     compile twice for an unchanged canonical."""
     p = _canonical_path(subject, grade, chapter_number)
+    return _compiled(p)
+
+
+def _compiled(p: str) -> Optional[Dict[str, Any]]:
     if not os.path.isfile(p):
         return None
     mtime = os.path.getmtime(p)
@@ -432,6 +471,21 @@ def load_genon_stream(subject: str, grade: str, chapter_number: int) -> Optional
     stream = compile_stream(json.load(open(p)))
     _stream_cache[p] = (mtime, stream)
     return stream
+
+
+def load_genon_streams(subject: str, grade: str, chapter_number: int) -> List[Dict[str, Any]]:
+    """Compiled streams for the chapter's whole variant library, richest first.
+    Empty list when the chapter has no canonical at all."""
+    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    paths = [_canonical_path(subject, grade, chapter_number)]
+    prefix = f"ch_{int(chapter_number):02d}_canonical_p"
+    if os.path.isdir(d):
+        for f in sorted(os.listdir(d)):
+            if f.startswith(prefix) and f.endswith(".json"):
+                paths.append(os.path.join(d, f))
+    streams = [s for s in (_compiled(p) for p in paths) if s is not None]
+    streams.sort(key=lambda s: -len(s.get("units") or []))
+    return streams
 
 
 def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any],

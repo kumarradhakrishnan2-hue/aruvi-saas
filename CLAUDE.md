@@ -205,6 +205,26 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   the suggested-periods group styling).
 - **Output caching** keyed by (subject, grade, chapter, period_profile, constitution_version)
   is the #1 economic lever at seasonal scale — wire it at the service layer when live gen lands.
+- **The variant-canonical serve engine IS the genon architecture (2026-07-31) — the
+  deterministic partition engine is RETIRED.** Standing spec:
+  `docs/variant_canonical_architecture.md` (read it before touching genon). A chapter is a
+  LIBRARY of variant canonicals (same section list authored at 2–3 period counts, each a
+  complete plan + its own assessment, at the class-standard duration:
+  `ch_NN_canonical.json` + `ch_NN_canonical_pKK.json`). Serving is SELECTION, never
+  composition: next-highest variant (full richness; surrender only above the top,
+  declared) · X−1+1 form (first X−1 units verbatim, ONE whole unit per sitting) · slot-X
+  fill ladder (exact > superset/runway > longest-suffix > truncation — candidates are
+  other variants' CLOSING units only; never skip inside the chosen plan) · proportional
+  per-unit duration scaling (the only arithmetic; weekly dispersion kept) · per-variant
+  assessments (borrowed unit brings its own items, band ids namespaced F…).
+  `variant_solver.py` reverse-deduces compact counts + mandated closing spans from the top
+  canonical (gaps ≤ σ, demand-weighted) and emits the adaptation table. Assessment anchoring is UNIT-level (item unit_ref from period_ref; band ids are
+  internal, derived positionally by compile v0.5 — never demanded of the model). Engine
+  e08; SS·sec LP v1.9 (Rules 14/15/16 removed; register stands), assessment v1.5
+  (phase_ref removed); A2/A3/A4 cancelled + X3 void for the ten un-amended constitutions,
+  V-series (brief §7) replaces them; `partition.py`/`polish.py`
+  live in `_to_delete/`. DO NOT reintroduce cutting below the unit, seam text, role
+  weighting, or compression regimes — the brief §1 records why they failed.
 - **The calibrated standard is the default (2026-07-26)** — two period tables live under
   `data/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
   by subject·**stage**, in flat **40-minute** periods) and `master_plan.json` (OUR calibration —

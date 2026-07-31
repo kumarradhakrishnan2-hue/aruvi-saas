@@ -802,14 +802,15 @@ def generate(subject: str, grade: str) -> JSONResponse:
     )
 
 
-# ── genon: deterministic adaptation from pre-warmed canonicals (step 6, 2026-07-25) ──
-# One certified canonical per chapter (authored at the class-standard duration) is
-# compiled once into a phase stream (Bucket-A content, api/data.py). A teacher's
-# duration matrix partitions that stream in milliseconds — no LLM, Rs. 0 — into a
-# saved plan registered to HER prepared-plans list, so it appears in My Lessons
-# like any generated lesson. There is NO LLM anywhere in this path: the seam-polish
-# option was REMOVED at test-campaign step 0 (docs/testing.md §2, 2026-07-29) — every
-# teacher-facing generation is a pure partition of the certified canonical.
+# ── genon: deterministic SERVE from the chapter's variant library (2026-07-31) ──
+# A chapter is authored as a small LIBRARY of variant canonicals (the same section
+# list planned at two or three period counts, each a complete plan + assessment, at
+# the class-standard duration). A teacher's duration matrix is served in
+# milliseconds — no LLM, Rs. 0 — by SELECTION: next-highest variant, first X-1
+# units verbatim, slot X from the fill ladder (exact > superset > suffix >
+# truncation), minutes scaled in proportion to each sitting's duration. The old
+# partition engine (DP cuts, compression regimes, handoff text) is RETIRED —
+# docs/variant_canonical_architecture.md records why.
 
 class GenonRowInput(BaseModel):
     duration: int          # minutes per period
@@ -839,10 +840,9 @@ def genon_available(subject: str, grade: str) -> Dict[str, Any]:
 @app.post("/genon/{subject}/{grade}/{chapter_number}/plan")
 def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPlanRequest,
                     identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
-    """Partition the chapter's canonical stream to the teacher's duration matrix, save the
+    """Serve the chapter's variant library to the teacher's duration matrix, save the
     adapted plan, and register it as prepared for this teacher (it pops up in My Lessons)."""
-    from aruvi_core.genon import build_plan, GenonDeclarationError
-    from aruvi_core.genon.partition import PartitionError
+    from aruvi_core.genon import GenonDeclarationError, ServeError, serve_plan
 
     _subject(subject)
     tenant_id, user_id = identity
@@ -853,20 +853,33 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     if total_periods > 60:
         raise HTTPException(status_code=400, detail="Period count implausibly large.")
 
-    canonical = data.load_genon_canonical(subject, grade, chapter_number)
-    if canonical is None:
+    library = data.load_genon_library(subject, grade, chapter_number)
+    if not library:
         raise HTTPException(status_code=404,
                             detail="No canonical for this chapter yet.")
 
-    # ── identity rule (founder, 2026-07-25): a request whose matrix equals the
-    # canonical's standard row (aggregated across rows of the same duration) is the
-    # canonical — register THAT file as prepared, save no copy. It goes by its
-    # chapter name alone; only amended durations get a small "a min × Y" line.
-    std = (canonical.get("period_rows_snapshot") or [{}])[0]
+    def _std_row(c) -> Dict[int, int]:
+        row = (c.get("period_rows_snapshot") or [{}])[0]
+        try:
+            return {int(row.get("duration", -1)): int(row.get("count", -2))}
+        except (TypeError, ValueError):
+            return {}
+
+    def _count(c) -> int:
+        row = (c.get("period_rows_snapshot") or [{}])[0]
+        try:
+            return int(row.get("count") or 0)
+        except (TypeError, ValueError):
+            return 0
+
+    # ── identity rule (founder, 2026-07-25; generalised to the library 2026-07-31):
+    # a request whose matrix equals ANY variant's standard row IS that variant —
+    # register THAT file as prepared, save no copy.
     agg: Dict[int, int] = {}
     for d_, c_ in matrix:
         agg[d_] = agg.get(d_, 0) + c_
-    if agg == {int(std.get("duration", -1)): int(std.get("count", -2))}:
+    canonical = next((c for c in library if agg == _std_row(c)), None)
+    if canonical is not None:
         filename = canonical["filename"]
         try:
             prepared_plans_repo.mark(tenant_id, user_id, _plan_key(subject, grade, filename),
@@ -884,10 +897,32 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         }
 
     # ── the plan is a CACHE ENTRY, addressed by what determines its bytes ──────────
-    # (chapter, normalised matrix, canonical version, engine version). A hit is
-    # served without partitioning; an accidental double-click is free. Per-teacher
-    # visibility still comes from the register.
-    filename = data.genon_plan_filename(chapter_number, matrix, canonical)
+    # (chapter, normalised matrix, CHOSEN VARIANT's version, engine version). The
+    # next-highest rule decides which variant keys the entry; a hit is served
+    # without serving again. Per-teacher visibility still comes from the register.
+    chosen = next((c for c in reversed(library) if _count(c) >= total_periods),
+                  library[0])
+    filename = data.genon_plan_filename(chapter_number, matrix, chosen)
+
+    def _serve_summary(g: Dict[str, Any]) -> Dict[str, Any]:
+        """The response's serve facts. `compression`/`seam_periods` keys survive
+        for the frontend's sake: regime now names the serve outcome, and there
+        are no seams any more — a sitting is one whole unit."""
+        fill = g.get("slot_fill") or {}
+        regime = ("surrender" if g.get("surrendered_periods")
+                  else "full" if not fill else fill.get("mode"))
+        return {
+            "compression": {"ratio": round(total_periods / (g.get("variant_used") or
+                                                            total_periods), 3),
+                            "regime": regime},
+            "seam_periods": [],
+            "serve": {"variant_used": g.get("variant_used"),
+                      "library": g.get("library"),
+                      "slot_fill": g.get("slot_fill"),
+                      "surrendered_periods": g.get("surrendered_periods"),
+                      "surrender_note": g.get("surrender_note")},
+        }
+
     hit = data.load_saved_plan(subject, grade, filename)
     if hit is not None:
         try:
@@ -902,19 +937,18 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             "chapter_number": chapter_number,
             "chapter_title": hit.get("chapter_title"),
             "periods": total_periods,
-            "compression": hg.get("compression"),
-            "seam_periods": hg.get("mid_unit_openings") or [],
+            **_serve_summary(hg),
             "coverage_note": (hit.get("result") or {}).get("section_coverage_note"),
         }
 
     try:
-        stream = data.load_genon_stream(subject, grade, chapter_number)
-        plan = build_plan(stream, matrix)
+        streams = data.load_genon_streams(subject, grade, chapter_number)
+        plan = serve_plan(streams, matrix)
     except GenonDeclarationError as e:
-        # the canonical is not v1.1-declared: name the content problem instead of
+        # a library canonical is not declared: name the content problem instead of
         # letting it escape as a bare 500 with nothing for anyone to read
         raise HTTPException(status_code=500, detail=f"Canonical cannot be compiled: {e}")
-    except PartitionError as e:
+    except ServeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
     data.save_generated_plan(subject, grade, plan, filename=filename)
@@ -932,8 +966,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         "chapter_number": chapter_number,
         "chapter_title": plan.get("chapter_title"),
         "periods": total_periods,
-        "compression": g["compression"],
-        "seam_periods": g["mid_unit_openings"],
+        **_serve_summary(g),
         "coverage_note": plan["result"].get("section_coverage_note"),
     }
 

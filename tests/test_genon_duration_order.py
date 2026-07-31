@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from aruvi_core.genon.partition import _spread, order_durations  # noqa: E402
+from aruvi_core.genon.serve import _spread, order_durations  # noqa: E402
 
 FAILED = []
 
