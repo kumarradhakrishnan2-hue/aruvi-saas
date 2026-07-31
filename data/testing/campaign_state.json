@@ -1,7 +1,7 @@
 {
   "version": 1,
   "campaign": "aruvi-25-combo-certification",
-  "updated_at": "2026-07-30T11:00:00",
+  "updated_at": "2026-07-30T21:42:02",
   "step0": {
     "campaign": {
       "0.1": {
@@ -138,10 +138,10 @@
         "c5_split": ""
       },
       "C3": {
-        "status": "fail",
-        "by": "Claude",
-        "at": "2026-07-30T00:40:00",
-        "comment": "Full rule-by-rule table at docs/testing_artefacts/c3_social_sciences_ix_ch03.md (LP v1.7 all 16 rules + register + schemas + integrity; assessment v1.2 all 12 rules). PARTITION-FACING ARCHITECTURE FULLY CLEAN: A1 schema, 36 bands tiling 0-50, Rule 14 ids/band_refs, Rule 15 coverage/order, Rule 12/A2 verbatim handoff (0 mismatches), mapping settled, weight architecture EXACT (5/3/3/3/2/2, one Open Task, source-slots resolved right). 4 defects: ARV-D-002 (S2, register in 2 notes: P8 'the previous unit', P10 cites c-codes), ARV-D-003 (S2, MCQ positions 5/6 on B - item-18 recurrence), ARV-D-004 (S3, one phase_ref subset of LO band_refs), ARV-D-005 (S4, two handoff notes 92/93 words). Observations: role mix perfectly uniform 12xH/D/C (watch for Rule-15 anticipation across combos); SI demand plateau; 3 validator title collocation false-positives (ARV-D-001 thread). All fails content-repairable without regeneration."
+        "status": "pass",
+        "by": "Kumar",
+        "at": "2026-07-30T21:42:02",
+        "comment": "Full rule-by-rule table at docs/testing_artefacts/c3_social_sciences_ix_ch03.md (LP v1.7 all 16 rules + register + schemas + integrity; assessment v1.2 all 12 rules). PARTITION-FACING ARCHITECTURE FULLY CLEAN: A1 schema, 36 bands tiling 0-50, Rule 14 ids/band_refs, Rule 15 coverage/order, Rule 12/A2 verbatim handoff (0 mismatches), mapping settled, weight architecture EXACT (5/3/3/3/2/2, one Open Task, source-slots resolved right). 4 defects: ARV-D-002 (S2, register in 2 notes: P8 'the previous unit', P10 cites c-codes), ARV-D-003 (S2, MCQ positions 5/6 on B - item-18 recurrence), ARV-D-004 (S3, one phase_ref subset of LO band_refs), ARV-D-005 (S4, two handoff notes 92/93 words). Observations: role mix perfectly uniform 12xH/D/C (watch for Rule-15 anticipation across combos); SI demand plateau; 3 validator title collocation false-positives (ARV-D-001 thread). All fails content-repairable without regeneration. | STATUS CORRECTED 2026-07-30: C3's exit criterion is 'every rule number appears in the table; every fail becomes a defect' - both satisfied, so the STEP passes. The open S2 defects block the combo SIGN-OFF (section 7), not this step. Previously mis-set to fail."
       }
     },
     "social_sciences/vi": {
@@ -185,17 +185,17 @@
     },
     {
       "id": "ARV-D-003",
-      "severity": "S2",
+      "severity": "S3",
       "step": "C3",
       "title": "MCQ correct-answer clustering: 5/6 on B, 4 consecutive",
       "evidence": "MCQ correct positions across the assessment: B,B,B,B,C,B. Assessment constitution v1.2 Rule 7 prohibition 3 bans same-label runs and single-letter dominance.",
-      "notes": "Founder decisions 2026-07-30: (1) NO deterministic shuffle in generate_canonical.py - post-processing stays content-neutral (Pandora's box). (2) Assessment constitution v1.2 -> v1.3: MCQ position becomes an AFFIRMATIVE ordering convention (alphabetical by option text / ascending for numeric), correct answer takes the label that falls out; ambiguous 'consecutive items' prohibition replaced with 'never adjust the arrangement'. Rationale: convention is signal-free (exploit-proof) though letter counts may still cluster by chance - the audit criterion changes from 'letters spread' to 'convention followed', which is mechanically checkable. Empirical: ch 3's six MCQs under the convention -> B,B,B,C,D,B (chance cluster, compliant). RECHECK: next live generation should show options in convention order; ch 3 MCQ backfill to convention order pending founder call. | 2026-07-30: clause trimmed (mandate 81->43 words, prohibition 32->18) and written in; docs/partition_constitution_rollout.md gains A9 (MCQ option order — a convention, not a choice) with scope = ALL ELEVEN assessment constitutions, no dependency on A2/A6, and sequencing step 5 (do the four MEMORY-item-18 files first). Probe genon/test_mcq_convention.py added (~Rs 6): authors the 6 MCQs from the existing LO rows under the live Rule 7 and checks arrangement mechanically (labels A-D in order; texts alphabetical / numeric ascending; guide letters consistent). AUDIT CRITERION IS ARRANGEMENT, NOT SPREAD. | MCQ PROBE RUN 1 (v1.3, Rs 5.93): 2/6 arranged. Diagnosis: 3 of 4 failures had the distractors correctly sorted with the CORRECT option pulled to A - the B-cluster became an A-cluster (A,B,B,A,C,A vs certified B,B,B,B,C,B). 4th failure: all options shared a long stem ('Because...'), burying the alphabetical key. v1.3 -> v1.4: arrangement named as the LAST step before emitting, correct option explicitly included and 'never led with', key = 'first word at which they differ'. Rollout A9 updated with the quote and the two failure modes. Re-probe pending.",
+      "notes": "Founder decisions 2026-07-30: (1) NO deterministic shuffle in generate_canonical.py - post-processing stays content-neutral (Pandora's box). (2) Assessment constitution v1.2 -> v1.3: MCQ position becomes an AFFIRMATIVE ordering convention (alphabetical by option text / ascending for numeric), correct answer takes the label that falls out; ambiguous 'consecutive items' prohibition replaced with 'never adjust the arrangement'. Rationale: convention is signal-free (exploit-proof) though letter counts may still cluster by chance - the audit criterion changes from 'letters spread' to 'convention followed', which is mechanically checkable. Empirical: ch 3's six MCQs under the convention -> B,B,B,C,D,B (chance cluster, compliant). RECHECK: next live generation should show options in convention order; ch 3 MCQ backfill to convention order pending founder call. | 2026-07-30: clause trimmed (mandate 81->43 words, prohibition 32->18) and written in; docs/partition_constitution_rollout.md gains A9 (MCQ option order — a convention, not a choice) with scope = ALL ELEVEN assessment constitutions, no dependency on A2/A6, and sequencing step 5 (do the four MEMORY-item-18 files first). Probe genon/test_mcq_convention.py added (~Rs 6): authors the 6 MCQs from the existing LO rows under the live Rule 7 and checks arrangement mechanically (labels A-D in order; texts alphabetical / numeric ascending; guide letters consistent). AUDIT CRITERION IS ARRANGEMENT, NOT SPREAD. | MCQ PROBE RUN 1 (v1.3, Rs 5.93): 2/6 arranged. Diagnosis: 3 of 4 failures had the distractors correctly sorted with the CORRECT option pulled to A - the B-cluster became an A-cluster (A,B,B,A,C,A vs certified B,B,B,B,C,B). 4th failure: all options shared a long stem ('Because...'), burying the alphabetical key. v1.3 -> v1.4: arrangement named as the LAST step before emitting, correct option explicitly included and 'never led with', key = 'first word at which they differ'. Rollout A9 updated with the quote and the two failure modes. Re-probe pending. | FOUNDER VERDICT 2026-07-30: accept and watch. Imperfect arrangement still delivers the variability the change was for (B x5 -> A3/B2/C1). Clause stands at v1.4, ported via rollout A9. WATCH ACROSS COMBOS: not just the arrangement rate but A's share - partial compliance clusters at A because the model leads with the answer, and an A-bias is a signal a student could learn, unlike a true arrangement. Revisit if A stays high over the next few chapters.",
       "combo": "social_sciences/ix",
       "owner": "Kumar",
-      "status": "fixing",
+      "status": "accepted",
       "opened": "2026-07-30T00:40:00",
-      "closed": null,
-      "at": "2026-07-30T11:00:00"
+      "closed": "2026-07-30T13:30:00",
+      "at": "2026-07-30T13:30:00"
     },
     {
       "id": "ARV-D-004",
@@ -224,6 +224,34 @@
       "opened": "2026-07-30T00:40:00",
       "closed": null,
       "at": "2026-07-30T00:40:00"
+    },
+    {
+      "id": "ARV-D-006",
+      "severity": "S4",
+      "combo": "campaign",
+      "step": "C3",
+      "owner": "Kumar",
+      "status": "open",
+      "opened": "2026-07-30T13:30:00",
+      "closed": null,
+      "at": "2026-07-30T13:30:00",
+      "title": "role_handoff carries no information - 33/33 units are positionally derivable",
+      "evidence": "ch 3: H-D-C in all 12 units. ch 5: H-D-D-C in all 21. Every emitted role equals the positional default (first band = hook, last = consolidation, rest = development), zero deviations. The engine's uses are all ordinal too: CUT_COST makes unit boundaries free and post-opening cuts expensive; DEV_PACE_FLOOR protects middle bands; DEMOTE_BELOW demotes trailing ones.",
+      "notes": "Either the model shapes bands to the H..C arc (silent breach of Rule 15 prohibition 1) or the arc is universal (making the classification redundant) - both point the same way. PROPOSAL for the rollout: exception-only emission - the engine derives the positional default and Rule 15 asks for entries ONLY where a unit genuinely departs (all-development unit, two consolidations, mid-unit re-hook). Near-zero tokens, judgement still capturable, and a subject that never overrides tells us something. Decide before porting A3 to the other ten stages."
+    },
+    {
+      "id": "ARV-D-007",
+      "severity": "S4",
+      "combo": "campaign",
+      "step": "C3",
+      "owner": "Kumar",
+      "status": "accepted",
+      "opened": "2026-07-30T13:30:00",
+      "closed": "2026-07-30T13:30:00",
+      "at": "2026-07-30T13:30:00",
+      "title": "Band granularity: count is invariant to period duration - measure, do not legislate yet",
+      "evidence": "367 units across 45 plans: 3 bands=45, 4=228, 5=84, 6=10 (mean 4.16), essentially unchanged from 30-min to 60-min periods, so band LENGTH absorbs all duration variation. Largest band occupies 53-73% of a teacher's sitting at short durations. BUT ch 3 (3 bands, max 25 min) partitioned cleanly at 115/85/75/55% and at 30- and 35-min durations: correct regimes, coverage note fired, never a single-band sitting, minimum 2 bands per sitting. ch 5 (4 bands) behaves the same (67% vs 73%), so 3->4 buys ~6 points.",
+      "notes": "FOUNDER DECISION 2026-07-30: no minutes ceiling. A 25-30% cap would outlaw genuinely indivisible long activities (science practical, extended writing) and manufacture 'Part 1 / Part 2' splits; a 25% cap is also degenerate at 4 bands (forces all bands exactly equal). A 3-5 count guidance was considered and set aside as descriptive - it already covers 97.3% of observed units and does not bind distribution (3 bands can be 5/20/25). ACTION: measure instead - bands/unit and largest-band-share added to the provenance panel; C5/C7 across combos decide whether fat bands actually produce badly cut plans."
     }
   ]
 }
