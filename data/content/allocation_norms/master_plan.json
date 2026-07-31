@@ -8,7 +8,7 @@
       "IX": 50
     },
     "allocation_method": "largest remainder over chapter effort weights (same as Allocate.jsx / api allocator)",
-    "floor_definition": "unit-dropping begins when teacher_minutes/canonical_minutes < 0.6; floor_minutes = 0.6 x recommended_periods x standard_duration",
+    "floor_definition": "unit-dropping begins when teacher_minutes/canonical_minutes < 0.6; floor_minutes = 0.6 x recommended_periods x standard_duration; floor_periods_at_standard = floor_minutes / standard_duration rounded to the NEAREST whole period (was ceil; corrected 2026-07-31, founder decision)",
     "skipped": [
       "english X: budget 160 but no chapters in workbook",
       "mathematics X: budget 210 but no chapters in workbook",
@@ -44,7 +44,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -55,7 +55,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -77,7 +77,7 @@
           "recommended_periods": 4,
           "canonical_minutes": 160,
           "floor_minutes": 96.0,
-          "floor_periods_at_standard": 3,
+          "floor_periods_at_standard": 2,
           "placeholder": false
         },
         {
@@ -99,7 +99,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -121,7 +121,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -132,7 +132,7 @@
           "recommended_periods": 4,
           "canonical_minutes": 160,
           "floor_minutes": 96.0,
-          "floor_periods_at_standard": 3,
+          "floor_periods_at_standard": 2,
           "placeholder": false
         },
         {
@@ -143,7 +143,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -154,7 +154,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -176,7 +176,7 @@
           "recommended_periods": 4,
           "canonical_minutes": 160,
           "floor_minutes": 96.0,
-          "floor_periods_at_standard": 3,
+          "floor_periods_at_standard": 2,
           "placeholder": false
         },
         {
@@ -187,7 +187,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -198,7 +198,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -230,7 +230,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -285,7 +285,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -427,7 +427,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -449,7 +449,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -547,7 +547,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -558,7 +558,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -569,7 +569,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -591,7 +591,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -624,7 +624,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -635,7 +635,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -678,7 +678,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -700,7 +700,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -711,7 +711,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -722,7 +722,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -755,7 +755,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -777,7 +777,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -810,7 +810,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -821,7 +821,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -864,7 +864,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -897,7 +897,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -908,7 +908,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -930,7 +930,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -974,7 +974,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1007,7 +1007,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         }
       ]
@@ -1050,7 +1050,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1061,7 +1061,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 350,
           "floor_minutes": 210.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -1094,7 +1094,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 850,
           "floor_minutes": 510.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -1105,7 +1105,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 350,
           "floor_minutes": 210.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -1138,7 +1138,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1171,7 +1171,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 450,
           "floor_minutes": 270.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1182,7 +1182,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 450,
           "floor_minutes": 270.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1193,7 +1193,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 450,
           "floor_minutes": 270.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         }
       ]
@@ -1214,7 +1214,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -1236,7 +1236,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1258,7 +1258,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1280,7 +1280,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1313,7 +1313,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1346,7 +1346,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1411,7 +1411,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1455,7 +1455,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1477,7 +1477,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1542,7 +1542,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1641,7 +1641,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1685,7 +1685,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1739,7 +1739,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1750,7 +1750,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -1783,7 +1783,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -1805,7 +1805,7 @@
           "recommended_periods": 24,
           "canonical_minutes": 960,
           "floor_minutes": 576.0,
-          "floor_periods_at_standard": 15,
+          "floor_periods_at_standard": 14,
           "placeholder": false
         },
         {
@@ -1848,7 +1848,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1859,7 +1859,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1870,7 +1870,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1892,7 +1892,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1903,7 +1903,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1914,7 +1914,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -1936,7 +1936,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1947,7 +1947,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1958,7 +1958,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -1969,7 +1969,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -1980,7 +1980,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -1991,7 +1991,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         }
       ]
@@ -2012,7 +2012,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -2023,7 +2023,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2056,7 +2056,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2078,7 +2078,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 765,
           "floor_minutes": 459.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2089,7 +2089,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 630,
           "floor_minutes": 378.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2100,7 +2100,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 630,
           "floor_minutes": 378.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2111,7 +2111,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2122,7 +2122,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 765,
           "floor_minutes": 459.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2155,7 +2155,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 630,
           "floor_minutes": 378.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         }
       ]
@@ -2187,7 +2187,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 600,
           "floor_minutes": 360.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2198,7 +2198,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 950,
           "floor_minutes": 570.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -2209,7 +2209,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2231,7 +2231,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2253,7 +2253,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 600,
           "floor_minutes": 360.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2395,7 +2395,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2406,7 +2406,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2417,7 +2417,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2461,7 +2461,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2472,7 +2472,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2483,7 +2483,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         }
       ]
@@ -2504,7 +2504,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -2537,7 +2537,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2570,7 +2570,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2581,7 +2581,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2592,7 +2592,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2625,7 +2625,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         }
       ]
@@ -2657,7 +2657,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 765,
           "floor_minutes": 459.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2668,7 +2668,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 405,
           "floor_minutes": 243.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -2701,7 +2701,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2723,7 +2723,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 630,
           "floor_minutes": 378.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -2734,7 +2734,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 765,
           "floor_minutes": 459.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -2767,7 +2767,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2778,7 +2778,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         }
       ]
@@ -2832,7 +2832,7 @@
           "recommended_periods": 22,
           "canonical_minutes": 1100,
           "floor_minutes": 660.0,
-          "floor_periods_at_standard": 14,
+          "floor_periods_at_standard": 13,
           "placeholder": false
         },
         {
@@ -2865,7 +2865,7 @@
           "recommended_periods": 22,
           "canonical_minutes": 1100,
           "floor_minutes": 660.0,
-          "floor_periods_at_standard": 14,
+          "floor_periods_at_standard": 13,
           "placeholder": false
         },
         {
@@ -2876,7 +2876,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 600,
           "floor_minutes": 360.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -2887,7 +2887,7 @@
           "recommended_periods": 22,
           "canonical_minutes": 1100,
           "floor_minutes": 660.0,
-          "floor_periods_at_standard": 14,
+          "floor_periods_at_standard": 13,
           "placeholder": false
         },
         {
@@ -2931,7 +2931,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 450,
           "floor_minutes": 270.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         }
       ]
@@ -2952,7 +2952,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -2974,7 +2974,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -3007,7 +3007,7 @@
           "recommended_periods": 24,
           "canonical_minutes": 960,
           "floor_minutes": 576.0,
-          "floor_periods_at_standard": 15,
+          "floor_periods_at_standard": 14,
           "placeholder": false
         },
         {
@@ -3018,7 +3018,7 @@
           "recommended_periods": 22,
           "canonical_minutes": 880,
           "floor_minutes": 528.0,
-          "floor_periods_at_standard": 14,
+          "floor_periods_at_standard": 13,
           "placeholder": false
         },
         {
@@ -3062,7 +3062,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3095,7 +3095,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         }
       ]
@@ -3116,7 +3116,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3127,7 +3127,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 360,
           "floor_minutes": 216.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -3149,7 +3149,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3160,7 +3160,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3226,7 +3226,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -3258,7 +3258,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 540,
           "floor_minutes": 324.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -3444,7 +3444,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 600,
           "floor_minutes": 360.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {
@@ -3455,7 +3455,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 950,
           "floor_minutes": 570.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3477,7 +3477,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 950,
           "floor_minutes": 570.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3488,7 +3488,7 @@
           "recommended_periods": 9,
           "canonical_minutes": 450,
           "floor_minutes": 270.0,
-          "floor_periods_at_standard": 6,
+          "floor_periods_at_standard": 5,
           "placeholder": false
         },
         {
@@ -3499,7 +3499,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 350,
           "floor_minutes": 210.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -3510,7 +3510,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 350,
           "floor_minutes": 210.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -3521,7 +3521,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3532,7 +3532,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3543,7 +3543,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3554,7 +3554,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3565,7 +3565,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3576,7 +3576,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3587,7 +3587,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3598,7 +3598,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 700,
           "floor_minutes": 420.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": true
         },
         {
@@ -3685,7 +3685,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -3707,7 +3707,7 @@
           "recommended_periods": 7,
           "canonical_minutes": 280,
           "floor_minutes": 168.0,
-          "floor_periods_at_standard": 5,
+          "floor_periods_at_standard": 4,
           "placeholder": false
         },
         {
@@ -3740,7 +3740,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -3783,7 +3783,7 @@
           "recommended_periods": 17,
           "canonical_minutes": 680,
           "floor_minutes": 408.0,
-          "floor_periods_at_standard": 11,
+          "floor_periods_at_standard": 10,
           "placeholder": false
         },
         {
@@ -3827,7 +3827,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3892,7 +3892,7 @@
           "recommended_periods": 14,
           "canonical_minutes": 560,
           "floor_minutes": 336.0,
-          "floor_periods_at_standard": 9,
+          "floor_periods_at_standard": 8,
           "placeholder": false
         },
         {
@@ -3947,7 +3947,7 @@
           "recommended_periods": 19,
           "canonical_minutes": 760,
           "floor_minutes": 456.0,
-          "floor_periods_at_standard": 12,
+          "floor_periods_at_standard": 11,
           "placeholder": false
         },
         {
@@ -3980,7 +3980,7 @@
           "recommended_periods": 12,
           "canonical_minutes": 480,
           "floor_minutes": 288.0,
-          "floor_periods_at_standard": 8,
+          "floor_periods_at_standard": 7,
           "placeholder": false
         },
         {

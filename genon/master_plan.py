@@ -90,7 +90,7 @@ for key in sorted(chapters, key=lambda k: (k[0], ROMAN[k[1]])):
             "recommended_periods": periods,
             "canonical_minutes": canonical_min,
             "floor_minutes": round(floor_min, 1),
-            "floor_periods_at_standard": math.ceil(floor_min / dur),
+            "floor_periods_at_standard": round(floor_min / dur),  # nearest, not ceil (founder, 2026-07-31)
             "placeholder": "Placeholder" in str(title),
         })
     plan[f"{subject}|{cls}"] = {

@@ -440,6 +440,7 @@ standing spec for this architecture — read it before touching genon).
   unit may be terminal or precede a companion variant's unit — this ban is GLOBAL, not a tail
   concern), calendar time (Calendar Purge doctrine). Backward references freed; content-named
   continuity stays as best practice. Rollout brief's A5/A7 entry now ports v1.10.
+- **master_plan floors corrected to nearest-whole rounding (founder, same day):** floor_periods_at_standard was ceil(floor_minutes/duration); now round() — 143 of 339 chapter rows changed (SS·IX ch3 8→7, ch5 14→13); genon/master_plan.py fixed alongside so regeneration holds. Solver's demand inputs are both calibrated data now: recommended_periods (weight centre, via variant_solver.demand_weights) + floor_periods_at_standard (the C anchor). ch3 re-solves to {12, 9, 7}, spans {9:1, 7:2}, full coverage 7–12. Note the floor is still 0.6×rec by definition — the ratio itself is partition-era and open to pedagogical re-setting.
 - **Open (founder):** floor + σ per subject·stage; 4th-variant threshold for big chapters
   (ch 5 is 21 units); adaptation-table UI (deferred); retire `compression`/`seam_periods`
   response keys at the next web pass; apply §9 to testing.md itself.

@@ -23,21 +23,41 @@ from __future__ import annotations
 
 
 def _even_ranges(m, count, closing_span):
-    """Model a compact variant: contiguous unit ranges over m sections, closing
-    unit spanning closing_span, the rest as even as arithmetic allows."""
-    closing_span = max(1, min(closing_span, m - (count - 1)))
-    body = m - closing_span
+    """Model a compact variant: contiguous, non-decreasing unit ranges over m
+    sections, closing unit spanning closing_span, the body as even as the
+    arithmetic allows. When the body has more units than sections (the top
+    canonical itself does this — 12 units over 9 sections), sections are SHARED:
+    several consecutive units sit on one section, exactly as Rule 4 permits."""
+    closing_span = max(1, min(closing_span, m))
     n = count - 1
     if n <= 0:
         return [(0, m - 1)]
-    base, rem = divmod(body, n)
-    ranges, lo = [], 0
-    for i in range(n):
-        w = base + (1 if i < rem else 0)
-        ranges.append((lo, lo + w - 1))
-        lo += w
-    ranges.append((lo, m - 1))
+    body = m - closing_span
+    ranges = []
+    if body <= 0:
+        ranges = [(0, 0)] * n                    # degenerate: floor below sense
+    elif n >= body:
+        base, rem = divmod(n, body)              # units share sections
+        for si in range(body):
+            k = base + (1 if si < rem else 0)
+            ranges.extend([(si, si)] * k)
+    else:
+        base, rem = divmod(body, n)              # units span section runs
+        lo = 0
+        for i in range(n):
+            w = base + (1 if i < rem else 0)
+            ranges.append((lo, lo + w - 1))
+            lo += w
+    ranges.append((m - closing_span, m - 1))
     return ranges
+
+
+def demand_weights(recommended, floor, top, spread=2.0):
+    """Gaussian demand profile over [floor, top], centred on the master-plan
+    recommendation — where teacher requests will cluster."""
+    import math
+    return {x: math.exp(-((x - recommended) ** 2) / (2 * spread ** 2))
+            for x in range(floor, top + 1)}
 
 
 def outcome_for(x, counts_ranges, m):
