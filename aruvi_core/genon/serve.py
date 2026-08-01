@@ -187,6 +187,16 @@ def choose_variant(streams, requested):
 def fill_slot(streams, chosen, requested, registry):
     """The slot-X ladder. Returns a dict describing the fill, or a truncation.
 
+    FRONTIER ARITHMETIC (founder ruling, 2026-07-31): what the prefix has
+    covered is measured by its first-visit frontier — the furthest registry
+    section any prefix unit reaches. Backward-anchored synthesis sittings (ch 5
+    authors three of them) revisit sections without advancing the frontier, so
+    the UNCOVERED span is always a registry suffix even when unit anchors are
+    not monotonic. When the frontier already stands at the last section, the
+    withheld tail is synthesis-only: coverage is complete and slot X borrows a
+    companion variant's closing synthesis (nearest in scale), or hands the
+    synthesis material over.
+
     Candidates are the CLOSING units of the other variants only — a fill is a
     designed consolidation from a denser plan, never a skip inside the chosen
     plan (the founder's 11-vs-12 ruling: with no denser closing unit available,
@@ -194,11 +204,26 @@ def fill_slot(streams, chosen, requested, registry):
     ridx = {_norm(a): i for i, a in enumerate(registry)}
     last = len(registry) - 1
     units = chosen["units"]
-    missing_units = units[requested - 1:]
     ranges = [unit_range(u, ridx) for u in units]
     if any(r is None for r in ranges):
         raise ServeError("SERVE INVALID: chosen variant has units outside its own registry")
-    lo = ranges[requested - 1][0]
+    frontier = max((r[1] for r in ranges[:requested - 1]), default=-1)
+    lo = frontier + 1
+
+    if lo > last:
+        # prefix covers every section — the withheld tail is synthesis-only
+        others = [s for s in streams if s is not chosen]
+        if others:
+            c = min(others, key=lambda s: (abs(len(s["units"]) - requested),
+                                           len(s["units"])))
+            return {"mode": "synthesis", "stream": c, "unit": c["units"][-1],
+                    "borrowed_from": len(c["units"]),
+                    "overlap_sections": [], "uncovered_sections": [],
+                    "withheld_units": [u["unit"] for u in units[requested - 1:]]}
+        return {"mode": "truncation", "stream": chosen, "unit": units[requested - 1],
+                "borrowed_from": None, "overlap_sections": [],
+                "uncovered_sections": [], "synthesis_only": True,
+                "withheld_units": [u["unit"] for u in units[requested:]]}
 
     exact_or_super, suffixes = [], []
     for s in streams:
@@ -230,18 +255,15 @@ def fill_slot(streams, chosen, requested, registry):
         return {"mode": "suffix", "stream": c["stream"], "unit": c["unit"],
                 "borrowed_from": c["variant_count"],
                 "overlap_sections": [], "uncovered_sections": list(c["uncovered"])}
-    # truncation — serve the chosen variant's own unit X, withhold the tail
-    withheld = units[requested:]
-    uncov, seen = [], set()
-    for u in withheld:
-        for a in _unit_anchors(u):
-            if _norm(a) not in seen:
-                seen.add(_norm(a))
-                uncov.append(a)
+    # truncation — serve the chosen variant's own unit X, withhold the tail.
+    # Uncovered = registry sections beyond the frontier INCLUDING unit X's reach;
+    # when that is empty the withheld tail is synthesis-only and says so.
+    f2 = max(frontier, ranges[requested - 1][1])
+    uncov = list(registry[f2 + 1:])
     return {"mode": "truncation", "stream": chosen, "unit": units[requested - 1],
             "borrowed_from": None, "overlap_sections": [],
-            "uncovered_sections": uncov,
-            "withheld_units": [u["unit"] for u in withheld]}
+            "uncovered_sections": uncov, "synthesis_only": not uncov,
+            "withheld_units": [u["unit"] for u in units[requested:]]}
 
 
 # ── the serve itself ─────────────────────────────────────────────────────────
@@ -372,12 +394,22 @@ def serve_plan(streams, matrix):
                 + "; ".join(fill["uncovered_sections"])
                 + " could not be scheduled — share this material for guided "
                   "self-study or homework. The closing sitting completes the chapter.")
-        elif fill["mode"] == "truncation":
+        elif fill["mode"] == "synthesis":
             coverage_note = (
-                "Time budget short of the chapter's full span: "
-                + "; ".join(fill["uncovered_sections"])
-                + " could not be scheduled. The material is included for you to "
-                  "share — cover it as homework or found time.")
+                "Every section is covered; the time budget trims the chapter's "
+                "closing synthesis to one sitting.")
+        elif fill["mode"] == "truncation":
+            if fill.get("synthesis_only"):
+                coverage_note = (
+                    "Every section is covered; the chapter's remaining synthesis "
+                    "sittings could not be scheduled — their material is included "
+                    "for you to draw on.")
+            else:
+                coverage_note = (
+                    "Time budget short of the chapter's full span: "
+                    + "; ".join(fill["uncovered_sections"])
+                    + " could not be scheduled. The material is included for you to "
+                      "share — cover it as homework or found time.")
     surrender_note = None
     if surrendered:
         surrender_note = ("%d period(s) (%d minutes) exceed this chapter's fullest "
@@ -420,6 +452,7 @@ def serve_plan(streams, matrix):
                 "borrowed_from": fill.get("borrowed_from"),
                 "overlap_sections": fill.get("overlap_sections") or [],
                 "uncovered_sections": fill.get("uncovered_sections") or [],
+                "synthesis_only": bool(fill.get("synthesis_only")),
                 "withheld_units": fill.get("withheld_units") or [],
             }),
             "surrendered_periods": surrendered,

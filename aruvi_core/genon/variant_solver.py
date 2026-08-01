@@ -64,15 +64,22 @@ def outcome_for(x, counts_ranges, m):
     """Serve outcome for a request of x sittings against modelled variants.
 
     counts_ranges: dict count -> list of (lo, hi) unit ranges (top's are real).
-    Returns 'full' | 'partial' | 'truncation' (partial = suffix fill exists)."""
+    FRONTIER arithmetic (2026-07-31): the prefix's coverage is its first-visit
+    frontier, so backward-anchored synthesis tails don't distort the missing
+    span. Returns 'full' | 'partial' | 'truncation'."""
     counts = sorted(counts_ranges, reverse=True)
     top = counts[0]
     if x >= top or x in counts_ranges:
         return "full"                      # exact variant hit (or surrender above top)
     y = min(c for c in counts if c >= x)
     ry = counts_ranges[y]
-    lo_missing = ry[x - 1][0]
-    closers = [counts_ranges[c][-1][0] for c in counts if c != y]
+    frontier = max((r[1] for r in ry[:x - 1]), default=-1)
+    lo_missing = frontier + 1
+    if lo_missing > m - 1:
+        # synthesis-only tail: a companion variant's closing synthesis serves
+        return "full" if len(counts) > 1 else "partial"
+    closers = [counts_ranges[c][-1] for c in counts if c != y]
+    closers = [r[0] for r in closers if r[1] == m - 1]   # must close the chapter
     if any(clo <= lo_missing for clo in closers):
         return "full"                      # exact or superset fill
     if closers:

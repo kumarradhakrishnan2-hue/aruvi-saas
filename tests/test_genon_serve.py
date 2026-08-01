@@ -168,3 +168,33 @@ except ServeError:
     pass
 
 print("test_genon_serve: all assertions passed")
+
+# ── frontier arithmetic: synthesis tails (founder ruling, 2026-07-31) ────────
+# a 12-unit top over 9 sections whose last three units are backward-anchored
+# synthesis sittings, plus a 7-unit companion over the SAME registry
+SYN = _mk_stream(12, [(i, i) for i in range(9)] + [(5, 5), (3, 3), (0, 0)], "S")
+D = _mk_stream(7, [(0, 0), (1, 1), (2, 2), (3, 4), (5, 6), (7, 7), (8, 8)], "D")
+
+p = serve_plan([SYN], [(50, 11)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "truncation" and g["uncovered_sections"] == [], g
+assert "synthesis" in p["result"]["section_coverage_note"], "coverage complete, synthesis named"
+
+p = serve_plan([SYN, D], [(50, 11)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "synthesis" and g["borrowed_from"] == 7, g
+assert periods(p)[10]["activity_title"] == "D U7", "borrowed closing synthesis in slot 11"
+assert "closing synthesis" in p["result"]["section_coverage_note"]
+
+# X=9 against SYN alone: unit 9 completes coverage, withheld 10-12 are synthesis
+p = serve_plan([SYN], [(50, 9)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "truncation" and g["synthesis_only"] and g["uncovered_sections"] == [], g
+assert "synthesis" in p["result"]["section_coverage_note"]
+
+# X=8 against SYN alone: real coverage gap — Sec 09 unreached, named
+p = serve_plan([SYN], [(50, 8)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "truncation" and g["uncovered_sections"] == ["Sec 09"], g
+
+print("frontier/synthesis assertions passed")

@@ -358,6 +358,9 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
             c["recommended_periods"], c["recommended_source"] = c["ncf_estimated_periods"], "ncf"
         else:
             c["recommended_periods"], c["recommended_source"] = None, None
+        # the variant plan (genon/variant_plans.py): which variants to author/serve —
+        # counts (variant 1 = the top), mandated closing spans, provisional flag
+        c["variant_plan"] = data.master_variant_plan(subject, grade, c["chapter_number"])
 
     return {"subject": subject, "grade": grade, "chapters": chapters,
             "syllabus_total_weight": syllabus_total_weight,

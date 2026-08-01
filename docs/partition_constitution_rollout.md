@@ -98,9 +98,13 @@ target shape any more — the conversion got smaller). The compiler reads exactl
   face.) **Per-subject decision at prep:** what the registry lists where the section
   model is non-obvious — English's split-chapter/spine model needs its registry defined
   at its P-prep before variants are authored.
-- **V3** — the closing mandate: a compact variant's final unit covers exactly its
-  mandated span and closes the chapter as a real arc; if it cannot be closed coherently,
-  say so in output (feeds σ back to the solver).
+- **V3** — the closing mandate: a compact variant's final unit is a closing synthesis
+  ANCHORED to exactly its mandated span (the last k registry sections — the anchor must
+  list them so the fill ladder can see it; the synthesis may draw on the whole chapter);
+  if it cannot be closed coherently, say so in output (feeds σ back to the solver).
+  Coverage is measured by FIRST-VISIT FRONTIER, so backward-anchored synthesis tails
+  (ch 5 authors three) are legal — V2 mandates first-visit order, not per-unit
+  monotonicity.
 - **V4** — per-variant assessment, consuming that variant's own coverage handoff; no
   cross-variant references.
 

@@ -266,6 +266,19 @@ def master_recommended_periods(subject: str, grade: str) -> Dict[Any, int]:
     return out
 
 
+def master_variant_plan(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
+    """The chapter's variant plan from master_plan.json (genon/variant_plans.py,
+    2026-07-31): the variant counts to author (variant 1 = counts[0] = the top,
+    2, 3 …), each compact variant's mandated closing-synthesis span, sigma, and
+    whether the row is provisional (modeled top) or finalized (solved on the
+    authored canonical's real unit ranges). None when no row exists."""
+    combo = master_combo(subject, grade)
+    for row in (combo or {}).get("chapters", []) or []:
+        if row.get("chapter") == chapter_number:
+            return row.get("variant_plan")
+    return None
+
+
 # ── genon canonicals (relocated 2026-07-25, founder decision) ───────────────────
 # data/content/ is the home of ALL crucial server content, and saved_plans/ is the
 # home of lesson plans — so the certified canonicals live THERE, as ordinary

@@ -441,6 +441,28 @@ standing spec for this architecture — read it before touching genon).
   concern), calendar time (Calendar Purge doctrine). Backward references freed; content-named
   continuity stays as best practice. Rollout brief's A5/A7 entry now ports v1.10.
 - **master_plan floors corrected to nearest-whole rounding (founder, same day):** floor_periods_at_standard was ceil(floor_minutes/duration); now round() — 143 of 339 chapter rows changed (SS·IX ch3 8→7, ch5 14→13); genon/master_plan.py fixed alongside so regeneration holds. Solver's demand inputs are both calibrated data now: recommended_periods (weight centre, via variant_solver.demand_weights) + floor_periods_at_standard (the C anchor). ch3 re-solves to {12, 9, 7}, spans {9:1, 7:2}, full coverage 7–12. Note the floor is still 0.6×rec by definition — the ratio itself is partition-era and open to pedagogical re-setting.
+- **Frontier arithmetic (founder ruling, same day):** ch 5's tail exposed backward-anchored
+  SYNTHESIS sittings (units 19-21 revisit Economy/Religious Life/the opening section) — the
+  missing-span-as-suffix premise broke. Ruling: keep synthesis tails legal; coverage is the
+  prefix's FIRST-VISIT FRONTIER (uncovered span stays a registry suffix); when the frontier
+  reaches the last section the withheld tail is synthesis-only — slot X borrows a companion
+  variant's closing synthesis (new fill mode "synthesis", nearest-in-scale) or truncates with
+  an every-section-is-covered note. V2 = first-visit order (not per-unit monotonicity); V3 =
+  closing synthesis anchored to the mandated last-k sections. serve.py + variant_solver.py +
+  tests updated (all green, incl. synthesis-tail cases); both briefs carry the ruling.
+  Ch 5 re-solved trustworthily: {21, 17, 13}, spans {17:1, 13:1}, FULL coverage 13-21 at
+  sigma=2 — NO fourth variant needed even for the largest chapter; ch 3: {12, 9, 7} full 7-12.
+- **Industrial variant plans (same day):** genon/variant_plans.py annotates EVERY chapter
+  row of master_plan.json with variant_plan {sigma, counts, closing_spans, provisional,
+  basis, registry_sections, full_coverage, partials_at} — 2 rows solved on authored
+  canonicals (SS·IX ch3/ch5), 337 provisional (modeled top, 1 section/unit; re-run the
+  script after each top canonical certifies to finalize its row in place). Small chapters
+  degrade gracefully (2-variant and 1-variant plans where recommended−floor < 3). API:
+  data.master_variant_plan() + variant_plan on every chapter in GET /subjects/{s}/{g}/chapters.
+  SIGMA table in the script (default 2, per-stage overrides) is the founder's dial. Wide
+  provisional rows (e.g. SS·IX ch4: rec 19, floor 11) show midband partials — expected to
+  improve on real registries (synthesis tails shrink effective section count) or resolve via
+  the 4th-variant/sigma decision per stage.
 - **Open (founder):** floor + σ per subject·stage; 4th-variant threshold for big chapters
   (ch 5 is 21 units); adaptation-table UI (deferred); retire `compression`/`seam_periods`
   response keys at the next web pass; apply §9 to testing.md itself.

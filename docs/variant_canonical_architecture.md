@@ -121,12 +121,25 @@ the scheduling note, exactly as before.
 ## 4. Section arithmetic — the join key
 
 The chapter's ordered section list is the library's shared registry (the chapter summary
-is its registry of record). Every variant's units are contiguous, section-aligned
-partitions of that SAME list, with `section_anchor` strings drawn verbatim from it.
-Cross-variant matching is then index arithmetic: a candidate closing unit is exact /
-superset / suffix purely by where its range starts relative to the missing span. This is
-the one new serialization mandate the whole scheme rests on (V2 in §7); without verbatim
-anchors the ladder fails on spelling drift, and with them it is trivial and certifiable.
+is its registry of record). Every variant's units are section-aligned against that SAME
+list, with `section_anchor` strings drawn verbatim from it. Cross-variant matching is
+then index arithmetic: a candidate closing unit is exact / superset / suffix purely by
+where its range starts relative to the missing span. This is the one new serialization
+mandate the whole scheme rests on (V2 in §7); without verbatim anchors the ladder fails
+on spelling drift, and with them it is trivial and certifiable.
+
+**Frontier arithmetic (founder ruling, 2026-07-31).** Coverage is measured by the
+prefix's FIRST-VISIT FRONTIER — the furthest registry section any served unit reaches —
+not by per-unit anchor order. The ch 5 canonical's tail proved why: its last three units
+are backward-anchored synthesis sittings ("Early Indian Economy: Synthesis", "Unity in
+Diversity", "Chapter Synthesis" anchored to the opening section) — legitimate authoring
+that revisits sections without advancing the frontier. Under frontier arithmetic the
+uncovered span is always a registry suffix even with such tails; when the frontier
+already stands at the final section, the withheld tail is synthesis-only — coverage is
+complete, and slot X borrows a companion variant's closing synthesis (nearest in scale)
+or, in a one-variant library, hands the synthesis material over with a note that says
+exactly that. So V2 mandates first-visit ORDER (new sections appear in registry order),
+not per-unit monotonicity — synthesis tails remain legal and welcome.
 
 ## 5. Reverse deduction — solving for the variant set
 
@@ -209,10 +222,13 @@ workflow testing.md already defines. Ready-to-port requirement blocks:
   range of it; multi-section units join anchors with " / " in list order. (Rule 3/4 already
   imply most of this; V2 makes the verbatim-string and contiguity requirements explicit,
   because the fill ladder is string arithmetic on them.)
-- **V3 · The closing mandate.** The final unit of a compact variant covers exactly its
-  mandated span and closes the chapter — synthesis, resolution — as a real unit-arc, not a
-  summary lecture. If the mandated span cannot be closed coherently, the author must say so
-  in generation output rather than comply badly (that verdict feeds σ back to the solver).
+- **V3 · The closing mandate.** The final unit of a compact variant is a CLOSING
+  SYNTHESIS anchored to exactly its mandated span — the last k registry sections — and
+  closes the chapter as a real unit-arc, not a summary lecture. (The anchor must list
+  those k sections so the fill ladder can see it; the synthesis may of course draw on
+  the whole chapter, as ch 5's authored closers do.) If the mandated span cannot be
+  closed coherently, the author must say so in generation output rather than comply
+  badly (that verdict feeds σ back to the solver).
 - **V4 · Per-variant assessment.** Each variant's assessment run consumes ITS OWN coverage
   handoff; item counts scale with the variant's unit count per the existing assessment
   constitution rules. No cross-variant references of any kind.
