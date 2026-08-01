@@ -50,7 +50,7 @@ check("longest duration leads the label", "40m10-30m4" in key(5, [(30, 4), (40, 
       key(5, [(30, 4), (40, 10)]))
 check("zero/negative rows are ignored",
       key(5, [(50, 17), (0, 9), (45, 0)]) == k17)
-check("readable shape", k17 == "ch_05_50m17_e08_c20260726112240.json", k17)
+check("readable shape", k17 == "ch_05_50m17_e10_c20260726112240.json", k17)
 
 # ── 2. every component moves the key ───────────────────────────────────────
 check("chapter changes the key", key(6, [(50, 17)]) != k17)
@@ -74,7 +74,7 @@ if live is None:
     print("SKIP  live-canonical checks (no ch 5 canonical on disk)")
 else:
     lk = data.genon_plan_filename(5, [(50, 16)], live)
-    check("live canonical keys cleanly", lk.startswith("ch_05_50m16_e08_c") and lk.endswith(".json"), lk)
+    check("live canonical keys cleanly", lk.startswith("ch_05_50m16_e10_c") and lk.endswith(".json"), lk)
     check("key is deterministic across calls",
           lk == data.genon_plan_filename(5, [(50, 16)], live))
 

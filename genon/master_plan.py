@@ -115,7 +115,8 @@ out = {
         "standard_durations": {"<=VII": 40, "VIII": 45, "IX": 50},
         "allocation_method": "largest remainder over chapter effort weights (same as Allocate.jsx / api allocator)",
         "floor_definition": f"unit-dropping begins when teacher_minutes/canonical_minutes < {DROP_THRESHOLD}; "
-                            f"floor_minutes = {DROP_THRESHOLD} x recommended_periods x standard_duration",
+                            f"floor_minutes = {DROP_THRESHOLD} x recommended_periods x standard_duration; "
+                            "floor_periods_at_standard rounded to the NEAREST whole period (founder, 2026-07-31)",
         "skipped": [f"{s} {c}: {why}" for s, c, why in skipped],
     },
     "combos": plan,
@@ -123,52 +124,12 @@ out = {
 with open(NORMS / "master_plan.json", "w") as f:
     json.dump(out, f, indent=2, ensure_ascii=False)
 
-# ---- human-readable md ----
-L = []
-L.append("# GENON MASTER PLAN — step 2 (2026-07-24)")
-L.append("")
-L.append("Realistic annual budgets (founder's workbook, NOT the NCF norms) spread per chapter")
-L.append("by effort weight (largest remainder — the same allocator the app uses). Canonical")
-L.append("plans are authored at the class-standard duration: **40 min ≤ VII · 45 min VIII ·")
-L.append("50 min IX** (HANDOVER Decision 2). Floor = the point where the three-regime")
-L.append(f"compression doctrine starts dropping trailing units (ratio < {DROP_THRESHOLD}):")
-L.append(f"floor_minutes = {DROP_THRESHOLD} × periods × duration; 'floor P' below is that floor")
-L.append("expressed in standard-duration periods (rounded up).")
-L.append("")
-L.append("Source: `data/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx`")
-L.append("(budget + Chapters sheets, cleaned 2026-07-24). Regenerate with `genon/master_plan.py` (writes here, to allocation_norms).")
-L.append("")
-if skipped:
-    L.append("**Not planned:** " + "; ".join(f"{s} {c} ({why})" for s, c, why in skipped) + ".")
-    L.append("")
-L.append("## Portfolio summary")
-L.append("")
-L.append("| Subject | Class | Std dur | Annual periods | Chapters | Canonical hours |")
-L.append("|---|---|---|---|---|---|")
-for key, p in plan.items():
-    hours = sum(r["canonical_minutes"] for r in p["chapters"]) / 60
-    L.append(f"| {p['subject']} | {p['class']} | {p['standard_duration_minutes']} | "
-             f"{p['annual_budget_periods']} | {p['n_chapters']} | {hours:.0f} |")
-L.append("")
-for key, p in plan.items():
-    L.append(f"## {p['subject']} · {p['class']} — {p['annual_budget_periods']} periods/yr "
-             f"× {p['standard_duration_minutes']} min")
-    L.append("")
-    L.append("| Ch | Title | Wt | Periods | Canon min | Floor min | Floor P |")
-    L.append("|---|---|---|---|---|---|---|")
-    for r in p["chapters"]:
-        t = r["title"] if len(str(r["title"])) <= 48 else str(r["title"])[:45] + "..."
-        flag = " ⚠" if r["placeholder"] else ""
-        L.append(f"| {r['chapter']} | {t}{flag} | {r['weight']} | {r['recommended_periods']} | "
-                 f"{r['canonical_minutes']} | {r['floor_minutes']:.0f} | {r['floor_periods_at_standard']} |")
-    L.append("")
-    if any(r["placeholder"] for r in p["chapters"]):
-        L.append("⚠ placeholder chapters (awaiting NCERT release) hold flat weights — this")
-        L.append("combo's numbers will shift when the real chapters land; do not author")
-        L.append("canonicals for ⚠ rows.")
-        L.append("")
-with open(NORMS / "master_plan.md", "w") as f:
-    f.write("\n".join(L))
+# ---- no derived md: master_plan.json is the single artifact (2026-07-31) ----
+# The human-readable master_plan.md was RETIRED after it served a stale floor
+# to the founder (ceil vs round, corrected the same day): a derived view that
+# can drift from its source will eventually lie. To eyeball the plan, read the
+# JSON fresh (python3 -m json.tool) or GET /subjects/{s}/{g}/chapters, which
+# carries recommended_periods, floors, and variant_plan per chapter.
 
 print("combos planned:", len(plan), "| skipped:", len(skipped))
 for s, c, why in skipped:

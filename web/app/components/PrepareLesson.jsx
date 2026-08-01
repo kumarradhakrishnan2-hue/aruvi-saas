@@ -42,6 +42,10 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   const [view, setView] = useState(null);
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
+  // Edge-state warnings live INLINE in the form (the prep-floor line below the period
+  // stepper), BEFORE Generate — founder 2026-08-01: floor note below 60%, surrender note
+  // above the top; nothing after generation ("that's it"). The served plan itself prints
+  // the periods actually used (genon.served_matrix, engine e10).
   const [showInfo, setShowInfo] = useState(false);         // effort-index explainer popover
   const [showBreakdown, setShowBreakdown] = useState(false); // committed-chapters popup
   const [warnRegen, setWarnRegen] = useState(false);       // re-preparing an already-prepared chapter
@@ -56,6 +60,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
    * cache, and a matrix equal to the canonical's own returns the certified plan untouched. */
   const [genonChs, setGenonChs] = useState([]);            // chapter numbers with a canonical
   const [canonMinutes, setCanonMinutes] = useState({});    // {chapter: canonical total minutes}
+  const [canonPeriods, setCanonPeriods] = useState({});    // {chapter: top canonical period COUNT}
   // Re-entry guard, kept although a partition is free and instant: a second click during
   // an in-flight request would still double-register and can race the preview swap. The
   // ref blocks re-entry even if a click slips past the disabled button (modal path,
@@ -73,7 +78,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     getJSON(`/plans/${subject}/${grade}`)
       .then((d) => setPlans(d.plans || [])).catch(() => setPlans([]));
     getJSON(`/genon/${subject}/${grade}/chapters`)
-      .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); })
+      .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); setCanonPeriods(d.canonical_periods || {}); })
       .catch(() => { setGenonChs([]); setCanonMinutes({}); });
   }, [subject, grade]);
 
@@ -362,11 +367,29 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
                 const totalMin = rows.reduce((s, r) => s + (Number(r.duration) || 0) * (Number(r.count) || 0), 0);
                 const totalP = rows.reduce((s, r) => s + (Number(r.count) || 0), 0);
                 if (!cm || !totalMin || !totalP) return null;
+                /* Surrender, same place as the floor note (founder 2026-08-01): above the
+                   chapter's fullest plan, the extra periods return to her budget — said HERE,
+                   before Generate, and nowhere else. Top ≈ canonical minutes / her avg length. */
+                /* Count-based, from the API (surrender compares COUNTS — a minutes/avg
+                   approximation misfires on mixed-duration profiles). */
+                const topP = Number(canonPeriods[String(chapterNo)])
+                  || Math.round(cm / (totalMin / totalP));
+                if (totalP > topP) return (
+                  <p className="prep-floor">
+                    Above {topP} periods, the extra {totalP - topP} return{totalP - topP === 1 ? "s" : ""} to
+                    your budget — this chapter&rsquo;s fullest plan uses {topP}.
+                  </p>
+                );
                 if (totalMin / cm >= 0.6) return null;
                 return (
                   <p className="prep-floor">
-                    If below minimum period of {Math.ceil((0.6 * cm) / (totalMin / totalP))}, some
-                    later sections may be dropped.
+                    {/* Floor = round(0.6 x canonical / duration), matching master_plan's
+                        floor_periods_at_standard (nearest-whole, founder 2026-07-31; was ceil).
+                        Wording updated for the serve engine (2026-08-01): below the floor the
+                        plan still closes the chapter — unreached sections are NAMED and handed
+                        over, never silently dropped. */}
+                    Below {Math.round((0.6 * cm) / (totalMin / totalP))} periods, later sections
+                    move to guided self-study — the plan still closes the chapter and names them.
                   </p>
                 );
               })() : null}

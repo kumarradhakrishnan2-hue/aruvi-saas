@@ -198,3 +198,25 @@ g = p["genon"]["slot_fill"]
 assert g["mode"] == "truncation" and g["uncovered_sections"] == ["Sec 09"], g
 
 print("frontier/synthesis assertions passed")
+
+# ── dropped units (founder, 2026-08-01): below-floor plans carry unreached units ──
+p = serve_plan(LIB, [(50, 5)])            # below floor: suffix fill, sections lost
+du = p["result"]["dropped_units"]
+assert du and all(q["unscheduled"] for q in du), "lost coverage rides as unscheduled units"
+uncv = set(p["genon"]["slot_fill"]["uncovered_sections"])
+for q in du:
+    assert set(q["section_anchor"].split(" / ")) <= uncv, "dropped units cover only lost sections"
+p = serve_plan(LIB, [(50, 11)])           # exact fill, nothing lost
+assert p["result"]["dropped_units"] is None
+p = serve_plan([SYN], [(50, 9)])          # synthesis-only truncation: coverage complete
+assert p["result"]["dropped_units"] is None
+p = serve_plan([A], [(50, 10)])           # truncation with real loss
+du = p["result"]["dropped_units"]
+assert du and len(du) == len(p["genon"]["slot_fill"]["withheld_units"])
+print("dropped-units assertions passed")
+
+# ── surrender files in the drop channel (founder ruling, 2026-08-01) ─────────
+p = serve_plan(LIB, [(50, 14)])
+assert "return to your budget" in p["result"]["section_coverage_note"]
+assert p["result"]["dropped_units"] is None, "surrender loses nothing"
+print("surrender-note assertion passed")

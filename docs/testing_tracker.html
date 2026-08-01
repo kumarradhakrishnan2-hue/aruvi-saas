@@ -90,7 +90,7 @@
 <body>
 <header>
   <h1>Aruvi · Test Campaign Tracker</h1>
-  <span class="sub">docs/testing.md v1.0 — 25 combos · state lives in Aruvi (<code>/api/testing/campaign</code>)</span>
+  <span class="sub">docs/testing.md v2.0 — 11 subject·stage rows (serve era) · state lives in Aruvi (<code>/api/testing/campaign</code>)</span>
   <label class="small">API <input type="text" id="apiBase" size="20" value="http://localhost:8000"></label>
   <label class="small">I am <select id="who"><option>Kumar</option><option>Claude</option></select></label>
   <span><span id="connDot"></span><span id="connTxt" class="small">…</span></span>
@@ -103,7 +103,7 @@
   <button data-tab="overview" class="active">Overview</button>
   <button data-tab="step0">Step 0</button>
   <button data-tab="stages">Stage prep</button>
-  <button data-tab="combos">Per-combo matrix</button>
+  <button data-tab="combos">Per-stage matrix</button>
   <button data-tab="cross">Cross-cutting</button>
   <button data-tab="defects">Defect register</button>
 </nav>
@@ -130,17 +130,21 @@
   </section>
 
   <section class="tab" id="tab-stages">
-    <h2>Per-stage preparation — constitutions amend per STAGE, before any class in it is certified</h2>
-    <p class="small">P1 amend LP constitution (A1–A5, A7) · P2 assessment <code>phase_ref</code> (A6) ·
-      P3 <code>phases[]→time_bands[]</code> (Group B only; auto N/A for Group A) · P4 changelog sidecar ·
-      SIGN Claude sign-off. <b>Ordering rule:</b> a stage's classes stay blocked until SIGN is green.</p>
+    <h2>Per-stage preparation — the constitutions are amended before the stage's library is generated</h2>
+    <p class="small">P1 LP constitution (A1 + the v1.10 three-ban REGISTER as one block) ·
+      P2 assessment (A6-confirm anchor unit + A9 MCQ convention) ·
+      P3 <code>phases[]→time_bands[]</code> (Group B only; auto N/A for time_bands stages) ·
+      P4 changelog sidecar · P5 solver inputs (floor · σ · section registry where non-obvious) ·
+      SIGN Claude sign-off. <b>A2/A3/A4 are cancelled; the V-series is NOT constitutional.</b>
+      <b>Ordering rule:</b> the stage's C-cycle stays blocked until SIGN is green.</p>
     <table id="stagesTbl"></table>
   </section>
 
   <section class="tab" id="tab-combos">
-    <h2>The 25-combo cycle — rows in suggested execution order (§11)</h2>
-    <p class="small">PREP mirrors the stage sign-off. PROV opens the provenance & cost panel (C2/§6).
-      A combo certifies when C1–C13 are all pass/n-a and SIGN is set.</p>
+    <h2>The 11-stage cycle — rows in suggested execution order (§11)</h2>
+    <p class="small">One randomly drawn class per stage, one pilot chapter, one variant library.
+      PREP mirrors the stage sign-off. PROV opens the provenance & cost panel (C2/§6).
+      A stage certifies when C1–C13 are all pass/n-a and the HUMAN GATE is signed.</p>
     <table id="combosTbl"></table>
   </section>
 
@@ -151,8 +155,12 @@
 
   <section class="tab" id="tab-defects">
     <h2>Defect register</h2>
-    <p class="small">S1 chain broken / tenancy leak (stops the combo) · S2 teacher-visible wrongness
-      (blocks certification) · S3 contract drift (certify with owner) · S4 cosmetic.</p>
+    <p class="small">S1 chain broken / serve wrong or &gt;5 s / tenancy leak (stops the stage) ·
+      S2 teacher-visible wrongness — dropped section without a coverage note, mis-anchored assessment,
+      register violation, a quarantined file reachable by serving (blocks certification) ·
+      S3 contract drift (certify with owner) · S4 cosmetic. Generation defects link to their
+      <code>backup/quarantine/…</code> path and close only when the regenerated file passes
+      <code>--certify-only</code>. Fixes happen upstream — never by hand-editing an artefact.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
       <button class="primary" onclick="editDefect(null)">＋ New defect</button>
     </div>
@@ -168,73 +176,76 @@
 <script>
 /* ───────────────────────── checklist definitions (from docs/testing.md) ───────────── */
 const STEP0 = [
- ["0.1","K","Remove the polish path","Strip GenonPlanRequest.polish, _seam_polish_allowed()/ARUVI_SEAM_POLISH, the want_polish block + run_polish import, polish keys in all 3 responses (api/main.py); the polished param + '_p' suffix (api/data.py); SEAM_POLISH_ENABLED + reads (web/app/lib/format.js).","EXIT: grep shows no live polish reference; API starts clean; pytest green. Artefact: the diff."],
- ["0.2","K","Bump GENON_ENGINE_VERSION 06 → 07","api/data.py, dated comment: polish removed, cache-key shape loses the _p variant. All C10 filename assertions use e07.","EXIT: a fresh partition writes a _e07_ file; no new file carries _p."],
- ["0.3","K","Archive the legacy _p file","Move data/content/saved_plans/social_sciences/ix/ch_05_50m16_e03_c20260726112240_p.json → backup/.","EXIT: find data/content/saved_plans -name \"*_p.json\" returns nothing."],
+ ["0.1","K","The generation environment (Terminal only)","runtime_data/anthropic.key present (never printed); token_log.csv with its header; model pinned claude-sonnet-4-6. The Cowork sandbox proxy blocks credentialed API calls in EVERY mode — metered runs happen only on the founder's machine.","EXIT: python3 genon/build_library.py social_sciences ix 3 --certify-only produces a report without spending a rupee."],
+ ["0.2","C","Engine + code state","GENON_ENGINE_VERSION = \"08\" (api/data.py); serve.py v1.1 + compile.py v0.5 present; partition.py / polish.py in _to_delete/ and imported by nothing live.","EXIT: grep shows no live partition/polish import in api/, aruvi_core/genon/__init__.py, web/app/lib/format.js."],
+ ["0.3","K","Variant plans fresh","python3 genon/variant_plans.py — every chapter row carries variant_plan {sigma, counts, closing_spans, provisional, basis, registry_sections, full_coverage, partials_at}. RUNBOOK PAIR: master_plan.py regeneration WIPES these rows; re-run variant_plans.py immediately after it.","EXIT: annotate pass reports rows written; pilot chapters read basis:'authored_canonical' once their tops exist."],
  ["0.4","K","Deploy this tracker","api/testing_campaign.py + 2-line include in api/main.py; open docs/testing_tracker.html against the API.","EXIT: a tick made here survives an API restart (data/testing/campaign_state.json)."],
  ["0.5","K","Provision kumar1 / kumar2 / kumar3","Three X-Aruvi-User identities (all-lowercase standard), each with a readiness profile covering the subjects under test.","EXIT: GET /readiness ready:true for all three."],
- ["0.6","C","Re-verify the 25-combo matrix","Count chapters per combo from data/content/chapters/; confirm ~317 chapters and that class X has no content anywhere.","EXIT: §1 table matches disk, or corrected with a dated note. Artefact: count table (paste in comment)."],
- ["0.7","K","Cost baseline","runtime_data/token_log.csv exists with header; ANTHROPIC_API_KEY present in the generation environment.","EXIT: a test row appends and reads back."],
+ ["0.6","C","Re-verify the matrix and DRAW THE CLASSES","Recount chapters per subject·class from mappings/; apply the eligibility filter (summary+mapping on disk, non-placeholder master_plan row); run the 11 draws recording METHOD + SEED + candidates + result. 330 mappings / 339 master-plan rows (the excess are placeholders); class X has no content.","EXIT: §1 table matches disk (or corrected with a dated note) and all 11 picks are recorded here."],
+ ["0.7","K","Floor and σ per subject·stage (founder dials)","floor_periods_at_standard (currently round(0.6 × recommended) — the ratio is partition-era and open to re-setting) and σ, the widest closing synthesis a compact variant may anchor (SIGMA_DEFAULT = 2 in genon/variant_plans.py). Set per stage at P5; here just confirm the dials exist and the defaults are consciously accepted.","EXIT: a recorded per-stage decision or an explicit 'default 2 accepted'."],
+ ["0.8","K","Quarantine hygiene","backup/quarantine/ exists and is EMPTY at campaign start — a non-empty quarantine is an open fix worklist, and a quarantined file must never be servable.","EXIT: find backup/quarantine -name '*.json' returns nothing."],
 ];
 const STAGES = [
- {key:"social_sciences/secondary", group:"ref", note:"v1.5 — the reference, DONE (record sign-off retroactively at the pilot)"},
- {key:"social_sciences/middle",    group:"A",  note:"v2.7 · competency_edges — A2 is a true copy-paste"},
- {key:"science/secondary",        group:"A",  note:"v1.0 · implied_lo — forces the A2 per-subject decision + X3"},
- {key:"mathematics/secondary",    group:"A",  note:"v1.0 · implied_lo"},
- {key:"the_world_around_us/preparatory", group:"A", note:"v1.2 · implied_lo"},
- {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → time_bands (P3); A3 is a pure addition"},
- {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] + core_/adjunct_competencies"},
- {key:"mathematics/preparatory",  group:"B",  note:"v1.1 · phases[] + core_/adjunct_competencies"},
- {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[]"},
- {key:"english/middle",           group:"B",  note:"v1.5 · phases[] (stale footer fixed at P4)"},
- {key:"english/secondary",        group:"B",  note:"v1.0 · phases[] (fork of middle v1.5)"},
+ {key:"social_sciences/secondary", group:"ref", note:"LP v1.10 · assessment v1.5 — THE REFERENCE (pilot: ch 3, class IX, 50 min)"},
+ {key:"social_sciences/middle",    group:"TB", note:"v2.7 · time_bands · classes vi/vii/viii · TWO durations 40/45 · A9 replaces the item-18 prohibition"},
+ {key:"science/secondary",        group:"TB", note:"v1.0 · time_bands · class ix · 50 min · A9 replaces item-18"},
+ {key:"mathematics/secondary",    group:"TB", note:"v1.0 · time_bands · class ix · 50 min · content gap: 8 of 16 chapters have no summary"},
+ {key:"the_world_around_us/preparatory", group:"TB", note:"v1.2 · time_bands · classes iii/iv/v · 40 min"},
+ {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → P3 · classes vi/vii/viii · TWO durations 40/45 · A9 replaces item-18"},
+ {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] → P3 · classes vi/vii/viii · TWO durations 40/45"},
+ {key:"mathematics/preparatory",  group:"B",  note:"v1.1 · phases[] → P3 · classes iii/iv/v · 40 min"},
+ {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[] → P3 · classes iii/iv/v · 40 min · registry definition needed (P5.2)"},
+ {key:"english/middle",           group:"B",  note:"v1.5 · phases[] → P3 · classes vi/vii/viii · TWO durations · strike 'preview into next' · registry definition (P5.2)"},
+ {key:"english/secondary",        group:"B",  note:"v1.0 · phases[] → P3 · class ix · 50 min · registry definition (P5.2)"},
 ];
 const PSTEPS = [
- ["P1","K","Amend LP constitution","A1 single standard period row · A2 Rule 14 band_id + band anchoring (per-subject decision outside SS!) · A3 Rule 15 role_handoff · A4 Rule 16 unit_handoff · A5+A7 THE SELF-CONTAINED REGISTER ported as ONE block.","EXIT: all present, VERSION bumped, diff shows no pedagogical rule changed."],
- ["P2","K","Amend assessment constitution","A6: every item carries phase_ref (band_ref per SS·secondary v1.2 reference). Depends on P1/A2.","EXIT: VERSION bumped; schema mandates phase_ref."],
- ["P3","K","phases[] → time_bands[] (Group B only)","Rename the array AND description→activity; the compiler reads exactly time_bands / activity. Constitutions are amended — no compile.py adapter.","EXIT: schema emits time_bands{band_id,minutes,activity}; no phases[ remains."],
+ ["P1","K","Amend LP constitution (A1 + the REGISTER)","A1 — period schedule = exactly ONE standard row at the class-standard duration (40 ≤VII · 45 VIII · 50 IX–X, the master-plan bands). A5+A7 — THE SELF-CONTAINED REGISTER as ONE block in the v1.10 re-cut: three bans only (clock quantity · forward reference/completion language · calendar time); BACKWARD REFERENCES ARE LEGAL, content-named continuity is best practice. A2/A3/A4 are CANCELLED — do not port band ids, role_handoff or unit_handoff.","EXIT: A1 + the one-block register present; VERSION bumped; diff shows no pedagogical rule changed."],
+ ["P2","K","Assessment constitution — A6-confirm + A9","A6 is a CONFIRMATION: every item carries its anchor UNIT (period_ref or the subject's equivalent) — amend only where absent; the band-level phase_ref is reversed and must not return. A9: MCQ options arranged alphabetically from the first differing word (ascending where numeric) as the LAST step before emission, correct answer never led with — replaces the item-18 prohibition in the four SS/Science files.","EXIT: VERSION bumped; anchor requirement present; A9 clause present."],
+ ["P3","K","phases[] → time_bands[] (Group B only)","Rename the array AND description→activity. NO band_id in the target shape (the band layer left the declaration surface). The compiler reads exactly time_bands / activity — constitutions are amended, no compile.py adapter.","EXIT: schema emits time_bands{minutes,activity}; no phases[ remains."],
  ["P4","K","History to sidecar CHANGELOG.md","Amendment notes go beside the file, never in it; the VERSION line stays.","EXIT: no version-history block in the constitution; CHANGELOG lists every bump."],
- ["SIGN","C","Stage sign-off","Read the amended pair against the reference + rollout brief; per amendment: present / absent / deviates-with-reason; the A2 decision recorded.","EXIT: written note per amendment; classes in this stage unblock."],
+ ["P5","B","Solver inputs (pipeline, not constitution)","(1) floor + σ for this stage, set or default-accepted · (2) the SECTION REGISTRY definition where the section model is non-obvious (English's split-chapter/spine model must be defined BEFORE its variants are authored — the fill ladder is string arithmetic on verbatim section_anchor values) · (3) the drawn class's pilot chapter has summary + mapping and a non-placeholder master_plan row with a variant_plan.","EXIT: all three recorded, with the chapter's variant_plan row pasted in."],
+ ["SIGN","C","Stage sign-off","Read the amended pair against the SS·secondary v1.10/v1.5 reference + the rollout brief: A1 lands, register is ONE block in three-ban form, A6 anchors present, A9 in, P3 converted (Group B), and NO cancelled amendment (A2/A3/A4) or V-rule has crept into a constitution.","EXIT: a written note per item — present / absent / deviates-with-reason; the C-cycle unblocks."],
 ];
 const CSTEPS = [
- ["C1","K","Generate the chain","Summary → mapping → LP canonical → assessment under the amended constitutions; install ch_NN_canonical.json (plan_status canonical, ledger_ts stamped); supply the four JSONs to Claude.","EXIT: GET /genon/{s}/{g}/chapters lists the chapter; canonical_minutes = standard duration × period count."],
- ["C2","C","Cost the chain","Per stage (summary/mapping/canonical/assessment): wall s, tokens in/out, cost ₹; chapter total ₹ — the number that prices the ~317-chapter pre-warm. Fill the PROV panel.","EXIT: all 4×4 cells + total recorded; missing cells recorded as missing."],
- ["C3","C","Canonical vs constitution, rule by rule","A table rule# → pass/fail/subjective-pass with quoted evidence — cite rule numbers, never a general impression. Register/tone calls are subjective: say so and quote the strings judged.","EXIT: every rule number appears; every fail becomes a defect."],
- ["C4","C","MEMORY.md 18 amendment items, live","Test each item applicable to this combo (see §4 map; item 6 = closed-by-design under A1 — confirm with founder once).","EXIT: per item pass/fail/n-a-here + one line of live evidence; fails → defects."],
- ["C5","K","The five partitions","115 / 100 / 85 / 75 / 55% of the canonical budget — one per regime plus identity. STANDARD SPLIT: kumar1 → 115 (stretch) + 100 (identity:true, no file saved!); kumar2 → 75 (role-weighted) + 55 (unit-drop + section_coverage_note); kumar3 → 85 as the C6 mixed-duration weekly mix (rescale).","EXIT: 5×200; regimes as expected; four ch_NN_<matrix>_e07_c<ver>.json files."],
- ["C6","K","Mixed-duration weekly matrix — the 85% run (kumar3)","A realistic weekly mix whose total minutes ≈ 85% of canonical (ratio 0.8–1.0, rescale). Doubles as C5's 85% row; C7.5 and C12 inspect this plan. Record the mix.","EXIT: 200; file written; mix, ratio + regime recorded."],
- ["C7","C","Partition compliance","(1) band minutes tile each sitting exactly · (2) unit order preserved · (3) register scan (word-list then judged quotes) on all titles/notes · (4) 55% carries section_coverage_note · (5) C6 week repeats, long periods interior + non-adjacent · (6) 3+-unit sittings in genon.wide_spans, container title names the heaviest pair never a ≤5-min scrap.","EXIT: all six on every file, or defects."],
- ["C8","C","LLM-need flags","Every point where quality begs an LLM call, each with the deterministic alternative to try first.","EXIT: the (possibly empty) list, in the comment."],
- ["C9","C","Assessment anchoring after re-cut","75% + 55% plans: each item's phase_ref resolves to its own unit; an item whose anchor unit dropped at 55% carries its scheduling note, never mis-anchors.","EXIT: zero mis-anchored; dropped-unit items all noted."],
- ["C10","C","Storage conventions","(1) filename grammar (matrix longest-first, e07, c<ledger_ts[+hrev]>) · (2) repeat request → cached:true, mtime unchanged · (3) e06 files untouched beside e07 (bump re-keys, never overwrites) · (4) delete + re-run → byte-identical minus saved_at (jq del diff empty).","EXIT: all four hold."],
- ["C11","C","Partition wall time","Cache-miss request timed (curl -w %{time_total}).","EXIT: < 5 s (over 5 s = defect); record the figure either way."],
- ["C12","B","Exports render","C6 plan: lesson/assessment/integrated × pdf+docx + allocation pdf+docx — this subject's view-model shape (science·ix section-grouped; science middle stage-grouped; english spine-nested).","EXIT: 8 files clean — no blanks, no raw JSON, answers=1 renders the answer layer."],
- ["C13","B","Failure paths read like sentences","(1) canonical minus one band_id → 500 'Canonical cannot be compiled: …' naming it · (2) >60 periods → 400 'Period count implausibly large.' · (3) no canonical → 404 'No canonical for this chapter yet.'","EXIT: the 3 codes + readable details; no stack leak in any body."],
- ["SIGN","B","Combo sign-off","All C-steps pass/n-a, PROV complete, defects closed or accepted-with-owner.","EXIT: the row turns green."],
+ ["C1","K","Build the library (Terminal, metered)","python3 genon/build_library.py <subject> <grade> <chapter> — top canonical → variant_plans.py annotate → briefs (genon/out/briefs/) → each compact variant with its brief and own assessment (ch_NN_canonical_pKK.json) → re-annotate → deterministic certification → report. --certify-only re-runs the free steps. NEVER author an installable plan in a Cowork session.","EXIT: library on disk matches variant_plan.counts; GET /genon/{s}/{g}/chapters lists the chapter; canonical_minutes = standard duration × top count."],
+ ["C2","C","Cost the LIBRARY","From runtime_data/token_log.csv: every canonical_generation / variant_generation row for this chapter (tokens in/out, ₹) INCLUDING reruns, plus the library total. Fill the PROV panel. Benchmark: SS·IX ch 3 = ₹145.70 all-in (39.43 + 36.51 + 35.05 + 34.71 rerun); ~₹120–190 per library; 330 chapters ≈ ₹30–40k sync / ₹15–20k batch.","EXIT: every row attributed; total recorded; missing cells recorded as missing, not blank."],
+ ["C3","C","Canonical + one COMPACT VARIANT vs the constitution, rule by rule","A table rule# → pass/fail/subjective-pass with quoted evidence, for BOTH files — a constitution that only holds at full length has not been proven. Register/tone calls are subjective: say so and quote the strings judged.","EXIT: every rule number appears for both files; every fail becomes a defect."],
+ ["C4","C","MEMORY.md amendment items, live","Test each item applicable to this stage (see §4 map). Item 6 (time vector) = CLOSED BY DESIGN under A1 + the serve engine; item 18 (MCQ position spread) = SUPERSEDED by A9 — check the convention, not the spread.","EXIT: per item pass/fail/n-a-here + one line of live evidence; fails → defects."],
+ ["C5","C","Read the certification report — ALL PASS required","genon/out/library_reports/…: (1) library complete vs variant_plan.counts · (2) every file compiles · (3) anchors verbatim in the top registry · (4) first-visit order (synthesis tails legal, skipped sections not) · (5) coverage reaches the final section · (6) closing units anchor their mandated last-k spans · (7) serve sweep floor−2 … top+2 with no exception · (8) projected-vs-actual full-coverage diff. PLUS: quarantine empty for this chapter; partials_at empty or founder-accepted. NB the pilot's dropped section was caught by (4), NOT by the sweep.","EXIT: report says ALL PASS; quarantine empty; partials_at resolved."],
+ ["C6","K","API serve checks — the teacher-facing path","POST /genon/{s}/{g}/{ch}/plan: identity per variant (kumar1 → identity:true, that variant's filename, NO new file) · one between-variant X giving superset (runway note) · one giving exact · X = top+1 → surrender note · X = floor−1 → suffix/truncation with a coverage note naming what was not scheduled · a mixed-duration weekly matrix (kumar3). WHERE THE STAGE SPANS TWO DURATIONS, run the whole table at BOTH 40 and 45 — and note that identity only fires at the AUTHORED duration (elsewhere the same X serves whole with proportional scaling). Dispersion: from genon.duration_sequence, shortest opens the week, long sittings interior and never adjacent.","EXIT: every row as expected; responses + filenames recorded; the duration(s) run are recorded."],
+ ["C7","C","Register scan on teacher-facing text","The v1.10 THREE bans only: clock quantity · forward reference/completion language · calendar time. BACKWARD REFERENCES ARE LEGAL — the old word-list's positional entries (previously, earlier, first/second half) are retired as automatic hits. Mechanical scan first, judged quotes on survivors.","EXIT: zero live-ban hits, or a defect per hit, each with the quoted string."],
+ ["C8","C","LLM-need flags","Every point where quality begs an LLM call (e.g. a borrowed closing unit reading oddly beside its prefix), each with the deterministic alternative to try first. The constraint is unchanged: no LLM in the request path.","EXIT: the (possibly empty) list, in the comment."],
+ ["C9","C","Assessment anchoring across the serve","(1) prefix items remap unit → SITTING · (2) a borrowed fill unit brings its OWN items from its home variant, anchored to the fill sitting · (3) on the below-floor serve, an item whose anchor unit was unserved carries scheduling_note 'anchor unit not scheduled in this plan (time budget)' with empty period_ref, never mis-anchors · (4) no cross-variant references of any other kind.","EXIT: zero mis-anchored items; every unserved-anchor item noted."],
+ ["C10","C","Storage conventions","(1) ch_NN_canonical.json + ch_NN_canonical_pKK.json; served plans ch_NN_<matrix>_e08_c<CHOSEN VARIANT's version>.json, matrix longest-first · (2) repeat a non-identity request → cached:true, mtime unchanged · (3) pre-campaign _e06_/_e07_ files untouched beside the new _e08_ ones · (4) delete + re-run → byte-identical minus saved_at · (5) QUARANTINE IS INVISIBLE TO SERVING: move a variant to backup/quarantine/, re-run a request it served, the serve falls to the next-highest survivor and never names it. Restore after.","EXIT: all five hold."],
+ ["C11","C","Serve wall time","Cache-miss request timed (curl -w %{time_total}); selection + one compile should be milliseconds.","EXIT: < 5 s (over 5 s = defect); record the figure either way."],
+ ["C12","B","Exports render","The C6 mixed-duration plan — and it must include a BORROWED FILL SITTING: lesson/assessment/integrated × pdf+docx + allocation pdf+docx. This stage's view-model shape (science·ix section-anchored flat; science middle stage-grouped; english spine-nested).","EXIT: 8 files clean — no blanks, no raw JSON, the borrowed sitting reads as a whole unit, answers=1 renders the answer layer, coverage note carried through."],
+ ["C13","B","Failure paths read like sentences","(1) no canonical → 404 'No canonical for this chapter yet.' · (2) >60 periods → 400 'Period count implausibly large.' (empty rows → 400 'At least one duration row is required.') · (3) scratch copy with an assessment item pointing at a non-existent unit → 500 'Canonical cannot be compiled: …' naming the item (remove the scratch file after) · (4) the quarantined-variant transcript from C10.5 read as a failure path: nothing 500s.","EXIT: the codes + readable details; no stack leak in any body."],
+ ["SIGN","B","HUMAN GATE — the stage sign-off","Deterministic ALL PASS is a precondition, not a verdict. Claude presents, the founder rules on: the projected-vs-actual adaptation table diff · the FULL TEXT of 2–3 borrowed-seam sittings read as a teacher meets them · EACH compact variant's closing synthesis in full (a real unit-arc, or a summary lecture wearing a unit's clothes? — that verdict feeds σ back to the solver) · any C7 register hits. Never self-approved; in batch mode it samples but never disappears.","EXIT: a recorded verdict; PROV complete; defects closed or accepted-with-owner. The row turns green."],
 ];
-const COMBOS = [ // suggested execution order (§11); pilot first
- ["social_sciences","ix","social_sciences/secondary","PILOT — regenerate ch 5 under v1.5 (discharges the P6.1 re-certification)"],
- ["social_sciences","vi","social_sciences/middle",""],["social_sciences","vii","social_sciences/middle",""],["social_sciences","viii","social_sciences/middle",""],
- ["science","ix","science/secondary","first implied_lo subject — do X3 before certifying"],
- ["mathematics","ix","mathematics/secondary",""],
- ["the_world_around_us","iii","the_world_around_us/preparatory",""],["the_world_around_us","iv","the_world_around_us/preparatory",""],["the_world_around_us","v","the_world_around_us/preparatory",""],
- ["science","vi","science/middle",""],["science","vii","science/middle",""],["science","viii","science/middle",""],
- ["mathematics","vi","mathematics/middle",""],["mathematics","vii","mathematics/middle",""],["mathematics","viii","mathematics/middle",""],
- ["mathematics","iii","mathematics/preparatory",""],["mathematics","iv","mathematics/preparatory",""],["mathematics","v","mathematics/preparatory",""],
- ["english","ix","english/secondary","fork-parent deltas (item 9) while fresh"],
- ["english","vi","english/middle",""],["english","vii","english/middle",""],["english","viii","english/middle","weak task_density fit — see X2"],
- ["english","iii","english/preparatory",""],["english","iv","english/preparatory",""],["english","v","english/preparatory",""],
+const COMBOS = [ // ONE ROW PER SUBJECT·STAGE, in suggested execution order (§11); pilot first
+ ["social_sciences","secondary","social_sciences/secondary","PILOT — ch 3, class IX, library {12,9,7}; C-steps done in substance 2026-08-01, gate + tracker entries owed"],
+ ["social_sciences","middle","social_sciences/middle","first port; first TWO-DURATION stage (40/45) — run C6 at both"],
+ ["science","secondary","science/secondary","first stage outside the SS family; section-anchored flat export shape"],
+ ["mathematics","secondary","mathematics/secondary","draw the pilot chapter from the 8 that HAVE summaries"],
+ ["the_world_around_us","preparatory","the_world_around_us/preparatory","completes the time_bands group; item 1 applies"],
+ ["science","middle","science/middle","first Group B (P3); stage-grouped export shape; two durations"],
+ ["mathematics","middle","mathematics/middle","core_/adjunct_competencies skill layer; items 14, 15, 16; two durations"],
+ ["mathematics","preparatory","mathematics/preparatory","second core_/adjunct stage"],
+ ["english","secondary","english/secondary","english first at secondary — registry definition (P5.2) lands here"],
+ ["english","middle","english/middle","heaviest MEMORY burden; weak task_density fit — see X2; two durations"],
+ ["english","preparatory","english/preparatory","last: items 8, 12, 13; no saved-plan corpus to fall back on"],
 ];
 const CROSS = [
- ["X1","B","Tenancy — every surface, plus the authorization case","With kumar1/kumar2: (1) plans-prepared isolated · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state progress+bookmark isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: kumar2 fetches kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists (confirmed) — client-side only, test as such.","EXIT: 1–5 zero leakage; 6 & 7 recorded with a founder decision."],
- ["X2","C","Effort index vs the calibrated standard","Year Plan page values == GET /subjects/{s}/{g}/chapters == master_plan.json (calibrated first, NCF alongside-only). English vi–viii: also report the raw task_density distribution per grade — the VI-calibrated cutoffs are the thing under test (MEMORY item 5); a near-binary grade → defect against the calibration, owner founder.","EXIT: sampled grades match; English distribution report exists."],
- ["X3","K","Generalise compile.py::_check_declarations","Beyond competency_edges, to whichever object carries band refs per subject (do before the first non-SS stage certifies). Engine change → version bump → §9 cheap re-check of anything certified.","EXIT: a canonical whose implied_lo rows lack band refs fails compilation with a named problem."],
+ ["X1","B","Tenancy — every surface, the authorization case, and the archive rules","With kumar1/kumar2/kumar3: (1) plans-prepared isolated (NB an identity request registers the variant file itself — two teachers may legitimately share that filename) · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: kumar2 fetches kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists — client-side only, test as such · (8) ARCHIVE (fix 2026-08-01): archived plans excluded from the section-attach chooser and never front the tour — verify both; then put the two open judgment calls to the founder: PrepareLesson excludes archived plans from 'committed' (archiving un-prepares a chapter) while YearPlan still counts archived periods — the two screens disagree.","EXIT: 1–5 zero leakage; 6, 7, 8 recorded with founder decisions."],
+ ["X2","C","Effort index vs the calibrated standard","Year Plan page values == GET /subjects/{s}/{g}/chapters == master_plan.json (calibrated first, NCF alongside-only); confirm the variant_plan row shown is finalized, not a stale provisional after a master_plan.py run. English middle: also report the raw task_density distribution per grade — the VI-calibrated cutoffs are the thing under test (MEMORY item 5); a near-binary grade → defect against the calibration, owner founder.","EXIT: sampled grades match; English distribution report exists."],
 ];
-const PROVFIELDS = [["chapter","Chapter #"],["model","Model"],["date","Run date"],
- ["lp_ver","LP constitution ver"],["as_ver","Assessment const. ver"],["engine","Engine ver (07)"],
- ["ledger_ts","Canonical ledger_ts"],["handoff_rev","handoff_rev"],["files","Plan filename(s)"],
- ["bands_per_unit","Bands/unit (e.g. 3x12)"],["max_band_share","Largest band, % of sitting"]];
-const PROVSTAGES = ["summary","mapping","lp_canonical","assessment"];
+const PROVFIELDS = [["klass","Class drawn"],["draw","Draw seed / method"],["chapter","Chapter #"],
+ ["duration","Authored duration (min)"],["model","Model"],["date","Run date"],
+ ["lp_ver","LP constitution ver"],["as_ver","Assessment const. ver"],["engine","Engine ver (08)"],
+ ["variant_plan","variant_plan (counts · spans · σ · basis)"],["brief","Brief identity (variant_plans.py commit)"],
+ ["ledger_ts","Canonical + variant ledger_ts"],["report","Certification report path"],
+ ["files","Served plan filename(s)"],["durations_run","C6 durations run (40/45/50)"]];
+const PROVSTAGES = ["top_canonical","variant_a","variant_b","reruns"];
 const STATUSES = ["pass","fail","na","blocked","pending"];
 
 /* ───────────────────────── state + API ─────────────────────────────────────────── */
@@ -329,7 +340,7 @@ function renderAll(){
       <td><b>${s[2]}</b><div class="small">${s[3]}</div></td>${cellHtml("step0","campaign",s[0],"●")}</tr>`).join("");
   // stages
   $("stagesTbl").innerHTML = "<tr><th>Stage</th><th>Group</th>"+
-    PSTEPS.map(p=>`<th class="hh" data-scope="stages" data-step="${p[0]}">${p[0]}</th>`).join("")+"<th>Classes</th></tr>"+
+    PSTEPS.map(p=>`<th class="hh" data-scope="stages" data-step="${p[0]}">${p[0]}</th>`).join("")+"<th>C-cycle</th></tr>"+
     STAGES.map(st=>{
       const cells=PSTEPS.map(p=>{
         if(p[0]==="P3"&&st.group!=="B") return `<td class="cell s-na" title="Group ${st.group} — time_bands already">n/a</td>`;
@@ -341,7 +352,7 @@ function renderAll(){
         <td class="small">${unlocked?"✅ unblocked":"⛔ blocked until SIGN"}</td></tr>`;
     }).join("");
   // combos
-  $("combosTbl").innerHTML = "<tr><th>#</th><th>Combo</th><th>PREP</th>"+
+  $("combosTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th><th>PREP</th>"+
     CSTEPS.map(c=>`<th class="hh" data-scope="combos" data-step="${c[0]}">${c[0]}</th>`).join("")+"<th>PROV</th></tr>"+
     COMBOS.map((c,i)=>{
       const key=comboKey(c); const prep=stageSigned(c[2]);
@@ -360,7 +371,7 @@ function renderAll(){
       <td><b>${x[2]}</b><div class="small">${x[3]}</div></td>${cellHtml("cross","campaign",x[0],"●")}</tr>`).join("");
   // defects
   const defs=(S.defects||[]).slice().sort((a,b)=>(a.id<b.id?-1:1));
-  $("defTbl").innerHTML = "<tr><th>ID</th><th>Combo</th><th>Step</th><th>Sev</th><th>Title / evidence</th><th>Owner</th><th>Status</th><th>Opened</th><th></th></tr>"+
+  $("defTbl").innerHTML = "<tr><th>ID</th><th>Stage</th><th>Step</th><th>Sev</th><th>Title / evidence</th><th>Owner</th><th>Status</th><th>Opened</th><th></th></tr>"+
     (defs.length?defs.map(d=>`<tr><td>${d.id}</td><td>${d.combo||""}</td><td>${d.step||""}</td>
       <td class="defsev-${d.severity}">${d.severity}</td>
       <td><b>${esc(d.title)}</b><div class="small">${esc(d.evidence)}</div><div class="small">${esc(d.notes)}</div></td>
@@ -383,15 +394,15 @@ function renderOverview(){
   let cost=0; COMBOS.forEach(c=>{const p=item("combos",comboKey(c),"provenance");
     if(p&&p.total_cost_inr!=null)cost+=Number(p.total_cost_inr)||0;});
   $("statCards").innerHTML=
-    `<div class="stat"><b>${certified} / 25</b><span>combos certified</span>
-       <div class="bar"><i style="width:${certified*4}%"></i></div></div>
+    `<div class="stat"><b>${certified} / ${COMBOS.length}</b><span>stages certified</span>
+       <div class="bar"><i style="width:${Math.round(certified/COMBOS.length*100)}%"></i></div></div>
      <div class="stat"><b>${done} / ${total}</b><span>steps ticked (pass or n/a)</span>
        <div class="bar"><i style="width:${total?Math.round(done/total*100):0}%"></i></div></div>
      <div class="stat"><b style="color:var(--fail)">${fails}</b><span>failing steps</span></div>
      <div class="stat"><b style="color:${openDef.length?"var(--blocked)":"var(--pass)"}">${openDef.length}</b>
        <span>open defects (${openDef.filter(d=>d.severity==="S1").length}×S1, ${openDef.filter(d=>d.severity==="S2").length}×S2)</span></div>
-     <div class="stat"><b>₹ ${cost.toFixed(0)}</b><span>chapter-chain spend so far (C2 totals)</span></div>`;
-  $("glance").innerHTML="<table><tr><th>Combo</th><th>Progress</th></tr>"+
+     <div class="stat"><b>₹ ${cost.toFixed(0)}</b><span>library spend so far (C2 totals)</span></div>`;
+  $("glance").innerHTML="<table><tr><th>Subject · stage</th><th>Progress</th></tr>"+
     COMBOS.map(c=>{const key=comboKey(c);
       const cells=CSTEPS.map(cs=>{const st=item("combos",key,cs[0]).status||"pending";
         return `<td class="cell s-${st}" style="min-width:20px;padding:2px" title="${cs[0]} · ${st}"
@@ -442,8 +453,8 @@ function openProv(key){
     <p class="small">§6: a result that cannot be attributed to a version is not a result.</p>
     <div class="provgrid">${PROVFIELDS.map(f=>
       `<div><label>${f[1]}</label><input id="pv_${f[0]}" value="${esc(p[f[0]]||"")}"></div>`).join("")}</div>
-    <h3>Per-stage cost (C2)</h3>
-    <table><tr><th>Stage</th><th>Wall s</th><th>Tokens in</th><th>Tokens out</th><th>Cost ₹</th></tr>
+    <h3>Per-generation cost (C2) — from runtime_data/token_log.csv, reruns included</h3>
+    <table><tr><th>Run</th><th>Wall s</th><th>Tokens in</th><th>Tokens out</th><th>Cost ₹</th></tr>
     ${PROVSTAGES.map(sg=>{const r=st[sg]||{};
       return `<tr><td>${sg}</td>
         <td><input size=6 id="pv_${sg}_wall" value="${esc(r.wall_s||"")}"></td>
@@ -451,8 +462,8 @@ function openProv(key){
         <td><input size=8 id="pv_${sg}_tout" value="${esc(r.tokens_out||"")}"></td>
         <td><input size=7 id="pv_${sg}_cost" value="${esc(r.cost_inr||"")}"></td></tr>`;}).join("")}
     </table>
-    <p class="small">Partition wall time (C11, s): <input size=8 id="pv_part_wall" value="${esc(p.partition_wall_s||"")}">
-       · C5 identity by: <input size=8 id="pv_who5" value="${esc(p.c5_split||"")}" placeholder="k1: 115+100 / k2: 75+55 / k3: 85mix"></p>
+    <p class="small">Serve wall time (C11, s): <input size=8 id="pv_part_wall" value="${esc(p.partition_wall_s||"")}">
+       · C6 identity split: <input size=8 id="pv_who5" value="${esc(p.c5_split||"")}" placeholder="k1: identities / k2: between+floor−1+top+1 / k3: mixed week"></p>
     <div style="margin-top:10px"><button class="primary" onclick="commitProv('${key}')">Save provenance</button></div>
     <p class="meta">${p.at?`last saved ${esc(p.at)}`:"never saved"}</p>`;
   showDrawer();
@@ -479,7 +490,7 @@ function editDefect(id,pre){
     <button style="float:right" onclick="closeDrawer()">✕ close</button>
     <h2>${id?("Defect "+id):"New defect"}</h2>
     <div class="provgrid">
-      <div><label>Combo / scope</label><input id="df_combo" value="${esc(d.combo||"")}" placeholder="english/iii · stage:science/middle · campaign"></div>
+      <div><label>Stage / scope</label><input id="df_combo" value="${esc(d.combo||"")}" placeholder="english/middle · stage:science/middle · campaign"></div>
       <div><label>Step</label><input id="df_step" value="${esc(d.step||"")}" placeholder="C7"></div>
       <div><label>Severity</label><select id="df_sev">${["S1","S2","S3","S4"].map(s=>
         `<option ${d.severity===s?"selected":""}>${s}</option>`).join("")}</select></div>

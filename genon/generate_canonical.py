@@ -40,8 +40,8 @@ from pathlib import Path
 import prompt_assembly as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from aruvi_core.genon.partition import (  # noqa: E402
-    handoff_vocab, validate_unit_handoff)
+# (partition-era imports removed 2026-07-31 — the band/handoff layer is retired;
+# see docs/variant_canonical_architecture.md §6a)
 
 HERE = Path(__file__).resolve().parent           # genon/
 REPO = HERE.parent                                # aruvi-saas/
@@ -104,41 +104,43 @@ def strip_fences(text: str) -> str:
 
 
 def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]:
+    """Serve-era checks (2026-07-31). The band declaration layer is RETIRED —
+    band ids, roles, band_refs, phase_ref and unit_handoff are no longer part of
+    the contract (compile v0.5 derives band labels; anchoring is unit-level via
+    period_ref). What a canonical must now get right: period count, coverage
+    handoff, verbatim section anchors on every unit, exact band tiling, and a
+    resolvable anchor unit on every assessment item. expect_v11 is retained in
+    the signature for call-site stability; it gates nothing any more."""
     problems = []
     periods = parsed.get("lesson_plan", {}).get("periods", [])
     if len(periods) != expected_periods:
         problems.append(f"period count {len(periods)} != scheduled {expected_periods}")
     if not parsed.get("coverage_handoff"):
         problems.append("coverage_handoff missing/empty")
-    if expect_v11:
-        # LP v1.2: role lives in the Rule-15 role_handoff sibling; earlier v1.1.x
-        # canonicals carried it inline on each band — accept either, require one.
-        rh = parsed.get("role_handoff") or {}
-        all_ids = []
-        for p in periods:
-            for b in p.get("time_bands", []):
-                if not b.get("band_id"):
-                    problems.append(f"P{p.get('period_number')}: band missing band_id")
-                else:
-                    all_ids.append(b["band_id"])
-                role = rh.get(b.get("band_id")) or b.get("role")
-                if role not in ("hook", "development", "consolidation"):
-                    problems.append(f"P{p.get('period_number')}: band {b.get('band_id')} role {role!r}")
-            for e in p.get("competency_edges", []):
-                if not e.get("band_refs"):
-                    problems.append(f"P{p.get('period_number')}: edge {e.get('c_code')} missing band_refs")
-        extra = [k for k in rh if k not in all_ids]
-        if extra:
-            problems.append(f"role_handoff names unknown bands: {extra[:5]}")
-        for c_code, blk in (parsed.get("coverage_handoff") or {}).items():
-            for lo in blk.get("los", []):
-                if not lo.get("band_refs"):
-                    problems.append(f"handoff {c_code}: LO row missing band_refs")
-        for item in parsed.get("assessment_items", []) or []:
-            if isinstance(item, dict) and not item.get("phase_ref"):
-                problems.append(f"assessment item {item.get('id', '?')} missing phase_ref")
-        problems.extend(validate_unit_handoff(parsed.get("unit_handoff"), len(periods),
-                                              handoff_vocab(periods)))
+    unit_numbers = set()
+    for p in periods:
+        n = p.get("period_number")
+        unit_numbers.add(n)
+        if not str(p.get("section_anchor") or "").strip():
+            problems.append(f"P{n}: missing section_anchor (the registry join key)")
+        cur = 0
+        for b in p.get("time_bands", []) or []:
+            try:
+                a_, z_ = (int(x) for x in str(b["minutes"]).replace("\u2013", "-").split("-"))
+            except Exception:
+                problems.append(f"P{n}: unparseable band minutes {b.get('minutes')!r}")
+                continue
+            if a_ != cur:
+                problems.append(f"P{n}: band gap at {b.get('minutes')}")
+            cur = z_
+        if cur != p.get("period_duration_minutes"):
+            problems.append(f"P{n}: bands sum {cur} != {p.get('period_duration_minutes')}")
+    for item in parsed.get("assessment_items", []) or []:
+        if isinstance(item, dict):
+            pr = [u for u in (item.get("period_ref") or []) if isinstance(u, int)]
+            if not (set(pr) & unit_numbers):
+                problems.append(f"assessment item {item.get('id', '?')}: "
+                                "no resolvable anchor unit (period_ref)")
     return problems[:40]
 
 
@@ -155,7 +157,8 @@ def const_version(path) -> str:
 
 def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: int,
                       ts: str, duration: int, count: int, const_label: str,
-                      status: str, problems: list[str]) -> Path:
+                      status: str, problems: list[str],
+                      variant: int | None = None) -> Path:
     """Drop the generated canonical STRAIGHT into the saved-plans library, wrapped in
     the saved-plan shape the API reads (mirrors ch_05_canonical.json) — the live
     environment has no certification gate, so genon/out and the library are written
@@ -165,7 +168,8 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
     backup/saved_plans/ (never deleted) — its ledger_ts keys retire with it."""
     lib = REPO / "data" / "content" / "saved_plans" / subject_folder / grade_folder
     lib.mkdir(parents=True, exist_ok=True)
-    fname = f"ch_{ch:02d}_canonical.json"
+    fname = (f"ch_{ch:02d}_canonical_p{variant:02d}.json" if variant
+             else f"ch_{ch:02d}_canonical.json")
     dest = lib / fname
     if dest.exists():
         bdir = REPO / "backup" / "saved_plans" / subject_folder / grade_folder
@@ -175,7 +179,7 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
                       .get("genon_canonical") or {}).get("ledger_ts") or "unknown"
         except Exception:
             old_ts = "unparsed"
-        dest.replace(bdir / f"ch_{ch:02d}_canonical_{old_ts}.json")
+        dest.replace(bdir / f"{fname[:-5]}_{old_ts}.json")
     total = duration * count
     doc = {
         "filename": fname,
@@ -257,6 +261,11 @@ def cmd_one(args) -> int:
     mp_row = master_plan_entry(subject_folder, grade_folder, ch)
     duration = args.duration or std_duration(grade_folder)
     count = args.periods or (mp_row and mp_row["recommended_periods"])
+    if args.variant:
+        if not args.brief:
+            print("--variant requires --brief (genon/variant_plans.py brief ...)", file=sys.stderr)
+            return 2
+        count = args.periods or args.variant
     if not count:
         print("No period count: not in master_plan.json — pass --periods.", file=sys.stderr)
         return 2
@@ -282,6 +291,10 @@ def cmd_one(args) -> int:
         include_assessment=not args.lp_only,
     )
 
+    if args.brief:
+        brief_text = Path(args.brief).read_text(encoding="utf-8")
+        user_blocks = [{"type": "text", "text": brief_text}] + list(user_blocks)
+
     lp_text = Path(paths["lp_constitution"]).read_text(encoding="utf-8")
     expect_v11 = "RULE 14" in lp_text
     lp_v = const_version(paths["lp_constitution"])
@@ -291,7 +304,7 @@ def cmd_one(args) -> int:
     usr_chars = sum(len(b["text"]) for b in user_blocks)
     print(f"{subject} · {grade} · ch {ch} — {count} × {duration} min "
           f"({'LP+A' if not args.lp_only else 'LP only'}; "
-          f"constitution {'v1.1 genon' if expect_v11 else 'pre-genon'})")
+          f"constitution {'pre-serve (carries RULE 14)' if expect_v11 else 'serve-era'})")
     print(f"  schedule : {period_sched.splitlines()[-1]}")
     print(f"  system   : {sys_chars:,} chars   user: {usr_chars:,} chars")
 
@@ -310,7 +323,18 @@ def cmd_one(args) -> int:
         return 0
 
     import anthropic  # only needed live
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        # standard fallback (2026-08-01): a git-ignored key file, so Cowork skill
+        # sessions need no shell-profile plumbing. Never print or log the key.
+        kf = REPO / "runtime_data" / "anthropic.key"
+        if kf.is_file():
+            key = kf.read_text(encoding="utf-8").strip()
+    if not key:
+        print("No API key: set ANTHROPIC_API_KEY, or put the key (one line) in "
+              "runtime_data/anthropic.key (git-ignored via *.key).", file=sys.stderr)
+        return 2
+    client = anthropic.Anthropic(api_key=key)
     max_tokens = MAX_TOKENS_LP_ONLY if args.lp_only else MAX_TOKENS_LPA
     t0 = time.time()
     with client.messages.stream(
@@ -402,17 +426,19 @@ def cmd_one(args) -> int:
         if not args.lp_only and not args.tag and not args.no_install:
             installed = install_canonical(parsed, subject_folder, grade_folder, ch,
                                           ts, duration, count, const_label,
-                                          status, problems)
+                                          status, problems, variant=args.variant)
             print(f"  installed: {installed}"
                   + ("" if status == "ok" else "  (validator findings recorded, not blocking)"))
     print(f"  tokens   : {it:,} in / {ot:,} out · ₹{cost_inr:.2f} · {elapsed:.1f}s · {status}")
     for p in problems:
         print(f"  ⚠ {p}")
 
-    log_token_log("canonical_generation", subject_folder, grade_folder, ch, title,
+    log_token_log("variant_generation" if args.variant else "canonical_generation",
+                  subject_folder, grade_folder, ch, title,
                   it, ot, cost_inr)
     log_ledger({
         "ts": ts, "mode": "one", "tag": args.tag or "", "model": args.model,
+        "variant": args.variant or "",
         "subject": subject_folder, "grade": grade_folder, "chapter": ch,
         "schedule": f"{count}x{duration}", "lp_only": args.lp_only,
         "constitution": const_label,
@@ -439,6 +465,11 @@ def main() -> int:
     one.add_argument("--assess-const", help="override assessment constitution path")
     one.add_argument("--model", default=GENERATION_MODEL)
     one.add_argument("--tag", help="filename/ledger tag, e.g. control_v10")
+    one.add_argument("--brief", help="variant brief file (from `genon/variant_plans.py "
+                     "brief ...`); prepended verbatim to the user prompt as a binding block")
+    one.add_argument("--variant", type=int, help="compact-variant period count KK: implies "
+                     "--periods KK, installs as ch_NN_canonical_pKK.json, logs as "
+                     "variant_generation; requires --brief")
     one.add_argument("--no-install", action="store_true",
                      help="write genon/out only; skip the simultaneous library install")
     one.add_argument("--dry", action="store_true", help="assemble + dump prompt, no API call")

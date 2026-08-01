@@ -501,7 +501,21 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
                     "handoff": r.get("coverage_handoff", _lp.get("coverage_handoff", []))}
     a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter,
                                link_context=link_context)
-    return {"meta": chapter, "view": ViewModel(lp, a).to_dict()}
+    vm = ViewModel(lp, a).to_dict()
+    # ── Dropped sections (founder, 2026-08-01): a below-floor plan carries its
+    # unreached units (result.dropped_units, serve v1.1). They ride into the VIEW
+    # only — rendered through the same subject adapter so their shape matches the
+    # plan's own units — never into exports (her printed artifact stays as decided
+    # at generation; online is an option, not an imposition).
+    du = r.get("dropped_units") or []
+    if du:
+        vm["dropped_lp"] = sub.lesson_plan_to_view(
+            {"lesson_plan": {"periods": du},
+             "coverage_handoff": r.get("coverage_handoff", {})},
+            grade=g, chapter=chapter)
+        sf = (saved.get("genon") or {}).get("slot_fill") or {}
+        vm["dropped_sections"] = sf.get("uncovered_sections") or []
+    return {"meta": chapter, "view": vm}
 
 
 @app.get("/subjects/{subject}/{grade}/allocation")
@@ -832,12 +846,18 @@ def genon_available(subject: str, grade: str) -> Dict[str, Any]:
     _subject(subject)
     chs = data.genon_chapters(subject, grade)
     minutes: Dict[str, int] = {}
+    periods: Dict[str, int] = {}
     for ch in chs:
         c = data.load_genon_canonical(subject, grade, ch) or {}
         row = (c.get("period_rows_snapshot") or [{}])[0]
         if row.get("duration") and row.get("count"):
             minutes[str(ch)] = int(row["duration"]) * int(row["count"])
-    return {"subject": subject, "grade": grade, "chapters": chs, "canonical_minutes": minutes}
+            # canonical_periods (2026-08-01): surrender is COUNT-based — the frontend's
+            # inline warning uses this true top count, never a minutes/avg approximation
+            # (which misfires on mixed-duration profiles: 600min/52avg rounded to 11).
+            periods[str(ch)] = int(row["count"])
+    return {"subject": subject, "grade": grade, "chapters": chs,
+            "canonical_minutes": minutes, "canonical_periods": periods}
 
 
 @app.post("/genon/{subject}/{grade}/{chapter_number}/plan")

@@ -1630,6 +1630,12 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
 export default function LessonView({ view, sectionKey = "", onExit, preview = false }) {
   const lp = view.lesson_plan;
   const units = useMemo(() => flattenUnits(lp), [lp]);
+  // Dropped sections (founder 2026-08-01): a below-floor plan carries its unreached
+  // units (view.dropped_lp, adapter-shaped). They page AFTER the served units — the
+  // strip chains "Next" from the last unit into them and "Back" from the first of them
+  // returns to the last served unit. Never counted in pointer/completion arithmetic.
+  const droppedLp = view.dropped_lp || null;
+  const droppedUnits = useMemo(() => (droppedLp ? flattenUnits(droppedLp) : []), [droppedLp]);
   // Preview root — used to reset scroll to the top of the unit when paging (see pvGoto).
   const pvRef = useRef(null);
   const storageKey = `lu_pointer_${sectionKey || lp.subject + "_" + lp.grade + "_" + (lp.chapter_title || "")}`;
@@ -1793,7 +1799,9 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // ── Paging helpers — shared by My Lessons preview, the read-only "View full lesson plan"
   //    preview, AND the My Classes tracking view (all three use the same one-unit-at-a-time
   //    paging layout; tracking just adds the note tab + the pointer's mark-complete box). ──
-  const pu = units[previewAt] || units[0];
+  const inDropped = previewAt >= units.length && droppedUnits.length > 0;
+  const pu = inDropped ? (droppedUnits[previewAt - units.length] || droppedUnits[0])
+                       : (units[previewAt] || units[0]);
   // Change the shown unit AND reset scroll to the top of the unit view. Without this, paging
   // from the bottom nav strip leaves the window scrolled down at the frozen header, so the new
   // unit opens mid-way; we land the teacher at the unit's start, just under the pinned header.
@@ -1816,16 +1824,26 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // The unit strip (bottom of the lesson body). LEFT is backward navigation: on Unit 1 (no
   // previous unit) it becomes chapter-org navigation (founder 2026-07-23); on every other unit
   // it pages to the previous unit, as before. CENTRE is "Unit N / total", RIGHT is next unit.
+  const totalAll = units.length + droppedUnits.length;
   const pvNav = (endClass = "") => (
     <div className={`lv-pvnav lv-pvnav-thin ${endClass}`}>
       {previewAt <= 0 ? (
         <button className="lv-pvbtn" onClick={goOrg}>‹ Chapter org.</button>
+      ) : previewAt === units.length ? (
+        /* first dropped unit — back returns to the LAST SERVED unit (founder 2026-08-01) */
+        <button className="lv-pvbtn" onClick={() => pvGoto(units.length - 1)}>← Back to unit {units.length}</button>
       ) : (
         <button className="lv-pvbtn" onClick={() => pvGoto(previewAt - 1)}>← Previous unit</button>
       )}
-      <span className="lv-pvmid">Unit {previewAt + 1} / {units.length}</span>
-      <button className={`lv-pvbtn ${previewAt >= units.length - 1 ? "off" : ""}`}
-        onClick={() => previewAt < units.length - 1 && pvGoto(previewAt + 1)} disabled={previewAt >= units.length - 1}>Next unit →</button>
+      <span className="lv-pvmid">{inDropped
+        ? `Dropped ${previewAt - units.length + 1} / ${droppedUnits.length}`
+        : `Unit ${previewAt + 1} / ${units.length}`}</span>
+      {previewAt === units.length - 1 && droppedUnits.length ? (
+        <button className="lv-pvbtn" onClick={() => pvGoto(units.length)}>Dropped sections →</button>
+      ) : (
+        <button className={`lv-pvbtn ${previewAt >= totalAll - 1 ? "off" : ""}`}
+          onClick={() => previewAt < totalAll - 1 && pvGoto(previewAt + 1)} disabled={previewAt >= totalAll - 1}>Next unit →</button>
+      )}
     </div>
   );
 
@@ -1838,7 +1856,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     // the back button alone.
     const headerContent = (
       <div className="lv-hd lv-hd-merge">
-        <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
+        <div className="lv-title lv-title-full"><span className="lv-unum">{inDropped ? "✦ " : `${previewAt + 1}.`}</span>{pu.title}
+          {inDropped ? <div className="uv-durline">Dropped section · for self-study · not scheduled</div> : null}</div>
         <button className="back back-tr" data-tour="preview-back"
           onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
           ← back
@@ -1872,7 +1891,8 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   const actUnit = undoTo != null ? undoTo : cur;
   const trackHeader = (
     <div className="lv-hd lv-hd-merge">
-      <div className="lv-title lv-title-full"><span className="lv-unum">{previewAt + 1}.</span>{pu.title}</div>
+      <div className="lv-title lv-title-full"><span className="lv-unum">{inDropped ? "✦ " : `${previewAt + 1}.`}</span>{pu.title}
+        {inDropped ? <div className="uv-durline">Dropped section · for self-study · not scheduled</div> : null}</div>
       {/* Back raises the chapter-org altitude (like My Lessons), NOT straight to section cards
           (founder 2026-07-23) — the org page's own back exits to the cards. */}
       <button className="back back-tr" onClick={goOrg}>← back</button>

@@ -1,0 +1,17 @@
+Social Science · Grade IX · ch 3 — 12 × 50 min (LP+A; constitution serve-era)
+  schedule : Total: 12 periods · 10h 0min
+  system   : 37,241 chars   user: 27,842 chars
+Traceback (most recent call last):
+  File "/sessions/vibrant-tender-johnson/mnt/aruvi-saas/genon/generate_canonical.py", line 482, in <module>
+    sys.exit(main())
+  File "/sessions/vibrant-tender-johnson/mnt/aruvi-saas/genon/generate_canonical.py", line 478, in main
+    return args.fn(args)
+  File "/sessions/vibrant-tender-johnson/mnt/aruvi-saas/genon/generate_canonical.py", line 340, in cmd_one
+    with client.messages.stream(
+  File "/sessions/vibrant-tender-johnson/.local/lib/python3.10/site-packages/anthropic/lib/streaming/_messages.py", line 167, in __enter__
+    raw_stream = self.__api_request()
+  File "/sessions/vibrant-tender-johnson/.local/lib/python3.10/site-packages/anthropic/_base_client.py", line 1536, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/sessions/vibrant-tender-johnson/.local/lib/python3.10/site-packages/anthropic/_base_client.py", line 1195, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.AuthenticationError: Unauthorized

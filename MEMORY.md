@@ -463,6 +463,99 @@ standing spec for this architecture — read it before touching genon).
   provisional rows (e.g. SS·IX ch4: rec 19, floor 11) show midband partials — expected to
   improve on real registries (synthesis tails shrink effective section count) or resolve via
   the 4th-variant/sigma decision per stage.
+- **master_plan.md RETIRED (same day):** it misled the founder with a stale ceil'd floor
+  within hours of the rounding correction — a derived human view nothing consumes and
+  nothing keeps fresh. master_plan.json is the single artifact; eyeball it fresh (json.tool)
+  or via GET /subjects/{s}/{g}/chapters. genon/master_plan.py no longer emits it (comment at
+  the removal site records why). RUNBOOK PAIR: master_plan.py regeneration wipes derived
+  annotations — always run genon/variant_plans.py immediately after it.
+- **NEW SKILL .claude/skills/canonical (same day):** one invocation runs the whole library
+  loop on desktop — top canonical (LP + assessment) under live constitutions -> variant_plans.py
+  finalize -> brief extraction consumed in-session -> compact variants + their assessments ->
+  deterministic certification (compile, registry/first-visit/closing-mandate checks, serve
+  sweep, projected-vs-actual table diff) -> HUMAN GATE (seam reading + diff verdict, never
+  self-approved; sampled in batch mode). Kills the human relay of printed briefs; the FastAPI
+  is never involved (generation was always cowork-side; serve reads files by glob). Sibling to
+  the chapter skill, which remains the summary/mapping ground.
+- **Metered generation wired for variants (2026-08-01):** generate_canonical.py gains
+  --brief (prepended verbatim as the first user block) + --variant KK (count override,
+  installs ch_NN_canonical_pKK.json, logs variant_generation; requires --brief); its
+  validator rewritten for the serve-era contract (anchors/tiling/period_ref — band layer
+  checks gone with the retired partition import). Verified by --dry: model claude-sonnet-4-6,
+  brief first block, count from --variant, guard fires without --brief. canonical skill v2
+  routes ALL certified generation through this path (on-computer + ANTHROPIC_API_KEY;
+  in-session authoring forbidden for installable artifacts — constitutions are calibrated
+  to Sonnet 4.6). NOTE: founder cleared data/content/saved_plans/social_sciences/ix (olds in
+  backup/saved_plans/) — annotate pass will show ch3/ch5 provisional until fresh tops land;
+  variant_plans.py brief now refuses gracefully when the canonical is missing.
+- **SANDBOX NETWORK FINDING + the one-command driver (2026-08-01):** the Cowork sandbox
+  proxy blocks credentialed API calls in EVERY mode (on-computer included) — x-api-key
+  requests return identical plain-text 401s for bogus and real keys; keyless requests reach
+  Cloudflare. So metered generation runs ONLY in the founder's own Terminal. Response:
+  genon/build_library.py — ONE command (subject grade ch) runs top canonical -> annotate ->
+  briefs (genon/out/briefs/) -> compact variants -> re-annotate -> deterministic
+  certification (compile, registry/first-visit/closing-mandate, serve sweep,
+  projected-vs-actual) -> report in genon/out/library_reports/; --certify-only re-runs the
+  free steps. variant_plans.py refactored (briefs_for() returns {count: text}). canonical
+  skill v3: session does preflight, hands the user the command, then reads the report and
+  runs the HUMAN GATE — it never generates and never works around the proxy. Pilot ceremony:
+  Social Science · Grade IX · ch 3 — 12 × 50 min (LP+A; constitution serve-era)
+  schedule : Total: 12 periods · 10h 0min
+  system   : 37,241 chars   user: 27,842 chars
+
+== STEP 1 · top canonical (metered, Sonnet 4.6) == then gate in any session.
+- **V-SERIES IS NOT CONSTITUTIONAL (founder ruling, 2026-08-01):** the variant brief is
+  post-constitution — composed by the platform, prepended to the prompt, invisible to the
+  constitution; the certifier enforces every V-requirement in code. NO constitution carries
+  a V-rule, an INPUTS acknowledgment, or a precedence line (founder rejected even that).
+  Constitutional carry-forward per stage is EXACTLY: A1 · A5/A7 (v1.10 register) ·
+  A6-confirm · A9 · P3 · P4 — nothing more. Economics: brief wording iterates at failure
+  speed (ch 3 hardened it twice in a day, Rs 35, no cascade); a constitutional amendment
+  reopens every certified combo under testing.md §9. Both briefs updated (rollout §3+§5,
+  architecture §7); rollout header/table synced to LP v1.10 reference.
+- **testing.md rewrite brief written (docs/testing_rewrite_brief.md, 2026-08-01):** the
+  handoff for rewriting the campaign template. HEADLINE: certification collapses from 25
+  class combos to 11 subject·STAGE rows — ONE randomly chosen class per stage (constitutions
+  are per stage; record the pick; cover both stage durations deterministically where a stage
+  spans 40/45). Encodes everything settled: serve-era test object, constitutional
+  carry-forward list, Terminal-only generation + build_library + quarantine + human gate,
+  ch 3 pilot evidence (Rs 145.70 all-in incl. the caught coverage defect), C-step by C-step
+  rewrite guidance, and the three-way regression distinction (constitution vs engine/brief
+  vs master_plan changes).
+- **DROPPED SECTIONS shipped (founder spec, 2026-08-01; engine e09):** below the floor,
+  the served plan carries its unreached units verbatim (result.dropped_units, unscheduled,
+  authored minutes as guidance) — the 'give her access to it' promise made literal. /view
+  renders them through the subject adapter (view.dropped_lp + dropped_sections); EXPORTS
+  DELIBERATELY UNCHANGED (her printed artifact stands as generated; online is an option,
+  never forced). UI (LessonView, all three surfaces — preview, tracking, chapter-org): one
+  collapsible 'Dropped sections' row below the planned units; the paging strip chains
+  'Next' from the last served unit into the dropped units and 'Back to unit N' from the
+  first dropped unit returns to the last served one; dropped units badge 'for self-study ·
+  not scheduled' and never enter pointer/completion arithmetic. Also same-day UI fixes:
+  archived plans excluded from section-attach chooser + tour; floor small-print now
+  round()-based ('Below 7 periods…') with serve-era wording in Prepare + FirstRun;
+  duration_label on ALL plans incl. canonicals ('50 min × 12/9/7' — supersedes the
+  2026-07-25 no-label rule). Every e08 cache entry stale by construction (e09 bump).
+- **Surrender surfacing settled (founder, 2026-08-01): the drop channel, at generation,
+  nothing else.** serve.py routes surrender_note into section_coverage_note (mutually
+  exclusive with coverage loss, no collision); genon.surrender_note stays as provenance.
+  No org-header line, no card reconciliation, no view surface — same-day fold into e09
+  (no surrendered e09 artefact existed). ALSO: the org-page 'Dropped sections' collapsible
+  row was REMOVED on founder order — the paging-strip chaining (last unit -> dropped units,
+  back returns to last served unit) is the sole access path, plus the generation-time note.
+- **Generation-note interstitial (2026-08-01):** PrepareLesson's onPrepared early-return was
+  SILENTLY DISCARDING coverage_note in the normal flow (launched from My Lessons/My Classes) —
+  drops at 5/6 and surrender at 13+ never showed. Fix: when the serve returns a note and a
+  return handler exists, a one-screen interstitial ("Lesson plan prepared" + note + Continue)
+  shows once, then continues; no note -> zero-click as before. Cached responses carry the note
+  too, so repeats still surface it. FirstRun's guided path untouched (its flow predates floors).
+- **Edge-warning placement FINALIZED + served-schedule prints (founder, 2026-08-01; e10):**
+  the warning lives INLINE in the Prepare form (prep-floor line, before Generate) —
+  context-aware: floor note below 60%, surrender note ('Above 12 periods, the extra N return
+  to your budget') above the top; the post-generate interstitial was REMOVED (double-warned).
+  Engine e10: period_schedule_display + duration_label build from genon.served_matrix — a
+  13-ask PRINTS 12 periods everywhere teacher-facing; the request stays in genon.matrix as
+  provenance. test_genon_plan_key asserts e10. Stale e09 13-file moved to _to_delete.
 - **Open (founder):** floor + σ per subject·stage; 4th-variant threshold for big chapters
   (ch 5 is 21 units); adaptation-table UI (deferred); retire `compression`/`seam_periods`
   response keys at the next web pass; apply §9 to testing.md itself.

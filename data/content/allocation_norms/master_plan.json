@@ -8,7 +8,7 @@
       "IX": 50
     },
     "allocation_method": "largest remainder over chapter effort weights (same as Allocate.jsx / api allocator)",
-    "floor_definition": "unit-dropping begins when teacher_minutes/canonical_minutes < 0.6; floor_minutes = 0.6 x recommended_periods x standard_duration; floor_periods_at_standard = floor_minutes / standard_duration rounded to the NEAREST whole period (was ceil; corrected 2026-07-31, founder decision)",
+    "floor_definition": "unit-dropping begins when teacher_minutes/canonical_minutes < 0.6; floor_minutes = 0.6 x recommended_periods x standard_duration; floor_periods_at_standard rounded to the NEAREST whole period (founder, 2026-07-31)",
     "skipped": [
       "english X: budget 160 but no chapters in workbook",
       "mathematics X: budget 210 but no chapters in workbook",
@@ -9830,21 +9830,26 @@
             "sigma": 2,
             "counts": [
               21,
-              17,
+              19,
               13
             ],
             "closing_spans": {
-              "17": 1,
-              "13": 1
+              "19": 1,
+              "13": 2
             },
-            "provisional": false,
-            "basis": "authored_canonical",
-            "registry_sections": 18,
+            "provisional": true,
+            "basis": "modeled",
+            "registry_sections": 21,
             "full_coverage": [
               13,
               21
             ],
-            "partials_at": []
+            "partials_at": [
+              14,
+              15,
+              16,
+              17
+            ]
           }
         },
         {

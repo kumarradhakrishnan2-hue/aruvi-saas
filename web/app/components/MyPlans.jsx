@@ -305,7 +305,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // arbitrary library chapter (kumar23 generated ch 2, the guide walked ch 9 — 2026-07-06).
   const latestPrepared = (gp) => {
     if (!Array.isArray(gp)) return null;
-    const prepped = gp.filter((p) => p.prepared)
+    const prepped = gp.filter((p) => p.prepared && !p.archived)   // an archived plan never fronts the tour
       .sort((a, b) => String(b.prepared_at || "").localeCompare(String(a.prepared_at || "")));
     return prepped[0] || null;
   };
@@ -492,10 +492,13 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // Only chapters SHE PREPARED (never raw library entries — /plans returns the whole shared
     // library; My Lessons applies the same filter), excluding the chapter already bound to this
     // section (e.g. the just-completed one) — she's here to pick a DIFFERENT chapter.
+    // ARCHIVED plans are excluded too (founder, 2026-08-01): the archive box holds a plan
+    // OUT of circulation — restore it in My Lessons first, then attach. (An attached plan
+    // can never be archived, so the sibling-section pass-through below is unaffected.)
     const boundFile = currentChapterFile(sectionKey);
     const alsoAttachable = boundFilesForGrade(c.subjectSlug, c.gradeSlug); // bound to a sibling section
     const listPlans = Array.isArray(gradePlans)
-      ? gradePlans.filter((p) => (p.prepared || alsoAttachable.has(p.filename)) && p.filename !== boundFile)
+      ? gradePlans.filter((p) => (p.prepared || alsoAttachable.has(p.filename)) && p.filename !== boundFile && !p.archived)
       : gradePlans;
     return (
       <div className="ap-overlay" onClick={() => setAttachFor(null)}>

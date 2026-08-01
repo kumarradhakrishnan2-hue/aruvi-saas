@@ -293,7 +293,9 @@ def duration_label(saved: Dict[str, Any]) -> Optional[str]:
     the canonical's standard row) shows no label — it goes by its chapter name
     alone (founder naming rule, 2026-07-25)."""
     g = saved.get("genon") or {}
-    matrix = g.get("matrix")
+    # served_matrix (2026-08-01): the periods ACTUALLY used — a surrendered request
+    # labels 12, not the 13 asked. Falls back to the requested matrix for older files.
+    matrix = g.get("served_matrix") or g.get("matrix")
     if not matrix:
         return None
     return " · ".join(f"{m['duration']} min × {m['count']}" for m in matrix)
@@ -348,7 +350,18 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "08"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "10"     # BUMP when compile/serve change the OUTPUT
+# 10 (2026-08-01): teacher-facing time prints show the SERVED schedule, never the
+# request — period_schedule_display and duration_label build from genon.served_matrix
+# (surrendered 13-ask prints 12; request kept as provenance in genon.matrix).
+# 09 (2026-08-01): DROPPED SECTIONS — a below-floor serve carries its unreached units
+# verbatim in result.dropped_units (unscheduled, authored minutes as guidance), per the
+# founder's "give her access to it" ruling. Online-only: the /view endpoint renders them
+# through the subject adapter (view.dropped_lp); exports deliberately omit them. The
+# result shape changes for every plan (key present, null above floor), so every e08
+# entry is stale by construction. Same-day fold (no surrendered e09 artefact existed):
+# surrender now files in section_coverage_note — the same generation-time channel as
+# drops, per the founder's ruling; genon.surrender_note stays as provenance.
 # 08 (2026-07-31): THE PARTITION ENGINE IS RETIRED — replaced by the variant-serve
 # engine (docs/variant_canonical_architecture.md). A chapter is a library of variant
 # canonicals; a request is served by next-highest selection, the X-1+1 slot-fill

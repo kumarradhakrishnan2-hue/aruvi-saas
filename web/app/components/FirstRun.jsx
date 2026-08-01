@@ -897,8 +897,10 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
               if (totalMin / cm >= 0.6) return null;
               return (
                 <p className="prep-floor">
-                  If below minimum period of {Math.ceil((0.6 * cm) / (Number(durationMin) || 40))},
-                  some later sections may be dropped.
+                  {/* nearest-whole floor + serve-era wording (2026-08-01) — see PrepareLesson */}
+                  Below {Math.round((0.6 * cm) / (Number(durationMin) || 40))} periods, later
+                  sections move to guided self-study — the plan still closes the chapter and
+                  names them.
                 </p>
               );
             })()}

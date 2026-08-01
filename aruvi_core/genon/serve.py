@@ -415,11 +415,44 @@ def serve_plan(streams, matrix):
         surrender_note = ("%d period(s) (%d minutes) exceed this chapter's fullest "
                           "plan and return to your budget."
                           % (surrendered, sum(surrendered_durations)))
+        # Founder ruling 2026-08-01: surrender surfaces EXACTLY where drops do — the
+        # generation-time note channel (section_coverage_note), and nowhere else.
+        # Surrender and coverage loss are mutually exclusive, so no collision.
+        coverage_note = surrender_note
 
-    total = sum(d * c for d, c in matrix)
-    nper = sum(c for _, c in matrix)
+    # ── Dropped sections (founder, 2026-08-01): below the floor — i.e. whenever the
+    # serve leaves sections uncovered — the plan CARRIES the unserved units whose
+    # coverage was lost, verbatim as authored, flagged unscheduled. Online-only
+    # self-study material ("give her access to it"); exports deliberately omit it.
+    dropped_units = []
+    if fill and (fill.get("uncovered_sections") or []):
+        _ridx = {_norm(a): i for i, a in enumerate(registry)}
+        uncov = {_ridx[_norm(a)] for a in fill["uncovered_sections"] if _norm(a) in _ridx}
+        base = len(served)
+        for u in units:
+            if u["unit"] in served_chosen_units:
+                continue
+            r = unit_range(u, _ridx)
+            if r is None:
+                continue
+            if set(range(r[0], r[1] + 1)) <= uncov:   # its coverage was truly lost
+                p = _period_from_unit(chosen, u, base + len(dropped_units) + 1,
+                                      u["authored_duration_minutes"])
+                p["unscheduled"] = True
+                dropped_units.append(p)
+
+    # ── the SERVED schedule (founder, 2026-08-01): every teacher-facing time print
+    # reflects the periods actually used, never the request. A surrendered request
+    # (13 asked, 12 served) prints 12; the request survives in genon.matrix /
+    # period_rows_snapshot as provenance.
+    served_agg = {}
+    for d in sit_durations:
+        served_agg[d] = served_agg.get(d, 0) + 1
+    served_matrix = [(d, served_agg[d]) for d in sorted(served_agg, reverse=True)]
+    total = sum(sit_durations)
+    nper = len(served)
     rows = "\n".join("  Row %d: %d minutes × %d periods = %d minutes"
-                     % (i + 1, d, c, d * c) for i, (d, c) in enumerate(matrix))
+                     % (i + 1, d, c, d * c) for i, (d, c) in enumerate(served_matrix))
     meta = chosen["meta"]
     plan = {
         "filename": None,
@@ -438,6 +471,7 @@ def serve_plan(streams, matrix):
             "coverage_handoff": handoff,
             "assessment_items": items,
             "section_coverage_note": coverage_note,
+            "dropped_units": dropped_units or None,
         },
         "genon": {
             "engine": ("serve v1.1 (variant library, next-highest selection, "
@@ -459,6 +493,7 @@ def serve_plan(streams, matrix):
             "surrender_note": surrender_note,
             "stream_source": meta.get("source_file"),
             "matrix": [{"duration": d, "count": c} for d, c in matrix],
+            "served_matrix": [{"duration": d, "count": c} for d, c in served_matrix],
             "duration_sequence": durations,
             "scale": [round(d / u["authored_duration_minutes"], 3)
                       for (s, u), d in zip(served, sit_durations)],

@@ -208,15 +208,28 @@ exactly what is missing. When the honest answer is "this chapter cannot be taugh
 coherently in fewer than K periods," the coverage note says so and the material is handed
 over — refusal-with-access is a feature, not a failure.
 
-## 7. The V-series — constitution amendments for the authoring pass
+## 7. The V-series — carried by the VARIANT BRIEF, never by constitutions
 
-The demolition is done (§8). The authoring side is the next pass, per stage, in the P1–P4
-workflow testing.md already defines. Ready-to-port requirement blocks:
+**Founder ruling (2026-08-01): the V-series is NOT constitutional.** The brief is
+post-constitution — composed by the platform (`genon/variant_plans.py briefs_for`),
+prepended to the generation prompt, invisible to the constitution — and the
+deterministic certifier (`genon/build_library.py`) enforces every V-requirement
+regardless of wording. Constitutions receive nothing for it: no V-rules, no INPUTS
+acknowledgment, no precedence line. Two reasons, both proven in the ch 3 pilot:
+the brief's content is per-chapter and parameterized (a constitution cannot carry a
+registry), and brief wording must iterate at the speed generation failures teach —
+the coverage clause was hardened the same day a variant leaked, at one ₹35 rerun,
+where a constitutional amendment would have reopened every certified combo under
+testing.md §9. The constitutional carry-forward for the rollout is exactly the list
+in partition_constitution_rollout.md §3 (A1 · A5/A7 v1.10 register · A6-confirm ·
+A9 · P3 · P4) and nothing more.
 
-- **V1 · The variant brief as input.** INPUTS gains: "Variant brief — this plan's period
-  count and, for compact variants, the mandated closing span: the final unit consolidates
-  the last k sections." Each variant is authored as a COMPLETE plan under all existing
-  rules — never as a compression of the top variant's text.
+The V-requirements themselves, as the brief and certifier carry them:
+
+- **V1 · The variant brief.** The brief carries this plan's period count and, for
+  compact variants, the mandated closing span (the final unit consolidates the last k
+  sections). Each variant is authored as a COMPLETE plan under all existing rules —
+  never as a compression of the top variant's text.
 - **V2 · The shared section registry.** All variants of a chapter draw `section_anchor`
   verbatim from the chapter summary's section list; every unit's coverage is a contiguous
   range of it; multi-section units join anchors with " / " in list order. (Rule 3/4 already

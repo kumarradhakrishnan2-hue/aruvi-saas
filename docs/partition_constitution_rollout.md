@@ -6,8 +6,9 @@ of this brief rolled out the partition engine's declaration layer — band ids, 
 unit handoffs. That engine is retired and its amendments are cancelled;
 `docs/variant_canonical_architecture.md` records the whole story (§1 the failure
 evidence, §6a the band-layer removal). This file now carries ONLY what still ports:
-the amendments that survive, the one that shrank, and the new V-series the variant
-architecture creates. SS·secondary (LP v1.9 · assessment v1.5) is the reference pair.
+the amendments that survive and the one that shrank; the V-series is carried by the
+variant brief, outside every constitution (§3). SS·secondary (LP v1.10 · assessment
+v1.5) is the reference pair.
 
 ---
 
@@ -29,7 +30,7 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 
 | Subject · stage | LP ver | Band shape | A1 | Register (A5/A7) | A9 (assess) |
 |---|---|---|---|---|---|
-| **social_sciences · secondary** | **1.9 — reference** | time_bands | ✓ | ✓ | ✓ (v1.3+) |
+| **social_sciences · secondary** | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (v1.3+) |
 | social_sciences · middle | 2.7 | time_bands | — | — | — (item-18 prohibition to replace) |
 | science · secondary | 1.0 | time_bands | — | — | — (item-18 prohibition to replace) |
 | mathematics · secondary | 1.0 | time_bands | — | — | — |
@@ -87,26 +88,21 @@ target shape any more — the conversion got smaller). The compiler reads exactl
 **P4 · History to the sidecar.** Unchanged convention: amendment notes go to
 `CHANGELOG.md` beside the constitution; the `VERSION` line stays in the file.
 
-**V-series · NEW — the variant architecture's own requirements**
-(full text: variant_canonical_architecture.md §7):
-
-- **V1** — the variant brief as input: period count + (compact variants) the mandated
-  closing span, solver-computed. Each variant is a COMPLETE plan under all rules, never
-  a compression of the top variant's text.
-- **V2** — the shared section registry: `section_anchor` verbatim from the chapter
-  summary's section list; contiguous ranges; " / " joining. (S3 above is its engine
-  face.) **Per-subject decision at prep:** what the registry lists where the section
-  model is non-obvious — English's split-chapter/spine model needs its registry defined
-  at its P-prep before variants are authored.
-- **V3** — the closing mandate: a compact variant's final unit is a closing synthesis
-  ANCHORED to exactly its mandated span (the last k registry sections — the anchor must
-  list them so the fill ladder can see it; the synthesis may draw on the whole chapter);
-  if it cannot be closed coherently, say so in output (feeds σ back to the solver).
-  Coverage is measured by FIRST-VISIT FRONTIER, so backward-anchored synthesis tails
-  (ch 5 authors three) are legal — V2 mandates first-visit order, not per-unit
-  monotonicity.
-- **V4** — per-variant assessment, consuming that variant's own coverage handoff; no
-  cross-variant references.
+**V-series · NOT CONSTITUTIONAL (founder ruling, 2026-08-01).** The variant
+requirements — V1 the variant brief (count + mandated closing span), V2 the shared
+section registry (verbatim anchors, first-visit order), V3 the closing-synthesis
+mandate, V4 per-variant assessment — are carried ENTIRELY by the platform-computed
+VARIANT BRIEF (`genon/variant_plans.py briefs_for`, prepended to the generation
+prompt) and enforced by the deterministic certifier (`genon/build_library.py`). The
+brief is post-constitution and invisible to it; no constitution carries a V-rule, an
+INPUTS acknowledgment, or any reference to briefs (the founder rejected even a
+precedence line). This is deliberate economics: brief wording iterates at the speed
+generation failures teach (the ch 3 pilot hardened it twice in one day at Rs 35 and no
+cascade), while a constitutional amendment reopens every certified combo under §9.
+Full text and rationale: variant_canonical_architecture.md §7.
+One decision still lands at prep, in the PIPELINE not the constitution: what the
+registry lists where the section model is non-obvious — English's split-chapter/spine
+model needs its registry defined before its variants are authored.
 
 ## 4. Cancelled, and where the reasoning lives
 
@@ -121,9 +117,11 @@ of it: the failure evidence is variant_canonical_architecture.md §1.
 
 1. **A1 everywhere.** Still the cheapest, highest-leverage edit; stops new canonicals
    being authored in shapes the library cannot use.
-2. **Per stage, in the campaign's combo order: A5/A7 → A6-confirm → V1–V4** (P3 first
-   where Group B). One stage fully signed off before the next begins — the testing.md
-   P-prep slot, with A2/A3/A4 struck from its checklist.
+2. **Per stage, in the campaign's combo order: A5/A7 → A6-confirm** (P3 first where
+   Group B). That is the WHOLE constitutional carry-forward per stage — the V-series
+   rides in the brief and never touches the files. One stage fully signed off before
+   the next begins — the testing.md P-prep slot, with A2/A3/A4 struck from its
+   checklist.
 3. **A9 into the ten remaining assessment constitutions**; the four item-18 files first,
    since their prohibition is known not to hold. Schedule the corpus repair beside it.
 4. **Floor + σ per subject·stage** (founder inputs the solver needs) — set at each
