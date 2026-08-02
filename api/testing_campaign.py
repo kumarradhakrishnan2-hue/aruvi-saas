@@ -1,6 +1,6 @@
 """Test-campaign tracker state — docs/testing.md §6a.
 
-Persists the 25-combo certification campaign's tick-offs, comments, provenance
+Persists the 11-stage certification campaign's tick-offs, comments, provenance
 records and defect register INSIDE Aruvi itself (Bucket-B-style state under
 STATE_DIR/testing/), so the tracker UI (docs/testing_tracker.html, also served at
 GET /api/testing/tracker) survives restarts and both actors see one register.
@@ -37,12 +37,12 @@ def _state_path() -> str:
 def _default_state() -> Dict[str, Any]:
     return {
         "version": 1,
-        "campaign": "aruvi-25-combo-certification",
+        "campaign": "aruvi-11-stage-certification",
         "updated_at": None,
         # scope → key → step → {status, comment, by, at, ...extras (e.g. provenance)}
         "step0": {},     # key "campaign" → {"0.1": {...}}
         "stages": {},    # key "english/preparatory" → {"P1": {...}}
-        "combos": {},    # key "english/iii" → {"C1": {...}, "provenance": {...}}
+        "combos": {},    # key "english/middle" → {"C1": {...}, "provenance": {...}}
         "cross": {},     # key "campaign" → {"X1": {...}}
         "defects": [],   # [{id, combo, step, severity, title, evidence, owner, status, opened, closed, notes}]
     }
@@ -100,8 +100,8 @@ class ItemPatch(BaseModel):
 
     scope: step0 | stages | combos | cross
     key:   "campaign" for step0/cross; "english/preparatory" for stages;
-           "english/iii" for combos
-    step:  "0.1" | "P1".."P4" | "SIGN" | "C1".."C13" | "X1".."X3" | "provenance"
+           "english/middle" for combos (subject·STAGE rows)
+    step:  "0.1".."0.8" | "P1".."P5" | "SIGN" | "C1".."C13" | "X1"/"X2" | "provenance"
     patch: merged into the stored item (status / comment / by / any extra fields;
            set a field to null to delete it). `at` is stamped server-side.
     """
@@ -134,7 +134,7 @@ def post_item(req: ItemPatch) -> Dict[str, Any]:
 class DefectUpsert(BaseModel):
     """Upsert one defect-register row by id; omit id to open a new ARV-D-NNN."""
     id: Optional[str] = None
-    combo: str = ""            # "english/iii", "stage:science/middle", or "campaign"
+    combo: str = ""            # "english/middle", "stage:science/middle", or "campaign"
     step: str = ""             # "C7", "P2", "X1", "0.1", ...
     severity: str = "S3"       # S1..S4 per docs/testing.md §7
     title: str = ""

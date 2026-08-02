@@ -1,7 +1,11 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.0 · 2026-08-01 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.1 · 2026-08-02 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.1 (2026-08-02, at step 0.2): the engine ladder e08 → **e10** folded in — dropped sections
+(e09) and served-schedule prints (e10) are now asserted in C6, C7, C10 and C12. Template change,
+so §9 applies: no stage is certified yet, so nothing re-opens.*
 
 **Supersedes VERSION 1.0 (2026-07-29), the 25-combo partition-era template.** The engine it
 certified no longer exists: the deterministic partition engine was retired on 2026-07-31 and
@@ -115,12 +119,26 @@ model pinned `claude-sonnet-4-6` in `genon/generate_canonical.py`.
 **Exit:** `python3 genon/build_library.py social_sciences ix 3 --certify-only` runs to a report
 without spending a rupee. **Artefact:** the report path + the CSV header line.
 
-**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "08"` (`api/data.py`);
+**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "10"` (`api/data.py`);
 `aruvi_core/genon/` contains exactly `compile.py` (v0.5), `serve.py` (v1.1) and
 `variant_solver.py` — the retired `partition.py`/`polish.py` are gone from the engine package;
 the repo-root `genon/` lab keeps historical copies (`partition.py`, `polish_plan.py`,
 `polish_seams.py`) that nothing live imports. **Exit:** `grep -rn "partition\|polish" api/
-aruvi_core/ web/app/lib/format.js` shows no live import. **Artefact:** the grep output.
+aruvi_core/ web/app/lib/format.js` shows no live import, and the four genon suites
+(`test_genon_serve`, `test_variant_solver`, `test_genon_plan_key`, `test_genon_duration_order`)
+are green. **Artefact:** the grep output + the test run.
+
+> **Engine ladder, recorded here because the campaign's assertions key on it** (`api/data.py`
+> carries the full dated comment block): **e08** the variant-serve pivot · **e09** (2026-08-01)
+> **dropped sections** — a below-floor serve carries its unreached units verbatim in
+> `result.dropped_units` (flagged `unscheduled`, authored minutes as guidance), rendered
+> online only via `/view` → `view.dropped_lp` and deliberately omitted from exports; surrender
+> now files in `section_coverage_note`, the same channel as drops, with
+> `genon.surrender_note` kept as provenance · **e10** (2026-08-01) **served-schedule prints** —
+> `period_schedule_display` and the duration label build from `genon.served_matrix` (the
+> periods actually used), so a 13-period ask on a 12-period top prints 12; the request survives
+> in `genon.matrix` / `period_rows_snapshot`. Every e08/e09 plan file is stale by construction
+> and stays on disk as the C10.3 no-overwrite evidence.
 
 **0.3 [Kumar] Variant plans fresh.** `python3 genon/variant_plans.py` — every chapter row of
 `master_plan.json` carries `variant_plan {sigma, counts, closing_spans, provisional, basis,
@@ -129,9 +147,14 @@ regeneration WIPES these rows; `variant_plans.py` must be re-run immediately aft
 any row is trusted. **Exit:** the annotate pass reports rows written; the campaign's pilot
 chapters show `basis: "authored_canonical"` once their tops exist. **Artefact:** the run output.
 
-**0.4 [Kumar] Deploy the campaign tracker.** `api/testing_campaign.py` merged + included in
-`api/main.py`; open `docs/testing_tracker.html` (or `GET /api/testing/tracker`) against the
-running API. **Exit:** a tick made in the browser survives an API restart (state at
+**0.4 [Kumar] Deploy the campaign tracker.** `api/testing_campaign.py` is now **included in
+`api/main.py`** (2026-08-02 — the router had never been wired in, which is why the page sat
+"offline": it loads from `file://` fine, but every `/api/testing/*` fetch 404'd). Open
+`docs/testing_tracker.html` or, better, `GET /api/testing/tracker` (same origin as the API).
+The v1.0 campaign state is archived under `backup/testing/` and the register restarted for
+this template, carrying only the defect rows — step keys `0.x` and `P1–P4` were REDEFINED by
+this rewrite, so a v1.0 tick under them would have read as evidence for a different step.
+**Exit:** a tick made in the browser survives an API restart (state at
 `data/testing/campaign_state.json`). **Artefact:** the state file.
 
 **0.5 [Kumar] Provision the three test identities.** `kumar1`, `kumar2`, `kumar3` (sent as
@@ -372,8 +395,8 @@ at the class-standard duration:
 | X = each variant's own count | kumar1 | `identity: true`, that variant's own filename, **no new file saved** |
 | X between two variants (superset/runway) | kumar2 | 200; `serve.slot_fill.mode` = `superset`; coverage note names the re-crossed sections |
 | X between two variants (exact fill) | kumar2 | 200; `mode` = `exact`; no coverage note needed |
-| X = A_top + 1 | kumar2 | 200; `serve.surrendered_periods` ≥ 1 and `surrender_note` names the returned minutes |
-| X = floor − 1 (below floor) | kumar2 | 200; `mode` = `suffix` or `truncation`; `coverage_note` names exactly what was not scheduled |
+| X = A_top + 1 | kumar2 | 200; `serve.surrendered_periods` ≥ 1; the surrender sentence appears in **`coverage_note`** (e09 folded it into the same channel as drops), with `serve.surrender_note` kept as provenance; and the **served schedule prints the served count, not the ask** (e10: `period_schedule_display` + the duration label from `genon.served_matrix`; the request survives in `genon.matrix` / `period_rows_snapshot`) |
+| X = floor − 1 (below floor) | kumar2 | 200; `mode` = `suffix` or `truncation`; `coverage_note` names exactly what was not scheduled; **`result.dropped_units`** carries those unreached units verbatim, each flagged `unscheduled: true` (e09) |
 | mixed-duration weekly matrix | kumar3 | 200; the plan this stage's C7/C9/C12 inspect |
 
 **Where the stage spans two durations (S2/S6/S7/S10), run the whole table at BOTH 40 and 45**
@@ -386,7 +409,8 @@ that the shortest sitting opens the week and long sittings sit interior and neve
 **Exit:** every row returns as expected; responses recorded. **Artefact:** the responses + files.
 
 **C7 [Claude] Register scan on teacher-facing text.** On the C6 plan files (and the library
-files), every teacher-facing title and note is checked against the **v1.10 three bans**:
+files) — **including any `result.dropped_units`, which a teacher reads on screen** — every
+teacher-facing title and note is checked against the **v1.10 three bans**:
 1. **clock quantity** — any stated number of minutes/hours/fractions of a period in band or note
    text (proportional scaling would falsify it);
 2. **forward reference / completion language** — "next period", "we will finish", "in the final
@@ -424,13 +448,15 @@ normalizes `period_ref` (the identity) — legacy `phase_ref` as fallback — on
 **C10 [Claude] Storage conventions.**
 1. Library files: `ch_NN_canonical.json` + `ch_NN_canonical_pKK.json` (KK = the variant's
    period count, zero-padded). Served plans: exactly
-   `ch_NN_<matrix>_e08_c<chosen-variant-version>.json`, `<matrix>` duration-aggregated
+   `ch_NN_<matrix>_e10_c<chosen-variant-version>.json`, `<matrix>` duration-aggregated
    longest-first (`50m10`, `60m3-45m9`) and the version being the **chosen variant's**
-   `ledger_ts` — not the top canonical's (`api/data.py::genon_plan_filename`).
+   `ledger_ts` — not the top canonical's (`api/data.py::genon_plan_filename`). Live proof of
+   the chosen-variant rule already on disk: SS·IX ch 3's `50m8` and `50m6` files key on the
+   p09 and p07 variants' own timestamps, not the top's.
 2. **Cache hit** — repeat one C6 non-identity request: response has `cached: true` and the
    file's mtime did not change.
-3. **No overwrite across engine versions** — any pre-campaign `_e06_`/`_e07_` file for this
-   chapter is still on disk untouched beside the new `_e08_` files.
+3. **No overwrite across engine versions** — every pre-campaign file for this chapter
+   (`_e06_` … `_e09_`) is still on disk untouched beside the new `_e10_` files.
 4. **Determinism** — delete one C6 plan file, re-run the same request: the new file is
    byte-identical except the top-level `saved_at`
    (`diff <(jq 'del(.saved_at)' a) <(jq 'del(.saved_at)' b)` empty).
@@ -445,16 +471,21 @@ or use a fresh matrix): `curl -w '%{time_total}'`. **Exit:** total < 5 s — any
 defect; record the actual figure either way (selection + one compile should be milliseconds).
 **Artefact:** the timing.
 
-**C12 [Kumar runs, Claude inspects] Exports.** For the C6 mixed-duration plan — and it must be
+**C12 [Kumar runs, Claude inspects] The online view and the exports — the e09 split.** First
+the **view**: `GET /api/plans/{s}/{g}/{filename}/view` on the below-floor plan must carry
+`dropped_lp` (the unreached units, adapter-shaped), and `LessonView` must page them AFTER the
+served units, visibly unscheduled — this is the "give her access to it" ruling. Then the
+**exports**, which deliberately OMIT dropped units: for the C6 mixed-duration plan — and it must be
 one that includes a **borrowed fill sitting** — all three plan exports
 (`GET /api/plans/{s}/{g}/{filename}/export/{lesson|assessment|integrated}`) in both
 `format=pdf` and `format=docx`, plus the allocation report (`POST /api/allocation/export-pdf`
 and `export-docx`) for this subject·grade. View-model shapes differ by subject (science·ix
 section-anchored flat; science middle stage-grouped; english spine-nested) — the export must
-render this stage's shape cleanly. **Exit:** 8 files open without error; no blank sections, no
-raw JSON leaking, unit/phase structure visible and matching the plan, the borrowed sitting
-reading as a whole unit, `answers=1` rendering the answer layer, and the coverage note carried
-through. **Artefact:** the 8 files.
+render this stage's shape cleanly. **Exit:** `dropped_lp` present and paged last in the view; 8 files open
+without error; no blank sections, no raw JSON leaking, unit/phase structure visible and matching
+the plan, the borrowed sitting reading as a whole unit, `answers=1` rendering the answer layer,
+the coverage note carried through, and **no dropped unit anywhere in any exported file**.
+**Artefact:** the view response + the 8 files.
 
 **C13 [Kumar breaks, Claude reads] Failure paths.** Each must surface a message a teacher can
 read, with no stack trace in the body:
@@ -543,7 +574,7 @@ distribution report exists. **Artefact:** comparison table + distribution note.
 | Pilot chapter number | tracker |
 | LP constitution version | `VERSION` line of the stage's LP constitution |
 | Assessment constitution version | `VERSION` line, assessment side |
-| `GENON_ENGINE_VERSION` | `api/data.py` (08) |
+| `GENON_ENGINE_VERSION` | `api/data.py` (10 — see the ladder in §2, 0.2) |
 | **Variant plan row** | `master_plan.json` → `variant_plan {sigma, counts, closing_spans, basis, registry_sections, full_coverage, partials_at}` |
 | **Brief identity** | the brief files in `genon/out/briefs/` for this chapter — record the git commit of `genon/variant_plans.py` (which composes them) and keep the brief text as an artefact; brief wording is version-bearing even though it is not constitutional |
 | Canonical + variant `ledger_ts` | `genon_canonical` block of each library file |
@@ -692,7 +723,10 @@ is repetition with known risk retired in order of cost.
 
 ## Corrections note (repository vs brief, checked 2026-08-01)
 
-Verified against the repo before writing: `GENON_ENGINE_VERSION = "08"` (`api/data.py`);
+Verified against the repo (re-checked at step 0.2, 2026-08-02): `GENON_ENGINE_VERSION = "10"`
+(`api/data.py`) — the brief was written at e08 and two bumps landed after it, e09 (dropped
+sections + surrender folded into `section_coverage_note`) and e10 (served-schedule prints);
+the C-steps above carry the added assertions;
 `aruvi_core/genon/` holds only `compile.py` v0.5 · `serve.py` v1.1 · `variant_solver.py`;
 `genon/build_library.py` implements exactly the eight certification checks
 listed in C5, quarantines to `backup/quarantine/<subject>/<grade>/` with a timestamp suffix,

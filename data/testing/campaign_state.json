@@ -1,158 +1,31 @@
 {
   "version": 1,
-  "campaign": "aruvi-25-combo-certification",
-  "updated_at": "2026-07-30T15:10:00",
+  "campaign": "aruvi-11-stage-certification",
+  "updated_at": "2026-08-02T09:16:40",
   "step0": {
     "campaign": {
       "0.1": {
         "status": "pass",
-        "comment": "Polish path stripped across api/main.py (GenonPlanRequest.polish, _seam_polish_allowed/ARUVI_SEAM_POLISH, run_polish block, polish response keys), api/data.py (polished param + _p suffix), format.js (SEAM_POLISH_ENABLED), PrepareLesson.jsx + FirstRun.jsx (imports + polish: body field), genon/__init__.py (polish import/exports). polish.py remains on disk, nothing imports it; tests/test_genon_polish.py retired to _to_delete/step0_polish_removal/. Exit grep clean (one historical comment in data.py); test_genon_plan_key.py ALL PASS on this repo.",
-        "by": "Claude",
-        "at": "2026-07-29T19:05:00"
+        "by": "Kumar",
+        "at": "2026-08-02T09:11:20",
+        "comment": "Generation environment green: SS IX ch 3 canonicals built end-to-end in Terminal, anthropic.key picked up automatically, runs logged to runtime_data/token_log.csv."
       },
       "0.2": {
         "status": "pass",
-        "comment": "GENON_ENGINE_VERSION 06 -> 07 in api/data.py with dated comment (cache-key shape loses the _p variant). Live canonical keys as ch_05_50m16_e07_c20260726112240.json - verified by test run against the real repo.",
         "by": "Claude",
-        "at": "2026-07-29T19:05:00"
+        "at": "2026-08-02T09:11:20",
+        "comment": "PASS WITH A CORRECTION TO THE TEMPLATE (no code defect).\n1. GENON_ENGINE_VERSION = \"10\", not \"08\" (api/data.py:353). Two bumps landed after the rewrite brief: e09 (2026-08-01) dropped sections — result.dropped_units carries the unreached units verbatim, flagged unscheduled, rendered online via /view -> view.dropped_lp and omitted from exports; surrender folded into section_coverage_note with genon.surrender_note kept as provenance. e10 (2026-08-01) served-schedule prints — period_schedule_display + duration label build from genon.served_matrix, so a 13-ask on a 12-top prints 12; request survives in genon.matrix / period_rows_snapshot. testing.md -> VERSION 2.1 with the new assertions in C6, C7, C10 (filenames now _e10_), C12 (view carries dropped_lp; exports must omit it).\n2. aruvi_core/genon/ contains exactly __init__.py, compile.py (v0.5), serve.py, variant_solver.py — partition.py/polish.py gone from the engine package; the repo-root genon/ lab keeps historical copies nothing imports. grep over api/, aruvi_core/, web/app/lib/format.js: no live import (only prose/comments and variant_solver's mathematical use of the word 'partition').\n3. Genon suites green: test_genon_serve, test_variant_solver, test_genon_plan_key, test_genon_duration_order.\n4. Cosmetic, unfixed: serve.py's module docstring still says v1.0 while the engine tag it emits says v1.1.\n5. On disk for SS IX ch 3: _e08_ and _e09_ served files sit beside the library untouched — they are the C10.3 no-overwrite evidence; the 50m8/50m6 files key on the p09/p07 variants' own timestamps, confirming the chosen-variant filename rule."
       },
       "0.3": {
         "status": "pass",
-        "comment": "find data/content/saved_plans -name '*_p.json' returns nothing. NOTE: the legacy file ch_05_50m16_e03_c20260726112240_p.json is not in backup/ either - it appears to have been removed from the repo entirely rather than archived; confirm a copy exists if the history matters.",
-        "by": "Claude",
-        "at": "2026-07-29T19:05:00"
-      },
-      "0.4": {
-        "status": "pass",
-        "comment": "Tracker deployed: api/testing_campaign.py + include in main.py; tick survived an API restart (state at data/testing/campaign_state.json). Confirmed by Kumar 2026-07-29.",
         "by": "Kumar",
-        "at": "2026-07-29T19:05:00"
-      },
-      "0.5": {
-        "status": "pass",
-        "comment": "kumar1, kumar2, kumar3 readiness profiles exist (all-lowercase standard; renamed from Kumar1/kumar23 on 2026-07-29; kumar3 created same day, cloned from kumar1). STANDARD C5/C6 SPLIT: kumar1 -> 115% + 100% (identity); kumar2 -> 75% + 55%; kumar3 -> 85% as the mixed-duration weekly matrix (C6). NOTE the Mac filesystem is case-INsensitive so mixed-case tenant names would collide - consider normalising X-Aruvi-User to lowercase in _current_identity. NOTE all three profiles are currently identical (Social Sciences IX) - consider differentiating one before X1.",
-        "by": "Claude",
-        "at": "2026-07-29T20:35:00"
-      },
-      "0.6": {
-        "status": "pass",
-        "comment": "Counts by *_mapping.json: english 17/12/10/16/15/15/16=101, mathematics 14/14/15/10/15/14/16=98, science 12/12/13/13=50, SS 14/12/14/9=49, TWAU 12/10/10=32; total 330 (prompt said ~317). Class X absent everywhere. FLAG: mathematics/ix has 16 mappings but only 8 summaries - reconcile before that combo's C1. testing.md section 1 table corrected with dated note.",
-        "by": "Claude",
-        "at": "2026-07-29T19:05:00"
-      },
-      "0.7": {
-        "status": "pass",
-        "comment": "runtime_data/token_log.csv present with correct header; ANTHROPIC_API_KEY confirmed set in the generation environment by Kumar (echo ${ANTHROPIC_API_KEY:+set} -> set).",
-        "by": "Kumar",
-        "at": "2026-07-29T19:05:00"
+        "at": "2026-08-02T09:16:40",
+        "comment": "Annotate pass re-run after the ch 3 rebuild: 'variant plans written: 1 on authored canonicals, 338 provisional' (339 chapter rows total, matching the 0.6 count). SS|IX ch 3 row finalized: sigma 2, counts [12, 9, 7], closing_spans {9:1, 7:2}, provisional false, basis authored_canonical, registry_sections 9, full_coverage [7, 12], partials_at [] — every field as the pilot library requires. Runbook pair noted: master_plan.py regeneration wipes these rows; this script is its mandatory follow-up."
       }
     }
   },
-  "stages": {
-    "social_sciences/secondary": {
-      "P1": {
-        "status": "pass",
-        "comment": "LP constitution v1.5 read in full against the rollout brief. A1: INPUTS 4 single standard row + TIME integrity constraint + one-row period_schedule schema, all present. A2: Rule 14 band_id P<n>.<ordinal>, band_refs per-band genuineness within own unit, copied verbatim into the A2 handoff schema. A3: Rule 15 role_handoff flat map {hook,development,consolidation}, emitted after the plan, no-anticipation prohibition. A4: Rule 16 unit_handoff N-1 adjacent pairs, title <=70 chars + note <=90 words; no-splice AND no-abstraction merged in prohibition 1, no completion language (proh 2), no new content (proh 4), anticipation ban citing Rule 15 (proh 5), adjacency/order (proh 6). A5+A7: THE SELF-CONTAINED REGISTER as ONE block beside VOCABULARY binding Rules 10/13/16 (each references it in a single line), covering calendar time, position, and clock quantity with duration independence folded in. Observation only: the duration-band sentence says '50 for IX' not 'IX-X' - immaterial while X has no content.",
-        "by": "Claude",
-        "at": "2026-07-29T19:40:00"
-      },
-      "P2": {
-        "status": "pass",
-        "comment": "Assessment constitution v1.2: phase_ref mandated as verbatim copy of the source LO's band_refs (Rule 6 mandate + prohibition 4, Amendment A1 schema 'never empty', integrity constraint). Depends correctly on A2 via the coverage handoff. Rule 7 prohibition 3 (MCQ position spread, MEMORY item 18) also present. | v1.3 (2026-07-30): MCQ position by ordering convention (ARV-D-003). Clause trimmed 2026-07-30; A9 added to the rollout brief for the other ten.",
-        "by": "Claude",
-        "at": "2026-07-29T19:40:00"
-      },
-      "P3": {
-        "status": "na",
-        "comment": "Group A/reference - already time_bands[{band_id,minutes,activity}]; no phases[] conversion needed.",
-        "by": "Claude",
-        "at": "2026-07-29T19:40:00"
-      },
-      "P4": {
-        "status": "pass",
-        "comment": "LP side: CHANGELOG.md sidecar lists v1.1->v1.5, VERSION line in file, no history block. Assessment side had ONE inline amendment note on line 2 ('(v1.2, 2026-07-24: phase_ref...)') - lifted out 2026-07-29 into a new CHANGELOG.md sidecar (v1.0/v1.1/v1.2 rows); VERSION line retained. Comment-only edit, no rule text changed, nothing was certified under it yet. | v1.6 row added 2026-07-29 (derived titles). v1.7 row added (collective naming).",
-        "by": "Claude",
-        "at": "2026-07-29T19:40:00"
-      },
-      "SIGN": {
-        "status": "pass",
-        "comment": "Stage sign-off recorded retroactively per the pilot note (docs/testing.md section 10): all amendments present or n/a with reasons above; A2 decision n/a here (SS carries competency_edges natively). SS-secondary classes (ix) unblocked - pilot may start at C1. | RE-TOUCHED for v1.6 (2026-07-29): Rule 16 titles are now DERIVED from the note's opening pivot, and the A1 schema swaps unit_handoff emission order (teacher_notes before title) so derivation flows with generation. Grounds: first live run spliced 10/11 titles while every note found its pivot; the old schema forced titles to be emitted before the notes they should compress. Prohibitions unchanged. Ports subject-agnostically via A4 (no 'object of study' epistemology). | v1.7 (2026-07-29): plural pivots titled by collective, never enumerated - probe-driven iteration.",
-        "by": "Claude",
-        "at": "2026-07-30T09:20:00"
-      }
-    }
-  },
-  "combos": {
-    "social_sciences/ix": {
-      "C1": {
-        "status": "pass",
-        "by": "Claude",
-        "at": "2026-07-29T23:45:00",
-        "comment": "PILOT CHAPTER = 3 (Atmosphere and Climate; deviation from drafted ch 5 recorded). Run 20260729_192438, 12x50, combined LP+assessment, claude-sonnet-4-6, LP v1.5 / assessment v1.2. DOCTRINE CHANGE (founder, 2026-07-29): the live environment has no certification gate, so generate_canonical.py now installs the canonical into data/content/saved_plans SIMULTANEOUSLY with genon/out (validator still runs; findings are recorded in genon_canonical.validation + the ledger as C3 review input, never a block; --no-install / --tag / --lp-only skip install; prior canonical archived to backup/). ch_03_canonical.json installed and COMPILES CLEAN through the strict engine gate: 36 phases / 12 units / unit_handoff 11/11 / 18 items. Validator findings (10 spliced unit_handoff titles) remain open as ARV-D-001 -> C3. | 2026-07-29 backfill: unit_handoff titles replaced with v1.7-derived set (handoff_rev=1); ARV-D-001 -> fixed-awaiting-recheck."
-      },
-      "C2": {
-        "status": "pass",
-        "by": "Claude",
-        "at": "2026-07-29T21:05:00",
-        "comment": "Costed from genon/ledger.csv + runtime_data/token_log.csv, run 20260729_192438: LP canonical + assessment are ONE combined call (lp_only=False): wall 501.6 s, 16410 in / 30057 out tokens, Rs 46.01. Summary and mapping: pre-existing artefacts generated 2026-07-16 in the cowork chapter pipeline - wall/tokens/cost NOT logged in this repo (recorded as missing, a template gap to close: the chapter pipeline should append to token_log.csv). Chapter total (logged stages only): Rs 46.01 per generation attempt - note a failed-certification run still spends the full amount, so regeneration doubles the chapter cost."
-      },
-      "provenance": {
-        "by": "Claude",
-        "at": "2026-07-29T23:45:00",
-        "chapter": "3",
-        "model": "claude-sonnet-4-6",
-        "date": "2026-07-29",
-        "lp_ver": "v1.5",
-        "as_ver": "v1.2",
-        "engine": "07",
-        "ledger_ts": "20260729_192438",
-        "handoff_rev": "1",
-        "files": "ch_03_canonical.json (installed; genon/out raw: ch_03_20260729_192438_*)",
-        "stages": {
-          "summary": {
-            "wall_s": "",
-            "tokens_in": "",
-            "tokens_out": "",
-            "cost_inr": ""
-          },
-          "mapping": {
-            "wall_s": "",
-            "tokens_in": "",
-            "tokens_out": "",
-            "cost_inr": ""
-          },
-          "lp_canonical": {
-            "wall_s": "501.6",
-            "tokens_in": "16410",
-            "tokens_out": "30057",
-            "cost_inr": "46.01"
-          },
-          "assessment": {
-            "wall_s": "combined",
-            "tokens_in": "combined",
-            "tokens_out": "combined",
-            "cost_inr": ""
-          }
-        },
-        "total_cost_inr": 46.01,
-        "c5_split": ""
-      },
-      "C3": {
-        "status": "pass",
-        "by": "Kumar",
-        "at": "2026-07-30T21:42:02",
-        "comment": "Full rule-by-rule table at docs/testing_artefacts/c3_social_sciences_ix_ch03.md (LP v1.7 all 16 rules + register + schemas + integrity; assessment v1.2 all 12 rules). PARTITION-FACING ARCHITECTURE FULLY CLEAN: A1 schema, 36 bands tiling 0-50, Rule 14 ids/band_refs, Rule 15 coverage/order, Rule 12/A2 verbatim handoff (0 mismatches), mapping settled, weight architecture EXACT (5/3/3/3/2/2, one Open Task, source-slots resolved right). 4 defects: ARV-D-002 (S2, register in 2 notes: P8 'the previous unit', P10 cites c-codes), ARV-D-003 (S2, MCQ positions 5/6 on B - item-18 recurrence), ARV-D-004 (S3, one phase_ref subset of LO band_refs), ARV-D-005 (S4, two handoff notes 92/93 words). Observations: role mix perfectly uniform 12xH/D/C (watch for Rule-15 anticipation across combos); SI demand plateau; 3 validator title collocation false-positives (ARV-D-001 thread). All fails content-repairable without regeneration. | STATUS CORRECTED 2026-07-30: C3's exit criterion is 'every rule number appears in the table; every fail becomes a defect' - both satisfied, so the STEP passes. The open S2 defects block the combo SIGN-OFF (section 7), not this step. Previously mis-set to fail."
-      }
-    },
-    "social_sciences/vi": {
-      "C1": {
-        "status": "pending",
-        "comment": "",
-        "by": "Kumar",
-        "at": "2026-07-29T19:07:45"
-      }
-    }
-  },
+  "stages": {},
+  "combos": {},
   "cross": {},
   "defects": [
     {
@@ -253,5 +126,7 @@
       "evidence": "367 units across 45 plans: 3 bands=45, 4=228, 5=84, 6=10 (mean 4.16), essentially unchanged from 30-min to 60-min periods, so band LENGTH absorbs all duration variation. Largest band occupies 53-73% of a teacher's sitting at short durations. BUT ch 3 (3 bands, max 25 min) partitioned cleanly at 115/85/75/55% and at 30- and 35-min durations: correct regimes, coverage note fired, never a single-band sitting, minimum 2 bands per sitting. ch 5 (4 bands) behaves the same (67% vs 73%), so 3->4 buys ~6 points.",
       "notes": "FOUNDER DECISION 2026-07-30: no minutes ceiling. A 25-30% cap would outlaw genuinely indivisible long activities (science practical, extended writing) and manufacture 'Part 1 / Part 2' splits; a 25% cap is also degenerate at 4 bands (forces all bands exactly equal). A 3-5 count guidance was considered and set aside as descriptive - it already covers 97.3% of observed units and does not bind distribution (3 bands can be 5/20/25). ACTION: measure instead - bands/unit and largest-band-share added to the provenance panel; C5/C7 across combos decide whether fat bands actually produce badly cut plans."
     }
-  ]
+  ],
+  "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",
+  "_note": "v1.0 (25-combo, partition era) state archived at the path above when docs/testing.md went to VERSION 2.0 on 2026-08-02. Step keys 0.x / P1-P4 were REDEFINED and the combo keys became subject-stage, so nothing but the defect register carries over."
 }

@@ -45,6 +45,12 @@ app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
 
+# Test-campaign tracker state (docs/testing.md §6a) — campaign tooling, not a teacher
+# surface: /api/testing/campaign{,/item,/defect,/export.csv} + /api/testing/tracker.
+# Without this include the tracker page loads but every fetch 404s and it sits "offline".
+from .testing_campaign import router as testing_campaign_router  # noqa: E402
+app.include_router(testing_campaign_router)
+
 # Initialize the allocation repository. The allocation register is per-user/tenant STATE
 # (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/allocations/) — NOT the read-only
 # content dir. (Previously it wrote into the prototype content mirror; moved here so all
