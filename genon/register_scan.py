@@ -28,8 +28,20 @@ WHAT IT DOES NOT CATCH, stated plainly: paraphrase. "Later in this chapter we sh
 sails through. The scanner carries the floor; a sampled LLM audit at batch level is what finds
 new phrasings, and every one it finds should be added to PATTERNS here with a dated note.
 
-Scanned fields are exactly the teacher-facing ones: activity_title, teacher_notes,
-time_bands[].activity, homework[]. section_context and LO rows are internal.
+Scanned fields are exactly the teacher-facing ones, ACROSS ALL ELEVEN SUBJECT-STAGE SHAPES
+(checked 2026-08-02 against every LP constitution): activity_title · teacher_notes, or
+`teacher_facilitation_note` where TWAU-preparatory names it that · the band array, which is
+`time_bands[]` in the five converted constitutions and still `phases[]` in the six awaiting P3,
+with its text under `activity` or `description` · homework[]. section_context and LO rows are
+internal and not scanned.
+
+Reading only one shape would be worse than useless — a Group B plan would scan clean because
+nothing was read. Every shape is tried, and `scanned_fields()` reports what was actually found.
+
+Vocabulary note: all eleven constitutions name the atomic chunk a "unit" in teacher-facing prose
+and reserve "period" for schema/scheduling, so the families below are subject-neutral. Several
+give "the previous unit" as a LEGITIMATE cross-reference, which is why backward-positional
+phrasing is advisory here rather than a ban.
 """
 from __future__ import annotations
 
@@ -66,14 +78,35 @@ PATTERNS = [
 ]
 
 
+NOTE_KEYS = ("teacher_notes", "teacher_facilitation_note")   # TWAU-prep names it the long way
+BAND_KEYS = ("time_bands", "phases")                        # phases[] until P3 converts a stage
+BAND_TEXT = ("activity", "description")                     # description[] is the phases-era key
+
+
 def _fields(unit):
-    """The teacher-facing strings of one unit, as (label, text) pairs."""
+    """The teacher-facing strings of one unit, as (label, text) pairs — shape-agnostic."""
     yield "activity_title", str(unit.get("activity_title") or "")
-    yield "teacher_notes", str(unit.get("teacher_notes") or "")
-    for i, b in enumerate(unit.get("time_bands") or []):
-        yield f"time_bands[{i}] {b.get('minutes','?')}", str(b.get("activity") or "")
+    for k in NOTE_KEYS:
+        if unit.get(k):
+            yield k, str(unit[k])
+    for bk in BAND_KEYS:
+        for i, b in enumerate(unit.get(bk) or []):
+            text = next((str(b[t]) for t in BAND_TEXT if b.get(t)), "")
+            yield f"{bk}[{i}] {b.get('minutes','?')}", text
     for i, h in enumerate(unit.get("homework") or []):
         yield f"homework[{i}]", h if isinstance(h, str) else json.dumps(h, ensure_ascii=False)
+
+
+def scanned_fields(plan: dict):
+    """Which teacher-facing keys were actually found — so a silent miss is visible.
+    A plan reporting 0 bans AND 0 band fields has not been scanned, it has been skipped."""
+    periods = ((plan.get("result") or plan).get("lesson_plan") or {}).get("periods") or []
+    seen = {}
+    for u in periods:
+        for label, text in _fields(u):
+            key = label.split("[")[0]
+            seen[key] = seen.get(key, 0) + (1 if text else 0)
+    return seen
 
 
 _QUOTED = re.compile(r"[\u2018\u2019\u201c\u201d\'\"]([^\u2018\u2019\u201c\u201d\'\"]{0,300}?)[\u2018\u2019\u201c\u201d\'\"]")

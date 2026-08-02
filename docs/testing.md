@@ -514,6 +514,17 @@ live artefacts; fails become defects. **Artefact:** the item table.
    structure that breaks serving; a register breach makes serving *wrong*, not impossible, and
    is repairable in place). `today`/`yesterday` and backward-positional phrasings surface as
    ADVISORY — a gate that failed on "Will it rain today?" would be switched off in a week.
+10. **item counts per competency — ADVISORY, DOES NOT GATE** (added 2026-08-02 at SS·secondary
+   C4). Each file's items are grouped by competency and compared to the mandated count for that
+   weight label: `EXACT_ITEM_COUNTS[(subject, stage)]` where the stage's assessment constitution
+   has been read at its P2, otherwise the modal count across the library's own variants — which
+   still catches a variant disagreeing with its siblings without knowing any constitution. A
+   competency the handoff carries but the assessment never touches reports as 0. **It reports and
+   never fails** (founder ruling, ARV-D-019: slot misses are generation variance priced below a
+   ~₹37 regeneration, hand back-fill is forbidden by §7, and nothing downstream reads item
+   counts) — the purpose is to turn a silent miss into a visible rate across 926 authoring runs.
+   Read the advisory block at C5 and carry any miss into the stage's C4 record; promote it to a
+   gate only if the founder later prices the rate.
 **Also:** `backup/quarantine/<subject>/<grade>/` must be EMPTY for this chapter. Failed files
 are moved there automatically (founder doctrine 2026-08-01: passing files stay live, only
 failures move; a failed TOP takes its whole library with it). If `partials_at` is non-empty in

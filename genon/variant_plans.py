@@ -140,8 +140,8 @@ def top_brief_for(subject, klass, chapter):
         "beside a unit she has never seen.",
         "- Therefore every unit CLOSES ON ITS OWN GROUND: it names no other unit, promises "
         "nothing that follows it, and never claims the chapter has been covered. Where "
-        "continuity helps, name the CONTENT already taught (\"Having traced the Vedic "
-        "political vocabulary, ...\") — never a unit's position or existence.",
+        "continuity helps, name the CONTENT already taught — the idea, text, method or "
+        "phenomenon the class has worked on — never a unit's position or existence.",
         "- MATERIALS, OPENING MOVES AND HOMEWORK ARE PER-UNIT. No unit may require that "
         "another unit was taught, or that its homework was set, in order to run: a unit "
         "whose first activity collects an earlier unit's homework dead-ends whenever the "

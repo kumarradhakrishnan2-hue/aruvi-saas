@@ -1,0 +1,57 @@
+C4 — PASS (CLOSED 2026-08-02). SS·secondary · ch 3 · LP v1.10 / assessment v1.6 / engine e10.
+Full artefact: docs/testing_artefacts/c4_social_sciences_ix_ch03.md
+
+APPLICABLE ITEMS: 1, 3, 7, 18(→A9). Item 6 closed by design. Items 9 and 17 N/A here (item 9's
+file list carries no SS·secondary constitution; item 17 amended SS MIDDLE, tested at S2). All
+English/maths items N/A. Result: 2 pass · 1 pass-with-correction · 2 fail, both dispositioned.
+
+ITEM 1 guide.{TYPE} nesting — PASS. 53/53 items across {12,9,7}: guide is a dict with exactly one
+key equal to the item's own question_type; zero flat placements; inner field names match Rule 10
+exactly for all five types. First live exercise of the SS mandate — it holds. TWAU owes its half
+at S5.
+
+ITEM 3 exact item counts — FAIL, ARV-D-019 (S2) → ACCEPTED BY FOUNDER, NO BACK-FILL. Expected 18
+(1 Central 5 + 3 Substantive 3 + 2 Present 2). top 18 OK, p09 18 OK, p07 17: C-4.5 is Substantive
+(weight 2 in its own handoff) but emits only MCQ+SCR; the mandated third slot (SI or ECR) is
+missing, and since both survivors sit at Evaluation the missing one is the ECR. Founder ruling:
+generation variance, not a systematic breach — regenerating at ~Rs 37 to recover one ECR is a
+lottery ticket priced above the loss, hand back-fill is forbidden (§7), the competency is still
+assessed by two Evaluation-demand items, and nothing downstream reads item counts. Defect status
+= accepted, owner founder; does NOT block certification; p07 stands as authored at 17 items.
+Not a defect: Rule 5's demand floor shows no Analysis+ item for C-4.1 in any variant, legitimately
+waived — its LOs top out at Application/Understanding and the ceiling always wins.
+FOLLOW-ON, logged for C8 (does not reopen the defect): certify() has 8 structural checks + the
+register scan and NO item-count check, so p07 passed ALL PASS at 17 items and the miss surfaced
+only because C4 counted by hand. A 9th check (weight → exact count from the stage constitution)
+costs nothing per run and makes the rate visible at 926 authoring runs.
+
+ITEM 7 Period.approach — PASS, PREMISE CORRECTED. The item predicted SS renders no approach line;
+that is stale. LP v1.10 Rule 9 mandates pedagogical_approaches (list, verbatim from the NCF
+Pedagogy doc) and the SS port joins with "; " into Period.approach. All 28 authored units
+populate — 0 empty. Five approaches used (Inquiry · Issues-based learning · Project work ·
+Reflective essays · Role plays and simulations), all verbatim in
+framework/social_sciences/secondary/pedagogy_secondary_social_sciences.txt. Only maths·preparatory
+remains a legitimate empty; for SS an empty approach is now a DEFECT. MEMORY item 7 amended.
+
+ITEM 18 → A9 MCQ option order — FAIL, ARV-D-018 (S3, open + owned). The check is whether the
+ordering step ran. It largely did not: 10/18 MCQs are not alphabetical (top 3/6 · p09 2/6 ·
+p07 5/6), stable under three comparators. Breaks are early, e.g. "Hot land creates LOW" before
+"Hot land creates HIGH" (word 4); "A weak" before "A strong" (word 2). Correct-position
+distribution recorded but NOT a defect under A9: top {B:4,C:2} · p09 {B:3,C:2,D:1} · p07 {B:5,A:1}
+— this reframes ARV-D-003, whose clustering is a symptom of the unrun step. S3 → does not block.
+CLAUSE COLLISION RESOLVED SAME DAY — assessment v1.5 → v1.6. On 2 of 18, strict alphabetical put
+the correct option at A, colliding with "never led with", with no tie-break and prohibition 3
+forbidding the remedy. Founder struck the ban: two words removed, NOTHING added (an affirmative
+replacement naming A as a legal landing was drafted and rejected — naming A makes A salient and
+invites position reasoning). Prohibition 3 unchanged, now the whole guard. Relaxing amendment: no
+v1.5 artefact becomes non-compliant; p07 C-4.4 (correct at A) is now legal but remains misordered
+on its own merits, so the count stays 10/18. The other ten constitutions receive A9 in the v1.6
+wording at their own P2 — never the v1.4/v1.5 sentence.
+
+MEMORY.md EDITS MADE: item 6 CLOSED BY DESIGN with reasoning; item 7 tested live + premise
+corrected; item 18 SUPERSEDED BY A9 with the first live result and the v1.6 ruling.
+
+OPEN AGAINST THE STAGE, not against C4: provenance now reads assessment v1.6 while the ch 3
+library was authored under v1.5. Under §9 a constitution change nominally re-opens the stage in
+full; because this one only REMOVES a prohibition, the founder may accept the existing library
+under v1.6 instead. That accept must be entered explicitly — the tracker shows amber until it is.

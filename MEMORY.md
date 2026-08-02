@@ -75,6 +75,12 @@ must confirm · source entry.
    consumes the duration vector, produces exactly the right number of long sessions, and marks
    them; feasibility holds globally. (src: 2026-07-05 "Period durations & the LLM's time
    budget".)
+   **★ CLOSED BY DESIGN 2026-08-02 (recorded at SS·secondary C4, per testing.md C4's footnote).**
+   The duration vector will never be wired: Amendment A1 fixes the constitutions at exactly ONE
+   standard period row (class-standard duration × count) and the variant-canonical serve engine
+   owns every timetable variation — proportional per-unit scaling plus weekly dispersion
+   (`genon.duration_sequence`). There is nothing left for a constitution to receive. No pre-warm
+   check is owed. Do not reopen.
 
 7. **`Period.approach` — confirmed NO constitutional change (verify the empties are acceptable
    live)** — founder decided NOT to flatten the diverse per-subject "how do I run this?" source
@@ -83,6 +89,16 @@ must confirm · source entry.
    it here so a pre-warm reviewer doesn't mistake the empty approach line for a generation bug:
    *confirm* Maths-prep and SS plans legitimately render no approach line, and every other
    subject·stage carries one. (src: 2026-07-09 "LP display standardized".)
+   **★ TESTED LIVE + PREMISE CORRECTED 2026-08-02 (SS·secondary C4, ch 3 library {12,9,7}).**
+   **SS is no longer an empty-approach subject.** SS·secondary LP v1.10 Rule 9 mandates
+   `pedagogical_approaches` (a LIST, verbatim from the NCF Pedagogy doc, `[]` only when a unit is
+   genuinely diffuse), and the port joins it with "; " into `Period.approach` exactly as English
+   does. Measured on all 28 authored units (12 + 9 + 7): **0 empty** — Inquiry · Project work ·
+   Issues-based learning · Reflective essays · Role plays and simulations, all five verbatim in
+   `framework/social_sciences/secondary/pedagogy_secondary_social_sciences.txt`. **The remaining
+   legitimate empty is mathematics·preparatory alone** (no source field in its constitution);
+   SS·middle emits `pedagogical_approaches` too (v2.7) and is expected to populate at its own C4.
+   The pre-warm check for this item is now: maths-prep empty is fine; SS empty is a DEFECT.
 
 8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
    (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,
@@ -354,6 +370,28 @@ must confirm · source entry.
     position-shuffle of the already-saved SS/Science MCQs, re-tagging `is_correct` + the option
     order) to fix the clustered plans retroactively — separate from generation. (src: 2026-07-16,
     founder-reported audit.)
+    **★ SUPERSEDED BY AMENDMENT A9, 2026-08-02 (recorded at SS·secondary C4, per testing.md C4's
+    footnote).** The position PROHIBITION is replaced by a CONVENTION: author the four options,
+    then as the LAST step before emission arrange all four — the correct one included, never led
+    with — alphabetically from the first word at which they differ (ascending where numeric) and
+    label them A–D in that order. Under A9 **uneven letters across a chapter are coincidence, not
+    a defect**, so the old "spread the correct position / no same-label runs" check is retired and
+    ARV-D-003 (5/6 on B) is moot as framed. What is now checked is whether the ORDERING STEP ran.
+    *First live result (SS·IX ch 3 library, 18 MCQs across {12,9,7}):* **FAIL — 10/18 are not in
+    alphabetical order**, most breaking at the 2nd–4th word (top 3/6 · p09 2/6 · p07 5/6);
+    ARV-D-018. Also surfaced: A9's two clauses can COLLIDE — on 2 of the 18, strict alphabetical
+    puts the correct option at label A, which "never led with" forbids, and the constitution does
+    not say which clause wins. **RULED same day: the ban is REMOVED — SS·secondary assessment
+    v1.5 → v1.6** — two words struck, nothing added. An affirmative replacement naming A as a
+    legal landing was drafted and REJECTED: mentioning label A in the rule at all makes A salient
+    and invites the model to reason about position, which is what the convention exists to
+    prevent. The rule now states only what the arrangement is. Prohibition 3 unchanged, now the
+    whole guard. This partially reverses v1.4,
+    which had added the ban on probe evidence ("distractors sorted, correct answer pulled to A") —
+    that diagnostic is deliberately given up; a correct answer at A is now caught only as an
+    ordering failure. Relaxing amendment: no v1.5 artefact becomes non-compliant. **The other ten
+    assessment constitutions must receive A9 in this v1.6 form at their own P2 — never v1.4/v1.5's
+    wording.** ARV-D-018's ordering half (10/18) stands open and unaffected.
 
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable

@@ -41,10 +41,34 @@ from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, section_registry, unit_range,
 )
 import variant_plans as vp_mod                                     # noqa: E402
-from register_scan import scan_plan                                # noqa: E402
+from register_scan import scan_plan, scanned_fields                # noqa: E402
+
+from aruvi_core.grades import stage_for                            # noqa: E402
 
 KLASS = {"iii": "III", "iv": "IV", "v": "V", "vi": "VI", "vii": "VII",
          "viii": "VIII", "ix": "IX", "x": "X"}
+
+# ── EXACT ITEM COUNTS PER COMPETENCY WEIGHT (2026-08-02) ─────────────────────────
+# Added at SS·secondary C4 / ARV-D-019: the p07 variant shipped 17 items where its
+# own constitution mandates 18 (a Substantive competency lost its third slot), and
+# the eight structural checks could not see it — the miss surfaced only because a
+# Cowork session counted by hand, which will not happen across 926 authoring runs.
+#
+# ADVISORY, NOT A GATE (founder ruling the same day): slot misses are generation
+# variance, priced below a ~Rs 37 regeneration, and ch 3's p07 is accepted as
+# authored. So this reports and never sets ok=False — the point is to turn a silent
+# miss into a visible rate. Promote it to a gate by passing the flag through note()
+# instead of lines.append(), once the founder prices the rate.
+#
+# One row per subject·stage, filled from that stage's assessment constitution as it
+# is amended at its own P2. A stage with no row falls back to the library's own
+# modal count per weight label, which still catches a variant disagreeing with its
+# siblings (exactly the p07 shape) without knowing any constitution.
+EXACT_ITEM_COUNTS = {
+    # SS·secondary assessment v1.6 Rule 4 — Central 1 MCQ + 1 SCR + 1 SOURCE_INTERPRETATION
+    # + 1 ECR + 1 Open Task · Substantive 1 MCQ + 1 SCR + 1 (SI or ECR) · Present 1 MCQ + 1 SCR.
+    ("social_sciences", "secondary"): {"Central": 5, "Substantive": 3, "Present": 2},
+}
 
 
 def run(label, argv):
@@ -57,6 +81,35 @@ def run(label, argv):
 
 def lib_dir_of(subject, grade):
     return REPO / "data" / "content" / "saved_plans" / subject / grade
+
+
+def item_census(raw):
+    """{c_code: (weight_label, n_items)} from a saved plan's assessment_items,
+    plus the set of non-Incidental competencies its handoff says must be assessed.
+    Weight-label spelling is the constitution's own (Central/Substantive/Present);
+    a competency the handoff carries but the assessment never touches comes back
+    with n = 0, which is the loudest version of the same defect."""
+    r = raw.get("result", raw)
+    census, order = {}, []
+    for it in r.get("assessment_items") or []:
+        code = ((it.get("competency") or {}).get("c_code") or "").strip()
+        if not code:
+            continue
+        if code not in census:
+            census[code] = [str(it.get("weight_label") or "").strip(), 0]
+            order.append(code)
+        census[code][1] += 1
+    handoff = r.get("coverage_handoff")
+    if isinstance(handoff, dict):
+        for code, v in handoff.items():
+            if not isinstance(v, dict):
+                continue
+            if str(v.get("weight", "")).strip() in ("0", "Incidental", "incidental"):
+                continue
+            if code not in census:
+                census[code] = ["(from handoff)", 0]
+                order.append(code)
+    return [(c, census[c][0], census[c][1]) for c in order]
 
 
 def load_library(subject, grade, ch, lines, fails):
@@ -138,12 +191,54 @@ def certify(subject, grade, ch, row):
     for name, s_ in lib:
         raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
         bans = [h for h in scan_plan(raw) if h["ban"]]
+        seen = scanned_fields(raw)
+        # A plan whose band array we cannot read would report "clean" having been SKIPPED.
+        # The scanner knows time_bands[] and phases[] (with activity/description); anything
+        # else is a new shape and must fail loudly rather than pass silently.
+        bands_read = seen.get("time_bands", 0) + seen.get("phases", 0)
+        note(bands_read > 0,
+             f"{name}: register scan reached the band text ({bands_read} band(s) read: "
+             f"{ {k: v for k, v in seen.items()} })", name)
         note(not bans, f"{name}: register clean ({len(bans)} ban hit(s))")
         for h in bans[:8]:
             lines.append(f"      U{h['unit']} {h['field']} [{h['family']}] {h['excerpt']}")
         if bans:
             lines.append("      -> declare the fixes in genon/repair_register.py and re-run "
                          "--certify-only; do NOT hand-edit the artefact")
+
+    # ── ASSESSMENT ITEM COUNTS — ADVISORY (2026-08-02, testing.md C4 / ARV-D-019) ──
+    # See EXACT_ITEM_COUNTS above for why this reports rather than gates.
+    censuses = {name: item_census(json.loads((lib_dir_of(subject, grade) / name).read_text()))
+                for name, _ in lib}
+    table = EXACT_ITEM_COUNTS.get((subject, stage_for(grade)))
+    basis = "constitution"
+    if not table:                       # no row for this stage yet — derive from the library
+        seen = {}
+        for cen in censuses.values():
+            for _c, w, n in cen:
+                seen.setdefault(w, []).append(n)
+        table = {w: max(set(ns), key=ns.count) for w, ns in seen.items() if w}
+        basis = "derived (modal count across this library — no constitution row yet)"
+    says = "constitution says" if basis == "constitution" else "its siblings carry"
+    short = 0
+    lines.append("")
+    lines.append(f"item counts per competency — ADVISORY, does not gate; basis: {basis}")
+    lines.append(f"      expected {json.dumps(table, sort_keys=True)}")
+    for name, cen in censuses.items():
+        got = sum(n for _c, _w, n in cen)
+        want = sum(table.get(w, n) for _c, w, n in cen)
+        misses = [(c, w, n, table[w]) for c, w, n in cen
+                  if w in table and n != table[w]]
+        short += len(misses)
+        lines.append(f"      {name}: {got} items vs {want} expected"
+                     + ("" if not misses else "  <-- MISS"))
+        for c, w, n, exp in misses:
+            lines.append(f"          {c} ({w}) has {n}, {says} {exp}")
+    if short:
+        lines.append(f"      -> {short} competenc(ies) off the mandated count. Generation "
+                     "variance, accepted by default (ARV-D-019); a hand back-fill is "
+                     "forbidden (testing.md §7) — the only fix is regeneration, and that "
+                     "is a founder call on cost, not a certification failure.")
 
     # serve sweep + projected-vs-actual
     floor = row["floor_periods_at_standard"]
