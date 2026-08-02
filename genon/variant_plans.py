@@ -36,8 +36,24 @@ MP = os.path.join(ROOT, "data/content/allocation_norms/master_plan.json")
 SAVED = os.path.join(ROOT, "data/content/saved_plans")
 
 # sigma per subject·stage: the widest closing synthesis a compact variant may be
-# mandated to anchor. Evidence so far: SS·secondary solves fully at 2 (ch 3 + ch 5,
-# 2026-07-31). Others default to 2 until their stages are calibrated — edit here.
+# mandated to anchor. It is a CAP on the search (solve() enumerates spans 1..sigma and
+# keeps the best-covering pair), and mechanically it is the FILL'S REACH: a closing unit
+# spanning s starts at section m-s, so a wider span reaches further back down the chapter.
+#
+# SIZING RULE (docs/testing.md §0.7, verified within +/-1 against solve()'s own minimum on
+# all 339 rows): the fill must absorb (m / Y) * g sections — sections per unit times the
+# units left unserved — so for three variants over [floor C, top A],
+#     sigma_required ~= m * (A - C) / (2A)   ->   ~= 0.2 * m at the current C = 0.6A.
+# That estimate assumes EVEN partitions and is pessimistic: real registries need less
+# (SS·IX ch 3 modelled demands 3; its real canonical, m=9 over 12 units, covers fully at 1).
+# So sigma cannot be calibrated from provisional rows — only after a stage's first top
+# canonical lands and this script re-solves the row on real ranges.
+#
+# FOUNDER, 2026-08-02: 2 is the standing PEDAGOGICAL CEILING campaign-wide — one closing
+# sitting may consolidate at most two sections; more is a summary lecture. Per-stage
+# overrides go in SIGMA below, with the real m and A that justify them. A finalised row
+# still showing partials_at is the escalation trigger (4th variant / raise the floor /
+# accept the declared partial), not a reason to quietly widen sigma.
 SIGMA_DEFAULT = 2
 SIGMA = {
     # ("social_sciences", "secondary"): 2,
@@ -85,6 +101,55 @@ def plan_chapter(top_ranges, m, A, C, sigma):
         return [A, C], {C: s_c}, table
     sol = solve(top_ranges, floor=C, sigma=sigma, weights=w)
     return sol["counts"], sol["closing_spans"], sol["table"]
+
+
+def top_brief_for(subject, klass, chapter):
+    """The TOP canonical's brief — platform-composed, prepended to the generation prompt
+    exactly like a variant brief (v1.0, 2026-08-02).
+
+    WHY IT EXISTS. Until today the top canonical was the ONLY artefact generated without a
+    brief: the compacts got one, the top got the constitution alone. It is also the artefact
+    served most (identity at X=A, and the prefix of every X below it). The SS·IX ch 3 pilot
+    read out exactly that way — top 9 register breaches, p09 2, p07 0 (testing.md C3).
+
+    It carries three things, and deliberately not the whole register (the constitution states
+    that; this states the MECHANISM that makes it matter):
+      1. what serving does to this plan, in plain terms — the reason self-containment is not
+         a style preference;
+      2. the per-unit independence of MATERIALS, opening moves and homework. This is NOT in
+         any constitution, and it is the ch 3 defect that no text repair can fix: U6 set a
+         homework log that U8 opened by collecting (ARV-D-012);
+      3. no completion claim, aimed at the closing unit — the fill ladder's prime borrow
+         candidate, where "having worked through every section" becomes false.
+
+    Brief wording iterates freely: it is post-constitution, so no VERSION moves and §9's
+    re-certification cascade never fires (docs/variant_canonical_architecture.md §7)."""
+    mp = json.load(open(MP))
+    combo = mp["combos"][f"{subject}|{klass}"]
+    row = next(c for c in combo["chapters"] if c["chapter"] == int(chapter))
+    dur = combo["standard_duration_minutes"]
+    count = int(row["recommended_periods"])
+    return "\n".join([
+        f"TOP CANONICAL BRIEF — {count} periods (platform-computed; binding)",
+        "",
+        f"- This is the chapter's fullest plan: {count} units x {dur} minutes "
+        f"(period_schedule: exactly one row {{{dur}, {count}}}).",
+        "- IT IS SERVED WHOLE AND IN PARTS. A teacher whose budget is smaller receives its "
+        "first X-1 units followed by a closing unit borrowed from a companion plan of this "
+        "same chapter. So ANY unit may be the last one she teaches, and any unit may sit "
+        "beside a unit she has never seen.",
+        "- Therefore every unit CLOSES ON ITS OWN GROUND: it names no other unit, promises "
+        "nothing that follows it, and never claims the chapter has been covered. Where "
+        "continuity helps, name the CONTENT already taught (\"Having traced the Vedic "
+        "political vocabulary, ...\") — never a unit's position or existence.",
+        "- MATERIALS, OPENING MOVES AND HOMEWORK ARE PER-UNIT. No unit may require that "
+        "another unit was taught, or that its homework was set, in order to run: a unit "
+        "whose first activity collects an earlier unit's homework dead-ends whenever the "
+        "teacher's budget did not include that unit.",
+        "- The final unit closes the chapter as a unit-arc of its own, without announcing "
+        "that it is doing so.",
+        f"- Save as: ch_{int(chapter):02d}_canonical.json",
+    ]) + "\n"
 
 
 def briefs_for(subject, klass, chapter):

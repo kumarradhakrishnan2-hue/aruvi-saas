@@ -41,6 +41,7 @@ from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, section_registry, unit_range,
 )
 import variant_plans as vp_mod                                     # noqa: E402
+from register_scan import scan_plan                                # noqa: E402
 
 KLASS = {"iii": "III", "iv": "IV", "v": "V", "vi": "VI", "vii": "VII",
          "viii": "VIII", "ix": "IX", "x": "X"}
@@ -54,8 +55,12 @@ def run(label, argv):
                          "fix and re-run — completed steps are idempotent.")
 
 
+def lib_dir_of(subject, grade):
+    return REPO / "data" / "content" / "saved_plans" / subject / grade
+
+
 def load_library(subject, grade, ch, lines, fails):
-    lib_dir = REPO / "data" / "content" / "saved_plans" / subject / grade
+    lib_dir = lib_dir_of(subject, grade)
     paths = [lib_dir / f"ch_{ch:02d}_canonical.json"]
     paths += sorted(lib_dir.glob(f"ch_{ch:02d}_canonical_p*.json"))
     streams = []
@@ -120,6 +125,26 @@ def certify(subject, grade, ch, row):
                  f"{name}: closing unit anchors exactly its mandated last-{span} span",
                  name)
 
+    # ── REGISTER GATE (2026-08-02) ────────────────────────────────────────────────
+    # The register is stated as a prohibition in every constitution and the ch 3 pilot
+    # proved a prohibition is not enforcement (testing.md C3: 9 breaches under v1.10,
+    # which bans them in terms). Detection lives here, in code, where it is not a matter
+    # of the model's attention. genon/repair_register.py is the intended response.
+    #
+    # A register hit FAILS certification but does NOT quarantine (founder call, 2026-08-02):
+    # quarantine exists for files whose STRUCTURE breaks serving. A register breach makes
+    # serving WRONG, not impossible, and the file is repairable in place — pulling it out of
+    # the library would lose a good plan over a clause.
+    for name, s_ in lib:
+        raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+        bans = [h for h in scan_plan(raw) if h["ban"]]
+        note(not bans, f"{name}: register clean ({len(bans)} ban hit(s))")
+        for h in bans[:8]:
+            lines.append(f"      U{h['unit']} {h['field']} [{h['family']}] {h['excerpt']}")
+        if bans:
+            lines.append("      -> declare the fixes in genon/repair_register.py and re-run "
+                         "--certify-only; do NOT hand-edit the artefact")
+
     # serve sweep + projected-vs-actual
     floor = row["floor_periods_at_standard"]
     top_n = len(top["units"])
@@ -183,14 +208,20 @@ def main():
     gen = str(HERE / "generate_canonical.py")
     vpn = str(HERE / "variant_plans.py")
 
+    bdir = HERE / "out" / "briefs"
+    bdir.mkdir(parents=True, exist_ok=True)
+    # The TOP canonical gets a brief too (2026-08-02). It used to be the only artefact
+    # generated without one — and the only one that breached the register nine times.
+    top_bf = bdir / f"ch_{ch:02d}_top.txt"
+    top_bf.write_text(vp_mod.top_brief_for(subject, klass, ch), encoding="utf-8")
+    print(f"brief written: {top_bf}")
+
     if not certify_only:
         run("STEP 1 · top canonical (metered, Sonnet 4.6)",
-            [gen, "one", subject, grade, str(ch)])
+            [gen, "one", subject, grade, str(ch), "--brief", str(top_bf)])
     run("STEP 2 · annotate master plan", [vpn])
 
     briefs, vp = vp_mod.briefs_for(subject, klass, ch)
-    bdir = HERE / "out" / "briefs"
-    bdir.mkdir(parents=True, exist_ok=True)
     bfiles = {}
     for k, text in briefs.items():
         bf = bdir / f"ch_{ch:02d}_p{k:02d}.txt"

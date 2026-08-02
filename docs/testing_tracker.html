@@ -90,7 +90,7 @@
 <body>
 <header>
   <h1>Aruvi · Test Campaign Tracker</h1>
-  <span class="sub">docs/testing.md v2.0 — 11 subject·stage rows (serve era) · state lives in Aruvi (<code>/api/testing/campaign</code>)</span>
+  <span class="sub">docs/testing.md v2.1 — 11 subject·stage rows (serve era) · state lives in Aruvi (<code>/api/testing/campaign</code>)</span>
   <label class="small">API <input type="text" id="apiBase" size="20" value="http://localhost:8000"></label>
   <label class="small">I am <select id="who"><option>Kumar</option><option>Claude</option></select></label>
   <span><span id="connDot"></span><span id="connTxt" class="small">…</span></span>
@@ -187,15 +187,15 @@ const STEP0 = [
 ];
 const STAGES = [
  {key:"social_sciences/secondary", group:"ref", note:"LP v1.10 · assessment v1.5 — THE REFERENCE (pilot: ch 3, class IX, 50 min)"},
- {key:"social_sciences/middle",    group:"TB", note:"v2.7 · time_bands · classes vi/vii/viii · TWO durations 40/45 · A9 replaces the item-18 prohibition"},
+ {key:"social_sciences/middle",    group:"TB", note:"v2.7 · time_bands · classes vi/vii/viii · A9 replaces the item-18 prohibition"},
  {key:"science/secondary",        group:"TB", note:"v1.0 · time_bands · class ix · 50 min · A9 replaces item-18"},
  {key:"mathematics/secondary",    group:"TB", note:"v1.0 · time_bands · class ix · 50 min · content gap: 8 of 16 chapters have no summary"},
  {key:"the_world_around_us/preparatory", group:"TB", note:"v1.2 · time_bands · classes iii/iv/v · 40 min"},
- {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → P3 · classes vi/vii/viii · TWO durations 40/45 · A9 replaces item-18"},
- {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] → P3 · classes vi/vii/viii · TWO durations 40/45"},
+ {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → P3 · classes vi/vii/viii · A9 replaces item-18"},
+ {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] → P3 · classes vi/vii/viii"},
  {key:"mathematics/preparatory",  group:"B",  note:"v1.1 · phases[] → P3 · classes iii/iv/v · 40 min"},
  {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[] → P3 · classes iii/iv/v · 40 min · registry definition needed (P5.2)"},
- {key:"english/middle",           group:"B",  note:"v1.5 · phases[] → P3 · classes vi/vii/viii · TWO durations · strike 'preview into next' · registry definition (P5.2)"},
+ {key:"english/middle",           group:"B",  note:"v1.5 · phases[] → P3 · classes vi/vii/viii · strike 'preview into next' · registry definition (P5.2)"},
  {key:"english/secondary",        group:"B",  note:"v1.0 · phases[] → P3 · class ix · 50 min · registry definition (P5.2)"},
 ];
 const PSTEPS = [
@@ -212,7 +212,7 @@ const CSTEPS = [
  ["C3","C","Canonical + one COMPACT VARIANT vs the constitution, rule by rule","A table rule# → pass/fail/subjective-pass with quoted evidence, for BOTH files — a constitution that only holds at full length has not been proven. Register/tone calls are subjective: say so and quote the strings judged.","EXIT: every rule number appears for both files; every fail becomes a defect."],
  ["C4","C","MEMORY.md amendment items, live","Test each item applicable to this stage (see §4 map). Item 6 (time vector) = CLOSED BY DESIGN under A1 + the serve engine; item 18 (MCQ position spread) = SUPERSEDED by A9 — check the convention, not the spread.","EXIT: per item pass/fail/n-a-here + one line of live evidence; fails → defects."],
  ["C5","C","Read the certification report — ALL PASS required","genon/out/library_reports/…: (1) library complete vs variant_plan.counts · (2) every file compiles · (3) anchors verbatim in the top registry · (4) first-visit order (synthesis tails legal, skipped sections not) · (5) coverage reaches the final section · (6) closing units anchor their mandated last-k spans · (7) serve sweep floor−2 … top+2 with no exception · (8) projected-vs-actual full-coverage diff. PLUS: quarantine empty for this chapter; partials_at empty or founder-accepted. NB the pilot's dropped section was caught by (4), NOT by the sweep.","EXIT: report says ALL PASS; quarantine empty; partials_at resolved."],
- ["C6","K","API serve checks — the teacher-facing path","POST /genon/{s}/{g}/{ch}/plan: identity per variant (kumar1 → identity:true, that variant's filename, NO new file) · one between-variant X giving superset (runway note) · one giving exact · X = top+1 → surrender note · X = floor−1 → suffix/truncation with a coverage note naming what was not scheduled · a mixed-duration weekly matrix (kumar3). WHERE THE STAGE SPANS TWO DURATIONS, run the whole table at BOTH 40 and 45 — and note that identity only fires at the AUTHORED duration (elsewhere the same X serves whole with proportional scaling). Dispersion: from genon.duration_sequence, shortest opens the week, long sittings interior and never adjacent.","EXIT: every row as expected; responses + filenames recorded; the duration(s) run are recorded."],
+ ["C6","K","API serve checks — the teacher-facing path","POST /genon/{s}/{g}/{ch}/plan: identity per variant (kumar1 → identity:true, that variant's filename, NO new file) · one between-variant X giving superset (runway note) · one giving exact · X = top+1 → surrender note · X = floor−1 → suffix/truncation with a coverage note naming what was not scheduled · a mixed-duration weekly matrix (kumar3). Record the authored duration; note that identity only fires at the AUTHORED duration (ask the same X at any other duration and the variant is served whole with proportional scaling — the ordinary teacher case). Dispersion: from genon.duration_sequence, shortest opens the week, long sittings interior and never adjacent.","EXIT: every row as expected; responses + filenames recorded; the duration(s) run are recorded."],
  ["C7","C","Register scan on teacher-facing text","The v1.10 THREE bans only: clock quantity · forward reference/completion language · calendar time. BACKWARD REFERENCES ARE LEGAL — the old word-list's positional entries (previously, earlier, first/second half) are retired as automatic hits. Mechanical scan first, judged quotes on survivors.","EXIT: zero live-ban hits, or a defect per hit, each with the quoted string."],
  ["C8","C","LLM-need flags","Every point where quality begs an LLM call (e.g. a borrowed closing unit reading oddly beside its prefix), each with the deterministic alternative to try first. The constraint is unchanged: no LLM in the request path.","EXIT: the (possibly empty) list, in the comment."],
  ["C9","C","Assessment anchoring across the serve","(1) prefix items remap unit → SITTING · (2) a borrowed fill unit brings its OWN items from its home variant, anchored to the fill sitting · (3) on the below-floor serve, an item whose anchor unit was unserved carries scheduling_note 'anchor unit not scheduled in this plan (time budget)' with empty period_ref, never mis-anchors · (4) no cross-variant references of any other kind.","EXIT: zero mis-anchored items; every unserved-anchor item noted."],
@@ -224,15 +224,15 @@ const CSTEPS = [
 ];
 const COMBOS = [ // ONE ROW PER SUBJECT·STAGE, in suggested execution order (§11); pilot first
  ["social_sciences","secondary","social_sciences/secondary","PILOT — ch 3, class IX, library {12,9,7}; C-steps done in substance 2026-08-01, gate + tracker entries owed"],
- ["social_sciences","middle","social_sciences/middle","first port; first TWO-DURATION stage (40/45) — run C6 at both"],
+ ["social_sciences","middle","social_sciences/middle","first port — the cheapest proof that the template carries off the reference pair"],
  ["science","secondary","science/secondary","first stage outside the SS family; section-anchored flat export shape"],
  ["mathematics","secondary","mathematics/secondary","draw the pilot chapter from the 8 that HAVE summaries"],
  ["the_world_around_us","preparatory","the_world_around_us/preparatory","completes the time_bands group; item 1 applies"],
- ["science","middle","science/middle","first Group B (P3); stage-grouped export shape; two durations"],
- ["mathematics","middle","mathematics/middle","core_/adjunct_competencies skill layer; items 14, 15, 16; two durations"],
+ ["science","middle","science/middle","first Group B (P3); stage-grouped export shape"],
+ ["mathematics","middle","mathematics/middle","core_/adjunct_competencies skill layer; items 14, 15, 16"],
  ["mathematics","preparatory","mathematics/preparatory","second core_/adjunct stage"],
  ["english","secondary","english/secondary","english first at secondary — registry definition (P5.2) lands here"],
- ["english","middle","english/middle","heaviest MEMORY burden; weak task_density fit — see X2; two durations"],
+ ["english","middle","english/middle","heaviest MEMORY burden; weak task_density fit — see X2"],
  ["english","preparatory","english/preparatory","last: items 8, 12, 13; no saved-plan corpus to fall back on"],
 ];
 const CROSS = [

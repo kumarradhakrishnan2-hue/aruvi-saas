@@ -1,7 +1,7 @@
 {
   "version": 1,
   "campaign": "aruvi-11-stage-certification",
-  "updated_at": "2026-08-02T09:16:40",
+  "updated_at": "2026-08-02T11:19:06",
   "step0": {
     "campaign": {
       "0.1": {
@@ -21,11 +21,223 @@
         "by": "Kumar",
         "at": "2026-08-02T09:16:40",
         "comment": "Annotate pass re-run after the ch 3 rebuild: 'variant plans written: 1 on authored canonicals, 338 provisional' (339 chapter rows total, matching the 0.6 count). SS|IX ch 3 row finalized: sigma 2, counts [12, 9, 7], closing_spans {9:1, 7:2}, provisional false, basis authored_canonical, registry_sections 9, full_coverage [7, 12], partials_at [] — every field as the pilot library requires. Runbook pair noted: master_plan.py regeneration wipes these rows; this script is its mandatory follow-up."
+      },
+      "0.4": {
+        "status": "pass",
+        "comment": "",
+        "by": "Kumar",
+        "at": "2026-08-02T09:35:55"
+      },
+      "0.5": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T09:40:30",
+        "comment": "Founder decision: the three identities start EMPTY; each stage's teaching profile is set up at its P5 through the app's own flow (testing.md 0.5 + P5.4 amended to match).\nHistory cleared and backed up to backup/testing/identities_20260802_093809/ (readiness, prepared_plans, section_state, plan_archive, allocations). kumar1 carried the SS IX trial: 5 prepared plans incl. e06/e08 ch 3 and ch 5 entries; kumar3 carried 1; kumar1's profile still had SS IX sections A/B/C at 50/60 min. All reset.\nVerified through the API for each of kumar1/kumar2/kumar3: GET /readiness -> ready:false, subjects:[]; /plans-prepared -> {}; /plan-archive -> {}; /section-state -> {}.\nAlso fixed: plan_archive/Kumar1/Kumar1/ renamed to all-lowercase kumar1/kumar1/ — mixed case aliases on macOS but would split into two tenants on Linux/Supabase."
+      },
+      "0.6": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T09:56:07",
+        "comment": "MATRIX RE-VERIFIED: 330 mappings — english 101 (17/12/10/16/15/15/16), mathematics 98 (14/14/15/10/15/14/16), science 50 (12/12/13/13), social_sciences 49 (14/12/14/9), TWAU 32 (12/10/10). Class X: no content anywhere. master_plan.json 339 rows (24 placeholders: maths|IX 8, SS|IX 9, SS|VIII 7).\nELIGIBILITY (mapping + summary on disk + non-placeholder row): 315 of 330. Two content gaps — mathematics/ix 16 mappings vs 8 summaries, and social_sciences/viii 14 vs 7 (this one was NOT in the brief; draw pilot chapters from the covered half in both).\nDRAWS — method: seed '<subject>|<stage>|2026-08-02', random.Random(seed).choice(sorted(candidates)); reproducible by re-running the seed.\n  social_sciences/secondary: candidates ['ix'] -> IX (seed 'social_sciences|secondary|2026-08-02')\n  social_sciences/middle: candidates ['vi', 'vii', 'viii'] -> VII (seed 'social_sciences|middle|2026-08-02')\n  science/secondary: candidates ['ix'] -> IX (seed 'science|secondary|2026-08-02')\n  mathematics/secondary: candidates ['ix'] -> IX (seed 'mathematics|secondary|2026-08-02')\n  the_world_around_us/preparatory: candidates ['iii', 'iv', 'v'] -> V (seed 'the_world_around_us|preparatory|2026-08-02')\n  science/middle: candidates ['vi', 'vii', 'viii'] -> VIII (seed 'science|middle|2026-08-02')\n  mathematics/middle: candidates ['vi', 'vii', 'viii'] -> VII (seed 'mathematics|middle|2026-08-02')\n  mathematics/preparatory: candidates ['iii', 'iv', 'v'] -> III (seed 'mathematics|preparatory|2026-08-02')\n  english/secondary: candidates ['ix'] -> IX (seed 'english|secondary|2026-08-02')\n  english/middle: candidates ['vi', 'vii', 'viii'] -> VI (seed 'english|middle|2026-08-02')\n  english/preparatory: candidates ['iii', 'iv', 'v'] -> III (seed 'english|preparatory|2026-08-02')\nDuration: the founder struck the 'two-duration residual' on review — the constitution takes duration as an INPUT (INPUTS 4) and no rule branches on 40 vs 45, so drawing VII rather than VIII samples the same constitution and the draws need no correction. Serve-time duration variance stays where it belongs: C6's mixed matrix + the certifier's tiling check, for all 11 stages. testing.md -> v2.1."
+      },
+      "0.7": {
+        "status": "pass",
+        "by": "Kumar",
+        "at": "2026-08-02T10:29:34",
+        "comment": "FOUNDER DECISION: sigma = 2 is the standing PEDAGOGICAL CEILING campaign-wide (one closing sitting may consolidate at most two registry sections); per-stage calibration is DEFERRED to each stage's C1, recorded at P5 with the real m and A. Floor stays round(0.6 x recommended) — partition-era ratio, accepted unchanged, flagged as the open dial.\nSIZING RULE recorded in testing.md §0.7 and in genon/variant_plans.py beside SIGMA: the fill absorbs (m/Y)*g sections — sections per unit x units left unserved — so for 3 variants over [C, A], sigma_req ~= m(A-C)/(2A) ~= 0.2*m at C=0.6A. Verified within +/-1 of solve()'s own minimum on all 339 rows. Reads as: ~9-11 sections need 2, 12-16 need 3, 17-21 need 4, 22-25 need 5.\nCORPUS SWEEP (evidence, with its caveat): at sigma 1/2/3/4/5, full projected coverage on 0.9% / 41.0% / 83.5% / 97.6% / 100% of the 339 rows — but 338 rows are MODELLED (one section per unit, m=A, the pessimistic extreme). The one real registry shows the gap: SS IX ch 3 modelled demands sigma 3; the real canonical (m=9 over 12 units) covers fully at sigma 1, counts [12,8,7], both spans 1. So the sweep measures the model, not the chapters.\nESCALATION LADDER when a FINALISED row still shows partials_at at sigma=2 (per chapter, founder call): (1) 4th variant — three gaps instead of two cuts sigma demand by ~a third, ~Rs 35; (2) raise that chapter's floor — sigma_req falls with (A-C); (3) accept the declared partial (suffix fill keeps closure and names what moved to self-study). Never widen sigma quietly."
+      },
+      "0.8": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T10:30:40",
+        "comment": "Quarantine clean at campaign start: backup/quarantine/ does not exist at all (cleaner than empty — build_library.py creates it on demand at the first structural failure), and find over backup/ returns no quarantined JSON anywhere.\nPilot library live and intact: data/content/saved_plans/social_sciences/ix/ holds ch_03_canonical.json (14:44), ch_03_canonical_p09.json (14:51) and ch_03_canonical_p07.json (15:08 — the post-fix rerun after the silently-dropped-section defect). Nothing of ch 3 sits in quarantine, which is the expected state for a library whose last certification run was clean of structural failures."
       }
     }
   },
-  "stages": {},
-  "combos": {},
+  "stages": {
+    "social_sciences/secondary": {
+      "P1": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T10:34:13",
+        "comment": "VERIFIED, NOT AMENDED — this stage is the reference. LP constitution VERSION 1.10 (file mtime 2026-07-31 22:22).\nA1: INPUTS 4 reads 'Period schedule — exactly ONE row {duration_minutes, count}: the class-standard duration (40 min up to VII, 45 for VIII, 50 for IX) x the period count.' Present, verbatim in force.\nA5/A7 REGISTER: present as ONE block titled 'THE SELF-CONTAINED REGISTER (binds Rules 10 and 13)', carrying exactly the three v1.10 bans — clock quantity / point forward or claim completion / calendar time — each with its live mechanism stated. Backward continuity explicitly WELCOMED ('best carried by naming the content built on'), i.e. the v1.10 re-cut, not the older ban. Rules 10 and 13 each reference it in one line rather than restating it.\nCANCELLED AMENDMENTS ABSENT (correct): grep finds no RULE 14/15/16, no band_id, no band_ref, no role_handoff, no unit_handoff anywhere in the file."
+      },
+      "P2": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T10:34:13",
+        "comment": "VERIFIED, NOT AMENDED. Assessment constitution VERSION 1.5.\nA6-confirm: Rule 6 'ONE ITEM <- ONE LO -> ONE UNIT' — 'Linkage is an identity: each item's period_ref is the single unit of its source LO, and that unit is its display anchor.' Schema line: 'period_ref: array — exactly one element: the source LO's unit number.' INPUTS 1 states it explicitly for the serve era: 'whole-unit serving resolves anchors at unit level; no band-level address exists.' No amendment needed.\nphase_ref/band_id/band_ref: ZERO occurrences (v1.2 reversed by v1.5, as intended).\nA9: Rule 7 carries the full convention — 'Option ORDER is a convention, never a choice... as the LAST step before emitting the item, arrange all four — the correct one included, never led with — alphabetically from the first word at which they differ, ascending where they are numeric', plus prohibition 3 'MUST NOT depart from the arrangement to move the correct answer toward or away from any label.' The old MEMORY-item-18 position prohibition is gone. (Rule 5's 'SPREAD' clause is a different thing — LO selection across units — and legitimately stays.)"
+      },
+      "P3": {
+        "status": "na",
+        "by": "Claude",
+        "at": "2026-08-02T10:34:13",
+        "comment": "N/A — time_bands stage, not Group B. The A1 schema already emits 'time_bands: [ { minutes: string e.g. 0-8, activity: string } ]' with no band_id, which is the post-v1.9 target shape. No phases[] anywhere in the file."
+      },
+      "P4": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T10:34:13",
+        "comment": "Both sidecars exist and neither constitution carries a version-history block (grep for 'version history|changelog|previous version' inside the .txt files: no hits).\nLP CHANGELOG.md: 14 rows, v1.1 through v1.10, each naming what changed AND its 'no pedagogical rule changed' scope. ASSESSMENT CHANGELOG.md: v1.0 through v1.5, incl. the v1.3/v1.4 MCQ-convention evidence trail and v1.5's phase_ref reversal.\nS4 filed: row ordering in both changelogs is non-monotonic (LP has v1.10, v1.9, v1.8 then v1.1 onward; assessment has v1.5 before v1.3/v1.4). Cosmetic, no bump warranted."
+      },
+      "P5": {
+        "status": "blocked",
+        "by": "Claude",
+        "at": "2026-08-02T10:39:32",
+        "comment": "1. FLOOR + SIGMA — settled, no override. This stage is the one place the real numbers already exist (C1 done): ch 3 registry m=9 sections over A=12 units, floor C=7. Solved minimum sigma for full coverage = 1; the standing ceiling of 2 is comfortably sufficient and the authored library {12, 9, 7} with spans {9:1, 7:2} covers 7-12 with partials_at empty. SIGMA_DEFAULT=2 accepted for the stage; no entry added to the SIGMA table. Floor ratio 0.6 accepted unchanged.\n   HEADS-UP for the rest of the stage: ch 5 (A=21) is this stage's sigma stress case. Its row is PROVISIONAL again (the founder cleared saved_plans; the modelled row demands sigma ~4). Re-solve on the real registry before trusting it — MEMORY's 2026-07-31 note says it solved to {21,17,13} at sigma=2 on the earlier canonical, i.e. the real registry is far kinder than the model.\n2. SECTION REGISTRY — N/A. SS's section model is the chapter summary's ordered section list; nothing to define (that item exists for English's split-chapter/spine model).\n3. PILOT CHAPTER — ch 3 'Atmosphere and Climate': ch_03_summary.txt + ch_03_mapping.json on disk, master_plan row non-placeholder, variant_plan finalized (basis authored_canonical).\n4. TEST-IDENTITY PROFILES — OUTSTANDING, and the only thing blocking this step. 0.5 left kumar1/2/3 empty by design; sign in as each and set up Social Sciences IX through the app's own flow, with DIFFERENT sections per identity (e.g. k1 A/B, k2 C/D, k3 E/F) and one longer duration beside the 50-min standard so C6's mixed matrix has something real to draw on.\n\nPROVISIONAL APPROVAL (founder, 2026-08-02): this step stays AMBER and the stage is signed anyway. Rationale now in testing.md §3 — P5.4 is not consumed by generation or certification; it is first needed at C6 (the API serve checks), which is its hard stop. C1-C5 may proceed."
+      },
+      "SIGN": {
+        "status": "pass",
+        "by": "Kumar",
+        "at": "2026-08-02T10:39:32",
+        "comment": "SIGNED — PROVISIONAL ON P5.4 ONLY (founder, 2026-08-02).\nConstitutional gate clean and complete: P1 pass (LP v1.10 — A1 verbatim, the three-ban register as one block, no Rule 14/15/16, no band_id/band_ref/role_handoff/unit_handoff), P2 pass (assessment v1.5 — period_ref as identity, zero phase_ref, A9 in full), P3 n/a (already time_bands), P4 pass (both sidecars, no version-history block in either constitution). P5.1-P5.3 settled: sigma ceiling 2 accepted with no override (ch 3 real registry m=9/A=12/C=7 needs only 1), registry definition N/A for SS, pilot chapter ch 3 confirmed.\nOPEN, DELIBERATELY: P5.4 — the three test profiles (kumar1/2/3, SS IX, different sections each, one longer duration beside the 50-min standard). Amber until done; C6 cannot run without them.\nThe C-cycle is open. Note C1 is already discharged in substance: the ch 3 library was authored 2026-08-01 under exactly these versions, so the pilot resumes at C2 (cost the library from token_log) and C5 (read the certification report)."
+      }
+    }
+  },
+  "combos": {
+    "social_sciences/secondary": {
+      "provenance": {
+        "klass": "ix",
+        "draw": "seed 'social_sciences|secondary|2026-08-02' over ['ix']",
+        "by": "Claude",
+        "at": "2026-08-02T10:42:22",
+        "chapter": "3 — Atmosphere and Climate",
+        "duration": "50",
+        "model": "claude-sonnet-4-6",
+        "date": "2026-08-01",
+        "lp_ver": "1.10",
+        "as_ver": "1.5",
+        "engine": "10 (library authored under e08-era files)",
+        "variant_plan": "counts [12, 9, 7] · spans {9:1, 7:2} · sigma 2 · basis authored_canonical",
+        "ledger_ts": "top c20260801143756 · p09 · p07 (rerun 15:08)",
+        "stages": {
+          "top_canonical": {
+            "wall_s": "not logged",
+            "tokens_in": "14915",
+            "tokens_out": "25589",
+            "cost_inr": "39.43"
+          },
+          "variant_a": {
+            "wall_s": "not logged",
+            "tokens_in": "15293",
+            "tokens_out": "23397",
+            "cost_inr": "36.51"
+          },
+          "variant_b": {
+            "wall_s": "not logged",
+            "tokens_in": "15296",
+            "tokens_out": "22338",
+            "cost_inr": "35.05"
+          },
+          "reruns": {
+            "wall_s": "not logged",
+            "tokens_in": "15402",
+            "tokens_out": "22071",
+            "cost_inr": "34.71"
+          }
+        },
+        "total_cost_inr": 145.7
+      },
+      "C1": {
+        "status": "pass",
+        "comment": "",
+        "by": "Kumar",
+        "at": "2026-08-02T10:40:30"
+      },
+      "C2": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T10:42:22",
+        "comment": "THE LIBRARY COST — 4 metered runs on 2026-08-01, all Sonnet 4.6, each run producing an LP AND its assessment in one call:\n  14:44:58  canonical_generation  in 14,915 / out 25,589  Rs 39.43   (top, 12 units)\n  14:51:26  variant_generation    in 15,293 / out 23,397  Rs 36.51   (p09)\n  14:57:28  variant_generation    in 15,296 / out 22,338  Rs 35.05   (p07, FAILED first-visit check — silently dropped a section)\n  15:08:37  variant_generation    in 15,402 / out 22,071  Rs 34.71   (p07 rerun after the brief's total-coverage clause was hardened)\n  TOTAL: in 60,906 / out 93,395 / Rs 145.70. Clean-path cost (3 runs, no defect): Rs 110.99.\nNOT counted as library cost, but on the same chapter: Rs 54.35 of superseded/R&D spend — the partition-era canonical of 2026-07-29 (Rs 46.01, its files since cleared) plus two rule16 probes and one MCQ probe (Rs 8.35). Chapter total ever spent: Rs 200.05. The pre-warm extrapolation uses library cost only; folding R&D in would inflate it by ~37%.\nCOST SHAPE: input is flat across runs (14.9-15.4k — constitution + summary + mapping + brief), output falls with period count (25.6k at 12 units -> 22.1k at 7). So a compact variant is only ~11% cheaper than the top, NOT proportional to its size — the constitution is paid for in full on every run.\nCORPUS EXTRAPOLATION, on the real variant-plan distribution rather than a flat x3: 315 non-placeholder chapters carry variant plans of size 3 (296 chapters) or 2 (19) = 926 authoring runs. At this library's mean run of Rs 36.42: ~Rs 33,700. At the clean mean Rs 37.00: ~Rs 34,300. With a 15% defect-rerun allowance: ~Rs 39,400. This CONFIRMS testing.md's Rs 30-40k synchronous estimate and now gives it a basis. Caveat: SS-secondary is the heaviest corner (dense chapters, long plans), so 926 runs at Rs 37 is likely an upper-middle estimate; preparatory chapters should run cheaper.\nGAP: token_log.csv has no duration column, so per-generation WALL TIME (a §6 provenance field) cannot be recovered — only completion timestamps. Filed S4."
+      },
+      "C3": {
+        "status": "pass",
+        "by": "Claude",
+        "at": "2026-08-02T11:19:06",
+        "comment": "READ: ch_03_canonical.json (12 units) rule-by-rule against LP v1.10 + ch_03_canonical_p07.json (7 units, the compact) + a register scan of p09. Full rule table held in this session; the verdicts below are all quote-verified directly against the JSON.\nPASSES (quoted): INPUTS 4 single standard row 50x12 · Rule 2 cognitive floor · Rule 4 full coverage (all 9 sections, no front-loading, section_coverage_note null) · Rule 8 emphasis · Rule 12 handoff (key order = mapping order, 23 edges, field-by-field identical to the edges, zero authored content) · band tiling 12/12 exact to 0-50 · Rule 13 substance is genuinely strong (questions stated, book apparatus used, no 'points at content without carrying it' breach found).\nTHE HEADLINE FAILURE — THE SELF-CONTAINED REGISTER, in the artefact the register was written for. 9 forward-reference/completion hits in the TOP canonical: U1 b40-50 'framing what is to come' · U2 b40-50 'a thread to pick up in the climate-change unit' · U6 notes 'which the next unit develops mechanistically' · U6 b40-50 'a thread that the monsoon unit develops further' · U6 homework 'Bring the log to the next unit' · U8 b42-50 'a point the climate-change unit will show is now under threat' · U9 notes 'distinguishes this unit from the next' · U12 notes 'Having worked through every section of the chapter'. p09 carries 2 more ('previewing the inter-linkage work of the next unit'; 'pointing forward to the climate-change and Punjab-floods themes of later units'); p07 carries NONE.\nWORST OF THEM, because it is not prose but MATERIALS: U6 homework says 'Log the weather report... for five days. Bring the log to the next unit' (also a calendar span, REG-3) and U8's materials list 'Student weather logs from homework' with opening band 'Students share their five-day weather logs from homework.' U8 cannot open unless U6 was served AND its optional homework was set. Under X-1+1 or a slot-X fill that band dead-ends.\nAND: U12's completion claim sits on the CLOSING SYNTHESIS — the single unit most likely to be borrowed as slot-X fill for a lower X, where 'having worked through every section' is simply false.\nOTHER FAILS: Rule 10 P (c-codes) leaked into a teacher-facing BAND — U9 b42-50 'individual carbon-footprint reduction (C-4.6) from systemic policy responses (C-4.5)' · Rule 9 P1 consecutive approach repeats (U1-U2 both Inquiry; U8-U9-U10 all Issues-based learning) · Rule 6 P1 7 LOs carry chapter-specific proper nouns · Rule 3 U12 anchored 'Climate Change' though chapter-wide (the anchor propagates to assessment via the handoff) · Rule 3 U11 depends on a teacher-prepared NDMA extract the chapter does not supply · A1 drift: result carries vestigial role_handoff:{} and unit_handoff:{}.\nPATTERN WORTH THE MOST: breaches fall as the plan gets compacter (top 9, p09 2, p07 0) — and the TOP is the ONLY artefact generated WITHOUT a brief. The compact variants get a platform-composed brief demanding a complete self-sufficient plan; the top gets the constitution alone. The least-guarded artefact is the one served most (identity at X=12 and the prefix for X=10, 11).\nNOTE FOR THE RECORD: the certifier passed this library ALL PASS. Register compliance is not machine-checked anywhere — the pilot's earlier lesson was 'certification catches what serving cannot'; this is its twin, 'reading catches what certification cannot'.\n\n=== BACKFILL APPLIED, 2026-08-02 (founder ruling: regenerating is a lottery) ===\nNEW MACHINERY: genon/register_scan.py (deterministic gate — forward / completion / calendar / clock / competency-code families, with today-yesterday and backward-positional phrasings as ADVISORY so the gate stays credible) · genon/repair_register.py (declared old->new edits applied by assertion, recorded in genon_canonical.repairs[], re-scanned) · the gate now runs inside build_library.py's certify() · the TOP canonical now gets its own platform brief (variant_plans.top_brief_for), which it never had.\nREPAIRED: 13 declared edits — top canonical 10, p09 2, p07 1. Ban hits 11/4/0 -> 0/0/0. Every edit but one is a deletion of a trailing clause; the exception merges U6's homework classifying task into its first sentence. All repaired sentences re-read clean, no punctuation artefacts, and each file records what was done.\nRE-CERTIFIED FREE: build_library --certify-only -> ALL PASS, incl. the three new 'register clean (0 ban hits)' lines. Structure untouched by the edits: anchors, first-visit order, coverage, closing spans and the serve sweep all unchanged — and X=6 now reads 'suffix', matching the post-fix table in the rewrite brief (the earlier report's 'exact' came from the defective p07).\nNOT REPAIRED, deliberately (class C — structural/pedagogical, cannot be laundered as text hygiene): ARV-D-012 the U6 homework -> U8 materials dependency and its five-day span; ARV-D-014 approach repeats; ARV-D-015 LO proper nouns; ARV-D-016 U12's chapter-wide anchor; ARV-D-017 vestigial keys. The top brief's per-unit-independence clause is what stops ARV-D-012 recurring in future chapters; this chapter's instance stands for the human gate to rule on."
+      }
+    },
+    "social_sciences/middle": {
+      "provenance": {
+        "klass": "vii",
+        "draw": "seed 'social_sciences|middle|2026-08-02' over ['vi', 'vii', 'viii']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "science/secondary": {
+      "provenance": {
+        "klass": "ix",
+        "draw": "seed 'science|secondary|2026-08-02' over ['ix']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "mathematics/secondary": {
+      "provenance": {
+        "klass": "ix",
+        "draw": "seed 'mathematics|secondary|2026-08-02' over ['ix']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "the_world_around_us/preparatory": {
+      "provenance": {
+        "klass": "v",
+        "draw": "seed 'the_world_around_us|preparatory|2026-08-02' over ['iii', 'iv', 'v']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "science/middle": {
+      "provenance": {
+        "klass": "viii",
+        "draw": "seed 'science|middle|2026-08-02' over ['vi', 'vii', 'viii']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "mathematics/middle": {
+      "provenance": {
+        "klass": "vii",
+        "draw": "seed 'mathematics|middle|2026-08-02' over ['vi', 'vii', 'viii']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "mathematics/preparatory": {
+      "provenance": {
+        "klass": "iii",
+        "draw": "seed 'mathematics|preparatory|2026-08-02' over ['iii', 'iv', 'v']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "english/secondary": {
+      "provenance": {
+        "klass": "ix",
+        "draw": "seed 'english|secondary|2026-08-02' over ['ix']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "english/middle": {
+      "provenance": {
+        "klass": "vi",
+        "draw": "seed 'english|middle|2026-08-02' over ['vi', 'vii', 'viii']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    },
+    "english/preparatory": {
+      "provenance": {
+        "klass": "iii",
+        "draw": "seed 'english|preparatory|2026-08-02' over ['iii', 'iv', 'v']",
+        "by": "Claude",
+        "at": "2026-08-02T09:42:48"
+      }
+    }
+  },
   "cross": {},
   "defects": [
     {
@@ -125,6 +337,146 @@
       "title": "Band granularity: count is invariant to period duration - measure, do not legislate yet",
       "evidence": "367 units across 45 plans: 3 bands=45, 4=228, 5=84, 6=10 (mean 4.16), essentially unchanged from 30-min to 60-min periods, so band LENGTH absorbs all duration variation. Largest band occupies 53-73% of a teacher's sitting at short durations. BUT ch 3 (3 bands, max 25 min) partitioned cleanly at 115/85/75/55% and at 30- and 35-min durations: correct regimes, coverage note fired, never a single-band sitting, minimum 2 bands per sitting. ch 5 (4 bands) behaves the same (67% vs 73%), so 3->4 buys ~6 points.",
       "notes": "FOUNDER DECISION 2026-07-30: no minutes ceiling. A 25-30% cap would outlaw genuinely indivisible long activities (science practical, extended writing) and manufacture 'Part 1 / Part 2' splits; a 25% cap is also degenerate at 4 bands (forces all bands exactly equal). A 3-5 count guidance was considered and set aside as descriptive - it already covers 97.3% of observed units and does not bind distribution (3 bands can be 5/20/25). ACTION: measure instead - bands/unit and largest-band-share added to the provenance panel; C5/C7 across combos decide whether fat bands actually produce badly cut plans."
+    },
+    {
+      "id": "ARV-D-008",
+      "combo": "social_sciences/secondary",
+      "step": "P1",
+      "severity": "S4",
+      "title": "Constitution INPUTS 4 still says 'handled downstream at partition time'",
+      "evidence": "lesson_plan/social_sciences/secondary v1.10, INPUTS 4: '...Teacher timetable variation never reaches generation; it is handled downstream at partition time.'",
+      "owner": "founder",
+      "status": "open",
+      "notes": "The partition engine is retired; the phrase should read 'at serve time'. Model-visible prompt text, but semantically harmless (the model only needs to know timetable variation does not reach it). DELIBERATELY NOT FIXED NOW: any constitution edit bumps VERSION, and under testing.md §9 that invalidates the ch 3 library authored under v1.10 — ~Rs 145 to re-author for a cosmetic word. Fix at the next substantive bump, and sweep the other ten constitutions for the same phrase then.",
+      "opened": "2026-08-02T10:34:13",
+      "closed": null,
+      "at": "2026-08-02T10:34:13"
+    },
+    {
+      "id": "ARV-D-009",
+      "combo": "social_sciences/secondary",
+      "step": "P4",
+      "severity": "S4",
+      "title": "Changelog rows are non-monotonic in both SS-secondary sidecars",
+      "evidence": "LP CHANGELOG.md: v1.10, v1.9, v1.8, then v1.1 -> v1.7. Assessment CHANGELOG.md: v1.5 sits between v1.2 and v1.3.",
+      "owner": "founder",
+      "status": "open",
+      "notes": "Cosmetic; sidecars are not prompt text, so no version bump is involved. Fix whenever either file is next touched.",
+      "opened": "2026-08-02T10:34:13",
+      "closed": null,
+      "at": "2026-08-02T10:34:13"
+    },
+    {
+      "id": "ARV-D-010",
+      "combo": "campaign",
+      "step": "C2",
+      "severity": "S4",
+      "title": "token_log.csv has no duration column — generation wall time is unrecoverable",
+      "evidence": "header: timestamp,call_type,subject,grade,chapter_number,chapter_title,input_tokens,output_tokens,total_tokens,cost_inr,cache_write_input_tokens,cache_read_input_tokens",
+      "owner": "founder",
+      "status": "open",
+      "opened": "2026-08-02T10:42:22",
+      "closed": null,
+      "at": "2026-08-02T10:42:22",
+      "notes": "§6 asks for wall time per run and C2 cannot supply it; only completion timestamps exist, and the gaps between them include the driver's deterministic steps. One-line fix in genon/generate_canonical.py's log_token_log (time the API call, append a duration_s column). Cosmetic for costing — rupees are what decide the pre-warm — but it is the only §6 field the campaign structurally cannot fill."
+    },
+    {
+      "id": "ARV-D-011",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S2",
+      "title": "Register: 9 forward-reference/completion breaches in the top canonical (2 more in p09)",
+      "evidence": "U2 b40-50 'a thread to pick up in the climate-change unit'; U8 b42-50 'a point the climate-change unit will show is now under threat'; U12 notes 'Having worked through every section of the chapter'; U6 notes/band/homework; U1 b40-50; U9 notes. p09 U5 notes, U6 b42-50.",
+      "owner": "founder",
+      "status": "closed",
+      "notes": "Authored 2026-08-01 under v1.10, i.e. under the ban itself — a generation-compliance failure, not a constitution gap. Lethal under serving: a compact variant closing before Climate Change makes U2 and U8 false to the teacher, and U12's claim is false whenever it is borrowed as a fill. | CLOSED 2026-08-02 by genon/repair_register.py (declared edits, recorded in genon_canonical.repairs[]); re-scan 0 ban hits; --certify-only ALL PASS. Recurrence guarded by the register gate in certify() and, for new chapters, the top-canonical brief.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": "2026-08-02T11:19:06",
+      "at": "2026-08-02T11:19:06"
+    },
+    {
+      "id": "ARV-D-012",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S2",
+      "title": "U6 homework -> U8 materials is a hard cross-unit dependency (plus a calendar span)",
+      "evidence": "U6 homework: 'Log the weather report ... for five days. Bring the log to the next unit'. U8 materials: 'Student weather logs from homework'; U8 band 0-10: 'Students share their five-day weather logs from homework.'",
+      "owner": "founder",
+      "status": "open",
+      "notes": "Not prose but MATERIALS: U8's opening move cannot run unless U6 was served and its optional homework was set. Breaks 'each unit closes on its own ground' at the level the serve engine cannot repair. | 2026-08-02: NOT backfilled — structural, not textual. Only the forward reference ('Bring the log to the next unit') was removed; the five-day span and U8's opening dependency on those logs remain. Future chapters are guarded by the top brief's per-unit independence clause. This instance is a human-gate call: accept, or regenerate the top under the new brief.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": null,
+      "at": "2026-08-02T10:53:47"
+    },
+    {
+      "id": "ARV-D-013",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S2",
+      "title": "Internal competency codes in teacher-facing band text (U9)",
+      "evidence": "U9 band 42-50: 'distinguishing individual carbon-footprint reduction (C-4.6) from systemic policy responses (C-4.5).'",
+      "owner": "founder",
+      "status": "closed",
+      "notes": "Rule 10 bans c-codes in notes; leaking them into a band — Rule 13's 'core teacher-facing product' — is strictly worse. A teacher reads the mapping's internal codes in her lesson. | CLOSED 2026-08-02 by genon/repair_register.py (declared edits, recorded in genon_canonical.repairs[]); re-scan 0 ban hits; --certify-only ALL PASS. Recurrence guarded by the register gate in certify() and, for new chapters, the top-canonical brief.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": "2026-08-02T11:19:06",
+      "at": "2026-08-02T11:19:06"
+    },
+    {
+      "id": "ARV-D-014",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S3",
+      "title": "Rule 9: approach repeats across consecutive units",
+      "evidence": "U1-U2 both ['Inquiry']; U8, U9, U10 all carry 'Issues-based learning' (three consecutive).",
+      "owner": "founder",
+      "status": "open",
+      "notes": "Explicit MUST NOT; surfaces in the rendered Overview 'Pedagogy' row. Monotony, not wrongness.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": null,
+      "at": "2026-08-02T10:53:47"
+    },
+    {
+      "id": "ARV-D-015",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S3",
+      "title": "Rule 6 P1: 7 implied LOs carry chapter-specific proper nouns",
+      "evidence": "e.g. U7/C-4.1 'Students can read monsoon-advance maps ... across India'; U8/C-4.4 '... water security across India'.",
+      "owner": "founder",
+      "status": "open",
+      "notes": "Propagates into the assessment via the handoff, where LOs are visible on the Assess Overview tab.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": null,
+      "at": "2026-08-02T10:53:47"
+    },
+    {
+      "id": "ARV-D-016",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S3",
+      "title": "U12 anchored 'Climate Change' but is a chapter-wide synthesis",
+      "evidence": "U12 section_anchor 'Climate Change'; title 'Atmosphere to Action: Synthesising the Chapter Through a Climate Lens'; band 10-30 spans physical system, human drivers and responses.",
+      "owner": "founder",
+      "status": "open",
+      "notes": "The anchor propagates verbatim to assessment anchoring, and U12 is the fill ladder's prime borrow candidate. Raises the standing question of how a synthesis closer should anchor (V3 mandates exactly this shape for compact variants, while the Integrity Constraint bans review units).",
+      "opened": "2026-08-02T10:53:47",
+      "closed": null,
+      "at": "2026-08-02T10:53:47"
+    },
+    {
+      "id": "ARV-D-017",
+      "combo": "social_sciences/secondary",
+      "step": "C3",
+      "severity": "S3",
+      "title": "Vestigial role_handoff:{} and unit_handoff:{} in result",
+      "evidence": "result keys: lesson_plan, period_schedule, coverage_handoff, role_handoff, unit_handoff, assessment_items, competency_gap_note, section_coverage_note.",
+      "owner": "founder",
+      "status": "open",
+      "notes": "Empty dicts from the retired schema, carried into a certified artefact. A trap for any consumer testing presence rather than truthiness.",
+      "opened": "2026-08-02T10:53:47",
+      "closed": null,
+      "at": "2026-08-02T10:53:47"
     }
   ],
   "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",
