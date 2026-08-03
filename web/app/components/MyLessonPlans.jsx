@@ -601,8 +601,12 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
                   <div className="sc-title">{p.chapter_title}</div>
-                  {/* Adapted-duration plans carry their matrix in small letters below the name
-                      (e.g. "45 min × 12"); the canonical schedule shows no line (2026-07-25). */}
+                  {/* EVERY plan carries its matrix in small letters below the name (e.g.
+                      "50 min × 12"), library canonicals included — reverses the 2026-07-25
+                      "canonical goes by its chapter name alone" rule, which predates the
+                      variant library: ch 3 is {12, 9, 7} and three cards reading only
+                      "Atmosphere and Climate" are indistinguishable. Source: api/data.py
+                      duration_label(), served_matrix -> matrix -> period_rows_snapshot. */}
                   {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
                   {effView === "archived" ? (
                     <div className="mlp2-ready">Archived</div>

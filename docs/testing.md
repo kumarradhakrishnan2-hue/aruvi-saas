@@ -150,7 +150,7 @@ model pinned `claude-sonnet-4-6` in `genon/generate_canonical.py`.
 **Exit:** `python3 genon/build_library.py social_sciences ix 3 --certify-only` runs to a report
 without spending a rupee. **Artefact:** the report path + the CSV header line.
 
-**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "10"` (`api/data.py`);
+**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "11"` (`api/data.py`);
 `aruvi_core/genon/` contains exactly `compile.py` (v0.5), `serve.py` (v1.1) and
 `variant_solver.py` — the retired `partition.py`/`polish.py` are gone from the engine package;
 the repo-root `genon/` lab keeps historical copies (`partition.py`, `polish_plan.py`,
@@ -168,8 +168,18 @@ are green. **Artefact:** the grep output + the test run.
 > `genon.surrender_note` kept as provenance · **e10** (2026-08-01) **served-schedule prints** —
 > `period_schedule_display` and the duration label build from `genon.served_matrix` (the
 > periods actually used), so a 13-period ask on a 12-period top prints 12; the request survives
-> in `genon.matrix` / `period_rows_snapshot`. Every e08/e09 plan file is stale by construction
-> and stays on disk as the C10.3 no-overwrite evidence.
+> in `genon.matrix` / `period_rows_snapshot` · **e11** (2026-08-02) **lendable unit** — the fill
+> ladder no longer offers a variant's trailing SYNTHESIS unit. A unit that only re-anchors
+> sections an earlier unit of its own plan already taught is written to be met at the END of its
+> own arc, so borrowing it into a foreign prefix produced sittings assuming lessons the class
+> never had (ARV-D-023, found at C7 — the 50m×10 serve carried NO coverage note because section
+> coverage was formally complete; **anchoring is not teaching**). `serve.lendable_unit()` walks
+> back to the unit that first introduced those sections; synthesis mode still borrows `units[-1]`,
+> where a synthesis assumes nothing false. Certification check 6 moves to the lendable unit, and
+> the variant brief's closing mandate now says the closing unit must TEACH its span and forbids a
+> trailing synthesis. Side effect: the TOP canonical becomes lendable for the first time.
+> Every e08/e09/e10 plan file is stale by construction and stays on disk as the C10.3
+> no-overwrite evidence.
 
 **0.3 [Kumar] Variant plans fresh.** `python3 genon/variant_plans.py` — every chapter row of
 `master_plan.json` carries `variant_plan {sigma, counts, closing_spans, provisional, basis,
@@ -733,7 +743,7 @@ distribution report exists. **Artefact:** comparison table + distribution note.
 | Pilot chapter number | tracker |
 | LP constitution version | `VERSION` line of the stage's LP constitution |
 | Assessment constitution version | `VERSION` line, assessment side |
-| `GENON_ENGINE_VERSION` | `api/data.py` (10 — see the ladder in §2, 0.2) |
+| `GENON_ENGINE_VERSION` | `api/data.py` (11 — see the ladder in §2, 0.2) |
 | **Variant plan row** | `master_plan.json` → `variant_plan {sigma, counts, closing_spans, basis, registry_sections, full_coverage, partials_at}` |
 | **Brief identity** | the brief files in `genon/out/briefs/` for this chapter — record the git commit of `genon/variant_plans.py` (which composes them) and keep the brief text as an artefact; brief wording is version-bearing even though it is not constitutional |
 | Canonical + variant `ledger_ts` | `genon_canonical` block of each library file |

@@ -64,6 +64,17 @@ def test_every_item_resolves_zero_orphans():
         for it in items:
             lp_set = it.meta.get("linked_periods")
             anchor = it.meta.get("anchor_period")
+            # DELIBERATELY UNANCHORED (engine e09+, 2026-08-01; testing.md C9.3): on a
+            # below-floor or fill serve, an item whose anchor unit was not scheduled
+            # carries an empty period_ref plus scheduling_note, rather than being
+            # mis-anchored onto a surviving unit. That is the designed outcome, not an
+            # orphan — the alternative (silently re-pointing it) is the actual defect.
+            # Recognised on the SOURCE item, so a genuine resolver miss still fails.
+            src = next((x for x in (r.get("assessment_items") or [])
+                        if x.get("implied_lo") == it.meta.get("linked_lo")), None)
+            if not lp_set and src is not None and src.get("scheduling_note") \
+                    and not (src.get("period_ref") or []):
+                continue
             assert lp_set, (f"ORPHAN — {subject}/{grade} {os.path.basename(fp)}: "
                             f"item resolved to no period. meta={it.meta}")
             assert anchor == max(lp_set), (f"{subject}/{grade}: anchor {anchor} != "

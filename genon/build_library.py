@@ -38,7 +38,7 @@ sys.path.insert(0, str(HERE))
 
 from aruvi_core.genon import compile_stream, serve_plan            # noqa: E402
 from aruvi_core.genon.serve import (                               # noqa: E402
-    _norm, section_registry, unit_range,
+    _norm, section_registry, unit_range, lendable_unit,
 )
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
@@ -172,11 +172,18 @@ def certify(subject, grade, ch, row):
         if str(k) in vp["closing_spans"]:
             span = vp["closing_spans"][str(k)]
             want = {_norm(a) for a in reg[-span:]}
-            got = {_norm(a) for a in
-                   str(s["units"][-1]["section_anchor"]).split(" / ")}
+            # e11 (2026-08-02): the mandate is checked on the LENDABLE unit, not
+            # blindly on units[-1]. A variant may close with a synthesis of sections
+            # an earlier unit taught; that unit is never lent (ARV-D-023), so the
+            # span it must carry belongs to the unit the ladder will actually borrow.
+            lu = lendable_unit(s, ridx)
+            got = {_norm(a) for a in str(lu["section_anchor"]).split(" / ")}
+            tail_note = ("" if lu is s["units"][-1]
+                         else f" (lendable unit is U{lu['unit']}, not the trailing "
+                              f"synthesis U{s['units'][-1]['unit']})")
             note(got == want,
-                 f"{name}: closing unit anchors exactly its mandated last-{span} span",
-                 name)
+                 f"{name}: lendable unit anchors exactly its mandated last-{span} "
+                 f"span{tail_note}", name)
 
     # ── REGISTER GATE (2026-08-02) ────────────────────────────────────────────────
     # The register is stated as a prohibition in every constitution and the ch 3 pilot

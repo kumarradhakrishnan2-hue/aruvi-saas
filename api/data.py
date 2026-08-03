@@ -288,17 +288,33 @@ def master_variant_plan(subject: str, grade: str, chapter_number: int) -> Option
 # mtime — no separate stream artifact on disk.
 
 def duration_label(saved: Dict[str, Any]) -> Optional[str]:
-    """Small-letter duration line for ADAPTED plans, e.g. "45 min × 12" or
-    "40 min × 10 · 30 min × 4". The canonical (and any plan whose matrix matches
-    the canonical's standard row) shows no label — it goes by its chapter name
-    alone (founder naming rule, 2026-07-25)."""
+    """Small-letter duration line under a plan's name, e.g. "45 min × 12" or
+    "40 min × 10 · 30 min × 4".
+
+    EVERY plan carries one, library canonicals included (founder, 2026-08-02).
+    This REVERSES the 2026-07-25 naming rule ("the canonical goes by its chapter
+    name alone"), which was written when a chapter had exactly ONE canonical and
+    the label's only job was to mark a plan as adapted. Under the variant-canonical
+    architecture a chapter is a LIBRARY — ch 3 is {12, 9, 7} — and three files that
+    all render as "Atmosphere and Climate" with no small print are indistinguishable
+    in My Lessons, which is a teacher-facing defect, not a naming preference.
+    """
     g = saved.get("genon") or {}
     # served_matrix (2026-08-01): the periods ACTUALLY used — a surrendered request
     # labels 12, not the 13 asked. Falls back to the requested matrix for older files.
     matrix = g.get("served_matrix") or g.get("matrix")
+    # Library canonicals carry no `genon` block at all (they are authored, not served);
+    # their schedule is the authored standard row in period_rows_snapshot. Served plans
+    # never reach this line, so the e10 "print what was served, not what was asked"
+    # rule above is untouched.
+    if not matrix:
+        matrix = saved.get("period_rows_snapshot")
     if not matrix:
         return None
-    return " · ".join(f"{m['duration']} min × {m['count']}" for m in matrix)
+    try:
+        return " · ".join(f"{int(m['duration'])} min × {int(m['count'])}" for m in matrix)
+    except (KeyError, TypeError, ValueError):
+        return None
 
 
 def _canonical_path(subject: str, grade: str, chapter_number: int) -> str:
@@ -350,7 +366,19 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "10"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "11"     # BUMP when compile/serve change the OUTPUT
+# 11 (2026-08-02): LENDABLE UNIT — the fill ladder no longer offers a variant's
+# trailing SYNTHESIS unit. A unit that only re-anchors sections an earlier unit of
+# its own plan already taught is written to be met at the end of ITS OWN plan
+# ("having traced the full arc…", "rank the factors from the case study"), so
+# borrowing it into a foreign prefix produced sittings that assumed lessons the
+# class never had — ARV-D-023, found at C7: the 50m x 10 serve carried NO coverage
+# note because section coverage was formally complete. Anchoring is not teaching.
+# serve.lendable_unit() walks back to the unit that first introduced those sections;
+# synthesis mode (prefix already covers the registry) still borrows units[-1], where
+# a synthesis assumes nothing false. Side effect: the TOP canonical becomes lendable
+# for the first time (its last unit never reached the final section), which is why
+# X=8 on SS·IX ch 3 improves from superset to exact.
 # 10 (2026-08-01): teacher-facing time prints show the SERVED schedule, never the
 # request — period_schedule_display and duration_label build from genon.served_matrix
 # (surrendered 13-ask prints 12; request kept as provenance in genon.matrix).

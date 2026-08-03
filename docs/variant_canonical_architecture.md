@@ -76,9 +76,27 @@ units 1..X−1 verbatim, plus ONE adaptive slot at position X. Even truncation f
 entire adaptation question is therefore a single selector: *what fills slot X, in what
 order of preference?*
 
-**R3 · The fill ladder.** Candidates are the CLOSING units of the *other* variants — a
-library of V variants has exactly V closure-bearing units, and a fill is a designed
-consolidation from a denser plan, never a skip inside the chosen plan. In order:
+**R3 · The fill ladder.** Candidates are the LENDABLE units of the *other* variants — a
+library of V variants offers at most V closure-bearing units, and a fill is a designed
+consolidation from a denser plan, never a skip inside the chosen plan.
+
+> **The lendable unit (engine e11, 2026-08-02 — amends "the closing unit").** A variant's
+> lendable unit is its last one UNLESS that unit anchors only sections an earlier unit of the
+> SAME plan already taught. Such a trailing SYNTHESIS is written to be met at the end of its own
+> arc — "having traced the full arc…", "rank the factors from the case study" — so lending it
+> into a foreign prefix hands the teacher a sitting that assumes lessons her class never had.
+> The ladder walks back to the unit that first introduced those sections ("all", not "any": a
+> unit anchoring one repeat plus one new section still teaches, and the walk may take more than
+> one step). **Anchoring is not teaching** — the section checks pass on a label while the prose
+> treats the section as revision, which is why nothing caught this until a human read the plans
+> (ARV-D-023, SS·IX ch 3 C7). Two consequences: the TOP canonical becomes lendable for the first
+> time (its own last unit is a synthesis that never reached the final section), and the closing
+> mandate — in the brief and in certification check 6 — attaches to the lendable unit, with a
+> trailing synthesis forbidden in newly-authored variants. The **exception is synthesis mode**,
+> where the prefix already covers the whole registry: there the trailing synthesis assumes
+> nothing false and is exactly the right borrow.
+
+In order:
 
 1. **Exact fill** — a closing unit covering precisely the missing sections. Complete
    coverage, closure intact, nothing to disclose.

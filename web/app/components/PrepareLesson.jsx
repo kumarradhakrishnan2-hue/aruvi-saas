@@ -380,15 +380,24 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
                     your budget — this chapter&rsquo;s fullest plan uses {topP}.
                   </p>
                 );
-                if (totalMin / cm >= 0.6) return null;
+                /* Floor = round(0.6 x canonical / duration), matching master_plan's
+                   floor_periods_at_standard (nearest-whole, founder 2026-07-31; was ceil).
+                   TEST IN PERIODS, NOT MINUTES (fix 2026-08-02): the old guard asked
+                   `totalMin / cm < 0.6` while the sentence printed the ROUNDED period floor,
+                   so the two disagreed wherever 0.6xA rounds DOWN — at A=12 the floor is
+                   round(7.2)=7 but 7/12=0.583, so a teacher asking for exactly 7 was warned
+                   about being below 7. That band is the common case, not an edge (A=9 -> 5,
+                   A=7 -> 4, likewise). The floor is defined in PERIODS in master_plan, so the
+                   comparison has to be too — and now the test and the sentence use one number
+                   by construction, which is what stops this drifting apart again.
+                   Wording is the serve engine's (2026-08-01): below the floor the plan still
+                   closes the chapter — unreached sections are NAMED and handed over, never
+                   silently dropped. */
+                const floorP = Math.round((0.6 * cm) / (totalMin / totalP));
+                if (!floorP || totalP >= floorP) return null;
                 return (
                   <p className="prep-floor">
-                    {/* Floor = round(0.6 x canonical / duration), matching master_plan's
-                        floor_periods_at_standard (nearest-whole, founder 2026-07-31; was ceil).
-                        Wording updated for the serve engine (2026-08-01): below the floor the
-                        plan still closes the chapter — unreached sections are NAMED and handed
-                        over, never silently dropped. */}
-                    Below {Math.round((0.6 * cm) / (totalMin / totalP))} periods, later sections
+                    Below {floorP} periods, later sections
                     move to guided self-study — the plan still closes the chapter and names them.
                   </p>
                 );

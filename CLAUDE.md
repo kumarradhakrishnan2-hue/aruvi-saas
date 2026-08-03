@@ -220,7 +220,11 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   `variant_solver.py` reverse-deduces compact counts + mandated closing spans from the top
   canonical (gaps ≤ σ, demand-weighted) and emits the adaptation table. Assessment anchoring is UNIT-level (item unit_ref from period_ref; band ids are
   internal, derived positionally by compile v0.5 — never demanded of the model). Engine
-  e08; SS·sec LP v1.9 (Rules 14/15/16 removed; register stands), assessment v1.5
+  **e11** — the ladder borrows each variant's LENDABLE unit, not blindly its last: a trailing
+  synthesis of sections an earlier unit already taught is never lent (it assumes lessons a
+  foreign prefix never had — ARV-D-023; anchoring is not teaching), except in synthesis mode.
+  SS·sec LP v1.9 (Rules 14/15/16 removed; register stands), assessment v1.6 (A9's
+  "never led with" struck 2026-08-02)
   (phase_ref removed); A2/A3/A4 cancelled + X3 void for the ten un-amended constitutions,
   V-series (brief §7) replaces them; `partition.py`/`polish.py`
   live in `_to_delete/`. DO NOT reintroduce cutting below the unit, seam text, role

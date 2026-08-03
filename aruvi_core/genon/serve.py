@@ -1,4 +1,4 @@
-"""Aruvi variant-serve engine — v1.0 (2026-07-31). Replaces the partition engine.
+"""Aruvi variant-serve engine — v1.2 (2026-08-02). Replaces the partition engine.
 
 Doctrine (docs/variant_canonical_architecture.md): a chapter is authored as a small
 LIBRARY of variant canonicals — the same section list planned at two or three period
@@ -7,9 +7,12 @@ Serving a teacher's request is SELECTION, never composition:
 
   * the NEXT-HIGHEST variant is chosen (full richness; surrender only above the top);
   * the first X-1 sittings are that variant's units 1..X-1, verbatim;
-  * slot X is SELECTED from the library's closing units by a fixed ladder —
+  * slot X is SELECTED from the library's LENDABLE units by a fixed ladder —
     exact fill > superset (minimal overlap, revision runway) > longest suffix >
     truncation (serve unit X, withhold the tail, hand the material over);
+    a variant's lendable unit is its last one UNLESS that is a trailing synthesis
+    of sections an earlier unit already taught, in which case the ladder walks back
+    to the unit that taught them (v1.2 / engine e11 — see lendable_unit());
   * within a unit, time expands/contracts in proportion to the sitting's duration
     (the only arithmetic left — bounded, per-unit, against an authored arc).
 
@@ -184,6 +187,45 @@ def choose_variant(streams, requested):
     return eligible[-1], 0        # smallest count >= requested
 
 
+def lendable_unit(stream, ridx):
+    """The unit this variant offers the fill ladder — engine e11 (2026-08-02).
+
+    Normally the variant's LAST unit. But a variant with slack often spends it on
+    a trailing SYNTHESIS unit that anchors sections an earlier unit already taught
+    (SS·IX ch 3: p09 U8 teaches the Punjab floods, U9 synthesises them; the top's
+    U11 and U12 do the same). Such a unit is written to be met at the END of ITS
+    OWN plan — its notes say "having traced the full arc…", its bands say "rank the
+    factors from the case study" — so borrowing it into a foreign prefix hands the
+    teacher a sitting that assumes lessons her class never had (ARV-D-023, S2: the
+    50m x 10 serve told her to run a discussion on a case study never read, and
+    carried no coverage note because section coverage was formally complete —
+    ANCHORING IS NOT TEACHING).
+
+    So: walk back past any trailing unit ALL of whose anchored sections already
+    appeared earlier in the same variant, and lend the unit that first introduced
+    them. "All", not "any" — a unit anchoring one repeat plus one new section still
+    teaches (p07 U7 anchors Climate Change + Punjab Floods and stays lendable). The
+    walk can take more than one step (top: U12 -> U11 -> U10).
+
+    Callers use this ONLY for fill candidates. In synthesis mode — where the prefix
+    already covers the whole registry — the trailing synthesis IS the right borrow
+    and fill_slot deliberately takes units[-1] instead.
+    """
+    us = stream["units"]
+    cut = len(us)
+    while cut > 1:
+        seen = set()
+        for u in us[:cut - 1]:
+            r = unit_range(u, ridx)
+            if r:
+                seen.update(range(r[0], r[1] + 1))
+        r = unit_range(us[cut - 1], ridx)
+        if r and not set(range(r[0], r[1] + 1)) <= seen:
+            break                          # this unit still introduces something
+        cut -= 1
+    return us[cut - 1]
+
+
 def fill_slot(streams, chosen, requested, registry):
     """The slot-X ladder. Returns a dict describing the fill, or a truncation.
 
@@ -211,7 +253,11 @@ def fill_slot(streams, chosen, requested, registry):
     lo = frontier + 1
 
     if lo > last:
-        # prefix covers every section — the withheld tail is synthesis-only
+        # prefix covers every section — the withheld tail is synthesis-only, and
+        # THIS is the one case where a trailing synthesis is the right borrow: the
+        # class has met every section, so a unit that draws the arc together assumes
+        # nothing false. No walk-back here (e11) — walking back would hand over a
+        # teaching unit and re-teach a section the prefix just covered.
         others = [s for s in streams if s is not chosen]
         if others:
             c = min(others, key=lambda s: (abs(len(s["units"]) - requested),
@@ -229,8 +275,8 @@ def fill_slot(streams, chosen, requested, registry):
     for s in streams:
         if s is chosen:
             continue
-        cu = s["units"][-1]
-        r = unit_range(cu, ridx)
+        cu = lendable_unit(s, ridx)
+        r = unit_range(cu, ridx) if cu else None
         if r is None or r[1] != last:
             continue                      # not closure-bearing in this registry
         clo = r[0]
@@ -474,9 +520,9 @@ def serve_plan(streams, matrix):
             "dropped_units": dropped_units or None,
         },
         "genon": {
-            "engine": ("serve v1.1 (variant library, next-highest selection, "
-                       "X-1+1 slot fill, proportional duration scaling, "
-                       "unit-anchored assessment)"),
+            "engine": ("serve v1.2 (variant library, next-highest selection, "
+                       "X-1+1 slot fill from each variant's LENDABLE unit, "
+                       "proportional duration scaling, unit-anchored assessment)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,

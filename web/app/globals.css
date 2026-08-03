@@ -2271,8 +2271,10 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .ap-list-capped { flex: 0 1 auto; max-height: 160px; scroll-snap-type: y proximity; }
 .ap-list-capped .ap-row { flex: none; height: 76px; overflow: hidden; scroll-snap-align: start;
   justify-content: center; }   /* one-line chapter rows sit centred in the fixed-height slot */
-/* Adapted-duration line under a lesson's name (cards + the "+" picker): the matrix in small
-   letters, e.g. "45 min × 12" / "40 min × 10 · 30 min × 4". Canonical-schedule plans have none. */
+/* Duration line under a lesson's name (cards + the "+" picker): the matrix in small letters,
+   e.g. "50 min × 12" / "40 min × 10 · 30 min × 4". EVERY plan carries one as of 2026-08-02,
+   library canonicals included — a chapter is a library of variants ({12, 9, 7}), so the name
+   alone no longer identifies a plan. */
 .sc-durline { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .06em;
   color: var(--ink-soft); margin-top: 2px; }
 .ap-loading, .ap-none { font-size: 13px; color: var(--ink-soft); font-style: italic; padding: 8px 2px; }

@@ -220,3 +220,46 @@ p = serve_plan(LIB, [(50, 14)])
 assert "return to your budget" in p["result"]["section_coverage_note"]
 assert p["result"]["dropped_units"] is None, "surrender loses nothing"
 print("surrender-note assertion passed")
+
+# ── LENDABLE UNIT (engine e11, 2026-08-02; ARV-D-023) ───────────────────────────
+# A variant that spends slack on a trailing SYNTHESIS unit — one whose anchored
+# sections an earlier unit of the SAME plan already taught — must not lend that unit
+# to another plan's slot X. It is authored to be met at the end of its own arc
+# ("having traced the full arc…"), so in a foreign prefix it assumes lessons the
+# class never had. The ladder walks back to the unit that TAUGHT those sections.
+from aruvi_core.genon.serve import lendable_unit, _norm   # noqa: E402
+
+RIDX = {_norm(a): i for i, a in enumerate(SECTIONS)}
+
+# D = 9 units: U1..U8 teach all 12 sections, U9 re-anchors the last one (synthesis).
+D = _mk_stream(9, _ranges_even(8, 2) + [(11, 11)], "D")
+assert len(D["units"]) == 9
+assert lendable_unit(D, RIDX)["unit"] == 8, "trailing synthesis is walked past"
+assert lendable_unit(B, RIDX)["unit"] == len(B["units"]), \
+    "a closing unit that introduces its sections stays lendable"
+
+# more than one step: E ends with TWO trailing revisit units
+E = _mk_stream(10, _ranges_even(8, 2) + [(11, 11), (11, 11)], "E")
+assert lendable_unit(E, RIDX)["unit"] == 8, "walk-back takes as many steps as needed"
+
+# "all", not "any": a unit anchoring one repeat PLUS new sections still teaches.
+# This is the real p07 U7 shape — Climate Change (taught at U6) + Punjab Floods (new).
+F = _mk_stream(9, [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 9)]
+               + [(9, 11)], "F")
+assert lendable_unit(F, RIDX)["unit"] == 9, "a partial repeat still introduces"
+
+# the ladder borrows the TAUGHT unit, never the synthesis — whatever rung it lands on
+p = serve_plan([A, D], [(50, 10)])
+fill = p["genon"]["slot_fill"]
+assert fill and fill["borrowed_from"] == 9, fill          # borrowed from D
+closing = p["result"]["lesson_plan"]["periods"][-1]["activity_title"]
+assert closing == "D U8", "slot X must be D's taught closing unit, not its synthesis"
+
+# EXCEPT in synthesis mode — prefix already covers every section, so the trailing
+# synthesis assumes nothing false and is the right borrow.
+p = serve_plan([A, D], [(50, 12)])         # A serves 11 units = all 12 sections
+if (p["genon"]["slot_fill"] or {}).get("mode") == "synthesis":
+    assert p["result"]["lesson_plan"]["periods"][-1]["activity_title"] == "D U9", \
+        "synthesis mode borrows the closing synthesis as authored"
+
+print("lendable-unit assertions passed")

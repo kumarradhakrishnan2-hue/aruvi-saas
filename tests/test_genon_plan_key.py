@@ -50,7 +50,12 @@ check("longest duration leads the label", "40m10-30m4" in key(5, [(30, 4), (40, 
       key(5, [(30, 4), (40, 10)]))
 check("zero/negative rows are ignored",
       key(5, [(50, 17), (0, 9), (45, 0)]) == k17)
-check("readable shape", k17 == "ch_05_50m17_e10_c20260726112240.json", k17)
+# Built from the live constant, never hardcoded: the engine version is SUPPOSED to
+# move (e08 -> e09 -> e10 -> e11 in four days) and a bump re-keying the cache is the
+# designed behaviour, not a regression. Check the SHAPE, and let check 2 below prove
+# the version is load-bearing.
+check("readable shape",
+      k17 == f"ch_05_50m17_e{data.GENON_ENGINE_VERSION}_c20260726112240.json", k17)
 
 # ── 2. every component moves the key ───────────────────────────────────────
 check("chapter changes the key", key(6, [(50, 17)]) != k17)

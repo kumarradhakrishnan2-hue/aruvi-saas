@@ -892,13 +892,20 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                * against, and deliberately silent about WHICH sections go — Aruvi teaches the
                * textbook in its own order, so "the later ones" is something she can deduce. */
               const cm = Number(canonMinutes[String(chapterNo)]) || 0;
-              const totalMin = (Number(durationMin) || 0) * (Number(periods) || 0);
-              if (!genonAvailable || !cm || !totalMin) return null;
-              if (totalMin / cm >= 0.6) return null;
+              const dur = Number(durationMin) || 0;
+              const totalP = Number(periods) || 0;
+              if (!genonAvailable || !cm || !dur || !totalP) return null;
+              /* nearest-whole floor + serve-era wording (2026-08-01) — see PrepareLesson.
+                 TEST IN PERIODS, NOT MINUTES (fix 2026-08-02, same defect as PrepareLesson):
+                 the old guard `totalMin / cm < 0.6` fired at exactly the floor wherever
+                 0.6xA rounds down — at 50x12 the floor is round(7.2)=7, yet 7/12=0.583, so
+                 asking for 7 warned about being below 7. One number now drives both the test
+                 and the sentence. */
+              const floorP = Math.round((0.6 * cm) / dur);
+              if (!floorP || totalP >= floorP) return null;
               return (
                 <p className="prep-floor">
-                  {/* nearest-whole floor + serve-era wording (2026-08-01) — see PrepareLesson */}
-                  Below {Math.round((0.6 * cm) / (Number(durationMin) || 40))} periods, later
+                  Below {floorP} periods, later
                   sections move to guided self-study — the plan still closes the chapter and
                   names them.
                 </p>
