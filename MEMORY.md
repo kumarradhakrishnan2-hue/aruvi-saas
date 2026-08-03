@@ -386,7 +386,30 @@ must confirm · source entry.
     legal landing was drafted and REJECTED: mentioning label A in the rule at all makes A salient
     and invites the model to reason about position, which is what the convention exists to
     prevent. The rule now states only what the arrangement is. Prohibition 3 unchanged, now the
-    whole guard. This partially reverses v1.4,
+    whole guard.
+    **★★ CLOSED BY CODE 2026-08-03 — the arrangement LEAVES the constitution (SS·secondary
+    assessment v1.6 → v1.7, ARV-D-032).** Measured on the v2.0 library under v1.6: **15 of 18
+    MCQs unarranged** — worse than v1.5's 10/18 — with the correct option at A or B on 16 of 18
+    and never at D. Three amendments, one ₹6 probe and three weeks RAISED the rate, so wording
+    was never the lever: the rule is a SORT of four 40-word strings, asked of a generation 26k
+    output tokens deep (the break sat at word 2–4 in 11 of the 15). Founder ruling: enforce in
+    code and strike the sentence. **`genon/normalize_options.py` v1.0** is STEP 6 of
+    `build_library.py` — sorts word-wise (ascending numeric only when an option OPENS with a
+    number), relabels A–D, remaps `guide.MCQ.what_each_option_reveals`; option text and
+    `is_correct` are never touched; idempotent; runs under `--certify-only`, so it repairs
+    existing libraries at ₹0; records `items_scanned`/`items_moved` into
+    `genon_canonical.repairs[]` **so the generation-quality rate survives as a statistic instead
+    of being silently absorbed**. Certification gains a ninth check ("MCQ options in arrangement
+    order") whose job is to prove the stage ran. v1.7's Rule 7 says only that order carries no
+    meaning; prohibition 3 now bans an option that references another option BY LABEL ("both A
+    and B", "none of the above") — the one construction a downstream sort cannot reorder without
+    rewriting. ch 3 normalised in place: 15/18 moved, distribution A6·B10·C2·D0 → **A3·B7·C4·D4**,
+    library re-certified ALL PASS, ₹0, no re-author. **The other ten assessment constitutions
+    must receive the v1.7 form at their own P2 — the arrangement sentence is never re-added;
+    only the label-reference prohibition travels.** ARV-D-018's ordering half is closed with it.
+    Pre-warm check for this item is now: `items_moved` per library — a stage where it drops to 0
+    is the model doing it unaided, which is worth knowing but changes nothing.
+    (Historical note follows.) This partially reverses v1.4,
     which had added the ban on probe evidence ("distractors sorted, correct answer pulled to A") —
     that diagnostic is deliberately given up; a correct answer at A is now caught only as an
     ordering failure. Relaxing amendment: no v1.5 artefact becomes non-compliant. **The other ten
@@ -399,7 +422,70 @@ must confirm · source entry.
 
 ---
 
-## 2026-07-31 (newest) — THE VARIANT-CANONICAL PIVOT: partition engine retired, serve engine lands (genon e08; SS·sec LP → v1.8)
+## 2026-08-03 (newest) — ARCHITECTURE v2.0: mandates OUT, the first-exposure choice set IN (engine e12; solver retired)
+
+**The defect (ARV-D-025).** The solver-mandated closing spans failed at their root: by
+mandating a synthesizing closing unit in each compact and lending it into slot X, we
+imported the assumption that the BORROWING plan's class had the lending plan's own priors
+for those sections. It never does — it reached slot X through a different prefix. The
+jumpy X−1→X profile of served plans was the proof. Mandated synthesis is jumpiness by
+construction; no wording repair fixes it.
+
+**The fix (architecture §0, the new spec-of-record — read it before touching genon):**
+
+- **Free canonicals at arithmetic counts.** No solver, no σ, no closing spans. Counts by
+  EQUAL DISPERSION over [floor, standard]: {A, ⌈(A+C)/2⌉, C} when A−C ≥ 4, {A, C} when
+  1 < A−C < 4, {A} degenerate (so small chapters naturally get two canonicals, founder
+  ruling 2026-08-03 with placement/collapse choices). `master_plan.py` emits
+  `canonical_periods`; `variant_plans.py` v2.0 annotates `canonical_plan` {counts,
+  provisional, basis, registry_sections, authored} and composes the new briefs
+  (`variant_plan` keys are purged from master_plan.json).
+- **The one surviving mandate — the synthesis anchor (§0.3).** The STANDARD canonical's
+  last unit is a whole-chapter synthesis, `section_anchor` exactly the reserved token
+  `synthesis` — excluded from the registry, forbidden in compacts, gated by
+  `build_library.py` (which replaced the closing-span check). Safe because it is only
+  borrowed in Case 1, where the prefix covers the whole registry — full coverage is the
+  only prior a whole-chapter synthesis needs.
+- **The Xth-unit choice set (§0.4, serve.py e12).** Case 1: prefix covers all → borrow
+  the standard's synthesis. Case 2: borrow, from ANY canonical (chosen included — its own
+  unit X is the identity candidate), the unit that FIRST deals the next-due section M in
+  its own plan — a first-exposure unit's only backward dependency is "prior sections
+  taught", which the prefix guarantees: the structural no-jumpiness argument, e11's
+  "anchoring is not teaching" promoted to the selection principle. Preference:
+  forward-reach-no-recross (furthest first) > M alone > backward combos (redundancy is
+  not jumpiness); ties → count nearest X, then denser. Contiguity (V2) makes every
+  candidate adjacent, so on a certified library Case 3 is structurally impossible.
+  Dropped sections now ride FROM THE LENDER's subsequent units (provenance consistency;
+  was: from the chosen plan). Case 3 (defensive): truncate, NO drops, message asks for
+  the REFERENCE canonical's count — not the floor (the gap being diagnosed is between
+  the request and the depth it implies; below C the reference IS the floor canonical).
+- **Retired:** `variant_solver.py` + `test_variant_solver.py` → `_to_delete/`;
+  `lendable_unit()` and the exact/superset/suffix ladder (absorbed by first-exposure
+  selection); the projected-vs-actual certification diff (the serve sweep is the table
+  of record, now with per-X fill class + drop counts and a no-Case-3 gate).
+- **Ripples:** api `GENON_ENGINE_VERSION` → "12" (every e11 cache entry stale);
+  `data.master_canonical_plan()` / `canonical_plan` in GET chapters (frontend never read
+  `variant_plan` — grep-verified); `test_genon_serve.py` rewritten for e12 (all pass;
+  duration-order + plan-key suites untouched and green; the fastapi/fixture failures
+  pre-date this session, CLAUDE.md §8).
+- **testing.md → template v2.3 (same day):** §0.7's σ machinery struck (floor stands);
+  C1/C5/C6/P5/§6/§9 aligned to canonical_plan, the synthesis-anchor gate and e12 sweep
+  modes; **C8 replaced** (founder) — LLM-need flags give way to the X−1→X TRANSITION
+  INSPECTION: read sitting X−1 and X in full consecutively per exercised fill class +
+  the synthesis borrow, rate clean/serviceable/jumpy with quoted evidence, every jumpy
+  a defect citing ARV-D-025 with a deterministic remedy first; the HUMAN GATE now reads
+  the sweep table, C8's worst transition, the standard's synthesis and each compact's
+  free ending. §10 carries the pilot's v2.0 note (library must re-author; old serve
+  modes extinct); the 2026-08-01 corrections note superseded by a dated re-check.
+- **Standing consequence for ch 3's pilot library:** counts move {12, 9, 7} → {12, 10, 7}
+  and the on-disk artefacts are PRE-v2.0 (top has no synthesis unit; p09/p07 carry the
+  old mandated closers). The library still serves through legacy fallbacks, but v2.0
+  certification would rightly fail it — the chapter re-authors under the new briefs
+  before the template is called portable. p09 is orphaned by the new counts.
+
+---
+
+## 2026-07-31 — THE VARIANT-CANONICAL PIVOT: partition engine retired, serve engine lands (genon e08; SS·sec LP → v1.8)
 
 **The founder's verdict on the first realistic partition (SS·IX ch 3 at 9×50, e06) killed the
 partition architecture, and the evidence supported it completely:** every one of the nine

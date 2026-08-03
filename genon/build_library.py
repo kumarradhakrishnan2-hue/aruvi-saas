@@ -15,13 +15,16 @@ Steps (stops on the first failure; each is idempotent to re-run):
   2. annotate master_plan.json                — variant_plans.py (row finalizes)
   3. variant briefs                            — written to genon/out/briefs/
   4. each compact variant (LP + assessment)    — generate_canonical.py --variant, metered
-  5. re-annotate + DETERMINISTIC CERTIFICATION — compile, registry/first-visit/closing
-     checks, serve sweep, projected-vs-actual diff
-  6. report                                    — genon/out/library_reports/ch_NN_<ts>.md
-     (the Cowork session presents this at the Step 6 human gate; approval is the
+  5. re-annotate                               — variant_plans.py on the full library
+  6. arrange MCQ options                       — normalize_options.py (deterministic, free,
+     idempotent; option text and is_correct untouched — order, labels and guide keys only)
+  7. DETERMINISTIC CERTIFICATION               — compile, registry/first-visit/synthesis
+     checks, register scan, MCQ arrangement gate, serve sweep
+  8. report                                    — genon/out/library_reports/ch_NN_<ts>.md
+     (the Cowork session presents this at the human gate; approval is the
      founder's, never this script's)
 
-    --certify-only   skip generations; run steps 2-6 on whatever library exists
+    --certify-only   skip generations; run steps 2-8 on whatever library exists
 """
 from __future__ import annotations
 
@@ -38,10 +41,11 @@ sys.path.insert(0, str(HERE))
 
 from aruvi_core.genon import compile_stream, serve_plan            # noqa: E402
 from aruvi_core.genon.serve import (                               # noqa: E402
-    _norm, section_registry, unit_range, lendable_unit,
+    _norm, is_synthesis_unit, section_registry, unit_range,
 )
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
+from normalize_options import normalize_library, unarranged        # noqa: E402
 
 from aruvi_core.grades import stage_for                            # noqa: E402
 
@@ -148,12 +152,28 @@ def certify(subject, grade, ch, row):
     top_name, top = lib[0]
     reg = section_registry(top)
     ridx = {_norm(a): i for i, a in enumerate(reg)}
-    vp = row["variant_plan"]
+    vp = row["canonical_plan"]
 
     note(len(lib) == len(vp["counts"]),
          f"library complete: {[n for n, _ in lib]} vs plan {vp['counts']}")
     for name, s in lib:
-        rr = [unit_range(u, ridx) for u in s["units"]]
+        is_top = name == top_name
+        # ── THE SYNTHESIS-ANCHOR GATE (v2.0 §0.3, replaces the closing-span
+        # check): the STANDARD canonical's last unit anchors exactly the reserved
+        # token `synthesis`; no other unit — and no compact — may carry it. The
+        # old solver-mandated spans are gone (ARV-D-025: a mandated closing
+        # synthesis in a compact imported foreign priors — the jumpy Xth unit).
+        syn_units = [u["unit"] for u in s["units"] if is_synthesis_unit(u)]
+        if is_top:
+            note(syn_units == [s["units"][-1]["unit"]],
+                 f"{name}: standard closes with the mandated `synthesis` unit "
+                 f"(and carries the token nowhere else)", name)
+        else:
+            note(not syn_units,
+                 f"{name}: the `synthesis` token is reserved to the standard "
+                 f"canonical", name)
+        body = [u for u in s["units"] if not is_synthesis_unit(u)]
+        rr = [unit_range(u, ridx) for u in body]
         note(all(r is not None for r in rr),
              f"{name}: every anchor verbatim in the top registry", name)
         okorder, seen_hi = True, -1
@@ -167,23 +187,8 @@ def certify(subject, grade, ch, row):
                 seen_hi = r[1]
         note(okorder, f"{name}: first-visit order follows the registry", name)
         note(seen_hi == len(reg) - 1,
-             f"{name}: coverage reaches the final registry section", name)
-        k = len(s["units"])
-        if str(k) in vp["closing_spans"]:
-            span = vp["closing_spans"][str(k)]
-            want = {_norm(a) for a in reg[-span:]}
-            # e11 (2026-08-02): the mandate is checked on the LENDABLE unit, not
-            # blindly on units[-1]. A variant may close with a synthesis of sections
-            # an earlier unit taught; that unit is never lent (ARV-D-023), so the
-            # span it must carry belongs to the unit the ladder will actually borrow.
-            lu = lendable_unit(s, ridx)
-            got = {_norm(a) for a in str(lu["section_anchor"]).split(" / ")}
-            tail_note = ("" if lu is s["units"][-1]
-                         else f" (lendable unit is U{lu['unit']}, not the trailing "
-                              f"synthesis U{s['units'][-1]['unit']})")
-            note(got == want,
-                 f"{name}: lendable unit anchors exactly its mandated last-{span} "
-                 f"span{tail_note}", name)
+             f"{name}: coverage reaches the final registry section"
+             + (" before the synthesis unit" if is_top else ""), name)
 
     # ── REGISTER GATE (2026-08-02) ────────────────────────────────────────────────
     # The register is stated as a prohibition in every constitution and the ch 3 pilot
@@ -212,6 +217,19 @@ def certify(subject, grade, ch, row):
         if bans:
             lines.append("      -> declare the fixes in genon/repair_register.py and re-run "
                          "--certify-only; do NOT hand-edit the artefact")
+
+    # ── MCQ ARRANGEMENT GATE (2026-08-03, ARV-D-032) ─────────────────────────────
+    # Rule 7's option arrangement is a SORT, and prose could not carry it: four constitution
+    # versions and one probe took the failure rate from 5/6-on-B to 15 of 18 unarranged, with
+    # the correct option at A or B on 16 of 18 and never at D. STEP 6 (normalize_options.py)
+    # now does it deterministically, so this gate should ALWAYS pass — it exists to prove the
+    # stage ran, not to catch the model. The rate itself is reported by that step and recorded
+    # in genon_canonical.repairs[]; the constitution sentence is struck at v1.7.
+    for name, _s in lib:
+        left = unarranged(lib_dir_of(subject, grade) / name)
+        note(not left,
+             f"{name}: MCQ options in arrangement order"
+             + (f" — items {left} unarranged; run STEP 6" if left else ""), name)
 
     # ── ASSESSMENT ITEM COUNTS — ADVISORY (2026-08-02, testing.md C4 / ARV-D-019) ──
     # See EXACT_ITEM_COUNTS above for why this reports rather than gates.
@@ -247,7 +265,9 @@ def certify(subject, grade, ch, row):
                      "forbidden (testing.md §7) — the only fix is regeneration, and that "
                      "is a founder call on cost, not a certification failure.")
 
-    # serve sweep + projected-vs-actual
+    # ── serve sweep — the adaptation table of record (no solver projection to
+    # diff against since v2.0; certification derives it from the authored
+    # library directly). Per X: the fill mode/class + how many sections drop.
     floor = row["floor_periods_at_standard"]
     top_n = len(top["units"])
     dur = top["units"][0]["authored_duration_minutes"]
@@ -258,18 +278,24 @@ def certify(subject, grade, ch, row):
             p = serve_plan(streams, [(dur, x)])
             g = p["genon"]
             fill = g["slot_fill"]
-            mode = ("surrender" if g["surrendered_periods"]
-                    else "identity" if not fill else fill["mode"])
-            sweep[x] = mode
+            if g["surrendered_periods"]:
+                sweep[x] = "surrender"
+            elif not fill:
+                sweep[x] = "identity"
+            elif fill["mode"] == "fill":
+                ndrop = len(fill["uncovered_sections"])
+                sweep[x] = (f"fill/{fill['fill_class']}"
+                            + (f" -{ndrop}s" if ndrop else ""))
+            else:
+                sweep[x] = fill["mode"]
+            # Case 3 must stay structurally impossible on a certified library
+            # (§0.4); its appearance in the band is a certification failure.
+            note(not (fill and fill["mode"] == "truncation"
+                      and not fill.get("synthesis_only")),
+                 f"X={x}: choice set non-empty (no defensive truncation)")
         except Exception as e:                     # noqa: BLE001
             sweep[x] = f"ERROR: {e}"
             note(False, f"serve X={x} raised: {e}")
-    full_modes = {"identity", "exact", "superset", "synthesis", "surrender"}
-    projected = vp.get("full_coverage") or [None, None]
-    for x, mode in sweep.items():
-        if projected[0] is not None and projected[0] <= x <= (projected[1] or 0):
-            note(mode in full_modes,
-                 f"X={x}: projected full, served '{mode}'")
     lines.append("")
     lines.append("serve sweep: " + json.dumps(sweep))
     return ok, lines, sweep, fails
@@ -338,10 +364,18 @@ def main():
                  "--variant", str(k), "--brief", str(bf)])
         run("STEP 5 · re-annotate on the full library", [vpn])
 
+    # STEP 6 · arrange MCQ options (deterministic, free, idempotent, ALWAYS runs — including
+    # under --certify-only, which is how a library authored before this stage existed gets
+    # fixed for ₹0). Nothing is authored here: option text and is_correct are untouched.
+    print("\n== STEP 6 · arrange MCQ options ==")
+    opt_lines, opt_moved, opt_scanned = normalize_library(subject, grade, ch)
+    print("\n".join(opt_lines))
+
     mp = json.loads((REPO / "data/content/allocation_norms/master_plan.json").read_text())
     row = next(c for c in mp["combos"][f"{subject}|{klass}"]["chapters"]
                if c["chapter"] == ch)
     ok, lines, sweep, fails = certify(subject, grade, ch, row)
+    lines += [""] + opt_lines
     moved = quarantine(subject, grade, ch, fails, lines) if fails else []
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -350,10 +384,9 @@ def main():
     report = rdir / f"{subject}_{grade}_ch{ch:02d}_{ts}.md"
     report.write_text(
         f"# Library certification · {subject} {klass} ch {ch} · {ts}\n\n"
-        f"plan: counts {row['variant_plan']['counts']} · "
-        f"spans {row['variant_plan']['closing_spans']} · "
-        f"sigma {row['variant_plan']['sigma']} · "
-        f"basis {row['variant_plan']['basis']}\n\n"
+        f"plan: counts {row['canonical_plan']['counts']} · "
+        f"basis {row['canonical_plan']['basis']} · "
+        f"registry {row['canonical_plan']['registry_sections']} sections\n\n"
         + "\n".join(lines)
         + "\n\nDETERMINISTIC CHECKS "
         + ("ALL PASS" if ok else "HAVE FAILURES — do not certify")

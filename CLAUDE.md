@@ -205,30 +205,37 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   the suggested-periods group styling).
 - **Output caching** keyed by (subject, grade, chapter, period_profile, constitution_version)
   is the #1 economic lever at seasonal scale — wire it at the service layer when live gen lands.
-- **The variant-canonical serve engine IS the genon architecture (2026-07-31) — the
+- **The variant-canonical serve engine IS the genon architecture (v2.0, 2026-08-03) — the
   deterministic partition engine is RETIRED.** Standing spec:
-  `docs/variant_canonical_architecture.md` (read it before touching genon). A chapter is a
-  LIBRARY of variant canonicals (same section list authored at 2–3 period counts, each a
-  complete plan + its own assessment, at the class-standard duration:
-  `ch_NN_canonical.json` + `ch_NN_canonical_pKK.json`). Serving is SELECTION, never
-  composition: next-highest variant (full richness; surrender only above the top,
-  declared) · X−1+1 form (first X−1 units verbatim, ONE whole unit per sitting) · slot-X
-  fill ladder (exact > superset/runway > longest-suffix > truncation — candidates are
-  other variants' CLOSING units only; never skip inside the chosen plan) · proportional
-  per-unit duration scaling (the only arithmetic; weekly dispersion kept) · per-variant
-  assessments (borrowed unit brings its own items, band ids namespaced F…).
-  `variant_solver.py` reverse-deduces compact counts + mandated closing spans from the top
-  canonical (gaps ≤ σ, demand-weighted) and emits the adaptation table. Assessment anchoring is UNIT-level (item unit_ref from period_ref; band ids are
-  internal, derived positionally by compile v0.5 — never demanded of the model). Engine
-  **e11** — the ladder borrows each variant's LENDABLE unit, not blindly its last: a trailing
-  synthesis of sections an earlier unit already taught is never lent (it assumes lessons a
-  foreign prefix never had — ARV-D-023; anchoring is not teaching), except in synthesis mode.
+  `docs/variant_canonical_architecture.md` — **read §0 first** (v2.0 supersedes the fill
+  ladder, the solver and the closing-span mandates). A chapter is a LIBRARY of canonicals
+  authored FREE at counts fixed by EQUAL DISPERSION over [floor, standard] ({A, ⌈(A+C)/2⌉, C}
+  when A−C ≥ 4, {A, C} when smaller, degenerate {A}; `master_plan.py canonical_periods` +
+  `variant_plans.py` → `canonical_plan` per row — no sigma, no solver, no mandated spans;
+  ARV-D-025: a mandated closing synthesis in a compact imported the lending plan's priors —
+  the jumpy Xth unit). The ONE mandate: the STANDARD canonical closes with a whole-chapter
+  synthesis unit, `section_anchor` exactly the reserved token `synthesis` (§0.3; excluded
+  from the registry; forbidden in compacts — certified by `build_library.py`'s
+  synthesis-anchor gate). Serving is SELECTION, never composition: next-highest canonical
+  (full richness; surrender only above the top, declared) · X−1+1 form · **the Xth-unit
+  CHOICE SET (§0.4, engine e12)**: Case 1 (prefix covers all sections) borrows the
+  standard's synthesis; Case 2 borrows, from ANY canonical, the unit that FIRST deals the
+  next-due section M (first-exposure units' only backward dependency is prior sections —
+  the structural no-jumpiness guarantee; preference forward-reach > M-alone > backward
+  combos, ties to the count nearest X then denser); dropped sections ride from the
+  LENDER's subsequent units; Case 3 (empty set — structurally impossible on a certified
+  library) truncates with NO drops and asks for the reference canonical's count ·
+  proportional per-unit duration scaling (the only arithmetic; weekly dispersion kept) ·
+  per-canonical assessments (borrowed unit brings its own items). Assessment anchoring is
+  UNIT-level (item unit_ref from period_ref; band ids are internal, derived positionally by
+  compile v0.5 — never demanded of the model).
   SS·sec LP v1.9 (Rules 14/15/16 removed; register stands), assessment v1.6 (A9's
   "never led with" struck 2026-08-02)
   (phase_ref removed); A2/A3/A4 cancelled + X3 void for the ten un-amended constitutions,
-  V-series (brief §7) replaces them; `partition.py`/`polish.py`
-  live in `_to_delete/`. DO NOT reintroduce cutting below the unit, seam text, role
-  weighting, or compression regimes — the brief §1 records why they failed.
+  V-series (brief §7, V3 struck by §0) replaces them; `partition.py`/`polish.py`/
+  `variant_solver.py` live in `_to_delete/`. DO NOT reintroduce cutting below the unit,
+  seam text, role weighting, compression regimes, or mandated closing spans — the brief
+  §§0–1 record why they failed.
 - **The calibrated standard is the default (2026-07-26)** — two period tables live under
   `data/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
   by subject·**stage**, in flat **40-minute** periods) and `master_plan.json` (OUR calibration —

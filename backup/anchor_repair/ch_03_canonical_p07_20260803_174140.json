@@ -20,138 +20,7 @@
     "constitution": "LP v1.10 / assessment v1.6",
     "source": "generate_canonical.py one social_sciences ix 3",
     "ledger_ts": "20260803_143426",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-03T17:41:40",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 3,
-            "field": "section_anchor",
-            "rule": "V2/joiner",
-            "removed": "Weather and Climate; Elements of Weather and Climate / Elements of Weather and Climate",
-            "replaced_with": "Weather and Climate / Elements of Weather and Climate",
-            "note": "semicolon composite plus a redundant repeat of the second section; the clean two-section form is emitted. Unit coverage is unchanged (sections 3-4)."
-          }
-        ]
-      },
-      {
-        "at": "2026-08-03T19:28:11",
-        "tool": "genon/normalize_options.py v1.0",
-        "reason": "Rule 7 option arrangement enforced in code (ARV-D-032; founder ruling 2026-08-03). Option text and is_correct are untouched; array order, labels and guide option keys only.",
-        "items_scanned": 6,
-        "items_moved": 5,
-        "edits": [
-          {
-            "item": 6,
-            "competency": "C-4.3",
-            "period_ref": [
-              5
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "C",
-              "D",
-              "A",
-              "B"
-            ],
-            "correct_before": "A",
-            "correct_now": "C"
-          },
-          {
-            "item": 9,
-            "competency": "C-4.4",
-            "period_ref": [
-              5
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "A",
-              "C",
-              "D"
-            ],
-            "correct_before": "B",
-            "correct_now": "A"
-          },
-          {
-            "item": 12,
-            "competency": "C-4.5",
-            "period_ref": [
-              6
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "A",
-              "C",
-              "D",
-              "B"
-            ],
-            "correct_before": "B",
-            "correct_now": "D"
-          },
-          {
-            "item": 15,
-            "competency": "C-4.1",
-            "period_ref": [
-              5
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "A",
-              "C",
-              "D"
-            ],
-            "correct_before": "B",
-            "correct_now": "A"
-          },
-          {
-            "item": 17,
-            "competency": "C-4.6",
-            "period_ref": [
-              6
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "A",
-              "C",
-              "B",
-              "D"
-            ],
-            "correct_before": "B",
-            "correct_now": "C"
-          }
-        ]
-      }
-    ]
+    "validation": "clean"
   },
   "result": {
     "lesson_plan": {
@@ -260,7 +129,7 @@
           "period_number": 3,
           "period_duration_minutes": 50,
           "activity_title": "Weather, Climate, and the Elements That Shape Them",
-          "section_anchor": "Weather and Climate / Elements of Weather and Climate",
+          "section_anchor": "Weather and Climate; Elements of Weather and Climate / Elements of Weather and Climate",
           "materials": [
             "Textbook Chapter 3",
             "Fig. 3.6 temperature zones",
@@ -987,22 +856,22 @@
         "options": [
           {
             "label": "A",
-            "text": "In winter insolation increases over the Bay of Bengal, warming the sea surface and generating moisture-laden winds that always move toward high-pressure areas over land.",
-            "is_correct": false
-          },
-          {
-            "label": "B",
-            "text": "In winter the Himalayan range creates a high-pressure barrier that deflects south-west monsoon winds to the south-eastern coast, reversing their direction from westerly to north-easterly.",
-            "is_correct": false
-          },
-          {
-            "label": "C",
             "text": "In winter the land cools faster than the sea, creating high pressure over land and low pressure over the Bay of Bengal; north-east winds blow seaward, pick up Bay of Bengal moisture, and deposit rain on the south-eastern coast.",
             "is_correct": true
           },
           {
-            "label": "D",
+            "label": "B",
             "text": "In winter the sea cools faster than the land, creating low pressure over land; south-west winds continue blowing from sea to land, but reach only the south-eastern coast because the Western Ghats block them elsewhere.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "In winter insolation increases over the Bay of Bengal, warming the sea surface and generating moisture-laden winds that always move toward high-pressure areas over land.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "In winter the Himalayan range creates a high-pressure barrier that deflects south-west monsoon winds to the south-eastern coast, reversing their direction from westerly to north-easterly.",
             "is_correct": false
           }
         ],
@@ -1017,9 +886,9 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "D": "Confuses the winter monsoon mechanism with the summer one and misattributes the Western Ghats' role to winter wind blocking rather than the pressure reversal.",
-              "A": "Inverts the rule that wind moves from high to low pressure, and incorrectly places greater winter insolation over the sea rather than recognising the land-cooling dynamic.",
-              "B": "Conflates the Himalayan barrier effect with the monsoon reversal mechanism and incorrectly treats the north-east winds as deflected south-west winds rather than a genuinely reversed pressure-driven circulation."
+              "B": "Confuses the winter monsoon mechanism with the summer one and misattributes the Western Ghats' role to winter wind blocking rather than the pressure reversal.",
+              "C": "Inverts the rule that wind moves from high to low pressure, and incorrectly places greater winter insolation over the sea rather than recognising the land-cooling dynamic.",
+              "D": "Conflates the Himalayan barrier effect with the monsoon reversal mechanism and incorrectly treats the north-east winds as deflected south-west winds rather than a genuinely reversed pressure-driven circulation."
             }
           }
         }
@@ -1124,13 +993,13 @@
         "options": [
           {
             "label": "A",
-            "text": "The monsoon accounts for most of India's annual rainfall, so the country's water supply and agriculture depend on it arriving on time and in adequate quantity; too much rain causes floods while too little causes drought.",
-            "is_correct": true
+            "text": "The monsoon brings rain only to some regions, leaving others permanently dry, so its benefit is regional rather than national.",
+            "is_correct": false
           },
           {
             "label": "B",
-            "text": "The monsoon brings rain only to some regions, leaving others permanently dry, so its benefit is regional rather than national.",
-            "is_correct": false
+            "text": "The monsoon accounts for most of India's annual rainfall, so the country's water supply and agriculture depend on it arriving on time and in adequate quantity; too much rain causes floods while too little causes drought.",
+            "is_correct": true
           },
           {
             "label": "C",
@@ -1154,7 +1023,7 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "B": "Misrepresents the monsoon's geographical reach — the chapter shows it covers the whole country — and fails to engage with the variability argument.",
+              "A": "Misrepresents the monsoon's geographical reach — the chapter shows it covers the whole country — and fails to engage with the variability argument.",
               "C": "Introduces humidity and disease as the risk mechanism, which the chapter does not use; this distractor identifies students who conflate health impacts of humidity with the agricultural variability argument.",
               "D": "Focuses correctly on the wind reversal mechanism but misidentifies trade disruption as the source of risk, ignoring the chapter's clear framing around rainfall totals and agricultural dependence."
             }
@@ -1264,18 +1133,18 @@
           },
           {
             "label": "B",
+            "text": "The argument is partly right: individual actions are genuinely small, but the chapter argues that collective action — combining individual lifestyle changes with renewable energy adoption, forest protection, and systemic policy — is required together.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
             "text": "The argument is entirely wrong: the chapter shows that individual pledges alone, such as those from the My Carbon Footprint activity, are sufficient to reverse greenhouse gas accumulation without any need for systemic change.",
             "is_correct": false
           },
           {
-            "label": "C",
+            "label": "D",
             "text": "The argument is irrelevant because climate change is a natural process driven by volcanic activity and solar variation, so neither individual nor government action can influence it.",
             "is_correct": false
-          },
-          {
-            "label": "D",
-            "text": "The argument is partly right: individual actions are genuinely small, but the chapter argues that collective action — combining individual lifestyle changes with renewable energy adoption, forest protection, and systemic policy — is required together.",
-            "is_correct": true
           }
         ],
         "expected_elements": [],
@@ -1290,8 +1159,8 @@
           "MCQ": {
             "what_each_option_reveals": {
               "A": "Misreads the chapter by omitting the individual-action strand entirely and misidentifying the chapter's solution set as government-only.",
-              "B": "Inverts the chapter's argument — individual pledges are a start, not a sufficient solution — indicating a student who did not engage with the collective-effort framing.",
-              "C": "Rejects the chapter's central premise that climate change is primarily human-driven, indicating either non-engagement with the text or a prior misconception about natural versus anthropogenic climate forcing."
+              "C": "Inverts the chapter's argument — individual pledges are a start, not a sufficient solution — indicating a student who did not engage with the collective-effort framing.",
+              "D": "Rejects the chapter's central premise that climate change is primarily human-driven, indicating either non-engagement with the text or a prior misconception about natural versus anthropogenic climate forcing."
             }
           }
         }
@@ -1395,13 +1264,13 @@
         "options": [
           {
             "label": "A",
-            "text": "It arrives over the southern peninsula and the Bay of Bengal branch in early June and advances northward and north-westward, covering most of India by July–August.",
-            "is_correct": true
+            "text": "It enters India from the north-west in June and moves progressively toward the south-east, reaching the southern tip last.",
+            "is_correct": false
           },
           {
             "label": "B",
-            "text": "It enters India from the north-west in June and moves progressively toward the south-east, reaching the southern tip last.",
-            "is_correct": false
+            "text": "It arrives over the southern peninsula and the Bay of Bengal branch in early June and advances northward and north-westward, covering most of India by July–August.",
+            "is_correct": true
           },
           {
             "label": "C",
@@ -1425,7 +1294,7 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "B": "Inverts the direction of advance — north-west to south-east rather than south to north-west — indicating the student has not read the monsoon map or has confused the direction.",
+              "A": "Inverts the direction of advance — north-west to south-east rather than south to north-west — indicating the student has not read the monsoon map or has confused the direction.",
               "C": "Fabricates a simultaneous dual-coast entry in May, revealing a student who did not use the advancing monsoon map and is guessing at the chronology.",
               "D": "Inverts the branching sequence — the Arabian Sea and Bay of Bengal branches exist before the monsoon reaches the Deccan, not after — indicating a misreading of the chapter's spatial and temporal monsoon narrative."
             }
@@ -1493,13 +1362,13 @@
           },
           {
             "label": "B",
-            "text": "She decides the score is too low to matter and continues her existing habits, since individual actions cannot reverse climate change on their own.",
-            "is_correct": false
+            "text": "She identifies two specific household electricity habits she can change — switching off fans and lights when not in use, and reducing air-conditioner hours — and commits to them as her action pledge.",
+            "is_correct": true
           },
           {
             "label": "C",
-            "text": "She identifies two specific household electricity habits she can change — switching off fans and lights when not in use, and reducing air-conditioner hours — and commits to them as her action pledge.",
-            "is_correct": true
+            "text": "She decides the score is too low to matter and continues her existing habits, since individual actions cannot reverse climate change on their own.",
+            "is_correct": false
           },
           {
             "label": "D",
@@ -1519,7 +1388,7 @@
           "MCQ": {
             "what_each_option_reveals": {
               "A": "Externalises responsibility entirely, showing the student has not engaged with the chapter's individual-action framework and the carbon footprint activity's purpose.",
-              "B": "Correctly identifies the limitation of individual action but uses it to justify inaction — a partial reading that misses the chapter's argument that small actions, aggregated, form part of the collective response.",
+              "C": "Correctly identifies the limitation of individual action but uses it to justify inaction — a partial reading that misses the chapter's argument that small actions, aggregated, form part of the collective response.",
               "D": "Recognises the need for change but selects a disproportionate and impractical response, indicating the student has not understood that judicious use means thoughtful reduction rather than complete elimination."
             }
           }

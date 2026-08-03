@@ -1,10 +1,139 @@
 # The Variant-Canonical Architecture — serving lesson plans by selection, never composition
 
-VERSION 1.0 · 2026-07-31 · Founder + Claude, settled over one working session.
+VERSION 2.0 · 2026-08-03 (v1.0 · 2026-07-31) · Founder + Claude.
 Supersedes the deterministic partition engine (partition.py v0.5, DP/three-regime) and the
 Rule 15/16 handoff machinery outright. Read alongside `docs/testing.md` (whose C-steps this
 changes — §9 below) and `docs/partition_constitution_rollout.md` (whose A3/A4 amendments
 this cancels for the ten remaining constitutions — §8).
+
+> ★★ **READ §0 FIRST (v2.0, 2026-08-03).** The solver-mandated closing spans and σ are
+> RETIRED. §0 supersedes §3-R3 (the fill ladder), §5 (reverse deduction), §7-V3 (the closing
+> mandate) and every reference to `closing_spans`/`sigma`. §§1–2, R1, R2, R4, R5, §4
+> (section arithmetic incl. frontier), §6a and V2/V4 stand unchanged and are read through §0.
+
+---
+
+## 0 · VERSION 2.0 — free canonicals, the synthesis anchor, and the Xth-unit choice set
+
+### 0.1 The defect that forced it (ARV-D-025, the "jumpy Xth unit")
+
+v1.0 mandated each compact variant to close with a synthesizing unit spanning its
+solver-assigned last-k sections, so the fill ladder's candidates would exist by
+construction. The mandate smuggled in a false premise: **by writing the compact's closing
+unit to consolidate, we imported the assumption that the BORROWING plan's class has the
+same prior exposure to those sections that the LENDING plan built in its own units 1..X−1.**
+It does not — the borrowing class reached slot X through a different prefix. The served
+plans' X−1→X profile read exactly that way: a closing sitting pitched as consolidation of
+lessons the class never had in that shape. Mandated synthesis is jumpiness by construction.
+
+The structural fix inverts the requirement. A borrowed unit is safe in a foreign prefix
+exactly when it is a **FIRST-EXPOSURE unit for the sections it advances**: such a unit's
+only backward dependency is "the sections before mine have been taught" — which the
+deterministic prefix guarantees, because sections are sequential and the frontier stands at
+M−1 when slot X opens on section M. (This is e11's "anchoring is not teaching" insight
+promoted from a repair to the selection principle itself.) Nothing about the fix needs a
+mandate on the lender — it needs the RIGHT PICK from freely authored plans. So the mandates
+go, except one (§0.3).
+
+Localization stands deliberately: only slot X is adaptive. Reaching further back would
+multiply the contextualization burden (unit X must now cohere with more foreign units)
+faster than it adds value; the multiple-canonical library is precisely what makes the
+single-slot deliberation sufficient.
+
+### 0.2 The canonical set — equal dispersion, no solver
+
+Per chapter, with A = `recommended_periods` (the standard) and C =
+`floor_periods_at_standard` (0.6 × A, rounded — unchanged):
+
+- **A − C ≥ 4:** three canonicals at **{A, mid, C}**, mid = ⌈(A+C)/2⌉ — equal (or
+  near-equal) dispersion across the band, endpoints included. The floor canonical anchors
+  the bottom of the serve band.
+- **1 < A − C < 4:** two canonicals, **{A, C}** (the midpoint would sit adjacent to an
+  endpoint and buy nothing).
+- **A − C ≤ 1:** the standard alone, **{A}**.
+
+Counts are pure arithmetic in `genon/master_plan.py` (`canonical_periods` on every chapter
+row). `variant_solver.py` is RETIRED; `sigma` and `closing_spans` no longer exist anywhere.
+Demand weighting is unnecessary: the spacing rule is uniform because the choice set (§0.4)
+no longer depends on where requests cluster.
+
+### 0.3 The one surviving mandate — the synthesis anchor (standard canonical only)
+
+Compact canonicals are authored **FREE**: complete plans under all existing rules (V2
+registry discipline, total coverage, first-visit order, self-containment) with NO closing
+mandate — the author shapes the ending as the count demands, which near the floor will
+naturally condense adjacent sections (the same pressure the solver used to formalize).
+
+The STANDARD canonical alone carries one mandate: **its final unit is a whole-chapter
+synthesis whose `section_anchor` is exactly the reserved token `synthesis`** — not a
+registry section. Rules of the token: it may appear only in the standard canonical, only on
+its last unit; all registry sections must first-appear across units 1..A−1; the synthesis
+unit may assume every SECTION's content has been taught but never that any particular
+activity, reading or homework happened (it is lent into plans whose classes covered the
+same sections through different units). The registry is computed ignoring the token;
+first-visit and coverage checks skip the synthesis unit.
+
+Why it is safe where the old mandate was not: the synthesis unit is only ever borrowed in
+**Case 1** (§0.4), where the borrowing prefix has covered the ENTIRE registry — full
+coverage is the only prior a full-chapter synthesis needs, and Case 1 guarantees it.
+
+### 0.4 The Xth-unit choice set (replaces the v1.0 fill ladder)
+
+The X−1+1 form (R2) stands. With the chosen (next-highest) canonical's units 1..X−1 served
+verbatim and the frontier at M−1 (M = first uncovered registry section):
+
+**Case 1 — frontier at the last section (all sections covered by X−1).** Slot X borrows
+the standard canonical's `synthesis` unit. One choice, no deliberation.
+
+**Case 2 — sections remain.** For every canonical in the library (the chosen one
+included — its own unit X is the identity candidate), find the unit that deals section M
+**for the first time in its own plan** (first-visit). Contiguity (V2) makes every co-dealt
+section adjacent to M, so every such unit qualifies. Preference order, per the founder's
+rule (2026-08-03):
+
+1. **Forward, no re-cross** — first-deals M with further reach (M+N, M+N+O …): among
+   these, the furthest forward reach wins (fewest dropped sections; condensation matters
+   most toward the floor, and the floor-side canonicals are where these units live).
+2. **M alone** — first-deals exactly M.
+3. **Backward combinations** — first-deals M jointly with already-taught sections (L+M,
+   K+L+M …): mild redundancy on the re-crossed sections, which is contextually safe
+   (redundancy is not jumpiness); least backward overlap first, then furthest reach.
+
+Ties inside a class: the lender whose period count is closest to X (pacing context), then
+the denser plan. Every candidate is first-exposure for M by construction, so the borrowed
+unit's priors are satisfied whatever prefix precedes it — the v1.0 exact/superset/suffix
+distinction and its closure requirement (r[1] == last) are gone.
+
+**Dropped sections.** If the fill still leaves registry sections uncovered, the plan
+carries them as dropped units **sourced from the LENDING plan** — its units after the
+serving unit (their coverage lies wholly beyond the fill's reach, by contiguity), verbatim,
+flagged unscheduled. Provenance is consistent: the tail continues the plan the closing
+unit came from. (v1.0 sourced drops from the chosen plan; that changes.)
+
+**Case 3 — empty choice set.** With total-coverage canonicals and the generalized adjacency
+rule this should be structurally impossible (the chosen plan's own unit X always
+qualifies); the rung is kept as a defensive guard. On truncation: serve the chosen plan's
+own unit X, show NO dropped sections, and put up the message asking for **at least the
+reference canonical's count** — the next higher canonical, not the floor. The gap being
+diagnosed is between the request and its reference canonical (the teacher seems to want
+that plan's depth); when X < C the reference IS the floor canonical, so the old message
+survives as the special case.
+
+### 0.5 What this retires / changes on disk (2026-08-03)
+
+- `aruvi_core/genon/variant_solver.py` → RETIRED to `_to_delete/` (with
+  `tests/test_variant_solver.py`). No projected adaptation table; certification's serve
+  sweep is the table of record.
+- `master_plan.json`: chapter rows carry `canonical_periods` (from `master_plan.py`) and
+  `canonical_plan` {counts, provisional, basis, registry_sections, authored} (from
+  `variant_plans.py`); `variant_plan`/`closing_spans`/`sigma` are gone.
+- `variant_plans.py`: briefs recomposed — the standard brief gains the synthesis-anchor
+  mandate; compact briefs lose the closing mandate (free authoring, coverage total).
+- `serve.py` → engine **e12**: `fill_slot` implements §0.4; `section_registry`/validation
+  learn the `synthesis` token; drops re-sourced to the lender.
+- `build_library.py`: closing-span check → synthesis-anchor gate (top only, last unit
+  only, token forbidden elsewhere); projected-vs-actual diff dropped.
+- V3 is struck from §7's V-series; V1's brief content changes as above; V2/V4 stand.
 
 ---
 

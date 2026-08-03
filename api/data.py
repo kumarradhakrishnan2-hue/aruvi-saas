@@ -266,16 +266,17 @@ def master_recommended_periods(subject: str, grade: str) -> Dict[Any, int]:
     return out
 
 
-def master_variant_plan(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
-    """The chapter's variant plan from master_plan.json (genon/variant_plans.py,
-    2026-07-31): the variant counts to author (variant 1 = counts[0] = the top,
-    2, 3 …), each compact variant's mandated closing-synthesis span, sigma, and
-    whether the row is provisional (modeled top) or finalized (solved on the
-    authored canonical's real unit ranges). None when no row exists."""
+def master_canonical_plan(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
+    """The chapter's canonical plan from master_plan.json (genon/variant_plans.py
+    v2.0, 2026-08-03): the canonical counts to author (counts[0] = the standard,
+    then equal-dispersion points down to the floor — architecture §0.2), which of
+    them are on disk, and whether the row is provisional (standard not yet
+    authored). No sigma, no closing spans — canonicals are authored free; the
+    standard alone carries the synthesis-anchor mandate. None when no row exists."""
     combo = master_combo(subject, grade)
     for row in (combo or {}).get("chapters", []) or []:
         if row.get("chapter") == chapter_number:
-            return row.get("variant_plan")
+            return row.get("canonical_plan")
     return None
 
 
@@ -366,7 +367,19 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "11"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "12"     # BUMP when compile/serve change the OUTPUT
+# 12 (2026-08-03): THE Xth-UNIT CHOICE SET (architecture §0, v2.0) — the fill
+# ladder (exact/superset/suffix + lendable-unit walk-back) is replaced by
+# first-exposure selection: slot X borrows, from ANY canonical, the unit that
+# FIRST deals the next-due section M (preference: forward reach without
+# re-cross > M alone > backward combinations). Case 1 borrows the standard's
+# mandated `synthesis` unit (reserved anchor token, new); dropped units are
+# re-sourced from the LENDER's subsequent units; Case-3 truncation shows no
+# drops and asks for the reference canonical's count. Root cause ARV-D-025:
+# solver-mandated closing spans imported the lending plan's priors into the
+# borrowing plan — the jumpy Xth unit; sigma/closing_spans/variant_solver are
+# retired, canonical counts come from equal dispersion over [floor, standard].
+# Every e11 entry is stale by construction.
 # 11 (2026-08-02): LENDABLE UNIT — the fill ladder no longer offers a variant's
 # trailing SYNTHESIS unit. A unit that only re-anchors sections an earlier unit of
 # its own plan already taught is written to be met at the end of ITS OWN plan

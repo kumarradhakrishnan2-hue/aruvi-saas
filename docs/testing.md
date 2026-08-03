@@ -1,7 +1,19 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.2 · 2026-08-02 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.3 · 2026-08-03 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.3 (2026-08-03): aligned to **architecture v2.0** (`variant_canonical_architecture.md §0`
+— read it first). σ, the solver, and the mandated closing spans are RETIRED (ARV-D-025:
+a mandated closing synthesis in a compact imported the lending plan's priors — the jumpy
+Xth unit); canonicals are authored FREE at equal-dispersion counts, the standard alone
+closes with the reserved `synthesis` unit, and slot X is filled by the first-exposure
+choice set (engine e12). Template consequences: §0.7's σ machinery struck (floor stands);
+C1/C5/C6 updated to `canonical_plan`, the synthesis-anchor gate and the e12 sweep modes;
+**C8 replaced** — LLM-need flags give way to the X−1→X transition inspection, the direct
+probe of the defect that forced v2.0; the HUMAN GATE reads the sweep table, the standard's
+synthesis unit and C8's worst transition. §9 applies: no stage is certified yet, so
+nothing re-opens.*
 
 *2.2 (2026-08-02, at the pilot's C3): the register moves from prohibition to MACHINE GATE.
 `genon/register_scan.py` runs inside `build_library.py`'s certification; `genon/repair_register.py`
@@ -150,13 +162,13 @@ model pinned `claude-sonnet-4-6` in `genon/generate_canonical.py`.
 **Exit:** `python3 genon/build_library.py social_sciences ix 3 --certify-only` runs to a report
 without spending a rupee. **Artefact:** the report path + the CSV header line.
 
-**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "11"` (`api/data.py`);
-`aruvi_core/genon/` contains exactly `compile.py` (v0.5), `serve.py` (v1.1) and
-`variant_solver.py` — the retired `partition.py`/`polish.py` are gone from the engine package;
-the repo-root `genon/` lab keeps historical copies (`partition.py`, `polish_plan.py`,
-`polish_seams.py`) that nothing live imports. **Exit:** `grep -rn "partition\|polish" api/
-aruvi_core/ web/app/lib/format.js` shows no live import, and the four genon suites
-(`test_genon_serve`, `test_variant_solver`, `test_genon_plan_key`, `test_genon_duration_order`)
+**0.2 [Claude] Engine + code state.** Assert `GENON_ENGINE_VERSION = "12"` (`api/data.py`);
+`aruvi_core/genon/` contains exactly `compile.py` (v0.5) and `serve.py` (v2.0/e12) — the
+retired `partition.py`/`polish.py`/`variant_solver.py` sit in `_to_delete/`; the repo-root
+`genon/` lab keeps historical copies (`partition.py`, `polish_plan.py`, `polish_seams.py`)
+that nothing live imports. **Exit:** `grep -rn "partition\|polish\|variant_solver" api/
+aruvi_core/ web/app/lib/format.js` shows no live import, and the three genon suites
+(`test_genon_serve`, `test_genon_plan_key`, `test_genon_duration_order`)
 are green. **Artefact:** the grep output + the test run.
 
 > **Engine ladder, recorded here because the campaign's assertions key on it** (`api/data.py`
@@ -177,16 +189,24 @@ are green. **Artefact:** the grep output + the test run.
 > back to the unit that first introduced those sections; synthesis mode still borrows `units[-1]`,
 > where a synthesis assumes nothing false. Certification check 6 moves to the lendable unit, and
 > the variant brief's closing mandate now says the closing unit must TEACH its span and forbids a
-> trailing synthesis. Side effect: the TOP canonical becomes lendable for the first time.
-> Every e08/e09/e10 plan file is stale by construction and stays on disk as the C10.3
+> trailing synthesis. Side effect: the TOP canonical becomes lendable for the first time ·
+> **e12** (2026-08-03, architecture v2.0) **the Xth-unit CHOICE SET** — the exact/superset/
+> suffix ladder and `lendable_unit()` are replaced outright by first-exposure selection
+> (§0.4): slot X borrows the unit that FIRST deals the next-due section (forward reach >
+> M-alone > backward; e11's insight promoted to the selection principle); Case 1 borrows the
+> standard's mandated `synthesis` unit; drops re-source from the LENDER; Case-3 truncation
+> asks for the reference canonical's count. σ, `closing_spans` and `variant_solver.py` retired
+> with the mandate they served (ARV-D-025).
+> Every e08–e11 plan file is stale by construction and stays on disk as the C10.3
 > no-overwrite evidence.
 
-**0.3 [Kumar] Variant plans fresh.** `python3 genon/variant_plans.py` — every chapter row of
-`master_plan.json` carries `variant_plan {sigma, counts, closing_spans, provisional, basis,
-registry_sections, full_coverage, partials_at}`. **Runbook pair (hard):** `genon/master_plan.py`
-regeneration WIPES these rows; `variant_plans.py` must be re-run immediately after it, before
-any row is trusted. **Exit:** the annotate pass reports rows written; the campaign's pilot
-chapters show `basis: "authored_canonical"` once their tops exist. **Artefact:** the run output.
+**0.3 [Kumar] Canonical plans fresh.** `python3 genon/variant_plans.py` — every chapter row of
+`master_plan.json` carries `canonical_plan {counts, provisional, basis, registry_sections,
+authored}` (counts by equal dispersion; stale v1.x `variant_plan` keys are purged by the
+pass). **Runbook pair (hard):** `genon/master_plan.py` regeneration WIPES these rows;
+`variant_plans.py` must be re-run immediately after it, before any row is trusted.
+**Exit:** the annotate pass reports rows written; the campaign's pilot chapters show
+`basis: "authored_standard"` once their standards exist. **Artefact:** the run output.
 
 **0.4 [Kumar] Deploy the campaign tracker.** `api/testing_campaign.py` is now **included in
 `api/main.py`** (2026-08-02 — the router had never been wired in, which is why the page sat
@@ -217,66 +237,22 @@ seed + candidates + result per stage. **Exit:** the §1 table matches disk (or i
 with a dated note) and all 11 picks are recorded under step 0 in the tracker. **Artefact:** the
 count table + the pick log.
 
-**0.7 [Kumar, founder inputs] Floor and σ — the ceiling now, the calibration per stage.**
+**0.7 [Kumar, founder inputs] The floor (σ is GONE — struck at template 2.3).**
 
-**What σ is.** Not an output: a **cap on the search**. `variant_solver.solve()` enumerates
-candidate closing spans `s ∈ 1..σ` for each compact variant and keeps the combination that
-maximises projected coverage. Mechanically σ is **the fill's reach** — a closing unit mandated
-to span `s` sections is anchored to sections `m−s … m−1`, so it *starts* at `m−s`, and a request
-is fully covered only when some other variant's closing unit starts at or before the missing
-span's first section (`variant_solver.outcome_for`). A wider mandated span reaches further back
-down the chapter.
+> ★ **Struck 2026-08-03 (architecture v2.0 §0).** Everything this step said about σ — the
+> ceiling, the sizing rule, the corpus projection, per-stage calibration, the escalation
+> ladder — described the solver-mandated closing spans, and those are RETIRED (ARV-D-025).
+> Canonical counts are now pure arithmetic (equal dispersion over [floor, standard],
+> `master_plan.py canonical_periods`); there is nothing to calibrate and no `SIGMA` table.
+> The condensation judgment the ceiling tried to formalize now lives where it belongs:
+> at authoring time, in the free compact's own hands — and is *inspected*, not mandated,
+> at C8 and the human gate. The prior text survives in git and in template 2.2.
 
-**Founder decision (2026-08-02): σ = 2 stands as a PEDAGOGICAL CEILING, campaign-wide** —
-one closing sitting may be asked to consolidate at most two registry sections. It is asserted,
-not derived: a sitting that "consolidates the last five sections" is a summary lecture wearing a
-unit's clothes, and that judgement is the binding constraint, not the arithmetic.
+**The floor stands, unchanged:** `round(0.6 × recommended_periods)` — "the fewest periods
+at which this chapter still tells a coherent story." It is now also the LOWEST canonical's
+count on wide-enough bands (§0.2). Left as-is for this campaign; flagged as the open dial.
 
-**The sizing rule (record it; it is what the ceiling is traded against).** With Y the serving
-variant's unit count, m the chapter's section count, and g the units left unserved (worst case:
-g = the spacing to the next lower variant), the fill must absorb
-
-> missing sections ≈ (m / Y) × g  — *sections per unit × units not served*
-
-so, for three variants spread over [floor C, top A],
-
-> **σ_required ≈ m(A − C) / (2A)**, which at the current floor C = 0.6·A is **≈ 0.2 × m**
-> — the closing sitting has to carry about a fifth of the chapter's sections.
-
-Checked against the solver's own minimum on all 339 chapter rows: **within ±1 on 100%** of them.
-Read off the rule: ~9–11 sections need σ 2 · 12–16 need 3 · 17–21 need 4 · 22–25 need 5.
-
-**Why that does NOT mean σ=2 is too small.** The rule is an *even-partition* estimate, and real
-plans beat it whenever units share a section or the plan carries a backward-anchored synthesis
-tail (frontier arithmetic). Measured on the corpus at σ=2, only 41% of rows project full
-coverage (σ=1: 0.9% · σ=3: 83.5% · σ=4: 97.6% · σ=5: 100%) — but **338 of 339 rows are
-modelled**, i.e. one section per unit, m = A, the pessimistic extreme. The single real registry
-shows the size of that pessimism: SS·IX ch 3 modelled (m = A = 12) demands σ = 3; **the real
-canonical (m = 9 sections over 12 units) achieves full coverage at σ = 1** — counts [12, 8, 7],
-both spans 1. So the corpus figures measure the model, not the chapters.
-
-**Therefore per-stage calibration is DEFERRED to each stage's C1.** A stage's real σ demand only
-becomes knowable when its first top canonical exists and `variant_plans.py` re-solves the row on
-real unit ranges (`basis: "authored_canonical"`). At that point P5 records the stage's σ —
-`SIGMA_DEFAULT = 2` accepted, or a per-stage override in `genon/variant_plans.py`'s `SIGMA`
-table with the real m and A that justify it.
-
-**The escalation ladder, when a finalised row still shows `partials_at` under σ=2** (founder
-call, per chapter; architecture brief §10.3):
-1. **A fourth variant** — three gaps instead of two divides the spacing by 3, cutting σ demand by
-   about a third (`σ_req ≈ m(A−C)/(3A)`). ~₹35 and one more authoring run.
-2. **Raise that chapter's floor** — `σ_req` falls directly with (A − C); the honest reading is
-   "this chapter is not coherent below K periods," which the serve engine already declares.
-3. **Accept the declared partial** — the suffix fill keeps closure and names what moved to
-   self-study. Legitimate, but it must be a decision, not a default.
-
-**The floor itself is still the partition era's number:** `round(0.6 × recommended_periods)`,
-never re-derived for the serve model, where it now means "the fewest periods at which this
-chapter still tells a coherent story." Left as-is for this campaign; flagged as the open dial.
-
-**Exit:** σ=2 recorded as the standing ceiling with the sizing rule beside it; the floor ratio
-recorded as accepted-unchanged; per-stage σ deferred to P5 after C1. **Artefact:** this record
-(plus a `SIGMA` table diff for any stage that later overrides).
+**Exit:** the floor ratio recorded as accepted-unchanged. **Artefact:** this record.
 
 **0.8 [Kumar] Quarantine hygiene.** `backup/quarantine/` exists and is EMPTY at campaign start
 (a non-empty quarantine is an open fix worklist, and a quarantined file must never be servable).
@@ -378,21 +354,19 @@ constitution, never into the file; the `VERSION` line stays in the file.
 **Exit:** no version-history block in the constitution; `CHANGELOG.md` lists every bump with
 date and one-line rationale. **Artefact:** the changelog.
 
-**P5 [Kumar + Claude] Stage inputs for the solver (pipeline, not constitution).**
-1. **Floor and σ** for this stage — σ=2 is the standing ceiling (§0.7); this is where a stage
-   *overrides* it, and the override is made with the row's REAL numbers in hand, i.e. after C1
-   has produced the top canonical and `variant_plans.py` has re-solved the row
-   (`basis: "authored_canonical"`). Sizing rule for the judgement: `σ_req ≈ m(A−C)/(2A) ≈ 0.2m`,
-   pessimistic — real registries need less. Record the m and A behind any override. A finalised
-   row still showing `partials_at` triggers §0.7's escalation ladder: fourth variant · raise the
-   floor · accept the declared partial.
+**P5 [Kumar + Claude] Stage inputs for the pipeline (never the constitution).**
+1. **The floor** for this stage — accepted at the standing ratio (§0.7) or overridden per
+   chapter with a recorded reason. (σ is struck at template 2.3: canonical counts are
+   arithmetic, there is nothing to calibrate. A chapter whose serve band reads badly at C8
+   escalates the v2.0 way: a fourth canonical between the dispersion points, raise the
+   floor, or accept the declared drops — founder call, recorded.)
 2. **The section registry definition where the section model is non-obvious.** English's
-   split-chapter / spine model must have its registry defined *before* its variants are
-   authored — the fill ladder is string arithmetic on `section_anchor` values drawn verbatim
+   split-chapter / spine model must have its registry defined *before* its canonicals are
+   authored — the choice set is string arithmetic on `section_anchor` values drawn verbatim
    from the chapter summary's section list. This decision lands in the pipeline (summary +
    brief), never in a constitution.
 3. Confirm the drawn class's pilot chapter has summary + mapping and a non-placeholder
-   `master_plan.json` row with a `variant_plan`.
+   `master_plan.json` row with a `canonical_plan`.
 4. **Set up the three test identities' teaching profiles for THIS stage's drawn class** (0.5
    leaves them empty by design). Do it through the app's own first-run / profile flow, not by
    hand-editing JSON — the setup doubles as a live check of that flow, and the profile then
@@ -401,7 +375,7 @@ date and one-line rationale. **Artefact:** the changelog.
    standard so C6's mixed-duration matrix has something real to draw on.
 **Exit:** all four recorded; `GET /readiness` now returns `ready: true` for each identity, and
 its subjects list contains this stage's class and nothing left over from an earlier stage.
-**Artefact:** the note + the chapter's `variant_plan` row + the three profiles.
+**Artefact:** the note + the chapter's `canonical_plan` row + the three profiles.
 
 **[Claude] Stage sign-off:** read the amended pair against the reference and the rollout brief;
 confirm A1 lands, the register is ONE block in the v1.10 three-ban form, A6 anchors are present,
@@ -427,18 +401,22 @@ is what makes C10 and X1 meaningful.
 python3 genon/build_library.py <subject> <grade> <chapter>
 ```
 
-which runs, stopping on the first failure and idempotent to re-run: **the top-canonical brief**
-(`variant_plans.top_brief_for` → `genon/out/briefs/ch_NN_top.txt`, passed with `--brief`: the
-serve contract in plain terms, per-unit independence of materials/opening moves/homework, and no
-completion claim — added 2026-08-02, when the top turned out to be the only artefact generated
-without a brief and the one that breached the register nine times) → top canonical (LP +
-assessment, `ch_NN_canonical.json`) → `variant_plans.py` annotate (the row finalizes:
-`provisional: false`, `basis: "authored_canonical"`) → briefs written to `genon/out/briefs/`
-→ each compact variant with its brief (own assessment; installs `ch_NN_canonical_pKK.json`) →
-re-annotate → deterministic certification → report in `genon/out/library_reports/`.
+which runs, stopping on the first failure and idempotent to re-run: **the standard-canonical
+brief** (`variant_plans.top_brief_for` → `genon/out/briefs/ch_NN_top.txt`, passed with
+`--brief`: the serve contract in plain terms, per-unit independence of materials/opening
+moves/homework, no completion claim — added 2026-08-02, when the top turned out to be the
+only artefact generated without a brief and the one that breached the register nine times —
+**plus, since v2.0, the synthesis mandate**: final unit anchored exactly the reserved token
+`synthesis`, coverage complete by unit A−1) → standard canonical (LP + assessment,
+`ch_NN_canonical.json`) → `variant_plans.py` annotate (the row finalizes:
+`provisional: false`, `basis: "authored_standard"`) → compact briefs written to
+`genon/out/briefs/` (FREE authoring: registry discipline + total coverage, NO closing
+mandate, token forbidden) → each compact canonical with its brief (own assessment; installs
+`ch_NN_canonical_pKK.json`) → re-annotate → deterministic certification → report in
+`genon/out/library_reports/`.
 `--certify-only` re-runs the free steps. **Never author an installable plan in a Cowork
 session** — a session-authored plan is a draft on an uncalibrated model.
-**Exit:** the library on disk matches `variant_plan.counts`; `GET /genon/{subject}/{grade}/chapters`
+**Exit:** the library on disk matches `canonical_plan.counts`; `GET /genon/{subject}/{grade}/chapters`
 lists the chapter and `canonical_minutes` = standard duration × top period count.
 **Artefact:** the library files + the report path.
 
@@ -504,19 +482,22 @@ live artefacts; fails become defects. **Artefact:** the item table.
 **C5 [Claude] Read the certification report — ALL PASS required.** Open the newest
 `genon/out/library_reports/<subject>_<grade>_chNN_<ts>.md` and confirm each deterministic check
 (implemented in `genon/build_library.py::certify` — cite it, do not re-specify it):
-1. **library complete** — the files on disk match `variant_plan.counts`;
+1. **library complete** — the files on disk match `canonical_plan.counts`;
 2. every file **compiles** (`compile_stream`, v0.5);
-3. **anchors verbatim** — every unit's `section_anchor` resolves in the top canonical's registry;
-4. **first-visit order** — new sections appear in registry order (synthesis tails that revisit
-   earlier sections are legal; skipping a section is not);
-5. **coverage reaches the final registry section**;
-6. **closing mandate** — each compact variant's last unit anchors exactly its mandated last-k
-   span from `variant_plan.closing_spans`;
+3. **anchors verbatim** — every unit's `section_anchor` resolves in the top canonical's
+   registry (the reserved `synthesis` token is exempt — it is not a section);
+4. **first-visit order** — new sections appear in registry order (revisit tails are legal;
+   skipping a section is not; the synthesis unit is skipped by the walk);
+5. **coverage reaches the final registry section** (for the standard: by unit A−1, before
+   the synthesis unit);
+6. **the synthesis-anchor gate** (v2.0, replaces the closing-span check) — the STANDARD's
+   last unit anchors exactly `synthesis` and carries the token nowhere else; NO compact
+   uses the token anywhere;
 7. **serve sweep** — X from `floor − 2` to `top + 2`, each X producing a mode
-   (`identity | exact | superset | suffix | synthesis | truncation | surrender`) with no
-   exception raised;
-8. **projected-vs-actual** — every X the solver projected as full coverage is served by a
-   full-coverage mode;
+   (`identity | fill/forward | fill/single | fill/backward | synthesis | truncation |
+   surrender`, fills annotated with their drop count `-Ns`) with no exception raised;
+8. **no defensive truncation** — Case 3 is structurally impossible on a well-formed
+   library (§0.4); any non-synthesis-only truncation inside the band FAILS certification;
 9. **register clean** (`genon/register_scan.py`, added 2026-08-02) — zero *ban* hits per file
    across `activity_title`, `teacher_notes`, `time_bands[].activity` and `homework[]`: forward
    reference · completion claim · calendar schedule · clock quantity · competency-code leakage.
@@ -524,6 +505,15 @@ live artefacts; fails become defects. **Artefact:** the item table.
    structure that breaks serving; a register breach makes serving *wrong*, not impossible, and
    is repairable in place). `today`/`yesterday` and backward-positional phrasings surface as
    ADVISORY — a gate that failed on "Will it rain today?" would be switched off in a week.
+9a. **MCQ options in arrangement order** (added 2026-08-03 at SS·secondary C3, ARV-D-032) —
+   every item's options sorted word-wise (ascending numeric only where an option OPENS with a
+   number), labels in sequence. This gate should ALWAYS pass: **STEP 6**
+   (`genon/normalize_options.py`) sorts them deterministically before certification, so the
+   check exists to prove the stage ran, not to catch the model. The step's own report line —
+   `options arranged: N of M item(s) re-ordered` — IS the generation-quality rate for the
+   retired Rule 7 arrangement sentence (struck at assessment v1.7); read it, do not skip it. It
+   also appears per file in `genon_canonical.repairs[]`. Items whose option text references
+   another option by label are skipped and reported rather than reordered.
 10. **item counts per competency — ADVISORY, DOES NOT GATE** (added 2026-08-02 at SS·secondary
    C4). Each file's items are grouped by competency and compared to the mandated count for that
    weight label: `EXACT_ITEM_COUNTS[(subject, stage)]` where the stage's assessment constitution
@@ -537,9 +527,10 @@ live artefacts; fails become defects. **Artefact:** the item table.
    gate only if the founder later prices the rate.
 **Also:** `backup/quarantine/<subject>/<grade>/` must be EMPTY for this chapter. Failed files
 are moved there automatically (founder doctrine 2026-08-01: passing files stay live, only
-failures move; a failed TOP takes its whole library with it). If `partials_at` is non-empty in
-the master-plan row, raise it — that is a σ / variant-count decision, not something to paper
-over. **Exit:** report says ALL PASS; quarantine empty; `partials_at` empty or founder-accepted.
+failures move; a failed TOP takes its whole library with it). Sweep rows carrying drop
+counts (`fill/... -Ns`) inside [floor, top] are not failures — they are the declared cost
+of that period count, read again at C8 and the human gate.
+**Exit:** report says ALL PASS; quarantine empty.
 **Artefact:** the report + the sweep table.
 *Pilot lesson to keep in view: the first 7-period variant of ch 3 silently DROPPED a section
 with no coverage note; the **first-visit check caught it, the serve sweep did not** (X=7 is an
@@ -551,12 +542,12 @@ at the class-standard duration:
 
 | Request | Identity | Expect |
 |---|---|---|
-| X = each variant's own count | kumar1 | `identity: true`, that variant's own filename, **no new file saved** |
-| X between two variants (superset/runway) | kumar2 | 200; `serve.slot_fill.mode` = `superset`; coverage note names the re-crossed sections |
-| X between two variants (exact fill) | kumar2 | 200; `mode` = `exact`; no coverage note needed |
+| X = each canonical's own count | kumar1 | `identity: true`, that canonical's own filename, **no new file saved** |
+| X between two canonicals (complete fill) | kumar2 | 200; `serve.slot_fill.mode` = `fill` with a `fill_class` (`forward`/`single`/`backward`); `uncovered_sections` empty; a `backward` fill's coverage note names the re-crossed sections as runway, otherwise no note needed |
+| X where the prefix completes coverage early | kumar2 | 200; `mode` = `synthesis`; **the borrowed unit is the STANDARD's `synthesis` unit** (`slot_fill.borrowed_from` = the standard's count); note says the closing sitting draws the chapter together |
 | X = A_top + 1 | kumar2 | 200; `serve.surrendered_periods` ≥ 1; the surrender sentence appears in **`coverage_note`** (e09 folded it into the same channel as drops), with `serve.surrender_note` kept as provenance; and the **served schedule prints the served count, not the ask** (e10: `period_schedule_display` + the duration label from `genon.served_matrix`; the request survives in `genon.matrix` / `period_rows_snapshot`) |
-| X = floor − 1 (below floor) | kumar2 | 200; `mode` = `suffix` or `truncation`; `coverage_note` names exactly what was not scheduled; **`result.dropped_units`** carries those unreached units verbatim, each flagged `unscheduled: true` (e09) |
-| mixed-duration weekly matrix | kumar3 | 200; the plan this stage's C7/C9/C12 inspect |
+| X = floor − 1 (below floor) | kumar2 | 200; `mode` = `fill` with non-empty `uncovered_sections`; `coverage_note` names exactly what was not scheduled; **`result.dropped_units`** carries the lost units verbatim, each flagged `unscheduled: true` — **sourced from the LENDING plan's subsequent units** (e12; was: from the chosen plan) |
+| mixed-duration weekly matrix | kumar3 | 200; the plan this stage's C7/C8/C9/C12 inspect |
 
 Record the duration the library was authored at. One nuance worth asserting deliberately:
 **identity only fires at the authored duration** — ask for the same X at any other duration and
@@ -593,11 +584,28 @@ next class|period|week, "we will complete", "by the end of the chapter"); subjec
 on survivors, quoting every judged string.
 **Exit:** zero live-ban hits, or a defect per hit. **Artefact:** the scan table.
 
-**C8 [Claude] LLM-need flags.** Note every point in the stage's flow where output quality begs
-an LLM call (e.g. a borrowed closing unit whose note reads oddly beside the prefix it lands
-after). **Exit:** a (possibly empty) list, each entry with the deterministic alternative to try
-first — the constraint is unchanged: **no LLM in the request path.**
-**Artefact:** the list, in the tracker comment.
+**C8 [Claude] The X−1→X transition inspection (v2.3 — replaces LLM-need flags).** The
+handover into the borrowed slot is the exact joint that killed two architectures (seam
+composition, then mandated closing spans — ARV-D-025), so it is inspected DIRECTLY, on
+served plans, every stage. Take the C6 serve set and cover the choice-set classes the
+sweep actually exercised — at minimum one plan each of `fill/forward`, `fill/single`,
+`fill/backward` (where the band produces one) and the Case-1 `synthesis` borrow, plus the
+below-floor serve. For each: read **sitting X−1 and sitting X in full, consecutively, as
+the teacher meets them** — titles, teacher notes, opening move, bands, homework — and rate
+the transition:
+- **clean** — sitting X opens on its own ground; nothing it says presumes a unit the
+  prefix didn't contain; any re-crossed section reads as runway, not repetition;
+- **serviceable** — a visible register shift (pace, voice, assumed familiarity) a teacher
+  absorbs without preparation loss; note it, no defect;
+- **jumpy** — sitting X presumes exposure the prefix never gave (the ARV-D-025 profile),
+  or re-teaches at a depth that insults what X−1 just did.
+Quote the exact strings each verdict rests on — the rating is subjective, the evidence is
+not. **Every `jumpy` is a defect (§7)**, and its remedy is deterministic first: check the
+lender actually first-deals the section (a certification gap), re-examine the tie-break
+that picked this lender over another, harden the brief's self-containment wording — the
+constraint is unchanged: **no LLM in the request path.**
+**Exit:** a rating per inspected transition, quoted evidence attached; zero `jumpy`, or a
+defect per hit. **Artefact:** the transition table, in the tracker comment.
 
 **C9 [Claude] Assessment anchoring across the serve.** Anchoring is UNIT-level: `compile.py`
 normalizes `period_ref` (the identity) — legacy `phase_ref` as fallback — onto `unit_ref`, and
@@ -673,12 +681,16 @@ read, with no stack trace in the body:
 
 **HUMAN GATE [Kumar decides, Claude presents] — the stage's sign-off.** Deterministic ALL PASS
 is a precondition; this is the verdict. Claude presents, and the founder rules on:
-- the **projected-vs-actual adaptation table** diff;
-- the **full text of 2–3 borrowed-seam sittings** (a prefix unit followed by the borrowed
-  closing unit) read as a teacher would meet them;
-- **each compact variant's closing-synthesis unit in full** — does it close the chapter as a
-  real unit-arc, or is it a summary lecture wearing a unit's clothes? (That verdict is what
-  feeds σ back to the solver.)
+- the **serve-sweep table** (C5.7): what every period count in the band buys, drops named —
+  the adaptation table of record now that there is no solver projection to diff;
+- **C8's transition table, with the worst-rated X−1→X handover read aloud in full** — the
+  founder meets the joint exactly as a teacher would;
+- **the STANDARD's `synthesis` unit in full** — does it draw the chapter together as a real
+  unit-arc while assuming only section content, never a particular activity? (It is the
+  Case-1 borrow: every class that meets it arrived through a different prefix.)
+- **each compact's own ending** — freely authored now: does the count's natural condensation
+  still teach, or has it collapsed into a summary lecture? (No σ to feed back — the remedy
+  is P5's escalation: a fourth canonical, a raised floor, or accepted drops.)
 - any **register scan hits** from C7.
 The gate never self-approves and never disappears; in a batch pre-warm it may sample at a rate
 the founder chooses. **Exit:** a recorded verdict. The stage row turns green only after it.
@@ -723,7 +735,7 @@ per-chapter `recommended_periods` and effort weights must match
 `data/content/allocation_norms/master_plan.json` (calibrated first,
 `recommended_source: "master_plan"`; NCF fallback only where the master plan has no row — shown
 alongside, never driving the default). Verify for one grade per subject against
-`GET /subjects/{s}/{g}/chapters` (which also carries `variant_plan` per chapter now — confirm
+`GET /subjects/{s}/{g}/chapters` (which also carries `canonical_plan` per chapter now — confirm
 the row shown is the finalized one, not a stale provisional after a `master_plan.py` run).
 **English caveat (MEMORY item 5):** the `task_density` cutoffs (≤2.0 / 2.1–2.9 / ≥3.0) were
 calibrated on VI and reused for VII and VIII with an admittedly weak fit — for English the
@@ -743,8 +755,8 @@ distribution report exists. **Artefact:** comparison table + distribution note.
 | Pilot chapter number | tracker |
 | LP constitution version | `VERSION` line of the stage's LP constitution |
 | Assessment constitution version | `VERSION` line, assessment side |
-| `GENON_ENGINE_VERSION` | `api/data.py` (11 — see the ladder in §2, 0.2) |
-| **Variant plan row** | `master_plan.json` → `variant_plan {sigma, counts, closing_spans, basis, registry_sections, full_coverage, partials_at}` |
+| `GENON_ENGINE_VERSION` | `api/data.py` (12 — see the ladder in §2, 0.2) |
+| **Canonical plan row** | `master_plan.json` → `canonical_plan {counts, provisional, basis, registry_sections, authored}` |
 | **Brief identity** | the brief files in `genon/out/briefs/` for this chapter — record the git commit of `genon/variant_plans.py` (which composes them) and keep the brief text as an artefact; brief wording is version-bearing even though it is not constitutional |
 | Canonical + variant `ledger_ts` | `genon_canonical` block of each library file |
 | Certification report path | `genon/out/library_reports/…` |
@@ -787,7 +799,8 @@ or a regeneration decision. Hand-editing an artefact remains forbidden in all ca
 **Quarantine is the fix worklist for generation defects:** a defect on a library file links to
 its quarantined path under `backup/quarantine/<subject>/<grade>/`, and closes only when the
 regenerated file passes `--certify-only` and the quarantine entry is cleared. Fixes happen
-upstream — regenerate, harden the brief, adjust σ — **never by hand-editing an artefact**.
+upstream — regenerate, harden the brief, adjust the canonical set (P5.1) — **never by
+hand-editing an artefact**.
 
 Severity scale — definitions, not vibes:
 - **S1** — the chain is broken: a library cannot be generated or certified, a serve is wrong or
@@ -833,10 +846,10 @@ wildly different amounts, and must never be conflated:**
   changed line → re-run C6–C12 on that chapter. (An engine change that alters served bytes also
   bumps `GENON_ENGINE_VERSION`, which re-keys the cache: every prior `_eNN_` plan file is stale
   by construction, never overwritten.)
-- **`master_plan.py` regeneration (data, silent):** it **wipes every `variant_plan`
+- **`master_plan.py` regeneration (data, silent):** it **wipes every `canonical_plan`
   annotation**. Re-run `python3 genon/variant_plans.py` immediately; until then no row —
-  counts, closing spans, floor, coverage projection — may be trusted, and no certification that
-  cites one is valid.
+  counts, floor, authored list — may be trusted, and no certification that cites one is
+  valid.
 
 The tracker marks re-opened stages amber automatically when a provenance version differs from
 the current campaign versions; it never silently keeps green.
@@ -863,10 +876,20 @@ chapter 3, class IX at 50 min):
   identity · 8 superset (runway) · 9 identity · 10 exact · 11 synthesis · 12 identity · 13–14
   surrender.
 
-What the pilot still owes before the template is declared portable: the **human gate** read in
-full (borrowed seams + each closing synthesis), C7/C9/C10/C12/C13 recorded against the tracker,
-and a **template retro** — every step whose instruction was ambiguous or whose exit criterion
-was uncheckable gets rewritten here before stage 2.
+> ★ **v2.0 note (2026-08-03).** The record above is the pilot as run — under the mandated
+> closing spans the pilot itself helped retire (ARV-D-025 was found in ITS served plans:
+> the mandated synthesis in the compacts imported the lending plan's priors — the jumpy
+> Xth unit). Its library is PRE-v2.0 on every axis: the plan now reads `{12, 10, 7}` (equal
+> dispersion; p09 is orphaned), the standard carries no `synthesis` unit, and the compacts
+> carry the old mandated closers — so v2.0 certification rightly fails it. **The pilot
+> re-authors under the v2.3 template** (one `build_library.py` run) before its C-steps are
+> re-read; its old serve table's `exact/superset/suffix` modes no longer exist.
+
+What the pilot still owes before the template is declared portable: the **re-authored v2.0
+library** certified ALL PASS, the **human gate** read in full (C8's worst transition + the
+standard's synthesis + each compact's ending), C7/C9/C10/C12/C13 recorded against the
+tracker, and a **template retro** — every step whose instruction was ambiguous or whose exit
+criterion was uncheckable gets rewritten here before stage 2.
 
 ---
 
@@ -892,7 +915,7 @@ conversions late; one stage fully signed off before the next stage's prep begins
 7. **english last: secondary (S11) → middle (S10) → preparatory (S9)** — deliberately final:
    three separate stage preps, the largest chapter count (101), the spine-nested export shape,
    the heaviest MEMORY burden (items 2, 4, 5, 8–13), the open X2 calibration question, and the
-   one **registry-definition decision** (P5.2) the fill ladder depends on. By the time English
+   one **registry-definition decision** (P5.2) the choice set depends on. By the time English
    starts, the template is boring and only the subject is hard.
 
 Rationale in one line: the pilot proves the template; SS·middle proves it ports and covers the
@@ -930,3 +953,14 @@ next (neither changes anything above): `aruvi_core/genon/serve.py`'s module docs
 "v1.0" while the engine tag it emits in every response says v1.1; and
 `lesson_plan/mathematics/middle`'s footer says "Version 3.1" against its authoritative header
 VERSION 3.3 — fold that one into S7's P4.
+
+**Re-checked 2026-08-03 (template 2.3 / architecture v2.0) — the paragraphs above are the
+2026-08-01 snapshot; where they disagree with this line, this line wins:**
+`GENON_ENGINE_VERSION = "12"`; `aruvi_core/genon/` holds `compile.py` v0.5 · `serve.py`
+v2.0/e12 (`variant_solver.py` moved to `_to_delete/`, its test with it; the serve.py
+docstring stale-version item is closed by the rewrite); certification implements the C5
+list AS REVISED (synthesis-anchor gate, e12 sweep modes, the no-Case-3 gate; no
+projected-vs-actual); fill modes are `fill/{forward|single|backward} | synthesis |
+truncation` plus `identity` and `surrender`; rows carry `canonical_plan {counts,
+provisional, basis, registry_sections, authored}`; SS·IX ch 3's plan reads `{12, 10, 7}`
+and its on-disk pre-v2.0 library awaits re-authoring (§10's v2.0 note).

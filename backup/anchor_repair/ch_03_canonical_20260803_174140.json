@@ -20,171 +20,7 @@
     "constitution": "LP v1.10 / assessment v1.6",
     "source": "generate_canonical.py one social_sciences ix 3",
     "ledger_ts": "20260803_141938",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-03T17:41:40",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "section_anchor",
-            "rule": "V2/joiner",
-            "removed": "Weather and Climate; Elements of Weather and Climate",
-            "replaced_with": "Weather and Climate / Elements of Weather and Climate",
-            "note": "two-section unit; ';' is not the mandated joiner, so the registry read it as one opaque section. Sections named and their order are unchanged."
-          }
-        ]
-      },
-      {
-        "at": "2026-08-03T18:07:01",
-        "tool": "genon/repair_register.py v1.1",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "band:2",
-            "rule": "register/clock",
-            "removed": "— is posed for two minutes of paired oral sharing.",
-            "replaced_with": "— is taken up as paired oral sharing.",
-            "note": "clock quantity only. The THINK ABOUT IT prompt and its paired-oral format are KEPT; the band's own `minutes` already carries the timing"
-          },
-          {
-            "unit": 8,
-            "field": "band:0",
-            "rule": "register/clock",
-            "removed": "Pairs discuss for three minutes and take one response each side.",
-            "replaced_with": "Pairs discuss and take one response each side.",
-            "note": "clock quantity deleted; the pairing and the one-response-each-side instruction stand"
-          },
-          {
-            "unit": 11,
-            "field": "band:2",
-            "rule": "register/clock",
-            "removed": "Groups of four discuss for five minutes and prepare a two-sentence position.",
-            "replaced_with": "Groups of four discuss and prepare a two-sentence position.",
-            "note": "clock quantity deleted; group size and the two-sentence output are unchanged"
-          }
-        ],
-        "ban_hits_before": 3,
-        "ban_hits_after": 0
-      },
-      {
-        "at": "2026-08-03T19:28:11",
-        "tool": "genon/normalize_options.py v1.0",
-        "reason": "Rule 7 option arrangement enforced in code (ARV-D-032; founder ruling 2026-08-03). Option text and is_correct are untouched; array order, labels and guide option keys only.",
-        "items_scanned": 6,
-        "items_moved": 5,
-        "edits": [
-          {
-            "item": 1,
-            "competency": "C-4.2",
-            "period_ref": [
-              4
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "A",
-              "D",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "B"
-          },
-          {
-            "item": 6,
-            "competency": "C-4.3",
-            "period_ref": [
-              6
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "D",
-              "A",
-              "B",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "B"
-          },
-          {
-            "item": 9,
-            "competency": "C-4.4",
-            "period_ref": [
-              8
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "D",
-              "A",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "C"
-          },
-          {
-            "item": 12,
-            "competency": "C-4.5",
-            "period_ref": [
-              9
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "C",
-              "B",
-              "D",
-              "A"
-            ],
-            "correct_before": "A",
-            "correct_now": "D"
-          },
-          {
-            "item": 17,
-            "competency": "C-4.6",
-            "period_ref": [
-              10
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "C",
-              "A",
-              "D",
-              "B"
-            ],
-            "correct_before": "B",
-            "correct_now": "D"
-          }
-        ]
-      }
-    ]
+    "validation": "clean"
   },
   "result": {
     "lesson_plan": {
@@ -328,7 +164,7 @@
           "period_number": 4,
           "period_duration_minutes": 50,
           "activity_title": "Weather vs Climate and the Five Elements",
-          "section_anchor": "Weather and Climate / Elements of Weather and Climate",
+          "section_anchor": "Weather and Climate; Elements of Weather and Climate",
           "materials": [
             "Textbook — Table 3.1 (wind speed classification)",
             "Fig. 3.6 (temperature zones)",
@@ -347,7 +183,7 @@
             },
             {
               "minutes": "30-44",
-              "activity": "Students draw a cause-chain diagram: Insolation → Temperature → Humidity → Precipitation, and a separate chain: Temperature difference (land vs sea) → Pressure difference → Wind direction (day vs night). Each arrow must carry a one-word causal label. The THINK ABOUT IT prompt — 'On what other occasions have strong winds caused problems?' — is taken up as paired oral sharing."
+              "activity": "Students draw a cause-chain diagram: Insolation → Temperature → Humidity → Precipitation, and a separate chain: Temperature difference (land vs sea) → Pressure difference → Wind direction (day vs night). Each arrow must carry a one-word causal label. The THINK ABOUT IT prompt — 'On what other occasions have strong winds caused problems?' — is posed for two minutes of paired oral sharing."
             },
             {
               "minutes": "44-50",
@@ -563,7 +399,7 @@
           "time_bands": [
             {
               "minutes": "0-8",
-              "activity": "Open with the question: 'The chapter says the monsoon is vital to Indian agriculture, water supply, daily life, festivals, and livelihoods — but it also says it causes floods and droughts. Is the monsoon a resource, a hazard, or both?' Pairs discuss and take one response each side."
+              "activity": "Open with the question: 'The chapter says the monsoon is vital to Indian agriculture, water supply, daily life, festivals, and livelihoods — but it also says it causes floods and droughts. Is the monsoon a resource, a hazard, or both?' Pairs discuss for three minutes and take one response each side."
             },
             {
               "minutes": "8-30",
@@ -722,7 +558,7 @@
             },
             {
               "minutes": "30-44",
-              "activity": "Use the chapter's CLASSROOM DISCUSSION prompts: 'How far were natural factors responsible versus human activities?' and 'Could better planning have reduced the damage?' Groups of four discuss and prepare a two-sentence position. Then: what role can students and youth play in disaster preparedness? Each group adds one concrete, actionable youth role."
+              "activity": "Use the chapter's CLASSROOM DISCUSSION prompts: 'How far were natural factors responsible versus human activities?' and 'Could better planning have reduced the damage?' Groups of four discuss for five minutes and prepare a two-sentence position. Then: what role can students and youth play in disaster preparedness? Each group adds one concrete, actionable youth role."
             },
             {
               "minutes": "44-50",
@@ -1057,22 +893,22 @@
         "options": [
           {
             "label": "A",
-            "text": "Land heats faster than the sea, forming a high-pressure area over the land that pushes warm air seaward.",
-            "is_correct": false
-          },
-          {
-            "label": "B",
             "text": "Land heats faster than the sea, forming a low-pressure area over the land that draws cooler sea air inward.",
             "is_correct": true
           },
           {
+            "label": "B",
+            "text": "Land heats faster than the sea, forming a high-pressure area over the land that pushes warm air seaward.",
+            "is_correct": false
+          },
+          {
             "label": "C",
-            "text": "Sea heats faster than the land, forming a high-pressure area over the sea that pushes cool air inland.",
+            "text": "Sea heats faster than the land, forming a low-pressure area over the sea that draws land air outward.",
             "is_correct": false
           },
           {
             "label": "D",
-            "text": "Sea heats faster than the land, forming a low-pressure area over the sea that draws land air outward.",
+            "text": "Sea heats faster than the land, forming a high-pressure area over the sea that pushes cool air inland.",
             "is_correct": false
           }
         ],
@@ -1087,9 +923,9 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "A": "Student correctly identifies that land heats faster but reverses the pressure outcome — confuses which surface type creates low pressure.",
-              "D": "Student correctly applies the low-pressure rule but swaps which surface heats faster, producing the opposite (land breeze) scenario.",
-              "C": "Student inverts both premises — incorrect surface heating and incorrect pressure outcome — indicating foundational confusion about the pressure-wind relationship."
+              "B": "Student correctly identifies that land heats faster but reverses the pressure outcome — confuses which surface type creates low pressure.",
+              "C": "Student correctly applies the low-pressure rule but swaps which surface heats faster, producing the opposite (land breeze) scenario.",
+              "D": "Student inverts both premises — incorrect surface heating and incorrect pressure outcome — indicating foundational confusion about the pressure-wind relationship."
             }
           }
         }
@@ -1283,22 +1119,22 @@
         "options": [
           {
             "label": "A",
-            "text": "At 10°N the land surface is darker and absorbs more of the incoming radiation, while at 65°N lighter surfaces reflect most of it.",
-            "is_correct": false
-          },
-          {
-            "label": "B",
             "text": "At 10°N the Sun's rays strike the surface at a steep angle, concentrating energy over a smaller area, while at 65°N the low Sun angle spreads the same energy over a much larger area.",
             "is_correct": true
           },
           {
-            "label": "C",
+            "label": "B",
             "text": "At 65°N the atmosphere is thicker and absorbs more solar radiation before it reaches the surface, leaving less energy for the ground.",
             "is_correct": false
           },
           {
-            "label": "D",
+            "label": "C",
             "text": "At 65°N the Earth is physically farther from the Sun than at 10°N, so the inverse-square law reduces the energy received.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "At 10°N the land surface is darker and absorbs more of the incoming radiation, while at 65°N lighter surfaces reflect most of it.",
             "is_correct": false
           }
         ],
@@ -1313,9 +1149,9 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "C": "Student confuses atmospheric thickness at different latitudes with the angle-of-incidence explanation; misapplies the idea that the atmosphere filters radiation.",
-              "D": "Student confuses the Earth's axial tilt effect (which changes the angle of sunlight) with orbital distance, applying an incorrect physical law to a latitude question.",
-              "A": "Student conflates the albedo effect (surface reflectivity) with the insolation-angle explanation; reverses causality by treating surface colour as the primary input."
+              "B": "Student confuses atmospheric thickness at different latitudes with the angle-of-incidence explanation; misapplies the idea that the atmosphere filters radiation.",
+              "C": "Student confuses the Earth's axial tilt effect (which changes the angle of sunlight) with orbital distance, applying an incorrect physical law to a latitude question.",
+              "D": "Student conflates the albedo effect (surface reflectivity) with the insolation-angle explanation; reverses causality by treating surface colour as the primary input."
             }
           }
         }
@@ -1416,22 +1252,22 @@
         "options": [
           {
             "label": "A",
-            "text": "The monsoon brings cool temperatures that protect crops from heat stress, but the strong winds associated with it damage standing crops and fishing vessels.",
-            "is_correct": false
-          },
-          {
-            "label": "B",
-            "text": "The monsoon creates employment in agriculture, but the south-west monsoon's arrival also marks the start of the cyclone season that disrupts coastal livelihoods every year.",
-            "is_correct": false
-          },
-          {
-            "label": "C",
             "text": "The monsoon provides most of India's annual rainfall, sustaining agriculture and water supply, but an excessively strong monsoon causes floods that destroy crops and infrastructure, while a weak monsoon causes droughts.",
             "is_correct": true
           },
           {
-            "label": "D",
+            "label": "B",
+            "text": "The monsoon brings cool temperatures that protect crops from heat stress, but the strong winds associated with it damage standing crops and fishing vessels.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
             "text": "The monsoon replenishes groundwater and rivers, but the retreating north-east monsoon always brings destructive floods to the entire country.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The monsoon creates employment in agriculture, but the south-west monsoon's arrival also marks the start of the cyclone season that disrupts coastal livelihoods every year.",
             "is_correct": false
           }
         ],
@@ -1446,9 +1282,9 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "A": "Student substitutes a plausible-sounding but chapter-unsupported mechanism — temperature cooling and wind damage — for the text's stated rainfall surplus/deficit logic; indicates surface-level familiarity with monsoon without chapter-grounded reasoning.",
-              "D": "Student correctly identifies groundwater recharge but overgeneralises the north-east monsoon's hazard scope — the chapter limits its rain to the south-eastern coast, not the entire country.",
-              "B": "Student correctly identifies employment but introduces cyclones, which are not the chapter's stated hazard mechanism for the south-west monsoon; reflects outside knowledge overriding chapter evidence."
+              "B": "Student substitutes a plausible-sounding but chapter-unsupported mechanism — temperature cooling and wind damage — for the text's stated rainfall surplus/deficit logic; indicates surface-level familiarity with monsoon without chapter-grounded reasoning.",
+              "C": "Student correctly identifies groundwater recharge but overgeneralises the north-east monsoon's hazard scope — the chapter limits its rain to the south-eastern coast, not the entire country.",
+              "D": "Student correctly identifies employment but introduces cyclones, which are not the chapter's stated hazard mechanism for the south-west monsoon; reflects outside knowledge overriding chapter evidence."
             }
           }
         }
@@ -1563,8 +1399,8 @@
         "options": [
           {
             "label": "A",
-            "text": "The claim is incorrect: the chapter identifies rising sea levels as the most serious consequence for India because the entire coastline will be submerged, displacing more people than floods or droughts.",
-            "is_correct": false
+            "text": "The claim is well-supported: rising temperatures intensify evaporation and atmospheric moisture, making monsoon rainfall more variable — producing both more intense floods and more severe droughts — which directly threatens India's agriculture, water supply, and livelihoods.",
+            "is_correct": true
           },
           {
             "label": "B",
@@ -1573,13 +1409,13 @@
           },
           {
             "label": "C",
-            "text": "The claim is unsupported: the chapter states that the monsoon is driven by land-sea temperature differentials, and since both land and sea will warm equally under climate change, the monsoon will not be affected.",
+            "text": "The claim is incorrect: the chapter identifies rising sea levels as the most serious consequence for India because the entire coastline will be submerged, displacing more people than floods or droughts.",
             "is_correct": false
           },
           {
             "label": "D",
-            "text": "The claim is well-supported: rising temperatures intensify evaporation and atmospheric moisture, making monsoon rainfall more variable — producing both more intense floods and more severe droughts — which directly threatens India's agriculture, water supply, and livelihoods.",
-            "is_correct": true
+            "text": "The claim is unsupported: the chapter states that the monsoon is driven by land-sea temperature differentials, and since both land and sea will warm equally under climate change, the monsoon will not be affected.",
+            "is_correct": false
           }
         ],
         "expected_elements": [],
@@ -1594,8 +1430,8 @@
           "MCQ": {
             "what_each_option_reveals": {
               "B": "Student selects real chapter consequences (biodiversity, glacier melt) but ranks them above the water-cycle/monsoon consequences for India — misreads the chapter's emphasis on agriculture and livelihoods.",
-              "A": "Student overgeneralises sea-level rise as the dominant India consequence, ignoring that the chapter's primary human-impact frame for India is agriculture, water supply, and livelihoods tied to monsoon variability.",
-              "C": "Student misapplies the monsoon mechanism by assuming uniform warming eliminates the land-sea temperature differential — fails to analyse that differential warming rates would still change, and conflates 'both warm' with 'both warm equally'."
+              "C": "Student overgeneralises sea-level rise as the dominant India consequence, ignoring that the chapter's primary human-impact frame for India is agriculture, water supply, and livelihoods tied to monsoon variability.",
+              "D": "Student misapplies the monsoon mechanism by assuming uniform warming eliminates the land-sea temperature differential — fails to analyse that differential warming rates would still change, and conflates 'both warm' with 'both warm equally'."
             }
           }
         }
@@ -1791,23 +1627,23 @@
         "options": [
           {
             "label": "A",
-            "text": "I will ask my family to install solar panels so that our electricity comes from renewable energy.",
-            "is_correct": false
-          },
-          {
-            "label": "B",
             "text": "I will be more careful about how I use water at home.",
             "is_correct": false
           },
           {
+            "label": "B",
+            "text": "I will switch off the shower while soaping and turn it on only to rinse, reducing heated-water energy use and water volume wasted.",
+            "is_correct": true
+          },
+          {
             "label": "C",
-            "text": "I will stop buying plastic bottles and use a reusable bottle instead, keeping plastic out of landfills.",
+            "text": "I will ask my family to install solar panels so that our electricity comes from renewable energy.",
             "is_correct": false
           },
           {
             "label": "D",
-            "text": "I will switch off the shower while soaping and turn it on only to rinse, reducing heated-water energy use and water volume wasted.",
-            "is_correct": true
+            "text": "I will stop buying plastic bottles and use a reusable bottle instead, keeping plastic out of landfills.",
+            "is_correct": false
           }
         ],
         "expected_elements": [],
@@ -1821,9 +1657,9 @@
         "guide": {
           "MCQ": {
             "what_each_option_reveals": {
-              "B": "Student produces a vague intention rather than a specific, actionable pledge — demonstrates awareness of the goal but not the ability to operationalise it in the water use domain.",
-              "A": "Student selects a genuinely good conservation action but from the electricity domain rather than the water use domain — indicates failure to apply the pledge to the identified high-impact area.",
-              "C": "Student selects a valid waste-and-plastics domain pledge but not a water use pledge — indicates either domain confusion or defaulting to a more familiar conservation action."
+              "A": "Student produces a vague intention rather than a specific, actionable pledge — demonstrates awareness of the goal but not the ability to operationalise it in the water use domain.",
+              "C": "Student selects a genuinely good conservation action but from the electricity domain rather than the water use domain — indicates failure to apply the pledge to the identified high-impact area.",
+              "D": "Student selects a valid waste-and-plastics domain pledge but not a water use pledge — indicates either domain confusion or defaulting to a more familiar conservation action."
             }
           }
         }

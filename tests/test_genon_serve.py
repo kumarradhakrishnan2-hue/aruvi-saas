@@ -1,9 +1,11 @@
-"""Serve engine (variant library) — selection, fill ladder, scaling, edges.
+"""Serve engine v2.0 / e12 — selection, the Xth-unit choice set (§0.4), scaling, edges.
 
-Synthetic three-variant library over a 12-section chapter:
-  * top variant  A=12 — one section per unit;
-  * mid variant  B=9  — closing unit spans the last 2 sections;
-  * dense variant C=7 — closing unit spans the last 4 sections.
+Synthetic canonical library over a 12-section chapter (equal-dispersion counts):
+  * A — the STANDARD, 13 units: one section per unit + the mandated closing
+        `synthesis` unit (reserved token, §0.3);
+  * B — 11 units: coverage completes at U8 (whose unit condenses the last two
+        sections); U9–U11 are backward revisit sittings (frontier arithmetic);
+  * C — 8 units (the floor): condensed pairs.
 Stdlib only; run directly: python3 tests/test_genon_serve.py
 """
 import os
@@ -12,19 +14,19 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from aruvi_core.genon.serve import (   # noqa: E402
-    ServeError, choose_variant, fill_slot, order_durations, section_registry,
-    serve_plan,
+    ServeError, choose_variant, fill_slot, first_dealing_unit, is_synthesis_unit,
+    order_durations, section_registry, serve_plan, synthesis_unit_of, _norm,
 )
 
 SECTIONS = ["Sec %02d" % i for i in range(1, 13)]
 
 
-def _mk_stream(count, ranges, tag):
-    """A synthetic compiled stream: `ranges` is a list of (lo, hi) section index
-    pairs, one per unit, covering 0..11 contiguously."""
+def _mk_stream(ranges, tag):
+    """A synthetic compiled stream: `ranges` entries are (lo, hi) section index
+    pairs — or the string "synthesis" for the standard's reserved closer."""
     units, phases = [], []
-    for n, (lo, hi) in enumerate(ranges, 1):
-        anchor = " / ".join(SECTIONS[lo:hi + 1])
+    for n, r in enumerate(ranges, 1):
+        anchor = "synthesis" if r == "synthesis" else " / ".join(SECTIONS[r[0]:r[1] + 1])
         pids = ["P%d.%d" % (n, k) for k in (1, 2, 3)]
         for k, pid in enumerate(pids):
             phases.append({"phase_id": pid, "seq": len(phases),
@@ -43,7 +45,6 @@ def _mk_stream(count, ranges, tag):
         "meta": {"subject": "social_sciences", "grade": "ix",
                  "chapter_number": 3, "chapter_title": "T", "source_file": tag},
         "phases": phases, "units": units, "coverage_handoff": {},
-        # unit_ref is what compile v0.5 normalizes onto every item
         "assessment_items": [
             {"id": "%s-i%d" % (tag, n), "unit_ref": [n], "period_ref": [n]}
             for n, u in enumerate(units, 1)
@@ -51,86 +52,114 @@ def _mk_stream(count, ranges, tag):
     }
 
 
-def _ranges_even(count, closing):
-    body = 12 - closing
-    base, rem = divmod(body, count - 1)
-    out, lo = [], 0
-    for i in range(count - 1):
-        w = base + (1 if i < rem else 0)
-        out.append((lo, lo + w - 1))
-        lo += w
-    out.append((lo, 11))
-    return out
-
-
-A = _mk_stream(12, [(i, i) for i in range(12)], "A")
-B = _mk_stream(9, _ranges_even(9, 2), "B")
-C = _mk_stream(7, _ranges_even(7, 4), "C")
+A = _mk_stream([(i, i) for i in range(12)] + ["synthesis"], "A")           # 13
+B = _mk_stream([(0, 0), (1, 1), (2, 2), (3, 3), (4, 5), (6, 7), (8, 9),
+                (10, 11), (3, 3), (0, 0), (5, 5)], "B")                    # 11
+C = _mk_stream([(0, 1), (2, 3), (4, 4), (5, 5), (6, 7), (8, 9),
+                (10, 10), (11, 11)], "C")                                  # 8
 LIB = [A, B, C]
+RIDX = {_norm(a): i for i, a in enumerate(SECTIONS)}
 
 
 def periods(plan):
     return plan["result"]["lesson_plan"]["periods"]
 
 
-# ── registry + selection ─────────────────────────────────────────────────────
-assert section_registry(A) == SECTIONS
-chosen, surr = choose_variant(LIB, 12)
+# ── the synthesis token: registry exclusion + detection ──────────────────────
+assert section_registry(A) == SECTIONS, "the reserved token never enters the registry"
+assert is_synthesis_unit(A["units"][-1]) and not is_synthesis_unit(A["units"][0])
+s, u = synthesis_unit_of(LIB)
+assert s is A and u["unit"] == 13, "the standard's closer is the library's synthesis"
+
+# ── selection (unchanged): next-highest, full richness ───────────────────────
+chosen, surr = choose_variant(LIB, 13)
 assert chosen is A and surr == 0
 chosen, surr = choose_variant(LIB, 15)
-assert chosen is A and surr == 3, "surrender only above the top variant"
-chosen, surr = choose_variant(LIB, 11)
+assert chosen is A and surr == 2, "surrender only above the top"
+chosen, surr = choose_variant(LIB, 12)
 assert chosen is A and surr == 0, "next-highest, full richness"
-chosen, surr = choose_variant(LIB, 8)
-assert chosen is B, "8 is served by the 9-variant, never the 7"
+chosen, surr = choose_variant(LIB, 9)
+assert chosen is B, "9 is served by the 11-canonical, never the 8"
 chosen, surr = choose_variant(LIB, 5)
 assert chosen is C, "below the smallest, the smallest serves"
 
-# ── exact variant hit: whole plan verbatim, no fill, no notes ────────────────
-p = serve_plan(LIB, [(50, 9)])
-assert p["genon"]["variant_used"] == 9 and p["genon"]["slot_fill"] is None
-assert [q["activity_title"] for q in periods(p)] == ["B U%d" % i for i in range(1, 10)]
+# ── exact canonical hit: whole plan verbatim, synthesis served as authored ───
+p = serve_plan(LIB, [(50, 13)])
+assert p["genon"]["variant_used"] == 13 and p["genon"]["slot_fill"] is None
+assert periods(p)[-1]["activity_title"] == "A U13"
+assert periods(p)[-1]["section_anchor"] == "synthesis"
 assert p["result"]["section_coverage_note"] is None
 
-# ── X-1+1: exact fill — A at 11: prefix A1..A10 + B's closing unit (last 2) ──
-p = serve_plan(LIB, [(50, 11)])
-g = p["genon"]
-assert g["variant_used"] == 12 and g["slot_fill"]["mode"] == "exact"
-assert g["slot_fill"]["borrowed_from"] == 9
-ps = periods(p)
-assert [q["activity_title"] for q in ps[:10]] == ["A U%d" % i for i in range(1, 11)]
-assert ps[10]["activity_title"] == "B U9", "slot 11 is B's closing unit"
-assert p["result"]["section_coverage_note"] is None, "exact fill discloses nothing"
+# ── Case 2 / single, self fill — A at 12: M = Sec 12, A's own U12 wins the tie
+#    (no re-cross, same reach, densest at equal distance) ─────────────────────
+p = serve_plan(LIB, [(50, 12)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "fill" and g["fill_class"] == "single" and g["self_fill"], g
+assert g["first_section"] == "Sec 12" and g["uncovered_sections"] == []
+assert periods(p)[11]["activity_title"] == "A U12"
+assert p["result"]["section_coverage_note"] is None, "complete fill discloses nothing"
+assert p["result"]["dropped_units"] is None
 
-# ── superset fill — A at 10: missing 3, B's closer spans 2 (suffix), C's 4 ──
+# ── Case 1 — B at 10: prefix U1..U9 covers all 12 sections (U9 is a revisit),
+#    so slot 10 borrows the STANDARD's synthesis unit ────────────────────────
 p = serve_plan(LIB, [(50, 10)])
 g = p["genon"]["slot_fill"]
-assert g["mode"] == "superset" and g["borrowed_from"] == 7
-assert g["overlap_sections"] == ["Sec 09"], g
-assert "re-crosses" in p["result"]["section_coverage_note"]
+assert g["mode"] == "synthesis" and g["borrowed_from"] == 13, g
+assert periods(p)[9]["activity_title"] == "A U13", "the mandated synthesis is the borrow"
+assert "draws the chapter together" in p["result"]["section_coverage_note"]
+assert p["result"]["dropped_units"] is None, "nothing lost — only revisits withheld"
 
-# ── suffix fill — B at 6: missing B-units 6..9, no closer reaches back ──────
-p = serve_plan([A, B], [(50, 8)])
+# ── Case 2 / forward — C at 7: M = Sec 11; B's U8 condenses Sec 11+12 and
+#    outreaches every single-section candidate ───────────────────────────────
+p = serve_plan(LIB, [(50, 7)])
 g = p["genon"]["slot_fill"]
-assert g["mode"] in ("suffix",), g
-assert g["borrowed_from"] == 12, "A's one-section closer is the only candidate"
-assert g["uncovered_sections"], "the gap is named"
-assert "could not be scheduled" in p["result"]["section_coverage_note"]
+assert g["mode"] == "fill" and g["fill_class"] == "forward", g
+assert g["borrowed_from"] == 11 and not g["self_fill"]
+assert periods(p)[6]["activity_title"] == "B U8"
+assert g["uncovered_sections"] == [], "forward reach completes the chapter"
+assert p["result"]["section_coverage_note"] is None
 
-# ── truncation — single-variant library, the founder's 11-vs-12 ruling ──────
-p = serve_plan([A], [(50, 11)])
+# ── Case 2 with dropped sections — C at 6: M = Sec 09; C's own U6 (Sec 09+10)
+#    wins (count closest to X); Sec 11+12 drop, SOURCED FROM THE LENDER (C) ──
+p = serve_plan(LIB, [(50, 6)])
 g = p["genon"]["slot_fill"]
-assert g["mode"] == "truncation" and g["withheld_units"] == [12]
-ps = periods(p)
-assert ps[10]["activity_title"] == "A U11", "no skip inside the chosen plan"
+assert g["mode"] == "fill" and g["fill_class"] == "forward" and g["self_fill"], g
+assert g["uncovered_sections"] == ["Sec 11", "Sec 12"]
 assert "could not be scheduled" in p["result"]["section_coverage_note"]
+du = p["result"]["dropped_units"]
+assert du and [q["activity_title"] for q in du] == ["C U7", "C U8"], \
+    "drops ride from the lending plan's subsequent units"
+assert all(q["unscheduled"] for q in du)
+
+# ── Case 2 / backward — no forward or single candidate exists for M:
+#    the L+M unit is borrowed, the re-cross named as runway ──────────────────
+REG4 = ["Sec %02d" % i for i in range(1, 5)]
+R4 = {_norm(a): i for i, a in enumerate(REG4)}
+T1 = _mk_stream([(0, 0), (1, 1), (1, 2), (3, 3)], "T1")
+T2 = _mk_stream([(0, 0), (1, 2), (3, 3)], "T2")
+f = fill_slot([T1, T2], T1, 3, REG4)
+assert f["mode"] == "fill" and f["fill_class"] == "backward", f
+assert f["stream"] is T2, "count closest to X breaks the backward tie"
+assert f["overlap_sections"] == ["Sec 02"]
+
+# ── first_dealing_unit: a stream that SKIPS m yields no candidate ────────────
+GAP = _mk_stream([(0, 0), (2, 2)], "G")
+assert first_dealing_unit(GAP, R4, 1) is None, "skipping is not first exposure"
+
+# ── Case 3 — defensive truncation: empty choice set, no drops, the message
+#    asks for the reference canonical's count ────────────────────────────────
+f = fill_slot([GAP], GAP, 2, REG4[:3])
+assert f["mode"] == "truncation" and f["reference_count"] == 2, f
+assert f["uncovered_sections"] == [], "Case 3 shows no dropped sections"
 
 # ── surrender above the top ──────────────────────────────────────────────────
-p = serve_plan(LIB, [(50, 14)])
-assert p["genon"]["sittings"] == 12 and p["genon"]["surrendered_periods"] == 2
+p = serve_plan(LIB, [(50, 15)])
+assert p["genon"]["sittings"] == 13 and p["genon"]["surrendered_periods"] == 2
 assert "return to your budget" in p["genon"]["surrender_note"]
+assert "return to your budget" in p["result"]["section_coverage_note"]
+assert p["result"]["dropped_units"] is None, "surrender loses nothing"
 
-# ── proportional scaling: tiling exact at 40 and 60, bands keep proportion ──
+# ── proportional scaling: tiling exact at 40 and 60, dispersion kept ─────────
 p = serve_plan(LIB, [(40, 6), (60, 3)])
 for q in periods(p):
     lo = 0
@@ -141,24 +170,40 @@ for q in periods(p):
     assert lo == q["period_duration_minutes"]
 seq = p["genon"]["duration_sequence"]
 assert seq[0] == 40 and 60 not in (seq[0], seq[-1]), "long sittings interior"
+assert order_durations([(50, 14), (60, 4)])[:9] == [50, 50, 60, 50, 50, 50, 60, 50, 50]
 
-# ── assessment remap: unit-anchored — prefix items live, withheld items noted,
-#    the borrowed fill unit brings its own items from its home variant ─────────
-p = serve_plan(LIB, [(50, 11)])
+# ── assessment remap: prefix items live, withheld items noted, the borrowed
+#    synthesis brings ITS OWN item from the standard ─────────────────────────
+p = serve_plan(LIB, [(50, 10)])          # B prefix + A's synthesis
 items = p["result"]["assessment_items"]
 by_id = {i["id"]: i for i in items}
-assert by_id["A-i10"]["period_ref"] == [10]
-assert by_id["A-i11"]["scheduling_note"], "unserved A-unit item carries the note"
-assert by_id["B-i9"]["period_ref"] == [11], "borrowed unit brings its own items"
-assert "B-i8" not in by_id, "only the borrowed unit's items travel"
+assert by_id["B-i9"]["period_ref"] == [9]
+assert by_id["B-i10"]["scheduling_note"], "unserved B-unit item carries the note"
+assert by_id["A-i13"]["period_ref"] == [10], "the synthesis brings its own item"
+assert "A-i12" not in by_id, "only the borrowed unit's items travel"
 
-# ── edges pass through verbatim (band layer is internal since compile v0.5) ──
-ps = periods(p)
-for e in ps[10]["competency_edges"]:
+# a SELF fill adds no foreign items and keeps its own anchored normally
+p = serve_plan(LIB, [(50, 6)])
+by_id = {i["id"]: i for i in p["result"]["assessment_items"]}
+assert by_id["C-i6"]["period_ref"] == [6]
+assert all(not k.startswith(("A-", "B-")) for k in by_id), "no foreign items on self fill"
+
+# ── edges pass through verbatim ──────────────────────────────────────────────
+p = serve_plan(LIB, [(50, 10)])
+for e in periods(p)[9]["competency_edges"]:
     assert e["band_refs"], "edges are untouched passthrough"
 
-# ── weekly dispersion retained ───────────────────────────────────────────────
-assert order_durations([(50, 14), (60, 4)])[:9] == [50, 50, 60, 50, 50, 50, 60, 50, 50]
+# ── legacy library (no synthesis token): Case 1 falls back to the nearest
+#    companion's closing unit; single library truncates synthesis-only ───────
+L1 = _mk_stream([(i, i) for i in range(9)] + [(5, 5), (3, 3), (0, 0)], "S")   # 12u/9s
+L2 = _mk_stream([(0, 0), (1, 1), (2, 2), (3, 4), (5, 6), (7, 7), (8, 8)], "D")
+p = serve_plan([L1, L2], [(50, 11)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "synthesis" and g["borrowed_from"] == 7, g
+p = serve_plan([L1], [(50, 11)])
+g = p["genon"]["slot_fill"]
+assert g["mode"] == "truncation" and g["synthesis_only"], g
+assert "synthesis" in p["result"]["section_coverage_note"]
 
 # ── guards ───────────────────────────────────────────────────────────────────
 try:
@@ -167,99 +212,4 @@ try:
 except ServeError:
     pass
 
-print("test_genon_serve: all assertions passed")
-
-# ── frontier arithmetic: synthesis tails (founder ruling, 2026-07-31) ────────
-# a 12-unit top over 9 sections whose last three units are backward-anchored
-# synthesis sittings, plus a 7-unit companion over the SAME registry
-SYN = _mk_stream(12, [(i, i) for i in range(9)] + [(5, 5), (3, 3), (0, 0)], "S")
-D = _mk_stream(7, [(0, 0), (1, 1), (2, 2), (3, 4), (5, 6), (7, 7), (8, 8)], "D")
-
-p = serve_plan([SYN], [(50, 11)])
-g = p["genon"]["slot_fill"]
-assert g["mode"] == "truncation" and g["uncovered_sections"] == [], g
-assert "synthesis" in p["result"]["section_coverage_note"], "coverage complete, synthesis named"
-
-p = serve_plan([SYN, D], [(50, 11)])
-g = p["genon"]["slot_fill"]
-assert g["mode"] == "synthesis" and g["borrowed_from"] == 7, g
-assert periods(p)[10]["activity_title"] == "D U7", "borrowed closing synthesis in slot 11"
-assert "closing synthesis" in p["result"]["section_coverage_note"]
-
-# X=9 against SYN alone: unit 9 completes coverage, withheld 10-12 are synthesis
-p = serve_plan([SYN], [(50, 9)])
-g = p["genon"]["slot_fill"]
-assert g["mode"] == "truncation" and g["synthesis_only"] and g["uncovered_sections"] == [], g
-assert "synthesis" in p["result"]["section_coverage_note"]
-
-# X=8 against SYN alone: real coverage gap — Sec 09 unreached, named
-p = serve_plan([SYN], [(50, 8)])
-g = p["genon"]["slot_fill"]
-assert g["mode"] == "truncation" and g["uncovered_sections"] == ["Sec 09"], g
-
-print("frontier/synthesis assertions passed")
-
-# ── dropped units (founder, 2026-08-01): below-floor plans carry unreached units ──
-p = serve_plan(LIB, [(50, 5)])            # below floor: suffix fill, sections lost
-du = p["result"]["dropped_units"]
-assert du and all(q["unscheduled"] for q in du), "lost coverage rides as unscheduled units"
-uncv = set(p["genon"]["slot_fill"]["uncovered_sections"])
-for q in du:
-    assert set(q["section_anchor"].split(" / ")) <= uncv, "dropped units cover only lost sections"
-p = serve_plan(LIB, [(50, 11)])           # exact fill, nothing lost
-assert p["result"]["dropped_units"] is None
-p = serve_plan([SYN], [(50, 9)])          # synthesis-only truncation: coverage complete
-assert p["result"]["dropped_units"] is None
-p = serve_plan([A], [(50, 10)])           # truncation with real loss
-du = p["result"]["dropped_units"]
-assert du and len(du) == len(p["genon"]["slot_fill"]["withheld_units"])
-print("dropped-units assertions passed")
-
-# ── surrender files in the drop channel (founder ruling, 2026-08-01) ─────────
-p = serve_plan(LIB, [(50, 14)])
-assert "return to your budget" in p["result"]["section_coverage_note"]
-assert p["result"]["dropped_units"] is None, "surrender loses nothing"
-print("surrender-note assertion passed")
-
-# ── LENDABLE UNIT (engine e11, 2026-08-02; ARV-D-023) ───────────────────────────
-# A variant that spends slack on a trailing SYNTHESIS unit — one whose anchored
-# sections an earlier unit of the SAME plan already taught — must not lend that unit
-# to another plan's slot X. It is authored to be met at the end of its own arc
-# ("having traced the full arc…"), so in a foreign prefix it assumes lessons the
-# class never had. The ladder walks back to the unit that TAUGHT those sections.
-from aruvi_core.genon.serve import lendable_unit, _norm   # noqa: E402
-
-RIDX = {_norm(a): i for i, a in enumerate(SECTIONS)}
-
-# D = 9 units: U1..U8 teach all 12 sections, U9 re-anchors the last one (synthesis).
-D = _mk_stream(9, _ranges_even(8, 2) + [(11, 11)], "D")
-assert len(D["units"]) == 9
-assert lendable_unit(D, RIDX)["unit"] == 8, "trailing synthesis is walked past"
-assert lendable_unit(B, RIDX)["unit"] == len(B["units"]), \
-    "a closing unit that introduces its sections stays lendable"
-
-# more than one step: E ends with TWO trailing revisit units
-E = _mk_stream(10, _ranges_even(8, 2) + [(11, 11), (11, 11)], "E")
-assert lendable_unit(E, RIDX)["unit"] == 8, "walk-back takes as many steps as needed"
-
-# "all", not "any": a unit anchoring one repeat PLUS new sections still teaches.
-# This is the real p07 U7 shape — Climate Change (taught at U6) + Punjab Floods (new).
-F = _mk_stream(9, [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 9)]
-               + [(9, 11)], "F")
-assert lendable_unit(F, RIDX)["unit"] == 9, "a partial repeat still introduces"
-
-# the ladder borrows the TAUGHT unit, never the synthesis — whatever rung it lands on
-p = serve_plan([A, D], [(50, 10)])
-fill = p["genon"]["slot_fill"]
-assert fill and fill["borrowed_from"] == 9, fill          # borrowed from D
-closing = p["result"]["lesson_plan"]["periods"][-1]["activity_title"]
-assert closing == "D U8", "slot X must be D's taught closing unit, not its synthesis"
-
-# EXCEPT in synthesis mode — prefix already covers every section, so the trailing
-# synthesis assumes nothing false and is the right borrow.
-p = serve_plan([A, D], [(50, 12)])         # A serves 11 units = all 12 sections
-if (p["genon"]["slot_fill"] or {}).get("mode") == "synthesis":
-    assert p["result"]["lesson_plan"]["periods"][-1]["activity_title"] == "D U9", \
-        "synthesis mode borrows the closing synthesis as authored"
-
-print("lendable-unit assertions passed")
+print("test_genon_serve: all e12 assertions passed")

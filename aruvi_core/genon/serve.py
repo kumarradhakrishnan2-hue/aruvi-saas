@@ -1,18 +1,28 @@
-"""Aruvi variant-serve engine — v1.2 (2026-08-02). Replaces the partition engine.
+"""Aruvi variant-serve engine — v2.0 / engine e12 (2026-08-03). Replaces the partition engine.
 
-Doctrine (docs/variant_canonical_architecture.md): a chapter is authored as a small
-LIBRARY of variant canonicals — the same section list planned at two or three period
-counts, each a complete, coherent plan whose every sitting is one authored unit-arc.
-Serving a teacher's request is SELECTION, never composition:
+Doctrine (docs/variant_canonical_architecture.md §0): a chapter is authored as a small
+LIBRARY of canonicals — the same section list planned FREE at counts spaced by equal
+dispersion over [floor, standard]; the standard alone closes with a mandated
+whole-chapter synthesis unit anchored to the reserved token `synthesis`. Serving a
+teacher's request is SELECTION, never composition:
 
-  * the NEXT-HIGHEST variant is chosen (full richness; surrender only above the top);
-  * the first X-1 sittings are that variant's units 1..X-1, verbatim;
-  * slot X is SELECTED from the library's LENDABLE units by a fixed ladder —
-    exact fill > superset (minimal overlap, revision runway) > longest suffix >
-    truncation (serve unit X, withhold the tail, hand the material over);
-    a variant's lendable unit is its last one UNLESS that is a trailing synthesis
-    of sections an earlier unit already taught, in which case the ladder walks back
-    to the unit that taught them (v1.2 / engine e11 — see lendable_unit());
+  * the NEXT-HIGHEST canonical is chosen (full richness; surrender only above the top);
+  * the first X-1 sittings are that canonical's units 1..X-1, verbatim;
+  * slot X is SELECTED by the Xth-unit CHOICE SET (§0.4, replaces the v1 fill ladder):
+      Case 1 — prefix covers every section: borrow the standard's `synthesis` unit
+        (full coverage is the only prior a whole-chapter synthesis needs);
+      Case 2 — sections remain (M = first uncovered): borrow, from ANY canonical, the
+        unit that FIRST deals M in its own plan — a first-exposure unit's only backward
+        dependency is "the sections before mine were taught", which the prefix
+        guarantees (ARV-D-025: mandated closing syntheses imported foreign priors and
+        produced the jumpy Xth unit; first-exposure selection is the structural fix).
+        Preference: forward reach without re-cross (M+N…, furthest first) > M alone >
+        backward combinations (L+M…, redundancy is not jumpiness). Sections still
+        uncovered after the fill ride as dropped units SOURCED FROM THE LENDER's
+        subsequent units;
+      Case 3 — empty choice set (defensive; structurally impossible on a well-formed
+        library): truncate, no dropped sections, message asking for the reference
+        canonical's count;
   * within a unit, time expands/contracts in proportion to the sitting's duration
     (the only arithmetic left — bounded, per-unit, against an authored arc).
 
@@ -134,6 +144,11 @@ def integerise(mins_float, dur):
 
 _ANCHOR_JOINER = " / "
 
+# The reserved anchor of the standard canonical's mandated closing synthesis
+# (§0.3). It is NOT a registry section: section_registry skips it, unit_range
+# reports the unit as rangeless, and only Case 1 ever borrows such a unit.
+SYNTH_TOKEN = "synthesis"
+
 
 def _norm(s):
     return " ".join(str(s or "").split()).casefold()
@@ -144,13 +159,20 @@ def _unit_anchors(unit):
             if a.strip()]
 
 
+def is_synthesis_unit(unit):
+    """True iff the unit carries the reserved `synthesis` anchor (standard
+    canonical's mandated closer — §0.3; the token is exact and alone)."""
+    return [_norm(a) for a in _unit_anchors(unit)] == [SYNTH_TOKEN]
+
+
 def section_registry(stream):
-    """Ordered unique section anchors across a stream's units."""
+    """Ordered unique section anchors across a stream's units (the reserved
+    synthesis token is not a section and never enters the registry)."""
     out, seen = [], set()
     for u in stream["units"]:
         for a in _unit_anchors(u):
             k = _norm(a)
-            if k not in seen:
+            if k != SYNTH_TOKEN and k not in seen:
                 seen.add(k)
                 out.append(a)
     return out
@@ -187,83 +209,96 @@ def choose_variant(streams, requested):
     return eligible[-1], 0        # smallest count >= requested
 
 
-def lendable_unit(stream, ridx):
-    """The unit this variant offers the fill ladder — engine e11 (2026-08-02).
+def first_dealing_unit(stream, ridx, m):
+    """The unit of `stream` that deals registry section m FOR THE FIRST TIME in
+    its own plan (first-visit walk), with its index and range. A first-exposure
+    unit's only backward dependency is "the sections before mine were taught" —
+    the property the whole choice set rests on (§0.4). None when the stream
+    never first-visits m (malformed coverage), or first-visits it in a unit with
+    anchors outside the registry."""
+    prev = -1
+    for i, u in enumerate(stream["units"]):
+        r = unit_range(u, ridx)
+        if r is None:
+            continue                      # synthesis token / foreign anchors
+        if r[1] > prev:                   # this unit advances the frontier
+            if prev < m <= r[1]:
+                if r[0] <= m:
+                    return i, u, r
+                return None               # the stream SKIPS m — no first exposure
+            prev = r[1]
+    return None
 
-    Normally the variant's LAST unit. But a variant with slack often spends it on
-    a trailing SYNTHESIS unit that anchors sections an earlier unit already taught
-    (SS·IX ch 3: p09 U8 teaches the Punjab floods, U9 synthesises them; the top's
-    U11 and U12 do the same). Such a unit is written to be met at the END of ITS
-    OWN plan — its notes say "having traced the full arc…", its bands say "rank the
-    factors from the case study" — so borrowing it into a foreign prefix hands the
-    teacher a sitting that assumes lessons her class never had (ARV-D-023, S2: the
-    50m x 10 serve told her to run a discussion on a case study never read, and
-    carried no coverage note because section coverage was formally complete —
-    ANCHORING IS NOT TEACHING).
 
-    So: walk back past any trailing unit ALL of whose anchored sections already
-    appeared earlier in the same variant, and lend the unit that first introduced
-    them. "All", not "any" — a unit anchoring one repeat plus one new section still
-    teaches (p07 U7 anchors Climate Change + Punjab Floods and stays lendable). The
-    walk can take more than one step (top: U12 -> U11 -> U10).
-
-    Callers use this ONLY for fill candidates. In synthesis mode — where the prefix
-    already covers the whole registry — the trailing synthesis IS the right borrow
-    and fill_slot deliberately takes units[-1] instead.
-    """
-    us = stream["units"]
-    cut = len(us)
-    while cut > 1:
-        seen = set()
-        for u in us[:cut - 1]:
-            r = unit_range(u, ridx)
-            if r:
-                seen.update(range(r[0], r[1] + 1))
-        r = unit_range(us[cut - 1], ridx)
-        if r and not set(range(r[0], r[1] + 1)) <= seen:
-            break                          # this unit still introduces something
-        cut -= 1
-    return us[cut - 1]
+def synthesis_unit_of(streams):
+    """The library's mandated whole-chapter synthesis — the standard canonical's
+    closing unit anchored to the reserved token (§0.3). Largest count first, so
+    a well-formed library yields the standard's. None on legacy libraries."""
+    for s in sorted(streams, key=lambda s: -len(s["units"])):
+        if is_synthesis_unit(s["units"][-1]):
+            return s, s["units"][-1]
+    return None
 
 
 def fill_slot(streams, chosen, requested, registry):
-    """The slot-X ladder. Returns a dict describing the fill, or a truncation.
+    """The Xth-unit choice set (§0.4, engine e12 — replaces the v1 fill ladder).
 
     FRONTIER ARITHMETIC (founder ruling, 2026-07-31): what the prefix has
     covered is measured by its first-visit frontier — the furthest registry
-    section any prefix unit reaches. Backward-anchored synthesis sittings (ch 5
-    authors three of them) revisit sections without advancing the frontier, so
-    the UNCOVERED span is always a registry suffix even when unit anchors are
-    not monotonic. When the frontier already stands at the last section, the
-    withheld tail is synthesis-only: coverage is complete and slot X borrows a
-    companion variant's closing synthesis (nearest in scale), or hands the
-    synthesis material over.
+    section any prefix unit reaches — so backward-anchored revisit sittings
+    never distort the missing span, which is always a registry suffix.
 
-    Candidates are the CLOSING units of the other variants only — a fill is a
-    designed consolidation from a denser plan, never a skip inside the chosen
-    plan (the founder's 11-vs-12 ruling: with no denser closing unit available,
-    curtail and hand the material over, don't jump the chapter's own sequence)."""
+    Case 1 (frontier at the last section): borrow the standard's `synthesis`
+    unit — full coverage is the only prior it needs, and the prefix guarantees
+    it. Legacy libraries without the token fall back to the nearest-in-scale
+    companion's closing unit (the v1 synthesis mode), else a synthesis-only
+    truncation.
+
+    Case 2 (M = first uncovered section): candidates are, per canonical in the
+    library (the chosen plan included — its own unit X is the identity
+    candidate), the unit that FIRST deals M in its own plan. Contiguity (V2)
+    makes every co-dealt section adjacent to M. Preference (founder,
+    2026-08-03): forward reach without re-cross (M+N…, furthest first) > M
+    alone > backward combinations (least re-cross, then furthest reach) — a
+    brisk re-cross is redundancy, and redundancy is not jumpiness. Ties: the
+    lender whose count is closest to X (pacing context), then the denser plan.
+    Sections beyond the fill's reach are reported; serve_plan carries them as
+    dropped units SOURCED FROM THE LENDER's subsequent units.
+
+    Case 3 (empty choice set — defensive, structurally impossible on a
+    well-formed library): serve the chosen plan's own unit X, show NO dropped
+    sections, and ask for the reference canonical's count (the next higher
+    canonical — the depth this teacher's request implies)."""
     ridx = {_norm(a): i for i, a in enumerate(registry)}
     last = len(registry) - 1
     units = chosen["units"]
-    ranges = [unit_range(u, ridx) for u in units]
-    if any(r is None for r in ranges):
-        raise ServeError("SERVE INVALID: chosen variant has units outside its own registry")
-    frontier = max((r[1] for r in ranges[:requested - 1]), default=-1)
-    lo = frontier + 1
+    ranges = []
+    for u in units:
+        r = unit_range(u, ridx)
+        if r is None and not is_synthesis_unit(u):
+            raise ServeError("SERVE INVALID: chosen variant has units outside "
+                             "its own registry")
+        ranges.append(r)
+    frontier = max((r[1] for r in ranges[:requested - 1] if r), default=-1)
+    m = frontier + 1
 
-    if lo > last:
-        # prefix covers every section — the withheld tail is synthesis-only, and
-        # THIS is the one case where a trailing synthesis is the right borrow: the
-        # class has met every section, so a unit that draws the arc together assumes
-        # nothing false. No walk-back here (e11) — walking back would hand over a
-        # teaching unit and re-teach a section the prefix just covered.
-        others = [s for s in streams if s is not chosen]
+    if m > last:
+        # ── Case 1: every section covered — the whole-chapter synthesis is the
+        # one borrow that assumes nothing false, wherever the prefix came from.
+        syn = synthesis_unit_of(streams)
+        if syn:
+            s, u = syn
+            return {"mode": "synthesis", "stream": s, "unit": u,
+                    "borrowed_from": len(s["units"]), "self_fill": s is chosen,
+                    "overlap_sections": [], "uncovered_sections": [],
+                    "withheld_units": [w["unit"] for w in units[requested - 1:]
+                                       if w is not u]}
+        others = [s for s in streams if s is not chosen]      # legacy fallback
         if others:
             c = min(others, key=lambda s: (abs(len(s["units"]) - requested),
                                            len(s["units"])))
             return {"mode": "synthesis", "stream": c, "unit": c["units"][-1],
-                    "borrowed_from": len(c["units"]),
+                    "borrowed_from": len(c["units"]), "self_fill": False,
                     "overlap_sections": [], "uncovered_sections": [],
                     "withheld_units": [u["unit"] for u in units[requested - 1:]]}
         return {"mode": "truncation", "stream": chosen, "unit": units[requested - 1],
@@ -271,44 +306,52 @@ def fill_slot(streams, chosen, requested, registry):
                 "uncovered_sections": [], "synthesis_only": True,
                 "withheld_units": [u["unit"] for u in units[requested:]]}
 
-    exact_or_super, suffixes = [], []
+    # ── Case 2: the choice set — first-exposure units for M across the library.
+    cands = []
     for s in streams:
-        if s is chosen:
+        hit = first_dealing_unit(s, ridx, m)
+        if hit is None:
             continue
-        cu = lendable_unit(s, ridx)
-        r = unit_range(cu, ridx) if cu else None
-        if r is None or r[1] != last:
-            continue                      # not closure-bearing in this registry
-        clo = r[0]
-        cand = {"stream": s, "unit": cu, "variant_count": len(s["units"]), "range": r}
-        if clo <= lo:
-            cand["overlap"] = registry[clo:lo]
-            exact_or_super.append(cand)
-        else:
-            cand["uncovered"] = registry[lo:clo]
-            suffixes.append(cand)
+        i, u, r = hit
+        a, b = r
+        o = m - a                          # already-taught sections re-crossed
+        cands.append({"stream": s, "unit": u, "unit_index": i, "range": r,
+                      "overlap": o, "reach": b,
+                      "count": len(s["units"])})
+    if cands:
+        cands.sort(key=lambda c: (0 if c["overlap"] == 0 else 1,   # no re-cross first
+                                  c["overlap"],                    # then least re-cross
+                                  -c["reach"],                     # furthest reach
+                                  abs(c["count"] - requested),     # pacing context
+                                  -c["count"]))                    # then denser
+        c = cands[0]
+        a, b = c["range"]
+        fill_class = ("forward" if c["overlap"] == 0 and b > m
+                      else "single" if c["overlap"] == 0
+                      else "backward")
+        uncovered = list(registry[b + 1:])
+        s = c["stream"]
+        drop_units = []
+        if uncovered:
+            uncov_idx = set(range(b + 1, last + 1))
+            for w in s["units"][c["unit_index"] + 1:]:
+                r = unit_range(w, ridx)
+                if r and set(range(r[0], r[1] + 1)) <= uncov_idx:
+                    drop_units.append(w)
+        return {"mode": "fill", "fill_class": fill_class,
+                "first_section": registry[m],
+                "stream": s, "unit": c["unit"],
+                "borrowed_from": c["count"], "self_fill": s is chosen,
+                "overlap_sections": list(registry[a:m]),
+                "uncovered_sections": uncovered,
+                "drop_units": drop_units}
 
-    if exact_or_super:
-        exact_or_super.sort(key=lambda c: (len(c["overlap"]), -c["variant_count"]))
-        c = exact_or_super[0]
-        mode = "exact" if not c["overlap"] else "superset"
-        return {"mode": mode, "stream": c["stream"], "unit": c["unit"],
-                "borrowed_from": c["variant_count"],
-                "overlap_sections": list(c["overlap"]), "uncovered_sections": []}
-    if suffixes:
-        suffixes.sort(key=lambda c: (len(c["uncovered"]), -c["variant_count"]))
-        c = suffixes[0]
-        return {"mode": "suffix", "stream": c["stream"], "unit": c["unit"],
-                "borrowed_from": c["variant_count"],
-                "overlap_sections": [], "uncovered_sections": list(c["uncovered"])}
-    # truncation — serve the chosen variant's own unit X, withhold the tail.
-    # Uncovered = registry sections beyond the frontier INCLUDING unit X's reach;
-    # when that is empty the withheld tail is synthesis-only and says so.
-    f2 = max(frontier, ranges[requested - 1][1])
-    uncov = list(registry[f2 + 1:])
+    # ── Case 3: defensive truncation — no dropped sections, ask for the
+    # reference canonical's count instead.
     return {"mode": "truncation", "stream": chosen, "unit": units[requested - 1],
             "borrowed_from": None, "overlap_sections": [],
-            "uncovered_sections": uncov, "synthesis_only": not uncov,
+            "uncovered_sections": [], "synthesis_only": False,
+            "reference_count": len(units),
             "withheld_units": [u["unit"] for u in units[requested:]]}
 
 
@@ -408,7 +451,7 @@ def serve_plan(streams, matrix):
         else:
             it2["period_ref"] = [max(live)] if live else it2.get("period_ref")
         items.append(it2)
-    if fill and fill.get("borrowed_from"):
+    if fill and fill["stream"] is not chosen and fill.get("borrowed_from"):
         fn = fill["unit"]["unit"]
         fsit = len(served)
         for it in fill["stream"]["assessment_items"]:
@@ -429,21 +472,25 @@ def serve_plan(streams, matrix):
     # ── the honest notes ─────────────────────────────────────────────────────
     coverage_note = None
     if fill:
-        if fill["mode"] == "superset" and fill["overlap_sections"]:
-            coverage_note = (
-                "The closing sitting briefly re-crosses "
-                + "; ".join(fill["overlap_sections"])
-                + " as runway before completing the chapter.")
-        elif fill["mode"] == "suffix":
-            coverage_note = (
-                "Time budget short of the chapter's full span: "
-                + "; ".join(fill["uncovered_sections"])
-                + " could not be scheduled — share this material for guided "
-                  "self-study or homework. The closing sitting completes the chapter.")
+        if fill["mode"] == "fill":
+            parts = []
+            if fill["overlap_sections"]:
+                parts.append(
+                    "The closing sitting briefly re-crosses "
+                    + "; ".join(fill["overlap_sections"])
+                    + " as runway before introducing "
+                    + fill["first_section"] + ".")
+            if fill["uncovered_sections"]:
+                parts.append(
+                    "Time budget short of the chapter's full span: "
+                    + "; ".join(fill["uncovered_sections"])
+                    + " could not be scheduled — the material is included for "
+                      "you to share as guided self-study or homework.")
+            coverage_note = " ".join(parts) or None
         elif fill["mode"] == "synthesis":
             coverage_note = (
-                "Every section is covered; the time budget trims the chapter's "
-                "closing synthesis to one sitting.")
+                "Every section is covered; the closing sitting draws the "
+                "chapter together in one synthesis.")
         elif fill["mode"] == "truncation":
             if fill.get("synthesis_only"):
                 coverage_note = (
@@ -451,11 +498,14 @@ def serve_plan(streams, matrix):
                     "sittings could not be scheduled — their material is included "
                     "for you to draw on.")
             else:
+                # Case 3 (§0.4): the request sits too far from its reference
+                # canonical to close coherently. No dropped sections are shown —
+                # the honest ask is the reference plan's depth.
                 coverage_note = (
-                    "Time budget short of the chapter's full span: "
-                    + "; ".join(fill["uncovered_sections"])
-                    + " could not be scheduled. The material is included for you to "
-                      "share — cover it as homework or found time.")
+                    "This chapter cannot be adapted coherently at %d period(s). "
+                    "Plan at least %d periods — this chapter's reference plan at "
+                    "your budget — to teach it as designed."
+                    % (requested, fill.get("reference_count", n_units)))
     surrender_note = None
     if surrendered:
         surrender_note = ("%d period(s) (%d minutes) exceed this chapter's fullest "
@@ -466,26 +516,22 @@ def serve_plan(streams, matrix):
         # Surrender and coverage loss are mutually exclusive, so no collision.
         coverage_note = surrender_note
 
-    # ── Dropped sections (founder, 2026-08-01): below the floor — i.e. whenever the
-    # serve leaves sections uncovered — the plan CARRIES the unserved units whose
-    # coverage was lost, verbatim as authored, flagged unscheduled. Online-only
-    # self-study material ("give her access to it"); exports deliberately omit it.
+    # ── Dropped sections (founder, 2026-08-01; re-sourced 2026-08-03 §0.4):
+    # whenever the serve leaves sections uncovered, the plan CARRIES the units
+    # whose coverage was lost, verbatim as authored, flagged unscheduled — and
+    # they come FROM THE LENDING PLAN's units after the serving unit, so the
+    # tail continues the plan the closing sitting came from. Online-only
+    # self-study material ("give her access to it"); exports deliberately omit
+    # it. Case-3 truncation deliberately shows none (the ask is the reference
+    # plan's depth, not a salvage).
     dropped_units = []
-    if fill and (fill.get("uncovered_sections") or []):
-        _ridx = {_norm(a): i for i, a in enumerate(registry)}
-        uncov = {_ridx[_norm(a)] for a in fill["uncovered_sections"] if _norm(a) in _ridx}
+    if fill and fill.get("drop_units"):
         base = len(served)
-        for u in units:
-            if u["unit"] in served_chosen_units:
-                continue
-            r = unit_range(u, _ridx)
-            if r is None:
-                continue
-            if set(range(r[0], r[1] + 1)) <= uncov:   # its coverage was truly lost
-                p = _period_from_unit(chosen, u, base + len(dropped_units) + 1,
-                                      u["authored_duration_minutes"])
-                p["unscheduled"] = True
-                dropped_units.append(p)
+        for u in fill["drop_units"]:
+            p = _period_from_unit(fill["stream"], u, base + len(dropped_units) + 1,
+                                  u["authored_duration_minutes"])
+            p["unscheduled"] = True
+            dropped_units.append(p)
 
     # ── the SERVED schedule (founder, 2026-08-01): every teacher-facing time print
     # reflects the periods actually used, never the request. A surrendered request
@@ -520,8 +566,8 @@ def serve_plan(streams, matrix):
             "dropped_units": dropped_units or None,
         },
         "genon": {
-            "engine": ("serve v1.2 (variant library, next-highest selection, "
-                       "X-1+1 slot fill from each variant's LENDABLE unit, "
+            "engine": ("serve v2.0 / e12 (canonical library, next-highest selection, "
+                       "X-1+1 slot fill by the first-exposure choice set §0.4, "
                        "proportional duration scaling, unit-anchored assessment)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
@@ -529,10 +575,14 @@ def serve_plan(streams, matrix):
             "sittings": len(served),
             "slot_fill": (None if not fill else {
                 "mode": fill["mode"],
+                "fill_class": fill.get("fill_class"),
+                "first_section": fill.get("first_section"),
                 "borrowed_from": fill.get("borrowed_from"),
+                "self_fill": bool(fill.get("self_fill")),
                 "overlap_sections": fill.get("overlap_sections") or [],
                 "uncovered_sections": fill.get("uncovered_sections") or [],
                 "synthesis_only": bool(fill.get("synthesis_only")),
+                "reference_count": fill.get("reference_count"),
                 "withheld_units": fill.get("withheld_units") or [],
             }),
             "surrendered_periods": surrendered,

@@ -30,6 +30,19 @@ SUBJECT_KEY = {
 ROMAN = {"III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10}
 
 
+def canonical_periods(a, c):
+    """The chapter's canonical set — equal dispersion over [floor, standard]
+    (architecture §0.2, v2.0 2026-08-03). No solver, no sigma: {A, mid, C} with
+    mid = ceil((A+C)/2) when the band is wide enough (A-C >= 4), {A, C} when the
+    midpoint would sit adjacent to an endpoint, {A} alone on a degenerate band."""
+    a, c = int(a), int(c)
+    if c >= a - 1:
+        return [a]
+    if a - c < 4:
+        return [a, c]
+    return [a, (a + c + 1) // 2, c]
+
+
 def std_duration(cls_roman):
     n = ROMAN[cls_roman]
     if n <= 7:
@@ -82,6 +95,7 @@ for key in sorted(chapters, key=lambda k: (k[0], ROMAN[k[1]])):
     for (ch, title, w), periods, ex in zip(chs, alloc, exact):
         canonical_min = periods * dur
         floor_min = DROP_THRESHOLD * canonical_min
+        floor_periods = round(floor_min / dur)  # nearest, not ceil (founder, 2026-07-31)
         rows.append({
             "chapter": ch,
             "title": title,
@@ -90,7 +104,8 @@ for key in sorted(chapters, key=lambda k: (k[0], ROMAN[k[1]])):
             "recommended_periods": periods,
             "canonical_minutes": canonical_min,
             "floor_minutes": round(floor_min, 1),
-            "floor_periods_at_standard": round(floor_min / dur),  # nearest, not ceil (founder, 2026-07-31)
+            "floor_periods_at_standard": floor_periods,
+            "canonical_periods": canonical_periods(periods, floor_periods),
             "placeholder": "Placeholder" in str(title),
         })
     plan[f"{subject}|{cls}"] = {
@@ -117,6 +132,12 @@ out = {
         "floor_definition": f"unit-dropping begins when teacher_minutes/canonical_minutes < {DROP_THRESHOLD}; "
                             f"floor_minutes = {DROP_THRESHOLD} x recommended_periods x standard_duration; "
                             "floor_periods_at_standard rounded to the NEAREST whole period (founder, 2026-07-31)",
+        "canonical_periods": "the chapter's canonical set by EQUAL DISPERSION over "
+                             "[floor, standard] (architecture §0.2, v2.0 2026-08-03): "
+                             "{A, ceil((A+C)/2), C} when A-C >= 4, {A, C} when 1 < A-C < 4, "
+                             "{A} otherwise. No solver, no sigma, no mandated closing spans "
+                             "— canonicals are authored free; the standard alone carries "
+                             "the synthesis-anchor mandate.",
         "skipped": [f"{s} {c}: {why}" for s, c, why in skipped],
     },
     "combos": plan,
@@ -129,7 +150,7 @@ with open(NORMS / "master_plan.json", "w") as f:
 # to the founder (ceil vs round, corrected the same day): a derived view that
 # can drift from its source will eventually lie. To eyeball the plan, read the
 # JSON fresh (python3 -m json.tool) or GET /subjects/{s}/{g}/chapters, which
-# carries recommended_periods, floors, and variant_plan per chapter.
+# carries recommended_periods, floors, and canonical_plan per chapter.
 
 print("combos planned:", len(plan), "| skipped:", len(skipped))
 for s, c, why in skipped:

@@ -45,66 +45,45 @@ BACKUP = REPO / "backup" / "register_repair"
 # ── the declared edits ───────────────────────────────────────────────────────────
 # file -> [(unit_number, field_locator, old, new, rule_broken, note)]
 # field_locator: "teacher_notes" | "band:<index>" | "homework:<index>"
+#
+# DECLARATIONS REWRITTEN 2026-08-03 (v1.1). The previous set was written against the
+# 2026-08-01 library (12/9/7) and went stale the moment that library was regenerated under
+# LP v1.10 / assessment v1.6 on 2026-08-03 (12/10/7) — `--list` failed its own assertion on
+# the very first edit, which is the guard working exactly as designed. The p09 variant no
+# longer exists; p07 now scans clean. What follows is declared against the CURRENT artefacts
+# (ch_03_canonical.json 14:19, ch_03_canonical_p10.json 14:34, ch_03_canonical_p07.json 14:34)
+# and covers the four surviving breaches in the 2026-08-03 certification report.
+#
+# Three of the four are the SAME family: a clock quantity written into band prose when the
+# band already carries its own `minutes`. Those are pure deletions of the quantity — the
+# activity, the grouping and the output all stand. The fourth is a forward reference.
 REPAIRS = {
     "ch_03_canonical.json": [
-        (1, "band:3",
-         " — framing what is to come.", ".",
-         "register/forward",
-         "trailing appositive dropped; the band still names all six structural elements"),
-        (2, "band:3",
-         " — a thread to pick up in the climate-change unit.", ".",
-         "register/forward",
-         "promise to a unit a compact variant may never serve"),
-        (6, "teacher_notes",
-         ", which the next unit develops mechanistically.", ".",
-         "register/forward",
-         "clause dropped; the confusion it introduces stands on its own"),
-        (6, "band:3",
-         " — a thread that the monsoon unit develops further.", ".",
-         "register/forward",
-         "trailing appositive dropped"),
-        (6, "homework:0",
-         ". Bring the log to the next unit and note which IMD season these days belong to.",
-         ", and note which IMD season these days belong to.",
-         "register/forward",
-         "the classifying task is KEPT (it carries the cognitive floor); only the delivery "
-         "instruction to a following unit goes. NOTE: the five-day span and U8's dependency on "
-         "this homework are NOT repaired here — see ARV-D-012, human gate"),
-        (8, "band:3",
-         ", a point the climate-change unit will show is now under threat.", ".",
-         "register/forward",
-         "the synthesis itself is kept; only the forward promise goes"),
-        (9, "teacher_notes",
-         " The carbon-footprint activity distinguishes this unit from the next, which examines "
-         "a specific crisis event rather than general causes and responses.", "",
-         "register/forward",
-         "whole sentence is about unit ORDER; notes remain 2 sentences (Rule 10 allows 2-3)"),
-        (9, "band:3",
-         " (C-4.6)", "", "rule10/ids", "competency code out of teacher-facing band text"),
-        (9, "band:3",
-         " (C-4.5)", "", "rule10/ids", "competency code out of teacher-facing band text"),
-        (12, "teacher_notes",
-         "Having worked through every section of the chapter, this unit asks",
-         "This unit asks",
-         "register/completion",
-         "U12 is the fill ladder's prime borrow candidate; the completion claim is false the "
-         "moment it is served into a shorter plan"),
-    ],
-    "ch_03_canonical_p09.json": [
-        (5, "teacher_notes",
-         ", previewing the inter-linkage work of the next unit.", ".",
-         "register/forward", "trailing clause dropped"),
-        (6, "band:3",
-         ", connecting forward to the climate-change and Punjab-floods themes of later units.",
-         ".",
-         "register/forward", "trailing clause dropped"),
-    ],
-    "ch_03_canonical_p07.json": [
         (4, "band:2",
-         " from the previous unit", "",
-         "rule13/positional",
-         "ADVISORY, not a ban (v1.10 legalised backward references) — but Rule 13 P3 keeps "
-         "unit-to-unit linking in teacher_notes, and the distinction reads fine unqualified"),
+         " — is posed for two minutes of paired oral sharing.",
+         " — is taken up as paired oral sharing.",
+         "register/clock",
+         "clock quantity only. The THINK ABOUT IT prompt and its paired-oral format are KEPT; "
+         "the band's own `minutes` already carries the timing"),
+        (8, "band:0",
+         "Pairs discuss for three minutes and take one response each side.",
+         "Pairs discuss and take one response each side.",
+         "register/clock",
+         "clock quantity deleted; the pairing and the one-response-each-side instruction stand"),
+        (11, "band:2",
+         "Groups of four discuss for five minutes and prepare a two-sentence position.",
+         "Groups of four discuss and prepare a two-sentence position.",
+         "register/clock",
+         "clock quantity deleted; group size and the two-sentence output are unchanged"),
+    ],
+    "ch_03_canonical_p10.json": [
+        (2, "band:3",
+         " — previewing the climate change thread without naming a future topic.", "",
+         "register/forward",
+         "trailing appositive dropped whole (not replaced with '.', because the sentence "
+         "already closes on the quoted question mark). The CO2 question itself is KEPT — it is "
+         "answerable from the composition section the unit teaches; only the promise to a "
+         "later unit goes, which is exactly the promise a compact variant may never keep"),
     ],
 }
 
@@ -156,7 +135,7 @@ def apply_file(fname, edits, dry):
         gc = plan.setdefault("genon_canonical", {})
         gc.setdefault("repairs", []).append({
             "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": "genon/repair_register.py v1.0",
+            "tool": "genon/repair_register.py v1.1",
             "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013)",
             "edits": done,
             "ban_hits_before": before, "ban_hits_after": len(after_hits),
