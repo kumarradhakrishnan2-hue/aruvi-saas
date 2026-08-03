@@ -187,21 +187,32 @@ def normalize_library(subject, grade, ch, apply=True, backup=True):
         for f in files:
             shutil.copy2(f, bdir / f.name)
 
-    lines, total, scanned = [], 0, 0
+    lines, total, scanned, prior_total = [], 0, 0, 0
     for f in files:
+        # What EARLIER runs had to move. Without this a re-certification prints "0 of 18" and
+        # reads as "the model arranged them unaided" — the exact statistic this stage exists to
+        # preserve, silently inverted. The durable count lives in the artefact, so read it.
+        prior = [r for r in (json.loads(f.read_text(encoding="utf-8"))
+                             .get("genon_canonical", {}).get("repairs", []) or [])
+                 if r.get("tool", "").startswith("genon/normalize_options.py")]
+        prior_n = sum(r.get("items_moved", 0) for r in prior)
+        prior_total += prior_n
         rep = normalize_file(f, apply=apply)
         total += rep["moved"]
         scanned += rep["scanned"]
-        lines.append(f"      {rep['file']}: {rep['moved']} of {rep['scanned']} item(s) re-ordered")
+        lines.append(f"      {rep['file']}: {rep['moved']} of {rep['scanned']} item(s) re-ordered"
+                     + (f" (this run; {prior_n} moved by an earlier run)" if prior_n else ""))
         for e in rep["detail"]:
             lines.append(f"          #{e['item']} {e['competency']} U{e['period_ref'][0]}: "
                          f"A–D now hold {''.join(e['came_from'])} "
                          f"· correct {e['correct_before']} -> {e['correct_now']}")
         for s in rep["skipped"]:
             lines.append(f"          #{s['item']} SKIPPED — {s['reason']}")
-    head = (f"options arranged: {total} of {scanned} item(s) re-ordered "
-            f"— the generation-quality rate for Rule 7 (ARV-D-032); 0 means the model arranged "
-            f"them unaided")
+    head = (f"options arranged: {total} of {scanned} item(s) re-ordered this run"
+            + (f"; {prior_total} of {scanned} were re-ordered when this library was first "
+               f"normalized" if prior_total else "")
+            + " — the generation-quality rate for Rule 7 (ARV-D-032). A 0 with no earlier run "
+              "behind it means the model arranged them unaided.")
     return [head] + lines, total, scanned
 
 

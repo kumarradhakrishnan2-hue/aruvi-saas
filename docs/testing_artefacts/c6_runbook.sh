@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
 # C6 — API serve checks · social_sciences · ix · ch 3
-# Library {12, 9, 7} · floor 7 · authored duration 50 min · engine e10
+# REWRITTEN 2026-08-03 for the v2.0 library and engine e12. The previous version was
+# written against {12, 9, 7} at e10 and its expectations (superset / exact / suffix modes,
+# a p09 variant) no longer exist. Do not run the old one.
+#
+# Library {12, 10, 7} · floor 7 · top 12 · AUTHORED AT 50 MIN · engine e12
 #
 #   bash docs/testing_artefacts/c6_runbook.sh
 #
-# Precondition: P5.4 done (the three identities have Social Sciences IX profiles),
-# and the API is up:  python3 -m uvicorn api.main:app --port 8000
+# Preconditions, both hard:
+#   1. P5.4 done — kumar1, kumar2, kumar3 each have a Social Sciences IX teaching profile.
+#      Step 0 below prints each one; if any reads ready False, STOP and fix that first.
+#   2. The API is up in another terminal:
+#         python3 -m uvicorn api.main:app --port 8000
 #
-# Every response is saved under docs/testing_artefacts/c6_responses/ — those files
-# are the artefact for C6 and the input for C7, C9, C10, C11 and C12.
+# Every response is saved under docs/testing_artefacts/c6_responses/. Those files are the
+# C6 artefact and the input for C7, C9, C10, C11 and C12 — keep them.
+#
+# What the identity split is FOR: kumar1 runs identities, kumar2 the fills and the edges,
+# kumar3 the mixed-duration week. Three tenants writing into the same chapter is what makes
+# C10 (isolation) and X1 (tenancy) meaningful later.
 
 set -u
 API=http://localhost:8000
@@ -41,9 +52,11 @@ print("   filename   :", d.get("filename"))
 print("   periods    :", d.get("periods"), "| variant_used:", s.get("variant_used"))
 print("   mode       :", ("identity" if d.get("identity")
                           else "surrender" if s.get("surrendered_periods")
-                          else fill.get("mode")))
+                          else fill.get("mode")),
+      "| fill_class:", fill.get("fill_class"), "| borrowed_from:", fill.get("borrowed_from"))
+print("   uncovered  :", fill.get("uncovered_sections"))
 print("   surrendered:", s.get("surrendered_periods"))
-print("   coverage   :", (d.get("coverage_note") or "(none)")[:220])
+print("   coverage   :", (d.get("coverage_note") or "(none)")[:240])
 if s.get("surrender_note"): print("   surrender_note:", s["surrender_note"][:200])
 PY
 }
@@ -60,10 +73,10 @@ done
 echo "   -> all three MUST read ready True with social_sciences / ix. If not, stop: P5.4 first."
 ls "$LIB" > "$OUT/_lib_before.txt"; echo "   library snapshot -> _lib_before.txt"
 
-# ── 1 · identity · kumar1 · X = each variant's own count, at 50 min ────────────
-say "1 · identity (kumar1) — expect identity:true, the variant's OWN filename, no new file"
+# ── 1 · identity · kumar1 · X = each canonical's own count, at the authored 50 min ──
+say "1 · identity (kumar1) — expect identity:true, the canonical's OWN filename, NO new file"
 serve identity_50m12 kumar1 '[{"duration":50,"count":12}]'
-serve identity_50m9  kumar1 '[{"duration":50,"count":9}]'
+serve identity_50m10 kumar1 '[{"duration":50,"count":10}]'
 serve identity_50m7  kumar1 '[{"duration":50,"count":7}]'
 ls "$LIB" > "$OUT/_lib_after_identity.txt"
 if diff -q "$OUT/_lib_before.txt" "$OUT/_lib_after_identity.txt" >/dev/null; then
@@ -73,18 +86,24 @@ else
 fi
 
 # ── 2 · between-variant fills · kumar2 · at 50 min ─────────────────────────────
-say "2 · between-variant fills (kumar2)"
-echo "   X=8  expect mode superset (runway) + a coverage note naming the re-crossed sections"
+# The certified sweep (report 20260803_194610) predicts these exactly. A mode that
+# disagrees with the sweep is the finding — the sweep runs the same engine offline,
+# so a divergence means the API path differs from the certification path.
+say "2 · between-variant fills (kumar2) — sweep predicts: X=8 fill/single, X=11 fill/single"
 serve fill_50m8  kumar2 '[{"duration":50,"count":8}]'
-echo "   X=10 expect mode exact, no coverage note needed"
-serve fill_50m10 kumar2 '[{"duration":50,"count":10}]'
-echo "   X=11 expect mode synthesis (recorded; not required by the C6 table)"
 serve fill_50m11 kumar2 '[{"duration":50,"count":11}]'
+echo "   expect for both: mode fill · a fill_class · uncovered_sections EMPTY"
+echo "   a backward fill_class must name the re-crossed sections as runway in coverage_note"
 
-# ── 3 · above the top · kumar2 ────────────────────────────────────────────────
-say "3 · X = top + 1 = 13 (kumar2) — expect surrender"
-echo "   surrendered_periods >= 1; the surrender sentence in coverage_note (e09);"
-echo "   and the SERVED schedule must print 12, not the 13 asked for (e10)"
+# ── 3 · early-coverage synthesis borrow · kumar2 ───────────────────────────────
+say "3 · X=9 (kumar2) — sweep predicts SYNTHESIS: the prefix completes coverage early"
+serve synthesis_50m9 kumar2 '[{"duration":50,"count":9}]'
+echo "   ASSERT: mode synthesis · borrowed_from = 12 (the STANDARD's count — the borrowed"
+echo "   unit must be the standard's own synthesis unit, not a compact's closer) ·"
+echo "   coverage_note says the closing sitting draws the chapter together"
+
+# ── 4 · above the top · kumar2 ────────────────────────────────────────────────
+say "4 · X = top + 1 = 13 (kumar2) — expect surrender"
 serve surrender_50m13 kumar2 '[{"duration":50,"count":13}]'
 python3 - "$OUT/surrender_50m13.json" "$LIB" <<'PY'
 import json,sys,pathlib
@@ -96,10 +115,14 @@ if p and p.is_file():
     print("   genon.served_matrix     :", g.get("served_matrix"))
     print("   genon.matrix (the ask)  :", g.get("matrix"))
     print("   period_rows_snapshot    :", s.get("period_rows_snapshot"))
+    print("   -> e10: the SERVED schedule must print 12, not the 13 asked for;")
+    print("      the ask survives only in genon.matrix / period_rows_snapshot")
+    print("   -> e09: the surrender sentence belongs in coverage_note, with")
+    print("      serve.surrender_note kept as provenance")
 PY
 
-# ── 4 · below the floor · kumar2 ──────────────────────────────────────────────
-say "4 · X = floor - 1 = 6 (kumar2) — expect suffix or truncation + dropped_units"
+# ── 5 · below the floor · kumar2 ──────────────────────────────────────────────
+say "5 · X = floor - 1 = 6 (kumar2) — honest partial: fill + uncovered_sections"
 serve belowfloor_50m6 kumar2 '[{"duration":50,"count":6}]'
 python3 - "$OUT/belowfloor_50m6.json" "$LIB" <<'PY'
 import json,sys,pathlib
@@ -111,13 +134,16 @@ if p and p.is_file():
     for u in du:
         print("      unit", u.get("period_number"), "| unscheduled:", u.get("unscheduled"),
               "|", str(u.get("activity_title"))[:70])
-    if not du: print("   CHECK: e09 expects the unreached units here, verbatim")
+    if not du: print("   CHECK FAILED: e09 expects the unreached units here, verbatim")
+    print("   -> e12: the dropped units must come from the LENDING plan's subsequent units,")
+    print("      not the chosen plan's. Compare their titles against the lender named by")
+    print("      slot_fill.borrowed_from in belowfloor_50m6.json.")
 PY
 
-# ── 5 · mixed-duration weekly matrix · kumar3 ─────────────────────────────────
-say "5 · mixed-duration matrix (kumar3) — 3x60 + 7x50 = 10 periods"
-echo "   Deliberately totals 10 so it lands on a FILL mode: C12 needs a plan that"
-echo "   contains a BORROWED closing sitting. Identity cannot fire off 50 min."
+# ── 6 · mixed-duration weekly matrix · kumar3 ─────────────────────────────────
+say "6 · mixed-duration matrix (kumar3) — 3x60 + 7x50 = 10 sittings"
+echo "   Totals 10 but at MIXED durations, so identity cannot fire and a file is written."
+echo "   This is the plan C7/C8/C9/C12 inspect."
 serve mixed_60m3_50m7 kumar3 '[{"duration":60,"count":3},{"duration":50,"count":7}]'
 python3 - "$OUT/mixed_60m3_50m7.json" "$LIB" <<'PY'
 import json,sys,pathlib
@@ -128,37 +154,47 @@ if p and p.is_file():
     seq=g.get("duration_sequence") or []
     print("   duration_sequence:", seq)
     if seq:
-        ok_open = seq[0]==min(seq)
-        adj=[i for i in range(len(seq)-1) if seq[i]==seq[i+1]==max(seq)]
-        interior=all(0<i<len(seq)-1 for i,v in enumerate(seq) if v==max(seq))
-        print("   shortest opens the week :", ok_open)
-        print("   long sittings interior  :", interior)
-        print("   no two long adjacent    :", not adj)
+        longest=max(seq)
+        print("   shortest opens the week :", seq[0]==min(seq))
+        print("   long sittings interior  :", all(0<i<len(seq)-1 for i,v in enumerate(seq) if v==longest))
+        print("   no two long adjacent    :", not [i for i in range(len(seq)-1) if seq[i]==seq[i+1]==longest])
     units=(s.get("result") or {}).get("lesson_plan",{}).get("periods") or []
     print("   sittings:", len(units), "| per-unit minutes:",
           [u.get("period_duration_minutes") for u in units])
 PY
 
-# ── 6 · same X, NON-authored duration — identity must NOT fire ────────────────
-say "6 · X=9 at 45 min (kumar3) — the ordinary teacher case, NOT identity"
+# ── 7 · same X, NON-authored duration — identity must NOT fire ────────────────
+say "7 · X=10 at 45 min (kumar3) — the ordinary teacher case, NOT identity"
 echo "   expect identity absent/false, a file written, proportional scaling, exact tiling"
-serve scaled_45m9 kumar3 '[{"duration":45,"count":9}]'
-python3 - "$OUT/scaled_45m9.json" "$LIB" <<'PY'
+serve scaled_45m10 kumar3 '[{"duration":45,"count":10}]'
+python3 - "$OUT/scaled_45m10.json" "$LIB" <<'PY'
 import json,sys,pathlib
 d=json.load(open(sys.argv[1])); fn=d.get("filename")
 p=pathlib.Path(sys.argv[2])/fn if fn else None
 if p and p.is_file():
-    s=json.load(open(p))
+    s=json.load(open(p)); bad=[]
     for u in (s.get("result") or {}).get("lesson_plan",{}).get("periods") or []:
-        tb=u.get("time_bands") or []
-        ends=[]
-        for b in tb:
-            m=str(b.get("minutes","")).replace("–","-").split("-")
-            ends.append(m[-1].strip())
-        print("      unit",u.get("period_number"),"dur",u.get("period_duration_minutes"),
-              "| bands end at", ends[-1] if ends else "?")
+        dur=u.get("period_duration_minutes"); prev=0; ok=True
+        for b in u.get("time_bands") or []:
+            a,_,z=str(b.get("minutes","")).replace("–","-").partition("-")
+            try: a,z=int(a.strip()),int(z.strip())
+            except ValueError: ok=False; break
+            if a!=prev or z<=a: ok=False; break
+            prev=z
+        if not ok or prev!=dur: bad.append(u.get("period_number"))
+        print("      unit",u.get("period_number"),"dur",dur,"| tiles to",prev)
+    print("   exact tiling on every unit:", not bad, bad or "")
 PY
 
 say "done — responses in $OUT"
-echo "Record in the tracker: every row's mode, filename, coverage note, and the"
-echo "duration the library was authored at (50 min). Then C7 reads these same files."
+cat <<'NOTE'
+Then tell Claude, and it records C6 in the tracker. What it needs from this run:
+  · every row's mode / fill_class / borrowed_from / filename / coverage note
+  · confirmation that the three identity requests wrote NO file
+  · the surrender row's served-vs-asked schedule
+  · the below-floor row's dropped_units and which plan they came from
+  · the mixed row's duration_sequence
+  · whether any served mode disagreed with the certified sweep
+    {5: fill/single -2s, 6: fill/single -1s, 7: identity, 8: fill/single, 9: synthesis,
+     10: identity, 11: fill/single, 12: identity, 13-14: surrender}
+NOTE

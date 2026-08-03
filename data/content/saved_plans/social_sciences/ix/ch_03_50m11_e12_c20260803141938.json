@@ -1,216 +1,19 @@
 {
-  "filename": "ch_03_canonical.json",
-  "saved_at": "2026-08-03T14:26:58",
-  "plan_status": "canonical",
-  "chapter_number": 3,
-  "chapter_title": "Atmosphere and Climate",
+  "filename": "ch_03_50m11_e12_c20260803141938.json",
+  "saved_at": "2026-08-03T19:52:12",
   "grade": "Grade IX",
   "subject": "Social Science",
+  "chapter_number": 3,
+  "chapter_title": "Atmosphere and Climate",
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 11 periods = 550 minutes\nTotal: 11 periods · 9h 10min",
   "period_rows_snapshot": [
     {
       "id": 0,
       "duration": 50,
-      "count": 12
+      "count": 11
     }
   ],
-  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 12 periods = 600 minutes\nTotal: 12 periods · 10h 0min",
-  "genon_canonical": {
-    "generated": "2026-08-03",
-    "schedule": "12x50",
-    "constitution": "LP v1.10 / assessment v1.6",
-    "source": "generate_canonical.py one social_sciences ix 3",
-    "ledger_ts": "20260803_141938",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-03T17:41:40",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "section_anchor",
-            "rule": "V2/joiner",
-            "removed": "Weather and Climate; Elements of Weather and Climate",
-            "replaced_with": "Weather and Climate / Elements of Weather and Climate",
-            "note": "two-section unit; ';' is not the mandated joiner, so the registry read it as one opaque section. Sections named and their order are unchanged."
-          }
-        ]
-      },
-      {
-        "at": "2026-08-03T18:07:01",
-        "tool": "genon/repair_register.py v1.1",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "band:2",
-            "rule": "register/clock",
-            "removed": "— is posed for two minutes of paired oral sharing.",
-            "replaced_with": "— is taken up as paired oral sharing.",
-            "note": "clock quantity only. The THINK ABOUT IT prompt and its paired-oral format are KEPT; the band's own `minutes` already carries the timing"
-          },
-          {
-            "unit": 8,
-            "field": "band:0",
-            "rule": "register/clock",
-            "removed": "Pairs discuss for three minutes and take one response each side.",
-            "replaced_with": "Pairs discuss and take one response each side.",
-            "note": "clock quantity deleted; the pairing and the one-response-each-side instruction stand"
-          },
-          {
-            "unit": 11,
-            "field": "band:2",
-            "rule": "register/clock",
-            "removed": "Groups of four discuss for five minutes and prepare a two-sentence position.",
-            "replaced_with": "Groups of four discuss and prepare a two-sentence position.",
-            "note": "clock quantity deleted; group size and the two-sentence output are unchanged"
-          }
-        ],
-        "ban_hits_before": 3,
-        "ban_hits_after": 0
-      },
-      {
-        "at": "2026-08-03T19:28:11",
-        "tool": "genon/normalize_options.py v1.0",
-        "reason": "Rule 7 option arrangement enforced in code (ARV-D-032; founder ruling 2026-08-03). Option text and is_correct are untouched; array order, labels and guide option keys only.",
-        "items_scanned": 6,
-        "items_moved": 5,
-        "edits": [
-          {
-            "item": 1,
-            "competency": "C-4.2",
-            "period_ref": [
-              4
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "A",
-              "D",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "B"
-          },
-          {
-            "item": 6,
-            "competency": "C-4.3",
-            "period_ref": [
-              6
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "D",
-              "A",
-              "B",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "B"
-          },
-          {
-            "item": 9,
-            "competency": "C-4.4",
-            "period_ref": [
-              8
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "B",
-              "D",
-              "A",
-              "C"
-            ],
-            "correct_before": "A",
-            "correct_now": "C"
-          },
-          {
-            "item": 12,
-            "competency": "C-4.5",
-            "period_ref": [
-              9
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "C",
-              "B",
-              "D",
-              "A"
-            ],
-            "correct_before": "A",
-            "correct_now": "D"
-          },
-          {
-            "item": 17,
-            "competency": "C-4.6",
-            "period_ref": [
-              10
-            ],
-            "labels_before": [
-              "A",
-              "B",
-              "C",
-              "D"
-            ],
-            "came_from": [
-              "C",
-              "A",
-              "D",
-              "B"
-            ],
-            "correct_before": "B",
-            "correct_now": "D"
-          }
-        ]
-      },
-      {
-        "at": "2026-08-03T19:37:56",
-        "tool": "genon/repair_register.py v1.2",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
-        "edits": [
-          {
-            "unit": 1,
-            "field": "band:0",
-            "rule": "register/clock",
-            "removed": "Students jot individual responses for two to three minutes, then share aloud.",
-            "replaced_with": "Students jot individual responses, then share aloud.",
-            "note": "ranged clock quantity deleted; the individual-jotting task and the share-aloud that follows it are unchanged, and the band's own `minutes` already carries the timing"
-          },
-          {
-            "unit": 6,
-            "field": "teacher_notes",
-            "rule": "register/forward",
-            "removed": "Connecting India's tropical position to the monsoon regime that will follow prepares students conceptually.",
-            "replaced_with": "",
-            "note": "the whole trailing sentence goes: it exists only to point at a unit that may never be served after this one. Nothing is invented in its place, and the note still carries its continuity link and its confusion at Rule 10's 2-sentence floor"
-          }
-        ],
-        "ban_hits_before": 2,
-        "ban_hits_after": 0
-      }
-    ]
-  },
+  "plan_status": "adapted",
   "result": {
     "lesson_plan": {
       "periods": [
@@ -226,18 +29,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P1.1",
               "minutes": "0-10",
               "activity": "Pose the chapter's own THINK ABOUT IT: 'Imagine there is no atmosphere around the Earth — what would happen?' Students jot individual responses, then share aloud. Record key ideas (no radiation shield, no temperature regulation, no weather, no breathable air) on the board without evaluating them yet."
             },
             {
+              "band_id": "P1.2",
               "minutes": "10-30",
               "activity": "Introduce the atmosphere as a gravity-held blanket of mixed gases. Walk through its three stated functions: (1) shielding Earth from harmful solar and ultraviolet radiation, (2) trapping some solar energy to regulate temperature and prevent it escaping to space, and (3) driving weather and climate by influencing temperature, humidity, and air pressure. For each function, return to one student prediction from the opening and confirm or correct it using the text."
             },
             {
+              "band_id": "P1.3",
               "minutes": "30-45",
               "activity": "Students construct a three-column organiser headed 'Function / Without the atmosphere / With the atmosphere', completing the second column from their earlier predictions and the third from the class explanation. Pairs compare organisers and reconcile any disagreement."
             },
             {
+              "band_id": "P1.4",
               "minutes": "45-50",
               "activity": "Cold call three pairs: one reads their radiation row, one the temperature row, one the weather row. Correct misconceptions on the spot and display a one-sentence summary of each function on the board."
             }
@@ -271,18 +78,22 @@
           "visual_aids": "Fig. 3.2 — pie diagram of atmospheric gas proportions",
           "time_bands": [
             {
+              "band_id": "P2.1",
               "minutes": "0-8",
               "activity": "Display Fig. 3.2. Ask students to name the two dominant gases before reading the labels — then reveal: nitrogen ~78%, oxygen ~21%. Ask why almost no one named nitrogen when they think of 'air we breathe'. Briefly address the LET'S RECALL prompt: how nitrogen is useful for plants (protein synthesis, from Grade 8 Science)."
             },
             {
+              "band_id": "P2.2",
               "minutes": "8-28",
               "activity": "Work through the full composition: nitrogen, oxygen, argon, carbon dioxide, ozone, water vapour (0.1–0.4%), and dust particles. For each minor component, state its role — ozone filters UV, carbon dioxide traps heat, water vapour forms clouds and drives precipitation. Emphasise that composition varies with altitude and that water vapour, though tiny in proportion, is disproportionately important for weather."
             },
             {
+              "band_id": "P2.3",
               "minutes": "28-42",
               "activity": "Students receive a blank pie outline and must redraw the diagram from memory, labelling each sector with the gas name and approximate percentage. They then write two sentences below the diagram answering: 'Why does a small change in water vapour matter far more than its percentage suggests?'"
             },
             {
+              "band_id": "P2.4",
               "minutes": "42-50",
               "activity": "Students exchange diagrams with a neighbour and check each other's percentages against Fig. 3.2. Three volunteers read their water-vapour sentences aloud; class discusses which explanation is most precise."
             }
@@ -316,18 +127,22 @@
           "visual_aids": "Fig. 3.3 — layered structure of the atmosphere showing altitude, temperature, and density",
           "time_bands": [
             {
+              "band_id": "P3.1",
               "minutes": "0-10",
               "activity": "Open with a rapid sorting challenge: write on the board — 'weather', 'aircraft cruise', 'auroras', 'meteorite burn-up', 'gas escape into space' — and ask students to place each in a rough low-to-high order before they have studied the layers. Collect predictions without comment."
             },
             {
+              "band_id": "P3.2",
               "minutes": "10-35",
               "activity": "Walk through the five layers using Fig. 3.3 as the anchor. Troposphere (0–12 km): breathable air, most water vapour and clouds, all weather phenomena — rain, fog, hail — temperature falls with height to the tropopause. Stratosphere (up to ~50 km): cloud-free, aircraft-safe, ozone layer filters UV, ends at stratopause. Mesosphere (to ~80 km): temperature falls again, burns up most meteorites. Thermosphere (80–700 km): absorbs X-rays and short-wave UV, heats rapidly with height, contains the ionosphere that aids radio transmission, hosts Aurora Borealis and Aurora Australis. Exosphere: very thin air, helium and hydrogen escape into space. After each layer, ask students to annotate the blank template."
             },
             {
+              "band_id": "P3.3",
               "minutes": "35-45",
               "activity": "Return to the board predictions. Students revise each placement as a class, correcting the layer for auroras (thermosphere), aircraft (stratosphere), and meteorite burn-up (mesosphere). Discuss the surprise that aircraft fly above weather but below the ozone layer they depend on."
             },
             {
+              "band_id": "P3.4",
               "minutes": "45-50",
               "activity": "Exit question: 'Name the layer most directly relevant to your daily life and give two pieces of evidence from today's discussion.' Students write one sentence per piece of evidence."
             }
@@ -363,18 +178,22 @@
           "visual_aids": "Fig. 3.6 — torrid, temperate, and frigid temperature zones; Table 3.1 — wind speed classification; Fig. 3.8 — land and sea breeze diagrams",
           "time_bands": [
             {
+              "band_id": "P4.1",
               "minutes": "0-8",
               "activity": "Ask: 'What is the weather like today? What is the climate of this region?' Take three responses each. Use student phrasing to draw the core distinction: weather is the hour-to-hour and day-to-day atmospheric condition, variable from one day to the next; climate is the average of weather conditions over a large area for thirty or more years."
             },
             {
+              "band_id": "P4.2",
               "minutes": "8-30",
               "activity": "Introduce the five elements — temperature, humidity, precipitation, atmospheric pressure, wind — systematically. Temperature: governed by insolation (incoming solar energy), which decreases equator to poles, creating the torrid, temperate, and frigid zones in Fig. 3.6. Humidity: warmer air holds more moisture; saturated air precipitates as rain, snow, sleet, drizzle, or hail. Atmospheric pressure: weight of air, highest at sea level, falling with altitude; warm air rises → low pressure → cloudy wet weather; cold air sinks → high pressure → clear sunny skies. Wind: air moves from high to low pressure; Earth's rotation influences direction (Fig. 3.7); Table 3.1 — students read the calm-to-storm speed categories aloud. Land and sea breeze (Fig. 3.8): land heats and cools faster than sea, so sea breeze by day, land breeze by night."
             },
             {
+              "band_id": "P4.3",
               "minutes": "30-44",
               "activity": "Students draw a cause-chain diagram: Insolation → Temperature → Humidity → Precipitation, and a separate chain: Temperature difference (land vs sea) → Pressure difference → Wind direction (day vs night). Each arrow must carry a one-word causal label. The THINK ABOUT IT prompt — 'On what other occasions have strong winds caused problems?' — is taken up as paired oral sharing."
             },
             {
+              "band_id": "P4.4",
               "minutes": "44-50",
               "activity": "Select four students to explain one chain link each to the class. Correct any causal reversals (e.g. pressure causing temperature rather than the reverse)."
             }
@@ -417,18 +236,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P5.1",
               "minutes": "0-10",
               "activity": "Ask students to name how many seasons India has and record answers on the board — the range of answers (two, four, six) opens the lesson. Explain that atmospheric conditions settling into patterns over weeks and months produce what we call seasons, and that two different frameworks exist for India."
             },
             {
+              "band_id": "P5.2",
               "minutes": "10-30",
               "activity": "Cover the IMD four-season framework: winter (December–early April), summer/pre-monsoon (April–June, or July in the north-west), advancing south-west monsoon (June–September), and retreating or post-monsoon (October–December). Note that the more temperate Himalayan states also experience autumn and spring as distinct seasons. Then present Table 3.2 — the traditional Indian six-ritu calendar — reading the names and their approximate two-month spans, and discuss why a scheme tied to the Indian subcontinent's geography and agriculture might divide the year into six rather than four. Pose the THINK ABOUT IT: 'Which Hindustani classical rāgas are connected to each season? Ask elders or teachers and report back.'"
             },
             {
+              "band_id": "P5.3",
               "minutes": "30-44",
               "activity": "Students begin the LET'S ANALYSE task: they examine today's local newspaper weather page and fill in the first row of a two-week observation grid (date, maximum and minimum temperature, sky condition, any precipitation). They then annotate the grid with which IMD season the recorded conditions belong to and write one sentence predicting whether conditions will shift to a different IMD season within the fortnight and why."
             },
             {
+              "band_id": "P5.4",
               "minutes": "44-50",
               "activity": "Three students share their season prediction and rationale. Class evaluates whether each prediction is consistent with the IMD seasonal calendar — correct reasoning aloud."
             }
@@ -472,18 +295,22 @@
           "visual_aids": "Fig. 3.6 — Earth's torrid, temperate, and frigid temperature zones by latitude",
           "time_bands": [
             {
+              "band_id": "P6.1",
               "minutes": "0-10",
               "activity": "Display Fig. 3.6 without labels. Ask students to identify which latitudinal zone receives the most direct sunlight year-round and which the least, drawing on the insolation-and-temperature relationship covered when discussing the five elements of weather and climate. Take responses and use them to name the torrid, temperate, and frigid zones."
             },
             {
+              "band_id": "P6.2",
               "minutes": "10-28",
               "activity": "Walk through each zone: torrid zone (between the Tropics of Cancer and Capricorn) — high insolation, consistently high temperatures; temperate zones (Tropic to Arctic/Antarctic Circle, north and south) — moderate insolation, seasonal variation; frigid zones (polar circles to poles) — low insolation, extreme cold. Locate India's latitude span and identify which zone(s) it falls in. Discuss why temperature falls poleward and how this spatial pattern determines broad climate types."
             },
             {
+              "band_id": "P6.3",
               "minutes": "28-44",
               "activity": "Students shade a blank outline world map using three colours, one per zone, and correctly label each zone, the bounding latitude lines (Equator, Tropics, Arctic and Antarctic Circles), and India's position. They then write two sentences below the map answering: 'Why does insolation determine temperature zone boundaries rather than, say, distance from the ocean?'"
             },
             {
+              "band_id": "P6.4",
               "minutes": "44-50",
               "activity": "Pairs check each other's zone boundaries and labels against Fig. 3.6. Two volunteers read their explanatory sentences and class evaluates whether they correctly prioritise insolation angle over ocean distance."
             }
@@ -526,18 +353,22 @@
           "visual_aids": "Fig. 3.10 — normal dates of advancing south-west monsoon across India; Fig. 3.11 — retreating north-east monsoon map",
           "time_bands": [
             {
+              "band_id": "P7.1",
               "minutes": "0-8",
               "activity": "Ask: 'The word monsoon comes from Arabic — what does mausim mean, and why would Arab sailors have named this wind?' Take responses and establish the answer: mausim means season, and the seasonal reversal of winds was critical for ancient maritime trade across the Indian Ocean."
             },
             {
+              "band_id": "P7.2",
               "minutes": "8-30",
               "activity": "Explain the south-west (summer) monsoon mechanism: India's landmass heats faster than the surrounding oceans between April and June, forming a low-pressure area over the subcontinent; moist winds from the Indian Ocean, Arabian Sea, and Bay of Bengal are drawn in, travel from sea to land from June to September, and deliver most of the country's rainfall. Then explain the reversal: by October the land cools faster than the sea, reversing the pressure gradient; the north-east (winter) monsoon blows cold dry air seaward from October to February, but picks up moisture over the Bay of Bengal and brings rain to the south-eastern coast — Tamil Nadu, Andhra Pradesh, and parts of Karnataka. Use Figs. 3.10 and 3.11 to trace the normal advance and retreat dates across India."
             },
             {
+              "band_id": "P7.3",
               "minutes": "30-44",
               "activity": "Students annotate a copy of Figs. 3.10/3.11 by circling the region that receives rain last from the south-west monsoon and the region that benefits most from the north-east monsoon, and write a three-sentence explanation of the land-sea heating differential that drives the reversal. The LET'S EXPLORE prompt — 'Describe in your own words how the monsoon affects the lives of people around you' — is answered in two sentences, grounding the mechanism in a local livelihood observation."
             },
             {
+              "band_id": "P7.4",
               "minutes": "44-50",
               "activity": "Two students share their reversal explanation; class identifies whether the key causal step — differential heating creating a pressure gradient — is present. One student shares a livelihood observation and class extends it with one additional example."
             }
@@ -587,18 +418,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P8.1",
               "minutes": "0-8",
               "activity": "Open with the question: 'The chapter says the monsoon is vital to Indian agriculture, water supply, daily life, festivals, and livelihoods — but it also says it causes floods and droughts. Is the monsoon a resource, a hazard, or both?' Pairs discuss and take one response each side."
             },
             {
+              "band_id": "P8.2",
               "minutes": "8-30",
               "activity": "Develop a fishbone (cause-effect) diagram on the board with 'Monsoon' at the spine, branching into: agriculture (irrigation, paddy and kharif crop calendars), water supply (rivers, reservoirs, groundwater recharge), livelihoods (fishing, transport, employment in farming), festivals and culture, and hazards (excessive rain → floods, weak monsoon → droughts). For each branch, prompt students to supply one concrete example drawn from the text or their own knowledge. Note the asymmetry: the same monsoon wind that sustains agriculture also destroys it when it is too strong or too weak."
             },
             {
+              "band_id": "P8.3",
               "minutes": "30-44",
               "activity": "Students copy and extend the fishbone into their notebooks, adding at least one personal or regional example per branch. They then answer the LET'S EXPLORE prompt fully: 'Describe in your own words how the monsoon affects the lives of people around you' — writing four to five sentences that cover at least two different sectors (e.g. farming and festivals, or water supply and employment)."
             },
             {
+              "band_id": "P8.4",
               "minutes": "44-50",
               "activity": "Two students read their LET'S EXPLORE response. Class checks: does the response cover more than one sector? Does it distinguish benefit from hazard? Refine with class input."
             }
@@ -632,18 +467,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P9.1",
               "minutes": "0-8",
               "activity": "Ask: 'What is the difference between weather changing day to day and climate change?' Collect three responses and build toward the definition: climate change refers to long-term shifts in temperature, rainfall, and wind patterns, driven mainly by human activities, distinct from natural short-term variability."
             },
             {
+              "band_id": "P9.2",
               "minutes": "8-30",
               "activity": "Develop the causal chain on the board: burning fossil fuels + deforestation + industrial pollution → increased carbon dioxide, methane, nitrous oxide, and water vapour in the atmosphere → enhanced greenhouse effect → trapped heat → rising global temperatures. Then trace consequences: more frequent and intense floods and droughts, melting glaciers, rising sea levels, loss of biodiversity, threats to ecosystems, human health, agriculture, and livelihoods — noting the chapter's specific point that women and children are disproportionately affected. Ask students to annotate each consequence with one word explaining the mechanism linking it to rising temperatures."
             },
             {
+              "band_id": "P9.3",
               "minutes": "30-44",
               "activity": "Students write a structured paragraph of five to six sentences: opening sentence states the core causal claim (human activities → greenhouse gases → warming), the next three sentences each cover one consequence with its mechanism, and the closing sentence evaluates which consequence is most urgent for India and why. The evaluation must invoke evidence from the chapter, not opinion alone."
             },
             {
+              "band_id": "P9.4",
               "minutes": "44-50",
               "activity": "Two students share their evaluative closing sentence. Class tests each claim: is it grounded in the chapter's evidence? Is it specific to India's context? Refine with input."
             }
@@ -685,18 +524,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P10.1",
               "minutes": "0-8",
               "activity": "Ask: 'What is a carbon footprint — whose footprint is it and what does it measure?' Take two responses and define: it is the total greenhouse gas emissions caused by an individual's choices across transport, energy use, water use, and waste. Establish that individual habits aggregate into national and global emissions."
             },
             {
+              "band_id": "P10.2",
               "minutes": "8-25",
               "activity": "Students work through the chapter's 'My Carbon Footprint' checklist independently: they tick their habits across the four domains — transport, electricity use, water use, and waste and plastics — and calculate their score following the activity's own scoring key. They then identify the two highest-impact habits in their profile."
             },
             {
+              "band_id": "P10.3",
               "minutes": "25-40",
               "activity": "Build a class tally on the board: for each domain, how many students scored high-impact versus low-impact? Discuss patterns — which domain shows the widest spread and why? Students then write their two-point climate action pledge as the chapter's activity prescribes: one pledge per identified high-impact habit, specifying the substitute behaviour and the resource or emission saved."
             },
             {
+              "band_id": "P10.4",
               "minutes": "40-50",
               "activity": "Five students share one pledge each. Class evaluates: is the substitute behaviour realistic, specific, and genuinely lower-carbon? Revise any vague pledges (e.g. 'use less electricity' → 'switch off lights when leaving a room to reduce electricity-generated CO₂')."
             }
@@ -738,18 +581,22 @@
           "visual_aids": null,
           "time_bands": [
             {
+              "band_id": "P11.1",
               "minutes": "0-10",
               "activity": "Introduce the case: severe 2025 Punjab floods caused by heavy monsoon rain and the successive swelling of the Satluj, Beas, Ravi, and Ghaggar rivers, with western disturbances and rainfall in Himachal Pradesh and Jammu & Kashmir intensifying the inflow. Students read the case study passage silently, underlining in one colour the natural causes they find and in another the human-made causes."
             },
             {
+              "band_id": "P11.2",
               "minutes": "10-30",
               "activity": "Build a T-chart on the board: Natural Causes | Human-Made Causes. Students contribute from their underlining. Natural side: very heavy monsoon rainfall intensified by western disturbances; contributions from Himachal Pradesh and J&K rivers; already-high river levels. Human side: weak and old embankments (dhūsī bāndh); houses and farms built too close to rivers; silt reducing capacity of rivers and dams; late or poorly communicated flood warnings. List all effects — loss of life, displacement to relief camps, submerged farmland, ruined paddy crops, damaged poultry and dairy, damaged roads, bridges, and public buildings, health problems from standing water."
             },
             {
+              "band_id": "P11.3",
               "minutes": "30-44",
               "activity": "Use the chapter's CLASSROOM DISCUSSION prompts: 'How far were natural factors responsible versus human activities?' and 'Could better planning have reduced the damage?' Groups of four discuss and prepare a two-sentence position. Then: what role can students and youth play in disaster preparedness? Each group adds one concrete, actionable youth role."
             },
             {
+              "band_id": "P11.4",
               "minutes": "44-50",
               "activity": "One spokesperson per group states their natural-vs-human verdict with justification; class votes on which argument is most evidence-based. Introduce the NDMA flood-management guidelines briefly: early warning systems, embankment maintenance, zoning laws on riverbank construction."
             }
@@ -778,84 +625,9 @@
               "cognitive_demand": "Analysis"
             }
           ]
-        },
-        {
-          "period_number": 12,
-          "period_duration_minutes": 50,
-          "activity_title": "Atmosphere to Action: A Whole-Chapter Synthesis",
-          "section_anchor": "synthesis",
-          "materials": [
-            "Whiteboard",
-            "Blank concept-map template (one per student)"
-          ],
-          "visual_aids": null,
-          "time_bands": [
-            {
-              "minutes": "0-10",
-              "activity": "Pose the synthesis question: 'The chapter moves from the composition and structure of the atmosphere through weather, climate, seasons, and the monsoon to climate change and a flood disaster — what is the single thread that connects all of these?' Students write one sentence before discussion begins. Take five responses and identify the common thread: human life depends on, is shaped by, and now alters the atmosphere."
-            },
-            {
-              "minutes": "10-30",
-              "activity": "Students construct a whole-chapter concept map with 'Atmosphere' at the centre and six radiating nodes: Composition (nitrogen, oxygen, water vapour, ozone), Structure (troposphere to exosphere and their phenomena), Weather and Climate Elements (insolation, temperature, humidity, pressure, wind), Seasons and Monsoon (IMD four seasons, six ṛtu, south-west and north-east monsoon mechanisms, land-sea differential heating), Human Dependence (agriculture, livelihoods, festivals, water supply), and Human Disruption (greenhouse gases, climate change consequences, Punjab floods causes). For each node, students must draw at least one connecting arrow to another node, labelled with the relationship (e.g. 'ozone in stratosphere filters UV that governs insolation at surface')."
-            },
-            {
-              "minutes": "30-44",
-              "activity": "Pairs exchange maps and identify: (a) one cross-node connection that is missing or unlabelled, and (b) one connection that is mislabelled or reversed. Pairs correct each other's maps and initial the corrections. Then each student writes a four-sentence argument answering: 'Climate change is essentially a disruption of the processes described in the first three sections of this chapter — do you agree? Use at least two named processes as evidence.' This forces integration of composition, structure, and elements with the climate change analysis."
-            },
-            {
-              "minutes": "44-50",
-              "activity": "Three students share their four-sentence argument. Class evaluates whether each argument names a process from the composition or structure sections (e.g. the greenhouse gas composition, the ozone layer, the water vapour role in precipitation) and links it to a climate change consequence. Close by noting that the atmosphere's layered, interdependent structure makes even small compositional changes — a rise in CO₂, thinning ozone — cascade through temperature, pressure, wind, monsoon, and ultimately human livelihoods."
-            }
-          ],
-          "section_context": "Whole-chapter synthesis: atmosphere structure, climate elements, monsoon, climate change, floods",
-          "pedagogical_approaches": [
-            "Inquiry"
-          ],
-          "teacher_notes": "This unit assumes all chapter sections have been taught and invites students to build connections across the full conceptual arc — from the gas proportions in Fig. 3.2 through the layered structure, the five weather elements, the seasonal and monsoon mechanisms, the greenhouse effect, and the Punjab floods case study. The concept-map's cross-node arrows are the critical task: a student who can label 'ozone in stratosphere filters the UV that, if unfiltered, would raise surface temperatures beyond the torrid zone's current range' has genuinely synthesised the chapter. Invite students to locate the Punjab floods in the map — it should appear as a node under both Human Disruption and Seasons/Monsoon, bridging the two.",
-          "homework": [],
-          "competency_edges": [
-            {
-              "c_code": "C-4.2",
-              "cg": "CG-4",
-              "weight": 3,
-              "competency_text": "Explaining important geographical concepts and the physical factors of a region",
-              "implied_lo": "Students can construct a connected explanatory framework linking atmospheric composition, layered structure, weather elements, and climate patterns into a coherent whole.",
-              "cognitive_demand": "Evaluation"
-            },
-            {
-              "c_code": "C-4.3",
-              "cg": "CG-4",
-              "weight": 2,
-              "competency_text": "Drawing inter-linkages between components of the physical environment, such as climate and relief",
-              "implied_lo": "Students can identify and justify cross-system linkages — between atmospheric composition, insolation, temperature zones, monsoon circulation, and flood hazards — using labelled connections in a concept map.",
-              "cognitive_demand": "Evaluation"
-            },
-            {
-              "c_code": "C-4.5",
-              "cg": "CG-4",
-              "weight": 2,
-              "competency_text": "Evaluating the impact of human interventions on the environment and measures to reverse these",
-              "implied_lo": "Students can construct an evidence-based argument showing how human-driven changes to atmospheric composition disrupt the natural processes that govern weather, climate, and livelihoods.",
-              "cognitive_demand": "Evaluation"
-            },
-            {
-              "c_code": "C-4.4",
-              "cg": "CG-4",
-              "weight": 2,
-              "competency_text": "The inter-relationship between the natural environment and human beings and their livelihoods",
-              "implied_lo": "Students can synthesise evidence from multiple sections to argue how human dependence on and disruption of the atmosphere connect physical processes to social and economic outcomes.",
-              "cognitive_demand": "Evaluation"
-            }
-          ]
         }
       ]
     },
-    "period_schedule": [
-      {
-        "duration_minutes": 50,
-        "count": 12
-      }
-    ],
     "coverage_handoff": {
       "C-4.2": {
         "cg": "CG-4",
@@ -903,13 +675,6 @@
             "section_context": "Figs. 3.10 and 3.11; south-west and north-east monsoon mechanisms; mausim etymology",
             "implied_lo": "Students can explain the differential land-sea heating mechanism that drives the seasonal reversal of south-west and north-east monsoon winds.",
             "cognitive_demand": "Analysis"
-          },
-          {
-            "period_number": 12,
-            "section_anchor": "synthesis",
-            "section_context": "Whole-chapter synthesis: atmosphere structure, climate elements, monsoon, climate change, floods",
-            "implied_lo": "Students can construct a connected explanatory framework linking atmospheric composition, layered structure, weather elements, and climate patterns into a coherent whole.",
-            "cognitive_demand": "Evaluation"
           }
         ]
       },
@@ -938,13 +703,6 @@
             "section_context": "Figs. 3.10 and 3.11; south-west and north-east monsoon mechanisms; mausim etymology",
             "implied_lo": "Students can explain how the differential rates of heating between the Indian landmass and surrounding oceans produce the seasonal pressure reversal that defines monsoon circulation.",
             "cognitive_demand": "Analysis"
-          },
-          {
-            "period_number": 12,
-            "section_anchor": "synthesis",
-            "section_context": "Whole-chapter synthesis: atmosphere structure, climate elements, monsoon, climate change, floods",
-            "implied_lo": "Students can identify and justify cross-system linkages — between atmospheric composition, insolation, temperature zones, monsoon circulation, and flood hazards — using labelled connections in a concept map.",
-            "cognitive_demand": "Evaluation"
           }
         ]
       },
@@ -980,13 +738,6 @@
             "section_context": "Punjab 2025 floods — Satluj, Beas, Ravi, Ghaggar; dhūsī bāndh; NDMA guidelines",
             "implied_lo": "Students can analyse how a specific flood event disrupts agriculture, infrastructure, and livelihoods, distinguishing between the natural trigger and the human conditions that amplify harm.",
             "cognitive_demand": "Analysis"
-          },
-          {
-            "period_number": 12,
-            "section_anchor": "synthesis",
-            "section_context": "Whole-chapter synthesis: atmosphere structure, climate elements, monsoon, climate change, floods",
-            "implied_lo": "Students can synthesise evidence from multiple sections to argue how human dependence on and disruption of the atmosphere connect physical processes to social and economic outcomes.",
-            "cognitive_demand": "Evaluation"
           }
         ]
       },
@@ -1014,13 +765,6 @@
             "section_anchor": "Punjab Floods 2025: A Case Study",
             "section_context": "Punjab 2025 floods — Satluj, Beas, Ravi, Ghaggar; dhūsī bāndh; NDMA guidelines",
             "implied_lo": "Students can evaluate the relative contribution of natural and human-made factors to a flood disaster and assess which human interventions could most effectively reduce future damage.",
-            "cognitive_demand": "Evaluation"
-          },
-          {
-            "period_number": 12,
-            "section_anchor": "synthesis",
-            "section_context": "Whole-chapter synthesis: atmosphere structure, climate elements, monsoon, climate change, floods",
-            "implied_lo": "Students can construct an evidence-based argument showing how human-driven changes to atmospheric composition disrupt the natural processes that govern weather, climate, and livelihoods.",
             "cognitive_demand": "Evaluation"
           }
         ]
@@ -1061,8 +805,6 @@
         ]
       }
     },
-    "role_handoff": {},
-    "unit_handoff": {},
     "assessment_items": [
       {
         "question_type": "MCQ",
@@ -1117,7 +859,10 @@
               "C": "Student inverts both premises — incorrect surface heating and incorrect pressure outcome — indicating foundational confusion about the pressure-wind relationship."
             }
           }
-        }
+        },
+        "unit_ref": [
+          4
+        ]
       },
       {
         "question_type": "SCR",
@@ -1155,7 +900,10 @@
               "Notes that the stratosphere extends from the tropopause to about 50 km, placing aircraft well above weather disturbances."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          3
+        ]
       },
       {
         "question_type": "SOURCE_INTERPRETATION",
@@ -1209,7 +957,10 @@
               "Student contrasts ozone (filters harmful ultraviolet radiation in the stratosphere, protecting life at the surface) with carbon dioxide (traps heat through the greenhouse effect, regulating surface temperature), demonstrating that importance is determined by function, not by proportion."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          2
+        ]
       },
       {
         "question_type": "ECR",
@@ -1251,7 +1002,10 @@
               "Demonstrates understanding of the monsoon as a system rather than two separate wind events — showing that the same pressure logic operates in reverse between summer and winter."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          7
+        ]
       },
       {
         "question_type": "OPEN_TASK",
@@ -1263,9 +1017,7 @@
         },
         "implied_lo": "Students can construct a connected explanatory framework linking atmospheric composition, layered structure, weather elements, and climate patterns into a coherent whole.",
         "cognitive_demand": "Evaluation",
-        "period_ref": [
-          12
-        ],
+        "period_ref": [],
         "chapter_section": "synthesis",
         "question_text": "",
         "options": [],
@@ -1288,7 +1040,11 @@
             "format_type": "Cause-effect map",
             "format_rationale": "A cause-effect map is the most natural demonstration vehicle for an LO requiring students to construct a connected explanatory framework: it externalises the causal architecture of the chapter in a form the teacher can inspect and assess in a single session. The teacher may substitute any other format from the permitted menu — comparison table, annotated diagram, structured discussion prompt with written output, or source analysis task."
           }
-        }
+        },
+        "unit_ref": [
+          12
+        ],
+        "scheduling_note": "anchor unit not scheduled in this plan (time budget)"
       },
       {
         "question_type": "MCQ",
@@ -1343,7 +1099,10 @@
               "A": "Student conflates the albedo effect (surface reflectivity) with the insolation-angle explanation; reverses causality by treating surface colour as the primary input."
             }
           }
-        }
+        },
+        "unit_ref": [
+          6
+        ]
       },
       {
         "question_type": "SCR",
@@ -1381,7 +1140,10 @@
               "Makes the causal link explicit: air always moves from high to low pressure, and the direction of that pressure gradient reverses between day and night because land and sea heat and cool at different rates."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          4
+        ]
       },
       {
         "question_type": "ECR",
@@ -1421,7 +1183,10 @@
               "Reaches a considered verdict on whether 'most dramatic land-sea breeze' is accurate or whether the scale difference makes it a qualitatively different phenomenon, supported by chapter evidence."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          7
+        ]
       },
       {
         "question_type": "MCQ",
@@ -1476,7 +1241,10 @@
               "B": "Student correctly identifies employment but introduces cyclones, which are not the chapter's stated hazard mechanism for the south-west monsoon; reflects outside knowledge overriding chapter evidence."
             }
           }
-        }
+        },
+        "unit_ref": [
+          8
+        ]
       },
       {
         "question_type": "SCR",
@@ -1514,7 +1282,10 @@
               "Connects the named consequence to the specific mechanism of disproportionate impact rather than asserting it without explanation."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          9
+        ]
       },
       {
         "question_type": "SOURCE_INTERPRETATION",
@@ -1568,7 +1339,10 @@
               "Student evaluates realistically: better warnings would reduce loss of life and allow evacuation, partially mitigating displacement effects; but they would not prevent flood water reaching farms, damaging infrastructure, or contaminating water, because warnings address human exposure, not the physical inundation driven by weak embankments and silted rivers. A strong response distinguishes which effects warnings can and cannot address."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          11
+        ]
       },
       {
         "question_type": "MCQ",
@@ -1623,7 +1397,10 @@
               "C": "Student misapplies the monsoon mechanism by assuming uniform warming eliminates the land-sea temperature differential — fails to analyse that differential warming rates would still change, and conflates 'both warm' with 'both warm equally'."
             }
           }
-        }
+        },
+        "unit_ref": [
+          9
+        ]
       },
       {
         "question_type": "SCR",
@@ -1661,7 +1438,10 @@
               "Implicitly or explicitly acknowledges that the other causes also matter but explains why the chosen cause has priority — demonstrating evaluative reasoning rather than simple listing."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          11
+        ]
       },
       {
         "question_type": "ECR",
@@ -1703,7 +1483,10 @@
               "Reaches a stated verdict — individual action is necessary but insufficient, or individual action is meaningful only as part of broader collective effort — supported by at least two pieces of chapter evidence."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          10
+        ]
       },
       {
         "question_type": "MCQ",
@@ -1758,7 +1541,10 @@
               "D": "Student selects the southern temperate zone boundaries, confusing the zone between the Tropic of Capricorn and the Antarctic Circle with the torrid zone."
             }
           }
-        }
+        },
+        "unit_ref": [
+          6
+        ]
       },
       {
         "question_type": "SCR",
@@ -1796,7 +1582,10 @@
               "Describes the direction of progression correctly: south-west to north-east or south to north."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          7
+        ]
       },
       {
         "question_type": "MCQ",
@@ -1851,7 +1640,10 @@
               "C": "Student selects a valid waste-and-plastics domain pledge but not a water use pledge — indicates either domain confusion or defaulting to a more familiar conservation action."
             }
           }
-        }
+        },
+        "unit_ref": [
+          10
+        ]
       },
       {
         "question_type": "SCR",
@@ -1889,10 +1681,88 @@
               "Provides one sentence explaining which resource or emission the pledge conserves (e.g. electricity → reduced CO₂ from power generation; water → reduced energy for treatment and pumping; waste reduction → less methane from landfill decomposition) and why conserving it matters in the context of the chapter's climate change argument."
             ]
           }
-        }
+        },
+        "unit_ref": [
+          10
+        ]
       }
     ],
-    "competency_gap_note": "",
-    "section_coverage_note": null
+    "section_coverage_note": null,
+    "dropped_units": null
+  },
+  "genon": {
+    "engine": "serve v2.0 / e12 (canonical library, next-highest selection, X-1+1 slot fill by the first-exposure choice set §0.4, proportional duration scaling, unit-anchored assessment)",
+    "library": [
+      12,
+      10,
+      7
+    ],
+    "variant_used": 12,
+    "requested_periods": 11,
+    "sittings": 11,
+    "slot_fill": {
+      "mode": "fill",
+      "fill_class": "single",
+      "first_section": "Punjab Floods 2025: A Case Study",
+      "borrowed_from": 12,
+      "self_fill": true,
+      "overlap_sections": [],
+      "uncovered_sections": [],
+      "synthesis_only": false,
+      "reference_count": null,
+      "withheld_units": []
+    },
+    "surrendered_periods": 0,
+    "surrender_note": null,
+    "stream_source": "ch_03_canonical.json",
+    "matrix": [
+      {
+        "duration": 50,
+        "count": 11
+      }
+    ],
+    "served_matrix": [
+      {
+        "duration": 50,
+        "count": 11
+      }
+    ],
+    "duration_sequence": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "registry": [
+      "Introduction to the Atmosphere",
+      "Composition of the Atmosphere",
+      "Structure of the Atmosphere",
+      "Weather and Climate",
+      "Elements of Weather and Climate",
+      "Seasons in India",
+      "Monsoon",
+      "Climate Change",
+      "Punjab Floods 2025: A Case Study"
+    ]
   }
 }

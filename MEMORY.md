@@ -26,6 +26,12 @@ must confirm · source entry.
    flat) — the constitution text itself was never exercised by a generation run. *Pre-warm must
    confirm:* live SS + TWAU assessment generation actually emits `guide.{TYPE}`-nested rubrics,
    never flat. (src: 2026-07-10 "Normalized assessment items + 3b renderer".)
+   **★ SS HALF TESTED LIVE + PASSED 2026-08-03 (SS·secondary C4, v2.0 ch 3 library).** All
+   **54 items** across {12, 10, 7} nest under exactly their own `question_type` key, every type's
+   mandated fields present (MCQ `what_each_option_reveals`, SCR `expected_elements`, ECR
+   `look_for`, SI `stimulus_rationale` + `sub_question_expectations`, OPEN_TASK's five), and ZERO
+   flat placements. The constitution text now has a live run behind it for SS·secondary.
+   **Still owed: TWAU** (v1.3) and SS·middle, each at its own C4.
 
 2. **English MCQ option-reveals rewrite — owed into the generation prompt wrappers** — the
    corpus MCQs had their prose-`note` option analyses rewritten into the keyed
@@ -40,6 +46,15 @@ must confirm · source entry.
    per-type item-count expectations in the constitutions have not been reconciled against what
    the generator emits. *Pre-warm must confirm:* generated assessments hit the constitutions'
    exact counts per type. (src: 2026-07-10, "still deferred to generation milestone".)
+   **★ SS·SECONDARY TESTED LIVE 2026-08-03 (C4, v2.0 ch 3 library) — COUNTS PASS, SLOT TYPES DO
+   NOT.** All three files carry exactly the mandated slate per competency: Central 5
+   (MCQ·SCR·SI·ECR·OPEN_TASK), Substantive 3, Present 2 → 18 items each, no competency over or
+   short. **But the count being right does not make the SLOT right:** three Substantive third
+   slots took an ECR where the competency owned a source-capable LO and Rule 4 mandates
+   SOURCE_INTERPRETATION (ARV-D-028). So this item splits: *counting* is solved and can be
+   gated (`build_library.py`'s advisory census already does), *slot-type resolution* is a
+   separate deterministic pre-step the model does not run. The p07 17-vs-18 miss of 2026-08-02
+   (ARV-D-019) did not recur. Other stages still owed at their own C4.
 
 4. **English Unit→true-chapter splits (Grades VI, VII, VIII; plus III & IX)** — the 5 Unit-level
    summaries/mappings/saved-plans per grade were cut into true per-section chapters by
@@ -99,6 +114,10 @@ must confirm · source entry.
    legitimate empty is mathematics·preparatory alone** (no source field in its constitution);
    SS·middle emits `pedagogical_approaches` too (v2.7) and is expected to populate at its own C4.
    The pre-warm check for this item is now: maths-prep empty is fine; SS empty is a DEFECT.
+   **★ RE-CONFIRMED on the v2.0 library 2026-08-03 (C4):** 0 empty across all 29 units of
+   {12, 10, 7}, and the JOIN is now visibly exercised — p10 U6 "Inquiry; Project work", p10 U7
+   and U10 "Issues-based learning; Reflective essays", p07 U5/U6 likewise. Rule 9 P5's
+   multi-approach list survives the port into `Period.approach` intact.
 
 8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
    (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,

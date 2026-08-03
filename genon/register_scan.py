@@ -63,6 +63,14 @@ PATTERNS = [
     ("forward", True, re.compile(r"\bthread (to pick up|that .{0,40} develops)\b", re.I)),
     ("forward", True, re.compile(r"\bpreviewing\b|\bforeshadow\w*\b", re.I)),
     ("forward", True, re.compile(r"\bfrom the next\b|\bthis unit from the next\b", re.I)),
+    # ── added 2026-08-03 (ARV-D-026) — three forward phrasings that sailed through a clean run:
+    # "the monsoon regime that will follow", "the interlinkage that the Monsoon unit will extend",
+    # "explored in upcoming units". The second is the general shape: a NAMED unit plus a future
+    # verb, which no earlier pattern covered because it never says "next".
+    ("forward", True, re.compile(r"\bthat (will|would) follow\b|\bthat follows? later\b", re.I)),
+    ("forward", True, re.compile(r"\bthe [\w'’-]+ (unit|lesson) will\b", re.I)),
+    ("forward", True, re.compile(r"\bin upcoming (units|lessons|sections)\b|\bupcoming (unit|lesson)\b", re.I)),
+    ("forward", True, re.compile(r"\bwill (extend|pick up|take up|carry (this|it) forward)\b", re.I)),
     ("completion", True, re.compile(r"\bhaving (worked through|covered|completed) (every|all|the whole)\b", re.I)),
     ("completion", True, re.compile(r"\bnow that (we|students|they) have (covered|completed)\b", re.I)),
     ("completion", True, re.compile(r"\bthe chapter is (now )?complete\b", re.I)),
@@ -71,6 +79,12 @@ PATTERNS = [
     ("calendar", True, re.compile(r"\b(next|last) class\b", re.I)),
     ("calendar", False, re.compile(r"\b(today|yesterday)\b", re.I)),      # advisory — see header
     ("clock", True, re.compile(r"\bfor (two|three|four|five|six|seven|eight|nine|ten|fifteen|twenty|thirty|\d+) minutes\b", re.I)),
+    # ── added 2026-08-03 (ARV-D-026, found by hand at C3 — four breaches passed a clean run) ──
+    # The header promises that every new phrasing lands here with a dated note. These are those.
+    # Ranged and hedged clock quantities: "for two to three minutes", "for about ten minutes".
+    # The {0,20} window keeps it to the same clause, so "asks for the map … minutes later" in a
+    # different sentence is not swept in.
+    ("clock", True, re.compile(r"\bfor\b[^.;]{0,20}\bminutes\b", re.I)),
     ("clock", True, re.compile(r"\bthe remaining time\b|\bhalf the (session|period|class)\b", re.I)),
     ("clock", True, re.compile(r"\bin the (first|last) \w+ minutes\b", re.I)),
     ("ids", True, re.compile(r"\(C-\d+\.\d+\)")),

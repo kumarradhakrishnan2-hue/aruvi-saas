@@ -768,6 +768,12 @@ distribution report exists. **Artefact:** comparison table + distribution note.
 
 ## 6a. Recording surface
 
+**No step artefacts (founder, 2026-08-03).** A C-step's record is its **tracker comment plus its
+defect rows** — not a `docs/testing_artefacts/*.md` file. Write findings straight into the
+tracker: brief, quoted where it matters, one defect per failure. Long-form artefacts are written
+only when the founder asks for one. (`docs/testing_artefacts/` keeps what already exists as
+history; nothing new lands there by default.)
+
 State lives **in Aruvi itself**: `GET/PUT /api/testing/campaign` and
 `POST /api/testing/campaign/item`, persisted at `data/testing/campaign_state.json` (atomic
 writes). The UI is `docs/testing_tracker.html`, also served at `GET /api/testing/tracker`; it

@@ -57,33 +57,42 @@ BACKUP = REPO / "backup" / "register_repair"
 # Three of the four are the SAME family: a clock quantity written into band prose when the
 # band already carries its own `minutes`. Those are pure deletions of the quantity — the
 # activity, the grouping and the output all stand. The fourth is a forward reference.
+# ── v1.2 ADDITIONS, 2026-08-03 (ARV-D-026) ──────────────────────────────────────
+# Four breaches found at C3 that the 18:07 pass never saw, because register_scan had no
+# pattern for their phrasing: a RANGED clock quantity ("for two to three minutes" — the
+# scanner matches "for two minutes") and three forward references in prose the pattern list
+# did not cover. The patterns are added to register_scan.py in the same change, so the next
+# library is gated on them rather than found by hand. The p10 U1 "the three functions the
+# whole chapter unpacks" borderline is deliberately NOT repaired (founder ruling, same day):
+# read as orienting prose about the chapter as an object, not a pointer to a later unit.
 REPAIRS = {
     "ch_03_canonical.json": [
-        (4, "band:2",
-         " — is posed for two minutes of paired oral sharing.",
-         " — is taken up as paired oral sharing.",
+        (1, "band:0",
+         "Students jot individual responses for two to three minutes, then share aloud.",
+         "Students jot individual responses, then share aloud.",
          "register/clock",
-         "clock quantity only. The THINK ABOUT IT prompt and its paired-oral format are KEPT; "
-         "the band's own `minutes` already carries the timing"),
-        (8, "band:0",
-         "Pairs discuss for three minutes and take one response each side.",
-         "Pairs discuss and take one response each side.",
-         "register/clock",
-         "clock quantity deleted; the pairing and the one-response-each-side instruction stand"),
-        (11, "band:2",
-         "Groups of four discuss for five minutes and prepare a two-sentence position.",
-         "Groups of four discuss and prepare a two-sentence position.",
-         "register/clock",
-         "clock quantity deleted; group size and the two-sentence output are unchanged"),
-    ],
-    "ch_03_canonical_p10.json": [
-        (2, "band:3",
-         " — previewing the climate change thread without naming a future topic.", "",
+         "ranged clock quantity deleted; the individual-jotting task and the share-aloud that "
+         "follows it are unchanged, and the band's own `minutes` already carries the timing"),
+        (6, "teacher_notes",
+         " Connecting India's tropical position to the monsoon regime that will follow prepares "
+         "students conceptually.", "",
          "register/forward",
-         "trailing appositive dropped whole (not replaced with '.', because the sentence "
-         "already closes on the quoted question mark). The CO2 question itself is KEPT — it is "
-         "answerable from the composition section the unit teaches; only the promise to a "
-         "later unit goes, which is exactly the promise a compact variant may never keep"),
+         "the whole trailing sentence goes: it exists only to point at a unit that may never be "
+         "served after this one. Nothing is invented in its place, and the note still carries "
+         "its continuity link and its confusion at Rule 10's 2-sentence floor"),
+    ],
+    "ch_03_canonical_p07.json": [
+        (3, "teacher_notes",
+         " that the Monsoon unit will extend", "",
+         "register/forward",
+         "trailing relative clause dropped; the sentence keeps its point — the task plants the "
+         "relief-climate interlinkage — and loses only the claim about which unit picks it up"),
+        (3, "band:3",
+         " This sets up the interlinkage of relief and climate explored in upcoming units.", "",
+         "register/forward",
+         "whole trailing sentence dropped. The worst of the four because it sits in BAND text, "
+         "which Rule 13 makes the core teacher-facing product; the band keeps its teaching "
+         "content and closes on the windward-leeward question it asks students"),
     ],
 }
 
@@ -135,8 +144,8 @@ def apply_file(fname, edits, dry):
         gc = plan.setdefault("genon_canonical", {})
         gc.setdefault("repairs", []).append({
             "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": "genon/repair_register.py v1.1",
-            "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013)",
+            "tool": "genon/repair_register.py v1.2",
+            "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
             "edits": done,
             "ban_hits_before": before, "ban_hits_after": len(after_hits),
         })
