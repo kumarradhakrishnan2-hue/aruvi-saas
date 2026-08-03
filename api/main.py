@@ -1096,7 +1096,12 @@ def _plan_view_bundle(subject: str, grade: str, filename: str):
     _lp = r.get("lesson_plan", {})
     link_context = {"periods": _lp.get("periods", []),
                     "handoff": r.get("coverage_handoff", _lp.get("coverage_handoff", []))}
-    a = sub.assessment_to_view(r.get("assessment_items", []), grade=g, chapter=chapter,
+    # A dropped unit's questions travel with it ON SCREEN (serve e13) but NOT into the
+    # export — the same rule the dropped units themselves follow: her printed artifact is
+    # the plan she was served, and printing questions for a sitting the export omits would
+    # put un-taught content in her hand (ARV-D-037).
+    export_items = [i for i in (r.get("assessment_items") or []) if not i.get("unscheduled")]
+    a = sub.assessment_to_view(export_items, grade=g, chapter=chapter,
                                link_context=link_context)
     view = ViewModel(lp, a).to_dict()
 

@@ -755,7 +755,7 @@ distribution report exists. **Artefact:** comparison table + distribution note.
 | Pilot chapter number | tracker |
 | LP constitution version | `VERSION` line of the stage's LP constitution |
 | Assessment constitution version | `VERSION` line, assessment side |
-| `GENON_ENGINE_VERSION` | `api/data.py` (12 — see the ladder in §2, 0.2) |
+| `GENON_ENGINE_VERSION` | `api/data.py` (**13** — e13, 2026-08-03: an assessment item whose unit is not in the served plan is dropped, and a dropped unit's questions ride with it; ARV-D-037. See the ladder in §2, 0.2) |
 | **Canonical plan row** | `master_plan.json` → `canonical_plan {counts, provisional, basis, registry_sections, authored}` |
 | **Brief identity** | the brief files in `genon/out/briefs/` for this chapter — record the git commit of `genon/variant_plans.py` (which composes them) and keep the brief text as an artefact; brief wording is version-bearing even though it is not constitutional |
 | Canonical + variant `ledger_ts` | `genon_canonical` block of each library file |

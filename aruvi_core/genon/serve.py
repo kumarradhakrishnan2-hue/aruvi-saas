@@ -439,18 +439,58 @@ def serve_plan(streams, matrix):
         if s is chosen:
             unit_to_sitting[u["unit"]] = i
 
+    # Dropped units are built HERE (they used to be built after the notes) because the
+    # assessment needs their sitting numbers: a dropped unit is shown to the teacher as
+    # self-study, so its questions must travel with it. They come FROM THE LENDING PLAN's
+    # units after the serving unit, and are renumbered N+1, N+2… in this plan's own
+    # sequence — never the lender's original numbers, which could collide with a served
+    # sitting and hang the questions on the wrong unit.
+    dropped_units = []
+    dropped_lender_unit_to_sitting = {}
+    if fill and fill.get("drop_units"):
+        base = len(served)
+        for u in fill["drop_units"]:
+            p = _period_from_unit(fill["stream"], u, base + len(dropped_units) + 1,
+                                  u["authored_duration_minutes"])
+            p["unscheduled"] = True
+            dropped_lender_unit_to_sitting[u["unit"]] = p["period_number"]
+            dropped_units.append(p)
+
+    # ── assessment: anchoring is unit-level (compile v0.5 normalizes unit_ref) —
+    # the chosen variant's items remap unit -> sitting; a borrowed fill unit
+    # brings its own items from its home variant, anchored to the fill sitting ──
+    #
+    # AN ITEM WHOSE UNIT IS NOT IN THIS PLAN IS NOT IN THIS PLAN (ARV-D-037, 2026-08-03).
+    # It used to be kept with `period_ref: []` and a scheduling note. That state was
+    # neither in nor out: the screen anchors items to units, so it rendered nowhere, while
+    # the EXPORT walks assessment_items flat and printed it — on the 8-period serve, 7 of
+    # 20 questions were invisible on screen and present on paper, about units the class
+    # never had. Nor could they be re-anchored to whatever else teaches their section: the
+    # item's implied_lo is not in this plan's coverage_handoff (measured: 7 of 7 absent),
+    # its demand was set by a sitting that did not happen, and section labels are merged
+    # strings that differ between canonicals. So the item is DROPPED, and the count is
+    # reported in provenance rather than left to be inferred from a silence.
     items = []
+    unserved_items = 0
     for it in chosen["assessment_items"]:
         it2 = json.loads(json.dumps(it))
         anchors = it2.get("unit_ref") or []
         live = [unit_to_sitting[u] for u in anchors if u in unit_to_sitting]
-        if anchors and not live:
-            it2["period_ref"] = []
-            it2["scheduling_note"] = ("anchor unit not scheduled in this plan "
-                                      "(time budget)")
-        else:
+        if live or not anchors:
             it2["period_ref"] = [max(live)] if live else it2.get("period_ref")
-        items.append(it2)
+            items.append(it2)
+            continue
+        # not served — but if its unit is one the teacher still SEES (a dropped unit from
+        # this same plan), the question rides with that unit instead of being lost.
+        drops = [dropped_lender_unit_to_sitting[u] for u in anchors
+                 if fill and fill["stream"] is chosen
+                 and u in dropped_lender_unit_to_sitting]
+        if drops:
+            it2["period_ref"] = [max(drops)]
+            it2["unscheduled"] = True          # screen: yes (with its unit) · export: no
+            items.append(it2)
+        else:
+            unserved_items += 1
     if fill and fill["stream"] is not chosen and fill.get("borrowed_from"):
         fn = fill["unit"]["unit"]
         fsit = len(served)
@@ -459,8 +499,21 @@ def serve_plan(streams, matrix):
                 it2 = json.loads(json.dumps(it))
                 it2["period_ref"] = [fsit]
                 items.append(it2)
+    # dropped units lent by a DIFFERENT plan bring their questions with them too
+    if fill and fill["stream"] is not chosen and dropped_lender_unit_to_sitting:
+        for it in fill["stream"]["assessment_items"]:
+            hit = [dropped_lender_unit_to_sitting[u] for u in (it.get("unit_ref") or [])
+                   if u in dropped_lender_unit_to_sitting]
+            if hit:
+                it2 = json.loads(json.dumps(it))
+                it2["period_ref"] = [max(hit)]
+                it2["unscheduled"] = True
+                items.append(it2)
 
     # ── coverage handoff: chosen's rows, filtered to served units, remapped ──
+    # Dropped units' rows are RESTORED, flagged: their questions are in the plan, so their
+    # LOs must be too — an item whose LO the plan does not contain breaks the identity the
+    # whole assessment rests on (one item <- one LO -> one unit).
     handoff = json.loads(json.dumps(chosen.get("coverage_handoff") or {}))
     for c in handoff.values():
         kept = [lo for lo in c.get("los", [])
@@ -468,6 +521,26 @@ def serve_plan(streams, matrix):
         for lo in kept:
             lo["period_number"] = unit_to_sitting[int(lo["period_number"])]
         c["los"] = kept
+    if dropped_lender_unit_to_sitting:
+        lender_ho = (fill["stream"].get("coverage_handoff") or {}) if fill else {}
+        for code, blk in lender_ho.items():
+            rows = []
+            for lo in blk.get("los", []):
+                sit = dropped_lender_unit_to_sitting.get(int(lo.get("period_number", -1)))
+                if sit is None:
+                    continue
+                lo2 = json.loads(json.dumps(lo))
+                lo2["period_number"] = sit
+                lo2["unscheduled"] = True
+                rows.append(lo2)
+            if not rows:
+                continue
+            if code in handoff:
+                handoff[code]["los"] = (handoff[code].get("los") or []) + rows
+            else:
+                blk2 = json.loads(json.dumps(blk))
+                blk2["los"] = rows
+                handoff[code] = blk2
 
     # ── the honest notes ─────────────────────────────────────────────────────
     coverage_note = None
@@ -524,14 +597,7 @@ def serve_plan(streams, matrix):
     # self-study material ("give her access to it"); exports deliberately omit
     # it. Case-3 truncation deliberately shows none (the ask is the reference
     # plan's depth, not a salvage).
-    dropped_units = []
-    if fill and fill.get("drop_units"):
-        base = len(served)
-        for u in fill["drop_units"]:
-            p = _period_from_unit(fill["stream"], u, base + len(dropped_units) + 1,
-                                  u["authored_duration_minutes"])
-            p["unscheduled"] = True
-            dropped_units.append(p)
+    # (dropped_units are built above, with the assessment — their questions ride with them)
 
     # ── the SERVED schedule (founder, 2026-08-01): every teacher-facing time print
     # reflects the periods actually used, never the request. A surrendered request
@@ -566,9 +632,11 @@ def serve_plan(streams, matrix):
             "dropped_units": dropped_units or None,
         },
         "genon": {
-            "engine": ("serve v2.0 / e12 (canonical library, next-highest selection, "
+            "engine": ("serve v2.1 / e13 (canonical library, next-highest selection, "
                        "X-1+1 slot fill by the first-exposure choice set §0.4, "
-                       "proportional duration scaling, unit-anchored assessment)"),
+                       "proportional duration scaling, unit-anchored assessment; "
+                       "e13: an item whose unit is not in the plan is not in the plan, "
+                       "and a dropped unit's questions ride with it)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,
@@ -587,6 +655,10 @@ def serve_plan(streams, matrix):
             }),
             "surrendered_periods": surrendered,
             "surrender_note": surrender_note,
+            # How much of the canonical's assessment did not come with this serve. Reported
+            # so the loss is a number someone can look at, not a silence (ARV-D-037).
+            "assessment_items_unserved": unserved_items,
+            "assessment_items_unscheduled": sum(1 for i in items if i.get("unscheduled")),
             "stream_source": meta.get("source_file"),
             "matrix": [{"duration": d, "count": c} for d, c in matrix],
             "served_matrix": [{"duration": d, "count": c} for d, c in served_matrix],

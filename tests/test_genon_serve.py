@@ -1,4 +1,4 @@
-"""Serve engine v2.0 / e12 — selection, the Xth-unit choice set (§0.4), scaling, edges.
+"""Serve engine v2.0 / e13 — selection, the Xth-unit choice set (§0.4), scaling, edges.
 
 Synthetic canonical library over a 12-section chapter (equal-dispersion counts):
   * A — the STANDARD, 13 units: one section per unit + the mandated closing
@@ -130,6 +130,23 @@ du = p["result"]["dropped_units"]
 assert du and [q["activity_title"] for q in du] == ["C U7", "C U8"], \
     "drops ride from the lending plan's subsequent units"
 assert all(q["unscheduled"] for q in du)
+# e13 (ARV-D-037): a dropped unit is SHOWN to the teacher as self-study, so its questions
+# ride with it — anchored to the unit's number IN THIS PLAN (7, 8 here), never the lender's
+# own numbering, which could collide with a served sitting. They are flagged `unscheduled`
+# so the export can leave them out exactly as it leaves out the dropped units themselves.
+dsits = {q["period_number"] for q in du}
+assert dsits == {7, 8}, dsits
+dq = [i for i in p["result"]["assessment_items"] if i.get("unscheduled")]
+assert dq, "a dropped unit's questions travel with it"
+assert all(i["period_ref"][0] in dsits for i in dq), "anchored to the DROPPED sitting"
+# Their LOs are restored to the handoff too, flagged — an item whose LO the plan does not
+# contain would break the identity the assessment rests on. This fixture carries an empty
+# handoff, so the assertion is that any restored row IS flagged and IS a dropped sitting;
+# the populated case is exercised on the real SS·IX ch 3 library (2 rows, both restored).
+for _c, _b in p["result"]["coverage_handoff"].items():
+    for _lo in _b.get("los", []):
+        if _lo["period_number"] in dsits:
+            assert _lo.get("unscheduled"), "a restored handoff row is flagged unscheduled"
 
 # ── Case 2 / backward — no forward or single candidate exists for M:
 #    the L+M unit is borrowed, the re-cross named as runway ──────────────────
@@ -178,7 +195,12 @@ p = serve_plan(LIB, [(50, 10)])          # B prefix + A's synthesis
 items = p["result"]["assessment_items"]
 by_id = {i["id"]: i for i in items}
 assert by_id["B-i9"]["period_ref"] == [9]
-assert by_id["B-i10"]["scheduling_note"], "unserved B-unit item carries the note"
+# e13 (ARV-D-037): an item whose unit is not in the plan is NOT in the plan. It used to be
+# kept with period_ref [] + a scheduling note — a state the screen rendered nowhere and the
+# EXPORT printed anyway, putting questions about un-served units on the teacher's paper.
+assert "B-i10" not in by_id, "an item whose unit is not served does not travel"
+assert p["genon"]["assessment_items_unserved"] >= 1, "the loss is reported, not silent"
+assert all(i["period_ref"] for i in items), "no item carries an empty anchor"
 assert by_id["A-i13"]["period_ref"] == [10], "the synthesis brings its own item"
 assert "A-i12" not in by_id, "only the borrowed unit's items travel"
 
@@ -212,4 +234,4 @@ try:
 except ServeError:
     pass
 
-print("test_genon_serve: all e12 assertions passed")
+print("test_genon_serve: all e13 assertions passed")

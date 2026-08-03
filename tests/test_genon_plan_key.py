@@ -100,5 +100,36 @@ else:
         finally:
             data.DATA_DIR = real
 
+# ── ARV-D-034 (2026-08-03): a repair must re-key the cache ──────────────────────
+# repair_anchors / repair_register / normalize_options rewrite a canonical IN PLACE.
+# ledger_ts and the engine version are unchanged, so before this the derived plan kept
+# its key and the pre-repair bytes were served forever — measured on SS·IX ch 3, where
+# the 8-period plan still carried a repaired-away register breach four hours later.
+def test_repairs_rekey():
+    import copy
+    from api import data
+    base = {"genon_canonical": {"ledger_ts": "20260803141938"}, "result": {}}
+    k0 = data.canonical_version(base)
+
+    one = copy.deepcopy(base)
+    one["genon_canonical"]["repairs"] = [{"at": "2026-08-03T18:07:01", "tool": "x", "edits": []}]
+    k1 = data.canonical_version(one)
+    assert k1 != k0, "a repaired canonical must not keep the unrepaired key"
+
+    two = copy.deepcopy(one)
+    two["genon_canonical"]["repairs"].append({"at": "2026-08-03T19:28:11", "tool": "y", "edits": []})
+    k2 = data.canonical_version(two)
+    assert k2 != k1, "a SECOND repair must re-key again"
+
+    assert data.canonical_version(copy.deepcopy(one)) == k1, "the key must be stable"
+    assert k1.startswith(k0), "the ledger run must remain readable in the key"
+    print("PASS  a repair re-keys the cache; a second repair re-keys again; keys are stable")
+
+
+test_repairs_rekey()
+
+
 print("\n" + ("ALL PASS" if not FAILURES else "FAILURES: " + ", ".join(FAILURES)))
 sys.exit(1 if FAILURES else 0)
+
+

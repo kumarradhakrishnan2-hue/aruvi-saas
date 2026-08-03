@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # C6 — API serve checks · social_sciences · ix · ch 3
-# REWRITTEN 2026-08-03 for the v2.0 library and engine e12. The previous version was
+# REWRITTEN 2026-08-03 for the v2.0 library and engine e13 (ARV-D-037: an item whose
+# unit is not served is dropped; a dropped unit's questions ride with it). The previous version was
 # written against {12, 9, 7} at e10 and its expectations (superset / exact / suffix modes,
 # a p09 variant) no longer exist. Do not run the old one.
 #
-# Library {12, 10, 7} · floor 7 · top 12 · AUTHORED AT 50 MIN · engine e12
+# Library {12, 10, 7} · floor 7 · top 12 · AUTHORED AT 50 MIN · engine e13
 #
 #   bash docs/testing_artefacts/c6_runbook.sh
 #
@@ -124,6 +125,8 @@ PY
 # ── 5 · below the floor · kumar2 ──────────────────────────────────────────────
 say "5 · X = floor - 1 = 6 (kumar2) — honest partial: fill + uncovered_sections"
 serve belowfloor_50m6 kumar2 '[{"duration":50,"count":6}]'
+echo "   e13 also: the DROPPED unit now carries its own Assess tab on screen (its questions"
+echo "   are anchored to it and flagged unscheduled) and is still omitted from exports."
 python3 - "$OUT/belowfloor_50m6.json" "$LIB" <<'PY'
 import json,sys,pathlib
 d=json.load(open(sys.argv[1])); fn=d.get("filename")
