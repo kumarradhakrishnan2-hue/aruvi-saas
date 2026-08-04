@@ -885,8 +885,13 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
 
     library = data.load_genon_library(subject, grade, chapter_number)
     if not library:
+        # "Canonical" is our word, not hers (founder, 2026-08-04). A teacher who asks for a
+        # chapter we have not authored yet should be told about the CHAPTER, in her language;
+        # engine vocabulary in a teacher-facing string is a defect even when the string is
+        # otherwise correct. This is the only such message on the genon path — the rest of the
+        # 4xx wording is already plain ("Period count implausibly large.").
         raise HTTPException(status_code=404,
-                            detail="No canonical for this chapter yet.")
+                            detail="No underlying chapter yet.")
 
     def _std_row(c) -> Dict[int, int]:
         row = (c.get("period_rows_snapshot") or [{}])[0]

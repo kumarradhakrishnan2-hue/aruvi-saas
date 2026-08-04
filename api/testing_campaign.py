@@ -101,7 +101,7 @@ class ItemPatch(BaseModel):
     scope: step0 | stages | combos | cross
     key:   "campaign" for step0/cross; "english/preparatory" for stages;
            "english/middle" for combos (subject·STAGE rows)
-    step:  "0.1".."0.8" | "P1".."P5" | "SIGN" | "C1".."C13" | "X1"/"X2" | "provenance"
+    step:  "0.1".."0.8" | "P1".."P5" | "SIGN" | "C1".."C14" | "X1"/"X2" | "provenance"
     patch: merged into the stored item (status / comment / by / any extra fields;
            set a field to null to delete it). `at` is stamped server-side.
     """

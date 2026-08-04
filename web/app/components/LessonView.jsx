@@ -1249,14 +1249,22 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
                 </div>
                 {/* Lifted-note popup (founder-picked style A, 2026-07-15): paper-white card,
                     soft lift shadow, 3px LEFT identity rule — unit popups take their STATE
-                    colour (clay = now, pine = taught, hairline = ahead). Navigation does
-                    NOT live here (founder same day): "open unit →" was too hard to find
-                    inside the graphic — it sits ABOVE the unit column instead. */}
+                    colour (clay = now, pine = taught, hairline = ahead).
+                    The popup IS a second door into the unit (founder 2026-08-04): tapping the
+                    expanded name box opens it, exactly as the row's "→" does. The row tap keeps
+                    its own job (focus → ribbons + this box); only the box navigates. */}
                 {open ? (
-                  <div className="cof-pop" style={{ borderLeftColor:
-                    st === "cur" ? "var(--clay)" : st === "done" ? "var(--pine)" : "var(--line)" }}>
+                  <div className="cof-pop cof-pop-open" role="button" tabIndex={0}
+                    title={`Open unit ${pad2(i + 1)}`}
+                    onClick={(e) => { e.stopPropagation(); onOpenUnit(i); }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); onOpenUnit(i); }
+                    }}
+                    style={{ borderLeftColor:
+                      st === "cur" ? "var(--clay)" : st === "done" ? "var(--pine)" : "var(--line)" }}>
                     <span className="cof-pop-k">{pad2(i + 1)}</span> · {u.title || `Unit ${i + 1}`}
                     {u.meta?.duration_minutes ? ` · ${u.meta.duration_minutes} min` : ""}
+                    <span className="cof-pop-go" aria-hidden="true">→</span>
                     {!edges.length ? (
                       <div className="cof-pop-quiet">Taught in full — builds no competency edge, by design</div>
                     ) : null}

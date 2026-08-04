@@ -47,7 +47,7 @@ def _anchor_items(items, band_unit, unit_numbers):
     Source of truth: period_ref (the identity); legacy fallback: phase_ref
     mapped through the declared band ids. Returns the problem list."""
     problems = []
-    for it in items:
+    for n, it in enumerate(items, 1):
         if not isinstance(it, dict):
             continue
         units = [u for u in (it.get("period_ref") or [])
@@ -56,8 +56,21 @@ def _anchor_items(items, band_unit, unit_numbers):
             units = sorted({band_unit[r] for r in (it.get("phase_ref") or [])
                             if r in band_unit})
         if not units:
-            problems.append(f"assessment item {it.get('id', '?')}: "
-                            "no resolvable anchor unit (period_ref/phase_ref)")
+            # Name the item by whatever it actually carries. Most subjects emit no `id`, so
+            # the old message read "assessment item ?", which tells the reader nothing about
+            # WHICH question is broken in an 18-item file (C13 case 3, 2026-08-04). Position
+            # is always available; type and competency are what a human searches on.
+            who = it.get("id") or (
+                "#%d %s%s" % (
+                    n,
+                    it.get("question_type") or "item",
+                    " / " + (it.get("competency") or {}).get("c_code", "")
+                    if isinstance(it.get("competency"), dict)
+                    and (it.get("competency") or {}).get("c_code") else "",
+                ))
+            problems.append(f"assessment item {who}: "
+                            "no resolvable anchor unit (period_ref/phase_ref) — it names "
+                            f"{it.get('period_ref') or it.get('phase_ref') or 'nothing'}")
         it["unit_ref"] = units
     return problems
 

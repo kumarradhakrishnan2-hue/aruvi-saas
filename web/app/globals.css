@@ -3299,6 +3299,17 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .cof-pop-fade { position: absolute; left: 3px; right: 1px; bottom: 1px; height: 16px;
   pointer-events: none; border-radius: 0 0 7px 7px;
   background: linear-gradient(to bottom, transparent, var(--paper-2)); }
+/* The UNIT popup doubles as an open-the-unit target (founder 2026-08-04) — the second door
+   beside the row's "→". Reads as tappable: pointer cursor, a quiet trailing arrow that firms
+   up on hover, and a touch-friendly 44px min height. */
+.cof-pop-open { cursor: pointer; min-height: 44px; padding-right: 26px;
+  transition: box-shadow .15s ease, transform .15s ease; }
+.cof-pop-open:hover { box-shadow: 0 4px 13px rgba(60, 50, 30, .16); }
+.cof-pop-open:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+.cof-pop-go { position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  font-family: var(--f-mono); font-size: 13px; color: var(--ink-soft); opacity: .55;
+  transition: opacity .15s ease; }
+.cof-pop-open:hover .cof-pop-go { opacity: 1; color: var(--pine); }
 .cof-pop-k { font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
 .cof-pop-quiet { font-family: var(--f-mono); font-size: 9px; text-transform: uppercase;
   letter-spacing: .1em; color: var(--ink-soft); margin-top: 5px; }

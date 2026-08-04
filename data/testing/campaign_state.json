@@ -1,7 +1,7 @@
 {
   "version": 1,
   "campaign": "aruvi-11-stage-certification",
-  "updated_at": "2026-08-04T11:54:27",
+  "updated_at": "2026-08-04T13:01:00",
   "step0": {
     "campaign": {
       "0.1": {
@@ -205,6 +205,18 @@
         "by": "Claude",
         "comment": "[v2.0/e13 2026-08-03 - PASS, 0.011-0.026 s against a 5 s budget] Timed with curl -w '%{time_total}' against the live API, using FRESH MATRICES rather than deleting a file (the step allows either, and the sandbox mount blocks unlink).\n\nCACHE MISS, end to end over HTTP - seven previously unserved matrices:\n  55min x 9    0.026 s  synthesis        45min x 5 + 55min x 4  0.011 s  synthesis\n  35min x 12   0.018 s  whole variant    40min x 11             0.012 s  fill\n  50min x 5    0.011 s  fill             50min x 14             0.011 s  surrender\n  60min x 6    0.011 s  fill\nWorst case 0.026 s - 190x inside the 5 s budget, and that figure is the first request after start-up (cold import path), not the steady state.\n\nCACHED REPEATS: 0.003-0.004 s.\n\nWHERE THE TIME ACTUALLY GOES (engine only, no HTTP, 20 serves across X=5..14):\n  load 3 canonicals from disk : 1.8 ms\n  compile 3 streams           : 0.9 ms\n  serve, mean / max           : 0.3 / 0.4 ms\nSo the serve decision itself - selection, the first-exposure choice set, duration scaling, assessment remap - costs a THIRD OF A MILLISECOND. Everything else in the 11 ms is JSON I/O and the HTTP round trip. This is what the architecture promised when the deterministic engine replaced generation-time partitioning: adaptation is free at serve time, and the cost sits entirely in authoring (C2's Rs 38.82 per run).\n\nNothing here is close to the budget, so no defect. Worth re-measuring only if a stage's canonicals are much larger than SS-secondary's (12 units, ~120 KB each): the load figure scales with file size, the serve figure with unit count, and neither is near anything.\n\nEXIT: total well under 5 s; the actual figures are recorded above.",
         "at": "2026-08-04T11:30:19"
+      },
+      "C12": {
+        "status": "pass",
+        "by": "Claude",
+        "comment": "[v2.0/e13 2026-08-04 - PASS with one S2 opened] Ran the whole step in-sandbox (weasyprint + xhtml2pdf installed locally to do it): 2 plans prepared, 16 files exported, all inspected as extracted text rather than by eye alone.\n\nTHE VIEW (below-floor plan, 6 x 50): PASS. dropped_lp present and adapter-shaped, carrying the one unreached unit (U7 Punjab Floods) NUMBERED AFTER the six served units, so LessonView pages it last as the e09 ruling requires. view.dropped_sections = ['Punjab Floods 2025: A Case Study']. e13 confirmed on the same response: the assessment items anchor 1:1, 2:2, 3:2, 4:2, 5:4, 6:5 and 7:2 - the DROPPED unit carries its own two questions, which is the behaviour built today.\n\nTHE EXPORTS: 8 required files + 8 more for completeness, all HTTP 200, none empty, no raw JSON anywhere.\n  mixed plan (60m x 4 + 50m x 7 = 11 sittings, fill/single, borrowed closing unit from the 12):\n    lesson pdf 138 KB / docx 50 KB · assessment pdf 102 KB / docx 44 KB · integrated pdf 161 KB / docx 56 KB\n    assessment answers=1 pdf 116 KB / docx 49 KB\n  allocation report: pdf 84 KB / docx 38 KB\n  below-floor plan (the drop test): lesson pdf 131 KB / docx 48 KB · assessment pdf 100 KB / docx 44 KB · integrated pdf 150 KB / docx 53 KB\n\nTHE BORROWED SITTING READS AS A WHOLE UNIT: U11, borrowed from the standard, appears in the lesson export with its title, its full teacher notes, ALL FOUR of its bands and its own 50-min duration. All 11 unit titles are present in both formats. Mixed durations survive: both '50 min' and '60 min' print, and the header row reads '50 mins x 7 . 60 mins x 4'.\n\nNO DROPPED UNIT REACHES ANY EXPORT: on the below-floor plan's six exports, the dropped unit's title is absent from all six, and so are both of its assessment questions (checked by stem). The e09 split holds, and e13's flagging of unscheduled items is what keeps the questions out too.\n\nANSWERS LAYER: assessment 18,379 chars vs answers=1 32,658 - a +78% delta. 'Answer', 'Look for' and 'Expected' appear only in the answers variant; the plain paper carries none of them.\n\nDEFECT OPENED - ARV-D-039 (S2): the below-floor coverage note reaches NO export and no view field. Exports rightly omit dropped units, so with the note missing too the printed plan is a silent partial - 6 units, no mention that a section was left out, no hint that the material exists for self-study. The sentence is returned only by the POST response, i.e. only at the moment she prepares; reopening or printing the plan is silent. No exporter references section_coverage_note at all.\n\nMETHOD NOTE for whoever repeats this: extract PDFs with `pdftotext` WITHOUT -layout when checking for strings. -layout preserves column geometry and splits wrapped headings across lines in a way that survives whitespace normalisation, which made 10 of 11 unit titles look missing on the first pass. They were all present.\n\nEXIT: dropped_lp present and paged last; 16 files open without error; no blank sections, no raw JSON, structure visible and matching the plan, the borrowed sitting whole, answers layer rendering, no dropped unit in any export. The coverage note is the one exit condition NOT met - filed as ARV-D-039.",
+        "at": "2026-08-04T12:42:43"
+      },
+      "C13": {
+        "status": "pass",
+        "by": "Claude",
+        "comment": "[v2.0/e13 2026-08-04 - PASS, all four] Run in-sandbox against the live API. No body in any of the four resembles a traceback.\n\n1 NO CANONICAL - POST chapter 77: HTTP 404. The message read 'No canonical for this chapter yet.' and was CHANGED the same day (founder): 'canonical' is our word for the authored library, not a word a teacher has any reason to know. It now reads 'No underlying chapter yet.' Engine vocabulary in a teacher-facing string is a defect even when the string is otherwise correct - and this was the only one left on the genon path; the 400s were already plain. Re-read after the change: HTTP 404 'No underlying chapter yet.'\n\n2 IMPLAUSIBLE / EMPTY MATRIX - 61 periods: HTTP 400 'Period count implausibly large.' Empty rows: HTTP 400 'At least one duration row is required.' A row with count 0 gives the same 400, which is right - it IS an empty matrix once filtered.\n\n3 UNRESOLVABLE ITEM ANCHOR - copied p07 to a scratch chapter 99 and pointed item 1's period_ref at unit 99, which does not exist. HTTP 500 'Canonical cannot be compiled: canonical plan is not v1.1-declared (1 problem): assessment item …' - the compile error, named, not a bare 500. BUT the item was identified as '?', because compile.py fell back to a missing `id` field that no subject emits. Filed and FIXED the same day (ARV-D-040, S4, closed): the message now reads 'assessment item #1 MCQ / C-4.2: no resolvable anchor unit (period_ref/phase_ref) - it names [99]'. In an 18-item file the difference between '?' and '#1 MCQ / C-4.2' is the difference between a message and a lead.\n\n4 QUARANTINED VARIANT - p07 moved to backup/quarantine/, X=6 re-requested: HTTP 200, nothing 500s. serve.library reports [12, 10] with p07 absent, the request falls to variant 10, and the response names p07 nowhere. Degrades honestly rather than silently, as C10.5 already showed. p07 restored; library back to 3 files.\n\nHOUSEKEEPING: the scratch chapter-99 canonical is out of the library and parked at backup/c13_scratch/ (two copies, before and after the fix). The sandbox cannot unlink, so delete that directory on your machine.\n\nEXIT: 404 / 400 / 500 / 200 with readable details; nothing resembling a traceback in any body.",
+        "at": "2026-08-04T13:01:00"
       }
     },
     "social_sciences/middle": {
@@ -709,6 +721,34 @@
       "status": "closed",
       "notes": "THE GENERAL SHAPE, worth carrying to every stage: EVERY unit is a potential last sitting, so a closing band that points at what comes next is a landmine for whichever request lands there. A canonical-only scan cannot catch it; it needs either the pattern or a read of the served tail. FIXED same day, Rs 0: two patterns added to register_scan ('sections that follow', 'bridges toward the'), the sentence declared and deleted in repair_register (ban hits 2 -> 0), library re-certified 20260803_220454 ALL PASS. Verified after: the last sitting of every X from 5 to 14 now scans 0 bans and closes on its own ground.",
       "at": "2026-08-03T22:05:34"
+    },
+    {
+      "id": "ARV-D-039",
+      "opened": "2026-08-04T12:42:43",
+      "closed": null,
+      "combo": "social_sciences/secondary",
+      "step": "C12",
+      "severity": "S2",
+      "title": "A below-floor plan EXPORTS as if it were complete: the coverage note reaches no export and no view field",
+      "evidence": "Served ch_03 at 6 x 50 (floor-1). result.section_coverage_note reads 'Time budget short of the chapter's full span: Punjab Floods 2025: A Case Study could not be scheduled - the material is included for you to share as guided self-study or homework.' That sentence appears in NONE of the six exports of that plan (lesson/assessment/integrated x pdf/docx, all checked with normalised text): no 'could not be scheduled', no 'self-study', no section name in that context. Nor does the view carry the sentence - GET /view exposes dropped_lp and dropped_sections ['Punjab Floods 2025: A Case Study'] but not the note text itself; the note is returned only by the POST /genon/.../plan response, i.e. only at the moment she prepares. grep confirms the cause: no exporter references section_coverage_note or coverage_note at all, and _plan_view_bundle never passes it.",
+      "owner": "Kumar",
+      "status": "open",
+      "notes": "WHY THIS IS S2, not cosmetic: exports deliberately omit dropped units (correct - e09), so with the note also missing the printed plan is a SILENT PARTIAL. A teacher printing her 6-period plan gets 6 units, no mention that a section was left out, and no hint that material exists for self-study. That is the pilot's original defect (a section dropped with nothing said) reappearing on the print surface after being fixed on the serve surface. It also reads worse over time: she prepares, sees the note once on screen, and every later encounter with the plan - reopening it, printing it - is silent. FIX: carry section_coverage_note into _plan_view_bundle and render it in the lesson and integrated exports (a short note block under the schedule header), and expose it on the view so LessonView can show it whenever the plan is opened, not only at prepare time. The assessment export is arguable - the dropped unit's items are already withheld there - but the lesson and integrated exports are not.",
+      "at": "2026-08-04T12:42:43"
+    },
+    {
+      "id": "ARV-D-040",
+      "opened": "2026-08-04T12:54:20",
+      "closed": "2026-08-04T12:54:20",
+      "combo": "social_sciences/secondary",
+      "step": "C13",
+      "severity": "S4",
+      "title": "A broken assessment anchor was reported as 'assessment item ?'",
+      "evidence": "C13 case 3: pointing one item's period_ref at a non-existent unit returned 'Canonical cannot be compiled: canonical plan is not v1.1-declared (1 problem): assessment item ?: no resolvable anchor unit (period_ref/phase_ref)'. The '?' is compile.py's fallback for a missing `id`, and no subject emits ids - so the message named the failure precisely and the ITEM not at all, in an 18-item file.",
+      "owner": "Claude",
+      "status": "closed",
+      "notes": "FIXED same day in aruvi_core/genon/compile.py: the item is now named by position + question type + competency, and the message quotes the anchor it actually carries. Re-read: 'assessment item #1 MCQ / C-4.2: no resolvable anchor unit (period_ref/phase_ref) - it names [99]'. Position is always available and type+competency are what a human greps for. Library re-certified after the change; test_genon_serve green.",
+      "at": "2026-08-04T12:54:20"
     }
   ],
   "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",

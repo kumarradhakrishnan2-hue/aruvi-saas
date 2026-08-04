@@ -1,7 +1,11 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.3 · 2026-08-03 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.4 · 2026-08-04 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.4 (2026-08-04): **C14 added — copyrights review**, run per stage like every other C-step
+(each of the 11 tracker rows gains a C14 column before GATE). §9 applies: no stage is
+certified yet, so nothing re-opens.*
 
 *2.3 (2026-08-03): aligned to **architecture v2.0** (`variant_canonical_architecture.md §0`
 — read it first). σ, the solver, and the mandated closing spans are RETIRED (ARV-D-025:
@@ -686,8 +690,9 @@ the coverage note carried through, and **no dropped unit anywhere in any exporte
 
 **C13 [Kumar breaks, Claude reads] Failure paths.** Each must surface a message a teacher can
 read, with no stack trace in the body:
-1. **No canonical** — a chapter number with no library → **404** `"No canonical for this
-   chapter yet."`
+1. **No canonical** — a chapter number with no library → **404** `"No underlying chapter
+   yet."` (wording changed 2026-08-04, founder: "canonical" is our word, not hers — engine
+   vocabulary in a teacher-facing string is a defect even when the string is correct)
 2. **Implausible matrix** — total periods > 60 → **400** `"Period count implausibly large."`
    (and an empty `rows` → **400** `"At least one duration row is required."`)
 3. **Unresolvable item anchor** — copy the canonical to a scratch chapter number, point one
@@ -698,6 +703,30 @@ read, with no stack trace in the body:
    nothing 500s, and the response names only live files.
 **Exit:** the codes + readable details; nothing resembling a traceback in any body.
 **Artefact:** the four responses.
+
+**C14 [Claude] Copyrights review (added at template 2.4, 2026-08-04).** Campaign-level
+reference: `docs/NCERT_copyright_review.md` (the formal review against the NCERT copyright
+statement, v1.1: F1 closed by founder ruling — private personal backup, canonicals-only to
+cloud, PDFs local forever; **F2 — English verbatim task-text in served plans — is the sole
+open finding** this step polices). On the library files
+and the C6 served plans — every teacher-facing surface, including the exports and any
+`result.dropped_units`:
+1. **No verbatim textbook reproduction beyond short quotation** — spot-check band text,
+   teacher notes, homework and assessment stems/stimuli against the chapter's source
+   (`textbooks/{subject}/{grade}/` PDF and the chapter summary). Paraphrase and original
+   activity design are the expectation; a lifted passage is a defect. Anchors drawn verbatim
+   from the section registry (`section_anchor` titles) are exempt — they are structural
+   references, not reproduced content.
+2. **No third-party copyrighted material** — poems, song lyrics, story excerpts, brand text
+   or images embedded in stimuli/activities that the textbook itself does not carry; where
+   the textbook carries it, the plan may reference it (page/task refs, e.g. English's
+   `(p.NN)` homework convention) but must not reproduce it wholesale.
+3. **Quoted source text is attributed** — anything deliberately quoted names its source;
+   an unattributed quotation is a defect even when short.
+Subjective calls (how much quotation is "short", whether a paraphrase is too close) are
+flagged as such with the strings quoted, and land at the human gate — same doctrine as C3's
+register judgements. **Exit:** zero unattributed or wholesale reproductions, or a defect per
+hit (§7). **Artefact:** the review table, in the tracker comment.
 
 **HUMAN GATE [Kumar decides, Claude presents] — the stage's sign-off.** Deterministic ALL PASS
 is a precondition; this is the verdict. Claude presents, and the founder rules on:
@@ -846,7 +875,7 @@ Fixes that touch a constitution, the engine, the brief or the master plan trigge
 
 Maintained live in the tracker UI; the canonical column set per stage:
 
-`P1 P2 P3 P4 P5 · stage-sign-off` — then `C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 · GATE`.
+`P1 P2 P3 P4 P5 · stage-sign-off` — then `C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14 · GATE`.
 Step 0 and the cross-cutting X1–X2 sit above the matrix.
 
 Rows: social_sciences·secondary · social_sciences·middle · science·secondary ·
@@ -862,7 +891,7 @@ Each row's header carries the drawn class and the pilot chapter.
 wildly different amounts, and must never be conflated:**
 
 - **Constitution change (stage-scoped, expensive):** the library was authored under the old
-  version, so the stage **re-certifies in full** — C1 regenerates the whole library and C1–C13 +
+  version, so the stage **re-certifies in full** — C1 regenerates the whole library and C1–C14 +
   the gate re-run. This is the cost the §3 ordering rule exists to avoid: amend first, certify
   after.
 - **Engine / brief / certifier change (corpus-wide, cheap):** the authored artefacts are still
