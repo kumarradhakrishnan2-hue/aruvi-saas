@@ -66,33 +66,14 @@ BACKUP = REPO / "backup" / "register_repair"
 # whole chapter unpacks" borderline is deliberately NOT repaired (founder ruling, same day):
 # read as orienting prose about the chapter as an object, not a pointer to a later unit.
 REPAIRS = {
-    "ch_03_canonical.json": [
-        (1, "band:0",
-         "Students jot individual responses for two to three minutes, then share aloud.",
-         "Students jot individual responses, then share aloud.",
-         "register/clock",
-         "ranged clock quantity deleted; the individual-jotting task and the share-aloud that "
-         "follows it are unchanged, and the band's own `minutes` already carries the timing"),
-        (6, "teacher_notes",
-         " Connecting India's tropical position to the monsoon regime that will follow prepares "
-         "students conceptually.", "",
-         "register/forward",
-         "the whole trailing sentence goes: it exists only to point at a unit that may never be "
-         "served after this one. Nothing is invented in its place, and the note still carries "
-         "its continuity link and its confusion at Rule 10's 2-sentence floor"),
-    ],
     "ch_03_canonical_p07.json": [
-        (3, "teacher_notes",
-         " that the Monsoon unit will extend", "",
+        (5, "band:3",
+         " This bridges toward the climate change and Punjab floods sections that follow.", "",
          "register/forward",
-         "trailing relative clause dropped; the sentence keeps its point — the task plants the "
-         "relief-climate interlinkage — and loses only the claim about which unit picks it up"),
-        (3, "band:3",
-         " This sets up the interlinkage of relief and climate explored in upcoming units.", "",
-         "register/forward",
-         "whole trailing sentence dropped. The worst of the four because it sits in BAND text, "
-         "which Rule 13 makes the core teacher-facing product; the band keeps its teaching "
-         "content and closes on the windward-leeward question it asks students"),
+         "found at C8 by reading the LAST sitting of the 5-period serve, where this unit lands "
+         "last and the sentence is simply false; at 6 it is half false (the floods section is "
+         "dropped). The discussion it closes — monsoon variability as both sustenance and risk — "
+         "is complete without it, so the trailing sentence goes whole"),
     ],
 }
 

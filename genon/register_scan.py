@@ -71,6 +71,13 @@ PATTERNS = [
     ("forward", True, re.compile(r"\bthe [\w'’-]+ (unit|lesson) will\b", re.I)),
     ("forward", True, re.compile(r"\bin upcoming (units|lessons|sections)\b|\bupcoming (unit|lesson)\b", re.I)),
     ("forward", True, re.compile(r"\bwill (extend|pick up|take up|carry (this|it) forward)\b", re.I)),
+    # ── added 2026-08-03 (ARV-D-038, found at C8 by reading a served plan's LAST sitting) ──
+    # "This bridges toward the climate change and Punjab floods sections that follow" is TRUE
+    # in the canonical, where those sections do follow, and FALSE the moment a serve ends on
+    # that unit. Every unit is a potential last sitting, so a closing band that points at what
+    # comes next is a landmine for whichever request lands there.
+    ("forward", True, re.compile(r"\bsections?\s+that\s+follows?\b", re.I)),
+    ("forward", True, re.compile(r"\bbridges?\s+(toward|towards|to)\s+the\b", re.I)),
     ("completion", True, re.compile(r"\bhaving (worked through|covered|completed) (every|all|the whole)\b", re.I)),
     ("completion", True, re.compile(r"\bnow that (we|students|they) have (covered|completed)\b", re.I)),
     ("completion", True, re.compile(r"\bthe chapter is (now )?complete\b", re.I)),
