@@ -222,7 +222,10 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   standard's synthesis; Case 2 borrows, from ANY canonical, the unit that FIRST deals the
   next-due section M (first-exposure units' only backward dependency is prior sections —
   the structural no-jumpiness guarantee; preference forward-reach > M-alone > backward
-  combos, ties to the count nearest X then denser); dropped sections ride from the
+  combos, ties **SELF FIRST** — the chosen plan's own candidate wins every tie it enters
+  (e14, 2026-08-04, architecture v2.1: pacing distance used to decide, so the engine
+  borrowed a stranger's unit while the plan being served had its own) — then the count
+  nearest X, then denser); dropped sections ride from the
   LENDER's subsequent units; Case 3 (empty set — structurally impossible on a certified
   library) truncates with NO drops and asks for the reference canonical's count ·
   proportional per-unit duration scaling (the only arithmetic; weekly dispersion kept) ·

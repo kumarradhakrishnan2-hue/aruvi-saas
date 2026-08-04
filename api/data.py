@@ -367,7 +367,30 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "13"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "14"     # BUMP when compile/serve change the OUTPUT
+# 14 (2026-08-04): SELF-PREFERENCE IN THE Xth-UNIT TIE-BREAK (architecture v2.1
+# §0.4). fill_slot's Case-2 sort gains `0 if c["self"] else 1` between reach and
+# pacing distance, so the CHOSEN plan's own candidate wins every tie it enters.
+# Before this the identity candidate carried no privilege at all and the engine
+# borrowed a stranger's closing unit while the plan being served had its own,
+# equally first-exposure: SS·IX X=8 (p10's own U8 lost to p07 U7 on |7−8| <
+# |10−8|), SS·VIII X=11 (p10 U10 over p13's own U11) and X=14 (p13 U11 over the
+# top's own U14). Continuity, not correctness — every candidate is first-exposure
+# and therefore safe, which is why nothing broke; but the home unit is written for
+# THIS arc and names the content the class just had. Tie-break only: it sits below
+# reach, so a home unit that re-crosses still loses to a foreign forward-reaching
+# one. Raised at SS·IX's C8 (2026-08-03) and not adopted; recurred at SS·VIII.
+# Only Case-2 fills change; identity, synthesis, surrender and below-floor serves
+# are byte-identical. Every e13 entry is stale by construction.
+# 13 (2026-08-03): UNSERVED ASSESSMENT ITEMS ARE ABSENT (ARV-D-037) — backfilled
+# entry; the bump shipped without one. An item whose anchor unit is not scheduled
+# used to keep its place with period_ref=[] plus a scheduling_note: it rendered
+# NOWHERE on screen (LessonView attaches items by anchor unit) while the EXPORT
+# walked assessment_items flat and printed it — 7 of 20 questions on the 8-period
+# serve, about units the class never had. The rule now: an item whose unit is not
+# in the plan is not in the plan. Count reports in genon.assessment_items_unserved;
+# a DROPPED unit's items stay, anchored to the dropped unit's sitting number in
+# this plan and flagged unscheduled, and exports omit exactly those.
 # 12 (2026-08-03): THE Xth-UNIT CHOICE SET (architecture §0, v2.0) — the fill
 # ladder (exact/superset/suffix + lendable-unit walk-back) is replaced by
 # first-exposure selection: slot X borrows, from ANY canonical, the unit that

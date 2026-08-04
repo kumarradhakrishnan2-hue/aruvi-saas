@@ -27,11 +27,17 @@ function of the input, so it is applied automatically. The line both tools share
 authors text. Here, option `text` and `is_correct` are never touched — only the array order, the
 labels, and the guide keys that point at those labels.
 
-WHAT IT MUST KEEP DOING: counting. The moment sorting is automatic the generation-quality signal
-disappears unless it is recorded, so every run reports how many items it had to move, per file,
-and writes the count into genon_canonical.repairs[]. That number is the only evidence that would
-ever say whether the model learned to do this unaided. If it falls to zero across a stage, say so;
-do not quietly assume it.
+WHAT IT USED TO DO AND NO LONGER DOES: record. Until 2026-08-04 every run appended a
+genon_canonical.repairs[] entry with the per-item move detail, on the theory that the count would
+eventually say whether the model had learned to arrange options unaided. FOUNDER RULING
+2026-08-04: it never did — four constitution versions and a probe moved the rate the WRONG way
+(5/6-on-B → 10 of 18 → 15 of 18), which is precisely why the sort was moved into code. There is
+no outside authority to report to and no path from this data back into the model, so the record
+was weight in every canonical and nothing else. It is removed from the artefacts and no longer
+written. The run still PRINTS its count, which is free; read it on the first pass of a freshly
+generated library, where it means something, and ignore it on a re-run, where 0 only means there
+was nothing left to move. repairs[] itself stays — repair_register.py and repair_anchors.py write
+declared human judgements, which is a different thing from a pure function of the input.
 
     python3 genon/normalize_options.py <subject> <grade> <chapter>          # apply
     python3 genon/normalize_options.py <subject> <grade> <chapter> --list   # dry run
@@ -155,17 +161,16 @@ def normalize_file(path, apply=True):
     rep = {"file": Path(path).name, "scanned": scanned,
            "moved": len(moved), "skipped": skipped, "detail": moved}
     if apply and moved:
-        gc = doc.setdefault("genon_canonical", {})
-        gc.setdefault("repairs", []).append({
-            "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": TOOL,
-            "reason": ("Rule 7 option arrangement enforced in code (ARV-D-032; founder ruling "
-                       "2026-08-03). Option text and is_correct are untouched; array order, "
-                       "labels and guide option keys only."),
-            "items_scanned": scanned,
-            "items_moved": len(moved),
-            "edits": moved,
-        })
+        # NOTHING IS RECORDED IN THE ARTEFACT (founder ruling 2026-08-04). This step used to
+        # append a genon_canonical.repairs[] entry carrying the per-item move detail, on the
+        # theory that the count would eventually say whether the model had learned to arrange
+        # options unaided. It never did: four constitution versions and a probe took the rate
+        # from 5/6-on-B to 15 of 18 unarranged (ARV-D-032), which is why the sort moved into
+        # code in the first place. There is no outside authority to report to and no path from
+        # this data back into the model, so the record was pure weight in every canonical.
+        # The run-time report below still prints THIS run's count; repairs[] stays in use by
+        # repair_register.py and repair_anchors.py, whose edits are declared judgements rather
+        # than a pure function of the input.
         Path(path).write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
     return rep
 
@@ -187,21 +192,12 @@ def normalize_library(subject, grade, ch, apply=True, backup=True):
         for f in files:
             shutil.copy2(f, bdir / f.name)
 
-    lines, total, scanned, prior_total = [], 0, 0, 0
+    lines, total, scanned = [], 0, 0
     for f in files:
-        # What EARLIER runs had to move. Without this a re-certification prints "0 of 18" and
-        # reads as "the model arranged them unaided" — the exact statistic this stage exists to
-        # preserve, silently inverted. The durable count lives in the artefact, so read it.
-        prior = [r for r in (json.loads(f.read_text(encoding="utf-8"))
-                             .get("genon_canonical", {}).get("repairs", []) or [])
-                 if r.get("tool", "").startswith("genon/normalize_options.py")]
-        prior_n = sum(r.get("items_moved", 0) for r in prior)
-        prior_total += prior_n
         rep = normalize_file(f, apply=apply)
         total += rep["moved"]
         scanned += rep["scanned"]
-        lines.append(f"      {rep['file']}: {rep['moved']} of {rep['scanned']} item(s) re-ordered"
-                     + (f" (this run; {prior_n} moved by an earlier run)" if prior_n else ""))
+        lines.append(f"      {rep['file']}: {rep['moved']} of {rep['scanned']} item(s) re-ordered")
         for e in rep["detail"]:
             lines.append(f"          #{e['item']} {e['competency']} U{e['period_ref'][0]}: "
                          f"A–D now hold {''.join(e['came_from'])} "
@@ -212,11 +208,11 @@ def normalize_library(subject, grade, ch, apply=True, backup=True):
         # A rewritten canonical invalidates the plans derived from it (ARV-D-034).
         from purge_derived import purge
         purge(subject, grade, ch, reason="genon/normalize_options.py")
-    head = (f"options arranged: {total} of {scanned} item(s) re-ordered this run"
-            + (f"; {prior_total} of {scanned} were re-ordered when this library was first "
-               f"normalized" if prior_total else "")
-            + " — the generation-quality rate for Rule 7 (ARV-D-032). A 0 with no earlier run "
-              "behind it means the model arranged them unaided.")
+    head = (f"options arranged: {total} of {scanned} item(s) re-ordered this run. "
+            "Nothing is written to the artefact (founder ruling 2026-08-04), so a 0 here means "
+            "only that nothing was left to move — on a re-run that is expected, and it is NOT "
+            "evidence the model arranged them unaided. Read this number on the FIRST pass of a "
+            "freshly generated library or not at all.")
     return [head] + lines, total, scanned
 
 

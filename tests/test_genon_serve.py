@@ -1,4 +1,4 @@
-"""Serve engine v2.0 / e13 — selection, the Xth-unit choice set (§0.4), scaling, edges.
+"""Serve engine v2.0 / e14 — selection, the Xth-unit choice set (§0.4), scaling, edges.
 
 Synthetic canonical library over a 12-section chapter (equal-dispersion counts):
   * A — the STANDARD, 13 units: one section per unit + the mandated closing
@@ -156,8 +156,33 @@ T1 = _mk_stream([(0, 0), (1, 1), (1, 2), (3, 3)], "T1")
 T2 = _mk_stream([(0, 0), (1, 2), (3, 3)], "T2")
 f = fill_slot([T1, T2], T1, 3, REG4)
 assert f["mode"] == "fill" and f["fill_class"] == "backward", f
-assert f["stream"] is T2, "count closest to X breaks the backward tie"
 assert f["overlap_sections"] == ["Sec 02"]
+
+# SELF-PREFERENCE (e14, 2026-08-04, architecture v2.1). T1 (the CHOSEN plan) and T2
+# tie on class, overlap and reach. Pacing distance would hand it to T2 (|3−3| = 0
+# beats T1's |4−3| = 1) — which is what this engine did until today, borrowing a
+# stranger's unit while the plan being served had its own, equally first-exposure.
+# The identity candidate now wins every tie it enters.
+assert f["stream"] is T1, "the chosen plan's own candidate wins the tie"
+assert f["self_fill"] is True
+
+# …and pacing distance still decides among candidates when NONE is the chosen
+# plan's. CH's prefix reaches Sec 02 but CH itself never deals Sec 03, so it
+# contributes no candidate and the old tie-break governs the two foreign ones.
+CH = _mk_stream([(0, 0), (1, 1), (3, 3)], "CH")
+assert first_dealing_unit(CH, R4, 2) is None, "CH offers no candidate for M"
+f = fill_slot([CH, T1, T2], CH, 3, REG4)
+assert f["mode"] == "fill" and f["fill_class"] == "backward", f
+assert f["stream"] is T2, "count closest to X still breaks a tie between foreigners"
+assert f["self_fill"] is False
+
+# Self-preference is a TIE-BREAK, never a class promotion: T3 first-deals Sec 02
+# cleanly (no re-cross) where the chosen T1's own candidate re-crosses Sec 02's
+# predecessor, so the foreign unit must still win on the preference class.
+T3 = _mk_stream([(0, 0), (1, 1), (2, 3)], "T3")
+f = fill_slot([T1, T3], T1, 3, REG4)
+assert f["stream"] is T3, "a better preference class outranks self-preference"
+assert f["fill_class"] == "forward" and f["self_fill"] is False
 
 # ── first_dealing_unit: a stream that SKIPS m yields no candidate ────────────
 GAP = _mk_stream([(0, 0), (2, 2)], "G")
@@ -234,4 +259,4 @@ try:
 except ServeError:
     pass
 
-print("test_genon_serve: all e13 assertions passed")
+print("test_genon_serve: all e14 assertions passed")

@@ -53,7 +53,14 @@ def _render_table(pipe_text: str) -> str:
         "<tr>" + "".join(f"<td>{_esc(c)}</td>" for c in row) + "</tr>"
         for row in t["rows"]
     )
-    return f'<table class="vs-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>'
+    # A title row above the header and a trailing attribution line are lifted out of the grid
+    # by parse_table (2026-08-04) so the columns line up; render them around the table rather
+    # than dropping them — both carry text the teacher is meant to read.
+    cap = f'<div class="vs-table-cap">{_esc(t.get("caption"))}</div>' if t.get("caption") else ""
+    note = f'<div class="vs-table-src">{_esc(t.get("source_note"))}</div>' if t.get("source_note") else ""
+    thead = f"<thead><tr>{head}</tr></thead>" if t["header"] else ""
+    return (f'<div class="vs-table-wrap">{cap}'
+            f'<table class="vs-table">{thead}<tbody>{body}</tbody></table>{note}</div>')
 
 
 def _render_stimulus(vs: VisualStimulus) -> str:

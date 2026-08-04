@@ -455,13 +455,22 @@ function ATyped({ b, passage = false }) {
   if (b.type === "table" && b.table) {
     // A word bank (no column semantics) arrives with an empty header — render every cell the
     // same, with no bold/filled header row. Data tables keep their header.
+    // `caption` / `source_note` (2026-08-04): the generator puts non-data lines inside the
+    // pipe payload — a title row above the header, a trailing attribution line. parse_table
+    // lifts them OUT so the grid's columns line up (they used to render as a short header
+    // over wider body rows, here and in PDF/Word alike); they are printed around the table
+    // rather than dropped, because both carry text the reader is meant to see.
     const header = b.table.header || [];
+    const caption = b.table.caption || "";
+    const srcNote = b.table.source_note || "";
     return (
       <div className="assess-vs">
+        {caption ? <div className="assess-table-cap">{caption}</div> : null}
         <table className="assess-table">
           {header.length ? <thead><tr>{header.map((c, i) => <th key={i}>{c}</th>)}</tr></thead> : null}
           <tbody>{(b.table.rows || []).map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}</tbody>
         </table>
+        {srcNote ? <div className="assess-table-src">{srcNote}</div> : null}
       </div>
     );
   }

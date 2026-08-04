@@ -31,7 +31,12 @@ must confirm · source entry.
    mandated fields present (MCQ `what_each_option_reveals`, SCR `expected_elements`, ECR
    `look_for`, SI `stimulus_rationale` + `sub_question_expectations`, OPEN_TASK's five), and ZERO
    flat placements. The constitution text now has a live run behind it for SS·secondary.
-   **Still owed: TWAU** (v1.3) and SS·middle, each at its own C4.
+   **★ SS·MIDDLE TESTED LIVE + PASSED 2026-08-04 (C4, VIII ch 3 library {16,13,10}).** All **59
+   items** across the three files nest under exactly their own `question_type` key — guide-key
+   mismatches 0, FLAT placements of `what_each_option_reveals` / `expected_elements` / `look_for`
+   0. Every type's mandated fields present (MCQ reveals keyed to the three non-correct labels and
+   never the correct one; SCR `expected_elements`; ECR `look_for`; OPEN_TASK's five). **Still owed:
+   TWAU** (v1.3) alone — both SS stages now have a live run behind the constitution text.
 
 2. **English MCQ option-reveals rewrite — owed into the generation prompt wrappers** — the
    corpus MCQs had their prose-`note` option analyses rewritten into the keyed
@@ -118,6 +123,14 @@ must confirm · source entry.
    {12, 10, 7}, and the JOIN is now visibly exercised — p10 U6 "Inquiry; Project work", p10 U7
    and U10 "Issues-based learning; Reflective essays", p07 U5/U6 likewise. Rule 9 P5's
    multi-approach list survives the port into `Period.approach` intact.
+   **★ SS·MIDDLE CONFIRMED 2026-08-04 (C4, VIII ch 3 {16,13,10}) — the prediction held:** 0 empty
+   across all **39 units**, and the JOIN is exercised (p10 has five two-approach units, e.g. U5
+   "Issues-based learning; Inquiry"). **Mathematics·preparatory is now the ONLY legitimate empty
+   left.** One caveat this run added, carried as ARV-D-043 (accepted): populated ≠ valid — the
+   standard's U3/U8/U12 record "Source analysis task", which is NOT in
+   `framework/social_sciences/middle/pedagogy_middle_social_sciences.txt` but IS a verbatim entry
+   in the ASSESSMENT constitution's Rule 8 Open Task menu. The pre-warm check gains a second half:
+   SS empty is a defect, and so is an approach no Pedagogy document contains.
 
 8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
    (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,
@@ -362,6 +375,16 @@ must confirm · source entry.
     output). *Pre-warm must confirm:* live SS-middle LP generation actually emits a non-blank
     Rule-11 `teacher_notes` per period, and the emitted notes obey the constraints (no verbatim
     activity restatement, no C-codes, no "Transition" opener). (src: 2026-07-14, founder-directed.)
+    **★ TESTED LIVE + PASSED 2026-08-04 (SS·middle C4, VIII ch 3 library {16,13,10}) — THIS ITEM IS
+    DISCHARGED.** The rule is now generator output, not backfill. Across all **39 authored units**:
+    zero blank notes; every note **2–3 sentences**; **zero** C-code citations; **zero** notes opening
+    with "Transition" or a section label; **zero** verbatim restatement of the unit's own band text
+    (tested as any shared 8-word run between a note and a band). The continuity link names CONTENT
+    rather than position, as the v2.8 register requires — standard U13: "The civilian administration
+    unit covered the internal structure of Shivaji's government; this unit addresses the external
+    revenue mechanism that funded it." **DRIFT — the rule moved:** this entry says "RULE 11" and "the
+    A3 period schema"; in the live LP v2.8 it is **RULE 10** and the field sits in the **A1** schema
+    (renumbered between v1.6 and v2.7). Chasing this item by rule number elsewhere will fail.
 
 18. **MCQ correct-answer POSITION rule added — Science + SS assessment constitutions (all four
     middle+secondary files)** — audit finding (2026-07-16, founder-reported): within a single
@@ -446,6 +469,57 @@ must confirm · source entry.
 
 ---
 
+## 2026-08-04 (newest) — SELF-PREFERENCE in the Xth-unit tie-break (architecture v2.1, engine e14)
+
+**The rule.** In §0.4's Case-2 choice set, **the chosen plan's own candidate now wins every tie
+it enters** — inserted between reach and pacing distance in `serve.py::fill_slot`'s sort:
+
+```python
+(overlap == 0, overlap, -reach, 0 if c["self"] else 1, abs(count - requested), -count)
+#                                ^^^^^^^^^^^^^^^^^^^^ e14
+```
+
+**What was wrong.** §0.4 named the chosen plan's unit "the identity candidate" and then gave it
+no privilege whatever; the tie fell straight to `abs(count − requested)` ("pacing context"). So
+the engine handed the teacher **a stranger's closing unit while the plan she was being served
+had its own, equally first-exposure**. Every candidate is first-exposure by construction and
+therefore SAFE — which is exactly why nothing broke and no gate could see it. This is
+continuity, not correctness: the home unit is written *for this arc* and names the content the
+class just had. SS·IX p10 U8 opens *"The climate change mechanism examined in the unit on
+greenhouse gases and fossil fuels…"* — a precise back-reference to the sitting just taught,
+where the borrowed p07 U7's equivalent is generic.
+
+**Where it bit.** SS·IX X=8 (p10's own U8 lost to p07 U7 on |7−8| < |10−8|); SS·VIII X=11 (p10
+U10 over p13's own U11) and X=14 (p13 U11 over the top's own U14). After the patch **every
+Case-2 fill in both chapters is `self_fill: true`**, and the SS·VIII band's two in-band fills
+become pure single-plan prefixes — no cross-lending anywhere in [floor, top].
+
+**Scope.** Tie-break only. It sits BELOW reach, so it never promotes a home unit past a better
+preference class — a home unit that re-crosses still loses to a foreign forward-reaching one
+(asserted in `tests/test_genon_serve.py`, along with the case proving pacing distance still
+governs a tie between two foreigners). Identity, synthesis, surrender and below-floor serves
+are byte-identical; only Case-2 fills change.
+
+**The process lesson, which is the bigger one.** I raised this at **SS·IX's C8 on 2026-08-03**
+(`genon/out/library_reports/social_sciences_ix_ch03_SEAM_READ_20260803.md`, finding A1) with
+this exact one-line patch. It was written into a C8 narrative report and **never filed as a
+tracker row** — no ID, no owner, no status — so nothing carried it forward and it recurred at
+SS·VIII. **A recommendation that lives only in prose has no mechanism to come back. File it as
+an ARV-D row or it did not happen.**
+
+**Second gap, worth fixing.** testing.md §9's cheap path for an engine change is "re-run
+`--certify-only` and diff the reports; identical → stages stay certified." Both reports here
+came back **byte-identical apart from the timestamp** — because the sweep line records the
+*mode* (`fill/single`) and never the *lender*. §9's diff test is lender-blind and would have
+declared this change invisible. Adding `borrowed_from` to the sweep string would close it.
+
+**Consequences handled:** `GENON_ENGINE_VERSION` 13 → **14** (served bytes change, so the cache
+re-keys and every `_e13_` file is stale by construction, never overwritten); the ladder comment
+in `api/data.py` also **backfills the missing e13 entry** (ARV-D-037 shipped without one).
+Canonicals, briefs and constitutions are untouched — no regeneration, ₹0.
+
+---
+
 ## 2026-08-04 — ARV-D-034's fix MOVED: the cache key is clean, the repair tools purge
 
 **The problem, unchanged:** `repair_anchors` / `repair_register` / `normalize_options` rewrite a
@@ -476,7 +550,7 @@ stable across repairs, and the purge pattern must never match a canonical.
 
 ---
 
-## 2026-08-03 (newest) — ARCHITECTURE v2.0: mandates OUT, the first-exposure choice set IN (engine e12; solver retired)
+## 2026-08-03 — ARCHITECTURE v2.0: mandates OUT, the first-exposure choice set IN (engine e12; solver retired)
 
 **The defect (ARV-D-025).** The solver-mandated closing spans failed at their root: by
 mandating a synthesizing closing unit in each compact and lending it into slot X, we
@@ -507,8 +581,9 @@ construction; no wording repair fixes it.
   taught", which the prefix guarantees: the structural no-jumpiness argument, e11's
   "anchoring is not teaching" promoted to the selection principle. Preference:
   forward-reach-no-recross (furthest first) > M alone > backward combos (redundancy is
-  not jumpiness); ties → count nearest X, then denser. Contiguity (V2) makes every
-  candidate adjacent, so on a certified library Case 3 is structurally impossible.
+  not jumpiness); ties → **SELF FIRST** (e14, 2026-08-04), then count nearest X, then
+  denser. Contiguity (V2) makes every candidate adjacent, so on a certified library
+  Case 3 is structurally impossible.
   Dropped sections now ride FROM THE LENDER's subsequent units (provenance consistency;
   was: from the chosen plan). Case 3 (defensive): truncate, NO drops, message asks for
   the REFERENCE canonical's count — not the floor (the gap being diagnosed is between

@@ -199,7 +199,14 @@ def _stimulus_html(block: Optional[Dict[str, Any]]) -> str:
 
         head = _row(header, "st-th") if header else ""
         body = "".join(_row(r, "st-td") for r in rows)
-        return f'<table class="{tcls}">{head}{body}</table>'
+        # parse_table (2026-08-04) lifts a title row above the header and a trailing
+        # attribution line OUT of the grid so the columns line up. Print them around the
+        # table — dropping them would lose text the student is meant to read.
+        cap = (f'<div class="stim-tbl-cap">{_esc(t.get("caption"))}</div>'
+               if t.get("caption") else "")
+        note = (f'<div class="stim-tbl-src">{_esc(t.get("source_note"))}</div>'
+                if t.get("source_note") else "")
+        return f'{cap}<table class="{tcls}">{head}{body}</table>{note}'
     if btype == "number_line" and block.get("number_line"):
         nl = block["number_line"]
         labels = " · ".join(str(t.get("label", "")) for t in nl.get("ticks", []) if t.get("label"))
@@ -306,6 +313,8 @@ def render_assessment_pdf_html(
             border: 0.5px solid {G_EDGE}; padding: 4px 6px; word-wrap: break-word; }}
   .st-td {{ font-size: 7pt; color: #2a2a2a; border: 0.5px solid {G_EDGE}; padding: 4px 6px; word-wrap: break-word; }}
   .stim-tbl-wide .st-th, .stim-tbl-wide .st-td {{ font-size: 6pt; padding: 3px 4px; }}
+  .stim-tbl-cap {{ font-size: 7.5pt; color: #2a2a2a; font-weight: bold; margin: 6px 0 2px 0; }}
+  .stim-tbl-src {{ font-size: 6.5pt; color: #55524d; font-style: italic; margin: 2px 0 6px 0; }}
   .stim-prose {{ font-size: 7.5pt; color: #2a2a2a; font-style: italic; margin: 5px 0; }}
   .stim-note {{ font-size: 7pt; color: #8a8a86; font-style: italic; margin: 5px 0; }}
   .scaf {{ font-size: 7.5pt; color: #2a2a2a; margin: 4px 0 2px; }}

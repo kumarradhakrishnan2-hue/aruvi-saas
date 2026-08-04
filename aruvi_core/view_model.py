@@ -141,7 +141,8 @@ class NormalizedItem:
     spec §1) into THIS one shape; the 3b renderer reads ONLY this, never a raw source key.
 
     Typed blocks (`visual_stimulus`, `passage`) are plain dicts:
-        {"type": "svg"|"table"|"prose", "content": str, "table": {"header","rows"}?}
+        {"type": "svg"|"table"|"prose", "content": str,
+         "table": {"header","rows","caption","source_note"}?}
     — the SAME typing as LP visuals, with pipe-tables pre-split via normalize.parse_table
     so no renderer ever re-splits the raw string (the recurring drift-bug class).
 

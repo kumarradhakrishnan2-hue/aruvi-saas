@@ -1,6 +1,9 @@
 # The Variant-Canonical Architecture — serving lesson plans by selection, never composition
 
-VERSION 2.0 · 2026-08-03 (v1.0 · 2026-07-31) · Founder + Claude.
+VERSION 2.1 · 2026-08-04 (v2.0 · 2026-08-03; v1.0 · 2026-07-31) · Founder + Claude.
+*v2.1 is a single amendment: §0.4's Case-2 tie-break gains SELF-PREFERENCE — the chosen
+plan's own candidate wins every tie it enters, above pacing distance. Engine e13 → **e14**.
+Nothing else changes; canonicals, briefs and constitutions are untouched.*
 Supersedes the deterministic partition engine (partition.py v0.5, DP/three-regime) and the
 Rule 15/16 handoff machinery outright. Read alongside `docs/testing.md` (whose C-steps this
 changes — §9 below) and `docs/partition_constitution_rollout.md` (whose A3/A4 amendments
@@ -99,10 +102,30 @@ rule (2026-08-03):
    K+L+M …): mild redundancy on the re-crossed sections, which is contextually safe
    (redundancy is not jumpiness); least backward overlap first, then furthest reach.
 
-Ties inside a class: the lender whose period count is closest to X (pacing context), then
-the denser plan. Every candidate is first-exposure for M by construction, so the borrowed
-unit's priors are satisfied whatever prefix precedes it — the v1.0 exact/superset/suffix
-distinction and its closure requirement (r[1] == last) are gone.
+Ties inside a class, in order (**self-preference added 2026-08-04, v2.1 — see below**):
+**the chosen plan's own candidate wins every tie it enters**, then the lender whose period
+count is closest to X (pacing context), then the denser plan. Every candidate is
+first-exposure for M by construction, so the borrowed unit's priors are satisfied whatever
+prefix precedes it — the v1.0 exact/superset/suffix distinction and its closure requirement
+(r[1] == last) are gone.
+
+> ★ **v2.1 (2026-08-04) — SELF-PREFERENCE.** Until today the tie-break went straight to
+> pacing distance, and the chosen plan's own unit — the *identity candidate*, named as
+> such two paragraphs above — carried no privilege whatever. The engine therefore handed
+> the teacher a stranger's closing unit while the plan she was actually being served had
+> its own, equally first-exposure, sitting right there. Two stages hit it: SS·IX X=8
+> (p10's own U8 lost to p07's U7 on |7−8| < |10−8|) and SS·VIII X=11 and X=14. The
+> defect is one of continuity, not correctness — every candidate is safe by construction,
+> which is why nothing broke — but the home unit is written *for this arc*: it names the
+> content the class just had, in the voice the prefix established. SS·IX made the case
+> concretely — p10 U8 opens *"The climate change mechanism examined in the unit on
+> greenhouse gases and fossil fuels…"*, a precise back-reference to the sitting the class
+> just had, where the borrowed p07 U7's equivalent is generic. Pacing distance is a thin
+> reason to pass that over. **The rule now: prefer self, always, inside a preference
+> class.** It is a tie-break only — it never lifts a candidate above a better preference
+> class, so a home unit that re-crosses ground still loses to a foreign forward-reaching
+> one. Recommended at SS·IX's C8 on 2026-08-03 and not adopted then; it recurred at
+> SS·VIII, which is what carried it.
 
 **Dropped sections.** If the fill still leaves registry sections uncovered, the plan
 carries them as dropped units **sourced from the LENDING plan** — its units after the

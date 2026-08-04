@@ -335,6 +335,11 @@ def _stimulus(doc, block):
         tb = block["table"]; header = tb.get("header", []) or []; rows = tb.get("rows", []) or []
         ncols = max([len(header)] + [len(r) for r in rows]) if (header or rows) else 0
         if ncols:
+            # parse_table (2026-08-04) lifts a title row above the header and a trailing
+            # attribution line OUT of the grid so the columns line up. Write them around
+            # the table so no text is lost in Word either.
+            if tb.get("caption"):
+                _run(_para(doc, space_after=1), tb["caption"], bold=True, size=8, color=G_DARK)
             t = doc.add_table(rows=(1 if header else 0) + len(rows), cols=ncols); _hairlines(t, "CDE0D8")
             ri = 0
             if header:  # a real data table — the first row is a filled/bold header
@@ -346,6 +351,9 @@ def _stimulus(doc, block):
                     if j < ncols:
                         _run(t.cell(ri, j).paragraphs[0], val, size=8, color=BODY)
                 ri += 1
+            if tb.get("source_note"):
+                _run(_para(doc, space_after=2), tb["source_note"], italic=True, size=7,
+                     color=BODY)
             return
     content = block.get("content")
     if content and block.get("type") != "svg":

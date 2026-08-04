@@ -157,19 +157,45 @@ one: the model was never told the three bans, so it broke two of them.
 (Present) has 1 where its siblings have 2. ARV-D-019 says generation variance is accepted by
 default and a hand back-fill is forbidden; the only fix is regeneration, and that is a cost call.
 
-**The choice is yours, and it is not the 2026-08-02 lottery case.** That ruling ("regenerating is
-a lottery — repair in place") was made when SS·IX ch 3 breached a register the constitution
-**stated in terms**. Here the constitution was silent, so a run under v2.8 is not a re-roll of the
-same distribution — it is the first roll with the rule present, and it is the only thing that
-would actually prove the ported register block works for SS·middle.
+---
 
-- **Regenerate under v2.8 · v2.4** — ordering-rule-correct, exercises the amendment live, also
-  re-rolls the p13 count miss. ~₹150 and ~10 minutes.
-- **Repair in place** — `genon/repair_register.py` with 7 declared (old → new) pairs, then
-  `build_library.py --certify-only`. ₹0. All 7 are trailing-clause deletions or a number-to-kind
-  swap, exactly the shape the tool was built for. But the library stays authored under the
-  superseded pair, which needs a recorded founder waiver, and the v2.8 register block goes into
-  the campaign never having been generated against.
+## C1 resolution — REPAIRED, and the library now certifies ALL PASS
 
-**Then:** record the class-override reason and the stage row in `docs/testing_tracker.html`, and
-the C-cycle proper opens at C2.
+**FOUNDER RULING 2026-08-04: repair now, do not regenerate.** Recorded as a deliberate waiver of
+the P-ordering rule, not an oversight. The alternative — regenerating under v2.8 · v2.4 at ~₹150
+— was declined; the artefact stays authored under LP v2.7 / assessment v2.3.
+
+**What was done** (`genon/repair_register.py` **v1.3**, extended this session to take
+`--subject/--grade` instead of a hard-coded `social_sciences/ix` path):
+
+- **7 declared (old → new) pairs, all pure deletions.** Three trailing forward-reference
+  appositives go whole (U2 "as a preview of the next unit's content" · U6 "— setting up the
+  military and conflict discussion in later units" · U7 "; navy addressed in the next unit");
+  four clock quantities are struck from sentences that read correctly without them (U7 "for four
+  minutes" · U9 "for five minutes" · U16 "circulates for three minutes" · p10 U4 "in pairs for
+  two minutes"). No text was authored, nothing was replaced with new content, and every declared
+  `old` matched verbatim on the dry run — the guard never fired.
+- Ban hits: `ch_03_canonical.json` **6 → 0**, `ch_03_canonical_p10.json` **1 → 0**, p13 already
+  clean. Recorded in each file's `genon_canonical.repairs[]`; originals in
+  `backup/register_repair/`. Derived plans purged (ARV-D-034) so the serve cache cannot keep
+  serving the stale text.
+- `build_library.py --certify-only` re-run → report
+  `genon/out/library_reports/social_sciences_viii_ch03_20260804_180034.md`: **deterministic
+  checks ALL PASS**, register clean on all three files, serve sweep unchanged, STEP 6 reports
+  **0 of 41 re-ordered this run** (41 moved by the first pass — the generation-quality rate).
+
+**Two things this leaves owed, and they should not be lost:**
+
+1. **The v2.8 register block has never been GENERATED against.** SS·middle's whole constitutional
+   carry-forward was proven by repair, not by a live run — the exact "synthetically validated,
+   not live-run" trap MEMORY.md's "★ AMENDMENTS TO BE TESTED" list exists to catch. It belongs on
+   that list, due at the corpus pre-warm sweep.
+2. **`ch_03_canonical_p13.json` carries 19 items vs 20** — C-9.1 (Present) has 1 where its
+   siblings have 2. Advisory, does not gate; ARV-D-019 accepts generation variance by default and
+   forbids a hand back-fill. It survives the repair route untouched.
+
+**Still open before the stage is signed:** P5.4 (the three VIII profiles, through the app) and the
+**HUMAN GATE** — the borrowed seams across the X range, each compact's closing unit, and the
+projected-vs-actual adaptation diff, read as a teacher would meet them. Then record the class
+override (**reason: VIII is the only middle class on the 45-min band**) beside the original VII
+draw in `docs/testing_tracker.html`, and the C-cycle opens at C2.

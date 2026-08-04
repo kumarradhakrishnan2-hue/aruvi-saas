@@ -56,27 +56,78 @@ def classify_stimulus(raw) -> VisualStimulus:
     return VisualStimulus(StimulusType.PROSE, s)
 
 
+_SOURCE_NOTE_OPENERS = ("—", "–", "-", "adapted from", "based on", "source:", "from ")
+
+
+def _is_source_note(row: List[str]) -> bool:
+    """A trailing one-cell line that attributes the table rather than carrying data."""
+    if len(row) != 1 or not row[0]:
+        return False
+    t = row[0].strip().lower()
+    return any(t.startswith(p) for p in _SOURCE_NOTE_OPENERS)
+
+
 def parse_table(raw: str) -> dict:
-    """Split pipe-delimited table text into {'header': [...], 'rows': [[...]]}.
+    """Split pipe-delimited table text into
+    {'header': [...], 'rows': [[...]], 'caption': str, 'source_note': str}.
 
     THE single place a pipe-table string is split into cells — every renderer (HTML/PDF
-    export, the React on-screen view, the assessment 3b view) consumes this structure and
-    NEVER re-splits the raw string itself (the recurring drift-bug class). Row 0 is the
-    header; remaining lines are body rows. Empty/blank lines are dropped."""
+    export, DOCX, the React on-screen view, the assessment 3b view) consumes this structure
+    and NEVER re-splits the raw string itself (the recurring drift-bug class). Row 0 is the
+    header; remaining lines are body rows. Empty/blank lines are dropped.
+
+    RAGGED PAYLOADS (2026-08-04, founder-reported on SS·VIII ch 3's Maratha-navy MCQ).
+    The generator routinely puts NON-DATA lines inside the pipe payload, and every renderer
+    took line 0 as the header and each line's own cell count as its width — so a table whose
+    title row held 2 cells above 3-column data rendered a 2-column head over 3-column body,
+    online AND in PDF/Word. Two shapes, both now handled HERE so one fix reaches all four
+    renderers:
+      * a LEADING TITLE row — strictly narrower than the body's modal width — becomes
+        `caption` (its cells joined with ' · ', so a spanning two-level head keeps every
+        word) and the NEXT row becomes the header;
+      * a TRAILING ATTRIBUTION row — one cell opening with a dash or 'Adapted from' /
+        'Based on' / 'Source:' — becomes `source_note` (SS·IX carries four of these).
+    Whatever survives is then PADDED to a single width so no renderer can emit a broken
+    grid. Padding never truncates: a row wider than the header widens the whole table
+    instead, because dropping a cell would delete content a teacher is meant to read.
+
+    `caption` and `source_note` are '' when absent, so existing consumers that read only
+    'header'/'rows' keep working unchanged."""
     lines = [ln for ln in (raw or "").splitlines() if ln.strip()]
     cells = [[c.strip() for c in ln.split("|")] for ln in lines]
     if not cells:
-        return {"header": [], "rows": []}
+        return {"header": [], "rows": [], "caption": "", "source_note": ""}
+
+    source_note = ""
+    if len(cells) > 1 and _is_source_note(cells[-1]):
+        source_note = cells[-1][0].strip()
+        cells = cells[:-1]
+
+    caption = ""
+    if len(cells) >= 3:
+        body_widths = [len(r) for r in cells[1:]]
+        modal = max(set(body_widths), key=body_widths.count)
+        # Strictly narrower than the body it sits above → a title, not a header row.
+        if len(cells[0]) < modal:
+            caption = " · ".join(c for c in cells[0] if c)
+            cells = cells[1:]
+
     # WORD BANK (no header): a grid where every cell is a single word — a box of words for a
     # cloze / matching / word-choice task. These have no column semantics, so the first row is
     # NOT a header and must not render bold/filled (every word is the same hierarchy). Data
     # tables always carry at least one multi-word cell (their column labels), so they keep the
     # header. Gated to 3+ columns so ordinary two-column tables (Word | Meaning) are untouched.
     flat = [c for row in cells for c in row if c]
-    max_cols = max((len(r) for r in cells), default=0)
-    if len(cells) >= 2 and max_cols >= 3 and flat and all(" " not in c for c in flat):
-        return {"header": [], "rows": cells}
-    return {"header": cells[0], "rows": cells[1:]}
+    width = max((len(r) for r in cells), default=0)
+    if len(cells) >= 2 and width >= 3 and flat and all(" " not in c for c in flat):
+        return {"header": [], "rows": [r + [""] * (width - len(r)) for r in cells],
+                "caption": caption, "source_note": source_note}
+
+    def _pad(r):
+        return r + [""] * (width - len(r))
+
+    return {"header": _pad(cells[0]), "rows": [_pad(r) for r in cells[1:]],
+            "caption": caption, "source_note": source_note}
 
 
 def normalize_options(raw: Any) -> tuple:

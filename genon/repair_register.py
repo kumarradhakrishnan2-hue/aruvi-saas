@@ -249,7 +249,9 @@ def main():
     # keys on the canonical's ledger_ts, which a repair does not change, so a stale plan would
     # otherwise keep being served. Rebuilding one costs ~11 ms.
     if not dry:
-        purge("social_sciences", "ix", 3, reason="genon/repair_register.py")
+        chapters = sorted({int(f.split("_")[1]) for f in repairs})
+        for ch in chapters:
+            purge(subject, grade, ch, reason="genon/repair_register.py")
     if dry:
         print("dry run — re-run with --apply to write.")
     return 1 if total_after else 0

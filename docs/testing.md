@@ -549,10 +549,14 @@ live artefacts; fails become defects. **Artefact:** the item table.
    number), labels in sequence. This gate should ALWAYS pass: **STEP 6**
    (`genon/normalize_options.py`) sorts them deterministically before certification, so the
    check exists to prove the stage ran, not to catch the model. The step's own report line —
-   `options arranged: N of M item(s) re-ordered` — IS the generation-quality rate for the
-   retired Rule 7 arrangement sentence (struck at assessment v1.7); read it, do not skip it. It
-   also appears per file in `genon_canonical.repairs[]`. Items whose option text references
-   another option by label are skipped and reported rather than reordered.
+   `options arranged: N of M item(s) re-ordered` — is printed and **nowhere stored**: the
+   `genon_canonical.repairs[]` record was removed on 2026-08-04 (founder ruling: four
+   constitution versions moved the rate the wrong way, there is no outside reporting duty and no
+   route from the data back into the model, so it was weight in every canonical). Read the count
+   on the FIRST pass of a freshly generated library; on a `--certify-only` re-run a 0 means only
+   that nothing was left to move. `repairs[]` itself stays in use for `repair_register.py` and
+   `repair_anchors.py`, whose edits are declared judgements rather than a pure sort. Items whose
+   option text references another option by label are skipped and reported rather than reordered.
 10. **item counts per competency — ADVISORY, DOES NOT GATE** (added 2026-08-02 at SS·secondary
    C4). Each file's items are grouped by competency and compared to the mandated count for that
    weight label: `EXACT_ITEM_COUNTS[(subject, stage)]` where the stage's assessment constitution

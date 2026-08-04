@@ -223,8 +223,10 @@ def certify(subject, grade, ch, row):
     # versions and one probe took the failure rate from 5/6-on-B to 15 of 18 unarranged, with
     # the correct option at A or B on 16 of 18 and never at D. STEP 6 (normalize_options.py)
     # now does it deterministically, so this gate should ALWAYS pass — it exists to prove the
-    # stage ran, not to catch the model. The rate itself is reported by that step and recorded
-    # in genon_canonical.repairs[]; the constitution sentence is struck at v1.7.
+    # stage ran, not to catch the model. The rate is PRINTED by that step and nowhere stored:
+    # the genon_canonical.repairs[] record was removed on 2026-08-04 (founder) because it never
+    # produced the signal it was kept for. Read the printed count on a first pass only; on a
+    # --certify-only re-run a 0 means nothing was left to move. Constitution sentence struck at v1.7.
     for name, _s in lib:
         left = unarranged(lib_dir_of(subject, grade) / name)
         note(not left,

@@ -67,7 +67,47 @@ def test_parse_table_structure():
     t = parse_table("Planet | Weight (N)\nEarth | 10\nMoon | 1.6")
     assert t["header"] == ["Planet", "Weight (N)"]
     assert t["rows"] == [["Earth", "10"], ["Moon", "1.6"]]
-    assert parse_table("") == {"header": [], "rows": []}
+    assert t["caption"] == "" and t["source_note"] == "", "an ordinary table has neither"
+    assert parse_table("") == {"header": [], "rows": [], "caption": "", "source_note": ""}
+
+
+def test_leading_title_row_becomes_a_caption():
+    """SS·VIII ch 3's Maratha-navy MCQ (founder-reported 2026-08-04): the generator put a
+    2-cell TITLE line above 3-column data, and every renderer took it as the header — a
+    2-column head over a 3-column body, on screen AND in PDF/Word."""
+    t = parse_table(
+        "Maratha Naval Institution: Two Functions | Evidence from the Chapter\n"
+        "Function | Description | Key Evidence\n"
+        "Military defence | Protected the west coast | Navy founded 1657\n"
+        "Economic sovereignty | Challenged European control | Angre reversed the cartaz")
+    assert t["caption"] == ("Maratha Naval Institution: Two Functions · "
+                           "Evidence from the Chapter")
+    assert t["header"] == ["Function", "Description", "Key Evidence"]
+    assert len(t["rows"]) == 2
+    assert {len(r) for r in t["rows"]} == {len(t["header"])} == {3}, "grid is uniform"
+
+
+def test_trailing_attribution_becomes_a_source_note():
+    """SS·IX carries four of these — a one-cell '— Adapted from …' line inside the payload."""
+    t = parse_table("Gas | Proportion\nNitrogen | ~78%\nOxygen | ~21%\n"
+                    "— Adapted from Fig. 3.2, Chapter 3")
+    assert t["source_note"] == "— Adapted from Fig. 3.2, Chapter 3"
+    assert t["header"] == ["Gas", "Proportion"]
+    assert t["rows"] == [["Nitrogen", "~78%"], ["Oxygen", "~21%"]]
+
+
+def test_short_rows_are_padded_never_truncated():
+    t = parse_table("A | B | C\nlong one | 2\nthree | four | five")
+    assert {len(r) for r in t["rows"]} == {3}
+    assert t["rows"][0] == ["long one", "2", ""], "padded, and no cell dropped"
+
+
+def test_two_column_table_keeps_its_first_row_as_header():
+    """Guard against over-eager caption detection: a genuine 2-column table's first row is
+    the header, not a title, because it is not NARROWER than the body."""
+    t = parse_table("Word | Meaning\nswarajya | self-rule\ncartaz | trade pass")
+    assert t["caption"] == ""
+    assert t["header"] == ["Word", "Meaning"]
 
 
 def test_all_pipe_bearing_assessment_stimuli_type_as_table():

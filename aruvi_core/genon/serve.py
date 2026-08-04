@@ -260,8 +260,10 @@ def fill_slot(streams, chosen, requested, registry):
     makes every co-dealt section adjacent to M. Preference (founder,
     2026-08-03): forward reach without re-cross (M+N…, furthest first) > M
     alone > backward combinations (least re-cross, then furthest reach) — a
-    brisk re-cross is redundancy, and redundancy is not jumpiness. Ties: the
-    lender whose count is closest to X (pacing context), then the denser plan.
+    brisk re-cross is redundancy, and redundancy is not jumpiness. Ties (SELF
+    FIRST, added 2026-08-04, architecture v2.1): the chosen plan's OWN
+    candidate wins every tie it enters, then the lender whose count is closest
+    to X (pacing context), then the denser plan.
     Sections beyond the fill's reach are reported; serve_plan carries them as
     dropped units SOURCED FROM THE LENDER's subsequent units.
 
@@ -316,12 +318,23 @@ def fill_slot(streams, chosen, requested, registry):
         a, b = r
         o = m - a                          # already-taught sections re-crossed
         cands.append({"stream": s, "unit": u, "unit_index": i, "range": r,
-                      "overlap": o, "reach": b,
+                      "overlap": o, "reach": b, "self": s is chosen,
                       "count": len(s["units"])})
     if cands:
+        # SELF-PREFERENCE (2026-08-04, architecture v2.1): the chosen plan's own
+        # candidate wins every tie it enters. Until today the sort fell straight
+        # from reach to pacing distance, so the identity candidate carried no
+        # privilege and the engine handed the teacher a stranger's closing unit
+        # while the plan she was being served had its own — SS·IX X=8 (p10 U8 lost
+        # to p07 U7 on |7−8| < |10−8|), SS·VIII X=11 and X=14. Every candidate is
+        # first-exposure and therefore SAFE, so this is continuity, not correctness:
+        # the home unit names the content the class just had, in the voice its own
+        # prefix established. It stays a TIE-BREAK — placed below reach, it never
+        # lifts a home unit above a better preference class.
         cands.sort(key=lambda c: (0 if c["overlap"] == 0 else 1,   # no re-cross first
                                   c["overlap"],                    # then least re-cross
                                   -c["reach"],                     # furthest reach
+                                  0 if c["self"] else 1,           # SELF FIRST
                                   abs(c["count"] - requested),     # pacing context
                                   -c["count"]))                    # then denser
         c = cands[0]
@@ -632,11 +645,20 @@ def serve_plan(streams, matrix):
             "dropped_units": dropped_units or None,
         },
         "genon": {
-            "engine": ("serve v2.1 / e13 (canonical library, next-highest selection, "
+            # PROVENANCE — keep the eNN here in step with api.data.GENON_ENGINE_VERSION.
+            # These are two different strings for the same fact: this one is stamped INTO
+            # every served plan, that one keys the FILENAME. They drifted at e14 (the
+            # filename said e14 while the plan inside still claimed e13), which is
+            # invisible until someone diffs an e13 file against its e14 twin — the
+            # tracker's amber rule reads provenance, so a stale string here reads as
+            # "no engine change" on a plan that is one.
+            "engine": ("serve v2.1 / e14 (canonical library, next-highest selection, "
                        "X-1+1 slot fill by the first-exposure choice set §0.4, "
                        "proportional duration scaling, unit-anchored assessment; "
                        "e13: an item whose unit is not in the plan is not in the plan, "
-                       "and a dropped unit's questions ride with it)"),
+                       "and a dropped unit's questions ride with it; "
+                       "e14: SELF-PREFERENCE — the chosen plan's own candidate wins "
+                       "every tie in the Xth-unit choice set)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,
