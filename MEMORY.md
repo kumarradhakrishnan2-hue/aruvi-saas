@@ -441,6 +441,36 @@ must confirm · source entry.
 
 ---
 
+## 2026-08-04 — ARV-D-034's fix MOVED: the cache key is clean, the repair tools purge
+
+**The problem, unchanged:** `repair_anchors` / `repair_register` / `normalize_options` rewrite a
+canonical IN PLACE. The serve cache keys on (chapter, matrix, engine, canonical `ledger_ts`) —
+none of which a repair moves — so plans derived before the repair keep being served. Measured on
+the pilot: the 8-period plan carried a repaired-away register breach and five unarranged MCQs
+four hours after the repair, and only a manual delete dislodged it.
+
+**First fix (2026-08-03), now REVERTED:** a repair fingerprint in `canonical_version` —
+`…_c20260803143426r4d21e.json`, where `r4` = four repairs and `d21e` hashes them. Correct, and
+unreadable: every served filename grew a hash tail, and the founder deleted the derived plans and
+asked for the plain convention back.
+
+**Second fix (2026-08-04), current:** `genon/purge_derived.py`. A canonical change DELETES the
+chapter's derived plans (`ch_NN_<matrix>_e*_c*.json`, never a `ch_NN_canonical*.json`, never
+another chapter), called automatically from all three repair tools. Names stay plain
+(`ch_03_50m8_e13_c20260803142658.json`) and the next request rebuilds in ~11 ms — the rebuild
+being free (C11: 0.3 ms of engine work) is what makes purging affordable where it would not be
+for a generated artefact.
+
+**The trade, stated:** a teacher holding a purged plan loses that file and re-prepares. Her
+prepared-plans register still names it; `GET /plans/{subject}/{grade}` walks the DIRECTORY and
+marks what is prepared, so a dangling key is silently skipped rather than erroring (verified —
+30 such keys exist across kumar1/2/3 today and My Lessons is unaffected). The re-key branch is
+the alternative if that ever stops being acceptable; do not invent a third mechanism.
+`tests/test_genon_plan_key.py::test_repairs_do_not_rekey` pins BOTH halves: the key must stay
+stable across repairs, and the purge pattern must never match a canonical.
+
+---
+
 ## 2026-08-03 (newest) — ARCHITECTURE v2.0: mandates OUT, the first-exposure choice set IN (engine e12; solver retired)
 
 **The defect (ARV-D-025).** The solver-mandated closing spans failed at their root: by

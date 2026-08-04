@@ -208,6 +208,10 @@ def normalize_library(subject, grade, ch, apply=True, backup=True):
                          f"· correct {e['correct_before']} -> {e['correct_now']}")
         for s in rep["skipped"]:
             lines.append(f"          #{s['item']} SKIPPED — {s['reason']}")
+    if apply and total:
+        # A rewritten canonical invalidates the plans derived from it (ARV-D-034).
+        from purge_derived import purge
+        purge(subject, grade, ch, reason="genon/normalize_options.py")
     head = (f"options arranged: {total} of {scanned} item(s) re-ordered this run"
             + (f"; {prior_total} of {scanned} were re-ordered when this library was first "
                f"normalized" if prior_total else "")

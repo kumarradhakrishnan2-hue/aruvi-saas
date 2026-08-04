@@ -100,34 +100,44 @@ else:
         finally:
             data.DATA_DIR = real
 
-# ── ARV-D-034 (2026-08-03): a repair must re-key the cache ──────────────────────
-# repair_anchors / repair_register / normalize_options rewrite a canonical IN PLACE.
-# ledger_ts and the engine version are unchanged, so before this the derived plan kept
-# its key and the pre-repair bytes were served forever — measured on SS·IX ch 3, where
-# the 8-period plan still carried a repaired-away register breach four hours later.
-def test_repairs_rekey():
+# ── ARV-D-034 (2026-08-04): the key is CLEAN; invalidation lives in the repair tools ──
+# A repair fingerprint in this key was built 2026-08-03 and REVERTED the next day (founder):
+# it hung an unreadable hash tail off every served filename. The invariant it protected —
+# a repaired canonical must never be served from a plan built before the repair — now lives
+# in genon/purge_derived.py, which the repair tools call. So the key must stay STABLE across
+# repairs, and the purge is what stops a stale plan existing at all.
+def test_repairs_do_not_rekey():
     import copy
     from api import data
     base = {"genon_canonical": {"ledger_ts": "20260803141938"}, "result": {}}
     k0 = data.canonical_version(base)
+    assert k0 == "20260803141938", k0
 
-    one = copy.deepcopy(base)
-    one["genon_canonical"]["repairs"] = [{"at": "2026-08-03T18:07:01", "tool": "x", "edits": []}]
-    k1 = data.canonical_version(one)
-    assert k1 != k0, "a repaired canonical must not keep the unrepaired key"
+    repaired = copy.deepcopy(base)
+    repaired["genon_canonical"]["repairs"] = [
+        {"at": "2026-08-03T18:07:01", "tool": "repair_register", "edits": []},
+        {"at": "2026-08-03T19:28:11", "tool": "normalize_options", "edits": []},
+    ]
+    assert data.canonical_version(repaired) == k0, \
+        "a repair must NOT change the key — purge_derived is what invalidates"
 
-    two = copy.deepcopy(one)
-    two["genon_canonical"]["repairs"].append({"at": "2026-08-03T19:28:11", "tool": "y", "edits": []})
-    k2 = data.canonical_version(two)
-    assert k2 != k1, "a SECOND repair must re-key again"
+    # the guard that replaced it: the purge pattern hits derived plans and never the library
+    import importlib.util, pathlib
+    spec = importlib.util.spec_from_file_location(
+        "purge_derived", pathlib.Path(__file__).resolve().parent.parent / "genon" / "purge_derived.py")
+    pd = importlib.util.module_from_spec(spec); spec.loader.exec_module(pd)
+    pat = pd.derived_pattern(3)
+    assert pat.match("ch_03_50m8_e13_c20260803142658.json")
+    assert pat.match("ch_03_60m4-50m6_e13_c20260803142658.json")
+    assert not pat.match("ch_03_canonical.json"), "the library must never be purgeable"
+    assert not pat.match("ch_03_canonical_p07.json"), "nor a compact canonical"
+    assert not pat.match("ch_04_50m8_e13_c20260803142658.json"), "nor another chapter"
+    print("PASS  the key is stable across repairs; purge_derived hits only derived plans")
 
-    assert data.canonical_version(copy.deepcopy(one)) == k1, "the key must be stable"
-    assert k1.startswith(k0), "the ledger run must remain readable in the key"
-    print("PASS  a repair re-keys the cache; a second repair re-keys again; keys are stable")
 
 
-test_repairs_rekey()
 
+test_repairs_do_not_rekey()
 
 print("\n" + ("ALL PASS" if not FAILURES else "FAILURES: " + ", ".join(FAILURES)))
 sys.exit(1 if FAILURES else 0)

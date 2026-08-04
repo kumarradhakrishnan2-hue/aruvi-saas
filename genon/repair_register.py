@@ -38,6 +38,7 @@ REPO = HERE.parent
 sys.path.insert(0, str(HERE))
 
 from register_scan import scan_plan, report                      # noqa: E402
+from purge_derived import purge                                  # noqa: E402
 
 LIB = REPO / "data" / "content" / "saved_plans" / "social_sciences" / "ix"
 BACKUP = REPO / "backup" / "register_repair"
@@ -156,6 +157,11 @@ def main():
         if after:
             report([h for h in scan_plan(plan) if h["ban"]], f"{fname} SURVIVING")
     print(f"\nTOTAL surviving ban hits across the library: {total_after}")
+    # A repaired canonical invalidates every plan derived from it (ARV-D-034): the serve cache
+    # keys on the canonical's ledger_ts, which a repair does not change, so a stale plan would
+    # otherwise keep being served. Rebuilding one costs ~11 ms.
+    if not dry:
+        purge("social_sciences", "ix", 3, reason="genon/repair_register.py")
     if dry:
         print("dry run — re-run with --apply to write.")
     return 1 if total_after else 0

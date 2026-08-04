@@ -953,6 +953,14 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
                       "surrender_note": g.get("surrender_note")},
         }
 
+    # Has THIS teacher held this exact plan before? Read the register BEFORE marking, because
+    # marking is what makes the answer false. The client uses it to decide whether to show the
+    # preparing state: `cached` is about the SERVER's work and is the wrong question — a plan
+    # another teacher warmed is still new to her, and her own second look at it is not.
+    # (founder, 2026-08-04)
+    plan_key = _plan_key(subject, grade, filename)
+    already_yours = plan_key in prepared_plans_repo.load_all(tenant_id, user_id)
+
     hit = data.load_saved_plan(subject, grade, filename)
     if hit is not None:
         try:
@@ -963,6 +971,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         hg = hit.get("genon") or {}
         return {
             "status": "prepared", "cached": True,
+            "already_yours": already_yours,
             "filename": filename,
             "chapter_number": chapter_number,
             "chapter_title": hit.get("chapter_title"),
@@ -992,6 +1001,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     g = plan["genon"]
     return {
         "status": "prepared", "cached": False,
+        "already_yours": already_yours,
         "filename": filename,
         "chapter_number": chapter_number,
         "chapter_title": plan.get("chapter_title"),

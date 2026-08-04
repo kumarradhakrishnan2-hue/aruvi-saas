@@ -615,9 +615,17 @@ normalizes `period_ref` (the identity) — legacy `phase_ref` as fallback — on
 2. **Borrowed unit brings its own items** — on a fill serve, the fill unit's items come from
    its HOME variant and are anchored to the fill sitting (last sitting), not to a
    chosen-variant unit;
-3. **Unserved anchors** — on the below-floor serve, an item whose anchor unit was not scheduled
-   carries `scheduling_note: "anchor unit not scheduled in this plan (time budget)"` and an
-   empty `period_ref`, rather than mis-anchoring to a surviving unit;
+3. **Unserved anchors (REWRITTEN at e13, 2026-08-03 — ARV-D-037).** The old rule here was that
+   such an item stays with an empty `period_ref` and a `scheduling_note`. That state was
+   neither in nor out: the screen anchors items to units so it rendered nowhere, while the
+   EXPORT walks `assessment_items` flat and printed it — 7 of 20 questions on the 8-period
+   serve, about units the class never had. The rule now: **an item whose unit is not in the
+   plan is not in the plan.** Check (a) no item carries an empty `period_ref`, anywhere;
+   (b) items whose anchor unit was not served are ABSENT, and their number is reported in
+   `genon.assessment_items_unserved`; (c) on a below-floor serve the DROPPED units' items ARE
+   present, anchored to the dropped unit's sitting number in this plan (never the lender's own
+   numbering) and flagged `unscheduled: true`, with their handoff rows restored and flagged;
+   (d) exports omit exactly the `unscheduled` items, as they omit the dropped units themselves;
 4. **No cross-variant references** of any other kind.
 **Exit:** zero mis-anchored items; every unserved-anchor item carries the note.
 **Artefact:** the anchor table per plan.
@@ -625,15 +633,27 @@ normalizes `period_ref` (the identity) — legacy `phase_ref` as fallback — on
 **C10 [Claude] Storage conventions.**
 1. Library files: `ch_NN_canonical.json` + `ch_NN_canonical_pKK.json` (KK = the variant's
    period count, zero-padded). Served plans: exactly
-   `ch_NN_<matrix>_e10_c<chosen-variant-version>.json`, `<matrix>` duration-aggregated
-   longest-first (`50m10`, `60m3-45m9`) and the version being the **chosen variant's**
-   `ledger_ts` — not the top canonical's (`api/data.py::genon_plan_filename`). Live proof of
-   the chosen-variant rule already on disk: SS·IX ch 3's `50m8` and `50m6` files key on the
-   p09 and p07 variants' own timestamps, not the top's.
-2. **Cache hit** — repeat one C6 non-identity request: response has `cached: true` and the
-   file's mtime did not change.
-3. **No overwrite across engine versions** — every pre-campaign file for this chapter
-   (`_e06_` … `_e09_`) is still on disk untouched beside the new `_e10_` files.
+   `ch_NN_<matrix>_e<ENGINE>_c<chosen-variant-version>.json`, `<matrix>` duration-aggregated
+   longest-first (`50m10`, `60m4-50m6`) and the version being the **chosen variant's**
+   `canonical_version` — not the top canonical's (`api/data.py::genon_plan_filename`). Live
+   proof of the chosen-variant rule on disk: SS·IX ch 3's `50m8` keys on p10 and `50m6` on
+   p07, each the variant that served it. The version token is the ledger timestamp and nothing
+   else: a repair fingerprint was added 2026-08-03 and **reverted 2026-08-04** (founder — it
+   hung an unreadable hash tail off every filename); invalidation moved to the repair tools
+   instead, see check 2.
+2. **Cache hit, and the purge that keeps it honest** — two halves, and the second is why the
+   first is safe: (a) repeat one C6 non-identity request: response has `cached: true` and the
+   file's mtime did not change; (b) after any in-place repair of a canonical, the chapter's
+   derived plans must be GONE — `genon/purge_derived.py` runs from `repair_register`,
+   `repair_anchors` and `normalize_options`, so the next request rebuilds (~11 ms) instead of
+   serving pre-repair bytes (ARV-D-034: the pilot served repaired-away text for four hours
+   because the key did not move, and only a manual delete dislodged it). Check the purge
+   PRINTED what it removed, and that no `ch_NN_<matrix>_e*_c*.json` survives a repair run.
+   Cost, accepted: a teacher holding a purged plan loses that file and re-prepares — the
+   listing walks the directory, so her dangling register key is skipped, not an error.
+3. **No overwrite across engine versions** — every earlier-engine file for this chapter is
+   still on disk untouched beside the current ones (a bump re-keys the cache by construction,
+   so nothing is ever rewritten in place).
 4. **Determinism** — delete one C6 plan file, re-run the same request: the new file is
    byte-identical except the top-level `saved_at`
    (`diff <(jq 'del(.saved_at)' a) <(jq 'del(.saved_at)' b)` empty).

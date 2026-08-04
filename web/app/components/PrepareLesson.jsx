@@ -46,6 +46,21 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   // stepper), BEFORE Generate — founder 2026-08-01: floor note below 60%, surrender note
   // above the top; nothing after generation ("that's it"). The served plan itself prints
   // the periods actually used (genon.served_matrix, engine e10).
+  // ── The preparing state (founder, 2026-08-04; supersedes the assembly-reveal trial) ──
+  // A genon serve is ~0.3 ms (C11), so without a hold the plan is simply THERE, which read as
+  // artificial — the screen changed before the tap finished. The first trial staged the unit
+  // cards in over ~1.3 s; the founder's verdict was that it took her away and still felt fast
+  // and artificial. So: STAY ON THIS SCREEN, show the lesson card she is about to get in a
+  // resting state — its real chapter, class and period shape, drawn pale, with a "· · · · ·"
+  // line saying the plan is in the works — and hold for five seconds.
+  //
+  // WHO WAITS is the interesting rule (founder): not "was the server's cache cold" but "is
+  // this plan new TO HER". `already_yours` comes from her prepared-plans register, read
+  // server-side before the request marks it. Her own second look is instant; a plan another
+  // teacher happened to warm is still her first sight of it, and gets the full wait. That
+  // makes the pause a property of her experience rather than of our infrastructure.
+  const PREPARING_MS = 5000;
+  const [preparing, setPreparing] = useState(null);   // { chapterTitle, periods, durations } | null
   const [showInfo, setShowInfo] = useState(false);         // effort-index explainer popover
   const [showBreakdown, setShowBreakdown] = useState(false); // committed-chapters popup
   const [warnRegen, setWarnRegen] = useState(false);       // re-preparing an already-prepared chapter
@@ -258,6 +273,14 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     try { await runGenerate(); } finally { inFlight.current = false; }
   };
 
+  // Hold the preparing card for the rest of the five seconds, then resolve. A plan she has
+  // held before resolves immediately — no hold, no flicker.
+  const holdPreparing = (startedAt, alreadyYours) => {
+    if (alreadyYours) return Promise.resolve();
+    const left = Math.max(0, PREPARING_MS - (Date.now() - startedAt));
+    return new Promise((res) => setTimeout(res, left));
+  };
+
   const runGenerate = async () => {
     if (!chosen) return;
     // ── genon path: deterministic adaptation from the chapter's certified canonical ──
@@ -267,9 +290,17 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
         .filter((r) => r.duration > 0 && r.count > 0);
       if (!matrix.length) { setError("Add at least one duration row."); return; }
       setBusy(true); setError(""); setNote("");
+      // The card goes up FIRST, from what she just told us — chapter, class, period shape.
+      // Nothing here is invented and nothing is fetched to draw it.
+      const startedAt = Date.now();
+      setPreparing({
+        chapterTitle: (chosen && (chosen.chapter_title || chosen.title)) || `Chapter ${chapterNo}`,
+        rows: matrix,
+      });
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
           { rows: matrix });
+        await holdPreparing(startedAt, !!resp.already_yours);
         if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
         // No return handler → show the freshly adapted plan.
         setStep("preview");
@@ -278,6 +309,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       } catch {
         setError("Couldn't build the lesson plan right now. Try again in a moment.");
       } finally {
+        setPreparing(null);
         setBusy(false);
       }
       return;
@@ -311,6 +343,28 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       setBusy(false);
     }
   };
+
+  // ── the preparing card — SHE STAYS HERE; the lesson she is about to get, at rest ──
+  if (preparing) {
+    const totalP = (preparing.rows || []).reduce((a, r) => a + (Number(r.count) || 0), 0);
+    const shape = (preparing.rows || [])
+      .map((r) => `${r.count} × ${r.duration} min`).join(" + ");
+    return (
+      <div className="prep-wait" aria-live="polite" aria-busy="true">
+        <div className="ap-kicker prep-scope">{pretty(subject)} · Class {classNum(grade)}</div>
+        <div className="prep-wait-card">
+          <p className="prep-wait-title">{preparing.chapterTitle}</p>
+          <p className="prep-wait-meta">
+            {totalP} {totalP === 1 ? "period" : "periods"}{shape ? ` · ${shape}` : ""}
+          </p>
+          <p className="prep-wait-dots" aria-hidden="true">
+            <span /><span /><span /><span /><span />
+          </p>
+          <p className="prep-wait-note">Preparing your lesson plan…</p>
+        </div>
+      </div>
+    );
+  }
 
   // ── preview: the generated (saved-plan) lesson ──
   if (step === "preview") {

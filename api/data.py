@@ -456,25 +456,17 @@ def canonical_version(canonical: Dict[str, Any]) -> str:
         # Canonicals generated under v1.3 emit unit_handoff in the run itself and carry
         # no handoff_rev, so their keys stay clean.
         rev = "".join(ch for ch in str(gc.get("handoff_rev") or "") if ch.isalnum())
-        ts = f"{ts}h{rev}" if rev else ts
-        # REPAIRS ARE THE SAME PROBLEM AS handoff_rev, ONE STEP LATER (ARV-D-034, 2026-08-03).
-        # repair_anchors / repair_register / normalize_options all rewrite a canonical IN
-        # PLACE: the bytes a serve produces change while ledger_ts and the engine version do
-        # not, so every plan derived before the repair keeps its key and is served from cache
-        # forever. Measured on the pilot: the 8-period plan was served four hours after its
-        # canonical was repaired, still carrying the repaired-away register breach and five
-        # unarranged MCQs, and only a manual delete dislodged it. Certification said clean;
-        # the teacher's copy was not. So the repair set joins the key.
-        # A repair therefore MINTS A NEW ENTRY rather than mutating an old one — same promise
-        # as regeneration: a teacher mid-chapter keeps the plan she is teaching, and the
-        # repaired version is a new file offered alongside it.
-        reps = gc.get("repairs") or []
-        if reps:
-            import hashlib
-            fp = hashlib.sha1(json.dumps(reps, ensure_ascii=False, sort_keys=True)
-                              .encode()).hexdigest()[:4]
-            ts = f"{ts}r{len(reps)}{fp}"
-        return ts
+        return f"{ts}h{rev}" if rev else ts
+        # NOTE (ARV-D-034, resolved differently on 2026-08-04). An in-place repair changes the
+        # bytes a serve produces without changing ledger_ts, so a plan derived BEFORE the repair
+        # would otherwise be served from cache forever — measured on the pilot, where the
+        # 8-period plan carried a repaired-away register breach for four hours.
+        # A repair fingerprint in this key was tried and REVERTED (founder): it made every
+        # served filename carry a hash tail nobody could read. The invariant now lives in the
+        # repair tools instead — `genon/purge_derived.py` deletes the chapter's derived plans
+        # whenever a canonical is repaired, so a stale entry cannot exist to be served.
+        # If you are tempted to re-key here, read that file first: the choice is where the
+        # invalidation lives, not whether it exists.
     import hashlib
     blob = json.dumps(canonical.get("result"), ensure_ascii=False, sort_keys=True).encode()
     return hashlib.sha1(blob).hexdigest()[:12]

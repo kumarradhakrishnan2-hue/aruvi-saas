@@ -48,6 +48,8 @@ REPO = HERE.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(HERE))
 
+from purge_derived import purge                                  # noqa: E402
+
 from aruvi_core.genon import compile_stream                        # noqa: E402
 from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, is_synthesis_unit, section_registry, unit_range,
@@ -190,6 +192,9 @@ def main():
     if dry:
         print("\ndry run — re-run with --apply to write.")
         return 0
+    # A repaired canonical invalidates every plan derived from it (ARV-D-034) — the serve
+    # cache keys on the canonical's ledger_ts, which a repair does not move.
+    purge("social_sciences", "ix", 3, reason="genon/repair_anchors.py")
     reg = show_registry("AFTER")
     bad = [b for _, b, _, _ in first_visit_check(*registry_of_library()) if b]
     print(f"\nregistry is {len(reg)} sections; "

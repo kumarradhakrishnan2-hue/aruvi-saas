@@ -1,19 +1,200 @@
 {
-  "filename": "ch_03_50m6_e12_c20260803143426.json",
-  "saved_at": "2026-08-03T19:52:39",
-  "grade": "Grade IX",
-  "subject": "Social Science",
+  "filename": "ch_03_canonical_p07.json",
+  "saved_at": "2026-08-03T14:40:39",
+  "plan_status": "canonical",
   "chapter_number": 3,
   "chapter_title": "Atmosphere and Climate",
-  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 6 periods = 300 minutes\nTotal: 6 periods · 5h 00min",
+  "grade": "Grade IX",
+  "subject": "Social Science",
   "period_rows_snapshot": [
     {
       "id": 0,
       "duration": 50,
-      "count": 6
+      "count": 7
     }
   ],
-  "plan_status": "adapted",
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 7 periods = 350 minutes\nTotal: 7 periods · 5h 50min",
+  "genon_canonical": {
+    "generated": "2026-08-03",
+    "schedule": "7x50",
+    "constitution": "LP v1.10 / assessment v1.6",
+    "source": "generate_canonical.py one social_sciences ix 3",
+    "ledger_ts": "20260803_143426",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-03T17:41:40",
+        "tool": "genon/repair_anchors.py v1.0",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 3,
+            "field": "section_anchor",
+            "rule": "V2/joiner",
+            "removed": "Weather and Climate; Elements of Weather and Climate / Elements of Weather and Climate",
+            "replaced_with": "Weather and Climate / Elements of Weather and Climate",
+            "note": "semicolon composite plus a redundant repeat of the second section; the clean two-section form is emitted. Unit coverage is unchanged (sections 3-4)."
+          }
+        ]
+      },
+      {
+        "at": "2026-08-03T19:28:11",
+        "tool": "genon/normalize_options.py v1.0",
+        "reason": "Rule 7 option arrangement enforced in code (ARV-D-032; founder ruling 2026-08-03). Option text and is_correct are untouched; array order, labels and guide option keys only.",
+        "items_scanned": 6,
+        "items_moved": 5,
+        "edits": [
+          {
+            "item": 6,
+            "competency": "C-4.3",
+            "period_ref": [
+              5
+            ],
+            "labels_before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "came_from": [
+              "C",
+              "D",
+              "A",
+              "B"
+            ],
+            "correct_before": "A",
+            "correct_now": "C"
+          },
+          {
+            "item": 9,
+            "competency": "C-4.4",
+            "period_ref": [
+              5
+            ],
+            "labels_before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "came_from": [
+              "B",
+              "A",
+              "C",
+              "D"
+            ],
+            "correct_before": "B",
+            "correct_now": "A"
+          },
+          {
+            "item": 12,
+            "competency": "C-4.5",
+            "period_ref": [
+              6
+            ],
+            "labels_before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "came_from": [
+              "A",
+              "C",
+              "D",
+              "B"
+            ],
+            "correct_before": "B",
+            "correct_now": "D"
+          },
+          {
+            "item": 15,
+            "competency": "C-4.1",
+            "period_ref": [
+              5
+            ],
+            "labels_before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "came_from": [
+              "B",
+              "A",
+              "C",
+              "D"
+            ],
+            "correct_before": "B",
+            "correct_now": "A"
+          },
+          {
+            "item": 17,
+            "competency": "C-4.6",
+            "period_ref": [
+              6
+            ],
+            "labels_before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "came_from": [
+              "A",
+              "C",
+              "B",
+              "D"
+            ],
+            "correct_before": "B",
+            "correct_now": "C"
+          }
+        ]
+      },
+      {
+        "at": "2026-08-03T19:37:56",
+        "tool": "genon/repair_register.py v1.2",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 3,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "that the Monsoon unit will extend",
+            "replaced_with": "",
+            "note": "trailing relative clause dropped; the sentence keeps its point — the task plants the relief-climate interlinkage — and loses only the claim about which unit picks it up"
+          },
+          {
+            "unit": 3,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "This sets up the interlinkage of relief and climate explored in upcoming units.",
+            "replaced_with": "",
+            "note": "whole trailing sentence dropped. The worst of the four because it sits in BAND text, which Rule 13 makes the core teacher-facing product; the band keeps its teaching content and closes on the windward-leeward question it asks students"
+          }
+        ],
+        "ban_hits_before": 2,
+        "ban_hits_after": 0
+      },
+      {
+        "at": "2026-08-03T22:04:45",
+        "tool": "genon/repair_register.py v1.2",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 5,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "This bridges toward the climate change and Punjab floods sections that follow.",
+            "replaced_with": "",
+            "note": "found at C8 by reading the LAST sitting of the 5-period serve, where this unit lands last and the sentence is simply false; at 6 it is half false (the floods section is dropped). The discussion it closes — monsoon variability as both sustenance and risk — is complete without it, so the trailing sentence goes whole"
+          }
+        ],
+        "ban_hits_before": 2,
+        "ban_hits_after": 0
+      }
+    ]
+  },
   "result": {
     "lesson_plan": {
       "periods": [
@@ -30,22 +211,18 @@
           "visual_aids": "Fig. 3.2 — pie diagram of atmospheric gas proportions",
           "time_bands": [
             {
-              "band_id": "P1.1",
               "minutes": "0-10",
               "activity": "Pose the chapter's own 'THINK ABOUT IT' prompt: What would happen if there were no atmosphere? Students individually jot three consequences (shield from UV gone, temperature regulation lost, no weather), then share briefly. Teacher weaves responses into a working definition: the atmosphere is the gravity-held blanket of gases essential for life, blocking harmful radiation and regulating heat."
             },
             {
-              "band_id": "P1.2",
               "minutes": "10-28",
               "activity": "Project Fig. 3.2. Students read the proportions — nitrogen ~78%, oxygen ~21%, and the trace gases including carbon dioxide, argon, ozone, and water vapour — then answer two written questions: (1) Why might a gas present in less than 0.04% still matter enormously for life and climate? (2) Water vapour ranges from 0.1 to 0.4% yet the chapter calls it significant — what two roles does it perform? Students write responses, then pairs compare before a whole-class share-out. Teacher clarifies that composition varies with altitude and that water vapour drives cloud formation and precipitation."
             },
             {
-              "band_id": "P1.3",
               "minutes": "28-42",
               "activity": "Students reconstruct Fig. 3.2 from memory as a labelled sketch, adding a brief annotation beside each major segment explaining why that gas matters (e.g., oxygen — respiration; nitrogen — plant nutrient cycle recalled from Grade 8 Science; ozone — UV shield; water vapour — clouds and rain). Teacher circulates, prompting students who conflate carbon dioxide's trace proportion with its climate importance."
             },
             {
-              "band_id": "P1.4",
               "minutes": "42-50",
               "activity": "Quick whole-class check: teacher reads out four statements about atmospheric composition — one correct, three containing common errors (e.g., 'oxygen is the most abundant gas', 'water vapour is fixed at exactly 0.4%', 'dust particles have no atmospheric role') — students raise hands to flag the errors and correct them aloud, consolidating the key proportions and roles."
             }
@@ -80,22 +257,18 @@
           "visual_aids": "Fig. 3.3 — layered structure of the atmosphere showing altitude and temperature changes",
           "time_bands": [
             {
-              "band_id": "P2.1",
               "minutes": "0-12",
               "activity": "Display Fig. 3.3 without labels. Students, working individually, use the chapter text to identify the five layers in order — troposphere, stratosphere, mesosphere, thermosphere, exosphere — writing beside each its altitude range, temperature behaviour (rising or falling with height), and one distinctive feature. Teacher notes that the driving organising principle is temperature change, not simply height."
             },
             {
-              "band_id": "P2.2",
               "minutes": "12-30",
               "activity": "Students build an annotated vertical diagram on blank paper: a vertical axis labelled with altitudes (surface, 12 km, 50 km, 80 km, 700 km) and five shaded bands. Inside each band students write: the layer's name, the boundary name at its top (tropopause, stratopause, etc.), the temperature trend, and a functional fact — troposphere holds weather and breathable air; stratosphere contains the ozone layer and is ideal for aircraft; mesosphere burns up meteorites; thermosphere absorbs X-rays, hosts the ionosphere, and produces Aurora Borealis and Aurora Australis; exosphere is where light gases like helium and hydrogen escape to space. Teacher circulates and asks: 'Why does the thermosphere heat up even though it is very thin?' to push beyond recall toward understanding of gas absorption."
             },
             {
-              "band_id": "P2.3",
               "minutes": "30-44",
               "activity": "Pairs swap diagrams and critique each other's: Is the ozone layer correctly placed in the stratosphere? Is 'temperature falls with altitude' correctly noted only for troposphere and mesosphere? Are the auroras assigned to the thermosphere? Each student writes one correction and one strength on their partner's sheet before returning it."
             },
             {
-              "band_id": "P2.4",
               "minutes": "44-50",
               "activity": "Teacher poses two application questions: (1) Aircraft cruise in the stratosphere — using the diagram, explain two reasons why. (2) Radio signals bounce back to Earth from the thermosphere — which property of that layer enables this? Students give oral responses, with teacher drawing out the ozone shelter and calm-air arguments for aircraft, and the ionosphere's reflective property for radio."
             }
@@ -140,22 +313,18 @@
           "visual_aids": "Fig. 3.6 — Earth's torrid, temperate, and frigid temperature zones; Table 3.1 — Beaufort-style wind speed categories; Fig. 3.8 — land breeze and sea breeze diagrams",
           "time_bands": [
             {
-              "band_id": "P3.1",
               "minutes": "0-8",
               "activity": "Teacher opens by asking students to distinguish: 'It rained here this morning' versus 'This region receives 1,200 mm of rain annually' — which is weather and which is climate, and why? Students pair-discuss, then teacher formalises: weather is the hour-to-hour and day-to-day condition of the atmosphere; climate is the averaged weather over a large area across thirty or more years. Teacher notes that the same five elements — temperature, precipitation, humidity, wind, and atmospheric pressure — constitute both."
             },
             {
-              "band_id": "P3.2",
               "minutes": "8-26",
               "activity": "Students work through three focused questions drawing on Fig. 3.6, Fig. 3.7, and Table 3.1. (1) Using Fig. 3.6: why does insolation decrease from the equator toward the poles, and what does this produce in the temperature zone pattern? (2) Using the chapter's pressure-wind explanation: a coastal city on the equator shows rising warm air — predict the weather type (cloudy and wet low-pressure) and explain the pressure-wind chain that caused it. (3) Using Table 3.1: a wind recorded as a 'strong breeze' versus a 'storm' — what specific effects does the chapter associate with each? Students write answers; teacher circulates and probes the pressure-to-wind causal chain."
             },
             {
-              "band_id": "P3.3",
               "minutes": "26-40",
               "activity": "Using Fig. 3.8, students trace the land breeze and sea breeze mechanism step by step: daytime — land heats faster, lower pressure over land, sea breeze blows sea-to-land; night — land cools faster, lower pressure over sea, land breeze blows land-to-sea. Students annotate a simplified copy of Fig. 3.8 with arrows and explanatory labels. Teacher uses the chapter's own 'THINK ABOUT IT' prompt — occasions when strong winds have caused problems — as a bridging question to connect the Beaufort categories to real consequences."
             },
             {
-              "band_id": "P3.4",
               "minutes": "40-50",
               "activity": "Teacher introduces humidity and precipitation: warmer air holds more moisture; when saturated air cools, condensation occurs and precipitation falls as drizzle, rain, snow, sleet, or hail, affected by prevailing winds, mountains, and seasons. Students write two sentences applying this chain to a named scenario: 'Explain why the windward slope of a mountain range receives heavy rain while the leeward slope is dry.'"
             }
@@ -206,22 +375,18 @@
           "visual_aids": null,
           "time_bands": [
             {
-              "band_id": "P4.1",
               "minutes": "0-10",
               "activity": "Teacher asks: 'Why do we have seasons at all?' — students connect back to insolation variation and the pressure-wind-temperature chain established earlier, grounding the concept before introducing India's specific seasonal pattern. Teacher frames: because atmospheric conditions settle into common patterns over weeks and months, we divide the year into seasons; India's climate is broadly tropical monsoon, and the IMD recognises four official seasons."
             },
             {
-              "band_id": "P4.2",
               "minutes": "10-28",
               "activity": "Students create a comparison table in two columns — IMD four-season scheme versus traditional Indian six-ṛtu scheme (Table 3.2) — filling in the name of each season, its approximate months, and its dominant weather characteristic for each entry. For the IMD scheme: winter (December–early April), summer/pre-monsoon (April–June, or to July in the north-west), monsoon/south-west monsoon (June–September), post-monsoon/retreating monsoon (October–December). For the ṛtu scheme: the six approximately two-month seasons as given in Table 3.2. Teacher circulates, probing: 'Why might Himalayan states experience autumn and spring but plains states do not?'"
             },
             {
-              "band_id": "P4.3",
               "minutes": "28-40",
               "activity": "The chapter's 'LET'S ANALYSE' station: students recall (or observe from a hypothetical two-week newspaper weather report) patterns — temperature rising or falling, rain appearing or absent — and write a three-sentence interpretation: which IMD season the data most likely represents, which atmospheric element (temperature, precipitation) is the strongest signal, and what they would predict for the following fortnight. Teacher uses this to reinforce that season recognition is a matter of reading converging atmospheric signals, not just a calendar date."
             },
             {
-              "band_id": "P4.4",
               "minutes": "40-50",
               "activity": "Students answer a written question: 'A student living in a Himalayan state argues that India has six seasons while a student in Rajasthan says India has four — who is right, and why?' Expected response draws on the IMD framework, the ṛtu tradition, and the regional differentiation due to altitude and relief. Teacher closes by noting the chapter's 'THINK ABOUT IT' prompt about Hindustani classical rāgas and seasons as evidence that India's atmospheric rhythms have shaped culture, art, and daily life."
             }
@@ -267,24 +432,20 @@
           "visual_aids": "Fig. 3.10 — normal dates of advancing south-west monsoon; Fig. 3.11 — normal dates of retreating monsoon",
           "time_bands": [
             {
-              "band_id": "P5.1",
               "minutes": "0-12",
               "activity": "Teacher traces the monsoon mechanism step by step: the Indian landmass heats faster than the surrounding oceans in summer, creating a low-pressure zone over the land; moist winds from the Indian Ocean, Arabian Sea, and Bay of Bengal are drawn in, carrying the south-west monsoon (June–September). In winter, the land cools faster, pressure reverses, and cold dry north-east winds blow seaward — the north-east or winter monsoon (October–February), which picks up moisture over the Bay of Bengal and brings rain to Tamil Nadu, Andhra Pradesh, and parts of Karnataka. Students write the causal chain in their own words: differential heating → pressure difference → wind reversal → seasonal rainfall."
             },
             {
-              "band_id": "P5.2",
               "minutes": "12-30",
               "activity": "Students study Fig. 3.10 and Fig. 3.11 side by side and annotate their blank outline maps: trace the approximate line of advancing south-west monsoon progress for June 1, July 1, August 1, and September 1 from Fig. 3.10; mark the retreat line from Fig. 3.11 for October and November. Students then answer: (1) Which coast receives the south-west monsoon first? (2) Which region is last to receive it? (3) Which areas receive rain from the north-east monsoon rather than the south-west? Teacher checks that the Bay of Bengal and Arabian Sea branches are distinguished."
             },
             {
-              "band_id": "P5.3",
               "minutes": "30-42",
               "activity": "Using the chapter's 'LET'S EXPLORE' prompt, students write a structured paragraph (five to seven sentences) describing how the monsoon affects the lives of people in their own region: agriculture, water availability, transport, festivals, or livelihoods. Teacher notes the text's own evidence — ancient rainfall-prediction texts like Kṛiṣhiparāśhara and Bṛihatsaṁhitā, Kālidāsa's Meghadūtam, the National Monsoon Mission — as proof that the monsoon's human significance stretches from antiquity to the present."
             },
             {
-              "band_id": "P5.4",
               "minutes": "42-50",
-              "activity": "Class discussion: 'The same monsoon that sustains Indian agriculture can also cause floods and droughts — how?' Students use the text's own framing (excessive rain → floods; weak monsoon → drought) to articulate why monsoon variability, not just presence, determines agricultural and social outcomes. This bridges toward the climate change and Punjab floods sections that follow."
+              "activity": "Class discussion: 'The same monsoon that sustains Indian agriculture can also cause floods and droughts — how?' Students use the text's own framing (excessive rain → floods; weak monsoon → drought) to articulate why monsoon variability, not just presence, determines agricultural and social outcomes."
             }
           ],
           "section_context": "South-west and north-east monsoon mechanism; advancing Fig. 3.10 and retreating Fig. 3.11 monsoon maps",
@@ -342,22 +503,18 @@
           "visual_aids": null,
           "time_bands": [
             {
-              "band_id": "P6.1",
               "minutes": "0-10",
               "activity": "Teacher poses: 'Climate and weather vary naturally — so what makes climate change a crisis?' Students use the chapter's definition to distinguish natural variability from long-term human-driven change: burning fossil fuels, deforestation, and industrial pollution raise greenhouse gases (carbon dioxide, methane, nitrous oxide, water vapour), trapping heat and raising global temperatures systematically over time. Teacher records the four named greenhouse gases on the board and asks: which of these did we encounter when studying atmospheric composition?"
             },
             {
-              "band_id": "P6.2",
               "minutes": "10-28",
               "activity": "Students work through the chapter's consequences list — more frequent floods and droughts, melting glaciers, rising sea levels, loss of biodiversity, threats to ecosystems, human health, agriculture, and livelihoods, with women and children disproportionately affected — and for each consequence write a one-sentence causal chain connecting the greenhouse effect to that outcome. For example: rising temperatures → glaciers melt → sea levels rise → coastal farmland floods → food security threatened. Teacher probes: 'Why are women and children especially affected?' to push beyond listing."
             },
             {
-              "band_id": "P6.3",
               "minutes": "28-44",
               "activity": "Students complete the chapter's 'My Carbon Footprint' activity: they tick their habits across four domains (transport, electricity use, water use, waste and plastics), score their impact, and then write a two-point climate action pledge naming specific, feasible changes — not generic statements like 'save the environment'. Teacher circulates, pushing students whose pledges are vague toward concrete actions (e.g., 'I will switch off the fan when leaving the room' rather than 'I will save energy')."
             },
             {
-              "band_id": "P6.4",
               "minutes": "44-50",
               "activity": "Three students share their pledges; class evaluates whether each pledge genuinely reduces a greenhouse-gas source or conserves a resource. Teacher closes by noting the chapter's argument: collective effort — renewable energy, forest protection, sustainable lifestyles — is required alongside individual action, because individual pledges alone cannot reverse systemic drivers. Students note one systemic measure alongside their personal pledge."
             }
@@ -395,9 +552,69 @@
               "cognitive_demand": "Evaluation"
             }
           ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Punjab Floods 2025: Natural Hazard, Human Failure, and Disaster Preparedness",
+          "section_anchor": "Punjab Floods 2025: A Case Study",
+          "materials": [
+            "Textbook Chapter 3",
+            "Case study text and classroom discussion prompts",
+            "Blank cause-effect organiser per student"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students read the Punjab Floods 2025 case study. Teacher then asks them to sort the chapter's listed causes into a two-column organiser: natural causes (very heavy monsoon rain intensified by western disturbances, rainfall in Himachal Pradesh and Jammu & Kashmir swelling the Satluj, Beas, Ravi, and Ghaggar rivers) versus human-made causes (weak and old embankments, houses and farms built too close to rivers, silt reducing dam and river capacity, late or poorly communicated flood warnings). Students complete their organisers individually."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Students build a cause-effect map: from the two columns of causes, draw arrows to the chapter's listed effects — loss of life, displacement to relief camps, submerged paddy crops, damaged poultry and dairy farms with animal deaths, damaged roads bridges and public buildings, and health problems from standing water. Students then annotate: which effects could have been reduced if the human-made causes had been addressed? This forces evaluation rather than description."
+            },
+            {
+              "minutes": "28-44",
+              "activity": "The chapter's 'CLASSROOM DISCUSSION' prompts structure a focused whole-class debate: (1) How far did natural factors versus human activities cause the floods? (2) Could better planning — improved embankments, land-use controls, early-warning systems — have reduced the damage? (3) What do NDMA flood-management guidelines prescribe, and which of the human-made causes do they directly address? (4) What roles can students and youth play in disaster preparedness? Teacher ensures the debate uses evidence from the case study, not opinion alone, and that both natural and human drivers receive proportional weight."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Each student writes a three-sentence evaluative response: 'The 2025 Punjab floods were caused by both natural and human factors. The effect that could most have been reduced by better planning was [X] because [evidence from the case study]. The single most important preparedness measure I would recommend is [Y] because [reasoning].' Teacher collects responses as a written exit check."
+            }
+          ],
+          "section_context": "Punjab 2025 floods; natural vs human-made causes; Satluj Beas Ravi rivers; effects and NDMA preparedness",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having established the mechanisms of climate change as a long-run planetary process, this unit grounds that understanding in a specific, recent, geographically named event — the 2025 Punjab floods — where the natural and human drivers can be separated and evaluated. A common confusion is treating the floods as purely a natural disaster; the case study's explicit listing of weak embankments, inappropriate land use, and poor early warning makes the human-made dimension undeniable. The written exit response is the unit's cognitive payoff: pushing from description and debate to evaluation and recommendation.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-4.4",
+              "cg": "CG-4",
+              "weight": 2,
+              "competency_text": "Analysing the inter-relationship between the natural environment and human beings and their livelihoods",
+              "implied_lo": "Students can analyse how natural hazards interact with human decisions and infrastructure failures to produce disaster, using evidence to distinguish causes and evaluate the scope of human responsibility.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-4.5",
+              "cg": "CG-4",
+              "weight": 2,
+              "competency_text": "Examining the practices that have led to environmental crises and the measures to reverse them",
+              "implied_lo": "Students can evaluate which human practices amplified the Punjab flood disaster and identify preparedness and planning measures that could reduce future impact.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
         }
       ]
     },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 7
+      }
+    ],
     "coverage_handoff": {
       "C-4.2": {
         "cg": "CG-4",
@@ -487,6 +704,13 @@
             "section_context": "Greenhouse gases; climate change consequences; My Carbon Footprint activity; collective mitigation measures",
             "implied_lo": "Students can analyse how climate change disrupts ecosystems, agriculture, and livelihoods, tracing causal chains from greenhouse emissions to human consequences.",
             "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "Punjab Floods 2025: A Case Study",
+            "section_context": "Punjab 2025 floods; natural vs human-made causes; Satluj Beas Ravi rivers; effects and NDMA preparedness",
+            "implied_lo": "Students can analyse how natural hazards interact with human decisions and infrastructure failures to produce disaster, using evidence to distinguish causes and evaluate the scope of human responsibility.",
+            "cognitive_demand": "Evaluation"
           }
         ]
       },
@@ -500,6 +724,13 @@
             "section_anchor": "Climate Change",
             "section_context": "Greenhouse gases; climate change consequences; My Carbon Footprint activity; collective mitigation measures",
             "implied_lo": "Students can identify the human practices driving climate change and evaluate mitigation measures at individual and collective levels.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "Punjab Floods 2025: A Case Study",
+            "section_context": "Punjab 2025 floods; natural vs human-made causes; Satluj Beas Ravi rivers; effects and NDMA preparedness",
+            "implied_lo": "Students can evaluate which human practices amplified the Punjab flood disaster and identify preparedness and planning measures that could reduce future impact.",
             "cognitive_demand": "Evaluation"
           }
         ]
@@ -547,6 +778,8 @@
         ]
       }
     },
+    "role_handoff": {},
+    "unit_handoff": {},
     "assessment_items": [
       {
         "question_type": "MCQ",
@@ -601,10 +834,7 @@
               "D": "Substitutes altitude for temperature as the driver of pressure differences, conflating vertical pressure reduction with horizontal pressure gradients."
             }
           }
-        },
-        "unit_ref": [
-          3
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -644,10 +874,7 @@
               "Dry winds blow from land to sea as the north-east monsoon, bringing rain to the south-eastern coast after picking up moisture over the Bay of Bengal."
             ]
           }
-        },
-        "unit_ref": [
-          5
-        ]
+        }
       },
       {
         "question_type": "SOURCE_INTERPRETATION",
@@ -701,10 +928,7 @@
               "A complete response notes that proportion and climate impact are not proportional: carbon dioxide absorbs and re-emits outgoing heat radiation (the greenhouse effect), trapping energy in the lower atmosphere; even a small increase in its concentration meaningfully raises global temperatures."
             ]
           }
-        },
-        "unit_ref": [
-          1
-        ]
+        }
       },
       {
         "question_type": "ECR",
@@ -748,10 +972,7 @@
               "Correct ordering throughout, with each boundary name used accurately."
             ]
           }
-        },
-        "unit_ref": [
-          2
-        ]
+        }
       },
       {
         "question_type": "OPEN_TASK",
@@ -788,10 +1009,7 @@
             "format_type": "Comparison table",
             "format_rationale": "A comparison table is the most natural demonstration vehicle for an LO about contrasting two parallel classification systems; it makes the structural and atmospheric differences between the IMD and ṛtu frameworks directly visible. The teacher may substitute any other format from the Open Task menu."
           }
-        },
-        "unit_ref": [
-          4
-        ]
+        }
       },
       {
         "question_type": "MCQ",
@@ -846,10 +1064,7 @@
               "B": "Conflates the Himalayan barrier effect with the monsoon reversal mechanism and incorrectly treats the north-east winds as deflected south-west winds rather than a genuinely reversed pressure-driven circulation."
             }
           }
-        },
-        "unit_ref": [
-          5
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -889,10 +1104,7 @@
               "The chapter notes that Himalayan states experience autumn and spring in addition to the four seasons recognised by the IMD for India as a whole."
             ]
           }
-        },
-        "unit_ref": [
-          4
-        ]
+        }
       },
       {
         "question_type": "ECR",
@@ -934,10 +1146,7 @@
               "A specific example correctly drawn from the chapter: equatorial low-pressure zones and heavy rainfall, polar high-pressure and dry skies, or the land-sea breeze mechanism."
             ]
           }
-        },
-        "unit_ref": [
-          3
-        ]
+        }
       },
       {
         "question_type": "MCQ",
@@ -992,10 +1201,7 @@
               "D": "Focuses correctly on the wind reversal mechanism but misidentifies trade disruption as the source of risk, ignoring the chapter's clear framing around rainfall totals and agricultural dependence."
             }
           }
-        },
-        "unit_ref": [
-          5
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -1007,7 +1213,9 @@
         },
         "implied_lo": "Students can analyse how natural hazards interact with human decisions and infrastructure failures to produce disaster, using evidence to distinguish causes and evaluate the scope of human responsibility.",
         "cognitive_demand": "Evaluation",
-        "period_ref": [],
+        "period_ref": [
+          7
+        ],
         "chapter_section": "Punjab Floods 2025: A Case Study",
         "question_text": "The 2025 Punjab floods caused loss of life, displacement, ruined paddy crops, and damaged infrastructure. A local official claims the disaster was entirely caused by unusually heavy monsoon rain. Using evidence from the case study, evaluate this claim: was the official correct, and what does your answer suggest about the scope of human responsibility for the disaster?",
         "options": [],
@@ -1033,11 +1241,7 @@
               "The evaluative conclusion: natural causes made flooding likely; human failures determined severity."
             ]
           }
-        },
-        "unit_ref": [
-          7
-        ],
-        "scheduling_note": "anchor unit not scheduled in this plan (time budget)"
+        }
       },
       {
         "question_type": "ECR",
@@ -1077,10 +1281,7 @@
               "Chain maintained throughout — consequences connected to the mechanism, not merely listed."
             ]
           }
-        },
-        "unit_ref": [
-          6
-        ]
+        }
       },
       {
         "question_type": "MCQ",
@@ -1135,10 +1336,7 @@
               "C": "Rejects the chapter's central premise that climate change is primarily human-driven, indicating either non-engagement with the text or a prior misconception about natural versus anthropogenic climate forcing."
             }
           }
-        },
-        "unit_ref": [
-          6
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -1150,7 +1348,9 @@
         },
         "implied_lo": "Students can evaluate which human practices amplified the Punjab flood disaster and identify preparedness and planning measures that could reduce future impact.",
         "cognitive_demand": "Evaluation",
-        "period_ref": [],
+        "period_ref": [
+          7
+        ],
         "chapter_section": "Punjab Floods 2025: A Case Study",
         "question_text": "The Punjab Floods 2025 case study identifies several human-made causes that amplified the disaster. Choose two of these causes and, for each, name one specific planning or infrastructure measure that could have reduced its impact. Justify each measure with a reason drawn from the case study.",
         "options": [],
@@ -1175,11 +1375,7 @@
               "Each measure justified with a causal link drawn from the case study's own evidence."
             ]
           }
-        },
-        "unit_ref": [
-          7
-        ],
-        "scheduling_note": "anchor unit not scheduled in this plan (time budget)"
+        }
       },
       {
         "question_type": "ECR",
@@ -1221,10 +1417,7 @@
               "Coherent argument maintained across all three practices."
             ]
           }
-        },
-        "unit_ref": [
-          6
-        ]
+        }
       },
       {
         "question_type": "MCQ",
@@ -1279,10 +1472,7 @@
               "D": "Inverts the branching sequence — the Arabian Sea and Bay of Bengal branches exist before the monsoon reaches the Deccan, not after — indicating a misreading of the chapter's spatial and temporal monsoon narrative."
             }
           }
-        },
-        "unit_ref": [
-          5
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -1320,10 +1510,7 @@
               "One accurate distinctive feature per layer, drawn from the chapter."
             ]
           }
-        },
-        "unit_ref": [
-          2
-        ]
+        }
       },
       {
         "question_type": "MCQ",
@@ -1378,10 +1565,7 @@
               "D": "Recognises the need for change but selects a disproportionate and impractical response, indicating the student has not understood that judicious use means thoughtful reduction rather than complete elimination."
             }
           }
-        },
-        "unit_ref": [
-          6
-        ]
+        }
       },
       {
         "question_type": "SCR",
@@ -1420,140 +1604,10 @@
               "One explanation per measure connecting the action to reduced environmental impact."
             ]
           }
-        },
-        "unit_ref": [
-          6
-        ]
+        }
       }
     ],
-    "section_coverage_note": "Time budget short of the chapter's full span: Punjab Floods 2025: A Case Study could not be scheduled — the material is included for you to share as guided self-study or homework.",
-    "dropped_units": [
-      {
-        "period_number": 7,
-        "period_duration_minutes": 50,
-        "activity_title": "Punjab Floods 2025: Natural Hazard, Human Failure, and Disaster Preparedness",
-        "section_anchor": "Punjab Floods 2025: A Case Study",
-        "materials": [
-          "Textbook Chapter 3",
-          "Case study text and classroom discussion prompts",
-          "Blank cause-effect organiser per student"
-        ],
-        "visual_aids": null,
-        "time_bands": [
-          {
-            "band_id": "P7.1",
-            "minutes": "0-12",
-            "activity": "Students read the Punjab Floods 2025 case study. Teacher then asks them to sort the chapter's listed causes into a two-column organiser: natural causes (very heavy monsoon rain intensified by western disturbances, rainfall in Himachal Pradesh and Jammu & Kashmir swelling the Satluj, Beas, Ravi, and Ghaggar rivers) versus human-made causes (weak and old embankments, houses and farms built too close to rivers, silt reducing dam and river capacity, late or poorly communicated flood warnings). Students complete their organisers individually."
-          },
-          {
-            "band_id": "P7.2",
-            "minutes": "12-28",
-            "activity": "Students build a cause-effect map: from the two columns of causes, draw arrows to the chapter's listed effects — loss of life, displacement to relief camps, submerged paddy crops, damaged poultry and dairy farms with animal deaths, damaged roads bridges and public buildings, and health problems from standing water. Students then annotate: which effects could have been reduced if the human-made causes had been addressed? This forces evaluation rather than description."
-          },
-          {
-            "band_id": "P7.3",
-            "minutes": "28-44",
-            "activity": "The chapter's 'CLASSROOM DISCUSSION' prompts structure a focused whole-class debate: (1) How far did natural factors versus human activities cause the floods? (2) Could better planning — improved embankments, land-use controls, early-warning systems — have reduced the damage? (3) What do NDMA flood-management guidelines prescribe, and which of the human-made causes do they directly address? (4) What roles can students and youth play in disaster preparedness? Teacher ensures the debate uses evidence from the case study, not opinion alone, and that both natural and human drivers receive proportional weight."
-          },
-          {
-            "band_id": "P7.4",
-            "minutes": "44-50",
-            "activity": "Each student writes a three-sentence evaluative response: 'The 2025 Punjab floods were caused by both natural and human factors. The effect that could most have been reduced by better planning was [X] because [evidence from the case study]. The single most important preparedness measure I would recommend is [Y] because [reasoning].' Teacher collects responses as a written exit check."
-          }
-        ],
-        "section_context": "Punjab 2025 floods; natural vs human-made causes; Satluj Beas Ravi rivers; effects and NDMA preparedness",
-        "pedagogical_approaches": [
-          "Issues-based learning"
-        ],
-        "teacher_notes": "Having established the mechanisms of climate change as a long-run planetary process, this unit grounds that understanding in a specific, recent, geographically named event — the 2025 Punjab floods — where the natural and human drivers can be separated and evaluated. A common confusion is treating the floods as purely a natural disaster; the case study's explicit listing of weak embankments, inappropriate land use, and poor early warning makes the human-made dimension undeniable. The written exit response is the unit's cognitive payoff: pushing from description and debate to evaluation and recommendation.",
-        "homework": [],
-        "competency_edges": [
-          {
-            "c_code": "C-4.4",
-            "cg": "CG-4",
-            "weight": 2,
-            "competency_text": "Analysing the inter-relationship between the natural environment and human beings and their livelihoods",
-            "implied_lo": "Students can analyse how natural hazards interact with human decisions and infrastructure failures to produce disaster, using evidence to distinguish causes and evaluate the scope of human responsibility.",
-            "cognitive_demand": "Evaluation"
-          },
-          {
-            "c_code": "C-4.5",
-            "cg": "CG-4",
-            "weight": 2,
-            "competency_text": "Examining the practices that have led to environmental crises and the measures to reverse them",
-            "implied_lo": "Students can evaluate which human practices amplified the Punjab flood disaster and identify preparedness and planning measures that could reduce future impact.",
-            "cognitive_demand": "Evaluation"
-          }
-        ],
-        "unscheduled": true
-      }
-    ]
-  },
-  "genon": {
-    "engine": "serve v2.0 / e12 (canonical library, next-highest selection, X-1+1 slot fill by the first-exposure choice set §0.4, proportional duration scaling, unit-anchored assessment)",
-    "library": [
-      12,
-      10,
-      7
-    ],
-    "variant_used": 7,
-    "requested_periods": 6,
-    "sittings": 6,
-    "slot_fill": {
-      "mode": "fill",
-      "fill_class": "single",
-      "first_section": "Climate Change",
-      "borrowed_from": 7,
-      "self_fill": true,
-      "overlap_sections": [],
-      "uncovered_sections": [
-        "Punjab Floods 2025: A Case Study"
-      ],
-      "synthesis_only": false,
-      "reference_count": null,
-      "withheld_units": []
-    },
-    "surrendered_periods": 0,
-    "surrender_note": null,
-    "stream_source": "ch_03_canonical_p07.json",
-    "matrix": [
-      {
-        "duration": 50,
-        "count": 6
-      }
-    ],
-    "served_matrix": [
-      {
-        "duration": 50,
-        "count": 6
-      }
-    ],
-    "duration_sequence": [
-      50,
-      50,
-      50,
-      50,
-      50,
-      50
-    ],
-    "scale": [
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0
-    ],
-    "registry": [
-      "Introduction to the Atmosphere",
-      "Composition of the Atmosphere",
-      "Structure of the Atmosphere",
-      "Weather and Climate",
-      "Elements of Weather and Climate",
-      "Seasons in India",
-      "Monsoon",
-      "Climate Change",
-      "Punjab Floods 2025: A Case Study"
-    ]
+    "competency_gap_note": "",
+    "section_coverage_note": null
   }
 }
