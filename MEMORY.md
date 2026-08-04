@@ -433,7 +433,12 @@ must confirm · source entry.
     that diagnostic is deliberately given up; a correct answer at A is now caught only as an
     ordering failure. Relaxing amendment: no v1.5 artefact becomes non-compliant. **The other ten
     assessment constitutions must receive A9 in this v1.6 form at their own P2 — never v1.4/v1.5's
-    wording.** ARV-D-018's ordering half (10/18) stands open and unaffected.
+    wording.** *(That instruction is STRUCK, 2026-08-04 — superseded by the v1.7 form stated
+    above: the arrangement sentence is never re-added at all. `docs/testing.md` §3 P2 (template
+    2.5) and the rollout brief §3 were rewritten the same day so no stage inherits it; SS·middle
+    was the first stage amended under the corrected text — LP v2.8 · assessment v2.4, artefacts
+    in `genon/out/stage_prep_ss_middle/`.)* ARV-D-018's ordering half (10/18) stands open and
+    unaffected.
 
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable

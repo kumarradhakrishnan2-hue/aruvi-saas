@@ -8,7 +8,10 @@ unit handoffs. That engine is retired and its amendments are cancelled;
 evidence, §6a the band-layer removal). This file now carries ONLY what still ports:
 the amendments that survive and the one that shrank; the V-series is carried by the
 variant brief, outside every constitution (§3). SS·secondary (LP v1.10 · assessment
-v1.5) is the reference pair.
+v1.7) is the reference pair. **§3's A9 was rewritten 2026-08-04** — option order left the
+constitution at assessment v1.7 and became a pipeline stage (`genon/normalize_options.py`);
+A9 is now a removal, not an arrangement rule. Read §3 before amending any assessment
+constitution.
 
 ---
 
@@ -28,10 +31,10 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 
 ## 2. Where the eleven constitutions stand (2026-07-31)
 
-| Subject · stage | LP ver | Band shape | A1 | Register (A5/A7) | A9 (assess) |
+| Subject · stage | LP ver | Band shape | A1 | Register (A5/A7) | A9 (assess option order) |
 |---|---|---|---|---|---|
-| **social_sciences · secondary** | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (v1.3+) |
-| social_sciences · middle | 2.7 | time_bands | — | — | — (item-18 prohibition to replace) |
+| **social_sciences · secondary** | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (v1.7 — arrangement struck) |
+| social_sciences · middle | **2.8 ✓ (2026-08-04)** | time_bands | ✓ | ✓ | ✓ (v2.4 — item-18 struck) |
 | science · secondary | 1.0 | time_bands | — | — | — (item-18 prohibition to replace) |
 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
@@ -42,7 +45,8 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 | english · middle | 1.5 | phases[] → P3 | — | — | — |
 | english · secondary | 1.0 | phases[] → P3 | — | — | — |
 
-(SS·middle assessment also carries the item-18 position prohibition A9 replaces; see §3.)
+(Table state is 2026-07-31 except the two amended rows. Science middle + secondary still carry
+the item-18 position prohibition A9 strikes; see §3.)
 
 ## 3. The surviving amendment set
 
@@ -68,16 +72,32 @@ unit; preview into next" (forward direction — still banned).
 **A6 · REDUCED to a confirmation.** Items must carry their anchor unit — `period_ref`
 or that subject's equivalent, copied from the LO row consumed. Verify at each stage's
 prep; amend only where absent. (The v1.2-era band-level `phase_ref` is reversed —
-SS·secondary assessment v1.5 is the reference.)
+the reversal landed at SS·secondary assessment v1.5 and stands in the live v1.7.)
 
-**A9 · MCQ option order is a convention, not a choice.** Unchanged in force and scope
-(all eleven assessment constitutions; SS·secondary has it since v1.3). Options arranged
-alphabetically from the first word at which they differ, ascending where numeric, as the
-LAST step before emission, correct answer never led with. Replaces the MEMORY-item-18
-prohibition outright in the four files that carry it (SS + Science, middle and
-secondary). **Standing corpus-repair debt:** already-saved SS and Science plans still
-carry clustered answers — the repair pass reorders them into convention order, never
-shuffles.
+**A9 · MCQ option order is NOT the model's to set.** *Rewritten 2026-08-04. The
+alphabetical arrangement convention this item carried from v1.3 to v1.6 is STRUCK: it was
+removed from the reference at SS·secondary assessment **v1.7** (2026-08-03, ARV-D-032)
+because prose could not carry a sort — the v1.6 library came in 15 of 18 unarranged, the
+correct option at A or B on 16 of 18 and never at D. Ordering is now a deterministic
+pipeline stage,* `genon/normalize_options.py` *(STEP 6 of* `build_library.py`*,
+subject-agnostic), gated at certification.* Scope is unchanged — all eleven assessment
+constitutions — but what ports is **one removal and two lines**:
+
+- **REMOVE** the MEMORY-item-18 position prohibition in the four files that carry it
+  (SS + Science, middle and secondary). Nothing replaces it in kind.
+- **ADD** the v1.7 mandate line (option order carries no meaning and is not yours to set;
+  emit the four as authored; uneven letters across a chapter are coincidence, not a
+  defect) and the prohibition on an option that references another **by its label**
+  ("both A and B", "none of the above") — the one construction a downstream sort cannot
+  reorder without rewriting.
+- **NEVER re-add** the arrangement sentence, "never led with", or any rule naming a label
+  position: naming arrangement at all keeps position salient to a model that should not be
+  reasoning about position (founder, v1.6 and v1.7).
+
+**Corpus-repair debt — now discharged by the pipeline:** STEP 6 normalises already-saved
+SS and Science plans in place at ₹0, never shuffles, and writes the moved-item count into
+`genon_canonical.repairs[]`. That count is the only remaining generation-quality signal for
+this item; if it falls to zero across a stage, say so rather than assume it.
 
 **P3 · Group B schema conversion.** Unchanged: the six `phases[{minutes, description}]`
 constitutions convert to `time_bands[{minutes, activity}]` (note: no band_id in the
@@ -122,7 +142,8 @@ of it: the failure evidence is variant_canonical_architecture.md §1.
    rides in the brief and never touches the files. One stage fully signed off before
    the next begins — the testing.md P-prep slot, with A2/A3/A4 struck from its
    checklist.
-3. **A9 into the ten remaining assessment constitutions**; the four item-18 files first,
-   since their prohibition is known not to hold. Schedule the corpus repair beside it.
+3. **A9 into the ten remaining assessment constitutions** — the strike-plus-two-lines form
+   above, never an arrangement rule; the four item-18 files first, since their prohibition is
+   known not to hold. No corpus repair to schedule: STEP 6 does it.
 4. **Floor + σ per subject·stage** (founder inputs the solver needs) — set at each
    stage's prep, from the master-plan calibration.

@@ -1,14 +1,7 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · MIDDLE · VERSION 2.8
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · SOCIAL SCIENCES · MIDDLE · VERSION 2.7
 
 VOCABULARY
-The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
-
-THE SELF-CONTAINED REGISTER (binds Rules 10 and 13)
-Three things no band or note may do, each because the platform enforces it:
-1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick individual list", "an extended reading" — never in number.
-2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "having covered all four" are wrong for someone. Each unit closes on its own ground.
-3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
-Backward continuity is welcome, and is best carried by naming the content built on (“Having traced the Vedic political vocabulary, …” — Rule 10's continuity link) rather than a unit's position.
+The atomic teaching chunk is a "unit" in ALL teacher-facing prose (teacher_notes, activity titles, homework, cross-references such as "the previous unit"). The token "period" appears ONLY in schema field names (period_number, periods[], etc.) and in scheduling/allocation (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
 
 THE EDGE MODEL
 A unit teaches content (one textbook section). A competency is realised by some units and not others. Where a unit genuinely advances a competency, that pairing is an EDGE, and every edge produces exactly one Learning Outcome — the transferable skill that unit builds toward that competency. The LO carries both endpoints (its unit and its competency), so they cannot disagree. The relationship is many-to-many and unforced: a unit may carry zero, one, or several edges; a competency reaches only the units that genuinely realise it.
@@ -22,7 +15,7 @@ INPUTS (given — do not regenerate or supplement):
 1. Competency mapping JSON — flat chapter-level list of {cg, c_code, weight, justification}. Settled.
 2. Chapter summary (.txt)
 3. NCF Pedagogy document for subject and stage
-4. Period schedule — exactly ONE row {duration_minutes, count}: the class-standard duration (40 min for classes up to VII, 45 for VIII, 50 for IX) × the period count. Teacher timetable variation never reaches generation; it is handled downstream at partition time.
+4. Period schedule — one or more rows of {duration_minutes, count}
 
 OUTPUTS REQUIRED:
 1. Human-readable lesson plan — prose + time bands, one section per unit, for teacher use.
@@ -128,11 +121,10 @@ PROHIBITION
 RULE 10 · TEACHER NOTES
 
 MANDATE
-Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a continuity link to the content already taught — named by that content itself, never by its position (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.
+Every unit carries non-blank teacher_notes: 2–3 sentences of flowing prose weaving in a link to the previous unit (the first unit orients to the chapter's start), one common confusion drawn only from the chapter summary, and optionally a facilitation pointer.
 
 PROHIBITION
 MUST NOT restate the activity verbatim, cite c-codes or internal IDs, fabricate confusions, or open with "Transition"/a section label.
-MUST NOT breach THE SELF-CONTAINED REGISTER.
 
 ================================================================================
 RULE 11 · HOMEWORK
@@ -164,14 +156,13 @@ PROHIBITION
 1. MUST NOT write bands that point at content without carrying it ("discusses the main features", "reviews the sources named in the chapter").
 2. MUST NOT let the structured fields (competency_edges, teacher_notes, homework) absorb substance that belongs in the bands — they supplement the teaching script, never substitute for it.
 3. MUST NOT pad toward the sentence ceiling — it is a limit, not a target; substance means chapter specifics, not additional sentences.
-4. MUST NOT breach THE SELF-CONTAINED REGISTER. Each band speaks in the present of its own activity; sequence lives in the plan's structure, and unit-to-unit linking lives only in teacher_notes (Rule 10).
 
 ================================================================================
 INTEGRITY CONSTRAINTS (system level — override any other instruction)
 
 - The mapping is settled: competency selection and weights are never reopened.
 - LOs are outputs only; no LO document is an input.
-- TIME: the schedule is a single standard row; total minutes = duration × count; total unit count = count; exactly one activity per unit, calibrated to the standard duration. Full budget is teaching only — no assessment tasks or time.
+- TIME: total minutes = Σ(duration × count); total unit count = Σ(row counts); exactly one activity per unit, calibrated to its duration. Full budget is teaching only — no assessment tasks or time.
 - Section anchoring (Rule 3) is absolute — no exceptions for introductory, transition, or review units.
 - Teaching-layer fields (notes, homework, materials) never enter competency logic or assessment selection.
 - coverage_handoff (Rule 12) is a verbatim regrouping of the edges — it introduces no new content and is required on every run regardless of whether an assessment is generated.
@@ -182,14 +173,13 @@ AMENDMENT A1 — FULL LP JSON SCHEMA
 Populate every field. Empty strings/arrays are permitted only where a rule defines them (homework, pedagogical_approaches, competency_edges, competency_gap_note, section_coverage_note).
 visual_aids: name any visual resource the activity naturally requires; null if none. MUST NOT invent requirements.
 Edges carry no period_number: an edge's unit is the period that contains it — nesting is the linkage the assessment inherits.
-period_schedule: exactly one row — the class-standard duration × count (INPUTS 4).
 
 {
   "grade": "string",
   "subject": "string",
   "chapter_number": "integer",
   "chapter_title": "string",
-  "period_schedule": [ { "duration_minutes": "integer — the class-standard duration", "count": "integer" } ],
+  "period_schedule": [ { "duration_minutes": "integer", "count": "integer" } ],
   "competency_gap_note": "string — mapped competencies with no genuine unit home; empty when none",
   "section_coverage_note": "string | null — present only under a Rule 4 budget shortfall; else null",
   "coverage_handoff": { "...": "per Amendment A2 — required sibling of lesson_plan" },

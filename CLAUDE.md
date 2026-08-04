@@ -229,8 +229,9 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   per-canonical assessments (borrowed unit brings its own items). Assessment anchoring is
   UNIT-level (item unit_ref from period_ref; band ids are internal, derived positionally by
   compile v0.5 — never demanded of the model).
-  SS·sec LP v1.9 (Rules 14/15/16 removed; register stands), assessment v1.6 (A9's
-  "never led with" struck 2026-08-02)
+  SS·sec LP v1.10 (Rules 14/15/16 removed; register stands), assessment v1.7 (A9's whole
+  arrangement sentence struck 2026-08-03 — option order is now STEP 6,
+  `genon/normalize_options.py`; SS·middle amended to LP v2.8 · assessment v2.4 on 2026-08-04)
   (phase_ref removed); A2/A3/A4 cancelled + X3 void for the ten un-amended constitutions,
   V-series (brief §7, V3 struck by §0) replaces them; `partition.py`/`polish.py`/
   `variant_solver.py` live in `_to_delete/`. DO NOT reintroduce cutting below the unit,

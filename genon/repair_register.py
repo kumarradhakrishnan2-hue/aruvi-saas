@@ -22,8 +22,14 @@ WHAT MAKES THIS SAFE, and the line it must not cross:
     Repairing those here would launder content changes as text hygiene. They go to the human
     gate or a regeneration decision.
 
-    python3 genon/repair_register.py --list          # show the declared edits
-    python3 genon/repair_register.py --apply         # back up, apply, record, re-scan
+    python3 genon/repair_register.py --list                        # show the declared edits
+    python3 genon/repair_register.py --apply                       # back up, apply, record, re-scan
+    python3 genon/repair_register.py --grade ix --list             # an older stage's set
+
+v1.3, 2026-08-04: the library path is no longer hard-coded to social_sciences/ix — the tool
+takes --subject/--grade and selects the matching declaration set, because S2 needed it. Each
+set is keyed by (subject, grade) and is stale by design once applied: re-running an applied set
+FAILS its own "declared text not found" assertion, which is the guard, not a bug.
 """
 from __future__ import annotations
 
@@ -40,7 +46,7 @@ sys.path.insert(0, str(HERE))
 from register_scan import scan_plan, report                      # noqa: E402
 from purge_derived import purge                                  # noqa: E402
 
-LIB = REPO / "data" / "content" / "saved_plans" / "social_sciences" / "ix"
+SAVED = REPO / "data" / "content" / "saved_plans"
 BACKUP = REPO / "backup" / "register_repair"
 
 # ── the declared edits ───────────────────────────────────────────────────────────
@@ -66,17 +72,87 @@ BACKUP = REPO / "backup" / "register_repair"
 # library is gated on them rather than found by hand. The p10 U1 "the three functions the
 # whole chapter unpacks" borderline is deliberately NOT repaired (founder ruling, same day):
 # read as orienting prose about the chapter as an object, not a pointer to a later unit.
+#
+# ── v1.3, 2026-08-04 · S2 · social_sciences VIII ch 3 "The Rise of the Marathas" ──
+# Seven breaches in the 16:37 certification report — 3 forward references, 4 clock quantities,
+# across the standard canonical (6) and p10 (1); p13 scanned clean.
+#
+# WHY THIS LIBRARY BREACHED, and why repair is the founder's call rather than the obvious one:
+# the artefact records `constitution: LP v2.7 / assessment v2.3`. It was authored at 16:10-16:37,
+# BEFORE the stage's P1-P4 amendments landed at 17:39 — so it was generated against a
+# constitution that did not contain THE SELF-CONTAINED REGISTER at all. The model was never told
+# the three bans. That makes this NOT the 2026-08-02 lottery case (SS·IX breached a register its
+# constitution stated in terms); a run under v2.8 would have been the first roll with the rule
+# present. FOUNDER RULING 2026-08-04: repair now, do not regenerate — ~Rs 150 and the ordering
+# breach is recorded as a waiver instead. Consequence carried forward: the v2.8 register block
+# enters the campaign never having been GENERATED against, and is owed a live check at the
+# corpus pre-warm (MEMORY.md "AMENDMENTS TO BE TESTED").
+#
+# All seven are pure deletions. Nothing is rewritten and no clause is replaced with new text:
+# three trailing forward-reference appositives go whole, and four clock quantities are struck
+# from sentences that read correctly without them ("for four minutes" -> ""), which is exactly
+# what the register asks for — the band already carries its own `minutes`, and the platform
+# rescales them.
 REPAIRS = {
-    "ch_03_canonical_p07.json": [
-        (5, "band:3",
-         " This bridges toward the climate change and Punjab floods sections that follow.", "",
-         "register/forward",
-         "found at C8 by reading the LAST sitting of the 5-period serve, where this unit lands "
-         "last and the sentence is simply false; at 6 it is half false (the floods section is "
-         "dropped). The discussion it closes — monsoon variability as both sustenance and risk — "
-         "is complete without it, so the trailing sentence goes whole"),
-    ],
+    ("social_sciences", "viii"): {
+        "ch_03_canonical.json": [
+            (2, "band:3",
+             " as a preview of the next unit's content", "",
+             "register/forward",
+             "the timeline mark itself is the teaching act and stands alone; naming what the "
+             "NEXT unit holds is false for any teacher whose X ends here or borrows a "
+             "different unit at this slot"),
+            (6, "band:3",
+             " — setting up the military and conflict discussion in later units", "",
+             "register/forward",
+             "trailing appositive on the Amatya/Sachiv answer. The revenue question closes on "
+             "its own ground; 'later units' is unknowable at authoring"),
+            (7, "band:0",
+             "; navy addressed in the next unit", "",
+             "register/forward",
+             "the cavalry correction (bargirs/shiledars) is complete without it. The navy has "
+             "its own registry section and will be reached, or not, by the served count"),
+            (7, "band:0",
+             " for four minutes", "",
+             "register/clock",
+             "same band as the edit above. The read-then-fill instruction is unchanged; the "
+             "band's own 0-8 minutes carry the time and are rescaled per sitting"),
+            (9, "band:0",
+             " for five minutes", "",
+             "register/clock",
+             "'begin reading the two sections from the chapter summary' is the instruction; "
+             "the quantity is falsified silently whenever the sitting is not 45 min"),
+            (16, "band:0",
+             "Teacher circulates for three minutes, then students share",
+             "Teacher circulates, then students share",
+             "register/clock",
+             "synthesis unit. The circulate-then-share sequence is the teaching move and "
+             "survives the quantity's removal intact"),
+        ],
+        "ch_03_canonical_p10.json": [
+            (4, "band:0",
+             "Students discuss in pairs for two minutes, then share",
+             "Students discuss in pairs, then share",
+             "register/clock",
+             "the only hit in the compact. Pair-discuss-then-share is unchanged"),
+        ],
+    },
+    # ── APPLIED 2026-08-03; kept as the record. Re-running this set will FAIL its own
+    #    "declared text not found" assertion, because the text is already gone. That is the guard.
+    ("social_sciences", "ix"): {
+        "ch_03_canonical_p07.json": [
+            (5, "band:3",
+             " This bridges toward the climate change and Punjab floods sections that follow.", "",
+             "register/forward",
+             "found at C8 by reading the LAST sitting of the 5-period serve, where this unit lands "
+             "last and the sentence is simply false; at 6 it is half false (the floods section is "
+             "dropped). The discussion it closes — monsoon variability as both sustenance and risk — "
+             "is complete without it, so the trailing sentence goes whole"),
+        ],
+    },
 }
+
+DEFAULT_SET = ("social_sciences", "viii")
 
 
 def _get_set(unit, locator, new=None):
@@ -100,8 +176,8 @@ def _get_set(unit, locator, new=None):
     return None
 
 
-def apply_file(fname, edits, dry):
-    path = LIB / fname
+def apply_file(lib, fname, edits, dry):
+    path = lib / fname
     if not path.is_file():
         raise SystemExit(f"missing: {path}")
     plan = json.loads(path.read_text(encoding="utf-8"))
@@ -126,7 +202,7 @@ def apply_file(fname, edits, dry):
         gc = plan.setdefault("genon_canonical", {})
         gc.setdefault("repairs", []).append({
             "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": "genon/repair_register.py v1.2",
+            "tool": "genon/repair_register.py v1.3",
             "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
             "edits": done,
             "ban_hits_before": before, "ban_hits_after": len(after_hits),
@@ -135,17 +211,29 @@ def apply_file(fname, edits, dry):
     return before, len(after_hits), done, plan
 
 
+def _arg(flag, default):
+    return sys.argv[sys.argv.index(flag) + 1] if flag in sys.argv else default
+
+
 def main():
     dry = "--apply" not in sys.argv
+    subject = _arg("--subject", DEFAULT_SET[0])
+    grade = _arg("--grade", DEFAULT_SET[1])
+    key = (subject, grade)
+    if key not in REPAIRS:
+        raise SystemExit(f"no declared repair set for {key}; have {sorted(REPAIRS)}")
+    repairs = REPAIRS[key]
+    lib = SAVED / subject / grade
+    print(f"repair set {subject} {grade} -> {lib.relative_to(REPO)}/")
     if not dry:
         BACKUP.mkdir(parents=True, exist_ok=True)
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        for fname in REPAIRS:
-            shutil.copy2(LIB / fname, BACKUP / f"{fname[:-5]}_{ts}.json")
-        print(f"backed up {len(REPAIRS)} file(s) -> {BACKUP.relative_to(REPO)}/")
+        for fname in repairs:
+            shutil.copy2(lib / fname, BACKUP / f"{grade}_{fname[:-5]}_{ts}.json")
+        print(f"backed up {len(repairs)} file(s) -> {BACKUP.relative_to(REPO)}/")
     total_after = 0
-    for fname, edits in REPAIRS.items():
-        before, after, done, plan = apply_file(fname, edits, dry)
+    for fname, edits in repairs.items():
+        before, after, done, plan = apply_file(lib, fname, edits, dry)
         total_after += after
         print(f"\n=== {fname} — {len(done)} edit(s); ban hits {before} -> {after}"
               f"{' (DRY RUN, nothing written)' if dry else ''}")

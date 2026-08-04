@@ -369,7 +369,10 @@ the coverage clause was hardened the same day a variant leaked, at one ₹35 rer
 where a constitutional amendment would have reopened every certified combo under
 testing.md §9. The constitutional carry-forward for the rollout is exactly the list
 in partition_constitution_rollout.md §3 (A1 · A5/A7 v1.10 register · A6-confirm ·
-A9 · P3 · P4) and nothing more.
+A9 · P3 · P4) and nothing more — noting that **A9 became a REMOVAL on 2026-08-04**: option
+order left the constitution at assessment v1.7 and lives in `genon/normalize_options.py`,
+so A9 now strikes the item-18 prohibition and adds only the "order carries no meaning" line
+and the by-label option ban.
 
 The V-requirements themselves, as the brief and certifier carry them:
 

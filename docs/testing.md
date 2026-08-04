@@ -1,7 +1,18 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.4 · 2026-08-04 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.5 · 2026-08-04 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.5 (2026-08-04, at S2's P-prep): **the stale A9 is removed.** P2 still said "options arranged
+alphabetically from the first word at which they differ … correct answer never led with" — a
+sentence the reference struck a day earlier (SS·secondary assessment v1.6 → v1.7, 2026-08-03,
+ARV-D-032) when ordering moved into `genon/normalize_options.py`, STEP 6 of `build_library.py`.
+Porting it would have put every remaining stage in contradiction with the pipeline that enforces
+it. A9 is now stated as **one removal (the item-18 position prohibition) plus two lines (order
+carries no meaning · no by-label option references)**, with an explicit ban on re-adding any
+arrangement rule; the reference pair reads **LP v1.10 · assessment v1.7**; C13's item 18 is
+closed by STEP 6 rather than "superseded by a convention"; the §3 stage table gains S2's landed
+versions. §9 applies: no stage is certified yet, so nothing re-opens.*
 
 *2.4 (2026-08-04): **C14 added — copyrights review**, run per stage like every other C-step
 (each of the 11 tracker rows gains a C14 column before GATE). §9 applies: no stage is
@@ -283,7 +294,9 @@ count on wide-enough bands (§0.2). Left as-is for this campaign; flagged as the
 **The constitutional carry-forward is EXACTLY this and nothing more** (founder ruling
 2026-08-01; `partition_constitution_rollout.md` §3): **A1 · A5/A7 · A6-confirm · A9 · P3 · P4**.
 **A2, A3 and A4 are cancelled; X3 is void.** The reference pair is SS·secondary
-**LP v1.10 · assessment v1.5**.
+**LP v1.10 · assessment v1.7**. **A9 is now a REMOVAL, not an addition** — the arrangement
+sentence was struck at v1.7 (2026-08-03) and the sort lives in `genon/normalize_options.py`;
+see P2.
 
 **The V-series is NOT constitutional.** V1 (the variant brief) · V2 (shared section registry,
 verbatim anchors, first-visit order) · V3 (the closing-synthesis mandate) · V4 (per-variant
@@ -297,10 +310,10 @@ triggers the cheaper `--certify-only` re-run; see §9).
 Stage state (from `partition_constitution_rollout.md` §2 — re-read the live VERSION lines
 before starting each stage):
 
-| # | Subject · stage | LP ver | Band shape | A1 | Register | A9 |
+| # | Subject · stage | LP ver | Band shape | A1 | Register | A9 (option order) |
 |---|---|---|---|---|---|---|
-| S1 | social_sciences · secondary | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ |
-| S2 | social_sciences · middle | 2.7 | time_bands | — | — | — (item-18 prohibition to replace) |
+| S1 | social_sciences · secondary | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (assess v1.7) |
+| S2 | social_sciences · middle | **2.8 ✓** | time_bands | ✓ | ✓ | ✓ (assess v2.4, 2026-08-04) |
 | S3 | science · secondary | 1.0 | time_bands | — | — | — (item-18 prohibition to replace) |
 | S4 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
@@ -335,15 +348,34 @@ the pre-amendment file shows no pedagogical rule changed. **Artefact:** amended 
   (`period_ref`, or that subject's equivalent, copied from the LO row consumed). Verify; amend
   only where absent. The v1.2-era band-level `phase_ref` is reversed and must not be
   reintroduced.
-- **A9 — MCQ option order is a convention, not a choice:** options arranged alphabetically from
-  the first word at which they differ (ascending where numeric) as the LAST step before
-  emission, correct answer never led with. Applies to all eleven assessment constitutions;
-  **replaces** the MEMORY-item-18 position prohibition outright in the four files that carry it
-  (SS + Science, middle and secondary) — do those four first, their prohibition is known not to
-  hold. **Standing corpus-repair debt:** already-saved SS and Science plans carry clustered
-  answers; the repair pass reorders into convention order, never shuffles.
-**Exit:** `VERSION` bumped; anchor requirement present; A9 clause present.
+- **A9 — MCQ option order is NOT the model's to set.** *Rewritten 2026-08-04: the arrangement
+  convention this item used to mandate was struck from the reference at assessment v1.7
+  (2026-08-03, ARV-D-032) — prose could not carry a sort, and the v1.6 library came in 15 of 18
+  unarranged. Ordering is now a pipeline stage:* `genon/normalize_options.py` (STEP 6 of
+  `build_library.py`, subject-agnostic) sorts, relabels and remaps the guide keys
+  deterministically, and C3's gate 9a proves it ran. **So A9 at P2 is one removal and one
+  addition, and never an arrangement rule:**
+  - **REMOVE** the MEMORY-item-18 position prohibition ("the correct option must vary in
+    position / never the same label across consecutive items") in the four files that carry it
+    (SS + Science, middle and secondary) — it is known not to hold, and it asks for randomness
+    the model cannot produce. Nothing replaces it in kind.
+  - **ADD**, in the v1.7 wording: a mandate line saying option order carries no meaning and is
+    not the model's to set (emit them as authored; uneven letters across a chapter are
+    coincidence, not a defect), and the prohibition on an option that refers to another option
+    **by its label** ("both A and B", "none of the above") — the one construction a downstream
+    sort cannot reorder without rewriting.
+  - **MUST NOT** re-add the alphabetical arrangement sentence, "never led with", or any rule
+    that names a label position — naming arrangement at all keeps position salient to a model
+    that should never reason about it (founder, v1.6 and v1.7 both).
+  Applies to all eleven assessment constitutions; do the four item-18 files first. **Standing
+  corpus-repair debt:** already-saved SS and Science plans carry clustered answers; STEP 6
+  normalises them in place at ₹0, never shuffles, and records the count in
+  `genon_canonical.repairs[]`.
+**Exit:** `VERSION` bumped; anchor requirement present; item-18 prohibition gone; the "order
+carries no meaning" line and the label-reference prohibition present; no arrangement sentence.
 **Artefact:** amended file + diff.
+**Done for S2 (2026-08-04):** SS·middle assessment **v2.3 → v2.4**; artefacts and the per-item
+sign-off in `genon/out/stage_prep_ss_middle/`.
 
 **P3 [Kumar] Group B only — schema conversion.** Convert `phases[{minutes, description}]` →
 `time_bands[{minutes, activity}]` (rename both the array and the `description` key). **No
@@ -383,7 +415,8 @@ its subjects list contains this stage's class and nothing left over from an earl
 
 **[Claude] Stage sign-off:** read the amended pair against the reference and the rollout brief;
 confirm A1 lands, the register is ONE block in the v1.10 three-ban form, A6 anchors are present,
-A9 is in, P3 converted (Group B), and no cancelled amendment (A2/A3/A4) or V-rule has crept into
+A9 landed as the v1.7 removal-plus-two-lines (**and no arrangement sentence came back**), P3
+converted (Group B), and no cancelled amendment (A2/A3/A4) or V-rule has crept into
 a constitution. **Exit:** a written note per item — present / absent / deviates-with-reason.
 **Artefact:** the note; the stage's C-cycle is then unblocked.
 
@@ -474,12 +507,14 @@ summarised):
 | 6 time vector — closed by design* | (see note) | 15 homework book_ref | maths (all 3 stages) |
 | 7 empty approach OK | maths prep, SS | 16 inclusivity {support, challenge} | maths middle |
 | 8 FILL_IN/MATCH shapes | english prep | 17 SS teacher_notes | SS middle |
-| 9 Jul 12–13 wave contracts | per its file list | 18 MCQ position spread | **superseded by A9** |
+| 9 Jul 12–13 wave contracts | per its file list | 18 MCQ position spread | **closed by STEP 6** |
 
 \* Item 6 ("wire time into the constitutions" as a duration vector) is **closed by design**: A1
-fixes one standard row and the serve engine owns every timetable variation. Item 18 is
-**superseded by A9** (a convention replaces a prohibition) — check the convention, not the
-spread. Record both closures in MEMORY.md the first time they come up.
+fixes one standard row and the serve engine owns every timetable variation. Item 18 is **closed
+by the pipeline**: the position prohibition is struck at P2 and ordering is done deterministically
+by `normalize_options.py` (STEP 6), so there is no spread to check and no convention to check
+either — read STEP 6's `options arranged: N of M` line as the generation-quality signal instead
+(C3 gate 9a). Record both closures in MEMORY.md the first time they come up.
 **Exit:** each applicable item gets pass / fail / n-a-here with one line of evidence from the
 live artefacts; fails become defects. **Artefact:** the item table.
 
@@ -955,7 +990,7 @@ conversions late; one stage fully signed off before the next stage's prep begins
 
 1. **social_sciences · middle** (S2, time_bands, same subject family as the pilot) — the
    cheapest proof that the template ports at all. Carries MEMORY item 17 and the
-   A9-replaces-item-18 case.
+   A9-strikes-item-18 case. *P1–P4 done 2026-08-04 (LP v2.8 · assessment v2.4); P5 open.*
 2. **science · secondary** (S3, time_bands) — first stage outside the SS family; the
    section-anchored flat export shape (C12).
 3. **mathematics · secondary** (S4, time_bands) — confirms the port generalises; the
