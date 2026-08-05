@@ -22,7 +22,7 @@ heuristic code in the product engine.
 """
 from __future__ import annotations
 
-import json
+from . import carriers as _carriers
 
 
 class GenonDeclarationError(ValueError):
@@ -43,14 +43,18 @@ def _parse_band(s):
 
 
 def _anchor_items(items, band_unit, unit_numbers):
-    """Normalize each item's anchor to unit_ref (a list of unit numbers).
-    Source of truth: period_ref (the identity); legacy fallback: phase_ref
-    mapped through the declared band ids. Returns the problem list."""
+    """Confirm every item resolves to a KNOWN unit, and return the problem list.
+
+    The carrier seam (genon/carriers.py) has already stamped `unit_ref` using this
+    subject's own rule — `period_ref` for the item-self-sufficient family, the
+    coverage_handoff bridge for the handoff-bridged one. This function no longer
+    decides the anchor; it validates it against the units actually present, keeping
+    the legacy `phase_ref` path for pre-v0.5 files."""
     problems = []
     for n, it in enumerate(items, 1):
         if not isinstance(it, dict):
             continue
-        units = [u for u in (it.get("period_ref") or [])
+        units = [u for u in (it.get("unit_ref") or it.get("period_ref") or [])
                  if isinstance(u, int) and u in unit_numbers]
         if not units:
             units = sorted({band_unit[r] for r in (it.get("phase_ref") or [])
@@ -79,7 +83,12 @@ def compile_stream(plan: dict) -> dict:
     """Canonical plan JSON -> phase stream (strict). Raises GenonDeclarationError."""
     result = plan.get("result", plan)
     periods = result["lesson_plan"]["periods"]
-    items_in = result.get("assessment_items", []) or []
+    # THE CARRIER SEAM (2026-08-05). Never read result["assessment_items"] directly:
+    # only Social Sciences and TWAU keep a flat list there. Science secondary wraps its
+    # items under a "questions" key, and iterating that wrapper silently yields its key
+    # NAMES as strings — a canonical that compiles clean with zero questions. carriers.py
+    # asks the subject plugin, exactly as the app has always done. See its module docstring.
+    items = _carriers.assessment_items(plan, result)
     role_handoff = result.get("role_handoff") or plan.get("role_handoff") or {}
 
     phases, units = [], []
@@ -115,7 +124,6 @@ def compile_stream(plan: dict) -> dict:
             "authored_duration_minutes": p["period_duration_minutes"],
         })
 
-    items = [json.loads(json.dumps(it)) for it in items_in]
     band_unit = {ph["phase_id"]: ph["unit"] for ph in phases}
     problems = _anchor_items(items, band_unit, {u["unit"] for u in units})
     if problems:

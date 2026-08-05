@@ -138,8 +138,16 @@ def normalize_item(item):
 
 
 def _items_of(doc):
-    r = doc.get("result", doc)
-    return r.get("assessment_items") or []
+    """The LIVE item list — this tool mutates items in place and writes the file back.
+
+    Via the carrier seam (2026-08-05): only SS and TWAU keep a flat list under
+    `assessment_items`. Science secondary wraps its items under a "questions" key, and
+    reading the wrapper directly iterated its KEY NAMES, killing STEP 6 with
+    `'str' object has no attribute 'get'`.
+    """
+    sys.path.insert(0, str(REPO))
+    from aruvi_core.genon.carriers import raw_item_list       # noqa: E402
+    return raw_item_list(doc.get("result", doc))
 
 
 def normalize_file(path, apply=True):

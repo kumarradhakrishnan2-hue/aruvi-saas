@@ -40,6 +40,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(HERE))
 
 from aruvi_core.genon import compile_stream, serve_plan            # noqa: E402
+from aruvi_core.genon.carriers import raw_item_list                # noqa: E402
 from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, is_synthesis_unit, section_registry, unit_range,
 )
@@ -95,7 +96,7 @@ def item_census(raw):
     with n = 0, which is the loudest version of the same defect."""
     r = raw.get("result", raw)
     census, order = {}, []
-    for it in r.get("assessment_items") or []:
+    for it in raw_item_list(r):          # carrier seam — never read the key directly
         code = ((it.get("competency") or {}).get("c_code") or "").strip()
         if not code:
             continue

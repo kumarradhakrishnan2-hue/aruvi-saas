@@ -242,6 +242,33 @@ class ScienceSubject:
                   "duration_minutes": p.get("period_duration_minutes")},
         )
 
+    def genon_assessment(self, result: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """The genon carrier seam (aruvi_core/genon/carriers.py) — Science is
+        HANDOFF-BRIDGED at both stages, and the container shape differs by stage:
+
+          • SECONDARY — items live under `assessment_items["questions"]`, each carrying
+            `section_number`; bridge it through coverage_handoff's `section_number`.
+          • MIDDLE    — items are a flat list, each carrying `progression_stage`;
+            bridge it through coverage_handoff's `stage_number`.
+
+        Same two facts `assessment_to_view` above already encodes — stated once more here
+        because genon needs the RAW item dicts (options, is_correct, guide, visual_stimulus
+        intact, for served files and exports), where the view model returns display objects.
+        Anchoring is the section's LAST unit, per the 2026-08-05 ruling.
+        """
+        from ...genon.carriers import items_by_handoff
+
+        raw = result.get("assessment_items")
+        if isinstance(raw, dict) and "questions" in raw:          # secondary
+            return items_by_handoff(result, items=raw.get("questions") or [],
+                                    join_key="section_number",
+                                    handoff_key="section_number")
+        items = raw if isinstance(raw, list) else (                # middle
+            (raw or {}).get("assessment_items") or [])
+        return items_by_handoff(result, items=items,
+                                join_key="progression_stage",
+                                handoff_key="stage_number")
+
     def assessment_to_view(self, raw: Union[Dict[str, Any], list], *, grade, chapter,
                            link_context: Dict[str, Any] = None) -> AssessmentView:
         # Two container shapes by stage (architecture-plan.md rules 1 & 2):

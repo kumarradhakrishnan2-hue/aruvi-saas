@@ -1,7 +1,15 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.5 · 2026-08-04 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.6 · 2026-08-05 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.6 (2026-08-05, founder): **the teacher's own marks are now checked per stage, not once.**
+C12 gains sub-checks 3 and 4 — **chapter notes** (usage, privacy, persistence) and the
+**lesson-plan bookmark** (privacy, persistence) — because both are per-teacher writes on the
+plan surface C12 already opens, and a stage's serve is the only place their asset/section keys
+are exercised against real filenames. X1.3 and X1.7 remain the DEFINITION of the tenancy
+property; C12 is the per-stage re-verification and points back at them. No new tracker column
+(C12 already has one). §9 applies: no stage is certified yet, so nothing re-opens.*
 
 *2.5 (2026-08-04, at S2's P-prep): **the stale A9 is removed.** P2 still said "options arranged
 alphabetically from the first word at which they differ … correct answer never led with" — a
@@ -725,7 +733,46 @@ render this stage's shape cleanly. **Exit:** `dropped_lp` present and paged last
 without error; no blank sections, no raw JSON leaking, unit/phase structure visible and matching
 the plan, the borrowed sitting reading as a whole unit, `answers=1` rendering the answer layer,
 the coverage note carried through, and **no dropped unit anywhere in any exported file**.
-**Artefact:** the view response + the 8 files.
+
+Then, on that same open plan, the teacher's TWO writable marks — the only per-teacher writes on
+an otherwise read-only surface. X1.3 and X1.7 state the tenancy property; these are the per-stage
+re-verification of it against this stage's real filenames and section keys.
+
+3. **Chapter notes — usage, privacy, persistence.** The notes tab in the axis gutter
+   (`LessonView.jsx`, `ChapterNotesModal`) writes localStorage key
+   `chapter_notes_{subject}_{grade}_{chapter_title}` through `userKey()`, i.e. suffixed with the
+   signed-in user. Check, as kumar1: (a) **usage** — open the notebook from the served plan, write
+   a note, close; the tab shows the has-note state and its `title` carries the text; reopening the
+   plan restores it. (b) **asset-keying, deliberately section-independent** — the SAME note
+   surfaces in preview (My Lessons) and in tracking, and from every section bound to this
+   chapter (the per-unit section note was removed 2026-07-23 — one notebook per chapter, and a
+   note appearing under only one of two bound sections is a defect). Confirm the key does NOT
+   move when the served *matrix* changes: a 50m10 and a 60m4-50m6 serve of this chapter share one
+   notebook. (c) **privacy** — sign in as kumar2 on the same browser profile and open the same
+   chapter: the notebook is EMPTY, and kumar1's key is still on disk untouched
+   (`userKey` suffix is the whole isolation mechanism — a bare `chapter_notes_…` key without a
+   user suffix is an S2 defect). (d) **persistence and its limit** — the note survives reload and
+   restart, but there is **no notes endpoint**: it stays in the browser profile that wrote it and
+   does not follow the teacher to another device. Record as the known limitation (X1.7), not a
+   tenancy defect; re-record it each stage so it is never silently assumed fixed. Also confirm
+   clearing a note to blank REMOVES the key rather than storing an empty string.
+4. **Bookmark — privacy and persistence.** The teacher's ONE phase bookmark per section
+   (`web/app/lib/sectionState.js`, cache key `lu_bookmark_{sectionKey}`, server field
+   `bookmark_unit`/`bookmark_phase` on `POST /section-state`). Check: (a) set a bookmark on a
+   phase of the served plan as kumar1; `GET /section-state` returns both fields (0-based) on that
+   section's row, i.e. it **round-trips to the server**, not localStorage alone — this is what
+   makes it survive a new browser. (b) **persistence** — reload, and sign in from a second browser
+   profile as kumar1: the bookmark reconciles back onto the same unit·phase from the server row.
+   (c) **privacy** — as kumar2, `GET /section-state` shows no trace of kumar1's section key or
+   bookmark, and the two states live under separate
+   `data/section_state/{tenant}/{user}/state.json` paths. (d) **the one legitimate clear** — only
+   unbind/bind deletes the row; verify a server row that carries NO bookmark does not wipe a
+   locally-held one (the reconcile rule in `sectionState.js`), and that moving the bookmark
+   replaces rather than accumulates (one per section, always).
+**Exit (3–4):** notes shared across sections and matrices for one teacher and invisible to
+another; bookmark round-trips to the server, survives a new browser, isolated per user; the
+no-notes-endpoint limitation recorded. **Artefact:** the view response + the 8 files; for 3–4,
+the paired kumar1/kumar2 evidence (localStorage keys + `GET /section-state` bodies).
 
 **C13 [Kumar breaks, Claude reads] Failure paths.** Each must surface a message a teacher can
 read, with no stack trace in the body:
@@ -794,7 +841,9 @@ having run their C6 share):
    prepared — two teachers requesting the same variant legitimately share a filename.)
 2. `GET /plan-archive` + archive/restore — kumar1 archives a plan; kumar2's listing is
    unaffected; restore returns it; `GET /plans/{s}/{g}` shows per-caller `archived` flags.
-3. `GET/POST/DELETE /section-state` — progress + bookmark isolated per user.
+3. `GET/POST/DELETE /section-state` — progress + bookmark isolated per user. (This is the
+   DEFINITION; **C12.4 re-verifies it per stage** on that stage's served plan — privacy,
+   server round-trip, survival into a new browser, and the unbind/bind-only clear.)
 4. `GET /readiness` — profiles stay distinct; the 409-cascade guard fires for a destructive edit
    and cascades only with `cascade: true`.
 5. Allocation — `save_allocation` / `GET allocation` / `DELETE` isolated per user for the same
@@ -808,7 +857,11 @@ having run their C6 share):
    a stated property.
 7. **Chapter notes** — the API exposes `section-state` (bookmark + progress) and **no notes
    endpoint**. Notes are client-side only: they stay in the browser profile that wrote them.
-   Record as a known limitation, not a tenancy defect.
+   Isolation across teachers on one browser is the `userKey()` suffix on
+   `chapter_notes_{subject}_{grade}_{chapter_title}`, and nothing else. Record the missing
+   endpoint as a known limitation, not a tenancy defect — but a note visible to a second
+   signed-in user IS a defect. (**C12.3 re-verifies this per stage**, adding usage and the
+   asset-keying rule: one notebook per chapter, shared across sections and matrices.)
 8. **Archived plans stay out of circulation (fix landed 2026-08-01).** An archived plan is
    excluded from the section-attach chooser (`MyPlans.jsx`) and never fronts the guided tour.
    Verify both. **Two open judgment calls to put to the founder while here:** (a)

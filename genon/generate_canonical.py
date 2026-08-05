@@ -135,12 +135,25 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
             cur = z_
         if cur != p.get("period_duration_minutes"):
             problems.append(f"P{n}: bands sum {cur} != {p.get('period_duration_minutes')}")
-    for item in parsed.get("assessment_items", []) or []:
+    # Carrier seam (2026-08-05): an item's anchor is `period_ref` only for the
+    # item-self-sufficient family (SS, TWAU). Handoff-bridged subjects — science both
+    # stages, maths secondary — carry an integer section/stage number and the platform
+    # resolves the unit from coverage_handoff, so demanding period_ref here would fail
+    # every science canonical by construction. Ask the seam what the anchor is.
+    try:
+        from aruvi_core.genon.carriers import assessment_items as _carrier_items
+        resolved = _carrier_items(parsed, parsed)
+    except Exception:                                            # noqa: BLE001
+        resolved = [it for it in (parsed.get("assessment_items") or [])
+                    if isinstance(it, dict)]
+    for item in resolved:
         if isinstance(item, dict):
-            pr = [u for u in (item.get("period_ref") or []) if isinstance(u, int)]
+            pr = [u for u in (item.get("unit_ref") or item.get("period_ref") or [])
+                  if isinstance(u, int)]
             if not (set(pr) & unit_numbers):
                 problems.append(f"assessment item {item.get('id', '?')}: "
-                                "no resolvable anchor unit (period_ref)")
+                                "no resolvable anchor unit "
+                                "(period_ref, or section_number via coverage_handoff)")
     return problems[:40]
 
 
