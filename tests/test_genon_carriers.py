@@ -22,7 +22,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from aruvi_core.genon.carriers import (          # noqa: E402
-    CarrierNotImplemented, assessment_items, items_by_handoff, subject_key,
+    CarrierNotImplemented, assessment_items, backfill_unit_context, from_engine_handoff,
+    items_by_handoff, subject_key, to_engine_handoff, unit_approaches,
 )
 
 FIX = Path(__file__).resolve().parent / "fixtures"
@@ -155,6 +156,75 @@ class TestHandoffBridgedFamily(unittest.TestCase):
         self.assertEqual([it["unit_ref"] for it in items], [[10], [11]])
 
 
+class TestHandoffRoundTrip(unittest.TestCase):
+    """serve remaps in ONE shape; a served plan must leave in the SUBJECT's shape, or
+    the app's display path — which iterates science's handoff as a list — links nothing."""
+
+    SCI = {"coverage_handoff": [
+        {"section_number": 1, "section_label": "8.1 Roots", "total_sections": 2,
+         "period_numbers": [1], "section_context": "ctx one", "c_code": "C-1.1"},
+        {"section_number": 2, "section_label": "8.2 Models", "total_sections": 2,
+         "period_numbers": [2, 3], "section_context": "ctx two", "c_code": "C-1.1"},
+    ]}
+
+    def test_array_becomes_a_dict_serve_can_walk(self):
+        eng = to_engine_handoff(self.SCI)
+        self.assertIsInstance(eng, dict)
+        for blk in eng.values():                      # what serve.py actually does
+            self.assertIsInstance(blk.get("los"), list)
+            for lo in blk["los"]:
+                self.assertIn("period_number", lo)
+
+    def test_round_trip_is_lossless_and_keeps_order(self):
+        back = from_engine_handoff(json.loads(json.dumps(to_engine_handoff(self.SCI))))
+        self.assertEqual([h["section_label"] for h in back], ["8.1 Roots", "8.2 Models"])
+        self.assertEqual([h["period_numbers"] for h in back], [[1], [2, 3]])
+        self.assertEqual(set(self.SCI["coverage_handoff"][0]), set(back[0]))
+
+    def test_no_engine_marker_leaks_into_a_served_plan(self):
+        back = from_engine_handoff(to_engine_handoff(self.SCI))
+        for h in back:
+            self.assertNotIn("_carrier", h)
+            self.assertNotIn("_entry", h)
+            self.assertNotIn("_order", h)
+
+    def test_keyed_on_the_LABEL_not_the_per_plan_section_number(self):
+        """Two canonicals that cut differently can number the same section differently;
+        the label is the verbatim registry anchor and is stable across them (V2)."""
+        self.assertEqual(sorted(to_engine_handoff(self.SCI)), ["8.1 Roots", "8.2 Models"])
+
+    def test_a_section_with_no_surviving_unit_is_dropped(self):
+        eng = to_engine_handoff(self.SCI)
+        eng["8.2 Models"]["los"] = []                 # serve filtered them all away
+        back = from_engine_handoff(eng)
+        self.assertEqual([h["section_label"] for h in back], ["8.1 Roots"])
+        self.assertEqual(back[0]["total_sections"], 1, "recomputed for THIS plan")
+
+    def test_block_shaped_families_pass_through_untouched(self):
+        ss = {"coverage_handoff": {"C-1.1": {"cg": "CG-1", "los": [{"period_number": 2}]}}}
+        self.assertEqual(to_engine_handoff(ss), ss["coverage_handoff"])
+        self.assertEqual(from_engine_handoff(ss["coverage_handoff"]), ss["coverage_handoff"])
+
+
+class TestUnitProjection(unittest.TestCase):
+    def test_approach_is_read_under_all_three_spellings(self):
+        self.assertEqual(unit_approaches({"pedagogical_approaches": ["A", "B"]}), ["A", "B"])
+        self.assertEqual(unit_approaches({"pedagogical_approach": "Inquiry"}), ["Inquiry"])
+        self.assertEqual(unit_approaches({"dominant_mode": "Hands-on Investigation"}),
+                         ["Hands-on Investigation"])
+        self.assertEqual(unit_approaches({}), [])
+
+    def test_section_context_backfills_from_the_handoff(self):
+        """Science secondary's LP Rule 6 FORBIDS section_context inside a period object,
+        so reading it off the period leaves the served Overview blank."""
+        units = [{"unit": 1, "section_context": None}, {"unit": 3, "section_context": None},
+                 {"unit": 9, "section_context": "already here"}]
+        backfill_unit_context(units, TestHandoffRoundTrip.SCI)
+        self.assertEqual(units[0]["section_context"], "ctx one")
+        self.assertEqual(units[1]["section_context"], "ctx two")
+        self.assertEqual(units[2]["section_context"], "already here", "never overwritten")
+
+
 class TestUnimplementedFamiliesFailLoudly(unittest.TestCase):
     """A subject genon has never run on must REFUSE, not return something plausible."""
 
@@ -223,6 +293,24 @@ class TestCompileEndToEnd(unittest.TestCase):
         for it in items:
             self.assertIsInstance(it, dict)
             self.assertTrue(it.get("unit_ref"))
+
+    def test_science_secondary_SERVES_and_the_plan_keeps_its_native_handoff(self):
+        """End to end: the shape that used to AttributeError inside serve's remap."""
+        p = (Path(__file__).resolve().parents[1]
+             / "backup/saved_plans/science/ix/ch_08_20260612_151832.json")
+        if not p.is_file():
+            self.skipTest("science IX prototype plan not on disk")
+        from aruvi_core.genon import compile_stream, serve_plan
+        stream = compile_stream(json.loads(p.read_text(encoding="utf-8")))
+        for x in (11, 9, 6):
+            with self.subTest(x=x):
+                served = serve_plan([stream], [(50, x)])["result"]
+                ho = served["coverage_handoff"]
+                self.assertIsInstance(ho, list, "must come back as science's ARRAY")
+                self.assertEqual(len(served["lesson_plan"]["periods"]), x)
+                for h in ho:
+                    self.assertIn("period_numbers", h)
+                    self.assertNotIn("_carrier", h, "engine marker leaked into a served plan")
 
 
 if __name__ == "__main__":

@@ -41,6 +41,8 @@ from __future__ import annotations
 
 import json
 
+from . import carriers as _carriers
+
 
 class ServeError(RuntimeError):
     """The serve failed validation — never serve an invalid plan."""
@@ -639,7 +641,11 @@ def serve_plan(streams, matrix):
         "plan_status": "adapted",
         "result": {
             "lesson_plan": {"periods": new_periods},
-            "coverage_handoff": handoff,
+            # Restored to the SUBJECT's own shape (carriers.from_engine_handoff). The
+            # remap above works in the one engine shape; a served plan must leave here
+            # looking like the plans the app already reads, or the display path — which
+            # iterates science's handoff as a list — silently links no items.
+            "coverage_handoff": _carriers.from_engine_handoff(handoff),
             "assessment_items": items,
             "section_coverage_note": coverage_note,
             "dropped_units": dropped_units or None,

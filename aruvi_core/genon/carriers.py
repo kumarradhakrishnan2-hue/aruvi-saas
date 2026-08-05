@@ -175,6 +175,120 @@ def items_by_handoff(result: Dict[str, Any], *, items, join_key: str,
     return out
 
 
+# ── the coverage handoff · round trip ────────────────────────────────────────────
+# serve.py remaps the handoff in ONE shape: {key: {..., "los": [{period_number, …}]}}.
+# That is Social Sciences' competency-keyed block, and `serve` does `handoff.values()`
+# and reads `c["los"]` — an AttributeError the moment it meets science's ARRAY of
+# section entries. Rather than teach `serve` two shapes (a subject conditional inside
+# the engine, the very thing this module exists to remove), the handoff is normalized
+# IN and restored OUT: the engine sees one shape, and a served plan keeps its own
+# subject's native shape, so the app's display path is untouched.
+#
+# The marker travels in the data (`_carrier`), so restoring needs no side-channel.
+
+_SCIENCE_SECTION = "science_section"
+
+
+def to_engine_handoff(result: Dict[str, Any]) -> Any:
+    """Native handoff -> the one shape serve speaks. Identity for the block-shaped
+    families (SS, TWAU); a lossless wrapping for the section-array families."""
+    ho = result.get("coverage_handoff")
+    if not isinstance(ho, list):
+        return ho if ho is not None else {}
+    out: Dict[str, Any] = {}
+    for n, h in enumerate(ho):
+        if not isinstance(h, dict):
+            continue
+        entry = {k: v for k, v in h.items() if k != "period_numbers"}
+        # Key on the section LABEL — the verbatim registry anchor, which V2 makes stable
+        # ACROSS canonicals of a chapter. `section_number` is per-plan and two canonicals
+        # that cut differently can number the same section differently, so keying on it
+        # would merge a lender's rows onto the wrong section.
+        key = str(h.get("section_label") or h.get("stage_label")
+                  or h.get("section_number") or h.get("stage_number") or f"_{n}")
+        out[key] = {
+            "_carrier": _SCIENCE_SECTION,
+            "_entry": entry,
+            "_order": n,
+            "los": [{"period_number": int(p)} for p in (h.get("period_numbers") or [])
+                    if p is not None],
+        }
+    return out
+
+
+def from_engine_handoff(handoff: Any) -> Any:
+    """The inverse — engine shape -> the subject's native shape, after serve has
+    filtered and renumbered the rows. Entries whose units are all gone are DROPPED:
+    science's contract is one entry per section THIS plan anchors, so a section the
+    plan does not teach has no entry (unlike SS, which keeps the block with empty
+    `los`). `total_sections` is recomputed to what this plan actually carries; the
+    stale authored count would misdescribe a served plan."""
+    if not isinstance(handoff, dict) or not any(
+            isinstance(v, dict) and v.get("_carrier") == _SCIENCE_SECTION
+            for v in handoff.values()):
+        return handoff
+    rows = []
+    for blk in handoff.values():
+        if not isinstance(blk, dict) or blk.get("_carrier") != _SCIENCE_SECTION:
+            continue
+        los = blk.get("los") or []
+        if not los:
+            continue
+        entry = dict(blk.get("_entry") or {})
+        entry["period_numbers"] = sorted({int(lo["period_number"]) for lo in los
+                                          if lo.get("period_number") is not None})
+        if los and all(lo.get("unscheduled") for lo in los):
+            entry["unscheduled"] = True
+        rows.append((blk.get("_order", 0), entry))
+    rows.sort(key=lambda t: t[0])
+    out = [e for _, e in rows]
+    for e in out:
+        e["total_sections"] = len(out)
+    return out
+
+
+# ── unit projection · the fields whose spelling differs by constitution ───────────
+def unit_approaches(period: Dict[str, Any]) -> List[str]:
+    """`pedagogical_approaches` (SS, English) vs `pedagogical_approach` (Science,
+    Maths) vs `dominant_mode` (TWAU) — the same field under three names, exactly the
+    diversity CLAUDE.md §3 already refuses to flatten upstream ("the source keys are
+    too diverse … Period.approach is the single normalization point"). This is that
+    point for genon. Reading alternative KEY NAMES is serialization tolerance, not a
+    branch on subject."""
+    v = period.get("pedagogical_approaches")
+    if isinstance(v, list) and v:
+        return [str(x) for x in v if str(x).strip()]
+    for k in ("pedagogical_approach", "dominant_mode"):
+        s = str(period.get(k) or "").strip()
+        if s:
+            return [s]
+    return []
+
+
+def backfill_unit_context(units: List[Dict[str, Any]], result: Dict[str, Any]) -> None:
+    """Fill a unit's `section_context` from the handoff when the period does not carry
+    it. Science secondary's LP Rule 6 prohibition 2 FORBIDS section_context inside a
+    period object — it lives only in the handoff — so reading it off the period leaves
+    the served Overview blank. Shape-based and subject-agnostic: any handoff entry that
+    names its `period_numbers` and a `section_context` is used. Mutates in place."""
+    ho = result.get("coverage_handoff")
+    if not isinstance(ho, list):
+        return
+    by_unit: Dict[int, str] = {}
+    for h in ho:
+        if not isinstance(h, dict):
+            continue
+        ctx = str(h.get("section_context") or "").strip()
+        if not ctx:
+            continue
+        for p in (h.get("period_numbers") or []):
+            if p is not None:
+                by_unit.setdefault(int(p), ctx)
+    for u in units:
+        if not str(u.get("section_context") or "").strip():
+            u["section_context"] = by_unit.get(u.get("unit"))
+
+
 # ── the seam itself ──────────────────────────────────────────────────────────────
 def assessment_items(plan: Dict[str, Any], result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """The chapter's assessment as a FLAT list of item dicts, each stamped `unit_ref`.

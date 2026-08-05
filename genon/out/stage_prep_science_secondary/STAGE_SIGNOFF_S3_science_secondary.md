@@ -42,7 +42,7 @@ beside both constitutions.
 
 ---
 
-## The blocker — ✅ C1-gating work LANDED 2026-08-05; two items remain for C6/C12
+## The blocker — ✅ ALL FOUR ENGINE ITEMS LANDED 2026-08-05
 
 > **The carrier seam is built** (`aruvi_core/genon/carriers.py`, new). Genon read
 > `result["assessment_items"]` directly and assumed a flat list of item dicts carrying
@@ -83,13 +83,13 @@ engine speak the 8-rule contract it already documents:
    — `max(period_numbers)`, the same value `link_resolver` already uses as `anchor_period`.
 2. ✅ **DONE — `genon/generate_canonical.py::validate`** — accept that resolution instead of demanding
    `period_ref`, so a section-carrier canonical certifies on its own terms.
-3. ⬜ **OPEN — `aruvi_core/genon/serve.py`, handoff remap** — it does `for c in handoff.values()` and
+3. ✅ **DONE — `aruvi_core/genon/serve.py`, handoff remap** — it does `for c in handoff.values()` and
    reads `c["los"]`, which is the SS shape (dict keyed by c_code, LO rows inside). Science
    secondary's handoff is a **JSON array** of section entries with no `los` key: this is an
    `AttributeError` on the first science serve, not a subtle mis-anchoring. Per the
    no-bespoke-logic rule the fix belongs in the science normalizer — normalize to the one
    shape serve already speaks — not in a branch inside serve.
-4. ⬜ **OPEN — `aruvi_core/genon/compile.py`, the unit projection** — three more fields of the same
+4. ✅ **DONE — `aruvi_core/genon/compile.py`, the unit projection** — three more fields of the same
    kind, found at verification, so the list above was an undercount. `compile` reads
    `pedagogical_approaches` (**plural**) while this stage's A3 emits `pedagogical_approach`
    (singular), so every served science unit would carry an empty approaches list and the
@@ -99,7 +99,13 @@ engine speak the 8-rule contract it already documents:
    period object at this stage (they live in the handoff), so both are structurally always
    empty. None of this errors; it silently empties the teacher-facing Overview.
 
-Items 1–2 gated C1 and are landed. Item 3 gates C6, item 4 gates C12 — both still open. None of them changes a constitution, so
+**All four are landed.** Item 3 turned out to gate **C1**, not C6: STEP 7's certification calls `serve_plan` across the whole sweep to build the serve-sweep table (C5.7, the adaptation table of record). The sweep is wrapped in a try/except and sweep errors do not set the pass flag, so C1 would have reported **ALL PASS with a sweep that was a wall of `ERROR: 'list' object has no attribute 'values'`** — worse than a crash, because the machine would not have caught it.
+
+**Item 3 — the ROUND-TRIP route (founder, 2026-08-05).** `carriers.to_engine_handoff` normalizes science's section ARRAY into the block shape serve speaks; `from_engine_handoff` restores the native array on the way out, so a served plan looks like the plans the app already reads. The marker travels in the data (`_carrier`), so no side-channel is needed, and blocks are keyed on the **section LABEL** — the verbatim registry anchor, stable across canonicals under V2 — never on `section_number`, which is per-plan and would merge a lender's rows onto the wrong section. Serve's remap logic is untouched: the alternative, teaching serve two shapes, would have put a subject conditional inside the engine, the exact thing this fix removes. Verified: round trip loses no field, keeps order, drops a section whose units are all gone (science's contract is one entry per section THIS plan anchors), recomputes `total_sections` for the served plan, and leaks no marker.
+
+**Item 4.** `carriers.unit_approaches` reads the approach under all three constitutional spellings (`pedagogical_approaches` / `pedagogical_approach` / `dominant_mode`) — the same single-normalization-point doctrine CLAUDE.md §3 already applies to `Period.approach`. `carriers.backfill_unit_context` fills a unit's `section_context` from the handoff when the period does not carry it, because science secondary's LP Rule 6 prohibition 2 FORBIDS it inside a period object — without this the served Overview renders blank.
+
+**Verified end to end on the real Grade IX file:** serves at X = 11 / 9 / 6 all succeed (was: AttributeError), each returning science's native array handoff with no engine marker, and U1 now carries `['Didactic approach']` and its section context. **No regression:** both certified SS libraries serve their full sweeps (SS·IX X=5…14, SS·VIII X=8…18) with the handoff unchanged on the identity path. `tests/test_genon_carriers.py` now 25 tests, green; the five suites still failing are the same five as before (missing `fastapi`, missing english/science saved-plan data), none referencing genon. None of them changes a constitution, so
 none triggers the §9 cascade. The shape of all four is identical: **the engine currently knows
 only the SS carrier family**, and the 8-rule table's per-subject normalizer is where each
 belongs — not as branches inside `serve`.
@@ -220,7 +226,7 @@ fire and that fix is withdrawn. The blocker list stands at four.
 
 ## Still open before the stage is signed
 
-1. Engine items **3 and 4** above (items 1–2 landed 2026-08-05). Item 3 gates C6, item 4 gates C12.
+1. ~~Engine items 1–4~~ — **all landed 2026-08-05**. C1 is unblocked.
 2. **P5.4** — the three Science IX profiles, built through the app.
 3. **P5.2's registry cut** — recorded as a choice above; confirm or overturn before C1.
 4. The **HUMAN GATE**, after the C-cycle.

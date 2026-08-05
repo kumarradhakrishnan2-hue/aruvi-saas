@@ -116,7 +116,7 @@ def compile_stream(plan: dict) -> dict:
             "section_context": p.get("section_context"),
             "materials": p.get("materials") or [],
             "visual_aids": p.get("visual_aids"),
-            "pedagogical_approaches": p.get("pedagogical_approaches") or [],
+            "pedagogical_approaches": _carriers.unit_approaches(p),
             "teacher_notes": p.get("teacher_notes", ""),
             "homework": p.get("homework") or [],
             "competency_edges": [dict(e) for e in p.get("competency_edges") or []],
@@ -128,6 +128,11 @@ def compile_stream(plan: dict) -> dict:
     problems = _anchor_items(items, band_unit, {u["unit"] for u in units})
     if problems:
         raise GenonDeclarationError(problems)
+
+    # Stages whose constitution FORBIDS section_context inside a period object (science
+    # secondary, LP Rule 6 prohibition 2 — it lives only in the handoff) would otherwise
+    # serve units with a blank Overview context. Fill it from the handoff.
+    _carriers.backfill_unit_context(units, result)
 
     stream = {
         "stream_format": "aruvi-phase-stream v0.5 (unit-anchored)",
@@ -144,7 +149,9 @@ def compile_stream(plan: dict) -> dict:
         },
         "phases": phases,
         "units": units,                      # the served atoms: one sitting = one unit
-        "coverage_handoff": result.get("coverage_handoff", {}),
+        # Normalized to the ONE shape serve speaks; serve_plan restores the subject's
+        # own shape on the way out (carriers.to_engine_handoff / from_engine_handoff).
+        "coverage_handoff": _carriers.to_engine_handoff(result),
         "assessment_items": items,
     }
 
