@@ -224,6 +224,7 @@ export default function Home() {
   // `filename` is the prepared plan.
   const onPrepared = ({ subject: s, grade: g, filename }) => {
     setGenerateEntry(null);
+    setPreparingCard(null);            // the proposed card gives way to the real one
     if (prepareReturn) {
       setPendingAttach({ ...prepareReturn, filename });
       setPrepareReturn(null);
@@ -233,6 +234,36 @@ export default function Home() {
       setEditFlow("lessonplans"); setTab("myplans");
     }
   };
+
+  // ── THE WAIT MOVED TO WHERE THE LESSON LANDS (founder, 2026-08-06) ──────────────
+  // Preparing no longer holds her on the Generate screen behind a pale stand-in card.
+  // The moment the request goes out, PrepareLesson hands the descriptor up here and we
+  // put her in My Lessons, where the proposed lesson is drawn as an ordinary card at the
+  // head of the list — real title, real period shape, full strength — with a progress bar
+  // where "Ready to teach" will be. When the plan resolves, that card becomes the real one
+  // in place; she never changes screens to watch it happen.
+  //   `preparingCard` lives HERE, above the tab, because PrepareLesson unmounts the instant
+  // we navigate. The request itself keeps running inside that unmounted component's closure
+  // and still calls onPrepared / onPrepareError, which is why nothing had to move server-side.
+  //   The section-attach path (prepareReturn) is deliberately EXCLUDED: it lands in My
+  // Classes, not My Lessons, so there is nowhere to put this card. It keeps the in-place
+  // wait, which PrepareLesson still implements as its fallback.
+  const [preparingCard, setPreparingCard] = useState(null);
+  // Returns TRUE only if the card was actually taken. PrepareLesson falls back to its own
+  // in-place wait on false — without that handshake the attach path would show her nothing
+  // at all for five seconds, which is worse than either screen.
+  const onPreparing = (desc) => {
+    if (!desc || prepareReturn) return false;    // attach path keeps the in-place wait
+    setGenerateEntry(null);
+    setPreparingCard(desc);
+    if (desc.subject) setSubject(desc.subject);
+    if (desc.grade) setGrade(desc.grade);
+    setEditFlow("lessonplans"); setTab("myplans");
+    return true;
+  };
+  // The serve failed. Pull the proposed card rather than leave a bar running forever —
+  // a card that never resolves is worse than no card, because it looks like a plan she has.
+  const onPrepareError = () => setPreparingCard(null);
 
   // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
   // plan (grade-level reads, section-level acts). Scope the tab, leave the library, and stash
@@ -373,7 +404,7 @@ export default function Home() {
             /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
-                tourStep={tour} />
+                tourStep={tour} preparing={preparingCard} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
             /* Teaching profile (via the settings gear) — view + conversational redo (the SAME
@@ -391,7 +422,8 @@ export default function Home() {
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
             tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness}
               onNavigate={setTab} entry={generateEntry} onScope={(s, g) => { setSubject(s); setGrade(g); }}
-              onConsumeEntry={() => setGenerateEntry(null)} onPrepared={onPrepared} /> :
+              onConsumeEntry={() => setGenerateEntry(null)} onPrepared={onPrepared}
+              onPreparing={onPreparing} onPrepareError={onPrepareError} /> :
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
               user={user} onSignOut={onSignOut}

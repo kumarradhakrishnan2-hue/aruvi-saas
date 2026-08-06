@@ -32,7 +32,8 @@ const classNum = (g) => {
   return idx >= 0 ? idx + 3 : (g || "").toUpperCase();
 };
 
-export default function PrepareLesson({ subject, grade, readiness, onNavigate, onPrepared }) {
+export default function PrepareLesson({ subject, grade, readiness, onNavigate, onPrepared,
+                                        onPreparing, onPrepareError }) {
   const [chapters, setChapters] = useState([]);
   const [chapterNo, setChapterNo] = useState("");          // chapter_number as string
   const [periods, setPeriods] = useState(DEFAULT_PERIODS);
@@ -293,10 +294,24 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       // The card goes up FIRST, from what she just told us — chapter, class, period shape.
       // Nothing here is invented and nothing is fetched to draw it.
       const startedAt = Date.now();
-      setPreparing({
+      // ── WHERE THE WAIT HAPPENS (founder, 2026-08-06) ────────────────────────────
+      // With `onPreparing` wired, she does NOT wait here. The descriptor goes up to the
+      // shell, which lands her in My Lessons immediately and draws the proposed lesson as
+      // a real card at the head of the list — full strength, ordinary structure, a progress
+      // bar on its last line. This request keeps running after this component unmounts:
+      // the closure holds the fetch and `onPrepared`, both of which outlive the render, so
+      // the hold and the resolve still fire from here. Without the prop (a caller that has
+      // nowhere to put the card) the old in-place `prep-wait` screen is still the fallback.
+      const descriptor = {
+        subject, grade, chapterNo,
         chapterTitle: (chosen && (chosen.chapter_title || chosen.title)) || `Chapter ${chapterNo}`,
         rows: matrix,
-      });
+      };
+      // The shell answers TRUE only if it actually took the card. It declines on the
+      // section-attach path, which lands in My Classes and has nowhere to put one — and a
+      // silent decline would leave her staring at an unchanged form for five seconds.
+      const taken = onPreparing ? onPreparing(descriptor) === true : false;
+      if (!taken) setPreparing(descriptor);
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
           { rows: matrix });
@@ -307,6 +322,9 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
         if (resp.coverage_note) setNote(resp.coverage_note);
         setView((await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`)).view);
       } catch {
+        // She may already be in My Lessons watching the proposed card — the failure has to
+        // reach HER, not this screen, so it goes back up the same way it went down.
+        if (onPrepareError) onPrepareError(descriptor);
         setError("Couldn't build the lesson plan right now. Try again in a moment.");
       } finally {
         setPreparing(null);

@@ -3586,3 +3586,53 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 @media (prefers-reduced-motion: reduce) {
   .prep-wait-dots span { animation: none; opacity: .45; }
 }
+
+/* ── the PROPOSED lesson card, in My Lessons (founder, 2026-08-06) ─────────────────
+ * Supersedes the .prep-wait screen above for the My-Lessons path (that block stays as
+ * the fallback for the section-attach flow, which lands in My Classes and has nowhere
+ * to put a card). Two deliberate departures from .prep-wait:
+ *   NOT FADED. .prep-wait dropped the card to opacity .58 to say "not real yet", but
+ *   every fact on it — chapter, class, period shape — is already final; fading them
+ *   reads as missing data. The card is drawn at full strength, in the ordinary .sc-card
+ *   structure, in the slot the finished plan will occupy. Only its LAST LINE differs.
+ *   A DETERMINATE BAR, not dots. The dots said "something is happening"; the bar says
+ *   how much longer. The fill runs the same 5s hold PrepareLesson enforces, so the two
+ *   must be changed together (PREPARING_MS ←→ --prep-ms).
+ * The card is not clickable — there is nothing to open — so it takes the default cursor
+ * and no hover border; anything else would invite a tap that does nothing. */
+.sc-card.sc-proposed {
+  cursor: default;
+  background: var(--paper-2);
+  border-style: dashed;               /* the one "not yet" signal — structure, not colour */
+  border-color: var(--edge-clay);
+}
+.sc-card.sc-proposed::before { background: var(--clay); }
+.sc-card.sc-proposed:hover { border-color: var(--edge-clay); }
+.sc-prep { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.sc-prep-bar {
+  --prep-ms: 5000ms;                  /* keep in step with PrepareLesson PREPARING_MS */
+  position: relative; flex: 1 1 auto; max-width: 190px; height: 3px;
+  border-radius: 2px; background: var(--line-soft); overflow: hidden;
+}
+.sc-prep-bar > i {
+  position: absolute; inset: 0 auto 0 0; display: block; width: 0;
+  border-radius: 2px; background: var(--clay);
+  animation: sc-prep-fill var(--prep-ms) cubic-bezier(.25, .8, .3, 1) forwards;
+}
+/* Eases toward full and stops just short: the card is replaced by the real one at the
+   same moment, so a bar that visibly "completes" and then lingers would read as stuck. */
+@keyframes sc-prep-fill { from { width: 0; } to { width: 96%; } }
+.sc-prep-note {
+  font-family: var(--f-body); font-style: italic; font-size: 12.5px;
+  color: var(--ink-soft);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sc-prep-bar > i { animation: none; width: 40%; }
+}
+@media (max-width: 420px) {
+  /* At 360–412 the bar and its note compete for one line; the note leads, the bar sits
+     under it at full width rather than being squeezed to a stub. */
+  .sc-prep { flex-direction: column; align-items: flex-start; gap: 5px; }
+  .sc-prep-bar { max-width: none; width: 100%; order: 2; }
+  .sc-prep-note { order: 1; }
+}

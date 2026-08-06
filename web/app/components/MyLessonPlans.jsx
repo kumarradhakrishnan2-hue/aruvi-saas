@@ -214,7 +214,41 @@ function ReportButton({ sSlug, gSlug, filename, dataTour }) {
   );
 }
 
-export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
+/* ── the PROPOSED lesson card (founder, 2026-08-06) ─────────────────────────────
+ * Preparing used to take her AWAY: PrepareLesson swapped its whole screen for a pale
+ * stand-in card with a "· · · · ·" line, and only after the hold did she arrive here.
+ * Two things were wrong with it — she left the place the lesson was going to appear,
+ * and a faded card reads as "something is missing" when in fact every fact on it is
+ * already known and final. So the wait now happens HERE, in the repository, as a real
+ * lesson card in the ordinary structure (number tag · title · duration line), drawn at
+ * full strength, sitting exactly where the finished plan will sit. The only difference
+ * is the last line: a determinate progress bar instead of "Ready to teach".
+ * It is deliberately NOT clickable — there is nothing to open yet — and it carries
+ * aria-busy so a screen reader announces the wait rather than reading a dead card. */
+function ProposedCard({ preparing }) {
+  const rows = (preparing.rows || []).filter((r) => r.count > 0);
+  const total = rows.reduce((a, r) => a + (Number(r.count) || 0), 0);
+  // Same phrasing as api/data.py duration_label() so the proposed card and the
+  // finished card read identically — she should not see the wording change under her.
+  const label = rows.map((r) => `${r.duration} min × ${r.count}`).join(" + ");
+  return (
+    <div className="sc-card sc-proposed" aria-busy="true" aria-live="polite">
+      <div className="sc-tag">{pad(preparing.chapterNo)}</div>
+      <div className="sc-body">
+        <div className="sc-title">{preparing.chapterTitle}</div>
+        {label ? <div className="sc-durline">{label}</div> : null}
+        <div className="sc-prep">
+          <div className="sc-prep-bar"><i /></div>
+          <span className="sc-prep-note">
+            Preparing your {total} {total === 1 ? "period" : "periods"} lesson plan…
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -256,6 +290,27 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const [pane, setPane] = useState(() => (lsGet(LS_PANE) === "plan" ? "plan" : "lessons"));
   const onPane = (p) => { setPane(p); lsSet(LS_PANE, p); };
   const [toast, setToast] = useState(null);         // { kind:"ok"|"block", text } | null
+
+  // ── follow the lesson being prepared into view (2026-08-06) ──────────────────────
+  // This repository remembers its OWN subject·class across visits (LS_SUBJECT/LS_CLASS),
+  // which is right for browsing and wrong the one time it matters here: if she was last
+  // looking at English VI and prepares Science IX, the proposed card would be drawn into
+  // a list she is not on and she would arrive to an unchanged screen — a worse outcome
+  // than the screen she used to wait on. So a new preparing descriptor STEERS the panes:
+  // its subject·class, the lessons pane, the live view. Persisted like any other switch,
+  // because after it resolves this is genuinely where she is. Runs on the descriptor's
+  // identity, so it fires once per prepare and never fights her wheels mid-wait.
+  const prepKey = preparing ? `${preparing.subject}|${preparing.grade}|${preparing.chapterNo}` : "";
+  useEffect(() => {
+    if (!preparing) return;
+    const s = subjects.find((x) => subjectSlug(x.name) === preparing.subject);
+    if (s && s.name !== activeSubject) { setActiveSubject(s.name); lsSet(LS_SUBJECT, s.name); }
+    const g = (preparing.grade || "").toUpperCase();
+    if (g && g !== activeGrade) { setActiveGrade(g); lsSet(LS_CLASS, g); }
+    setView("active");
+    setPane("lessons"); lsSet(LS_PANE, "lessons");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prepKey]);
 
   const current = subjects.find((s) => s.name === activeSubject) || subjects[0] || null;
   const grades = useMemo(() => (current && current.grades) || [], [current]);   // HER enrolled classes
@@ -509,7 +564,27 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   // lesson a class is actively teaching can never vanish from the repository even if its prepared
   // write was lost. Un-prepared sample plans are hidden entirely (the empty-state copy already
   // reads "no lesson plans prepared … yet").
-  const preparedPlans = (Array.isArray(plans) ? plans : []).filter((p) => p.prepared || isAttached(p));
+  // ── NEWEST PREPARED FIRST (founder, 2026-08-06) ─────────────────────────────────
+  // GET /plans walks the chapter directory, so it hands back library order — which put a
+  // freshly prepared lesson wherever its chapter number happened to fall, usually the
+  // BOTTOM of a long list. The one card she is certain to want next is the one she just
+  // made, so the list is ordered by her own `prepared_at` (server-set, per teacher, from
+  // her prepared-plans register), most recent first. Re-preparing an existing chapter
+  // moves it back to the top, which is the same rule and the right answer: it is again
+  // the most recent thing she did.
+  //   The fallback keeps the order STABLE rather than arbitrary when the stamp is missing
+  // or tied — a plan that is attached but never explicitly prepared has no stamp, and two
+  // prepared in the same second tie — so those settle by chapter number, ascending, below
+  // everything stamped. Same comparator for the archive, so the two panes never disagree.
+  const byRecency = (a, b) => {
+    const at = String(a.prepared_at || ""), bt = String(b.prepared_at || "");
+    if (at !== bt) return bt.localeCompare(at);          // ISO strings sort lexically
+    return (Number(a.chapter_number) || 0) - (Number(b.chapter_number) || 0);
+  };
+  const preparedPlans = (Array.isArray(plans) ? plans : [])
+    .filter((p) => p.prepared || isAttached(p))
+    .slice()
+    .sort(byRecency);
   // Split the prepared list into the two views by the server-set archived flag (archive is a
   // flag, not a separate fetch). Chips only appear once something is archived — no clutter before.
   const allPlans = preparedPlans;
@@ -518,6 +593,13 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
   const hasArchived = archivedPlans.length > 0;
   const effView = hasArchived ? view : "active";   // auto-fall-back when nothing's archived
   const shown = effView === "archived" ? archivedPlans : activePlans;
+  // Show the proposed card only in the pane and scope it belongs to: the live
+  // (non-archived) list of the subject·class being prepared for. Preparing scopes the view
+  // to that subject·class on the way in, so this is normally true — the guard is for the
+  // case where she wheels away mid-wait, and it makes the card follow the data, not a timer.
+  const showProposed = !!preparing && pane === "lessons" && effView !== "archived"
+    && (!preparing.subject || preparing.subject === sSlug)
+    && (!preparing.grade || preparing.grade === gSlug);
 
   return (
     <div className="mlp2" ref={rootRef}>
@@ -577,7 +659,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
       <>
       {plans === undefined ? (
         <div className="mlp-loading">Loading plans…</div>
-      ) : shown.length === 0 ? (
+      ) : shown.length === 0 && !showProposed ? (
         <div className="mlp2-emptybody">
           {effView === "archived"
             ? "Nothing archived here."
@@ -587,6 +669,10 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep }) {
         </div>
       ) : (
         <div className="sc-list">
+          {/* The lesson being prepared sits FIRST, where the finished card will land —
+              including when this is her very first plan and the list is otherwise the
+              empty state (hence the `showProposed` guard on that branch above). */}
+          {showProposed ? <ProposedCard preparing={preparing} /> : null}
           {shown.map((p, pi) => {
             const { completed, live } = statusFor(p);
             const cls = effView === "archived"
