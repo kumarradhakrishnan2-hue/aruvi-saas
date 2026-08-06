@@ -127,6 +127,44 @@ def raw_item_list(result: Dict[str, Any]) -> List[Dict[str, Any]]:
     return raw if isinstance(raw, list) else []
 
 
+def item_container(result: Dict[str, Any]) -> Dict[str, Any] | None:
+    """The subject's own WRAPPER around its item list, or None if it stores a bare list.
+
+    The mirror of `raw_item_list` above, and the reason it exists (ARV-D-060,
+    2026-08-06): unwrapping was one-way. Science·secondary stores its assessment as
+    {grade, subject, stage, chapter_number, chapter_title, chapter_cg,
+    reasoning_floor_lift_applied, questions: [...]}, and its port decides the plan is
+    secondary by seeing that wrapper. `compile` unwrapped to the bare list serve speaks
+    and nothing put the wrapper back, so every SERVED science plan arrived at the screen
+    looking like a middle-stage plan — the port then joined on `progression_stage`, which
+    secondary items do not carry, matched nothing, and LessonView's "if nothing is
+    anchored, show everything" fallback printed EVERY question under EVERY sitting.
+    SS and TWAU store a bare list, which is why two certified stages never saw it.
+
+    Same contract as to_engine_handoff/from_engine_handoff, and deliberately the same
+    shape of solution: a CONTAINER lookup, shape-based not subject-based. The
+    subject-specific part — how an item finds its unit — stays in the plugin.
+    """
+    raw = result.get("assessment_items")
+    if isinstance(raw, dict):
+        for k in ("questions", "assessment_items"):
+            if isinstance(raw.get(k), list):
+                return {"_key": k,
+                        "_shell": {kk: vv for kk, vv in raw.items() if kk != k}}
+    return None
+
+
+def from_engine_items(items: List[Dict[str, Any]],
+                      container: Dict[str, Any] | None) -> Any:
+    """The inverse of `item_container` — put the served list back inside the subject's
+    own wrapper. Identity for the bare-list families, so callers need not branch."""
+    if not container or not container.get("_key"):
+        return items
+    out = dict(container.get("_shell") or {})
+    out[container["_key"]] = items
+    return out
+
+
 # ── family 1 · item-self-sufficient (social_sciences, the_world_around_us) ────────
 def items_by_period_ref(result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """`period_ref` is an identity: the item names its own unit. Tolerates a dict

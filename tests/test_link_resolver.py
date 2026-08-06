@@ -20,6 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # register every subject
+from aruvi_core.genon import carriers as _carriers   # noqa: E402
 import aruvi_core.subjects.science            # noqa: E402
 import aruvi_core.subjects.social_sciences    # noqa: E402
 import aruvi_core.subjects.mathematics        # noqa: E402
@@ -70,7 +71,12 @@ def test_every_item_resolves_zero_orphans():
             # mis-anchored onto a surviving unit. That is the designed outcome, not an
             # orphan — the alternative (silently re-pointing it) is the actual defect.
             # Recognised on the SOURCE item, so a genuine resolver miss still fails.
-            src = next((x for x in (r.get("assessment_items") or [])
+            # Through the CARRIER SEAM, never the raw key (carriers.raw_item_list):
+            # science wraps its list under `questions`, so reading the key directly
+            # iterates the wrapper's field NAMES. This test only ever survived that
+            # because served science plans had (wrongly) lost their wrapper — the bug
+            # ARV-D-060 fixed; the moment they kept it, the shortcut broke here too.
+            src = next((x for x in _carriers.raw_item_list(r)
                         if x.get("implied_lo") == it.meta.get("linked_lo")), None)
             if not lp_set and src is not None and src.get("scheduling_note") \
                     and not (src.get("period_ref") or []):

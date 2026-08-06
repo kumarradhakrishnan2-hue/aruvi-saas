@@ -1,9 +1,15 @@
 # The Variant-Canonical Architecture — serving lesson plans by selection, never composition
 
-VERSION 2.1 · 2026-08-04 (v2.0 · 2026-08-03; v1.0 · 2026-07-31) · Founder + Claude.
-*v2.1 is a single amendment: §0.4's Case-2 tie-break gains SELF-PREFERENCE — the chosen
-plan's own candidate wins every tie it enters, above pacing distance. Engine e13 → **e14**.
-Nothing else changes; canonicals, briefs and constitutions are untouched.*
+VERSION 2.2 · 2026-08-06 (v2.1 · 2026-08-04; v2.0 · 2026-08-03; v1.0 · 2026-07-31) ·
+Founder + Claude.
+*v2.2 is a single amendment: §0.4 gains **Case 1b — the exact-fit complete rescue**. When
+the upward serve would drop sections and a canonical's FULL count is exactly X−1, that
+canonical is served complete plus the standard's `synthesis` unit. Tried last, after every
+richness-preserving option. Engine e14 → **e15**. Nothing else changes; canonicals, briefs
+and constitutions are untouched — this is a serve-time rule, and no chapter needs
+re-authoring for it.*
+*v2.1 was a single amendment: §0.4's Case-2 tie-break gains SELF-PREFERENCE — the chosen
+plan's own candidate wins every tie it enters, above pacing distance. Engine e13 → **e14**.*
 Supersedes the deterministic partition engine (partition.py v0.5, DP/three-regime) and the
 Rule 15/16 handoff machinery outright. Read alongside `docs/testing.md` (whose C-steps this
 changes — §9 below) and `docs/partition_constitution_rollout.md` (whose A3/A4 amendments
@@ -127,11 +133,52 @@ prefix precedes it — the v1.0 exact/superset/suffix distinction and its closur
 > one. Recommended at SS·IX's C8 on 2026-08-03 and not adopted then; it recurred at
 > SS·VIII, which is what carried it.
 
-**Dropped sections.** If the fill still leaves registry sections uncovered, the plan
-carries them as dropped units **sourced from the LENDING plan** — its units after the
-serving unit (their coverage lies wholly beyond the fill's reach, by contiguity), verbatim,
-flagged unscheduled. Provenance is consistent: the tail continues the plan the closing
-unit came from. (v1.0 sourced drops from the chosen plan; that changes.)
+**Case 1b — the exact-fit complete rescue (v2.2, 2026-08-06).** Tried LAST, after Case 2
+has run and only when it still leaves sections uncovered. If a canonical exists whose
+**full unit count is exactly X−1**, serve THAT canonical complete, and fill slot X with the
+standard's `synthesis` unit. The teacher gets the whole chapter, properly closed, in
+exactly the periods she asked for.
+
+*Why it is safe.* This is Case 1 with a wider set of bases, not a new mechanism. Case 1's
+warrant is that the synthesis unit's only prior is full coverage, which the prefix
+guarantees; a complete canonical satisfies that warrant more strongly than a prefix does,
+being a whole authored plan rather than a truncation. It does NOT reopen ARV-D-025 — that
+defect was a synthesis *mandated onto a compact at authoring time* regardless of what
+preceded it, importing the lending plan's priors. Here nothing is mandated and the base is
+complete by construction.
+
+*Why it always terminates.* Certification requires every canonical to reach the final
+registry section (`build_library.py::certify` check 5), so any canonical reachable by this
+rule is complete. The rescue can never itself drop. "Last before dropping" is therefore a
+guaranteed terminator, not a heuristic.
+
+*Why EXACT fit only (founder, 2026-08-06).* Where `count(D) + 1 < X` the rescue would have
+to surrender the residual periods — serving is selection, so padding is not available —
+and the teacher would meet two visible compromises (a coarser plan AND periods handed back)
+to buy one gain. A returned period reads as the app failing to use her time, and that is
+where trust goes. At exact fit she sees no time cost at all: the only difference from the
+upward serve is front-section granularity, which she has no way to perceive. The rule
+therefore takes the trade only when it costs nothing visible.
+
+*Why the restriction loses nothing.* The inversion this fixes is structurally a
+*one-above-a-canonical* event: X = C is identity and complete; X = C+1 moves onto the next
+canonical's pacing with only C units of prefix, which is where the tail falls off. That is
+exactly the X at which a canonical of count X−1 exists. So exact fit covers every inversion
+of the form "X = C+1 serves less than X = C", at both C+1 and mid+1, by construction. A
+drop at an X that is *not* one above a canonical count stays unrescued by design; there is
+no guaranteed-complete exact-fit alternative there, and certification must surface it.
+
+*Boundaries.* Never fires below the floor — no canonical is small enough — so honest
+partials stay honest. Never fires when Case 2 already completes coverage, so richness is
+never traded for its own sake. Which X are rescuable is fixed by the equal-dispersion
+counts in `master_plan`, i.e. by arithmetic, not pedagogy.
+
+**Dropped sections.** If the fill still leaves registry sections uncovered AND Case 1b does
+not apply, the plan carries them as dropped units **sourced from the LENDING plan** — its
+units after the serving unit (their coverage lies wholly beyond the fill's reach, by
+contiguity), verbatim, flagged unscheduled. Provenance is consistent: the tail continues
+the plan the closing unit came from. (v1.0 sourced drops from the chosen plan; that
+changes.)
 
 **Case 3 — empty choice set.** With total-coverage canonicals and the generalized adjacency
 rule this should be structurally impossible (the chosen plan's own unit X always

@@ -367,7 +367,7 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "14"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "15"     # BUMP when compile/serve change the OUTPUT
 # 14 (2026-08-04): SELF-PREFERENCE IN THE Xth-UNIT TIE-BREAK (architecture v2.1
 # §0.4). fill_slot's Case-2 sort gains `0 if c["self"] else 1` between reach and
 # pacing distance, so the CHOSEN plan's own candidate wins every tie it enters.

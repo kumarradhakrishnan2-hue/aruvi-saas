@@ -935,8 +935,33 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     # (chapter, normalised matrix, CHOSEN VARIANT's version, engine version). The
     # next-highest rule decides which variant keys the entry; a hit is served
     # without serving again. Per-teacher visibility still comes from the register.
-    chosen = next((c for c in reversed(library) if _count(c) >= total_periods),
-                  library[0])
+    #
+    # ── THE KEY IS DERIVED FROM THE SERVE, NOT FROM A COPY OF ITS RULE (2026-08-06, e15).
+    # This used to recompute the next-highest canonical here — a second implementation of
+    # a selection rule that lives in serve.py. Case 1b broke that copy: when the exact-fit
+    # rescue fires, the plan is built from the canonical BELOW the request while this line
+    # still named the one above, so the entry was stamped with the version of a file its
+    # bytes do not come from. A later regeneration of the real base would then leave a
+    # stale entry keyed to an untouched stranger — ARV-D-034's exact failure class.
+    # Serving is selection and costs milliseconds (C11), so we serve FIRST and key the
+    # entry off `genon.variant_used`, which is the base the plan was actually built from
+    # after every rung of §0.4 has run. The cache still saves the WRITE, which is what it
+    # was ever protecting; it no longer pretends to know the answer before asking.
+    try:
+        streams = data.load_genon_streams(subject, grade, chapter_number)
+        plan = serve_plan(streams, matrix)
+    except GenonDeclarationError as e:
+        # a library canonical is not declared: name the content problem instead of
+        # letting it escape as a bare 500 with nothing for anyone to read
+        raise HTTPException(status_code=500, detail=f"Canonical cannot be compiled: {e}")
+    except ServeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    base_count = (plan.get("genon") or {}).get("variant_used")
+    chosen = next((c for c in library if _count(c) == base_count), None)
+    if chosen is None:                       # never expected; fall back to the old rule
+        chosen = next((c for c in reversed(library) if _count(c) >= total_periods),
+                      library[0])
     filename = data.genon_plan_filename(chapter_number, matrix, chosen)
 
     def _serve_summary(g: Dict[str, Any]) -> Dict[str, Any]:
@@ -984,16 +1009,6 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
             **_serve_summary(hg),
             "coverage_note": (hit.get("result") or {}).get("section_coverage_note"),
         }
-
-    try:
-        streams = data.load_genon_streams(subject, grade, chapter_number)
-        plan = serve_plan(streams, matrix)
-    except GenonDeclarationError as e:
-        # a library canonical is not declared: name the content problem instead of
-        # letting it escape as a bare 500 with nothing for anyone to read
-        raise HTTPException(status_code=500, detail=f"Canonical cannot be compiled: {e}")
-    except ServeError as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
     data.save_generated_plan(subject, grade, plan, filename=filename)
     key = _plan_key(subject, grade, filename)

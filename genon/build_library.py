@@ -285,6 +285,12 @@ def certify(subject, grade, ch, row):
                 sweep[x] = "surrender"
             elif not fill:
                 sweep[x] = "identity"
+            elif fill["mode"] == "complete_rescue":
+                # Case 1b (§0.4 v2.2 / e15): the upward serve would have dropped; a
+                # canonical of count X-1 was served complete and closed with the
+                # standard's synthesis. Named with the count it RESCUED FROM so the
+                # sweep shows what the richness trade cost — read at the human gate.
+                sweep[x] = f"rescue/complete (from {fill.get('rescued_from')})"
             elif fill["mode"] == "fill":
                 ndrop = len(fill["uncovered_sections"])
                 sweep[x] = (f"fill/{fill['fill_class']}"

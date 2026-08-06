@@ -153,6 +153,11 @@ def compile_stream(plan: dict) -> dict:
         # own shape on the way out (carriers.to_engine_handoff / from_engine_handoff).
         "coverage_handoff": _carriers.to_engine_handoff(result),
         "assessment_items": items,
+        # The subject's own wrapper around that list, carried so serve_plan can put it
+        # back (carriers.item_container / from_engine_items — ARV-D-060). Unwrapping
+        # used to be one-way, and a served science plan reached the screen looking like
+        # a different stage's plan. None for the bare-list subjects.
+        "assessment_container": _carriers.item_container(result),
     }
 
     # ---- content-inventory audit: the rewriter must add nothing, drop nothing ----

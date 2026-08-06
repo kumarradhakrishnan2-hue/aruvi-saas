@@ -242,6 +242,40 @@ def synthesis_unit_of(streams):
     return None
 
 
+def exact_fit_rescue(streams, chosen, requested):
+    """Case 1b (§0.4, v2.2 / e15) — the EXACT-FIT COMPLETE RESCUE.
+
+    Called only when Case 2's fill has left registry sections uncovered. Returns
+    the canonical whose FULL unit count is exactly `requested - 1`, if the library
+    has one and it is not already the chosen plan; else None. The caller serves it
+    complete and gives slot X to the standard's `synthesis` unit, so the teacher
+    receives the whole chapter, closed, in exactly the periods she asked for.
+
+    This is Case 1 with a wider set of bases, not a new mechanism: Case 1's warrant
+    is that the synthesis unit's only prior is FULL COVERAGE, and a complete
+    canonical satisfies that more strongly than a prefix does. It does not reopen
+    ARV-D-025 — that was a synthesis MANDATED onto a compact at authoring time
+    regardless of what preceded it; nothing is mandated here and the base is
+    complete by construction (certify check 5 guarantees every canonical reaches
+    the final registry section, so this rung can never itself drop).
+
+    EXACT FIT ONLY (founder, 2026-08-06). Where count(D) + 1 < X the rescue would
+    have to surrender the residual — serving is selection, so padding is not
+    available — and the teacher would meet two visible compromises, a coarser plan
+    AND periods handed back, to buy one gain. A returned period reads as the app
+    failing to use her time. At exact fit there is no time cost at all: the only
+    difference is front-section granularity, which she cannot perceive. The
+    restriction loses nothing structural, because the inversion being fixed is a
+    one-above-a-canonical event (X = C is identity and complete; X = C+1 moves onto
+    the next canonical's pacing with only C units of prefix) — exactly the X at
+    which a canonical of count X - 1 exists.
+    """
+    for s in streams:
+        if s is not chosen and len(s["units"]) == requested - 1:
+            return s
+    return None
+
+
 def fill_slot(streams, chosen, requested, registry):
     """The Xth-unit choice set (§0.4, engine e12 — replaces the v1 fill ladder).
 
@@ -432,10 +466,33 @@ def serve_plan(streams, matrix):
     n_units = len(units)
 
     fill = None
+    rescued_from = None
     if surrendered or requested == n_units:
         served = [(chosen, u) for u in units]        # whole variant, verbatim
     else:
         fill = fill_slot(streams, chosen, requested, registry)
+        # ── Case 1b (§0.4, v2.2 / e15): the upward serve would DROP. If a canonical's
+        # full count is exactly X-1, serve it complete and close with the standard's
+        # synthesis instead — the whole chapter, properly ended, in the periods she
+        # asked for. Tried LAST, so richness is only ever traded for completeness and
+        # never for its own sake. Rebinding `chosen` is required, not optional: the
+        # assessment remap below walks `chosen["assessment_items"]` and matches
+        # `s is chosen`, so a base swap that left `chosen` behind would strand every
+        # item as unserved.
+        if fill.get("uncovered_sections"):
+            d = exact_fit_rescue(streams, chosen, requested)
+            syn = synthesis_unit_of(streams) if d is not None else None
+            if d is not None and syn is not None:
+                rescued_from = n_units           # the richer plan we declined
+                s_syn, u_syn = syn
+                chosen, units, n_units = d, d["units"], len(d["units"])
+                registry = section_registry(chosen)
+                fill = {"mode": "complete_rescue", "fill_class": None,
+                        "first_section": None, "stream": s_syn, "unit": u_syn,
+                        "borrowed_from": len(s_syn["units"]),
+                        "self_fill": s_syn is chosen, "overlap_sections": [],
+                        "uncovered_sections": [], "synthesis_only": False,
+                        "reference_count": None, "withheld_units": [], "drop_units": []}
         prefix = [(chosen, u) for u in units[:requested - 1]]
         served = prefix + [(fill["stream"], fill["unit"])]
 
@@ -575,7 +632,13 @@ def serve_plan(streams, matrix):
                     + " could not be scheduled — the material is included for "
                       "you to share as guided self-study or homework.")
             coverage_note = " ".join(parts) or None
-        elif fill["mode"] == "synthesis":
+        elif fill["mode"] in ("synthesis", "complete_rescue"):
+            # Case 1b reads to the teacher EXACTLY as Case 1 does, and that is
+            # deliberate: from where she sits the two are the same event — every
+            # section covered, the chapter drawn together at the end, in the periods
+            # she asked for. The base swap is provenance (genon.slot_fill.mode and
+            # rescued_from carry it), not news. Saying anything else here would
+            # advertise a plan she did not get.
             coverage_note = (
                 "Every section is covered; the closing sitting draws the "
                 "chapter together in one synthesis.")
@@ -646,7 +709,12 @@ def serve_plan(streams, matrix):
             # looking like the plans the app already reads, or the display path — which
             # iterates science's handoff as a list — silently links no items.
             "coverage_handoff": _carriers.from_engine_handoff(handoff),
-            "assessment_items": items,
+            # Restored to the SUBJECT's own container too (ARV-D-060, 2026-08-06) —
+            # the handoff line above did this from the start and the items did not,
+            # so a served science plan lost the {…, questions: [...]} wrapper its own
+            # port uses to recognise the stage. Symmetrical fix, same carrier seam.
+            "assessment_items": _carriers.from_engine_items(
+                items, chosen.get("assessment_container")),
             "section_coverage_note": coverage_note,
             "dropped_units": dropped_units or None,
         },
@@ -658,13 +726,16 @@ def serve_plan(streams, matrix):
             # invisible until someone diffs an e13 file against its e14 twin — the
             # tracker's amber rule reads provenance, so a stale string here reads as
             # "no engine change" on a plan that is one.
-            "engine": ("serve v2.1 / e14 (canonical library, next-highest selection, "
+            "engine": ("serve v2.2 / e15 (canonical library, next-highest selection, "
                        "X-1+1 slot fill by the first-exposure choice set §0.4, "
                        "proportional duration scaling, unit-anchored assessment; "
                        "e13: an item whose unit is not in the plan is not in the plan, "
                        "and a dropped unit's questions ride with it; "
                        "e14: SELF-PREFERENCE — the chosen plan's own candidate wins "
-                       "every tie in the Xth-unit choice set)"),
+                       "every tie in the Xth-unit choice set; "
+                       "e15: Case 1b EXACT-FIT COMPLETE RESCUE — rather than drop, "
+                       "serve the canonical whose full count is X-1 complete plus the "
+                       "standard's synthesis, when one exists)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,
@@ -680,6 +751,10 @@ def serve_plan(streams, matrix):
                 "synthesis_only": bool(fill.get("synthesis_only")),
                 "reference_count": fill.get("reference_count"),
                 "withheld_units": fill.get("withheld_units") or [],
+                # e15 provenance: the richer canonical the upward rule had selected
+                # before Case 1b took a complete base instead. None on every other
+                # path, so its presence IS the record that the rescue fired.
+                "rescued_from": rescued_from,
             }),
             "surrendered_periods": surrendered,
             "surrender_note": surrender_note,
