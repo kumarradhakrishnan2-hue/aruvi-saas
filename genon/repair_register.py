@@ -150,6 +150,38 @@ REPAIRS = {
              "is complete without it, so the trailing sentence goes whole"),
         ],
     },
+    # ── S3 · science · secondary · ch 8 "Journey Inside the Atom" (2026-08-06) ──────
+    # THE FIRST LIBRARY AUTHORED WITH THE REGISTER ALREADY IN ITS CONSTITUTION.
+    # SS·VIII's 7 hits came from a library generated BEFORE its P1 amendment landed — the
+    # model was never told the three bans. Here LP v1.1 carried the register at authoring
+    # and the model still broke it 3 times in 48 bands: better than SS·secondary's 9 under
+    # v1.10, and still not zero. Prohibition is not enforcement; the machine gate is.
+    # Both compacts scan CLEAN — all three hits are in the standard canonical.
+    # Every edit below is a pure DELETION: each sentence reads correctly without the struck
+    # clause. No text is authored and nothing is replaced.
+    ("science", "ix"): {
+        "ch_08_canonical.json": [
+            (5, "band:3",
+             " — that rule is the subject of a later unit", "",
+             "register/forward",
+             "the Bohr consolidation names the open question — how many electrons a shell "
+             "holds — which is the teaching act and stands alone. Promising that a LATER "
+             "unit answers it is false for any teacher whose X ends at this unit, and for "
+             "any class that borrowed this unit as its closing sitting"),
+            (7, "band:0",
+             " for three minutes", "",
+             "register/clock",
+             "the IUPAC symbol-invention task is 'work individually', which is the "
+             "instruction; the platform scales this band's minutes to whatever sitting "
+             "carries it, so a stated three minutes is silently falsified"),
+            (12, "band:0",
+             " for five minutes", "",
+             "register/clock",
+             "same pattern in the synthesis unit's opening — 'students work individually "
+             "listing everything they would need to know' is complete and unfalsifiable; "
+             "the number is not"),
+        ],
+    },
 }
 
 DEFAULT_SET = ("social_sciences", "viii")

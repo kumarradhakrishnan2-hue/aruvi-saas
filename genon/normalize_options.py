@@ -161,8 +161,12 @@ def normalize_file(path, apply=True):
         scanned += 1
         changed, detail = normalize_item(item)
         if changed:
+            # `anchor` is a display label, not a join — the handoff-bridged subjects carry
+            # no period_ref at all (science secondary's constitution forbids it), which is
+            # what crashed this report with 'NoneType' object is not subscriptable.
+            from aruvi_core.genon.carriers import item_anchor_label   # noqa: E402
             moved.append({"item": n, "competency": item.get("competency", {}).get("c_code"),
-                          "period_ref": item.get("period_ref"), **detail})
+                          "anchor": item_anchor_label(item, n), **detail})
         elif detail:
             skipped.append({"item": n, "reason": detail})
 
@@ -207,7 +211,7 @@ def normalize_library(subject, grade, ch, apply=True, backup=True):
         scanned += rep["scanned"]
         lines.append(f"      {rep['file']}: {rep['moved']} of {rep['scanned']} item(s) re-ordered")
         for e in rep["detail"]:
-            lines.append(f"          #{e['item']} {e['competency']} U{e['period_ref'][0]}: "
+            lines.append(f"          #{e['item']} {e['competency']} {e['anchor']}: "
                          f"A–D now hold {''.join(e['came_from'])} "
                          f"· correct {e['correct_before']} -> {e['correct_now']}")
         for s in rep["skipped"]:

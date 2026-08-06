@@ -175,6 +175,26 @@ def items_by_handoff(result: Dict[str, Any], *, items, join_key: str,
     return out
 
 
+def item_anchor_label(item: Dict[str, Any], n: int = 0) -> str:
+    """A short human label for an item's anchor, for REPORTS only — never a join.
+
+    `period_ref[0]` reads "U7" for the item-self-sufficient family; the
+    handoff-bridged family carries no `period_ref` at all (science secondary's
+    constitution forbids it), so it reads "S3" from `section_number` or "PS2" from
+    `progression_stage`. Reporting code that assumed `period_ref[0]` crashed STEP 6
+    with `'NoneType' object is not subscriptable` on the first science library.
+    """
+    pr = [u for u in (item.get("period_ref") or []) if u is not None]
+    if pr:
+        return f"U{pr[0]}"
+    for key, prefix in (("section_number", "S"), ("progression_stage", "PS"),
+                        ("stage_number", "PS")):
+        v = item.get(key)
+        if v is not None:
+            return f"{prefix}{v}"
+    return f"#{n}" if n else "?"
+
+
 # ── the coverage handoff · round trip ────────────────────────────────────────────
 # serve.py remaps the handoff in ONE shape: {key: {..., "los": [{period_number, …}]}}.
 # That is Social Sciences' competency-keyed block, and `serve` does `handoff.values()`
