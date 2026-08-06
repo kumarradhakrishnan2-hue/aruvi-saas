@@ -19,7 +19,8 @@ from typing import Any, Dict, List, Union
 from ..base import Subject  # noqa: F401  (documents the contract this conforms to)
 from ...assessment_norm import from_constitution
 from ...grades import stage_for
-from ...link_resolver import handoff_period_index, period_number_by_field, stamp
+from ...link_resolver import (handoff_period_index, period_number_by_field,
+                              platform_anchor, stamp)
 from ...normalize import as_list as _as_list, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
@@ -295,16 +296,26 @@ class ScienceSubject:
                 period_index = period_number_by_field(periods, "progression_stage")
 
         groups: List[AssessmentGroup] = []
-        by_group: Dict[int, AssessmentGroup] = {}
+        by_group: Dict[Any, AssessmentGroup] = {}
         for it in items or []:
             gnum = it.get(join_key)
-            if gnum not in by_group:
+            # GROUP ON THE ITEM'S OWN LABEL, not on the mediating number (ARV-D-064).
+            # This used to key on `gnum` and take the heading from the FIRST item to
+            # claim that number. A borrowed unit's question carries the lender's
+            # numbering, so it was filed under whatever the host plan calls that number
+            # — a question about 8.2.2 sitting under a heading reading "8.2.3 Bohr's
+            # model". The item carries its own true `section_label`; use it. For plans
+            # that never borrow this is identical grouping (one label per number), and
+            # the number is still reported in the group's meta.
+            glabel = it.get(group_label) or f"{'Section' if secondary else 'Stage'} {gnum}"
+            gkey = glabel
+            if gkey not in by_group:
                 g = AssessmentGroup(
                     type="progression_stage" if not secondary else "section",
-                    label=it.get(group_label, f"{'Section' if secondary else 'Stage'} {gnum}"),
+                    label=glabel,
                     meta={group_key: gnum},
                 )
-                by_group[gnum] = g
+                by_group[gkey] = g
                 groups.append(g)
             guide = (_as_list(it.get("look_for")) + _as_list(it.get("expected_elements"))
                      + _as_list(it.get("scaffold")) + _as_list(it.get("format_of_output")))
@@ -312,9 +323,12 @@ class ScienceSubject:
             lo = it.get("implied_lo_assessed", "")
             meta = {"competency": it.get("competency", {}),
                     "cognitive_demand": it.get("cognitive_demand", "")}
-            linked = period_index.get(int(gnum), []) if gnum is not None else []
+            # The platform's stamp wins; the handoff join is the fallback for an
+            # un-served library file (link_resolver.platform_anchor — ARV-D-064).
+            linked = platform_anchor(it) or (
+                period_index.get(int(gnum), []) if gnum is not None else [])
             stamp(meta, linked, lo)
-            by_group[gnum].items.append(AssessmentItem(
+            by_group[gkey].items.append(AssessmentItem(
                 prompt=it.get("question_text") or it.get("task", ""),
                 item_type=it.get("question_type", ""),
                 options=options,

@@ -43,6 +43,46 @@ def stamp(meta: Dict[str, Any], periods: Iterable[int], lo: Optional[str] = None
     return meta
 
 
+# ── the platform's own stamp BEATS every subject join (ARV-D-064, 2026-08-06) ───
+def platform_anchor(item: Dict[str, Any]) -> List[int]:
+    """The unit(s) the PLATFORM has already resolved for this item, or [].
+
+    Every join below goes through a MEDIATING KEY — a section number, a stage number,
+    a spine code — and every one of those keys is PLAN-LOCAL. The model is free to cut
+    and merge sections against the time it is given, so `section_number` 5 names one
+    section in a chapter's 12-unit canonical and a different one in its 7-unit
+    canonical (measured on science·ix ch 8: p12 S3 = 8.2.2 gold foil, p07 S3 = 8.2.3
+    Bohr; S2–S7 all disagree). Inside ONE plan the key is self-consistent and the join
+    is safe. Across plans it is not — and the serve engine crosses plans by design:
+    when p07's eighth sitting is filled from p12's eleventh unit, that unit's question
+    travels with it (serve.py's borrowed-item block) carrying the LENDER's numbering
+    into a plan holding the HOST's index. Re-deriving there lands the question on the
+    wrong sitting, or on none.
+
+    So: derive ONCE, stamp, and read the stamp. `compile.py::_anchor_items` writes
+    `unit_ref`; `serve.py` writes `period_ref` = the sitting, borrowed units included.
+    Where that stamp exists it is the answer and no join may override it. Where it does
+    not — an un-served library file, one self-consistent plan — the subject's own join
+    runs as before. This is not a new contract: it is what social_sciences and
+    the_world_around_us have always done (`stamp(meta, as_list(it["period_ref"]), lo)`),
+    which is exactly why neither ever met this defect.
+
+    `period_ref` is read before `unit_ref` because serve rewrites `period_ref` to the
+    SITTING number while `unit_ref` may still hold the authored unit.
+    """
+    for key in ("period_ref", "unit_ref"):
+        v = item.get(key)
+        if isinstance(v, (list, tuple, set)):
+            ps = [int(p) for p in v if isinstance(p, (int, float)) and not isinstance(p, bool)]
+        elif isinstance(v, int) and not isinstance(v, bool):
+            ps = [v]
+        else:
+            ps = []
+        if ps:
+            return sorted(set(ps))
+    return []
+
+
 # ── handoff-bridged family: stage/section number → period_numbers ───────────────
 def handoff_period_index(handoff: Any, key: str) -> Dict[int, List[int]]:
     """Build {stage_or_section_number: [period_numbers]} from a coverage_handoff list.

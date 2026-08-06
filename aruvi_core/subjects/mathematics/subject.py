@@ -18,7 +18,7 @@ from ..base import Subject  # noqa: F401
 from ...assessment_norm import from_maths
 from ...grades import stage_for
 from ...link_resolver import (
-    handoff_period_index, norm_code, period_field_index, stamp,
+    handoff_period_index, norm_code, period_field_index, platform_anchor, stamp,
 )
 from ...normalize import (
     as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines,
@@ -245,7 +245,9 @@ class MathematicsSubject:
                 ref = it.get("section_ref", "")
                 meta = {"section_ref": ref, "goal": it.get("goal", ""),
                         "exercise": it.get("exercise", "")}
-                stamp(meta, period_index.get(norm_code(ref), []), None)  # rules 4/5: no LO
+                # Platform stamp first, section-code join as fallback (ARV-D-064).
+                stamp(meta, platform_anchor(it) or period_index.get(norm_code(ref), []),
+                      None)  # rules 4/5: no LO
                 g.items.append(AssessmentItem(
                     prompt=it.get("prompt", ""),
                     item_type=it.get("question_type", ""),
@@ -286,7 +288,9 @@ class MathematicsSubject:
             lo = q.get("implied_lo_assessed", "")
             meta = {"competency": q.get("competency", {}),
                     "cognitive_demand": q.get("cognitive_demand", "")}
-            linked = period_index.get(int(sn), []) if sn is not None else []
+            # Platform stamp first, section-number join as fallback (ARV-D-064).
+            linked = platform_anchor(q) or (
+                period_index.get(int(sn), []) if sn is not None else [])
             stamp(meta, linked, lo)
             index[key].items.append(AssessmentItem(
                 prompt=q.get("question_text", ""),

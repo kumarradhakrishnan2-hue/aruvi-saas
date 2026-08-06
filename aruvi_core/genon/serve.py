@@ -593,6 +593,42 @@ def serve_plan(streams, matrix):
         for lo in kept:
             lo["period_number"] = unit_to_sitting[int(lo["period_number"])]
         c["los"] = kept
+    # A BORROWED SERVED UNIT'S ROW TRAVELS TOO (ARV-D-064, 2026-08-06). The dropped-unit
+    # path below has always done this; the borrowed-unit path did not, and the reason it
+    # must is the same one stated above — the borrowed unit's questions are in this plan
+    # (they are appended a few lines up), so the LO they test has to be in it as well, or
+    # the plan asks something its own coverage never claims to teach. This is NOT how the
+    # item finds its sitting: that is the platform stamp (`period_ref`), read by
+    # link_resolver.platform_anchor. The row is carried for the LO, the label and the
+    # coverage ledger. Safe to carry verbatim because the engine handoff is keyed on the
+    # section LABEL, not on `section_number` — carriers.to_engine_handoff chose that key
+    # for exactly this reason, so a lender's row cannot land on a host section that
+    # happens to share its number, and a genuinely shared section merges as it should.
+    if fill and fill["stream"] is not chosen and fill.get("borrowed_from"):
+        fn = fill["unit"]["unit"]
+        fsit = len(served)
+        for code, blk in (fill["stream"].get("coverage_handoff") or {}).items():
+            rows = []
+            for lo in blk.get("los", []):
+                if int(lo.get("period_number", -1)) != fn:
+                    continue
+                lo2 = json.loads(json.dumps(lo))
+                lo2["period_number"] = fsit
+                rows.append(lo2)
+            if not rows:
+                continue
+            if code in handoff:
+                handoff[code]["los"] = (handoff[code].get("los") or []) + rows
+            else:
+                blk2 = json.loads(json.dumps(blk))
+                blk2["los"] = rows
+                # The borrowed unit is the LAST sitting, so its row reads last. The
+                # lender's own `_order` is its position in the LENDER's handoff and
+                # would otherwise interleave it into the middle of the host's rows.
+                blk2["_order"] = 1 + max(
+                    [int(b.get("_order", 0)) for b in handoff.values()
+                     if isinstance(b, dict) and b.get("_order") is not None] or [0])
+                handoff[code] = blk2
     if dropped_lender_unit_to_sitting:
         lender_ho = (fill["stream"].get("coverage_handoff") or {}) if fill else {}
         for code, blk in lender_ho.items():
@@ -735,7 +771,11 @@ def serve_plan(streams, matrix):
                        "every tie in the Xth-unit choice set; "
                        "e15: Case 1b EXACT-FIT COMPLETE RESCUE — rather than drop, "
                        "serve the canonical whose full count is X-1 complete plus the "
-                       "standard's synthesis, when one exists)"),
+                       "standard's synthesis, when one exists; "
+                       "e16: a borrowed unit's COVERAGE ROW travels with it, so the LO "
+                       "its questions test is in the plan that asks them — and the "
+                       "display reads the platform's anchor stamp instead of "
+                       "re-deriving it through a plan-local key)"),
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,

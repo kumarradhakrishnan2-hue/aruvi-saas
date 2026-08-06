@@ -469,7 +469,74 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-04 (newest) — SELF-PREFERENCE in the Xth-unit tie-break (architecture v2.1, engine e14)
+## 2026-08-06 (newest) — DERIVE ONCE, STAMP, READ THE STAMP: assessment anchoring stops going
+## through a plan-local mediator (ARV-D-064, S1; engine e14 → e16). Found at science·secondary C9.
+
+**The founder's rule, and it is the whole entry.** *If p07 U7 is filled with p12 U11, the
+question indexed to p12 U11 must be brought along — and stay attached to it.* Unit identity,
+carried, never recomputed.
+
+**What was wrong.** The serve engine has always stamped the true answer on every item
+(`compile.py::_anchor_items` writes `unit_ref`; `serve.py` writes `period_ref` = the sitting,
+**borrowed units included**). Three of the five ports threw that stamp away and re-derived the
+anchor at render time by joining a **mediating key** — `section_number` (science, maths·sec),
+a spine/section code (english, maths·mid) — through the *receiving* plan's index. Those keys are
+**plan-local**: the model cuts and merges sections against the time it is given, so on science·ix
+ch 8, p12's section 3 is *8.2.2 gold foil* while p07's section 3 is *8.2.3 Bohr* — S2 through S7
+all disagree. Cross a plan boundary (which the serve engine does by design) and the question
+lands on the wrong sitting, or nowhere. **social_sciences and the_world_around_us never had the
+bug** because they already did the right thing — `stamp(meta, as_list(it["period_ref"]), lo)` —
+which is the strongest possible argument that this was never a missing feature, just four
+subjects not doing what two subjects already did.
+
+**Two halves, and the second was already shipping.** (a) The ANCHOR half is latent on today's
+corpus — science·secondary is the only certified handoff-bridged stage and its one cross-plan
+borrow (the e15 rescue of the TOP's synthesis) carries no questions. (b) The **LO half was
+LIVE on two certified stages**: measured against a clean HEAD checkout, SS·IX ch 3 X=9 and
+SS·VIII ch 3 X=12 are real cross-plan synthesis borrows carrying 1 and 2 questions on the
+borrowed closing sitting, and the served plan's `coverage_handoff` stopped at sitting 8 / 11 —
+**questions asked on a sitting the plan claimed no learning outcome for**, breaking the identity
+serve.py's own dropped-unit comment says must never break (invisible on screen, since the LP
+never displays LOs; it would surface only in a coverage audit).
+
+**The fix (4 files).** (1) `link_resolver.platform_anchor(item)` — the platform's stamp beats
+every subject join. (2) science / english / mathematics ports read it first and fall back to
+their own mediator ONLY for an un-served library file (one plan, self-consistent, safe).
+(3) science's assessment grouping keys on the item's **own `section_label`**, not on the number —
+otherwise a borrowed question is filed under whatever the host calls that number. (4) `serve.py`
+carries a borrowed served unit's handoff row, remapped to the fill sitting, `_order` beyond the
+host's so it reads last — **for the LO and the coverage ledger, never for the join**. Safe
+verbatim because the engine handoff is keyed on the section LABEL
+(`carriers.to_engine_handoff` chose that key for exactly this reason).
+
+**The rejected fix, recorded because the reasoning matters.** C9 first proposed restoring the
+lender's handoff row *so the join would work*. That repairs the mediator instead of removing it,
+and it is actively dangerous: `handoff_period_index` is a dict, so a lender row carrying a
+colliding number **overwrites the host's row** — the new test demonstrates the host's own
+question being dragged onto the borrowed sitting. A number-keyed join clobbers in both
+directions.
+
+**Test: `tests/test_borrowed_anchor.py`** — supplies the case the corpus withholds: a
+science·secondary-shaped library whose borrowed unit carries two questions numbered 6, where the
+host's section 6 is a different section on a *served* sitting. Discriminating: against clean HEAD
+it fails on the missing handoff row; with serve fixed but the old port it fails with the borrowed
+questions filed under "8.6 Mass Number". **No behaviour change on the real corpus** — every
+science·ix ch 8 plan and canonical re-rendered before/after, anchors and headings diff-identical.
+Suite unchanged (same 4 pre-existing missing-fixture failures). Re-served at e16: science·ix ch 8,
+SS·IX ch 3 and SS·VIII ch 3, all clean, 24/24 exports 200, no orphaned item in any view.
+
+**Also fixed the same session — ARV-D-063 (S2), the sibling of ARV-D-060 on the export path.**
+`api/main.py`'s unscheduled-item filter iterated `result["assessment_items"]` as a bare list;
+science wraps it, so the walk yielded the wrapper's KEYS and every science·secondary export died
+with an AttributeError **before any renderer ran** — the plain identity canonical included, so
+that stage had never exported at all. Routed through the carrier seam ARV-D-060 built, wrapper
+restored (the port reads it to decide the stage). 30/30 exports now 200; SS control byte-identical.
+**Standing lesson from both defects: `result["assessment_items"]` is never read directly — always
+through `genon/carriers.py`.**
+
+---
+
+## 2026-08-04 — SELF-PREFERENCE in the Xth-unit tie-break (architecture v2.1, engine e14)
 
 **The rule.** In §0.4's Case-2 choice set, **the chosen plan's own candidate now wins every tie
 it enters** — inserted between reach and pacing distance in `serve.py::fill_slot`'s sort:

@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Union
 
 from ..base import Subject  # noqa: F401
 from ...assessment_norm import from_english
-from ...link_resolver import norm_code, stamp
+from ...link_resolver import norm_code, platform_anchor, stamp
 from ...normalize import as_list, classify_stimulus, normalize_options, phases_from
 from ...ports import Prompt
 from ...view_model import (
@@ -295,7 +295,10 @@ class EnglishSubject:
                 # (fallback) so the item still anchors somewhere.
                 pos = key_pos.get(key, 0)
                 key_pos[key] = pos + 1
-                linked = key_periods[key][pos]
+                # Platform stamp first, positional (section, spine) pairing as the
+                # fallback for an un-served plan (ARV-D-064). The pairing counter is
+                # advanced either way, so a stamped item does not shift its siblings.
+                linked = platform_anchor(it) or key_periods[key][pos]
                 stamp(meta, linked, lo)
                 g.items.append(AssessmentItem(
                     prompt=it.get("item_stem", ""),

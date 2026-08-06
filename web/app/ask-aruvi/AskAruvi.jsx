@@ -24,6 +24,10 @@ export default function AskAruvi({ onClose }) {
   const [query, setQuery] = useState("");
   const [openCat, setOpenCat] = useState(null);   // the frozen (expanded) category id
   const [openPair, setOpenPair] = useState(null); // the expanded answer id
+  // The accent rail is a SINGLE moving marker, not one bar per category: it starts beside the
+  // first category and hops to whichever header is tapped (open or collapse — it marks
+  // "where you are", so it never disappears).
+  const [markedCat, setMarkedCat] = useState(kb.categories[0]?.id ?? null);
 
   const result = useMemo(() => search(kb.pairs, query), [query]);
   const searching = result !== null;
@@ -100,11 +104,15 @@ export default function AskAruvi({ onClose }) {
               const pairs = byCat[c.id] || [];
               const isOpen = openCat === c.id;
               return (
-                <section key={c.id} className={`aa-cat ${isOpen ? "open" : ""}`} style={{ "--accent": c.accent }}>
+                <section
+                  key={c.id}
+                  className={`aa-cat ${isOpen ? "open" : ""} ${markedCat === c.id ? "marked" : ""}`}
+                  style={{ "--accent": c.accent }}
+                >
                   <button
                     className="aa-cat-head"
                     aria-expanded={isOpen}
-                    onClick={() => { setOpenCat(isOpen ? null : c.id); setOpenPair(null); }}
+                    onClick={() => { setOpenCat(isOpen ? null : c.id); setMarkedCat(c.id); setOpenPair(null); }}
                   >
                     <span className="aa-cat-bar" aria-hidden="true" />
                     <span className="aa-cat-text">
@@ -138,6 +146,10 @@ export default function AskAruvi({ onClose }) {
         .aa-scrim { position: fixed; top: var(--hdr-h, 72px); left: 0; right: 0; bottom: 0;
           z-index: 40; background: rgba(20,16,10,.34);
           display: flex; justify-content: center; align-items: stretch; }
+        /* NOTE: the section palette (--sec-a…d) that the category accents resolve against is
+           declared for .aa-panel in globals.css (light + dark), NOT here — it is scoped to
+           .rd/.myclasses/.fr-wrap there, and without .aa-panel every accent but cat_e's
+           :root --ss-plum resolved to nothing (only the last category showed a rail). */
         .aa-panel { width: 100%; max-width: 720px; height: 100%; background: var(--paper);
           display: flex; flex-direction: column; box-shadow: 0 0 60px rgba(0,0,0,.28); }
         @media (min-width: 721px) { .aa-panel { border-radius: 0 0 16px 16px; overflow: hidden; } }
@@ -174,7 +186,11 @@ export default function AskAruvi({ onClose }) {
           background: var(--paper); border: none; cursor: pointer; text-align: left; padding: 15px 2px;
           transform: translateZ(0); }
         .aa-cat.open .aa-cat-head { border-bottom: 1px solid var(--line-soft); }
-        .aa-cat-bar { flex: none; width: 4px; align-self: stretch; min-height: 30px; border-radius: 3px; background: var(--accent); }
+        /* One marker, not five: the rail keeps its 4px of gutter on every row (so titles stay
+           aligned) but only paints on the marked category. */
+        .aa-cat-bar { flex: none; width: 4px; align-self: stretch; min-height: 30px; border-radius: 3px;
+          background: transparent; transition: background .18s ease; }
+        .aa-cat.marked .aa-cat-bar { background: var(--accent); }
         .aa-cat-text { flex: 1; min-width: 0; }
         .aa-cat-title { display: block; font-family: var(--f-display); font-size: 16.5px; font-weight: 600; color: var(--ink); }
         .aa-cat-desc { display: block; font-family: var(--f-body); font-size: 13px; color: var(--ink-soft); margin-top: 2px; line-height: 1.35; }

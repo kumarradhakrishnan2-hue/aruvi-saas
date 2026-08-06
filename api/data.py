@@ -367,7 +367,17 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "15"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "16"     # BUMP when compile/serve change the OUTPUT
+# 16 (2026-08-06): A BORROWED UNIT'S COVERAGE ROW TRAVELS WITH IT (ARV-D-064, S1).
+# The serve output gains the lender's handoff entry for the borrowed sitting, so the
+# LO its questions test is present in the plan that asks them — the rule the dropped-
+# unit path has always followed ("their questions are in the plan, so their LOs must
+# be too"), applied to the served borrow it had skipped. Paired with the display-side
+# half of the same defect: assessment anchoring now READS the platform's stamp
+# (link_resolver.platform_anchor) instead of re-deriving it through a plan-local
+# mediating key. Safe to carry the row verbatim because the engine handoff is keyed on
+# the section LABEL, not on section_number. Cache: founder ruling 2026-08-06 — no
+# non-canonical variant is kept permanently, so re-keying costs a re-serve.
 # 14 (2026-08-04): SELF-PREFERENCE IN THE Xth-UNIT TIE-BREAK (architecture v2.1
 # §0.4). fill_slot's Case-2 sort gains `0 if c["self"] else 1` between reach and
 # pacing distance, so the CHOSEN plan's own candidate wins every tie it enters.

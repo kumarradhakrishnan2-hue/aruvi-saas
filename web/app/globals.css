@@ -717,6 +717,13 @@ table.vt th { background: var(--paper-sunk); color: var(--pine-d); font-weight: 
   .continue-btn { justify-content: center; }
 }
 
+/* Ask Aruvi's category accents resolve against the same section palette (--sec-a…d) that
+   .rd/.myclasses/.fr-wrap own; without this declaration only cat_e (:root --ss-plum) painted. */
+.aa-panel {
+  --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
+  --sec-c:#9a7321; --sec-c-bg:#f4ecd8; --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
+}
+
 /* ═══════════ Readiness setup (Phase 2 — ported from readiness-grid-flow.html) ═══════════ */
 .rd {
   --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
@@ -2993,7 +3000,8 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   /* Section palette — redefined on the same selectors that own it. */
   [data-theme-effective="dark"] .rd,
   [data-theme-effective="dark"] .myclasses,
-  [data-theme-effective="dark"] .fr-wrap {
+  [data-theme-effective="dark"] .fr-wrap,
+  [data-theme-effective="dark"] .aa-panel {
     --sec-a:#5cae93; --sec-a-bg:#1c2a24;
     --sec-b:#cf7f56; --sec-b-bg:#2c211b;
     --sec-c:#c69c4d; --sec-c-bg:#2a2519;

@@ -1130,7 +1130,19 @@ def _plan_view_bundle(subject: str, grade: str, filename: str):
     # export — the same rule the dropped units themselves follow: her printed artifact is
     # the plan she was served, and printing questions for a sitting the export omits would
     # put un-taught content in her hand (ARV-D-037).
-    export_items = [i for i in (r.get("assessment_items") or []) if not i.get("unscheduled")]
+    #
+    # THROUGH THE CARRIER SEAM, never off `result` directly (ARV-D-063, 2026-08-06). This
+    # line used to iterate `r["assessment_items"]` as a bare list. Science·secondary wraps
+    # its items in a dict ({grade, subject, stage, …, questions: [...]}), so the walk
+    # yielded the wrapper's KEYS — strings — and `i.get("unscheduled")` raised
+    # AttributeError before any renderer was reached: all six exports 500 for every
+    # science·ix plan, the plain identity canonical included. Same one-way-unwrap
+    # blindness as ARV-D-060, on the export path; the seam that fix built is used here.
+    # The wrapper must go back on, because the port reads it to decide the stage.
+    from aruvi_core.genon import carriers as _carriers
+    export_items = _carriers.from_engine_items(
+        [i for i in _carriers.raw_item_list(r) if not i.get("unscheduled")],
+        _carriers.item_container(r))
     a = sub.assessment_to_view(export_items, grade=g, chapter=chapter,
                                link_context=link_context)
     view = ViewModel(lp, a).to_dict()
