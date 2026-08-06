@@ -235,7 +235,11 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   useEffect(() => {
     if (!subject || !grade) { setChapters([]); setGenonChs([]); setCanonMinutes({}); return; }
     getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => {
-      setChapters(d.chapters || []);
+      // Drop chapters the master plan budgets for but NCERT hasn't published (placeholder:true,
+      // titled "Book awaited" — 2026-08-06). They belong to the YEAR, so the Year Plan shows
+      // them, but there is no summary or mapping to generate a lesson from, so they must never
+      // reach a chapter picker.
+      setChapters((d.chapters || []).filter((c) => !c.placeholder));
       // Calibrated class duration for this class band — seeds BOTH the chapter-step default and
       // (via startAcquisition) the durations she carries into the profile. Falls back to 40 only
       // if the API is old or the response is malformed.

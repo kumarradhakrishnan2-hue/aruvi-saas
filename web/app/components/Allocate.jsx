@@ -206,7 +206,10 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
       setAllAllocations([]);
     }
 
-    getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters(d.chapters); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
+    // placeholder:true = budgeted but unpublished ("Book awaited"). Excluded here so the select
+    // list and the allocation table only ever offer chapters that can actually be taught
+    // (2026-08-06); their periods are still held in the master-plan denominator.
+    getJSON(`/subjects/${subject}/${grade}/chapters`).then((d) => { setChapters((d.chapters || []).filter((c) => !c.placeholder)); setBasis(d.allocation_basis); }).catch(() => { setChapters([]); setBasis(null); });
 
     // saved plans power the generate spoke's previews (live gen deferred)
     setGenView(null);

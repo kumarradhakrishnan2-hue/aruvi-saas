@@ -313,6 +313,25 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
             row = by_ch.get(c["chapter_number"])
             if row and row.get("weight") is not None:
                 c["weight"] = row["weight"]
+        # ── Unreleased chapters are part of the year (founder, 2026-08-06) ────────────
+        # The list above is built from the MAPPING FILES on disk, so a chapter the master
+        # plan budgets for but NCERT hasn't published yet (SS·IX 10–18) never appeared —
+        # its weight counted in the denominator while its row was missing, and the Year
+        # Plan read half-empty (120 suggested against a 245 budget). Those rows are now
+        # merged in from the master plan, titled "Book awaited" and flagged
+        # `placeholder: true`. The flag is the contract: the Year Plan SHOWS them (the
+        # teacher's year is 18 chapters whether or not the books have shipped), while
+        # every flow that leads to GENERATING a lesson — first-run's chapter wheel,
+        # Allocate's select list — filters them out, since there is no summary or mapping
+        # to generate from. Ordered by chapter number so the merged rows sit in sequence.
+        listed = {c["chapter_number"] for c in chapters}
+        for row in combo.get("chapters", []):
+            n = row.get("chapter")
+            if n is None or n in listed:
+                continue
+            chapters.append({"chapter_number": n, "chapter_title": "Book awaited",
+                             "weight": row.get("weight"), "placeholder": True})
+        chapters.sort(key=lambda c: (c["chapter_number"] is None, c["chapter_number"]))
         syllabus_total_weight = combo.get("total_effort_weight")
     if not syllabus_total_weight:   # no master-plan combo → listed chapters are all we know
         syllabus_total_weight = sum((c.get("weight") or 0) for c in chapters) or None

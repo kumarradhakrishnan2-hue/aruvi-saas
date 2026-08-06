@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""copyright_scan.py — the deterministic floor under C14's copyright review (v1.0, 2026-08-06).
+
+WHY THIS EXISTS. `docs/NCERT_copyright_review.md` §6 recommendation 4 asks for exactly this:
+"add a scan that n-gram matches served-plan text against the summary verbatim fields and the
+chapter summary itself, surfacing long matches for judgment. C14's manual spot-check then
+audits the gate rather than being the gate — the same maturation C7 went through." Until this
+existed, C14 was a human reading a 12-unit plan beside a 30-page PDF and hoping to notice.
+
+WHAT IT DOES. Shingles the SOURCE (the chapter's textbook PDF, plus the chapter summary) into
+overlapping n-word windows, then slides the same window over every teacher-facing string in a
+plan and reports the MAXIMAL RUNS of consecutive matching windows. A run of length L means L
+consecutive words appear verbatim in the source. Sorted longest first, because length is the
+whole question: a 6-word collision is the English language, a 40-word collision is a lifted
+passage.
+
+WHAT IT DOES NOT DECIDE, stated plainly. It does not decide whether a hit is a defect. "How
+much quotation is short" and "is this paraphrase too close" are the subjective calls C14 sends
+to the human gate by design. This tool's job is to make sure nobody has to FIND them by eye.
+It also cannot see paraphrase — a passage reworded sentence by sentence scans clean, which is
+the same blind spot register_scan.py documents. The scanner carries the floor; judgment sits
+on top of it.
+
+EXEMPTIONS, and why each is safe:
+  * `section_anchor` — drawn verbatim from the section registry BY DESIGN (V2). Structural
+    references, not reproduced content; the copyright review says so at §5.
+  * `section_context` and LO rows — internal, never teacher-facing (same rule as register_scan).
+  * Chemical names, formulae, unit names and the like will collide and should: "the mass number
+    is the sum of protons and neutrons" is a definition, not an expression. Short runs are
+    reported but the report's own threshold is what a reader should look at.
+
+    python3 genon/copyright_scan.py science ix 8 [--n 8] [--min-run 12]
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
+sys.path.insert(0, str(REPO))
+
+CONTENT = REPO / "data" / "content"
+TEXTBOOKS = REPO / "textbooks"
+
+WORD = re.compile(r"[a-z0-9]+")
+
+
+def norm_words(text: str) -> list:
+    """Lowercase word list — punctuation, casing and whitespace are not the question."""
+    return WORD.findall(str(text or "").lower())
+
+
+def shingles(words: list, n: int) -> set:
+    return {tuple(words[i:i + n]) for i in range(len(words) - n + 1)}
+
+
+def longest_runs(words: list, source: set, n: int):
+    """Maximal runs of consecutive matching n-grams → [(start_word, run_length_in_words)]."""
+    if len(words) < n:
+        return []
+    hit = [tuple(words[i:i + n]) in source for i in range(len(words) - n + 1)]
+    runs, i = [], 0
+    while i < len(hit):
+        if hit[i]:
+            j = i
+            while j + 1 < len(hit) and hit[j + 1]:
+                j += 1
+            runs.append((i, (j - i) + n))     # words covered by the run
+            i = j + 1
+        else:
+            i += 1
+    return runs
+
+
+# ── the teacher-facing surface ────────────────────────────────────────────────────────────
+def lp_fields(plan: dict):
+    """Every teacher-facing string in a lesson plan, dropped units INCLUDED (C14 says so)."""
+    result = plan.get("result", plan)
+    buckets = [("served", result.get("lesson_plan", {}).get("periods") or []),
+               ("dropped", result.get("dropped_units") or [])]
+    for origin, periods in buckets:
+        for u in periods:
+            un = u.get("period_number")
+            yield f"{origin} u{un} activity_title", u.get("activity_title")
+            yield f"{origin} u{un} teacher_notes", u.get("teacher_notes")
+            for h in (u.get("homework") or []):
+                yield f"{origin} u{un} homework", h
+            for i, b in enumerate(u.get("time_bands") or u.get("phases") or [], 1):
+                yield f"{origin} u{un} band{i}", b.get("activity") or b.get("description")
+            # visual_aids is a STRING on science·secondary and a LIST elsewhere. Iterating a
+            # string yields CHARACTERS — 3 769 one-letter "fields" on this chapter, every one
+            # scanning clean, which is the silent-miss failure register_scan.py warns about.
+            # Normalise the shape before iterating, never after.
+            va = u.get("visual_aids")
+            for v in ([va] if isinstance(va, str) else (va or [])):
+                yield f"{origin} u{un} visual_aid", (v if isinstance(v, str)
+                                                     else json.dumps(v, ensure_ascii=False))
+            # section_anchor is EXEMPT (registry-verbatim by design)
+
+
+def item_fields(plan: dict):
+    """Every teacher- or student-facing string in an assessment item, through the carrier seam."""
+    from aruvi_core.genon import carriers
+    result = plan.get("result", plan)
+    for n, it in enumerate(carriers.raw_item_list(result), 1):
+        if not isinstance(it, dict):
+            continue
+        yield f"item{n} question_text", it.get("question_text")
+        yield f"item{n} task", it.get("task")
+        yield f"item{n} scaffold", it.get("scaffold")
+        for o in (it.get("options") or []):
+            yield f"item{n} option", (o if isinstance(o, str) else o.get("text") or json.dumps(o, ensure_ascii=False))
+        vs = it.get("visual_stimulus")
+        if vs:
+            yield f"item{n} visual_stimulus", (vs if isinstance(vs, str)
+                                               else json.dumps(vs, ensure_ascii=False))
+        for k in ("expected_elements", "look_for"):
+            for e in (it.get(k) or []):
+                yield f"item{n} {k}", e
+
+
+def load_source(subject: str, grade: str, ch: int) -> tuple:
+    """The chapter's textbook PDF text + the chapter summary — the two things a plan could lift."""
+    words, parts = [], []
+    pdfs = sorted(p for p in (TEXTBOOKS / subject / grade).glob("*.pdf")
+                  if re.match(rf"chapter\s*0*{ch}\b", p.name, re.I))
+    for p in pdfs:
+        import pdfplumber
+        with pdfplumber.open(p) as doc:
+            t = "\n".join((pg.extract_text() or "") for pg in doc.pages)
+        words += norm_words(t); parts.append(f"{p.name} ({len(norm_words(t))} words)")
+    s = CONTENT / "chapters" / subject / grade / "summaries" / f"ch_{ch:02d}_summary.txt"
+    if s.exists():
+        t = s.read_text(encoding="utf8", errors="replace")
+        words += norm_words(t); parts.append(f"{s.name} ({len(norm_words(t))} words)")
+    return words, parts
+
+
+def scan_plan(path: Path, source: set, n: int, min_run: int) -> list:
+    plan = json.load(open(path))
+    hits = []
+    for label, text in list(lp_fields(plan)) + list(item_fields(plan)):
+        w = norm_words(text)
+        for start, length in longest_runs(w, source, n):
+            if length >= min_run:
+                hits.append({"file": path.name, "field": label, "words": length,
+                             "text": " ".join(w[start:start + length])})
+    return sorted(hits, key=lambda h: -h["words"])
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("subject"); ap.add_argument("grade"); ap.add_argument("chapter", type=int)
+    ap.add_argument("--n", type=int, default=8, help="shingle width in words")
+    ap.add_argument("--min-run", type=int, default=12, help="report runs at least this long")
+    ap.add_argument("--top", type=int, default=25)
+    a = ap.parse_args()
+
+    src_words, parts = load_source(a.subject, a.grade, a.chapter)
+    if not src_words:
+        print("NO SOURCE FOUND — cannot scan. Looked for "
+              f"{TEXTBOOKS / a.subject / a.grade} and the chapter summary."); return 2
+    source = shingles(src_words, a.n)
+    print(f"source: {' + '.join(parts)}  →  {len(source)} distinct {a.n}-grams")
+
+    d = CONTENT / "saved_plans" / a.subject / a.grade
+    files = sorted(p for p in d.glob(f"ch_{a.chapter:02d}_*.json"))
+    print(f"scanning {len(files)} file(s) in {d}\n")
+
+    all_hits, scanned = [], 0
+    for p in files:
+        try:
+            hits = scan_plan(p, source, a.n, a.min_run)
+        except Exception as e:                       # a malformed file must be loud, not skipped
+            print(f"   !! {p.name}: {type(e).__name__}: {e}"); continue
+        scanned += 1
+        all_hits += hits
+        print(f"   {p.name:44s} {len(hits):3d} run(s) ≥ {a.min_run} words")
+
+    print(f"\n{len(all_hits)} hit(s) across {scanned} file(s), longest first:\n")
+    for h in all_hits[:a.top]:
+        print(f"   {h['words']:3d} words · {h['file']} · {h['field']}")
+        print(f"        \"{h['text'][:220]}\"")
+    if not all_hits:
+        print("   NONE — no run of "
+              f"{a.min_run}+ words in any teacher-facing field appears verbatim in the source.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

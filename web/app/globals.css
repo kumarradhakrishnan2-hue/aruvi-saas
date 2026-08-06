@@ -1881,6 +1881,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 @media (max-width: 600px) {
   .mlp .lvl-title { font-size:23px; }
   .mlp2-title { font-size:20px; }   /* match .dash-title's mobile size so the two tab headers stay identical */
+  /* The switch words follow the title down, and the archive box tightens, so "Your lessons" +
+     box + "Year plan" all clear a 360px phone without wrapping. */
+  .mlp2-vtab { font-size:20px; }
+  .mlp2-titleleft { gap:6px; }
+  .mlp2-titlerow { gap:8px; }
+  .mlp2-archfolder { padding:4px 5px; }
   .mlp-allocate { flex-direction:column; align-items:stretch; }
   .mlp-allocate-btn { width:100%; min-height:44px; }
   .mlp-row-open { min-height:44px; }
@@ -3481,11 +3487,28 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 
 /* ── Year-Plan entry button on the title row (replaces the old Lessons|Year Plan tab). Groups
       with the archive control on the right; the year button hides while the archive is open. ── */
-.mlp2-titleleft { display: flex; align-items: center; gap: 8px; }
-.mlp2-yearbtn { display: inline-flex; align-items: center; justify-content: center; padding: 5px; border: none; border-radius: 8px; background: none; color: var(--ink-soft); cursor: pointer; }
-.mlp2-yearbtn:hover { color: var(--ink); }
-.mlp2-yearbtn.on { color: var(--clay); background: none; }
-.mlp2-yearbtn:focus-visible { outline: 2px solid var(--pine); outline-offset: 1px; }
+.mlp2-titleleft { display: flex; align-items: center; gap: 9px; min-width: 0; }
+/* View switch in the title row (2026-08-06) — "Your lessons" · "Year plan". The words ARE the
+   title: same face and size as the old .mlp2-title, no button chrome, no boxes. Only the live one
+   is inked, and it carries a short clay underline sitting directly under the word. Deliberately
+   NOT the top nav's .tab treatment (14px, padded, on a full-width rule) — same grammar, different
+   register, so two clay underlines can't read as two nav bars. Swap `--clay` for `--ochre` here if
+   the repetition ever crowds. */
+.mlp2-vtab {
+  flex: none; max-width: 100%;
+  font-family: var(--f-display); font-weight: 500; font-size: 23px; line-height: 1.15;
+  color: var(--ink-soft); text-align: left; white-space: nowrap;
+  margin: 0; padding: 2px 0 4px; background: none; border: 0;
+  border-bottom: 2px solid transparent; border-radius: 0; cursor: pointer;
+  transition: color .12s ease, border-color .12s ease;
+}
+.mlp2-vtab.on { color: var(--ink); border-bottom-color: var(--clay); cursor: default; }
+/* Hover only on true hover devices, so a tap can't leave the inked state stuck on the word she
+   just left (same reasoning as .mlp2-archfolder above). */
+@media (hover: hover) and (pointer: fine) {
+  .mlp2-vtab:not(.on):hover { color: var(--ink); }
+}
+.mlp2-vtab:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
 
 /* ── Year Plan view ── */
 .yp { --yp-card: #fff; padding: 4px 18px 10px; }
@@ -3495,14 +3518,29 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 /* Frozen plan head: exec + tiles + column header stay put while the chapter rows scroll beneath.
    Sticks directly under My Lessons' own frozen header, whose measured height is --mlp2-frozen-h. */
 .yp-head { position: sticky; top: calc(var(--nav-h, 118px) + var(--mlp2-frozen-h, 132px)); z-index: 3; background: var(--paper); }
-.yp-exec { margin-top: 8px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; background: #f7ebe3; }
-[data-theme-effective="dark"] .yp-exec { background: #2a221d; }
-.yp-exec-h { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0; background: none; border: none; cursor: pointer; }
-.yp-exec-k { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
-.yp-exec-chev { color: var(--ink-soft); font-size: 13px; line-height: 1; transition: transform .15s ease; }
-.yp-exec-chev.open { transform: rotate(180deg); }
-.yp-exec p { margin: 8px 0 0; font-family: var(--f-body); font-style: italic; font-size: 14px; line-height: 1.62; color: var(--ink); }
-.yp-exec b { font-style: normal; font-weight: 600; }
+/* The standalone "Plan" row is GONE (2026-08-06). It was a heading above a heading: a mono kicker
+   and a disclosure arrow sitting on top of a table that already announces its own columns. The
+   explanation it hid now belongs to the column it explains — the arrow rides beside "Your plan" in
+   the column header, and the note opens under that header line. .yp-exec* are retired.
+   The label breaks over two lines ("Your" / "plan") so the arrow can grow without the column
+   growing with it — the header cell is now as tall as two kicker lines either way. */
+.yp-c-plan { display: flex; justify-content: flex-end; }
+.yp-hbtn {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0; padding: 0; background: none; border: 0; cursor: pointer;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+}
+.yp-hbtn:focus-visible { outline: 2px solid var(--pine); outline-offset: 3px; border-radius: 3px; }
+/* The arrow carries the whole affordance now, so it stays full --ink and runs far above the 8.5px
+   kicker beside it — 16px → 22px (2026-08-06). line-height:0 keeps the glyph from setting the
+   header line's height, so the two-line label alone decides it and "Chapter" / "Suggested periods"
+   stay level. */
+.yp-hlbl { text-align: right; line-height: 1.25; }
+.yp-chev { font-size: 22px; line-height: 0; color: var(--ink); transition: transform .15s ease; }
+.yp-chev.open { transform: rotate(180deg); }
+/* The note itself — plain italic body copy under the header rule, no box. */
+.yp-note { margin: 10px 0 2px; font-family: var(--f-body); font-style: italic; font-size: 14px; line-height: 1.62; color: var(--ink); }
+.yp-note b { font-style: normal; font-weight: 600; }
 .yp-help { margin: 14px 2px 0; font-family: var(--f-body); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 
 .yp-budget { margin-top: 14px; }
@@ -3516,12 +3554,18 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .yp-bar > i { display: block; height: 100%; background: var(--pine); }
 .yp-cap { margin: 8px 2px 0; font-family: var(--f-body); font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); }
 
-.yp-colhd { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: end; margin-top: 15px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.yp-colhd { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: end; margin-top: 15px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
 .yp-c { font-family: var(--f-mono); font-size: 8.5px; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); text-align: right; }
 .yp-c.chap { text-align: left; }
 
-.yp-row { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: start; padding: 6px 0 6px; border-bottom: 1px solid var(--line); }
+.yp-row { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: start; padding: 6px 0 6px; border-bottom: 1px solid var(--line); }
 .yp-row.pend { opacity: .7; }
+/* "Book awaited" — a chapter the year budgets for that NCERT hasn't published (2026-08-06).
+   The NUMBER and the suggested periods stay at full strength (they are real commitments of her
+   year); only the title softens to italic, because it is a state, not a chapter name. Set after
+   .pend so a row that is both doesn't end up double-faded. */
+.yp-row.awaited { opacity: 1; }
+.yp-row.awaited .yp-cname { font-style: italic; font-weight: 400; color: var(--ink-soft); }
 .yp-cell-ch { display: flex; gap: 9px; align-items: baseline; min-width: 0; }
 .yp-cn { flex: none; font-family: var(--f-mono); font-size: 11px; color: var(--ink); }
 .yp-cname { min-width: 0; font-family: var(--f-display); font-weight: 500; font-size: 11px; line-height: 1.25; color: var(--ink); }
@@ -3533,7 +3577,7 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .yp-delta { margin-top: 3px; font-family: var(--f-mono); font-size: 9px; letter-spacing: .03em; color: var(--clay); }
 .yp-pend { margin-top: 3px; font-family: var(--f-mono); font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); opacity: .85; }
 
-.yp-tot { display: grid; grid-template-columns: 1fr 54px 62px; gap: 0 6px; align-items: baseline; margin-top: 2px; padding: 12px 0 4px; border-top: 2px solid var(--ink); }
+.yp-tot { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: baseline; margin-top: 2px; padding: 12px 0 4px; border-top: 2px solid var(--ink); }
 .yp-tot-l { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
 .yp-tot-n { text-align: right; font-family: var(--f-display); font-weight: 600; font-size: 18px; }
 .yp-tot-n.sug { color: var(--ink); }

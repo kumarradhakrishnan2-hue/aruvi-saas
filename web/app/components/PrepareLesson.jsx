@@ -89,7 +89,9 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
     setStep("chapter"); setChapterNo(""); setView(null); setError(""); setNote("");
     setChapters([]); setPlans([]); setShowInfo(false); setShowBreakdown(false); setWarnRegen(false);
     getJSON(`/subjects/${subject}/${grade}/chapters`)
-      .then((d) => { setChapters(d.chapters || []); setSyllabusW(d.syllabus_total_weight || null); })
+      // placeholder:true = budgeted but unpublished ("Book awaited"). Nothing to generate from,
+      // so it never enters this picker; the Year Plan is where those rows live (2026-08-06).
+      .then((d) => { setChapters((d.chapters || []).filter((c) => !c.placeholder)); setSyllabusW(d.syllabus_total_weight || null); })
       .catch(() => { setChapters([]); setSyllabusW(null); });
     getJSON(`/plans/${subject}/${grade}`)
       .then((d) => setPlans(d.plans || [])).catch(() => setPlans([]));

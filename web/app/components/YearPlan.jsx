@@ -128,6 +128,12 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
       return {
         n: cn,
         title: c.chapter_title || "",
+        // Budgeted but unpublished — the API titles these "Book awaited" and flags them
+        // (2026-08-06). They belong here: her year is 18 chapters whether or not the books
+        // have shipped, and their periods are already held in the budget. They just can't
+        // carry a plan, so the "not yet" pending tag is suppressed below — it isn't
+        // waiting on HER.
+        awaited: !!c.placeholder,
         sug,
         plan,
         prepared,
@@ -157,43 +163,50 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
           put while the chapter rows scroll beneath it (sticks under My Lessons' own frozen header
           via the measured --mlp2-frozen-h). */}
       <div className="yp-head">
-      {/* Executive summary — collapsible like teacher notes: readable on demand, collapsed by
-          default (kicker "Plan"; no competency, no effort numbers). */}
-      <div className={`yp-exec${showPlan ? " open" : ""}`}>
-        <button type="button" className="yp-exec-h" onClick={() => setShowPlan((v) => !v)} aria-expanded={showPlan}>
-          <span className="yp-exec-k">Plan</span>
-          <span className={`yp-exec-chev${showPlan ? " open" : ""}`} aria-hidden="true">⌄</span>
-        </button>
-        {showPlan && (
-          <p>
-            Your teaching year at a glance — how{budget != null ? <> a budget of <b>{budget} periods</b></> : <> your periods</>} spread
-            across all {rows.length} chapters. <b>Suggested periods</b> is Aruvi&rsquo;s proposal, giving heavier chapters more
-            room. Each time you prepare a lesson you set your own periods for that chapter; those appear
-            in <b>Your plan</b>, beside the suggestion, so you can see where you&rsquo;ve adjusted and how much of
-            the year you&rsquo;ve committed. To know how Aruvi suggests, refer to Ask Aruvi time allocation section.
-          </p>
-        )}
-      </div>
-
-      {/* Column header — the last frozen line (its bottom border is "the line below the row"). */}
+      {/* Column header — the last frozen line (its bottom border is "the line below the row").
+          The standalone "Plan" row that used to sit above this was removed (2026-08-06): it was a
+          second, competing header for a table that already has one. Its explanatory copy now hangs
+          off the "Your plan" column itself — the arrow sits with the words it explains, and the
+          note opens directly beneath this line. */}
       <div className="yp-colhd">
         <div className="yp-c chap">Chapter</div>
         <div className="yp-c">Suggested periods</div>
-        <div className="yp-c">Your plan</div>
+        <div className="yp-c yp-c-plan">
+          <button type="button" className="yp-hbtn" onClick={() => setShowPlan((v) => !v)}
+            aria-expanded={showPlan}
+            aria-label={showPlan ? "Hide what this table shows" : "What does this table show?"}>
+            <span className="yp-hlbl">Your<br />plan</span>
+            <span className={`yp-chev${showPlan ? " open" : ""}`} aria-hidden="true">⌄</span>
+          </button>
+        </div>
       </div>
       </div>{/* /yp-head */}
+
+      {/* The note opens UNDER the column-header line and scrolls away with the chapter rows —
+          deliberately outside .yp-head, so an open note never freezes at the top of the screen. */}
+      {showPlan && (
+        <p className="yp-note">
+          Your teaching year at a glance — how{budget != null ? <> a budget of <b>{budget} periods</b></> : <> your periods</>} spread
+          across all {rows.length} chapters. <b>Suggested periods</b> is Aruvi&rsquo;s proposal, giving heavier chapters more
+          room. Each time you prepare a lesson you set your own periods for that chapter; those appear
+          in <b>Your plan</b>, beside the suggestion, so you can see where you&rsquo;ve adjusted and how much of
+          the year you&rsquo;ve committed. To know how Aruvi suggests, refer to Ask Aruvi time allocation section.
+        </p>
+      )}
 
       {/* Chapter rows (scroll beneath the frozen head) */}
       <div className="yp-rows">
         {rows.map((r) => (
-          <div className={`yp-row${r.prepared ? "" : " pend"}`} key={r.n}>
+          <div className={`yp-row${r.prepared ? "" : " pend"}${r.awaited ? " awaited" : ""}`} key={r.n}>
             <div className="yp-cell-ch">
               <span className="yp-cn">{pad(r.n)}</span>
               <span className="yp-cname">{r.title}</span>
             </div>
             <div className="yp-sug">{r.sug != null ? r.sug : dash}</div>
             <div className="yp-planw">
-              {r.plan != null ? (
+              {r.awaited ? (
+                <span className="yp-plan">{dash}</span>
+              ) : r.plan != null ? (
                 <span className="yp-plan">{r.plan}</span>
               ) : r.prepared ? (
                 <span className="yp-plan yp-set">set</span>

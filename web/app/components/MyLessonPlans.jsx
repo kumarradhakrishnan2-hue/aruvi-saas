@@ -83,14 +83,8 @@ const ReportIcon = ({ size = 17 }) => (
   </svg>
 );
 
-/* Year-Plan glyph — varying-length horizontal bars, reading as "periods spread across chapters"
-   (an allocation/plan symbol, deliberately NOT a calendar). Sits at the right of the title row. */
-const YearPlanIcon = ({ size = 22 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
-       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M4 6h15" /><path d="M4 12h9" /><path d="M4 18h12" />
-  </svg>
-);
+/* (The Year-Plan glyph was retired 2026-08-06 — the pane is now named in words in the title row,
+   not signalled by an icon. See the title row in the render below.) */
 
 const REPORT_COMPS = [
   { id: "lesson", title: "Lesson Plan", desc: "Teaching plan, activities, steps and resources" },
@@ -605,35 +599,43 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     <div className="mlp2" ref={rootRef}>
       <div className="mlp2-frozen" ref={frozenRef}>
         <div className="mlp2-titlerow">
+          {/* The two panes are NAMED, both always on screen, and the live one carries a clay
+              underline (2026-08-06). The old icon-only Year-Plan button was undiscoverable —
+              nothing told a teacher the pane existed. Words, not tabs: no boxes, no chrome, the
+              title itself IS the switch. "Your lessons" holds the left end (with the archive box
+              folded in beside it — archive is a sub-state of THIS pane, so it belongs with its
+              own word, not floating opposite it); "Year plan" holds the right end at the same
+              display size. */}
           <div className="mlp2-titleleft">
-            <h1 className="mlp2-title">{pane === "plan" ? "Year Plan" : effView === "archived" ? "Archive" : "Your lessons"}</h1>
-            {/* Year-Plan toggle — sits right beside the title; hidden while the archive is open,
-                and back once Your lessons is active. Toggles the whole-year pane. */}
-            {!(pane === "lessons" && effView === "archived") && (
-              <button className={`mlp2-yearbtn${pane === "plan" ? " on" : ""}`}
-                onClick={() => onPane(pane === "plan" ? "lessons" : "plan")}
-                aria-label={pane === "plan" ? "Back to your lessons" : "Year plan"}
-                title={pane === "plan" ? "Your lessons" : "Year plan"}>
-                <YearPlanIcon size={24} />
+            <button className={`mlp2-vtab${pane === "lessons" ? " on" : ""}`}
+              onClick={() => { if (pane !== "lessons") onPane("lessons"); }}
+              aria-current={pane === "lessons" ? "page" : undefined}
+              title="Your lessons">
+              {pane === "lessons" && effView === "archived" ? "Archive" : "Your lessons"}
+            </button>
+            {/* Archive control — only while the lessons pane is live. */}
+            {pane !== "lessons" ? null : effView === "archived" ? (
+              // Open box = you're inside the archive; tapping it closes the box and drops you back
+              // to your lessons (the one, symmetric way in and out).
+              <button className="mlp2-archfolder open" onClick={() => setView("active")}
+                aria-label="Close archive, back to your lessons" title="Back to your lessons">
+                <OpenArchiveIcon size={22} />
+                <span className="mlp2-archcount">{archivedPlans.length}</span>
               </button>
-            )}
+            ) : hasArchived ? (
+              <button className="mlp2-archfolder" onClick={() => setView("archived")}
+                aria-label={`Open archive (${archivedPlans.length})`} title="Archived lessons">
+                <ArchiveIcon size={22} />
+                <span className="mlp2-archcount">{archivedPlans.length}</span>
+              </button>
+            ) : null}
           </div>
-          {/* Archive control stays on the right of the row. */}
-          {pane === "plan" ? null : effView === "archived" ? (
-            // Open box = you're inside the archive; tapping it closes the box and drops you back
-            // to your lessons (the one, symmetric way in and out).
-            <button className="mlp2-archfolder open" onClick={() => setView("active")}
-              aria-label="Close archive, back to your lessons" title="Back to your lessons">
-              <OpenArchiveIcon size={22} />
-              <span className="mlp2-archcount">{archivedPlans.length}</span>
-            </button>
-          ) : hasArchived ? (
-            <button className="mlp2-archfolder" onClick={() => setView("archived")}
-              aria-label={`Open archive (${archivedPlans.length})`} title="Archived lessons">
-              <ArchiveIcon size={22} />
-              <span className="mlp2-archcount">{archivedPlans.length}</span>
-            </button>
-          ) : null}
+          <button className={`mlp2-vtab${pane === "plan" ? " on" : ""}`}
+            onClick={() => { if (pane !== "plan") onPane("plan"); }}
+            aria-current={pane === "plan" ? "page" : undefined}
+            title="Year plan">
+            Year plan
+          </button>
         </div>
         <div className="mlp2-wheels">
           <div className="mlp2-wcol">
