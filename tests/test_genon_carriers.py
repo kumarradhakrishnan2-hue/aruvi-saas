@@ -263,10 +263,20 @@ class TestCompileEndToEnd(unittest.TestCase):
         here so the gap is registered rather than skipped into silence. When either is
         closed this test FAILS, which is the signal to update it.
 
-          • science·middle  — periods carry `phases[]`, not `time_bands[]`. This is
-            exactly the Group B conversion testing.md §3 P3 owes stage S6.
+          • science·middle  — periods carry `phases[]`, not `time_bands[]`. The Group B
+            conversion landed in the CONSTITUTION at S6's P3 (2026-08-07, LP v2.2), so
+            plans generated from here on emit `time_bands`; this fixture predates it and
+            will not compile until the chapter is regenerated at C1. NOTE: the fixture's
+            missing `section_anchor` is NOT a gap for this stage — science·middle has no
+            section axis by design (carriers.has_section_axis), so `time_bands` is the
+            only thing standing between it and compiling.
           • TWAU            — periods carry `textbook_anchor` / `section_ref`, no
             `section_anchor`. TWAU's registry join has no owner yet; S5 owes it.
+
+        Assertion note (2026-08-07): the `section_anchor` read is now mediated by
+        carriers.unit_anchor, which still raises KeyError on a section-axis stage but
+        names the period and the stage in the message. The failure MODE is what this
+        test guards, so it matches on the substring rather than the bare key.
         """
         from aruvi_core.genon import compile_stream
         for fixture, missing in (("science_vii_ch02_saved.json", "time_bands"),
@@ -274,7 +284,7 @@ class TestCompileEndToEnd(unittest.TestCase):
             with self.subTest(fixture=fixture):
                 with self.assertRaises(KeyError) as cm:
                     compile_stream(load(fixture))
-                self.assertEqual(cm.exception.args[0], missing)
+                self.assertIn(missing, str(cm.exception.args[0]))
                 # the seam itself is fine for both — items extract as dicts
                 plan = load(fixture)
                 items = assessment_items(plan, plan.get("result", plan))

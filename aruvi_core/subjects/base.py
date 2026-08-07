@@ -61,3 +61,22 @@ class Subject(Protocol):
         the factors enumerated, never the numbers/ranges. Powers the teacher-facing
         'How are periods allocated?' note. Shape: {"basis": str, "factors": [str, ...]}."""
         ...
+
+    # ── genon: how this subject·stage is SERVED (optional; default "unit") ───────────
+    # Added 2026-08-07 at S6. The serve engine must not branch on subject (§3), so the
+    # subject declares its own granularity and serve.py reads the declaration.
+    #
+    #   "unit" — units are the atoms: a plan is a prefix of a canonical plus one borrowed
+    #            unit, and coverage is measured in SECTIONS. Ten of the eleven stages.
+    #   "plan" — canonicals are the atoms. science·middle alone: its units belong to a
+    #            cognitive progression arc, a stage is taught whole or not at all, so no
+    #            prefix of a canonical is a valid plan. Serving is whole-canonical
+    #            selection; the only bridge between two counts is the top's single
+    #            synthesis unit. Spec: docs/science_middle_stage_serve.md.
+    #
+    # A "plan"-granularity stage also has NO SECTION AXIS: `section_anchor` is absent by
+    # design, and `genon_has_section_axis` tells compile.py that its absence is expected
+    # rather than a malformed plan.
+    def genon_serve_granularity(self, grade: str) -> str: ...
+
+    def genon_has_section_axis(self, grade: str) -> bool: ...

@@ -367,7 +367,23 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "16"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "17"     # BUMP when compile/serve change the OUTPUT
+# 17 (2026-08-07): PLAN GRANULARITY — serving is per-CANONICAL where the subject plugin
+# says so. Spec: docs/science_middle_stage_serve.md. science·middle is the corpus's one
+# structural exception: its units belong to a cognitive progression arc (LP Rule 1) and a
+# stage's implied LO is the outcome of the COMPLETE stage (Rule 5), so no prefix of a
+# canonical is a valid plan — truncating mid-arc would test a class on an operation it
+# was taught part of, with no honest way to name what is missing. Truncation dies, and
+# borrowing with it. That stage is served by whole-canonical SELECTION: identity at X=K,
+# K complete + the top's synthesis unit at X=K+1, truncation with declared drops only
+# BELOW the lowest canonical, surrender only above the top. No fill, no choice set, no
+# section registry. The engine never learns a subject's name — Subject.genon_serve_
+# granularity / genon_has_section_axis declare it and carriers.py asks (CLAUDE.md §3);
+# compile.py's `section_anchor` read is mediated through the same seam, and the synthesis
+# unit is carried by an explicit boolean where there is no anchor field to hold the token.
+# Canonical counts for such a stage step down by 2 (genon/master_plan.py), which is what
+# makes "no surrender inside the band" true rather than hoped-for; certify enforces it.
+# ALL TEN OTHER STAGES ARE BIT-IDENTICAL — verified against the three authored libraries.
 # 16 (2026-08-06): A BORROWED UNIT'S COVERAGE ROW TRAVELS WITH IT (ARV-D-064, S1).
 # The serve output gains the lender's handoff entry for the borrowed sitting, so the
 # LO its questions test is present in the plan that asks them — the rule the dropped-

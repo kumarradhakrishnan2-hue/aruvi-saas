@@ -25,6 +25,10 @@ Steps (stops on the first failure; each is idempotent to re-run):
      founder's, never this script's)
 
     --certify-only   skip generations; run steps 2-8 on whatever library exists
+    --redo           regenerate metered artefacts even if they are already on disk
+
+RESUMABLE (2026-08-07): steps 1 and 4 SKIP any canonical already installed, so a build
+that failed after paying for a file resumes instead of buying it again. --redo overrides.
 """
 from __future__ import annotations
 
@@ -40,7 +44,9 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(HERE))
 
 from aruvi_core.genon import compile_stream, serve_plan            # noqa: E402
-from aruvi_core.genon.carriers import raw_item_list                # noqa: E402
+from aruvi_core.genon.carriers import (                           # noqa: E402
+    has_section_axis, raw_item_list, serve_granularity,
+)
 from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, is_synthesis_unit, section_registry, unit_range,
 )
@@ -74,6 +80,67 @@ EXACT_ITEM_COUNTS = {
     # + 1 ECR + 1 Open Task · Substantive 1 MCQ + 1 SCR + 1 (SI or ECR) · Present 1 MCQ + 1 SCR.
     ("social_sciences", "secondary"): {"Central": 5, "Substantive": 3, "Present": 2},
 }
+
+# ── PER-STAGE ITEM MINIMUMS (2026-08-07, ARV-D-065 at S6·C3) ─────────────────────
+# A second advisory, for stages whose assessment is grouped by PROGRESSION STAGE rather
+# than by competency weight. It exists because the weight-based check above could not see
+# this defect at all: it compares each file to the library's own MODAL count, and ch 6's
+# four canonicals came in at 13/15/14/12 items against a mandated 15 — they disagreed with
+# the CONSTITUTION, not with each other, so the modal fallback read them as consistent.
+#
+# Keyed by stage POSITION, which is what assessment v1.5 Rule 4 prescribes:
+#   first  = 2 MCQ · middle = 2 MCQ + 1 SCR · final = 2 MCQ + 1 ECR + 1 Open Task
+# Types are checked too — an ECR in a middle stage is a type intrusion, and one of the
+# three breaches on ch 6's top canonical was exactly that.
+STAGE_ITEM_MINIMUMS = {
+    ("science", "middle"): {
+        "first":  {"MCQ": 2},
+        "middle": {"MCQ": 2, "SCR": 1},
+        "final":  {"MCQ": 2, "ECR": 1, "OPEN_TASK": 1},
+        "types":  {"first": {"MCQ"}, "middle": {"MCQ", "SCR"},
+                   "final": {"MCQ", "ECR", "OPEN_TASK"}},
+    },
+}
+
+
+def stage_item_report(subject, grade, lib):
+    """ADVISORY per-stage item census against the constitution's own minimums.
+
+    Reports and never gates — same founder ruling as the weight-based check (ARV-D-019):
+    a slot miss is generation variance priced below a regeneration, and a hand back-fill is
+    forbidden by testing.md §7. The point is to turn a silent miss into a RATE across 154
+    authoring runs, which is what C3 had to find by hand."""
+    spec = STAGE_ITEM_MINIMUMS.get((subject, stage_for(grade)))
+    if not spec:
+        return []
+    out = ["", "per-stage item minimums — ADVISORY, does not gate; basis: "
+           f"{subject}·{stage_for(grade)} assessment constitution Rule 4"]
+    for name, s in lib:
+        raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+        items = raw_item_list(raw.get("result", raw))
+        stages = sorted({i.get("progression_stage") for i in items
+                         if i.get("progression_stage") is not None})
+        if not stages:
+            out.append(f"      {name}: no progression_stage on any item — check skipped")
+            continue
+        top = max(stages)
+        short = []
+        for s_no in stages:
+            pos = "first" if s_no == 1 else ("final" if s_no == top else "middle")
+            got = {}
+            for i in items:
+                if i.get("progression_stage") == s_no:
+                    got[i.get("question_type")] = got.get(i.get("question_type"), 0) + 1
+            for t, n in spec[pos].items():
+                if got.get(t, 0) < n:
+                    short.append(f"S{s_no}({pos[0]}) {t} {got.get(t, 0)}<{n}")
+            for t in got:
+                if t not in spec["types"][pos]:
+                    short.append(f"S{s_no}({pos[0]}) {t} is not a {pos}-stage type")
+        out.append(f"      {name}: {len(items)} items, "
+                   + (f"{len(short)} shortfall(s) — " + "; ".join(short) if short
+                      else "all stages meet their minimums"))
+    return out
 
 
 def run(label, argv):
@@ -157,6 +224,23 @@ def certify(subject, grade, ch, row):
 
     note(len(lib) == len(vp["counts"]),
          f"library complete: {[n for n, _ in lib]} vs plan {vp['counts']}")
+
+    # ── WHICH CHECKS APPLY (2026-08-07, S6) ──────────────────────────────────────
+    # Checks 3, 4 and 5 (anchors verbatim · first-visit order · coverage reaches the
+    # final registry section) are all SECTION arithmetic. A PLAN-granularity stage has
+    # no section axis at all — its units belong to a cognitive progression arc derived
+    # fresh per canonical — so running them would not be a stricter test, it would be a
+    # meaningless one against an empty registry. They report N/A and the stage is held
+    # to the checks that do bear on it: library completeness, compilation, the synthesis
+    # gate (via the boolean carrier), the register, MCQ arrangement, and a serve sweep
+    # whose legal modes are narrower. Spec: docs/science_middle_stage_serve.md §4.7.
+    granularity = serve_granularity(top["meta"].get("subject"), top["meta"].get("grade"))
+    section_axis = has_section_axis(top["meta"].get("subject"), top["meta"].get("grade"))
+    lines.append(f"serve granularity: {granularity}  ·  section axis: {section_axis}")
+    if not section_axis:
+        lines.append("N/A   anchors verbatim / first-visit order / registry coverage "
+                     "— this stage has no section axis (checks 3-5 do not apply)")
+
     for name, s in lib:
         is_top = name == top_name
         # ── THE SYNTHESIS-ANCHOR GATE (v2.0 §0.3, replaces the closing-span
@@ -173,6 +257,8 @@ def certify(subject, grade, ch, row):
             note(not syn_units,
                  f"{name}: the `synthesis` token is reserved to the standard "
                  f"canonical", name)
+        if not section_axis:
+            continue                              # checks 3-5 are section arithmetic
         body = [u for u in s["units"] if not is_synthesis_unit(u)]
         rr = [unit_range(u, ridx) for u in body]
         note(all(r is not None for r in rr),
@@ -268,6 +354,10 @@ def certify(subject, grade, ch, row):
                      "forbidden (testing.md §7) — the only fix is regeneration, and that "
                      "is a founder call on cost, not a certification failure.")
 
+    # The per-STAGE census, for stages whose assessment is grouped by progression stage.
+    # The weight-based check above is blind to that axis (ARV-D-065).
+    lines.extend(stage_item_report(subject, grade, lib))
+
     # ── serve sweep — the adaptation table of record (no solver projection to
     # diff against since v2.0; certification derives it from the authored
     # library directly). Per X: the fill mode/class + how many sections drop.
@@ -295,13 +385,30 @@ def certify(subject, grade, ch, row):
                 ndrop = len(fill["uncovered_sections"])
                 sweep[x] = (f"fill/{fill['fill_class']}"
                             + (f" -{ndrop}s" if ndrop else ""))
+            elif fill.get("below_floor"):
+                sweep[x] = "truncation -%du" % fill.get("dropped_unit_count", 0)
             else:
                 sweep[x] = fill["mode"]
-            # Case 3 must stay structurally impossible on a certified library
-            # (§0.4); its appearance in the band is a certification failure.
-            note(not (fill and fill["mode"] == "truncation"
-                      and not fill.get("synthesis_only")),
-                 f"X={x}: choice set non-empty (no defensive truncation)")
+            if granularity == "plan":
+                # CHECK 8, REDEFINED for a plan-granularity stage (spec §4.7).
+                # Truncation is not a defect here — it is the honest answer BELOW the
+                # lowest canonical, where no complete plan fits. What must never happen
+                # is truncating INSIDE the band, or surrendering inside it: the first
+                # would split a cognitive stage, the second would hand back periods the
+                # step-2 density rule exists to make usable. Both indicate an
+                # under-dense library, so the check is on the band, not on the mode.
+                inside = floor <= x <= top_n
+                note(not (inside and fill and fill["mode"] == "truncation"),
+                     f"X={x}: no truncation inside [floor, top]")
+                note(not (inside and g["surrendered_periods"]),
+                     f"X={x}: no surrender inside [floor, top] "
+                     f"(library dense enough at step 2)")
+            else:
+                # Case 3 must stay structurally impossible on a certified library
+                # (§0.4); its appearance in the band is a certification failure.
+                note(not (fill and fill["mode"] == "truncation"
+                          and not fill.get("synthesis_only")),
+                     f"X={x}: choice set non-empty (no defensive truncation)")
         except Exception as e:                     # noqa: BLE001
             sweep[x] = f"ERROR: {e}"
             note(False, f"serve X={x} raised: {e}")
@@ -353,9 +460,28 @@ def main():
     top_bf.write_text(vp_mod.top_brief_for(subject, klass, ch), encoding="utf-8")
     print(f"brief written: {top_bf}")
 
+    # RESUMABILITY (2026-08-07). A metered step whose OUTPUT IS ALREADY ON DISK is
+    # skipped. The steps were always idempotent in effect; they were not free to repeat,
+    # and the docstring's "idempotent to re-run" quietly meant "will pay again". Found at
+    # S6's C1: the top canonical generated perfectly, a stale validator failed the build
+    # AFTER the model had been paid, and the only way forward was to buy the same file
+    # twice. At 926 corpus runs a build that cannot resume is a standing tax on every
+    # fixable failure. `--redo` forces regeneration.
+    lib_dir = lib_dir_of(subject, grade)
+    redo = "--redo" in sys.argv
+
+    def skip_if_present(path, label):
+        if redo or not path.is_file():
+            return False
+        print(f"\n== {label} == SKIPPED — already on disk: "
+              f"{path.relative_to(REPO)}\n   (delete it, or pass --redo, to regenerate)")
+        return True
+
     if not certify_only:
-        run("STEP 1 · top canonical (metered, Sonnet 4.6)",
-            [gen, "one", subject, grade, str(ch), "--brief", str(top_bf)])
+        top_path = lib_dir / f"ch_{ch:02d}_canonical.json"
+        if not skip_if_present(top_path, "STEP 1 · top canonical (metered, Sonnet 4.6)"):
+            run("STEP 1 · top canonical (metered, Sonnet 4.6)",
+                [gen, "one", subject, grade, str(ch), "--brief", str(top_bf)])
     run("STEP 2 · annotate master plan", [vpn])
 
     briefs, vp = vp_mod.briefs_for(subject, klass, ch)
@@ -368,9 +494,11 @@ def main():
 
     if not certify_only:
         for k, bf in bfiles.items():
-            run(f"STEP 4 · {k}-period variant (metered, Sonnet 4.6)",
-                [gen, "one", subject, grade, str(ch),
-                 "--variant", str(k), "--brief", str(bf)])
+            label = f"STEP 4 · {k}-period variant (metered, Sonnet 4.6)"
+            if skip_if_present(lib_dir / f"ch_{ch:02d}_canonical_p{k:02d}.json", label):
+                continue
+            run(label, [gen, "one", subject, grade, str(ch),
+                        "--variant", str(k), "--brief", str(bf)])
         run("STEP 5 · re-annotate on the full library", [vpn])
 
     # STEP 6 · arrange MCQ options (deterministic, free, idempotent, ALWAYS runs — including

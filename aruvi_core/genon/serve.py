@@ -162,8 +162,14 @@ def _unit_anchors(unit):
 
 
 def is_synthesis_unit(unit):
-    """True iff the unit carries the reserved `synthesis` anchor (standard
-    canonical's mandated closer — §0.3; the token is exact and alone)."""
+    """True iff the unit is the standard canonical's mandated closer (§0.3).
+
+    Two carriers for one fact (2026-08-07): section-axis stages put the reserved token
+    in `section_anchor`; a stage with no section axis (science·middle) has nowhere to
+    put it and its brief mandates the explicit `synthesis` boolean, which compile.py
+    stamps onto the unit. Read both here so no caller has to know the difference."""
+    if unit.get("synthesis") is True:
+        return True
     return [_norm(a) for a in _unit_anchors(unit)] == [SYNTH_TOKEN]
 
 
@@ -274,6 +280,93 @@ def exact_fit_rescue(streams, chosen, requested):
         if s is not chosen and len(s["units"]) == requested - 1:
             return s
     return None
+
+
+def select_whole_plan(streams, requested):
+    """PLAN-GRANULARITY selection (science·middle; docs/science_middle_stage_serve.md).
+
+    Where units are not separable — a cognitive-progression stage is taught whole or not
+    at all — no prefix of a canonical is a valid plan, so there is nothing to fill and
+    nothing to borrow except the chapter's one closing synthesis. Returns
+    (chosen, surrendered, fill) for serve_plan, where `fill` is None (serve the canonical
+    whole), a `synthesis` borrow (serve it whole, then the top's synthesis as sitting X),
+    or a below-floor `truncation` carrying its dropped tail.
+
+    ONE RULE, four consequences: serve the LARGEST number of sittings that is ≤ X and is
+    either a canonical's own count K or K+1 (K complete, closed by the borrowed
+    synthesis). That single line yields identity at X = K, the synthesis borrow at
+    X = K+1, surrender above the top, and — because the density rule spaces canonicals
+    exactly 2 apart (genon/master_plan.py) — never surrenders inside the band. Below the
+    lowest canonical there is no such number, and only there do we truncate.
+
+    The +1 extension is not offered on the canonical that OWNS the synthesis: it already
+    ends with that unit, and lending a plan its own closer would serve it twice."""
+    ranked = sorted(streams, key=lambda s: -len(s["units"]))
+    top = ranked[0]
+    syn = synthesis_unit_of(streams)
+
+    if requested >= len(top["units"]):
+        return top, requested - len(top["units"]), None      # identity / surrender
+
+    # Maximise sittings served; at equal length prefer IDENTITY over the borrow. Both
+    # forms can reach the same X (X = 8 is the 8-canonical whole, and also the
+    # 7-canonical plus a synthesis), and the purpose-authored plan at that exact length
+    # is the better teaching object — its arc was written for those periods, where the
+    # other is a shorter arc with a closer bolted on. Without this the winner would
+    # depend on the order the library happened to glob off disk.
+    best = None                                              # (served, prefers, s, syn?)
+    for s in streams:
+        k = len(s["units"])
+        if k <= requested:
+            cand = (k, 1, s, False)                          # 1 = identity, wins ties
+            if best is None or cand[:2] > best[:2]:
+                best = cand
+        if syn and s is not syn[0] and k + 1 <= requested:
+            cand = (k + 1, 0, s, True)
+            if best is None or cand[:2] > best[:2]:
+                best = cand
+
+    if best is None:
+        # ── Below the lowest canonical. Partial stages ARE tolerated here and only
+        # here: the request is already in declared-deficit territory, and showing the
+        # teacher the sittings she will not reach beats refusing her a plan. The tail
+        # rides e09's channel — dropped_units, online only, omitted from exports — and
+        # its questions travel with it through the existing chosen-plan drop path.
+        low = ranked[-1]
+        return low, 0, {
+            "mode": "truncation", "below_floor": True, "fill_class": None,
+            "first_section": None, "stream": low, "unit": low["units"][requested - 1],
+            "borrowed_from": None, "self_fill": True, "overlap_sections": [],
+            "uncovered_sections": [], "synthesis_only": False, "reference_count": None,
+            "withheld_units": [], "drop_units": list(low["units"][requested:]),
+        }
+
+    served_count, _prefers, s, use_syn = best
+    if not use_syn:
+        return s, requested - served_count, None
+    s_syn, u_syn = syn
+    return s, requested - served_count, {
+        "mode": "synthesis", "below_floor": False, "fill_class": None,
+        "first_section": None, "stream": s_syn, "unit": u_syn,
+        "borrowed_from": len(s_syn["units"]), "self_fill": False,
+        "overlap_sections": [], "uncovered_sections": [], "synthesis_only": False,
+        "reference_count": None, "withheld_units": [], "drop_units": [],
+        # ── THE BORROWED SYNTHESIS BRINGS NOTHING BUT ITSELF (ARV-D-067, 2026-08-07) ──
+        # C9.2's standing rule — "a borrowed unit brings its own items" — presupposes
+        # UNIT-level anchoring. Under stage-level anchoring a unit has no items of its
+        # own: it inherits its whole STAGE's set. So carrying the lender's items dragged
+        # the top's entire final-stage assessment into a variant whose class was never
+        # taught that stage's earlier units, and carrying the lender's handoff row grew a
+        # phantom extra stage holding one sitting. Both wrong, and the 2026-08-07 ruling
+        # that "the synthesis carries items and travels with them" was made before this
+        # distinction was visible — it holds for the section-axis stages and not here.
+        #   `silent` suppresses both imports; `adopt_group` makes the unit join the host's
+        # LAST group, which is where it belongs: a closing sitting of the final stage, not
+        # a stage of its own. Its stage keeps exactly the items the variant authored, and
+        # none of them anchor to the synthesis sitting.
+        "silent": True,
+        "adopt_group": True,
+    }
 
 
 def fill_slot(streams, chosen, requested, registry):
@@ -430,7 +523,14 @@ def _scaled_bands(stream, unit, duration):
 
 
 def _period_from_unit(stream, unit, sitting, duration):
+    # The authored fields the engine does not model are spliced back FIRST, so the
+    # engine's own keys always win (`period_number` in particular must be the SITTING,
+    # never the authored unit number). Without this a served plan is missing whatever
+    # its subject's port groups on — science·middle's `progression_stage` / `stage_label`,
+    # whose absence collapsed a served plan into one "Stage None" group. compile.py's
+    # `_MODELLED` decides what lands here; neither end knows a subject's name.
     return {
+        **(unit.get("extra") or {}),
         "period_number": sitting,
         "period_duration_minutes": duration,
         "activity_title": unit["activity_title"],
@@ -460,47 +560,82 @@ def serve_plan(streams, matrix):
         raise ServeError("SERVE INVALID: empty duration matrix")
 
     registry_top = section_registry(max(streams, key=lambda s: len(s["units"])))
-    chosen, surrendered = choose_variant(streams, requested)
-    registry = section_registry(chosen)
-    units = chosen["units"]
-    n_units = len(units)
 
-    fill = None
+    # WHICH ENGINE SERVES THIS STAGE — asked of the subject plugin, never inferred from
+    # the subject's name (CLAUDE.md §3). "unit" for ten stages; "plan" for science·middle,
+    # whose units belong to a cognitive arc and cannot be cut (spec §1).
+    _meta0 = max(streams, key=lambda s: len(s["units"]))["meta"]
+    meta0_subject, meta0_grade = _meta0.get("subject"), _meta0.get("grade")
+    granularity = _carriers.serve_granularity(meta0_subject, meta0_grade)
+
     rescued_from = None
-    if surrendered or requested == n_units:
-        served = [(chosen, u) for u in units]        # whole variant, verbatim
+    if granularity == "plan":
+        # ── PLAN GRANULARITY: selection only. No prefix, no choice set, no fill class.
+        chosen, surrendered, fill = select_whole_plan(streams, requested)
+        units, n_units = chosen["units"], len(chosen["units"])
+        registry = section_registry(chosen)          # empty on a stage with no sections
+        if fill is None:
+            served = [(chosen, u) for u in units]                     # identity/surrender
+        elif fill["mode"] == "synthesis":
+            served = [(chosen, u) for u in units] + [(fill["stream"], fill["unit"])]
+        else:                                                         # below-floor
+            served = [(chosen, u) for u in units[:requested]]
     else:
-        fill = fill_slot(streams, chosen, requested, registry)
-        # ── Case 1b (§0.4, v2.2 / e15): the upward serve would DROP. If a canonical's
-        # full count is exactly X-1, serve it complete and close with the standard's
-        # synthesis instead — the whole chapter, properly ended, in the periods she
-        # asked for. Tried LAST, so richness is only ever traded for completeness and
-        # never for its own sake. Rebinding `chosen` is required, not optional: the
-        # assessment remap below walks `chosen["assessment_items"]` and matches
-        # `s is chosen`, so a base swap that left `chosen` behind would strand every
-        # item as unserved.
-        if fill.get("uncovered_sections"):
-            d = exact_fit_rescue(streams, chosen, requested)
-            syn = synthesis_unit_of(streams) if d is not None else None
-            if d is not None and syn is not None:
-                rescued_from = n_units           # the richer plan we declined
-                s_syn, u_syn = syn
-                chosen, units, n_units = d, d["units"], len(d["units"])
-                registry = section_registry(chosen)
-                fill = {"mode": "complete_rescue", "fill_class": None,
-                        "first_section": None, "stream": s_syn, "unit": u_syn,
-                        "borrowed_from": len(s_syn["units"]),
-                        "self_fill": s_syn is chosen, "overlap_sections": [],
-                        "uncovered_sections": [], "synthesis_only": False,
-                        "reference_count": None, "withheld_units": [], "drop_units": []}
-        prefix = [(chosen, u) for u in units[:requested - 1]]
-        served = prefix + [(fill["stream"], fill["unit"])]
+        # ── UNIT GRANULARITY: the standard engine, unchanged (§0.4).
+        chosen, surrendered = choose_variant(streams, requested)
+        registry = section_registry(chosen)
+        units = chosen["units"]
+        n_units = len(units)
+        fill = None
+        if surrendered or requested == n_units:
+            served = [(chosen, u) for u in units]    # whole variant, verbatim
+        else:
+            fill = fill_slot(streams, chosen, requested, registry)
+            # ── Case 1b (§0.4, v2.2 / e15): the upward serve would DROP. If a canonical's
+            # full count is exactly X-1, serve it complete and close with the standard's
+            # synthesis instead — the whole chapter, properly ended, in the periods she
+            # asked for. Tried LAST, so richness is only ever traded for completeness and
+            # never for its own sake. Rebinding `chosen` is required, not optional: the
+            # assessment remap below walks `chosen["assessment_items"]` and matches
+            # `s is chosen`, so a base swap that left `chosen` behind would strand every
+            # item as unserved.
+            if fill.get("uncovered_sections"):
+                d = exact_fit_rescue(streams, chosen, requested)
+                syn = synthesis_unit_of(streams) if d is not None else None
+                if d is not None and syn is not None:
+                    rescued_from = n_units           # the richer plan we declined
+                    s_syn, u_syn = syn
+                    chosen, units, n_units = d, d["units"], len(d["units"])
+                    registry = section_registry(chosen)
+                    fill = {"mode": "complete_rescue", "fill_class": None,
+                            "first_section": None, "stream": s_syn, "unit": u_syn,
+                            "borrowed_from": len(s_syn["units"]),
+                            "self_fill": s_syn is chosen, "overlap_sections": [],
+                            "uncovered_sections": [], "synthesis_only": False,
+                            "reference_count": None, "withheld_units": [],
+                            "drop_units": []}
+            prefix = [(chosen, u) for u in units[:requested - 1]]
+            served = prefix + [(fill["stream"], fill["unit"])]
 
     sit_durations = durations[:len(served)]
     surrendered_durations = durations[len(served):]
 
     new_periods = [_period_from_unit(stream, unit, i, dur)
                    for i, ((stream, unit), dur) in enumerate(zip(served, sit_durations), 1)]
+
+    # ── the borrowed unit joins the HOST's last group (ARV-D-067, 2026-08-07) ──────────
+    # Only at plan granularity, and only for the fields the SUBJECT declares as its
+    # grouping keys — everything else on the borrowed unit (its title, bands, notes,
+    # materials) is its own and must survive verbatim. Without this the top's synthesis
+    # arrived still wearing its home arc's stage number and the served plan grew a stage
+    # that existed nowhere in what the class was taught.
+    if fill and fill.get("adopt_group") and len(new_periods) > 1:
+        gf = _carriers.group_fields(meta0_subject, meta0_grade)
+        if gf:
+            host = new_periods[-2]
+            for k in gf:
+                if k in host:
+                    new_periods[-1][k] = host[k]
 
     # ── assessment: anchoring is unit-level (compile v0.5 normalizes unit_ref) —
     # the chosen variant's items remap unit -> sitting; a borrowed fill unit
@@ -563,7 +698,8 @@ def serve_plan(streams, matrix):
             items.append(it2)
         else:
             unserved_items += 1
-    if fill and fill["stream"] is not chosen and fill.get("borrowed_from"):
+    if (fill and fill["stream"] is not chosen and fill.get("borrowed_from")
+            and not fill.get("silent")):          # `silent` -> ARV-D-067, see select_whole_plan
         fn = fill["unit"]["unit"]
         fsit = len(served)
         for it in fill["stream"]["assessment_items"]:
@@ -604,7 +740,8 @@ def serve_plan(streams, matrix):
     # section LABEL, not on `section_number` — carriers.to_engine_handoff chose that key
     # for exactly this reason, so a lender's row cannot land on a host section that
     # happens to share its number, and a genuinely shared section merges as it should.
-    if fill and fill["stream"] is not chosen and fill.get("borrowed_from"):
+    if (fill and fill["stream"] is not chosen and fill.get("borrowed_from")
+            and not fill.get("silent")):          # `silent` -> ARV-D-067, see select_whole_plan
         fn = fill["unit"]["unit"]
         fsit = len(served)
         for code, blk in (fill["stream"].get("coverage_handoff") or {}).items():
@@ -679,7 +816,18 @@ def serve_plan(streams, matrix):
                 "Every section is covered; the closing sitting draws the "
                 "chapter together in one synthesis.")
         elif fill["mode"] == "truncation":
-            if fill.get("synthesis_only"):
+            if fill.get("below_floor"):
+                # PLAN granularity, below the lowest canonical (spec §2). There are no
+                # sections to name, so name the sittings — the arc's own closing units,
+                # which is what she is actually missing and what the dropped_units panel
+                # is about to show her.
+                lost = [u["activity_title"] for u in (fill.get("drop_units") or [])]
+                coverage_note = (
+                    "Time budget short of this chapter's shortest complete plan: "
+                    "%d sitting(s) could not be scheduled%s — the material is included "
+                    "for you to share as guided self-study or homework."
+                    % (len(lost), (" (" + "; ".join(lost) + ")") if lost else ""))
+            elif fill.get("synthesis_only"):
                 coverage_note = (
                     "Every section is covered; the chapter's remaining synthesis "
                     "sittings could not be scheduled — their material is included "
@@ -775,7 +923,14 @@ def serve_plan(streams, matrix):
                        "e16: a borrowed unit's COVERAGE ROW travels with it, so the LO "
                        "its questions test is in the plan that asks them — and the "
                        "display reads the platform's anchor stamp instead of "
-                       "re-deriving it through a plan-local key)"),
+                       "re-deriving it through a plan-local key; "
+                       "e17: PLAN GRANULARITY — a stage whose plugin declares it "
+                       "(science·middle, whose units belong to an uncuttable cognitive "
+                       "arc) is served by whole-canonical selection: identity at X=K, "
+                       "K complete + the top's synthesis at X=K+1, truncation with "
+                       "declared drops only below the lowest canonical, surrender only "
+                       "above the top)"),
+            "serve_granularity": granularity,
             "library": sorted((len(s["units"]) for s in streams), reverse=True),
             "variant_used": n_units,
             "requested_periods": requested,
@@ -789,6 +944,11 @@ def serve_plan(streams, matrix):
                 "overlap_sections": fill.get("overlap_sections") or [],
                 "uncovered_sections": fill.get("uncovered_sections") or [],
                 "synthesis_only": bool(fill.get("synthesis_only")),
+                # PLAN granularity (e17): distinguishes the legal below-floor truncation
+                # from the unit engine's defensive Case-3 one, and carries how many
+                # sittings it cost — certify's sweep and the human gate both read it.
+                "below_floor": bool(fill.get("below_floor")),
+                "dropped_unit_count": len(fill.get("drop_units") or []),
                 "reference_count": fill.get("reference_count"),
                 "withheld_units": fill.get("withheld_units") or [],
                 # e15 provenance: the richer canonical the upward rule had selected

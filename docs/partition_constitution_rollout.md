@@ -35,18 +35,30 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 |---|---|---|---|---|---|
 | **social_sciences · secondary** | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (v1.7 — arrangement struck) |
 | social_sciences · middle | **2.8 ✓ (2026-08-04)** | time_bands | ✓ | ✓ | ✓ (v2.4 — item-18 struck) |
-| science · secondary | 1.0 | time_bands | — | — | — (item-18 prohibition to replace) |
+| science · secondary | **1.1 ✓ (2026-08-05)** | time_bands | ✓ | ✓ | ✓ (v1.2 — item-18 struck) |
 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
-| science · middle | 2.1 | phases[] → P3 | — | — | — (item-18 prohibition to replace) |
+| science · middle | **2.2 ✓ (2026-08-07)** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (v1.4 — item-18 struck) |
 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
 | mathematics · preparatory | 1.1 | phases[] → P3 | — | — | — |
 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |
 | english · middle | 1.5 | phases[] → P3 | — | — | — |
 | english · secondary | 1.0 | phases[] → P3 | — | — | — |
 
-(Table state is 2026-07-31 except the two amended rows. Science middle + secondary still carry
-the item-18 position prohibition A9 strikes; see §3.)
+(Table state is 2026-07-31 except the four amended rows. The remaining seven still carry
+the item-18 position prohibition A9 strikes where they have one; see §3.)
+
+> ★ **science · middle is the structural exception — read `docs/science_middle_stage_serve.md`
+> before touching it** (added 2026-08-07 at S6's prep). It anchors learning units to the
+> COGNITIVE PROGRESSION ARC, not to textbook sections: no `section_anchor`, no section
+> registry, no cross-canonical registry of any kind, and no prefix of a canonical is a valid
+> plan (a stage is taught whole or not at all). Two consequences recorded here because they
+> break the table's assumptions. (a) Its register is a **two-ban** cut — the forward-reference /
+> completion ban is deliberately NOT ported, because every unit of a canonical is served with
+> every other unit of that canonical, so forward reference is never wrong for anyone. Bans 1
+> and 3 (clock quantity, calendar time) stand in full: duration scaling and the Calendar Purge
+> are orthogonal to the serve model. (b) It serves at **plan granularity**, not unit
+> granularity, which is engine work gating its C1 — do not assume the standard serve law here.
 
 ## 3. The surviving amendment set
 

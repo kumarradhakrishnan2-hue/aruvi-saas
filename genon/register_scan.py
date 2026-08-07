@@ -147,7 +147,20 @@ def scan_plan(plan: dict):
       * overlapping matches on one field collapse to the first (several patterns describe the
         same breach; reporting it three times trains people to skim);
       * a CALENDAR hit inside quotation marks drops to advisory (quoted chapter content)."""
-    periods = ((plan.get("result") or plan).get("lesson_plan") or {}).get("periods") or []
+    # WHICH BANS THIS STAGE ACTUALLY CARRIES (2026-08-07, S6). The register is not the
+    # same three bans everywhere: science·middle's constitution (LP v2.2) carries a TWO-ban
+    # cut, because its units are never served apart, so forward reference and completion
+    # claims are true there. A scanner that enforces a rule the constitution does not have
+    # fails good plans — it flagged 4 hits across ch 6's compacts, every one of them legal.
+    # Asked of the subject plugin through the same seam compile.py and serve.py use.
+    _r = plan.get("result") or plan
+    try:
+        from aruvi_core.genon.carriers import forward_reference_legal
+        _fwd_ok = forward_reference_legal(plan.get("subject") or _r.get("subject"),
+                                          plan.get("grade") or _r.get("grade"))
+    except Exception:                                    # noqa: BLE001
+        _fwd_ok = False                                  # unknown subject -> strict default
+    periods = (_r.get("lesson_plan") or {}).get("periods") or []
     hits = []
     for u in periods:
         for field, text in _fields(u):
@@ -162,7 +175,12 @@ def scan_plan(plan: dict):
                     a, b = max(0, m.start() - 60), min(len(text), m.end() + 60)
                     hits.append({
                         "unit": u.get("period_number"), "field": field, "family": family,
-                        "ban": ban and not (family == "calendar" and in_quote),
+                        # A forward hit on a stage whose register drops ban 2 is reported
+                        # as ADVISORY, never suppressed: it stays visible to the human
+                        # reader, it just does not fail a library that is obeying its own
+                        # constitution.
+                        "ban": ban and not (family == "calendar" and in_quote)
+                                   and not (family == "forward" and _fwd_ok),
                         "quoted": in_quote, "match": m.group(0),
                         "excerpt": ("…" if a else "") + text[a:b].strip() + ("…" if b < len(text) else ""),
                     })

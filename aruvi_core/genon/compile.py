@@ -79,6 +79,17 @@ def _anchor_items(items, band_unit, unit_numbers):
     return problems
 
 
+# The period keys the unit projection models explicitly. Everything else is carried in
+# `unit["extra"]` and spliced back by serve._period_from_unit — see the note there.
+_MODELLED = frozenset({
+    "period_number", "period_duration_minutes", "activity_title", "section_anchor",
+    "section_context", "materials", "visual_aids", "time_bands", "phases",
+    "teacher_notes", "homework", "competency_edges", "pedagogical_approach",
+    "pedagogical_approaches", "pedagogical_method", "pedagogical_methods",
+    "dominant_mode", "synthesis",
+})
+
+
 def compile_stream(plan: dict) -> dict:
     """Canonical plan JSON -> phase stream (strict). Raises GenonDeclarationError."""
     result = plan.get("result", plan)
@@ -90,6 +101,9 @@ def compile_stream(plan: dict) -> dict:
     # asks the subject plugin, exactly as the app has always done. See its module docstring.
     items = _carriers.assessment_items(plan, result)
     role_handoff = result.get("role_handoff") or plan.get("role_handoff") or {}
+    # Identity of the stage, for the two carrier questions below. Read once.
+    _subj = plan.get("subject") or result.get("subject")
+    _grade = plan.get("grade") or result.get("grade")
 
     phases, units = [], []
     seq = 0
@@ -112,7 +126,15 @@ def compile_stream(plan: dict) -> dict:
         units.append({
             "unit": unum,
             "activity_title": p["activity_title"],
-            "section_anchor": p["section_anchor"],
+            # Mediated since 2026-08-07 (S6): a hard read here was a KeyError on any
+            # stage with no section axis. carriers.unit_anchor still raises on a
+            # section-axis stage, so a genuinely malformed SS/science-secondary plan
+            # fails exactly as loudly as before.
+            "section_anchor": _carriers.unit_anchor(p, subject=_subj, grade=_grade),
+            # The closing whole-chapter synthesis, carried explicitly. Section-axis
+            # stages put the reserved token in section_anchor; a stage without the axis
+            # has nowhere to put it and its brief mandates this boolean instead.
+            "synthesis": _carriers.is_synthesis(p),
             "section_context": p.get("section_context"),
             "materials": p.get("materials") or [],
             "visual_aids": p.get("visual_aids"),
@@ -122,6 +144,17 @@ def compile_stream(plan: dict) -> dict:
             "competency_edges": [dict(e) for e in p.get("competency_edges") or []],
             "phase_ids": unit_phase_ids,
             "authored_duration_minutes": p["period_duration_minutes"],
+            # EVERY OTHER AUTHORED FIELD, CARRIED VERBATIM (2026-08-07).
+            # The unit projection above models the fields the SERVE engine reasons about.
+            # It is not the set the DISPLAY needs: each subject's port groups periods by
+            # its own axis, and a field the projection drops is a field the served plan
+            # cannot be rendered by. science·middle groups on `progression_stage` /
+            # `stage_label`, and without this its served plans collapsed into a single
+            # "Stage None" group — the same phantom CLAUDE.md §3 records for science
+            # secondary, reappearing on the serve side. Generic on purpose: the engine
+            # must not learn which subject needs which key, and the subjects still owed a
+            # carrier (mathematics, english) will need theirs too.
+            "extra": {k: v for k, v in p.items() if k not in _MODELLED},
         })
 
     band_unit = {ph["phase_id"]: ph["unit"] for ph in phases}

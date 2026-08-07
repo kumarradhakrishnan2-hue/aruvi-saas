@@ -117,11 +117,22 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
         problems.append(f"period count {len(periods)} != scheduled {expected_periods}")
     if not parsed.get("coverage_handoff"):
         problems.append("coverage_handoff missing/empty")
+    # Carrier seam again (2026-08-07, S6), for the same reason the item check below
+    # already uses it: `section_anchor` is the registry join key on the ten stages that
+    # HAVE a registry. science·middle has none — its units belong to a cognitive
+    # progression arc, so demanding an anchor here failed a perfectly good canonical
+    # twelve times over and stopped the build AFTER the model had been paid. Ask the
+    # seam whether this subject·stage has a section axis at all.
+    try:
+        from aruvi_core.genon.carriers import has_section_axis
+        _axis = has_section_axis(parsed.get("subject"), parsed.get("grade"))
+    except Exception:                                            # noqa: BLE001
+        _axis = True                     # unknown subject -> the strict default
     unit_numbers = set()
     for p in periods:
         n = p.get("period_number")
         unit_numbers.add(n)
-        if not str(p.get("section_anchor") or "").strip():
+        if _axis and not str(p.get("section_anchor") or "").strip():
             problems.append(f"P{n}: missing section_anchor (the registry join key)")
         cur = 0
         for b in p.get("time_bands", []) or []:
@@ -158,12 +169,20 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
 
 
 def const_version(path) -> str:
-    """The VERSION number from a constitution's first line, e.g. '1.5'."""
+    """The VERSION number from a constitution's masthead, e.g. '1.5'.
+
+    Scans the first few lines, not just the first (2026-08-07). Every LP constitution
+    carries VERSION on line 1, but the assessment constitutions put a title and a blank
+    line above it — so this logged '?' for the assessment version on every science·middle
+    run, and the ledger cannot attribute a result to a version it never recorded
+    (testing.md §6). Case-insensitive because the assessment files write 'Version'."""
     try:
         import re
-        first = Path(path).read_text(encoding="utf-8").splitlines()[0]
-        m = re.search(r"VERSION\s+([\d.]+)", first)
-        return m.group(1) if m else "?"
+        for line in Path(path).read_text(encoding="utf-8").splitlines()[:6]:
+            m = re.search(r"VERSION\s+([\d.]+)", line, re.I)
+            if m:
+                return m.group(1)
+        return "?"
     except Exception:
         return "?"
 
@@ -376,7 +395,13 @@ def cmd_one(args) -> int:
                 # items are counted by their period_ref key, which only items carry.
                 ai = sofar.find('"assessment_items"')
                 if ai != -1:
-                    n_items = sofar.count('"period_ref"', ai)
+                    # Count `question_type` (every subject's item schema has one), not
+                    # `period_ref`: handoff-bridged stages anchor by section/stage number
+                    # and science·middle is FORBIDDEN period_ref outright (assessment
+                    # v1.4), so the old key made the live counter read 0 for a whole
+                    # six-minute run while items were streaming perfectly.
+                    n_items = max(sofar.count('"question_type"', ai),
+                                  sofar.count('"period_ref"', ai))
                     stage = f"periods {count}/{count} · assessment item {n_items}"
                 elif '"role_handoff"' in sofar:
                     stage = f"periods {count}/{count} · role handoff"

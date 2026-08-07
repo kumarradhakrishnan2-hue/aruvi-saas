@@ -1,0 +1,84 @@
+--- lesson_plan_constitution.txt (pre)
++++ lesson_plan_constitution.txt (post)
+@@ -1,10 +1,13 @@
+-ARUVI — LESSON PLAN GENERATION CONSTITUTION · SCIENCE · VERSION 2.1
++ARUVI — LESSON PLAN GENERATION CONSTITUTION · SCIENCE · MIDDLE STAGE · VERSION 2.2
+ 
+ INPUTS (given — do not regenerate):
+ 1. Competency mapping JSON (dissolution_test sentence, co_central flag, primary array)
+ 2. Chapter summary (.txt)
+ 3. NCF Pedagogy document for subject and stage
+-4. Period schedule — one or more rows of {duration in minutes, period count}
++4. Period schedule — exactly ONE row {duration_minutes, count}: the class-standard
++   duration (40 min for classes VI–VII, 45 for VIII) × the period count. Teacher
++   timetable variation never reaches generation; it is handled downstream at serve
++   time.
+ 
+ OUTPUTS REQUIRED:
+ 1. Cognitive progression (named arc stages in sequence)
+@@ -13,7 +16,14 @@
+ 4. Coverage Handoff JSON array — Amendment A4 (sole input to assessment constitution; output field: coverage_handoff)
+ 
+ VOCABULARY (teacher-facing naming):
+-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, period_numbers, periods[]) and (b) the scheduling/allocation budget (period schedule, period count). Never write "period" in prose the teacher reads.
++The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, period_numbers, periods[]) and (b) the scheduling/allocation budget (period schedule, period count). Never write "period" in prose the teacher reads; "session" is outside the register too.
++
++THE SELF-CONTAINED REGISTER (binds Rules 6 and 10)
++Two things no time band or teacher note may do, each because the platform enforces it:
++1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick individual observation", "an extended investigation" — never in number.
++2. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
++
++FORWARD REFERENCE AND COMPLETION LANGUAGE ARE LEGAL AT THIS STAGE — the one place the reference constitution's third ban is deliberately not carried. The cognitive progression binds the chapter into a single arc that is taught whole or not at all, and every unit of a plan is served with every other unit of that plan. So a unit may look ahead, and a closing unit may draw the chapter together and say so, because at this stage both are true. Continuity by position — "the previous unit", "in the next unit" — is welcome, and Rule 10 asks for it.
+ 
+ ================================================================================
+ RULE 1 — COGNITIVE PROGRESSION DERIVATION (before any period assignment)
+@@ -76,9 +86,11 @@
+ ================================================================================
+ RULE 6 — TIME CONSTRAINT
+ 
+-The period schedule is a hard constraint. Total available minutes = sum of all (duration × count) products across all period rows. The full budget is for teaching. There is no assessment time inside this budget.
+-
+-Every activity MUST be designed to fit within its period's duration. The phases array is the mechanism for this: phases must account for the full period and their durations must sum exactly to period_duration_minutes. If a planned activity cannot be completed within the period, it must be scoped down — not left to overrun.
++The period schedule is a hard constraint. It is a single standard row: total available minutes = duration × count, and the total period count = count. The full budget is for teaching. There is no assessment time inside this budget.
++
++Every activity MUST be designed to fit within its period's duration. The time_bands array is the mechanism for this: bands must account for the full period and their durations must sum exactly to period_duration_minutes. If a planned activity cannot be completed within the period, it must be scoped down — not left to overrun.
++
++Band text is bound by THE SELF-CONTAINED REGISTER: a band names no clock quantity and no calendar time.
+ 
+ ================================================================================
+ RULE 7 — PEDAGOGICAL APPROACH DIVERSITY
+@@ -139,11 +151,15 @@
+   on C-codes in LP body text).
+ - MUST NOT restate the activity_description verbatim — teacher_notes is
+   guidance on running the activity, not a second description of it.
++- MUST NOT breach THE SELF-CONTAINED REGISTER — no clock quantity, no
++  calendar time. Links to other units, forward or backward, are welcome:
++  see the register.
+ 
+ ================================================================================
+ AMENDMENT A3 — FULL LP JSON SCHEMA
+ 
+-The system MUST populate every field. Empty strings and empty arrays are not permitted for required fields.
++The system MUST populate every field. Empty strings and empty arrays are not permitted for required fields. Field constraint (do not violate):
++- period_schedule: exactly one row — the class-standard duration × count (INPUTS 4).
+ 
+ Each period in lesson_plan.periods[] MUST conform to this object schema:
+ 
+@@ -163,13 +179,13 @@
+ ]
+ — include only actors genuinely active in this period; minimum one entry required.
+ — MUST NOT use any actor label outside the three permitted values.
+-  "phases":                  [
++  "time_bands":              [
+                                {
+-                                 "minutes":     string — time range e.g. "0–10",
+-                                 "description": string — one sentence on what happens in this phase; no role embedding
++                                 "minutes":  string — time range e.g. "0-10",
++                                 "activity": string — one sentence on what happens in this band; no role embedding
+                                }
+                              ]
+-                             — phases must cover the full period from 0 to period_duration_minutes with no gaps; durations must sum exactly to period_duration_minutes,
++                             — bands must cover the full period from 0 to period_duration_minutes with no gaps; durations must sum exactly to period_duration_minutes,
+   "teacher_notes":           string — 2–3 sentences max, flowing prose; see Rule 10. Required field; never blank.,
+   "materials":               [string],
+   "homework":                [string] — [] by default; 1–2 plain-language items max; same cognitive floor as in-class activities

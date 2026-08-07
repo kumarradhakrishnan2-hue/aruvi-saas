@@ -9,7 +9,11 @@
     },
     "allocation_method": "largest remainder over chapter effort weights (same as Allocate.jsx / api allocator)",
     "floor_definition": "unit-dropping begins when teacher_minutes/canonical_minutes < 0.6; floor_minutes = 0.6 x recommended_periods x standard_duration; floor_periods_at_standard rounded to the NEAREST whole period (founder, 2026-07-31)",
-    "canonical_periods": "the chapter's canonical set by EQUAL DISPERSION over [floor, standard] (architecture §0.2, v2.0 2026-08-03): {A, ceil((A+C)/2), C} when A-C >= 4, {A, C} when 1 < A-C < 4, {A} otherwise. No solver, no sigma, no mandated closing spans — canonicals are authored free; the standard alone carries the synthesis-anchor mandate.",
+    "canonical_periods": "the chapter's canonical set by EQUAL DISPERSION over [floor, standard] (architecture §0.2, v2.0 2026-08-03): {A, ceil((A+C)/2), C} when A-C >= 4, {A, C} when 1 < A-C < 4, {A} otherwise. No solver, no sigma, no mandated closing spans — canonicals are authored free; the standard alone carries the synthesis-anchor mandate. EXCEPTION, science·middle: it serves at PLAN granularity (a cognitive-progression stage is taught whole or not at all, so no prefix of a canonical is a valid plan), and its only bridge between two counts is the top's single synthesis unit, which spans a gap of exactly 1. Its counts therefore STEP DOWN BY 2 from the standard — forced by the serve law, not tuned. FLOOR CONCESSION (founder, 2026-08-07): where the chain's last value above the floor C is exactly C+1, the chain takes one more step to C-1 instead of appending C off-chain — C+1 was already reachable as C plus the borrowed synthesis, so the concession costs nothing and extends the servable band one period lower. GUARDED: taken only if C-1 is at least half the standard, which blocks a 1-period canonical at A=3 and a 43%-of-standard arc at A=7. So floor_periods_at_standard remains the 0.6 floor, and the LOWEST canonical may sit one period below it (0.50-0.56 of standard on 13 of 37 chapters). Spec: docs/science_middle_stage_serve.md §3.",
+    "serve_granularity": {
+      "science|middle": "plan",
+      "_all_others": "unit"
+    },
     "skipped": [
       "english X: budget 160 but no chapters in workbook",
       "mathematics X: budget 210 but no chapters in workbook",
@@ -5460,12 +5464,14 @@
           "floor_minutes": 72.0,
           "floor_periods_at_standard": 2,
           "canonical_periods": [
-            3
+            3,
+            2
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
-              3
+              3,
+              2
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -5484,14 +5490,18 @@
           "floor_periods_at_standard": 13,
           "canonical_periods": [
             21,
+            19,
             17,
+            15,
             13
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               21,
+              19,
               17,
+              15,
               13
             ],
             "provisional": true,
@@ -5511,14 +5521,16 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             16,
-            13,
+            14,
+            12,
             10
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               16,
-              13,
+              14,
+              12,
               10
             ],
             "provisional": true,
@@ -5538,14 +5550,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5565,14 +5579,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5592,14 +5608,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5620,14 +5638,16 @@
           "canonical_periods": [
             13,
             11,
-            8
+            9,
+            7
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               13,
               11,
-              8
+              9,
+              7
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -5646,14 +5666,18 @@
           "floor_periods_at_standard": 12,
           "canonical_periods": [
             20,
+            18,
             16,
+            14,
             12
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               20,
+              18,
               16,
+              14,
               12
             ],
             "provisional": true,
@@ -5673,14 +5697,18 @@
           "floor_periods_at_standard": 12,
           "canonical_periods": [
             20,
+            18,
             16,
+            14,
             12
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               20,
+              18,
               16,
+              14,
               12
             ],
             "provisional": true,
@@ -5700,15 +5728,19 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             17,
-            14,
-            10
+            15,
+            13,
+            11,
+            9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               17,
-              14,
-              10
+              15,
+              13,
+              11,
+              9
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -5727,14 +5759,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5754,14 +5788,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5791,12 +5827,14 @@
           "floor_periods_at_standard": 4,
           "canonical_periods": [
             7,
+            5,
             4
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               7,
+              5,
               4
             ],
             "provisional": true,
@@ -5816,14 +5854,16 @@
           "floor_periods_at_standard": 9,
           "canonical_periods": [
             15,
-            12,
+            13,
+            11,
             9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               15,
-              12,
+              13,
+              11,
               9
             ],
             "provisional": true,
@@ -5843,15 +5883,19 @@
           "floor_periods_at_standard": 11,
           "canonical_periods": [
             18,
-            15,
-            11
+            16,
+            14,
+            12,
+            10
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               18,
-              15,
-              11
+              16,
+              14,
+              12,
+              10
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -5870,15 +5914,19 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             17,
-            14,
-            10
+            15,
+            13,
+            11,
+            9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               17,
-              14,
-              10
+              15,
+              13,
+              11,
+              9
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -5897,14 +5945,16 @@
           "floor_periods_at_standard": 9,
           "canonical_periods": [
             15,
-            12,
+            13,
+            11,
             9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               15,
-              12,
+              13,
+              11,
               9
             ],
             "provisional": true,
@@ -5951,14 +6001,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -5978,14 +6030,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -6005,15 +6059,19 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             17,
-            14,
-            10
+            15,
+            13,
+            11,
+            9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               17,
-              14,
-              10
+              15,
+              13,
+              11,
+              9
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6032,14 +6090,18 @@
           "floor_periods_at_standard": 12,
           "canonical_periods": [
             20,
+            18,
             16,
+            14,
             12
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               20,
+              18,
               16,
+              14,
               12
             ],
             "provisional": true,
@@ -6059,15 +6121,19 @@
           "floor_periods_at_standard": 11,
           "canonical_periods": [
             18,
-            15,
-            11
+            16,
+            14,
+            12,
+            10
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               18,
-              15,
-              11
+              16,
+              14,
+              12,
+              10
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6086,14 +6152,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -6148,15 +6216,19 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             17,
-            14,
-            10
+            15,
+            13,
+            11,
+            9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               17,
-              14,
-              10
+              15,
+              13,
+              11,
+              9
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6202,14 +6274,16 @@
           "floor_periods_at_standard": 9,
           "canonical_periods": [
             15,
-            12,
+            13,
+            11,
             9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               15,
-              12,
+              13,
+              11,
               9
             ],
             "provisional": true,
@@ -6229,15 +6303,19 @@
           "floor_periods_at_standard": 11,
           "canonical_periods": [
             18,
-            15,
-            11
+            16,
+            14,
+            12,
+            10
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               18,
-              15,
-              11
+              16,
+              14,
+              12,
+              10
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6257,6 +6335,7 @@
           "canonical_periods": [
             12,
             10,
+            8,
             7
           ],
           "placeholder": false,
@@ -6264,12 +6343,18 @@
             "counts": [
               12,
               10,
+              8,
               7
             ],
-            "provisional": true,
-            "basis": "arithmetic",
-            "registry_sections": null,
-            "authored": []
+            "provisional": false,
+            "basis": "authored_standard",
+            "registry_sections": 0,
+            "authored": [
+              12,
+              10,
+              8,
+              7
+            ]
           }
         },
         {
@@ -6283,15 +6368,19 @@
           "floor_periods_at_standard": 11,
           "canonical_periods": [
             18,
-            15,
-            11
+            16,
+            14,
+            12,
+            10
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               18,
-              15,
-              11
+              16,
+              14,
+              12,
+              10
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6310,14 +6399,16 @@
           "floor_periods_at_standard": 8,
           "canonical_periods": [
             14,
-            11,
+            12,
+            10,
             8
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               14,
-              11,
+              12,
+              10,
               8
             ],
             "provisional": true,
@@ -6337,15 +6428,19 @@
           "floor_periods_at_standard": 10,
           "canonical_periods": [
             17,
-            14,
-            10
+            15,
+            13,
+            11,
+            9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               17,
-              14,
-              10
+              15,
+              13,
+              11,
+              9
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6364,14 +6459,16 @@
           "floor_periods_at_standard": 9,
           "canonical_periods": [
             15,
-            12,
+            13,
+            11,
             9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               15,
-              12,
+              13,
+              11,
               9
             ],
             "provisional": true,
@@ -6391,14 +6488,16 @@
           "floor_periods_at_standard": 9,
           "canonical_periods": [
             15,
-            12,
+            13,
+            11,
             9
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               15,
-              12,
+              13,
+              11,
               9
             ],
             "provisional": true,
@@ -6419,14 +6518,16 @@
           "canonical_periods": [
             12,
             10,
-            7
+            8,
+            6
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               12,
               10,
-              7
+              8,
+              6
             ],
             "provisional": true,
             "basis": "arithmetic",
@@ -6446,14 +6547,16 @@
           "canonical_periods": [
             12,
             10,
-            7
+            8,
+            6
           ],
           "placeholder": false,
           "canonical_plan": {
             "counts": [
               12,
               10,
-              7
+              8,
+              6
             ],
             "provisional": true,
             "basis": "arithmetic",

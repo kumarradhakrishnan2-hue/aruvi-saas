@@ -93,6 +93,89 @@ def _serving_block():
     ]
 
 
+def _is_plan_granularity(subject, klass):
+    """Does this subject·stage serve at PLAN granularity? Asked of the subject plugin,
+    exactly as the engine asks it — never a name check here either."""
+    try:
+        sys.path.insert(0, ROOT)
+        from aruvi_core.genon.carriers import serve_granularity
+        return serve_granularity(subject, klass) == "plan"
+    except Exception:                                       # noqa: BLE001
+        return False
+
+
+def _arc_brief(count, dur, chapter, standard):
+    """The brief for a PLAN-GRANULARITY stage (science·middle;
+    docs/science_middle_stage_serve.md). Two things make it different from the
+    section-axis briefs, and both follow from the same fact — the plan's axis is the
+    chapter's cognitive progression arc, derived fresh from the summary at generation
+    time, not the textbook's section list.
+
+    1. THERE IS NO REGISTRY, and none is supplied. Arcs may differ freely between this
+       chapter's own canonicals in stage count, labels and structure; nothing is shared
+       and nothing is ever borrowed between them (founder, 2026-08-07). Each canonical
+       is authored as if it were the only plan of this chapter.
+    2. EVERY CANONICAL IS COMPLETE BY CONSTRUCTION. It is not "cover all sections" here
+       — the constitution's own Rules 1, 2 and 5 already require every arc stage to be
+       taught and the final stage to reach the dissolution test's operation. The brief
+       only has to say that the plan will never be cut, so it must be whole at this
+       count."""
+    lines = [
+        f"CANONICAL BRIEF — {count} periods (platform-computed; binding)",
+        "",
+        f"- This is a COMPLETE, self-sufficient lesson plan for the whole chapter at "
+        f"{count} units x {dur} minutes (period_schedule: exactly one row "
+        f"{{{dur}, {count}}}). It is NOT a compression, summary or edit of any other "
+        f"plan of this chapter — author it from the chapter summary as if it were the "
+        f"only plan, deriving its cognitive progression arc afresh at this length.",
+        "- THE ARC IS YOURS AT THIS COUNT. Stage count, stage labels and the shape of "
+        "the progression are decided by this chapter's content AT THIS BUDGET; they "
+        "need not match any other plan of this chapter, and nothing is ever borrowed "
+        "between them. The one fixed point is the terminus: the final stage must "
+        "correspond to the operation named in the dissolution test sentence.",
+        "- THE PLAN IS SERVED WHOLE OR NOT AT ALL. This platform never cuts a plan of "
+        "this stage mid-arc, so every stage you open must be completed inside these "
+        f"{count} units. There is no coverage note and no budget shortfall available: "
+        "an arc that does not close at this count is an authoring failure.",
+        "- MATERIALS, OPENING MOVES AND HOMEWORK ARE PER-UNIT. No unit may require "
+        "that another unit's homework was set in order to run. Forward and backward "
+        "references BETWEEN THE UNITS OF THIS PLAN are welcome — they are always "
+        "served together (LP constitution v2.2, THE SELF-CONTAINED REGISTER).",
+        "- NO CLOCK QUANTITY and NO CALENDAR TIME in any band or note: the platform "
+        "scales band minutes to the sitting that carries them, and keeps no calendar.",
+    ]
+    if standard:
+        lines += [
+            f"- THE SYNTHESIS MANDATE (this plan alone carries it): unit {count}, the "
+            "final unit, is a WHOLE-CHAPTER SYNTHESIS and carries the field "
+            '`\"synthesis\": true` on its period object (this stage has no '
+            "section_anchor field, so the boolean is how the platform recognises it). "
+            "It draws the entire chapter together as a real unit-arc.",
+            "- THAT UNIT TRAVELS. It is the ONE unit of this chapter the platform may "
+            "serve into a companion canonical's plan — a class that covered this same "
+            "chapter through a DIFFERENT arc, with different stages and different "
+            "activities. So it may assume the chapter's CONTENT has been taught and "
+            "that the class has reached the dissolution test's operation, and it may "
+            "name concepts. It must NOT assume any particular earlier stage, activity, "
+            "reading, discussion, homework or material actually happened, and must not "
+            "name a stage label.",
+            f"- COVERAGE COMPLETES BEFORE THE SYNTHESIS: the full arc is taught across "
+            f"units 1..{count - 1}.",
+            f"- Save as: ch_{int(chapter):02d}_canonical.json",
+        ]
+    else:
+        lines += [
+            "- NO SYNTHESIS UNIT. The closing whole-chapter synthesis is reserved to "
+            "this chapter's STANDARD canonical; never emit `\"synthesis\": true` here. "
+            "End the plan the way this count teaches best.",
+            f"- The assessment for this plan is generated from THIS plan's "
+            f"coverage_handoff in the normal way; it references no other plan of this "
+            f"chapter.",
+            f"- Save as: ch_{int(chapter):02d}_canonical_p{count:02d}.json",
+        ]
+    return "\n".join(lines) + "\n"
+
+
 def top_brief_for(subject, klass, chapter):
     """The STANDARD canonical's brief — platform-composed, prepended to the
     generation prompt (v2.0: gains the synthesis-anchor mandate, §0.3)."""
@@ -101,6 +184,8 @@ def top_brief_for(subject, klass, chapter):
     row = next(c for c in combo["chapters"] if c["chapter"] == int(chapter))
     dur = combo["standard_duration_minutes"]
     count = int(row["recommended_periods"])
+    if _is_plan_granularity(subject, klass):
+        return _arc_brief(count, dur, chapter, standard=True)
     return "\n".join([
         f"STANDARD CANONICAL BRIEF — {count} periods (platform-computed; binding)",
         "",
@@ -134,11 +219,16 @@ def briefs_for(subject, klass, chapter):
     if not plan or plan.get("provisional"):
         raise SystemExit("Row is provisional — author and certify the standard "
                          "canonical, run this script's annotate pass, then ask again.")
+    dur = combo["standard_duration_minutes"]
+    if _is_plan_granularity(subject, klass):
+        # No registry is read, because there is none to read: this stage's canonicals
+        # share no axis, so a compact needs nothing at all from the standard.
+        return {k: _arc_brief(k, dur, chapter, standard=False)
+                for k in plan["counts"][1:]}, plan
     reg = standard_registry(subject, klass, chapter)
     if reg is None:
         raise SystemExit("No standard canonical on disk — author it first; if the row "
                          "says finalized it is stale: re-run the annotate pass.")
-    dur = combo["standard_duration_minutes"]
     out = {}
     for k in plan["counts"][1:]:
         lines = [

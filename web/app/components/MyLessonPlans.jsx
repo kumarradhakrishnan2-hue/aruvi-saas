@@ -219,12 +219,25 @@ function ReportButton({ sSlug, gSlug, filename, dataTour }) {
  * is the last line: a determinate progress bar instead of "Ready to teach".
  * It is deliberately NOT clickable — there is nothing to open yet — and it carries
  * aria-busy so a screen reader announces the wait rather than reading a dead card. */
+/* The duration line, in the SERVER's exact phrasing (api/data.py duration_label): rows
+ * joined by " · ". Extracted 2026-08-07 (ARV-D-066) because the proposed card had drifted
+ * to " + " while the finished card used " · ", so a MIXED matrix read
+ *   proposed  60 min × 4 + 45 min × 6
+ *   finished  60 min × 4 · 45 min × 6
+ * — the wording changing under her, which is the one thing the old comment said must not
+ * happen. Single-row matrices were identical, so it stayed invisible until a 60+45 week.
+ * One function now, and it doubles as the dedupe key below. */
+export function matrixLabel(rows) {
+  return (rows || [])
+    .filter((r) => Number(r.count) > 0)
+    .map((r) => `${Number(r.duration)} min × ${Number(r.count)}`)
+    .join(" · ");
+}
+
 function ProposedCard({ preparing }) {
   const rows = (preparing.rows || []).filter((r) => r.count > 0);
   const total = rows.reduce((a, r) => a + (Number(r.count) || 0), 0);
-  // Same phrasing as api/data.py duration_label() so the proposed card and the
-  // finished card read identically — she should not see the wording change under her.
-  const label = rows.map((r) => `${r.duration} min × ${r.count}`).join(" + ");
+  const label = matrixLabel(rows);
   return (
     <div className="sc-card sc-proposed" aria-busy="true" aria-live="polite">
       <div className="sc-tag">{pad(preparing.chapterNo)}</div>
@@ -595,6 +608,25 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     && (!preparing.subject || preparing.subject === sSlug)
     && (!preparing.grade || preparing.grade === gSlug);
 
+  /* ── THE PLAN BEING PREPARED MAY ALREADY BE ON SCREEN (ARV-D-066, 2026-08-07) ──────
+   * The proposed card is worded to read exactly like the finished card, on purpose. But it
+   * was drawn UNCONDITIONALLY above the list, so whenever the run was going to land on a
+   * card that already exists the teacher saw her lesson TWICE — same title, same length —
+   * until the response arrived and the duplicate vanished. Two ordinary paths hit it: any
+   * re-prepare, and EVERY identity serve (X equal to a canonical's own count returns that
+   * canonical's filename and writes no new file, so the card is already there).
+   *
+   * The result lands on an existing card exactly when chapter AND matrix match — the served
+   * filename is derived from chapter + matrix — so that pair is the key. On a match we do
+   * not draw a second card; we mark the real one busy, which keeps the progress feedback
+   * where she is already looking instead of removing it. */
+  const proposedLabel = preparing ? matrixLabel(preparing.rows) : "";
+  const busyIdx = showProposed
+    ? shown.findIndex((p) => String(p.chapter_number) === String(preparing.chapterNo)
+        && String(p.duration_label || "") === proposedLabel)
+    : -1;
+  const showProposedCard = showProposed && busyIdx < 0;
+
   return (
     <div className="mlp2" ref={rootRef}>
       <div className="mlp2-frozen" ref={frozenRef}>
@@ -661,7 +693,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       <>
       {plans === undefined ? (
         <div className="mlp-loading">Loading plans…</div>
-      ) : shown.length === 0 && !showProposed ? (
+      ) : shown.length === 0 && !showProposedCard ? (
         <div className="mlp2-emptybody">
           {effView === "archived"
             ? "Nothing archived here."
@@ -674,17 +706,20 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
           {/* The lesson being prepared sits FIRST, where the finished card will land —
               including when this is her very first plan and the list is otherwise the
               empty state (hence the `showProposed` guard on that branch above). */}
-          {showProposed ? <ProposedCard preparing={preparing} /> : null}
+          {showProposedCard ? <ProposedCard preparing={preparing} /> : null}
           {shown.map((p, pi) => {
             const { completed, live } = statusFor(p);
-            const cls = effView === "archived"
+            const busy = pi === busyIdx;          // this card IS the one being re-prepared
+            const cls = (effView === "archived"
               ? "mlp2-arch"
-              : live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf";
+              : live.length ? "st-going" : completed.length ? "st-done" : "mlp2-shelf")
+              + (busy ? " sc-proposed" : "");
             // The guided tour's target card (the just-generated lesson). Steps 4/5 ring its
             // report/archive buttons — tagged only on this card and only at the matching step.
             const isTourCard = tourPlan && p.filename === tourPlan.filename;
             return (
-              <div className={`sc-card ${cls}`} key={p.filename} onClick={() => openLesson(p)}
+              <div className={`sc-card ${cls}`} key={p.filename} aria-busy={busy || undefined}
+                onClick={() => openLesson(p)}
                 data-tour={(tourStep === 3 || tourStep === 6) && tourPlan && p.filename === tourPlan.filename ? "lesson-first" : undefined}>
                 <div className="sc-tag">{pad(p.chapter_number)}</div>
                 <div className="sc-body">
@@ -696,7 +731,19 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                       "Atmosphere and Climate" are indistinguishable. Source: api/data.py
                       duration_label(), served_matrix -> matrix -> period_rows_snapshot. */}
                   {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
-                  {effView === "archived" ? (
+                  {busy ? (
+                    /* Re-preparing THIS plan: the progress line replaces the status line on
+                       the card she is already looking at, rather than a second card
+                       appearing above it (ARV-D-066). Same markup as ProposedCard. */
+                    <div className="sc-prep">
+                      <div className="sc-prep-bar"><i /></div>
+                      <span className="sc-prep-note">
+                        Preparing your {(preparing.rows || []).reduce((a, r) => a + (Number(r.count) || 0), 0)}{" "}
+                        {(preparing.rows || []).reduce((a, r) => a + (Number(r.count) || 0), 0) === 1
+                          ? "period" : "periods"} lesson plan…
+                      </span>
+                    </div>
+                  ) : effView === "archived" ? (
                     <div className="mlp2-ready">Archived</div>
                   ) : completed.length || live.length ? (
                     <div className="mlp2-status">

@@ -247,7 +247,12 @@ const PROVFIELDS = [["klass","Class drawn"],["draw","Draw seed / method"],["chap
  ["canonical_plan","canonical_plan (counts · basis · authored)"],["brief","Brief identity (variant_plans.py commit)"],
  ["ledger_ts","Canonical + variant ledger_ts"],["report","Certification report path"],
  ["files","Served plan filename(s)"],["durations_run","C6 durations run (40/45/50)"]];
-const PROVSTAGES = ["top_canonical","variant_a","variant_b","reruns"];
+/* variant_c / variant_d added 2026-08-07 (S6). The four-slot table predated
+   plan-granularity libraries: science·middle authors at step-2 density, so ch 6 has FOUR
+   canonicals and VI ch 2 will have FIVE. Without these the 4th would have had to sit in
+   the `reruns` row, which would read as a defect rerun in a chapter that had none.
+   Stages a combo does not use render empty and contribute 0 to the total. */
+const PROVSTAGES = ["top_canonical","variant_a","variant_b","variant_c","variant_d","reruns"];
 const STATUSES = ["pass","fail","na","blocked","pending"];
 
 /* ───────────────────────── state + API ─────────────────────────────────────────── */

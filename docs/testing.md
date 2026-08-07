@@ -1,7 +1,30 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.6 · 2026-08-05 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.7 · 2026-08-07 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.7 (2026-08-07, at S6's P-prep): **S6 · science·middle is certified against a DIFFERENT
+SERVE LAW, and the C-steps say so.** The stage anchors units to the cognitive progression arc,
+not to textbook sections, so it has no `section_anchor`, no registry, and no valid prefix of a
+canonical — it is served by whole-canonical selection (engine **e17**; spec
+`docs/science_middle_stage_serve.md`). Per-step consequences, applying to the S6 row ONLY:
+**C5** — checks 3, 4 and 5 (anchors verbatim · first-visit order · registry coverage) report
+**N/A**, because they are section arithmetic against an empty registry; check 6 (the synthesis
+gate) stands but reads the explicit `synthesis` boolean instead of the reserved anchor token;
+**check 8 is redefined** — truncation is LEGAL below the floor and a FAILURE inside the band,
+and a second gate fails any surrender inside the band (both indicate an under-dense library);
+check 7's sweep modes reduce to four — `identity | synthesis | truncation -Nu | surrender`.
+Checks 1, 2, 9, 9a and 10 are unchanged. **C6**'s request matrix loses the between-variant and
+below-floor *fill* rows and gains `X = K+1` (that canonical whole, closed by the top's synthesis)
+and `X < lowest K` (truncation with declared drops). **C7** is unchanged in bans 1 and 3; ban 2
+(forward reference / completion) is struck for this stage, so a forward reference between the
+units of one plan is NOT a hit. **C8** has exactly one joint to inspect — arc-complete into
+borrowed synthesis — which makes it the sharpest and cheapest transition test in the campaign.
+**C9** collapses: every served plan is a whole canonical carrying its own assessment, so there is
+no prefix remap; the borrowed synthesis brings its own items (founder 2026-08-07, after an audit
+found SS·VIII ch 3 and SS·IX ch 3 already do this), and only the below-floor case has drops.
+Everything else in this template is untouched, and the other ten stages are certified exactly as
+before. §9 applies and costs nothing: no stage carries a signed human GATE, so nothing re-opens.*
 
 *2.6 (2026-08-05, founder): **the teacher's own marks are now checked per stage, not once.**
 C12 gains sub-checks 3 and 4 — **chapter notes** (usage, privacy, persistence) and the
@@ -322,15 +345,35 @@ before starting each stage):
 |---|---|---|---|---|---|---|
 | S1 | social_sciences · secondary | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (assess v1.7) |
 | S2 | social_sciences · middle | **2.8 ✓** | time_bands | ✓ | ✓ | ✓ (assess v2.4, 2026-08-04) |
-| S3 | science · secondary | 1.0 | time_bands | — | — | — (item-18 prohibition to replace) |
+| S3 | science · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-05) |
 | S4 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
-| S6 | science · middle | 2.1 | phases[] → P3 | — | — | — (item-18 prohibition to replace) |
+| S6 | science · middle | **2.2 ✓** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.4, 2026-08-07) |
 | S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
 | S8 | mathematics · preparatory | 1.1 | phases[] → P3 | — | — | — |
 | S9 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |
 | S10 | english · middle | 1.5 | phases[] → P3 | — | — | — |
 | S11 | english · secondary | 1.0 | phases[] → P3 | — | — | — |
+
+> ★ **S6 · science · middle is the campaign's ONE STRUCTURAL EXCEPTION** (2026-08-07, at its
+> P-prep; spec `docs/science_middle_stage_serve.md`, read it before any S6 work). It anchors
+> learning units to the COGNITIVE PROGRESSION ARC, not to textbook sections. So it has no
+> `section_anchor`, no section registry, and — because arcs are derived freshly per generation
+> and may differ between a chapter's own canonicals — **no cross-canonical registry of any
+> kind and no borrowing of stages, ever**. A stage is taught whole or not at all, so no prefix
+> of a canonical is a valid plan: truncation dies, and borrowing with it. Two consequences for
+> the P-steps below. **P1's register is a TWO-BAN cut for this stage alone** — the
+> forward-reference / completion ban is deliberately NOT ported (founder ruling; every unit of
+> a canonical is served with every other unit of that canonical, so forward reference is never
+> wrong for anyone, and a completion claim is true). Bans 1 and 3 stand in full — duration
+> scaling and the Calendar Purge are orthogonal to the serve model. **P5.2's registry question
+> is answered negatively** for this stage; the arc's terminus (Rule 1's dissolution-test
+> operation) is the only shared fact, and the only thing a borrowed synthesis unit may assume.
+> The stage serves at PLAN granularity — identity · K+1 synthesis borrow · below-floor
+> truncation with drops · above-top surrender — on canonicals spaced exactly 2 apart, which
+> removes surrender inside the band. That engine work GATES S6's C1 and the C5–C9 rewrite
+> below (template → v2.7); the constitutional P-steps do not wait on it. §9 costs nothing:
+> no stage carries a signed human GATE.
 
 **P1 [Kumar] Amend the LP constitution** from the SS·secondary v1.10 reference
 (`data/content/constitutions/lesson_plan/social_sciences/secondary/lesson_plan_constitution.txt`):
@@ -384,6 +427,10 @@ carries no meaning" line and the label-reference prohibition present; no arrange
 **Artefact:** amended file + diff.
 **Done for S2 (2026-08-04):** SS·middle assessment **v2.3 → v2.4**; artefacts and the per-item
 sign-off in `genon/out/stage_prep_ss_middle/`.
+**Done for S3 (2026-08-05):** science·secondary assessment **v1.1 → v1.2**; A6 as the DERIVED
+`section_number` anchor, not the reference's `period_ref` field. `genon/out/stage_prep_science_secondary/`.
+**Done for S6 (2026-08-07):** science·middle assessment **v1.3 → v1.4**; A6 as the DERIVED
+`progression_stage` anchor resolving to the stage's LAST unit. `genon/out/stage_prep_science_middle/`.
 
 **P3 [Kumar] Group B only — schema conversion.** Convert `phases[{minutes, description}]` →
 `time_bands[{minutes, activity}]` (rename both the array and the `description` key). **No
@@ -392,6 +439,8 @@ declaration surface. The compiler reads exactly `time_bands` and `activity`; the
 stands to amend constitutions, not to teach `compile.py` an adapter.
 **Exit:** the schema block emits `time_bands` with both keys; no `phases[` remains.
 **Artefact:** diff.
+**Done for S6 (2026-08-07)** — the first stage where this was not N/A: science·middle
+Amendment A3 converted, Rule 6's prose following. `grep -c 'phases\['` = 0, `time_bands` = 2.
 
 **P4 [Kumar] History to the sidecar.** The amendment note goes to `CHANGELOG.md` beside the
 constitution, never into the file; the `VERSION` line stays in the file.
@@ -733,6 +782,13 @@ render this stage's shape cleanly. **Exit:** `dropped_lp` present and paged last
 without error; no blank sections, no raw JSON leaking, unit/phase structure visible and matching
 the plan, the borrowed sitting reading as a whole unit, `answers=1` rendering the answer layer,
 the coverage note carried through, and **no dropped unit anywhere in any exported file**.
+
+**Also on the mixed-duration plan (added 2026-08-07, ARV-D-066):** the duration line must read
+IDENTICALLY wherever the same plan is drawn — the My Lessons card, the proposed/busy card during a
+prepare, and the export header. The two renderings had drifted to different separators (" + " vs
+" · "), invisible on a single-row matrix and visible the moment a 60+45 week is served. One helper
+now (`MyLessonPlans.matrixLabel`, in the server's phrasing); check it holds on a MIXED matrix,
+which is the only case that can catch it.
 
 Then, on that same open plan, the teacher's TWO writable marks — the only per-teacher writes on
 an otherwise read-only surface. X1.3 and X1.7 state the tenancy property; these are the per-stage

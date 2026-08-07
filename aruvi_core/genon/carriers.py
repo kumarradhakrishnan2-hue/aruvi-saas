@@ -347,6 +347,116 @@ def backfill_unit_context(units: List[Dict[str, Any]], result: Dict[str, Any]) -
             u["section_context"] = by_unit.get(u.get("unit"))
 
 
+def _plugin_for(subject: Any):
+    """The registered plugin for a saved plan's `subject` string, or None."""
+    key = subject_key(subject)
+    if not key:
+        return None
+    _ensure_registered()
+    try:
+        return _subjects.get(key)
+    except Exception:                                       # noqa: BLE001
+        return None
+
+
+def _ask(subject: Any, grade: Any, method: str, default):
+    """Ask the plugin a genon question; fall back to the platform default.
+
+    The default is what ten of the eleven stages want, so a plugin only implements
+    these where it differs — and the engine never learns a subject's name."""
+    fn = getattr(_plugin_for(subject), method, None)
+    if not callable(fn):
+        return default
+    try:
+        return fn(grade)
+    except Exception:                                       # noqa: BLE001
+        return default
+
+
+def serve_granularity(subject: Any, grade: Any) -> str:
+    """"unit" (the atoms are units) | "plan" (the atoms are whole canonicals).
+
+    See aruvi_core/subjects/base.py and docs/science_middle_stage_serve.md."""
+    g = _ask(subject, grade, "genon_serve_granularity", "unit")
+    return g if g in ("unit", "plan") else "unit"
+
+
+def has_section_axis(subject: Any, grade: Any) -> bool:
+    """Does this subject·stage anchor its units to textbook SECTIONS?
+
+    True for ten stages. False for science·middle, whose units belong to a cognitive
+    progression arc — there, a missing `section_anchor` is the design, not a defect,
+    and compile.py must not treat its absence as a malformed plan."""
+    return bool(_ask(subject, grade, "genon_has_section_axis",
+                     serve_granularity(subject, grade) == "unit"))
+
+
+def forward_reference_legal(subject: Any, grade: Any) -> bool:
+    """May a unit point at what comes next, or claim the chapter complete?
+
+    False for ten stages: any unit of a canonical may be somebody's LAST sitting (the
+    X-1+1 fill borrows single units across plans), so a forward reference is wrong for
+    someone. That is ban 2 of THE SELF-CONTAINED REGISTER.
+
+    True for a PLAN-granularity stage, and derived rather than declared so the two can
+    never drift apart: the reason ban 2 exists is that units travel alone, and the reason
+    plan granularity exists is that they cannot. Every unit of a science·middle canonical
+    is served with every other unit of that canonical, so "in the next unit" is never
+    wrong for anyone and a closing completion claim is simply true. Hence its constitution
+    carries a TWO-ban register (LP v2.2, founder 2026-08-07) — and `genon/register_scan.py`
+    must agree with the constitution it is enforcing, or it fails good plans.
+
+    Bans 1 (clock quantity) and 3 (calendar time) are untouched by this and always apply:
+    duration scaling and the Calendar Purge are orthogonal to the serve model."""
+    return serve_granularity(subject, grade) == "plan"
+
+
+def group_fields(subject: Any, grade: Any) -> tuple:
+    """The period fields that say WHICH GROUP a unit belongs to, for this subject·stage.
+
+    Needed only when a unit is borrowed into a foreign plan at PLAN granularity. The
+    borrowed unit's own grouping metadata describes a plan the teacher never sees, so
+    carrying it verbatim invents a group: the top canonical's synthesis unit arrived in an
+    8-unit variant still labelled `progression_stage: 6`, and the served plan grew a sixth
+    stage that existed nowhere in the arc the class was taught (ARV-D-067).
+
+    Declared by the plugin so the engine never learns a subject's name. Empty tuple by
+    default — a subject that does not group by a period field needs no adoption, and
+    section-axis stages never take this path anyway."""
+    v = _ask(subject, grade, "genon_group_fields", ())
+    return tuple(v or ())
+
+
+def unit_anchor(period: Dict[str, Any], *, subject: Any, grade: Any) -> Any:
+    """A period's `section_anchor`, mediated (2026-08-07, S6).
+
+    `compile.py` used to read `p["section_anchor"]` directly — a hard KeyError on any
+    stage that does not have one, which would have killed science·middle's first build
+    before a single certification check ran. On a section-axis stage a missing anchor is
+    still an error (it means a malformed plan, and the serve engine's whole arithmetic
+    runs on it); on a stage without the axis it is simply None."""
+    if "section_anchor" in period:
+        return period["section_anchor"]
+    if has_section_axis(subject, grade):
+        raise KeyError(
+            "period %s has no section_anchor, and %s·%s anchors units to sections"
+            % (period.get("period_number"), subject, grade))
+    return None
+
+
+def is_synthesis(period: Dict[str, Any]) -> bool:
+    """Does this period carry the chapter's closing whole-chapter synthesis?
+
+    Two carriers for one fact. Section-axis stages put the reserved token in
+    `section_anchor` (architecture §0.3). A stage with no section axis has nowhere to
+    put it, so its brief mandates an explicit boolean instead. Read here so neither
+    compile.py nor serve.py has to know which kind of stage it is looking at."""
+    if period.get("synthesis") is True:
+        return True
+    a = " ".join(str(period.get("section_anchor") or "").split()).casefold()
+    return a == "synthesis"
+
+
 # ── the seam itself ──────────────────────────────────────────────────────────────
 def assessment_items(plan: Dict[str, Any], result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """The chapter's assessment as a FLAT list of item dicts, each stamped `unit_ref`.

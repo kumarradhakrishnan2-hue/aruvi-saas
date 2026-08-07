@@ -469,7 +469,83 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-06 (newest) — DERIVE ONCE, STAMP, READ THE STAMP: assessment anchoring stops going
+## 2026-08-07 (newest) — SCIENCE·MIDDLE IS THE ONE STRUCTURAL EXCEPTION: it serves at PLAN
+## granularity, not unit granularity. Found at S6's stage prep, before a rupee was spent.
+
+**Spec of record: `docs/science_middle_stage_serve.md` (v1.0).** Read it before any S6 work.
+
+**What was found.** `compile.py` hard-reads `p["section_anchor"]`. Science·middle emits no such
+field and honestly cannot: its LP is organised by the CHAPTER'S COGNITIVE PROGRESSION ARC (Rule
+1 derives the arc from the whole summary at generation time), not by textbook sections. The
+first `build_library.py` run would have died before any certification check executed. Caught at
+P-prep by reading the constitution against the engine rather than assuming the template's
+carry-forward covered it.
+
+**Why the standard engine cannot serve this stage** (founder rulings, 2026-08-07):
+- **No prefix of a canonical is a valid plan.** A stage spans several units (Rule 2), its
+  implied LO is the outcome of the *complete* stage (Rule 5), and its items test that LO.
+  Truncate a 15-unit plan to 13 and the class is tested on an operation it was taught 60% of —
+  and unlike a dropped section, there is no honest sentence to declare it with. Truncation dies,
+  and borrowing (which exists only to fill truncation's hole) dies with it.
+- **Arcs are not comparable across canonicals.** Stage count, labels and structure are derived
+  freshly per generation and may legitimately differ between a chapter's own canonicals.
+  **No cross-canonical registry of any kind; stages may NEVER be borrowed.** The one shared fact
+  is the arc's terminus — Rule 1 binds every arc to the dissolution-test operation — and that is
+  the only thing a borrowed synthesis unit may assume.
+
+**The serve law that replaces it.** X = a canonical's count → identity · X = K+1 → that
+canonical whole plus the TOP's synthesis unit · X < lowest → truncate the lowest with declared
+drops (partial stages ARE tolerated below the floor: that range is declared-deficit already, and
+showing her what she won't reach beats refusing) · X > top → surrender. **Canonical counts step
+down by exactly 2** from the standard, floor included — the bridge is one synthesis unit, so a
+gap of 2 is the largest the law can cross, and the spacing is FORCED, not a tuned tolerance.
+That removes surrender inside the band. **Landed the same day** in `genon/master_plan.py`
+(`SERVE_GRANULARITY` table, one read point — never an `if subject ==` in the body), runbook pair
+completed. Measured cost, not extrapolated: science·middle goes **107 → 154 authoring runs,
++47 ≈ ₹1,739**. Diff vs HEAD: 34 chapters changed, all science·middle, zero other combos touched.
+
+**Two rulings worth keeping separately.**
+1. **The register is a TWO-BAN cut here, and only here.** Ban 2 (forward reference / completion
+   language) is deliberately not ported: every unit of a canonical is served with every other
+   unit of that canonical, so "in the next unit" is never wrong for anyone and a closing
+   completion claim is simply true. **Bans 1 and 3 stand in full** — the argument for dropping
+   ban 2 reaches neither. Ban 1 exists because the platform scales every band's minutes to the
+   sitting that carries it (universal, unaffected by the serve model); ban 3 is Calendar Purge
+   doctrine. Consequently VOCABULARY keeps its positional cross-reference examples and Rule 10
+   keeps position-linked continuity — both of which every other stage had to strike.
+2. **The synthesis unit carries its own assessment items and brings them along.** The working
+   assumption was the opposite. An audit of the installed libraries found SS·VIII ch 3 anchors
+   items to synthesis unit 12 and SS·IX ch 3 to unit 16, and C9.2 mandates a borrowed unit bring
+   its own items. Ruling: keep it, and align science·middle rather than except it. **General
+   lesson: an "I guess that's already the case" is a claim to check, not a premise** — this one
+   was inverted, and it would have been discovered at C9 with a library already paid for.
+
+**Landed at P-prep:** LP **v2.1 → v2.2**, assessment **v1.3 → v1.4**, P3 converted (the first
+stage where P3 was not N/A). Artefacts + per-item sign-off in
+`genon/out/stage_prep_science_middle/`. **The engine work landed the same day** (e16 → e17): the
+plugin declares granularity and section axis, `compile.py`'s anchor read is mediated,
+`serve.select_whole_plan` implements the four laws as ONE rule (largest sittings ≤ X that is a
+canonical's K or K+1 — identity wins ties over the borrow), briefs supply no registry, and
+certification's checks 3/4/5 go N/A while check 8 is redefined and joined by a
+no-surrender-inside-the-band gate. `tests/test_genon_plan_granularity.py` covers it; S6's
+C-cycle is OPEN.
+
+**The defect the four laws would never have caught.** The engine's unit projection models what
+SERVING reasons about, not what DISPLAY needs: `progression_stage`/`stage_label` were dropped, so
+every served plan collapsed into one "Stage None" group — the phantom CLAUDE.md §3 records for
+science secondary, reappearing on the serve side. Only rendering a served plan through the
+subject port exposed it. Fixed generically (`compile._MODELLED` → `unit["extra"]`, spliced back
+first so engine keys win), which pre-pays the same debt for mathematics and english. **Standing
+lesson: a serve test that never renders its own output is testing half the pipeline.**
+
+**Open, for the pilot to answer:** do arcs authored at 12 and at 7 units of the same chapter
+reach a recognisably similar terminal operation? The synthesis borrow leans entirely on the
+dissolution-test sentence being honoured consistently. That is C8's inspection for this stage,
+and with one joint to look at it is a sharp, cheap test.
+
+---
+
+## 2026-08-06 — DERIVE ONCE, STAMP, READ THE STAMP: assessment anchoring stops going
 ## through a plan-local mediator (ARV-D-064, S1; engine e14 → e16). Found at science·secondary C9.
 
 **The founder's rule, and it is the whole entry.** *If p07 U7 is filled with p12 U11, the

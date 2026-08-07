@@ -1,0 +1,49 @@
+--- assessment_constitution.txt (pre)
++++ assessment_constitution.txt (post)
+@@ -1,8 +1,8 @@
+ ARUVI · PEDAGOGICAL PLATFORM
+ 
+-Chapter Assessment Constitution — Science
+-
+-Version 1.3 · Ten rules governing AI assessment generation for Science · Inputs: coverage_handoff + Chapter Summary
++Chapter Assessment Constitution — Science · Middle Stage
++
++Version 1.4 · Ten rules governing AI assessment generation for Science · Inputs: coverage_handoff + Chapter Summary
+ 
+ +----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ | Rule 1 · Governing Purpose |                                                                                                                                                                                                                                                                           |
+@@ -96,11 +96,14 @@
+ |                                | · a confusion between two concepts in the same chapter                                                                                                                   |
+ |                                |                                                                                                                                                                          |
+ |                                | · recall of a related but incorrect detail from the same chapter section                                                                                                 |
++|                                |                                                                                                                                                                          |
++|                                | Option order carries no meaning and is not yours to set: emit the four options in whatever order they were authored, and never let where an option sits influence how it |
++|                                | is written. Uneven letters across a chapter are coincidence, not a defect.                                                                                               |
+ +--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ | PROHIBITION                    | The system MUST NOT use true/false format. The system MUST NOT generate distractors that are implausible, arbitrary, or sourced from outside the chapter.                |
+ |                                |                                                                                                                                                                          |
+-|                                | The system MUST NOT place the correct answer at the same label across consecutive items; is_correct MUST be distributed across A-D so no single letter dominates a       |
+-|                                | chapter.                                                                                                                                                                 |
++|                                | The system MUST NOT write an option that refers to another option by its label ("both A and B", "none of the above") — options are ordered downstream and a label        |
++|                                | reference would be falsified.                                                                                                                                            |
+ |                                |                                                                                                                                                                          |
+ +--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ 
+@@ -164,6 +167,17 @@
+   PROHIBITION                The system MUST NOT generate: summative assessments or Board examination preparation; Holistic Progress Card inputs; multi-session projects or portfolios; individual student tracking across chapters.
+   -------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
++INTEGRITY CONSTRAINTS (system level — override any other instruction)
++
++· coverage_handoff is committed — no reopening competencies, no re-deriving its fields.
++· ANCHORING IS DERIVED, NOT DECLARED: progression_stage IS the item's anchor. The
++  platform resolves it to the units that teach that stage through the LP's
++  coverage_handoff period_numbers, and anchors the item to the LAST of them — an item
++  tests the stage's whole implied LO, so it becomes available only when the stage
++  completes. MUST NOT emit period_ref, phase_ref, or any unit number on an item.
++· Progression-stage numbers and labels are internal to generation and the guide block;
++  they never appear in user-facing output (Rule 4).
++
+ Amendment A1 — Full Assessment JSON Schema
+ 
+ The system MUST produce the assessment output as a structured JSON object conforming exactly to this schema. This JSON is the single source of truth for online display and PDF generation.

@@ -240,6 +240,21 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   `variant_solver.py` live in `_to_delete/`. DO NOT reintroduce cutting below the unit,
   seam text, role weighting, compression regimes, or mandated closing spans — the brief
   §§0–1 record why they failed.
+- ★ **ONE STAGE IS SERVED DIFFERENTLY — science·middle (2026-08-07, engine e17).** Spec:
+  `docs/science_middle_stage_serve.md`. Its LP is organised by the chapter's COGNITIVE
+  PROGRESSION ARC, not by textbook sections, so it has no `section_anchor`, no registry, and
+  no valid prefix of a canonical (a stage is taught whole or not at all). It serves at **PLAN
+  granularity**: identity at X=K · K complete + the TOP's synthesis unit at X=K+1 · truncation
+  with declared drops ONLY below the lowest canonical · surrender only above the top. Its
+  canonical counts step down by exactly 2 (`genon/master_plan.py`), which is what makes "no
+  surrender inside the band" true; certification enforces it. Its register is a **two-ban** cut
+  (forward reference is legal — every unit of a canonical is served with every other), and
+  stages are NEVER borrowed between canonicals (arcs are derived fresh per generation and may
+  differ). The engine never branches on subject: `Subject.genon_serve_granularity` /
+  `genon_has_section_axis` declare it and `aruvi_core/genon/carriers.py` asks. Corollary worth
+  keeping: `compile.py` models only what SERVING needs, so every other authored period field
+  rides in `unit["extra"]` and is spliced back by `serve._period_from_unit` — without it a
+  served plan loses whatever its subject's port groups on.
 - **The calibrated standard is the default (2026-07-26)** — two period tables live under
   `data/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
   by subject·**stage**, in flat **40-minute** periods) and `master_plan.json` (OUR calibration —

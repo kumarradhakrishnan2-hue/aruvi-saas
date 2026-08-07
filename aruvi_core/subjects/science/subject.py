@@ -101,6 +101,37 @@ class ScienceSubject:
                        "In-class execution load"]
         return {"basis": "effort index", "factors": factors}
 
+    # ── genon: how each stage is served (base.py; docs/science_middle_stage_serve.md) ──
+    def genon_serve_granularity(self, grade) -> str:
+        """SECONDARY serves at UNIT granularity like every other stage — its LP Rule 1
+        anchors each activity to a named chapter section, so the standard X-1+1 fill and
+        its section arithmetic apply unchanged.
+
+        MIDDLE serves at PLAN granularity, and is the only stage in the corpus that does.
+        Its LP is organised by the chapter's COGNITIVE PROGRESSION ARC (LP Rule 1): units
+        belong to arc stages, a stage's implied LO is the outcome of the COMPLETE stage
+        (Rule 5) and its assessment items test that LO. So a prefix of a canonical is not
+        a plan — truncating mid-stage would test a class on an operation it was taught
+        part of, with no honest way to declare what is missing. Truncation dies, and
+        borrowing with it. Serving is whole-canonical selection; the only bridge between
+        two counts is the top canonical's single synthesis unit (founder, 2026-08-07)."""
+        return "plan" if stage_for(grade) == "middle" else "unit"
+
+    def genon_group_fields(self, grade) -> tuple:
+        """MIDDLE groups its periods by progression stage, so those two fields say which
+        group a unit belongs to. A unit borrowed into a foreign plan must ADOPT its host's
+        values for them (ARV-D-067): the top's synthesis unit carries `progression_stage: 6`
+        from a six-stage arc, and served into an 8-unit variant with five stages it invented
+        a sixth. SECONDARY groups by section_anchor, which the serve engine already handles
+        and which never travels this path."""
+        return ("progression_stage", "stage_label") if stage_for(grade) == "middle" else ()
+
+    def genon_has_section_axis(self, grade) -> bool:
+        """Middle has none: the arc rides over the whole chapter summary and is derived
+        fresh at generation time, so its units carry no `section_anchor` — by design, not
+        by omission. Secondary anchors every activity to a section (LP Rule 1)."""
+        return stage_for(grade) != "middle"
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)
