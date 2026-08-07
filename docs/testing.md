@@ -521,6 +521,14 @@ runs that had to be redone (a rerun is part of what the chapter cost). **Exit:**
 this chapter is attributed; the total is in the provenance panel; a missing cell is recorded as
 missing, not blank. **Artefact:** the cost table.
 
+**TWO FIGURES, and the tracker's ₹ column is the first one** (founder, 2026-08-07): the
+**clean-path** cost is the runs that produced the files now on disk — reruns and superseded
+generations EXCLUDED — and it is what a chapter costs, so it is what the 330-chapter
+extrapolation multiplies. The **all-in** cost includes every rupee actually spent, and it is
+what prices a defect. Record both; the panel's `reruns` row keeps the difference visible. The
+column excluding reruns is deliberate: a defect rerun inflates a corpus projection by however
+often defects happened during a pilot, which is not a property of the corpus.
+
 *Benchmark, measured on the SS·IX ch 3 pilot (2026-08-01): top ₹39.43 + variants ₹36.51 and
 ₹35.05 + one defect rerun ₹34.71 = **₹145.70** all-in; **₹110.99** on the clean path.
 **Cost shape:** input is flat across runs (14.9–15.4k tokens — the constitution, summary, mapping

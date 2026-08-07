@@ -408,7 +408,7 @@ function renderOverview(){
      <div class="stat"><b style="color:var(--fail)">${fails}</b><span>failing steps</span></div>
      <div class="stat"><b style="color:${openDef.length?"var(--blocked)":"var(--pass)"}">${openDef.length}</b>
        <span>open defects (${openDef.filter(d=>d.severity==="S1").length}×S1, ${openDef.filter(d=>d.severity==="S2").length}×S2)</span></div>
-     <div class="stat"><b>₹ ${cost.toFixed(0)}</b><span>library spend so far (C2 totals)</span></div>`;
+     <div class="stat"><b>₹ ${cost.toFixed(0)}</b><span>clean-path library spend (C2, reruns excluded)</span></div>`;
   $("glance").innerHTML="<table><tr><th>Subject · stage</th><th>Progress</th></tr>"+
     COMBOS.map(c=>{const key=comboKey(c);
       const cells=CSTEPS.map(cs=>{const st=item("combos",key,cs[0]).status||"pending";
@@ -461,6 +461,9 @@ function openProv(key){
     <div class="provgrid">${PROVFIELDS.map(f=>
       `<div><label>${f[1]}</label><input id="pv_${f[0]}" value="${esc(p[f[0]]||"")}"></div>`).join("")}</div>
     <h3>Per-generation cost (C2) — from runtime_data/token_log.csv, reruns included</h3>
+    <p class="small">The ₹ column on the matrix is the CLEAN-PATH total: every row here EXCEPT
+    <code>reruns</code>, i.e. what the files now on disk cost. Record reruns anyway — C2 reads
+    them, and the all-in figure is the one that prices a defect.</p>
     <table><tr><th>Run</th><th>Wall s</th><th>Tokens in</th><th>Tokens out</th><th>Cost ₹</th></tr>
     ${PROVSTAGES.map(sg=>{const r=st[sg]||{};
       return `<tr><td>${sg}</td>
@@ -481,7 +484,13 @@ function commitProv(key){
   PROVSTAGES.forEach(sg=>{
     const r={wall_s:$("pv_"+sg+"_wall").value.trim(),tokens_in:$("pv_"+sg+"_tin").value.trim(),
              tokens_out:$("pv_"+sg+"_tout").value.trim(),cost_inr:$("pv_"+sg+"_cost").value.trim()};
-    patch.stages[sg]=r; const c=parseFloat(r.cost_inr); if(!isNaN(c)){total+=c;any=true;}
+    patch.stages[sg]=r; const c=parseFloat(r.cost_inr);
+    // total_cost_inr = the CLEAN-PATH library cost: the runs that produced the files now on
+    // disk. Reruns are excluded (founder, 2026-08-07) — a defect rerun or a superseded
+    // generation is real spend but it is not what the chapter COSTS, and the corpus
+    // extrapolation multiplies this figure by 330. The rerun row is still captured above and
+    // still read at C2, where the all-in figure belongs.
+    if(!isNaN(c) && sg!=="reruns"){total+=c;any=true;}
   });
   patch.partition_wall_s=$("pv_part_wall").value.trim();
   patch.c5_split=$("pv_who5").value.trim();
