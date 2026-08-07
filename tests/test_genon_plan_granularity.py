@@ -223,10 +223,15 @@ def test_assessment_matches_the_arc_actually_taught():
     # identity: the canonical's own assessment, entire, nothing unserved
     p = serve_plan(lib, [(DUR, 10)])
     assert len(_flat(p)) == 6 and p["genon"]["assessment_items_unserved"] == 0
-    # K+1: the base plan's items PLUS the borrowed synthesis unit's own
+    # K+1: STILL exactly the base plan's items. REVERSED at ARV-D-067 (2026-08-07) — this
+    # test previously asserted the opposite ("the borrowed synthesis brings its own items"),
+    # which was C9.2's rule read across from the section-axis stages. It does not survive
+    # stage-level anchoring: a unit there has no items of its own, it inherits its whole
+    # STAGE's set, so the borrow imported the lender's entire final-stage assessment into a
+    # class that never had that stage's earlier units.
     q = serve_plan(lib, [(DUR, 11)])
-    assert len(_flat(q)) > len(_flat(p)), \
-        "the borrowed synthesis must bring its own items (founder, 2026-08-07)"
+    assert len(_flat(q)) == len(_flat(p)), \
+        "the borrowed synthesis must bring NO items (ARV-D-067)"
     assert q["genon"]["assessment_items_unserved"] == 0
     for i in _flat(q):
         assert i.get("period_ref"), "every served item must carry a sitting anchor"
