@@ -354,6 +354,24 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     }
   }, [subjects, activeSubject, activeGrade]);
 
+  /* ── REFETCH WHEN A PREPARE FINISHES (ARV-D-068, 2026-08-07) ─────────────────────
+   * The fetch below keys on the subject·class alone, so preparing a lesson changed nothing
+   * it watches and the finished plan never entered the list: it appeared only when the
+   * teacher happened to switch subject or class and the key changed. It looked fine for a
+   * RE-prepare, because that card was already there — the gap only shows on a genuinely NEW
+   * plan, which is every new variant of a chapter she already has.
+   *   `preparing` going non-null -> null IS the completion signal (page.jsx clears it in
+   * onPrepared and in onPrepareError). Bump the nonce on that edge and the fetch re-runs for
+   * the current key. On the error edge the refetch is harmless — it re-reads the list she
+   * already had. Declared ABOVE the fetch: the dep array is evaluated during render, so a
+   * later `const` would sit in the temporal dead zone and throw. */
+  const [plansNonce, setPlansNonce] = useState(0);
+  const wasPreparing = useRef(false);
+  useEffect(() => {
+    if (wasPreparing.current && !preparing) setPlansNonce((n) => n + 1);
+    wasPreparing.current = !!preparing;
+  }, [preparing]);
+
   // Fetch the saved plans for the scoped subject·grade (a single small call per combo, cached).
   useEffect(() => {
     if (!key) return;
@@ -361,7 +379,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     getJSON(`/plans/${sSlug}/${gSlug}`)
       .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
       .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
-  }, [key, sSlug, gSlug]);
+  }, [key, sSlug, gSlug, plansNonce]);
 
   // Reconcile this grade's section teaching-state from the server into the localStorage cache so
   // the status lines match what the teacher set on My Classes / another device. Re-syncs on load,
@@ -621,11 +639,21 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
    * not draw a second card; we mark the real one busy, which keeps the progress feedback
    * where she is already looking instead of removing it. */
   const proposedLabel = preparing ? matrixLabel(preparing.rows) : "";
-  const busyIdx = showProposed
+  const matchIdx = showProposed
     ? shown.findIndex((p) => String(p.chapter_number) === String(preparing.chapterNo)
         && String(p.duration_label || "") === proposedLabel)
     : -1;
-  const showProposedCard = showProposed && busyIdx < 0;
+  const showProposedCard = showProposed && matchIdx < 0;
+  /* HOIST the busy card to the head of the list while it runs (ARV-D-068). The proposed
+   * card was always drawn FIRST, where she is looking; marking an existing card busy in
+   * place moved the progress bar to wherever that card happened to sit — with seven cards
+   * that is often below the fold, and the fix for the duplicate read as "no progress bar
+   * at all". Hoisting puts the indicator back where the proposed card would have been, and
+   * it is the same rule the list already follows: the plan she just acted on comes first. */
+  const ordered = matchIdx > 0
+    ? [shown[matchIdx], ...shown.slice(0, matchIdx), ...shown.slice(matchIdx + 1)]
+    : shown;
+  const busyIdx = matchIdx >= 0 ? 0 : -1;
 
   return (
     <div className="mlp2" ref={rootRef}>
@@ -707,7 +735,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
               including when this is her very first plan and the list is otherwise the
               empty state (hence the `showProposed` guard on that branch above). */}
           {showProposedCard ? <ProposedCard preparing={preparing} /> : null}
-          {shown.map((p, pi) => {
+          {ordered.map((p, pi) => {
             const { completed, live } = statusFor(p);
             const busy = pi === busyIdx;          // this card IS the one being re-prepared
             const cls = (effView === "archived"

@@ -63,6 +63,24 @@ PATTERNS = [
     ("forward", True, re.compile(r"\bthread (to pick up|that .{0,40} develops)\b", re.I)),
     ("forward", True, re.compile(r"\bpreviewing\b|\bforeshadow\w*\b", re.I)),
     ("forward", True, re.compile(r"\bfrom the next\b|\bthis unit from the next\b", re.I)),
+    # ── added 2026-08-07 (S6·C7), AFTER a false start worth recording ──────────────────
+    # The C7(c) subjective sweep turned up seven paraphrases the word list could not see, and
+    # I first added all seven as BANS. Six were wrong, and the certified corpus said so
+    # immediately: 26 ban hits appeared on SS·IX and science·IX, libraries that had certified
+    # clean. The bulk of them were "having established …" — which is not a breach at all but
+    # the phrasing the science·secondary register block ENDORSES by name as the model
+    # continuity link. v1.10 LEGALISED backward reference; ban 2 is FORWARD reference and
+    # COMPLETION claims only, and I had treated every backward paraphrase as a breach.
+    #   Two survive, for reasons that are about direction, not phrasing:
+    ("forward", True, re.compile(r"\b(you|students|they) will have (built|made|drawn|created|seen|covered)\b", re.I)),
+    # ARTEFACT DEPENDENCE — ADVISORY, a different rule from the register. The variant brief
+    # requires per-unit independence ("no unit may require that another unit was taught, or
+    # that its homework was set, in order to run"), and a unit that reaches for "their earlier
+    # chart" cannot be run without one — the sharpest form of the dependency, because it is
+    # not a reference but a prerequisite. Advisory rather than ban: within a plan that is
+    # always served whole (a plan-granularity stage) it is perfectly legal, so a human decides.
+    ("artefact", False, re.compile(r"\btheir (earlier|previous) (chart|table|diagram|map|list|notes|model)\b", re.I)),
+    ("artefact", False, re.compile(r"\b(the|that) \w+ (they|students) already (made|built|drew|created)\b", re.I)),
     # ── added 2026-08-03 (ARV-D-026) — three forward phrasings that sailed through a clean run:
     # "the monsoon regime that will follow", "the interlinkage that the Monsoon unit will extend",
     # "explored in upcoming units". The second is the general shape: a NAMED unit plus a future

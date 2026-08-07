@@ -538,8 +538,23 @@ subject port exposed it. Fixed generically (`compile._MODELLED` → `unit["extra
 first so engine keys win), which pre-pays the same debt for mathematics and english. **Standing
 lesson: a serve test that never renders its own output is testing half the pipeline.**
 
-**Open, for the pilot to answer:** do arcs authored at 12 and at 7 units of the same chapter
-reach a recognisably similar terminal operation? The synthesis borrow leans entirely on the
+**★ S6 CERTIFIED 2026-08-07** — human gate signed, P1-P5 + C1-C14 all pass. Third stage
+certified, and the FIRST served by an engine other than the standard one. Pilot: ch 6, library
+[12, 10, 8, 7] x 45, Rs 151.65 over 5 runs. Four defects raised and fixed inside the cycle —
+ARV-D-065 (Rule 4's item counts were a table column, not a mandate; proven by a re-author that
+went 13 -> 18 items), ARV-D-066, ARV-D-067 (the borrowed synthesis dragged the lender's whole
+stage and its items — the ruling made that morning reversed the same day), ARV-D-068.
+
+**The answer to the pilot's open question, now that it has run:** the arcs did NOT come back
+identical — the 12-unit top derived SIX stages where the compacts derived five — and that is
+exactly what the architecture assumes and permits. What holds is the terminus: every canonical
+closes on the dissolution test's operation, and the borrowed synthesis leans on nothing else.
+C8 rated both joints clean/serviceable with zero jumpy. The design decision to let arcs differ
+freely, and to forbid stage borrowing between canonicals, is validated by the first real library
+rather than argued from principle.
+
+**Original open question, kept for the record:** do arcs authored at 12 and at 7 units of the
+same chapter reach a recognisably similar terminal operation? The synthesis borrow leans entirely on the
 dissolution-test sentence being honoured consistently. That is C8's inspection for this stage,
 and with one joint to look at it is a sharp, cheap test.
 

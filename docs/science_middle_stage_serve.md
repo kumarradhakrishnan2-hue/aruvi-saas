@@ -74,10 +74,16 @@ Notes that make this law total:
   group maps to several units the item anchors to the LAST). So when a below-floor
   truncation drops that unit, the stage's items travel with it as `unscheduled`. No new
   behaviour is needed.
-- **The synthesis unit carries its own assessment items and brings them along** (founder,
-  2026-08-07). This is *not* an exception — it is C9.2's standing rule, and an audit of the
-  installed libraries confirmed SS·VIII ch 3 and SS·IX ch 3 already anchor items to their
-  synthesis units. Science middle is aligned with the platform here, not excepted.
+- **The borrowed synthesis brings NO assessment items, and joins the host's LAST stage**
+  (founder, 2026-08-07 — **reverses the earlier ruling on the same day**, ARV-D-067).
+  C9.2's "a borrowed unit brings its own items" presupposes UNIT-level anchoring. Here a
+  unit has no items of its own: it inherits its whole STAGE's set. So the borrow imported
+  the top's entire final-stage assessment into a class that never had that stage's earlier
+  units, and the lender's handoff row grew a phantom sixth stage holding one sitting. The
+  variant has already met its own per-stage minimums (assessment v1.5), so it needs no more
+  items; the top's stage keeps its questions. The unit arrives as the closing sitting of the
+  host's final stage, content intact, with nothing anchored to it. The earlier ruling stands
+  for the ten section-axis stages, where a borrowed unit really does own its items.
 
 ---
 

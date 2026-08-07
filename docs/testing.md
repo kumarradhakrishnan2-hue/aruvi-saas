@@ -348,7 +348,7 @@ before starting each stage):
 | S3 | science · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-05) |
 | S4 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
-| S6 | science · middle | **2.2 ✓** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.4, 2026-08-07) |
+| S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
 | S8 | mathematics · preparatory | 1.1 | phases[] → P3 | — | — | — |
 | S9 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |

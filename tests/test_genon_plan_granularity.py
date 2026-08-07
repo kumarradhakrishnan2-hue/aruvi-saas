@@ -236,7 +236,7 @@ def test_assessment_matches_the_arc_actually_taught():
     for i in _flat(q):
         assert i.get("period_ref"), "every served item must carry a sitting anchor"
         assert max(i["period_ref"]) <= 11
-    print("ok   assessment follows the arc served; the borrowed synthesis brings its own")
+    print("ok   assessment follows the arc served; the borrowed synthesis brings NO items")
 
 
 def test_stages_are_never_split():
