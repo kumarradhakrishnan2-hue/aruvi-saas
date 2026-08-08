@@ -1,4 +1,4 @@
-ARUVI · CHAPTER ASSESSMENT GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.0
+ARUVI · CHAPTER ASSESSMENT GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.1
 
 Subject group : mathematics
 Stage         : Secondary Stage   ·   Grades : ix · x
@@ -183,10 +183,15 @@ counting the constant term as a coefficient); a confusion between two chapter
 concepts (e.g. linear vs quadratic, slope vs intercept, growth vs decay); a
 predictable slip (sign error, off-by-one in a pattern's nth term, transposing a
 and b); or recall of a related-but-wrong definition from the section's slice.
+Option order carries no meaning and is not yours to set: emit the four options in
+whatever order they were authored, and never let where an option sits influence how
+it is written. Uneven letters across a chapter are coincidence, not a defect.
 
 PROHIBITION
-No true/false; no implausible, arbitrary, or out-of-chapter distractors; no
-"none of the above" / "all of the above".
+1. No true/false; no implausible, arbitrary, or out-of-chapter distractors.
+2. MUST NOT write an option that refers to another option by its label ("both A and
+   B", "none of the above", "all of the above") — options are ordered downstream and a
+   label reference would be falsified.
 
 ================================================================================
 RULE 8 · OPEN TASK MENU — MATHEMATICS
@@ -319,6 +324,9 @@ INTEGRITY CONSTRAINTS (system level — override any other instruction)
 · cognitive_demand (Rule 4) is the sole format governor, consistent with implied_lo.
 · One item per implied_lo (Rule 5); the LO count is the only richness signal.
 · section_number is internal (generation + guide block); never in user-facing output.
+· ANCHORING: section_number IS the item's anchor. The platform resolves it to the
+  unit(s) that teach the section through the LP's coverage_handoff period_numbers;
+  MUST NOT emit period_ref or any unit number on an item.
 · Content grounding (Rule 3): summary supplies, section_context scopes — neither
   substitutes the other; worked-example numbers are never copied.
 · Verification (Rule 11): no determinate item ships unverified.
@@ -476,5 +484,5 @@ task.
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Assessment Constitution · Version 1.0 · Secondary Stage · Internal Document
+Mathematics Assessment Constitution · Version 1.1 · Secondary Stage · Internal Document
 ================================================================================

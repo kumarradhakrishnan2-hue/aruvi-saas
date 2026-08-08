@@ -8,6 +8,10 @@ export const metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  /* Lets the page extend under the iPhone notch/status bar so env(safe-area-inset-top)
+     resolves to a real value — .topbar (position: fixed) pads itself by it and owns that
+     strip with the paper background. Without this the env() is 0 and the padding a no-op. */
+  viewportFit: "cover",
 };
 
 /* No-flash theme resolver. Runs before the app paints: reads the saved
@@ -16,6 +20,10 @@ export const viewport = {
    window.__aruviTheme for ThemeToggle.jsx. Default is "system" (follow phone). */
 const THEME_SCRIPT = `
 (function(){
+  /* Always open at the top. A home-screen (standalone) iPhone web app restores the scroll
+     position it was left at when it is relaunched, so Aruvi could come up mid-page with the
+     brand row already scrolled past — "hidden until I scroll". We own the entry point. */
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){}
   try {
     var pref = localStorage.getItem('aruvi-theme') || 'system';
     var mql = window.matchMedia('(prefers-color-scheme: dark)');

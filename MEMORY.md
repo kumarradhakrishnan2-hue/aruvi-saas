@@ -469,7 +469,95 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-07 (newest) — SCIENCE·MIDDLE IS THE ONE STRUCTURAL EXCEPTION: it serves at PLAN
+## 2026-08-08 (newest) — TWO STACKED STICKIES ARE NOT ONE FROZEN BAR, AND `sticky` DOES NOT
+## WORK ON A DIRECT CHILD OF <body> IN A HOME-SCREEN iOS WEB APP. Top chrome is now one
+## FIXED bar + spacer.
+
+**Symptom (founder, on an iPhone with Aruvi saved to the home screen — i.e. a standalone
+web app, not a Safari tab):** the top row carrying the Aruvi logo was not on screen at rest
+and only surfaced on scrolling. Second report sharpened it: *"it is as if the top row alone
+is not frozen while frozen headings stay"* — the My Classes / My Lessons tab row and the
+inner `--nav-h` stickies (`.dash-hd`, `.lv-stick`, `.mlp2-frozen`) all held their position;
+only the brand row did not.
+
+**Cause.** The top chrome was **two independent sticky siblings**: `.hdr` at `top: 0` and
+`.main-tabs` at `top: var(--hdr-h)`. That arrangement only *looks* like one frozen bar — the
+two rows are separately stuck, and it has two failure modes we hit at once:
+1. `--hdr-h` is measured by JS on mount. Until that effect runs (or if fonts land late and
+   change the brand row's height), `.main-tabs` sticks at its **fallback 72px** — a number
+   that has no relationship to the real header. On a slow phone the first scroll can beat the
+   measurement.
+2. Nothing structurally ties the two rows together. Whatever made `.hdr` fail to stick on the
+   standalone webview left `.main-tabs` happily stuck 72px down, so the tab row visually
+   *replaced* the brand row instead of sitting under it — exactly the reported picture.
+
+Compounding it, a standalone iOS web app **restores its previous scroll position on relaunch**,
+so the app could come up mid-page with the brand row already scrolled past.
+
+**Fix (the general lesson).** *If two rows must move as one, make ONE element sticky and put
+both rows inside it.* Never stack stickies whose offsets depend on a JS-measured height —
+a measurement in the freeze path is a race, and the fallback is a magic number that will be
+wrong at some breakpoint. Concretely:
+- New `<div className="topbar">` in `page.jsx` wraps `<header className="hdr">` +
+  `<nav className="tabs main-tabs">`. `.topbar` is the ONLY sticky element (`top: 0`, z-index 6,
+  `--paper` background); `.hdr` and `.main-tabs` are now **static** — their `position: sticky`
+  and `top` declarations are gone from `globals.css`.
+- `env(safe-area-inset-top)` padding moved onto `.topbar` (counted once, and it is part of the
+  frozen bar rather than something that scrolls out from under the notch).
+- `--nav-h` / `--hdr-h` are still published for the INNER stickies, but are now measured
+  **relative to `.topbar`'s top edge** (`--nav-h` = the bar's full height; `--hdr-h` =
+  `.hdr`'s bottom minus the bar's top, which is what AskAruvi's `.aa-scrim` hangs off) and a
+  **ResizeObserver** on `.topbar` re-publishes them, so late fonts or a changing status-bar
+  inset can't leave stale offsets. The old code summed two `getBoundingClientRect().height`s
+  and would have silently double-counted or dropped the safe-area inset.
+- `history.scrollRestoration = 'manual'` in `layout.jsx`'s pre-paint script — we own the entry
+  point; a relaunched home-screen app opens at the top.
+
+**Also fixed in the same pass, a genuinely separate bug on the LOGIN screen:**
+`.login-wrap` was `display:flex; align-items:center`. When the flex child is TALLER than the
+box, `align-items:center` pushes the child's top into **negative overflow — unreachable by
+normal scrolling**, visible only for the instant an iOS rubber-band overscroll drags it in.
+The login card (brand + kicker + question + prose + field + button + note) is taller than a
+phone's visual viewport, so the Aruvi logo row was exactly that clipped strip. Now top-aligned
+by default, centred only `@media (min-height: 780px)`, on `100dvh` with safe-area padding.
+**Standing rule: vertical centring is a nice-to-have, never a clipper — guard every
+`align-items: center` full-height wrapper with a min-height query or `safe center`.**
+Login autofocus is now desktop-only (`min-width: 601px`): focusing an input on load makes a
+phone scroll it into view and shove the brand off the top before the teacher touches anything.
+
+**ROUND 2, same day — the wrapper had to go from `sticky` to `fixed`.** With one sticky
+wrapper in place the founder reported the bar *still* left the screen: it hid on dragging up
+(going down the page) and reappeared on dragging back to the top — i.e. it was behaving as
+**ordinary in-flow content**, not as a stuck element. Read literally, `position: sticky` was
+**not taking effect at all** for this element on that webview, while the inner stickies inside
+`<main>` (`.dash-hd`, `.lv-stick`, `.mlp2-frozen` at `top: var(--nav-h)`) kept working. The
+distinguishing feature is depth: the failing element is a **direct child of `<body>`**, the
+working ones are nested inside `.bodycontent > main`. **Carry-forward rule: do not rely on
+`position: sticky` for a direct child of `<body>` — WebKit in a standalone home-screen web app
+does not honour it. Use `position: fixed` plus an explicit in-flow spacer for top chrome.**
+`.topbar` is now `position: fixed; top/left/right: 0`, with `.topbar-spacer`
+(`height: var(--nav-h, 118px)`, 108px fallback ≤600px) reserving its height. Fixed has no
+sticky-containing-block dependency, so it cannot fail this way. The `--nav-h` measurement and
+the ResizeObserver are unchanged and still feed both the spacer and every inner sticky offset.
+
+**Status: STATIC-verified only** (babel-parse clean on `page.jsx` / `layout.jsx` /
+`Login.jsx`, CSS braces balanced, single `.topbar` wrapper + spacer, no other `.hdr` in the
+tree).
+Per §11 the sandbox can't `next dev`. **Owed: a live pass on the founder's iPhone home-screen
+web app** — brand row pinned at rest and through a full card-list scroll, tab row directly
+beneath it, inner frozen headings landing under the bar with no gap and no overlap, plus the
+desktop check that nothing shifted.
+
+**Open follow-on, not done:** there is still **no `manifest.json`** in `web/` (no `public/`
+dir at all). The home-screen app's chrome is therefore whatever iOS defaults to, which is why
+`env(safe-area-inset-*)` may resolve to 0 — those insets are only non-zero under
+`viewport-fit=cover`. A proper manifest (`display: standalone`, name, icons, theme colour)
+plus `viewportFit: "cover"` in `layout.jsx`'s `viewport` export would make the standalone
+shell deterministic instead of inherited. Do this before trusting any safe-area rule.
+
+---
+
+## 2026-08-07 — SCIENCE·MIDDLE IS THE ONE STRUCTURAL EXCEPTION: it serves at PLAN
 ## granularity, not unit granularity. Found at S6's stage prep, before a rupee was spent.
 
 **Spec of record: `docs/science_middle_stage_serve.md` (v1.0).** Read it before any S6 work.

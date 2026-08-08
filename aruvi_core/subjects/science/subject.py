@@ -132,6 +132,15 @@ class ScienceSubject:
         by omission. Secondary anchors every activity to a section (LP Rule 1)."""
         return stage_for(grade) != "middle"
 
+    def genon_item_anchor_family(self, grade) -> str:
+        """The 8-rule table's family column (base.py). Science is handoff-bridged at BOTH
+        stages — secondary joins `section_number` (row 2), middle joins `progression_stage`
+        (row 1) — which `genon_assessment` below already encodes. Declared separately
+        because the family has a consequence the join does not: a derived anchor means the
+        standard's closing synthesis unit needs its own handoff row or nothing can be
+        anchored to it (see `carriers.item_anchor_is_derived`)."""
+        return "handoff"
+
     # ── Validation ──────────────────────────────────────────────────────────────
     def validate(self, raw: Dict[str, Any]) -> Dict[str, Any]:
         lp = raw.get("lesson_plan", raw)

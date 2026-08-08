@@ -176,6 +176,45 @@ def _arc_brief(count, dur, chapter, standard):
     return "\n".join(lines) + "\n"
 
 
+def _synthesis_handoff_lines(subject, klass, count):
+    """The synthesis unit's OWN coverage_handoff row — asked for only where it is needed.
+
+    On a HANDOFF-BRIDGED stage (the 8-rule table's derived-anchor family: science both
+    stages, mathematics·secondary) an assessment item reaches its unit only through a
+    `coverage_handoff` row. The synthesis unit is not a textbook section, so it gets no row
+    unless asked — and then nothing can be anchored to it, which makes C9.2 ("a borrowed
+    unit brings its own items") unsatisfiable on exactly the Case-1 synthesis borrow the
+    serve engine relies on.
+
+    This was not hypothetical. Measured on the installed, CERTIFIED science·ix ch 8 library
+    (2026-08-08): the model invented a synthesis row unprompted, and no item used it — item
+    `section_number`s stopped at 10 while the synthesis sat at unit 12, so its questions
+    simply did not exist. Asking is cheaper than hoping, and free.
+
+    Emits nothing on the item-self-sufficient family (items carry `period_ref`, so the
+    synthesis unit is reachable without a row) or on the period-field family.
+    """
+    try:
+        sys.path.insert(0, ROOT)
+        from aruvi_core.genon.carriers import item_anchor_is_derived
+        if not item_anchor_is_derived(subject, klass):
+            return []
+    except Exception:                                       # noqa: BLE001
+        return []
+    return [
+        f"- GIVE THE SYNTHESIS UNIT ITS OWN coverage_handoff ROW. At this stage an "
+        f"assessment item names a GROUP (its section number), never a unit, and the "
+        f"platform resolves the unit from that group's handoff row — so a unit with no row "
+        f"can hold no question. Emit one final handoff entry for unit {count}: the next "
+        f"number in sequence, its period_numbers exactly [{count}], its title/ref the word "
+        f"synthesis (this is the ONE row whose label is not copied from the chapter "
+        f"summary, because the unit is not a section), and its implied_lo the integrative "
+        f"outcome the closing sitting actually builds. Then write its items against that "
+        f"row like any other. Do NOT count this row in total_sections — that is the number "
+        f"of SECTIONS the chapter has, and synthesis is not one of them.",
+    ]
+
+
 def top_brief_for(subject, klass, chapter):
     """The STANDARD canonical's brief — platform-composed, prepended to the
     generation prompt (v2.0: gains the synthesis-anchor mandate, §0.3)."""
@@ -203,6 +242,7 @@ def top_brief_for(subject, klass, chapter):
         f"- COVERAGE COMPLETES BEFORE THE SYNTHESIS: all registry sections "
         f"first-appear across units 1..{count - 1}. No other unit may use the "
         "synthesis token.",
+        *_synthesis_handoff_lines(subject, klass, count),
         f"- Save as: ch_{int(chapter):02d}_canonical.json",
     ]) + "\n"
 

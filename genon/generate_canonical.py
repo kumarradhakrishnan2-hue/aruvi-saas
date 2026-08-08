@@ -151,9 +151,22 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
     # stages, maths secondary — carry an integer section/stage number and the platform
     # resolves the unit from coverage_handoff, so demanding period_ref here would fail
     # every science canonical by construction. Ask the seam what the anchor is.
+    # A MISSING CARRIER MUST NOT PASS (2026-08-08, found at S4's P-prep). This used to be a
+    # bare `except Exception`, and the combination was silently fatal: for a subject whose
+    # items sit under a wrapper (`{…, questions: []}` — science·secondary, maths·secondary)
+    # `parsed["assessment_items"]` is absent or a dict, so the fallback's isinstance filter
+    # yielded [] and the loop below became a NO-OP. The canonical then passed validation with
+    # every item anchored to nothing, was installed, and was paid for — the real failure only
+    # surfacing later at certification as "does not compile" on every file. So
+    # CarrierNotImplemented now propagates: a subject·stage genon cannot resolve refuses to
+    # generate rather than generating unvalidated. The legacy fallback is kept for genuinely
+    # shapeless files, but never for an unimplemented carrier.
+    from aruvi_core.genon.carriers import (CarrierNotImplemented,
+                                           assessment_items as _carrier_items)
     try:
-        from aruvi_core.genon.carriers import assessment_items as _carrier_items
         resolved = _carrier_items(parsed, parsed)
+    except CarrierNotImplemented:
+        raise
     except Exception:                                            # noqa: BLE001
         resolved = [it for it in (parsed.get("assessment_items") or [])
                     if isinstance(it, dict)]

@@ -48,7 +48,7 @@ from aruvi_core.genon.carriers import (                           # noqa: E402
     has_section_axis, raw_item_list, serve_granularity,
 )
 from aruvi_core.genon.serve import (                               # noqa: E402
-    _norm, is_synthesis_unit, section_registry, unit_range,
+    _norm, _unit_anchors, is_synthesis_unit, section_registry, unit_range,
 )
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
@@ -277,6 +277,82 @@ def certify(subject, grade, ch, row):
              f"{name}: coverage reaches the final registry section"
              + (" before the synthesis unit" if is_top else ""), name)
 
+    # ── HANDOFF ↔ ANCHOR AGREEMENT (2026-08-08, S4 · maths·IX ch 4) ───────────────
+    # Added because nothing compared the two objects that BETWEEN them decide where an
+    # assessment item lands. Checks 3-5 above test a unit's `section_anchor` against the
+    # REGISTRY; nothing tested it against the `coverage_handoff`, which on a derived-anchor
+    # stage is the item's only route to a unit. maths·IX ch 4's top canonical passed every
+    # existing check while units 10-12 wore the `4.1` label and section 1's handoff row
+    # listed only unit 1.
+    #
+    # THE TWO DIRECTIONS ARE NOT SYMMETRIC, and this is the whole design of the check.
+    # Measured on that library before writing it (founder ruling 2026-08-08):
+    #
+    #   handoff lists a unit that does NOT anchor its section  ->  GATE. The item is routed
+    #       to a sitting that never taught its section. There is no reading on which that is
+    #       correct, and the item cannot be trusted.
+    #
+    #   a unit anchors a section the handoff does not route through  ->  ADVISORY, never a
+    #       gate. The obvious "fix" — extend period_numbers to every unit bearing the label —
+    #       was tried and LOSES QUESTIONS: an item anchors at its section's LAST unit, so
+    #       extending sec#1 from [1] to [1,10,11,12] moved the Introduction item to unit 12
+    #       and it vanished at X=12 (12 items -> 11). p11, which does list them, drops its
+    #       Introduction item at X=9 and X=10 for exactly this reason. The shorter list is
+    #       the truthful one: section 4.1 completes at unit 1, and consolidation units that
+    #       revisit it do not re-open it.
+    #
+    # So the advisory is the honest signal: a unit wearing a section's label without teaching
+    # it. Its real cause is architectural — the registry offers no token for a CONSOLIDATION
+    # unit (`synthesis` is reserved to one closing unit), so a chapter with many more units
+    # than sections has no legal label for the rest and the model picks the least-wrong
+    # registry entry. Read the count; do not "repair" it into a gate pass.
+    if section_axis:
+        for name, s in lib:
+            raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+            handoff = (raw.get("result") or {}).get("coverage_handoff")
+            if not isinstance(handoff, list) or not handoff:
+                continue                     # dict-shaped handoffs are keyed by competency
+            anchors_of = {}                  # unit -> its normalised anchor tokens
+            for u in s["units"]:
+                anchors_of[u["unit"]] = ({"synthesis"} if is_synthesis_unit(u)
+                                         else set(_norm(a) for a in _unit_anchors(u)))
+            mis, unrouted, missing_row = [], [], []
+            routed = set()
+            for e in handoff:
+                if not isinstance(e, dict):
+                    continue
+                ref = _norm(e.get("section_ref") or e.get("section_label")
+                            or e.get("section_title") or "")
+                pns = [int(p) for p in (e.get("period_numbers") or []) if p is not None]
+                routed |= set(pns)
+                for pn in pns:
+                    have = anchors_of.get(pn)
+                    if have is None:
+                        mis.append(f"U{pn} (no such unit) <- {ref or '?'}")
+                    elif ref and not any(ref in a or a in ref for a in have):
+                        mis.append(f"U{pn} anchors {sorted(have)} but is routed as {ref!r}")
+            note(not mis,
+                 f"{name}: every handoff row routes to a unit that anchors its section"
+                 + (f" — {len(mis)} mis-route(s): " + "; ".join(mis[:4]) if mis else ""),
+                 name)
+            # ADVISORY (never gates) — see the reasoning block above.
+            for u in s["units"]:
+                un = u["unit"]
+                if un not in routed and not is_synthesis_unit(u):
+                    unrouted.append(f"U{un}={'/'.join(sorted(anchors_of[un])) or '?'}")
+            groups = len([e for e in handoff if isinstance(e, dict)])
+            lines.append(
+                f"      handoff/anchor: {groups} handoff group(s) for {len(s['units'])} "
+                f"unit(s) — at most {groups} unit(s) can carry an item, so "
+                f"{max(0, len(s['units']) - groups)} without one is arithmetic, not a defect")
+            if unrouted:
+                lines.append(
+                    f"      ADVISORY {name}: {len(unrouted)} unit(s) wear a section label the "
+                    f"handoff does not route items through: {', '.join(unrouted[:6])}"
+                    + (" …" if len(unrouted) > 6 else "")
+                    + "  (do NOT extend period_numbers to fix this — it moves the item to a "
+                      "later unit and loses it on short serves)")
+
     # ── REGISTER GATE (2026-08-02) ────────────────────────────────────────────────
     # The register is stated as a prohibition in every constitution and the ch 3 pilot
     # proved a prohibition is not enforcement (testing.md C3: 9 breaches under v1.10,
@@ -451,6 +527,18 @@ def main():
     klass = KLASS[grade]
     gen = str(HERE / "generate_canonical.py")
     vpn = str(HERE / "variant_plans.py")
+
+    # STEP 0 · PRE-FLIGHT: does this subject·stage have a genon carrier? (2026-08-08, S4.)
+    # This costs nothing and must stay FIRST. Without it the answer arrived at certification
+    # — which runs after STEP 1 and STEP 4 — so a subject genon cannot resolve was authored
+    # and PAID FOR in full, then reported as "does not compile" on every file, naming neither
+    # the carrier nor the subject. testing.md P5.5 asks for this as a read; here it is as a
+    # gate, because a gate cannot be forgotten.
+    from aruvi_core.genon.carriers import CarrierNotImplemented, require_carrier
+    try:
+        require_carrier(subject, grade)
+    except CarrierNotImplemented as e:
+        raise SystemExit(f"STOP before spending — {e}")
 
     bdir = HERE / "out" / "briefs"
     bdir.mkdir(parents=True, exist_ok=True)

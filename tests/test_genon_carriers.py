@@ -226,19 +226,142 @@ class TestUnitProjection(unittest.TestCase):
 
 
 class TestUnimplementedFamiliesFailLoudly(unittest.TestCase):
-    """A subject genon has never run on must REFUSE, not return something plausible."""
+    """A subject·stage genon has never run on must REFUSE, not return something plausible.
 
-    def test_mathematics_raises_with_the_owing_stage_named(self):
-        plan = load("maths_ix_ch02_saved.json")
+    Keyed by subject·STAGE since 2026-08-08 (S4). It used to be per subject, which made
+    `mathematics` a single entry spanning TWO families — handoff-bridged at secondary
+    (row 6), period-field at middle/preparatory (rows 4/5) — so landing secondary would
+    have silently declared the other two ready.
+    """
+
+    def test_mathematics_MIDDLE_still_raises_with_the_owing_stage_named(self):
+        plan = load("maths_vi_ch05_saved.json")
         with self.assertRaises(CarrierNotImplemented) as cm:
             assessment_items(plan, plan.get("result", plan))
-        self.assertIn("mathematics", str(cm.exception))
+        msg = str(cm.exception)
+        self.assertIn("mathematics", msg)
+        self.assertIn("period-field", msg, "must name the family it actually belongs to")
 
     def test_english_raises_with_the_owing_stage_named(self):
         plan = load("english_vii_ch01_saved.json")
         with self.assertRaises(CarrierNotImplemented) as cm:
             assessment_items(plan, plan.get("result", plan))
         self.assertIn("english", str(cm.exception))
+
+
+class TestMathematicsSecondaryLanded(unittest.TestCase):
+    """S4, 2026-08-08 — maths·secondary is 8-rule ROW 6, and it is a DELEGATION.
+
+    The join already existed for the app (`_secondary_assess`); all that was missing was
+    genon's door onto it (`genon_assessment`, which returns RAW item dicts rather than the
+    display objects `assessment_to_view` builds). These tests pin the row, not the plumbing.
+    """
+
+    PLAN = None
+
+    def setUp(self):
+        self.plan = load("maths_ix_ch02_saved.json")
+        self.result = self.plan.get("result", self.plan)
+
+    def test_it_no_longer_raises(self):
+        items = assessment_items(self.plan, self.result)
+        self.assertTrue(items, "the fixture has questions; the seam must return them")
+
+    def test_every_item_resolves_through_the_handoff_not_the_label(self):
+        index = {int(h["section_number"]): [int(p) for p in h["period_numbers"]]
+                 for h in self.result["coverage_handoff"]
+                 if h.get("section_number") is not None}
+        for it in assessment_items(self.plan, self.result):
+            sn = it.get("section_number")
+            if not isinstance(sn, int) or sn not in index:
+                continue
+            self.assertEqual(it["unit_ref"], [max(index[sn])],
+                             "row 6 anchors at the section's LAST unit (2026-08-05 ruling)")
+
+    def test_raw_item_fields_survive(self):
+        """Genon needs the RAW dicts: served files and exports read these."""
+        items = assessment_items(self.plan, self.result)
+        self.assertTrue(
+            any(("options" in it) or ("expected_answer" in it) or ("guide" in it)
+                for it in items),
+            "options / expected_answer / guide must not be stripped to display objects")
+
+    def test_the_wrapper_that_caused_all_this_is_handled(self):
+        """maths·secondary wraps items under `questions`, exactly like science·secondary —
+        the shape whose mishandling created this whole module at S3."""
+        self.assertIsInstance(self.result["assessment_items"], dict)
+        self.assertIn("questions", self.result["assessment_items"])
+        self.assertEqual(len(assessment_items(self.plan, self.result)),
+                         len(self.result["assessment_items"]["questions"]))
+
+    def test_the_seam_does_not_need_a_grade(self):
+        """`genon_assessment` receives only `result`, and the grade lives on the enclosing
+        PLAN — so a `stage_for(grade)` read here is None on the very call the carrier makes.
+        The stage is told apart by container shape instead. This test is the regression."""
+        self.assertIsNone(self.result.get("grade"), "fixture: grade is on the plan, not here")
+        assessment_items(self.plan, self.result)          # must not raise UnknownGradeError
+
+
+class TestCarrierPreFlight(unittest.TestCase):
+    """The gate must be FREE. Before 2026-08-08 the answer arrived at certification, which
+    runs after the metered steps, so a missing carrier cost a whole library (₹110-150) and
+    reported itself as "does not compile" on every file. testing.md P5.5."""
+
+    def test_ready_stages_report_no_gap(self):
+        from aruvi_core.genon.carriers import carrier_gap
+        for subject, grade in (("mathematics", "ix"), ("science", "ix"), ("science", "viii"),
+                               ("social_sciences", "ix"), ("the_world_around_us", "v")):
+            self.assertIsNone(carrier_gap(subject, grade), f"{subject}·{grade}")
+
+    def test_owed_stages_report_their_stage_and_row(self):
+        from aruvi_core.genon.carriers import carrier_gap
+        for subject, grade, owes in (("mathematics", "vii", "S7"),
+                                     ("mathematics", "iii", "S8"),
+                                     ("english", "iii", "S9"),
+                                     ("english", "vi", "S10"),
+                                     ("english", "ix", "S11")):
+            gap = carrier_gap(subject, grade)
+            self.assertIsNotNone(gap, f"{subject}·{grade} is not implemented")
+            self.assertIn(owes, gap, "the gap must name the stage that owes it")
+
+    def test_a_missing_grade_is_conservative_not_optimistic(self):
+        """Guessing "ready" is the expensive mistake, so an unknown grade on a subject that
+        still owes any stage reads as owed."""
+        from aruvi_core.genon.carriers import carrier_gap
+        self.assertIsNotNone(carrier_gap("mathematics", None))
+        self.assertIsNone(carrier_gap("social_sciences", None), "owes nothing at any stage")
+
+    def test_require_carrier_raises_only_for_owed(self):
+        from aruvi_core.genon.carriers import require_carrier
+        require_carrier("mathematics", "ix")                       # must not raise
+        with self.assertRaises(CarrierNotImplemented):
+            require_carrier("mathematics", "vii")
+
+
+class TestItemAnchorFamilyIsDeclared(unittest.TestCase):
+    """The 8-rule table's family column, declared on the plugin rather than inferred —
+    because it has a consequence beyond the join: on a DERIVED anchor a unit with no
+    handoff row can hold no item, which is why the standard's synthesis unit needs one."""
+
+    def test_families_match_the_8_rule_table(self):
+        from aruvi_core.genon.carriers import item_anchor_family
+        for subject, grade, family in (
+                ("science", "viii", "handoff"),          # row 1
+                ("science", "ix", "handoff"),            # row 2
+                ("social_sciences", "vii", "item"),      # row 3
+                ("mathematics", "vii", "period_field"),  # row 4
+                ("mathematics", "iii", "period_field"),  # row 5
+                ("mathematics", "ix", "handoff"),        # row 6
+                ("the_world_around_us", "iii", "item")): # row 8
+            self.assertEqual(item_anchor_family(subject, grade), family,
+                             f"{subject}·{grade}")
+
+    def test_derived_anchor_stages_are_exactly_the_handoff_family(self):
+        from aruvi_core.genon.carriers import item_anchor_is_derived
+        self.assertTrue(item_anchor_is_derived("mathematics", "ix"))
+        self.assertTrue(item_anchor_is_derived("science", "ix"))
+        self.assertFalse(item_anchor_is_derived("social_sciences", "ix"))
+        self.assertFalse(item_anchor_is_derived("mathematics", "vii"))
 
 
 class TestCompileEndToEnd(unittest.TestCase):

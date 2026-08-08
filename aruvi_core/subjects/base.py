@@ -80,3 +80,24 @@ class Subject(Protocol):
     def genon_serve_granularity(self, grade: str) -> str: ...
 
     def genon_has_section_axis(self, grade: str) -> bool: ...
+
+    # ── genon: which family LINKS an assessment item to its unit (default "item") ────
+    # Added 2026-08-08 at S4. This is the verified 8-rule table's family column
+    # (docs/architecture-plan.md §"Link resolution"), declared instead of inferred, so
+    # nothing downstream has to guess — and so a subject cannot invent a fourth way.
+    #
+    #   "item"         — item-self-sufficient: `period_ref[]` is read straight off the
+    #                    item. social_sciences, the_world_around_us (rows 3, 8).
+    #   "handoff"      — handoff-bridged: the item carries an integer group number
+    #                    (section/stage) and the platform joins it through
+    #                    `coverage_handoff` → `period_numbers`. science both stages,
+    #                    mathematics·secondary (rows 1, 2, 6).
+    #   "period_field" — the item's section/spine code matches the PERIOD's own field.
+    #                    mathematics middle/preparatory, english (rows 4, 5, 7).
+    #
+    # It has one consequence beyond the join, which is why it is declared at all: on a
+    # "handoff" stage an item's anchor is DERIVED, so a unit with no handoff row can carry
+    # no items — and the standard canonical's mandated closing SYNTHESIS unit is exactly
+    # such a unit unless the brief asks for a row for it. `variant_plans.top_brief_for`
+    # reads this to decide whether to ask. See docs/testing.md §3 P5.5.
+    def genon_item_anchor_family(self, grade: str) -> str: ...

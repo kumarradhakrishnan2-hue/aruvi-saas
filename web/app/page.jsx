@@ -89,22 +89,33 @@ export default function Home() {
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
 
-  // Freeze the top chrome (sticky header + tabs, then the My Classes greeting) while the card
-  // list scrolls beneath. Publish the measured header height and header+tabs height as CSS vars
-  // so the sticky offsets stay exact across breakpoints and the two-line brand — no magic numbers.
+  // Freeze the top chrome (the fixed .topbar, then the My Classes greeting) while the card
+  // list scrolls beneath. Publish two CSS vars so every inner sticky offset stays exact across
+  // breakpoints and the two-line brand — no magic numbers:
+  //   --nav-h  the FULL height of the frozen bar (what inner stickies sit under)
+  //   --hdr-h  the brand row's underside (AskAruvi's scrim hangs off this)
+  // Both are measured RELATIVE TO .topbar's top edge, so the safe-area inset a home-screen
+  // iPhone adds above the brand row is counted once and only once. ResizeObserver as well as
+  // resize: fonts landing late or the status-bar inset changing must not leave stale offsets.
   useEffect(() => {
+    const root = document.documentElement;
+    const bar = document.querySelector(".topbar");
     const setVars = () => {
-      const root = document.documentElement;
+      const b = document.querySelector(".topbar");
       const h = document.querySelector(".hdr");
-      const t = document.querySelector(".main-tabs");
-      const hh = h ? Math.round(h.getBoundingClientRect().height) : 0;
-      const th = t ? Math.round(t.getBoundingClientRect().height) : 0;
-      if (h) root.style.setProperty("--hdr-h", `${hh}px`);
-      if (h && t) root.style.setProperty("--nav-h", `${hh + th}px`);
+      if (!b) return;
+      const bt = b.getBoundingClientRect();
+      if (h) root.style.setProperty("--hdr-h", `${Math.round(h.getBoundingClientRect().bottom - bt.top)}px`);
+      root.style.setProperty("--nav-h", `${Math.round(bt.height)}px`);
     };
     setVars();
     window.addEventListener("resize", setVars);
-    return () => window.removeEventListener("resize", setVars);
+    let ro;
+    if (bar && typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(setVars);
+      ro.observe(bar);
+    }
+    return () => { window.removeEventListener("resize", setVars); if (ro) ro.disconnect(); };
   }, [ready, tab, editFlow, user]);
 
   // Load this user's readiness profile whenever the signed-in user changes (incl. on the
@@ -354,6 +365,19 @@ export default function Home() {
 
   return (
     <>
+      {/* ONE FIXED top bar (2026-08-08). Two histories are baked into this element:
+          (a) the brand row and the tab row used to be two INDEPENDENT sticky siblings — .hdr at
+              top:0 and .main-tabs at top:var(--hdr-h) — so nothing tied them together and the
+              tab row could stay frozen while the Aruvi row scrolled away behind it. Both rows
+              are now STATIC inside this one wrapper; they can only move as a unit.
+          (b) the wrapper was then `position: sticky`, and on an iPhone home-screen (standalone)
+              web app it still scrolled away — the brand row simply left with the content and
+              came back on returning to the top, i.e. sticky was not taking effect at all for a
+              direct child of <body> in that webview. So the bar is now `position: fixed`, which
+              does not depend on a sticky containing block, with .topbar-spacer reserving its
+              height in the flow. Do not "simplify" this back to sticky.
+          (--hdr-h/--nav-h are still published — inner views use them for their own offsets.) */}
+      <div className="topbar">
       {/* Shell header: the brand exactly as the first-run page renders it (Aruvi + red dot,
           LESSON STUDIO tag beneath); settings gear (→ teaching profile) + log out right. No
           hamburger, no drawer — the two tabs below the header are the whole nav. */}
@@ -363,11 +387,14 @@ export default function Home() {
           <span className="hdr-brand-tag">lesson studio</span>
         </div>
         <div className="hdr-user">
-          <span className="hdr-user-name">{user}</span>
           <ThemeToggle />
           <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings"
             data-tour="settings-gear">⚙</button>
-          <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
+          {/* rightmost: profile name stacked over its own log out */}
+          <div className="hdr-user-id">
+            <span className="hdr-user-name">{user}</span>
+            <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
+          </div>
         </div>
       </header>
 
@@ -393,6 +420,9 @@ export default function Home() {
           </svg>
         </button>
       </nav>
+      </div>
+      {/* reserves the fixed bar's height in the flow — see the .topbar comment above */}
+      <div className="topbar-spacer" aria-hidden="true" />
 
       <div className="bodycontent">
 

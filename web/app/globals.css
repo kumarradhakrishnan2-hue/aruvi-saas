@@ -42,9 +42,50 @@ body {
 .kicker { font-size: 10.5px; text-transform: uppercase; letter-spacing: .18em; color: var(--pine); font-weight: 500; }
 
 /* ── Header ───────────────────────────────────────────── */
+/* THE single sticky top bar — brand row + tab row, frozen together (2026-08-08).
+   Only this wrapper is sticky; .hdr and .main-tabs inside it are static. See the comment in
+   page.jsx for why the previous two-independent-stickies arrangement broke on an iPhone
+   home-screen web app. `top: 0` with a paper background and the safe-area top padding applied
+   HERE (not on .hdr) so the notch inset scrolls with nothing — it is part of the frozen bar. */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 6;
+  background: var(--bar-fill);
+  padding-top: env(safe-area-inset-top);
+  /* ── Bar palette (2026-08-08) — the bar is FILLED with the Aruvi logo's own pine
+     (--pine-d, #164436 in light) so the frozen chrome reads as chrome, contrasted against
+     the paper it floats over. Everything inside repaints through these bar-scoped tokens;
+     the dark values live with the rest of the dark theme at the bottom of this file. */
+  --bar-fill: var(--pine-d);
+  --bar-ink: #f3efe6;                    /* cream on pine — same cream as .mc-toast */
+  --bar-ink-soft: rgba(243, 239, 230, .66);
+  --bar-line: rgba(243, 239, 230, .18);  /* internal hairlines */
+  --bar-accent: #cf7f56;                 /* active-tab underline — the dark theme's clay; light clay #b65a31 sinks into the pine */
+}
+/* Children repaint on the bar tokens. The pine fill covers the safe-area strip + the BRAND
+   ROW ONLY — the My Classes / My Lessons / Ask-Aruvi tab row stays on paper (it repaints
+   itself opaque below). Scoped under .topbar only — .hdr/.tabs styles used anywhere else
+   (first-run, login) are untouched. */
+.topbar .hdr { background: transparent; border-bottom-color: var(--bar-line); }
+.topbar .main-tabs { background: var(--paper); border-bottom: none; } /* opaque paper over the fill — tabs keep their normal treatment, minus the full-width hairline under the row */
+.topbar .brand-row { color: var(--bar-ink); }
+/* The brand dot: the one-logo red (#c0392b) goes muddy on a pine fill, so the bar alone
+   uses the dark palette's brighter red of the same family. */
+.topbar .brand-row em { color: #e0705f; }
+.topbar .hdr-brand-tag { color: var(--bar-ink-soft); }
+.topbar .hdr-user-name { color: var(--bar-ink); }
+.topbar .hdr-theme, .topbar .hdr-gear, .topbar .hdr-user-logout { color: var(--bar-ink-soft); }
+.topbar .hdr-theme:hover, .topbar .hdr-gear:hover { color: var(--bar-ink); }
+.topbar .hdr-user-logout:hover { color: var(--bar-accent); }
+/* The bar is out of flow, so a spacer reserves its height. --nav-h is measured from the bar
+   itself (page.jsx); the fallbacks are the real rendered heights per breakpoint so the very
+   first paint doesn't jump before the measurement lands. */
+.topbar-spacer { height: var(--nav-h, 118px); }
+@media (max-width: 600px) { .topbar-spacer { height: var(--nav-h, 108px); } }
+
 .hdr {
-  position: sticky; top: 0; z-index: 6; background: var(--paper);
-  border-bottom: 1px solid var(--line); padding: 16px 34px; display: flex; align-items: center; gap: 18px;
+  z-index: 6; background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 34px; display: flex; align-items: center; gap: 18px;
 }
 @media (max-width: 600px) {
   .hdr { padding: 14px 18px; }
@@ -61,8 +102,10 @@ body {
 .hdr .sel { margin-left: auto; display: flex; gap: 14px; }
 /* signed-in user + log out, top-right on the logo row */
 .hdr-user { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+/* rightmost stack: profile name on top, log out beneath it (2026-08-08) */
+.hdr-user-id { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .hdr-user-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
-.hdr-user-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 4px 0; }
+.hdr-user-logout { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; cursor: pointer; padding: 0; }
 .hdr-user-logout:hover { color: var(--clay); }
 
 /* ── Phase 2 shell header ("side bar.jpg") — hamburger always-open trigger, centered
@@ -107,7 +150,21 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 @media (max-width: 600px) { .gate { margin: 32px auto; } }
 
 /* ── User-ID portal (pre-auth tenanting) ─────────────────── */
-.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+/* Vertical centring is a NICE-TO-HAVE, never a clipper (2026-08-08). `align-items: center`
+   on a flex box whose child is TALLER than the box pushes the child's top into NEGATIVE
+   overflow — unreachable by normal scrolling, visible only for the instant an iOS rubber-band
+   overscroll drags it into view. On a home-screen iPhone the login card (brand + kicker +
+   question + prose + field + button + note) is taller than the visual viewport, so the Aruvi
+   logo row was exactly that clipped strip. Fix: top-align by default, and only centre when the
+   viewport is provably tall enough that the card cannot overflow. `100dvh` (with a 100vh
+   fallback) so iOS's collapsing toolbar doesn't inflate the box either, and safe-area padding
+   for standalone/home-screen mode where the status bar can overlap the top. */
+.login-wrap {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
+}
+@media (min-height: 780px) { .login-wrap { align-items: center; } }
 .login-card {
   width: 100%; max-width: 420px; background: var(--paper-2); border: 1px solid var(--line);
   border-radius: 6px; padding: 40px 38px 30px; box-shadow: 0 1px 0 var(--line-soft), 0 18px 40px -28px rgba(31,42,36,.35);
@@ -239,9 +296,11 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: rela
    My Classes · My Lessons, centred, reusing the original .tabs/.tab treatment: the active
    tab carries the same clay-red underline the old My Plans/Generate tabs used. No sidebar,
    no hamburger, no other destinations — the settings gear in the header is chrome, not nav. */
-/* Tabs stay frozen right under the sticky header (--hdr-h measured in page.jsx), so the top
-   chrome — brand, tabs, then the My Classes greeting — holds while the card list scrolls. */
-.main-tabs { justify-content: center; position: sticky; top: var(--hdr-h, 72px); z-index: 5; background: var(--paper); }
+/* The tab row is STATIC — it is frozen because its parent .topbar is the sticky element, not
+   because it stickies itself at top:var(--hdr-h). That old arrangement made the tabs freeze
+   independently of the brand row above them, which is how the Aruvi row came unstuck on an
+   iPhone home-screen web app while the tabs stayed put (2026-08-08). */
+.main-tabs { justify-content: center; z-index: 5; background: var(--paper); }
 
 /* header settings gear — the teaching profile is parked behind it (settings, not a tab) */
 .hdr-gear { font-size: 18px; line-height: 1; background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
@@ -1908,7 +1967,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-wrap {
   min-height: 100vh; min-height: 100dvh;
   display: flex; flex-direction: column;
-  padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+  padding: calc(22px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom));
   max-width: 480px; margin: 0 auto;
   overflow-x: hidden; /* safety net: no step's content may force horizontal scroll */
   /* Section palette — same tokens the readiness grid (.rd) and My Class (.myclasses) define.
@@ -3001,6 +3060,17 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
     --edge:        #3d4a43;
     --edge-green:  #33453d;
     --edge-clay:   #4a382e;
+  }
+
+  /* — The fixed top bar: same pine-chrome idea at dark depth. A deep pine fill, clearly
+       greener than the near-neutral --paper, with the shared cream ink. Only the bar tokens
+       flip; the .topbar-scoped child rules in the header section do the painting. — */
+  [data-theme-effective="dark"] .topbar {
+    --bar-fill: #14332a;
+    --bar-ink: #e9e4d7;
+    --bar-ink-soft: rgba(233, 228, 215, .62);
+    --bar-line: rgba(233, 228, 215, .15);
+    /* --bar-accent stays #cf7f56 — already the dark clay */
   }
 
   /* Section palette — redefined on the same selectors that own it. */

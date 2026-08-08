@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 /* ───────── User-ID portal (pre-auth tenanting) ─────────
  * The primary entry point to Aruvi. No password stage yet: a teacher types a user ID and
@@ -15,6 +15,16 @@ import { useState } from "react";
 export default function Login({ onEnter }) {
   const [id, setId] = useState("");
   const trimmed = id.trim();
+  const inputRef = useRef(null);
+
+  /* Autofocus is DESKTOP-ONLY (2026-08-08). On a phone — especially a home-screen/standalone
+     web app — focusing an input on load makes the browser scroll it into view (and can raise
+     the keyboard), which shoves the Aruvi brand row off the top of the screen before the
+     teacher has touched anything. Desktop keeps the convenience of typing straight away. */
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    if (window.matchMedia("(min-width: 601px)").matches) inputRef.current?.focus();
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
@@ -40,11 +50,11 @@ export default function Login({ onEnter }) {
         <label className="login-field">
           <span>User ID</span>
           <input
+            ref={inputRef}
             type="text"
             value={id}
             onChange={(e) => setId(e.target.value)}
             placeholder="e.g. Kumar1"
-            autoFocus
             autoComplete="off"
             spellCheck={false}
           />

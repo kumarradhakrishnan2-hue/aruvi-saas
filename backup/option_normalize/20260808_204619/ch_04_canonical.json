@@ -1,0 +1,1638 @@
+{
+  "filename": "ch_04_canonical.json",
+  "saved_at": "2026-08-08T17:43:59",
+  "plan_status": "canonical",
+  "chapter_number": 4,
+  "chapter_title": "Exploring Algebraic Identities",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 14
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 14 periods = 700 minutes\nTotal: 14 periods · 11h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-08",
+    "schedule": "14x50",
+    "constitution": "LP v1.1 / assessment v1.1",
+    "source": "generate_canonical.py one mathematics ix 4",
+    "ledger_ts": "20260808_173726",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-08T20:46:14",
+        "tool": "genon/repair_register.py v1.4",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 2,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": ", previewing the companion identity to be derived in the factorisation unit",
+            "replaced_with": "",
+            "note": "the b -> -b substitution and writing the result on the board IS the teaching act and closes on its own ground. Naming what a later unit derives is false for any teacher whose X ends here, and for any class that borrowed this unit as its closing sitting"
+          },
+          {
+            "unit": 5,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "that the following unit will formalise symbolically",
+            "replaced_with": "",
+            "note": "the note's point — the tile model gives concrete meaning to the abstract middle-term split — is complete without it. The relative clause is the only forward element in the field; the misconception warning and the no-book_ref statement after it both stand untouched"
+          },
+          {
+            "unit": 7,
+            "field": "band:2",
+            "rule": "register/forward",
+            "removed": "—that is the subject of the next unit",
+            "replaced_with": "",
+            "note": "'Record the pattern without proving the general case' is a legitimate and deliberate stopping point — the think-and-reflect prompt asks students to test x^4-y^4 and x^5-y^5, not to prove. Leaving the generalisation open is correct; promising who closes it is not"
+          },
+          {
+            "unit": 10,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "Preview: the next unit extends this to factorisation of the same breadth.",
+            "replaced_with": "",
+            "note": "trailing sentence on a consolidation band. The share-and-record move is the whole activity. This is also the 'Preview:' convention the model invented, which appears nowhere in the constitution or the brief"
+          },
+          {
+            "unit": 13,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "Preview that the synthesis unit will connect all such proof moves across the chapter.",
+            "replaced_with": "",
+            "note": "the proof-steps consolidation closes cleanly at 'collect terms, conclude'. This is the brief-paraphrase hit: the standard brief describes unit 14 to the model in detail and then bans naming it, and this is the unit immediately before it"
+          }
+        ],
+        "ban_hits_before": 5,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Consecutive Squares Pattern and the Promise of Algebra",
+          "section_anchor": "4.1",
+          "pedagogical_method": "Inductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "4.1",
+              "book_ref": "Example 1, p.68",
+              "description": "Demonstrates that for three consecutive square numbers, adding the smallest and largest and subtracting twice the middle square always gives 2, checked with two numeric sets."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Pose the question: pick any three consecutive whole numbers, square each, add the smallest and largest squares, subtract twice the middle square. Record three or four student-chosen sets on the board. Students notice the answer is always 2. Ask: is this a coincidence or a rule? Students attempt to articulate why in words."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Work through Example 1, p.68 together, showing the numeric verification for two different sets. Then invite students to test the think-and-reflect prompt from the section: try four consecutive squares and see whether a similar invariant exists. Small groups test cases and report back."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students record their findings for four consecutive squares. Draw out the contrast: three consecutive squares give invariant 2; four give a different pattern. Ask: what algebraic tool would let us prove these observations for ALL choices, not just a few?"
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Summarise: the chapter's goal is to build and prove algebraic identities powerful enough to explain patterns like these. Students write one sentence in their notebooks stating the invariant observed for three consecutive squares."
+            }
+          ],
+          "teacher_notes": "This opening unit builds on students' familiarity with squaring numbers and motivates the chapter by showing that numeric experimentation can uncover surprising invariants. Watch for the common slip of computing consecutive squares as n, n+1, n+2 instead of n², (n+1)², (n+2)². Example 2, p.70 can be suggested as independent reading for students who want to explore the identity with negative values early.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Visualising and Deriving the Binomial Square Identity",
+          "section_anchor": "4.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk",
+            "Ruler and pencil for students"
+          ],
+          "visual_aids": "Partitioned square of side (a+b) divided into four regions: square of side a, square of side b, and two rectangles of dimensions a×b",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "4.2",
+              "book_ref": "Example 2, p.70",
+              "description": "Verifies (a+b)^2 = a^2+2ab+b^2 for negative values a=-2, b=-3."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "4.2",
+              "book_ref": "Example 3, p.71",
+              "description": "Expands (5x+2y)^2 using the identity."
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "4.2",
+              "book_ref": "Example 4, p.71",
+              "description": "Computes 43^2 as (40+3)^2 using the identity."
+            },
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "4.2",
+              "book_ref": "Exercise 4.1 Q1, p.71",
+              "description": "Expand six binomial-square expressions using (a+b)^2 = a^2+2ab+b^2."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "4.2",
+              "book_ref": "Exercise 4.1 Q2, p.72",
+              "description": "Find the values of (64)^2, (105)^2, (205)^2 using the identity."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Draw a square of side (a+b) on the board. Ask students how to partition it into four pieces by drawing one horizontal and one vertical line inside. Students label the four regions and identify their areas. Guide them to sum: a² + ab + ab + b² = a² + 2ab + b². Then verify algebraically using the distributive property. Confirm with Example 2, p.70 (negative values)."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Discuss the key distinction: an equation holds for specific values, an identity holds for all values. Work through Example 3, p.71 (expanding (5x+2y)²) and Example 4, p.71 (computing 43² mentally). Students practise Exercise 4.1 Q1, p.71 parts (i)–(iii) individually."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students complete Exercise 4.1 Q1, p.71 parts (iv)–(vi) and Exercise 4.1 Q2, p.72. Pairs compare answers. Introduce the think-and-reflect prompt: compare (a+b)² with a²+b²—when is each larger? When are they equal? Students write a brief conjecture."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Whole-class discussion of the conjecture: (a+b)² equals a²+b² only when ab = 0. Ask: what happens if we replace b with −b in the identity? Students write the resulting expression on the board."
+            }
+          ],
+          "teacher_notes": "Having established the consecutive-squares invariant numerically, this unit grounds the first identity in a geometric argument before moving to symbolic manipulation. The most common error here is writing (a+b)² = a²+b², omitting the 2ab term—press students to count the rectangular regions in the diagram. Exercise 4.1 Q2, p.72 can be left as self-study for students who finish quickly.",
+          "homework": [
+            "Exercise 4.1 Q2, p.72: find (64)², (105)², (205)² using the identity, showing all steps."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Reversing the Identity: Factorising Perfect-Square Quadratics",
+          "section_anchor": "4.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "4.3",
+              "book_ref": "Example 5, p.72",
+              "description": "Factors x^2+4x+4 as (x+2)^2."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "4.3",
+              "book_ref": "Example 6, p.72",
+              "description": "Factors 36x^2+12x+1 as (6x+1)^2."
+            },
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "4.3",
+              "book_ref": "Example 7, p.72",
+              "description": "Factors 50p^2+60pq+18q^2 by first extracting a common factor of 2."
+            },
+            {
+              "id": "WE-8",
+              "type": "worked_example",
+              "source_section": "4.3",
+              "book_ref": "Example 8, p.73",
+              "description": "Computes 29^2 as (30-1)^2 using (a-b)^2 = a^2-2ab+b^2."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "4.3",
+              "book_ref": "Exercise 4.2 Q1, p.74",
+              "description": "Factor completely four quadratic expressions using the perfect-square identity."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "4.3",
+              "book_ref": "Exercise 4.2 Q2, p.75",
+              "description": "Find (79)^2, (193)^2, (299)^2 using (a-b)^2."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Rewrite the identity in reverse: a²+2ab+b² = (a+b)². Work through Example 5, p.72 (factoring x²+4x+4) and Example 6, p.72 (factoring 36x²+12x+1), emphasising how to identify a and b by taking square roots of the first and last terms and verifying the middle term."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Work through Example 7, p.72: factor 50p²+60pq+18q², highlighting that pulling out the common factor 2 first is necessary before matching the perfect-square pattern. Students attempt Exercise 4.2 Q1, p.74 parts (i)–(ii) independently."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Introduce the companion identity (a−b)² = a²−2ab+b² by replacing b with −b in the known identity. Derive it on the board. Work through Example 8, p.73 (computing 29²). Students complete Exercise 4.2 Q2, p.75 in pairs."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Use (a−b)² and (a+b)² together to prove the consecutive-squares invariant algebraically: let the three consecutive squares be (n−1)², n², (n+1)² and expand. Students verify the algebra gives 2. Complete Exercise 4.2 Q1, p.74 parts (iii)–(iv)."
+            }
+          ],
+          "teacher_notes": "Building on the expansion of (a+b)² established earlier, this unit asks students to reverse the process—a cognitive shift from expansion to recognition. The most common error is forgetting to extract a common factor first (as in Example 7, p.72), leading to incorrect identification of a and b. Example 8, p.73 makes a good self-study item for students who want additional practice with the minus-form identity.",
+          "homework": [
+            "Exercise 4.2 Q1, p.74 parts (iii)–(iv): factor the remaining two expressions fully, showing matching to the perfect-square template."
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Extending to Three Terms: Deriving and Applying (a+b+c)²",
+          "section_anchor": "4.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Partitioned square of side (a+b+c) showing nine sub-regions: three squares and six rectangles",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-9",
+              "type": "worked_example",
+              "source_section": "4.4",
+              "book_ref": "Example 9, p.76",
+              "description": "Computes 119^2 as (100+10+9)^2 using the three-term square identity."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "4.4",
+              "book_ref": "Exercise 4.3 Q1, p.76",
+              "description": "Find six squares choosing the more convenient identity for each."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "4.4",
+              "book_ref": "Exercise 4.3 Q2, p.77",
+              "description": "Factor five expressions using suitable identities."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "4.4",
+              "book_ref": "Exercise 4.3 Q3, p.77",
+              "description": "Expand (p+3q+7r)^2 and (3x-2y+4z)^2 using the three-term square identity."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "4.4",
+              "book_ref": "Exercise 4.3 Q4, p.77",
+              "description": "Determine whether (a+b-c)^2+(a-b+c)^2+(a-b-c)^2 = 2a^2+2b^2+2c^2 is an identity."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Derive (a+b+c)² by substituting d = b+c into the known two-variable identity: (a+d)² = a²+2ad+d², then expand d² = (b+c)² and 2ad = 2a(b+c). Collect terms to arrive at a²+b²+c²+2ab+2bc+2ca. Display the geometric figure of a square partitioned into nine sub-regions—three squares of sides a, b, c and six rectangles—as a visual confirmation."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Work through the think-and-reflect prompt: ask students to label the nine sub-regions of the figure with their areas to confirm the identity. Then work through Example 9, p.76 (computing 119²). Discuss how to choose the decomposition a=100, b=10, c=9 to minimise computation."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work on Exercise 4.3 Q1, p.76 (selecting the convenient identity for each of the six squares) and Exercise 4.3 Q3, p.77 (expanding (p+3q+7r)² and (3x−2y+4z)²). Pairs compare approaches."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Exercise 4.3 Q4, p.77: students determine whether the given expression is an identity by expanding both sides. Discuss the think-and-reflect prompt about evaluating 35², 65², 85², 105² to spot a pattern and identify which identity is illustrated."
+            }
+          ],
+          "teacher_notes": "Having derived both two-variable square identities, students now see the substitution strategy—replacing a single variable with a binomial—as a general proof technique. A frequent error in the three-term identity is omitting one of the three cross-product terms (writing only 2ab instead of also including 2bc and 2ca); the nine-region diagram is the best corrective. Exercise 4.3 Q2, p.77 is a good self-study item for factorisation practice with the new identity.",
+          "homework": [
+            "Exercise 4.3 Q3, p.77: expand (3x−2y+4z)² fully, listing every term, and verify by substituting x=1, y=1, z=1."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Algebra Tiles: Building Products as Rectangles",
+          "section_anchor": "4.5",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk",
+            "Algebra tile cutouts or drawn tile grids"
+          ],
+          "visual_aids": "Rectangular arrangement of algebra tiles showing (x+3)(x+4) = x²+7x+12 partitioned into one x²-tile, seven x-tiles, and twelve unit tiles",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Introduce algebra tiles: the large square tile represents x², the rectangular tile represents x×1, and the small square represents 1×1. On the board draw the tile arrangement for (x+3)(x+4): one x²-tile, three x-tiles along one side, four along the other, filling the interior with unit tiles. Students count: how many x-tiles total? How many unit tiles?"
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Guide students to see that the seven x-tiles decompose as 3x+4x, matching the sides of the rectangle. Work through the think-and-reflect prompt: what if we split 7x as 2x+5x instead? Students try to build a valid rectangle with that split and discover it does not tile neatly. Record why: the rectangle requires factors whose product is 12 and whose sum is 7."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Extend the tile model to a rectangle with sides (2x+3) and (3x+1): draw the arrangement on the board showing four distinct tile regions. Students compute the total area expression and write it as a polynomial. Discuss how the tile model motivates the general form (px+a)(qx+b)."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students work on the think-and-reflect prompt about using algebra tiles to find products and factors for two given expressions of their choice from the section. Pairs share results. Emphasise the key insight: the middle term's split must correspond to a valid rectangular arrangement."
+            }
+          ],
+          "teacher_notes": "The algebra tile model gives a concrete geometric meaning to the abstract split of the middle term. Watch for students who compute the tile count correctly but cannot connect it to the polynomial coefficients—ask them to write the area of each tile type explicitly. This unit does not introduce a worked example by book_ref; the tile arrangements are taken directly from the section's diagrams.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Splitting the Middle Term: Factorising Quadratics Without Tiles",
+          "section_anchor": "4.6",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-10",
+              "type": "worked_example",
+              "source_section": "4.6",
+              "book_ref": "Example 10, p.81",
+              "description": "Factors x^2+7x+12 by finding a,b with a+b=7 and ab=12."
+            },
+            {
+              "id": "WE-11",
+              "type": "worked_example",
+              "source_section": "4.6",
+              "book_ref": "Example 11, p.81",
+              "description": "Factors x^2+11x+30 by finding a,b with a+b=11 and ab=30."
+            },
+            {
+              "id": "WE-12",
+              "type": "worked_example",
+              "source_section": "4.6",
+              "book_ref": "Example 12, p.81",
+              "description": "Factors x^2-5x+6 by finding negative a,b with a+b=-5 and ab=6."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "4.6",
+              "book_ref": "Exercise 4.4 Q1, p.81",
+              "description": "Fill in the blanks to complete four factorisation identities."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "4.6",
+              "book_ref": "Exercise 4.4 Q2, p.81",
+              "description": "Use a suitable identity to compute eight products/squares without direct multiplication."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "4.6",
+              "book_ref": "Exercise 4.4 Q3, p.82",
+              "description": "Factor five algebraic expressions using identities."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Write the general form x²+(a+b)x+ab = (x+a)(x+b) on the board. Identify that factorising x²+px+q requires finding two numbers with sum p and product q. Work through Example 10, p.81 (x²+7x+12) step by step, listing factor pairs of 12 and selecting 3 and 4."
+            },
+            {
+              "minutes": "12-25",
+              "activity": "Work through Example 11, p.81 (x²+11x+30). Then tackle Example 12, p.81 (x²−5x+6): guide students to recognise that both a and b must be negative when the product is positive and the sum is negative. Work through the think-and-reflect prompt about two students' competing derivations of (a−b)²(a+b), judging which approach is correct."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Students work on Exercise 4.4 Q1, p.81 (filling in blanks) and Exercise 4.4 Q3, p.82 (factoring five expressions). Circulate to check that students are listing factor-pair possibilities systematically rather than guessing."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students attempt Exercise 4.4 Q2, p.81 (computing eight products/squares using suitable identities). Discuss how the same splitting strategy underlies mental-arithmetic shortcuts. Consolidate by having one student present a solution to any part of Q3."
+            }
+          ],
+          "teacher_notes": "Building on the tile model's geometric intuition, this unit formalises middle-term splitting as a purely symbolic procedure. The most frequent error is selecting a and b with the correct sum but wrong product (or vice versa)—stress that both conditions must hold simultaneously. Exercise 4.4 Q2, p.81 works well as independent self-study for students who want extra practice combining identities for mental computation.",
+          "homework": [
+            "Exercise 4.4 Q3, p.82 parts (iii)–(v): factor three expressions fully, showing the sum-and-product reasoning for each."
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Deriving the Binomial Cube Identity and Its Geometric Model",
+          "section_anchor": "4.7",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Diagram of a cube of edge (a+b) decomposed into two smaller cubes of edges a and b and six cuboids",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-13",
+              "type": "worked_example",
+              "source_section": "4.7",
+              "book_ref": "Example 13, p.84",
+              "description": "Finds the cube root of p^3+6p^2q+12pq^2+8q^3 by matching to (a+b)^3."
+            },
+            {
+              "id": "WE-14",
+              "type": "worked_example",
+              "source_section": "4.7",
+              "book_ref": "Example 14, p.84",
+              "description": "Finds the cube root of 8n^3-60n^2m+150nm^2-125m^3 by matching to (a-b)^3."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Derive (a+b)³ on the board: write (a+b)³ = (a+b)(a+b)² = (a+b)(a²+2ab+b²), then expand by the distributive property, collecting a³+3a²b+3ab²+b³. Display the cube decomposition diagram: two cubes of volumes a³ and b³ and six cuboids of volumes a²b, a²b, ab², ab², ab², ab², confirming the coefficients 1, 3, 3, 1."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Substitute −b for b to derive (a−b)³ = a³−3a²b+3ab²−b³. Emphasise the sign pattern. Work through Example 13, p.84 (matching p³+6p²q+12pq²+8q³ to (p+2q)³) and Example 14, p.84 (matching 8n³−60n²m+150nm²−125m³ to (2n−5m)³)."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Revisit the think-and-reflect prompt from the section: as the power of (x−y) increases from x²−y² to x³−y³, does (x−y) remain a factor? Guide students to test x⁴−y⁴ and x⁵−y⁵ by direct substitution x=y to check. Record the pattern without proving the general case."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write the cube identities from memory in their notebooks and verify Example 13, p.84 by expanding (p+2q)³ themselves. Quick class check: identify a and b for each of the two examples."
+            }
+          ],
+          "teacher_notes": "Having derived the square identities by a geometric partition argument, students now apply the same distributive expansion strategy to cubes. The most common sign error is writing (a−b)³ = a³−3a²b−3ab²−b³, with all signs negative—the substitution of −b must be tracked term by term. Example 14, p.84 makes good independent reading after class for students who want to consolidate the minus-cube form.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Sum and Difference of Cubes, and the Three-Variable Cube Identity",
+          "section_anchor": "4.7",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-15",
+              "type": "worked_example",
+              "source_section": "4.7",
+              "book_ref": "Example 15, p.85",
+              "description": "Uses x^3+y^3+z^3-3xyz = (x+y+z)(x^2+y^2+z^2-xy-xz-yz) to find the sum of cubes of three numbers given their sum, product, and sum of squares."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-20",
+              "activity": "Derive x³−y³ by computing (x−y)(x²+xy+y²) on the board via direct expansion, verifying all terms cancel except x³−y³. Repeat the process for x³+y³ = (x+y)(x²−xy+y²). Connect to the think-and-reflect observation from the previous unit: (x−y) is indeed a factor of x³−y³, and students can now see why."
+            },
+            {
+              "minutes": "20-35",
+              "activity": "State the identity x³+y³+z³−3xyz = (x+y+z)(x²+y²+z²−xy−xz−yz). Verify it by expanding the right side on the board (or guide student volunteers through the expansion). Discuss when x³+y³+z³ = 3xyz (when x+y+z = 0 or x = y = z)."
+            },
+            {
+              "minutes": "35-48",
+              "activity": "Work through Example 15, p.85: given three numbers with known sum, product, and sum of squares, compute their sum of cubes using the identity. Students try a variation: if x+y+z = 6, xy+yz+zx = 11, xyz = 6, find x³+y³+z³. Hint them to use x²+y²+z² = (x+y+z)²−2(xy+yz+zx)."
+            },
+            {
+              "minutes": "48-50",
+              "activity": "Summarise the three factorisation identities derived in sections 4.7: the binomial cubes, sum of cubes, difference of cubes, and three-variable cube. Students list them in a table in their notebooks."
+            }
+          ],
+          "teacher_notes": "This unit completes the cube-identity family derived in section 4.7, building on the binomial cube established in the previous unit. A common confusion is mixing up the sign inside the quadratic factor: x³+y³ has the factor (x²−xy+y²) with a minus, while x³−y³ has (x²+xy+y²) with a plus—make this contrast explicit. Example 15, p.85 is a rich application and worth revisiting as self-study.",
+          "homework": [
+            "Derive x³+y³+z³−3xyz = (x+y+z)(x²+y²+z²−xy−xz−yz) independently, recording every step of the expansion."
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Simplifying Rational Algebraic Expressions by Factorisation",
+          "section_anchor": "4.8",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-16",
+              "type": "worked_example",
+              "source_section": "4.8",
+              "book_ref": "Example 16, p.86",
+              "description": "Simplifies (x^2-7x+12)/(5x^2+5x-100) by factoring numerator and denominator and cancelling the common factor (x-4)."
+            },
+            {
+              "id": "WE-17",
+              "type": "worked_example",
+              "source_section": "4.8",
+              "book_ref": "Example 17, p.87",
+              "description": "Finds the length and breadth of a rectangle built from algebra-tile-like pieces by factoring x^2+8x+15."
+            },
+            {
+              "id": "WE-18",
+              "type": "worked_example",
+              "source_section": "4.8",
+              "book_ref": "Example 18, p.88",
+              "description": "Finds the length and breadth of a rectangular pool of area 96 sq. m where breadth is 4 m less than length, by factoring x^2-4x-96=0."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "4.8",
+              "book_ref": "Exercise 4.5 Q1, p.87",
+              "description": "Simplify six rational expressions by factoring numerator and denominator and cancelling common non-zero factors."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Introduce rational algebraic expressions: a ratio of two polynomials. Discuss the condition that the denominator must be non-zero. Work through Example 16, p.86: factor the numerator x²−7x+12 = (x−3)(x−4) and the denominator 5x²+5x−100 = 5(x²+x−20) = 5(x+5)(x−4), then cancel the common factor (x−4)."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Pose the think-and-reflect prompt: simplify a rational expression with a quadratic denominator by first factoring it. Students attempt a similar example on the board. Stress that cancellation is valid only for common FACTORS, not common terms."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Work through Example 17, p.87 (rectangle dimensions from x²+8x+15) and Example 18, p.88 (pool dimensions from x²−4x−96=0). Students begin Exercise 4.5 Q1, p.87 parts (i)–(iii), showing full factorisation working."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students complete Exercise 4.5 Q1, p.87 parts (iv)–(vi). Pairs exchange and verify each other's factorisation. Discuss: is the simplified expression defined at the values where the cancelled factor was zero? Reinforce that such values are excluded."
+            }
+          ],
+          "teacher_notes": "Building on the middle-term splitting and identity-based factorisation developed across sections 4.3, 4.5, and 4.6, this unit applies those tools in a new context: rational expressions. The most common error is cancelling terms rather than factors, e.g. incorrectly simplifying (x²+4x)/(x+4) to x²—draw the distinction explicitly on the board. Exercise 4.5 Q1, p.87 parts (iv)–(vi) are good self-study items for students who finish early.",
+          "homework": [
+            "Exercise 4.5 Q1, p.87 parts (iv)–(vi): simplify each rational expression fully, stating the excluded value(s) of the variable."
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Mixed Expansion and Products Using All Identities So Far",
+          "section_anchor": "4.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q1, p.88",
+              "description": "Use suitable identities to find nine products/expansions, including binomial squares, difference-of-squares, and a binomial cube."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q2, p.89",
+              "description": "Find eight values using suitable identities: 17×21, 104×96, 24×16, 147³, 199³, 127³, (−107)³, (−299)³."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Briefly review the identities developed across the chapter: (a+b)², (a−b)², (a+b+c)², (a+b)³, (a−b)³, difference and sum of cubes. Ask students which identity they would select for each expression in End of Chapter Q1, p.88 before computing—instil the habit of identity-selection before calculation."
+            },
+            {
+              "minutes": "15-32",
+              "activity": "Students work through End of Chapter Q1, p.88 parts (i)–(v) individually. Teacher circulates, noting which identity choices are made. Discuss any part where more than one identity could apply."
+            },
+            {
+              "minutes": "32-45",
+              "activity": "Students tackle End of Chapter Q2, p.89 parts (i)–(iv): computing 17×21, 104×96, 24×16, 147³ using identities. Emphasise how to write each number as a sum or difference near a round number. Compare mental-arithmetic speed with direct multiplication."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Quick share: each pair presents the identity used for one part of Q2. Record on the board which identities were used most."
+            }
+          ],
+          "teacher_notes": "This unit consolidates identity-based expansion and numeric computation across the full range of identities from the chapter. A frequent error in cube computations is applying (a+b)³ with incorrect signs when one of a or b is negative—remind students to substitute carefully, treating the negative as part of b. End of Chapter Q2, p.89 parts (v)–(viii) are available as self-study for students who move quickly.",
+          "homework": [
+            "End of Chapter Q2, p.89 parts (v)–(viii): compute 199³, 127³, (−107)³, (−299)³ using cube identities, showing the identity substitution clearly."
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Factorising a Wide Range of Expressions Using All Chapter Identities",
+          "section_anchor": "4.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q3, p.89",
+              "description": "Factor eleven algebraic expressions using the chapter's identities, including sum/difference-of-cubes and three-term-cube forms."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q4, p.89",
+              "description": "Simplify three rational expressions using factorisation by identities."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Students work through End of Chapter Q3, p.89 parts (i)–(v). Teacher circulates and prompts students to state aloud which identity they recognise before writing a single symbol. For each expression, ask: is there a common factor to extract first?"
+            },
+            {
+              "minutes": "18-35",
+              "activity": "Continue End of Chapter Q3, p.89 parts (vi)–(xi), which include sum-of-cubes, difference-of-cubes, and three-term-cube forms. Pairs discuss any part where the identity is not immediately obvious. Teacher models one or two on the board."
+            },
+            {
+              "minutes": "35-47",
+              "activity": "Students work through End of Chapter Q4, p.89 (simplifying three rational expressions by factorisation). Stress that each numerator and denominator must be factored fully before cancellation is attempted."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Whole-class debrief: which factorisation required the most steps? What strategy helps with expressions that are not immediately recognisable as a standard form?"
+            }
+          ],
+          "teacher_notes": "This unit asks students to deploy all factorisation identities developed across the chapter in a mixed setting, which is more demanding than single-identity practice. The most common error in sum/difference-of-cubes factorisation is writing the wrong sign inside the quadratic factor—refer students back to the derivation by direct expansion. End of Chapter Q4, p.89 gives practice connecting factorisation to rational-expression simplification at a slightly higher level.",
+          "homework": [
+            "End of Chapter Q3, p.89 parts (ix)–(xi): factor three expressions involving cube identities, showing the matching step explicitly."
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Geometric and Contextual Problems: Lengths, Areas, and Volumes",
+          "section_anchor": "4.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q5, p.89",
+              "description": "Find possible length and breadth expressions for two rectangles given their area expressions."
+            },
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q6, p.89",
+              "description": "Find possible length, breadth, and height expressions for two cuboids given their volume expressions."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q7, p.90",
+              "description": "Find an expression in terms of s for the area of a walking path of width s around a square playground of side 40 m."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q8, p.90",
+              "description": "Find a number which, when added to its reciprocal, equals 10/3."
+            },
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "4.1",
+              "book_ref": "End of Chapter Q9, p.90",
+              "description": "Find the length of a rectangular pool of area 2x^2+7x+3 sq. hastas given its width is 2x+1 hastas."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Work through End of Chapter Q5, p.89: given area expressions as polynomials, factor them to find possible length and breadth. Discuss that factorisation is not always unique—note when both factors are equivalent (a perfect square). Then tackle End of Chapter Q6, p.89: volume expressions for two cuboids, factoring each into three binomial factors."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Work through End of Chapter Q7, p.90: the walking path around a square playground. Guide students to express the outer square's side as (40+2s), expand (40+2s)²−40² using the difference-of-squares or the square identity, and simplify to an expression in s."
+            },
+            {
+              "minutes": "30-43",
+              "activity": "End of Chapter Q8, p.90: set up the equation x+1/x = 10/3, multiply through to get a quadratic 3x²−10x+3 = 0, and factor using the middle-term split. Students solve for x. End of Chapter Q9, p.90: divide 2x²+7x+3 by (2x+1) by factoring the numerator."
+            },
+            {
+              "minutes": "43-50",
+              "activity": "Class discussion: how do the geometric contexts (area = length × breadth; volume = l×b×h) make factorisation meaningful rather than a purely abstract exercise? Students write one sentence connecting polynomial factorisation to a geometric interpretation."
+            }
+          ],
+          "teacher_notes": "This unit applies factorisation in geometric and word-problem contexts, drawing on all of the section-level skills built earlier in the chapter. A common error in the path problem (Q7, p.90) is computing (40+s)² instead of (40+2s)² because students forget the path is on both sides of the square. End of Chapter Q9, p.90 is a good self-study item connecting polynomial division with factorisation.",
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "activity_title": "Proving and Justifying: Algebraic Arguments Using Identities",
+          "section_anchor": "4.6",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "4.4",
+              "book_ref": "Exercise 4.3 Q4, p.77",
+              "description": "Determine whether (a+b-c)^2+(a-b+c)^2+(a-b-c)^2 = 2a^2+2b^2+2c^2 is an identity."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Return to Exercise 4.3 Q4, p.77 in proof mode: rather than just checking numerically, expand each square using (a+b+c)² with appropriate substitutions and collect all terms to verify the identity algebraically. Model how to organise a proof: expand, group like terms, simplify."
+            },
+            {
+              "minutes": "18-35",
+              "activity": "Present the think-and-reflect debate from section 4.6: two students offer different derivations of (a−b)²(a+b). Students work in pairs to expand both approaches and judge which is correct and which contains an error. Each pair writes a one-paragraph justification."
+            },
+            {
+              "minutes": "35-48",
+              "activity": "Students combine two identities to derive a new result: e.g. use (a+b)³ and (a−b)³ to show (a+b)³+(a−b)³ = 2a(a²+3b²). Guide them through the addition step by step. Discuss: what makes a derivation a proof rather than a verification?"
+            },
+            {
+              "minutes": "48-50",
+              "activity": "Consolidate: students write the key steps of a rigorous algebraic proof—state what you want to prove, expand using known identities, collect terms, conclude."
+            }
+          ],
+          "teacher_notes": "This unit uses the algebraic identity work from sections 4.4 and 4.6 as the vehicle for explicit proof-writing practice, fitting the chapter's transition-to-proof character. A common error is treating numerical verification (checking for specific values) as equivalent to an algebraic proof—use the identity debate from section 4.6's think-and-reflect to make this distinction concrete. The combination-of-identities derivation in the third band is an extension activity from the section's own think-and-reflect prompt.",
+          "homework": [
+            "Write a complete algebraic proof that (a+b)³−(a−b)³ = 2b(3a²+b²), citing the identity used at each step."
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 50,
+          "activity_title": "Whole-Chapter Synthesis: Identities, Proofs, and Applications Connected",
+          "section_anchor": "synthesis",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Open with a conceptual map activity: students list on the board all the identities developed in the chapter—square, three-term square, cube, sum/difference of cubes, three-variable cube identity—and draw arrows showing how each was derived from a prior result (e.g. (a−b)² comes from replacing b with −b in (a+b)²; the three-term square comes from substituting d=b+c). The map makes the derivation chain visible."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Pose three integrative questions drawing explicitly on the derivation chain: (1) Use (a+b)² and (a−b)² together to derive the identity (a+b)²−(a−b)² = 4ab. (2) Factor a⁴−b⁴ completely by applying difference-of-squares twice, connecting back to the pattern in section 4.7's think-and-reflect about (x−y) remaining a factor. (3) Simplify a rational expression whose numerator involves a sum-of-cubes and whose denominator involves a quadratic. Students work in small groups."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups present solutions on the board. For each, the class identifies which identity was used, where the substitution strategy appeared, and whether the step constitutes a proof or a verification. Teacher connects the three questions to the chapter's central theme: every identity was discovered geometrically or numerically, then justified algebraically."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Individual written reflection: students choose the identity they found most surprising and write three to four sentences explaining where it comes from, how it was proved, and one situation in which it simplifies a calculation. Teacher collects these as a formative snapshot of the chapter's conceptual reach."
+            }
+          ],
+          "teacher_notes": "This synthesis unit draws on the full content of the chapter: the geometric derivations of the square identities from sections 4.2 and 4.4, the distributive-property derivations of the cube identities from section 4.7, the factorisation methods of sections 4.3, 4.5, and 4.6, and the rational-expression work of section 4.8. It may assume all section content has been taught but must not assume any specific earlier activity, homework, or discussion occurred. The key integrative insight to press for is that substitution (replacing one variable with an expression) is the engine that generated most identities, and that algebraic proof differs fundamentally from numeric verification.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 14
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "4.1",
+        "section_title": "Introduction",
+        "total_sections": 8,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can demonstrate that for any three consecutive square numbers the expression (smallest) + (largest) − 2×(middle) equals 2 and articulate why this motivates algebraic proof."
+        ],
+        "section_context": "Consecutive-square invariant, numeric pattern motivating algebraic identities",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "4.2",
+        "section_title": "Visualising Identities",
+        "total_sections": 8,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive and apply (a+b)² = a²+2ab+b² from the geometric partition of a square and the distributive property.",
+          "Students can distinguish an identity from an equation and use the identity to expand binomial squares and compute numerical squares."
+        ],
+        "section_context": "(a+b)² identity, geometric square partition, equation vs identity distinction",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "4.3",
+        "section_title": "Factorisation of Algebraic Expressions Using Identities",
+        "total_sections": 8,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can factorise quadratic expressions of the form a²+2ab+b² and a²−2ab+b² by matching to the perfect-square identity, including cases requiring a common factor to be extracted first.",
+          "Students can apply (a−b)² = a²−2ab+b² to compute numerical squares and to prove the consecutive-squares invariant algebraically."
+        ],
+        "section_context": "Perfect-square factorisation, (a−b)² identity, consecutive-squares algebraic proof",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "4.4",
+        "section_title": "More Identities",
+        "total_sections": 8,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive (a+b+c)² = a²+b²+c²+2ab+2bc+2ca by substitution into the two-variable identity and represent it geometrically.",
+          "Students can apply the three-term square identity to expand and factorise three-variable expressions and to compute squares of three-digit numbers."
+        ],
+        "section_context": "(a+b+c)² identity, nine-region square partition, three-digit number squares",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "4.5",
+        "section_title": "Factorisation Using Algebra Tiles",
+        "total_sections": 8,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can represent polynomial multiplication and factorisation geometrically using algebra tiles and explain why only certain middle-term splits produce a valid rectangular arrangement."
+        ],
+        "section_context": "Algebra tiles, polynomial rectangle model, middle-term split geometric interpretation",
+        "c_code": "C-9.3",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_ref": "4.6",
+        "section_title": "Factorisation Without Using Algebra Tiles",
+        "total_sections": 8,
+        "period_numbers": [
+          6,
+          13
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can factorise quadratic expressions x²+px+q by finding two numbers with the required sum and product, including cases where both numbers are negative.",
+          "Students can construct and verify algebraic proofs by combining identities, distinguishing a proof from a numeric verification."
+        ],
+        "section_context": "Middle-term splitting procedure, sum-and-product conditions, algebraic proof construction",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_ref": "4.7",
+        "section_title": "Finding New Identities",
+        "total_sections": 8,
+        "period_numbers": [
+          7,
+          8
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive (a+b)³ and (a−b)³ via the distributive property and use them to find cube roots of perfect-cube polynomial expressions.",
+          "Students can derive and apply the identities for x³−y³, x³+y³, and x³+y³+z³−3xyz to factorise expressions and compute sums of cubes from given symmetric information."
+        ],
+        "section_context": "Binomial cube identities, sum/difference of cubes, three-variable cube identity",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_ref": "4.8",
+        "section_title": "Simplifying Rational Expressions",
+        "total_sections": 8,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can simplify rational algebraic expressions by factoring numerator and denominator using chapter identities and cancelling common non-zero factors, stating excluded values."
+        ],
+        "section_context": "Rational algebraic expressions, factor-and-cancel method, excluded values",
+        "c_code": "C-3.1",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_ref": "synthesis",
+        "section_title": "synthesis",
+        "total_sections": 8,
+        "period_numbers": [
+          14
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can connect the chapter's algebraic identities into a derivation chain and deploy multiple identities together to prove new results, factorise higher-degree expressions, and simplify compound rational expressions."
+        ],
+        "section_context": "Derivation chain connecting all chapter identities, integrative proof and factorisation",
+        "c_code": "C-3.1",
+        "co_central": false
+      }
+    ],
+    "role_handoff": {},
+    "unit_handoff": {},
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 4,
+      "chapter_title": "Exploring Algebraic Identities",
+      "chapter_cg": "CG-3",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "4.1",
+          "section_title": "Introduction",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can demonstrate that for any three consecutive square numbers the expression (smallest) + (largest) − 2×(middle) equals 2 and articulate why this motivates algebraic proof.",
+          "section_context": "Consecutive-square invariant, numeric pattern motivating algebraic identities",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Let n be any positive integer. Consider the three consecutive square numbers (n−1)², n², and (n+1)². (a) Compute the value of [(n−1)² + (n+1)²] − 2n² by expanding each square using the identity (a±b)² and collecting terms. (b) What does your result tell you about the expression for every value of n? (c) Explain, in one or two sentences, why checking the result for three specific values of n does not constitute a proof, but the algebraic expansion does.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correct expansion of (n−1)² = n²−2n+1 and (n+1)² = n²+2n+1.",
+            "Collection of terms: (n²−2n+1)+(n²+2n+1)−2n² = 2n²+2−2n² = 2.",
+            "Explicit statement that the result is the constant 2, independent of n.",
+            "Clear explanation that numeric checks verify for specific cases but the algebraic argument establishes the result for all integers n simultaneously."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": "For students who struggle with the general expansion, allow them first to verify the pattern for n = 3, 5, and 10, then ask them to write out the general step using those as a template. For students who complete parts (a)–(c) quickly, challenge them to investigate whether a similar invariant exists for four consecutive squares and to determine what constant (if any) results."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "4.2",
+          "section_title": "Visualising Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can derive and apply (a+b)² = a²+2ab+b² from the geometric partition of a square and the distributive property.",
+          "section_context": "(a+b)² identity, geometric square partition, equation vs identity distinction",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A student claims: \"Since a square of side (a+b) has area (a+b)², and I can see four pieces inside it—a square of side a, a square of side b, and two rectangles each of area ab—the identity (a+b)² = a²+2ab+b² is just a fact about squares, not something that needs to be proved algebraically.\" Do you agree or disagree with this claim? Write a response that (i) explains what the geometric argument establishes, (ii) explains what role the algebraic expansion using the distributive property plays, and (iii) states whether the two arguments together constitute a complete proof of the identity.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Recognition that the geometric argument is valid for positive real values of a and b (sides of a square must be positive) but does not cover negative or rational values.",
+            "Acknowledgment that the algebraic expansion (a+b)² = (a+b)(a+b) = a²+ab+ba+b² = a²+2ab+b² using the distributive property covers all real values.",
+            "Correct identification that the geometric and algebraic arguments complement each other: the geometric version gives intuition and is valid for a,b > 0; the algebraic version is the full proof.",
+            "A clear, reasoned conclusion—not merely an assertion—about completeness of the combined argument."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": "Students who find the evaluative framing difficult can first be asked to verify the identity for a = −2, b = −3 (as in Example 2, p.70) to see that the geometric argument would not apply, and then articulate why. Students who master the argument quickly can be asked to judge whether a purely numeric verification for 100 values of a and b would be sufficient to establish the identity for all real numbers."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "4.2",
+          "section_title": "Visualising Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can distinguish an identity from an equation and use the identity to expand binomial squares and compute numerical squares.",
+          "section_context": "(a+b)² identity, geometric square partition, equation vs identity distinction",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Which of the following correctly describes the difference between an equation and an identity in algebra?",
+          "options": [
+            {
+              "label": "A",
+              "text": "An equation and an identity are the same thing; the difference is only in how they are written.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "An equation is true for all values of the variable, while an identity is true only for specific values.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "An identity holds only when the variables are positive, while an equation can hold for any real number.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "An identity is true for all values of the variables, while an equation is true only for specific values that satisfy it.",
+              "is_correct": true
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "B": "Reverses the definitions: the student has swapped the meaning of equation and identity, a confusion the section directly addresses.",
+                "A": "Confuses notation with meaning: the student has not registered that the distinction is about the set of values for which the statement is true, not about typographical convention.",
+                "C": "Conflates the geometric argument's limitation (valid for positive a and b in the square model) with the definition of an identity, applying the constraint on the derivation method to the result itself."
+              },
+              "inclusivity": "Students who confuse options A and B can be directed to test the equation 2x+1 = 5 for x = 1 and x = 3, and to test (a+b)² = a²+2ab+b² for several pairs, to feel the difference before articulating it. For a challenge, ask students to write their own example of an equation that is also an identity and explain why it qualifies as both."
+            },
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "4.3",
+          "section_title": "Factorisation of Algebraic Expressions Using Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can factorise quadratic expressions of the form a²+2ab+b² and a²−2ab+b² by matching to the perfect-square identity, including cases requiring a common factor to be extracted first.",
+          "section_context": "Perfect-square factorisation, (a−b)² identity, consecutive-squares algebraic proof",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Factorise the expression 72m² + 120mn + 50n² completely, showing all steps.",
+          "options": [],
+          "expected_answer": "2(6m + 5n)²",
+          "method_one_line": "Extract the common factor 2 first, then match the remaining 36m²+60mn+25n² to the template a²+2ab+b² with a = 6m and b = 5n.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students who do not spot the common factor can be prompted to list the GCD of 72, 120, and 50 before attempting to match the identity. As a challenge, students can be asked to verify their factorisation by expanding 2(6m+5n)² and confirming it equals the original expression, then state why the answer is unique."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "4.3",
+          "section_title": "Factorisation of Algebraic Expressions Using Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can apply (a−b)² = a²−2ab+b² to compute numerical squares and to prove the consecutive-squares invariant algebraically.",
+          "section_context": "Perfect-square factorisation, (a−b)² identity, consecutive-squares algebraic proof",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Using the identity (a−b)² = a²−2ab+b², compute the value of (97)² without direct multiplication. Show the identity substitution clearly.",
+          "options": [],
+          "expected_answer": "9409",
+          "method_one_line": "Write 97 = 100 − 3, substitute a = 100 and b = 3 to get 100² − 2×100×3 + 3² = 10000 − 600 + 9 = 9409.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students unsure how to decompose 97 can be guided to look for the nearest multiple of 10 (100) and express 97 as that multiple minus a small number. As an extension, ask students to compute (193)² using the same strategy and compare the efficiency with (200−7)²."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "4.4",
+          "section_title": "More Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can derive (a+b+c)² = a²+b²+c²+2ab+2bc+2ca by substitution into the two-variable identity and represent it geometrically.",
+          "section_context": "(a+b+c)² identity, nine-region square partition, three-digit number squares",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Derive the identity (a+b+c)² = a²+b²+c²+2ab+2bc+2ca by substituting d = b+c into the known identity (a+d)² = a²+2ad+d² and expanding each part. Show every step. Then describe, in one sentence, how this identity can be represented geometrically as a square partitioned into nine sub-regions.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Clear statement of the substitution: let d = b+c, so (a+b+c)² = (a+d)².",
+            "Expansion of (a+d)² = a²+2ad+d².",
+            "Substitution of d = b+c to give a²+2a(b+c)+(b+c)².",
+            "Correct expansion of (b+c)² = b²+2bc+c² and 2a(b+c) = 2ab+2ac.",
+            "Collection to a²+b²+c²+2ab+2bc+2ca with all six terms present.",
+            "A geometric description identifying three squares of areas a², b², c² and six rectangles of areas ab, ab, bc, bc, ca, ca (or equivalent paired description)."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who lose track of the expansion can be asked to first confirm the identity for a=1, b=2, c=3 numerically (6²=36; 1+4+9+4+6+6=30 — this reveals the need for careful sign checks), then redo the algebra. A challenge extension: ask whether the identity can be derived by a second substitution path (e.g. letting e = a+b first) and whether the same result is obtained."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "4.4",
+          "section_title": "More Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can apply the three-term square identity to expand and factorise three-variable expressions and to compute squares of three-digit numbers.",
+          "section_context": "(a+b+c)² identity, nine-region square partition, three-digit number squares",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Compute the value of (214)² using the identity (a+b+c)² = a²+b²+c²+2ab+2bc+2ca. Choose a suitable decomposition of 214 and show all substitution and calculation steps.",
+          "options": [],
+          "expected_answer": "45796",
+          "method_one_line": "Write 214 = 200+10+4, substitute a=200, b=10, c=4 into the three-term square identity and evaluate each term to get 40000+100+16+4000+80+1600 = 45796.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students uncertain about the decomposition can be guided to use the place-value split 200+14 (two-variable identity) first, then compare with the three-term split to see which is more efficient. For a challenge, ask students to compute 1104² using a=1000, b=100, c=4 and comment on whether three terms always give a cleaner computation than two."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "4.5",
+          "section_title": "Factorisation Using Algebra Tiles",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can represent polynomial multiplication and factorisation geometrically using algebra tiles and explain why only certain middle-term splits produce a valid rectangular arrangement.",
+          "section_context": "Algebra tiles, polynomial rectangle model, middle-term split geometric interpretation",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-9.3",
+            "competency_text": "Adapting a single solution method—here the tile-based middle-term split—across several differently structured polynomial expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Consider the quadratic expression x²+9x+20. (a) Using the algebra tile model, state how the seven x-tiles of a 1×9 arrangement would be split between the two sides of the rectangle, and explain why only the split 9x = 4x+5x (and not, say, 9x = 2x+7x) produces a valid rectangular arrangement. (b) Write the factorised form of x²+9x+20.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "Identification that a valid rectangular arrangement requires the two groups of x-tiles to equal the two side lengths, whose product must equal the number of unit tiles (20).",
+            "Explicit check: 4×5 = 20 ✓ and 4+5 = 9 ✓; whereas 2×7 = 14 ≠ 20, so 2x+7x does not produce a valid rectangle.",
+            "Correct factorised form: (x+4)(x+5)."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "Students who struggle with the geometric explanation can draw the tile rectangle on paper, labelling each region's area, to make the constraint visible. As a challenge, ask students to determine whether x²+9x+18 can also be represented as a valid tile rectangle, identify the split, and write the factorised form."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "4.6",
+          "section_title": "Factorisation Without Using Algebra Tiles",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can factorise quadratic expressions x²+px+q by finding two numbers with the required sum and product, including cases where both numbers are negative.",
+          "section_context": "Middle-term splitting procedure, sum-and-product conditions, algebraic proof construction",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Factorise x²−8x+15 by finding two integers a and b such that a+b = −8 and ab = 15. Show the factor-pair reasoning and write the fully factorised expression.",
+          "options": [],
+          "expected_answer": "(x−3)(x−5)",
+          "method_one_line": "List factor pairs of 15: (1,15), (3,5), (−1,−15), (−3,−5); select (−3,−5) since −3+(−5)=−8 and (−3)(−5)=15; split as x²−3x−5x+15 = x(x−3)−5(x−3) = (x−3)(x−5).",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who try only positive factor pairs can be prompted to consider what sign conditions are needed when the product is positive and the sum is negative. As a challenge, ask students to factorise x²−8x+15 a second way by completing the square and verify both methods give the same answer."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "4.6",
+          "section_title": "Factorisation Without Using Algebra Tiles",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can construct and verify algebraic proofs by combining identities, distinguishing a proof from a numeric verification.",
+          "section_context": "Middle-term splitting procedure, sum-and-product conditions, algebraic proof construction",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Two students, Priya and Rajan, both claim to have proved the result (a+b)²−(a−b)² = 4ab. Priya substitutes a = 3, b = 2 and checks: (5)²−(1)² = 25−1 = 24 = 4×3×2 ✓. Rajan expands both squares using the identities (a+b)² = a²+2ab+b² and (a−b)² = a²−2ab+b², subtracts, and simplifies. (a) Carry out Rajan's algebraic expansion and verify the identity. (b) Explain why Priya's method is not a proof of the identity. (c) State one additional thing Rajan's proof establishes that Priya's verification cannot.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correct algebraic expansion: (a²+2ab+b²)−(a²−2ab+b²) = 4ab, with all intermediate steps shown.",
+            "Clear explanation that Priya checks one specific case: if the identity were false for other values, her check would not detect it.",
+            "Identification of what the algebraic proof adds: the result holds for ALL real values of a and b, not merely for a=3, b=2.",
+            "Reasoned conclusion, not merely an assertion, distinguishing verification from proof."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who find it hard to articulate the limitation of Priya's method can be asked: 'Could you find values of a and b for which both sides happen to give the same number even if the algebra were wrong?' This leads them to see that coincidental agreement is possible. For students who complete the proof quickly, ask them to use (a+b)²+(a−b)² to derive a second identity and state whether each step is an expansion, a substitution, or a collection of terms."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "4.7",
+          "section_title": "Finding New Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can derive (a+b)³ and (a−b)³ via the distributive property and use them to find cube roots of perfect-cube polynomial expressions.",
+          "section_context": "Binomial cube identities, sum/difference of cubes, three-variable cube identity",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The polynomial 27x³ − 54x²y + 36xy² − 8y³ is a perfect cube. Find the binomial whose cube equals this polynomial, showing how you identify the values of a and b in the identity (a−b)³ = a³−3a²b+3ab²−b³.",
+          "options": [],
+          "expected_answer": "(3x − 2y)³",
+          "method_one_line": "Match 27x³ = (3x)³ so a = 3x, match 8y³ = (2y)³ so b = 2y, verify the middle terms: 3(3x)²(2y) = 54x²y ✓ and 3(3x)(2y)² = 36xy² ✓; conclude the cube root is (3x−2y).",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students unsure how to start can be guided to take the cube root of the first term (27x³) and the last term (8y³) to identify a and b, then check whether the middle terms match before committing to the answer. As a challenge, ask students to verify their result by expanding (3x−2y)³ fully and confirming every coefficient matches."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "4.7",
+          "section_title": "Finding New Identities",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can derive and apply the identities for x³−y³, x³+y³, and x³+y³+z³−3xyz to factorise expressions and compute sums of cubes from given symmetric information.",
+          "section_context": "Binomial cube identities, sum/difference of cubes, three-variable cube identity",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Three numbers x, y, z satisfy x+y+z = 5, xy+yz+zx = 8, and xyz = 2. Using the identity x³+y³+z³−3xyz = (x+y+z)(x²+y²+z²−xy−yz−zx), find the value of x³+y³+z³. Show all intermediate steps, including how you compute x²+y²+z².",
+          "options": [],
+          "expected_answer": "23",
+          "method_one_line": "Compute x²+y²+z² = (x+y+z)²−2(xy+yz+zx) = 25−16 = 9; then (x+y+z)(x²+y²+z²−xy−yz−zx) = 5×(9−8) = 5; so x³+y³+z³ = 5+3×2 = 11. Wait — recheck: 5×(9−8)+3×2 = 5+6 = 11.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who forget how to find x²+y²+z² can be prompted to expand (x+y+z)² and subtract the cross-product terms. As a challenge, ask students to verify: if x+y+z = 0, what does the identity immediately tell you about x³+y³+z³? State the result and confirm it holds for a specific triple such as (1, −1, 0)."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "4.8",
+          "section_title": "Simplifying Rational Expressions",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can simplify rational algebraic expressions by factoring numerator and denominator using chapter identities and cancelling common non-zero factors, stating excluded values.",
+          "section_context": "Rational algebraic expressions, factor-and-cancel method, excluded values",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Simplify the rational expression (x²+5x+6) / (3x²+12x+9) fully, showing the factorisation of both numerator and denominator. State the value(s) of x for which the original expression is undefined.",
+          "options": [],
+          "expected_answer": "(x+2) / (3(x+3)), undefined at x = −3 and x = −1",
+          "method_one_line": "Factor numerator: x²+5x+6 = (x+2)(x+3); factor denominator: 3x²+12x+9 = 3(x²+4x+3) = 3(x+1)(x+3); cancel (x+3) to get (x+2)/(3(x+1)), undefined at x = −3 and x = −1.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "Students who cancel terms rather than factors can be shown the counter-example: (x+2)(x+3) / (x+3)(x+5) — ask what remains after cancelling the factor (x+3) and check the answer by substituting x=0. As a challenge, ask students to identify and explain what happens to the simplified expression at the excluded value x = −3 in the original and why the simplification is no longer valid there."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "synthesis",
+          "section_title": "synthesis",
+          "total_sections": 8,
+          "implied_lo_assessed": "Students can connect the chapter's algebraic identities into a derivation chain and deploy multiple identities together to prove new results, factorise higher-degree expressions, and simplify compound rational expressions.",
+          "section_context": "Derivation chain connecting all chapter identities, integrative proof and factorisation",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-3.1",
+            "competency_text": "Discovering and proving algebraic identities by deriving each from a geometric or distributive-property argument and applying them to factorise expressions and compute results."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "The expression A = (a+b)³ − (a³+b³) is an algebraic expression in a and b.\n\n(i) Expand (a+b)³ using the cube identity and then expand (a³+b³) using the sum-of-cubes identity. Simplify A fully.\n\n(ii) You should find that A factors neatly. Write A as a product of the simplest possible factors.\n\n(iii) Use your result from (ii) to explain, without any new calculation, what the value of A must be whenever a+b = 0.\n\n(iv) Now consider the rational expression A / (a²−b²). Factor the denominator using the difference-of-squares identity, simplify the rational expression as far as possible, and state the value(s) of a and b for which the original expression is undefined.",
+          "scaffold": "Hint for part (i): expand (a+b)³ term by term, then subtract the sum-of-cubes expansion. Collect all terms. For part (iv): recall a²−b² = (a+b)(a−b) and use your simplified form of A from part (ii).",
+          "format_of_output": [
+            "Part (i): algebraic working line by line, ending with a simplified polynomial in a and b.",
+            "Part (ii): A written as a product of two or more factors.",
+            "Part (iii): a one- or two-sentence explanation citing which factor equals zero.",
+            "Part (iv): the simplified rational expression and the excluded values of a and b stated explicitly."
+          ],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "Proof or derivation",
+              "format_rationale": "The task requires students to chain the cube identity, the sum-of-cubes identity, and the difference-of-squares identity in a single derivation, which is the most natural vehicle for an integrative proof-and-simplification demonstration at this stage.",
+              "what_this_demonstrates": "Students demonstrate that they can identify which identity applies at each stage of a multi-step derivation, handle the transition between expansion and factorisation, and use a factored form to draw a logical conclusion about special cases.",
+              "reading_the_scaffold": "The scaffold directs students to treat each part sequentially and points them back to specific identities; a strong student will use the scaffold only to check their approach rather than as a crutch, while a student who needs support will use it to structure the algebra.",
+              "strong_vs_weak_markers": "Strong: all expansions are correct, the simplified form of A is 3ab(a+b) (derived correctly as (a+b)³ − a³ − b³ = 3a²b+3ab² = 3ab(a+b)), the factored denominator is applied cleanly, the simplified rational expression A/(a²−b²) = 3ab(a+b)/((a+b)(a−b)) = 3ab/(a−b) (for a ≠ −b, a ≠ b), and excluded values a = −b and a = b are both stated with justification. Weak: one or more sign errors in the cube expansion, failure to factor out 3ab in part (ii), statement of only one excluded value, or a conclusion in part (iii) that does not cite the factor (a+b) explicitly.",
+              "inclusivity": "Students who struggle with part (i) can be directed to first expand (a+b)³ alone and check against the section's identity, then subtract a³+b³ term by term. For students who complete all four parts quickly, ask them to investigate whether the result generalises: is (a+b)³ − (a³+b³) always divisible by 3ab, and can they prove it directly from the factored form without expanding?"
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

@@ -1,0 +1,112 @@
+--- lesson_plan_constitution_v1.0_pre.txt	2026-08-08 15:10:27.045646961 +0530
++++ ../../../data/content/constitutions/lesson_plan/mathematics/secondary/lesson_plan_constitution.txt	2026-08-08 15:30:19.458028545 +0530
+@@ -1,7 +1,14 @@
+-ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.0
++ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.1
+ 
+ VOCABULARY (teacher-facing naming):
+-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
++The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
++
++THE SELF-CONTAINED REGISTER (binds Rules 9 and 10)
++Three things no time band or teacher note may do, each because the platform enforces it:
++1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick individual calculation", "an extended derivation" — never in number.
++2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "having covered all three identities" are wrong for someone. Each unit closes on its own ground.
++3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
++Backward continuity is welcome, and is best carried by naming the content built on ("Having established the expansion of a binomial product, …" — Rule 10's continuity link) rather than a unit's position.
+ 
+ Subject group : mathematics
+ Stage         : Secondary Stage
+@@ -17,7 +24,10 @@
+    think_reflect note), prose_summary, enumerated_worked_examples,
+    enumerated_exercises.
+ 3. NCF Pedagogy document for Mathematics, Secondary Stage.
+-4. Period schedule — one or more rows of {duration_minutes, count}.
++4. Period schedule — exactly ONE row {duration_minutes, count}: the class-standard
++   duration (40 min for classes up to VII, 45 for VIII, 50 for IX) × the period
++   count. Teacher timetable variation never reaches generation; it is handled
++   downstream at serve time.
+ 
+ OUTPUTS REQUIRED:
+ 1. Human-readable lesson plan — prose + time-band format, intended for teacher
+@@ -242,6 +252,9 @@
+ 4. Effort-index terms (conceptual_demand, reasoning_load, exec_load,
+    effort_index).
+ 5. Internal item ids (WE-N, E-N) — use book_ref instead.
++6. Anything barred by THE SELF-CONTAINED REGISTER. Each band speaks in the present
++   of its own activity; sequence lives in the plan's structure, and unit-to-unit
++   linking lives only in teacher_notes (Rule 10).
+ 
+ The competency fields in the coverage_handoff are structured metadata, not
+ teacher-facing text, and are exempt — but their contents MUST NOT leak into any
+@@ -254,8 +267,9 @@
+ MANDATE
+ Every period carries a teacher_notes field: 2–3 sentences of flowing prose
+ written for the teacher. Weave in, naturally:
+-- A brief recap of what the previous unit covered and how it connects to this
+-  one (omit for the first unit).
++- A continuity link to the content already taught — named by that content
++  itself, never by its position. The first unit instead orients the teacher to
++  the chapter's entry point.
+ - One common error or misconception to watch for, drawn from this section's own
+   content in the chapter summary — no fabrication. At this stage these are
+   typically a misread of a definition, a slip in a derivation or sign, a
+@@ -267,6 +281,7 @@
+ teacher_notes MUST NOT begin with the word "Transition" or any section label,
+ MUST NOT contain C-codes, CG codes, internal item ids, or effort-index terms,
+ and MUST NOT exceed three sentences. Refer to any textbook item by book_ref.
++MUST NOT breach THE SELF-CONTAINED REGISTER.
+ 
+ 
+ ================================================================================
+@@ -339,7 +354,7 @@
+   "chapter_number": "integer",
+   "chapter_title": "string",
+   "chapter_cg": "string — core_cg from the mapping JSON; chosen once at chapter level",
+-  "period_schedule": [ { "duration_minutes": "integer", "count": "integer" } ],
++  "period_schedule": [ { "duration_minutes": "integer — the class-standard duration", "count": "integer" } ],
+   "section_coverage_note": "string | null — present only under a Rule 7 budget shortfall; else null",
+   "lesson_plan": {
+     "periods": [
+@@ -364,7 +379,7 @@
+           { "minutes": "string — e.g. '0-10'; tiles 0..period_duration_minutes with no gaps or overlaps",
+             "activity": "string — narrative; names textbook items by book_ref only" }
+         ],
+-        "teacher_notes": "string — 2–3 sentences (Rule 10); recap-and-connect, one likely error from this section, optional self-study book_ref",
++        "teacher_notes": "string — 2–3 sentences (Rule 10); continuity by content not position, one likely error from this section, optional self-study book_ref",
+         "homework": ["string"]
+       }
+     ]
+@@ -373,6 +388,7 @@
+ }
+ 
+ Field constraints:
++- period_schedule: exactly one row — the class-standard duration × count (INPUTS 4).
+ - time_bands tile the period exactly from 0 to period_duration_minutes, no gaps
+   or overlaps; minimum 3 bands per period.
+ - textbook_items_in_class ids MUST equal ids present in the summary's
+@@ -393,14 +409,19 @@
+ - Section anchoring (Rule 1) is absolute — no period without a section.
+ - Position carries no cognitive signal — demand is read off each section as it
+   stands (Rule 1); the LP imposes no ramp.
+-- TIME: total minutes = sum of (duration × count) per schedule row; total period
+-  count = sum of row counts. Each period has exactly one anchored section's work
+-  calibrated to its duration. The full budget is teaching only — no period is
+-  reserved for assessment, and no assessment task or time estimate is embedded
++- TIME: the schedule is a single standard row. Total minutes = duration × count.
++  Total period count = count. Each period has exactly one anchored section's work
++  calibrated to the standard duration. The full budget is teaching only — no period
++  is reserved for assessment, and no assessment task or time estimate is embedded
+   in the lesson plan.
++- ITEM ANCHORING IS DERIVED, NOT DECLARED: an assessment item's anchor unit is
++  resolved by the platform from its section_number through this handoff's
++  period_numbers. MUST NOT emit period_ref (or any unit number) on an assessment
++  item — at this stage the unique link is the SECTION, and a section may be taught
++  across several units (Rule 7).
+ 
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-Mathematics Lesson Plan Constitution · Version 1.0 · Secondary Stage · Internal Document
++Mathematics Lesson Plan Constitution · Version 1.1 · Secondary Stage · Internal Document
+ ================================================================================

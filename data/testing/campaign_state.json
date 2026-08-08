@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-07T21:44:41",
+ "updated_at": "2026-08-08T21:07:29",
  "step0": {
   "campaign": {
    "0.1": {
@@ -205,6 +205,44 @@
     "by": "Claude",
     "at": "2026-08-07T17:45:05",
     "comment": "STAGE SIGNED 2026-08-07 - constitutional gate clear AND the engine gate lifted. Status to be confirmed by Kumar.\n\nCONSTITUTIONAL (P1-P5, all green): A1 lands; the register is ONE block in a declared TWO-BAN cut; A6 anchors present as the derived form (progression_stage -> the stage's LAST unit); A9 landed as the v1.7 removal-plus-two-lines with no arrangement sentence; P3 converted (the first stage where P3 was not N/A); no cancelled amendment (A2/A3/A4) and no V-rule in either constitution. P5.4 profiles done through the app's own first-run flow with disjoint sections and a 60-min identity for C6. Per-item note: genon/out/stage_prep_science_middle/STAGE_SIGNOFF_S6_science_middle.md.\n\nENGINE (the gating condition, which had no precedent in S1-S3): DONE the same day, engine e16 -> e17. All nine items of docs/science_middle_stage_serve.md section 4 landed. The stage now serves at PLAN granularity: identity at X=K, K complete + the TOP's synthesis at X=K+1, truncation with declared drops only BELOW the lowest canonical, surrender only above the top. The subject plugin declares granularity and section axis (Subject.genon_serve_granularity / genon_has_section_axis); serve.py and compile.py ask carriers.py and never learn a subject's name (CLAUDE.md section 3). compile.py's section_anchor read is mediated - still raising on a section-axis stage. The synthesis unit is carried by an explicit boolean where there is no anchor field to hold the token. Briefs supply NO registry (there is none) and mandate a whole arc at each count. Certification: checks 3/4/5 N/A, 6 via the boolean, 8 REDEFINED (truncation legal below the floor, a failure inside the band; plus a new gate on surrender inside the band). testing.md -> v2.7 records all of it for the S6 row.\n\nDEFECT FOUND AND FIXED IN PASSING: the engine's unit projection dropped progression_stage / stage_label, so every served science-middle plan collapsed into ONE 'Stage None' group - the phantom CLAUDE.md section 3 records for science secondary, reappearing on the serve side. Fixed generically (compile._MODELLED -> unit['extra'], spliced back first in _period_from_unit), which pre-pays the same debt for mathematics and english. No test of the four serve laws would have caught it; only rendering a served plan through the subject port did.\n\nREGRESSION: the three authored libraries (SS IX ch3, SS VIII ch3, science IX ch8) serve every X in [floor-1, top+1] with identical modes and granularity 'unit'. An under-dense library is now caught: certifying the old [12,10,7] counts FAILS at X=9 on the no-surrender-inside-the-band gate. Suite 20 passed / 5 failed, the five being pre-existing environment and fixture gaps that fail identically against the pre-session tree.\n\nS6's C-cycle is OPEN. C1 is the next step and it is metered (Terminal, ~Rs 150 for ch 6's four canonicals)."
+   }
+  },
+  "mathematics/secondary": {
+   "P1": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T17:20:46",
+    "comment": "AMENDED 2026-08-08. LP constitution v1.0 -> v1.1.\n\nA1: INPUTS 4 was 'one or more rows of {duration_minutes, count}'; now 'exactly ONE row {duration_minutes, count}: the class-standard duration (40 min for classes up to VII, 45 for VIII, 50 for IX) x the period count ... handled downstream at serve time'. The TIME integrity constraint is restated as duration x count (was 'sum of (duration x count) per schedule row; total period count = sum of row counts'); the A3 schema comment names the standard duration and a NEW field constraint states the one-row rule where the schema is actually read. Bands are the master-plan calibration, not NCF's flat 40. Declared deviation from the verbatim port: the reference says 'partition time', this file says SERVE time (the partition engine was retired 2026-07-31) - the same correction S3 made.\n\nA5+A7 THE SELF-CONTAINED REGISTER: PRESENT as ONE block after VOCABULARY in the v1.10 three-ban re-cut (clock quantity / forward reference or completion / calendar time, plus the closing backward-continuity line). Bound at Rule 9 (prohibition 6 - teacher-facing text and band activity) and Rule 10 (teacher notes) BY REFERENCE, never as scattered bans; the edit script asserts the phrase appears exactly 3 times (heading + two binds). Declared deviation: the reference's illustrative strings are Social Sciences content, substituted with mathematics ones ('a quick individual calculation', 'an extended derivation', 'having covered all three identities', 'Having established the expansion of a binomial product, ...'). The three bans and the closing rule are verbatim in substance.\n\nConsequential edits, both following the reference: VOCABULARY dropped its positional cross-reference examples ('the previous unit', 'this unit') and gained the 'session' exclusion; Rule 10's continuity bullet ('a brief recap of what the previous unit covered and how it connects to this one') is now position-free, naming the content built on.\n\nAlso added here, as A6's LP-side half: an ITEM ANCHORING IS DERIVED, NOT DECLARED integrity line - the platform resolves an item's anchor unit from section_number through the handoff's period_numbers; MUST NOT emit period_ref or any unit number.\n\nOne more consequential edit, added 2026-08-08 after verification: A3's teacher_notes schema comment read 'recap-and-connect', the exact positional framing Rule 10's bullet was rewritten away from. Now 'continuity by content not position' - matching science secondary's practice of pointing at the rule rather than restating it.\n\nTWO RESIDUES DISCLOSED, deliberately NOT fixed (science secondary v1.1 and science middle v2.2 carry the same ones; patching maths alone would put four signed stages out of step for no gain): (a) A4's period_duration_minutes comment still says 'if mixed across this section's periods, the most common' - inert under one standard row; (b) INPUTS 4 names the bands '40 <=VII, 45 VIII, 50 IX' verbatim from the reference in a constitution whose grades are ix and x, where testing.md P1 writes '50 IX-X'. Inert (step 0.6: class X has no content anywhere); align in the REFERENCE and port if the founder wants it changed.\n\nNo pedagogical rule changed: Rules 1-8, 11, 12, Amendment A4 and every period field byte-identical. Artefacts in genon/out/stage_prep_mathematics_secondary/ (lesson_plan_constitution_v1.0_pre.txt, lp_v1.0_to_v1.1.diff, apply_s4_amendments.py - every edit asserts exactly-one occurrence; re-running the script from the PRE files reproduces both live constitutions byte-for-byte, and re-running it against the amended files aborts loudly)."
+   },
+   "P2": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T17:20:46",
+    "comment": "AMENDED 2026-08-08. Assessment constitution v1.0 -> v1.1.\n\nA6-confirm: PRESENT via the subject's equivalent, not amended. Every item already carries section_number matching the handoff, and the LP's coverage_handoff (A4) maps it to period_numbers. Mathematics secondary's unique link is the SECTION, not the unit - LP Rule 7 lets a section span several periods - so the reference's period_ref FIELD is not ported. Added an integrity line recording that ANCHORING is derived (section_number IS the anchor; the platform resolves it through period_numbers) and forbidding period_ref or any unit number on an item. Identical shape to science secondary v1.2 (founder ruling 2026-08-05: derive the link, never demand it). grep -c phase_ref = 0; period_ref appears exactly once, inside the new ban. The carrier family is already NAMED for this join (carriers.py docstring, handoff-bridged) but is NOT YET IMPLEMENTED - see SIGN.\n\nA9 - TWO ADDITIONS; THE REMOVAL IS N/A. This file never carried the MEMORY-item-18 position prohibition: testing.md P2 names four files that carry it (SS + Science, middle and secondary) and mathematics secondary is not one. Confirmed by grep - 'is_correct MUST', 'consecutive items', 'same label' all 0. Nothing was struck.\n\nADDED, in the v1.7 wording: the Rule 7 mandate line (option order carries no meaning and is not yours to set, emit as authored, uneven letters across a chapter are coincidence not a defect) and the by-label option-reference prohibition. The pre-existing 'none of the above' / 'all of the above' ban is ABSORBED INTO that prohibition rather than duplicated - same ban, now carrying the reason a downstream sort cannot reorder it - and Rule 7's PROHIBITION is renumbered 1/2 to hold both. No scope lost.\n\nNOT re-added and asserted absent by the edit script: 'alphabetically', 'never led with', 'first word at which they differ'. Note that Rule 1's prohibition 3, Rule 4's and Rule 5's 'never position' clauses and the 'Position carries no signal' integrity line all concern a SECTION's position in the chapter - a different subject entirely - and were left untouched.\n\nNo pedagogical rule changed: Rules 1-6, 8-12, the guide layer and the whole A1 schema (including VS-1..VS-6 and graph_paper) are byte-identical. Artefacts: assessment_constitution_v1.0_pre.txt, assess_v1.0_to_v1.1.diff."
+   },
+   "P3": {
+    "status": "na",
+    "by": "Claude",
+    "at": "2026-08-08T17:20:46",
+    "comment": "N/A 2026-08-08 - mathematics secondary is GROUP A, matching the testing.md section 3 stage table's 'time_bands' entry for S4.\n\nAmendment A3's period schema already emits time_bands[{minutes, activity}] with the tiling constraint ('tile the period exactly from 0 to period_duration_minutes, no gaps or overlaps; minimum 3 bands per period'). Verified by grep on both constitutions: 'phases[' = 0, '\"phases\"' = 0, band_id = 0, time_bands present. The edit script re-asserts all four as closing guards, so a future edit cannot silently reintroduce the retired shape.\n\nNothing to convert; no band_id to remove (the band layer left the declaration surface at compile v0.5 and ids are derived internally)."
+   },
+   "P4": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T17:20:46",
+    "comment": "DONE 2026-08-08. CHANGELOG.md created beside BOTH amended constitutions:\n- data/content/constitutions/lesson_plan/mathematics/secondary/CHANGELOG.md (v1.1 entry + a v1.0 'pre' stub)\n- data/content/constitutions/assessment/mathematics/secondary/CHANGELOG.md (v1.1 entry + a v1.0 'pre' stub)\n\nEach lists the bump with date and per-amendment rationale, including the declared deviations (serve time for partition time; mathematics illustrative strings in the register block; the derived section_number anchor in place of the reference's period_ref field; A9's removal recorded as N/A with the grep evidence; the absorbed none/all-of-the-above ban). Neither constitution carried an in-document version-history block, so nothing had to be lifted out; the VERSION line stays in the file and nothing in the sidecars is read at generation time.\n\nThe assessment sidecar also carries forward the file's standing RENDERER WIRING debt (VS-2 figure SVG and VS-6 green graph paper are permitted by this stage but honoured by neither renderer) as a note - flagged for the C-cycle as a defect if a pilot item needs a grid, explicitly NOT as a constitutional item."
+   },
+   "P5": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T17:35:05",
+    "comment": "CLOSED 2026-08-08 — all five sub-items done.\n\nP5.1 FLOOR: standing ratio, no override. round(0.6 x 14) = 8, matching floor_periods_at_standard. Equal dispersion over [8, 14] gives counts [14, 11, 8] — three canonicals, three authoring runs.\n\nP5.2 REGISTRY: obvious, no definition needed. The summary carries an explicit sections[] spine of {ref, title} and LP A3 specifies section_anchor as the bare ref. Ch 4's registry is the eight refs in summary order (4.1 Introduction ... 4.8 Simplifying Rational Expressions). Consistency across the library is guaranteed by construction: standard_registry() reads it off the AUTHORED standard, briefs_for() prints it verbatim into every compact brief. Nothing about the registry enters a constitution.\n\n  ITS OPEN ITEM IS NOW FIXED — the synthesis unit's handoff row. On a DERIVED-anchor stage an item reaches its unit only through a coverage_handoff row; the synthesis unit is not a section, so it got no row and could hold no question, making C9.2 unsatisfiable on the Case-1 borrow. Measured on the CERTIFIED science ix ch 8 library: the model invented a row unprompted and NO item used it (item section_numbers stopped at 10; stamped unit_refs never reached unit 12). Fixed by one added instruction in variant_plans.top_brief_for, emitted ONLY where carriers.item_anchor_is_derived() is true — verified present for mathematics ix and science ix, absent for social_sciences ix (item-self-sufficient) and for science viii (plan-granularity arc brief). V-series, so no constitution moved and only a --certify-only re-run is implied for existing libraries.\n\nP5.3 PILOT CHAPTER: mathematics / IX / ch 4 'Exploring Algebraic Identities' — founder pick from the eight eligible (9-16 are placeholder). Summary + mapping on disk, placeholder false, canonical_plan present, 8 sections, 18 worked examples, 21 exercises, core_cg CG-3, co_central false, effort_index 11.0.\n\nP5.4 TEST IDENTITY PROFILES for class IX: DONE, set up by Kumar through the app's own first-run flow. Verified on disk: Mathematics IX on all three; sections DISJOINT (kumar1 B+D, kumar2 F, kumar3 H+I); MIXED DURATION on the right identity — kumar3 carries [50, 60] with ppw_by_duration {50: 5, 60: 2}, anchor 50, and section 4 assigns the mixed-duration matrix to kumar3. kumar1/kumar2 are 50-only at 7 ppw. Leftovers from S1-S3/S6 accepted per the 2026-08-07 ruling. grids[] all -1, correct post-Calendar-Purge.\n\nP5.5 THE CARRIER: DONE — and it was a DELEGATION of the verified 8-rule table, exactly as the doctrine requires, not a new join. Mathematics secondary is ROW 6: item section_number -> handoff section_number -> period_numbers, never section_anchor text, items under the {..., questions: []} wrapper, anchoring at the section's LAST unit. _secondary_assess already ran that rule for the app; genon needed the same rule on the RAW item dicts. What landed:\n  1. genon_assessment on the mathematics plugin — secondary delegates to carriers.items_by_handoff with row 6's two keys; middle/preparatory RAISE naming their own family (period-field, rows 4/5), so they cannot silently borrow row 6. Stage told apart by CONTAINER SHAPE, not stage_for(grade): the method receives only `result` and the grade lives on the enclosing plan, so a grade read there is None on the very call the carrier makes. test_genon_carriers caught that immediately and now pins it.\n  2. _NOT_YET re-keyed by subject·STAGE. It was per subject, so 'mathematics' was one entry spanning two families and deleting it would have declared middle+prep ready too. Now secondary is absent while ('mathematics','middle') and ('mathematics','preparatory') remain, each naming its 8-rule row and owing stage (S7/S8).\n  3. carrier_gap() / require_carrier() + a STEP 0 pre-flight in build_library.py. P5.5 asked for a read; this makes it a GATE, because a gate cannot be forgotten. An owed stage now stops with 'STOP before spending — ...' before any metered step. Verified: mathematics vii and english ix both stop cleanly; mathematics ix proceeds.\n  4. generate_canonical.validate no longer swallows CarrierNotImplemented — it sat in a bare except Exception whose fallback read a key the wrapper subjects lack, so the item-anchor check silently saw zero items and passed. That is what made a missing carrier a PAID failure.\n  5. genon_item_anchor_family declared on base/science/mathematics — the 8-rule family column as a first-class fact rather than an inference; it is what the synthesis-row brief line reads.\n\nTESTS: test_genon_carriers 25 -> 36, all green (row-6 join at LAST unit, synthesis row reachable, unserved anchor -> [] not a guess, raw fields survive, the no-grade regression, the pre-flight gate, all eight family rows). Full suite 20 passed / 5 failed, and all five failures were confirmed PRE-EXISTING by re-running them on a tree with these changes reverted (test_api needs fastapi; test_link_resolver and test_normalized_item want a missing English saved plan; test_lp_standard a missing TWAU view; test_stimulus a fixture count)."
+   },
+   "SIGN": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T17:35:05",
+    "comment": "CLEAR TO ENTER C1 — 2026-08-08. Status to be set by Kumar.\n\nCONSTITUTIONAL GATE: clear. A1 lands, the register is ONE block in the full v1.10 three-ban form, A6 anchors present as the derived section_number form on both sides, A9 landed as the v1.7 two lines with the removal recorded N/A (this stage never carried item-18) and no arrangement sentence anywhere, P3 N/A with grep evidence (Group A), no cancelled amendment (A2/A3/A4) and no V-rule in a constitution, no pedagogical rule changed. The edit script reproduces both live constitutions byte-for-byte from the PRE files and aborts loudly on re-run.\n\nBOTH BLOCKERS FIXED, not merely declared (see P5):\n  - The carrier — landed as a delegation of 8-rule row 6, plus the stage-aware _NOT_YET, the free STEP 0 pre-flight, and the validate swallow fix that had made a missing carrier a PAID failure rather than a refusal.\n  - The synthesis handoff row — one brief line in top_brief_for, emitted only on derived-anchor stages. Note this was a live defect against the CERTIFIED S3 library too (science ix ch 8's invented synthesis row has zero items anchored to it), so S3 may want a --certify-only re-run and a section 7 defect row; it is not an S4 matter.\n\nONE FOUNDER EYE WORTH SPENDING BEFORE STEP 4: the synthesis-row brief line is new, so ch 4's top canonical is the first artefact generated against it. Read that single handoff row in STEP 1's output before letting STEP 4 buy the two compacts — STEP 1 is resumable, so the check costs nothing and it is the cheapest place to catch a wording problem.\n\nC1 COMMAND: python3 genon/build_library.py mathematics ix 4\nIt will no longer stop at the carrier. It WILL still stop at STEP 2 with 'Row is provisional' until the standard canonical exists — the normal path for a fresh chapter, not a fault.\n\nNothing re-opens: no stage carries a signed human GATE, so testing.md section 9 costs nothing. Template is at v2.8, which added P5.5."
    }
   }
  },
@@ -613,9 +651,75 @@
   "mathematics/secondary": {
    "provenance": {
     "klass": "ix",
-    "draw": "seed 'mathematics|secondary|2026-08-02' over ['ix']",
+    "draw": "seed 'mathematics|secondary|2026-08-02' over ['ix'] -> ix (single-candidate stage)",
+    "chapter": "4 — Exploring Algebraic Identities",
+    "duration": "50",
+    "model": "claude-sonnet-4-6",
+    "date": "2026-08-08",
+    "lp_ver": "1.1",
+    "as_ver": "1.1",
+    "engine": "12",
+    "canonical_plan": "counts [14, 11, 8] · provisional false · basis authored_standard · registry_sections 8 · authored [14, 11, 8] (v2.0 equal dispersion over [floor 8, standard 14]; A-C = 6 >= 4 so three counts)",
+    "brief": "variant_plans.top_brief_for + briefs_for. FIRST library authored against the SYNTHESIS HANDOFF-ROW line (added 2026-08-08, emitted only where carriers.item_anchor_is_derived) — it worked on first use: sec#9 ref='synthesis' period_numbers [14], total_sections correctly still 8, and one item anchored to unit 14. Also the first library on the mathematics genon carrier (8-rule row 6).",
+    "ledger_ts": "top 20260808_173726 · p11 20260808_174359 · p08 20260808_174917 (first cert report 20260808_175345 FAILED on 6 register hits; repaired at Rs 0 by repair_register.py v1.4; ALL PASS at 20260808_204619; re-certified 20260808_210228 with the new handoff/anchor check)",
+    "report": "genon/out/library_reports/mathematics_ix_ch04_20260808_210228.md",
+    "files": "(none yet — C6 not run; no served plan written)",
+    "durations_run": "(C6 not run yet; authored at 50, kumar3's profile carries 60 for the mixed matrix)",
+    "stages": {
+     "top_canonical": {
+      "wall_s": "392.5",
+      "tokens_in": "22165",
+      "tokens_out": "25230",
+      "cost_inr": "40.93"
+     },
+     "variant_a": {
+      "wall_s": "317.7",
+      "tokens_in": "22222",
+      "tokens_out": "21387",
+      "cost_inr": "35.65"
+     },
+     "variant_b": {
+      "wall_s": "267.4",
+      "tokens_in": "22222",
+      "tokens_out": "17253",
+      "cost_inr": "29.94"
+     },
+     "variant_c": {
+      "wall_s": "",
+      "tokens_in": "",
+      "tokens_out": "",
+      "cost_inr": ""
+     },
+     "variant_d": {
+      "wall_s": "",
+      "tokens_in": "",
+      "tokens_out": "",
+      "cost_inr": ""
+     },
+     "reruns": {
+      "wall_s": "0",
+      "tokens_in": "0",
+      "tokens_out": "0",
+      "cost_inr": "0"
+     }
+    },
+    "total_cost_inr": 106.52,
+    "partition_wall_s": "",
+    "c5_split": "k1: identities / k2: between+floor−1+top+1 / k3: mixed week",
     "by": "Claude",
-    "at": "2026-08-02T09:42:48"
+    "at": "2026-08-08T21:07:29"
+   },
+   "C1": {
+    "status": "pass",
+    "by": "Kumar",
+    "at": "2026-08-08T21:07:29",
+    "comment": "PASS — library built 2026-08-08 (Kumar, Terminal, metered). Three canonicals on disk matching canonical_plan.counts [14, 11, 8]:\n  ch_04_canonical.json      14 units x 50 min\n  ch_04_canonical_p11.json  11 units x 50 min\n  ch_04_canonical_p08.json   8 units x 50 min\nThe master_plan row finalized as expected: provisional false, basis authored_standard, authored [14, 11, 8], registry_sections 8.\n\nTWO FIRSTS, both held:\n  1. The first library authored on the MATHEMATICS GENON CARRIER (8-rule row 6, landed at P5.5 the same day). Items resolve section_number -> coverage_handoff -> period_numbers, anchored at the section's LAST unit.\n  2. The first library authored against the SYNTHESIS HANDOFF-ROW brief line. It worked on first use — the top emitted sec#9 ref='synthesis' with period_numbers [14], kept total_sections at 8 as instructed, and anchored one item to unit 14. That is C9.2 ('a borrowed unit brings its own items') satisfiable on a derived-anchor stage for the first time.\n\nCERTIFICATION HISTORY — the first pass FAILED, and the failure was free to fix:\n  20260808_175345  FAIL — register clean: 6 ban hit(s), ALL forward reference (5 in the top, 1 in p11; p08 clean). Zero clock quantities across 132 bands, which is a distribution no earlier stage produced (SS VIII was 3 forward / 4 clock; science IX 1 / 2).\n  repair_register.py v1.4 --apply — six declared pure DELETIONS, no text authored, Rs 0. Backups in backup/register_repair/, edits recorded in genon_canonical.repairs[], derived plan cache purged (ARV-D-034).\n  20260808_204619  ALL PASS.\n  20260808_210228  ALL PASS again, now including the new handoff/anchor check added at C1 (see C5).\n\nNOTE ON THE BREACHES, carried to the human gate rather than acted on: every hit was a pedagogical SIGNPOST, not the boilerplate the ban's examples name ('the companion identity to be derived in the factorisation unit', 'the following unit will formalise'). The register was in the constitution at authoring (LP v1.1) AND in the brief, so this is not a not-told case. One hit — U13's 'Preview that the synthesis unit will connect all such proof moves' — is the model paraphrasing its own brief, which describes unit 14 to it in detail and then forbids naming it. Founder view 2026-08-08: the brief is not the lever; repair is the route (2026-08-02 ruling: regenerating is a lottery).\n\nEXIT criteria met: files match counts; the row is finalized; canonical_minutes = 50 x 14 = 700."
+   },
+   "C2": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-08T21:07:29",
+    "comment": "PASS — costed 2026-08-08 from genon/ledger.csv (wall seconds) + runtime_data/token_log.csv (tokens, rupees). Every row attributed; nothing missing.\n\n  top_canonical (14u)  392.5s  in 22165  out 25230  Rs 40.93\n  variant_a     (11u)  317.7s  in 22222  out 21387  Rs 35.65\n  variant_b     ( 8u)  267.4s  in 22222  out 17253  Rs 29.94\n  reruns                    —         0       0     Rs  0.00\n  ------------------------------------------------------------\n  CLEAN PATH                                        Rs 106.52\n  ALL-IN                                            Rs 106.52\n\nTHE TWO FIGURES ARE THE SAME HERE — zero reruns and zero superseded generations, so the chapter cost exactly what is on disk. The tracker's Rs column shows the clean-path total (founder 2026-08-07), which is also what a 330-chapter extrapolation may multiply. The six register breaches cost Rs 0 to fix: repair_register.py is deterministic, so a defect that would have been a Rs 106 re-author was a free edit.\n\nAGAINST THE BENCHMARK: SS IX ch 3 (v2.0 re-author) was Rs 116.46 across 3 runs = Rs 38.82/run. This library is Rs 106.52 across 3 runs = Rs 35.51/run, about 9% cheaper per run.\n\nCOST SHAPE, and it confirms the standing warning: INPUT IS FLAT — 22165 / 22222 / 22222 tokens, i.e. the constitution, summary, mapping and brief are paid in full on every run regardless of length. OUTPUT falls with period count (25230 -> 21387 -> 17253). So the 8-period compact costs 73% of the 14-period standard despite being 57% of its length. BUDGET PER RUN, NEVER PER UNIT.\n\nNote the input is ~45% higher than SS IX ch 3's 15.3-15.6k. Mathematics secondary carries 18 enumerated worked examples and 21 exercises in its summary plus a longer assessment constitution (VS-1..VS-6 + graph_paper), so its fixed per-run input is structurally larger. If that holds across maths chapters, the corpus projection should use a per-subject rate rather than one blended Rs 37/run — worth confirming at S7/S8 before the pre-warm is priced."
    }
   },
   "the_world_around_us/preparatory": {

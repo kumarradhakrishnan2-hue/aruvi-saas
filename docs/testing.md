@@ -1,7 +1,46 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.7 · 2026-08-07 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.8 · 2026-08-08 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.8 (2026-08-08, at S4's P-prep): **two per-stage preconditions on C1 are promoted into §3,
+both found at P-prep, neither constitutional.** (a) **The CARRIER, and it is a PAID gate, not a
+free one.** `aruvi_core/genon/carriers.py`'s `_NOT_YET` table still lists **mathematics and
+english**, and `assessment_items()` raises `CarrierNotImplemented` on a listed subject — so six
+of the eleven stages cannot be certified. But the raise fires at `certify()`
+(`build_library.py:514`), **after** metered STEP 1 and STEP 4, and `generate_canonical.validate`
+swallows it into a silent pass on the way, so a full library is authored and paid for first and
+the failure is then misreported as "does not compile" for every file. `_NOT_YET` must now be
+read BEFORE every stage's C1 and a listed subject treated as a hard gate on SIGN → C-cycle,
+tracked like S6's engine gate — the build is not a safety net. The entries are keyed by SUBJECT,
+so deleting one opens every stage of that subject, including stages in a different carrier
+family. (b) **The synthesis unit's handoff row.** On a DERIVED-anchor stage (science·secondary,
+mathematics·secondary, science·middle) an item reaches its unit only through
+`coverage_handoff.period_numbers`, so the v2.0-mandated synthesis unit can carry no items unless
+it has a handoff entry — which makes C9.2 unsatisfiable on exactly the Case-1 borrow C8
+inspects. Verified on the CERTIFIED science·IX ch 8 library: the model invented a synthesis
+handoff entry and **no item anchors to it** (item `section_number`s run 1–10; stamped
+`unit_ref`s never reach 12), so this is a live defect against S3, not only an S4 risk.
+`top_brief_for` was silent on it. **Both (a) and (b) are FIXED in this same pass** — the carrier
+landed as a delegation of 8-rule row 6, the pre-flight became a real gate, `validate` stopped
+swallowing the refusal, and the brief now asks for the synthesis row on derived-anchor stages
+only; `tests/test_genon_carriers.py` went 25 → 36 green. No constitution moved, so being V-series
+none of it enters one. **(c) §3 gains a new P-step, `P5.5` — THE CARRIER**, so (a) is never met as a
+surprise again. It writes down the settled doctrine that genon does not invent linkage: the
+**verified 8-rule table** (`docs/architecture-plan.md` §"Link resolution", restated in
+`link_resolver.py`) is the single source of truth, `carriers.py` is that table exposed to genon,
+and a stage's carrier work is a DELEGATION of what the subject plugin already does for the app —
+which is how S1, S3 and S6 were done and how S4 (rule 6) proceeds. P5.5 requires a four-part
+trace, gates **C1** (not C6, as P5.4 does), and carries the two warnings that make it a
+pre-flight READ rather than a run: `_NOT_YET` is keyed by subject so one deletion opens sibling
+stages in another family, and the build spends the money before it checks. The [Claude] sign-off
+checklist now fails a stage note that does not mention the carrier. §3 also gains S4's landed
+pair (LP v1.1 · assessment v1.1) and the note that
+**A9's removal was N/A for S4** — the first stage whose assessment constitution never carried
+the item-18 prohibition, so A9 landed as the two lines alone. Housekeeping in the same pass:
+`docs/testing_tracker.html`'s P2 step description still carried the arrangement sentence v2.5
+struck (it was instructing the one thing A9 forbids) and is rewritten. §9 applies and costs
+nothing: no stage carries a signed human GATE.*
 
 *2.7 (2026-08-07, at S6's P-prep): **S6 · science·middle is certified against a DIFFERENT
 SERVE LAW, and the C-steps say so.** The stage anchors units to the cognitive progression arc,
@@ -321,6 +360,12 @@ count on wide-enough bands (§0.2). Left as-is for this campaign; flagged as the
 > green, the C-cycle opens, and P5 stays **amber** in the tracker until the profiles exist.
 > C6 is the hard stop for it. A stage may NEVER be signed with a constitutional item (P1–P4)
 > or a solver input (P5.1–P5.3) open — those are what the ordering rule protects.
+>
+> **P5.5 (the carrier, added 2026-08-08) sits between the two.** It is not consumed by
+> generation *authoring* either, but it IS consumed by the compile/certify half of C1, so it
+> gates **C1**, not C6. A stage may be signed provisionally with P5.5 open provided the tracker
+> records it as a C1 gate — as S4 does — but it may never enter C1 with it open, and unlike P5.4
+> the failure is not a clean stop: the build spends the money first (P5.5's second warning).
 
 **The constitutional carry-forward is EXACTLY this and nothing more** (founder ruling
 2026-08-01; `partition_constitution_rollout.md` §3): **A1 · A5/A7 · A6-confirm · A9 · P3 · P4**.
@@ -346,7 +391,7 @@ before starting each stage):
 | S1 | social_sciences · secondary | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (assess v1.7) |
 | S2 | social_sciences · middle | **2.8 ✓** | time_bands | ✓ | ✓ | ✓ (assess v2.4, 2026-08-04) |
 | S3 | science · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-05) |
-| S4 | mathematics · secondary | 1.0 | time_bands | — | — | — |
+| S4 | mathematics · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.1, 2026-08-08 — no item-18 to remove) |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
@@ -374,6 +419,76 @@ before starting each stage):
 > removes surrender inside the band. That engine work GATES S6's C1 and the C5–C9 rewrite
 > below (template → v2.7); the constitutional P-steps do not wait on it. §9 costs nothing:
 > no stage carries a signed human GATE.
+
+> ★ **ADDED 2026-08-08, at S4's P-prep — the CARRIER is a per-stage precondition on C1, and
+> it is not constitutional.** `aruvi_core/genon/carriers.py` carries a `_NOT_YET` table, and
+> `assessment_items()` RAISES `CarrierNotImplemented` for any subject still in it. Only
+> `science` implements `genon_assessment`; social_sciences and TWAU ride the
+> item-self-sufficient default; **mathematics and english are both still listed** ("owed by
+> S4/S7/S8" and "owed by S9/S10/S11"). So six of the eleven stages cannot be certified. S4 found
+> this at its P-prep, exactly as S3 found the `questions`-wrapper bug that created the seam in
+> the first place.
+>
+> **Read the scope precisely, or this looks bigger than it is** (founder challenge, 2026-08-08).
+> A listed subject is NOT a subject whose assessment links are unresolved. The APP resolves them
+> and always has — `subjects/mathematics/subject.py::_secondary_assess` runs the handoff-bridged
+> join today and is parity-tested, which is why maths·secondary LPs and assessments render
+> correctly. The app reaches the plugin through `assessment_to_view`, which returns DISPLAY
+> objects; genon needs the RAW item dicts (options, `is_correct`, guide, `visual_stimulus`
+> intact, for served files and exports) and so asks for **`genon_assessment`** — a second door
+> that only `science` has opened. So each remaining stage's carrier work is a **delegation** of
+> logic the plugin already contains: for maths·secondary, a ~6-line call to `items_by_handoff`
+> with the identical arguments science·secondary passes. Budget it that way. What makes it a
+> gate is not its size but the two properties below.
+>
+> **The gate is POST-PAYMENT, and this is the part worth internalising.** `certify()` is called
+> at `build_library.py:514`, *after* metered STEP 1 (`:482-484`) and metered STEP 4
+> (`:497-501`) — the full library is authored and billed before the carrier is consulted. And
+> STEP 1 does not fail either: `generate_canonical.py:154-159` calls the carrier inside a bare
+> `except Exception` and falls back to `parsed.get("assessment_items")`, a key the
+> `questions`-wrapper subjects do not have, so the item-anchor validator degrades to a **silent
+> no-op** and a paid canonical installs with every item anchored to nothing. The raise finally
+> surfaces inside `load_library`'s `except` (`:196-199`) and is reported as
+> `FAIL <file>: does not compile` for EVERY library file, ending at
+> `STOP: no library on disk to certify` — naming neither the carrier nor the subject, and
+> skipping quarantine.
+>
+> Four standing consequences: (a) **this check is now a P-step — `P5.5`, below** — so it is read
+> before every stage's C1 and a listed subject is a hard gate, recorded in the tracker like S6's
+> engine gate; **do not rely on the build to stop the run**; (b) `validate` must stop swallowing
+> `CarrierNotImplemented` into a pass — a subject with no carrier should refuse to generate;
+> (c) the `_NOT_YET` entries are keyed by SUBJECT, not subject·stage, so deleting one opens every
+> stage of that subject at once, including stages in a different carrier family — making the
+> table stage-aware is the smaller fix and keeps the campaign's stage-at-a-time discipline;
+> (d) a `--certify-only` run on an empty library is safe and is the cheap way to test (b).
+> None of it touches a constitution, so §9 does not fire.
+>
+> ★ **ADDED 2026-08-08, also at S4's P-prep — the SYNTHESIS unit has no home in a
+> DERIVED-anchor handoff.** v2.0 mandates the standard canonical's closing synthesis unit
+> (`section_anchor` = the reserved token, excluded from the registry). Where items anchor by
+> `period_ref` that is harmless. Where the anchor is **derived** — science·secondary,
+> mathematics·secondary, and science·middle via `progression_stage` — an item's only route to a
+> unit is its group number → `coverage_handoff` → `period_numbers`, so a synthesis unit with no
+> handoff entry can carry NO items and **C9.2 ("a borrowed unit brings its own items") becomes
+> unsatisfiable on precisely the Case-1 synthesis borrow C8 exists to inspect**. The installed
+> science·IX ch 8 library shows the model inventing an entry (`section_label: "synthesis"`,
+> `period_numbers: [12]`, `total_sections: 11`) — **and it rescues nothing: no item uses it.**
+> Verified 2026-08-08 — ch 8's item `section_number`s run 1–10 and `assessment_items()` stamps
+> `unit_ref` 1,2,4,5,6,7,8,9,10,11, never 12. So C9.2 is already unsatisfiable on a **certified**
+> library, which makes this a defect against S3 (§7), not only an S4 precondition. Nothing asked
+> for the invented entry, and
+> maths·secondary's A4 is stricter (`section_ref`/`section_title` are specified as copied
+> VERBATIM from the summary, and there is no summary section to copy). `top_brief_for` mandates
+> the unit and says nothing about its handoff row. One brief line closes it for every
+> derived-anchor stage; **it is a V-series / brief matter and must NOT enter a constitution**,
+> so it iterates at failure speed and triggers only a `--certify-only` re-run, never §9.
+>
+> **CLOSED 2026-08-08.** `top_brief_for` now asks for the row explicitly, and only where it is
+> needed: the line is emitted when `carriers.item_anchor_is_derived()` is true — verified present
+> for mathematics·IX and science·IX, absent for social_sciences·IX (item-self-sufficient) and for
+> science·VIII (the plan-granularity arc brief). No constitution moved. **S3 should still take a
+> §7 defect row:** its installed library predates the line, so its synthesis unit's questions do
+> not exist, and a re-author is the only thing that creates them.
 
 **P1 [Kumar] Amend the LP constitution** from the SS·secondary v1.10 reference
 (`data/content/constitutions/lesson_plan/social_sciences/secondary/lesson_plan_constitution.txt`):
@@ -431,6 +546,11 @@ sign-off in `genon/out/stage_prep_ss_middle/`.
 `section_number` anchor, not the reference's `period_ref` field. `genon/out/stage_prep_science_secondary/`.
 **Done for S6 (2026-08-07):** science·middle assessment **v1.3 → v1.4**; A6 as the DERIVED
 `progression_stage` anchor resolving to the stage's LAST unit. `genon/out/stage_prep_science_middle/`.
+**Done for S4 (2026-08-08):** mathematics·secondary assessment **v1.0 → v1.1**; A6 as the DERIVED
+`section_number` anchor (the science·secondary shape). **The REMOVAL was N/A** — this file never
+carried the item-18 prohibition, so A9 landed as the two lines alone, and the pre-existing
+"none/all of the above" ban was absorbed into the by-label prohibition rather than duplicated.
+`genon/out/stage_prep_mathematics_secondary/`.
 
 **P3 [Kumar] Group B only — schema conversion.** Convert `phases[{minutes, description}]` →
 `time_bands[{minutes, activity}]` (rename both the array and the `description` key). **No
@@ -466,16 +586,92 @@ date and one-line rationale. **Artefact:** the changelog.
    describes exactly the class under test. Give the three identities *different sections* so
    X1's tenancy evidence is unambiguous, and include one longer duration alongside the class
    standard so C6's mixed-duration matrix has something real to draw on.
-**Exit:** all four recorded; `GET /readiness` now returns `ready: true` for each identity, and
+5. **THE CARRIER — genon's door onto the verified 8-rule table.** Added 2026-08-08 at S4's
+   P-prep, where its absence was met as a surprise instead of a checklist item. See below.
+**Exit:** all five recorded; `GET /readiness` now returns `ready: true` for each identity, and
 its subjects list contains this stage's class and nothing left over from an earlier stage.
-**Artefact:** the note + the chapter's `canonical_plan` row + the three profiles.
+**Artefact:** the note + the chapter's `canonical_plan` row + the three profiles + the carrier
+trace.
+
+**P5.5 in full — the carrier (founder doctrine, settled; do not re-litigate it per stage).**
+
+> **Genon does not invent linkage, and no stage may design a new way to link an assessment item
+> to its unit.** The single source of truth is the **verified 8-rule table** in
+> `docs/architecture-plan.md` §"Link resolution — verified 8-rule table" (also restated in
+> `aruvi_core/link_resolver.py`'s docstring): one row per subject·stage, giving the join method,
+> the LO source and the item-container shape, each corrected against real saved files.
+> `aruvi_core/genon/carriers.py` **is that same table exposed to genon** — its three families are
+> the table's three families, and it says so in its own docstring. A stage's carrier work is
+> therefore a **DELEGATION of what the subject plugin already does for the app**, never a fresh
+> join. This is how S1 (SS·secondary, rule 3-shape), S3 (science·secondary, rule 2) and S6
+> (science·middle, rule 1) were done, and S4 (mathematics·secondary, **rule 6**) follows it
+> unchanged.
+
+The per-stage check, all four parts by READING (never by "run it and see" — see the warning
+below):
+
+1. **Name the stage's row** in the 8-rule table: its number, family, join key, handoff key (or
+   period field), and item container. For maths·secondary that is **rule 6** — item
+   `section_number` → handoff `section_number` → `period_numbers`, **never** `section_anchor`
+   text, items under a `{…, questions: []}` dict.
+2. **Confirm the subject plugin already implements it for the app** (it almost always does —
+   that is why the app renders correctly). Cite the method.
+3. **Confirm `genon_assessment` exposes the SAME rule to genon.** The app reaches the plugin
+   through `assessment_to_view`, which returns *display* objects; genon needs the RAW item dicts
+   (options, `is_correct`, guide, `visual_stimulus` intact, for served files and exports), so it
+   asks for `genon_assessment` instead. That second door is the only thing usually missing. For
+   a handoff-bridged stage it is a few lines delegating to `carriers.items_by_handoff` with the
+   row's two keys.
+4. **Confirm the subject is absent from `carriers._NOT_YET`.**
+
+**Two hard warnings, both learned at S4:**
+
+- **`_NOT_YET` is keyed by SUBJECT, not subject·stage.** Deleting one entry opens every stage of
+  that subject at once — including sibling stages in a *different* family (mathematics spans
+  handoff-bridged at secondary and period-field at middle/prep). Either implement all of that
+  subject's rows, or make the table stage-aware. A stage-granular gate is the smaller change and
+  keeps the campaign's stage-at-a-time discipline.
+- **The build will NOT catch this for you, and it is not free.** `certify()` runs *after* the
+  metered steps, and `generate_canonical.validate` calls the carrier inside a bare
+  `except Exception` whose fallback reads a key the `questions`-wrapper subjects do not have —
+  so the item-anchor check silently sees zero items and passes. A missing carrier therefore
+  yields a **paid, clean-looking, wrongly-anchored library** and a final error that names neither
+  the carrier nor the subject. P5.5 is a **pre-flight read**, which is the whole point of it
+  being a P-step.
+
+**Exit for P5.5:** a one-line trace — *"rule N · family · join_key → handoff_key/period field ·
+container · plugin method · `genon_assessment` present · not in `_NOT_YET`"* — plus, where a
+door had to be opened, the diff. **P5.5 GATES C1** (unlike P5.4, which gates C6), so a stage may
+be signed provisionally with P5.5 open only if the tracker records it as a C1 gate; it may never
+*enter* C1 with it open.
+**Done for S4 (2026-08-08) — and this is the step's worked example.** Rule 6 was already
+specified and `_secondary_assess` already ran it for the app; only genon's door was shut. Closed
+as a **delegation**: `genon_assessment` on the mathematics plugin calls
+`carriers.items_by_handoff` with row 6's two keys, and middle/preparatory RAISE naming their own
+family so they cannot borrow a rule that is not theirs. Three things landed with it and are now
+part of the platform rather than the stage: **`_NOT_YET` re-keyed by subject·STAGE** (it was per
+subject, so `mathematics` was one entry spanning two families); **`carrier_gap()` /
+`require_carrier()` plus a STEP 0 pre-flight in `build_library.py`**, which turns this step from
+a read into a gate that stops with `STOP before spending — …` before any metered call; and
+**`generate_canonical.validate` no longer swallowing `CarrierNotImplemented`**, which is what had
+made a missing carrier a *paid* failure. `tests/test_genon_carriers.py` 25 → 36 tests, green.
+One trap recorded for S7–S11: `genon_assessment` receives only `result`, and the grade lives on
+the enclosing saved plan, so **branch on container shape, not `stage_for(grade)`** — a grade read
+there is `None` on the very call the carrier makes.
+**Retro-note for S1/S3/S6:** all three satisfied P5.5 in substance before it existed — S3 is
+where `carriers.py` was created (the `questions`-wrapper defect) and S6 extended it with
+`progression_stage`. Nothing re-opens.
 
 **[Claude] Stage sign-off:** read the amended pair against the reference and the rollout brief;
 confirm A1 lands, the register is ONE block in the v1.10 three-ban form, A6 anchors are present,
 A9 landed as the v1.7 removal-plus-two-lines (**and no arrangement sentence came back**), P3
 converted (Group B), and no cancelled amendment (A2/A3/A4) or V-rule has crept into
-a constitution. **Exit:** a written note per item — present / absent / deviates-with-reason.
-**Artefact:** the note; the stage's C-cycle is then unblocked.
+a constitution. **Then state the P5.5 carrier trace explicitly** — the stage's 8-rule row, the
+plugin method that already serves the app, whether `genon_assessment` exposes it, and whether the
+subject is still in `_NOT_YET`. A sign-off that does not mention the carrier is incomplete: this
+is the one item the ordering rule does not protect and the build does not catch.
+**Exit:** a written note per item — present / absent / deviates-with-reason.
+**Artefact:** the note; the stage's C-cycle is then unblocked, or the C1 gate is named.
 
 ---
 

@@ -33,10 +33,20 @@ hand a class a question most of whose material it never saw, which is worse than
 absent question. `unit_ref` is therefore a singleton, matching `link_resolver`'s
 `anchor_period`.
 
-A subject that has not yet been brought through this seam raises
-`CarrierNotImplemented` rather than returning something plausible and wrong. Genon has
-never run on mathematics or english; when their stages arrive (S4, S7–S11), implement
-`genon_assessment` on the plugin and delete the entry from `_NOT_YET`.
+A subject·stage that has not yet been brought through this seam raises
+`CarrierNotImplemented` rather than returning something plausible and wrong. When a stage
+arrives (S7–S11), implement `genon_assessment` on the plugin — DELEGATING to this module's
+family helper for that stage's row in the 8-rule table, never writing a fresh join — and
+remove the entry from `_NOT_YET`.
+
+**`mathematics` landed 2026-08-08 (S4): secondary only, via row 6.** Middle and preparatory
+belong to the period-field family and are still owed, which is why `_NOT_YET` is now keyed by
+subject·STAGE rather than by subject — see the table below.
+
+**Check it BEFORE you spend.** `carrier_gap()` / `require_carrier()` are the free pre-flight
+(testing.md P5.5). The build's own failure lands at certification, which runs after the metered
+steps, so relying on it costs a whole library and misreports itself as "does not compile" on
+every file.
 """
 from __future__ import annotations
 
@@ -75,11 +85,76 @@ _DISPLAY_TO_KEY = {
     "the world around us": "the_world_around_us",
 }
 
-# Families still to be implemented, with the stage that owes each one.
+# Families still to be implemented, keyed by (subject, STAGE) with the campaign stage that
+# owes each one and its row in the verified 8-rule table (docs/architecture-plan.md
+# §"Link resolution").
+#
+# KEYED BY SUBJECT·STAGE SINCE 2026-08-08 (S4). It used to be keyed by subject alone, which
+# made it a trap: mathematics spans TWO carrier families — handoff-bridged at secondary
+# (row 6) and period-field at middle/preparatory (rows 4 and 5) — so opening secondary by
+# deleting one entry would silently have declared middle and preparatory ready too, and the
+# next stage's items would have joined through a rule that is not theirs. A stage-granular
+# table cannot do that, and it stays an honest inventory of what is still owed.
 _NOT_YET = {
-    "mathematics": "period-field join (middle/prep) + handoff-bridged (secondary) — owed by S4/S7/S8",
-    "english": "period-field join on spines/section_refs — owed by S9/S10/S11",
+    ("mathematics", "middle"): (
+        "period-field join, item section_ref → period textbook_segments[].ref "
+        "(8-rule row 4) — owed by S7"),
+    ("mathematics", "preparatory"): (
+        "period-field join, item section_ref → period section_refs[] "
+        "(8-rule row 5) — owed by S8"),
+    ("english", "preparatory"): (
+        "period-field join on (source_section_id + source_spine) → (section_id + "
+        "spines_taught[]) (8-rule row 7) — owed by S9"),
+    ("english", "middle"): (
+        "period-field join on (source_section_id + source_spine) (8-rule row 7) "
+        "— owed by S10"),
+    ("english", "secondary"): (
+        "period-field join on (source_section_id + source_spine) (8-rule row 7) "
+        "— owed by S11"),
 }
+
+
+def carrier_gap(subject: Any, grade: Any) -> str | None:
+    """The reason this subject·stage has no genon carrier yet, or None if it has one.
+
+    THE pre-flight check behind testing.md's P5.5. Read it BEFORE spending money: the
+    build's own failure arrives at certification, which is after the metered steps, so
+    a missing carrier otherwise costs a full library (₹110–150) and reports itself as
+    "does not compile" on every file rather than naming the subject.
+
+    With an unknown or absent grade the answer is conservative — if ANY stage of the
+    subject is still owed, treat it as owed. Guessing "ready" is the expensive mistake.
+    """
+    key = subject_key(subject)
+    if not key:
+        return None
+    try:
+        from ..grades import stage_for
+        stage = stage_for(grade) if grade else None
+    except Exception:                                       # noqa: BLE001
+        stage = None
+    if stage:
+        return _NOT_YET.get((key, stage))
+    owed = [v for (s, _st), v in _NOT_YET.items() if s == key]
+    if owed:
+        return (f"grade not given, and {key} still owes at least one stage: "
+                + " · ".join(owed))
+    return None
+
+
+def require_carrier(subject: Any, grade: Any) -> None:
+    """Raise `CarrierNotImplemented` unless this subject·stage has a genon carrier.
+
+    Call it at the TOP of any metered pipeline (see `genon/build_library.py`), so the
+    gate is free instead of paid."""
+    gap = carrier_gap(subject, grade)
+    if gap:
+        raise CarrierNotImplemented(
+            f"genon has no carrier for {subject_key(subject)!r}·{grade}: {gap}. "
+            "Implement genon_assessment on the plugin (delegating to this module's "
+            "family helper for that subject·stage's row in the 8-rule table) and remove "
+            "the entry from _NOT_YET before running genon on it."
+        )
 
 
 def subject_key(name: Any) -> str | None:
@@ -411,6 +486,29 @@ def forward_reference_legal(subject: Any, grade: Any) -> bool:
     return serve_granularity(subject, grade) == "plan"
 
 
+def item_anchor_family(subject: Any, grade: Any) -> str:
+    """"item" | "handoff" | "period_field" — the 8-rule table's family column, declared.
+
+    See `aruvi_core/subjects/base.py`. Default "item" (item-self-sufficient), which is what
+    social_sciences and the_world_around_us want and what nothing else relies on."""
+    f = _ask(subject, grade, "genon_item_anchor_family", "item")
+    return f if f in ("item", "handoff", "period_field") else "item"
+
+
+def item_anchor_is_derived(subject: Any, grade: Any) -> bool:
+    """Does an item reach its unit through a MEDIATING row rather than off the item itself?
+
+    True for the handoff-bridged family. The consequence that matters at authoring time: a
+    unit with no `coverage_handoff` row can carry no assessment item at all, so the standard
+    canonical's mandated closing SYNTHESIS unit needs a row of its own or C9.2 ("a borrowed
+    unit brings its own items") is unsatisfiable on precisely the Case-1 synthesis borrow.
+    Measured on the installed science·ix ch 8 library (2026-08-08): the model invented a
+    synthesis row unprompted and NO item used it — item `section_number`s stopped at 10 and
+    no stamped `unit_ref` ever reached unit 12. `variant_plans.top_brief_for` asks for the
+    row explicitly rather than hoping."""
+    return item_anchor_family(subject, grade) == "handoff"
+
+
 def group_fields(subject: Any, grade: Any) -> tuple:
     """The period fields that say WHICH GROUP a unit belongs to, for this subject·stage.
 
@@ -466,11 +564,8 @@ def assessment_items(plan: Dict[str, Any], result: Dict[str, Any]) -> List[Dict[
     `items_by_period_ref` so nothing that worked before regresses.
     """
     key = subject_key(plan.get("subject") or result.get("subject"))
-    if key in _NOT_YET:
-        raise CarrierNotImplemented(
-            f"genon has no carrier for subject {key!r}: {_NOT_YET[key]}. "
-            "Implement genon_assessment on the plugin before running genon on it."
-        )
+    require_carrier(plan.get("subject") or result.get("subject"),
+                    plan.get("grade") or result.get("grade"))
     if key:
         _ensure_registered()
         try:
