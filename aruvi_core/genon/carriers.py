@@ -54,6 +54,8 @@ import json
 from typing import Any, Dict, List
 
 from .. import subjects as _subjects
+from ..normalize import group_label_from_unit
+from .serve import _ANCHOR_JOINER          # " / " — the V2 multi-section join
 
 
 def _ensure_registered() -> None:
@@ -417,9 +419,30 @@ def backfill_unit_context(units: List[Dict[str, Any]], result: Dict[str, Any]) -
         for p in (h.get("period_numbers") or []):
             if p is not None:
                 by_unit.setdefault(int(p), ctx)
+    # A COMPOSITE unit is routed by nothing, so the by_unit map above cannot reach it
+    # (2026-08-09, maths·IX ch 4). Its anchor joins several sections — "4.6 / 4.7 / 4.8" —
+    # and no handoff row is keyed by that string, so its Overview row rendered blank on
+    # exactly the units a teacher most needs orienting on.
+    #
+    # It is filled from the UNIT'S OWN TITLE, shortened — the same substitution the group
+    # label makes (founder 2026-08-09: a composite anchor is never shown to a teacher; the
+    # truncated unit title stands in for it everywhere).
+    #
+    # Two alternatives were measured and rejected. Joining the constituent sections'
+    # CONTEXTS runs 302 characters for three sections and 390 for four, where
+    # `section_context` is specified as a 10-12 word LABEL. Joining their TITLES is shorter
+    # but still ~100-140 characters and introduces a second vocabulary for the same unit.
+    # The unit's own title is already teacher-facing, already length-capped by the
+    # constitution, and is what the teacher reads at the head of the group — so the row
+    # agrees with its heading instead of competing with it. On an unrouted unit the field
+    # has no assessment job left either (no item anchors there), so orienting is all it does.
     for u in units:
-        if not str(u.get("section_context") or "").strip():
-            u["section_context"] = by_unit.get(u.get("unit"))
+        if str(u.get("section_context") or "").strip():
+            continue
+        got = by_unit.get(u.get("unit"))
+        if not got and _ANCHOR_JOINER in str(u.get("section_anchor") or ""):
+            got = group_label_from_unit(u.get("activity_title")) or None
+        u["section_context"] = got
 
 
 def _plugin_for(subject: Any):

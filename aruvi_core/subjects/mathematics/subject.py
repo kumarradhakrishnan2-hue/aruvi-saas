@@ -162,7 +162,13 @@ class MathematicsSubject:
                 # keeps the name "synthesis". It is the one reserved word teachers should
                 # meet as itself, and it is stable across every chapter, where a title-derived
                 # label would differ each time.
-                if not title and _ANCHOR_JOINER in key:
+                # The composite test comes FIRST and does not depend on `title` being empty.
+                # A multi-section unit is often routed by the handoff under ONE of its
+                # sections, which supplies that section's title — p09 U1 anchors "4.1 / 4.2"
+                # and was labelled "Visualising Identities", silently hiding that Introduction
+                # is taught in the same sitting. A single section's name is the wrong name for
+                # a unit teaching several.
+                if _ANCHOR_JOINER in key:
                     label = group_label_from_unit(p.get("activity_title")) or key
                 else:
                     label = title or key
