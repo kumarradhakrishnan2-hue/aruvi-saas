@@ -1,0 +1,58 @@
+--- lesson_plan_constitution_v1.1_pre.txt	2026-08-08 21:49:38.530610437 +0530
++++ ../../../data/content/constitutions/lesson_plan/mathematics/secondary/lesson_plan_constitution.txt	2026-08-08 21:49:38.541952806 +0530
+@@ -1,4 +1,4 @@
+-ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.1
++ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.2
+ 
+ VOCABULARY (teacher-facing naming):
+ The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
+@@ -305,8 +305,14 @@
+ JSON, or the period objects.
+ 
+ Exactly ONE entry per anchored section, in chapter-summary order. A section
+-spanning several periods is ONE entry whose period_numbers lists them all. An
+-entry carries one or two implied_lo values (Rule 6).
++taught across several periods is ONE entry, and period_numbers lists the periods
++that TEACH it — the ones that deliver the implied_lo(s) recorded here. A period
++that only REVISITS or consolidates a section already taught is NOT listed, even
++though it anchors to that section: it adds nothing to the outcome, and listing it
++would postpone the section's assessment item to a period the class may never
++reach (the item anchors to the LAST period listed). A section introduced early
++and COMPLETED later lists both — the later period is a teaching period and the
++item rightly waits for it. An entry carries one or two implied_lo values (Rule 6).
+ 
+ MUST NOT omit it. MUST NOT fold it into lesson_plan — it is a top-level sibling
+ key. MUST NOT duplicate implied_lo, section_context, or competency fields inside
+@@ -326,7 +332,11 @@
+     "section_ref":             string     — section ref, exactly as in the summary (e.g. "2.5")
+     "section_title":           string     — section title, copied verbatim from the summary
+     "total_sections":          integer    — total anchored sections in this chapter
+-    "period_numbers":          [integer]  — period number(s) assigned to this section
++    "period_numbers":          [integer]  — the period(s) that TEACH this section, i.e.
++                                           deliver the implied_lo(s) below (Rule 12).
++                                           A period that only revisits or consolidates
++                                           the section is EXCLUDED, even though it
++                                           anchors to it. Ascending order.
+     "period_duration_minutes": integer    — period duration; if mixed across this section's periods, the most common
+     "implied_lo":              [string]   — ONE or TWO implied learning outcomes (Rule 6), in textbook order
+     "section_context":         string     — 10–12 word label naming the key objects, results, or representations
+@@ -416,12 +426,15 @@
+   in the lesson plan.
+ - ITEM ANCHORING IS DERIVED, NOT DECLARED: an assessment item's anchor unit is
+   resolved by the platform from its section_number through this handoff's
+-  period_numbers. MUST NOT emit period_ref (or any unit number) on an assessment
+-  item — at this stage the unique link is the SECTION, and a section may be taught
+-  across several units (Rule 7).
++  period_numbers, and lands on the LAST unit listed there. MUST NOT emit period_ref
++  (or any unit number) on an assessment item — at this stage the unique link is the
++  SECTION, and a section may be taught across several units (Rule 7). Because the
++  anchor is the last listed unit, period_numbers carries only the units that TEACH
++  the section (Rule 12): a revisit listed here would withhold the item from a class
++  that had already been taught the whole section.
+ 
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-Mathematics Lesson Plan Constitution · Version 1.1 · Secondary Stage · Internal Document
++Mathematics Lesson Plan Constitution · Version 1.2 · Secondary Stage · Internal Document
+ ================================================================================

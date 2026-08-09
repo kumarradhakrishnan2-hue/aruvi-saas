@@ -48,19 +48,10 @@ item, not the banner that groups them.
 - **Worked examples** → `{ "id": "WE-N", "source_section", "book_ref", "description" }`
   Each item printed as `Example N` (a solved instance shown in the text).
 
-- **Exercises** → `{ "id": "E-N", "source_section", "source_sections", "book_ref", "description" }`
-  Every numbered question a student is asked to do, each one an `E-N`. Two
-  kinds, attributed differently:
-
-  - **Section exercises** (under a banner like `Exercise 4.2`): the banner
-    gives the section. Omit `source_sections`.
-
-  - **End-of-chapter questions**: these sit under NO section. There is no
-    banner and no default — first, last and nearest-printed are all wrong.
-    Decide which section's METHOD each question needs. List every such section
-    in `source_sections`, in section order; `source_section` is the dominant
-    one, which need not lead the list but must be in it. One section only →
-    name it in `source_section` and omit `source_sections`.
+- **Exercises** → `{ "id": "E-N", "source_section", "book_ref", "description" }`
+  Every numbered question a student is asked to do: the questions under a
+  section's practice-exercise banner, and the questions in the
+  end-of-chapter exercise set. Each numbered question is one `E-N`.
 
 `book_ref` is the locator a teacher with the book in hand would use:
 banner + question number (when the item is numbered) + page. Examples:
@@ -157,9 +148,7 @@ axis. Keep them independent — do not let one raise or lower another.
     { "id": "WE-1", "source_section": "2.1", "book_ref": "Example 1, p.16", "description": "..." }
   ],
   "enumerated_exercises": [
-    { "id": "E-1", "source_section": "2.1", "book_ref": "Exercise 2.1 Q1, p.18", "description": "..." },
-    { "id": "E-9", "source_section": "2.3", "source_sections": ["2.3", "2.5"],
-      "book_ref": "End of Chapter Q4, p.31", "description": "..." }
+    { "id": "E-1", "source_section": "2.1", "book_ref": "Exercise 2.1 Q1, p.18", "description": "..." }
   ],
   "conceptual_demand": 2,
   "reasoning_load": 2,
@@ -170,11 +159,7 @@ axis. Keep them independent — do not let one raise or lower another.
 Rules:
 - Every section on the Step 1 spine appears once in `sections`, in order.
 - `think_reflect` appears only on sections that carry such a prompt.
-- Every enumerated item's `source_section` is a `ref` present in `sections` and is the
-  section the item MAINLY exercises — never a placeholder chosen to fill the field.
-- `source_sections`, where present, lists `ref`s from `sections` in section order and
-  contains `source_section`. Required for an end-of-chapter question spanning several
-  sections; omitted otherwise.
+- Every enumerated item's `source_section` is a `ref` present in `sections`.
 - Every enumerated item carries a non-empty `book_ref`.
 - No `section_goal` field. No asterisked items. No sidebar-box items.
 - `enumerated_exercises` is non-empty for a normal chapter.

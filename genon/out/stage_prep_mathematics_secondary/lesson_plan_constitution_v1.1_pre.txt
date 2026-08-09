@@ -1,4 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.2
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.1
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -305,14 +305,8 @@ in this committed handoff, never in a re-reading of the summary, the mapping
 JSON, or the period objects.
 
 Exactly ONE entry per anchored section, in chapter-summary order. A section
-taught across several periods is ONE entry, and period_numbers lists the periods
-that TEACH it — the ones that deliver the implied_lo(s) recorded here. A period
-that only REVISITS or consolidates a section already taught is NOT listed, even
-though it anchors to that section: it adds nothing to the outcome, and listing it
-would postpone the section's assessment item to a period the class may never
-reach (the item anchors to the LAST period listed). A section introduced early
-and COMPLETED later lists both — the later period is a teaching period and the
-item rightly waits for it. An entry carries one or two implied_lo values (Rule 6).
+spanning several periods is ONE entry whose period_numbers lists them all. An
+entry carries one or two implied_lo values (Rule 6).
 
 MUST NOT omit it. MUST NOT fold it into lesson_plan — it is a top-level sibling
 key. MUST NOT duplicate implied_lo, section_context, or competency fields inside
@@ -332,11 +326,7 @@ by the Assessment Constitution.
     "section_ref":             string     — section ref, exactly as in the summary (e.g. "2.5")
     "section_title":           string     — section title, copied verbatim from the summary
     "total_sections":          integer    — total anchored sections in this chapter
-    "period_numbers":          [integer]  — the period(s) that TEACH this section, i.e.
-                                           deliver the implied_lo(s) below (Rule 12).
-                                           A period that only revisits or consolidates
-                                           the section is EXCLUDED, even though it
-                                           anchors to it. Ascending order.
+    "period_numbers":          [integer]  — period number(s) assigned to this section
     "period_duration_minutes": integer    — period duration; if mixed across this section's periods, the most common
     "implied_lo":              [string]   — ONE or TWO implied learning outcomes (Rule 6), in textbook order
     "section_context":         string     — 10–12 word label naming the key objects, results, or representations
@@ -380,12 +370,7 @@ period object. chapter_cg is emitted once at the top level.
           {
             "id":             "string — WE-N or E-N, equal to an id in the summary",
             "type":           "worked_example | exercise",
-            "source_section": "string — the section this item MAINLY exercises, e.g. '2.5'",
-            "source_sections": "[string] | absent — copied from the summary when the item
-                                exercises several sections (the end-of-chapter set usually
-                                does); SECTION ORDER, and source_section is one of them
-                                (the dominant one, not necessarily the first).
-                                A unit built on such items anchors on these sections",
+            "source_section": "string — e.g. '2.5'",
             "book_ref":       "string — copied from the summary (e.g. 'Example 4, p.19')",
             "description":    "string — verbatim from the summary"
           }
@@ -431,15 +416,12 @@ INTEGRITY CONSTRAINTS (system level — override any other instruction)
   in the lesson plan.
 - ITEM ANCHORING IS DERIVED, NOT DECLARED: an assessment item's anchor unit is
   resolved by the platform from its section_number through this handoff's
-  period_numbers, and lands on the LAST unit listed there. MUST NOT emit period_ref
-  (or any unit number) on an assessment item — at this stage the unique link is the
-  SECTION, and a section may be taught across several units (Rule 7). Because the
-  anchor is the last listed unit, period_numbers carries only the units that TEACH
-  the section (Rule 12): a revisit listed here would withhold the item from a class
-  that had already been taught the whole section.
+  period_numbers. MUST NOT emit period_ref (or any unit number) on an assessment
+  item — at this stage the unique link is the SECTION, and a section may be taught
+  across several units (Rule 7).
 
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Lesson Plan Constitution · Version 1.2 · Secondary Stage · Internal Document
+Mathematics Lesson Plan Constitution · Version 1.1 · Secondary Stage · Internal Document
 ================================================================================
