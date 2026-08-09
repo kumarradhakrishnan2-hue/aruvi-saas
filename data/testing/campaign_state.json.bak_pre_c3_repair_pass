@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-09T15:23:21",
+ "updated_at": "2026-08-09T12:02:15",
  "step0": {
   "campaign": {
    "0.1": {
@@ -707,29 +707,25 @@
     "partition_wall_s": "",
     "c5_split": "k1: identities / k2: between+floor−1+top+1 / k3: mixed week",
     "by": "Claude",
-    "at": "2026-08-09T10:29:34",
-    "lp_constitution_version": "1.3",
-    "assessment_constitution_version": "1.2",
-    "amended_at": "2026-08-09T15:23:21",
-    "reopened_by": "testing.md §9 — constitution change; library authored under LP v1.2 / assessment v1.1 must be re-authored"
+    "at": "2026-08-09T10:29:34"
    },
    "C1": {
-    "status": "reopen",
+    "status": "pass",
     "by": "Kumar",
-    "at": "2026-08-09T15:23:21",
-    "comment": "PASS — RE-AUTHORED 2026-08-09 at [15, 12, 9]. Three canonicals on disk matching canonical_plan.counts; row finalized provisional false, basis authored_standard, registry_sections 8.\n  ch_04_canonical.json      15 units x 50 min\n  ch_04_canonical_p12.json  12 units x 50 min\n  ch_04_canonical_p09.json   9 units x 50 min\n\nWHY RE-AUTHORED (the 2026-08-08 [14,11,8] library was correct and certified — it is superseded, not defective). Three of its inputs changed and none could be repaired into files already written:\n  1. THE SUMMARY. Its nine end-of-chapter items were all attributed to section 4.1, because the authoring prompt required every enumerated item to name a real section and end-of-chapter questions belong to none. Units 10-12 therefore wore the '4.1' label and rendered to the teacher as 'Introduction (Revisit)'.\n  2. LP v1.2's Rule 12 (period_numbers = teaching units only). p11's sec#1 listed [1,10,11] against an LO those units do not deliver.\n  3. THE PERIOD COUNT. ch 3's regeneration re-weighted the combo and moved ch 4 from 14 to 15 periods.\n\nWHAT THE RE-AUTHOR ACTUALLY CHANGED — the structural result is the headline:\n  BEFORE (14u): 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.7 4.8 [4.1 4.1 4.1] 4.6 synthesis\n  AFTER  (15u): 4.1 4.2 4.3 4.3 4.4 4.4 4.5 4.6 4.6 4.7 4.7 4.7 4.8 4.8 synthesis\nThe three consolidation units falsely anchored to 4.1 are GONE — correcting the summary removed the REASON for them, and the model spent the extra period deepening 4.3/4.4/4.7/4.8 instead of inventing consolidation blocks. The plan is monotonic; there is no revisit tail. Teacher screen carries ZERO '(Revisit)' labels (was three). Every handoff row lists exactly the units that anchor its section, so Rule 12 had no work to do here.\n\nREGISTER: forward references fell 5 -> 2 in the standard canonical, on a plan one unit LONGER — the first evidence that the summary fix reduces register pressure rather than relabelling it. p09 scanned clean; p12 carried one. All three repaired at Rs 0 (repair_register.py v1.5). A fourth scanner hit was a FALSE POSITIVE and was fixed at source instead: U3's 'the square root of the last term' is a polynomial term, so register_scan.py now treats 'last term' as advisory rather than a calendar ban (verified next week / next month / next class still ban).\n\nTHE COMPACTS NOW CARRY HONEST MULTI-SECTION ANCHORS, which is the corrected summary showing through: p12 U12 = '4.6/4.7/4.8' and p09 U9 = '4.4/4.6/4.7/4.8', joined with ' / ' per V2. Both are correctly flagged ADVISORY by the new handoff/anchor check (a consolidation unit legitimately wears labels the handoff does not route items through) and neither gates.\n\nEXIT criteria met: files match counts; row finalized; canonical_minutes = 50 x 15 = 750.\nReport: genon/out/library_reports/mathematics_ix_ch04_20260809_102753.md — deterministic checks ALL PASS.\n\n[RE-OPENED 2026-08-09 · testing.md §9. LP v1.2 -> v1.3 and assessment v1.1 -> v1.2 were amended\n at C3, after the library was authored. §9 is explicit that a constitution change re-certifies\n the stage in full: C1 regenerates the library under the new pair, C1-C14 and the gate re-run.\n WHAT THE RE-AUTHOR IS EXPECTED TO CARRY: the four amended limits (method cap exception,\n activity_title 6-13, section_context 6-12, synthesis OPEN_TASK) plus clean generation of the\n two defects no rule was wrong about (078 mis-owned duplicate item, 079 mis-tagged demand).\n WHAT MUST BE RE-APPLIED AFTER IT: genon/repair_c3.py — its GENERIC passes re-run unchanged\n (method label, id leakage, verbatim descriptions, guide shape, Rule 8 clause) and its DECLARED\n edits will REFUSE on the new text, which is the correct behaviour: they must be re-declared\n against whatever the new library actually says, never force-applied.\n COST: one library, ~Rs.111 on the clean path (C2's benchmark), paid once on one chapter before\n the stage's remaining eleven C-steps. This is the cost the P1-P4 ordering rule exists to avoid,\n and S4 is the first stage to pay it — recorded so S5-S11 read their NUMERIC limits at P1.]"
+    "at": "2026-08-09T10:29:34",
+    "comment": "PASS — RE-AUTHORED 2026-08-09 at [15, 12, 9]. Three canonicals on disk matching canonical_plan.counts; row finalized provisional false, basis authored_standard, registry_sections 8.\n  ch_04_canonical.json      15 units x 50 min\n  ch_04_canonical_p12.json  12 units x 50 min\n  ch_04_canonical_p09.json   9 units x 50 min\n\nWHY RE-AUTHORED (the 2026-08-08 [14,11,8] library was correct and certified — it is superseded, not defective). Three of its inputs changed and none could be repaired into files already written:\n  1. THE SUMMARY. Its nine end-of-chapter items were all attributed to section 4.1, because the authoring prompt required every enumerated item to name a real section and end-of-chapter questions belong to none. Units 10-12 therefore wore the '4.1' label and rendered to the teacher as 'Introduction (Revisit)'.\n  2. LP v1.2's Rule 12 (period_numbers = teaching units only). p11's sec#1 listed [1,10,11] against an LO those units do not deliver.\n  3. THE PERIOD COUNT. ch 3's regeneration re-weighted the combo and moved ch 4 from 14 to 15 periods.\n\nWHAT THE RE-AUTHOR ACTUALLY CHANGED — the structural result is the headline:\n  BEFORE (14u): 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.7 4.8 [4.1 4.1 4.1] 4.6 synthesis\n  AFTER  (15u): 4.1 4.2 4.3 4.3 4.4 4.4 4.5 4.6 4.6 4.7 4.7 4.7 4.8 4.8 synthesis\nThe three consolidation units falsely anchored to 4.1 are GONE — correcting the summary removed the REASON for them, and the model spent the extra period deepening 4.3/4.4/4.7/4.8 instead of inventing consolidation blocks. The plan is monotonic; there is no revisit tail. Teacher screen carries ZERO '(Revisit)' labels (was three). Every handoff row lists exactly the units that anchor its section, so Rule 12 had no work to do here.\n\nREGISTER: forward references fell 5 -> 2 in the standard canonical, on a plan one unit LONGER — the first evidence that the summary fix reduces register pressure rather than relabelling it. p09 scanned clean; p12 carried one. All three repaired at Rs 0 (repair_register.py v1.5). A fourth scanner hit was a FALSE POSITIVE and was fixed at source instead: U3's 'the square root of the last term' is a polynomial term, so register_scan.py now treats 'last term' as advisory rather than a calendar ban (verified next week / next month / next class still ban).\n\nTHE COMPACTS NOW CARRY HONEST MULTI-SECTION ANCHORS, which is the corrected summary showing through: p12 U12 = '4.6/4.7/4.8' and p09 U9 = '4.4/4.6/4.7/4.8', joined with ' / ' per V2. Both are correctly flagged ADVISORY by the new handoff/anchor check (a consolidation unit legitimately wears labels the handoff does not route items through) and neither gates.\n\nEXIT criteria met: files match counts; row finalized; canonical_minutes = 50 x 15 = 750.\nReport: genon/out/library_reports/mathematics_ix_ch04_20260809_102753.md — deterministic checks ALL PASS."
    },
    "C2": {
-    "status": "reopen",
+    "status": "pass",
     "by": "Claude",
-    "at": "2026-08-09T15:23:21",
-    "comment": "PASS — recosted 2026-08-09 for the re-authored library. Two figures, per the founder's 2026-08-07 rule.\n\n  CLEAN PATH (what the files on disk cost — the figure this column shows, and the one a 330-chapter extrapolation may multiply):\n    top  (15u)  405.3s  in 24469  out 26485  Rs  43.30\n    p12  (12u)  370.0s  in 24526  out 24660  Rs  40.80\n    p09  ( 9u)  269.0s  in 24526  out 17659  Rs  31.14\n    ---------------------------------------------------\n    3 runs                                    Rs 115.24     (Rs 38.41/run)\n\n  SUPERSEDED (the 2026-08-08 [14,11,8] library, archived under backup/superseded_libraries/):\n    Rs 106.52 across 3 runs.  ALL-IN EVER FOR CH 4: Rs 221.76.\n\n  The superseded spend is booked in the `reruns` row so the tracker's Rs column excludes it. It is NOT a defect rerun — that library certified ALL PASS. It is the cost of changing the chapter's INPUTS after authoring, which is a different thing and worth counting separately: it is what the ordering rule (constitutions before authoring) exists to prevent, and it now has a price tag. Nothing in the campaign yet extends that rule to SUMMARIES or to MAPPINGS, which is how this happened.\n\n  RATE MOVED, and the cause is structural not random. Rs 38.41/run here vs Rs 35.51/run on the 14/11/8 build and Rs 38.82 on SS IX ch 3. INPUT ROSE from 22165-22222 to 24469-24526 tokens (+10%) and stays there: the corrected summary carries source_sections and fuller descriptions, so every future maths run pays that. Output still falls with period count (26485 -> 24660 -> 17659), so the 9-unit compact costs 72% of the 15-unit standard despite being 60% of its length. BUDGET PER RUN, NEVER PER UNIT.\n\n  CORPUS NOTE: maths·secondary's fixed per-run input is ~45% above SS IX ch 3's 15.3-15.6k — this chapter carries 18 worked examples and 21 exercises plus a longer assessment constitution (VS-1..VS-6, graph_paper). If that holds across maths, the pre-warm should be priced per subject rather than at one blended Rs 37/run. Worth confirming at S7/S8.\n\n  DATA-QUALITY FINDING, not blocking: genon/ledger.csv rows for this chapter carry 18 fields against a 17-field header — an undeclared column holding the variant count sits between `model` and `subject`. Social Sciences rows have 17. csv.DictReader therefore mis-keys every maths row (subject reads '12', grade reads 'mathematics'). Figures above were taken positionally and cross-checked against runtime_data/token_log.csv, which agrees exactly (Rs 115.24). The header needs a column or the writer needs fixing before anyone parses the ledger by name.\n\n[RE-OPENED 2026-08-09 · testing.md §9. LP v1.2 -> v1.3 and assessment v1.1 -> v1.2 were amended\n at C3, after the library was authored. §9 is explicit that a constitution change re-certifies\n the stage in full: C1 regenerates the library under the new pair, C1-C14 and the gate re-run.\n WHAT THE RE-AUTHOR IS EXPECTED TO CARRY: the four amended limits (method cap exception,\n activity_title 6-13, section_context 6-12, synthesis OPEN_TASK) plus clean generation of the\n two defects no rule was wrong about (078 mis-owned duplicate item, 079 mis-tagged demand).\n WHAT MUST BE RE-APPLIED AFTER IT: genon/repair_c3.py — its GENERIC passes re-run unchanged\n (method label, id leakage, verbatim descriptions, guide shape, Rule 8 clause) and its DECLARED\n edits will REFUSE on the new text, which is the correct behaviour: they must be re-declared\n against whatever the new library actually says, never force-applied.\n COST: one library, ~Rs.111 on the clean path (C2's benchmark), paid once on one chapter before\n the stage's remaining eleven C-steps. This is the cost the P1-P4 ordering rule exists to avoid,\n and S4 is the first stage to pay it — recorded so S5-S11 read their NUMERIC limits at P1.]"
+    "at": "2026-08-09T10:29:34",
+    "comment": "PASS — recosted 2026-08-09 for the re-authored library. Two figures, per the founder's 2026-08-07 rule.\n\n  CLEAN PATH (what the files on disk cost — the figure this column shows, and the one a 330-chapter extrapolation may multiply):\n    top  (15u)  405.3s  in 24469  out 26485  Rs  43.30\n    p12  (12u)  370.0s  in 24526  out 24660  Rs  40.80\n    p09  ( 9u)  269.0s  in 24526  out 17659  Rs  31.14\n    ---------------------------------------------------\n    3 runs                                    Rs 115.24     (Rs 38.41/run)\n\n  SUPERSEDED (the 2026-08-08 [14,11,8] library, archived under backup/superseded_libraries/):\n    Rs 106.52 across 3 runs.  ALL-IN EVER FOR CH 4: Rs 221.76.\n\n  The superseded spend is booked in the `reruns` row so the tracker's Rs column excludes it. It is NOT a defect rerun — that library certified ALL PASS. It is the cost of changing the chapter's INPUTS after authoring, which is a different thing and worth counting separately: it is what the ordering rule (constitutions before authoring) exists to prevent, and it now has a price tag. Nothing in the campaign yet extends that rule to SUMMARIES or to MAPPINGS, which is how this happened.\n\n  RATE MOVED, and the cause is structural not random. Rs 38.41/run here vs Rs 35.51/run on the 14/11/8 build and Rs 38.82 on SS IX ch 3. INPUT ROSE from 22165-22222 to 24469-24526 tokens (+10%) and stays there: the corrected summary carries source_sections and fuller descriptions, so every future maths run pays that. Output still falls with period count (26485 -> 24660 -> 17659), so the 9-unit compact costs 72% of the 15-unit standard despite being 60% of its length. BUDGET PER RUN, NEVER PER UNIT.\n\n  CORPUS NOTE: maths·secondary's fixed per-run input is ~45% above SS IX ch 3's 15.3-15.6k — this chapter carries 18 worked examples and 21 exercises plus a longer assessment constitution (VS-1..VS-6, graph_paper). If that holds across maths, the pre-warm should be priced per subject rather than at one blended Rs 37/run. Worth confirming at S7/S8.\n\n  DATA-QUALITY FINDING, not blocking: genon/ledger.csv rows for this chapter carry 18 fields against a 17-field header — an undeclared column holding the variant count sits between `model` and `subject`. Social Sciences rows have 17. csv.DictReader therefore mis-keys every maths row (subject reads '12', grade reads 'mathematics'). Figures above were taken positionally and cross-checked against runtime_data/token_log.csv, which agrees exactly (Rs 115.24). The header needs a column or the writer needs fixing before anyone parses the ledger by name."
    },
    "C3": {
-    "status": "reopen",
+    "status": "fail",
     "by": "Claude",
-    "at": "2026-08-09T15:23:21",
-    "comment": "FAIL — 2026-08-09. Files: ch_04_canonical.json (STANDARD, 15x50, 14 items) and\nch_04_canonical_p12.json (MID compact, 12x50, 13 items), each checked against every numbered\nrule of LP v1.2 and assessment v1.1. Artefact: docs/testing_artefacts/c3_mathematics_ix_ch04.md\n(full rule table with quoted evidence, the serve-exposure bound, and the defect list).\nMethod: programmatic battery over both files (band tiling, sentence/word counts, register\nregexes, id leakage, guide shape, field discipline, A4 verbatim diff against the summary) +\njudged reads + independent symbolic re-derivation of all 27 determinate answers.\n\nTWO S1 DEFECTS, both in the STANDARD, both teacher-facing:\n\nARV-D-084 — item 4 ships a WRONG verified answer. expected_answer '8(3m - 2n)^2' expands to\n72m^2-96mn+32n^2, not the stem's 72m^2-48mn+8n^2; correct is 8(3m-n)^2. And method_one_line\ncarries the model's own deliberation verbatim: 'Extract the common factor 8 to get\n8(9m^2-12mn+n^2) - wait, verify: ... Let me re-check. ... So the answer is 8(3m-n)^2.' The model\nFOUND the error and the wrong value shipped anyway with verified: true. Breaches Rule 11\n(both prohibitions) and Rule 9's ban on exposing verification reasoning. 26 of 27 answers are\notherwise correct, including the three-variable ECR whose givens are mutually consistent\n(e1=6, e2=11, e3=6 -> roots 1,2,3 -> sum of cubes 36).\n\nARV-D-081 — guides reference options by LETTER in 4 places (std #2 'option A', std #7\n'option A', p12 #3 'option C', p12 #7 'option A'); STEP 6 caught exactly one (its report line\n'#3 SKIPPED - cross-references an option label'), so a future re-sort would silently falsify\nthe other three. Worse, std #7's guide names the WRONG option as correct: the answer is C\n(2a^2+2b^2+2c^2-4bc, re-derived) and the guide tells the teacher to 'confirm option A'.\nRule 7 P2 bans the construction in options[]; the falsification it prevents is being caused by\nthe guide, which the ban does not reach.\n\nELEVEN S2/S3 DEFECTS: ARV-D-069 register forward-reference in p12 notes AND homework plus\n'final unit' and a 'today' in the standard, all passing register_scan; ARV-D-070 continuity by\nposition ('in the previous unit', p12 x4); ARV-D-071 'Problem Solving' != the Pedagogy\ndocument's 'Problem solving' (standard only, 8 units); ARV-D-072 Rule 5 P1 (>2 consecutive\nmethods) breached in ALL THREE canonicals - std x4, p12 x3 twice, p09 x3; ARV-D-030 recurrence,\nsection_context outside 10-12 words (std 4/9, p12 2/8); ARV-D-073 31 internal E-N/WE-N ids in\nthe standard's bands and homework against Rule 9 P5, p12 has zero; ARV-D-074 period_numbers\nstill lists non-teaching units on 2 standard rows - the exact defect LP v1.2 was written for\neight days ago off this chapter, recurring in the post-v1.2 re-author; ARV-D-075 c_code C-9.3\nstamped on 4.5 where the mapping ties it to 4.6 (three canonicals give three answers);\nARV-D-076 activity_title below A3's 10-13 words on 24 of 27 units; ARV-D-077 textbook item\ndescription not verbatim (E-3 loses '(asterisked parts (v)-(vi) excluded)', the clause Rule 8\nleans on); ARV-D-078 standard item 1 tests 4.3's algebraic proof while owned by 4.1 and\nduplicates item 5 (p12 does this correctly); ARV-D-079 p12 item 9 tagged Analysis on an\nApplication LO; ARV-D-080 OPEN_TASK emitted against Evaluation/Analysis tags with\nco_central false and no declared lift, and p12's format_type is off-menu in substance;\nARV-D-082 Rule 8's 'teacher may substitute any menu format' statement missing from both\nOPEN_TASK guides; ARV-D-083 p12 emits all five guide sub-blocks on every item with empty\nstrings - 112 empty required fields against A1's explicit ban.\n\nWHAT PASSED AND IS WORTH RECORDING: band tiling exact on all 27 units; INPUTS 4 one standard\nrow; zero fabricated textbook ids; full section coverage with section_coverage_note null; one\nitem per implied_lo (14/14, 13/13); reasoning floor met without a lift; MCQ structure and\ndistractor diagnosis clean; A1 field discipline clean; no period_ref on any item, so the\nderived-anchor rule holds; and the synthesis handoff row works - std sec#9 ref 'synthesis',\nperiod_numbers [15], item 14 anchors to it. That last one CLOSES the S3 defect (a mandated\nsynthesis unit that can carry no items on a derived-anchor stage) on this stage, second outing.\n\nSERVE EXPOSURE OF ARV-D-074, bounded honestly: the standard's shortest served prefix is 12\nunits (at X=13) and its two over-long rows anchor at U9 and U12, so the breach costs NOTHING on\nthis library today - the remedy is a declared repair of two arrays, not a re-author. Margin is\none unit. Separately, and for C6/C9 rather than C3: the serve is NON-MONOTONE in questions -\nX=12 yields 13 items, X=13 yields 11, because X=13 switches to the standard whose 4.8 row\nanchors at U14. A teacher asking for one more period gets two fewer questions.\n\nTOOLING GAPS SURFACED (for C5): register_scan misses 'will recur', 'once section N has been\ntaught', 'after section N is covered' and 'final unit', and classifies 'today' as advisory;\ncertification checks no Rule 5 P1, no id leakage, no activity_title length, no description\nverbatim, no guide-shape/empty-field rule, no c_code-against-mapping consistency;\nnormalize_options' label-reference guard reads options[] only, not the guide. Also noted, not a\nC3 item: the installed engine reports serve v2.2 / e17 while testing.md 0.2 still asserts e12.\n\nTHE FINDING TO CARRY TO THE HUMAN GATE is not any single defect. The compact is BETTER than the\nstandard on item ownership, id leakage, the method label, c_code and Rule 12; WORSE on the\nregister, guide shape and format selection. So neither 'the constitution holds at full length\nand breaks under compaction' nor its opposite is true here. What the pair shows is that the\nrules with no machine check behind them are satisfied at roughly coin-flip rate per file,\nindependent of length.\n\n[FOLLOW-UP 2026-08-09, same day. TWO DEFECTS REPAIRED IN PLACE, THE CELL STAYS RED.\n · ARV-D-084 CLOSED, genuinely fixed - the wrong verified answer and the deliberation beside\n   it, by genon/repair_leaked_deliberation.py v1.0. The value adopted is the one the file already carried in its own\n   method line and guide, so nothing was invented and no rupee was spent. Regression test:\n   genon/out/answer_checks/mathematics_ix_ch04_check.py, 25 checks, 0 WRONG.\n · ARV-D-081 ACCEPTED by founder, not remedied - option-by-letter references in guides. The\n   post-hoc re-order is what makes them fragile; a further constitutional rule about options\n   would cost more than the defect. Std item 7's guide naming the wrong option on the MERITS\n   is explicitly excluded from the acceptance and stays open with the item-content debt.\n · Fifteen defects remain open. C3 = fail stands.\n · The sweep this C3 triggered found ARV-D-085 on a DIFFERENT and already-green stage\n   (science/secondary), which is the more important finding: a human rule-by-rule read does\n   not catch a wrecked sentence, because it is not a rule violation.\n · TEMPLATE CHANGE: testing.md -> v2.9. C3 gains a maths-only sub-check requiring every\n   determinate answer to be re-derived FROM THE STEM (genon/extract_determinate.py writes the\n   worksheet). Scoped to S4/S7/S8 - the sweep confirmed science and social_sciences ship zero\n   items with an expected_answer, so the other eight stages record it N/A.]\n\n[REPAIR PASS 2026-08-09. TEN CLOSED, FIVE ESCALATED, ZERO RUPEES.\n Tool: genon/repair_c3.py v1.0 — GENERIC passes (method label · id leakage · verbatim descriptions · guide\n shape · Rule 8 clause) derive their value from the summary, the Pedagogy document or the\n schema and are the ones that run corpus-wide at the pre-warm; DECLARED edits (register,\n continuity, word-count labels, period_numbers, c_code) are hand-written per instance.\n All three canonicals repaired, not just C3's pair — p09 carried two unnoticed positional\n continuity breaches and a c_code error of its own.\n CLOSED: 069 070 071 073 074 075 077 082 083 + 030's over-length half.\n ESCALATED: 072 076 078 079 080.\n VERIFIED after the pass: 0 id leaks · 0 non-verbatim descriptions · 0 empty guide fields ·\n 1 guide block per item · 0 register hits · 0 over-length labels · c_code identical across\n all three canonicals · 25/25 answer checks OK · certification ALL PASS · serve sweep\n identical at every X from 6 to 17, with 074's two anchors now landing EARLIER than before,\n so the X=13 margin is wider than C3 measured it.\n THREE OF THE FIVE ESCALATIONS ARE ARGUMENTS ABOUT THE RULE, NOT THE PLAN: 072 (all three\n canonicals breach the consecutive-method cap at chapter tails where content converges),\n 076 (31 of 36 titles miss a schema word-count in the same direction), and 080 (the v2.0\n synthesis mandate wants an integrative item that Rule 5 forbids on any co_central=false\n chapter — this will recur on every stage that mandates a synthesis unit).]\n\n[RE-OPENED 2026-08-09 · testing.md §9. LP v1.2 -> v1.3 and assessment v1.1 -> v1.2 were amended\n at C3, after the library was authored. §9 is explicit that a constitution change re-certifies\n the stage in full: C1 regenerates the library under the new pair, C1-C14 and the gate re-run.\n WHAT THE RE-AUTHOR IS EXPECTED TO CARRY: the four amended limits (method cap exception,\n activity_title 6-13, section_context 6-12, synthesis OPEN_TASK) plus clean generation of the\n two defects no rule was wrong about (078 mis-owned duplicate item, 079 mis-tagged demand).\n WHAT MUST BE RE-APPLIED AFTER IT: genon/repair_c3.py — its GENERIC passes re-run unchanged\n (method label, id leakage, verbatim descriptions, guide shape, Rule 8 clause) and its DECLARED\n edits will REFUSE on the new text, which is the correct behaviour: they must be re-declared\n against whatever the new library actually says, never force-applied.\n COST: one library, ~Rs.111 on the clean path (C2's benchmark), paid once on one chapter before\n the stage's remaining eleven C-steps. This is the cost the P1-P4 ordering rule exists to avoid,\n and S4 is the first stage to pay it — recorded so S5-S11 read their NUMERIC limits at P1.]",
+    "at": "2026-08-09T12:02:15",
+    "comment": "FAIL — 2026-08-09. Files: ch_04_canonical.json (STANDARD, 15x50, 14 items) and\nch_04_canonical_p12.json (MID compact, 12x50, 13 items), each checked against every numbered\nrule of LP v1.2 and assessment v1.1. Artefact: docs/testing_artefacts/c3_mathematics_ix_ch04.md\n(full rule table with quoted evidence, the serve-exposure bound, and the defect list).\nMethod: programmatic battery over both files (band tiling, sentence/word counts, register\nregexes, id leakage, guide shape, field discipline, A4 verbatim diff against the summary) +\njudged reads + independent symbolic re-derivation of all 27 determinate answers.\n\nTWO S1 DEFECTS, both in the STANDARD, both teacher-facing:\n\nARV-D-084 — item 4 ships a WRONG verified answer. expected_answer '8(3m - 2n)^2' expands to\n72m^2-96mn+32n^2, not the stem's 72m^2-48mn+8n^2; correct is 8(3m-n)^2. And method_one_line\ncarries the model's own deliberation verbatim: 'Extract the common factor 8 to get\n8(9m^2-12mn+n^2) - wait, verify: ... Let me re-check. ... So the answer is 8(3m-n)^2.' The model\nFOUND the error and the wrong value shipped anyway with verified: true. Breaches Rule 11\n(both prohibitions) and Rule 9's ban on exposing verification reasoning. 26 of 27 answers are\notherwise correct, including the three-variable ECR whose givens are mutually consistent\n(e1=6, e2=11, e3=6 -> roots 1,2,3 -> sum of cubes 36).\n\nARV-D-081 — guides reference options by LETTER in 4 places (std #2 'option A', std #7\n'option A', p12 #3 'option C', p12 #7 'option A'); STEP 6 caught exactly one (its report line\n'#3 SKIPPED - cross-references an option label'), so a future re-sort would silently falsify\nthe other three. Worse, std #7's guide names the WRONG option as correct: the answer is C\n(2a^2+2b^2+2c^2-4bc, re-derived) and the guide tells the teacher to 'confirm option A'.\nRule 7 P2 bans the construction in options[]; the falsification it prevents is being caused by\nthe guide, which the ban does not reach.\n\nELEVEN S2/S3 DEFECTS: ARV-D-069 register forward-reference in p12 notes AND homework plus\n'final unit' and a 'today' in the standard, all passing register_scan; ARV-D-070 continuity by\nposition ('in the previous unit', p12 x4); ARV-D-071 'Problem Solving' != the Pedagogy\ndocument's 'Problem solving' (standard only, 8 units); ARV-D-072 Rule 5 P1 (>2 consecutive\nmethods) breached in ALL THREE canonicals - std x4, p12 x3 twice, p09 x3; ARV-D-030 recurrence,\nsection_context outside 10-12 words (std 4/9, p12 2/8); ARV-D-073 31 internal E-N/WE-N ids in\nthe standard's bands and homework against Rule 9 P5, p12 has zero; ARV-D-074 period_numbers\nstill lists non-teaching units on 2 standard rows - the exact defect LP v1.2 was written for\neight days ago off this chapter, recurring in the post-v1.2 re-author; ARV-D-075 c_code C-9.3\nstamped on 4.5 where the mapping ties it to 4.6 (three canonicals give three answers);\nARV-D-076 activity_title below A3's 10-13 words on 24 of 27 units; ARV-D-077 textbook item\ndescription not verbatim (E-3 loses '(asterisked parts (v)-(vi) excluded)', the clause Rule 8\nleans on); ARV-D-078 standard item 1 tests 4.3's algebraic proof while owned by 4.1 and\nduplicates item 5 (p12 does this correctly); ARV-D-079 p12 item 9 tagged Analysis on an\nApplication LO; ARV-D-080 OPEN_TASK emitted against Evaluation/Analysis tags with\nco_central false and no declared lift, and p12's format_type is off-menu in substance;\nARV-D-082 Rule 8's 'teacher may substitute any menu format' statement missing from both\nOPEN_TASK guides; ARV-D-083 p12 emits all five guide sub-blocks on every item with empty\nstrings - 112 empty required fields against A1's explicit ban.\n\nWHAT PASSED AND IS WORTH RECORDING: band tiling exact on all 27 units; INPUTS 4 one standard\nrow; zero fabricated textbook ids; full section coverage with section_coverage_note null; one\nitem per implied_lo (14/14, 13/13); reasoning floor met without a lift; MCQ structure and\ndistractor diagnosis clean; A1 field discipline clean; no period_ref on any item, so the\nderived-anchor rule holds; and the synthesis handoff row works - std sec#9 ref 'synthesis',\nperiod_numbers [15], item 14 anchors to it. That last one CLOSES the S3 defect (a mandated\nsynthesis unit that can carry no items on a derived-anchor stage) on this stage, second outing.\n\nSERVE EXPOSURE OF ARV-D-074, bounded honestly: the standard's shortest served prefix is 12\nunits (at X=13) and its two over-long rows anchor at U9 and U12, so the breach costs NOTHING on\nthis library today - the remedy is a declared repair of two arrays, not a re-author. Margin is\none unit. Separately, and for C6/C9 rather than C3: the serve is NON-MONOTONE in questions -\nX=12 yields 13 items, X=13 yields 11, because X=13 switches to the standard whose 4.8 row\nanchors at U14. A teacher asking for one more period gets two fewer questions.\n\nTOOLING GAPS SURFACED (for C5): register_scan misses 'will recur', 'once section N has been\ntaught', 'after section N is covered' and 'final unit', and classifies 'today' as advisory;\ncertification checks no Rule 5 P1, no id leakage, no activity_title length, no description\nverbatim, no guide-shape/empty-field rule, no c_code-against-mapping consistency;\nnormalize_options' label-reference guard reads options[] only, not the guide. Also noted, not a\nC3 item: the installed engine reports serve v2.2 / e17 while testing.md 0.2 still asserts e12.\n\nTHE FINDING TO CARRY TO THE HUMAN GATE is not any single defect. The compact is BETTER than the\nstandard on item ownership, id leakage, the method label, c_code and Rule 12; WORSE on the\nregister, guide shape and format selection. So neither 'the constitution holds at full length\nand breaks under compaction' nor its opposite is true here. What the pair shows is that the\nrules with no machine check behind them are satisfied at roughly coin-flip rate per file,\nindependent of length.\n\n[FOLLOW-UP 2026-08-09, same day. TWO DEFECTS REPAIRED IN PLACE, THE CELL STAYS RED.\n · ARV-D-084 CLOSED, genuinely fixed - the wrong verified answer and the deliberation beside\n   it, by genon/repair_leaked_deliberation.py v1.0. The value adopted is the one the file already carried in its own\n   method line and guide, so nothing was invented and no rupee was spent. Regression test:\n   genon/out/answer_checks/mathematics_ix_ch04_check.py, 25 checks, 0 WRONG.\n · ARV-D-081 ACCEPTED by founder, not remedied - option-by-letter references in guides. The\n   post-hoc re-order is what makes them fragile; a further constitutional rule about options\n   would cost more than the defect. Std item 7's guide naming the wrong option on the MERITS\n   is explicitly excluded from the acceptance and stays open with the item-content debt.\n · Fifteen defects remain open. C3 = fail stands.\n · The sweep this C3 triggered found ARV-D-085 on a DIFFERENT and already-green stage\n   (science/secondary), which is the more important finding: a human rule-by-rule read does\n   not catch a wrecked sentence, because it is not a rule violation.\n · TEMPLATE CHANGE: testing.md -> v2.9. C3 gains a maths-only sub-check requiring every\n   determinate answer to be re-derived FROM THE STEM (genon/extract_determinate.py writes the\n   worksheet). Scoped to S4/S7/S8 - the sweep confirmed science and social_sciences ship zero\n   items with an expected_answer, so the other eight stages record it N/A.]",
     "artefact": "docs/testing_artefacts/c3_mathematics_ix_ch04.md",
     "artefacts": [
      "docs/testing_artefacts/c3_mathematics_ix_ch04.md",
@@ -1250,18 +1246,15 @@
    "owner": "Claude",
    "status": "open",
    "notes": "Compaction pressure - a unit carrying two merged sections pushes the label toward the inventory Rule 7 prohibits. Worth a brief note; mechanically checkable.",
-   "at": "2026-08-09T15:23:21",
+   "at": "2026-08-03T18:55:29",
    "recurrences": [
     {
      "combo": "mathematics/secondary",
      "step": "C3",
      "at": "2026-08-09T10:57:18",
-     "note": "RECURRENCE: section_context outside the mandated 10-12 words (std 4/9, p12 2/8)",
-     "resolution": "AMENDED for this stage — LP v1.3, Rule 6. section_context 10-12 -> 6-12 words. The UPPER bound is untouched: it is what the rule actually guards ('a label, not content'), and ch 4's three over-length labels were repaired, not excused. NOTE: this closes the maths-secondary recurrence only; the parent row on social_sciences/secondary is unaffected and its own constitution still reads 10-12."
+     "note": "RECURRENCE: section_context outside the mandated 10-12 words (std 4/9, p12 2/8)"
     }
-   ],
-   "resolution": "PARTIAL - the over-length half only, which is what Rule 6 actually guards ('it is a label, not content'). Three labels shortened into the 10-12 band: std sec#7 (15w) and sec#9 (14w), p09 sec#5 (15w). 0 over-length remain. The UNDER-length half (8-9 words) is escalated with ARV-D-076 as one question about word-count minimums, since the same argument governs both.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   ]
   },
   {
    "id": "ARV-D-031",
@@ -1806,14 +1799,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "register: forward reference in p12 notes AND homework, 'final unit', and 'today' in the standard - all pass register_scan",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "Register repaired. std U3 'the focal error today' -> 'the focal error to watch for' (ban 3). p12 U7 'will recur when simplifying rational expressions' -> 'also underpin the simplification of ...'; 'may be set for later self-study once section 4.7 has been taught' -> '... by students who have already met the cube identities'; the HOMEWORK line 'after section 4.7 is covered' -> 'which draw on the cube identities'; U12 'a final unit' -> 'a unit' (ban 2). Each rewrite states the same fact as a property of the CONTENT rather than of the sequence, which is what the register asks for. Verified: 0 hits on a scan of all three canonicals.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-070",
@@ -1821,14 +1812,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "continuity carried by position ('in the previous unit') where Rule 10 says never by position",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "Continuity by position removed in all three canonicals (std 2, p12 4, p09 2 - p09's two were outside C3's sampled pair and are repaired here too). In every case the CONTENT was already named, so the repair is deletion of the positional clause: 'Having derived (a+b)^2 in the previous unit' -> 'Having derived (a+b)^2'. Rule 10 satisfied without losing a single continuity link.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-071",
@@ -1836,14 +1825,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "'Problem Solving' != the Pedagogy document's 'Problem solving'; differs between canonicals of one chapter",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "8 units in the standard: 'Problem Solving' -> 'Problem solving', the Pedagogy document's exact spelling. All three canonicals now agree. Generic pass - the method table is the authority, so this runs corpus-wide.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-072",
@@ -1851,13 +1838,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T15:23:21",
-   "at": "2026-08-09T15:23:21",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "Rule 5 P1 (no method on >2 consecutive units) breached in all three canonicals; nothing in the pipeline checks it",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "AMENDED — LP v1.3, Rule 5 P1. The consecutive-method cap now yields where the anchored sections genuinely call for it; the weighting still binds and a run produced for convenience is still forbidden. All three of ch 4's canonicals breached the old cap, always at the chapter tail — evidence about the rule, not the plans."
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-073",
@@ -1865,14 +1851,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "31 internal E-N/WE-N ids in the standard's band text and homework against Rule 9 P5; p12 has zero, so it is variance not inevitability",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "27 internal ids deleted from the standard's teacher-facing text. Two forms were present, '(E-3)' and the narrated '(from E-1)' - the second was missed by C3's count of 31, which had over-counted elsewhere; 0 remain on a fresh scan. The book_ref always precedes the id, so this is pure deletion and no teacher loses a reference.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-074",
@@ -1880,14 +1864,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "period_numbers still lists non-teaching units on 2 standard rows - the exact defect LP v1.2 was written for, recurring in the post-v1.2 re-author",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "std sec#6 [8,9] -> [8] and sec#7 [10,11,12] -> [10,11]. U9 ('Middle-Term Splitting Extended: Applications') and U12 ('Finding New Identities by Combining Results') consolidate a section already taught and deliver none of its implied_lo, so Rule 12 excludes them. SERVE EFFECT, re-measured after the edit: both item anchors move EARLIER (U9->U8, U12->U11), the sweep is unchanged at every X from 6 to 17, and C3's one-unit margin at X=13 is now wider. sec#8 [13,14] was checked and is CORRECT - U14 teaches the applied LO, so it stays.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-075",
@@ -1895,14 +1877,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "c_code C-9.3 stamped on section 4.5 against a mapping that ties it to 4.6; three canonicals give three answers for the same two sections",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "Resolved against the mapping's own words: C-9.3's justification names 'the middle-term-splitting method in section 4.6'. So 4.6 carries C-9.3 and every other section carries the core C-3.1. std sec#5 and p09 sec#5 lose C-9.3; p09 sec#6 gains it; p12 was already correct. All three canonicals now give the SAME answer, which was the substance of the defect. Note left standing: the adjunct C-7.2 (named for 4.2/4.4/4.7 in the mapping) is used by no canonical - not repaired, because A4 does not require an adjunct to be used.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-076",
@@ -1910,13 +1890,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T15:23:21",
-   "at": "2026-08-09T15:23:21",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "activity_title below A3's stated 10-13 words on 24 of 27 units - reads as a constraint the prompt never surfaces",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "AMENDED — LP v1.3, A3. activity_title 10-13 -> 6-13 words. 31 of 36 units missed the old band, every one SHORT. A minimum missed in one direction by three independent generations is a minimum set too high."
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-077",
@@ -1924,14 +1903,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "textbook item description not verbatim; E-3 loses '(asterisked parts (v)-(vi) excluded)', the clause Rule 8 leans on",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "16 descriptions (std 10, p12 6) overwritten verbatim from the chapter summary, including E-3's '(asterisked parts (v)-(vi) excluded)' - the clause Rule 8's exclusion leans on. Generic pass: the summary is the authority, so this runs corpus-wide.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-078",
@@ -1939,13 +1916,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T15:23:21",
-   "at": "2026-08-09T15:23:21",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "std item 1 tests 4.3's algebraic proof while owned by 4.1 and duplicates item 5; p12 does this correctly",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "NO AMENDMENT — Rule 1 and Rule 5's one-item-per-LO already forbid an item that tests a section it does not own and duplicates another. Generation defect; closed by the re-author. The draft replacement stem recorded at the repair pass is superseded — regeneration under the corrected pair is strictly better than a hand-written item, and is the reason not to install one."
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-079",
@@ -1953,13 +1929,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T15:23:21",
-   "at": "2026-08-09T15:23:21",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "p12 item 9 tagged Analysis on an Application LO - the mis-tag that licenses the wrong format",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "NO AMENDMENT — Rule 4's reading guide already maps 'factorise' to Application and Rule 5 maps Application to NUM/SCR. The model simply mis-tagged, so this is a generation defect and is closed by the re-author that the v1.3/v1.2 bump forces. Kept distinct from ARV-D-080 deliberately: one is a rule that was wrong, the other is a rule that was not followed."
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-080",
@@ -1967,13 +1942,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T15:23:21",
-   "at": "2026-08-09T15:23:21",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "OPEN_TASK emitted against Evaluation/Analysis tags with co_central false and no declared lift; p12's format_type is off-menu in substance",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "AMENDED — assessment v1.2, Rule 5. The OPEN_TASK row now reads 'co_central, or a whole-chapter synthesis LO', with a paragraph stating that such an entry is integrative on its own ground, is not a Rule 6 lift and does not consume one. This was the campaign's most valuable C3 finding: architecture v2.0 MANDATES a synthesis unit whose LO is integrative by construction, while Rule 5 licensed OPEN_TASK only for co_central chapters — so every co_central:false chapter with a synthesis unit was in an unsatisfiable position, which is most of the corpus. Fixed once, here, before S7/S8 meet it. Also closed with it: p12 item 9's off-menu format_type, which the re-author regenerates against Rule 8's menu."
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-082",
@@ -1981,14 +1955,12 @@
    "step": "C3",
    "severity": "S3",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "Rule 8's 'teacher may substitute any other menu format' statement missing from both OPEN_TASK guides",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "Rule 8's substitution statement appended to both OPEN_TASK guides. Fixed sentence, so computable. NOTE: if ARV-D-080 is resolved by re-formatting those items to ECR, these guides disappear and this repair goes with them - harmless either way.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-083",
@@ -1996,14 +1968,12 @@
    "step": "C3",
    "severity": "S2",
    "owner": "founder",
-   "status": "closed",
+   "status": "open",
    "opened": "2026-08-09T10:57:18",
-   "closed": "2026-08-09T12:45:00",
-   "at": "2026-08-09T12:45:00",
+   "closed": null,
+   "at": "2026-08-09T10:57:18",
    "title": "p12 emits all five guide sub-blocks on every item with empty strings - 112 empty required fields against A1's explicit ban",
-   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects.",
-   "resolution": "52 empty required fields removed from p12: the four guide sub-blocks that do not match the item's question_type are set to null, which is the shape std and p09 already use. Each pruned block held only a duplicate learning_outcome plus empty strings; the pass refuses to prune any block carrying real content. Every item in all three canonicals now has exactly one guide block and zero empty required fields.",
-   "repaired_by": "genon/repair_c3.py v1.0"
+   "evidence": "See docs/testing_artefacts/c3_mathematics_ix_ch04.md — the rule table quotes the evidence for every row and section C lists the defects."
   },
   {
    "id": "ARV-D-085",

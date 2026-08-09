@@ -1,64 +1,38 @@
 # CHANGELOG — Chapter Assessment Constitution · Mathematics · Secondary Stage
 
 The `VERSION` line lives in the constitution; the history lives here (testing.md §3, P4).
-Nothing in this file is read at generation time.
 
 ---
 
-## v1.1 — 2026-08-08 · S4 stage preparation (P2)
+## v1.2 — 2026-08-09 · the synthesis unit may take OPEN_TASK (S4 · C3, ARV-D-080)
 
-**No pedagogical rule changed.** The diff touches the VERSION line, Rule 7's option-order
-clause and prohibition, one integrity line, and the footer. Question counts and format
-matching (Rule 5), the reasoning floor (Rule 6), the open-task menu (Rule 8), the guide
-layer (Rule 9), answer verification (Rule 11) and the whole A1 schema — including the VS-1
-to VS-6 visual-stimulus rules and `graph_paper` — are byte-identical.
+One clause added to Rule 5, resolving a contradiction between this constitution and
+architecture v2.0 that would otherwise recur on most of the corpus.
 
-- **A9 — MCQ option order is not the model's to set.** Two additions and, for this file,
-  **nothing to remove**. Ordering is a pipeline stage: `genon/normalize_options.py`, STEP 6
-  of `build_library.py`, subject-agnostic, gated at certification (C3 gate 9a).
-  - **REMOVAL — N/A.** This constitution never carried the MEMORY-item-18 position
-    prohibition. testing.md P2 names four files that carry it (SS + Science, middle and
-    secondary); mathematics·secondary is not one of them, confirmed by grep
-    (`is_correct MUST` · `consecutive items` · `same label` all 0). Nothing was struck.
-  - **ADDED**, in the v1.7 wording: option order carries no meaning and is not the model's
-    to set (emit as authored; uneven letters across a chapter are coincidence, not a
-    defect); and the prohibition on an option referring to another option by its label —
-    the one construction a downstream sort cannot reorder without rewriting.
-  - The pre-existing ban on "none of the above" / "all of the above" is **absorbed into
-    that prohibition rather than duplicated** — it is the same ban, now carrying its reason,
-    and Rule 7's prohibition is renumbered 1/2 to hold both. No scope was lost.
-  - **NOT re-added**, and must never be: the alphabetical arrangement sentence, "never led
-    with", or any rule naming a label position. Naming arrangement at all keeps position
-    salient to a model that should never reason about it. Note that Rule 1's prohibition 3,
-    Rule 4's and Rule 5's "never position" clauses, and the "Position carries no signal"
-    integrity line all concern a SECTION's position in the chapter — a different subject
-    entirely — and were left untouched.
+v2.0 MANDATES that the standard canonical close with a whole-chapter synthesis unit, whose
+implied_lo is integrative by construction ("select and apply the appropriate identity across
+the full chapter repertoire"). But Rule 5 reserved OPEN_TASK for `co_central` chapters, and
+Rule 6 licenses a lift to OPEN_TASK only where no LO already reaches Analysis or Evaluation.
+Ch 4 is `co_central: false` and carries ECR items, so its synthesis item was licensed by
+neither route — while the model, reading the LO in front of it, correctly judged the task
+integrative and emitted OPEN_TASK anyway. Every `co_central: false` chapter with a mandated
+synthesis unit sits in the same trap, which is most of the corpus.
 
-- **A6 — confirmed present via the subject's equivalent, one clarifying line added.**
-  Every item already carries `section_number` matching the handoff, and the LP's
-  `coverage_handoff` maps it to `period_numbers`. Mathematics secondary's unique link is the
-  SECTION, not the unit — LP Rule 7 lets a section be taught across several periods — so the
-  reference's `period_ref` field is not ported. An integrity line now records that the
-  platform resolves the anchor from `section_number`, and forbids the model emitting
-  `period_ref` or any unit number. Founder ruling, 2026-08-05: derive the link, never demand
-  it. The reversed band-level `phase_ref` is absent and was not reintroduced
-  (`grep -c phase_ref` = 0).
+Rule 5's OPEN_TASK row now reads "co_central, or a whole-chapter synthesis LO", with a short
+paragraph stating that such an entry is integrative on its own ground, is NOT a Rule 6 lift,
+and does not consume one. `co_central = true` is untouched, as are Rule 8's menu and Rule 6's
+one-lift ceiling.
 
-Artefacts: `genon/out/stage_prep_mathematics_secondary/` —
-`assessment_constitution_v1.0_pre.txt`, `assess_v1.0_to_v1.1.diff`,
-`apply_s4_amendments.py`.
+Not amended, and worth separating: ch 4's p12 item 9 carries a demand tag its LO does not
+support (Analysis on an Application LO, ARV-D-079) and an off-menu `format_type`. Rule 4's
+reading guide and Rule 8's menu already cover both — the model simply got it wrong, so it is
+a generation defect, not a rule defect, and no amendment addresses it. It stays open.
 
----
+Artefacts: `genon/out/stage_prep_mathematics_secondary/assessment_constitution_v1.1_pre.txt`.
 
-## v1.0 — pre-2026-08-08
-
-The stage's original constitution. It never carried the item-18 position prohibition, so
-v1.1's A9 is additive only. Earlier history was never kept in a sidecar and is not
-reconstructed here; git is the record. The file carried no in-document version-history
-block, so nothing was lifted out of it by P4.
-
-Standing implementation debt, unchanged by v1.1 and not a constitutional item: the
-RENDERER WIRING NOTE at the foot of the constitution. VS-2 (figure SVG) and VS-6
-(green graph-paper backing) are permitted by this stage but not yet honoured by
-`assessment_pdf_generator.py` or the online renderer. Carry it into the stage's C-cycle as
-a defect if a pilot item needs a grid.
+**§9: RELAXATION-ONLY, so this costs nothing** — the clause only licenses a format that was
+previously forbidden. No re-author. Compliance check on the installed library: the standard's
+item 14 (`section_ref: "synthesis"`) is now LICENSED by the new clause, which is exactly the
+item that provoked the amendment. p12's item 9 is NOT licensed — it is an ordinary Analysis
+tag on an Application LO (ARV-D-079) and stays open on its own merits, unaffected by this
+amendment either way.

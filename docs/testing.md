@@ -410,7 +410,7 @@ before starting each stage):
 | S1 | social_sciences · secondary | **1.10 — reference** | time_bands | ✓ | ✓ | ✓ (assess v1.7) |
 | S2 | social_sciences · middle | **2.8 ✓** | time_bands | ✓ | ✓ | ✓ (assess v2.4, 2026-08-04) |
 | S3 | science · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-05) |
-| S4 | mathematics · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.1, 2026-08-08 — no item-18 to remove) |
+| S4 | mathematics · secondary | **1.3 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-09) |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
@@ -570,6 +570,19 @@ sign-off in `genon/out/stage_prep_ss_middle/`.
 carried the item-18 prohibition, so A9 landed as the two lines alone, and the pre-existing
 "none/all of the above" ban was absorbed into the by-label prohibition rather than duplicated.
 `genon/out/stage_prep_mathematics_secondary/`.
+**AMENDED AGAIN for S4 (2026-08-09, at C3 — the first stage to amend AFTER authoring):**
+LP **v1.2 → v1.3** (Rule 5 P1's consecutive-method cap gains a content-driven exception ·
+`activity_title` 10–13 → **6–13** words · `section_context` 10–12 → **6–12** words, upper bound
+untouched) and assessment **v1.1 → v1.2** (Rule 5's OPEN_TASK row extended to a whole-chapter
+**synthesis LO**, which v2.0 mandates but `co_central: false` forbade — the trap most of the
+corpus sits in). All four came from ch 4's live output at C3, where the evidence pointed at the
+RULE, not the plan; no prohibition was removed and nothing pedagogical changed. Diffs +
+pre-files in `genon/out/stage_prep_mathematics_secondary/`; rationale in both CHANGELOGs.
+**§9 fires: S4 re-opens** — the library was authored under LP v1.2 / assessment v1.1 and is
+re-authored under the new pair, C1–C3 re-run. Paid once, on one chapter, before the stage's
+remaining eleven C-steps. **The general lesson for S5–S11: a limit stated as a number
+(word counts, consecutive caps) is the kind of rule live generation most often disproves —
+read the numeric limits at P1 with that in mind, because catching one there is free.**
 
 **P3 [Kumar] Group B only — schema conversion.** Convert `phases[{minutes, description}]` →
 `time_bands[{minutes, activity}]` (rename both the array and the `description` key). **No
@@ -1304,6 +1317,26 @@ wildly different amounts, and must never be conflated:**
   version, so the stage **re-certifies in full** — C1 regenerates the whole library and C1–C14 +
   the gate re-run. This is the cost the §3 ordering rule exists to avoid: amend first, certify
   after.
+- **RELAXATION-ONLY amendment (stage-scoped, FREE — added 2026-08-09, founder):** where every
+  edit in an amendment only **widens or permits** — a bound loosened, an exception added, a
+  format licensed — and **nothing is tightened and no new obligation is created**, the installed
+  library cannot have been invalidated by it: output that satisfied the stricter text satisfies
+  the looser text by construction, and the clauses at issue are usually the very ones the old
+  library breached. Such a stage does **NOT** re-author. It runs `--certify-only` and a written
+  **clause-by-clause compliance check** of the installed library against each amended clause,
+  recorded in the tracker; any clause the library fails is then a defect in the ordinary way.
+  **One tightening anywhere in the amendment forfeits this** and it is a constitution change in
+  the full sense above — the carve-out is not a judgement about how big the change feels.
+  *Worked example, S4 2026-08-09: LP v1.2 → v1.3 (method-cap exception · `activity_title`
+  10–13 → 6–13 · `section_context` 10–12 → 6–12, upper bound untouched) and assessment
+  v1.1 → v1.2 (OPEN_TASK extended to a synthesis LO) are relaxation-only. The installed library
+  was checked against all four and passes three outright; the fourth (OPEN_TASK licensing) it
+  passes on the standard's synthesis item and fails on one compact item, which stays open as
+  the ordinary defect it always was. No re-author; ~₹111 not spent. The reasoning that settled
+  it is worth keeping: **regeneration is a lottery, and the installed library had already been
+  repaired.** A re-author would have discarded verified-clean output for a fresh draw on nine
+  defect classes that recurred in both prior generations of this chapter — internal-id leakage
+  alone went 0 → 31 between them.*
 - **Engine / brief / certifier change (corpus-wide, cheap):** the authored artefacts are still
   valid. Re-run `python3 genon/build_library.py <subject> <grade> <ch> --certify-only` across
   every certified chapter and **diff the reports** — same checks, same serve sweep, no rupees.

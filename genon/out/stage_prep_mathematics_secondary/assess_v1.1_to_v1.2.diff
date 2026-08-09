@@ -1,0 +1,29 @@
+--- genon/out/stage_prep_mathematics_secondary/assessment_constitution_v1.1_pre.txt	2026-08-09 15:20:53.095687308 +0530
++++ data/content/constitutions/assessment/mathematics/secondary/assessment_constitution.txt	2026-08-09 15:21:34.038192569 +0530
+@@ -1,4 +1,4 @@
+-ARUVI · CHAPTER ASSESSMENT GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.1
++ARUVI · CHAPTER ASSESSMENT GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.2
+ 
+ Subject group : mathematics
+ Stage         : Secondary Stage   ·   Grades : ix · x
+@@ -130,12 +130,18 @@
+                                             the written reasoning, derivation,
+                                             or proof)
+   Integrative / cross-       → OPEN_TASK  (several operations on a novel
+-  operational (co_central)                 scenario; vehicle from the
+-                                            Mathematics menu, Rule 8)
++  operational (co_central,                 scenario; vehicle from the
++  or a whole-chapter                        Mathematics menu, Rule 8)
++  synthesis LO)
+ 
+ co_central = true: a section integrating both central operations is the
+ OPEN_TASK and MUST require reasoning across both at once (Rule 8).
+ 
++A whole-chapter SYNTHESIS entry in the handoff — one whose implied_lo requires
++selecting among the chapter's identities rather than applying a named one — is
++integrative by construction and takes OPEN_TASK on that ground alone, whatever
++co_central says. It is not a Rule 6 lift and does not consume one.
++
+ NUM is the math-native Application format: a numerical/algebraic answer the
+ student reaches by visible multi-step working, where selection from options
+ would reveal the steps that are the object of the task. Use it for evaluate,

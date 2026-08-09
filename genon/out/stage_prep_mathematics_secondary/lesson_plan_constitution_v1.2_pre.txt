@@ -1,4 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.3
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · MATHEMATICS · SECONDARY STAGE · VERSION 1.2
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -147,10 +147,7 @@ Play-way and Inductive are used sparingly and only where the section content
 clearly invites them.
 
 PROHIBITION
-1. MUST NOT repeat the same method across more than two consecutive periods,
-   unless the sections those periods anchor genuinely call for it (a chapter's
-   closing sections often converge on one method). The weighting above still
-   binds; a longer run MUST NOT be produced for convenience.
+1. MUST NOT repeat the same method across more than two consecutive periods.
 2. MUST NOT use a method outside the Pedagogy document.
 3. MUST NOT choose a method for variety alone, or leave the field blank, or
    list more than one.
@@ -187,7 +184,7 @@ derive, prove, justify, plot, solve, construct). It MUST NOT use internal-state
 verbs (understand, appreciate), MUST NOT restate the competency or
 dissolution_test, and MUST NOT bind to the worked example's specific values.
 
-Alongside the LO(s), record one section_context per section: a 6–12 word label
+Alongside the LO(s), record one section_context per section: a 10–12 word label
 naming the specific objects, results, or representations the section drew from.
 This is what the assessment question is about — it scopes the item; it is a
 label, not content.
@@ -374,7 +371,7 @@ period object. chapter_cg is emitted once at the top level.
       {
         "period_number": "integer",
         "period_duration_minutes": "integer",
-        "activity_title": "string — teacher-facing label, 6–13 words, no trailing period",
+        "activity_title": "string — teacher-facing label, 10–13 words, no trailing period",
         "section_anchor": "string — named section this period draws from (e.g. '2.5')",
         "pedagogical_method": "string — exactly one method from the Pedagogy document (Rule 5); never blank",
         "materials": ["string"],
