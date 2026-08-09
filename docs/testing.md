@@ -1,7 +1,26 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.8 · 2026-08-08 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.9 · 2026-08-09 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.9 (2026-08-09, after S4's C3): **C3 gains a MATHS-ONLY sub-check — every determinate answer
+is re-derived, and it is re-derived from the STEM.** S4's C3 found one wrong answer in 23
+(ARV-D-084: `8(3m − 2n)^2` against a stem asking for `72m^2 − 48mn + 8n^2`), shipped with
+`verified: true` and with the model's own "wait, verify… Let me re-check" aside left in
+`method_one_line` — where it had already reached the right answer. Nothing in the pipeline
+looks at answer VALUES: the certifier checks structure, STEP 6 checks option order, and
+`verified` is the model's claim about itself. **Mathematics is the only subject with exposure**
+— a sweep of all 16 installed canonicals found science and social_sciences carry zero items
+with an `expected_answer` (they ship `expected_elements`/`look_for`, which are judged, not
+computed), so the check is scoped to S4/S7/S8 and costs the other eight stages nothing.
+Mechanism: `genon/extract_determinate.py` writes a per-chapter sympy worksheet (extraction is
+mechanical); the checker fills in `claimed` and `target` and runs it (transcription is
+judgement). **The ordering rule is the whole check** — transcribe from the question, read
+`method_one_line` only after the verdict is recorded, or you confirm the file against itself.
+Filled worksheets are C3 artefacts. The same sweep found a SECOND leak of the same kind —
+science·IX ch 8 `p07` item 4, in the student-facing stem, on a stage already green at C3
+(ARV-D-085) — so a `--certify-only`-time regex for self-correction markers is recorded as a
+C5 tooling gap. §9 applies and costs nothing: no stage carries a signed human GATE.*
 
 *2.8 (2026-08-08, at S4's P-prep): **two per-stage preconditions on C1 are promoted into §3,
 both found at P-prep, neither constitutional.** (a) **The CARRIER, and it is a PAID gate, not a
@@ -752,6 +771,45 @@ compact variant too is deliberate — the variants are authored under the SAME c
 the brief, and a constitution that only holds at full length has not been proven.
 **Exit:** every rule number appears in the table for both files; every fail becomes a defect
 (§7). **Artefact:** the rule table.
+
+**C3 · maths sub-check — DETERMINATE ANSWERS ARE RE-DERIVED (S4, S7, S8 only; added 2026-08-09).**
+Mathematics is the only subject whose items carry an answer that is right or wrong rather than
+judged: science and social_sciences ship `expected_elements` / `look_for`, and a sweep of all 16
+installed canonicals on 2026-08-09 found **zero** items with an `expected_answer` outside maths.
+So this sub-check is scoped to the three maths stages, and the other eight record it N/A with
+that reason. It exists because **nothing else in the pipeline reads an answer's VALUE** — the
+certifier checks structure, STEP 6 checks option order, and `verified: true` is the model's
+claim about itself, which at S4 was false (ARV-D-084).
+
+Procedure, run over **every** installed canonical of the pilot chapter — the top and all
+compacts, not the C3 pair, since each compact authors its own assessment:
+
+```bash
+python3 genon/extract_determinate.py mathematics <grade> <chapter>
+# → genon/out/answer_checks/mathematics_<grade>_chNN_check.py
+#   fill in `claimed` and `target` per item, then:
+python3 genon/out/answer_checks/mathematics_<grade>_chNN_check.py
+```
+
+Extraction is mechanical; **transcription is judgement and stays with the checker** — stems are
+prose ("Compute 312^2 by writing 312 = 300 + 10 + 2 and applying the identity …"), so a parser
+that guessed at them would fail silently, which is the failure this check exists to prevent.
+
+**The one rule that makes it work: transcribe the target from the QUESTION STEM, and do not
+read `method_one_line` until the verdict is written down.** At S4 the wrong answer sat beside a
+method line that had already derived the right one; a checker who transcribes the method
+confirms the file against itself and sees nothing. Where an answer is not symbolically
+expressible (a sentence, a units-bearing quantity), set the target `None` and record the judged
+verdict in the note — a judged item is still checked, but it must say so. Count CHECKS, not
+items: a stem asking for both an expansion and a numerical value is two.
+
+**Exit:** the worksheet runs with 0 WRONG, and its item count reconciles against the library's
+determinate items. Any WRONG is an **S1 defect** — a wrong answer is teacher- and student-facing
+and cannot be accepted the way a register phrasing can. **Artefact:** the filled worksheet,
+committed beside the C3 markdown. *Worked example: `genon/out/answer_checks/mathematics_ix_ch04_check.py`
+(25 checks over 19 items across three canonicals; 1 WRONG on first run → ARV-D-084 → repaired in
+place by `genon/repair_leaked_deliberation.py`, and the worksheet is now that repair's regression
+test).*
 
 **C4 [Claude] MEMORY.md amendment items, live.** From the checklist in `MEMORY.md`
 §"★ AMENDMENTS TO BE TESTED", test the items that apply to this stage — several are themselves

@@ -34,25 +34,6 @@
       "source": "data/content/chapters/science/ix/mappings/ch_08_mapping.json primary[].cg"
      }
     ]
-   },
-   {
-    "tool": "genon/repair_leaked_deliberation.py v1.0",
-    "at": "2026-08-09T11:58:58",
-    "reason": "ARV-D-085 (S1, opened by the 2026-08-09 corpus sweep off ARV-D-084) — item 4(b) shipped the model's self-correction inside the STUDENT-FACING stem ('that has 14 neutrons instead of 14 — wait, this atom has 14 neutrons'), and the answer key had settled the stumble the wrong way: it resolved (b) to ²⁷₁₃Al, the same atom the stem hands the student, making the part unanswerable as written and pointless as keyed. Founder ruling 2026-08-09: restore the isotope teaching point the phrase 'the corrected nuclide notation' was reaching for — 15 neutrons, A = 28. The LO ('determine the subatomic particle composition of an atom from given nuclear data'), the section anchor, the competency and parts (a) and (c) are untouched.",
-    "edits": [
-     {
-      "item": 4,
-      "field": "question_text",
-      "old": "An atom of phosphorus is represented as ³¹₁₅P. (a) State the number of protons, neutrons, and electrons in this atom. Show the calculation for neutron count. (b) A second atom has the symbol ²⁷₁₃Al. Write the full nuclide notation for an atom of the same element that has 14 neutrons instead of 14 — wait, this atom has 14 neutrons. Calculate its mass number and write the corrected nuclide notation. (c) Explain in one sentence why the symbol for iron is Fe and not Ir, using the IUPAC rule for symbols derived from non-English names.",
-      "new": "An atom of phosphorus is represented as ³¹₁₅P. (a) State the number of protons, neutrons, and electrons in this atom. Show the calculation for neutron count. (b) A second atom has the symbol ²⁷₁₃Al. Write the full nuclide notation for an atom of the same element that has 15 neutrons. Calculate its mass number and show your working. (c) Explain in one sentence why the symbol for iron is Fe and not Ir, using the IUPAC rule for symbols derived from non-English names."
-     },
-     {
-      "item": 4,
-      "field": "expected_elements[1]",
-      "old": "For aluminium with 14 neutrons: A = Z + neutrons = 13 + 14 = 27; nuclide notation ²⁷₁₃Al — same as the given atom, demonstrating correct application of A = Z + n.",
-      "new": "For aluminium with 15 neutrons: A = Z + neutrons = 13 + 15 = 28; nuclide notation ²⁸₁₃Al — same Z as the given atom but a different A, so it is an isotope of aluminium."
-     }
-    ]
    }
   ]
  },
@@ -589,11 +570,11 @@
      },
      "cognitive_demand": "Application",
      "visual_stimulus": null,
-     "question_text": "An atom of phosphorus is represented as ³¹₁₅P. (a) State the number of protons, neutrons, and electrons in this atom. Show the calculation for neutron count. (b) A second atom has the symbol ²⁷₁₃Al. Write the full nuclide notation for an atom of the same element that has 15 neutrons. Calculate its mass number and show your working. (c) Explain in one sentence why the symbol for iron is Fe and not Ir, using the IUPAC rule for symbols derived from non-English names.",
+     "question_text": "An atom of phosphorus is represented as ³¹₁₅P. (a) State the number of protons, neutrons, and electrons in this atom. Show the calculation for neutron count. (b) A second atom has the symbol ²⁷₁₃Al. Write the full nuclide notation for an atom of the same element that has 14 neutrons instead of 14 — wait, this atom has 14 neutrons. Calculate its mass number and write the corrected nuclide notation. (c) Explain in one sentence why the symbol for iron is Fe and not Ir, using the IUPAC rule for symbols derived from non-English names.",
      "options": [],
      "expected_elements": [
       "Phosphorus: protons = 15 (read directly from Z), electrons = 15 (atom is neutral so equals proton count), neutrons = A – Z = 31 – 15 = 16; calculation shown.",
-      "For aluminium with 15 neutrons: A = Z + neutrons = 13 + 15 = 28; nuclide notation ²⁸₁₃Al — same Z as the given atom but a different A, so it is an isotope of aluminium.",
+      "For aluminium with 14 neutrons: A = Z + neutrons = 13 + 14 = 27; nuclide notation ²⁷₁₃Al — same as the given atom, demonstrating correct application of A = Z + n.",
       "Fe derives from the Latin name 'ferrum'; IUPAC allows symbols from Latin, Greek, or German names when the element was named in those languages, so the symbol need not match the English name."
      ],
      "look_for": [],
