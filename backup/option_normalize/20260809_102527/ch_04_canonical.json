@@ -1166,22 +1166,22 @@
           "options": [
             {
               "label": "A",
-              "text": "3x^2 − 24xy + 4y^2",
-              "is_correct": false
-            },
-            {
-              "label": "B",
               "text": "9x^2 − 24xy + 16y^2",
               "is_correct": true
             },
             {
-              "label": "C",
+              "label": "B",
               "text": "9x^2 + 16y^2",
               "is_correct": false
             },
             {
-              "label": "D",
+              "label": "C",
               "text": "9x^2 − 12xy + 16y^2",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "3x^2 − 24xy + 4y^2",
               "is_correct": false
             }
           ],
@@ -1199,9 +1199,9 @@
                 "section": 2
               },
               "what_each_option_reveals": {
-                "C": "Omits the cross-term entirely — the classic (a−b)^2 = a^2+b^2 error, forgetting the −2ab component.",
-                "D": "Computes the cross-term as 2×3×4 = 12 rather than 2×3x×4y = 24xy — fails to multiply both the coefficients and the variables.",
-                "A": "Squares the coefficients incorrectly (3→3, 4→4 instead of 9 and 16) while getting the cross-term right — confuses squaring with doubling."
+                "B": "Omits the cross-term entirely — the classic (a−b)^2 = a^2+b^2 error, forgetting the −2ab component.",
+                "C": "Computes the cross-term as 2×3×4 = 12 rather than 2×3x×4y = 24xy — fails to multiply both the coefficients and the variables.",
+                "D": "Squares the coefficients incorrectly (3→3, 4→4 instead of 9 and 16) while getting the cross-term right — confuses squaring with doubling."
               },
               "inclusivity": "A student who struggles with variable terms can first verify the identity by substituting small integers for x and y in option A and checking against direct computation. A student who is comfortable can be asked to explain geometrically, using the square diagram, why the cross-term must be −24xy."
             },
@@ -1388,8 +1388,8 @@
           "options": [
             {
               "label": "A",
-              "text": "It always equals (2a)^2 + (b−c)^2 + (b+c)^2 for all values of a, b, c.",
-              "is_correct": false
+              "text": "It always equals 2a^2 + 2b^2 + 2c^2 − 4bc for all values of a, b, c.",
+              "is_correct": true
             },
             {
               "label": "B",
@@ -1398,8 +1398,8 @@
             },
             {
               "label": "C",
-              "text": "It always equals 2a^2 + 2b^2 + 2c^2 − 4bc for all values of a, b, c.",
-              "is_correct": true
+              "text": "It always equals (2a)^2 + (b−c)^2 + (b+c)^2 for all values of a, b, c.",
+              "is_correct": false
             },
             {
               "label": "D",
@@ -1422,7 +1422,7 @@
               },
               "what_each_option_reveals": {
                 "B": "Drops the cross-terms when expanding each three-term square, treating (a+b−c)^2 as a^2+b^2+c^2 — the same error as omitting the 2ab term from a two-term square.",
-                "A": "Attempts to regroup but makes an error in the rearrangement — likely confuses the sum of two three-term squares with a sum of squares of regrouped sums.",
+                "C": "Attempts to regroup but makes an error in the rearrangement — likely confuses the sum of two three-term squares with a sum of squares of regrouped sums.",
                 "D": "Confuses the concept of an identity with an equation — fails to recognise that an expression that simplifies to a definite algebraic form is still an identity."
               },
               "inclusivity": "A student who is unsure can substitute a = 1, b = 1, c = 1 into each option to eliminate wrong answers, then verify the survivor algebraically. A student who is comfortable can expand the full sum symbolically and confirm option A by collecting all six cross-product terms."

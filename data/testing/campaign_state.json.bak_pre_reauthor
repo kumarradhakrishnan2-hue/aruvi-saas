@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-09T10:29:34",
+ "updated_at": "2026-08-08T21:07:29",
  "step0": {
   "campaign": {
    "0.1": {
@@ -655,34 +655,34 @@
     "chapter": "4 — Exploring Algebraic Identities",
     "duration": "50",
     "model": "claude-sonnet-4-6",
-    "date": "2026-08-09 (re-author; first build 2026-08-08, superseded)",
-    "lp_ver": "1.2",
+    "date": "2026-08-08",
+    "lp_ver": "1.1",
     "as_ver": "1.1",
     "engine": "12",
-    "canonical_plan": "counts [15, 12, 9] · provisional false · basis authored_standard · registry_sections 8 · authored [15, 12, 9]. Was [14, 11, 8] until ch 3's regeneration re-weighted the combo (effort_index 15 -> 13) and moved ch 4 from 14 to 15 recommended periods.",
-    "brief": "variant_plans.top_brief_for + briefs_for, with the synthesis handoff-row line (2026-08-08). Second outing, correct again: sec#9 ref='synthesis', period_numbers [15], total_sections still 8.",
-    "ledger_ts": "top 20260809_094843 · p12 20260809_101448 · p09 20260809_102058 (cert 20260809_102646 FAILED on 1 register hit in p12; repaired at Rs 0 by repair_register.py v1.5; ALL PASS at 20260809_102753)",
-    "report": "genon/out/library_reports/mathematics_ix_ch04_20260809_102753.md",
+    "canonical_plan": "counts [14, 11, 8] · provisional false · basis authored_standard · registry_sections 8 · authored [14, 11, 8] (v2.0 equal dispersion over [floor 8, standard 14]; A-C = 6 >= 4 so three counts)",
+    "brief": "variant_plans.top_brief_for + briefs_for. FIRST library authored against the SYNTHESIS HANDOFF-ROW line (added 2026-08-08, emitted only where carriers.item_anchor_is_derived) — it worked on first use: sec#9 ref='synthesis' period_numbers [14], total_sections correctly still 8, and one item anchored to unit 14. Also the first library on the mathematics genon carrier (8-rule row 6).",
+    "ledger_ts": "top 20260808_173726 · p11 20260808_174359 · p08 20260808_174917 (first cert report 20260808_175345 FAILED on 6 register hits; repaired at Rs 0 by repair_register.py v1.4; ALL PASS at 20260808_204619; re-certified 20260808_210228 with the new handoff/anchor check)",
+    "report": "genon/out/library_reports/mathematics_ix_ch04_20260808_210228.md",
     "files": "(none yet — C6 not run; no served plan written)",
-    "durations_run": "(C6 not run; authored at 50, kumar3's profile carries 60 for the mixed matrix)",
+    "durations_run": "(C6 not run yet; authored at 50, kumar3's profile carries 60 for the mixed matrix)",
     "stages": {
      "top_canonical": {
-      "wall_s": "405.3",
-      "tokens_in": "24469",
-      "tokens_out": "26485",
-      "cost_inr": "43.30"
+      "wall_s": "392.5",
+      "tokens_in": "22165",
+      "tokens_out": "25230",
+      "cost_inr": "40.93"
      },
      "variant_a": {
-      "wall_s": "370.0",
-      "tokens_in": "24526",
-      "tokens_out": "24660",
-      "cost_inr": "40.80"
+      "wall_s": "317.7",
+      "tokens_in": "22222",
+      "tokens_out": "21387",
+      "cost_inr": "35.65"
      },
      "variant_b": {
-      "wall_s": "269.0",
-      "tokens_in": "24526",
-      "tokens_out": "17659",
-      "cost_inr": "31.14"
+      "wall_s": "267.4",
+      "tokens_in": "22222",
+      "tokens_out": "17253",
+      "cost_inr": "29.94"
      },
      "variant_c": {
       "wall_s": "",
@@ -697,29 +697,29 @@
       "cost_inr": ""
      },
      "reruns": {
-      "wall_s": "977.6",
-      "tokens_in": "66609",
-      "tokens_out": "63870",
-      "cost_inr": "106.52"
+      "wall_s": "0",
+      "tokens_in": "0",
+      "tokens_out": "0",
+      "cost_inr": "0"
      }
     },
-    "total_cost_inr": 115.24,
+    "total_cost_inr": 106.52,
     "partition_wall_s": "",
     "c5_split": "k1: identities / k2: between+floor−1+top+1 / k3: mixed week",
     "by": "Claude",
-    "at": "2026-08-09T10:29:34"
+    "at": "2026-08-08T21:07:29"
    },
    "C1": {
     "status": "pass",
     "by": "Kumar",
-    "at": "2026-08-09T10:29:34",
-    "comment": "PASS — RE-AUTHORED 2026-08-09 at [15, 12, 9]. Three canonicals on disk matching canonical_plan.counts; row finalized provisional false, basis authored_standard, registry_sections 8.\n  ch_04_canonical.json      15 units x 50 min\n  ch_04_canonical_p12.json  12 units x 50 min\n  ch_04_canonical_p09.json   9 units x 50 min\n\nWHY RE-AUTHORED (the 2026-08-08 [14,11,8] library was correct and certified — it is superseded, not defective). Three of its inputs changed and none could be repaired into files already written:\n  1. THE SUMMARY. Its nine end-of-chapter items were all attributed to section 4.1, because the authoring prompt required every enumerated item to name a real section and end-of-chapter questions belong to none. Units 10-12 therefore wore the '4.1' label and rendered to the teacher as 'Introduction (Revisit)'.\n  2. LP v1.2's Rule 12 (period_numbers = teaching units only). p11's sec#1 listed [1,10,11] against an LO those units do not deliver.\n  3. THE PERIOD COUNT. ch 3's regeneration re-weighted the combo and moved ch 4 from 14 to 15 periods.\n\nWHAT THE RE-AUTHOR ACTUALLY CHANGED — the structural result is the headline:\n  BEFORE (14u): 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.7 4.8 [4.1 4.1 4.1] 4.6 synthesis\n  AFTER  (15u): 4.1 4.2 4.3 4.3 4.4 4.4 4.5 4.6 4.6 4.7 4.7 4.7 4.8 4.8 synthesis\nThe three consolidation units falsely anchored to 4.1 are GONE — correcting the summary removed the REASON for them, and the model spent the extra period deepening 4.3/4.4/4.7/4.8 instead of inventing consolidation blocks. The plan is monotonic; there is no revisit tail. Teacher screen carries ZERO '(Revisit)' labels (was three). Every handoff row lists exactly the units that anchor its section, so Rule 12 had no work to do here.\n\nREGISTER: forward references fell 5 -> 2 in the standard canonical, on a plan one unit LONGER — the first evidence that the summary fix reduces register pressure rather than relabelling it. p09 scanned clean; p12 carried one. All three repaired at Rs 0 (repair_register.py v1.5). A fourth scanner hit was a FALSE POSITIVE and was fixed at source instead: U3's 'the square root of the last term' is a polynomial term, so register_scan.py now treats 'last term' as advisory rather than a calendar ban (verified next week / next month / next class still ban).\n\nTHE COMPACTS NOW CARRY HONEST MULTI-SECTION ANCHORS, which is the corrected summary showing through: p12 U12 = '4.6/4.7/4.8' and p09 U9 = '4.4/4.6/4.7/4.8', joined with ' / ' per V2. Both are correctly flagged ADVISORY by the new handoff/anchor check (a consolidation unit legitimately wears labels the handoff does not route items through) and neither gates.\n\nEXIT criteria met: files match counts; row finalized; canonical_minutes = 50 x 15 = 750.\nReport: genon/out/library_reports/mathematics_ix_ch04_20260809_102753.md — deterministic checks ALL PASS."
+    "at": "2026-08-08T21:07:29",
+    "comment": "PASS — library built 2026-08-08 (Kumar, Terminal, metered). Three canonicals on disk matching canonical_plan.counts [14, 11, 8]:\n  ch_04_canonical.json      14 units x 50 min\n  ch_04_canonical_p11.json  11 units x 50 min\n  ch_04_canonical_p08.json   8 units x 50 min\nThe master_plan row finalized as expected: provisional false, basis authored_standard, authored [14, 11, 8], registry_sections 8.\n\nTWO FIRSTS, both held:\n  1. The first library authored on the MATHEMATICS GENON CARRIER (8-rule row 6, landed at P5.5 the same day). Items resolve section_number -> coverage_handoff -> period_numbers, anchored at the section's LAST unit.\n  2. The first library authored against the SYNTHESIS HANDOFF-ROW brief line. It worked on first use — the top emitted sec#9 ref='synthesis' with period_numbers [14], kept total_sections at 8 as instructed, and anchored one item to unit 14. That is C9.2 ('a borrowed unit brings its own items') satisfiable on a derived-anchor stage for the first time.\n\nCERTIFICATION HISTORY — the first pass FAILED, and the failure was free to fix:\n  20260808_175345  FAIL — register clean: 6 ban hit(s), ALL forward reference (5 in the top, 1 in p11; p08 clean). Zero clock quantities across 132 bands, which is a distribution no earlier stage produced (SS VIII was 3 forward / 4 clock; science IX 1 / 2).\n  repair_register.py v1.4 --apply — six declared pure DELETIONS, no text authored, Rs 0. Backups in backup/register_repair/, edits recorded in genon_canonical.repairs[], derived plan cache purged (ARV-D-034).\n  20260808_204619  ALL PASS.\n  20260808_210228  ALL PASS again, now including the new handoff/anchor check added at C1 (see C5).\n\nNOTE ON THE BREACHES, carried to the human gate rather than acted on: every hit was a pedagogical SIGNPOST, not the boilerplate the ban's examples name ('the companion identity to be derived in the factorisation unit', 'the following unit will formalise'). The register was in the constitution at authoring (LP v1.1) AND in the brief, so this is not a not-told case. One hit — U13's 'Preview that the synthesis unit will connect all such proof moves' — is the model paraphrasing its own brief, which describes unit 14 to it in detail and then forbids naming it. Founder view 2026-08-08: the brief is not the lever; repair is the route (2026-08-02 ruling: regenerating is a lottery).\n\nEXIT criteria met: files match counts; the row is finalized; canonical_minutes = 50 x 14 = 700."
    },
    "C2": {
     "status": "pass",
     "by": "Claude",
-    "at": "2026-08-09T10:29:34",
-    "comment": "PASS — recosted 2026-08-09 for the re-authored library. Two figures, per the founder's 2026-08-07 rule.\n\n  CLEAN PATH (what the files on disk cost — the figure this column shows, and the one a 330-chapter extrapolation may multiply):\n    top  (15u)  405.3s  in 24469  out 26485  Rs  43.30\n    p12  (12u)  370.0s  in 24526  out 24660  Rs  40.80\n    p09  ( 9u)  269.0s  in 24526  out 17659  Rs  31.14\n    ---------------------------------------------------\n    3 runs                                    Rs 115.24     (Rs 38.41/run)\n\n  SUPERSEDED (the 2026-08-08 [14,11,8] library, archived under backup/superseded_libraries/):\n    Rs 106.52 across 3 runs.  ALL-IN EVER FOR CH 4: Rs 221.76.\n\n  The superseded spend is booked in the `reruns` row so the tracker's Rs column excludes it. It is NOT a defect rerun — that library certified ALL PASS. It is the cost of changing the chapter's INPUTS after authoring, which is a different thing and worth counting separately: it is what the ordering rule (constitutions before authoring) exists to prevent, and it now has a price tag. Nothing in the campaign yet extends that rule to SUMMARIES or to MAPPINGS, which is how this happened.\n\n  RATE MOVED, and the cause is structural not random. Rs 38.41/run here vs Rs 35.51/run on the 14/11/8 build and Rs 38.82 on SS IX ch 3. INPUT ROSE from 22165-22222 to 24469-24526 tokens (+10%) and stays there: the corrected summary carries source_sections and fuller descriptions, so every future maths run pays that. Output still falls with period count (26485 -> 24660 -> 17659), so the 9-unit compact costs 72% of the 15-unit standard despite being 60% of its length. BUDGET PER RUN, NEVER PER UNIT.\n\n  CORPUS NOTE: maths·secondary's fixed per-run input is ~45% above SS IX ch 3's 15.3-15.6k — this chapter carries 18 worked examples and 21 exercises plus a longer assessment constitution (VS-1..VS-6, graph_paper). If that holds across maths, the pre-warm should be priced per subject rather than at one blended Rs 37/run. Worth confirming at S7/S8.\n\n  DATA-QUALITY FINDING, not blocking: genon/ledger.csv rows for this chapter carry 18 fields against a 17-field header — an undeclared column holding the variant count sits between `model` and `subject`. Social Sciences rows have 17. csv.DictReader therefore mis-keys every maths row (subject reads '12', grade reads 'mathematics'). Figures above were taken positionally and cross-checked against runtime_data/token_log.csv, which agrees exactly (Rs 115.24). The header needs a column or the writer needs fixing before anyone parses the ledger by name."
+    "at": "2026-08-08T21:07:29",
+    "comment": "PASS — costed 2026-08-08 from genon/ledger.csv (wall seconds) + runtime_data/token_log.csv (tokens, rupees). Every row attributed; nothing missing.\n\n  top_canonical (14u)  392.5s  in 22165  out 25230  Rs 40.93\n  variant_a     (11u)  317.7s  in 22222  out 21387  Rs 35.65\n  variant_b     ( 8u)  267.4s  in 22222  out 17253  Rs 29.94\n  reruns                    —         0       0     Rs  0.00\n  ------------------------------------------------------------\n  CLEAN PATH                                        Rs 106.52\n  ALL-IN                                            Rs 106.52\n\nTHE TWO FIGURES ARE THE SAME HERE — zero reruns and zero superseded generations, so the chapter cost exactly what is on disk. The tracker's Rs column shows the clean-path total (founder 2026-08-07), which is also what a 330-chapter extrapolation may multiply. The six register breaches cost Rs 0 to fix: repair_register.py is deterministic, so a defect that would have been a Rs 106 re-author was a free edit.\n\nAGAINST THE BENCHMARK: SS IX ch 3 (v2.0 re-author) was Rs 116.46 across 3 runs = Rs 38.82/run. This library is Rs 106.52 across 3 runs = Rs 35.51/run, about 9% cheaper per run.\n\nCOST SHAPE, and it confirms the standing warning: INPUT IS FLAT — 22165 / 22222 / 22222 tokens, i.e. the constitution, summary, mapping and brief are paid in full on every run regardless of length. OUTPUT falls with period count (25230 -> 21387 -> 17253). So the 8-period compact costs 73% of the 14-period standard despite being 57% of its length. BUDGET PER RUN, NEVER PER UNIT.\n\nNote the input is ~45% higher than SS IX ch 3's 15.3-15.6k. Mathematics secondary carries 18 enumerated worked examples and 21 exercises in its summary plus a longer assessment constitution (VS-1..VS-6 + graph_paper), so its fixed per-run input is structurally larger. If that holds across maths chapters, the corpus projection should use a per-subject rate rather than one blended Rs 37/run — worth confirming at S7/S8 before the pre-warm is priced."
    }
   },
   "the_world_around_us/preparatory": {

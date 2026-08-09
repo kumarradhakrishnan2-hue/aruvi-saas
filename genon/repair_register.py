@@ -37,6 +37,14 @@ one ban, and the first where every hit is a pedagogical signpost rather than the
 ban's own examples name. See the set's header comment: one hit is the model paraphrasing the
 brief's own description of the synthesis unit, which is an argument about the BRIEF, not the
 model. Repair remains the founder's route (2026-08-02: regenerating is a lottery).
+
+v1.5, 2026-08-09 (S4): ch 4 was RE-AUTHORED (corrected summary + LP v1.2 + 15 periods), so the
+v1.4 declarations are void — their text lives in an archived file. They are kept under a
+3-tuple SUPERSEDED key as the cost record and replaced, at the live 2-tuple key, by the
+re-author's two hits. Forward references fell 5 -> 2 on a plan one unit LONGER, which is the
+first evidence that the summary fix reduces register pressure rather than just relabelling it.
+A third scanner hit was a false positive and was fixed at source instead: "the square root of
+the last term" is a polynomial term, and register_scan.py now treats "last term" as advisory.
 """
 from __future__ import annotations
 
@@ -192,7 +200,73 @@ REPAIRS = {
     # the sentence: the self-study book_ref pointer it carries is something LP Rule 10 explicitly
     # invites, so striking the whole sentence would delete compliant pedagogy to fix a register
     # breach.
+    # ── S4 · mathematics IX ch 4, THE RE-AUTHORED LIBRARY (2026-08-09) ────────────
+    # The 2026-08-08 library was superseded: its summary attributed all nine end-of-chapter
+    # items to 4.1, so three consolidation units wore the "Introduction" label. With the
+    # summary corrected the model produced no consolidation units at all — it spent the extra
+    # period deepening sections instead — and the plan runs monotonically 4.1 -> 4.8 + synthesis.
+    #
+    # FORWARD REFERENCES FELL 5 -> 2 across that change, on a plan one unit LONGER. Both
+    # survivors are the same construction as before: a trailing clause promising what a later
+    # unit will do. Both are pure deletions; the sentence carries its teaching point without
+    # the promise. A third scanner hit was a FALSE POSITIVE and is fixed at source rather than
+    # repaired here — U3's "the square root of the last term" is a polynomial term, and
+    # register_scan.py's calendar pattern now treats "last term" as advisory (v1.1, same day).
+    # LIVE set — only what is still UNAPPLIED. The top's two edits were applied at 10:02, before
+    # the resume bought the compacts, so they now sit under the APPLIED key below: leaving them
+    # here would make the whole set fail its own "declared text not found" guard on the first
+    # edit and block the p12 repair. Once applied, a declaration is a record, not an instruction.
     ("mathematics", "ix"): {
+        "ch_04_canonical_p12.json": [
+            (9, "band:3",
+             " for the next unit's work", "",
+             "register/forward",
+             "the inspect-and-identify move on two of End of Chapter Q3's expressions is "
+             "complete in itself, and recording the identifications is good practice whether or "
+             "not anything follows. At 12 units this unit can be somebody's last sitting — the "
+             "sweep serves X=12 as an identity and X=13 as a fill off this plan — so promising "
+             "a next unit's work is false for those classes"),
+        ],
+    },
+
+    # ── APPLIED 2026-08-09 10:02 to the re-authored top, before the compacts existed.
+    #    Kept as the record; re-running would fail the guard, which is the guard working.
+    ("mathematics", "ix", "APPLIED-top-20260809"): {
+        "ch_04_canonical.json": [
+            (7, "band:3",
+             " — that follows in the next unit", "",
+             "register/forward",
+             "the algebra-tile band closes on its own ground: the general form (px+a)(qx+b) is "
+             "NOTED without full development, which is the teaching decision. Naming where the "
+             "development happens is false for any teacher whose X ends here, and for any class "
+             "that borrowed this unit as its closing sitting"),
+            (10, "band:3",
+             " for the next unit", "",
+             "register/forward",
+             "raising the (x-y)-as-a-factor question as a conjecture is the whole move, and the "
+             "think-and-reflect prompt is deliberately left open (LP Rule 4 folds it into the "
+             "period). 'raised as a conjecture' stands; who resolves it is not this unit's to say"),
+        ],
+        # The compacts, added after the 2026-08-09 resume bought p12 and p09. p09 scanned
+        # CLEAN; p12 carried one hit, of the same family as the top's two.
+        "ch_04_canonical_p12.json": [
+            (9, "band:3",
+             " for the next unit's work", "",
+             "register/forward",
+             "the inspect-and-identify move on two of End of Chapter Q3's expressions is "
+             "complete in itself, and recording the identifications is good practice whether or "
+             "not anything follows. At 12 units this unit can be somebody's last sitting — the "
+             "sweep serves X=12 as an identity and X=13 as a fill off this plan — so promising "
+             "a next unit's work is false for those classes"),
+        ],
+    },
+
+    # ── SUPERSEDED — applied 2026-08-08 to the library now in
+    #    backup/superseded_libraries/mathematics_ix_ch04_20260809_094739/. Kept as the record of
+    #    what that library cost in repairs (5 forward refs in the top, 1 in p11, 0 clock
+    #    quantities across 132 bands). These declarations must NEVER be re-run: their text lives
+    #    in an archived file, and the key they were stored under now holds the re-author's set.
+    ("mathematics", "ix", "SUPERSEDED-20260808"): {
         "ch_04_canonical.json": [
             (2, "band:3",
              ", previewing the companion identity to be derived in the factorisation unit", "",
@@ -315,7 +389,7 @@ def apply_file(lib, fname, edits, dry):
         gc = plan.setdefault("genon_canonical", {})
         gc.setdefault("repairs", []).append({
             "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": "genon/repair_register.py v1.4",
+            "tool": "genon/repair_register.py v1.5",
             "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
             "edits": done,
             "ban_hits_before": before, "ban_hits_after": len(after_hits),

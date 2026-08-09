@@ -147,6 +147,47 @@ def normalize_options(raw: Any) -> tuple:
     return options, answer
 
 
+GROUP_LABEL_CAP = 56          # ~the longest real section title in the corpus
+
+
+def group_label_from_unit(title: Any, cap: int = GROUP_LABEL_CAP) -> str:
+    """A short teacher-facing group label taken from a unit's own activity_title.
+
+    WHY (founder, 2026-08-09). A group's label is normally its SECTION NAME — "the section
+    NUMBER is noise in the label" (founder 2026-07-14). Two units have no section name to
+    show, and both were leaking machine tokens onto the teacher's screen:
+
+      * a unit spanning several sections, whose anchor is a JOIN ("4.6 / 4.7 / 4.8"). No
+        handoff row is keyed by the composite, so the title lookup missed and the raw refs
+        rendered — the exact thing the 2026-07-14 rule forbids.
+      * the standard canonical's closing unit, whose anchor is the reserved token, so the
+        teacher read the literal word "synthesis".
+
+    Rather than invent vocabulary for either, use what the model already wrote for that unit.
+    `activity_title` is teacher-facing by constitution and capped at 10-13 words, so it needs
+    only shortening, never rewriting.
+
+    Shortening prefers the LEAD CLAUSE before a colon, because these titles are habitually
+    "Lead: detail" and the lead is the name a teacher would use:
+        "Consolidating Identities: Factorisation, Rational Expressions, and Cross-Chapter
+         Applications"                                   -> "Consolidating Identities"
+        "Whole-Chapter Synthesis: Connecting Identities, Proof, and Applications"
+                                                         -> "Whole-Chapter Synthesis"
+    With no colon, or a lead still over `cap`, it truncates on a word boundary with an
+    ellipsis. Returns "" for empty input so callers keep their own fallback.
+    """
+    t = " ".join(str(title or "").split())
+    if not t:
+        return ""
+    head = t.split(":", 1)[0].strip()
+    if head and len(head) <= cap and head != t:
+        return head
+    if len(t) <= cap:
+        return t
+    cut = t[:cap].rsplit(" ", 1)[0].rstrip(" ,;:-—·")
+    return f"{cut}…" if cut else t[:cap]
+
+
 def as_list(v: Any) -> List[str]:
     """Coerce a string / list / None field into a clean list of non-empty strings."""
     if v is None or v == "":

@@ -100,7 +100,14 @@ PATTERNS = [
     ("completion", True, re.compile(r"\bnow that (we|students|they) have (covered|completed)\b", re.I)),
     ("completion", True, re.compile(r"\bthe chapter is (now )?complete\b", re.I)),
     ("calendar", True, re.compile(r"\btomorrow\b", re.I)),
-    ("calendar", True, re.compile(r"\b(this|next|last) (week|month|term)\b", re.I)),
+    ("calendar", True, re.compile(r"\b(this|next|last) (week|month)\b", re.I)),
+    # "term" split out to ADVISORY, 2026-08-09. It was a ban, and it fired on maths·IX ch 4's
+    # "identify the square root of the first term, the square root of the LAST TERM" — the term
+    # of a polynomial, not the school calendar. Across mathematics that reading is the common
+    # one by a wide margin, and a gate that fails a correct algebra band gets switched off, the
+    # same argument the header already makes for today/yesterday. Still surfaced, so a genuine
+    # "last term" in the academic sense is ruled on at C7 rather than ignored.
+    ("calendar", False, re.compile(r"\b(this|next|last) term\b", re.I)),
     ("calendar", True, re.compile(r"\b(next|last) class\b", re.I)),
     ("calendar", False, re.compile(r"\b(today|yesterday)\b", re.I)),      # advisory — see header
     ("clock", True, re.compile(r"\bfor (two|three|four|five|six|seven|eight|nine|ten|fifteen|twenty|thirty|\d+) minutes\b", re.I)),

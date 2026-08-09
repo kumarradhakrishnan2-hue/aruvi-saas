@@ -580,6 +580,22 @@ def main():
         bfiles[k] = bf
         print(f"brief written: {bf}")
 
+    # ── --top-only: stop after the standard canonical, for inspection ────────────
+    # Added 2026-08-09. A re-author is the one time it is worth reading the top BEFORE
+    # buying its compacts: the compacts are authored against the top's registry, so a
+    # defect in the top is a defect in all three, and STEP 1 is resumable — re-running
+    # without this flag skips it (skip_if_present) and goes straight to STEP 4. Everything
+    # free has already run by this point, so the row is annotated and the compact briefs
+    # are on disk, ready for the resume.
+    if "--top-only" in sys.argv:
+        print("\n== STOPPING AFTER THE STANDARD CANONICAL (--top-only) ==")
+        print(f"   top:     {(lib_dir / f'ch_{ch:02d}_canonical.json').relative_to(REPO)}")
+        print(f"   briefs:  {', '.join(str(b.name) for b in bfiles.values())} (written, unspent)")
+        print(f"   resume:  python3 genon/build_library.py {subject} {grade} {ch}")
+        print("            (STEP 1 is skipped — the file is on disk — and STEP 4 buys the "
+              f"{len(bfiles)} compact(s))")
+        return
+
     if not certify_only:
         for k, bf in bfiles.items():
             label = f"STEP 4 · {k}-period variant (metered, Sonnet 4.6)"

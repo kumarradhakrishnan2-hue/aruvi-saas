@@ -20,8 +20,9 @@ from ...grades import stage_for
 from ...link_resolver import (
     handoff_period_index, norm_code, period_field_index, platform_anchor, stamp,
 )
+from ...genon.serve import _ANCHOR_JOINER          # " / " — the V2 multi-section join
 from ...normalize import (
-    as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines,
+    as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines, group_label_from_unit,
 )
 from ...ports import Prompt
 from ...view_model import (
@@ -150,7 +151,21 @@ class MathematicsSubject:
                 # Founder rule 2026-07-14: the section NUMBER is noise in the label — show the
                 # name alone ("Introduction", not "2.1 — Introduction"); the anchor is kept in
                 # meta (and remains the grouping key) and shows only when no title exists.
-                label = title or key
+                #
+                # A unit spanning several sections anchors on a JOIN ("4.6 / 4.7 / 4.8"),
+                # which no handoff row is keyed by — so the title lookup missed and the bare
+                # refs reached the screen, the exact thing the rule above forbids. The model
+                # has already written a teacher-facing name for that unit, so use it,
+                # shortened, rather than inventing vocabulary (founder 2026-08-09).
+                #
+                # SYNTHESIS IS DELIBERATELY EXCLUDED (founder, same day): the closing unit
+                # keeps the name "synthesis". It is the one reserved word teachers should
+                # meet as itself, and it is stable across every chapter, where a title-derived
+                # label would differ each time.
+                if not title and _ANCHOR_JOINER in key:
+                    label = group_label_from_unit(p.get("activity_title")) or key
+                else:
+                    label = title or key
                 bands = p.get("time_bands")
                 gmeta = {"section_anchor": key, "section_title": title}
             else:

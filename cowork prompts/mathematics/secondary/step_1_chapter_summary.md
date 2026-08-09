@@ -49,18 +49,20 @@ item, not the banner that groups them.
   Each item printed as `Example N` (a solved instance shown in the text).
 
 - **Exercises** → `{ "id": "E-N", "source_section", "source_sections", "book_ref", "description" }`
-  Every numbered question a student is asked to do, each one an `E-N`. Two
-  kinds, attributed differently:
+  Every numbered question a student is asked to do, each one an `E-N`.
 
-  - **Section exercises** (under a banner like `Exercise 4.2`): the banner
-    gives the section. Omit `source_sections`.
+  **Attribute every question by the METHOD it needs, never by where it sits.**
+  A banner number is not a section number — `Exercise Set 6.1` collects the
+  questions for sections 6.1–6.5, and `Exercise 4.1` belongs to section 4.2.
+  End-of-chapter questions sit under no section at all, and there first, last
+  and nearest-printed are all wrong answers.
 
-  - **End-of-chapter questions**: these sit under NO section. There is no
-    banner and no default — first, last and nearest-printed are all wrong.
-    Decide which section's METHOD each question needs. List every such section
-    in `source_sections`, in section order; `source_section` is the dominant
-    one, which need not lead the list but must be in it. One section only →
-    name it in `source_section` and omit `source_sections`.
+  So: read the question, decide which section's method a student must use.
+  Where it needs more than one, list them all in `source_sections` in section
+  order; `source_section` is the dominant one, which need not lead the list
+  but must be in it. Where one section suffices, name it in `source_section`
+  and omit `source_sections`. This applies to banner-grouped and
+  end-of-chapter questions alike.
 
 `book_ref` is the locator a teacher with the book in hand would use:
 banner + question number (when the item is numbered) + page. Examples:
@@ -173,8 +175,8 @@ Rules:
 - Every enumerated item's `source_section` is a `ref` present in `sections` and is the
   section the item MAINLY exercises — never a placeholder chosen to fill the field.
 - `source_sections`, where present, lists `ref`s from `sections` in section order and
-  contains `source_section`. Required for an end-of-chapter question spanning several
-  sections; omitted otherwise.
+  contains `source_section`. Required for any item spanning several sections — whether it
+  sits under an exercise banner or at the end of the chapter; omitted otherwise.
 - Every enumerated item carries a non-empty `book_ref`.
 - No `section_goal` field. No asterisked items. No sidebar-box items.
 - `enumerated_exercises` is non-empty for a normal chapter.

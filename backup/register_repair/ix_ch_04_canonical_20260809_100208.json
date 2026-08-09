@@ -20,34 +20,7 @@
     "constitution": "LP v1.2 / assessment v1.1",
     "source": "generate_canonical.py one mathematics ix 4",
     "ledger_ts": "20260809_094843",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-09T10:02:08",
-        "tool": "genon/repair_register.py v1.5",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
-        "edits": [
-          {
-            "unit": 7,
-            "field": "band:3",
-            "rule": "register/forward",
-            "removed": "— that follows in the next unit",
-            "replaced_with": "",
-            "note": "the algebra-tile band closes on its own ground: the general form (px+a)(qx+b) is NOTED without full development, which is the teaching decision. Naming where the development happens is false for any teacher whose X ends here, and for any class that borrowed this unit as its closing sitting"
-          },
-          {
-            "unit": 10,
-            "field": "band:3",
-            "rule": "register/forward",
-            "removed": "for the next unit",
-            "replaced_with": "",
-            "note": "raising the (x-y)-as-a-factor question as a conjecture is the whole move, and the think-and-reflect prompt is deliberately left open (LP Rule 4 folds it into the period). 'raised as a conjecture' stands; who resolves it is not this unit's to say"
-          }
-        ],
-        "ban_hits_before": 2,
-        "ban_hits_after": 0
-      }
-    ]
+    "validation": "clean"
   },
   "result": {
     "lesson_plan": {
@@ -396,7 +369,7 @@
             },
             {
               "minutes": "44-50",
-              "activity": "Extend to the rectangle with binomial side lengths (2x+3) and (3x+1) as described in the section. Students sketch the tile arrangement and identify the four groups of tiles that correspond to the four terms of the expanded product. The general form (px+a)(qx+b) is noted without full algebraic development."
+              "activity": "Extend to the rectangle with binomial side lengths (2x+3) and (3x+1) as described in the section. Students sketch the tile arrangement and identify the four groups of tiles that correspond to the four terms of the expanded product. The general form (px+a)(qx+b) is noted without full algebraic development — that follows in the next unit."
             }
           ],
           "teacher_notes": "The algebra tile model provides a concrete referent for the abstract splitting-of-the-middle-term procedure that follows in Section 4.6; let students spend time on the physical arrangement before any symbolic rule is stated. The key misconception to forestall is that any split of 7x into two positive parts will yield a valid rectangle — only the split that corresponds to the actual factor pairs of 12 works. Students who are comfortable with the model can try the think-and-reflect tile problems involving products and factors described in the section.",
@@ -570,7 +543,7 @@
             },
             {
               "minutes": "44-50",
-              "activity": "Students attempt one self-check problem: given a polynomial matching (a+b)^3 with different coefficients, identify the cube root. Pairs compare their identification of a and b. The think-and-reflect question about (x-y) as a factor as the power rises is raised as a conjecture."
+              "activity": "Students attempt one self-check problem: given a polynomial matching (a+b)^3 with different coefficients, identify the cube root. Pairs compare their identification of a and b. The think-and-reflect question about (x-y) as a factor as the power rises is raised as a conjecture for the next unit."
             }
           ],
           "teacher_notes": "The derivation of (a+b)^3 builds directly on the binomial square identity established in Section 4.2, so that identity is the natural anchor for continuity. Students frequently confuse the coefficients in the expansion — writing 3a^2b+3ab^2 as 2a^2b+2ab^2 or similar — so stress that the coefficients come from two distinct geometric piece types, not from doubling. Example 14, p.84 is a good self-study item for students who want to practise the (a-b)^3 matching independently.",
@@ -1166,22 +1139,22 @@
           "options": [
             {
               "label": "A",
-              "text": "3x^2 − 24xy + 4y^2",
-              "is_correct": false
-            },
-            {
-              "label": "B",
               "text": "9x^2 − 24xy + 16y^2",
               "is_correct": true
             },
             {
-              "label": "C",
+              "label": "B",
               "text": "9x^2 + 16y^2",
               "is_correct": false
             },
             {
-              "label": "D",
+              "label": "C",
               "text": "9x^2 − 12xy + 16y^2",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "3x^2 − 24xy + 4y^2",
               "is_correct": false
             }
           ],
@@ -1199,9 +1172,9 @@
                 "section": 2
               },
               "what_each_option_reveals": {
-                "C": "Omits the cross-term entirely — the classic (a−b)^2 = a^2+b^2 error, forgetting the −2ab component.",
-                "D": "Computes the cross-term as 2×3×4 = 12 rather than 2×3x×4y = 24xy — fails to multiply both the coefficients and the variables.",
-                "A": "Squares the coefficients incorrectly (3→3, 4→4 instead of 9 and 16) while getting the cross-term right — confuses squaring with doubling."
+                "B": "Omits the cross-term entirely — the classic (a−b)^2 = a^2+b^2 error, forgetting the −2ab component.",
+                "C": "Computes the cross-term as 2×3×4 = 12 rather than 2×3x×4y = 24xy — fails to multiply both the coefficients and the variables.",
+                "D": "Squares the coefficients incorrectly (3→3, 4→4 instead of 9 and 16) while getting the cross-term right — confuses squaring with doubling."
               },
               "inclusivity": "A student who struggles with variable terms can first verify the identity by substituting small integers for x and y in option A and checking against direct computation. A student who is comfortable can be asked to explain geometrically, using the square diagram, why the cross-term must be −24xy."
             },
@@ -1388,8 +1361,8 @@
           "options": [
             {
               "label": "A",
-              "text": "It always equals (2a)^2 + (b−c)^2 + (b+c)^2 for all values of a, b, c.",
-              "is_correct": false
+              "text": "It always equals 2a^2 + 2b^2 + 2c^2 − 4bc for all values of a, b, c.",
+              "is_correct": true
             },
             {
               "label": "B",
@@ -1398,8 +1371,8 @@
             },
             {
               "label": "C",
-              "text": "It always equals 2a^2 + 2b^2 + 2c^2 − 4bc for all values of a, b, c.",
-              "is_correct": true
+              "text": "It always equals (2a)^2 + (b−c)^2 + (b+c)^2 for all values of a, b, c.",
+              "is_correct": false
             },
             {
               "label": "D",
@@ -1422,7 +1395,7 @@
               },
               "what_each_option_reveals": {
                 "B": "Drops the cross-terms when expanding each three-term square, treating (a+b−c)^2 as a^2+b^2+c^2 — the same error as omitting the 2ab term from a two-term square.",
-                "A": "Attempts to regroup but makes an error in the rearrangement — likely confuses the sum of two three-term squares with a sum of squares of regrouped sums.",
+                "C": "Attempts to regroup but makes an error in the rearrangement — likely confuses the sum of two three-term squares with a sum of squares of regrouped sums.",
                 "D": "Confuses the concept of an identity with an equation — fails to recognise that an expression that simplifies to a definite algebraic form is still an identity."
               },
               "inclusivity": "A student who is unsure can substitute a = 1, b = 1, c = 1 into each option to eliminate wrong answers, then verify the survivor algebraically. A student who is comfortable can expand the full sum symbolically and confirm option A by collecting all six cross-product terms."
