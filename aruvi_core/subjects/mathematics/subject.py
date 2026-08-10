@@ -21,6 +21,7 @@ from ...link_resolver import (
     handoff_period_index, norm_code, period_field_index, platform_anchor, stamp,
 )
 from ...genon.serve import _ANCHOR_JOINER          # " / " — the V2 multi-section join
+from ...genon.carriers import is_synthesis as _is_synth   # the token OR the boolean (S7)
 from ...normalize import (
     as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines, group_label_from_unit,
 )
@@ -168,7 +169,18 @@ class MathematicsSubject:
                 # and was labelled "Visualising Identities", silently hiding that Introduction
                 # is taught in the same sitting. A single section's name is the wrong name for
                 # a unit teaching several.
-                if _ANCHOR_JOINER in key:
+                if _is_synth(p):
+                    # CAPITALISED FOR DISPLAY (2026-08-10, S7). The founder ruling above
+                    # stands untouched — the closing unit keeps the NAME "synthesis" rather
+                    # than a title-derived label — but `section_anchor` carries the reserved
+                    # TOKEN, and printing a token verbatim put a lowercase heading among
+                    # capitalised ones on the teacher's screen. Only the presentation
+                    # changes: same word, same unit, same data, and the token is untouched
+                    # everywhere it is actually read (serve, the registry, certification).
+                    # Now agrees with the mediated-anchor stages, which reached "Synthesis"
+                    # from the boolean in the branch below.
+                    label = "Synthesis"
+                elif _ANCHOR_JOINER in key:
                     label = group_label_from_unit(p.get("activity_title")) or key
                 else:
                     label = title or key
@@ -176,12 +188,37 @@ class MathematicsSubject:
                 gmeta = {"section_anchor": key, "section_title": title}
             else:
                 seg = (p.get("textbook_segments") or [{}])[0]
-                key = str(seg.get("ref", "")) or "lesson"
+                # THE SYNTHESIS UNIT IS ITS OWN GROUP (2026-08-10, S7). On a token stage the
+                # anchor IS the word, so maths·IX files its closer under "synthesis" without
+                # anyone doing anything. A mediated-anchor stage has no token, and this branch
+                # read `textbook_segments[0]` — so ch 7's whole-chapter synthesis, which
+                # correctly lists all five sections it draws together, was filed under
+                # "Equilateral Triangles (Revisit)": the first section it names, marked as a
+                # repeat. The unit was right and the brief was obeyed; only the grouping was
+                # wrong. Read the fact through the seam, as every other synthesis-aware site
+                # now does.
+                if _is_synth(p):
+                    key, seg = "synthesis", {}
+                else:
+                    key = str(seg.get("ref", "")) or "lesson"
                 # Same founder rule for MIDDLE: title alone ("Simple Expressions", not
                 # "section 2.1 — Simple Expressions"); the ref stays in meta + key, and is
                 # the label only when the segment has no title.
-                label = str(seg.get("title") or "").strip() or str(seg.get("ref") or "") or "Lesson"
-                bands = p.get("phases")
+                label = ("Synthesis" if key == "synthesis" else
+                         str(seg.get("title") or "").strip()
+                         or str(seg.get("ref") or "") or "Lesson")
+                # BOTH KEYS, newest first (2026-08-10, S7's P3). The middle constitution
+                # emitted `phases[{minutes, description}]` until LP v3.4 renamed it to
+                # `time_bands[{minutes, activity}]` — the rename `compile.py` requires, since
+                # it rebuilds the timed spine from `time_bands` and asserts an inventory
+                # invariant over `activity`. Reading only `phases` left every unit of a
+                # v3.4-authored canonical with an EMPTY timed spine: no band text, no minutes
+                # in the marginal rail, only the bare textbook-item lines. The whole existing
+                # middle/preparatory corpus is still `phases`, so both must be read — the same
+                # tolerance the secondary branch above and the prototype's renderer already
+                # have (`lp_pdf_generator.py:2594-2609`: "Accept whichever is present").
+                # `phases_from` and `band_lines` already read either text key.
+                bands = p.get("time_bands") or p.get("phases")
                 gmeta = {"ref": seg.get("ref", "")}
             if key != prev_key:
                 # A section re-opened later in the plan is intentional (consolidation /
@@ -246,6 +283,14 @@ class MathematicsSubject:
         #   PREP    → period.section_refs[]             ("S2")
         # Both normalize through norm_code so "section 2.1"/"2.1" and "S2"/"s2" converge.
         periods = ctx.get("periods", []) or []
+        # The synthesis unit is excluded from the join, for the reason
+        # `genon/carriers.py::items_by_period_field` records at length (2026-08-10, S7): it
+        # teaches no section, and on this stage it declares the sections it REVISITS, so
+        # indexing it makes the closing unit the last unit of every section and every item
+        # anchors there. The display side must agree with the platform stamp, or a canonical
+        # read straight from disk would anchor differently from the same plan served.
+
+        periods = [p for p in periods if not _is_synth(p)]
         prep = stage_for(grade) == "preparatory"
         if prep:
             extract = lambda p: p.get("section_refs", []) or []

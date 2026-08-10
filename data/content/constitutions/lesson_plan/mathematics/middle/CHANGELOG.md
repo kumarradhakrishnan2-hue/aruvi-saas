@@ -4,6 +4,68 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v3.6 — 2026-08-10 · Rules 1 and 2 aligned with SECONDARY — the revisit fix (S7 · C1)
+
+Ch 7's top revisited sections 7.2, 7.3 and 7.5 after moving past them, so three of its
+twelve units taught nothing new — and because an item anchors at its section's LAST unit,
+the assessment landed on those revisits rather than on the sittings that actually taught the
+section. A teacher skips a revisit; she then misses the assessment with it. Founder, on
+seeing the unit/section table: *"Revisits are a wasted opportunity."*
+
+**The cause was Rule 2's own cap, and it is arithmetic.** Rule 2 let a heavy section split
+across "two adjacent periods". Five sections × 2 = 10 body units; ch 7's top needs 11. The
+model could not place its eleventh unit without breaking something, so it broke both rules
+available to it — one run of three on 7.3 (Rule 2) and three returns (Rule 1). The
+constraint binds exactly when **body units > 2 × sections**, and the corpus tracks it:
+
+| plan | body / sections | test | revisits |
+|---|---|---|---|
+| maths VII ch 7 top | 11 / 5 | 11 > 10 **binds** | 3 sections |
+| maths VII ch 7 p10 | 10 / 5 | 10 = 10 marginal | 1 |
+| maths VII ch 7 p07 | 7 / 5 | 7 < 10 slack | 0 |
+| maths IX ch 4 top | 14 / 8 | 14 < 16 slack | **0** |
+| science IX ch 8 | 11 / 10 | slack | 0 |
+
+**Maths secondary has no such cap** — which is why maths IX never revisits. Its Rule 7
+("FULL-SECTION COVERAGE") says a section "may span more than one period where its content
+warrants it; emphasis follows the substance of the section", and forbids any numerical
+allocation formula across sections; its Rule 2 is not a packing rule at all. Middle's
+"PERIOD BIN-PACKING" was the outlier in the maths family, and the only one of the three
+that named a number.
+
+So this is a **port, not an invention**: secondary's Rule 7 discipline moved down one stage,
+where S4 has already exercised it.
+
+- **Rule 1** gains one sentence making "interleave" concrete — a section's periods are
+  CONTIGUOUS, and a later period MUST NOT re-anchor a section an earlier run completed.
+  Consolidation belongs inside the section's own run.
+- **Rule 2** is renamed FULL-SECTION COVERAGE. The two-period cap is gone: a section may
+  span as many ADJACENT periods as its content warrants, emphasis following substance and
+  never the effort_index. Surplus budget is spent by DEEPENING a section inside its run.
+  Secondary's two prohibitions are ported verbatim in substance (no numerical allocation
+  formula across sections; no front-loading). The two-goal split generalises from "period N
+  and period N+1" to the earlier and later periods of the run, and a multi-period single-goal
+  run carries one goal throughout. Full coverage and the ban on dropping a section are
+  untouched.
+
+**§9: a CONSTITUTION CHANGE IN THE FULL SENSE — the relaxation-only carve-out does NOT
+apply.** Removing the cap and generalising the goal-split wording are relaxations, but Rule
+1's contiguity sentence and Rule 2's two ported prohibitions are tightenings, and one
+tightening anywhere forfeits the carve-out. **S7 re-opens: ch 7's three canonicals re-author
+under LP v3.6 (~₹106) and C1–C3 re-run.** The installed library breaches the amended text in
+both directions, so it could not have been carried forward on a compliance check either.
+
+Artefacts: `genon/out/stage_prep_mathematics_middle/lesson_plan_constitution_v3.5_pre.txt` ·
+`lp_v3.5_to_v3.6.diff` · `apply_s7_rules_1_2_alignment.py` (guards assert the cap is gone in
+every form, the port arrived intact, and that A1, the register, the P3 shape and v3.5's Rule 5
+exception are untouched).
+
+**Owed with this, and free:** a certifier check that no section appears in two non-contiguous
+runs. Rule 1 has forbidden interleaving all along and nothing ever tested it — which is why
+three revisits reached a paid artefact and were found by eye.
+
+---
+
 ## v3.5 — 2026-08-10 · Rule 5's consecutive-method cap gains an exception (S7 · C1)
 
 Found on ch 7's top canonical, the first artefact ever generated at this stage: units 10, 11

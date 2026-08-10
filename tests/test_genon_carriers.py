@@ -938,7 +938,7 @@ class TestCertifierHoldsOnAMediatedAnchorStage(unittest.TestCase):
     already used it. `carriers.unit_anchor` gained the third fix: a synthesis unit has no
     textbook segment to mediate FROM, and the section-axis raise fired on it."""
 
-    def _stream(self, synthesis_segments=None, on_last_unit_of_a_compact=False):
+    def _stream(self, synthesis_segments=None):
         from aruvi_core.genon import compile_stream
         plan = load("maths_vi_ch05_saved.json")
         for p in plan["result"]["lesson_plan"]["periods"]:
@@ -946,9 +946,6 @@ class TestCertifierHoldsOnAMediatedAnchorStage(unittest.TestCase):
             p["time_bands"] = [{"minutes": ph["minutes"], "activity": ph["description"]}
                                for ph in p.pop("phases")]
         periods = plan["result"]["lesson_plan"]["periods"]
-        if on_last_unit_of_a_compact:
-            periods[-1]["synthesis"] = True
-            return compile_stream(plan)
         closer = json.loads(json.dumps(periods[-1]))
         closer["period_number"] = len(periods) + 1
         closer["activity_title"] = "Whole-chapter synthesis"
@@ -1004,10 +1001,45 @@ class TestCertifierHoldsOnAMediatedAnchorStage(unittest.TestCase):
                 self.assertEqual(seen, len(reg) - 1, "coverage reaches the final section")
 
     def test_c_a_compact_carrying_the_boolean_still_FAILS_the_gate(self):
+        """The gate is `not syn_units` on a file the certifier has already decided is a
+        compact, so what has to hold is that the BOOLEAN form is found at all — the token
+        stages get this free because the reserved word is in `section_anchor`.
+
+        The flagged unit is APPENDED rather than converted from a teaching unit. Converting
+        one produced a plan the brief forbids in terms ("COVERAGE COMPLETES BEFORE THE
+        SYNTHESIS"): the fixture's last unit is the only one teaching section 5.6, so
+        flagging it left that section taught by nothing, and its item `Q-C-5` orphaned at
+        compile. That is the index working as designed — a synthesis unit teaches no
+        section, so it is not in the item index — and it is exactly the case the next test
+        pins deliberately."""
         from aruvi_core.genon.serve import is_synthesis_unit
-        s = self._stream(on_last_unit_of_a_compact=True)
+        s = self._stream()
         syn = [u["unit"] for u in s["units"] if is_synthesis_unit(u)]
         self.assertTrue(syn, "the gate's `not syn_units` must be False here")
+
+    def test_c_a_section_taught_ONLY_by_the_synthesis_unit_orphans_its_item(self):
+        """The deliberate edge of excluding the synthesis unit from the item index, pinned
+        so nobody 'fixes' it back (2026-08-10, S7).
+
+        The exclusion exists because ch 7's synthesis unit lists all five sections it draws
+        together: indexed, it became the LAST unit of every section, and since an item
+        anchors at its section's last unit, all twelve items collapsed onto it and units
+        1-11 showed no assessment at all. The cost of excluding it is this: a section no
+        BODY unit teaches has no anchor, and its item orphans loudly at compile rather than
+        landing on a sitting that never taught it. The brief prevents the situation
+        ("COVERAGE COMPLETES BEFORE THE SYNTHESIS"), and a loud orphan is the right failure
+        if it ever does not."""
+        from aruvi_core.genon import GenonDeclarationError, compile_stream
+        plan = load("maths_vi_ch05_saved.json")
+        for p in plan["result"]["lesson_plan"]["periods"]:
+            p["time_bands"] = [{"minutes": ph["minutes"], "activity": ph["description"]}
+                               for ph in p.pop("phases")]
+        periods = plan["result"]["lesson_plan"]["periods"]
+        periods[-1]["synthesis"] = True           # section 5.6's only teaching unit
+        with self.assertRaises(GenonDeclarationError) as cm:
+            compile_stream(plan)
+        self.assertIn("Q-C-5", str(cm.exception))
+        self.assertIn("no resolvable anchor unit", str(cm.exception))
 
     def test_d_the_unit_routed_by_nothing_advisory_does_not_fire_on_it(self):
         """Two independent reasons, both checked: this stage's `coverage_handoff` is a

@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION · VERSION 3.6
+ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION · VERSION 3.5
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -56,50 +56,29 @@ RULE 1 | SECTION ANCHORING
 LP walks textbook section order. Do NOT reorder, interleave, or
 re-sequence. Each period anchors to one or at most two adjacent sections.
 
-A section's periods are CONTIGUOUS. Once the plan has moved past a
-section it does not return: a later period MUST NOT re-anchor a section
-an earlier run already completed. Consolidation and extended practice
-belong INSIDE that section's own run, where the class is still working
-on it — never as a revisit after other sections have been taught.
-
 
 ================================================================================
-RULE 2 | FULL-SECTION COVERAGE
+RULE 2 | PERIOD BIN-PACKING
 ================================================================================
 
-Allocate exactly B periods across sections, in section order.
+Allocate exactly B periods across sections.
 
+- Heavy sections (many enumerated items, or two-goal declaration in
+  the summary) MAY split across two adjacent periods.
+- Light sections MAY merge with an adjacent section.
 - Every section listed in the summary MUST appear in at least one
   period's `textbook_segments`. Dropping a section is FORBIDDEN —
   including consolidation-only sections (e.g., "Parallel Illusions"
   closing §s).
-- A section MAY span as many ADJACENT periods as its content warrants.
-  Emphasis follows the SUBSTANCE of the section — the number of
-  enumerated items, the demand of the implied task — never the
-  effort_index, which governs only how the chapter as a whole is
-  allotted time in the Allocate step, never how periods are
-  distributed within it.
-- Light sections MAY merge with an adjacent section.
-- Where the period budget exceeds what the sections need one-for-one,
-  the surplus is spent by DEEPENING sections inside their own runs —
-  more practice, a harder case, a second representation, a contextual
-  application — never by adding a unit that returns to a section the
-  plan has already left (Rule 1).
-
-PROHIBITION
-1. MUST NOT apply any numerical allocation formula across sections
-   within the chapter.
-2. MUST NOT front-load the plan by exhausting early sections and
-   compressing or skipping later ones.
 
 When a section's summary `section_goal` is a two-element array, the
-LP MAY split that section's run so the EARLIER periods of the run
-carry the first-listed goal and the LATER periods the second, in
+LP MAY split it across two adjacent periods — period N gets the
+first-listed goal, period N+1 gets the second-listed goal, in
 textbook order.
 
 The LP MUST NOT split a single-goal section across two different
-goals. If a heavy single-goal section spans several periods, every
-period of that run carries the same `section_goal`.
+goals. If a heavy single-goal section is split for time-budget
+reasons, both periods carry the same `section_goal`.
 
 
 ================================================================================
@@ -444,5 +423,5 @@ LP JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Lesson Plan Constitution · Version 3.6 · Internal Document
+Mathematics Lesson Plan Constitution · Version 3.5 · Internal Document
 ================================================================================

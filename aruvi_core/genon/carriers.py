@@ -457,7 +457,19 @@ def items_by_period_field(result: Dict[str, Any], *, items, item_key: str,
     period teaches yields `[]` — an orphan `compile.py` reports by name, never a guess.
     `period_ref` is honoured as a fallback for legacy files that carry one.
     """
-    index = period_field_index(_periods_of(result), extract)
+    # THE SYNTHESIS UNIT IS NOT IN THE INDEX (2026-08-10, S7 · found on ch 7's served plan).
+    # It teaches no section — it draws the whole chapter together — and on a MEDIATED-anchor
+    # stage it says so by listing every section it revisits: ch 7's unit 12 carries all five
+    # of `section 7.1`..`section 7.5` in `textbook_segments`. Indexed, that makes 12 the LAST
+    # unit of every section, and since an item anchors at its section's last unit, all twelve
+    # items collapsed onto the synthesis unit and units 1-11 showed no assessment at all.
+    #
+    # The token stages never saw this because their synthesis unit's `section_anchor` is the
+    # literal reserved word, which matches no section and so never enters the index. Same
+    # omission, same reason, as `serve.section_registry` and `serve.unit_range` — this is the
+    # third site, and `is_synthesis` is the seam all three now go through.
+    index = period_field_index(
+        [p for p in _periods_of(result) if not is_synthesis(p)], extract)
     out = []
     for it in items or []:
         if not isinstance(it, dict):
