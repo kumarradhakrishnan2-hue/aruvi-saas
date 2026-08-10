@@ -3785,3 +3785,40 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   .sc-prep-bar { max-width: none; width: 100%; order: 2; }
   .sc-prep-note { order: 1; }
 }
+
+/* ── the FAILED proposed card (ARV-D-087, 2026-08-10) ───────────────────────────────
+ * Same card, at rest, carrying the reason — NOT pulled. It vanished silently before, which
+ * on a phone read as "I mis-tapped": the founder's own words were "something seemed to flash
+ * for a micro sec but nothing readable". So the bar stops, the dashed "not yet" border gives
+ * way to a solid clay edge (this is settled, not pending), and the last line becomes the
+ * message with a Dismiss she controls. Nothing navigates under her.
+ * The message is NOT drawn in red: it is usually a plain fact about her request ("that is
+ * more periods than this chapter can take"), not an alarm, and the warm-paper system has no
+ * error red. Clay already means "attention" here. */
+.sc-card.sc-proposed-failed { border-style: solid; border-color: var(--edge-clay); }
+/* ONE ROW, always — the failed card must be the SAME HEIGHT as every other card in the list.
+   The message occupies the line the progress bar had; Dismiss sits at its end exactly where
+   the bar ended. A taller card reads as a different KIND of thing and pulls the eye down the
+   list; this is the same card, settled. The note is clamped to two lines so an unusually long
+   4xx sentence can never grow the card either — the full text stays in `title`. */
+.sc-prep-failed { align-items: center; gap: 10px; flex-wrap: nowrap; }
+.sc-prep-failed .sc-prep-note {
+  font-style: normal; color: var(--ink);
+  flex: 1 1 auto; min-width: 0;                     /* min-width:0 lets it shrink, not overflow */
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.sc-prep-dismiss {
+  flex: 0 0 auto; cursor: pointer;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--clay); background: none; border: 0; border-bottom: 1px solid var(--edge-clay);
+  padding: 2px 0 1px 0;
+}
+.sc-prep-dismiss:hover { color: var(--ink); border-bottom-color: var(--ink); }
+@media (max-width: 420px) {
+  /* Undo the column stacking .sc-prep takes at this width: that rule exists so the BAR is not
+     squeezed to a stub, and there is no bar here. Staying in a row is what keeps the height
+     equal to its neighbours. */
+  .sc-prep-failed { flex-direction: row; align-items: center; gap: 10px; }
+  .sc-prep-failed .sc-prep-note { order: 0; font-size: 12px; }
+  .sc-prep-failed .sc-prep-dismiss { order: 0; }
+}

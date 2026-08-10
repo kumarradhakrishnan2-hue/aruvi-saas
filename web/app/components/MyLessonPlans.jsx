@@ -234,28 +234,48 @@ export function matrixLabel(rows) {
     .join(" · ");
 }
 
-function ProposedCard({ preparing }) {
+function ProposedCard({ preparing, onDismiss }) {
   const rows = (preparing.rows || []).filter((r) => r.count > 0);
   const total = rows.reduce((a, r) => a + (Number(r.count) || 0), 0);
   const label = matrixLabel(rows);
+  // FAILED (ARV-D-087, 2026-08-10): the same card, at rest, carrying the reason. It is not
+  // pulled, because she is looking at it — a card that vanishes silently reads as a mis-tap.
+  // The bar stops (that is what the old note was protecting against), aria-busy goes false, and
+  // the message is whatever reached us: the API's own 4xx sentence where there is one, our
+  // fallback otherwise. She dismisses it herself; nothing navigates under her.
+  const failed = !!preparing.failed;
+  const msg = preparing.message
+    || "Couldn't build the lesson plan right now. Try again in a moment.";
   return (
-    <div className="sc-card sc-proposed" aria-busy="true" aria-live="polite">
+    <div className={`sc-card sc-proposed${failed ? " sc-proposed-failed" : ""}`}
+         aria-busy={failed ? "false" : "true"} aria-live="polite">
       <div className="sc-tag">{pad(preparing.chapterNo)}</div>
       <div className="sc-body">
         <div className="sc-title">{preparing.chapterTitle}</div>
         {label ? <div className="sc-durline">{label}</div> : null}
-        <div className="sc-prep">
-          <div className="sc-prep-bar"><i /></div>
-          <span className="sc-prep-note">
-            Preparing your {total} {total === 1 ? "period" : "periods"} lesson plan…
-          </span>
-        </div>
+        {failed ? (
+          <div className="sc-prep sc-prep-failed">
+            {/* `title` carries the full sentence: the note is clamped to two lines so the card
+                cannot outgrow its neighbours, and a long 4xx string must stay reachable. */}
+            <span className="sc-prep-note" title={msg}>{msg}</span>
+            <button type="button" className="sc-prep-dismiss" onClick={onDismiss}
+                    aria-label="Dismiss this failed lesson">Dismiss</button>
+          </div>
+        ) : (
+          <div className="sc-prep">
+            <div className="sc-prep-bar"><i /></div>
+            <span className="sc-prep-note">
+              Preparing your {total} {total === 1 ? "period" : "periods"} lesson plan…
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing }) {
+export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
+                                        onDismissPrepareError }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -368,8 +388,14 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   const [plansNonce, setPlansNonce] = useState(0);
   const wasPreparing = useRef(false);
   useEffect(() => {
-    if (wasPreparing.current && !preparing) setPlansNonce((n) => n + 1);
-    wasPreparing.current = !!preparing;
+    // A FAILED card keeps `preparing` non-null (ARV-D-087), so the completion edge is now
+    // "was preparing, and is no longer preparing" — cleared OR failed. A failed prepare
+    // produced no plan, so the refetch is skipped rather than merely harmless.
+    const live = !!preparing && !preparing.failed;
+    if (wasPreparing.current && !live && !(preparing && preparing.failed)) {
+      setPlansNonce((n) => n + 1);
+    }
+    wasPreparing.current = live;
   }, [preparing]);
 
   // Fetch the saved plans for the scoped subject·grade (a single small call per combo, cached).
@@ -734,7 +760,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
           {/* The lesson being prepared sits FIRST, where the finished card will land —
               including when this is her very first plan and the list is otherwise the
               empty state (hence the `showProposed` guard on that branch above). */}
-          {showProposedCard ? <ProposedCard preparing={preparing} /> : null}
+          {showProposedCard ? <ProposedCard preparing={preparing} onDismiss={onDismissPrepareError} /> : null}
           {ordered.map((p, pi) => {
             const { completed, live } = statusFor(p);
             const busy = pi === busyIdx;          // this card IS the one being re-prepared

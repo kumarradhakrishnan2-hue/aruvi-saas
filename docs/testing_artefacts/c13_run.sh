@@ -62,11 +62,11 @@ if printf '%s' "$BODY" | grep -qi 'canonical'; then
   printf '  \033[31mFAIL\033[0m  the body says "canonical" — our word, not hers\n'; FAIL=$((FAIL+1))
 fi
 
-say "2 · a period count that cannot be real  →  400"
-post 4 '{"rows":[{"duration":50,"count":61}]}'
-check "over the ceiling"       400 "Period count implausibly large."      "$CODE" "$BODY"
-post 4 '{"rows":[{"duration":40,"count":31},{"duration":60,"count":30}]}'
-check "over the ceiling (sum)" 400 "Period count implausibly large."      "$CODE" "$BODY"
+say "2 · a period count that cannot be real  →  400  (cap lowered 60 → 30, 2026-08-10)"
+post 4 '{"rows":[{"duration":50,"count":31}]}'
+check "over the ceiling"       400 "too many for one chapter"             "$CODE" "$BODY"
+post 4 '{"rows":[{"duration":40,"count":16},{"duration":60,"count":15}]}'
+check "over the ceiling (sum)" 400 "too many for one chapter"             "$CODE" "$BODY"
 post 4 '{"rows":[]}'
 check "nothing to serve"       400 "At least one duration row is required." "$CODE" "$BODY"
 

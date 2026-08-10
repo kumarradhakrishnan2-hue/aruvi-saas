@@ -93,7 +93,26 @@ export async function postJSON(path, body) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body || {}),
   }));
-  if (!r.ok) throw new Error(`${r.status}`);
+  if (!r.ok) {
+    // Carry the SERVER'S OWN SENTENCE up to the caller (ARV-D-088, 2026-08-10). This used to
+    // throw the status code alone, so every teacher-facing failure collapsed into one generic
+    // line — and that line said "try again in a moment" for two cases where trying again can
+    // never work (a chapter we have not authored; a period count that is not possible). The
+    // API's 4xx strings are already written FOR HER — testing.md C13 check 1 exists to police
+    // exactly that ("canonical" is our word, not hers) — so showing them is safe by
+    // construction. 5xx detail is engine talk ("Canonical cannot be compiled: …") and is
+    // deliberately NOT surfaced: `detail` is populated for 4xx only, and the caller falls
+    // back to its own wording otherwise.
+    let detail = "";
+    try {
+      const body = await r.json();
+      if (typeof body?.detail === "string") detail = body.detail;
+    } catch { /* no JSON body — the status alone is all we have */ }
+    const err = new Error(detail || `${r.status}`);
+    err.status = r.status;
+    err.detail = (r.status >= 400 && r.status < 500) ? detail : "";
+    throw err;
+  }
   return r.json();
 }
 

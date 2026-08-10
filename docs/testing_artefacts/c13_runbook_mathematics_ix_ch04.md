@@ -31,7 +31,7 @@ change and is the point of the check — *"canonical" is our word, not hers*. If
 # a. over the ceiling
 curl -s -i -X POST http://localhost:8000/genon/mathematics/ix/4/plan \
   -H 'Content-Type: application/json' -H 'X-Aruvi-User: kumar1' \
-  -d '{"rows":[{"duration":50,"count":61}]}'
+  -d '{"rows":[{"duration":50,"count":31}]}'
 
 # b. nothing to serve
 curl -s -i -X POST http://localhost:8000/genon/mathematics/ix/4/plan \
@@ -42,11 +42,11 @@ curl -s -i -X POST http://localhost:8000/genon/mathematics/ix/4/plan \
 Expect `400` and, respectively:
 
 ```json
-{"detail":"Period count implausibly large."}
+{"detail":"More than 30 periods is too many for one chapter."}
 {"detail":"At least one duration row is required."}
 ```
 
-The ceiling is `total_periods > 60`, summed across rows — so `40×31 + 60×30` must also fail,
+The ceiling is `total_periods > 30`, summed across rows — so `40×16 + 60×15` must also fail,
 which is worth one extra call if you want the sum path covered rather than the single-row one.
 
 ## 3 · Unresolvable item anchor → **500 with the item named**

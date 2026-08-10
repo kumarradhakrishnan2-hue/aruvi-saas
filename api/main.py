@@ -899,8 +899,24 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     if not matrix:
         raise HTTPException(status_code=400, detail="At least one duration row is required.")
     total_periods = sum(c for _, c in matrix)
-    if total_periods > 60:
-        raise HTTPException(status_code=400, detail="Period count implausibly large.")
+    # THE TYPO GUARD, not a teaching rule (founder 2026-08-10, lowered 60 -> 30). It exists so a
+    # slipped keystroke cannot be cached as a legitimate request; it is deliberately NOT
+    # chapter-aware, because it runs BEFORE the library is loaded. The per-chapter ceiling is a
+    # different and softer thing: above the top canonical's count the engine serves the top and
+    # returns the surplus with a note ("N period(s) … return to your budget"), which is a real
+    # answer rather than a refusal. Sizing: the largest single-chapter recommendation in the
+    # whole corpus is 25 periods (mathematics VI, "Prime Time") and a whole YEAR of mathematics
+    # IX is 210, so 30 sits just above the largest real chapter — 60 was ~2.4x it and let
+    # nonsense through. The message names the number: at 60 it did not, so a teacher could not
+    # tell whether the line was 60, 20 or 16.
+    # Kept SHORT on purpose (founder, 2026-08-10): this line lands on a phone, beside a
+    # Dismiss, on a card that must stay the height of its neighbours — the longer wording
+    # tried first did not fit. The number is the one thing worth saying, so it is said and
+    # nothing else.
+    PERIOD_CAP = 30
+    if total_periods > PERIOD_CAP:
+        raise HTTPException(status_code=400,
+                            detail=f"More than {PERIOD_CAP} periods is too many for one chapter.")
 
     library = data.load_genon_library(subject, grade, chapter_number)
     if not library:

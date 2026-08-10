@@ -283,9 +283,15 @@ export default function Home() {
     setEditFlow("lessonplans"); setTab("myplans");
     return true;
   };
-  // The serve failed. Pull the proposed card rather than leave a bar running forever —
-  // a card that never resolves is worse than no card, because it looks like a plan she has.
-  const onPrepareError = () => setPreparingCard(null);
+  // The serve failed. Do NOT simply pull the card: she is watching it, and a card that
+  // vanishes silently reads as "I mis-tapped" (ARV-D-087 — the founder met exactly this on the
+  // phone: "something seemed to flash for a micro sec but nothing readable"). Keep it, mark it
+  // FAILED, and put the message on it — the card is where her attention already is, so it needs
+  // no banner and no navigation. A bar that never resolves is still worse than either, which is
+  // what the original note was protecting against; `failed` ends the bar.
+  const onPrepareError = (desc, message) =>
+    setPreparingCard(desc ? { ...desc, failed: true, message } : null);
+  const onDismissPrepareError = () => setPreparingCard(null);
 
   // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
   // plan (grade-level reads, section-level acts). Scope the tab, leave the library, and stash
@@ -449,7 +455,8 @@ export default function Home() {
             /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
-                tourStep={tour} preparing={preparingCard} />
+                tourStep={tour} preparing={preparingCard}
+                onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
             /* Teaching profile (via the settings gear) — view + conversational redo (the SAME

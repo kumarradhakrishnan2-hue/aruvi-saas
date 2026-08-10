@@ -438,28 +438,21 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           setPreviewPlanFile(resp.filename);
           if (resp.coverage_note) setPreviewNote(resp.coverage_note);
           return;
-        } catch {
-          // Fall through to the saved-plan preview rather than dead-end her first ever lesson.
+        } catch (e) {
+          // The genon path failed. It used to fall through to a saved-plan preview "rather than
+          // dead-end her first ever lesson" — but that fallback stood in ANOTHER CHAPTER's
+          // prototype-era plan, which is a worse first experience than an honest sentence, and
+          // it concealed a missing canonical behind a plausible-looking lesson.
+          setPreviewError((e && e.detail) || "Couldn't build the lesson plan right now. Try again in a moment.");
+          return;
         }
       }
-      const plansRes = await getJSON(`/plans/${subject}/${grade}`);
-      const plans = plansRes.plans || [];
-      let match = plans.find((p) => String(p.chapter_number) === String(chapterNo));
-      if (!match && plans.length) {
-        match = plans[0];
-        setPreviewNote(
-          `Live generation isn’t on yet, and there’s no saved test plan for Chapter ${chapterNo} — so Chapter ${match.chapter_number} (“${match.chapter_title}”) is standing in. This stand-in is the lesson that lands in My Lessons.`
-        );
-      }
-      if (!match) {
-        setPreviewError(`No saved test plans available yet for ${pretty(subject)} · Class ${classNum(grade)}.`);
-        return;
-      }
-      const viewRes = await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`);
-      setPreviewView(viewRes.view);
-      setPreviewPlanFile(match.filename);
+      // ── NO CANONICAL → NO LESSON (founder, 2026-08-10; retired with the fallback above).
+      // Same sentence as the API's 404 and as PrepareLesson, so a missing canonical reads
+      // identically wherever it is met — for her, and as a standing check for us.
+      setPreviewError("No underlying chapter yet.");
     } catch (e) {
-      setPreviewError("Couldn't load a saved plan right now. Try again in a moment.");
+      setPreviewError("Couldn't load a lesson plan right now. Try again in a moment.");
     } finally {
       setPreviewBusy(false);
     }
@@ -594,16 +587,16 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
                 <p className="fr-plan-ready-sub">Your lesson has been generated successfully.</p>
               </div>
 
-              {/* UNMISSABLE stand-in disclosure (founder's call 2026-07-06): when the chosen
-                  chapter has no saved test plan, the substitution must be said out loud HERE —
-                  the note used to be set but never rendered on this teaser, while the card
-                  showed the CHOSEN chapter's title over the stand-in's numbers ("I picked
-                  chapter 5 but the system shows 9"). The teaser now always names the plan
-                  actually being deposited. */}
+              {/* The stand-in disclosure that stood here is RETIRED with the substitution it
+                  disclosed (founder, 2026-08-10). It existed because a chapter with no plan was
+                  served another chapter's, and the swap had to be said out loud; there is no
+                  swap now — a chapter without a canonical says "No underlying chapter yet." and
+                  nothing is deposited. `previewNote` survives for the coverage note, which is
+                  about HER chapter, so the teaser title no longer has two cases. */}
               {previewNote && <div className="fr-standin" role="note">{previewNote}</div>}
 
               <div className="fr-teaser-card">
-                <h2 className="fr-teaser-title">{previewNote ? previewView.lesson_plan.chapter_title : (chosenChapter ? chosenChapter.chapter_title : previewView.lesson_plan.chapter_title)}</h2>
+                <h2 className="fr-teaser-title">{chosenChapter ? chosenChapter.chapter_title : previewView.lesson_plan.chapter_title}</h2>
                 <p className="fr-teaser-sub">{pretty(subject)} · Class {classNum(grade)}</p>
                 <div className="fr-teaser-stats">
                   <div className="fr-teaser-stat">

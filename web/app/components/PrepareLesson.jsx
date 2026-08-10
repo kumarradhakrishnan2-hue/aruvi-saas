@@ -259,9 +259,10 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   // "Prepare the lesson" — records the chapter as prepared, then RETURNS to where she came from
   // (the section's attach popup, or My Lessons) with the new chapter now listed — it does NOT
   // open the lesson plan. Attaching/teaching is a separate, deliberate step done from there.
-  // Live gen is still deferred, so "prepared" means the chapter's saved plan becomes hers; we
-  // await the mark so the popup's refetch sees `prepared` immediately. A chapter with no saved
-  // plan yet can't be prepared — a stand-in preview is shown instead so testing isn't blocked.
+  // "Prepared" means the chapter's plan, served from its certified canonical, becomes hers; we
+  // await the mark so the popup's refetch sees `prepared` immediately. A chapter with NO
+  // canonical cannot be prepared at all and says so (2026-08-10) — the stand-in preview that
+  // used to keep testing unblocked is retired, because it concealed exactly this condition.
   // Click handler: if this chapter is already prepared, warn first (re-preparing replaces the
   // tracked version); otherwise prepare straight away.
   const onPrepareClick = () => {
@@ -323,45 +324,41 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
         setStep("preview");
         if (resp.coverage_note) setNote(resp.coverage_note);
         setView((await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`)).view);
-      } catch {
+      } catch (e) {
         // She may already be in My Lessons watching the proposed card — the failure has to
         // reach HER, not this screen, so it goes back up the same way it went down.
-        if (onPrepareError) onPrepareError(descriptor);
-        setError("Couldn't build the lesson plan right now. Try again in a moment.");
+        //
+        // ARV-D-087 (2026-08-10): that sentence was the INTENT; the implementation stopped at
+        // pulling the card, and `setError` below writes to a screen that has already unmounted.
+        // The message now travels WITH the descriptor so the shell can show it on the card she
+        // is actually looking at. `setError` stays for the section-attach path, where this
+        // screen is still mounted and is the right place for it.
+        const msg = (e && e.detail)
+          ? e.detail                       // the API's own 4xx wording, written for her
+          : "Couldn't build the lesson plan right now. Try again in a moment.";
+        if (onPrepareError) onPrepareError(descriptor, msg);
+        setError(msg);
       } finally {
         setPreparing(null);
         setBusy(false);
       }
       return;
     }
-    const exact = planFor(chapterNo);            // the plan for the chapter she actually chose
-    if (exact) {
-      setBusy(true);
-      try {
-        await markPrepared(subject, grade, exact.filename, periods);
-        if (onPrepared) { onPrepared({ subject, grade, filename: exact.filename, chapterNo }); return; }
-      } finally {
-        setBusy(false);
-      }
-    }
-    // No exact saved plan (or no return handler) → fall back to the stand-in preview.
-    setStep("preview"); setBusy(true); setError(""); setNote(""); setView(null);
-    try {
-      let match = exact;
-      if (!match && plans.length) {
-        match = plans[0];
-        setNote(`No saved plan for Chapter ${chapterNo} yet — showing Chapter ${match.chapter_number} (${match.chapter_title}) as a stand-in preview.`);
-      }
-      if (!match) {
-        setError(`No saved plan available yet for ${pretty(subject)} · Class ${classNum(grade)}.`);
-        return;
-      }
-      setView((await getJSON(`/plans/${subject}/${grade}/${match.filename}/view`)).view);
-    } catch {
-      setError("Couldn't load a plan right now. Try again in a moment.");
-    } finally {
-      setBusy(false);
-    }
+    // ── NO CANONICAL → NO LESSON (founder, 2026-08-10). THE SAVED-PLAN FALLBACK IS RETIRED.
+    // This used to reach for the prototype-era saved plans: an exact one where it existed, and
+    // otherwise `plans[0]` — A DIFFERENT CHAPTER ENTIRELY — served as a "stand-in preview" in
+    // the old format. That made sense while the certified library was being built and nothing
+    // else existed; it is wrong now. It hands her a lesson for a chapter she did not ask for,
+    // in a shape the current renderer no longer targets, and — worst — it HIDES the fact that
+    // we have not authored her chapter yet, which is the one thing she and we both need to
+    // know. The genon path is now the only path.
+    //
+    // Deliberately the SAME sentence the API returns for the same condition
+    // (api/main.py, 404 "No underlying chapter yet."), so the message is one string wherever
+    // she meets it — and so a chapter silently losing its canonical shows up as this line
+    // rather than as a plausible-looking wrong lesson. It is a standing check for us, not
+    // only a message for her.
+    setError("No underlying chapter yet.");
   };
 
   // ── the preparing card — SHE STAYS HERE; the lesson she is about to get, at rest ──
@@ -416,7 +413,11 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
         <div className="empty">No chapter mappings for this subject &amp; grade yet.</div>
       ) : (
         <>
-          <RollWheel ariaLabel="Chapter" value={chapterNo} onChange={setChapterNo} rowPx={92}
+          {/* Clear the refusal the moment she moves the wheel: the message is about the chapter
+              that was selected, so leaving it under a different one would accuse the wrong
+              chapter. Only the error is cleared — the period count she set is hers to keep. */}
+          <RollWheel ariaLabel="Chapter" value={chapterNo} rowPx={92}
+            onChange={(id) => { setChapterNo(id); setError(""); }}
             items={chapters.map((c) => ({ id: String(c.chapter_number), chip: c.chapter_number, label: c.chapter_title }))} />
 
           <div className="prep-block">
@@ -523,6 +524,14 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
               </div>
             ) : null}
           </div>
+
+          {/* The error line for the CHAPTER step (2026-08-10). It had none: the only {error}
+              block sits inside the "preview" step, so the retired stand-in path used to
+              navigate there just to be seen. Now that a chapter without a canonical simply
+              refuses, the message has to appear WHERE SHE IS — beside the button she pressed,
+              with the picker still in front of her so the fix (choose another chapter) is one
+              tap away. Navigating to an empty "preview" to show a refusal would be theatre. */}
+          {!busy && error ? <p className="prep-floor" role="alert">{error}</p> : null}
 
           <div className="savebar savebar-prep">
             <button className="primary prepare-cta" disabled={!chosen || busy} onClick={onPrepareClick}>
