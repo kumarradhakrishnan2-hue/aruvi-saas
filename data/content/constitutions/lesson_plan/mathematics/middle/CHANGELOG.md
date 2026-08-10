@@ -4,6 +4,43 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v3.7 — 2026-08-10 · Rule 1 aligned with Rule 2 — the other direction of the same cap (S7 · C3)
+
+C3's rule-by-rule audit failed the top canonical's closing unit against Rule 1: it names five
+sections, and Rule 1 said *"Each period anchors to one or at most two adjacent sections"* (the
+schema likewise capped `textbook_segments` at `// 1–2 entries`).
+
+**The two rules cap the same many-to-many relation in opposite directions, and v3.6 only widened
+one of them.** Rule 2 governs one SECTION across many PERIODS — amended at v3.6 to "as many
+ADJACENT periods as its content warrants". Rule 1 governs one PERIOD across many SECTIONS, and
+still carried a fixed number. So a unit that legitimately draws several sections together was
+capped at two while a section that legitimately runs long was not capped at all.
+
+Rule 1 now reads *"A period anchors to as many ADJACENT sections as its content warrants."* —
+Rule 2's wording, from the other side. Adjacency is kept and is load-bearing: it stops a period
+naming 7.1 and 7.4 while skipping what lies between, which is what the serve engine's registry
+and first-visit arithmetic read off this field. No count is named, in either rule.
+
+**Deliberately NOT written: the synthesis unit.** An earlier draft carved it out by name. That
+would have put a V-series fact into a constitution, which testing.md §3 forbids — the closing
+synthesis is mandated by the platform brief, not by any constitution. "As its content warrants"
+covers it without naming it: five adjacent sections is what that unit's content warrants.
+"usually one" was also dropped at the founder's instruction — Rule 2 already elaborates the
+expectation (light sections merge; emphasis follows substance), so repeating it here would be
+a second, weaker statement of a rule that already has a good one.
+
+**§9: RELAXATION-ONLY, so it costs nothing.** Every edit widens; `grep -c "MUST NOT"` is
+unchanged, no obligation is added, and the v3.6 contiguity paragraph, v3.5's Rule 5 exception,
+A1, the register and the P3 shape are all asserted untouched by the edit script. Output authored
+under v3.6 satisfies v3.7 by construction — and the clause amended is the one ch 7's synthesis
+unit breached, so the installed library becomes compliant rather than breaching. No re-author.
+**Closes ARV-D-094.**
+
+Artefacts: `genon/out/stage_prep_mathematics_middle/lesson_plan_constitution_v3.6_pre.txt` ·
+`lp_v3.6_to_v3.7.diff`.
+
+---
+
 ## v3.6 — 2026-08-10 · Rules 1 and 2 aligned with SECONDARY — the revisit fix (S7 · C1)
 
 Ch 7's top revisited sections 7.2, 7.3 and 7.5 after moving past them, so three of its

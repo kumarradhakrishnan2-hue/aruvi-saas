@@ -680,11 +680,28 @@ function AOverviewPanel({ n, lo, nav }) {
   // Order (founder 2026-07-11): Competency → Learning outcome → Question type → Cognitive
   // demand. Built as a list so the forward nav ("Question →") can ride the LAST field's value
   // row — sharing the line when the value is short, wrapping below (still right) when it fills.
+  // Maths middle/prep fill NONE of Competency, Learning outcome or (until 2026-08-10)
+  // Cognitive demand — LP Rule 8 forbids competencies at that stage, 8-rule row 4 has no
+  // LO source at all, and cognitive_demand is a secondary-only key. The panel rendered a
+  // single row, "Question type", and read as bare beside secondary's four. Two rows the
+  // item was already carrying now surface: the SECTION under test (which the handoff-
+  // bridged stages spend on the LO instead), and the goal — recall/reason/apply — which
+  // that stage's own assessment Rule 3 defines as the item's cognitive level, normalized
+  // into cognitive_demand at the seam. Nothing new is asked of any generator.
   const rows = [];
   if (comp) rows.push(["Competency", comp]);
   if (lo) rows.push(["Learning outcome", lo]);
+  if (n.section) rows.push(["Section", n.section]);
   rows.push(["Question type", qtypeName(n.question_type)]);
   if (n.cognitive_demand) rows.push(["Cognitive demand", n.cognitive_demand]);
+  // The textbook parallel-practice pointer — this stage's distinctive teacher-facing asset,
+  // and previously reachable only from the Question tab. The ref is the locator, the
+  // description the task; carried separately (never pre-joined) because a ref can itself
+  // contain " — ".
+  if (n.exercise_ref || n.exercise_desc) {
+    rows.push(["Book exercise",
+               [n.exercise_ref, n.exercise_desc].filter(Boolean).join(" — ")]);
+  }
   return (
     <div className="assess-ovrows">
       {rows.map(([k, v], i) => (
@@ -945,8 +962,12 @@ function InclusivityText({ text, mathsMiddle = false, mathsSecondary = false }) 
     out.push(chunk.slice(last));
     return out;
   };
-  // Secondary maths: split before each "Support:"/"Challenge:" so the two land on separate rows.
-  if (mathsSecondary) {
+  // Maths SECONDARY and MIDDLE: split before each "Support:"/"Challenge:" so the two land on
+  // separate rows. Middle joined this on 2026-08-10 (S7): it authors inclusivity as a
+  // {support, challenge} OBJECT, which used to reach the screen as a stringified Python dict
+  // — braces, keys and quotes. The normalizer now flattens it to the same colon-labelled form
+  // secondary emits, so the two stages read identically and this branch serves both.
+  if (mathsSecondary || mathsMiddle) {
     const rows = text.split(/(?=\b(?:support|challenge)\s*:)/i).map((s) => s.trim()).filter(Boolean);
     if (rows.length > 1) {
       return <>{rows.map((r, i) => <div key={i} className="assess-inc-row">{render(r, i)}</div>)}</>;

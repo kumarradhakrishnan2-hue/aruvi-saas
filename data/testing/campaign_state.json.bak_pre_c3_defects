@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-10T20:27:34",
+ "updated_at": "2026-08-10T19:39:01",
  "step0": {
   "campaign": {
    "0.1": {
@@ -2286,33 +2286,6 @@
    "title": "extract_determinate.py silently overwrote a FILLED worksheet — destroying S4's completed 25-check artefact, which testing.md cites by name as the ARV-D-084 regression test",
    "evidence": "Re-running `python3 genon/extract_determinate.py mathematics ix 4` to regression-test the fix above rewrote genon/out/answer_checks/mathematics_ix_ch04_check.py as a blank stub. That file is an hour of hand transcription and testing.md C3 names it as the regression test for the repair_leaked_deliberation fix. Recovered from git — but only because someone happened to check `git status` afterwards. It then happened a SECOND time: the first guard counted a string the stub does not contain ('claimed=None' vs the real 'None,   # claimed'), so it never fired.",
    "decision": "FIXED 2026-08-10. The tool now compares CHECKS.append(( count against blank-'claimed' count and REFUSES when any line has been transcribed, unless --force. Both directions tested: refuses on the filled maths·IX sheet (rc=1, file intact at 25 checks / 0 WRONG), allows the blank maths·VII sheet. LESSON, worth carrying to every artefact-generating tool in genon/: a generator must not be able to destroy the thing a human filled in, and a guard that is not negative-tested is not a guard."
-  },
-  {
-   "id": "ARV-D-092",
-   "combo": "mathematics/middle",
-   "step": "C3",
-   "severity": "S1",
-   "owner": "Claude",
-   "status": "closed",
-   "opened": "2026-08-10T20:27:34",
-   "closed": "2026-08-10T20:27:34",
-   "at": "2026-08-10T20:27:34",
-   "title": "STEP 6 relabelled MCQ options without remapping teacher_guide.what_each_option_reveals — the correct answer carried a distractor's diagnostic",
-   "evidence": "genon/normalize_options.py remapped the label-keyed guide only at guide[QUESTION_TYPE].what_each_option_reveals — the constitution-family path used by science, social_sciences, TWAU and maths SECONDARY. Mathematics MIDDLE and PREPARATORY keep it at teacher_guide.what_each_option_reveals, so their diagnostics never moved when the options were sorted and relabelled.\n\nch 7 top item 2 (hypotenuse): is_correct=B, and B's diagnostic read 'Same misconception as A — the student picks the other adjacent side', while the correct-answer text sat on C. p10 item 2 was shifted the same way. A missing diagnostic is a gap; this is a CONFIDENT WRONG ONE printed against the answer the class got right — hence S1.\n\nCERTIFIED STAGES ARE NOT AFFECTED by this half: science and maths secondary both keep reveals under guide[MCQ] and were remapped correctly (verified by reading the installed files).\n\nFourth recurrence of the container-shape class: science's `questions` wrapper (S3), carriers.raw_item_list (S7 P5.5), extract_determinate.py (S7 C3, ARV-D-090), this.",
-   "decision": "FIXED AT SOURCE + REPAIRED IN PLACE, 2026-08-10. (a) normalize_options.py now remaps BOTH paths, found by shape, never by subject; negative-tested on a synthetic 4-option permutation and the constitution-family path proven unchanged. (b) Re-running STEP 6 could NOT undo the damage — the options are already sorted so its remap is the identity, and the inverting permutation is returned by normalize_item but deliberately never written to the artefact (founder 2026-08-04). So genon/repair_option_reveals.py applies DECLARED (old->new) label pairs, read off each diagnostic against the option it names, applied only if the mapping is a bijection and the resulting key set equals the non-correct labels. Recorded in genon_canonical.repairs[]. (c) Assessment v3.4/v1.2 make the key set machine-checkable, so this cannot recur silently."
-  },
-  {
-   "id": "ARV-D-093",
-   "combo": "mathematics/secondary",
-   "step": "C3",
-   "severity": "S2",
-   "owner": "founder",
-   "status": "open",
-   "opened": "2026-08-10T20:27:34",
-   "at": "2026-08-10T20:27:34",
-   "title": "Two inclusivity notes in the CERTIFIED maths IX ch 4 library name an option by a letter that STEP 6 has since moved",
-   "evidence": "Corpus sweep 2026-08-10 (S7 C3): exactly 7 answer/guide fields anywhere in the installed corpus name an option by letter in prose. THREE are stale — one in maths VII (repaired under ARV-D-092) and TWO in maths IX ch 4, which is CERTIFIED:\n  ch_04_canonical.json item 2 (correct B): 'verify the identity by substituting small integers for x and y IN OPTION A' — option A is 3x^2-24xy+4y^2, a distractor. You do not verify an identity against a wrong form; written when the answer was A.\n  ch_04_canonical.json item 7 (correct C): 'expand the full sum symbolically and CONFIRM OPTION A' — option A is a distractor.\n\nThe other four are CORRECT AS WRITTEN and are the reason this cannot be automated: ch_04_p12 says 'verify option A by expanding (2x-3)^2' and option A IS 4x^2-9=(2x-3)^2 — the task is to disprove it; science VIII p07 says 'rewrite option D so it is correct' and D IS the wrong hardness claim.\n\nROOT CAUSE, and it is not the mapping bug: an answer key exists in TWO representations. STRUCTURAL (is_correct, label-keyed dicts) travels with a sort. PROSE (a letter inside a sentence) cannot be rewritten by any sort without rewriting meaning. A9 at v1.7 already established the principle — an option may not refer to another option BY LABEL, 'because options are ordered downstream and a label reference would be falsified' — but A9 was scoped to options and never to the answer or guide fields.",
-   "decision": "OPEN — founder's call, and it is a defect against a CERTIFIED stage, so it is raised here rather than absorbed by S7. Three options, increasing scope: (1) repair the two notes in place (they name a distractor that is no longer at that letter); (2) add a certifier check listing every label-reference in a prose field and failing when the named label is not is_correct AND the prose does not quote that option's content — the four legitimate cases pass that test, the three stale ones do not; (3) widen A9 across all eleven constitutions from 'no option may name another option's label' to 'no field may name an option's label — name its content instead', which prevents rather than detects."
   }
  ],
  "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",

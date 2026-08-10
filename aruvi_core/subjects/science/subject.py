@@ -21,7 +21,9 @@ from ...assessment_norm import from_constitution
 from ...grades import stage_for
 from ...link_resolver import (handoff_period_index, period_number_by_field,
                               platform_anchor, stamp)
-from ...normalize import as_list as _as_list, classify_stimulus, normalize_options, phases_from
+from ...normalize import (as_list as _as_list, classify_stimulus, normalize_options,
+                          phases_from, SYNTHESIS_DISPLAY)
+from ...genon.carriers import is_synthesis as _is_synth   # token OR boolean (S7)
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
@@ -250,7 +252,12 @@ class ScienceSubject:
                 revisit = anchor in seen_anchors
                 groups.append(Group(
                     type="section",
-                    label=f"{anchor} (Revisit)" if revisit else anchor,
+                    # The closing synthesis reads as a proper heading, never as the
+                    # reserved token verbatim (2026-08-10, S7 — see normalize.
+                    # SYNTHESIS_DISPLAY). It can never be a "(Revisit)" either: it is
+                    # the one unit of the plan that anchors no section.
+                    label=(SYNTHESIS_DISPLAY if _is_synth(p)
+                           else f"{anchor} (Revisit)" if revisit else anchor),
                     meta={"section_context": ho.get("section_context", ""),
                           "implied_lo": lo or "",
                           **({"revisit": True} if revisit else {})},

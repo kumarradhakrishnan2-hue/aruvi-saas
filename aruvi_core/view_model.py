@@ -203,6 +203,10 @@ class NormalizedItem:
     # ── context (quiet meta, never structural labels) ──
     cognitive_demand: Optional[str] = None   # absent key OR "" in source → None (same state)
     competency: Optional[Dict[str, str]] = None   # {code, text}
+    # The SECTION this item tests, where the subject names one per item (Maths middle/prep
+    # carry `section_ref` + `section_title`; the handoff-bridged stages spend that line on
+    # the LO instead). Added 2026-08-10, S7 — see `section_of` below.
+    section: Optional[str] = None
     # ── the LP link (mirrors link_resolver.stamp; renderer treats as opaque) ──
     linked_lo: Optional[str] = None
     linked_periods: List[int] = field(default_factory=list)

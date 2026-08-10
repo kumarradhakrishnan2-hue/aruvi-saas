@@ -119,11 +119,29 @@ def normalize_item(item):
         opt["label"] = new_label
     item["options"] = arranged
 
-    guide = item.get("guide") or {}
-    block = guide.get(item.get("question_type"), {})
-    reveals = block.get("what_each_option_reveals")
-    if isinstance(reveals, dict):
-        block["what_each_option_reveals"] = {remap.get(k, k): v for k, v in reveals.items()}
+    # THE GUIDE LIVES IN TWO PLACES, AND THIS ONLY KNEW ONE (2026-08-10, S7 · C3).
+    #
+    #   guide[QUESTION_TYPE].what_each_option_reveals   constitution family — science, SS,
+    #                                                   TWAU, and maths SECONDARY (the hybrid)
+    #   teacher_guide.what_each_option_reveals          maths MIDDLE + PREPARATORY, per the
+    #                                                   registry spec's maths column
+    #
+    # Reading only the first meant that on maths·middle the options were sorted and relabelled
+    # while their diagnostics stayed keyed to the OLD labels — so the teacher's "what this
+    # choice reveals" line described a different option than the one beside it. On ch 7 the
+    # CORRECT answer carried the text "Same misconception as A — the student picks the other
+    # adjacent side." That is worse than a missing diagnostic: it is a confident wrong one, on
+    # the answer the class got right.
+    #
+    # Fourth recurrence of the container-shape class (science's `questions` wrapper at S3,
+    # carriers.raw_item_list and extract_determinate.py at S7). Both paths are remapped now,
+    # and the lookup is by SHAPE — any dict of label→text under either key — never by subject.
+    for block in (item.get("teacher_guide"), (item.get("guide") or {}).get(item.get("question_type"))):
+        if not isinstance(block, dict):
+            continue
+        reveals = block.get("what_each_option_reveals")
+        if isinstance(reveals, dict) and reveals:
+            block["what_each_option_reveals"] = {remap.get(k, k): v for k, v in reveals.items()}
 
     correct = next((o["label"] for o in arranged if o.get("is_correct")), None)
     # `came_from` reads positionally: the label each NEW slot's option used to carry, so

@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION · VERSION 3.7
+ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION · VERSION 3.6
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -54,8 +54,7 @@ RULE 1 | SECTION ANCHORING
 ================================================================================
 
 LP walks textbook section order. Do NOT reorder, interleave, or
-re-sequence. A period anchors to as many ADJACENT sections as its
-content warrants.
+re-sequence. Each period anchors to one or at most two adjacent sections.
 
 A section's periods are CONTIGUOUS. Once the plan has moved past a
 section it does not return: a later period MUST NOT re-anchor a section
@@ -358,8 +357,7 @@ LP JSON SCHEMA
                                                // duration of INPUTS 4;
                                                // identical on every
                                                // period of the plan
-  "textbook_segments":       [                    // adjacent sections, as
-                                                  // content warrants
+  "textbook_segments":       [                    // 1–2 entries
     { "ref":   string,                            // e.g. "§5.3"
       "title": string }                           // e.g. "Alternate Interior Angles"
                                                   // — copied from
@@ -446,5 +444,5 @@ LP JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Lesson Plan Constitution · Version 3.7 · Internal Document
+Mathematics Lesson Plan Constitution · Version 3.6 · Internal Document
 ================================================================================

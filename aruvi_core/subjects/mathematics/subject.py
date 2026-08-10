@@ -24,6 +24,7 @@ from ...genon.serve import _ANCHOR_JOINER          # " / " — the V2 multi-sect
 from ...genon.carriers import is_synthesis as _is_synth   # the token OR the boolean (S7)
 from ...normalize import (
     as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines, group_label_from_unit,
+    SYNTHESIS_DISPLAY,
 )
 from ...ports import Prompt
 from ...view_model import (
@@ -179,7 +180,7 @@ class MathematicsSubject:
                     # everywhere it is actually read (serve, the registry, certification).
                     # Now agrees with the mediated-anchor stages, which reached "Synthesis"
                     # from the boolean in the branch below.
-                    label = "Synthesis"
+                    label = SYNTHESIS_DISPLAY
                 elif _ANCHOR_JOINER in key:
                     label = group_label_from_unit(p.get("activity_title")) or key
                 else:
@@ -204,7 +205,7 @@ class MathematicsSubject:
                 # Same founder rule for MIDDLE: title alone ("Simple Expressions", not
                 # "section 2.1 — Simple Expressions"); the ref stays in meta + key, and is
                 # the label only when the segment has no title.
-                label = ("Synthesis" if key == "synthesis" else
+                label = (SYNTHESIS_DISPLAY if key == "synthesis" else
                          str(seg.get("title") or "").strip()
                          or str(seg.get("ref") or "") or "Lesson")
                 # BOTH KEYS, newest first (2026-08-10, S7's P3). The middle constitution
@@ -309,8 +310,17 @@ class MathematicsSubject:
             for it in sg.get("items", []):
                 options, answer = normalize_options(it.get("options"))
                 ref = it.get("section_ref", "")
+                # `section_label` is the Overview's Section row, set HERE because only
+                # this stage needs it: middle groups its items by A/B/C cluster, so the
+                # chapter section under test is invisible without it. Secondary groups
+                # BY section, where the same row would duplicate the heading and would
+                # print the reserved token on the synthesis item (2026-08-10, S7).
+                _st = str(it.get("section_title") or "").strip()
                 meta = {"section_ref": ref, "goal": it.get("goal", ""),
-                        "exercise": it.get("exercise", "")}
+                        "exercise": it.get("exercise", ""),
+                        "section_label": (f"{ref} — {_st}"
+                                          if ref and _st and _st.lower() not in ref.lower()
+                                          else (ref or _st))}
                 # Platform stamp first, section-code join as fallback (ARV-D-064).
                 stamp(meta, platform_anchor(it) or period_index.get(norm_code(ref), []),
                       None)  # rules 4/5: no LO

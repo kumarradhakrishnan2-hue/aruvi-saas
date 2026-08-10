@@ -424,6 +424,70 @@ def _maths_typed_block(raw: Any) -> Optional[Dict[str, Any]]:
     return _maths_number_line(raw) or typed_block(raw)
 
 
+def _inclusivity(v: Any) -> Optional[str]:
+    """Maths middle/prep author inclusivity as an OBJECT — `{support, challenge}` (middle's
+    Rule 6: "an OBJECT with two keys, each ONE short clause"). Every other stage authors a
+    sentence.
+
+    `_clean` calls `str()`, so the object arrived at the screen as its Python repr —
+    `{'support': 'Let the student…', 'challenge': 'Name one more property…'}`, braces, keys
+    and single quotes and all (2026-08-10, S7). Flattened here to the SAME colon-labelled
+    form maths·secondary already emits, so `InclusivityText` bolds the two labels and rows
+    them without learning a new shape. Empty halves are dropped rather than labelled blank.
+    Shape-based: any mapping carrying either key, never a branch on subject."""
+    if isinstance(v, dict):
+        parts = []
+        for key, label in (("support", "Support"), ("challenge", "Challenge"),
+                           ("stretch", "Stretch")):
+            s = _clean(v.get(key))
+            if s:
+                parts.append(f"{label}: {s}")
+        return "  ".join(parts) or None
+    return _clean(v)
+
+
+_GOAL_DEMAND = {
+    # MIDDLE — assessment Rule 3's `goal`
+    "recall": "Recall", "reason": "Reason", "apply": "Apply",
+    # PREPARATORY — the same axis under its own name, `intent`, on its own four-way
+    # A/B/C/D scale (Explore · Reason · Practise · Solve). Verified on the saved plan
+    # `mathematics/iii/ch_06`, whose items carry `intent` and no `goal` at all — which is
+    # also how the prototype told the two stages apart at render time
+    # (`assessment_pdf_generator.py:117-192`: middle has `goal` and no `intent`).
+    "explore": "Explore", "practise": "Practise", "practice": "Practise", "solve": "Solve",
+}
+
+
+def _goal_demand(*values: Any) -> Optional[str]:
+    """Maths middle's `goal` / preparatory's `intent` as the Overview's cognitive-demand
+    value — the first of them the item actually carries.
+
+    Title-cased only. The word itself is the constitution's own (middle's assessment Rule 3
+    names `goal` the item's cognitive level), so nothing is translated into secondary's
+    Bloom-ish vocabulary and no scale is claimed to be another. An unrecognised value is
+    carried as authored rather than dropped, since a new stage's word is more useful on
+    screen than a blank row."""
+    for v in values:
+        g = _clean(v)
+        if g:
+            return _GOAL_DEMAND.get(g.strip().lower(), g)
+    return None
+
+
+def _section_label(meta: Dict[str, Any]) -> Optional[str]:
+    """The section under test — "section 7.5 — Types of Triangles" — but ONLY where the
+    group heading does not already say it.
+
+    Read off `meta`, not the item, and set by the PORT. Both maths stages carry
+    `section_ref`/`section_title` on the item, so deriving it here put the row on secondary
+    too — where the group heading already IS the section, making it a duplicate, and where
+    the closing item rendered "Section: synthesis", leaking the reserved token into
+    teacher-facing text. Middle groups by A/B/C cluster instead, so there the section is
+    genuinely invisible without this row. Which of the two a stage is, is exactly the kind
+    of fact the plugin owns and this module must not infer (CLAUDE.md §3)."""
+    return _clean(meta.get("section_label"))
+
+
 def from_maths(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
     """Mathematics, all stages. Middle/prep carry the teacher_guide dict; SECONDARY is the
     hybrid (top-level expected_answer/method_one_line + constitution-style guide{TYPE} +
@@ -460,9 +524,29 @@ def from_maths(it: Dict[str, Any], meta: Dict[str, Any]) -> NormalizedItem:
         # unsplittable downstream. The renderer bolds the ref and shows the description after.
         exercise_ref=ref,
         exercise_desc=desc,
-        inclusivity=_clean(tg.get("inclusivity")) or _clean(gd.get("inclusivity")),
-        cognitive_demand=_clean(it.get("cognitive_demand")),   # present secondary only; ""/absent → None
+        inclusivity=_inclusivity(tg.get("inclusivity")) or _inclusivity(gd.get("inclusivity")),
+        # SECONDARY emits `cognitive_demand` ("Analysis"). MIDDLE and PREPARATORY emit
+        # `goal` — recall | reason | apply — and their own constitution calls it the
+        # cognitive level in terms: assessment Rule 3, "The prompt's cognitive level MUST
+        # match `goal`: recall → retrieve a fact, definition or directly-stated property;
+        # reason → construct an argument, justify a claim, or derive a relationship; apply
+        # → use a chapter procedure in a fresh numerical, geometric, or word context."
+        #
+        # So this is ONE field under two names, not two ideas (2026-08-10, S7 — the same
+        # normalize-at-the-seam move `unit_approaches` makes for the five spellings of the
+        # LP's approach line). Before it, a maths·middle item's Overview panel rendered a
+        # single row — "Question type" — because Competency is forbidden at this stage by
+        # LP Rule 8, `linked_lo` is null by 8-rule row 4, and `cognitive_demand` is a
+        # secondary-only key. Three of its four rows were structurally empty and the panel
+        # read as bare. Nothing here is invented: `goal` is authored, per item, and already
+        # governs the prompt.
+        cognitive_demand=(_clean(it.get("cognitive_demand"))
+                          or _goal_demand(it.get("goal"), it.get("intent"))),
         competency=_competency(it.get("competency")),
+        # The section under test, where the item names one. Middle/prep carry both halves
+        # verbatim from the LP handoff; the handoff-bridged stages carry neither and this
+        # stays None, so their panel is unchanged.
+        section=_section_label(meta),
     )
     return _finish(_link(n, meta))
 

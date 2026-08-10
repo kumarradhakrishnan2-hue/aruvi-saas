@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-10T20:27:34",
+ "updated_at": "2026-08-10T20:41:45",
  "step0": {
   "campaign": {
    "0.1": {
@@ -2313,6 +2313,84 @@
    "title": "Two inclusivity notes in the CERTIFIED maths IX ch 4 library name an option by a letter that STEP 6 has since moved",
    "evidence": "Corpus sweep 2026-08-10 (S7 C3): exactly 7 answer/guide fields anywhere in the installed corpus name an option by letter in prose. THREE are stale — one in maths VII (repaired under ARV-D-092) and TWO in maths IX ch 4, which is CERTIFIED:\n  ch_04_canonical.json item 2 (correct B): 'verify the identity by substituting small integers for x and y IN OPTION A' — option A is 3x^2-24xy+4y^2, a distractor. You do not verify an identity against a wrong form; written when the answer was A.\n  ch_04_canonical.json item 7 (correct C): 'expand the full sum symbolically and CONFIRM OPTION A' — option A is a distractor.\n\nThe other four are CORRECT AS WRITTEN and are the reason this cannot be automated: ch_04_p12 says 'verify option A by expanding (2x-3)^2' and option A IS 4x^2-9=(2x-3)^2 — the task is to disprove it; science VIII p07 says 'rewrite option D so it is correct' and D IS the wrong hardness claim.\n\nROOT CAUSE, and it is not the mapping bug: an answer key exists in TWO representations. STRUCTURAL (is_correct, label-keyed dicts) travels with a sort. PROSE (a letter inside a sentence) cannot be rewritten by any sort without rewriting meaning. A9 at v1.7 already established the principle — an option may not refer to another option BY LABEL, 'because options are ordered downstream and a label reference would be falsified' — but A9 was scoped to options and never to the answer or guide fields.",
    "decision": "OPEN — founder's call, and it is a defect against a CERTIFIED stage, so it is raised here rather than absorbed by S7. Three options, increasing scope: (1) repair the two notes in place (they name a distractor that is no longer at that letter); (2) add a certifier check listing every label-reference in a prose field and failing when the named label is not is_correct AND the prose does not quote that option's content — the four legitimate cases pass that test, the three stale ones do not; (3) widen A9 across all eleven constitutions from 'no option may name another option's label' to 'no field may name an option's label — name its content instead', which prevents rather than detects."
+  },
+  {
+   "id": "ARV-D-094",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "LP Rule 1 and the schema cap a unit at 1–2 adjacent sections, but v2.0 MANDATES a synthesis unit spanning all of them — a rule/brief collision, not a generation defect",
+   "evidence": "ch_07_canonical unit 12 carries FIVE textbook_segments (section 7.1…7.5) with synthesis: true, against Rule 1's 'one or at most two adjacent sections' and the schema's '// 1-2 entries'. The model did exactly what the platform brief told it to. Contiguity itself is clean after the unit-order repair: runs 7.1(1)·7.2(2,3,4)·7.3(5-8)·7.4(9)·7.5(10,11)·synthesis(12), zero revisits; p07 contiguous as authored.",
+   "decision": "OPEN — reads as a P1 amendment in the S4 style: Rule 1 and the schema need an explicit carve-out for the mandated synthesis unit, which by construction anchors the whole chapter. Founder's call whether to amend now or carry it."
+  },
+  {
+   "id": "ARV-D-095",
+   "combo": "cross",
+   "step": "C3",
+   "severity": "S3",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "The LP header block (core_cg, core_competencies, adjunct_competencies, periods_allocated, dissolution_test) is absent from EVERY authored canonical, across certified stages too",
+   "evidence": "LP Rule 7 mandates a chapter header table. Absent from ch_07_canonical and ch_07_canonical_p07 — and not a save-path artefact: the raw model output ch_07_20260810_184152_raw.txt lacks them, and so do CERTIFIED social_sciences/ix/ch_03 (S1) and mathematics/ix/ch_04 (S4). The assessment envelope likewise omits its mandated 'stage' key everywhere.",
+   "decision": "OPEN — platform-wide, so it belongs to the cross row rather than S7. Either the rule is dead letter and should be struck, or the prompt never asks for it and every library is short a mandated block. Cheap to determine: read the assembled prompt."
+  },
+  {
+   "id": "ARV-D-096",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "LP Rule 10's 10-word cap on the bracketed textbook-item description is breached on 26 of 26 brackets in the canonical and 15 of 20 in p07",
+   "evidence": "Worst case 33 words (canonical u4, band 6-26): 'Find 3 examples each of sidelength sets where the two circles: (a) touch each other at a point; …'. Format, book_ref narration and the internal-ID ban all hold — 0 A-/E-/WE- tokens in teacher-facing prose, and 0 WE-n anywhere (the chapter has no worked examples at all).",
+   "decision": "OPEN — the THIRD numeric limit this stage's live output has disproved, after Rule 5's method cap (v3.5) and Rule 2's period cap (v3.6). testing.md v2.9's standing lesson applies: 'a limit stated as a number is the kind of rule live generation most often disproves.' Founder's call: raise the cap, or make truncation the platform's job rather than the model's."
+  },
+  {
+   "id": "ARV-D-097",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S3",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "Assessment Rule 6's 25-word inclusivity cap is breached on all 19 items across both files (41-71 words)",
+   "evidence": "Canonical 41-69 words, p07 47-71. Rule 6: 'An OBJECT with two keys, each ONE short clause (together <= 25 words).' Not one item complies.",
+   "decision": "OPEN — same class as the item above. A cap missed by every single item in two independent generations is a cap set wrong, not nineteen mistakes."
+  },
+  {
+   "id": "ARV-D-098",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S1",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "Assessment Rule 3 breached: Q-C-7 solves by Pythagoras, which the chapter never teaches, and copies its anchor's entity and wording",
+   "evidence": "Rule 3: the prompt 'MUST be solvable using only methods, definitions, vocabulary, and worked-example procedures present in the section's prose_summary… Out-of-chapter procedures, properties, and notations are PROHIBITED', and 'must NOT copy the anchor's specific numbers, named entities, or wording'. Q-C-7 (spider/box shortest path) copies E-30's entity and wording and its answer is sqrt(12^2+5^2)=13 — grep -c 'Pythagor' on ch_07_summary.json returns 0. Q-A-1 separately copies E-26's numbers verbatim (5 cm, 6 cm, 5 cm).",
+   "decision": "OPEN — S1 because an item a class cannot solve with what it was taught is worse than a missing item. The ANSWER is arithmetically correct, which is why C3's determinate sub-check would not have caught it; only the rule-by-rule read does."
+  },
+  {
+   "id": "ARV-D-099",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S3",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:41:45",
+   "title": "LP Rule 11 anchor-selection breached once per file",
+   "evidence": "Canonical section_c[6] anchors E-30 for unit 12, whose own pools are [E-23, E-29] with empty homework — E-30 is in neither, and 7.5 declares only 'recall' while the unit is 'apply'. p07 section_c[3] anchors E-25 where unit 6's array is [A-1, E-24, E-25] and the unused exercise E-24 precedes it in array order. Counts and ordering are otherwise exact (12<->12, 7<->7) and every anchor id exists in the summary.",
+   "decision": "OPEN — minor; the exercise companion still points at a real chapter item. Carried to the human gate."
   }
  ],
  "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",

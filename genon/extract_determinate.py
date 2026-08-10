@@ -106,11 +106,28 @@ if __name__ == "__main__":
 
 
 def iter_items(obj):
+    """Every leaf ITEM in a saved plan, whatever container its stage wraps them in.
+
+    THREE shapes, not two (corrected 2026-08-10, S7 — this walker returned ZERO items for
+    maths·middle and the check silently passed on an unexamined library):
+      • {..., "questions": [...]}                    maths/science SECONDARY
+      • "assessment_items": [ item, ... ]            the flat-list stages
+      • "assessment_items": [ {section_code, items: [...]}, ... ]   maths MIDDLE + PREP
+
+    The third is the group-nested container `carriers.item_groups` recognises. A group dict
+    is NOT an item — it has no answer and no stem — so yielding it produced no rows and the
+    worksheet came back empty, which reads exactly like "this library has no determinate
+    answers". Detected by shape, never by subject."""
     if isinstance(obj, dict):
         if isinstance(obj.get("questions"), list):
             yield from obj["questions"]
-        if isinstance(obj.get("assessment_items"), list):
-            yield from obj["assessment_items"]
+        ai = obj.get("assessment_items")
+        if isinstance(ai, list):
+            for entry in ai:
+                if isinstance(entry, dict) and isinstance(entry.get("items"), list):
+                    yield from entry["items"]          # group-nested (middle / prep)
+                else:
+                    yield entry                        # already a leaf item
         for value in obj.values():
             yield from iter_items(value)
     elif isinstance(obj, list):
@@ -141,12 +158,20 @@ def main() -> int:
     for path in files:
         doc = json.loads(path.read_text(encoding="utf-8"))
         for idx, item in enumerate(iter_items(doc), 1):
-            answer = str(item.get("expected_answer") or "").strip()
-            method = str(item.get("method_one_line") or "").strip()
+            # TWO FIELD FAMILIES, per the registry spec's maths column. SECONDARY is the
+            # hybrid — `question_text` with expected_answer/method_one_line at the TOP level.
+            # MIDDLE and PREPARATORY put the stem in `prompt` and both answer fields inside
+            # `teacher_guide`. Reading only the secondary shape is why this returned nothing
+            # on maths·VII (2026-08-10, S7).
+            if not isinstance(item, dict):
+                continue
+            tg = item.get("teacher_guide") if isinstance(item.get("teacher_guide"), dict) else {}
+            answer = str(item.get("expected_answer") or tg.get("expected_answer") or "").strip()
+            method = str(item.get("method_one_line") or tg.get("method_one_line") or "").strip()
             if not answer and not method:
                 continue
             total += 1
-            stem = " ".join(str(item.get("question_text", "")).split())
+            stem = " ".join(str(item.get("question_text") or item.get("prompt") or "").split())
             body.append(STUB.format(
                 idx=idx,
                 file=path.name,
@@ -160,6 +185,25 @@ def main() -> int:
 
     OUT.mkdir(parents=True, exist_ok=True)
     dest = OUT / f"{args.subject}_{args.grade}_ch{args.chapter:02d}_check.py"
+    # A FILLED WORKSHEET IS AN ARTEFACT, NOT A SCRATCH FILE (2026-08-10, S7).
+    # Re-running the extractor silently overwrote `mathematics_ix_ch04_check.py` — S4's
+    # completed 25-check worksheet, which testing.md C3 cites BY NAME as the regression test
+    # for the ARV-D-084 repair. It was recovered from git, but only because someone happened
+    # to look. A worksheet is filled by hand over an hour of judgement and the tool that
+    # generates the blank must not be able to destroy it in a keystroke.
+    if dest.is_file():
+        existing = dest.read_text(encoding="utf-8")
+        # A BLANK stub has one "None,   # claimed" line per CHECKS.append. Any shortfall means
+        # a human has transcribed at least one — i.e. the file is partly or wholly filled.
+        # (The first version of this guard counted a string the stub never contains, so it
+        # never fired and overwrote the artefact a SECOND time. Assert against the real stub.)
+        appends = existing.count("CHECKS.append((")
+        blanks = existing.count("None,   # claimed")
+        if appends and blanks < appends and "--force" not in sys.argv:
+            print(f"REFUSING to overwrite {dest.relative_to(ROOT)} — it is FILLED "
+                  f"(a completed C3 artefact). Move it aside, or pass --force if you truly "
+                  f"mean to discard the transcriptions.", file=sys.stderr)
+            return 1
     dest.write_text(
         HEADER.format(subject=args.subject, grade=args.grade, chapter=args.chapter)
         + "".join(body) + FOOTER,

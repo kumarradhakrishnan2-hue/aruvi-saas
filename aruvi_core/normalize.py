@@ -150,6 +150,24 @@ def normalize_options(raw: Any) -> tuple:
 GROUP_LABEL_CAP = 56          # ~the longest real section title in the corpus
 
 
+# The heading a teacher reads above the chapter's closing whole-chapter synthesis.
+#
+# The unit declares itself in one of two ways — the reserved token `synthesis` in
+# `section_anchor` (the eight stages whose constitution defines that field) or a
+# `"synthesis": true` boolean (the mediated-anchor stages, which have nowhere to put a
+# token). `genon.carriers.is_synthesis` reads either; this is only the WORD that goes on
+# screen for both, kept in one place so the stages cannot drift apart on capitalisation.
+#
+# Why it is not simply the anchor string (2026-08-10, S7): the anchor carries the reserved
+# TOKEN, and printing a token verbatim put a lowercase heading among capitalised ones —
+# maths·IX read "synthesis" while maths·VII, which reaches the same unit through the
+# boolean, read "Synthesis". The founder ruling that the closing unit keeps the NAME
+# "synthesis", rather than a label derived from its title, is untouched: same word, same
+# unit, presentation only. Nothing that READS the token — serve, the registry,
+# certification — goes anywhere near this constant.
+SYNTHESIS_DISPLAY = "Synthesis"
+
+
 def group_label_from_unit(title: Any, cap: int = GROUP_LABEL_CAP) -> str:
     """A short teacher-facing group label taken from a unit's own activity_title.
 

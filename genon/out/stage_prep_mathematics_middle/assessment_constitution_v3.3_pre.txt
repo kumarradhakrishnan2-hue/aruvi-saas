@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION · VERSION 3.4
+ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION · VERSION 3.3
 Stages: Foundational, Preparatory, Middle, Secondary
 
 ================================================================================
@@ -149,20 +149,10 @@ Every non-fallback item carries `teacher_guide` as a JSON object:
     equality.").
 
   teacher_guide.what_each_option_reveals:
-    For MCQ items only — a JSON object with ONE ENTRY PER NON-CORRECT
-    OPTION, keyed to that option's `label` in `options[]`, each value a
-    one-sentence diagnostic of the misconception a student who chose it
-    likely holds. OMIT THE CORRECT OPTION: the object carries exactly
-    three entries, and the correct answer is already marked by
-    `is_correct` and read from `teacher_guide.expected_answer`. For
-    non-MCQ items, this is an empty object {}.
-
-    The omission is not a style preference. Option order is set
-    downstream, and a key set that must equal the non-correct labels
-    exactly is the platform's only mechanical check that the relabelling
-    carried the diagnostics with it. A diagnostic written for the correct
-    option destroys that check and, when the labels move, prints
-    "the student correctly …" against a wrong choice.
+    For MCQ items only — a JSON object keyed by option label
+    ("A", "B", "C", "D"), each value a one-sentence diagnostic of
+    what the student understanding (or misconception) that option
+    reveals. For non-MCQ items, this is an empty object {}.
 
   teacher_guide.inclusivity:
     An OBJECT with two keys, each ONE short clause (together ≤ 25 words):
@@ -287,8 +277,7 @@ Type-specific required fields:
                                                 // exactly one
                                                 // is_correct: true
     teacher_guide.what_each_option_reveals:
-        {A:..., C:..., D:...}   // the three NON-CORRECT labels only;
-                                // the correct option is omitted
+        {A:..., B:..., C:..., D:...}
 
     Option order carries no meaning and is not yours to set: emit the
     four options in whatever order they were authored, and never let
@@ -389,5 +378,5 @@ ASSESSMENT JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Assessment Constitution · Version 3.4 · Internal Document
+Mathematics Assessment Constitution · Version 3.3 · Internal Document
 ================================================================================

@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-10T18:34:22",
+ "updated_at": "2026-08-10T21:25:00",
  "step0": {
   "campaign": {
    "0.1": {
@@ -281,12 +281,6 @@
     "by": "Claude",
     "at": "2026-08-10T16:08:52",
     "comment": "SIGNED PROVISIONALLY 2026-08-10 - constitutional gate CLEAR, C1 NOT gated, P5.4 the only amber. Status to be confirmed by Kumar.\n\nUnlike S4 (carrier) and S6 (engine), S7 carries NO gate into its C-cycle: the carrier is landed and tested, and the four items found at P-prep are all fixed. Per-item note: genon/out/stage_prep_mathematics_middle/STAGE_SIGNOFF_S7_mathematics_middle.md.\n\nVerified: A1 lands; the register is ONE block in the v1.10 THREE-ban form (this stage is not S6's exception); A6 anchors are present as the derived period-field form; A9 landed as the two lines alone (removal N-A) with no arrangement sentence; P3 converted (Group B, real); no cancelled amendment (A2/A3/A4) or V-rule has crept into a constitution.\n\nTHE STAGE'S ONE IDEA, worth carrying to S8-S11: it looked like it needed three new fields and needed none. Founder ruling 2026-08-10 - maths middle already carries every fact the serve engine wants, under other names (period textbook_segments[].ref = the anchor; handoff entry section_ref = the item's route), and the PROTOTYPE resolved exactly this shape variance at the READ boundary rather than by amendment (lp_pdf_generator.py:2583-2592 for the anchor and the bands; assessment_pdf_generator.py:117-192 for the item regroup, stating in terms that 'the constitution / generated JSON is NOT changed - this runs at render time'). The SaaS keeps that answer and moves it to the sanctioned seam (carriers.py + the plugin, CLAUDE.md §3) instead of scattering it across renderers. So the anchor and the handoff were P5.5 work, not P1 work. The ONE exception was P3, because compile.py rebuilds the spine from time_bands and asserts an inventory invariant over activity - a tolerant read could not carry that. English (S9-S11) is the same period-field family and should be read this way first.\n\nFOUR THINGS FOUND AT P-PREP, all fixed, none constitutional:\n1. raw_item_list returned the GROUPS, not the items, for the group-nested container - the ARV-D-060 class, third recurrence, third container shape. STEP 6 and generate_canonical.validate would both have silently no-opped on a paid canonical. Fixed shape-based; item_container / from_engine_items now round-trip the A/B/C groups, emitting an empty group rather than dropping it.\n2. The goal-cluster handoff fell through to_engine_handoff unfiltered, so a served plan would have carried handoff rows for units it does not contain. Fixed with a second carrier marker; NO field added - each entry's period set is derived from its own section_ref, and it survives iff a period teaching its section is served (science's semantics).\n3. The synthesis mandate named section_anchor, a field this stage does not have - S7's analogue of S4's synthesis-handoff defect, and it would have been PAID (metered STEP 1). Fixed in the BRIEF, never a constitution: the boolean form ('synthesis': true) that _arc_brief already asks science-middle for is now used by any stage whose anchor is MEDIATED, declared as genon_anchor_field_present rather than sniffed. Chasing it turned up TWO LIVE ENGINE BUGS the token had been hiding - serve.section_registry filtered the synthesis unit by anchor TEXT and serve.unit_range was rangeless only incidentally, so a boolean-carried synthesis could have entered the registry and been picked as somebody's Xth unit; both now short-circuit on is_synthesis_unit. Plus carriers.unit_anchor raised KeyError on a mediated synthesis unit and now returns None (not the token - manufacturing an anchor string would write into a field this constitution does not define). The ten token stages are unchanged BY PROOF: 50 standard briefs and 5 compact brief sets snapshotted before the edit, only the six mediated mathematics combos differ.\n4. build_library.py mathematics vii 7 --certify-only does not reach the certify branch - STEP 2's annotate runs even under --certify-only and exits 'Row is provisional'. Correct downstream gate, same place S4 stopped, but the free smoke test is unavailable on an un-annotated row. Knowing it stops this reading as a failure.\n\nTEST STATE: test_genon_carriers 36 -> 80 green. test_maths_port, test_genon_serve, test_genon_plan_key, test_genon_duration_order, test_genon_plan_granularity, test_borrowed_anchor, test_genon_approach_survives_serve, test_unit_order, test_unitize all green. Five suites fail pre-existing and unrelated - the same five the S4 sign-off recorded (test_api needs fastapi; test_link_resolver + test_normalized_item want a missing English saved plan; test_lp_standard a missing TWAU view; test_stimulus a fixture count 16 < 20).\n\nTWO HOUSEKEEPING ITEMS FOR KUMAR, both outside the sandbox's reach:\n(a) rm .git/index.lock - a stale zero-byte lock from a subagent's attempted git stash; no stash was created and nothing was lost (git stash list is empty), but any git add/commit from the Mac side needs it removed first.\n(b) EIGHT S4 SERVED-PLAN FILES were deleted mid-session by a subagent's purge_derived cleanup and have been RESTORED from HEAD (data/content/saved_plans/mathematics/ix/ch_04_*_e17_*.json, *_e18_*.json, ch_99_canonical.json). These are C10.3 no-overwrite evidence for a stage in mid-cycle, so the loss would have been real. git status now shows zero deletions; verify before committing.\n\n§9: nothing re-opens. No stage carries a signed human GATE, and the engine changes (serve.section_registry, serve.unit_range, carriers.unit_anchor, the brief carrier) are the cheap corpus-wide kind - re-run --certify-only across every certified chapter and diff the reports before S7's C1."
-   },
-   "C1": {
-    "status": "amber",
-    "by": "Claude",
-    "at": "2026-08-10T18:34:22",
-    "comment": "PARTIAL 2026-08-10 - the STANDARD canonical is authored and installed; the two compacts are NOT yet bought (--top-only, deliberate pause for inspection).\n\nRUN: python3 genon/build_library.py mathematics vii 7 --top-only\n  ch 7 top, 12 units x 40 min. 18,181 in / 22,362 out - Rs 35.88 - 335.8s.\n  saved:     genon/out/canonical/mathematics/vii/ch_07_20260810_161523_canonical.json\n  installed: data/content/saved_plans/mathematics/vii/ch_07_canonical.json\n  Rs 35.88 against the S4 benchmark of Rs 110-150 for a full three-canonical library - on budget.\n\nTHE RUN EXITED 1, AND THE PLAN WAS NEVER THE PROBLEM. generate_canonical.validate reported 'P1..P12: missing section_anchor (the registry join key)' - all twelve units - and stopped the build before STEP 2. It was a FOURTH READ SITE the P5.5 mediation missed: validate read p['section_anchor'] off the period directly instead of through carriers.unit_anchor. Same shape of failure S6 fixed in this very function on 2026-08-07 (it taught validate to ask the seam whether a stage HAS a section axis, but left the anchor read itself hardcoded), one line along. Fixed 2026-08-10: the anchor is read through carriers.unit_anchor, with the synthesis unit exempted (on a mediated stage it anchors to no section and unit_anchor returns None by design; on a token stage it carries the reserved token and would pass anyway). Verified free: validate(result, 12, False) on the installed file now returns NONE. The canonical had already installed ('validator findings recorded, not blocking'), so no rupee was lost and STEP 1 is skipped on resume by skip_if_present.\n\nINSPECTION OF THE TOP - the first artefact ever generated under LP v3.4 / assessment v3.3:\n  REGISTER: CLEAN. Zero clock quantities, zero forward references, zero calendar time across all 48 time bands, 12 teacher notes and the homework. Notable - this is the clause set S4's stage breached nine times under a constitution that banned it in terms.\n  INTERNAL IDS: zero leaks in teacher-facing prose. No fabricated WE-n despite the chapter having NO worked examples, so P5.3's watch item did not fire - the model simply omitted the optional self-study pointer rather than inventing one.\n  RULE 11 ARITHMETIC: exact. 12 handoff entries against 12 periods (1 recall / 3 reason / 8 apply); 12 assessment items against 12 goals.\n  SYNTHESIS CARRIER WORKS: unit 12 carries '\"synthesis\": true'. It also lists all five sections in textbook_segments, which is harmless - unit_anchor short-circuits on a synthesis unit.\n  ANCHORS: verbatim 'section 7.1'-'section 7.5', first-visit in registry order (7.1@U1, 7.2@U2, 7.3@U4, 7.4@U7, 7.5@U8), so certification check 4 will pass.\n  P3: time_bands present, 4 per unit, tiling clean (validate's band checks pass).\n  NUMERIC LIMITS ALL HELD: activity_title <= 12 words everywhere, teacher_notes <= 3 sentences everywhere. The opposite of S4, where 31 of 36 titles fell outside the band.\n  A9: no by-label options. Only 2 MCQs in 12 items (correct at A and D), consistent with a single recall goal.\n\nTWO FINDINGS:\n  1. RULE 5 BREACH -> AMENDED (see the P1 row): units 10, 11, 12 all Problem-solving, a run of three against a cap of two. ARV-D-072's twin.\n  2. CONSOLIDATION UNITS, as predicted at P5.3: units 9, 10 and 11 return to sections 7.2, 7.3 and 7.5 after 7.5 first appeared at unit 8. First-visit order is monotone so certification passes, but LP Rule 1's 'do not reorder, interleave, or re-sequence' reads against it on its face. This is the C5 ADVISORY candidate and the S4 ARV-D-088 condition (12 units over 5 sections leaves ~7 units with no new section to name). DO NOT repair it by extending period_numbers - S4 section 3.3 measured that fix and it costs a question and buys nothing.\n\nNOT A DEFECT, recorded so it is not re-raised: the goal split is 1 recall / 3 reason / 8 apply, so section A of the assessment carries a single item. That comes from the summary's own section_goal arrays - a constructions chapter is inherently apply-heavy.\n\nRESUME (buys the two compacts at [10, 7]): python3 genon/build_library.py mathematics vii 7\n\nRE-OPENED 2026-08-10 by LP v3.6 (section 9, full constitution change). The library authored under v3.4/v3.5 is void for certification: it breaches v3.6's Rule 1 (three revisited sections) and was authored under a Rule 2 cap that no longer exists. RE-AUTHOR ALL THREE:\n\n    python3 genon/build_library.py mathematics vii 7 --redo\n\n(--redo, not the plain resume: STEP 1 must regenerate too, so skip_if_present must be overridden. ~Rs 106 for the three.)\n\nALSO FIXED THIS SESSION, all read-path, no rupees - the canonicals on disk were never the problem, the code reading them was:\n 1. generate_canonical.validate read p['section_anchor'] directly -> reported 'missing section_anchor' on all 12 units and exited 1 AFTER paying. Fourth read site the P5.5 mediation missed; now goes through carriers.unit_anchor with the synthesis unit exempt.\n 2. The maths port's middle branch read p['phases'] only -> every v3.4-authored unit rendered with an EMPTY timed spine (no band text, no minutes in the rail). The missing half of P3: constitution and compiler contract were renamed, the renderer was not. Now reads time_bands then phases, so the legacy corpus keeps working.\n 3. The synthesis unit was IN the item index. It lists all five sections it draws together, so indexed it became the LAST unit of every section and all 12 items collapsed onto it - units 1-11 showed no assessment at all. Excluded via is_synthesis in both the genon carrier and the display port; third site after serve.section_registry and serve.unit_range.\n 4. The synthesis unit's GROUP LABEL on a mediated-anchor stage read 'Equilateral Triangles (Revisit)' - the first section it names, marked a repeat - because there is no token to key on. Now groups as 'Synthesis'. (Maths IX still renders the raw lowercase token 'synthesis'; one-line display fix, NOT taken, founder's call.)\n\ntests/test_genon_carriers.py 81 green, including one new test pinning the deliberate edge: a section taught ONLY by the synthesis unit orphans its item loudly rather than landing on a sitting that never taught it."
    }
   }
  },
@@ -1029,9 +1023,65 @@
   "mathematics/middle": {
    "provenance": {
     "klass": "vii",
-    "draw": "seed 'mathematics|middle|2026-08-02' over ['vi', 'vii', 'viii']",
+    "draw": "seed 'mathematics|middle|2026-08-02' over ['vi','vii','viii'] -> vii",
+    "chapter": "7 — A Tale of Three Intersecting Lines",
+    "duration": "40",
+    "model": "claude-sonnet-4-6",
+    "date": "2026-08-10",
+    "lp_ver": "3.6",
+    "as_ver": "3.3",
+    "engine": "18",
+    "canonical_plan": "counts [12, 10, 7] · provisional false · basis authored_standard · registry_sections 5 · authored [12, 10, 7]",
+    "brief": "variant_plans.py — mediated-anchor carrier: the synthesis mandate asks for `\"synthesis\": true` (this stage has no section_anchor field), gated by genon_anchor_field_present",
+    "ledger_ts": "top 20260810_184152 · p10 20260810_191053 · p07 20260810_191516 (cert report 20260810_192813, ALL PASS)",
+    "report": "genon/out/library_reports/mathematics_vii_ch07_20260810_192813.md",
+    "files": "ch_07_canonical.json · ch_07_canonical_p10.json · ch_07_canonical_p07.json",
+    "durations_run": "40 authored; C6 mixed-duration matrix pending (P5.4 profiles open)",
     "by": "Claude",
-    "at": "2026-08-02T09:42:48"
+    "at": "2026-08-10T19:33:47",
+    "stages": {
+     "top_canonical": {
+      "wall_s": "315.8",
+      "tokens_in": "18556",
+      "tokens_out": "21029",
+      "cost_inr": "34.14"
+     },
+     "variant_a": {
+      "wall_s": "262.4",
+      "tokens_in": "18762",
+      "tokens_out": "17653",
+      "cost_inr": "29.54"
+     },
+     "variant_b": {
+      "wall_s": "186.1",
+      "tokens_in": "18762",
+      "tokens_out": "12446",
+      "cost_inr": "22.35"
+     },
+     "variant_c": {},
+     "variant_d": {},
+     "reruns": {
+      "wall_s": "830.0",
+      "tokens_in": "55175",
+      "tokens_out": "55228",
+      "cost_inr": "91.44"
+     }
+    },
+    "total_cost_inr": 86.03,
+    "partition_wall_s": "",
+    "c5_split": ""
+   },
+   "C1": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-10T19:36:23",
+    "comment": "CLOSED 2026-08-10 - DETERMINISTIC CHECKS ALL PASS. Report: genon/out/library_reports/mathematics_vii_ch07_20260810_192813.md\n\nLIBRARY: [12, 10, 7] complete - ch_07_canonical.json (12) + _p10 + _p07. Row final: provisional false, basis authored_standard, registry 5 sections.\n\nCOST: the top was authored TWICE. Run 1 (v3.4/v3.5) Rs 35.88; re-authored under LP v3.6 after the Rule 1/2 alignment (section 9, full constitution change), then the two compacts. All three now certify.\n\nCERTIFICATION: library complete - synthesis mandated on the standard and the token reserved from both compacts - every anchor verbatim in the top registry on all three - first-visit order follows the registry on all three - coverage reaches the final section on all three - register CLEAN on all three (0 ban hits against 47/40/27 bands read; the v3.4 run's single 'foreshadows congruence' hit died with the re-author, so no register repair was ever needed) - MCQ options in arrangement order on all three - choice set non-empty at every X from 5 to 14.\nServe sweep: 5,6 fill/single -1s - 7 identity - 8 fill/single - 9 synthesis - 10 identity - 11 synthesis - 12 identity - 13,14 surrender.\n\nONE REPAIR, DECLARED AND RECORDED: the top's U11 anchored section 7.2 after the plan had moved through 7.3, 7.4 and 7.5, so 7.2's three items landed on a stranded revisit. Moved beside U2/U3 by genon/repair_unit_order.py (new tool, v1.0) as a stated permutation [1,2,3,11,4,5,6,7,8,9,10,12] - never a generated rewrite. Checked before building the tool: the unit references NO 7.3/7.4/7.5 content, its items (E-9, E-11) and homework (E-7) are all 7.2 and disjoint from U2/U3, and Rule 5 survives. The handoff was remapped by inverting Rule 11 (one entry per period, period order within cluster) and ASSERTED (12 periods = 12 entries, every entry's goal matching its period's), items following per assessment Rule 1. Nothing inside a unit was touched. Recorded in genon_canonical.repairs[]; re-running is a no-op. Result: runs 7.1(1) 7.2(3) 7.3(4) 7.4(1) 7.5(2) synthesis - fully contiguous, zero revisits.\n\nONE DEFECT ACCEPTED, NOT FIXED: ARV-D-089 - p10's U10 is a whole-chapter consolidation wearing a 7.4/7.5 label after both runs closed, holding 4 of 10 items while the units that taught those sections hold none, and its own items are section 7.2. Cannot be reordered (it depends on 7.5 content). Founder call: accept, move on. Carried to C5/C8 and the human gate.\n\nFOUR READ-PATH BUGS FIXED THIS CYCLE, no rupees - the artefacts were never the problem:\n 1. generate_canonical.validate read p['section_anchor'] directly -> 'missing section_anchor' on all 12 units, exit 1 AFTER paying. Fourth read site the P5.5 mediation missed.\n 2. The maths port's middle branch read p['phases'] only -> every v3.4-authored unit rendered with an EMPTY timed spine. The missing half of P3: constitution and compiler renamed, renderer not.\n 3. The synthesis unit was IN the item index; it lists all five sections, so it became the LAST unit of every section and all 12 items collapsed onto it - units 1-11 showed no assessment. Third site after serve.section_registry and serve.unit_range.\n 4. The synthesis GROUP LABEL read 'Equilateral Triangles (Revisit)' on the mediated stage and lowercase 'synthesis' on the token stages. Now 'Synthesis' everywhere, from normalize.SYNTHESIS_DISPLAY.\n\nALSO LANDED (free, display): the Overview panel for maths middle/prep went from ONE row to four - Section, Question type, Cognitive demand (from the stage's own `goal`/`intent`, which its assessment Rule 3 defines as the item's cognitive level), Book exercise. Secondary byte-identical. Prep inherits it for S8.\n\ntests/test_genon_carriers.py 81 green; all five subject ports, view_model, render and the genon suites green."
+   },
+   "C2": {
+    "status": "pass",
+    "by": "Claude",
+    "at": "2026-08-10T19:36:23",
+    "comment": "COSTED 2026-08-10. Source: runtime_data/token_log.csv, six rows for mathematics/vii/ch 7 — every row in the file for this chapter is attributed, none missing.\n\nCLEAN PATH Rs 86.03 (3 runs, avg Rs 28.68) — THE TRACKER FIGURE, and what the corpus extrapolation multiplies.\n  18:47:08 canonical_generation  18,556 in / 21,029 out  Rs 34.14  top v3.6 (on disk)\n  19:15:16 variant_generation    18,762 in / 17,653 out  Rs 29.54  p10 (on disk)\n  19:18:22 variant_generation    18,762 in / 12,446 out  Rs 22.35  p07 (on disk)\n\nSUPERSEDED Rs 91.44 (3 runs) — the v3.4/v3.5 library, deleted before the re-author:\n  16:20:59 canonical_generation  18,181 / 22,362  Rs 35.88  first top\n  17:19:26 variant_generation    18,497 / 18,726  Rs 30.95  first p10\n  17:23:04 variant_generation    18,497 / 14,140  Rs 24.62  first p07\n\nALL-IN Rs 177.48. The difference is a CONSTITUTIONAL re-author, not a defect rerun: LP v3.5 -> v3.6 (Rules 1 and 2 aligned with secondary) fired section 9 in the full sense, so the whole library was re-authored. Worth separating from the SS-IX benchmark's Rs 34.71, which was a single defect rerun of one file — this stage's superseded spend is 51% of all-in because the amendment landed mid-cycle by design (the P-step ordering rule exists to prevent exactly this, and did not apply: the finding only became visible on live output).\n\nCOST SHAPE — the SS-IX benchmark holds in FORM but this stage is materially cheaper:\n * INPUT IS FLAT: 18,556-18,762 across the three clean runs, a 1.1% spread. The constitution, summary, mapping and brief are paid in full every run — 56,080 input tokens re-paid across one chapter.\n * OUTPUT FALLS WITH PERIOD COUNT: 21,029 (12u) -> 17,653 (10u) -> 12,446 (7u).\n * COMPACT vs TOP: p10 13% cheaper, p07 35% cheaper. The benchmark said ~11% for SS-IX; maths-middle's compacts fall off FASTER because its units are terser, so the 'budget per run, not per unit' rule still holds but the run cost itself is lower.\n\nRATE: Rs 28.68/run against the benchmark's Rs 37.00 — 22% under. testing.md calls SS-secondary the heaviest corner and Rs 37 upper-middle; maths-middle is the first stage to test that from below and confirms it. On the 926-run corpus that is roughly Rs 26.6k against the Rs 34.3k benchmark projection.\n\nNO PROMPT CACHING: cache_write_input_tokens and cache_read_input_tokens are 0 on all six rows. With input flat at ~18.5k and re-paid every run, the cached portion (constitution + summary + mapping, identical across a chapter's three runs) is the single largest lever available and is currently untouched — CLAUDE.md section 3 names output caching the #1 economic lever at seasonal scale. Recorded here as a measurement, not a change.\n\nNO R&D SPEND TO EXCLUDE: unlike SS-IX ch 3 (Rs 54.35 of partition-era canonical and probe spend), this chapter has no pre-campaign generations — the six rows above are its entire history."
    }
   },
   "mathematics/preparatory": {
@@ -2194,6 +2244,158 @@
    "title": "postJSON discards the server's `detail`, so every failure collapses to one generic line — and that line tells her to retry things that can never succeed",
    "evidence": "web/app/lib/format.js:96 — `if (!r.ok) throw new Error(`${r.status}`)`. The\nresponse BODY is never read, so the server's teacher-worded detail is thrown away at the\ntransport layer, before any component sees it. Only Allocate.jsx reads body.detail, and it uses\nits own fetch rather than postJSON.\n\nCONSEQUENCE: the four messages C13 certified never reach her. 'No underlying chapter yet.',\n'Period count implausibly large.', and the 500 that names the broken item all render as the same\nsentence: 'Couldn't build the lesson plan right now. Try again in a moment.'\n\nAND THAT SENTENCE IS WRONG IN A SPECIFIC WAY: 'Try again in a moment' is true for a transient\nfailure and FALSE for both cases she can actually reach — an unauthored chapter and an\nimpossible period count are permanent until someone acts. We send her to retry a thing that\ncannot work.\n\nSCOPE NOTE: the 404 is unreachable from the UI anyway. genonAvailable is computed from\n/genon/{s}/{g}/chapters (chapters WITH a library) and the picker itself is built from the\nSYLLABUS (/subjects/{s}/{g}/chapters, i.e. the mappings folder), so the app never asks the genon\npath for a chapter we have not authored. The reachable cases are the 400 (period count) and the\n500 (corrupt canonical).\n\nREMEDY (not applied): have postJSON read `detail` off the body and attach it to the thrown Error;\nshow it when present, keep the generic line as the fallback. Safe by construction — the API\nstrings are already teacher-worded, which is precisely what C13 check 1 polices ('canonical' is\nour word, not hers). Pairs with ARV-D-087: 087 is why she sees nothing, 088 is what she would\nsee once there is somewhere to say it.",
    "resolution": "CLOSED 2026-08-10. postJSON now reads the body and attaches `detail` to the thrown\nerror, so a 4xx reaches her in the API's own words. Scoped to 4xx DELIBERATELY: those strings\nare already written for her (C13 check 1 polices exactly that — 'canonical' is our word, not\nhers), while a 5xx detail is engine talk ('Canonical cannot be compiled: assessment item #4\nNUM / C-3.1 …') and must never be shown. A 5xx therefore keeps the generic sentence.\nVerified live: 31 periods on ch 4 now reads 'More than 30 periods is too many for one chapter.'\non the failed card, where it previously read 'try again in a moment' — advice that could never\nhave worked."
+  },
+  {
+   "id": "ARV-D-089",
+   "combo": "mathematics/middle",
+   "step": "C1",
+   "severity": "S3",
+   "owner": "founder",
+   "status": "accepted",
+   "opened": "2026-08-10T19:29:05",
+   "at": "2026-08-10T19:29:05",
+   "title": "p10's closing unit is a whole-chapter consolidation wearing a 7.4/7.5 label, after both runs closed — LP v3.6 Rule 1, and it cannot be repaired by reordering",
+   "evidence": "ch_07_canonical_p10.json U10 'Bringing It Together: Altitudes, Types, and Extended Problems'. Anchors section 7.4 AND section 7.5 (adjacent, so the two-section anchor is itself legal under Rule 1) but sits AFTER both runs closed - 7.4 at U7, 7.5 at U8-U9 - which v3.6's contiguity sentence forbids. Because an item anchors at its section's LAST unit, U10 becomes the last unit of both and captures 4 of the 10 items (two 7.5 recall, two 7.4 apply) while U7, U8 and U9 - which actually taught those sections - carry none.\n\nTHREE THINGS MAKE IT MORE THAN A CONTIGUITY SLIP:\n(a) THE ANCHOR DOES NOT MATCH THE CONTENT. Both its in-class items are E-9 and E-11, SECTION 7.2, and its first two bands are 7.2 material (circle-intersection, equilateral existence). Its own teacher note says it draws on 7.2, 7.3 and 7.4. This is the S4 section 3.3 consolidation-label pattern, worse here because the ITEMS come from a different section than the anchor.\n(b) IT IS A SYNTHESIS UNIT IN ALL BUT THE FLAG. Architecture v2.0 reserves the whole-chapter consolidation to the STANDARD canonical and the compact brief forbids it in terms; this unit obeys the letter (no 'synthesis': true, so the reserved-token gate passes) and breaks the intent.\n(c) IT CANNOT BE REPAIRED BY REORDERING, unlike the top's U11. Its band 3 uses 7.5's classification vocabulary (scalene, obtuse, classify), so it depends on U8/U9 and has no earlier home. A re-author (~Rs 35) is the only fix.",
+   "decision": "ACCEPTED by founder 2026-08-10, C1 closed. The certifier reports ALL PASS - nothing in the current gate set tests contiguity, which is precisely the gap. p07 is clean (contiguous, 5/5 sections, 7 items across 5 units) and the top was repaired by declared unit-order permutation. Carried to C5/C8 and the human gate.",
+   "carried": "THE PATTERN IS THE FINDING, NOT THE INSTANCE. Three occurrences in ONE chapter: the top's three revisits under v3.5, the top's U11 after v3.6 landed, and now p10's U10. Prose has failed to suppress it three times, including twice against text that forbids it in terms. Same shape as the option-order lesson (prose could not carry a sort, so it became STEP 6) and the register (banned in terms by v1.10, breached nine times, so it became a machine gate). OWED AND FREE: a certifier check that no section appears in two non-contiguous runs, gated by a plugin-declared fact (genon_sections_are_contiguous) so it never touches SS or TWAU - SS VIII ch 3 revisits twice and SS IX ch 3 once under constitutions that never forbade it, and gating them would re-open certified stages over a rule they were never held to."
+  },
+  {
+   "id": "ARV-D-090",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "Claude",
+   "status": "closed",
+   "opened": "2026-08-10T19:39:01",
+   "closed": "2026-08-10T19:39:01",
+   "at": "2026-08-10T19:39:01",
+   "title": "extract_determinate.py read only the SECONDARY shape, so C3's maths sub-check returned ZERO items on maths·middle — a silent pass on an unexamined library",
+   "evidence": "genon/extract_determinate.py. (a) iter_items() knew two containers — {…,'questions':[]} and a FLAT assessment_items list — but not the GROUP-NESTED one maths middle and preparatory use ([{section_code, items:[…]}]). It yielded GROUP dicts, which carry no answer and no stem, so nothing matched. (b) The field read was `item['expected_answer']` / `item['method_one_line']` / `item['question_text']` — the secondary hybrid's TOP-LEVEL shape. Middle and prep put the stem in `prompt` and both answer fields inside `teacher_guide`.\n\nTogether these printed '0 determinate item(s) across 3 file(s)', which reads exactly like 'this library has no computed answers' — the same false negative as a clean bill of health. The library actually carries 29. Third recurrence of the container-shape class after the science `questions` wrapper (S3) and carriers.raw_item_list (S7·P5.5); first one where the failure was SILENT rather than a crash.",
+   "decision": "FIXED 2026-08-10 before C3 ran. iter_items detects the group container by SHAPE (an element that is a dict carrying an `items` list), never by subject; the field read falls back through teacher_guide. Verified both ways: maths·VII 0 → 29 items, maths·IX unchanged at 19 items / 25 checks."
+  },
+  {
+   "id": "ARV-D-091",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "Claude",
+   "status": "closed",
+   "opened": "2026-08-10T19:39:01",
+   "closed": "2026-08-10T19:39:01",
+   "at": "2026-08-10T19:39:01",
+   "title": "extract_determinate.py silently overwrote a FILLED worksheet — destroying S4's completed 25-check artefact, which testing.md cites by name as the ARV-D-084 regression test",
+   "evidence": "Re-running `python3 genon/extract_determinate.py mathematics ix 4` to regression-test the fix above rewrote genon/out/answer_checks/mathematics_ix_ch04_check.py as a blank stub. That file is an hour of hand transcription and testing.md C3 names it as the regression test for the repair_leaked_deliberation fix. Recovered from git — but only because someone happened to check `git status` afterwards. It then happened a SECOND time: the first guard counted a string the stub does not contain ('claimed=None' vs the real 'None,   # claimed'), so it never fired.",
+   "decision": "FIXED 2026-08-10. The tool now compares CHECKS.append(( count against blank-'claimed' count and REFUSES when any line has been transcribed, unless --force. Both directions tested: refuses on the filled maths·IX sheet (rc=1, file intact at 25 checks / 0 WRONG), allows the blank maths·VII sheet. LESSON, worth carrying to every artefact-generating tool in genon/: a generator must not be able to destroy the thing a human filled in, and a guard that is not negative-tested is not a guard."
+  },
+  {
+   "id": "ARV-D-092",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S1",
+   "owner": "Claude",
+   "status": "closed",
+   "opened": "2026-08-10T20:27:34",
+   "closed": "2026-08-10T20:27:34",
+   "at": "2026-08-10T20:27:34",
+   "title": "STEP 6 relabelled MCQ options without remapping teacher_guide.what_each_option_reveals — the correct answer carried a distractor's diagnostic",
+   "evidence": "genon/normalize_options.py remapped the label-keyed guide only at guide[QUESTION_TYPE].what_each_option_reveals — the constitution-family path used by science, social_sciences, TWAU and maths SECONDARY. Mathematics MIDDLE and PREPARATORY keep it at teacher_guide.what_each_option_reveals, so their diagnostics never moved when the options were sorted and relabelled.\n\nch 7 top item 2 (hypotenuse): is_correct=B, and B's diagnostic read 'Same misconception as A — the student picks the other adjacent side', while the correct-answer text sat on C. p10 item 2 was shifted the same way. A missing diagnostic is a gap; this is a CONFIDENT WRONG ONE printed against the answer the class got right — hence S1.\n\nCERTIFIED STAGES ARE NOT AFFECTED by this half: science and maths secondary both keep reveals under guide[MCQ] and were remapped correctly (verified by reading the installed files).\n\nFourth recurrence of the container-shape class: science's `questions` wrapper (S3), carriers.raw_item_list (S7 P5.5), extract_determinate.py (S7 C3, ARV-D-090), this.",
+   "decision": "FIXED AT SOURCE + REPAIRED IN PLACE, 2026-08-10. (a) normalize_options.py now remaps BOTH paths, found by shape, never by subject; negative-tested on a synthetic 4-option permutation and the constitution-family path proven unchanged. (b) Re-running STEP 6 could NOT undo the damage — the options are already sorted so its remap is the identity, and the inverting permutation is returned by normalize_item but deliberately never written to the artefact (founder 2026-08-04). So genon/repair_option_reveals.py applies DECLARED (old->new) label pairs, read off each diagnostic against the option it names, applied only if the mapping is a bijection and the resulting key set equals the non-correct labels. Recorded in genon_canonical.repairs[]. (c) Assessment v3.4/v1.2 make the key set machine-checkable, so this cannot recur silently."
+  },
+  {
+   "id": "ARV-D-093",
+   "combo": "mathematics/secondary",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "founder",
+   "status": "open",
+   "opened": "2026-08-10T20:27:34",
+   "at": "2026-08-10T20:27:34",
+   "title": "Two inclusivity notes in the CERTIFIED maths IX ch 4 library name an option by a letter that STEP 6 has since moved",
+   "evidence": "Corpus sweep 2026-08-10 (S7 C3): exactly 7 answer/guide fields anywhere in the installed corpus name an option by letter in prose. THREE are stale — one in maths VII (repaired under ARV-D-092) and TWO in maths IX ch 4, which is CERTIFIED:\n  ch_04_canonical.json item 2 (correct B): 'verify the identity by substituting small integers for x and y IN OPTION A' — option A is 3x^2-24xy+4y^2, a distractor. You do not verify an identity against a wrong form; written when the answer was A.\n  ch_04_canonical.json item 7 (correct C): 'expand the full sum symbolically and CONFIRM OPTION A' — option A is a distractor.\n\nThe other four are CORRECT AS WRITTEN and are the reason this cannot be automated: ch_04_p12 says 'verify option A by expanding (2x-3)^2' and option A IS 4x^2-9=(2x-3)^2 — the task is to disprove it; science VIII p07 says 'rewrite option D so it is correct' and D IS the wrong hardness claim.\n\nROOT CAUSE, and it is not the mapping bug: an answer key exists in TWO representations. STRUCTURAL (is_correct, label-keyed dicts) travels with a sort. PROSE (a letter inside a sentence) cannot be rewritten by any sort without rewriting meaning. A9 at v1.7 already established the principle — an option may not refer to another option BY LABEL, 'because options are ordered downstream and a label reference would be falsified' — but A9 was scoped to options and never to the answer or guide fields.",
+   "decision": "OPEN — founder's call, and it is a defect against a CERTIFIED stage, so it is raised here rather than absorbed by S7. Three options, increasing scope: (1) repair the two notes in place (they name a distractor that is no longer at that letter); (2) add a certifier check listing every label-reference in a prose field and failing when the named label is not is_correct AND the prose does not quote that option's content — the four legitimate cases pass that test, the three stale ones do not; (3) widen A9 across all eleven constitutions from 'no option may name another option's label' to 'no field may name an option's label — name its content instead', which prevents rather than detects."
+  },
+  {
+   "id": "ARV-D-094",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "founder",
+   "status": "closed",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T20:56:37",
+   "title": "LP Rule 1 and the schema cap a unit at 1–2 adjacent sections, but v2.0 MANDATES a synthesis unit spanning all of them — a rule/brief collision, not a generation defect",
+   "evidence": "ch_07_canonical unit 12 carries FIVE textbook_segments (section 7.1…7.5) with synthesis: true, against Rule 1's 'one or at most two adjacent sections' and the schema's '// 1-2 entries'. The model did exactly what the platform brief told it to. Contiguity itself is clean after the unit-order repair: runs 7.1(1)·7.2(2,3,4)·7.3(5-8)·7.4(9)·7.5(10,11)·synthesis(12), zero revisits; p07 contiguous as authored.",
+   "decision": "CLOSED 2026-08-10 by LP v3.7. Founder's correction: this is not a synthesis carve-out, it is Rule 1 and Rule 2 capping the same many-to-many relation from opposite directions, and v3.6 widened only Rule 2 (one SECTION over many PERIODS). Rule 1 governs one PERIOD over many SECTIONS and still named a number. It now reads 'A period anchors to as many ADJACENT sections as its content warrants' — Rule 2's own wording from the other side — and the schema's '1-2 entries' cap goes with it. The synthesis unit is NOT named: the mandate is V-series and testing.md section 3 keeps it out of constitutions; 'as its content warrants' covers it. RELAXATION-ONLY, so no re-author: the installed library becomes compliant rather than breaching.",
+   "closed": "2026-08-10T20:56:37"
+  },
+  {
+   "id": "ARV-D-095",
+   "combo": "cross",
+   "step": "C3",
+   "severity": "S4",
+   "owner": "founder",
+   "status": "closed",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T21:22:58",
+   "title": "The LP header block (core_cg, core_competencies, adjunct_competencies, periods_allocated, dissolution_test) is absent from EVERY authored canonical, across certified stages too",
+   "evidence": "LP Rule 7 mandates a chapter header table. Absent from ch_07_canonical and ch_07_canonical_p07 — and not a save-path artefact: the raw model output ch_07_20260810_184152_raw.txt lacks them, and so do CERTIFIED social_sciences/ix/ch_03 (S1) and mathematics/ix/ch_04 (S4). The assessment envelope likewise omits its mandated 'stage' key everywhere.",
+   "decision": "WON'T FIX — founder, 2026-08-10. The LP header block is absent from SECONDARY too, so it is not a middle-stage defect and not a regression; it is a rule no stage has ever satisfied.\n\nAND MIDDLE CANNOT SATISFY IT EVEN IF ASKED. The competency data reaches an assessment through the COVERAGE HANDOFF, and the two stages' handoffs differ in kind. Verified 2026-08-10: maths IX's handoff entries carry c_code and co_central (keys: c_code, co_central, implied_lo, period_duration_minutes, period_numbers, section_context, section_number, section_ref, section_title, total_sections) and its items carry `competency`. Maths VII's goal entries carry only anchor_book_ref, anchor_description, anchor_id, goal, section_ref, section_title — no competency channel exists at all, and its items carry none. Middle's LP Rule 8 is the reason: 'Competencies do not drive LP … never in periods, time bands, or teacher_notes.'\n\nSo the header block is a secondary-shaped requirement sitting in a middle-stage file. Striking it from Rule 7 is the honest fix, but it is a corpus-wide question and is deferred, not done.",
+   "closed": "2026-08-10T21:22:58"
+  },
+  {
+   "id": "ARV-D-096",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S4",
+   "owner": "founder",
+   "status": "closed",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T21:22:58",
+   "title": "LP Rule 10's 10-word cap on the bracketed textbook-item description is breached on 26 of 26 brackets in the canonical and 15 of 20 in p07",
+   "evidence": "Worst case 33 words (canonical u4, band 6-26): 'Find 3 examples each of sidelength sets where the two circles: (a) touch each other at a point; …'. Format, book_ref narration and the internal-ID ban all hold — 0 A-/E-/WE- tokens in teacher-facing prose, and 0 WE-n anywhere (the chapter has no worked examples at all).",
+   "decision": "IGNORED — founder, 2026-08-10. Rule 10's 10-word cap on the bracketed textbook-item description is waived. It is the fourth numeric limit this stage's live output has disproved and the founder declined to keep litigating a number. The cap is NOT amended in the file; it is simply not enforced, and C3 will not raise it again for this stage.\n\nThe question it opened is bigger and is carried separately: how much of a textbook's wording Aruvi should reproduce at all. See the doctrine note 'textbook reproduction — the open question'.",
+   "closed": "2026-08-10T21:22:58"
+  },
+  {
+   "id": "ARV-D-097",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S4",
+   "owner": "founder",
+   "status": "closed",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T21:25:00",
+   "title": "Assessment Rule 6's 25-word inclusivity cap is breached on all 19 items across both files (41-71 words)",
+   "evidence": "Canonical 41-69 words, p07 47-71. Rule 6: 'An OBJECT with two keys, each ONE short clause (together <= 25 words).' Not one item complies.",
+   "decision": "IGNORED — founder, 2026-08-10: 'ignore inclusivity gap, its fine and useful'. The 25-word cap is not enforced. Worth recording WHY the breach is benign where Rule 10's was merely tolerated: the over-length text is Aruvi's OWN prose doing real work — a support move and a challenge move, both actionable — so length here buys the teacher something, where a longer textbook quotation bought nothing and carried a reproduction question. Same numeric-cap class, opposite verdict, for a reason.",
+   "closed": "2026-08-10T21:25:00"
+  },
+  {
+   "id": "ARV-D-098",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S2",
+   "owner": "founder",
+   "status": "accepted",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T21:25:00",
+   "title": "Assessment Rule 3 breached: Q-C-7 solves by Pythagoras, which the chapter never teaches, and copies its anchor's entity and wording",
+   "evidence": "Rule 3: the prompt 'MUST be solvable using only methods, definitions, vocabulary, and worked-example procedures present in the section's prose_summary… Out-of-chapter procedures, properties, and notations are PROHIBITED', and 'must NOT copy the anchor's specific numbers, named entities, or wording'. Q-C-7 (spider/box shortest path) copies E-30's entity and wording and its answer is sqrt(12^2+5^2)=13 — grep -c 'Pythagor' on ch_07_summary.json returns 0. Q-A-1 separately copies E-26's numbers verbatim (5 cm, 6 cm, 5 cm).",
+   "decision": "ACCEPTED — founder, 2026-08-10: 'exceptional case, not worth wasting time'. Q-C-7 (spider/box shortest path) reaches its answer by Pythagoras, which grep shows 0 times in the chapter summary, and copies its anchor's entity. Severity lowered S1 -> S2 on the founder's reading: the item is solvable and its answer is correct (13 cm), the flat 12x5 framing makes the diagonal reachable without naming the theorem, and one item in nineteen does not warrant a re-author. LEFT AS THE STANDING EXAMPLE of what C3's rule-by-rule read catches and the determinate sub-check cannot: the arithmetic was right, so only reading Rule 3 against the summary found it."
+  },
+  {
+   "id": "ARV-D-099",
+   "combo": "mathematics/middle",
+   "step": "C3",
+   "severity": "S4",
+   "owner": "founder",
+   "status": "closed",
+   "opened": "2026-08-10T20:41:45",
+   "at": "2026-08-10T21:25:00",
+   "title": "LP Rule 11 anchor-selection breached once per file",
+   "evidence": "Canonical section_c[6] anchors E-30 for unit 12, whose own pools are [E-23, E-29] with empty homework — E-30 is in neither, and 7.5 declares only 'recall' while the unit is 'apply'. p07 section_c[3] anchors E-25 where unit 6's array is [A-1, E-24, E-25] and the unused exercise E-24 precedes it in array order. Counts and ordering are otherwise exact (12<->12, 7<->7) and every anchor id exists in the summary.",
+   "decision": "IGNORED — founder, 2026-08-10. One anchor-selection breach per file; the exercise companion still points at a real chapter item, so the teacher's fallback works. Not raised again for this stage.",
+   "closed": "2026-08-10T21:25:00"
   }
  ],
  "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",
@@ -2220,6 +2422,16 @@
    "at": "2026-08-10T13:01:53",
    "title": "read-after-write — areas 1-5 complete",
    "note": "AREAS 1-5 ARE LIVE (2026-08-10). Area 6 is impossible and stays out.\n\n1 PROFILE — all THREE live write sites, not the one first shipped: TeachingProfile.persist\n  (settings gear + '+' portal), page.jsx onFirstRunComplete (THE ACTIVATION WRITE — it ended in\n  an empty catch, so a lost profile looked exactly like successful setup until her next\n  sign-in) and page.jsx onReadyComplete. On mismatch the shell re-syncs BOTH `readiness` AND\n  `ready` from Y', because leaving ready=true over an empty profile would strand her in a shell\n  with no classes and no explanation. MyClasses.jsx:97 is a fourth site but the component is\n  DEAD CODE (imported nowhere) — left alone deliberately.\n2 PREPARE — after the serve returns a filename, Y is knowable: 'that lesson is in MY prepared\n  register'. Verified against GET /plans-prepared; a mismatch means the plan was built but\n  never became hers, which she would otherwise meet as an unexplained absence in My Lessons.\n  Reported through the SAME failed-card surface ARV-D-087 built.\n3 ARCHIVE / RESTORE — one verifier for both directions, since they are the same fact inverted.\n  This pair was already the best-behaved code in the app (revert + toast on a throw) but a\n  throw is not the criterion: the archive may have landed with the response lost.\n4+5 SECTION CARD — both go through pushSectionState, the single shared writer, so ONE change\n  covers attach, unbind and mark-complete. Y = {chapter, done}; `done` is compared only when\n  asked for, so an attach is never failed by a done-flag it did not set. On mismatch the shell\n  re-pulls that section before speaking. A module-level handler rather than a return value,\n  because pushSectionState is fire-and-forget from a dozen call sites.\n\nCOMPARATORS TESTED: tests/test_verify_readiness.mjs, 17 -> 31 checks, all green. The additions\nassert the things that would make it cry wolf: another grade's plan does not count as hers; an\nattach is not failed by a done flag; a section she never touched is not judged.\n\nSTILL TRUE, and the reason this is a rule rather than error-handling: a throw is never the\ncriterion, and an unreachable server is 'cannot tell', not 'failed'. Only a read-back\ndisagreement speaks."
+  },
+  {
+   "at": "2026-08-10T21:22:58",
+   "title": "S7 founder calls that must carry into BULK BATCH GENERATION",
+   "note": "Recorded at S7 C3 (2026-08-10) at the founder's instruction: 'keep track of all of this as when we do bulk batch generation, we will apply same logic there too.' These are STANDING decisions, not S7 findings, and the batch pre-warm must apply them rather than re-derive them.\n\n1. NUMERIC LIMITS ARE THE FIRST THING LIVE GENERATION DISPROVES. Four fell in one chapter: Rule 5's consecutive-method cap (amended, v3.5), Rule 2's two-adjacent-period cap (amended, v3.6, and it was FORCING the revisits), Rule 1's one-or-two-sections cap (amended, v3.7), Rule 10's 10-word bracket cap (waived, ARV-D-096). The 25-word inclusivity cap (ARV-D-097) is the same class and is still open. AT BATCH: read every numeric bound in a constitution before authoring at scale, because catching one at P1 is free and catching it after 926 runs is not.\n\n2. RULE 1 AND RULE 2 CAP THE SAME RELATION FROM OPPOSITE DIRECTIONS. Rule 2 governs one SECTION over many PERIODS; Rule 1 governs one PERIOD over many SECTIONS. Amending one without the other leaves the model boxed in on the axis you did not touch. Both now read 'as many ADJACENT … as its content warrants'.\n\n3. THE MODEL ENDS PLANS BY LOOPING BACK, and prose does not stop it. Three occurrences in one chapter, twice against text forbidding it in terms. Same lesson as option ordering (became STEP 6) and the register (became a machine gate). AT BATCH: the contiguity certifier check is owed BEFORE volume, or the defect ships at corpus scale.\n\n4. THE HEADER BLOCK IS NOT COMING (ARV-D-095). No stage emits it; middle structurally cannot, because its handoff carries no competency channel and Rule 8 forbids one. Do not treat its absence as a batch defect.\n\n5. CONTAINER SHAPE IS THE RECURRING BUG CLASS — five instances now: science's `questions` wrapper (S3), carriers.raw_item_list, extract_determinate.py, normalize_options' guide path, and the assessment item-group nesting. AT BATCH: any tool that walks items must be shape-based and must be exercised on a maths-middle file, an english file and a science file before it runs at volume — a silent zero reads exactly like a clean pass.\n\n6. A GENERATOR MUST NOT BE ABLE TO DESTROY A FILLED ARTEFACT (ARV-D-091). Guard every artefact-writing tool, and negative-test the guard."
+  },
+  {
+   "at": "2026-08-10T21:22:58",
+   "title": "textbook reproduction — the open question (C14)",
+   "note": "DEFERRED by the founder, 2026-08-10, and framed by him thus: 'what are the copyright aspects involved when books are NOT being reproduced? Assessment items are GENERATED, and textbook items are shown as ADDITIONAL WORK only and are not solved for.'\n\nThat framing is the strongest fact in Aruvi's favour and should lead the analysis: the student-facing question is authored by Aruvi from the chapter summary's prose; the textbook item is a POINTER offered to the teacher as parallel practice, and Aruvi neither reprints nor solves it.\n\nSCOPE, measured 2026-08-10 — narrower than it looks:\n  · assessment `exercise` companion (book_ref + description): mathematics MIDDLE and PREPARATORY ONLY. Maths secondary has none; science, social_sciences, TWAU and all three English stages have none.\n  · LP `book_ref` citation: all THREE maths stages (middle 11 hits, prep 11, secondary 8). Secondary LOCATES only in prose but still carries a `description` string in its structured items — so a policy scoped to 'middle and prep' would miss it.\n  · non-maths subjects never cite a textbook item at all.\n\nTHE INTERNAL CONTRADICTION to resolve either way: the LP constitution's DESIGN PRINCIPLE says the LP 'does NOT reprint item content', and Rule 10 forty lines later mandates the description 'in brackets and inverted commas'. Also, `step_1_chapter_summary.md` never says whether `description` should be verbatim or a gist, so every description in the corpus is unconstrained — today they read as paraphrase.\n\nFOUNDER'S LEANING: quote the content in inverted commas and credit '(Source: NCERT)'. Two cautions recorded with it — attribution is not permission (it addresses passing-off, not copying), and marking a paraphrase as a quotation misattributes Aruvi's words to NCERT, so quotes require verbatim capture and therefore a summary re-author. Suggested refinement: credit once per artefact from a recorded `textbook_source` field rather than per item and rather than hard-coding a publisher.\n\nNOT A LEGAL OPINION. Needs counsel before spend. Precedent already inside the product: Rule 7 forbids reproducing FIGURES and says to point at them instead — 'Refer to Fig. 5.6 in §5.3 of your textbook'."
   }
  ]
 }

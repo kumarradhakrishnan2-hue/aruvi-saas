@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.2
+ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.1
 Stage: Preparatory (Grades III–V) · Maths Mela
 
 ================================================================================
@@ -149,11 +149,9 @@ Every non-fallback item carries `teacher_guide`:
   method_one_line:   one sentence naming the CHAPTER method that yields
                      the answer (e.g. "Compare hundreds first, then tens.").
                      This is the solving method, NOT the teaching method.
-  what_each_option_reveals: MCQ only — ONE ENTRY PER NON-CORRECT option,
-                     keyed to that option's label, each a one-sentence
-                     diagnostic of the misconception that option reveals.
-                     OMIT THE CORRECT OPTION (three entries, not four):
-                     it is already marked by `is_correct`. {} for non-MCQ.
+  what_each_option_reveals: MCQ only — object keyed "A".."D", each a
+                     one-sentence diagnostic of the misconception that
+                     option reveals. {} for non-MCQ.
   inclusivity:       one sentence (≤ 25 words) giving BOTH a support for
                      the struggling student AND a stretch, fitted to the
                      intent:
@@ -257,7 +255,7 @@ ASSESSMENT JSON SCHEMA
           "teacher_guide": {
             "expected_answer":          string,
             "method_one_line":          string,
-            "what_each_option_reveals": { "A": string, "C": string,
+            "what_each_option_reveals": { "A": string, "B": string,
                                           "C": string, "D": string } | {},
             "inclusivity":              string
           },
