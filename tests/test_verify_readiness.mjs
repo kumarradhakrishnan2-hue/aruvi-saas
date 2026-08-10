@@ -6,7 +6,8 @@
  *
  *   node tests/test_verify_readiness.mjs
  */
-import { verifiedWrite, readinessFingerprint } from "../web/app/lib/verify.js";
+import { verifiedWrite, readinessFingerprint, planIsPrepared, planIsArchived,
+         sectionStateMatches } from "../web/app/lib/verify.js";
 
 let fails = 0;
 const ok = (label, cond, detail = "") => {
@@ -100,6 +101,39 @@ const r5 = await verifiedWrite({
   expect: () => { throw new Error("bad comparator"); },
 });
 ok('a throwing comparator -> "unverified", never a false alarm', r5.status === "unverified", r5.status);
+
+console.log("\nAREA 2 · the lesson is mine");
+ok("present, object register",
+   planIsPrepared({ "mathematics/ix/ch_04_50m13.json": {} }, "mathematics", "ix", "ch_04_50m13.json"));
+ok("present, array register",
+   planIsPrepared([{ key: "mathematics/ix/a.json" }], "mathematics", "ix", "a.json"));
+ok("absent -> false", !planIsPrepared({}, "mathematics", "ix", "a.json"));
+ok("another teacher's grade does not count",
+   !planIsPrepared({ "mathematics/viii/a.json": {} }, "mathematics", "ix", "a.json"));
+
+console.log("\nAREA 3 · archived / restored (the same fact, inverted)");
+ok("archived", planIsArchived({ "science/ix/p.json": {} }, "science", "ix", "p.json"));
+ok("restored", !planIsArchived({}, "science", "ix", "p.json"));
+
+console.log("\nAREAS 4+5 · the section card");
+const S = { science_ix_9A: { chapter: "ch_08.json", done: false } };
+ok("attached to the right chapter",
+   sectionStateMatches(S, "science_ix_9A", { chapter: "ch_08.json" }));
+ok("attached to a DIFFERENT chapter -> mismatch",
+   !sectionStateMatches(S, "science_ix_9A", { chapter: "ch_09.json" }));
+ok("attach is not failed by a done flag it never set",
+   sectionStateMatches(S, "science_ix_9A", { chapter: "ch_08.json" }));
+ok("mark complete, server still false -> mismatch",
+   !sectionStateMatches(S, "science_ix_9A", { chapter: "ch_08.json", done: true }));
+ok("mark complete, server true -> ok",
+   sectionStateMatches({ science_ix_9A: { chapter: "ch_08.json", done: true } },
+                       "science_ix_9A", { chapter: "ch_08.json", done: true }));
+ok("unbind: no row is what we wanted",
+   sectionStateMatches({}, "science_ix_9A", { chapter: null }));
+ok("unbind: a surviving row -> mismatch",
+   !sectionStateMatches(S, "science_ix_9A", { chapter: null }));
+ok("a section we never touched is not judged",
+   sectionStateMatches(S, "science_ix_9B", { chapter: null }));
 
 console.log(fails ? `\n${fails} FAILURE(S)` : "\nall verification checks passed");
 process.exit(fails ? 1 : 0);

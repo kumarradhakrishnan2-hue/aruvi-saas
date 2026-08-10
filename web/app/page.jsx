@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser } from "./lib/format";
+import { verifiedWrite, readinessFingerprint } from "./lib/verify";
+import { setSectionMismatchHandler, pullSectionState } from "./lib/sectionState";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
@@ -86,6 +88,20 @@ export default function Home() {
   const finishTour = () => { setAskOpen(false); setTour(null); setTourDismissed(true); };
   const startTour = () => setTour(1);
 
+  // Areas 4 + 5: a VERIFIED section mismatch — the class is not on the chapter she just
+  // attached, or not marked complete. pushSectionState calls this only when the server was read
+  // back and disagrees; never on a throw, never when unreachable. Re-pull so the cards show the
+  // truth, then say one sentence.
+  const [sectionFailed, setSectionFailed] = useState("");
+  useEffect(() => {
+    setSectionMismatchHandler((sectionKey) => {
+      pullSectionState([sectionKey]).finally(() => {
+        setSectionFailed("That didn’t save — your classes are as Aruvi has them.");
+      });
+    });
+    return () => setSectionMismatchHandler(null);
+  }, []);
+
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
 
@@ -152,6 +168,34 @@ export default function Home() {
   // `ready` so the shell opens with her new section card(s) already visible in My Plans, and
   // scope the Generate tab to what she just set up. `ready` is now the ONLY activation signal
   // (see the comment above the component) — no separate local flag to keep in sync.
+  // ── READ-AFTER-WRITE for the shell's two readiness writes (founder doctrine, 2026-08-10)
+  // X = the profile before setup · A = this save · Y = the subjects[] she just built · Y′ =
+  // GET /readiness. Error IFF Y′ ≠ Y. A throw is not a criterion and an unreachable server is
+  // not an error — it is a state in which the check cannot run. Same rule, same helper and the
+  // same tested fingerprint as TeachingProfile; only the surface differs, because here she is
+  // in the shell rather than on the profile screen.
+  const [saveFailed, setSaveFailed] = useState(false);
+  const verifyReadiness = (subs) => {
+    const want = readinessFingerprint(subs);
+    verifiedWrite({
+      write: () => fetch(`${API}/readiness`, withUser({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subjects: subs }),
+      })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }),
+      read: () => getJSON("/readiness").then((d) => (d && d.readiness) || d || {}),
+      expect: (y) => readinessFingerprint(y.subjects) === want,
+    }).then(({ status, actual }) => {
+      if (status !== "mismatch") return;
+      // Y′ is the truth, including whether she is set up at all. Leaving `ready` true over an
+      // empty profile would strand her in a shell with no classes and no explanation.
+      const real = (actual && actual.subjects) || [];
+      setReadiness(projectReadiness({ subjects: real }));
+      setReady(real.length > 0);
+      setSaveFailed(true);
+    });
+  };
+
   const onFirstRunComplete = (payload) => {
     const subs = (payload && payload.subjects) || [];
     if (subs.length) {
@@ -160,11 +204,10 @@ export default function Home() {
       const first = subs[0];
       setSubject(subjectSlugify(first.name));
       if (first.grades && first.grades[0]) setGrade((first.grades[0].grade || "").toLowerCase());
-      fetch(`${API}/readiness`, withUser({
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subjects: subs }),
-      })).catch(() => {});
+      // READ-AFTER-WRITE (lib/verify.js). This is the ACTIVATION write — the one that turns a
+      // first-time teacher into a set-up one — and it used to end in an empty catch, so a lost
+      // profile looked exactly like a successful setup until her next sign-in.
+      verifyReadiness(subs);
     }
   };
 
@@ -189,11 +232,7 @@ export default function Home() {
   const onReadyComplete = (payload) => {
     setReadiness(payload);
     setReady(true);
-    fetch(`${API}/readiness`, withUser({
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subjects: (payload && payload.subjects) || [] }),
-    })).catch(() => {});
+    verifyReadiness((payload && payload.subjects) || []);
   };
 
 
@@ -448,6 +487,22 @@ export default function Home() {
       <div className="bodycontent">
 
         <main>
+          {/* Shown only on a VERIFIED mismatch — the server was read back and disagrees with
+              what she just set up. Never on a throw, never when the server could not be
+              reached. `ready` and the profile above have already been re-synced to what is
+              actually stored, so this is a caption for the screen she is now looking at. */}
+          {saveFailed && (
+            <div className="tp-savefail" role="alert">
+              <span>Your teaching set-up didn’t save — this is what Aruvi has for you.</span>
+              <button type="button" onClick={() => setSaveFailed(false)}>Dismiss</button>
+            </div>
+          )}
+          {sectionFailed && (
+            <div className="tp-savefail" role="alert">
+              <span>{sectionFailed}</span>
+              <button type="button" onClick={() => setSectionFailed("")}>Dismiss</button>
+            </div>
+          )}
           {/* Edit-flow views (My Lessons / teaching profile) require a set-up profile. A
            * not-ready user is always routed to the setup flow instead of a dead-end empty
            * view — readiness gates these the same way it gates Generate. */}

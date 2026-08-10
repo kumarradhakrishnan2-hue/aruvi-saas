@@ -8,6 +8,7 @@
  *
  * The three keys per section, so the naming can never drift between reader and writer: */
 import { API, withUser, getJSON } from "./format";
+import { verifiedWrite, sectionStateMatches } from "./verify";
 
 const chapterKey = (sk) => `current_chapter_${sk}`;
 const pointerKey = (sk) => `lu_pointer_${sk}`;
@@ -94,17 +95,36 @@ export function readLocalSection(sectionKey) {
  * (optimistic). Fire-and-forget — a failed sync never blocks or breaks the UI; the local
  * cache still reflects the teacher's action, and the next successful push reconciles.
  * No chapter bound → the section is untracked → DELETE the row. */
+/* Callers register here to hear about a VERIFIED mismatch — the server was read back and this
+ * section is not in the state the teacher just put it in (areas 4 and 5 of the founder's six:
+ * attaching a lesson to a class, and marking it complete). Not called on a throw, and not
+ * called when the server could not be reached: those are "we cannot tell", not "it failed".
+ * A module-level sink rather than a return value because pushSectionState is fire-and-forget
+ * from a dozen call sites, and threading a promise through all of them would change every one. */
+let onSectionMismatch = null;
+export function setSectionMismatchHandler(fn) { onSectionMismatch = fn; }
+
 export function pushSectionState(sectionKey) {
   if (typeof window === "undefined" || !sectionKey) return;
   const { chapter, unit, done } = readLocalSection(sectionKey);
   const bm = readLocalBookmark(sectionKey);
+  // Y, known upfront: this section tracks `chapter` and is (or is not) done — or, when there is
+  // no chapter, has NO row at all, which is what an unbind must produce.
+  const want = chapter ? { chapter, done: !!done } : { chapter: null };
+  const verify = (doWrite) => verifiedWrite({
+    write: doWrite,
+    read: () => getJSON("/section-state").then((d) => (d && d.states) || {}),
+    expect: (states) => sectionStateMatches(states, sectionKey, want),
+  }).then(({ status }) => {
+    if (status === "mismatch" && onSectionMismatch) onSectionMismatch(sectionKey, want);
+  });
   try {
     if (!chapter) {
-      fetch(`${API}/section-state/${encodeURIComponent(sectionKey)}`,
-        withUser({ method: "DELETE" })).catch(() => {});
+      verify(() => fetch(`${API}/section-state/${encodeURIComponent(sectionKey)}`,
+        withUser({ method: "DELETE" })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }));
       return;
     }
-    fetch(`${API}/section-state`, withUser({
+    verify(() => fetch(`${API}/section-state`, withUser({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -118,7 +138,7 @@ export function pushSectionState(sectionKey) {
         bookmark_unit: bm ? bm.unit : null,
         bookmark_phase: bm ? bm.phase : null,
       }),
-    })).catch(() => {});
+    })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }));
   } catch {}
 }
 

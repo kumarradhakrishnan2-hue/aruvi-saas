@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pad, pretty, userKey, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
+import { verifiedWrite, planIsArchived } from "../lib/verify";
 import LessonView from "./LessonView";
 import YearPlan from "./YearPlan";
 import { RollWheel } from "./wheels";
@@ -525,6 +526,24 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
 
   const body = (p) => ({ subject: sSlug, grade: gSlug, filename: p.filename });
 
+  /* One verifier for both directions — archive and restore are the same fact inverted, so
+     `want` is a boolean rather than two near-identical blocks. On a verified mismatch the
+     optimistic flag is put back to the truth and she is told; on "unverified" nothing is said
+     and nothing is reverted, because we do not know that it failed. */
+  const verifyArchive = (p, want, doWrite) => {
+    verifiedWrite({
+      write: doWrite,
+      read: () => getJSON("/plan-archive").then((d) => (d && (d.archived || d.plans)) || d || {}),
+      expect: (y) => planIsArchived(y, sSlug, gSlug, p.filename) === want,
+    }).then(({ status }) => {
+      if (status !== "mismatch") return;
+      setArchivedFlag(p.filename, !want);
+      setToast({ kind: "block",
+                 text: want ? "That didn’t archive — it’s still in your lessons."
+                            : "That didn’t restore — it’s still archived." });
+    });
+  };
+
   const archivePlan = (p, e) => {
     if (e) e.stopPropagation();
     // Safety only — the archive icon is never rendered for an attached plan, so this can't be
@@ -532,28 +551,25 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     if (isAttached(p)) return;
     setArchivedFlag(p.filename, true);
     setToast({ kind: "ok", text: "Moved to Archive — find it in the box above." });
-    fetch(`${API}/plan-archive`, withUser({
+    // READ-AFTER-WRITE (area 3). This pair already reverted-and-toasted on a throw, which was
+    // the best behaviour in the app — but a throw is not the criterion: the archive may have
+    // landed with the response lost. Y = "this plan IS in the archive"; Y′ = GET /plan-archive.
+    verifyArchive(p, true, () => fetch(`${API}/plan-archive`, withUser({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body(p)),
-    })).then((r) => { if (!r.ok) throw new Error(); }).catch(() => {
-      setArchivedFlag(p.filename, false);   // revert the optimistic move
-      setToast({ kind: "block", text: "Couldn't archive just now — please try again." });
-    });
+    })).then((r) => { if (!r.ok) throw new Error(); }));
   };
 
   const restorePlan = (p, e) => {
     if (e) e.stopPropagation();
     setArchivedFlag(p.filename, false);
     setToast({ kind: "ok", text: "Restored to your lessons." });
-    fetch(`${API}/plan-archive`, withUser({
+    verifyArchive(p, false, () => fetch(`${API}/plan-archive`, withUser({
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body(p)),
-    })).then((r) => { if (!r.ok) throw new Error(); }).catch(() => {
-      setArchivedFlag(p.filename, true);
-      setToast({ kind: "block", text: "Couldn't restore just now — please try again." });
-    });
+    })).then((r) => { if (!r.ok) throw new Error(); }));
   };
 
   // Auto-dismiss the toast after a few seconds.

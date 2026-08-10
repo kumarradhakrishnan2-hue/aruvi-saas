@@ -63,6 +63,42 @@ export async function verifiedWrite({ write, read, expect }) {
  * optional, and a mismatch there would be a normalisation artefact rather than lost work —
  * exactly the false alarm that would teach her to ignore the real one.
  */
+/* ── areas 2–5: PREDICATES, not equalities ───────────────────────────────────────────
+ * The profile is the only area where Y is a value she composed. Everywhere else she cannot
+ * know the artefact's name in advance — but she does know the PROPERTY that must hold, and
+ * that is all the rule needs. Each of these answers one question, in her terms.
+ */
+
+/* Area 2 · "the lesson I asked for is now mine." The plans-prepared register is keyed
+ * `{subject}/{grade}/{filename}`; the filename comes back from the serve, so by the time we
+ * verify we do know it. */
+export function planIsPrepared(prepared, subject, grade, filename) {
+  const key = `${subject}/${grade}/${filename}`;
+  if (Array.isArray(prepared)) return prepared.some((p) => (p && (p.key || p)) === key);
+  return !!(prepared && Object.prototype.hasOwnProperty.call(prepared, key));
+}
+
+/* Area 3 · "that lesson is in the archive" / "it is back in my lessons." One predicate, a
+ * flag for the direction, because archive and restore are the same fact inverted. */
+export function planIsArchived(archive, subject, grade, filename) {
+  const key = `${subject}/${grade}/${filename}`;
+  if (Array.isArray(archive)) return archive.some((p) => (p && (p.key || p)) === key);
+  return !!(archive && Object.prototype.hasOwnProperty.call(archive, key));
+}
+
+/* Areas 4 and 5 · the section card. Attaching asks "this class is now on that chapter";
+ * marking complete asks "this class has finished it". Both read one row, so both share a
+ * comparator: `want.chapter` (null = expect no row at all, i.e. an unbind) and, when given,
+ * `want.done`. `done` is compared only when asked for, so an attach is not failed by a
+ * done-flag it never set. */
+export function sectionStateMatches(states, sectionKey, want) {
+  const row = (states || {})[sectionKey];
+  if (!want || want.chapter === null) return !row || !row.chapter;
+  if (!row || row.chapter !== want.chapter) return false;
+  if (typeof want.done === "boolean" && !!row.done !== want.done) return false;
+  return true;
+}
+
 export function readinessFingerprint(subjects) {
   return JSON.stringify(
     (subjects || [])

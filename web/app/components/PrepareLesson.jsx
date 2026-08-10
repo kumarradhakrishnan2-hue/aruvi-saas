@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
+import { verifiedWrite, planIsPrepared } from "../lib/verify";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
 
@@ -318,6 +319,20 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       try {
         const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
           { rows: matrix });
+        // READ-AFTER-WRITE (area 2, lib/verify.js). The serve returned a filename, so Y is now
+        // knowable: "that lesson is in MY prepared register". Verified against
+        // GET /plans-prepared. A mismatch means the plan was built but never became hers — she
+        // would find it missing from My Lessons with no idea why. The write is already done
+        // above, so this call only READS; `write` is a no-op.
+        verifiedWrite({
+          write: async () => {},
+          read: () => getJSON("/plans-prepared").then((d) => (d && (d.prepared || d.plans)) || d || {}),
+          expect: (y) => planIsPrepared(y, subject, grade, resp.filename),
+        }).then(({ status }) => {
+          if (status !== "mismatch") return;
+          if (onPrepareError) onPrepareError(descriptor,
+            "The lesson was built but didn’t reach your lessons — please prepare it again.");
+        });
         await holdPreparing(startedAt, !!resp.already_yours);
         if (onPrepared) { onPrepared({ subject, grade, filename: resp.filename, chapterNo }); return; }
         // No return handler → show the freshly adapted plan.
