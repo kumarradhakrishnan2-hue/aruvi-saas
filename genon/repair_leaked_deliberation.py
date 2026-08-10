@@ -34,6 +34,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PLANS = ROOT / "data/content/saved_plans"
 BACKUP = ROOT / "backup/answer_repair"
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from purge_derived import purge                                    # noqa: E402
+
 # --------------------------------------------------------------------------------------
 # The repair table. Every edit names the item by its 1-based position in the flattened
 # question stream (the same index C3's battery and carriers.assessment_items() use), and
@@ -230,11 +233,19 @@ def main() -> int:
     stamp = now.replace("-", "").replace(":", "").replace("T", "_")
 
     failed = False
+    touched = set()
     for spec in REPAIRS:
         line = apply_file(spec, stamp, now, args.dry_run)
         if line.startswith("REFUSED"):
             failed = True
+        if line.startswith("REPAIRED"):
+            subject, grade, name = spec["path"].split("/")
+            touched.add((subject, grade, int(name.split("_")[1])))
         print(line)
+    # PURGE THE DERIVED PLANS (testing.md C10.2b, ARV-D-034) — an in-place repair does not
+    # move the cache key, so pre-repair bytes would keep being served. Found missing at S4's C10.
+    for subject, grade, ch in sorted(touched):
+        purge(subject, grade, ch, reason=f"{TOOL} — leaked-deliberation repair")
     return 1 if failed else 0
 
 

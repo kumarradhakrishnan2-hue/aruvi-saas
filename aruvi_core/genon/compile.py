@@ -84,10 +84,21 @@ def _anchor_items(items, band_unit, unit_numbers):
 _MODELLED = frozenset({
     "period_number", "period_duration_minutes", "activity_title", "section_anchor",
     "section_context", "materials", "visual_aids", "time_bands", "phases",
-    "teacher_notes", "homework", "competency_edges", "pedagogical_approach",
-    "pedagogical_approaches", "pedagogical_method", "pedagogical_methods",
-    "dominant_mode", "synthesis",
+    "teacher_notes", "homework", "competency_edges", "synthesis",
 })
+
+# ── the APPROACH keys are deliberately NOT modelled (2026-08-09, ARV-D-086, at S4's C6)
+# They used to be listed above, and that is what broke them: being "modelled" removed them
+# from `extra`, so serve spliced back nothing, while the only key the served period gained
+# was the NORMALIZED `pedagogical_approaches` — which four of the five subject ports do not
+# read. Each port reads the key its own constitution emits (`pedagogical_method` maths ·
+# `pedagogical_approach` science · `pedagogical_methods` english · `dominant_mode` TWAU ·
+# `pedagogical_approaches` SS), so only SS survived a serve and eight of eleven stages
+# rendered every served plan with an EMPTY approach line — CLAUDE.md §3(b)'s single
+# canonical "how do I run this?" line, missing from the artefact the teacher actually gets.
+# Letting them ride in `extra` restores each subject's own key verbatim, which is precisely
+# what `extra` is for and why serve._period_from_unit splices it FIRST. The engine still
+# publishes the normalized list below for its own use; it just no longer swallows the source.
 
 
 def compile_stream(plan: dict) -> dict:

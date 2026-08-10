@@ -367,7 +367,20 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "17"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "18"     # BUMP when compile/serve change the OUTPUT
+# 18 (2026-08-09): THE APPROACH LINE SURVIVES A SERVE (ARV-D-086, found at S4's C6).
+# compile.py's `_MODELLED` listed all five approach key names, which removed them from
+# `unit["extra"]` — so serve spliced back none of them and the served period carried only
+# the NORMALIZED `pedagogical_approaches`. Four of the five subject ports read the key their
+# own constitution emits, so only social_sciences (whose authored key happens to share that
+# name) rendered an approach at all: EIGHT of eleven stages served every plan with an empty
+# "how do I run this?" line — CLAUDE.md §3(b)'s single canonical line, absent from the only
+# artefact a teacher sees, while every canonical on disk carried it correctly. Invisible to
+# C1–C5 because none of them reads a served plan; C6 exists for exactly this. Fix: the
+# approach keys are no longer modelled, so each subject's own key rides in `extra` verbatim
+# (no port change, no subject branching), and `carriers.unit_approaches` now reads all five
+# names rather than three. Served bytes change for maths, science, english and TWAU —
+# hence the bump. Every `_e17_` plan file is stale by construction and stays on disk.
 # 17 (2026-08-07): PLAN GRANULARITY — serving is per-CANONICAL where the subject plugin
 # says so. Spec: docs/science_middle_stage_serve.md. science·middle is the corpus's one
 # structural exception: its units belong to a cognitive progression arc (LP Rule 1) and a

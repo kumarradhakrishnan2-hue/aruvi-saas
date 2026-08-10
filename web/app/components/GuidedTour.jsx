@@ -170,9 +170,12 @@ export default function GuidedTour({ step, info, onNext, onBack, onSkip }) {
       if (cfg.scrollTop) {
         // At most TWO pins to the top — never keep snapping back if the teacher then scrolls
         // to read the plan under the box (the repeated snap read as "garbled" on a phone).
-        if (window.scrollY > 0 && st.tries < 2 && now - st.last > 400) {
+        // In shell mode the app scrolls .bodycontent, not the window (html.app-shell).
+        const sc = document.querySelector(".bodycontent");
+        const sy = sc ? sc.scrollTop : window.scrollY;
+        if (sy > 0 && st.tries < 2 && now - st.last > 400) {
           st.tries += 1; st.last = now;
-          window.scrollTo(0, 0);
+          (sc || window).scrollTo(0, 0);
         }
       } else {
         const sr = scrollEl.getBoundingClientRect();

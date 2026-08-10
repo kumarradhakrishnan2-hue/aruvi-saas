@@ -38,6 +38,9 @@ PLANS = ROOT / "data/content/saved_plans"
 CHAPTERS = ROOT / "data/content/chapters"
 BACKUP = ROOT / "backup/c3_repair"
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from purge_derived import purge                                    # noqa: E402
+
 # The Pedagogy document's method names, verbatim. Source of truth for ARV-D-071.
 PEDAGOGY_METHODS = ["Play-way", "Discovery/Inquiry", "Problem solving", "Inductive", "Deductive"]
 
@@ -397,6 +400,7 @@ def main() -> int:
         return 1
 
     ctx = {"summary_items": load_summary_items(args.subject, args.grade, args.chapter)}
+    repaired_any = False
     now = datetime.datetime.now().replace(microsecond=0).isoformat()
     stamp = now.replace("-", "").replace(":", "").replace("T", "_")
     refused_any = False
@@ -448,9 +452,17 @@ def main() -> int:
 
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"REPAIRED {path.name} — {summary}")
+        repaired_any = True
 
     if not args.dry_run:
         print(f"\nbackups: backup/c3_repair/{stamp}/")
+        # PURGE THE DERIVED PLANS (testing.md C10.2b, ARV-D-034). An in-place repair does not
+        # move the cache key, so any served plan built before this run would keep serving
+        # pre-repair bytes until something dislodged it — the pilot did exactly that for four
+        # hours. Every other repair tool calls this; omitting it here was found at S4's C10.
+        if repaired_any:
+            purge(args.subject, args.grade, args.chapter,
+                  reason=f"{TOOL} — C3 defect repair")
     return 1 if refused_any else 0
 
 

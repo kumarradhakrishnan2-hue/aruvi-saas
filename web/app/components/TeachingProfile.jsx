@@ -185,7 +185,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     const setTop = () => {
       const el = rootRef.current;
       if (!el) return;
-      const h = (typeof document !== "undefined" && document.querySelector(".hdr")?.offsetHeight) || 60;
+      // In shell mode (html.app-shell) the scrollport is .bodycontent, which starts BELOW the
+      // static top bar — so the pinned block sits at the scrollport's own top, offset 0.
+      const shell = typeof document !== "undefined" && document.documentElement.classList.contains("app-shell");
+      const h = shell ? 0 : ((typeof document !== "undefined" && document.querySelector(".hdr")?.offsetHeight) || 60);
       el.style.setProperty("--tp-sticky-top", `${h}px`);
       const sticky = el.querySelector(".tp-sticky");
       const sh = sticky ? sticky.offsetHeight : 0;

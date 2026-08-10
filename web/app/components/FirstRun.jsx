@@ -909,8 +909,8 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
               if (!floorP || totalP >= floorP) return null;
               return (
                 <p className="prep-floor">
-                  Below {floorP} periods, later
-                  sections move to guided self-study — the plan still closes the chapter and
+                  Below {floorP} periods the plan compresses; some
+                  sections may move to guided self-study — the plan still closes the chapter and
                   names them.
                 </p>
               );

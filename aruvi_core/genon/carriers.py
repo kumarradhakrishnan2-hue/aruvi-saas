@@ -384,16 +384,36 @@ def from_engine_handoff(handoff: Any) -> Any:
 
 # ── unit projection · the fields whose spelling differs by constitution ───────────
 def unit_approaches(period: Dict[str, Any]) -> List[str]:
-    """`pedagogical_approaches` (SS, English) vs `pedagogical_approach` (Science,
-    Maths) vs `dominant_mode` (TWAU) — the same field under three names, exactly the
-    diversity CLAUDE.md §3 already refuses to flatten upstream ("the source keys are
-    too diverse … Period.approach is the single normalization point"). This is that
-    point for genon. Reading alternative KEY NAMES is serialization tolerance, not a
-    branch on subject."""
+    """The same field under FIVE names, one per subject — exactly the diversity
+    CLAUDE.md §3 refuses to flatten upstream ("the source keys are too diverse …
+    Period.approach is the single normalization point"). This is that point for genon.
+    Reading alternative KEY NAMES is serialization tolerance, not a branch on subject.
+
+        pedagogical_approaches   list  social_sciences
+        pedagogical_methods      dict  english   ({spine: method}; unique, first-seen)
+        pedagogical_approach     str   science
+        pedagogical_method       str   mathematics
+        dominant_mode            str   the_world_around_us
+
+    Corrected 2026-08-09 (ARV-D-086, S4·C6): the previous list read three names and its
+    docstring claimed `pedagogical_approach` covered "Science, Maths". It does not —
+    maths emits `pedagogical_method` and english `pedagogical_methods`, so this returned
+    [] for maths, english and TWAU alike. Nothing downstream depended on the value, which
+    is why it stayed invisible until a served plan was read at C6."""
     v = period.get("pedagogical_approaches")
     if isinstance(v, list) and v:
         return [str(x) for x in v if str(x).strip()]
-    for k in ("pedagogical_approach", "dominant_mode"):
+    methods = period.get("pedagogical_methods")
+    if isinstance(methods, dict) and methods:          # english: {spine: method}
+        seen: List[str] = []
+        for m in methods.values():
+            m = str(m or "").strip()
+            if m and m not in seen:
+                seen.append(m)
+        return seen
+    if isinstance(methods, list) and methods:
+        return [str(x) for x in methods if str(x).strip()]
+    for k in ("pedagogical_approach", "pedagogical_method", "dominant_mode"):
         s = str(period.get(k) or "").strip()
         if s:
             return [s]

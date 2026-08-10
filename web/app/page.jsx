@@ -89,6 +89,17 @@ export default function Home() {
   // On mount, restore the signed-in user from localStorage (survives refresh).
   useEffect(() => { setUserState(getUser()); }, []);
 
+  // App-shell scroll ownership (2026-08-09): while the signed-in shell is up, the document
+  // never scrolls — html.app-shell (globals.css) locks html/body to the viewport and makes
+  // .bodycontent the one scroll container, so the top bar is plain static flow that CANNOT
+  // scroll away. This exists because the standalone iPhone webview dropped both sticky AND
+  // fixed positioning on the document scroller. Login/first-run keep document scrolling.
+  useEffect(() => {
+    const on = !!(user && ready);
+    document.documentElement.classList.toggle("app-shell", on);
+    return () => document.documentElement.classList.remove("app-shell");
+  }, [user, ready]);
+
   // Freeze the top chrome (the fixed .topbar, then the My Classes greeting) while the card
   // list scrolls beneath. Publish two CSS vars so every inner sticky offset stays exact across
   // breakpoints and the two-line brand — no magic numbers:
@@ -373,9 +384,13 @@ export default function Home() {
           (b) the wrapper was then `position: sticky`, and on an iPhone home-screen (standalone)
               web app it still scrolled away — the brand row simply left with the content and
               came back on returning to the top, i.e. sticky was not taking effect at all for a
-              direct child of <body> in that webview. So the bar is now `position: fixed`, which
-              does not depend on a sticky containing block, with .topbar-spacer reserving its
-              height in the flow. Do not "simplify" this back to sticky.
+              direct child of <body> in that webview. It was made `position: fixed` + spacer —
+              and the webview scrolled THAT away too.
+          (c) so scroll ownership moved off the document entirely (2026-08-09): when the shell
+              is up, html.app-shell (globals.css) locks html/body and .bodycontent is the one
+              scroll container — this bar is plain static flow and cannot move. The fixed rule
+              in .topbar still applies pre-lock and is harmless; the spacer is display:none in
+              shell mode. Do not "simplify" any of this back to sticky or fixed-on-document.
           (--hdr-h/--nav-h are still published — inner views use them for their own offsets.) */}
       <div className="topbar">
       {/* Shell header: the brand exactly as the first-run page renders it (Aruvi + red dot,

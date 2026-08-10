@@ -311,13 +311,25 @@ function AssessPanel({ items, mathsMiddle = false, mathsSecondary = false }) {
     const el = grpRef.current;
     if (!el || typeof window === "undefined") return;
     const place = () => {
-      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118;
+      // In shell mode (html.app-shell) the scrollport is .bodycontent, which starts BELOW the
+      // top bar — the bar no longer overlays content, so NO --nav-h compensation (this inline
+      // top overrides the `html.app-shell … { top:0 }` rule in globals.css, so it must account
+      // for the shell itself). Outside the shell the bar overlays, so keep the offset.
+      const shell = document.documentElement.classList.contains("app-shell");
+      const navH = shell ? 0
+        : (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118);
       const stick = document.querySelector(".lv-stick");
       el.style.top = `${navH + (stick ? stick.offsetHeight : 0)}px`;
     };
     place();
+    const raf = requestAnimationFrame(place);   // re-measure after the frozen header settles
     window.addEventListener("resize", place);
-    return () => window.removeEventListener("resize", place);
+    window.addEventListener("orientationchange", place);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", place);
+      window.removeEventListener("orientationchange", place);
+    };
   }, []);
 
   return (
@@ -1829,6 +1841,15 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     if (typeof window === "undefined") return;
     requestAnimationFrame(() => {
       const el = pvRef.current;
+      // In shell mode (html.app-shell) the app scrolls .bodycontent, not the window; the bar
+      // no longer overlays the content there, so no --nav-h compensation is needed.
+      const sc = document.querySelector(".bodycontent");
+      if (sc) {
+        if (!el) { sc.scrollTo({ top: 0 }); return; }
+        const y = el.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+        sc.scrollTo({ top: Math.max(0, y) });
+        return;
+      }
       if (!el) { window.scrollTo({ top: 0 }); return; }
       const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 118;
       const y = el.getBoundingClientRect().top + window.scrollY - navH;
