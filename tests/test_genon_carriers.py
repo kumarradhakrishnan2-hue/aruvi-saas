@@ -772,11 +772,20 @@ _TOKEN_MANDATE = (
 _TOKEN_COVERAGE = (
     "- COVERAGE COMPLETES BEFORE THE SYNTHESIS: all registry sections first-appear across "
     "units 1..{m}. No other unit may use the synthesis token.")
+# Updated 2026-08-10 (founder ruling, S7 · C9). The compact brief lost two things it was
+# never authorised to say: "a later unit may revisit earlier sections" — which flatly
+# contradicted LP Rule 1's contiguity sentence in the SAME request — and a COVERAGE bullet
+# that mandated a MECHANISM ("ADJACENT sections share a unit") as well as the outcome. The
+# second is where p10's composite closing unit came from. These literals now pin the NEW
+# text, so an unintended drift is caught; the two absences are asserted separately below,
+# because those are the regressions that would actually hurt.
 _TOKEN_REGISTRY_RULE = (
     "  Every unit's section_anchor MUST be drawn verbatim from this list (a multi-section "
     "unit joins its sections with \" / \" in list order). Sections must FIRST APPEAR in "
-    "registry order; a later unit may revisit earlier sections. The token `synthesis` is "
-    "RESERVED to the chapter's standard canonical — never use it here.")
+    "registry order. The token `synthesis` is RESERVED to the chapter's standard canonical "
+    "— never use it here.")
+_COVERAGE_LINE = ("- A canonical covers the whole chapter: section_coverage_note is not "
+                  "available here.")
 
 # The eleven certified subject·stages, one representative class each.
 _STAGES = [("science", "VII"), ("science", "IX"),
@@ -915,11 +924,29 @@ class TestCompactBriefSynthesisCarrier(unittest.TestCase):
         finally:
             vp.MP, vp.standard_registry = old_mp, old_reg
 
-    def test_a_mathematics_middle_compact_forbids_the_BOOLEAN(self):
+    def test_a_mathematics_middle_compact_declares_the_BOOLEAN_FALSE(self):
+        """A POSITIVE declaration replaced the prohibition (founder, 2026-08-10). A ban can
+        only be obeyed by absence, and absence is indistinguishable from never having
+        considered it; `false` on every unit is auditable."""
         for text in self._briefs("mathematics", "VII").values():
-            self.assertIn('never emit `"synthesis": true` here', text)
+            self.assertIn('Emit `"synthesis": false` on every unit', text)
+            self.assertNotIn('"synthesis": true', text)
             self.assertNotIn("section_anchor", text)
             self.assertNotIn("The token `synthesis`", text)
+
+    def test_no_compact_brief_may_invite_a_revisit_or_a_merge(self):
+        """The two deletions, asserted for EVERY stage — this is the regression that matters.
+        Four LP amendments (v3.5-v3.8) failed to stop the composite closing unit because the
+        brief in the same request kept granting what they forbade."""
+        for subject, klass in (("mathematics", "VII"), ("mathematics", "IX"),
+                               ("social_sciences", "IX"), ("english", "VII")):
+            for text in self._briefs(subject, klass).values():
+                with self.subTest(stage=f"{subject}·{klass}"):
+                    self.assertNotIn("may revisit earlier sections", text)
+                    self.assertNotIn("CLOSING SHAPE", text)
+                    self.assertNotIn("ADJACENT sections share a unit", text)
+                    self.assertNotIn("judgment is yours", text)
+                    self.assertIn(_COVERAGE_LINE, text)
 
     def test_a_field_stage_compact_is_BYTE_IDENTICAL(self):
         for subject, klass in (("mathematics", "IX"), ("social_sciences", "IX"),
