@@ -4,6 +4,57 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v3.8 — 2026-08-10 · the SURPLUS bullet is deleted — it was the cause, not the cure (S7 · C9)
+
+Founder's question, on seeing p10's closing unit hoard 4 of 10 assessment items: *"despite in
+constitution we are asking it to deal in contiguous periods, why is this happening? did our
+instruction to deal in depth if more time available cause this problem? do we have similar
+provision in maths IX?"* All three answers are in the artefacts, and the last one settles it.
+
+**The plans were authored under v3.6**, which already carried the contiguity sentence — so this
+was not a stale-rule breach. **And only ONE of the three maths constitutions carried a surplus
+provision.** `grep -cio "surplus|deepen|more time|extra time"`: middle **1**, preparatory **0**,
+secondary **0**. Maths IX's Rule 7 says only *"A section may span more than one period where its
+content warrants it"* — a permission, with no notion of leftover budget — and maths IX produces
+zero revisits.
+
+The deleted bullet read: *"Where the period budget exceeds what the sections need one-for-one,
+the surplus is spent by DEEPENING sections inside their own runs — more practice, a harder case,
+a second representation, a contextual application — never by adding a unit that returns to a
+section the plan has already left (Rule 1)."*
+
+It did two harmful things, both authored here at v3.6 and both now removed:
+
+- **It created the frame.** "The budget exceeds what the sections need" tells the model it holds
+  *spare units to place*, which makes placement a decision separate from teaching. A unit
+  conceived as an add-on has no run to belong to, and its natural home is the end. p10's U10 is
+  that frame made concrete — a composite anchoring 7.4/7.5, belonging to no single run, sitting
+  after both closed (ARV-D-089).
+- **Its prohibition arrived last, as a subordinate clause** after four attractive examples, and
+  delegated to another rule by cross-reference. The same reading failure diagnosed hours earlier
+  on the top's U11: the model takes the permission and drops the tail.
+
+**Nothing is lost by deleting it.** The permission it appeared to grant is already in the bullet
+above (*"A section MAY span as many ADJACENT periods as its content warrants"*), and the
+prohibition it appeared to add is already Rule 1's contiguity sentence, which is the real one.
+The bullet's only distinct contribution was the frame. Rule 2 now says what maths·secondary's
+Rule 7 says, in middle's own words, with nothing about spare capacity.
+
+**One honest confound, recorded rather than buried:** maths IX also had slack under the old cap
+(14 body units against 8 sections). That no longer separates the stages — under v3.6 middle has
+no cap either, and ch 7's top had room to place contiguously and revisited anyway. The remaining
+structural difference between the two stages is this clause.
+
+**§9: RELAXATION-ONLY.** A redundant permission and a redundant prohibition are removed; nothing
+is tightened and no obligation is created (`MUST NOT` count unchanged — the deleted clause said
+"never"). No re-author. Whether ch 7 is re-authored to test the fix is a separate decision on its
+own merits.
+
+Artefacts: `genon/out/stage_prep_mathematics_middle/lesson_plan_constitution_v3.7_pre.txt` ·
+`lp_v3.7_to_v3.8.diff`.
+
+---
+
 ## v3.7 — 2026-08-10 · Rule 1 aligned with Rule 2 — the other direction of the same cap (S7 · C3)
 
 C3's rule-by-rule audit failed the top canonical's closing unit against Rule 1: it names five

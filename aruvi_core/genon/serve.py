@@ -564,6 +564,20 @@ def _period_from_unit(stream, unit, sitting, duration):
         "homework": list(unit.get("homework") or []),
         # band ids are internal labels since compile v0.5; edges pass through verbatim
         "competency_edges": [dict(e) for e in (unit.get("competency_edges") or [])],
+        # THE SYNTHESIS FLAG MUST SURVIVE THE SERVE (2026-08-10, S7 · C6).
+        # `synthesis` is a MODELLED key, so compile strips it from `extra` — and nothing put
+        # it back, so every served synthesis unit arrived flagless. On a stage whose anchor is
+        # MEDIATED that is not cosmetic: with no flag, `carriers.is_synthesis` is False, the
+        # port falls through to `textbook_segments[0]`, and the closing whole-chapter unit was
+        # labelled "Equilateral Triangles (Revisit)" — the first section it names, marked as a
+        # repeat. The canonical on disk read "Synthesis" and the SERVED plan did not, which is
+        # the worse half: the served plan is what a teacher actually opens.
+        #
+        # Recorded honestly: this residue was DISCLOSED earlier the same day as harmless
+        # ("nothing downstream reads it"). That was wrong within hours — `is_synthesis` had
+        # just become what the group label reads. A carried-not-emitted field is only harmless
+        # until something starts reading it.
+        **({"synthesis": True} if unit.get("synthesis") else {}),
     }
 
 

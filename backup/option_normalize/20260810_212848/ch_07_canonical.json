@@ -76,6 +76,26 @@
       ]
      }
     ]
+   },
+   {
+    "tool": "repair_option_reveals.py (declared, second pass)",
+    "kind": "option_reveals",
+    "at": "2026-08-10T20:40:56",
+    "why": "ARV-D-092, residue found by C3's rule-by-rule audit. The first pass re-keyed item 2 and merely CONFORMED item 1 (dropped its correct-option entry) without re-keying it — the mis-mapping was missed because only the 'correctly…' sentence was checked for position, not each diagnostic against its option. Item 1's three diagnostics are now re-keyed by the same declared, content-read method. Item 2's expected_answer also still LED with the stale label 'C — ' while the correct option is B; the prefix is deleted (the answer text itself was always right, and Rule 6 asks for 'words and numbers only').",
+    "items": [
+     {
+      "item": 1,
+      "moves": {
+       "A": "D",
+       "C": "A",
+       "D": "C"
+      }
+     },
+     {
+      "item": 2,
+      "expected_answer_label_prefix_removed": "C"
+     }
+    ]
    }
   ]
  },
@@ -1014,9 +1034,9 @@
        "expected_answer": "B — Isosceles, because exactly two sides (5 cm and 5 cm) are equal and the third side (6 cm) is different.",
        "method_one_line": "Apply the side-based classification: equilateral (all equal), isosceles (exactly two equal), scalene (all different).",
        "what_each_option_reveals": {
-        "A": "The student has not read all three measurements carefully, or does not know the definition of scalene.",
-        "C": "The student conflates 'two sides equal 5 cm' with 'all three sides are equal', confusing isosceles with equilateral.",
-        "D": "The student is applying an unrelated numerical check (Pythagoras) rather than the side-count definition; 5² + 5² = 50 ≠ 36 = 6², so this is also numerically wrong."
+        "A": "The student conflates 'two sides equal 5 cm' with 'all three sides are equal', confusing isosceles with equilateral.",
+        "C": "The student is applying an unrelated numerical check (Pythagoras) rather than the side-count definition; 5² + 5² = 50 ≠ 36 = 6², so this is also numerically wrong.",
+        "D": "The student has not read all three measurements carefully, or does not know the definition of scalene."
        },
        "inclusivity": {
         "support": "Let the student re-read the three side lengths and the three definitions from their textbook, then try again.",
@@ -1060,7 +1080,7 @@
        }
       ],
       "teacher_guide": {
-       "expected_answer": "C — AC is the hypotenuse, as it is the side opposite vertex B where the right angle lies.",
+       "expected_answer": "AC is the hypotenuse, as it is the side opposite vertex B where the right angle lies.",
        "method_one_line": "Recall that the hypotenuse is always the side opposite the right angle, not adjacent to it.",
        "what_each_option_reveals": {
         "A": "The student confuses 'opposite the right angle' with 'one of the sides meeting at it'.",

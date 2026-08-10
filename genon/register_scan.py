@@ -50,8 +50,29 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from aruvi_core.genon.carriers import is_synthesis as _is_synth   # noqa: E402
+
 # (family, is_ban, compiled pattern). Order is report order.
 PATTERNS = [
+    # ── COMPLETION-BY-PARAPHRASE — added 2026-08-10 (S7 · C7, ARV-D-100).
+    # The forward family is literal-phrase based, so it caught nothing in ch 7 while a real
+    # ban-2 breach sat in the top: U11's "connecting the geometric intuition BUILT THROUGHOUT
+    # THE CHAPTER". U11 is not the synthesis unit, and any unit may be a teacher's last
+    # sitting or a borrowed Xth unit, so a class meeting it as first exposure has built no
+    # such intuition. Second occurrence of the scanner-gap class after ARV-D-026.
+    #
+    # EXEMPT ON THE SYNTHESIS UNIT (see the ban calculation in scan_plan). The closing
+    # whole-chapter synthesis is licensed by the platform brief to assume the chapter's
+    # CONTENT has been taught, so "warming up all five sections' ideas" is correct there and
+    # a gate that failed it would be switched off within a week. Deliberately NOT added:
+    # references pointing OUTSIDE the chapter ("explored further in a later chapter") — true
+    # wherever the plan ends, and therefore not a ban-2 breach at all.
+    ("completion", True, re.compile(
+        r"\b(built|developed|established|learned|covered)\s+(up\s+)?(throughout|across)\s+(the|this)\s+chapter\b"
+        r"|\bso far in (the|this) chapter\b"
+        r"|\bnow that (you|we|students|they) have (covered|met|seen|learned|built)\b"
+        r"|\ball (five|six|seven|eight|nine|ten|of the) sections\b", re.I)),
     ("forward", True, re.compile(r"\bthe (next|following) (unit|lesson|class|session)\b", re.I)),
     ("forward", True, re.compile(r"\bnext unit\b", re.I)),
     ("forward", True, re.compile(r"\blater (unit|units|lessons)\b", re.I)),
@@ -204,8 +225,18 @@ def scan_plan(plan: dict):
                         # as ADVISORY, never suppressed: it stays visible to the human
                         # reader, it just does not fail a library that is obeying its own
                         # constitution.
+                        # `completion` is exempt on the synthesis unit, which the brief
+                        # licenses to assume the chapter's content has been taught.
                         "ban": ban and not (family == "calendar" and in_quote)
-                                   and not (family == "forward" and _fwd_ok),
+                                   and not (family in ("forward", "completion") and _fwd_ok)
+                                   # `completion` IS ban 2, so it takes the SAME stage
+                                   # exemption as `forward`. science·middle drops ban 2
+                                   # entirely (its units are served only as a whole arc,
+                                   # so a completion claim is true there) — without this
+                                   # the new pattern failed CERTIFIED science·VIII ch 6
+                                   # p08 on "built across the chapter". Found by running
+                                   # the pattern corpus-wide before trusting it.
+                                   and not (family == "completion" and _is_synth(u)),
                         "quoted": in_quote, "match": m.group(0),
                         "excerpt": ("…" if a else "") + text[a:b].strip() + ("…" if b < len(text) else ""),
                     })

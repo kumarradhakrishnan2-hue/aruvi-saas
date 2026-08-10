@@ -367,7 +367,15 @@ def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[f
 # for the Bucket-A output cache in §1, so the Supabase migration is a storage swap,
 # not a redesign.
 
-GENON_ENGINE_VERSION = "18"     # BUMP when compile/serve change the OUTPUT
+GENON_ENGINE_VERSION = "19"     # BUMP when compile/serve change the OUTPUT
+# e19 (2026-08-10, S7 · C6) — THE SYNTHESIS FLAG SURVIVES THE SERVE. `synthesis` is a
+# MODELLED key, so compile stripped it from `extra`, and `serve._period_from_unit` never
+# put it back: every served synthesis unit arrived flagless. On a MEDIATED-anchor stage
+# (maths middle/prep) `carriers.is_synthesis` then read False, the port fell through to
+# `textbook_segments[0]`, and the closing whole-chapter unit was labelled "Equilateral
+# Triangles (Revisit)". The canonical on disk read "Synthesis"; the SERVED plan — the one
+# a teacher opens — did not. Served bytes change (one key), so the version moves and every
+# _e18_ plan is stale by construction rather than overwritten.
 # 18 (2026-08-09): THE APPROACH LINE SURVIVES A SERVE (ARV-D-086, found at S4's C6).
 # compile.py's `_MODELLED` listed all five approach key names, which removed them from
 # `unit["extra"]` — so serve spliced back none of them and the served period carried only

@@ -323,18 +323,17 @@ def briefs_for(subject, klass, chapter):
         registry_rule = (
             "  Every unit's section_anchor MUST be drawn verbatim from this "
             "list (a multi-section unit joins its sections with \" / \" in "
-            "list order). Sections must FIRST APPEAR in registry order; a "
-            "later unit may revisit earlier sections. The token `synthesis` "
-            "is RESERVED to the chapter's standard canonical — never use it here.")
+            "list order). Sections must FIRST APPEAR in registry order. The "
+            "token `synthesis` is RESERVED to the chapter's standard canonical "
+            "— never use it here.")
     else:
         registry_rule = (
             "  Every unit's section reference MUST be drawn verbatim from this "
             "list, in the field your own constitution already defines for it (a "
             "unit teaching several sections lists them all, in list order). "
-            "Sections must FIRST APPEAR in registry order; a later unit may "
-            "revisit earlier sections. The closing whole-chapter SYNTHESIS is "
-            "RESERVED to the chapter's standard canonical — never emit "
-            "`\"synthesis\": true` here.")
+            "Sections must FIRST APPEAR in registry order. The closing "
+            "whole-chapter SYNTHESIS is RESERVED to the chapter's standard "
+            "canonical. Emit `\"synthesis\": false` on every unit.")
     out = {}
     for k in plan["counts"][1:]:
         lines = [
@@ -350,20 +349,34 @@ def briefs_for(subject, klass, chapter):
         lines += [f"    {i}. {a}" for i, a in enumerate(reg, 1)]
         lines += [
             registry_rule,
-            f"- COVERAGE IS TOTAL: all {len(reg)} registry sections must "
-            f"first-appear across this plan's {k} units — merge ADJACENT "
-            f"sections into shared units wherever the count demands it (the "
-            f"smaller the count, the more condensing this takes; that judgment "
-            f"is yours, made at authoring time). NO section may be omitted, and "
-            f"section_coverage_note is NOT available to a canonical: a coverage "
-            f"gap is an authoring failure, never a budget note.",
+            # COVERAGE: THE CONSTRAINT ONLY, NEVER A MECHANISM (founder, 2026-08-10, S7·C9).
+            # What stood here mandated the method as well as the outcome — "ADJACENT sections
+            # share a unit… where the count demands it" — and that is where p10's composite
+            # U10 came from: with 5 sections across 10 units nothing demanded merging at all,
+            # yet the brief presented it as the technique for achieving coverage. Ordering
+            # already lives in the registry bullet ("Sections must FIRST APPEAR in registry
+            # order"); run length and merging are Rules 1 and 2's, and the brief must not
+            # have a second opinion. What is LEFT is the one thing no constitution can know:
+            # four of them (maths·secondary, science·secondary, SS middle and secondary)
+            # explicitly offer a section_coverage_note escape, which is a SERVE-time concept
+            # and not available to a canonical; and six others forbid dropping nowhere at all.
+            "- A canonical covers the whole chapter: section_coverage_note is "
+            "not available here.",
             *_serving_block(),
-            "- THERE IS NO MANDATED CLOSING SHAPE. End the plan the way this "
-            "count teaches best. A final unit that condenses the last adjacent "
-            "sections is welcome when the count demands it; a trailing unit that "
-            "only revisits sections an earlier unit already taught spends a "
-            "period without advancing coverage — at this count that is almost "
-            "never affordable.",
+            # NOTHING IS SAID TO A COMPACT ABOUT HOW IT ENDS (2026-08-10, founder ruling at
+            # S7 · C9). What stood here encouraged one: "A final unit that condenses the last
+            # adjacent sections is WELCOME when the count demands it". ARV-D-025 retired the
+            # MANDATED closing span; it did not authorise a recommendation in its place, and
+            # nobody signed off on turning a removal into an invitation. The line described
+            # p10's composite U10 in advance and, with the revisit permission above, meant
+            # four LP amendments (v3.5-v3.8) were arguing with an instruction in the same
+            # request that kept granting what they forbade.
+            #
+            # THE DIVISION IS THE POINT (testing.md §3): the brief carries the V-SERIES — the
+            # serving contract, the registry, verbatim anchors, first-appear order, total
+            # coverage, per-variant assessment. HOW A PLAN IS SHAPED IS PEDAGOGY, and pedagogy
+            # is the constitution's. Rules 1 and 2 govern run length, contiguity and merging;
+            # the brief must not have a second opinion.
             "- The assessment for this plan is generated from THIS plan's "
             "coverage_handoff in the normal way; it references no other "
             "plan of this chapter.",
