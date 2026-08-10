@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, ROMAN, projectReadiness, API, withUser } from "../lib/format";
+import { verifiedWrite, readinessFingerprint } from "../lib/verify";
 import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, ppwAnchor,
          setPpwSplit, setPpwTotal, lowestDuration,
@@ -249,24 +250,42 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
     if (fromPortal && screen === "view") onBack && onBack();
   }, [fromPortal, screen]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Set ONLY on a verified mismatch (never on a throw, never on an unreachable server).
+  const [saveFailed, setSaveFailed] = useState(false);
+
   const persist = (subjectsOut) => {
     // Optimistic: push straight to the parent so the view reflects instantly — no local mirror
     // to keep in step. setReadiness re-renders this component with the new subjects[] (which
     // `canon` derives from) and every consumer.
     onChange && onChange(projectReadiness({ subjects: subjectsOut }));
-    // Persist to the server. cascade:true is REQUIRED for any removal (deleting a subject /
-    // class / section, or unticking a section): every destructive edit here is ALREADY behind a
-    // scoped confirm modal, and without cascade the server refuses removals with HTTP 409 and
-    // the write silently fails — so the edit reverts on the next login. Additive / value-only
-    // edits carry nothing to cascade, so the flag is a harmless no-op for them. Surface any
-    // failure rather than swallowing it, so a broken save is never invisible again.
-    fetch(`${API}/readiness`, withUser({
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subjects: subjectsOut, cascade: true }),
-    }))
-      .then((res) => { if (!res.ok) console.error("Aruvi: readiness save failed", res.status); })
-      .catch((e) => console.error("Aruvi: readiness save error", e));
+
+    // ── READ-AFTER-WRITE (founder doctrine, 2026-08-10; lib/verify.js) ────────────────
+    // X = the profile before this edit · A = this save · Y = subjectsOut, which she just
+    // composed and which we therefore know UPFRONT · Y′ = GET /readiness.
+    // Error IF AND ONLY IF Y′ ≠ Y. The POST throwing is not a criterion (a 200 can lie; a
+    // lost response can hide a write that landed), and an unreachable server is NOT an
+    // error — it is a state in which the check cannot be run, and presuming failure there
+    // would invent a fact. Hence three outcomes, and only the middle one speaks.
+    //
+    // cascade:true stays, and is unrelated to this: every destructive edit here is already
+    // behind its own scoped confirm, so the server's 409 guard would be a second ask.
+    const want = readinessFingerprint(subjectsOut);
+    verifiedWrite({
+      write: () => fetch(`${API}/readiness`, withUser({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subjects: subjectsOut, cascade: true }),
+      })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }),
+      read: () => getJSON("/readiness").then((d) => (d && d.readiness) || d || {}),
+      expect: (y) => readinessFingerprint(y.subjects) === want,
+    }).then(({ status, actual }) => {
+      if (status !== "mismatch") return;          // ok → silence; unverified → silence
+      // Y′ is the truth. Telling her AND leaving her edit on screen would recreate the exact
+      // divergence this check exists to catch, so the view is re-synced to what is actually
+      // stored — she sees the real state and the sentence that explains it.
+      onChange && onChange(projectReadiness({ subjects: (actual && actual.subjects) || [] }));
+      setSaveFailed(true);
+    });
   };
 
   /* ── granular removals (each behind its scoped confirm) ── */
@@ -1129,6 +1148,17 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
 
   return (
     <div className="tp" ref={rootRef}>
+      {/* Shown ONLY when the server was read back and genuinely disagrees with the edit
+          (lib/verify.js). Not on a throw, not when the server could not be reached — in both
+          of those we do not know, and saying so would be a guess. The view above has already
+          been re-synced to what IS stored, so this line explains what she is now looking at
+          rather than warning about something invisible. She dismisses it; nothing navigates. */}
+      {saveFailed && (
+        <div className="tp-savefail" role="alert">
+          <span>That change didn’t save — this is your teaching profile as it stands.</span>
+          <button type="button" onClick={() => setSaveFailed(false)}>Dismiss</button>
+        </div>
+      )}
       <div className="tp-sticky">
         {onBack && (
           <div style={{ textAlign: "right", marginTop: "-8px", marginBottom: "12px" }}>

@@ -3795,6 +3795,27 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
  * The message is NOT drawn in red: it is usually a plain fact about her request ("that is
  * more periods than this chapter can take"), not an alarm, and the warm-paper system has no
  * error red. Clay already means "attention" here. */
+/* ── the profile save-failed line (read-after-write, 2026-08-10) ────────────────────
+ * Sits at the top of the profile, above the sticky header, because the thing it explains is
+ * the WHOLE screen: the view below has already been re-synced to what the server actually
+ * holds, so this sentence is a caption for that, not a floating alert. Clay, not red — the
+ * warm-paper system has no error red, and clay already carries "attention" here. One row, so
+ * it cannot push the profile's own header off a phone screen. */
+.tp-savefail {
+  display: flex; align-items: center; gap: 12px; flex-wrap: nowrap;
+  margin: 0 0 12px 0; padding: 9px 12px;
+  border: 1px solid var(--edge-clay); border-radius: 8px; background: var(--paper-2);
+  font-family: var(--f-body); font-size: 13px; color: var(--ink);
+}
+.tp-savefail > span { flex: 1 1 auto; min-width: 0; }
+.tp-savefail > button {
+  flex: 0 0 auto; cursor: pointer; background: none; border: 0;
+  border-bottom: 1px solid var(--edge-clay); padding: 2px 0 1px 0;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--clay);
+}
+.tp-savefail > button:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
 .sc-card.sc-proposed-failed { border-style: solid; border-color: var(--edge-clay); }
 /* ONE ROW, always — the failed card must be the SAME HEIGHT as every other card in the list.
    The message occupies the line the progress bar had; Dismiss sits at its end exactly where
