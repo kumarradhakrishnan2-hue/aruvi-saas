@@ -175,9 +175,19 @@ def is_synthesis_unit(unit):
 
 def section_registry(stream):
     """Ordered unique section anchors across a stream's units (the reserved
-    synthesis token is not a section and never enters the registry)."""
+    synthesis token is not a section and never enters the registry).
+
+    THE SYNTHESIS UNIT IS SKIPPED THROUGH `is_synthesis_unit`, not by filtering its
+    anchor text (2026-08-10, S7). Filtering the token was enough while the token was
+    the only carrier; on a MEDIATED-anchor stage the carrier is the `synthesis` boolean
+    and the unit's anchor is whatever its period fields yielded, so a text filter would
+    have let a synthesis unit contribute sections to the registry. Behaviour on the ten
+    token-carrying stages is unchanged: the mandate gives that unit the token and nothing
+    else, so skipping the unit and filtering its one anchor are the same operation."""
     out, seen = [], set()
     for u in stream["units"]:
+        if is_synthesis_unit(u):
+            continue
         for a in _unit_anchors(u):
             k = _norm(a)
             if k != SYNTH_TOKEN and k not in seen:
@@ -188,7 +198,17 @@ def section_registry(stream):
 
 def unit_range(unit, registry_index):
     """Unit -> (lo, hi) inclusive indices into the registry. None if any anchor
-    is unknown to the registry (the candidate then simply doesn't qualify)."""
+    is unknown to the registry (the candidate then simply doesn't qualify).
+
+    A SYNTHESIS UNIT IS RANGELESS BY THE SEAM (2026-08-10, S7), for the same reason
+    `section_registry` skips it there. On a token-carrying stage it was rangeless
+    incidentally — "synthesis" is not a registry key — but on a mediated-anchor stage its
+    anchor may well be a real section string, and a synthesis unit that reports a range
+    can be picked by `first_dealing_unit` as somebody's Xth unit. It is the one unit whose
+    only prior is FULL coverage (§0.4 Case 1), so it must never enter first-visit
+    arithmetic. No change on the ten token stages."""
+    if is_synthesis_unit(unit):
+        return None
     idxs = []
     for a in _unit_anchors(unit):
         k = _norm(a)

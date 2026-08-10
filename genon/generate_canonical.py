@@ -123,17 +123,35 @@ def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]
     # progression arc, so demanding an anchor here failed a perfectly good canonical
     # twelve times over and stopped the build AFTER the model had been paid. Ask the
     # seam whether this subject·stage has a section axis at all.
+    _subj, _grade = parsed.get("subject"), parsed.get("grade")
     try:
-        from aruvi_core.genon.carriers import has_section_axis
-        _axis = has_section_axis(parsed.get("subject"), parsed.get("grade"))
+        from aruvi_core.genon import carriers as _carriers
+        _axis = _carriers.has_section_axis(_subj, _grade)
     except Exception:                                            # noqa: BLE001
+        _carriers = None
         _axis = True                     # unknown subject -> the strict default
     unit_numbers = set()
     for p in periods:
         n = p.get("period_number")
         unit_numbers.add(n)
-        if _axis and not str(p.get("section_anchor") or "").strip():
-            problems.append(f"P{n}: missing section_anchor (the registry join key)")
+        # AND THE ANCHOR IS READ THROUGH THE SEAM TOO (2026-08-10, S7) — the same lesson
+        # as the axis question above, one read site along. `section_anchor` is the FIELD
+        # NAME on eight of the ten section-axis stages; mathematics middle and preparatory
+        # carry the identical fact as `textbook_segments[].ref`, and the plugin mediates it
+        # (founder ruling 2026-08-10: no field is invented to feed the engine). Reading the
+        # field directly failed all twelve units of a perfectly good mathematics·VII
+        # canonical — after the model had been paid, which is the expensive half. The
+        # synthesis unit is exempt: on a mediated stage it anchors to no section and
+        # `unit_anchor` returns None by design, while on a token stage it carries the
+        # reserved token and would pass anyway.
+        if _axis:
+            try:
+                anchor = (_carriers.unit_anchor(p, subject=_subj, grade=_grade)
+                          if _carriers else p.get("section_anchor"))
+            except Exception:                                    # noqa: BLE001
+                anchor = None
+            if not (_carriers and _carriers.is_synthesis(p)) and not str(anchor or "").strip():
+                problems.append(f"P{n}: missing section_anchor (the registry join key)")
         cur = 0
         for b in p.get("time_bands", []) or []:
             try:

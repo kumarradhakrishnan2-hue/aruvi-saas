@@ -329,7 +329,7 @@ class MathematicsSubject:
     # ── genon: the carrier seam (aruvi_core/genon/carriers.py) ───────────────────
     def genon_has_section_axis(self, grade) -> bool:
         """All three stages anchor units to textbook sections, so this returns the platform
-        default (True) and changes no behaviour. It exists to carry a warning to S7/S8.
+        default (True) and changes no behaviour.
 
         SECONDARY puts the anchor in `section_anchor` (LP A3), which is the field
         `carriers.unit_anchor` and the whole serve arithmetic read — so genon works on it
@@ -338,18 +338,79 @@ class MathematicsSubject:
         MIDDLE and PREPARATORY have a section axis but DO NOT USE THAT FIELD NAME:
         `grep -c section_anchor` is 0 in both constitutions. Middle carries
         `textbook_segments[].ref`, preparatory carries `section_refs[]` (which is also why
-        their assessment join is the period-field family, rows 4 and 5). So returning True
-        here is honest about the axis but leaves `unit_anchor` raising KeyError on their
-        periods — the same wall science·middle hit at S6, for a different reason: science
-        middle has no axis, maths middle has one under another name.
+        their assessment join is the period-field family, rows 4 and 5).
 
-        S7/S8 must therefore pick deliberately, and it is a founder call, not a default:
-        rename the field in those constitutions (the P3-style answer — amend the
-        constitution, do not teach the compiler an adapter), or mediate the read the way
-        `unit_anchor` already mediates its absence. Do NOT resolve it by flipping this to
-        False; that would tell the engine these chapters have no sections, which is untrue
-        and would silently disable the section arithmetic their serve depends on."""
+        THE CHOICE THAT SENTENCE USED TO PUT TO S7/S8 IS MADE (founder ruling, 2026-08-10):
+        **mediate the read; do not rename the field.** No new field may be invented to feed
+        the serve engine — everything is derived from what the authored file already carries,
+        which is what the prototype did at its own read boundary. `genon_unit_anchor` below
+        is that mediation, and `carriers.unit_anchor` asks it before it decides an anchor is
+        missing. Flipping this to False remains forbidden for the reason it always was: it
+        would tell the engine these chapters have no sections, which is untrue, and would
+        silently disable the section arithmetic their serve depends on."""
         return True
+
+    def genon_unit_anchor(self, period, grade=None):
+        """This period's section anchor, in the field THIS stage's constitution uses.
+
+        Read VERBATIM and joined with `carriers._ANCHOR_JOINER`, in authored order, deduped.
+        Verbatim is the whole point: certification compares the anchor against the registry
+        drawn from the chapter summary's own `sections[].ref`, and both sides are the string
+        "section 7.1" — so they match by construction, and any reformatting here (dropping
+        the word "section", padding, re-casing) would manufacture a mismatch that then needs
+        a second normalizer to undo. A unit teaching two sections reads
+        "section 5.3 / section 5.4", the same multi-section join secondary's own anchors use.
+
+          MIDDLE       `textbook_segments[].ref`
+          PREPARATORY  `section_refs[]`
+
+        Branching is on the PERIOD's shape, not on `stage_for(grade)` — `grade` is passed
+        for symmetry with the other genon hooks and is deliberately not required, because
+        this is called from `compile.py` where the grade comes off the enclosing plan and
+        can be absent (the same trap `genon_assessment` documents below).
+
+        SECONDARY never reaches here: `carriers.unit_anchor` returns `section_anchor`
+        directly when the period has one.
+
+        PREPARATORY's branch is written because the field is known and the code is the same
+        three lines — but preparatory is STILL in `carriers._NOT_YET` (its assessment family,
+        row 5, is owed by S8), so no preparatory plan can reach compile in the first place.
+        Treat this branch as unexercised until S8 certifies it.
+        """
+        refs = [str(s.get("ref") or "").strip()
+                for s in (period.get("textbook_segments") or []) if isinstance(s, dict)]
+        if not any(refs):
+            refs = [str(x or "").strip() for x in (period.get("section_refs") or [])]
+        seen = []
+        for r in refs:
+            if r and r not in seen:
+                seen.append(r)
+        return _ANCHOR_JOINER.join(seen) or None
+
+    def genon_anchor_field_present(self, grade) -> bool:
+        """Does THIS stage's constitution define a `section_anchor` field on the period?
+
+        SECONDARY yes (LP A3). MIDDLE and PREPARATORY no — `grep -c section_anchor` is 0
+        in both, which is precisely why `genon_unit_anchor` above exists. Same fact, other
+        side: that method says WHERE the anchor is when the field is absent, this one says
+        that it is absent at all, and a caller that needs to WORD something cannot read it
+        off the other (a mediated anchor and a declared one are indistinguishable once
+        `unit_anchor` has returned a string).
+
+        WHAT IT CHANGES (2026-08-10, S7). `variant_plans.top_brief_for` asks it before it
+        writes the standard canonical's synthesis mandate. Where the field exists the
+        mandate is the reserved token `synthesis` in it; here there is no field to put a
+        token in, so the mandate is the explicit `"synthesis": true` boolean instead — the
+        same carrier science·middle already uses, and the one `carriers.is_synthesis` has
+        read all along. Without this the brief would have asked a maths·middle generation,
+        at metered STEP 1, for a field its constitution never defines, and the certifier's
+        synthesis gate would then have found no synthesis unit in the library it paid for.
+
+        NOT a licence to emit `section_anchor` here: the founder ruling of 2026-08-10
+        stands (nothing new may be added to a constitution to feed the serve engine). This
+        method reports the constitution as it is; it never asks it to change.
+        """
+        return stage_for(grade) == "secondary"
 
     def genon_item_anchor_family(self, grade) -> str:
         """The 8-rule table's family column (base.py). SECONDARY is row 6, handoff-bridged.
@@ -377,23 +438,33 @@ class MathematicsSubject:
             completes. Identical in every argument to science·secondary's row 2, which is
             why this is a delegation and not a join.
 
-          • MIDDLE (row 4) and PREPARATORY (row 5) — the PERIOD-FIELD family: the item's
-            `section_ref` matches the period's own field (`textbook_segments[].ref` at
-            middle, `section_refs[]` at preparatory), with no handoff in the path at all.
-            A different family, owed by S7/S8, so it RAISES rather than silently borrowing
-            secondary's join — which would anchor every item through a rule that is not
-            theirs. `_middle_assess` has the display-side logic to delegate to when those
-            stages arrive; it needs `ctx["periods"]`, which this seam does not yet pass.
+          • MIDDLE — 8-rule ROW 4, the PERIOD-FIELD family, landed 2026-08-10 (S7): items
+            are nested inside A/B/C section GROUPS (`[{section_code, section_title, note,
+            items:[…]}, …]`), each leaf carrying a `section_ref` ("section 5.2"), and the
+            join is that code against the PERIOD's own `textbook_segments[].ref`. No
+            `coverage_handoff` is in the path and there is no LO. It delegates to
+            `carriers.items_by_period_field`, which runs `link_resolver`'s
+            `period_field_index` / `norm_code` — the identical mechanics `_middle_assess`
+            above uses for the display side, so the two can never drift. Anchoring is the
+            same 2026-08-05 ruling: the section's LAST unit.
+
+          • PREPARATORY (row 5) — the same family on a different field
+            (`section_refs[]`) and a different item vocabulary (`intent`, not `goal`). Owed
+            by S8, so it still RAISES rather than borrowing middle's field or secondary's
+            join, either of which would anchor every item through a rule that is not theirs.
 
         The stage is told apart by CONTAINER SHAPE, not by `stage_for(grade)` — this method
         receives only `result`, and the grade lives on the enclosing saved PLAN, so a grade
         read here is `None` on the very call the carrier makes (found by
         `tests/test_genon_carriers.py` the moment this landed). Science's `genon_assessment`
         branches on shape for the same reason. The shapes are unambiguous: secondary wraps
-        its questions in a dict (A1), middle and preparatory emit section groups carrying
-        `items[]`.
+        its questions in a dict (A1); middle and preparatory both emit section groups
+        carrying `items[]`, and are then separated the way the prototype's
+        `_regroup_middle_maths_by_section` separates them — MIDDLE items carry `goal` and no
+        `intent`, PREPARATORY items carry `intent`.
         """
-        from ...genon.carriers import CarrierNotImplemented, items_by_handoff
+        from ...genon.carriers import (CarrierNotImplemented, item_groups,
+                                       items_by_handoff, items_by_period_field)
 
         raw = result.get("assessment_items")
         if isinstance(raw, dict) and "questions" in raw:            # SECONDARY — row 6
@@ -401,13 +472,27 @@ class MathematicsSubject:
                                     join_key="section_number",
                                     handoff_key="section_number")
 
+        groups = item_groups(raw)
+        if groups is not None:
+            flat = [it for g in groups for it in g["items"] if isinstance(it, dict)]
+            if any("intent" in it for it in flat) or not any("goal" in it for it in flat):
+                raise CarrierNotImplemented(
+                    "mathematics preparatory is 8-rule ROW 5 — the period-field family on "
+                    "`section_refs[]`, with `intent`-carrying items. Owed by S8. It must "
+                    "not borrow middle's row 4 (a different period field) or secondary's "
+                    "row 6 (a different family entirely). This branch also catches a "
+                    "MIDDLE file whose items carry no `goal`, which is a defect worth "
+                    "failing on rather than guessing past."
+                )
+            return items_by_period_field(                            # MIDDLE — row 4
+                result, items=flat, item_key="section_ref",
+                extract=lambda p: [s.get("ref", "")
+                                   for s in (p.get("textbook_segments") or [])
+                                   if isinstance(s, dict)])
+
         raise CarrierNotImplemented(
-            "mathematics middle/preparatory is the PERIOD-FIELD family (8-rule rows 4 and "
-            "5): the item's section_ref matches the period's OWN field "
-            "(textbook_segments[].ref at middle, section_refs[] at preparatory), with no "
-            "coverage_handoff in the path. Owed by S7/S8 — implement it by delegating to "
-            "the display-side join in _middle_assess, never by reusing row 6, which would "
-            "anchor every item through a rule that is not theirs. (This branch is also "
-            "where a SECONDARY plan lands if its items are not under the `questions` "
-            "wrapper A1 mandates — which is itself a defect worth failing on.)"
+            "mathematics: `assessment_items` is neither the secondary `{…, questions: []}` "
+            "wrapper (row 6) nor the middle/preparatory list of section groups carrying "
+            "`items[]` (rows 4 and 5). A SECONDARY plan lands here if its items are not "
+            "under the wrapper A1 mandates — which is itself a defect worth failing on."
         )

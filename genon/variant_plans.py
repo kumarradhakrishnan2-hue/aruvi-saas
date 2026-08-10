@@ -104,6 +104,35 @@ def _is_plan_granularity(subject, klass):
         return False
 
 
+def _anchor_field_present(subject, klass):
+    """Does this subject·stage's constitution define a `section_anchor` FIELD on the
+    period object, or is the anchor mediated out of another field?
+
+    Asked of the subject plugin, exactly as `_is_plan_granularity` above asks its own
+    question — never a name check here either. True (the platform default) on any error,
+    which is the safe direction: it keeps the wording every certified library was authored
+    against.
+
+    WHY A BRIEF CARES (2026-08-10, S7). The standard canonical's synthesis mandate has two
+    carriers for one fact (`carriers.is_synthesis`, architecture §0.3): the reserved token
+    in `section_anchor`, or an explicit `"synthesis": true` on the period object. Until now
+    the boolean form was reserved to the PLAN-granularity stage, on the reasoning that it
+    is the one with no section axis. That was the wrong test. What decides the carrier is
+    whether the FIELD exists to hold a token — and mathematics·middle has a section axis
+    (its anchor is mediated from `textbook_segments[].ref`) and no field. Asking it for
+    `section_anchor` would demand a field its constitution never defines, at metered STEP 1,
+    and the certifier's synthesis gate would then find no synthesis unit in the library it
+    had just paid for. This is the S7 analogue of S4's synthesis-handoff defect
+    (`_synthesis_handoff_lines` below), and like it, it is a BRIEF matter: no constitution
+    is amended (founder ruling 2026-08-10)."""
+    try:
+        sys.path.insert(0, ROOT)
+        from aruvi_core.genon.carriers import anchor_field_present
+        return anchor_field_present(subject, klass)
+    except Exception:                                       # noqa: BLE001
+        return True
+
+
 def _arc_brief(count, dur, chapter, standard):
     """The brief for a PLAN-GRANULARITY stage (science·middle;
     docs/science_middle_stage_serve.md). Two things make it different from the
@@ -225,6 +254,21 @@ def top_brief_for(subject, klass, chapter):
     count = int(row["recommended_periods"])
     if _is_plan_granularity(subject, klass):
         return _arc_brief(count, dur, chapter, standard=True)
+    # WHICH CARRIER THIS STAGE'S SYNTHESIS UNIT WEARS (2026-08-10, S7). One fact, two
+    # carriers, exactly as `carriers.is_synthesis` reads it: the reserved token in
+    # `section_anchor` where that field exists, the explicit boolean where it does not.
+    # The wording below is byte-identical to the pre-S7 brief on every stage that HAS the
+    # field, which is the point — ten certified stages must not be re-briefed by a change
+    # made for the eleventh.
+    field = _anchor_field_present(subject, klass)
+    marker = ("its section_anchor is exactly the single word: synthesis (the "
+              "reserved token — NOT a section name, no joining)"
+              if field else
+              "it carries the field `\"synthesis\": true` on its period object "
+              "(the boolean is how the platform recognises it; this stage's periods "
+              "have no field to hold a reserved token, so do not invent one)")
+    no_other = ("No other unit may use the synthesis token." if field else
+                "No other unit may carry `\"synthesis\": true`.")
     return "\n".join([
         f"STANDARD CANONICAL BRIEF — {count} periods (platform-computed; binding)",
         "",
@@ -232,16 +276,14 @@ def top_brief_for(subject, klass, chapter):
         f"(period_schedule: exactly one row {{{dur}, {count}}}).",
         *_serving_block(),
         f"- THE SYNTHESIS MANDATE (this plan alone carries it): unit {count}, the "
-        "final unit, is a WHOLE-CHAPTER SYNTHESIS and its section_anchor is exactly "
-        "the single word: synthesis (the reserved token — NOT a section name, no "
-        "joining). It draws the entire chapter together as a real unit-arc. It may "
+        f"final unit, is a WHOLE-CHAPTER SYNTHESIS and {marker}. It draws the entire "
+        "chapter together as a real unit-arc. It may "
         "assume every SECTION'S CONTENT has been taught, and may connect back to "
         "concepts BY NAME — but it must NOT assume any particular earlier activity, "
         "reading, discussion, homework or material actually happened: it will be "
         "served to classes that covered the same sections through DIFFERENT units.",
         f"- COVERAGE COMPLETES BEFORE THE SYNTHESIS: all registry sections "
-        f"first-appear across units 1..{count - 1}. No other unit may use the "
-        "synthesis token.",
+        f"first-appear across units 1..{count - 1}. {no_other}",
         *_synthesis_handoff_lines(subject, klass, count),
         f"- Save as: ch_{int(chapter):02d}_canonical.json",
     ]) + "\n"
@@ -269,6 +311,30 @@ def briefs_for(subject, klass, chapter):
     if reg is None:
         raise SystemExit("No standard canonical on disk — author it first; if the row "
                          "says finalized it is stale: re-run the annotate pass.")
+    # The compact's registry paragraph names the field the anchor goes in and forbids the
+    # synthesis carrier. Both are stage-dependent for the same reason `top_brief_for`'s
+    # mandate is (2026-08-10, S7): a mediated-anchor stage has no `section_anchor` field to
+    # name, and its synthesis carrier is the boolean, not the token. A compact carrying a
+    # synthesis unit is exactly the ARV-D-025 failure v2.0 exists to prevent, so the
+    # prohibition has to be stated in the carrier that stage actually uses — forbidding a
+    # token it was never going to emit forbids nothing. Byte-identical where the field
+    # exists.
+    if _anchor_field_present(subject, klass):
+        registry_rule = (
+            "  Every unit's section_anchor MUST be drawn verbatim from this "
+            "list (a multi-section unit joins its sections with \" / \" in "
+            "list order). Sections must FIRST APPEAR in registry order; a "
+            "later unit may revisit earlier sections. The token `synthesis` "
+            "is RESERVED to the chapter's standard canonical — never use it here.")
+    else:
+        registry_rule = (
+            "  Every unit's section reference MUST be drawn verbatim from this "
+            "list, in the field your own constitution already defines for it (a "
+            "unit teaching several sections lists them all, in list order). "
+            "Sections must FIRST APPEAR in registry order; a later unit may "
+            "revisit earlier sections. The closing whole-chapter SYNTHESIS is "
+            "RESERVED to the chapter's standard canonical — never emit "
+            "`\"synthesis\": true` here.")
     out = {}
     for k in plan["counts"][1:]:
         lines = [
@@ -283,11 +349,7 @@ def briefs_for(subject, klass, chapter):
         ]
         lines += [f"    {i}. {a}" for i, a in enumerate(reg, 1)]
         lines += [
-            "  Every unit's section_anchor MUST be drawn verbatim from this "
-            "list (a multi-section unit joins its sections with \" / \" in "
-            "list order). Sections must FIRST APPEAR in registry order; a "
-            "later unit may revisit earlier sections. The token `synthesis` "
-            "is RESERVED to the chapter's standard canonical — never use it here.",
+            registry_rule,
             f"- COVERAGE IS TOTAL: all {len(reg)} registry sections must "
             f"first-appear across this plan's {k} units — merge ADJACENT "
             f"sections into shared units wherever the count demands it (the "

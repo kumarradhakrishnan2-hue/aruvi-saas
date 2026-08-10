@@ -86,6 +86,16 @@
   .defsev-S1{color:var(--fail);font-weight:700}.defsev-S2{color:#c2410c;font-weight:700}
   .defsev-S3{color:var(--blocked)}.defsev-S4{color:var(--muted)}
   .small{font-size:12px;color:var(--muted)}
+
+  /* Stage-row notes: some carry a whole stage's history (maths·secondary is 711 chars against
+     42-100 for the rest), which pushed the matrix off the screen. Clamp to two lines with a
+     real ellipsis; one click opens the full text in place. Not a <details> because this sits
+     inside a table cell that is rebuilt by innerHTML — a self-contained class toggle survives
+     the rebuild, a details' open state does not. */
+  .rownote { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+             overflow:hidden; cursor:pointer; }
+  .rownote.open { display:block; -webkit-line-clamp:unset; }
+  .rownote:hover { color:var(--fail); }
 </style>
 </head>
 <body>
@@ -190,10 +200,10 @@ const STAGES = [
  {key:"social_sciences/secondary", group:"ref", note:"LP v1.10 · assessment v1.5 — THE REFERENCE (pilot: ch 3, class IX, 50 min)"},
  {key:"social_sciences/middle",    group:"TB", note:"v2.7 · time_bands · classes vi/vii/viii · A9 replaces the item-18 prohibition"},
  {key:"science/secondary",        group:"TB", note:"LP v1.1 · assessment v1.2 ✓ · class ix · 50 min · pilot ch 8 · SIGN blocked: 4 engine gaps"},
- {key:"mathematics/secondary",    group:"TB", note:"LP v1.3 · assessment v1.2 ✓ · engine e18 · class ix · 50 min · pilot ch 4 · P1–P5 CLEAR · C1–C7 PASS · C3 green by founder ruling (13 defects repaired at ₹0, 3 accepted, 3 became amendments); no re-author owed — both amendments relaxation-only, library verified compliant clause by clause (§9 relaxation carve-out, written from this stage) · C6 found ARV-D-086, the approach line not surviving a serve — 8 of 11 stages affected, fixed, engine 17→18, certify-only diff zero lines everywhere · C6 served files are _e17_ and want re-serving · C7 clean on all 11 files; the X−1+1 silent unit-skip observed and IGNORED by founder ruling · carrier landed (8-rule row 6) · content gap: 8 of 16 chapters have no summary"},
+ {key:"mathematics/secondary",    group:"TB", note:"LP v1.3 · assessment v1.2 ✓ · engine e18 · class ix · 50 min · pilot ch 4 · P1–P5 CLEAR · C1–C14 ALL PASS · 16 defects closed, 3 accepted, 0 open · C3 green by founder ruling; 3 defects became amendments and no re-author was owed (§9 relaxation carve-out, written from this stage) · C6 found ARV-D-086, the approach line not surviving a serve — 8 of 11 stages, fixed, engine 17→18 · carrier landed (8-rule row 6) · content gap: 8 of 16 chapters have no summary"},
  {key:"the_world_around_us/preparatory", group:"TB", note:"v1.2 · time_bands · classes iii/iv/v · 40 min"},
  {key:"science/middle",           group:"B",  note:"v2.1 · phases[] → P3 · classes vi/vii/viii · A9 replaces item-18"},
- {key:"mathematics/middle",       group:"B",  note:"v3.3 · phases[] → P3 · classes vi/vii/viii"},
+ {key:"mathematics/middle",       group:"B",  note:"LP v3.4 · assessment v3.3 ✓ · class vii · 40 min · pilot ch 7 · P1–P4 CLEAR, P5 amber (P5.4 profiles open; C6 is the stop) · P3 converted, Group B and real · carrier landed (8-rule row 4, period-field) · NO new field: anchor mediated from textbook_segments[].ref and the goal-cluster handoff derived, per the founder ruling of 2026-08-10 and the prototype precedent · C1 NOT gated"},
  {key:"mathematics/preparatory",  group:"B",  note:"v1.1 · phases[] → P3 · classes iii/iv/v · 40 min"},
  {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[] → P3 · classes iii/iv/v · 40 min · registry definition needed (P5.2)"},
  {key:"english/middle",           group:"B",  note:"v1.5 · phases[] → P3 · classes vi/vii/viii · strike 'preview into next' · registry definition (P5.2)"},
@@ -354,7 +364,7 @@ function renderAll(){
         return cellHtml("stages",st.key,p[0]);
       }).join("");
       const unlocked=stageSigned(st.key);
-      return `<tr><td class="rowlabel">${st.key}<br><small>${st.note}</small></td>
+      return `<tr><td class="rowlabel">${st.key}<br><small class="rownote" title="click to expand" onclick="this.classList.toggle('open')">${st.note}</small></td>
         <td>${st.group==="ref"?"—":st.group}</td>${cells}
         <td class="small">${unlocked?"✅ unblocked":"⛔ blocked until SIGN"}</td></tr>`;
     }).join("");
