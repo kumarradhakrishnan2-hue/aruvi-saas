@@ -1,0 +1,128 @@
+============================================================================================
+SOURCE: Chapter 07 - A Tale of Three Intersecting Lines.pdf (7687 words) + ch_07_summary.json (1987 words)
+        textbook 7687 words -> 7143 8-grams · summary 1987 words -> 1939 8-grams
+        summary 8-grams ALSO in the book: 132 (6.8%)
+
+DETECTOR CONTROL: 20-word passage lifted from the TEXTBOOK -> detected at 20 words · PASS
+
+CORPUS: 13 plan(s) — 3 canonical(s) on disk + 10 served fresh
+   ch_07_canonical.json               lp   78 · items   44
+   ch_07_canonical_p10.json           lp   63 · items   42
+   ch_07_canonical_p07.json           lp   45 · items   25
+   SERVED identity X=7                lp   45 · items   25
+   SERVED identity X=10               lp   63 · items   42
+   SERVED identity X=12               lp   78 · items   44
+   SERVED between X=8                 lp   51 · items   21
+   SERVED synthesis X=9               lp   57 · items   21
+   SERVED synthesis X=11              lp   73 · items   27
+   SERVED surrender X=13              lp   78 · items   44
+   SERVED below floor X=5             lp   38 · items   19
+   SERVED below floor X=6             lp   45 · items   25
+   SERVED mixed 4x50+7x40             lp   73 · items   27
+
+============================================================================================
+CHECK 1 · VERBATIM REPRODUCTION vs THE TEXTBOOK — 1193 teacher-facing strings scanned
+longest-shared-run distribution (0 = shares nothing with the book at 8 words):
+     0 words ·  1033 string(s)
+     8 words ·    51 string(s)
+     9 words ·    18 string(s)
+    10 words ·     5 string(s)
+    11 words ·    17 string(s)
+    12 words ·    13 string(s)
+    13 words ·    20 string(s)
+    14 words ·     4 string(s)
+    15 words ·     9 string(s)
+    16 words ·    14 string(s)
+    18 words ·     9 string(s)
+
+75 run(s) >= 12 words, 10 DISTINCT string(s); 10 of them are ALSO carried in full by the chapter summary
+
+    18 words · 9 occurrence(s) · book+summary · fields: ['served u4 band2', 'served u5 band2']
+        run : "a 3 cm 75 7 cm b 6 cm 25 3 cm c 3 cm 120 8 cm"
+        full: "Students construct all three cases in Figure it Out Q1, section 7.3 p.161 ("Construct triangles given two sides and the included angle: (a) 3 cm, 75°, 7 cm; (b) 6 cm, 25°, 3 cm; (c) 3 cm, 120°, 8 cm...."). They annotate each figure with the included angle and check that both given sides are correctly placed."
+
+    16 words · 9 occurrence(s) · book+summary · fields: ['served u3 band3', 'served u3 homework']
+        run : "a 1 100 100 b 3 6 9 c 1 1 5 d 5 10 12"
+        full: "{'id': 'E-10', 'type': 'exercise', 'source_section': 'section 7.2', 'book_ref': 'Figure it Out Q1, section 7.2 p.159', 'description': 'Check if a triangle exists for: (a) 1, 100, 100; (b) 3, 6, 9; (c) 1, 1, 5; (d) 5, 10, 12.'}"
+
+    16 words · 5 occurrence(s) · book+summary · fields: ['served u4 band2']
+        run : "circles a touch each other at a point b do not intersect frame a complete procedure"
+        full: "Students work on Figure it Out, section 7.2 p.158 ("Find 3 examples each of sidelength sets where the two circles: (a) touch each other at a point; (b) do not intersect. Frame a complete procedure to check the existence of a triangle...."). They construct or calculate examples for each circle-pair type and write a step-by-step existence-check procedure in their own words."
+
+    15 words · 9 occurrence(s) · book+summary · fields: ['served u6 band1']
+        run : "a 75 5 cm 75 b 25 3 cm 60 c 120 6 cm 30"
+        full: "Students construct the three ASA cases in Figure it Out Q1, section 7.3 p.162 ("Construct triangles given two angles and the included side: (a) 75°, 5 cm, 75°; (b) 25°, 3 cm, 60°; (c) 120°, 6 cm, 30°...."). They observe whether and where the two angle arms meet and record any surprises."
+
+    14 words · 4 occurrence(s) · book+summary · fields: ['served u5 band3']
+        run : "angles are a 36 72 b 150 15 c 90 30 d 75 45"
+        full: "Students apply the property in Figure it Out Q1, section 7.3 p.165 ('Find the third angle (using a parallel-line argument) when two angles are: (a) 36°, 72°; (b) 150°, 15°; (c) 90°, 30°; (d) 75°, 45°.') and Figure it Out Q2, section 7.3 p.165 ('Can a triangle have all three angles equal to 70°?...'). They also solve Try This Q3, section 7.3 p.165 ('In triangle ABC, ∠B = ∠C and ∠A = 50°. Find ∠B an"
+
+    13 words · 5 occurrence(s) · book+summary · fields: ['served u6 band2']
+        run : "exist for every combination of two angles and the included side find examples"
+        full: "Math Talk, section 7.3 p.162 ("Do triangles always exist for every combination of two angles and the included side? Find examples where they do not...."). Students test pairs summing to 180° and beyond, discover that parallel arms never meet, and articulate the condition: angle pair sum must be less than 180°."
+
+    13 words · 15 occurrence(s) · book+summary · fields: ['dropped u6 band2', 'dropped u7 band2', 'served u10 band1', 'served u10 band2', 'served u7 band2', 'served u8 band2']
+        run : "triangle abc with bc 5 cm ab 6 cm ca 5 cm construct"
+        full: "Students construct Figure it Out Q1, section 7.5 p.170 ("Construct triangle ABC with BC = 5 cm, AB = 6 cm, CA = 5 cm. Construct the altitude from A to BC....") and label the triangle by both side and angle type. The altitude from A is added using the set-square method, reinforcing the construction technique from the altitude work on perpendicular distance."
+
+    12 words · 11 occurrence(s) · book+summary · fields: ['served u10 band1', 'served u10 homework', 'served u8 band2']
+        run : "triangle try with ry 4 cm tr 7 cm r 140 construct"
+        full: "{'id': 'E-27', 'type': 'exercise', 'source_section': 'section 7.5', 'book_ref': 'Figure it Out Q2, section 7.5 p.170', 'description': 'Construct triangle TRY with RY = 4 cm, TR = 7 cm, ∠R = 140°. Construct the altitude from T to RY.'}"
+
+    12 words · 4 occurrence(s) · book+summary · fields: ['served u3 band2']
+        run : "circles a touch each other at a point b do not intersect"
+        full: "Students explore Figure it Out, section 7.2 p.158 ('Find 3 examples each of sidelength sets where the two circles: (a) touch each other at a point; (b) do not intersect....'), constructing or sketching the circle diagrams and then drafting a complete procedure for checking triangle existence. Groups share their written procedures and the class converges on a canonical three-step check."
+
+    12 words · 4 occurrence(s) · book+summary · fields: ['served u7 band2']
+        run : "altitude from the top vertex to the base justify why the crease"
+        full: "Students carry out Activity, section 7.4 p.168 ('Altitudes Using Paper Folding: cut out a paper triangle, fix one side as the base, and fold so the crease is the altitude from the top vertex to the base. Justify why the crease is perpendicular to the base.'). They fold and crease, then place a set-square against the crease and base to verify the 90° angle. Students articulate why the fold creates "
+
+============================================================================================
+CHECK 2 · THIRD-PARTY COPYRIGHTED MATERIAL
+   brand/trademark            0 hit(s)
+   literary/rights marker     0 hit(s)
+   external image or url      0 hit(s)
+   visual_stimulus fields     0
+============================================================================================
+CHECK 3 · QUOTED SOURCE TEXT IS ATTRIBUTED
+   519 quoted passage(s) (>=25 chars) in field values, 90 distinct
+   of which sharing an 8+ word run with the source: 448
+        ch_07_canonical.json · served u1 homework: "Figure it Out Q2, section 7.1 p.150"
+        ch_07_canonical.json · served u1 homework: "Use points on two (or three) equal circles and/or their centres A, B (and C) to form isosceles and equilateral triangles."
+        ch_07_canonical.json · served u1 band2: "Construct triangles with these sidelengths (all in cm) using compass and ruler...."
+        ch_07_canonical.json · served u1 band3: "Use points on a circle and/or its centre to form isosceles triangles...."
+        ch_07_canonical.json · served u2 homework: "Figure it Out Q2, section 7.2 p.154"
+        ch_07_canonical.json · served u2 homework: "Determine whether triangles exist for: (a) 10 km, 10 km, 25 km; (b) 5 mm, 10 mm, 20 mm; (c) 12 cm, 20 cm, 40 cm."
+        ch_07_canonical.json · served u2 band1: "Attempt to construct triangles with sidelengths 3 cm, 4 cm, 8 cm and 2 cm, 3 cm, 6 cm...."
+        ch_07_canonical.json · served u2 band3: "Without constructing: could you have determined that 3, 4, 8 cm cannot form triangles? Explain...."
+        ch_07_canonical.json · served u3 homework: "Figure it Out Q1, section 7.2 p.159"
+        ch_07_canonical.json · served u3 homework: "Check if a triangle exists for: (a) 1, 100, 100; (b) 3, 6, 9; (c) 1, 1, 5; (d) 5, 10, 12."
+        ch_07_canonical.json · served u3 band2: "Which sets of lengths can be sidelengths of a triangle? Explain: (a) 2, 2, 5; (b) 3, 4, 6...."
+        ch_07_canonical.json · served u3 band3: "For each pair of given sides, find at least 5 valid values for the third side: (a) 1, 100; (b) 5, 5; (c) 3, 7...."
+        ch_07_canonical.json · served u4 homework: "Try This Q3, section 7.2 p.154"
+        ch_07_canonical.json · served u4 homework: "For any set of three lengths, will at least two comparisons always satisfy "
+        ch_07_canonical.json · served u4 homework: "? Explore. Also find which length can be identified as immediately less than the sum without calculation."
+   sample of the quoted passages (to show WHAT is being quoted):
+        "Through construction, explore whether it is possible to construct: (a) a right-angled equilateral triangle; (b) an obtuse-angled equilateral triangle; (c) a right-angled "
+        "Through construction, explore whether it is possible to construct: (a) a right-angled equilateral triangle; (b) an obtuse-angled equilateral triangle; (c) a right-angled "
+        "Altitudes Using Paper Folding: cut out a paper triangle, fix one side as the base, and fold so the crease is the altitude from the top vertex to the base. Justify why the"
+        "Explore whether it is possible to construct: a right-angled equilateral triangle; an obtuse-angled equilateral triangle; a right-angled isosceles triangle; an obtuse-angl"
+        "Find 3 examples each of sidelength sets where the two circles: (a) touch each other at a point; (b) do not intersect. Frame a complete procedure to check the existence of"
+        "For each given angle (a) 30°; (b) 70°; (c) 54°; (d) 144°, find at least two angles for which a triangle is possible and two for which it is not. Find the third angle in e"
+        "Shortest Path in a Box: a spider at one corner of a box wants to walk (on the surfaces) to the opposite corner. Mark the shortest path on a cardboard box and compare with"
+        "For each pair of given sides, find at least 5 valid values for the third side: (a) 1, 100; (b) 5, 5; (c) 3, 7. Describe all possible third-side values for each case."
+        "Shortest Path in a Box: a spider at one corner of a box wants to walk on the surfaces to the opposite corner. Mark the shortest path on a cardboard box...."
+        "Experiment with different triangles to find a relation between any two angles and the third. What data will you track and how will you organise it?...."
+============================================================================================
+BOOK LOCATORS (references INTO the book, reproducing nothing)
+   97 distinct string(s) carry a locator; sample:
+        "A common construction error in SAS is measuring the included angle from the wrong ray; remind students that the angle is sandwiched between the two given sides,"
+        "A common error is checking only one inequality — for example, confirming only that the longest side is less than the sum of the two shorter sides and stopping t"
+        "A common slip in ASA construction is drawing both angle arms from the same endpoint; ensure students construct one angle at each end of the base. The exterior-a"
+        "A frequent slip is accepting a degenerate case (sum exactly equal, not strictly greater) as a valid triangle; highlight case (b) of the p.159 exercise as the ca"
+        "Brief whole-class share: collect one or two constructed triangles under the visualiser. Students state in their own words why C lies on both arcs and therefore "
+        "Class discussion surfaces the pattern. Students then tackle Figure it Out Q1, section 7.2 p.154 ("Without constructing: could you have determined that 3, 4, 8 c"
+        "Class revisits Figure it Out Q4, section 7.5 p.170 ('Through construction, explore whether it is possible to construct: (a) a right-angled equilateral triangle;"
+        "Class unpacks Figure it Out Q1, section 7.2 p.154 ("Without constructing: could you have determined that 3, 4, 8 cm cannot form triangles? Explain...."). Studen"
+        "Each student cuts out a paper triangle and performs Activity, section 7.4 p.168 ("Altitudes Using Paper Folding: cut out a paper triangle, fix one side as the b"
+        "Figure it Out Q2, section 7.2 p.159 ("Does an equilateral triangle exist with sides 50, 50, 50? In general, does an equilateral triangle of any sidelength exist"

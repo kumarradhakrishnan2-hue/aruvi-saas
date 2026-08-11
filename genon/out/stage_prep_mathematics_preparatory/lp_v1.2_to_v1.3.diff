@@ -1,0 +1,92 @@
+--- genon/out/stage_prep_mathematics_preparatory/lesson_plan_constitution_v1.2_pre.txt	2026-08-11 10:38:30.652417766 +0530
++++ data/content/constitutions/lesson_plan/mathematics/preparatory/lesson_plan_constitution.txt	2026-08-11 10:38:30.666364129 +0530
+@@ -1,4 +1,4 @@
+-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.2
++ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.3
+ 
+ VOCABULARY (teacher-facing naming):
+ The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
+@@ -17,7 +17,7 @@
+ 
+ The textbook's named-section order is the LP's structural axis. The LP
+ walks the chapter's `sections` (S1, S2, …) in order; each period anchors
+-to one or two adjacent sections.
++to as many adjacent sections as its content warrants.
+ 
+ Pedagogy is a property of the TASK, not the period. A prep section
+ interleaves several acts (explore, then reason, then practice), and a
+@@ -62,26 +62,44 @@
+ ================================================================================
+ 
+ The LP walks `sections` in textbook order. Do NOT reorder, interleave, or
+-re-sequence. Each period anchors to one — or at most two adjacent —
+-sections. Every section in the summary MUST appear in at least one
+-period's `section_refs`. Dropping a section is FORBIDDEN.
++re-sequence. A period anchors to as many ADJACENT sections as its
++content warrants.
++
++A section's periods are CONTIGUOUS. Once the plan has moved past a
++section it does not return: a later period MUST NOT re-anchor a section
++an earlier run already completed. Consolidation and extended practice
++belong INSIDE that section's own run, where the class is still working
++on it — never as a revisit after other sections have been taught.
+ 
+ ================================================================================
+-RULE 2 | PERIOD BIN-PACKING
++RULE 2 | FULL-SECTION COVERAGE
+ ================================================================================
+ 
+-Allocate exactly B periods across sections.
++Allocate exactly B periods across sections, in section order.
+ 
+-- A heavy section (many tasks) MAY split across two adjacent periods.
++- Every section in the summary MUST appear in at least one period's
++  `section_refs`. Dropping a section is FORBIDDEN.
++- A section MAY span as many ADJACENT periods as its content warrants.
++  Emphasis follows the SUBSTANCE of the section — the number of
++  enumerated tasks, the demand of the concept being built — never the
++  effort_index, which governs only how the chapter as a whole is
++  allotted time in the Allocate step, never how periods are
++  distributed within it.
+ - Light sections MAY merge with an adjacent section.
+-- A section split across periods keeps its tasks in textbook order; no
+-  task is assigned to two periods.
++- A section spanning several periods keeps its tasks in textbook order;
++  no task is assigned to two periods.
++
++PROHIBITION
++1. MUST NOT apply any numerical allocation formula across sections
++   within the chapter.
++2. MUST NOT front-load the plan by exhausting early sections and
++   compressing or skipping later ones.
+ 
+ ================================================================================
+ RULE 2A | IN-CLASS TASK SELECTION — NON-DUPLICATING
+ ================================================================================
+ 
+-Before bin-packing, apply a non-duplicating pass within each section: where
++Before allocating periods, apply a non-duplicating pass within each section: where
+ two or more tasks cover the same cognitive act on the same concept with only
+ surface variation (different numbers, different objects, identical procedure),
+ place only the richest representative in `tasks_in_class`. Group the remaining
+@@ -293,8 +311,11 @@
+ {
+   "period_number":           integer,
+   "period_duration_minutes": integer,
+-  "section_refs":            [ string ],        // 1–2, e.g. ["S3"] — copied
+-                                                //   from summary sections[].ref
++  "section_refs":            [ string ],        // e.g. ["S3"] — copied verbatim
++                                                //   from summary sections[].ref;
++                                                //   as many ADJACENT sections as
++                                                //   the unit's content warrants
++                                                //   (Rule 1), no fixed count
+   "section_titles":          [ string ],        // matching titles, verbatim
+   "activity_title":          string,            // ≤ 12 words, evocative
+   "tasks_in_class": [
+@@ -325,5 +346,5 @@
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-Mathematics Lesson Plan Constitution (Preparatory) · Version 1.2 · Internal Document
++Mathematics Lesson Plan Constitution (Preparatory) · Version 1.3 · Internal Document
+ ================================================================================

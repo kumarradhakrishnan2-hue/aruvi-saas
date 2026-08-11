@@ -414,7 +414,7 @@ before starting each stage):
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
-| S8 | mathematics · preparatory | 1.1 | phases[] → P3 | — | — | — |
+| S8 | mathematics · preparatory | **1.3 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
 | S9 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |
 | S10 | english · middle | 1.5 | phases[] → P3 | — | — | — |
 | S11 | english · secondary | 1.0 | phases[] → P3 | — | — | — |
@@ -570,6 +570,16 @@ sign-off in `genon/out/stage_prep_ss_middle/`.
 carried the item-18 prohibition, so A9 landed as the two lines alone, and the pre-existing
 "none/all of the above" ban was absorbed into the by-label prohibition rather than duplicated.
 `genon/out/stage_prep_mathematics_secondary/`.
+**Done for S7 (2026-08-10):** mathematics·middle assessment **v3.2 → v3.3**; A6 as the
+PERIOD-FIELD anchor (8-rule row 4) — `section_ref` resolved against the period's
+`textbook_segments[].ref`, with no `coverage_handoff` in the path. Removal N/A.
+`genon/out/stage_prep_mathematics_middle/`.
+**Done for S8 (2026-08-11):** mathematics·preparatory assessment **v1.2 → v1.3**; A6 as the
+PERIOD-FIELD anchor on **`section_refs[]`** (8-rule **row 5** — the same family as middle on a
+DIFFERENT field, which is why neither may borrow the other's join). Removal N/A. One defect
+repaired alongside: the `what_each_option_reveals` example had lost `"B"` and gained a second
+`"C"` when S7's distractors-only pass rewrote one of its two lines in this file.
+`genon/out/stage_prep_mathematics_preparatory/`.
 **AMENDED AGAIN for S4 (2026-08-09, at C3 — the first stage to amend AFTER authoring):**
 LP **v1.2 → v1.3** (Rule 5 P1's consecutive-method cap gains a content-driven exception ·
 `activity_title` 10–13 → **6–13** words · `section_context` 10–12 → **6–12** words, upper bound
@@ -593,6 +603,12 @@ stands to amend constitutions, not to teach `compile.py` an adapter.
 **Artefact:** diff.
 **Done for S6 (2026-08-07)** — the first stage where this was not N/A: science·middle
 Amendment A3 converted, Rule 6's prose following. `grep -c 'phases\['` = 0, `time_bands` = 2.
+**Done for S7 (2026-08-10)** — mathematics·middle: Rule 6, Rule 8, Rule 10's heading and prose,
+Rule 11's guard case and the schema all followed the rename.
+**Done for S8 (2026-08-11)** — mathematics·preparatory: Rule 5, Rule 6's heading
+(`PHASE NARRATION` → `BAND NARRATION`) and prose, Rule 7 and the schema followed. Note this
+leaves the middle/preparatory saved-plan corpus on the old shape; the mathematics plugin reads
+**both keys, newest first** (`subject.py:211-219`), which is what covers display.
 
 **P4 [Kumar] History to the sidecar.** The amendment note goes to `CHANGELOG.md` beside the
 constitution, never into the file; the `VERSION` line stays in the file.
@@ -690,6 +706,22 @@ made a missing carrier a *paid* failure. `tests/test_genon_carriers.py` 25 → 3
 One trap recorded for S7–S11: `genon_assessment` receives only `result`, and the grade lives on
 the enclosing saved plan, so **branch on container shape, not `stage_for(grade)`** — a grade read
 there is `None` on the very call the carrier makes.
+**Done for S7 (2026-08-10):** row 4, the period-field family's FIRST stage — it wrote
+`items_by_period_field` plus three shape adapters (mediated anchor, goal-cluster handoff,
+group-nested container), and deliberately left preparatory's branches written-but-shut with a
+note saying so.
+**Done for S8 (2026-08-11) — the cheapest carrier of the campaign, and it shows what a
+well-left note is worth.** Row 5 needed no new code: S7's family helper and
+`genon_unit_anchor`'s preparatory branch were already on disk, so the whole step was three
+lines of delegation (`items_by_period_field` with `section_refs[]`) plus deleting the
+`_NOT_YET` entry. **Mathematics is now carried at all three stages**; the four remaining
+entries are english's (row 7, S9–S11). The stage discriminator earns its keep in both
+directions now — middle and preparatory share a container and are told apart by `goal` vs
+`intent`, never by `stage_for(grade)`, which is `None` on the very call the carrier makes.
+Verified on the real saved shape (`backup/saved_plans/mathematics/iii/ch_06_*.json`): 26 items,
+zero orphans, every anchor equal to the independently computed last-period-teaching-the-section.
+`tests/test_genon_carriers.py` 82 (4 failing, all of them S7-era "preparatory is still owed"
+assertions) → **92, green**.
 **Retro-note for S1/S3/S6:** all three satisfied P5.5 in substance before it existed — S3 is
 where `carriers.py` was created (the `questions`-wrapper defect) and S6 extended it with
 `progression_stage`. Nothing re-opens.

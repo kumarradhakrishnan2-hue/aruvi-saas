@@ -1,0 +1,110 @@
+--- lesson_plan_constitution_v1.1_pre.txt	2026-07-14 10:27:01.015361786 +0530
++++ ../../../data/content/constitutions/lesson_plan/mathematics/preparatory/lesson_plan_constitution.txt	2026-08-11 09:38:25.804707538 +0530
+@@ -1,9 +1,16 @@
+-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.1
++ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.2
+ 
+ VOCABULARY (teacher-facing naming):
+-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
++The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
+ Stage: Preparatory (Grades III–V) · Maths Mela
+ 
++THE SELF-CONTAINED REGISTER (binds Rule 6 and teacher_notes)
++Three things no time band or teacher note may do, each because the platform enforces it:
++1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick count round the class", "an unhurried making activity" — never in number.
++2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "now that we have weighed everything" are wrong for someone. Each unit closes on its own ground.
++3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
++Backward continuity is welcome, and is best carried by naming the content built on ("The children have grouped in tens to count large collections, …") rather than a unit's position.
++
+ ================================================================================
+ DESIGN PRINCIPLE
+ ================================================================================
+@@ -38,7 +45,11 @@
+    (explore | reason | practice | solve), `book_ref`, `description`.
+ 3. Preparatory NCF Pedagogy document (source of the five methods and the
+    prep frequency row).
+-4. Period schedule: {duration, count} rows; total = B.
++4. Period schedule — exactly ONE row {duration_minutes, count}: the
++   class-standard duration (40 min for classes up to VII, 45 for VIII,
++   50 for IX–X — the master-plan calibration bands, not NCF's flat 40)
++   × the period count; total = B. Teacher timetable variation never
++   reaches generation; it is handled downstream at serve time.
+ 
+ ================================================================================
+ OUTPUT
+@@ -135,27 +146,32 @@
+ RULE 5 | TIME CONSTRAINT
+ ================================================================================
+ 
+-Each period's phases sum exactly to `period_duration_minutes`. Minimum 3
+-phases per period. `phases[].minutes` is a STRING time-range (e.g.
+-"0–10", "10–25") tiling 0..period_duration with no gaps or overlaps.
+-Overrun is not permitted.
++Each period's time bands sum exactly to `period_duration_minutes`.
++Minimum 3 bands per period. `time_bands[].minutes` is a STRING
++time-range (e.g. "0–10", "10–25") tiling 0..period_duration with no
++gaps or overlaps. Overrun is not permitted.
+ 
+ ================================================================================
+-RULE 6 | PHASE NARRATION USES book_ref, NOT INTERNAL ID
++RULE 6 | BAND NARRATION USES book_ref, NOT INTERNAL ID
+ ================================================================================
+ 
+-When a phase invokes a task, the phase `description` names it by
++When a time band invokes a task, the band's `activity` names it by
+ `book_ref` followed by the task's `description` in brackets and inverted
+ commas, ≤ 10 words with `....` if truncated.
+ 
+ Format: book_ref ("description up to 10 words....")
+ Example: Let us Do Q4 (p.67) ("fill the blanks with the correct numbers....")
+ 
+-The phase description MUST NOT use the internal `id`. Internal ids live
++Every band is additionally bound by THE SELF-CONTAINED REGISTER: it
++names no clock quantity, points forward at nothing, claims no
++completion, and names no calendar time. Each band speaks in the present
++of its own activity; unit-to-unit linking lives only in teacher_notes.
++
++The band's `activity` MUST NOT use the internal `id`. Internal ids live
+ only in the structured `tasks_in_class[]` array as join keys.
+ 
+ Section codes (S1, S2, …) are also internal references. They MUST NOT
+-appear in any prose the teacher reads — phases or teacher_notes. When
++appear in any prose the teacher reads — time bands or teacher_notes. When
+ referring to a section in prose, use its title from `section_titles`
+ (e.g. "the kilograms and grams section", not "S2").
+ 
+@@ -171,7 +187,7 @@
+ - periods_allocated (= B)
+ 
+ LP body text MUST NOT reference C-codes. Competencies appear only here and
+-in the mapping JSON, never in periods, phases, or teacher_notes.
++in the mapping JSON, never in periods, time bands, or teacher_notes.
+ 
+ ================================================================================
+ RULE 8 | COVERAGE HANDOFF EMISSION (INTENT AXIS)
+@@ -292,11 +308,15 @@
+     }
+   ],
+   "homework": [ <same shape as tasks_in_class entry> ],  // [] by default (Rule 9)
+-  "phases": [
+-    { "minutes": string, "description": string }  // narration via book_ref (Rule 6)
++  "time_bands": [
++    { "minutes": string, "activity": string }     // narration via book_ref (Rule 6)
+   ],
+   "teacher_notes":           string,            // 2–3 sentences, flowing prose.
+-                                                //   Recap prior unit; flag one
++                                                //   Carry continuity by NAMING
++                                                //   the content built on, never
++                                                //   a unit's position (THE
++                                                //   SELF-CONTAINED REGISTER,
++                                                //   ban 2); flag one
+                                                 //   common error from chapter prose
+                                                 //   (no fabrication). No C-codes,
+                                                 //   no internal ids, no S-codes.
+@@ -305,5 +325,5 @@
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-Mathematics Lesson Plan Constitution (Preparatory) · Version 1.1 · Internal Document
++Mathematics Lesson Plan Constitution (Preparatory) · Version 1.2 · Internal Document
+ ================================================================================

@@ -71,30 +71,56 @@ def main() -> int:
         if empty:
             notes.append(f"EMPTY ANCHOR on {empty}")
 
-        # 1 + 4: every anchor is a real sitting of THIS plan
-        oob = [a for a in anchors if not (1 <= a <= n)]
+        # 1 + 4: every anchor is a real sitting of THIS plan — OR a DROPPED unit's own
+        # number in this plan. Corrected 2026-08-10 (founder): the first version asserted
+        # anchors fall within 1..len(served), which fails a below-floor serve for a reason
+        # that is not a defect. A dropped unit is RENUMBERED as the plan's continuation
+        # (p07's u7 becomes 6 at X=5) and travels with the plan as material the teacher may
+        # still teach; its item pointing at 6 points exactly at the unit she is holding.
+        # That is C9 3(c) working — "the dropped unit's sitting number in THIS plan" — not
+        # the lender's numbering leaking through.
+        legal = set(range(1, n + 1)) | {u.get("period_number")
+                                        for u in (res.get("dropped_units") or [])}
+        oob = [a for a in anchors if a not in legal]
         if oob:
-            notes.append(f"anchor outside 1..{n}: {oob}")
+            notes.append(f"anchor outside the plan's sittings and dropped units: {oob}")
 
         # 3(c) below floor: dropped units' items present, anchored to the dropped sitting,
         #      flagged unscheduled
         dropped = res.get("dropped_units") or []
         if dropped:
             dnums = {u.get("period_number") for u in dropped}
-            flagged = [(i.normalized.id if i.normalized else None) or "?" for i, a in pairs
-                       if a in dnums and not (i.meta or {}).get("unscheduled")]
+            # The `unscheduled` flag is NOT asserted (founder, 2026-08-10). Its only
+            # consumer is the export, which omits flagged items — and the founder's ruling
+            # is that a dropped unit is handed over as material the teacher MAY still
+            # teach, so its question should travel and print with it. Flagging would strip
+            # exactly the question she needs. What IS checked is that the items are there.
             present = {a for _, a in pairs} & dnums
             if not present:
                 notes.append(f"dropped units {sorted(dnums)} carry NO items")
-            if flagged:
-                notes.append(f"dropped-unit items not flagged unscheduled: {flagged}")
 
         # 2: on a fill, the LAST sitting should carry the borrowed unit's own items
+        # 2: on a FILL the borrowed unit should bring its own items. A SYNTHESIS borrow is
+        # exempt by design (founder, 2026-08-10): the top's synthesis unit holds no items —
+        # it is excluded from the item index precisely so it does not become the last unit
+        # of every section and swallow the whole assessment — so a Case-1 borrow has nothing
+        # to bring. It is the one unit in the system that tests nothing of its own. NOTE the
+        # exclusion is narrow: a compact's COMPOSITE unit is not flagged synthesis and takes
+        # items normally (the old p10's composite held 5 of 11).
+        # STRUCTURALLY UNSATISFIABLE UNDER THE ACCEPTED ANCHORING RULE, and not a ch-7 quirk
+        # (founder, 2026-08-10): "if we are going to link items to last of the sittings which
+        # is our approach, we must live with the reality that borrowed units may lose
+        # assessment items." §0.4 borrows the unit that FIRST deals the next-due section;
+        # items anchor at that section's LAST unit. So a borrowed unit brings items only when
+        # its section happens to be a single-unit run. At X=8 the borrow takes p10's u8 — 7.5's
+        # first unit — while 7.5's items sit on u10, two units later. A SYNTHESIS borrow brings
+        # none for a different reason (it holds none at all, by design). Recorded, not asserted.
         sf = g.get("slot_fill") or {}
-        if sf.get("mode") in ("fill", "synthesis"):
-            if n not in anchors:
-                notes.append(f"fill/synthesis: last sitting {n} carries no item "
-                             f"(borrowed unit brought none)")
+        if sf.get("mode") in ("fill", "synthesis") and n not in anchors:
+            kind = "synthesis (holds no items by design)" if \
+                res["lesson_plan"]["periods"][-1].get("synthesis") else \
+                "fill (borrowed unit is its section's FIRST, items anchor at its LAST)"
+            print(f"{'':11} ·  accepted: last sitting {n} carries no item — {kind}")
 
         verdict = "PASS" if not notes else "FAIL"
         if notes:

@@ -469,7 +469,93 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-08 (newest) — TWO STACKED STICKIES ARE NOT ONE FROZEN BAR, AND `sticky` DOES NOT
+## 2026-08-11 (newest) — S8 · MATHS·PREPARATORY STAGE PREP: the cheapest prep of the
+## campaign, because S7 left a good note. And a numeric cap measured BEFORE it is paid for.
+
+**Landed:** LP **v1.1 → v1.3** (v1.2 the carry-forward, v1.3 the Rules 1–2 alignment) ·
+assessment **v1.2 → v1.3** · carrier row 5 open ·
+`_NOT_YET` down to english alone. Class III (already drawn), pilot **ch 5 *Fun with Shapes***
+(8 sections · rec 14 · floor 8 · counts [14, 11, 8]). Full note:
+`genon/out/stage_prep_mathematics_preparatory/STAGE_SIGNOFF_S8_mathematics_preparatory.md`.
+P1–P5.5 complete, **no gate carried into C1**; P5.4 amber by design (needs the live app,
+C6 is its hard stop).
+
+**The reusable lesson is about S7, not S8.** S7 wrote both halves of the seam preparatory
+would need — `items_by_period_field` and `genon_unit_anchor`'s prep branch — and then
+deliberately did NOT wire them up, leaving instead a comment saying *"Treat this branch as
+unexercised until S8 certifies it"* and a `CarrierNotImplemented` message naming this stage's
+row, field and owing stage. A session later that turned P5.5 from an investigation into three
+lines of delegation plus a deletion. **The pattern to keep: when you find yourself writing
+code a later stage will need, write it, refuse to use it, and say in the refusal exactly what
+the later stage must check.** It costs nothing and it is the difference between S4's carrier
+surprise and this one.
+
+**Mathematics is now carried at all three stages** (secondary row 6 · middle row 4 ·
+preparatory row 5). Middle and preparatory share a container shape and are separated ONLY by
+item vocabulary — `goal` vs `intent` — never by `stage_for(grade)`, which is `None` on the
+very call the carrier makes. Both fields are now load-bearing in both directions, and the
+neither-field case still refuses rather than guessing. Verified on the real prototype-era
+saved plan (`backup/saved_plans/mathematics/iii/ch_06_*.json`): 26 items, **zero orphans**,
+every anchor equal to the independently computed "last period that lists this section".
+`tests/test_genon_carriers.py` 82 (4 failing — all S7-era "preparatory is still owed"
+assertions) → **92, green**.
+
+**THE FINDING WORTH CARRYING FORWARD — and I got it wrong first, which is the useful part.**
+testing.md's standing lesson says a limit stated as a number is what live generation most
+often breaks; S7 proved it at LP v3.6 and paid a full re-author. Preparatory carried the same
+cap (Rule 2: a heavy section may split across **two adjacent periods**), so I measured the
+whole class at P-prep: **4 of 14 chapters cannot satisfy it at their top canonical** (ch 3, 8,
+10, 13), while the pilot dodges it (ch 5: 13 body vs cap 16). **I then recommended leaving it
+alone** — the pilot doesn't exercise it, and prep sections are "small and task-dense" in a way
+middle's are not. The founder challenged it in four words and the data broke all of it:
+
+- **The arithmetic case is not the only failure case, and I tested only that.** The real prep
+  corpus ALREADY exceeds the cap *with slack in hand* — `backup/saved_plans/mathematics/iv/
+  ch_08_*.json` runs section S5 across periods **6, 7 and 8** on 9 body units against a cap of
+  12. Nothing forced it; the content did. The cap breaks whenever a heavy section warrants a
+  third period, which is a property of the SECTION, not of the budget. So the pilot dodging
+  the arithmetic bought nothing at all, and the sweep I was proud of was the wrong sweep.
+- **My pedagogical premise held for the median and failed at the tail.** Class III's 98
+  sections: median 3 tasks, mean 4.2 — but max 13 and nine sections above eight. Those are
+  exactly the sections a two-period cap mis-sizes. I argued from the sections that were never
+  the problem.
+- **Preparatory had become the sole outlier in the maths family** and I did not check.
+  Secondary never had the cap; middle's went at v3.6. S7's own changelog names the tell — *"the
+  only one of the three that named a number"* — and after v3.6 it pointed here.
+- **Rule 1's cap was never a risk, it was a certainty.** The brief mandates a closing
+  whole-chapter synthesis unit; "one or at most two adjacent sections" cannot describe one.
+  S7 met exactly this at C3 (ARV-D-094). Knowing that and authoring anyway pays twice.
+
+**Amended at LP v1.3, cost zero** (§9 full sense — two relaxations, three new obligations — but
+no library exists). **The generalizable rules, both earned here:**
+
+1. **At P-prep, check every stated number against the corpus AND the arithmetic.** A sweep over
+   `sections × canonical_plan.counts` finds the chapters where a cap is *impossible*; only a
+   real saved plan finds the chapters where it is merely *wrong*. The second is the larger set
+   and it is the one that decided this.
+2. **When a number comes out, GREP THE NUMBER, NOT THE RULE.** Removing the cap from Rule 1
+   left it standing in three other places — the DESIGN PRINCIPLE, a stale cross-reference in
+   Rule 2A ("Before bin-packing"), and worst, **the schema comment** (`// 1–2, e.g. ["S3"]`),
+   which is the surface the model actually copies from. S7's v3.7 hit the identical schema
+   residue in middle. Two stages, same miss.
+3. **Port a stage's END STATE, not the text at the moment it changed.** Middle's v3.6 removed
+   the cap and introduced a SURPLUS bullet; v3.8 deleted that bullet as the cause of the
+   hoarding it tried to cure. Porting v3.6 verbatim would have imported a clause its own stage
+   had already retired. Guards assert it never arrived — as they assert no `section_goal` was
+   invented for a stage that has no per-period goal.
+
+**Two smaller things, both worth a line.** (a) An amendment to one stage silently damaged
+another: S7's `apply_s7_distractors_only.py` rewrote the FIRST of two lines of the
+`what_each_option_reveals` example in the *preparatory* file and left the second, leaving
+`{"A", "C", "C", "D"}` — four keys, "B" missing — contradicting its own prose for a day. **A
+cross-stage edit needs the same exactly-one-occurrence guards as an in-stage one**, and the
+prep file had no CHANGELOG to notice it in. (b) Both preparatory footers were stale (the
+assessment one by two bumps), which is the third stage running where the footer drifted from
+the header — worth a one-line assertion in every future edit script.
+
+---
+
+## 2026-08-08 — TWO STACKED STICKIES ARE NOT ONE FROZEN BAR, AND `sticky` DOES NOT
 ## WORK ON A DIRECT CHILD OF <body> IN A HOME-SCREEN iOS WEB APP. Top chrome is now one
 ## FIXED bar + spacer.
 

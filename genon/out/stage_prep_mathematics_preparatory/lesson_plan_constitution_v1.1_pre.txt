@@ -1,15 +1,8 @@
-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.3
+ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.1
 
 VOCABULARY (teacher-facing naming):
-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
+The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
 Stage: Preparatory (Grades III–V) · Maths Mela
-
-THE SELF-CONTAINED REGISTER (binds Rule 6 and teacher_notes)
-Three things no time band or teacher note may do, each because the platform enforces it:
-1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick count round the class", "an unhurried making activity" — never in number.
-2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "now that we have weighed everything" are wrong for someone. Each unit closes on its own ground.
-3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
-Backward continuity is welcome, and is best carried by naming the content built on ("The children have grouped in tens to count large collections, …") rather than a unit's position.
 
 ================================================================================
 DESIGN PRINCIPLE
@@ -17,7 +10,7 @@ DESIGN PRINCIPLE
 
 The textbook's named-section order is the LP's structural axis. The LP
 walks the chapter's `sections` (S1, S2, …) in order; each period anchors
-to as many adjacent sections as its content warrants.
+to one or two adjacent sections.
 
 Pedagogy is a property of the TASK, not the period. A prep section
 interleaves several acts (explore, then reason, then practice), and a
@@ -45,11 +38,7 @@ INPUTS
    (explore | reason | practice | solve), `book_ref`, `description`.
 3. Preparatory NCF Pedagogy document (source of the five methods and the
    prep frequency row).
-4. Period schedule — exactly ONE row {duration_minutes, count}: the
-   class-standard duration (40 min for classes up to VII, 45 for VIII,
-   50 for IX–X — the master-plan calibration bands, not NCF's flat 40)
-   × the period count; total = B. Teacher timetable variation never
-   reaches generation; it is handled downstream at serve time.
+4. Period schedule: {duration, count} rows; total = B.
 
 ================================================================================
 OUTPUT
@@ -62,44 +51,26 @@ RULE 1 | SECTION ANCHORING
 ================================================================================
 
 The LP walks `sections` in textbook order. Do NOT reorder, interleave, or
-re-sequence. A period anchors to as many ADJACENT sections as its
-content warrants.
-
-A section's periods are CONTIGUOUS. Once the plan has moved past a
-section it does not return: a later period MUST NOT re-anchor a section
-an earlier run already completed. Consolidation and extended practice
-belong INSIDE that section's own run, where the class is still working
-on it — never as a revisit after other sections have been taught.
+re-sequence. Each period anchors to one — or at most two adjacent —
+sections. Every section in the summary MUST appear in at least one
+period's `section_refs`. Dropping a section is FORBIDDEN.
 
 ================================================================================
-RULE 2 | FULL-SECTION COVERAGE
+RULE 2 | PERIOD BIN-PACKING
 ================================================================================
 
-Allocate exactly B periods across sections, in section order.
+Allocate exactly B periods across sections.
 
-- Every section in the summary MUST appear in at least one period's
-  `section_refs`. Dropping a section is FORBIDDEN.
-- A section MAY span as many ADJACENT periods as its content warrants.
-  Emphasis follows the SUBSTANCE of the section — the number of
-  enumerated tasks, the demand of the concept being built — never the
-  effort_index, which governs only how the chapter as a whole is
-  allotted time in the Allocate step, never how periods are
-  distributed within it.
+- A heavy section (many tasks) MAY split across two adjacent periods.
 - Light sections MAY merge with an adjacent section.
-- A section spanning several periods keeps its tasks in textbook order;
-  no task is assigned to two periods.
-
-PROHIBITION
-1. MUST NOT apply any numerical allocation formula across sections
-   within the chapter.
-2. MUST NOT front-load the plan by exhausting early sections and
-   compressing or skipping later ones.
+- A section split across periods keeps its tasks in textbook order; no
+  task is assigned to two periods.
 
 ================================================================================
 RULE 2A | IN-CLASS TASK SELECTION — NON-DUPLICATING
 ================================================================================
 
-Before allocating periods, apply a non-duplicating pass within each section: where
+Before bin-packing, apply a non-duplicating pass within each section: where
 two or more tasks cover the same cognitive act on the same concept with only
 surface variation (different numbers, different objects, identical procedure),
 place only the richest representative in `tasks_in_class`. Group the remaining
@@ -164,32 +135,27 @@ task.
 RULE 5 | TIME CONSTRAINT
 ================================================================================
 
-Each period's time bands sum exactly to `period_duration_minutes`.
-Minimum 3 bands per period. `time_bands[].minutes` is a STRING
-time-range (e.g. "0–10", "10–25") tiling 0..period_duration with no
-gaps or overlaps. Overrun is not permitted.
+Each period's phases sum exactly to `period_duration_minutes`. Minimum 3
+phases per period. `phases[].minutes` is a STRING time-range (e.g.
+"0–10", "10–25") tiling 0..period_duration with no gaps or overlaps.
+Overrun is not permitted.
 
 ================================================================================
-RULE 6 | BAND NARRATION USES book_ref, NOT INTERNAL ID
+RULE 6 | PHASE NARRATION USES book_ref, NOT INTERNAL ID
 ================================================================================
 
-When a time band invokes a task, the band's `activity` names it by
+When a phase invokes a task, the phase `description` names it by
 `book_ref` followed by the task's `description` in brackets and inverted
 commas, ≤ 10 words with `....` if truncated.
 
 Format: book_ref ("description up to 10 words....")
 Example: Let us Do Q4 (p.67) ("fill the blanks with the correct numbers....")
 
-Every band is additionally bound by THE SELF-CONTAINED REGISTER: it
-names no clock quantity, points forward at nothing, claims no
-completion, and names no calendar time. Each band speaks in the present
-of its own activity; unit-to-unit linking lives only in teacher_notes.
-
-The band's `activity` MUST NOT use the internal `id`. Internal ids live
+The phase description MUST NOT use the internal `id`. Internal ids live
 only in the structured `tasks_in_class[]` array as join keys.
 
 Section codes (S1, S2, …) are also internal references. They MUST NOT
-appear in any prose the teacher reads — time bands or teacher_notes. When
+appear in any prose the teacher reads — phases or teacher_notes. When
 referring to a section in prose, use its title from `section_titles`
 (e.g. "the kilograms and grams section", not "S2").
 
@@ -205,7 +171,7 @@ Once at the top of the LP:
 - periods_allocated (= B)
 
 LP body text MUST NOT reference C-codes. Competencies appear only here and
-in the mapping JSON, never in periods, time bands, or teacher_notes.
+in the mapping JSON, never in periods, phases, or teacher_notes.
 
 ================================================================================
 RULE 8 | COVERAGE HANDOFF EMISSION (INTENT AXIS)
@@ -311,11 +277,8 @@ LP JSON SCHEMA
 {
   "period_number":           integer,
   "period_duration_minutes": integer,
-  "section_refs":            [ string ],        // e.g. ["S3"] — copied verbatim
-                                                //   from summary sections[].ref;
-                                                //   as many ADJACENT sections as
-                                                //   the unit's content warrants
-                                                //   (Rule 1), no fixed count
+  "section_refs":            [ string ],        // 1–2, e.g. ["S3"] — copied
+                                                //   from summary sections[].ref
   "section_titles":          [ string ],        // matching titles, verbatim
   "activity_title":          string,            // ≤ 12 words, evocative
   "tasks_in_class": [
@@ -329,15 +292,11 @@ LP JSON SCHEMA
     }
   ],
   "homework": [ <same shape as tasks_in_class entry> ],  // [] by default (Rule 9)
-  "time_bands": [
-    { "minutes": string, "activity": string }     // narration via book_ref (Rule 6)
+  "phases": [
+    { "minutes": string, "description": string }  // narration via book_ref (Rule 6)
   ],
   "teacher_notes":           string,            // 2–3 sentences, flowing prose.
-                                                //   Carry continuity by NAMING
-                                                //   the content built on, never
-                                                //   a unit's position (THE
-                                                //   SELF-CONTAINED REGISTER,
-                                                //   ban 2); flag one
+                                                //   Recap prior unit; flag one
                                                 //   common error from chapter prose
                                                 //   (no fabrication). No C-codes,
                                                 //   no internal ids, no S-codes.
@@ -346,5 +305,5 @@ LP JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Lesson Plan Constitution (Preparatory) · Version 1.3 · Internal Document
+Mathematics Lesson Plan Constitution (Preparatory) · Version 1.1 · Internal Document
 ================================================================================

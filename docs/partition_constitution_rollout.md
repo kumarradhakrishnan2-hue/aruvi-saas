@@ -40,7 +40,7 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | science · middle | **2.2 ✓ CERTIFIED (2026-08-07)** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (v1.5 — item-18 struck; counts made binding at C3) |
 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
-| mathematics · preparatory | 1.1 | phases[] → P3 | — | — | — |
+| mathematics · preparatory | **1.3 ✓ (2026-08-11)** | time_bands ✓ | ✓ | ✓ | ✓ (v1.3 — removal N/A) |
 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |
 | english · middle | 1.5 | phases[] → P3 | — | — | — |
 | english · secondary | 1.0 | phases[] → P3 | — | — | — |

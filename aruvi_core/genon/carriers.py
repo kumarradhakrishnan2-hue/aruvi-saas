@@ -121,14 +121,15 @@ _DISPLAY_TO_KEY = {
 # table cannot do that, and it stays an honest inventory of what is still owed.
 #
 # `("mathematics", "middle")` was REMOVED 2026-08-10 (S7) — row 4 is implemented
-# (`items_by_period_field` + the plugin's middle branch). Preparatory stays: it is row 5, a
-# different period field (`section_refs[]`) on a different item vocabulary (`intent`, not
-# `goal`), and it is owed by S8. Its unit ANCHOR is already mediated, which is deliberate and
-# not the same thing as its carrier being ready.
+# (`items_by_period_field` + the plugin's middle branch).
+#
+# `("mathematics", "preparatory")` was REMOVED 2026-08-11 (S8) — row 5 is implemented on the
+# SAME family helper, joining the item's `section_ref` against the period's `section_refs[]`
+# rather than middle's `textbook_segments[].ref`. No new code was needed beyond the plugin's
+# preparatory branch: the family helper, the anchor mediation (`genon_unit_anchor`, written
+# unexercised at S7) and the shape-based stage discrimination (`intent` vs `goal`) were all
+# already here. **Mathematics is now fully carried at all three stages.**
 _NOT_YET = {
-    ("mathematics", "preparatory"): (
-        "period-field join, item section_ref → period section_refs[] "
-        "(8-rule row 5) — owed by S8"),
     ("english", "preparatory"): (
         "period-field join on (source_section_id + source_spine) → (section_id + "
         "spines_taught[]) (8-rule row 7) — owed by S9"),

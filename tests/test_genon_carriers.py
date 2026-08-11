@@ -235,24 +235,6 @@ class TestUnimplementedFamiliesFailLoudly(unittest.TestCase):
     have silently declared the other two ready.
     """
 
-    def test_mathematics_PREPARATORY_still_raises_though_middle_has_landed(self):
-        """S7 opened row 4 (middle) and row 5 (preparatory) stayed shut. They share a
-        container shape — a list of A/B/C groups carrying `items[]` — and are separated the
-        way the prototype separates them: middle items carry `goal`, preparatory `intent`.
-        A prep file must not fall through onto middle's period field."""
-        result = {
-            "assessment_items": [
-                {"section_code": "A", "items": [{"id": "Q1", "intent": "fluency",
-                                                 "section_ref": "S2"}]},
-            ],
-            "lesson_plan": {"periods": [{"period_number": 1, "section_refs": ["S2"]}]},
-        }
-        with self.assertRaises(CarrierNotImplemented) as cm:
-            assessment_items({"subject": "Mathematics", "grade": "Grade IV"}, result)
-        msg = str(cm.exception)
-        self.assertIn("mathematics", msg.lower())
-        self.assertIn("S8", msg, "must name the stage that owes it")
-
     def test_a_middle_file_with_no_goal_on_any_item_refuses_rather_than_guessing(self):
         result = {
             "assessment_items": [{"section_code": "A",
@@ -406,6 +388,16 @@ class TestMathematicsMiddleLanded(unittest.TestCase):
         stage that shares its container with preparatory."""
         self.assertIsNone(self.result.get("grade"), "fixture: grade is on the plan, not here")
         assessment_items(self.plan, self.result)
+
+    def test_a_middle_file_is_NOT_diverted_onto_preparatorys_field(self):
+        """S8 opened row 5 on the same family helper. The two stages share a container, so
+        the discriminator does the whole job: middle items carry `goal`, prep items carry
+        `intent`. A middle file whose periods happen to carry no `section_refs` must still
+        join on `textbook_segments[].ref` and must not silently orphan."""
+        items = assessment_items(self.plan, self.result)
+        self.assertTrue(all(it["unit_ref"] for it in items), "middle still joins on its own field")
+        for p in self.result["lesson_plan"]["periods"]:
+            self.assertNotIn("section_refs", p, "fixture: middle has no prep field to borrow")
 
     # ── E · the group-nested container ────────────────────────────────────────
     def test_raw_item_list_returns_ITEMS_not_the_A_B_C_GROUPS(self):
@@ -595,6 +587,122 @@ class TestMathematicsMiddleLanded(unittest.TestCase):
         self.assertIsInstance(from_engine_handoff(eng), list)
 
 
+class TestMathematicsPreparatoryLanded(unittest.TestCase):
+    """S8, 2026-08-11 — maths·preparatory is 8-rule ROW 5: the SAME family as middle on a
+    DIFFERENT field.
+
+    The item names a section ("S3"), the period names the sections it teaches
+    (`section_refs[]`), and the code itself is the join — no coverage_handoff in the path,
+    no LO. What separates it from middle is only the field and the item vocabulary
+    (`intent`, not `goal`), which is why the two are distinct rows of the 8-rule table and
+    why neither may borrow the other's join.
+
+    Fixture: the real prototype-era saved plan `backup/saved_plans/mathematics/iii/
+    ch_06_*.json` — 9 periods over sections S1–S11, 26 items in four A/B/C/D INTENT groups
+    (the prep container is the intent axis, not a section axis).
+    """
+
+    FIXTURE = ("backup/saved_plans/mathematics/iii/ch_06_20260603_180712.json")
+
+    def setUp(self):
+        p = Path(__file__).resolve().parents[1] / self.FIXTURE
+        if not p.is_file():
+            self.skipTest("maths III prototype plan not on disk")
+        self.plan = json.loads(p.read_text(encoding="utf-8"))
+        self.result = self.plan["result"]
+
+    def test_the_stage_is_no_longer_owed(self):
+        from aruvi_core.genon.carriers import carrier_gap
+        self.assertIsNone(carrier_gap("mathematics", "iii"))
+        self.assertIsNone(carrier_gap("mathematics", "iv"))
+        self.assertIsNone(carrier_gap("mathematics", "v"))
+
+    def test_every_item_resolves_to_exactly_one_unit_with_zero_orphans(self):
+        items = assessment_items(self.plan, self.result)
+        self.assertEqual(len(items), 26, "26 items across four intent groups, flattened")
+        for it in items:
+            self.assertIsInstance(it, dict, "the group wrapper must be flattened, not iterated")
+            self.assertEqual(len(it["unit_ref"]), 1,
+                             f"{it.get('id')} did not anchor to exactly one unit")
+
+    def test_every_anchor_equals_the_LAST_period_teaching_that_section(self):
+        """The 2026-08-05 ruling, computed independently off the periods rather than
+        trusted from the helper: an item tests what its section teaches, so it becomes
+        available only once the section completes. S3 spans periods 2-3 and S8 spans 6-7,
+        so both are real cases here, not hypotheticals."""
+        secs = {p["period_number"]: p["section_refs"]
+                for p in self.result["lesson_plan"]["periods"]}
+        self.assertEqual(secs[2], ["S2", "S3"])
+        self.assertEqual(secs[3], ["S3", "S4"])          # S3 spans 2-3
+        self.assertEqual(secs[6], ["S8"])
+        self.assertEqual(secs[7], ["S8", "S9"])          # S8 spans 6-7
+        for it in assessment_items(self.plan, self.result):
+            last = max(n for n, refs in secs.items() if it["section_ref"] in refs)
+            self.assertEqual(it["unit_ref"], [last],
+                             f"{it['id']} ({it['section_ref']}) anchored off its last unit")
+
+    def test_it_joins_on_section_refs_NOT_middles_textbook_segments(self):
+        """The whole reason row 5 is its own row. A prep period carries `section_refs` and
+        no `textbook_segments`; borrowing middle's field would orphan every item."""
+        for p in self.result["lesson_plan"]["periods"]:
+            self.assertIn("section_refs", p)
+            self.assertNotIn("textbook_segments", p)
+        self.assertTrue(all(it["unit_ref"] for it in
+                            assessment_items(self.plan, self.result)))
+
+    def test_a_section_no_period_teaches_resolves_to_EMPTY_not_a_guess(self):
+        from aruvi_core.genon.carriers import items_by_period_field
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 1, "section_refs": ["S1"]}]}}
+        got = items_by_period_field(
+            result, items=[{"id": "Q", "intent": "reason", "section_ref": "S9"}],
+            item_key="section_ref",
+            extract=lambda p: [str(r) for r in (p.get("section_refs") or [])])
+        self.assertEqual(got[0]["unit_ref"], [], "compile.py reports the orphan by name")
+
+    def test_the_code_join_is_tolerant_the_way_the_display_side_is(self):
+        from aruvi_core.genon.carriers import items_by_period_field
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 4, "section_refs": ["s3"]}]}}
+        got = items_by_period_field(
+            result, items=[{"id": "Q", "intent": "solve", "section_ref": "S3"}],
+            item_key="section_ref",
+            extract=lambda p: [str(r) for r in (p.get("section_refs") or [])])
+        self.assertEqual(got[0]["unit_ref"], [4], "norm_code converges the two spellings")
+
+    def test_raw_item_fields_survive_the_seam(self):
+        """Genon needs the RAW dicts, not display objects: served files and exports read
+        teacher_guide / visual_stimulus / exercise straight off them."""
+        it = next(i for i in assessment_items(self.plan, self.result) if i["id"] == "Q-A-1")
+        self.assertIn("expected_answer", it["teacher_guide"])
+        self.assertIn("visual_stimulus", it)
+        self.assertIn("exercise", it)
+        self.assertIn("intent", it, "the discriminator itself must survive")
+
+    def test_the_seam_does_not_need_a_grade(self):
+        """`genon_assessment` receives only `result`, and prep is told from middle by
+        CONTAINER SHAPE — the S4 regression, now load-bearing for two stages of one
+        subject that share a container."""
+        self.assertIsNone(self.result.get("grade"), "fixture: grade is on the plan, not here")
+        assessment_items(self.plan, self.result)
+
+    def test_raw_item_list_returns_ITEMS_not_the_intent_GROUPS(self):
+        from aruvi_core.genon.carriers import raw_item_list
+        got = raw_item_list(self.result)
+        self.assertEqual(len(got), 26, "4 groups would be the bug")
+        for it in got:
+            self.assertIn("intent", it)
+
+    def test_unit_anchor_is_the_VERBATIM_section_ref(self):
+        """`genon_unit_anchor`'s preparatory branch — written unexercised at S7, exercised
+        here for the first time. Verbatim, joined with the V2 multi-section joiner."""
+        from aruvi_core.genon.carriers import unit_anchor
+        periods = self.result["lesson_plan"]["periods"]
+        self.assertEqual(unit_anchor(periods[0], subject="mathematics", grade="iii"), "S1")
+        self.assertEqual(unit_anchor(periods[1], subject="mathematics", grade="iii"),
+                         "S2 / S3")
+
+
 class TestCarrierPreFlight(unittest.TestCase):
     """The gate must be FREE. Before 2026-08-08 the answer arrived at certification, which
     runs after the metered steps, so a missing carrier cost a whole library (₹110-150) and
@@ -609,8 +717,7 @@ class TestCarrierPreFlight(unittest.TestCase):
 
     def test_owed_stages_report_their_stage_and_row(self):
         from aruvi_core.genon.carriers import carrier_gap
-        for subject, grade, owes in (("mathematics", "iii", "S8"),
-                                     ("english", "iii", "S9"),
+        for subject, grade, owes in (("english", "iii", "S9"),
                                      ("english", "vi", "S10"),
                                      ("english", "ix", "S11")):
             gap = carrier_gap(subject, grade)
@@ -619,17 +726,22 @@ class TestCarrierPreFlight(unittest.TestCase):
 
     def test_a_missing_grade_is_conservative_not_optimistic(self):
         """Guessing "ready" is the expensive mistake, so an unknown grade on a subject that
-        still owes any stage reads as owed."""
+        still owes any stage reads as owed. English is the standing example: three of its
+        stages are owed (S9-S11), so a gradeless english call must not read as ready."""
         from aruvi_core.genon.carriers import carrier_gap
-        self.assertIsNotNone(carrier_gap("mathematics", None))
+        self.assertIsNotNone(carrier_gap("english", None))
         self.assertIsNone(carrier_gap("social_sciences", None), "owes nothing at any stage")
+        self.assertIsNone(carrier_gap("mathematics", None),
+                          "all three maths stages landed — secondary S4, middle S7, "
+                          "preparatory S8")
 
     def test_require_carrier_raises_only_for_owed(self):
         from aruvi_core.genon.carriers import require_carrier
         require_carrier("mathematics", "ix")                       # must not raise
         require_carrier("mathematics", "vii")                      # landed 2026-08-10 (S7)
+        require_carrier("mathematics", "iii")                      # landed 2026-08-11 (S8)
         with self.assertRaises(CarrierNotImplemented):
-            require_carrier("mathematics", "iii")                  # preparatory, owed by S8
+            require_carrier("english", "iii")                      # preparatory, owed by S9
 
 
 class TestItemAnchorFamilyIsDeclared(unittest.TestCase):

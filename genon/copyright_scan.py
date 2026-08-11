@@ -123,8 +123,31 @@ def item_fields(plan: dict):
                 yield f"item{n} {k}", e
 
 
-def load_source(subject: str, grade: str, ch: int) -> tuple:
-    """The chapter's textbook PDF text + the chapter summary — the two things a plan could lift."""
+def _json_strings(node):
+    if isinstance(node, str):
+        yield node
+    elif isinstance(node, dict):
+        for v in node.values():
+            yield from _json_strings(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _json_strings(v)
+
+
+def load_source(subject: str, grade: str, ch: int, book_only: bool = False) -> tuple:
+    """The chapter's textbook PDF text + the chapter summary — the two things a plan could lift.
+
+    BOTH SUMMARY SHAPES, and this was a silent hole (fixed 2026-08-11, at S7's C14). This
+    read only `ch_NN_summary.txt`. Science and social_sciences carry `.txt`; mathematics,
+    english and the_world_around_us carry `.json` — SEVEN of the eleven stages — so on every
+    one of those the summary contributed ZERO words and the scan reported a confident clean
+    against the PDF alone. Nothing said so.
+
+    `book_only` keeps the two APART when the question is copyright. The textbook is the
+    protected work; the summary is Aruvi's own derived asset, so a run matching the summary
+    but not the book is the pipeline quoting itself. Merging them makes the two
+    indistinguishable in the report — scan twice and diff, rather than once and guess.
+    """
     words, parts = [], []
     pdfs = sorted(p for p in (TEXTBOOKS / subject / grade).glob("*.pdf")
                   if re.match(rf"chapter\s*0*{ch}\b", p.name, re.I))
@@ -133,10 +156,16 @@ def load_source(subject: str, grade: str, ch: int) -> tuple:
         with pdfplumber.open(p) as doc:
             t = "\n".join((pg.extract_text() or "") for pg in doc.pages)
         words += norm_words(t); parts.append(f"{p.name} ({len(norm_words(t))} words)")
-    s = CONTENT / "chapters" / subject / grade / "summaries" / f"ch_{ch:02d}_summary.txt"
-    if s.exists():
-        t = s.read_text(encoding="utf8", errors="replace")
-        words += norm_words(t); parts.append(f"{s.name} ({len(norm_words(t))} words)")
+    if book_only:
+        return words, parts
+    base = CONTENT / "chapters" / subject / grade / "summaries" / f"ch_{ch:02d}_summary"
+    for s, reader in ((base.with_suffix(".txt"), lambda p: p.read_text(encoding="utf8",
+                                                                      errors="replace")),
+                      (base.with_suffix(".json"),
+                       lambda p: " ".join(_json_strings(json.load(open(p)))))):
+        if s.exists():
+            t = reader(s)
+            words += norm_words(t); parts.append(f"{s.name} ({len(norm_words(t))} words)")
     return words, parts
 
 
@@ -158,9 +187,11 @@ def main():
     ap.add_argument("--n", type=int, default=8, help="shingle width in words")
     ap.add_argument("--min-run", type=int, default=12, help="report runs at least this long")
     ap.add_argument("--top", type=int, default=25)
+    ap.add_argument("--book-only", action="store_true",
+                    help="textbook PDF alone — the copyright question, without Aruvi's own summary")
     a = ap.parse_args()
 
-    src_words, parts = load_source(a.subject, a.grade, a.chapter)
+    src_words, parts = load_source(a.subject, a.grade, a.chapter, book_only=a.book_only)
     if not src_words:
         print("NO SOURCE FOUND — cannot scan. Looked for "
               f"{TEXTBOOKS / a.subject / a.grade} and the chapter summary."); return 2

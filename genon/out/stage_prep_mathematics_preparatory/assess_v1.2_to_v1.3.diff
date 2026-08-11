@@ -1,0 +1,70 @@
+--- assessment_constitution_v1.2_pre.txt	2026-08-10 20:24:50.192733658 +0530
++++ ../../../data/content/constitutions/assessment/mathematics/preparatory/assessment_constitution.txt	2026-08-11 09:38:02.653784610 +0530
+@@ -1,4 +1,4 @@
+-ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.2
++ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.3
+ Stage: Preparatory (Grades III–V) · Maths Mela
+ 
+ ================================================================================
+@@ -225,6 +225,42 @@
+ populated `what_each_option_reveals`. SCR/NUM need no options; the teacher
+ reads the answer from `teacher_guide`.
+ 
++Option order carries no meaning and is not yours to set: emit the four
++options in whatever order they were authored, and never let where an
++option sits influence how it is written. Uneven letters across a chapter
++are coincidence, not a defect.
++
++PROHIBITED: an option that refers to another option by its label ("both A
++and B", "none of the above", "all of the above") — options are ordered
++downstream and a label reference would be falsified.
++
++================================================================================
++ANCHORING (PLATFORM INTEGRITY — NOT A GENERATION CHOICE)
++================================================================================
++
++· `section_ref` IS the item's anchor. It is copied verbatim from the LP
++  handoff entry the item was generated from, in the LP's own vocabulary
++  ("S3"), and the platform resolves it to the unit(s) that teach that
++  section by matching it against each period's own `section_refs[]`.
++  Nothing about that link is declared by the generator; it is derived.
++
++· Where a section is taught across several units, the item anchors at the
++  LAST of them. An item tests what its section teaches, so it becomes
++  available only once the section completes: a class that was not taught
++  all of it cannot be tasked on any of it.
++
++· MUST NOT emit `period_ref`, `period_number`, or any unit number on an
++  item. Declaring the link would freeze an arrangement the platform varies
++  per teacher.
++
++· `section_title` is likewise copied verbatim from the handoff entry and
++  matches the summary's `sections[i].title`. Both fields are pass-through:
++  the generator neither reformats nor abbreviates them.
++
++· `task_id` is NOT an anchor in this sense (Rule 8). It seeds the exercise
++  companion only, stays internal, and never reaches the platform's link
++  resolution.
++
+ ================================================================================
+ ASSESSMENT JSON SCHEMA
+ ================================================================================
+@@ -258,7 +294,10 @@
+             "expected_answer":          string,
+             "method_one_line":          string,
+             "what_each_option_reveals": { "A": string, "C": string,
+-                                          "C": string, "D": string } | {},
++                                          "D": string } | {},
++                                        // the three NON-CORRECT labels
++                                        // only; the correct option is
++                                        // omitted (Rule 6)
+             "inclusivity":              string
+           },
+ 
+@@ -277,5 +316,5 @@
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-Mathematics Assessment Constitution (Preparatory) · Version 1.1 · Internal Document
++Mathematics Assessment Constitution (Preparatory) · Version 1.3 · Internal Document
+ ================================================================================

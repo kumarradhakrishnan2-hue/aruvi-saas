@@ -503,10 +503,18 @@ class MathematicsSubject:
             above uses for the display side, so the two can never drift. Anchoring is the
             same 2026-08-05 ruling: the section's LAST unit.
 
-          • PREPARATORY (row 5) — the same family on a different field
-            (`section_refs[]`) and a different item vocabulary (`intent`, not `goal`). Owed
-            by S8, so it still RAISES rather than borrowing middle's field or secondary's
-            join, either of which would anchor every item through a rule that is not theirs.
+          • PREPARATORY — 8-rule ROW 5, the same family as middle on a DIFFERENT field,
+            landed 2026-08-11 (S8): items are nested inside A/B/C/D INTENT groups
+            (`[{section_code, section_title, items:[…]}, …]` — the intent axis, not a
+            section axis), each leaf carrying a `section_ref` ("S3"), and the join is that
+            code against the PERIOD's own `section_refs[]`. Middle's
+            `textbook_segments[].ref` is a different field and secondary's handoff is a
+            different family; borrowing either would anchor every item through a rule that
+            is not this stage's. Verified against the real saved shape
+            (`backup/saved_plans/mathematics/iii/ch_06_*.json`: periods carry
+            `section_refs: ["S2","S3"]`, items carry `intent` + `section_ref: "S1"`).
+            No `coverage_handoff` is in the path and there is no LO. Anchoring is the same
+            2026-08-05 ruling: the section's LAST unit.
 
         The stage is told apart by CONTAINER SHAPE, not by `stage_for(grade)` — this method
         receives only `result`, and the grade lives on the enclosing saved PLAN, so a grade
@@ -530,14 +538,19 @@ class MathematicsSubject:
         groups = item_groups(raw)
         if groups is not None:
             flat = [it for g in groups for it in g["items"] if isinstance(it, dict)]
-            if any("intent" in it for it in flat) or not any("goal" in it for it in flat):
+            if any("intent" in it for it in flat):
+                return items_by_period_field(                   # PREPARATORY — row 5
+                    result, items=flat, item_key="section_ref",
+                    extract=lambda p: [str(r) for r in (p.get("section_refs") or [])])
+            if not any("goal" in it for it in flat):
                 raise CarrierNotImplemented(
-                    "mathematics preparatory is 8-rule ROW 5 — the period-field family on "
-                    "`section_refs[]`, with `intent`-carrying items. Owed by S8. It must "
-                    "not borrow middle's row 4 (a different period field) or secondary's "
-                    "row 6 (a different family entirely). This branch also catches a "
-                    "MIDDLE file whose items carry no `goal`, which is a defect worth "
-                    "failing on rather than guessing past."
+                    "mathematics middle/preparatory: the items inside these section groups "
+                    "carry neither `intent` (PREPARATORY, 8-rule row 5, joining on the "
+                    "period's `section_refs[]`) nor `goal` (MIDDLE, row 4, joining on "
+                    "`textbook_segments[].ref`), so the stage cannot be told apart by shape "
+                    "and no join is safe. The two fields are different, and anchoring every "
+                    "item through the wrong one is worse than failing: a file in this state "
+                    "is a defect worth failing on rather than guessing past."
                 )
             return items_by_period_field(                            # MIDDLE — row 4
                 result, items=flat, item_key="section_ref",
