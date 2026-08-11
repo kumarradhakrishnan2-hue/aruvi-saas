@@ -385,14 +385,42 @@ _PLACEHOLDER_RE = re.compile(r"^[.…_\-\s]+$")   # "...", "…", "___", "-", bl
 _NL_TAG = re.compile(r"^\s*number[_ ]?line\s*:\s*", re.I)   # constitution Rule 7 form
 
 
+_MAX_TICK_LABEL = 16      # a tick carries a LABEL; anything longer is a sentence, not a tick
+
+
 def _nl_block(raw: str, cells: List[str], instruction: str) -> Optional[Dict[str, Any]]:
-    """Build a number_line stimulus from parsed tick cells; None if the cells are not a valid
-    number line (>=3 cells, >=2 numeric, every cell numeric-or-placeholder)."""
-    if len(cells) < 3 or sum(1 for c in cells if _NUM_RE.match(c)) < 2:
+    """Build a tick-line stimulus from parsed cells; None if the cells are not a tick line.
+
+    THE TEST IS STRUCTURAL, NOT NUMERIC (2026-08-11, founder-directed at S8's C4).
+    It used to demand >=2 NUMERIC cells with every cell numeric-or-placeholder. That was a
+    leftover from before the `number_line:` tag existed, when typing had to be *guessed* from
+    a bare pipe row and the numerals were the only thing distinguishing a number line from a
+    table. Since the tag arrived, intent is DECLARED — `_maths_number_line` reads the tag and
+    never guesses — so re-deriving intent from cell type is both redundant and wrong: it
+    rejected maths III ch 5 Q-C-4, an alternating shape pattern
+    (`number_line: line | curve | line | curve | ... `), which then fell through to TABLE and
+    printed the literal tag to the teacher (ARV-D-113).
+
+    So what is validated now is only what the RENDERER needs: a single row of at least three
+    short cells. Both renderers are already label-agnostic — `ANumberLine` draws `t.label` as
+    SVG text, `export_assessment_pdf` joins the labels with " · " — so word labels needed no
+    display work at all. Numbers still behave exactly as before; they are simply no longer
+    required.
+
+    The `number_line` KEY is deliberately kept though it is now a slight misnomer: it is wired
+    through `StimulusType`, both renderers, both exports, both maths constitutions and the
+    back-filled ch_06 corpus, and renaming would ripple a long way for no behavioural gain.
+    Read it as "tick line".
+
+    A cell that is a PLACEHOLDER ("...", "___") stays an unlabelled tick, as it always did —
+    that is what the student fills in.
+    """
+    if len(cells) < 3:
         return None
-    if not all(_NUM_RE.match(c) or _PLACEHOLDER_RE.match(c) for c in cells):
+    if any(len(c) > _MAX_TICK_LABEL for c in cells):
         return None
-    nl: Dict[str, Any] = {"ticks": [{"label": c if _NUM_RE.match(c) else ""} for c in cells]}
+    nl: Dict[str, Any] = {
+        "ticks": [{"label": "" if _PLACEHOLDER_RE.match(c) else c} for c in cells]}
     if instruction:
         nl["instruction"] = instruction
     return {"type": StimulusType.NUMBER_LINE.value, "content": raw, "number_line": nl}
@@ -419,9 +447,61 @@ def _maths_number_line(raw: Any) -> Optional[Dict[str, Any]]:
 
 
 def _maths_typed_block(raw: Any) -> Optional[Dict[str, Any]]:
-    """Stimulus typing for the maths family: try the number-line override first, else fall back
-    to the shared typing (svg / table / prose)."""
-    return _maths_number_line(raw) or typed_block(raw)
+    """Stimulus typing for the maths family: try the tick-line override first, else fall back
+    to the shared typing (svg / table / prose).
+
+    A TAGGED STIMULUS MUST NEVER DEGRADE SILENTLY (2026-08-11, ARV-D-113). Before this, a
+    stimulus that carried `number_line:` but failed the tick test fell straight into the shared
+    typing, which saw pipes and returned a TABLE — with the tag still sitting in `content`, so
+    the first cell rendered to the teacher as the literal string "number_line: line", on screen
+    and in the PDF alike. Two corrections, both here rather than in the renderers, so every
+    consumer inherits them:
+
+      * the tag is STRIPPED from the fallback content — an internal token can never reach a
+        teacher, whatever the fallback turns out to be;
+      * a tagged single row falls to PROSE, not TABLE. A one-row pipe list is not a table, and
+        boxing it as one was always the wrong shape; a multi-row payload still types as a table
+        because that is what it is.
+
+    The fallback is now also OBSERVABLE rather than silent: `mistyped_tag()` below reports it,
+    and `build_library.py` gates on that so a mis-tagged stimulus stops the run instead of
+    being found by eye at a C-step.
+    """
+    nl = _maths_number_line(raw)
+    if nl:
+        return nl
+    if isinstance(raw, str):
+        m = _NL_TAG.match(raw)
+        if m:
+            stripped = raw[m.end():]
+            body = [ln for ln in stripped.splitlines() if ln.strip()]
+            if len(body) <= 1:
+                return {"type": StimulusType.PROSE.value, "content": stripped.strip()}
+            return typed_block(stripped)
+    return typed_block(raw)
+
+
+def mistyped_tag(raw: Any) -> Optional[str]:
+    """Non-empty reason when a stimulus DECLARES a type it does not satisfy, else None.
+
+    The point of a declared tag is that it removes guessing — which only holds if a tag that
+    fails its own contract is loud. This is the reporting half; `genon/build_library.py` turns
+    it into a gate. Kept beside the typing it checks so the two cannot drift.
+    """
+    if not isinstance(raw, str):
+        return None
+    m = _NL_TAG.match(raw)
+    if not m or _maths_number_line(raw):
+        return None
+    parts = raw[m.end():].splitlines()
+    cells = [c.strip() for c in (parts[0] if parts else "").split("|") if c.strip()]
+    if len(cells) < 3:
+        return f"tagged `number_line:` but has only {len(cells)} tick cell(s); at least 3 are needed"
+    long = [c for c in cells if len(c) > _MAX_TICK_LABEL]
+    if long:
+        return (f"tagged `number_line:` but {len(long)} cell(s) exceed {_MAX_TICK_LABEL} chars "
+                f"— a tick carries a label, not a sentence: {long[0][:40]!r}")
+    return "tagged `number_line:` but does not parse as a tick line"
 
 
 def _inclusivity(v: Any) -> Optional[str]:

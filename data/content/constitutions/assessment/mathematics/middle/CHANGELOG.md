@@ -4,6 +4,49 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v3.5 — 2026-08-11 · `number_line:` becomes a TICK LINE — labels may be words
+
+Founder-directed at S8's C4, on the first live use of the tag. maths III ch 5 Q-C-4 tagged an
+alternating SHAPE pattern — `number_line: line | curve | line | curve | … ` — for
+*"draw the next two repeat units"*. That is the right picture for the question, and the rule as
+written forbade it (*"each cell a number … endpoints must be numbers"*), so the stimulus failed
+its own declared type, fell through to TABLE, and printed the literal token `number_line: line`
+to the teacher on screen and in the PDF (ARV-D-113).
+
+**Founder ruling: the tick line IS the better representation, so the rule follows the practice.**
+Without this the next generation doing the wanted thing is technically in breach and C3 re-raises
+it at every chapter.
+
+**What the rule now says.** A tick line is an ordered line of at least three cells; each cell is
+a LABEL — a number, or a short word naming what sits at that tick — or `...` for a blank tick the
+student fills. A label is a label, not a sentence. Ticks are drawn as a line, never a grid. Both
+the numeric and the word form are shown as examples.
+
+**Three things moved with it, and the third is what makes this a guarantee rather than a
+convention:**
+
+- `assessment_norm._nl_block` now validates STRUCTURE (single row, ≥3 cells, labels ≤16 chars)
+  instead of cell TYPE. The numeric test predated the tag, from when typing had to be *guessed*
+  from a bare pipe row; once intent is declared, re-deriving it from the cells is redundant — and
+  was wrong. Both renderers were already label-agnostic, so word labels needed no display work.
+- A tagged stimulus that fails the contract no longer degrades silently: the tag is **stripped**
+  from the fallback content and a single row falls to PROSE rather than TABLE. An internal token
+  can no longer reach a teacher under any fallback.
+- `build_library.py` gained a **DECLARED-TYPE GATE** — a stimulus that declares a type it does not
+  satisfy now fails certification by name. Q-C-4 was found by hand at C4; C3 had read the item and
+  passed it, because "tag present, no SVG" is what a human checks. Verified to fire on a
+  deliberately broken artefact and to pass on the real one.
+
+**§9: RELAXATION-ONLY.** Every edit widens — a form is permitted that was not; nothing is
+tightened and no obligation is created (`MUST NOT` / `PROHIBITED` counts asserted unchanged). A
+numeric tick line is still a tick line, so output authored under the old text satisfies the new by
+construction. **No library re-authors.** maths·middle's ch 7 library carries no tagged stimulus at all, so nothing changes for it today; the amendment is here so the two maths stages that share this rule stay identical.
+
+Artefacts: `genon/out/stage_prep_mathematics_preparatory/` — `assess_middle_v3.4_pre_tickline.txt`
+· `tickline_middle.diff` · `apply_tick_line_rule7.py`.
+
+---
+
 ## v3.3 — 2026-08-10 · A6-confirm + A9 (S7 · P2)
 
 Landed at S7's P-prep, before any canonical for this stage was authored. Paired with LP

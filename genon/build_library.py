@@ -50,6 +50,7 @@ from aruvi_core.genon.carriers import (                           # noqa: E402
 from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, _unit_anchors, is_synthesis_unit, section_registry, unit_range,
 )
+from aruvi_core.assessment_norm import mistyped_tag                # noqa: E402
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
 from normalize_options import normalize_library, unarranged        # noqa: E402
@@ -380,6 +381,35 @@ def certify(subject, grade, ch, row):
         if bans:
             lines.append("      -> declare the fixes in genon/repair_register.py and re-run "
                          "--certify-only; do NOT hand-edit the artefact")
+
+    # ── DECLARED-TYPE GATE (2026-08-11, ARV-D-113) ───────────────────────────────
+    # A stimulus may DECLARE its type with a tag (`number_line:`). The whole value of a
+    # declared type is that it removes guessing — which only holds if a tag that fails its own
+    # contract is LOUD. It was not: maths III ch 5's Q-C-4 tagged a shape pattern, failed the
+    # then-numeric tick test, fell through to TABLE, and printed the literal token
+    # "number_line: line" to the teacher on screen and in the PDF. Nothing caught it. C3's
+    # rule-by-rule pass read the item and moved on, because "tag present, no SVG" is what a
+    # human checks; the mismatch between the declared type and the resolved one is exactly the
+    # sort of thing a machine should be holding.
+    #
+    # Reported per item, not aggregated: a mis-tag is a property of one stimulus and the fix is
+    # to that stimulus. The typing itself lives in `assessment_norm.mistyped_tag`, beside the
+    # code it checks, so this gate and the renderer can never disagree about what a valid tag is.
+    for name, s_ in lib:
+        raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+        bad = []
+        for it in raw_item_list(raw.get("result", raw)):
+            why = mistyped_tag(it.get("visual_stimulus"))
+            if why:
+                bad.append((it.get("id") or "?", why))
+        note(not bad, f"{name}: every declared stimulus type resolves ({len(bad)} mis-tagged)",
+             name if bad else None)
+        for iid, why in bad[:6]:
+            lines.append(f"      {iid}: {why}")
+        if bad:
+            lines.append("      -> either correct the stimulus to satisfy the tag it declares, "
+                         "or drop the tag; a tagged stimulus that fails its contract renders as "
+                         "prose and loses the representation it asked for")
 
     # ── MCQ ARRANGEMENT GATE (2026-08-03, ARV-D-032) ─────────────────────────────
     # Rule 7's option arrangement is a SORT, and prose could not carry it: four constitution

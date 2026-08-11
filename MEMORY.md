@@ -311,6 +311,20 @@ must confirm · source entry.
     number lines in the tagged `number_line:` form (not as a pipe-table), one line, instruction in
     `prompt`. (src: 2026-07-13, founder-directed.)
 
+   **★ TESTED LIVE 2026-08-11 (S8 · C4, maths III ch 5) — AND THE AMENDMENT WAS TOO NARROW.**
+   First live use was Q-C-4, an alternating SHAPE pattern (`number_line: line | curve | …`) for a
+   repeat-unit question. The model reached for the tag correctly; the RULE was wrong. Cells were
+   words, the then-numeric tick test rejected them, typing fell through to TABLE and the literal
+   token `number_line: line` rendered to the teacher (ARV-D-113, accepted-then-fixed). Founder
+   ruled the tick line the better representation, so: Rule 7 widened to a TICK LINE with word or
+   numeric labels (prep **v1.4**, middle **v3.5**); `_nl_block` now validates structure not cell
+   type; a failed tag strips itself and falls to prose, never a table; and `build_library.py`
+   gained a declared-type gate so the next mis-tag stops the run instead of being found by eye.
+   The item now renders as a tick line with no file edit — the engine fix alone corrected it.
+   **What this item taught, beyond itself:** a permitted FORM with no gate is a convention, and
+   the convention held for exactly one live use. When a constitution licenses a declared type,
+   the certifier has to check the declaration, or the first misuse ships.
+
 15. **Maths homework locator restored at the RENDERER (middle) + prep homework field INTRODUCED
     (constitution)** — two coupled changes, founder-directed 2026-07-14. *The problem:* middle
     maths homework items are dicts carrying the page + section in a dedicated `book_ref`

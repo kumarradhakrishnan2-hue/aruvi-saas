@@ -6,7 +6,7 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ## v1.4 — 2026-08-11 · the narration format loses its JSON quote hazard (cross-stage)
 
-Cross-stage amendment made after S8's C1 lost a paid compact to it. This is the stage the defect was found on, mid-C1. Its ch 5 library spans the bump: the standard and the 11-period compact were authored under v1.3 (straight quotes, still valid), the 8-period compact under v1.4. Recorded in provenance; no re-author, because the amendment is relaxation-only.
+Cross-stage amendment made after S8's C1 lost a paid compact to it. This is the stage the defect was found on. **Correction to the first draft of this entry:** it claimed ch 5's library spans the bump, with the 8-period compact authored under v1.4. It does not. The ledger settles it — all three canonicals were authored at 10:41, 11:04 and 12:30, and this amendment landed at 13:11, so **the whole library is coherent at v1.3** and each artefact's own `genon_canonical.constitution` says so. Nothing re-authors, and nothing spans.
 
 **The hazard.** This rule mandated a narration format that puts a double-quoted phrase
 inside a value the model emits as JSON — `Format: book_ref ("description up to 10 words....")`. JSON strings are

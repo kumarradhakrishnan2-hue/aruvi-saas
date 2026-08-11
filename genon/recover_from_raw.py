@@ -125,10 +125,50 @@ def main() -> int:
         print("\n--dry-run: nothing written.")
         return 0
 
-    const_label = f"recovered from raw {raw_path.name}"
+    # THE CONSTITUTION LABEL MUST BE THE ONE THE ARTEFACT WAS AUTHORED UNDER, and it
+    # cannot be re-derived: by the time a recovery runs, the constitution on disk may have
+    # moved on (maths preparatory went v1.3 → v1.4 two hours after this very file was
+    # generated). Re-reading it would stamp the artefact with a version it never saw.
+    #
+    # The ledger recorded the real label at generation time, keyed by exactly the
+    # timestamp in this raw file's name — so read it from there. The first draft of this
+    # script wrote "recovered from raw <file>" into the field instead, which destroyed
+    # load-bearing provenance: §9 uses the constitution version to decide what re-opens,
+    # and the tracker marks a stage amber when provenance differs from the campaign
+    # versions. The recovery fact belongs beside that label, never in place of it.
+    # READ IT BY SHAPE, NOT BY COLUMN NAME. `log_ledger` builds its writer from
+    # `list(row.keys())` but only writes a header when the file is NEW, so every key added
+    # to the row dict since ledger.csv was created has shifted the data one column right of
+    # its header. Field counts across the file are 17 / 18 / 19 — the schema drifted twice —
+    # and a DictReader here duly returned `constitution: False`, which is the `lp_only`
+    # column. Matching the label by pattern is immune to that; recorded as a defect in its
+    # own right, because anything else reading this file by name is silently wrong too.
+    const_label = None
+    ledger = HERE / "ledger.csv"
+    if ledger.is_file():
+        import csv
+        with ledger.open(encoding="utf-8") as fh:
+            for row in csv.reader(fh):
+                if row and row[0] == ts:
+                    const_label = next((c for c in row if c.startswith("LP v")), None)
+                    break
+    if not const_label:
+        raise SystemExit(
+            f"no ledger row for ts {ts}, so the constitution version this artefact was "
+            f"authored under cannot be established. Refusing to install rather than "
+            f"stamp it with today's version — pass it explicitly if you know it.")
+    print(f"constitution: {const_label}  (read from the ledger, not from disk)")
+
     dest = install_canonical(parsed, subject_folder, grade_folder, ch, ts,
                              duration, count, const_label, status, problems,
                              variant=variant_arg)
+    # The recovery fact rides ALONGSIDE the provenance, not over it.
+    doc = json.loads(dest.read_text(encoding="utf-8"))
+    doc.setdefault("genon_canonical", {})["recovered_from"] = raw_path.name
+    doc["genon_canonical"]["recovered_note"] = (
+        f"parse recovered at ₹0 from the saved raw after {len(repairs)} naked-quote "
+        f"repairs; the generation itself is the metered run logged at {ts}")
+    dest.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"installed: {dest}")
     print("\nThe money for this artefact was logged by the run that earned it; "
           "nothing is added to the cost columns here.")

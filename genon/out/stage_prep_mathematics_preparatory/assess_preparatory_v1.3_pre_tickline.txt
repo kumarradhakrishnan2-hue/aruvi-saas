@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.4
+ARUVI — MATHEMATICS ASSESSMENT CONSTITUTION (PREPARATORY) · VERSION 1.3
 Stage: Preparatory (Grades III–V) · Maths Mela
 
 ================================================================================
@@ -180,17 +180,10 @@ tabular data the student must read or fill.
 Permitted:
 - Pipe-delimited table: 2+ lines, every line contains "|", first row is
   the header.
-- Tick line (tagged `number_line:`): one line tagged `number_line:` then the
-  ticks split by "|". Each cell is either a LABEL — a number, or a short word
-  naming what sits at that tick — or "..." (a blank tick the student fills in).
-  At least three cells; a label is a label, not a sentence. The ticks are drawn
-  as an ordered line, never as a grid.
-    numbers:  `number_line: 200 | ... | ... | ... | 260`
-    words:    `number_line: line | curve | line | curve | ... | ...`
-  Keep the task wording in `prompt`. Do not emit a tick line as a pipe-table,
-  and do not tag a pipe-table as a tick line: a stimulus that declares this tag
-  and does not satisfy it is rejected at certification and renders as plain
-  prose, losing the picture it asked for.
+- Number line: one line tagged `number_line:` then the ticks split by "|",
+  each cell a number (labelled tick) or "..." (blank tick the student marks);
+  endpoints must be numbers. E.g. `number_line: 200 | ... | ... | ... | 260`.
+  Keep the task wording in `prompt`. Do not emit a number line as a pipe-table.
 - Empty string "" — the default. A figure the student must look at is
   reached via the textbook (the prompt may say "Refer to the picture in
   <section> of your book") or via the exercise companion.
@@ -323,5 +316,5 @@ omitting intents not present in the handoff.
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Assessment Constitution (Preparatory) · Version 1.4 · Internal Document
+Mathematics Assessment Constitution (Preparatory) · Version 1.3 · Internal Document
 ================================================================================

@@ -145,6 +145,27 @@ class MathematicsSubject:
         groups: List[Group] = []
         prev_key: Any = object()  # sentinel ≠ any real key
         seen_keys: set = set()    # anchors already opened once — a re-opening is a REVISIT
+
+        # DOES THIS PLAN HAVE A SECTION AXIS TO GROUP ON? (2026-08-11, founder, at S8's C6.)
+        # The synthesis carve-out below exists for ONE reason: on a stage that groups by
+        # section, the closing unit would otherwise be misfiled under a section it merely
+        # revisits — S7's "Equilateral Triangles (Revisit)" bug. That reasoning needs a
+        # section axis to be true of. PREPARATORY has none: it carries `section_refs[]`, not
+        # `textbook_segments[]`, so this branch's `seg` is always {} and EVERY body unit
+        # already falls into one undifferentiated "Lesson" group. Carving "Synthesis" out of
+        # that produced a two-part Chapter Organization page for the plans that have a
+        # synthesis unit (the standard, and every X that borrows it) and a single flat list
+        # for those that do not (the compacts, and every X below the borrow) — the same
+        # chapter looking structurally different to two teachers for a reason neither can see.
+        #
+        # So the carve-out is now conditional on there BEING something to be misfiled among.
+        # Read from the DATA, never from the stage name (CLAUDE.md §3): a plan whose periods
+        # carry textbook_segments groups by section and keeps the separate Synthesis heading;
+        # one that does not renders the closing unit in the same single group as the rest.
+        # Nothing that READS the synthesis fact changes — serve, the registry, certification
+        # and `is_synthesis` are untouched; this is the presentation layer only.
+        _has_section_axis = any(p.get("textbook_segments") for p in periods)
+
         for p in periods:
             if secondary:
                 key = str(p.get("section_anchor", ""))
@@ -198,9 +219,11 @@ class MathematicsSubject:
                 # repeat. The unit was right and the brief was obeyed; only the grouping was
                 # wrong. Read the fact through the seam, as every other synthesis-aware site
                 # now does.
-                if _is_synth(p):
+                if _is_synth(p) and _has_section_axis:
                     key, seg = "synthesis", {}
                 else:
+                    # No section axis (preparatory): the closing unit takes the SAME key as
+                    # every other unit, so it joins the one group instead of opening a second.
                     key = str(seg.get("ref", "")) or "lesson"
                 # Same founder rule for MIDDLE: title alone ("Simple Expressions", not
                 # "section 2.1 — Simple Expressions"); the ref stays in meta + key, and is

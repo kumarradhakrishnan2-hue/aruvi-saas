@@ -81,13 +81,43 @@ def test_normalized_contract_well_formed():
                 assert n.template in TEMPLATES, f"{where}: {n.question_type} has no template"
                 seen_types.add(n.question_type)
                 # the question
-                assert n.stem.strip(), f"{where}: {n.question_type} item with empty stem"
+                #
+                # THE RULE-5 FALLBACK IS A LEGAL SHAPE, NOT AN EMPTY ITEM (2026-08-11, S8's C3).
+                # Every maths assessment constitution mandates that an item whose answer FAILS
+                # verification is still emitted, with `prompt`, `options` and the guide's answer
+                # fields deliberately blanked and `inclusivity` set to "[Verification failed]
+                # Refer to the book task anchored to <section>" — so the teacher keeps a textbook
+                # fallback instead of losing the slot. This test asserted a non-empty stem
+                # unconditionally, which no corpus had contradicted only because no library had
+                # yet contained a failed item; maths III ch 5's Q-C-2 is the first, and it made a
+                # green suite go red against an artefact that is exactly right.
+                #
+                # So the fallback is now CHECKED rather than exempted: it must be blank in all
+                # the right places and still carry its exercise pointer. An item that is merely
+                # empty — no fallback marker — still fails, which is the case the original
+                # assertion was written for.
+                _fallback = str(n.inclusivity or "").startswith("[Verification failed]")
+                if _fallback:
+                    assert not n.stem.strip() and not n.options, \
+                        f"{where}: verification-failure fallback must blank stem AND options"
+                    assert not n.model_answer and not n.method_one_line, \
+                        f"{where}: verification-failure fallback must blank the answer fields"
+                    assert n.exercise_ref, \
+                        f"{where}: verification-failure fallback must keep its exercise pointer"
+                else:
+                    assert n.stem.strip(), f"{where}: {n.question_type} item with empty stem"
                 if n.options:
                     assert n.question_type in SELECTED, \
                         f"{where}: {n.question_type} carries options"
                     assert all(set(o) == {"label", "text", "is_correct"} for o in n.options), \
                         f"{where}: options not structured"
-                if n.question_type == "MCQ":
+                if n.question_type == "MCQ" and not _fallback:
+                    # The MCQ shape checks below are about a REAL question. A Rule-5
+                    # verification-failure fallback keeps its declared `question_type` (it is
+                    # still the MCQ slot the handoff asked for) but carries no options at all
+                    # by mandate, so "MCQ" plus "no correct option" is the CORRECT reading of
+                    # it, not a defect — the fallback's own shape is asserted above.
+                    #
                     # ≥1, not ==1: the preserved English verification-fallback item flags
                     # every statement correct pending transcript verification (its note says
                     # so) — real data, deliberately kept (registry §4 note).
