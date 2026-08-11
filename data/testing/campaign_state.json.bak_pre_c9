@@ -1,7 +1,7 @@
 {
  "version": 1,
  "campaign": "aruvi-11-stage-certification",
- "updated_at": "2026-08-10T22:57:51",
+ "updated_at": "2026-08-10T21:59:41",
  "step0": {
   "campaign": {
    "0.1": {
@@ -1118,12 +1118,6 @@
     "by": "Claude",
     "at": "2026-08-10T21:48:12",
     "comment": "DONE 2026-08-10. Transition table over the choice-set classes the sweep actually exercised. Every joint read in full — sitting X-1 then sitting X consecutively, titles, notes, bands, homework — as the teacher meets them.\n\n| serve | class | joint | rating |\n| X=5 (below floor) | fill/single | 4->5 | CLEAN |\n| X=6 (below floor) | fill/single | 5->6 | CLEAN |\n| X=8 (between) | fill/single | 7->8 | CLEAN |\n| X=9 | synthesis borrow | 8->9 | JUMPY (mild) |\n| X=11 | synthesis borrow | 10->11 | JUMPY (mild) |\n| X=13 (top+1) | surrender | 11->12 | CLEAN |\n| 4x50+7x40 | synthesis borrow | 10->11 | JUMPY (mild) |\n\nfill/forward and fill/backward: N/A — this library's band produces neither; every fill the sweep generated is fill/single (the Xth unit is a single borrowed unit). Recorded as not-exercised rather than passed.\n\nCLEAN, with evidence: X=8's sitting 7 closes on altitudes ('Students articulate the definition of altitude in their own words') and sitting 8 opens on its own ground ('Teacher presents the two classification systems — by sides… by angles — using a simple tab[le]'), presuming nothing the prefix did not give. X=13's surrender joint is the top's own authored 11->12, untouched by composition.\n\nJUMPY x3 -> ARV-D-103. All three synthesis borrows repeat 'Figure it Out Q4, section 7.5 p.170' across the joint. On the ASSUMPTION axis these transitions are clean and the brief is visibly working — the synthesis note opens 'deliberately does not assume any prior activity, worksheet, or discussion from earlier units'. What breaks is repetition, not presumption: the class finishes Q4 and is handed Q4 again. NO CANONICAL IS AT FAULT (the top separates its two Q4 uses with u11; the serve drops u11 and joins them) — this is the composition defect C8 was written to catch, and its remedy is deterministic: a brief line forbidding the synthesis unit from reusing any other unit's textbook item, plus a certifier disjointness check."
-   },
-   "C9": {
-    "status": "amber",
-    "by": "Claude",
-    "at": "2026-08-10T22:57:51",
-    "comment": "RUN 2026-08-10 against the re-authored library [12, 10, 7]. Artefact: genon/out/stage_prep_mathematics_middle/c9_anchor_check.py — re-runnable in one command.\n\nAMBER, not pass: C9's exit is 'zero mis-anchored items' and four rows carry findings. Nothing found is a CONTENT defect — no item is mis-anchored to the wrong SECTION anywhere, and no item is lost that the engine does not count — but two are real and one is architectural.\n\nPASSING ROWS: X=7, X=10, X=12, X=13 — identity and surrender serves, every item anchored to its own sitting, nothing outside range, zero unserved.\n\nCHECK 1 (prefix remap) and CHECK 4 (no cross-variant): PASS on every row EXCEPT the two below-floor serves, where a dropped unit's items keep the LENDER's numbering — ARV-D-104.\nCHECK 3(a): PASS everywhere — no item carries an empty anchor.\nCHECK 3(b): PASS — items whose unit was not served are ABSENT and counted in assessment_items_unserved (3 at X=8/9/11, 2 at X=5).\nCHECK 3(c)/(d): FAIL on X=5 and X=6 — dropped-unit items are present but NOT flagged unscheduled, which matters because exports omit exactly the flagged ones — ARV-D-104.\nCHECK 2 (borrowed unit brings its own items): UNSATISFIABLE on this stage — ARV-D-105. The top's synthesis unit holds zero items by construction, so a Case-1 borrow has nothing to bring. Founder found this by reading the plans; verification confirmed 12 units / 12 handoff entries / 12 items with none on U12.\n\nALSO RAISED: ARV-D-106 — a section whose run is cut mid-way loses its assessment silently.\n\nTHE DIVIDEND OF THE BRIEF FIX, measured here: the re-authored p10 is contiguous (runs 7.1·7.2·7.3·7.4·7.5, no composite, no revisit), and at X=8 that recovered section 7.4's assessment and one item (6 items over 3 sections before, 7 over 4 now). The X=10 identity now passes C9 outright, where the composite p10 put 4 of 10 items on one unit."
    }
   },
   "mathematics/preparatory": {
@@ -2491,45 +2485,6 @@
    "title": "every synthesis borrow repeats the SAME textbook exercise the sitting before it just did — the composition creates it, no canonical is wrong",
    "evidence": "C8 transition inspection, three of three synthesis borrows: X=9, X=11 and the mixed 4x50+7x40 matrix all run 'Figure it Out Q4, section 7.5 p.170' in sitting X-1 AND again in sitting X.\n\nX=11, read as the teacher meets it — sitting 10 band 22-36: 'Figure it Out Q4, section 7.5 p.170 (\"Through construction, explore whether it is possible to construct: (a) a right-angled equilateral…\")'. Sitting 11 band 24-34: the identical reference, verbatim.\n\nNO CANONICAL IS AT FAULT — verified: the top uses Q4 at u10 and u12 with u11 BETWEEN them, so its authored joint is clean; p10 uses it once (u8); p07 once (u7). The repetition is manufactured by the SERVE: X=11 drops u11 and joins u10 straight to the borrowed synthesis. X=9 does the same to p10's u8. This is precisely the joint C8 exists to inspect — the handover into the borrowed slot.\n\nRATING: JUMPY, at its mild end — by C8's own rubric, 're-teaches at a depth that insults what X-1 just did'. It is not the ARV-D-025 profile: on the ASSUMPTION axis the transition is CLEAN, and the brief is visibly working — the synthesis unit's note opens 'This synthesis unit deliberately does not assume any prior activity, worksheet, or discussion from earlier units: the tasks are self-contained and solvable from content alone.' A teacher would not be stranded; she would be puzzled, ten minutes after finishing Q4, to be handed Q4.",
    "decision": "OPEN — remedy is deterministic, no LLM in the request path. Two halves: (a) BRIEF (V-series, iterates freely) — the standard's synthesis unit must not reuse a textbook item that any other unit of the chapter uses, BECAUSE it may be borrowed onto any prefix; that prevents it at authoring. (b) CERTIFIER (free, deterministic) — assert the synthesis unit's book_refs are disjoint from every other unit's, which catches it at C1 rather than at C8 by eye. Note the tie-break is NOT the culprit here: the lender is correct in every case (the standard owns the synthesis), so hardening lender selection would fix nothing."
-  },
-  {
-   "id": "ARV-D-104",
-   "combo": "mathematics/middle",
-   "step": "C9",
-   "severity": "S2",
-   "owner": "founder",
-   "status": "open",
-   "opened": "2026-08-10T22:57:51",
-   "at": "2026-08-10T22:57:51",
-   "title": "a DROPPED unit's items keep the lender's unit number, so they anchor outside the served plan and are not flagged unscheduled",
-   "evidence": "C9 checks 1, 3(c) and 4, on the below-floor serves. X=5 (5 sittings) carries an item anchored to unit 6; X=6 (6 sittings) to unit 7. C9 3(c) is explicit: a dropped unit's items must be anchored 'to the dropped unit's sitting number in THIS plan, never the lender's own numbering'. And neither is flagged `unscheduled: true` — Q-A-1 on both — which C9 3(d) makes load-bearing: EXPORTS omit exactly the flagged items. Unflagged means the export prints questions about a unit the class never had. That is ARV-D-037's failure, which e13 was written to end.\n\nIndependent of the p10 re-author: these rows use p07 and are unchanged by it.",
-   "decision": "OPEN — the remap and the flag both live in serve.py's drop path. Neither is a content question."
-  },
-  {
-   "id": "ARV-D-105",
-   "combo": "mathematics/middle",
-   "step": "C9",
-   "severity": "S3",
-   "owner": "founder",
-   "status": "open",
-   "opened": "2026-08-10T22:57:51",
-   "at": "2026-08-10T22:57:51",
-   "title": "C9 check 2 is UNSATISFIABLE on this stage — the synthesis unit can hold no assessment item, so a Case-1 borrow brings none",
-   "evidence": "Founder, reading the served plans: 'synthesis of tops has no assessment item'. Verified on the authored top: 12 units, 12 handoff entries, 12 items, and U12 (the synthesis) holds ZERO. Nothing is lost in the borrow — there was never anything to lend.\n\nCAUSE, and it is partly the platform's own fix. On maths·middle an item reaches a unit only by matching its section_ref to a period's textbook_segments. The synthesis unit names EVERY section, so with it in the index it became the last unit of all five and swallowed all twelve items (ARV-D-092's symptom: units 1-11 showing no assessment at all). carriers.items_by_period_field therefore EXCLUDES it — correctly — and the consequence is that it can hold no item, ever, on this stage. The handoff confirms there is no lost data: all 12 entries name a real section (7.5, 7.5, 7.2, 7.3, 7.3, 7.1, 7.2, 7.2, 7.3, 7.3, 7.4, 7.5) and NONE names the synthesis.\n\nThis is S4 §3.2's prediction — 'C9.2 is unsatisfiable on precisely the Case-1 synthesis borrow C8 exists to inspect' — confirmed on a MEDIATED-anchor stage, where it was raised for DERIVED-anchor stages only. The sharpest face of it is X=9: nine sittings, all five sections taught, the note reads 'Every section is covered; the closing sitting draws the chapter together' — and that sitting has nothing to assess while 7.5 has nothing either.",
-   "decision": "OPEN — two routes, founder's call. (a) ACCEPT as the stage's contract: the synthesis is a teaching sitting, not an assessed one, and a whole-chapter synthesis has no single section to test. (b) GIVE IT A REAL ANCHOR: the handoff carries a `synthesis` entry and the item index admits the synthesis unit ONLY for items whose section_ref is that token — a brief line plus a narrow carrier change, the same shape top_brief_for already makes for derived-anchor stages. (b) is what makes X=9's note honest. Neither is a correctness fix: no item is mis-anchored and nothing is lost."
-  },
-  {
-   "id": "ARV-D-106",
-   "combo": "mathematics/middle",
-   "step": "C9",
-   "severity": "S3",
-   "owner": "founder",
-   "status": "open",
-   "opened": "2026-08-10T22:57:51",
-   "at": "2026-08-10T22:57:51",
-   "title": "a section whose run is cut mid-way loses its assessment silently — taught, but no item and no note",
-   "evidence": "X=8 and X=9 teach all five sections; 7.5 is assessed in neither. Its three items anchor at p10's U10, the last unit of 7.5's run, and both serves stop at U8. `assessment_items_unserved` reads 3 — provenance, not teacher-facing — and the only note X=9 shows is the reassuring one.\n\nMEASURABLY BETTER THAN BEFORE, and worth recording as the brief fix's dividend: under the old composite p10 BOTH 7.4 and 7.5 were unassessed at X=8 and only 6 of 10 items survived. The contiguous p10 gives 7.4 its own closing unit, so it is now assessed and 7 items survive. The residue is structural, not a defect in the new plan: anchoring at a section's LAST unit means whichever section the prefix cut falls inside loses its assessment.",
-   "decision": "OPEN — either the coverage note says so ('section 7.5 is taught but not assessed at this count'), or anchoring moves from the section's last unit to its first completion. The second reverses the founder ruling of 2026-08-05 and is not a small change; the first is a sentence."
   }
  ],
  "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",
