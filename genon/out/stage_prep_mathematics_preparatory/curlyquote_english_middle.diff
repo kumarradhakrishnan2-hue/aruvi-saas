@@ -1,0 +1,30 @@
+--- lp_english_middle_v1.5_pre.txt	2026-08-11 13:11:49.089585941 +0530
++++ ../../../data/content/constitutions/lesson_plan/english/middle/lesson_plan_constitution.txt	2026-08-11 13:11:49.109584826 +0530
+@@ -1,4 +1,4 @@
+-ARUVI — ENGLISH LESSON PLAN CONSTITUTION · VERSION 1.5
++ARUVI — ENGLISH LESSON PLAN CONSTITUTION · VERSION 1.6
+ 
+ VOCABULARY (teacher-facing naming):
+ The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+@@ -309,7 +309,13 @@
+ "Reading for Meaning passage on pankhas (read-aloud + paired
+ discussion)".
+ 
+-Format: <spine_section_name> ("brief description up to 10 words....")
++Format: <spine_section_name> (“brief description up to 10 words....”)
++
++Use the CURLY quotation marks shown (“ ”), never straight double
++quotes. The plan is emitted as JSON, where a straight " inside a string value must
++be escaped; an unescaped one ends the string early and destroys the file. Curly
++marks need no escaping and read better in print. (Plans authored before this
++version used straight quotes here; that form remains valid and is not a defect.)
+ 
+ THREE FIELDS ARE TEACHER-FACING and bound by this rule:
+   - phase `description`
+@@ -512,5 +518,5 @@
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-English Lesson Plan Constitution · Version 1.5 · Internal Document
++English Lesson Plan Constitution · Version 1.6 · Internal Document
+ ================================================================================

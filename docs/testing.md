@@ -413,11 +413,23 @@ before starting each stage):
 | S4 | mathematics · secondary | **1.3 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-09) |
 | S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
-| S7 | mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
-| S8 | mathematics · preparatory | **1.3 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
-| S9 | english · preparatory | 1.0 | phases[] → P3 | — | — | — |
-| S10 | english · middle | 1.5 | phases[] → P3 | — | — | — |
-| S11 | english · secondary | 1.0 | phases[] → P3 | — | — | — |
+| S7 | mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (assess v3.4) |
+| S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
+| S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — |
+| S10 | english · middle | 1.6 (quote-format only) | phases[] → P3 | — | — | — |
+| S11 | english · secondary | 1.1 (quote-format only) | phases[] → P3 | — | — | — |
+
+> ★ **CROSS-STAGE, 2026-08-11 — the narration format's JSON quote hazard is closed on all
+> five LP constitutions that carried it** (maths middle v3.9 · maths prep v1.4 · english
+> prep/middle/secondary v1.1/v1.6/v1.1). `book_ref ("brief")` put a straight double quote
+> inside a value emitted as JSON, leaving the escape to the model — which does it for a whole
+> run or not at all. maths III ch 5 proved both halves on consecutive calls and the second
+> cost ₹40.72. The Format and Example lines now show CURLY marks (“ ”), which need no
+> escaping. **Worded as a licence, not a switch** — the straight form "remains valid and is
+> not a defect" — so it is relaxation-only under §9 and **no authored library re-opens**. The
+> S9–S11 rows below are bumped by this alone; their P-prep is otherwise untouched. Pipeline
+> half of the same fix: `parse_with_repair`'s bound 10 → 500, plus
+> `genon/recover_from_raw.py`, so a parse failure never costs a re-generation again.
 
 > ★ **S6 · science · middle is the campaign's ONE STRUCTURAL EXCEPTION** (2026-08-07, at its
 > P-prep; spec `docs/science_middle_stage_serve.md`, read it before any S6 work). It anchors

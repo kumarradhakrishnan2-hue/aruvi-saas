@@ -1,4 +1,4 @@
-ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.4
+ARUVI — MATHEMATICS LESSON PLAN CONSTITUTION (PREPARATORY) · VERSION 1.3
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
@@ -177,14 +177,8 @@ When a time band invokes a task, the band's `activity` names it by
 `book_ref` followed by the task's `description` in brackets and inverted
 commas, ≤ 10 words with `....` if truncated.
 
-Format: book_ref (“description up to 10 words....”)
-Example: Let us Do Q4 (p.67) (“fill the blanks with the correct numbers....”)
-
-Use the CURLY quotation marks shown (“ ”), never straight double
-quotes. The plan is emitted as JSON, where a straight " inside a string value must
-be escaped; an unescaped one ends the string early and destroys the file. Curly
-marks need no escaping and read better in print. (Plans authored before this
-version used straight quotes here; that form remains valid and is not a defect.)
+Format: book_ref ("description up to 10 words....")
+Example: Let us Do Q4 (p.67) ("fill the blanks with the correct numbers....")
 
 Every band is additionally bound by THE SELF-CONTAINED REGISTER: it
 names no clock quantity, points forward at nothing, claims no
@@ -352,5 +346,5 @@ LP JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-Mathematics Lesson Plan Constitution (Preparatory) · Version 1.4 · Internal Document
+Mathematics Lesson Plan Constitution (Preparatory) · Version 1.3 · Internal Document
 ================================================================================

@@ -103,6 +103,71 @@ def strip_fences(text: str) -> str:
     return t.strip()
 
 
+# ── THE ONE PARSER · every path that turns model output into a canonical goes here ──
+# Extracted from cmd_one 2026-08-11 (S8's C1). It had been inline, which is how the
+# recovery script came to hold a hand-copy of it — two copies of a heuristic that must
+# agree exactly. Batch mode (the Message Batches sweep, deferred per this module's
+# docstring) is the reason this matters beyond tidiness: whoever writes it will need a
+# parse step, and an inline block invites a third copy carrying the original bug back in.
+# There is now one function; call it.
+MAX_QUOTE_REPAIRS = 500          # was 10 — see the note below
+MAX_REPAIR_SPAN = 300            # a naked pair wider than this is not a quote glitch
+
+
+def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
+    """Parse model output, auto-repairing the one known serialization glitch.
+
+    Returns `(parsed | None, problems, repairs)`.
+
+    THE GLITCH: naked (unescaped) double quotes inside a JSON string. Each repair
+    escapes exactly ONE quote pair — provably content-neutral, no character is added or
+    removed except the two backslashes — and every repair is recorded so the ledger can
+    report it. Any OTHER defect still fails hard: nothing else is auto-touched.
+
+    THE BOUND WAS 10, AND 10 WAS THE WRONG ORDER OF MAGNITUDE (2026-08-11, S8's C1).
+    It was set when the glitch looked like a rare slip (4 quotes, 2026-07-26). It is not
+    rare on the stages whose LP constitution MANDATES an inner-quoted band narration:
+    mathematics preparatory Rule 6 and mathematics middle Rule 10 both require
+    `book_ref ("description....")`, so nearly every band that invokes a textbook task
+    carries a quote pair — 45 of 62 bands in maths III ch 5's standard canonical.
+
+    Escaping is left to the model and is NOT reliable, and the failure is a whole-run
+    MODE rather than a scatter: ch 5's standard escaped all 45 of its pairs and parsed
+    clean; its 11-period compact escaped none of its 42 and died at the 10th repair with
+    ₹40.72 already spent. So the bound must clear the worst case a COMPLIANT plan can
+    present (a long chapter at ~5 bands/unit ≈ 100), not the best. Each iteration is one
+    pass over ~100 KB, so the headroom costs milliseconds.
+
+    `MAX_REPAIR_SPAN` is the other magic number here and it is deliberately left as is:
+    a "pair" wider than 300 characters is more likely a genuinely broken structure than a
+    quoted phrase, and repairing it would corrupt rather than rescue. Measured on the run
+    that motivated this: max span 159, median 83, none above 300.
+    """
+    text = strip_fences(full)
+    parsed, problems, repairs = None, [], []
+    for _ in range(MAX_QUOTE_REPAIRS):
+        try:
+            parsed = json.loads(text)
+            break
+        except json.JSONDecodeError as e:
+            q1 = text.rfind('"', 0, e.pos)
+            q2 = text.find('"', e.pos)
+            if q1 == -1 or q2 == -1 or q2 - q1 > MAX_REPAIR_SPAN:
+                problems = [f"JSON parse error: {e}"]
+                break
+            repairs.append(text[q1 + 1:q2][:50])
+            text = text[:q1] + '\\"' + text[q1 + 1:q2] + '\\"' + text[q2 + 1:]
+    else:
+        # Exhaustion used to fall through to a generic "output is not valid JSON", which
+        # named neither the cause nor the count — the ledger held the real evidence
+        # ("auto-repaired 10 naked quotes") while the headline said nothing. Say it here,
+        # and say what to do about it: the raw is already on disk and already paid for.
+        problems = [f"gave up after {MAX_QUOTE_REPAIRS} naked-quote repairs — still not "
+                    f"valid JSON. The raw output is complete and on disk; recover it with "
+                    f"genon/recover_from_raw.py rather than re-generating."]
+    return parsed, problems, repairs
+
+
 def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]:
     """Serve-era checks (2026-07-31). The band declaration layer is RETIRED —
     band ids, roles, band_refs, phase_ref and unit_handoff are no longer part of
@@ -457,25 +522,7 @@ def cmd_one(args) -> int:
     raw_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_raw.txt"
     raw_path.write_text(full, encoding="utf-8")
 
-    # Parse — with bounded auto-repair for the model's one known serialization
-    # glitch: naked (unescaped) double quotes inside a JSON string (the 2026-07-26
-    # run lost its canonical to 4 of them). Each repair escapes exactly ONE quote
-    # pair — provably content-neutral — and is recorded in the ledger. Any other
-    # defect still fails hard: nothing else is auto-touched.
-    text = strip_fences(full)
-    parsed, problems, repairs = None, [], []
-    for _ in range(10):
-        try:
-            parsed = json.loads(text)
-            break
-        except json.JSONDecodeError as e:
-            q1 = text.rfind('"', 0, e.pos)
-            q2 = text.find('"', e.pos)
-            if q1 == -1 or q2 == -1 or q2 - q1 > 300:
-                problems = [f"JSON parse error: {e}"]
-                break
-            repairs.append(text[q1 + 1:q2][:50])
-            text = text[:q1] + '\\"' + text[q1 + 1:q2] + '\\"' + text[q2 + 1:]
+    parsed, problems, repairs = parse_with_repair(full)
     if parsed is not None:
         problems = validate(parsed, count, expect_v11)
         if repairs:

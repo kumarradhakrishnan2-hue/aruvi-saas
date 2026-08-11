@@ -39,11 +39,11 @@ Nothing else is declared. Roles, band ids, band refs, unit handoffs: not read.
 | mathematics · secondary | 1.0 | time_bands | — | — | — |
 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
 | science · middle | **2.2 ✓ CERTIFIED (2026-08-07)** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (v1.5 — item-18 struck; counts made binding at C3) |
-| mathematics · middle | 3.3 | phases[] → P3 | — | — | — |
-| mathematics · preparatory | **1.3 ✓ (2026-08-11)** | time_bands ✓ | ✓ | ✓ | ✓ (v1.3 — removal N/A) |
-| english · preparatory | 1.0 | phases[] → P3 | — | — | — |
-| english · middle | 1.5 | phases[] → P3 | — | — | — |
-| english · secondary | 1.0 | phases[] → P3 | — | — | — |
+| mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (v3.4) |
+| mathematics · preparatory | **1.4 ✓ (2026-08-11)** | time_bands ✓ | ✓ | ✓ | ✓ (v1.3 — removal N/A) |
+| english · preparatory | 1.1 | phases[] → P3 | — | — | — |
+| english · middle | 1.6 | phases[] → P3 | — | — | — |
+| english · secondary | 1.1 | phases[] → P3 | — | — | — |
 
 (Table state is 2026-07-31 except the four amended rows. The remaining seven still carry
 the item-18 position prohibition A9 strikes where they have one; see §3.)

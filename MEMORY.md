@@ -463,13 +463,83 @@ must confirm · source entry.
     in `genon/out/stage_prep_ss_middle/`.)* ARV-D-018's ordering half (10/18) stands open and
     unaffected.
 
+19. **The CURLY-QUOTE narration format (5 LP constitutions, 2026-08-11)** — maths middle
+   v3.9 · maths prep v1.4 · english prep/middle/secondary v1.1/v1.6/v1.1. The Format and
+   Example lines now show `book_ref (“brief....”)` instead of straight double quotes, to
+   remove the JSON escape hazard rather than repair it. *Validated so far:* the amendment
+   itself is unexercised — every artefact on disk was authored under the straight-quote
+   text (which the amendment explicitly keeps valid). *Must confirm live:* that generation
+   actually EMITS curly marks and that nothing downstream chokes on U+201C/U+201D — the
+   register scan, the copyright scan, the PDF/DOCX exports and the on-screen renderer all
+   read this text. **The next paid call tests it for free: maths III ch 5's 8-period
+   compact is the first generation under the new wording.** If it comes back with straight
+   quotes anyway, the Format line is not where the model is taking its cue and the
+   amendment needs re-siting, not re-wording.
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
 
 ---
 
-## 2026-08-11 (newest) — S8 · MATHS·PREPARATORY STAGE PREP: the cheapest prep of the
+## 2026-08-11 (newest) — A CONSTITUTION MANDATED A JSON-BREAKING FORMAT, AND THE
+## PIPELINE'S REPAIR BOUND WAS AN ORDER OF MAGNITUDE TOO SMALL. Both fixed; ₹40.72
+## recovered rather than re-spent.
+
+**What happened.** Five LP constitutions mandate band/phase narration as
+`book_ref ("brief....")`. A plan is emitted as JSON, whose strings are delimited by `"`,
+so that inner pair must be written `\"` — and nothing enforces it. maths III ch 5 proved
+on two consecutive calls that this is a **whole-run mode, not a scatter**: the standard
+canonical escaped all 45 of its pairs and parsed clean; the 11-period compact escaped
+**none** of its 42 and died. `generate_canonical`'s auto-repair was bounded at **10**
+(set when the glitch looked like a rare 4-quote slip in July), so it fixed ten, gave up,
+and reported the uninformative *"output is not valid JSON"* — naming neither cause nor
+count, while the ledger quietly held the real evidence (*"auto-repaired 10 naked
+quotes"*). ₹40.72 spent, no file.
+
+**Three fixes, in increasing order of how much they matter.**
+
+1. **Bound 10 → 500**, sized against the corpus rather than the incident: worst observed
+   45 pairs, largest canonical anywhere 25 units ≈ 125 pairs at ~5 bands/unit.
+2. **`genon/recover_from_raw.py`** — the raw output is written to disk BEFORE parsing
+   (`generate_canonical:457`), so a run that streams to completion has already bought
+   everything it needs. There was no way to use it: the only path back was `--redo`,
+   paying twice for output already in hand. The script re-parses, validates and installs
+   with **no API call**. ch 5's compact came back for ₹0, 42 repairs, validator clean.
+3. **The constitutions changed so the mistake cannot be made** — Format and Example lines
+   now show CURLY marks (“ ”), which have no meaning in JSON and need no escaping.
+   Straight single quotes would be equally safe but collide with apostrophes, which this
+   content is full of. Worded as a **licence, not a switch** ("the straight form remains
+   valid and is not a defect"), which is what keeps it relaxation-only under §9 and stops
+   two authored libraries re-opening.
+
+**THE LESSONS, and the first is the one to carry.**
+
+- **Prefer removing a failure mode to repairing it.** The bound fix catches the mistake
+  after the fact with a heuristic that has its own magic numbers (`MAX_REPAIR_SPAN = 300`,
+  unaudited, the same species as the 10). Changing the quote character makes the mistake
+  *unmakeable*. When both are available, the second is worth a constitution amendment.
+- **A constitution can mandate something the serialization cannot carry.** Nothing in the
+  P-step checklist asks whether a mandated FORMAT is safe in the output encoding. It
+  should: at P1, read every `Format:`/`Example:` line and ask what it becomes inside JSON.
+- **An error message that omits the count hides the cause.** "Not valid JSON" sent the
+  first diagnosis toward truncation (25,922 output tokens looked suspiciously close to the
+  standard's 26,023); it was nothing of the kind — `max_tokens` is 64,000 and the file was
+  complete, closing braces and all. The ledger had the answer the whole time.
+- **Two copies of a heuristic are one bug waiting.** The first draft of `recover_from_raw`
+  hand-copied the repair loop with a comment claiming it was "byte-identical" — a promise
+  a copy cannot keep, and the same shape as the defect being fixed. `parse_with_repair` is
+  now one extracted function both paths call. This matters most for the deferred **batch
+  mode**: an inline block invites a third copy carrying the original bug back in.
+- **Check whether the thing you are "fixing for the future" exists yet.** Asked whether
+  batch runs are now safe, the honest answer was that batch mode is *not written*
+  (`generate_canonical`'s docstring defers it to the mass pre-warm sweep), so the fix
+  covers today's single-chapter path and will only reach batch if batch calls the shared
+  parser. Stated as a condition, not a guarantee.
+
+---
+
+## 2026-08-11 — S8 · MATHS·PREPARATORY STAGE PREP: the cheapest prep of the
 ## campaign, because S7 left a good note. And a numeric cap measured BEFORE it is paid for.
 
 **Landed:** LP **v1.1 → v1.3** (v1.2 the carry-forward, v1.3 the Rules 1–2 alignment) ·

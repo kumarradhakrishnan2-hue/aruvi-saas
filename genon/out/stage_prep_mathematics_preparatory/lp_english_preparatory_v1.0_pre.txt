@@ -1,4 +1,4 @@
-ARUVI — ENGLISH LESSON PLAN CONSTITUTION · PREPARATORY · VERSION 1.1
+ARUVI — ENGLISH LESSON PLAN CONSTITUTION · PREPARATORY · VERSION 1.0
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
@@ -303,14 +303,8 @@ RULE 9 | PHASE NARRATION
 When a phase invokes a textbook task, the description names the task
 by anchor location + brief (≤ 10 words).
 
-Format: `<spine_section_name> (“brief ≤ 10 words”)`
-Example: `Let us Learn — A. (“consonant-cluster blend-and-say drill”)`
-
-Use the CURLY quotation marks shown (“ ”), never straight double
-quotes. The plan is emitted as JSON, where a straight " inside a string value must
-be escaped; an unescaped one ends the string early and destroys the file. Curly
-marks need no escaping and read better in print. (Plans authored before this
-version used straight quotes here; that form remains valid and is not a defect.)
+Format: `<spine_section_name> ("brief ≤ 10 words")`
+Example: `Let us Learn — A. Consonant-cluster blend-and-say drill`
 
 THREE FIELDS ARE TEACHER-FACING and bound by this rule:
   - phase `description`
