@@ -613,7 +613,110 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-12 (newest) — ENGLISH'S ASSESSMENT AXIS WAS CAPACITY-BOUNDED, AND THE
+## 2026-08-12 (newest) — S-SS · SOCIAL_SCIENCES · SECONDARY (IX) SHIPPED IN ONE DAY,
+## ₹488.76 — AND A COMPACT CAUGHT A DEFECT IN THE PLAN IT WAS AUTHORED FROM
+
+**The stage.** 9 real chapters (ch 10–18 are NCERT placeholders with no summary/mapping and
+were never eligible), 25 canonicals, 22 bought in two batch waves, ch 3 pre-installed from the
+v2.0 pilot. **Wave 1** (8 standards, 108 periods) ₹193.23 · **wave 2** (14 compacts, 139
+periods) ₹295.53 · **total ₹488.76**, against ~₹950 sync. Zero canonicals re-bought. Closed at
+**7 of 9 ALL PASS** with two declared exceptions (below).
+
+**Pricing: the runbook's curve is TWAU's, and it under-prices this stage by ~40%.** The
+runbook fit (`out ≈ 1.2k + 1.435k × periods`) predicted ₹272 for the 22 runs; fitting SS·IX's
+own 9 logged runs gives **`out ≈ 5.0k + 2.14k × periods`** — ~1.7× the output per period — and
+predicted ₹450 against ₹488.76 actual. **Fit the curve per stage from its first three runs;
+do not carry another stage's.**
+
+**THE FINDING THAT MATTERS — the registry is derived from the standard, so the standard's
+reading of the chapter is never independently tested** (runbook §4 trap 5, in the wild).
+`ch_02_p09` and `ch_08_p04` were QUARANTINED for anchoring sections the registry did not
+contain. Every one of those sections is a real heading in the chapter summary, and the
+STANDARDS teach them and say so in their own unit titles — ch 2 U5 "Agents of Gradation AND
+RUNNING WATER: Valley to Delta", ch 8 U5 "Planned AND MARKET Economies", ch 8 U4 "The Three
+Key Questions — What, How, and For Whom to Produce" — while anchoring one section each.
+**ch 8's registry held 6 of the chapter's 10 sections; MARKET ECONOMY, a whole section of an
+economics chapter, was not in it.** Certification passed ch 8 on "every anchor verbatim in the
+top registry" and "first-visit order follows the registry" because both compare the registry
+to the anchors it was derived FROM.
+- **p04's brief SHOWED it the 6-section registry** and said anchors MUST be drawn verbatim from
+  that list. It named seven sections anyway, three absent from its brief, because it had read
+  the summary. **The compact was right about the chapter and was quarantined for it.**
+- **Cheap check, not yet built:** diff every canonical's anchor set against its siblings' and
+  flag disagreement. That alone catches ch 2 and ch 8 automatically, free, before quarantine.
+- **Second gap:** certification's only coverage check is "coverage reaches the FINAL registry
+  section". A section in the middle can go unanchored and pass. Market Economy is section 9 of
+  10 with Mixed Economy at 10 — had it been in the registry, p04's omission would have sailed
+  through. **A total-coverage check is owed.**
+
+**THE PARENT-FOR-CHILD ANCHOR PATTERN — 4 for 4 across two chapters.** Where a chapter has a
+PARENT section with named children, this stage's model anchors the parent and teaches the
+child (ch 2 top U5, ch 2 p07 U4, ch 8 top U4, ch 8 top U5, plus p04 U4). p07's instance only
+became visible AFTER its standard was repaired and the registry grew — a repair can surface
+the next defect, so re-certify after every anchor change. Nothing in the brief says a unit
+teaching a sub-section must anchor the sub-section. **That is a brief-level gap, not nine
+independent slips.**
+
+**REGISTER: the clock ban carried two-thirds of the breach, in BOTH waves.** Wave 1: 9 clock /
+2 forward / 2 calendar / 1 completion over 14 hits. Wave 2: 11 clock / 1 forward / 1 calendar
+over 14 hits (recall wave 1 = 8 files, wave 2 = 14). Two independent waves, ~0.8 clock hits
+per file both times — not variance, the brief. Every hit is the same sentence shape:
+`"<group> for N minutes, then <share|compare>"`. The ban is stated; nothing tells the model how
+to express intra-band pacing WITHOUT a quantity, and a model with teaching instincts fills that
+silence. **Owed to the SS·secondary LP constitution, not to repair_register.py forever.**
+- All 27 edits across both waves were **pure deletions**; the grouping ("individually", "in
+  pairs") and the output ("then share") carry the pedagogy, never the number.
+- **ch 8 p04 U1 independently reproduced the exact calendar breach struck from the ch 8
+  STANDARD** ("things their parents bought this month"). Both authored free from the same
+  summary, whose LET'S EXPLORE carries the window. The phrasing is the SOURCE's, surfacing
+  twice — which strengthens the case (argued and recorded in repair_register.py, struck anyway
+  on founder instruction) that "this week"/"this month" about a student's OWN LIFE should be
+  demoted to advisory like "today"/"yesterday" already were.
+- **THE MODEL NARRATES ITS OWN COMPLIANCE, AND BREACHES IN THE SAME SENTENCE.** Three
+  instances: ch 1 U5 "previewing the four dedicated discipline sections WITHOUT NAMING UPCOMING
+  UNITS"; ch 1 U13 "...connects back to the four-discipline structure without naming specific
+  earlier units" (in a note opening "Having covered all four disciplines"); ch 5 p13 U13
+  "surveys the chapter's full arc WITHOUT CLAIMING THE CHAPTER IS COMPLETE" — which made the
+  scanner match inside its own negation. Constraint-compliance prose does not belong in
+  teacher-facing text at all; a `repair_leaked_deliberation` sweep would catch the class.
+
+**TWO DECLARED EXCEPTIONS — closed knowingly, not overlooked (founder, 2026-08-12).** Both are
+family `completion`, one hit each, and each keeps its chapter off ALL PASS permanently since
+the checker has no exception mechanism. Released at **7/9 ALL PASS**, so runbook §5 gate 4 is
+NOT met as written and this entry is the record of why.
+1. **ch_01_canonical.json U13** — "Having covered all four disciplines, this unit turns to…".
+   TRUE in the 15-period standard (U6–U12 cover the four disciplines). False only where U13 is
+   borrowed or served to a class that never had those units in that shape — and ch 1's compacts
+   are 12 and 9 units against 9 sections, so the 9-period plan certainly does not spend four
+   units on four disciplines. A five-word deletion would have fixed it.
+2. **ch_05_canonical_p13.json U13** — a SCANNER FALSE POSITIVE: the pattern
+   `the chapter is (now )?complete` fired inside "without claiming the chapter is complete".
+   Per trap #4 the correct fix is at the scanner (negation guard) or as leaked deliberation,
+   never by striking the text. **Neither was done.** The pattern will keep firing on any future
+   canonical that declares this particular compliance.
+
+**Closing state.** 25/25 canonicals on disk · quarantine cleared (both restored, both repaired
+on the way back in) · registries ch 2 8→9 and ch 8 6→10 sections, every plan covering its full
+registry · 2 register ban hits library-wide, both exceptions above · no derived plans on disk ·
+serve sweeps clean across each band (ch 5: identity at 21/17/13, fill/rescue between, surrender
+only above 21). Repairs declared in `repair_anchors.py` (8 edits) and `repair_register.py`
+(27 edits); applied wave-1 sets retired to 3-tuple SUPERSEDED keys so the live keys stay
+re-runnable. **Human gate not yet run** — the serve table, ch 5's synthesis unit in full, each
+compact's ending, and the trap-5 eyeball on ch 1, 5, 6, 7, 9 (unproven, not clean — ch 2 and
+ch 8 both failed exactly that check).
+
+**Two operational traps met the hard way, both worth carrying:**
+- `sorted(glob.glob('DRY_*top*.json'))[-1]` is ALPHABETICAL: it returned an old
+  `the_world_around_us` payload when verifying social_sciences' constitution version, which
+  would have "verified" a stale constitution and bought a wave against it. **Glob the subject
+  and sort by mtime.** Same class as `--latest`-by-name.
+- The runbook's example line is TWAU-flavoured (`the_world_around_us v iv iii --certify-only`)
+  and got pasted verbatim against the wrong stage. Free and idempotent, so ₹0 — but read the
+  first line of the output before trusting the last.
+
+---
+
+## 2026-08-12 — ENGLISH'S ASSESSMENT AXIS WAS CAPACITY-BOUNDED, AND THE
 ## RATIO WAS THE SMALLER HALF OF THE DEFECT
 
 Founder observation: english·secondary carries too few assessment items — "just one per spine

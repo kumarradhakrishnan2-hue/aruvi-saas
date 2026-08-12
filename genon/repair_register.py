@@ -186,7 +186,7 @@ REPAIRS = {
     # ALL THIRTEEN ARE PURE DELETIONS. No text is authored. Struck at the founder's
     # instruction (2026-08-12): clock, forward and calendar. The single COMPLETION hit
     # (ch 1 U13) is deliberately NOT declared here — see the note at the end of this set.
-    ("social_sciences", "ix"): {
+    ("social_sciences", "ix", "APPLIED-20260812-wave1"): {
         # ── forward (2) ──
         "ch_01_canonical.json": [
             (5, "band:3",
@@ -286,6 +286,103 @@ REPAIRS = {
              "register/clock",
              "ten minutes of a 16-minute band; at a 40-min serve the band is ~13 and the "
              "quantity crowds out the compare step it is paired with"),
+        ],
+    },
+    # ── S-SS · social_sciences · IX · BATCH WAVE 2 · THE COMPACTS (2026-08-12) ────
+    # 14 compacts, 14 ban hits over 8 files — and the SAME distribution as wave 1: 11 clock,
+    # 1 forward, 1 calendar (+ the 1 completion left standing in ch 1's standard). Wave 1 was
+    # 9 clock of 14. Two independent waves, same dominant family, ~0.8 clock hits per file
+    # both times. That is not variance; it is the brief. The clock ban is stated but nothing
+    # tells the model how to pace WITHIN a band without a quantity, and every hit takes the
+    # same shape: "<group> for N minutes, then <share|compare>". Fix belongs upstream in the
+    # SS·secondary LP constitution, not in this file forever.
+    #
+    # ch 8 p04 U1 REPRODUCED, INDEPENDENTLY, THE EXACT CALENDAR BREACH struck from the ch 8
+    # STANDARD earlier today ("things their parents bought this month"). Both were authored
+    # free from the same summary, whose LET'S EXPLORE carries the window. Evidence that this
+    # one is the SOURCE's phrasing surfacing twice, not a model habit — and a second reason to
+    # think the demotion argued in the wave-1 set is the right call. Struck here for
+    # consistency with the standard, on the same instruction.
+    #
+    # All 14 are pure DELETIONS. No text is authored.
+    ("social_sciences", "ix"): {
+        "ch_01_canonical_p09.json": [
+            (8, "band:0",
+             "Students brainstorm silently for two minutes, then share",
+             "Students brainstorm silently, then share",
+             "register/clock", "silent-brainstorm pacing; grouping and share-back stand"),
+        ],
+        "ch_01_canonical_p12.json": [
+            (5, "band:0",
+             "Students brainstorm for two minutes in pairs before any explanation",
+             "Students brainstorm in pairs before any explanation",
+             "register/clock", "the ordering constraint ('before any explanation') is the "
+             "teaching point and is scale-free"),
+            (8, "band:0",
+             "Students discuss in pairs for three minutes.",
+             "Students discuss in pairs.",
+             "register/clock", "borewell scenario; the collected word-cluster is the output"),
+        ],
+        "ch_02_canonical_p07.json": [
+            (2, "band:0",
+             "Students discuss in pairs for two minutes, then share",
+             "Students discuss in pairs, then share",
+             "register/clock", "volcanic-ash observation; Varahamihira link is untouched"),
+        ],
+        "ch_04_canonical_p11.json": [
+            (7, "band:0",
+             "Students brainstorm individually for two minutes, then share",
+             "Students brainstorm individually, then share",
+             "register/clock", "THINK ABOUT IT on river civilisations; the two-column record "
+             "is the output"),
+        ],
+        "ch_04_canonical_p15.json": [
+            (2, "band:0",
+             "Students brainstorm individually for two minutes, then share aloud",
+             "Students brainstorm individually, then share aloud",
+             "register/clock", "chapter's own opening question"),
+            (5, "band:0",
+             "Students predict in writing for two minutes, then share",
+             "Students predict in writing, then share",
+             "register/clock", "'in writing' is the move that matters, not the duration"),
+        ],
+        "ch_05_canonical_p13.json": [
+            (4, "band:2",
+             "Each group deliberates for five minutes and presents its position",
+             "Each group deliberates and presents its position",
+             "register/clock", "sabha/samiti role play; the vote that follows is the output"),
+        ],
+        "ch_06_canonical_p15.json": [
+            (6, "teacher_notes",
+             " — a tension the Challenges unit will develop", "",
+             "register/forward",
+             "the ONLY forward reference in either wave that names another unit outright. The "
+             "note's teaching point — distinguishing the media's democratic function from its "
+             "platform form — is complete without the promise, and the promise is false in any "
+             "plan where this unit is the last sitting"),
+            (15, "band:0",
+             "Students work individually for eight minutes, then compare with a neighbour",
+             "Students work individually, then compare with a neighbour",
+             "register/clock", "whole-chapter cause-effect map; the four branches are the spec"),
+        ],
+        "ch_08_canonical_p04.json": [
+            (1, "band:0",
+             "students individually list three things their parents bought this month, then classify",
+             "students individually list three things their parents bought, then classify",
+             "register/calendar",
+             "the standard's U1 breach, reproduced independently by the compact from the same "
+             "LET'S EXPLORE. Struck for consistency with the standard; the same dissent is "
+             "recorded there"),
+            (2, "band:3",
+             "Students work individually for four minutes, then share in pairs",
+             "Students work individually, then share in pairs",
+             "register/clock", "garment-factory analytical task"),
+            (3, "band:1",
+             "Students discuss in pairs for three minutes, then two pairs share their reasoning",
+             "Students discuss in pairs, then two pairs share their reasoning",
+             "register/clock",
+             "THINK ABOUT IT inside the what/for-whom unit; 'two pairs share' is the output "
+             "and is scale-free"),
         ],
     },
     # NOT DECLARED, and left standing on purpose: ch_01 U13 teacher_notes, "Having covered all

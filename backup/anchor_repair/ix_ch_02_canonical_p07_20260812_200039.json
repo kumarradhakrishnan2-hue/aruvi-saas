@@ -20,41 +20,7 @@
     "constitution": "LP v1.10 / assessment v1.7",
     "source": "generate_canonical.py one social_sciences ix 2",
     "ledger_ts": "20260812_165329_ss_ix_02_p07",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-12T20:00:39",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "section_anchor",
-            "rule": "V2/registry-omission",
-            "removed": "Agents of Gradation",
-            "replaced_with": "Running Water",
-            "note": "the unit deals Running Water and nothing else; Agents of Gradation was first visited at U3 and is not re-opened here"
-          }
-        ]
-      },
-      {
-        "at": "2026-08-12T20:02:17",
-        "tool": "genon/repair_register.py v1.5",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
-        "edits": [
-          {
-            "unit": 2,
-            "field": "band:0",
-            "rule": "register/clock",
-            "removed": "Students discuss in pairs for two minutes, then share",
-            "replaced_with": "Students discuss in pairs, then share",
-            "note": "volcanic-ash observation; Varahamihira link is untouched"
-          }
-        ],
-        "ban_hits_before": 1,
-        "ban_hits_after": 0
-      }
-    ]
+    "validation": "clean"
   },
   "result": {
     "lesson_plan": {
@@ -127,7 +93,7 @@
           "time_bands": [
             {
               "minutes": "0-10",
-              "activity": "Display the volcanic ash photograph from the chapter's LET'S EXPLORE box. Ask: 'What is the grey powder? What force produced it? What does it tell us about what is happening inside the Earth?' Students discuss in pairs, then share. Connect their observations to the chapter's DON'T MISS OUT note on Varāhamihira's Bṛihatsaṁhitā, which recorded earthquakes — called bhūkampa — and attributed their signs to wind, rain, clouds, animal behaviour, and four elemental forces (Vāyu, Agni, Indra, Varuṇa), showing that Indians observed and theorised these phenomena long before plate tectonics."
+              "activity": "Display the volcanic ash photograph from the chapter's LET'S EXPLORE box. Ask: 'What is the grey powder? What force produced it? What does it tell us about what is happening inside the Earth?' Students discuss in pairs for two minutes, then share. Connect their observations to the chapter's DON'T MISS OUT note on Varāhamihira's Bṛihatsaṁhitā, which recorded earthquakes — called bhūkampa — and attributed their signs to wind, rain, clouds, animal behaviour, and four elemental forces (Vāyu, Agni, Indra, Varuṇa), showing that Indians observed and theorised these phenomena long before plate tectonics."
             },
             {
               "minutes": "10-25",
@@ -249,7 +215,7 @@
           "period_number": 4,
           "period_duration_minutes": 50,
           "activity_title": "Rivers at Work: Valleys, Waterfalls, Meanders, and Deltas",
-          "section_anchor": "Running Water",
+          "section_anchor": "Agents of Gradation",
           "materials": [
             "Cross-section diagram of a river's upper, middle, and lower course (teacher-drawn or printed)",
             "Blank three-column table for students (Upper Course | Middle Course | Lower Course)"

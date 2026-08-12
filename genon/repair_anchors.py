@@ -141,34 +141,53 @@ REPAIRS = {
     # was right about the chapter and was quarantined for it. Cheap check for next time: diff
     # every canonical's anchor set against its siblings' and flag disagreement — that alone
     # would have caught both chapters automatically, at no cost, before either was quarantined.
-    "ch_02_canonical.json": [
-        (5,
-         "Agents of Gradation",
-         "Agents of Gradation / Running Water",
-         "V2/registry-omission",
-         "U5's own title names Running Water; bands 8-30 and 30-42 teach the full upper/middle/"
-         "lower course sequence. Registry 8 -> 9 sections; Running Water enters at position 4, "
-         "which is its summary order (between Agents of Gradation 5321 and Waves and Currents "
-         "7904), so first-visit order is unchanged"),
-    ],
-    "ch_08_canonical.json": [
+    # p07 carries the SAME under-naming as its standard, and only became visible once the
+    # standard's registry gained Running Water: p07 U4 is titled "Rivers at Work: Valleys,
+    # Waterfalls, Meanders, and Deltas" and teaches V-shaped valleys, waterfalls, meanders,
+    # oxbows and deltas, while anchoring 'Agents of Gradation' — which U3 has already
+    # first-visited. So the anchor names a section already open and leaves the section it
+    # actually deals unnamed, which read as "skips s3". Anchored correctly the plan runs
+    # monotone s0,s0,s1+s2,s3,s4+s5+s6,s7,s8.
+    # THE PATTERN IS NOW THREE-FOR-THREE ACROSS TWO CHAPTERS (ch2 top, ch2 p07, ch8 top):
+    # where a chapter has a PARENT section with named children, this stage's model anchors the
+    # parent and teaches the child. That is a brief-level gap, not nine independent slips —
+    # nothing in the brief says a unit teaching a sub-section must anchor the sub-section.
+    "ch_02_canonical_p07.json": [
         (4,
-         "Key Questions in Economics",
-         "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+         "Agents of Gradation",
+         "Running Water",
          "V2/registry-omission",
-         "U4 is titled 'The Three Key Questions — What, How, and For Whom to Produce' and its "
-         "bands work through both sub-sections explicitly (crop example for what-to-produce, "
-         "Fig. 8.6 factors of production for how-to-produce, and the THINK ABOUT IT is taken "
-         "from the 'What to Produce and for Whom?' section by name)"),
-        (5,
-         "Planned Economy",
-         "Economic Systems and How Choices are Made / Planned Economy / Market Economy",
+         "the unit deals Running Water and nothing else; Agents of Gradation was first "
+         "visited at U3 and is not re-opened here"),
+    ],
+    # p04 — the quarantined compact, repaired on the way back in. apply_file() reads the
+    # quarantined copy when the library copy is absent and writes it back under its proper
+    # library name, so this declaration IS the restore.
+    #
+    # p04 carries the SAME parent-for-child under-naming as the standard, in the same chapter:
+    # U4 is titled "How Economies Organise Answers: Planned, MARKET, and Mixed Systems" and its
+    # band 10-27 teaches the market economy outright — "Then shift to the market economy: demand
+    # and supply settle what, how, and how much to produce; the government acts like a referee",
+    # with examples (United States, Japan, Hong Kong) and a comparative pair-question — and its
+    # band 40-50 poses the LET'S EXPLORE from the Market Economy section by name. The section is
+    # taught; only the anchor omitted it. Corrected, p04 anchors 10 of 10 registry sections and
+    # nothing is dropped.
+    #
+    # WORTH BEING EXACT ABOUT, because the word matters here: a canonical never "drops" a
+    # section. Dropping is a SERVE-time act (§0.4 Case 2's dropped sections riding from the
+    # lender, Case 3's declared truncation). p04 was authored FREE at 4 periods as a complete
+    # plan for the whole chapter — not a compression of the 7-period standard — so a missing
+    # section would be a defect, never a feature, and a difference in DEPTH from the standard is
+    # neither. Reading the two side by side as though one were cut from the other is the retired
+    # partition engine's frame.
+    "ch_08_canonical_p04.json": [
+        (4,
+         "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+         "Economic Systems and How Choices are Made / Planned Economy / Market Economy / "
+         "Mixed Economy",
          "V2/registry-omission",
-         "THE SERIOUS ONE. U5 is titled 'Planned and Market Economies — Two Models of Answering "
-         "the Three Questions'; band 26-40 introduces the market economy from Fig. 8.7 with the "
-         "chapter's referee analogy, and band 40-50 has students build a Planned vs Market "
-         "comparison table. 'Economic Systems and How Choices are Made' is the parent section "
-         "whose framing question U5 band 0-12 opens on. Registry 6 -> 10 sections"),
+         "Market Economy inserted in registry order (7 / 8 / 9 / 10) as the brief requires; "
+         "the unit already teaches it in band 10-27"),
     ],
     # ── ch 4 "Early Humans and Beginning of Civilisation" · WAVE 1 (2026-08-12) ───
     # NOT A MODEL SLIP, and worth being explicit about because the repair record is also the
@@ -237,6 +256,41 @@ REPAIRS = {
          "THE CONSEQUENTIAL ONE: both halves are already registry sections (U5, U6), so "
          "unsplit this composite invented a phantom 17th section that every ch 6 compact "
          "brief would have been told to cover. Split, U18 is a legal backward revisit"),
+    ],
+  },
+
+  # APPLIED 2026-08-12 · SS·IX ch 2 standard. Kept as the cost/decision record, held at a
+  # 3-tuple key so main()'s (subject, grade) lookup cannot re-run it — re-running would fail
+  # its own "declared text not found" guard and block the p07 edit behind it.
+  ("social_sciences", "ix", "APPLIED-20260812-ch02-ch08-tops"): {
+    "ch_02_canonical.json": [
+        (5,
+         "Agents of Gradation",
+         "Agents of Gradation / Running Water",
+         "V2/registry-omission",
+         "U5's own title names Running Water; bands 8-30 and 30-42 teach the full upper/middle/"
+         "lower course sequence. Registry 8 -> 9 sections; Running Water enters at position 4, "
+         "its summary order (Agents of Gradation 5321 < Running Water 6232 < Waves and Currents "
+         "7904), so first-visit order is unchanged"),
+    ],
+    "ch_08_canonical.json": [
+        (4,
+         "Key Questions in Economics",
+         "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+         "V2/registry-omission",
+         "U4 is titled 'The Three Key Questions — What, How, and For Whom to Produce' and its "
+         "bands work through both sub-sections explicitly (crop example for what-to-produce, "
+         "Fig. 8.6 factors of production for how-to-produce, and the THINK ABOUT IT is taken "
+         "from the 'What to Produce and for Whom?' section by name)"),
+        (5,
+         "Planned Economy",
+         "Economic Systems and How Choices are Made / Planned Economy / Market Economy",
+         "V2/registry-omission",
+         "THE SERIOUS ONE. U5 is titled 'Planned and Market Economies — Two Models of Answering "
+         "the Three Questions'; band 26-40 introduces the market economy from Fig. 8.7 with the "
+         "chapter's referee analogy, and band 40-50 has students build a Planned vs Market "
+         "comparison table. 'Economic Systems and How Choices are Made' is the parent section "
+         "whose framing question U5 band 0-12 opens on. Registry 6 -> 10 sections"),
     ],
   },
 
