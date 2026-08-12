@@ -1,5 +1,11 @@
-ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 3.5
+ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 3.6
 Stage: Middle (Grades VI–VIII)
+
+v3.6 (2026-08-12) — THE PAIR. Rule 2 now emits TWO items per spine-cell, not
+one, on a prescriptive per-spine slot table; a new Rule 8A scopes them in two
+stages across the cell's teaching span. Amended in step with english/secondary
+v1.6 and english/preparatory v1.4. Reasoning:
+docs/english_secondary_item_density.md.
 
 ================================================================================
 DESIGN PRINCIPLE
@@ -14,9 +20,16 @@ The English LP→Assessment arc has two distinct phases:
 
   Assessment  → receives the spine-cell implied_lo values from the LP
                 handoff and the section's prose/poem content from the
-                summary. It generates ONE original assessment item per
-                spine-cell implied_lo, grounded entirely in the
+                summary. It generates a PAIR of original assessment items
+                per spine-cell implied_lo, grounded entirely in the
                 section's own text.
+
+WHY A PAIR AND NOT ONE (v3.6). A spine-cell's implied_lo is a broad,
+NCERT-style observable outcome, and the LP teaches that one cell across
+several units, anchoring several textbook tasks to it. One item under-samples
+it, and under-samples it worst exactly where the cell is richest. The pair
+samples the cell twice, at two rungs, so the teacher gets a check she can use
+partway through the cell's teaching and a deeper item when the cell closes.
 
 THE ASSESSMENT GENERATOR DOES NOT READ tasks_verbatim[] OR
 question_bank[] FROM THE SUMMARY — UNDER ANY CIRCUMSTANCE.
@@ -27,8 +40,9 @@ tasks_verbatim[] and question_bank[] are inputs to the LP only.
 This separation guarantees:
   - Items are original — derived from the section's prose/poem, not
     from the textbook exercise wording.
-  - Item count is manageable — one item per (section × spine) cell
-    with at least one anchored task, not one per task.
+  - Item count is manageable — a pair per (section × spine) cell
+    with at least one anchored task, not one item per task. A cell with
+    six anchored tasks still yields two items, not six.
   - Assessment reflects genuine outcomes, not exercise replays.
 
 The six-spine structure (Reading for Comprehension, Listening,
@@ -115,17 +129,52 @@ before C).
 
 
 ================================================================================
-RULE 2 | ITEM GENERATION — ONE ITEM PER SPINE-CELL IMPLIED LO
+RULE 2 | ITEM GENERATION — TWO ITEMS PER SPINE-CELL IMPLIED LO
 ================================================================================
 
 For each section_contribution in the LP handoff (one per section ×
-spine cell with at least one anchored task), generate exactly ONE
-assessment item. Use `implied_lo` to determine the question type and
-cognitive demand; use `section_context` to determine what the question
-is specifically about. The two fields work together — neither alone
-is sufficient.
+spine cell with at least one anchored task), generate exactly TWO
+assessment items — a PAIR, emitted in slot order. Use `implied_lo` to
+determine the question type and cognitive demand; use `section_context`
+to determine what the question is specifically about. The two fields work
+together — neither alone is sufficient. Both items of a pair carry the SAME
+`source_lo` (Rule 8): they sample one outcome twice, they do not split it
+into two outcomes.
 
-Generation constraints:
+THE PAIR MUST DIFFER ON BOTH AXES:
+
+  DEMAND — SLOT 1 sits at the comprehension / application rung. SLOT 2 sits
+     at inference, analysis or creation. Slot 2 is ALWAYS the higher of the
+     two; a pair at one rung is non-compliant.
+
+  TYPE — the two items MUST NOT share a `question_type`. Sole exception:
+     Speaking and Writing, whose spines permit exactly one type (ORAL_PROMPT,
+     WRITING_TASK). There the pair differs by MODE or FORM instead — named
+     explicitly in the slot table below — and sharing the type is legal.
+
+SLOT TABLE (prescriptive — the type is set by the slot, not chosen freely;
+types are drawn from Rule 4's per-spine permitted sets and this table never
+widens them):
+
+  Spine                     | SLOT 1 — lower rung        | SLOT 2 — higher rung
+  --------------------------|----------------------------|--------------------------
+  Reading for Comprehension | MCQ · TRUE_FALSE · FILL_IN | SCR — inferential or
+                            |                            | reflective
+  Listening                 | MCQ · TRUE_FALSE           | SCR · FILL_IN
+  Speaking                  | ORAL_PROMPT — recount,     | ORAL_PROMPT — opinion with
+                            | describe, read aloud       | a reason, role-play
+  Writing                   | WRITING_TASK — guided /    | WRITING_TASK — free,
+                            | functional form (notice,   | imaginative or opinion
+                            | list, informal letter)     | form
+  Vocabulary and Grammar    | MATCH · FILL_IN            | SCR — usage in context
+  Beyond the Text           | ECR                        | PROJECT
+
+ORDER. Within a spine's flat array, items are ordered by section_id (Rule 1),
+and WITHIN a contribution slot 1 precedes slot 2. This authoring order IS the
+teaching order (Rule 8A) and the platform relies on it; never emit slot 2
+first, and never interleave two contributions' items.
+
+Generation constraints (both items):
   a) The item MUST be grounded in the section's content —
      `prose_summary` (for prose/narrative/dialogue/informational
      sections) or `poem_text` + `poem_appreciation_summary` (for
@@ -138,16 +187,20 @@ Generation constraints:
      design principle.
   c) The item MUST directly test the `implied_lo` — not a generic
      comprehension question that could apply to any chapter, not a
-     tangentially related exercise.
-  d) Question type is drawn from the spine's permitted set (Rule 3).
-  e) Stage-appropriate depth applies (Rule 10).
+     tangentially related exercise. Where the `implied_lo` is compound, the
+     two items MUST take different strands of it; two items on the same
+     strand at two rungs is a weak pair, not a compliant one.
+  d) Question type is drawn from the slot table above.
+  e) Stage-appropriate depth applies (Rule 10). Slot 1 is the LOWER of the
+     two rungs, not a low-demand item in absolute terms.
 
 There is NO secondary fallback path. If a spine cell has no
-section_contribution in the LP handoff, it produces no item.
+section_contribution in the LP handoff, it produces no items — not one, not
+two. A pair is never broken: a contribution yields two items or none.
 
-Item count per chapter = total section_contributions across all spines
+Item count per chapter = 2 × total section_contributions across all spines
 in the LP handoff. A chapter with 3 sections and 4 spines active
-produces at most 12 items (typically fewer, as not every section × spine
+produces at most 24 items (typically fewer, as not every section × spine
 cell will have been taught).
 
 
@@ -361,6 +414,43 @@ and where the content comes from (via section tags).
 
 
 ================================================================================
+RULE 8A | ITEM ANCHORING — THE CELL IS THE ANCHOR, AND IT IS NOT YOURS TO NUMBER
+================================================================================
+
+An item's anchor is the (section × spine) CELL it was generated from, carried
+by the two Rule 8 fields it already has: `source_section_id` and
+`source_spine`, both copied verbatim from the handoff contribution consumed.
+Together they ARE the anchor — there is no third field to emit.
+
+The platform resolves that cell to the unit(s) that taught it by matching the
+pair against each period's own `section_id` + `spines_taught[]`.
+
+TWO-STAGE SCOPING (v3.6, and the reason the pair is ORDERED). Where a cell is
+taught across several units, its two items do NOT both wait for the cell to
+close. Rule 2's slot table makes the pair genuinely stage-able:
+
+  SLOT 1 is scoped to the cell's EARLY teaching — it tests one strand of the
+     `implied_lo` at the comprehension/application rung, and is answerable once
+     that strand has been taught, not once the whole cell has.
+  SLOT 2 is scoped to the cell's COMPLETION — it tests the outcome at the
+     higher rung and presumes the whole cell.
+
+The platform therefore DISPERSES a cell's items across the units that taught
+it, in slot order, and slot 2 lands at or near the close. This is why Rule 2
+forbids emitting slot 2 first: the order you author is the order the platform
+deals them.
+
+Author each item so it is honest at its own stage. A slot-1 item that silently
+depends on the cell's last unit is the defect this rule exists to prevent —
+it will be shown to the teacher partway through the cell.
+
+MUST NOT emit `period_ref`, `period_number`, `unit_ref`, or any other unit
+number or position. Scoping is declared by SLOT, never by number: which units
+a cell occupies, and how many, is decided long after this file is written, and
+declaring the link would freeze an arrangement the platform varies.
+
+
+================================================================================
 RULE 9 | VISUAL STIMULUS AND STRUCTURAL FIDELITY
 ================================================================================
 
@@ -532,5 +622,5 @@ ASSESSMENT JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-English Assessment Constitution · Version 3.5 · Internal Document
+English Assessment Constitution · Version 3.6 · Internal Document
 ================================================================================

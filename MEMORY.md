@@ -580,13 +580,136 @@ must confirm · source entry.
    pre-2026-08-12 history reconstructed from item 9's inventory and flagged as each stage's own
    P4 to complete.
 
+23. **English assessment — THE PAIR: two items per spine-cell, all three stages (2026-08-12)** —
+   `assessment/english/secondary` **v1.5 → v1.6**, `middle` **v3.5 → v3.6**, `preparatory`
+   **v1.3 → v1.4**. Rule 2 now emits **TWO** items per `section_contribution`, not one, on a
+   **prescriptive per-spine SLOT TABLE** (SS Rule 4's weight-table style, chosen by the founder
+   over science-secondary's advisory-budget style): slot 1 at the comprehension/application rung,
+   slot 2 at analysis/creation, and the two MUST NOT share a `question_type` — sole exception
+   Speaking/Writing, whose spines permit exactly one type and whose pair differs by MODE/FORM.
+   Rule 8A (NEW at middle + preparatory, which had none; amended at secondary) declares
+   **TWO-STAGE SCOPING** — slot 1 scoped to the cell's early teaching, slot 2 to its completion —
+   which is what licenses the platform to disperse them; the `period_ref`/`unit_ref` prohibition
+   is unchanged and now carried at all three stages. Item count = **2 × section_contributions**.
+   *Cause:* english·secondary measured **0.35 items/unit**, the lowest of any subject·stage (next
+   lowest 0.93, TWAU 1.0, SS 1.3–1.6) — and worse, only **6 of 17 units** of the ch 7 canonical
+   carried an Assess tab at all. Root cause in `docs/english_secondary_item_density.md`: english
+   is the only subject whose assessment axis is CAPACITY-bounded (six spines, fixed) rather than
+   content-bounded, and post-split a chapter is one main_section, so the ceiling is 6 items at
+   any period count. *Validated:* text only, plus a simulation over the three real ch 7 plans
+   (17/14/10 units) with each item duplicated into a pair — ratio 0.35 → 0.71 / 0.43 → 0.86 /
+   0.60 → 1.20, assessed units 6 → 9 of 17. **No english library has ever been generated under
+   any of it, and the three certified ch 7 canonicals are all pre-amendment (6 items each).**
+   *Pre-warm/C1/C3 must confirm:* exactly 2 items per contribution and never 1 or 3; slot 1
+   emitted BEFORE slot 2 within each contribution and contributions never interleaved (the
+   platform's dispersion depends on it); the two items differ in `question_type` everywhere
+   except Speaking/Writing; both carry the SAME `source_lo`/`source_context`; the pair takes
+   DIFFERENT strands of a compound `implied_lo` rather than the same strand twice; and at
+   preparatory the pair stays light (no two WRITING_TASKs, oral preferred for slot 2).
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
 
 ---
 
-## 2026-08-12 (newest) — S11 · ENGLISH·SECONDARY STAGE PREP: the family helper was
+## 2026-08-12 (newest) — ENGLISH'S ASSESSMENT AXIS WAS CAPACITY-BOUNDED, AND THE
+## RATIO WAS THE SMALLER HALF OF THE DEFECT
+
+Founder observation: english·secondary carries too few assessment items — "just one per spine
+per section, the lowest ratio of any subject/stage group" — and asked whether it can go to two.
+It can, it now does at all three english stages, and the investigation found the *coverage*
+problem underneath the ratio problem was the worse one. Full analysis:
+`docs/english_secondary_item_density.md`. Amendment recorded as checklist item 23.
+
+**THE MEASUREMENT.** Items ÷ units across the whole saved corpus: maths·prep 2.1–3.9 ·
+SS 1.25–2.6 · science·middle 1.5–1.75 · science·sec 1.0 · TWAU 1.0 · maths middle/sec
+0.93–1.08 · **english·secondary 0.35–0.60**. The certified english IX ch 7 canonical is
+**17 units, 6 items**.
+
+**THE ROOT CAUSE — the one structural difference, and it is not a tuning value.** Every other
+subject's assessment axis SCALES WITH CONTENT: sections, competencies, LOs, goals, periods.
+English's axis is the SPINE, and there are exactly six, fixed by NCF and never re-sequenced
+(LP Rule 1). Since the 2026-07-01 chapter split an english chapter is ONE main_section, so the
+(section × spine) grid collapsed from 3×6 to **1×6** and the item ceiling became
+
+    item ceiling = spines present ≤ 6
+
+at ANY period count. Assessment Rule 2 stated the flatness as a feature ("never a shorter
+assessment"); the unstated corollary was that it is also never a longer one. **English was the
+only subject whose item count is flat in plan length.** Worth carrying: when a count looks low,
+ask what the count is *indexed by* before tuning the count.
+
+**THE WORSE HALF — coverage, which the ratio hides.** Running the real resolver over the three
+certified ch 7 plans: **only 6 of 17 units carried an Assess tab.** Units 1–7 — the entire
+reading arc — had none. Reading for Comprehension is taught across 8 units, carries EIGHT
+anchored tasks in the handoff and a compound `implied_lo` ("character motivation, theme, AND
+authorial purpose"), and yielded ONE item anchored at the close. The substance was demonstrably
+there; the constitution was collapsing it. **Doubling the items alone would NOT have fixed
+this** — both items of a pair take the same cell, so both anchor at the same close: the ratio
+would double and the coverage would not move. That is why the amendment has two halves.
+
+**WHAT THE SISTER CONSTITUTIONS ALREADY DO** (the survey that shaped the fix): SS Rule 4 —
+competency weight is "the sole architectural governor", EXACT counts per tier (Central 5 /
+Substantive 3 / Present 2) with types prescribed BY SLOT, not chosen. Science·middle — floors by
+stage POSITION, uncapped above. Science·secondary — per-section count, "a rich section MAY carry
+more than one and MAY mix types", with an explicit anti-inflation guard. Maths·secondary — "a
+two-LO section yields two items, typically at two different cognitive demands." **Common shape:
+more than one item per anchor is normal, and the second is distinguished by DEMAND RUNG or TYPE,
+never by being another one of the same.** English was the outlier in kind, not degree.
+
+**THE AMENDMENT (founder chose: relax scoping · prescriptive slots · all three stages).**
+Rule 2 → TWO items per contribution on a per-spine SLOT TABLE (secondary Reading =
+MCQ/TRUE_FALSE/SCR + EXTRACT_ANALYSIS/ECR, which mirrors the textbook's OWN pairing of "Check
+Your Understanding" with "Critical Reflection"); pair must differ on demand AND type, sole
+exception Speaking/Writing (one permitted type each — they differ by mode/form). Rule 8A →
+TWO-STAGE SCOPING, and a new Rule 8A added to middle + preparatory, which had none.
+
+**THE CODE HALF — and the pleasant discovery that it was 90% already there.**
+`subjects/english/subject.py :: cell_resolver` has carried N-TO-N POSITIONAL PAIRING since
+2026-07-11 (M == N ⇒ one unit per item), shared by the display path and the genon carrier, with
+a *synthetic* test guarding a shape the corpus never produced ("Rule 10 emits one item per
+cell"). The amendment makes that shape real and generalises it: **new `_disperse()` cuts M units
+into N contiguous blocks by largest-remainder** (the same arithmetic `master_plan.canonical_periods`
+uses), item i takes block i, `stamp()` then anchors each at its own block's close. **M == N falls
+out of the same arithmetic**, so the old behaviour is now one code path rather than two that
+could drift. M < N and N == 1 (a TRUE span) keep the full set unchanged.
+
+**Measured on the three real ch 7 plans, items duplicated into pairs:**
+
+| plan | units | ratio | assessed units |
+|---|---|---|---|
+| canonical | 17 | 0.35 → **0.71** | 6 → **9** |
+| p14 | 14 | 0.43 → **0.86** | 6 → **10** |
+| p10 | 10 | 0.60 → **1.20** | 5 → **7** |
+
+Coverage improves but does not reach 1:1 because most cells are single-unit (Listening, Writing,
+Beyond each occupy one) — only Reading and Vocabulary/Grammar are long enough to disperse. **The
+remaining gap is option C of the analysis doc and is NOT closed by this work:** raise the number
+of CELLS upstream in LP Rule 10 (one contribution per section × spine × topic cluster, which is
+what every other subject's handoff already does) rather than items per cell. That would need an
+LP amendment and a regeneration of the certified canonicals; deliberately deferred.
+
+**Tests.** `test_genon_carriers.py` +3: the PAIR disperses over M > N (asserted BOTH pre-stamp
+blocks and post-stamp anchors), a TRUE span still keeps the union, more items than units keeps
+the shared set. The existing N-to-N test is retained and re-documented as the M == N case.
+`test_link_resolver`'s corpus sweep still reports **2017 items / 149 saved plans / 0 orphans**.
+**Trap worth remembering:** `unit_ref` on a carrier item is POST-stamp (always one number) — two
+of the new tests were first written against the pre-stamp span and failed for that reason alone.
+Assert spans through `cell_resolver` directly, anchors through `assessment_items`.
+
+**Suite state:** 16/21 green. Five failures are PRE-EXISTING and unrelated to this work —
+`test_api` + `test_link_resolver` reference saved plans that no longer exist on disk
+(`data/content/saved_plans/english/iv/` is now empty), and `test_genon_plan_key` /
+`test_normalized_item` / `test_unit_order` fail on SS + TWAU artefacts from today's batch runs.
+None touch the english path.
+
+**STATIC + unit-verified only.** No live generation has ever run under any of the three amended
+constitutions, and the three certified english ch 7 canonicals are all pre-amendment 6-item
+files — they must be regenerated before the pair is visible to a teacher. Live + mobile render
+check of a paired assessment (two items under one unit's ASSESS tab, pine pager active) pending.
+
+## 2026-08-12 — S11 · ENGLISH·SECONDARY STAGE PREP: the family helper was
 ## the WRONG thing to delegate to, and delegating to it would have looked right.
 
 **Landed:** LP **v1.1 → v1.2** · assessment **v1.3 → v1.4** · carrier row 7 open ·

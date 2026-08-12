@@ -110,6 +110,74 @@ REPAIRS = {
          "semicolon composite plus a redundant repeat of the second section; the clean "
          "two-section form is emitted. Unit coverage is unchanged (sections 3-4)."),
     ],
+    # ── ch 4 "Early Humans and Beginning of Civilisation" · WAVE 1 (2026-08-12) ───
+    # NOT A MODEL SLIP, and worth being explicit about because the repair record is also the
+    # evidence base for whether to change the MECHANISM. "a. The Sumerians" is the ch 4
+    # summary's OWN sub-heading, verbatim (ch_04_summary.txt offsets 12709 / 14965), and the
+    # summary really does place "The Beginning of Writing" between a. and b. The model
+    # transcribed its source correctly on both counts. This is a NORMALISATION at the founder's
+    # instruction (2026-08-12), not a defect repair: a registry section is a name, and textbook
+    # list lettering is enumeration, not name.
+    #
+    # THE RISK THIS CARRIES, stated so the next reader can check it rather than rediscover it:
+    # ch 4's compacts are authored in wave 2 from THIS registry, but the model also reads the
+    # lettered summary. If a compact writes "a. The Sumerians" it will fail "every anchor
+    # verbatim in the top registry" — a failure caused by this normalisation, not by the
+    # compact. It is free to repair there too (same tool, same declaration shape), but read
+    # ch 4's wave-2 anchor failures in that light before treating them as authoring defects.
+    "ch_04_canonical.json": [
+        (12, "a. The Sumerians", "The Sumerians", "V2/lettering",
+         "textbook enumeration stripped; the section named is unchanged and its position "
+         "in the registry (after Mesopotamian Civilisation) is unchanged"),
+        (14, "b. The Akkadians", "The Akkadians", "V2/lettering",
+         "same normalisation. Note the a./b. pair is split by 'The Beginning of Writing' in "
+         "the SUMMARY too — that ordering is the source's, not the model's, and is left alone"),
+    ],
+    # ── ch 6 "Democracy" · BATCH WAVE 1 (2026-08-12) ─────────────────────────────
+    # Three ';' composites, found by reading the derived registry against the summary —
+    # NOT by certification, which passed ch 6 on "every anchor verbatim in the top
+    # registry" and "first-visit order follows the registry". Both checks compare the
+    # registry to the anchors it was derived FROM, so a malformed joiner is invisible to
+    # them by construction (runbook §4 trap 5). This is the third stage to produce this
+    # exact defect after SS·IX ch 3 and TWAU wave 2.
+    #
+    # THE SECTION NAMES ARE NOT INVENTED. ch 6's summary has "Principles of Democracy" as
+    # a SECTION with seven named sub-sections under it, and this plan's own convention for
+    # a sub-section anchor is "Principles of Democracy — X" (U4, U5, U7 all write it that
+    # way, unjoined). So the repaired form repeats the parent prefix on both sides rather
+    # than emitting a bare "Rule of Law": splitting to a form the other 16 units do not use
+    # would put two spellings of the same convention in one registry.
+    #
+    # U18 IS THE ONE THAT MATTERS FOR WAVE 2. Its composite names Separation of Powers and
+    # Accountability and Transparency — both ALREADY registered, at U5 and U6. Unsplit, the
+    # pair entered the registry as a SEVENTEENTH opaque section that exists nowhere in the
+    # chapter, and every compact brief for ch 6 would have been built to cover it. Split, U18
+    # is what it actually is: an ordinary backward revisit of two taught sections, legal under
+    # LP v1.10, contributing nothing new to the registry. Registry goes 16 -> 17 real
+    # sections and loses the phantom. No unit's teaching content is touched.
+    "ch_06_canonical.json": [
+        (3,
+         "Principles of Democracy — Popular Sovereignty; Rule of Law",
+         "Principles of Democracy — Popular Sovereignty / Principles of Democracy — Rule of Law",
+         "V2/joiner",
+         "two adjacent sub-sections of Principles of Democracy, in summary order; ';' is "
+         "not the mandated joiner so the registry read them as one"),
+        (6,
+         "Principles of Democracy — Accountability and Transparency; Multi-Party System",
+         "Principles of Democracy — Accountability and Transparency / Principles of "
+         "Democracy — Multi-Party System",
+         "V2/joiner",
+         "same slip, same two-sub-section shape; both names are verbatim summary "
+         "sub-headings"),
+        (18,
+         "Principles of Democracy — Separation of Powers; Accountability and Transparency",
+         "Principles of Democracy — Separation of Powers / Principles of Democracy — "
+         "Accountability and Transparency",
+         "V2/joiner",
+         "THE CONSEQUENTIAL ONE: both halves are already registry sections (U5, U6), so "
+         "unsplit this composite invented a phantom 17th section that every ch 6 compact "
+         "brief would have been told to cover. Split, U18 is a legal backward revisit"),
+    ],
   },
 
   # ── v1.6, 2026-08-12 · S5 · the_world_around_us · WAVE 2 (the compacts) ──────────

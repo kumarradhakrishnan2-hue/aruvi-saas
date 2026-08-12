@@ -240,6 +240,32 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   `variant_solver.py` live in `_to_delete/`. DO NOT reintroduce cutting below the unit,
   seam text, role weighting, compression regimes, or mandated closing spans — the brief
   §§0–1 record why they failed.
+- ★ **ENGLISH ASSESSMENT IS A PAIR PER CELL, NOT ONE ITEM (2026-08-12, all three stages).**
+  Analysis: `docs/english_secondary_item_density.md`. English was the only subject whose
+  assessment axis is **capacity-bounded** — the SPINE, six of them, fixed — rather than
+  content-bounded (sections / competencies / LOs / goals / periods, which is what every other
+  subject indexes on). Post-split a chapter is ONE main_section, so the grid collapsed to 1×6
+  and the item ceiling was 6 **at any period count**: english·secondary measured **0.35
+  items/unit** (next lowest 0.93) and only **6 of 17 units** of the ch 7 canonical carried an
+  Assess tab at all. Fix, in two halves because doubling alone would have moved the ratio and
+  not the coverage: (a) **Rule 2 emits TWO items per `section_contribution`** on a
+  **prescriptive per-spine SLOT TABLE** (SS Rule 4's style) — slot 1 at the comprehension/
+  application rung, slot 2 at analysis/creation, types MUST differ (sole exception
+  Speaking/Writing, one permitted type each → differ by mode/form); both items carry the SAME
+  `source_lo` and must take DIFFERENT strands of a compound `implied_lo`. Item count = 2 ×
+  contributions. (b) **Rule 8A declares TWO-STAGE SCOPING** (slot 1 → the cell's early
+  teaching, slot 2 → its completion), which licenses `cell_resolver` to **disperse** a cell's
+  items across the units that taught it: new `_disperse()` cuts M units into N contiguous
+  blocks by largest-remainder, item i takes block i, `stamp()` anchors each at its own block's
+  close. **The 2026-07-11 N-to-N pairing is now the M == N case of that same arithmetic — one
+  code path, not two.** M < N and N == 1 (a true span) keep the full set, unchanged. Versions:
+  assessment english/secondary **v1.6** · middle **v3.6** · preparatory **v1.4** (Rule 8A is
+  NEW at middle + preparatory). The `period_ref`/`unit_ref` prohibition is untouched — scoping
+  is declared by SLOT, never by number. STATIC + unit-verified only; **no english library has
+  been generated under any of it and the three certified ch 7 canonicals are pre-amendment
+  6-item files.** The remaining gap (most cells are single-unit, so coverage reaches ~9/17 not
+  17/17) is closed only by raising the number of CELLS upstream in LP Rule 10 — option C of the
+  analysis doc, deliberately deferred.
 - ★ **ONE STAGE IS SERVED DIFFERENTLY — science·middle (2026-08-07, engine e17).** Spec:
   `docs/science_middle_stage_serve.md`. Its LP is organised by the chapter's COGNITIVE
   PROGRESSION ARC, not by textbook sections, so it has no `section_anchor`, no registry, and

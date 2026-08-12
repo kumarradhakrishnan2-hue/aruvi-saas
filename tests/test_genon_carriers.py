@@ -782,9 +782,8 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
         """Two items sharing a cell taught over exactly two units pair POSITIONALLY, one per
         unit, instead of both anchoring at the close. This is the 2026-07-11 display fix, and
         the carrier delegates to the same resolver so it cannot be lost on the served side.
-        Synthetic because no english chapter in the corpus authors two items for one cell —
-        Rule 10 emits one item per cell — but the shape is legal and the resolver supports it,
-        so the guard belongs here rather than in a comment."""
+        The M == N case of the 2026-08-12 even-dispersion generalisation: every block is one
+        unit long, so the original behaviour falls out of the same arithmetic."""
         result = {"lesson_plan": {"periods": [
             {"period_number": 4, "section_id": "A", "spines_taught": ["vocabulary_grammar"]},
             {"period_number": 5, "section_id": "A", "spines_taught": ["vocabulary_grammar"]}]},
@@ -793,6 +792,57 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
                 {"id": "Q2", "source_section_id": "A", "source_spine": "vocabulary_grammar"}]}]}
         got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
         self.assertEqual([it["unit_ref"] for it in got], [[4], [5]])
+
+    def test_the_PAIR_disperses_across_a_multi_unit_cell(self):
+        """M > N: the v1.6/v3.6/v1.4 PAIR over a cell taught in eight units is DEALT as two
+        contiguous blocks — slot 1 anchors at the end of the first half, slot 2 at the close —
+        instead of both items taking the union and both anchoring at unit 8. This is the
+        coverage half of the 2026-08-12 amendment: doubling the items without dispersing them
+        doubled the ratio but left the same six units of seventeen carrying an Assess tab."""
+        result = {"lesson_plan": {"periods": [
+            {"period_number": n, "section_id": "A",
+             "spines_taught": ["reading_for_comprehension"]} for n in range(1, 9)]},
+            "assessment_items": [{"spine_code": "reading_for_comprehension", "items": [
+                {"id": "Q-RFC-A-1", "source_section_id": "A",
+                 "source_spine": "reading_for_comprehension"},
+                {"id": "Q-RFC-A-2", "source_section_id": "A",
+                 "source_spine": "reading_for_comprehension"}]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
+        # unit_ref is POST-stamp — each item anchors at the LAST unit of its own block.
+        self.assertEqual([it["unit_ref"] for it in got], [[4], [8]],
+                         "slot 1 closes the first block, slot 2 closes the cell")
+        # …and the blocks themselves, pre-stamp, are the contiguous halves.
+        from aruvi_core.subjects.english.subject import cell_resolver
+        resolve = cell_resolver(result["lesson_plan"]["periods"], result["assessment_items"])
+        self.assertEqual([resolve(it) for it in result["assessment_items"][0]["items"]],
+                         [[1, 2, 3, 4], [5, 6, 7, 8]])
+
+    def test_a_TRUE_SPAN_still_keeps_the_whole_set(self):
+        """N == 1 over many units is a genuine span — one item re-tested across the cell — and
+        must NOT be dealt. It keeps the UNION (and then anchors at the close), unchanged by the
+        dispersion generalisation. Asserted pre-stamp, since stamping a span and stamping a
+        block both yield one number and would hide the difference."""
+        periods = [{"period_number": n, "section_id": "A", "spines_taught": ["speaking"]}
+                   for n in (2, 3, 4)]
+        groups = [{"spine_code": "speaking", "items": [
+            {"id": "Q1", "source_section_id": "A", "source_spine": "speaking"}]}]
+        from aruvi_core.subjects.english.subject import cell_resolver
+        resolve = cell_resolver(periods, groups)
+        self.assertEqual(resolve(groups[0]["items"][0]), [2, 3, 4], "the whole span, not a block")
+        got = assessment_items({"subject": "English", "grade": "Grade IX"},
+                               {"lesson_plan": {"periods": periods}, "assessment_items": groups})
+        self.assertEqual([it["unit_ref"] for it in got], [[4]], "anchors at the close")
+
+    def test_MORE_items_than_units_keeps_the_shared_set(self):
+        """M < N — a pair whose cell was taught in a single unit — cannot be dealt. Both items
+        keep the full set and both anchor there; splitting would invent a unit."""
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 12, "section_id": "A", "spines_taught": ["listening"]}]},
+            "assessment_items": [{"spine_code": "listening", "items": [
+                {"id": "Q1", "source_section_id": "A", "source_spine": "listening"},
+                {"id": "Q2", "source_section_id": "A", "source_spine": "listening"}]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
+        self.assertEqual([it["unit_ref"] for it in got], [[12], [12]])
 
     def test_a_cell_no_unit_teaches_resolves_to_EMPTY_not_a_guess(self):
         result = {"lesson_plan": {"periods": [

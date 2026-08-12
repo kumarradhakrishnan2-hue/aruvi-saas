@@ -1,5 +1,12 @@
-ARUVI — ENGLISH ASSESSMENT CONSTITUTION · PREPARATORY · VERSION 1.3
+ARUVI — ENGLISH ASSESSMENT CONSTITUTION · PREPARATORY · VERSION 1.4
 Stage: Preparatory (Grades III–V)
+
+v1.4 (2026-08-12) — THE PAIR. Rule 2 now emits TWO items per spine-cell, not
+one, on a prescriptive per-spine slot table; a new Rule 8A scopes them in two
+stages across the cell's teaching span. Amended in step with english/middle
+v3.6 and english/secondary v1.6. At THIS stage the pair is deliberately light —
+slot 1 is recognition, slot 2 is a single short production — never two long
+tasks. Reasoning: docs/english_secondary_item_density.md.
 
 ================================================================================
 DESIGN PRINCIPLE
@@ -11,9 +18,17 @@ The English LP → Assessment arc has two phases:
                 writes ONE spine-cell `implied_lo` per (section × spine)
                 cell that was taught.
   Assessment  → reads the LP handoff and the section's text summary
-                from the chapter summary. It generates ONE original
-                item per spine-cell implied_lo, grounded entirely in
+                from the chapter summary. It generates a PAIR of original
+                items per spine-cell implied_lo, grounded entirely in
                 that section's own content.
+
+WHY A PAIR AND NOT ONE (v1.4). A spine-cell's `implied_lo` is a broad
+observable outcome, and the LP teaches that one cell across several units.
+One item under-samples it. The pair samples the cell twice — once to check
+the child recognises it, once to have her produce it — so the teacher gets a
+usable check partway through the cell and a short production when it closes.
+At preparatory the pair is SMALL by design: two brief items, never two long
+tasks, and never two written tasks where one can be oral.
 
 THE ASSESSMENT GENERATOR DOES NOT READ `tasks_verbatim[]` OR
 `question_bank[]` FROM THE SUMMARY. Items are derived from the
@@ -81,26 +96,68 @@ Within each spine, items are ordered by `section_id` (A → B → C).
 
 
 ================================================================================
-RULE 2 | ONE ITEM PER SPINE-CELL IMPLIED LO
+RULE 2 | TWO ITEMS PER SPINE-CELL IMPLIED LO
 ================================================================================
 
-For each `section_contribution` in the handoff, generate exactly ONE
-assessment item. `implied_lo` determines question type and cognitive
-demand; `section_context` determines what the question is about.
-Neither alone is sufficient.
+For each `section_contribution` in the handoff, generate exactly TWO
+assessment items — a PAIR, emitted in slot order. `implied_lo` determines
+question type and cognitive demand; `section_context` determines what the
+question is about. Neither alone is sufficient. Both items of a pair carry
+the SAME `source_lo` and `source_context` (Rule 8): they sample one outcome
+twice, they do not split it into two outcomes.
 
-Constraints:
+THE PAIR MUST DIFFER ON BOTH AXES:
+
+  DEMAND — SLOT 1 is RECOGNITION: the child picks, matches, judges or
+     completes. SLOT 2 is PRODUCTION: the child says or writes something
+     short of her own. Slot 2 is ALWAYS the higher of the two; a pair at one
+     rung is non-compliant.
+
+  TYPE — the two items MUST NOT share a `question_type`.
+
+SLOT TABLE (prescriptive — the type is set by the slot, not chosen freely;
+types are drawn from Rule 4's per-spine permitted sets and this table never
+widens them):
+
+  Spine        | SLOT 1 — recognition          | SLOT 2 — short production
+  -------------|-------------------------------|---------------------------------
+  reading      | MCQ · TRUE_FALSE · MATCH      | SCR — 1–3 sentences (why / how /
+               |                               | what would you)
+  oracy        | MCQ · TRUE_FALSE — listen-    | ORAL_PROMPT — retell, describe,
+               | and-judge, sound              | share
+               | discrimination                |
+  writing      | SCR — guided single sentence  | WRITING_TASK — short-form, rubric
+               | or caption                    |
+  word_work    | FILL_IN · MATCH               | SCR — use the word in a sentence ·
+               |                               | ORAL_PROMPT — blend-and-say,
+               |                               | sight-word read-aloud
+  beyond_text  | MATCH                         | PROJECT · ORAL_PROMPT — riddle,
+               |                               | share-out
+
+KEEP THE PAIR LIGHT. Two brief items. Where both slots could be written,
+prefer an oral slot 2 — at this stage speaking is the cheaper demonstration
+and the more honest one. Never pair two WRITING_TASKs; never pair two items
+that each need a table.
+
+Constraints (both items):
   a) The item MUST be grounded strictly in the section's content
      source (per INPUTS §2). No outside content.
   b) The item MUST be original — must not reproduce, paraphrase, or
      structurally echo any textbook exercise wording.
   c) The item MUST directly test the `implied_lo` — not a generic
-     comprehension question, not a tangentially related exercise.
-  d) Question type is drawn from the spine's permitted set (Rule 4).
-  e) ECR is BANNED at preparatory (Rule 4).
+     comprehension question, not a tangentially related exercise. Where the
+     `implied_lo` is compound, the two items MUST take different strands of it.
+  d) Question type is drawn from the slot table above.
+  e) ECR is BANNED at preparatory (Rule 4) — in either slot.
+
+ORDER. Within a spine's flat array, items are ordered by `section_id`
+(Rule 1), and WITHIN a contribution slot 1 precedes slot 2. This authoring
+order IS the teaching order (Rule 8A) and the platform relies on it; never
+emit slot 2 first, and never interleave two contributions' items.
 
 There is no fallback path: a spine cell with no contribution
-produces no item. Item count per chapter = total
+produces no items — not one, not two. A pair is never broken: a contribution
+yields two items or none. Item count per chapter = 2 × total
 `section_contributions` across all spines in the handoff.
 
 
@@ -296,6 +353,43 @@ Every item carries:
 
 
 ================================================================================
+RULE 8A | ITEM ANCHORING — THE CELL IS THE ANCHOR, AND IT IS NOT YOURS TO NUMBER
+================================================================================
+
+An item's anchor is the (section × spine) CELL it was generated from, carried
+by the two Rule 8 fields it already has: `source_section_id` and
+`source_spine`, both copied verbatim from the handoff contribution consumed.
+Together they ARE the anchor — there is no third field to emit.
+
+The platform resolves that cell to the unit(s) that taught it by matching the
+pair against each period's own `section_id` + `spines_taught[]`.
+
+TWO-STAGE SCOPING (v1.4, and the reason the pair is ORDERED). Where a cell is
+taught across several units, its two items do NOT both wait for the cell to
+close. Rule 2's slot table makes the pair genuinely stage-able:
+
+  SLOT 1 is scoped to the cell's EARLY teaching — the recognition item is
+     answerable once the strand it names has been taught, not once the whole
+     cell has.
+  SLOT 2 is scoped to the cell's COMPLETION — the production item presumes
+     the whole cell.
+
+The platform therefore DISPERSES a cell's items across the units that taught
+it, in slot order, and slot 2 lands at or near the close. This is why Rule 2
+forbids emitting slot 2 first: the order you author is the order the platform
+deals them.
+
+Author each item so it is honest at its own stage. A slot-1 item that silently
+depends on the cell's last unit is the defect this rule exists to prevent —
+it will be shown to the teacher partway through the cell.
+
+MUST NOT emit `period_ref`, `period_number`, `unit_ref`, or any other unit
+number or position. Scoping is declared by SLOT, never by number: which units
+a cell occupies, and how many, is decided long after this file is written, and
+declaring the link would freeze an arrangement the platform varies.
+
+
+================================================================================
 RULE 9 | VISUAL STIMULUS
 ================================================================================
 
@@ -472,5 +566,5 @@ ASSESSMENT JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-English Assessment Constitution · Preparatory · Version 1.3
+English Assessment Constitution · Preparatory · Version 1.4
 ================================================================================

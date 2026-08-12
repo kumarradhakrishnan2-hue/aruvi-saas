@@ -101,6 +101,26 @@ def cell_key(section_id: Any, spine: Any) -> str:
     return f"{norm_code(section_id)}|{norm_code(spine)}"
 
 
+def _disperse(units: List[int], n: int) -> List[List[int]]:
+    """Cut `units` (sorted, deduped) into `n` contiguous blocks by EVEN DISPERSION.
+
+    Largest-remainder, the same shape `genon/master_plan.canonical_periods` uses: base =
+    M // n, and the first M % n blocks take one extra unit, so the earlier blocks are the
+    longer ones and the closing block always ends on the cell's last unit. `stamp()` anchors
+    each item at the LAST unit of its own block, so with n = 2 over eight units the pair lands
+    on units 4 and 8 rather than both on 8.
+
+    Caller guarantees M >= n >= 2. Documented and tested in `cell_resolver`.
+    """
+    m, out, i = len(units), [], 0
+    base, rem = divmod(m, n)
+    for b in range(n):
+        size = base + (1 if b < rem else 0)
+        out.append(units[i:i + size])
+        i += size
+    return out
+
+
 def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
     """Return `resolve(item) -> [period numbers]` for row 7, pairing INCLUDED.
 
@@ -108,15 +128,35 @@ def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
     runs the SAME resolution the app has been running since 2026-07-11, rather than a second
     join that would look equivalent and drift. Two behaviours it must keep:
 
-    THE N-TO-N PAIRING (2026-07-11). The coarse (section, spine) join cannot tell a real SPAN
-    — one item re-tested across several units, a genuine set — from SEVERAL items that merely
-    share a cell, one per topic-unit (word_work taught as Collective Nouns in U4 and Position
-    Words in U5, with a MATCH item and a FILL_IN item). Giving every item the union collapsed
-    them all onto the closing unit and surfaced the collective-nouns item under the
-    prepositions unit. So when a cell has N items AND exactly N units (N ≥ 2), they pair
-    POSITIONALLY — items are authored in topic order, units are in teaching order. Every other
-    shape (one item over many units — a true span; or a count mismatch) keeps the full set,
-    and anchoring at the close then does the right thing.
+    THE N-TO-N PAIRING (2026-07-11), GENERALISED TO EVEN DISPERSION (2026-08-12). The coarse
+    (section, spine) join cannot tell a real SPAN — one item re-tested across several units, a
+    genuine set — from SEVERAL items that merely share a cell, one per topic-unit (word_work
+    taught as Collective Nouns in U4 and Position Words in U5, with a MATCH item and a FILL_IN
+    item). Giving every item the union collapsed them all onto the closing unit and surfaced
+    the collective-nouns item under the prepositions unit. So when a cell has N items and M
+    units with M >= N >= 2, the M units are cut into N CONTIGUOUS BLOCKS by even dispersion
+    (largest-remainder: the first M%N blocks take one extra unit) and item i takes block i.
+    Items are authored in slot/topic order, units are in teaching order.
+
+    M == N is the original N-to-N case and falls out of the same arithmetic — every block is
+    one unit long — so there is one code path, not two that could drift.
+
+    M > N is what the english PAIR needs (assessment constitutions english/secondary v1.6,
+    english/middle v3.6, english/preparatory v1.4, 2026-08-12). A cell now emits TWO items —
+    a lower-rung slot 1 and a higher-rung slot 2 — and a Reading cell is routinely taught over
+    eight units. Handing both the union anchored both at the close: the ratio doubled but the
+    coverage did not, and eleven of seventeen units still had no Assess tab. Dealing blocks
+    puts slot 1 at the end of the cell's first half and slot 2 at the close. Rule 8A of each of
+    those constitutions is what licenses this — it declares slot 1 scoped to the cell's early
+    teaching and slot 2 to its completion, so the split is authored-for, not imposed.
+
+    Every other shape — one item over many units (a true span), or MORE items than units —
+    keeps the full set, and anchoring at the close then does the right thing.
+
+    STANDING CAVEAT (carried from 2026-07-11, and now load-bearing): dispersion assumes items
+    are authored in teaching order. Rule 2 of all three constitutions now MANDATES that order
+    ("slot 1 precedes slot 2; never interleave two contributions' items") rather than relying
+    on it being incidentally true, which is what makes M > N safe to deal.
 
     THE SECTION-WIDE FALLBACK. A cell with no matching unit falls back to any unit of its
     section, so an item still anchors somewhere rather than vanishing from the teacher's view.
@@ -148,8 +188,8 @@ def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
         sid = k.split("|", 1)[0]
         exact = period_index.get(k)
         uniq = sorted(set(exact)) if exact else []
-        if exact and len(its) >= 2 and len(its) == len(uniq):
-            key_periods[k] = [[p] for p in uniq]           # N-to-N: one unit per item
+        if exact and len(its) >= 2 and len(uniq) >= len(its):
+            key_periods[k] = _disperse(uniq, len(its))     # N-to-N (M==N) / blocks (M>N)
         else:
             span = exact if exact else section_index.get(sid, [])
             key_periods[k] = [span for _ in its]           # true span / fallback: shared set
