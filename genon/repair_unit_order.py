@@ -53,6 +53,8 @@ from pathlib import Path
 from typing import Dict
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from purge_derived import purge                                  # noqa: E402
 
 # ── the declared moves, keyed by (subject, grade, chapter) ───────────────────────
 # `order` is the NEW sequence written in OLD period numbers. It must be a permutation of
@@ -321,6 +323,30 @@ def main() -> int:
         doc = fn(doc, mv["order"], mv["why"], key)
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"    APPLIED — backup at {bak.name}")
+
+        # ── INVALIDATE THE DERIVED PLANS (added 2026-08-11, S5) ──────────────────
+        # This tool was the ONE repair of seven that did not do this: repair_anchors,
+        # repair_c3, repair_chapter_cg, repair_leaked_deliberation, repair_register and
+        # normalize_options all purge, and the most structural repair in the set opted out.
+        #
+        # It matters MORE here than anywhere, not less. `canonical_version` is the
+        # generation's `ledger_ts` (api/data.py), which an in-place repair does not change —
+        # so a plan served before the move keeps EXACTLY the filename the cache will look for
+        # afterwards, and the pre-move bytes are then served forever. That is ARV-D-034
+        # verbatim (the pilot served a repaired-away register breach for four hours), and the
+        # founder's chosen resolution was explicitly "the invariant lives in the repair
+        # tools", not a fingerprint in the key. A unit permutation is the loudest possible
+        # version of it: the stale plan is not merely out of date, it is the plan the move
+        # was made to stop being served.
+        #
+        # Found at S5 because TWAU·V ch 5 had three derived plans on disk and two teachers
+        # holding them at the moment the move landed. Nothing was lost only because the
+        # founder happened to re-serve after restarting the API.
+        _subject, _grade, _ch = key
+        gone = purge(_subject, _grade, _ch, reason="genon/repair_unit_order.py")
+        print(f"    PURGED {len(gone)} derived plan(s) built from the pre-move canonical"
+              + (": " + ", ".join(gone) if gone else " (none on disk)"))
+        print("    Teachers holding one re-prepare and get the repaired plan (~11 ms).")
     if not listing:
         print("\nNow re-certify (free):  python3 genon/build_library.py <subject> <grade> <ch> --certify-only")
     return 0

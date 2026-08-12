@@ -35,6 +35,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
@@ -53,6 +54,19 @@ from aruvi_core.genon.serve import (                               # noqa: E402
 from aruvi_core.assessment_norm import mistyped_tag                # noqa: E402
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
+
+# Every `question_type` the corpus actually uses — a census over all saved plans and the
+# backup corpus, 2026-08-12 (ARV-D-123). This is the union across ELEVEN stages, not one
+# stage's closed set, and that is the point: the gate below quarantines, so it must never
+# fire on a legal value. What it catches is a value that is not an assessment type in any
+# constitution — which is what a type copied out of another enumeration always is.
+# A stage that records its own set at P2 should be read in preference; until then this is
+# the strongest statement that cannot be wrong.
+KNOWN_ITEM_TYPES = {
+    "MCQ", "SCR", "ECR", "NUM", "OPEN_TASK", "SOURCE_INTERPRETATION",
+    "FILL_IN", "MATCH", "TRUE_FALSE", "ORAL_PROMPT", "WRITING_TASK", "PROJECT",
+    "EXTRACT_ANALYSIS",
+}
 from normalize_options import normalize_library, unarranged        # noqa: E402
 
 from aruvi_core.grades import stage_for                            # noqa: E402
@@ -410,6 +424,97 @@ def certify(subject, grade, ch, row):
             lines.append("      -> either correct the stimulus to satisfy the tag it declares, "
                          "or drop the tag; a tagged stimulus that fails its contract renders as "
                          "prose and loses the representation it asked for")
+
+    # ── ITEM-SHAPE GATES (2026-08-12, ARV-D-123 — found at S5's C3) ──────────────
+    # Two checks, both free, both closing the same hole: NOTHING IN THE PIPELINE READS AN
+    # ITEM'S OWN FIELDS. The certifier checks structure, STEP 6 checks option order, and
+    # `verified` is the model's claim about itself. That is how S4 shipped a wrong answer
+    # (ARV-D-084) and how S5 shipped `question_type: "HI"` with `question_text: null`
+    # (ARV-D-120) — both through a green certification, both found by eye.
+    #
+    # (1) THE TAXONOMY IS CLOSED, SO CHECK IT. Every assessment constitution names a closed
+    #     set and prohibits anything outside it. S5's breach has a cause that will recur on
+    #     every stage: the type-selection rule is a TABLE whose left column is some other
+    #     enumeration (TWAU's `dominant_mode`, science's mode, SS's weight tier) and whose
+    #     right column is the type. A model that copies the left column emits a value that
+    #     looks like data because it IS data — just the wrong column. No amount of prose
+    #     stops that; a membership test does.
+    #
+    #     TWO CHECKS, AND ONLY THE FIRST GATES — because the gate quarantines, and a gate that
+    #     quarantines must not guess. The first tests membership of `KNOWN_ITEM_TYPES`, the
+    #     union of every type the corpus actually uses (census over all saved plans, 2026-08-12).
+    #     Deliberately weaker than a per-subject set: it cannot tell a legal type used by the
+    #     wrong stage from a legal one, but it has ZERO false positives and it catches the
+    #     failure mode above exactly, because a value copied from another enumeration is never
+    #     an assessment type at all. The second reports a type used only ONCE in the whole
+    #     library — the "one item disagrees with every sibling" signal — as an ADVISORY.
+    #
+    #     A first cut derived the set from the file's own frequencies and FAILED p10 on its
+    #     single legitimate ECR, quarantining a good canonical. Recorded because it is the
+    #     shape of mistake this gate exists to prevent: a rare-but-legal value and an illegal
+    #     one look identical to a frequency test, and only the second should ever stop a build.
+    #
+    # (2) AN ITEM MUST HAVE SOMETHING TO ASK. Every schema in the corpus says the same two
+    #     things in opposite directions: a non-OPEN_TASK item's stem is `question_text`, and
+    #     an OPEN_TASK carries `question_text: ""` with the prompt in `task`. Both directions
+    #     are checked. `null` fails both — the schemas permit "" or [], never omitted and
+    #     never null — which is the half of ARV-D-120 that could not be repaired mechanically,
+    #     because a missing question has to be written.
+    lib_types = Counter()
+    parsed = {}
+    for name, s_ in lib:
+        raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+        parsed[name] = raw
+        for it in raw_item_list(raw.get("result", raw)):
+            lib_types[str(it.get("question_type") or "")] += 1
+
+    for name, s_ in lib:
+        raw = parsed[name]
+        items = raw_item_list(raw.get("result", raw))
+
+        unknown = [(it.get("id") or f"unit {it.get('period_ref')}", it.get("question_type"))
+                   for it in items
+                   if str(it.get("question_type") or "") not in KNOWN_ITEM_TYPES]
+        note(not unknown,
+             f"{name}: every question_type is a known assessment type ({len(unknown)} not)",
+             name if unknown else None)
+        for iid, t in unknown[:6]:
+            lines.append(f"      {iid}: question_type {t!r} is not an assessment type at all")
+        if unknown:
+            lines.append("      -> check the assessment constitution's type-selection TABLE: "
+                         "its left column is another enumeration (dominant_mode, weight tier, "
+                         "CG theme) and this is usually a value copied from the wrong column")
+
+        # ADVISORY, never a gate: a type nothing else in the library uses. Legal-but-rare and
+        # illegal look the same here, so it reports and the reader decides.
+        lonely = sorted({str(it.get("question_type") or "") for it in items
+                         if lib_types[str(it.get("question_type") or "")] == 1})
+        if lonely:
+            lines.append(f"      ADVISORY {name}: {lonely} used by exactly one item in the "
+                         "whole library — check it against the constitution's type table")
+
+        nostem, badopen = [], []
+        for it in items:
+            qt = str(it.get("question_type") or "")
+            stem = it.get("question_text")
+            ident = it.get("id") or f"unit {it.get('period_ref')}"
+            if qt == "OPEN_TASK":
+                if stem != "":
+                    badopen.append((ident, stem))
+            elif not (stem or "").strip():
+                nostem.append((ident, qt, stem))
+        note(not nostem,
+             f"{name}: every non-OPEN_TASK item carries a stem ({len(nostem)} without)",
+             name if nostem else None)
+        for iid, qt, stem in nostem[:6]:
+            lines.append(f"      {iid}: {qt} has question_text {stem!r} — "
+                         "there is nothing to ask")
+        note(not badopen,
+             f"{name}: every OPEN_TASK carries question_text \"\" ({len(badopen)} not)",
+             name if badopen else None)
+        for iid, stem in badopen[:6]:
+            lines.append(f"      {iid}: OPEN_TASK question_text is {str(stem)[:60]!r}, "
+                         "not \"\" — the prompt belongs in `task`")
 
     # ── MCQ ARRANGEMENT GATE (2026-08-03, ARV-D-032) ─────────────────────────────
     # Rule 7's option arrangement is a SORT, and prose could not carry it: four constitution

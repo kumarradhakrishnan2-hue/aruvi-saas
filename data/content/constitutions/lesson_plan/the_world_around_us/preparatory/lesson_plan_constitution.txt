@@ -1,4 +1,4 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.4
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.5
 
 VOCABULARY (teacher-facing naming):
 The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_facilitation_note, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too. Cross-reference another unit by the CONTENT it built, never by its position (see THE SELF-CONTAINED REGISTER below).
@@ -149,12 +149,15 @@ Use a class of object or phenomenon where needed (e.g. "everyday objects",
 from this activity (coin, aluminium foil, toothpick). Those belong in
 section_context.
 
-section_context — a compact label of 10–25 words naming the specific objects,
-phenomena, or tasks this period drew from. This is what the assessment question
-is about. Name every object the period actually used; where a period draws on
-several, the label runs to the upper end and that is correct — do not drop an
-object to fit a length. Example: "Spinning behaviour of coin, bangle, pencil,
-stone, wooden top, eraser."
+section_context — a compact label naming the specific objects, phenomena, or
+tasks this period drew from. This is what the assessment question is about.
+It is a LIST of what the period handled, not a sentence about it: name every
+object actually used, name nothing that was not, and add no commentary. Its
+length follows the period's content and is not itself a target — a period that
+handled two objects gives a short label, one that handled eight gives a longer
+one, and neither is a defect. MUST NOT drop an object to shorten the label.
+Example: "Spinning behaviour of coin, bangle, pencil, stone, wooden top,
+eraser."
 
 textbook_anchor — JSON-only field (not rendered in the lesson plan view).
 Format: <section_title> — <paraphrase of the single tasks[].task_text this
@@ -293,7 +296,7 @@ MUST NOT invent visual aid requirements.
           { "minutes": "string e.g. 0-5", "activity": "string" }
         ],
         "implied_lo": "string — transferable skill; no specific activity objects; format: 'Students can [skill verb phrase]'",
-        "section_context": "string — 10–25 words naming the specific objects, phenomena, or tasks this period drew from",
+        "section_context": "string — a list naming the specific objects, phenomena, or tasks this period drew from; length follows the content, not a word target",
         "teacher_facilitation_note": "string — open question, grouping, or pacing guidance"
       }
     ]

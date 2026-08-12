@@ -379,62 +379,155 @@ def log_token_log(call_type, subject, grade, ch, title, it, ot, cost_inr) -> Non
         pass
 
 
-def cmd_one(args) -> int:
-    subject_folder = args.subject
-    grade_folder = args.grade.lower()
-    ch = args.chapter
+# ── THE TWO HALVES OF A GENERATION, EXTRACTED (2026-08-12, for the batch path) ──
+# `cmd_one` used to be one block: build the prompt, call the model, post-process the
+# answer. The Message Batches path needs the FIRST and THIRD halves and replaces only
+# the middle (one async submit for many chapters instead of one blocking stream), so the
+# two halves are functions now and `cmd_one` is their first caller. Nothing about the
+# sync path's behaviour changes — this is a move, not a rewrite. The alternative was a
+# second copy of the parse/validate/install/log sequence in the batch script, which is
+# the 2026-08-11 lesson ("two copies of a heuristic are one bug waiting") applied to the
+# one code path where the bug would be a silently mis-installed paid artefact.
+
+def prepare_job(subject_folder: str, grade_folder: str, ch: int, *, periods=None,
+                duration=None, title=None, variant=None, brief=None, lp_only=False,
+                lp_const=None, assess_const=None, quiet=False) -> dict | None:
+    """Everything up to (not including) the API call. Returns the job dict the caller
+    sends however it likes; None on a refusal (message already printed to stderr)."""
     subject = FOLDER_TO_SUBJECT[subject_folder]
     grade = f"Grade {ROMAN[grade_folder]}"
 
     mp_row = master_plan_entry(subject_folder, grade_folder, ch)
-    duration = args.duration or std_duration(grade_folder)
-    count = args.periods or (mp_row and mp_row["recommended_periods"])
-    if args.variant:
-        if not args.brief:
+    duration = duration or std_duration(grade_folder)
+    count = periods or (mp_row and mp_row["recommended_periods"])
+    if variant:
+        if not brief:
             print("--variant requires --brief (genon/variant_plans.py brief ...)", file=sys.stderr)
-            return 2
-        count = args.periods or args.variant
+            return None
+        count = periods or variant
     if not count:
         print("No period count: not in master_plan.json — pass --periods.", file=sys.stderr)
-        return 2
+        return None
     if mp_row and mp_row.get("placeholder"):
         print(f"REFUSING: chapter {ch} is a placeholder (awaiting NCERT release).", file=sys.stderr)
-        return 2
+        return None
 
-    title = args.title or (mp_row and str(mp_row["title"]).split(": ", 1)[-1]) or ""
+    title = title or (mp_row and str(mp_row["title"]).split(": ", 1)[-1]) or ""
     chapter = {"chapter_number": ch, "chapter_title": title}
     paths = pa.resolve_paths(grade, subject, ch)
-    if args.lp_const:
-        paths["lp_constitution"] = Path(args.lp_const)
-    if args.assess_const:
-        paths["assessment_const"] = Path(args.assess_const)
+    if lp_const:
+        paths["lp_constitution"] = Path(lp_const)
+    if assess_const:
+        paths["assessment_const"] = Path(assess_const)
     for k, p in paths.items():
-        if not Path(p).exists() and not (k == "assessment_const" and args.lp_only):
+        if not Path(p).exists() and not (k == "assessment_const" and lp_only):
             print(f"MISSING input {k}: {p}", file=sys.stderr)
-            return 2
+            return None
 
     period_sched = pa.standard_row_schedule(duration, count)
     system_blocks, user_blocks = pa.build_lpa_prompts(
         grade, subject, chapter, period_sched, paths,
-        include_assessment=not args.lp_only,
+        include_assessment=not lp_only,
     )
 
-    if args.brief:
-        brief_text = Path(args.brief).read_text(encoding="utf-8")
+    if brief:
+        brief_text = Path(brief).read_text(encoding="utf-8")
         user_blocks = [{"type": "text", "text": brief_text}] + list(user_blocks)
 
     lp_text = Path(paths["lp_constitution"]).read_text(encoding="utf-8")
     expect_v11 = "RULE 14" in lp_text
     lp_v = const_version(paths["lp_constitution"])
-    as_v = "" if args.lp_only else const_version(paths["assessment_const"])
+    as_v = "" if lp_only else const_version(paths["assessment_const"])
     const_label = f"LP v{lp_v}" + (f" / assessment v{as_v}" if as_v else " (LP only)")
     sys_chars = sum(len(b["text"]) for b in system_blocks)
     usr_chars = sum(len(b["text"]) for b in user_blocks)
-    print(f"{subject} · {grade} · ch {ch} — {count} × {duration} min "
-          f"({'LP+A' if not args.lp_only else 'LP only'}; "
-          f"constitution {'pre-serve (carries RULE 14)' if expect_v11 else 'serve-era'})")
-    print(f"  schedule : {period_sched.splitlines()[-1]}")
-    print(f"  system   : {sys_chars:,} chars   user: {usr_chars:,} chars")
+    if not quiet:
+        print(f"{subject} · {grade} · ch {ch} — {count} × {duration} min "
+              f"({'LP+A' if not lp_only else 'LP only'}; "
+              f"constitution {'pre-serve (carries RULE 14)' if expect_v11 else 'serve-era'})")
+        print(f"  schedule : {period_sched.splitlines()[-1]}")
+        print(f"  system   : {sys_chars:,} chars   user: {usr_chars:,} chars")
+    return {
+        "subject_folder": subject_folder, "grade_folder": grade_folder, "ch": ch,
+        "subject": subject, "grade": grade, "title": title,
+        "count": count, "duration": duration, "variant": variant, "lp_only": lp_only,
+        "system_blocks": system_blocks, "user_blocks": user_blocks,
+        "const_label": const_label, "expect_v11": expect_v11,
+        "max_tokens": MAX_TOKENS_LP_ONLY if lp_only else MAX_TOKENS_LPA,
+        "sys_chars": sys_chars, "usr_chars": usr_chars,
+    }
+
+
+def finish_generation(job: dict, full: str, it: int, ot: int, elapsed: float, *,
+                      model: str, ts: str, mode: str = "one", tag: str = "",
+                      no_install: bool = False, price_mult: float = 1.0,
+                      cost_inr: float | None = None) -> tuple[str, list[str]]:
+    """Everything after the model answers: raw file, parse+repair, validate, install,
+    ledger, token log. `price_mult` is 0.5 on the Message Batches path — the ONE thing
+    that legitimately differs between the two callers."""
+    subject_folder, grade_folder = job["subject_folder"], job["grade_folder"]
+    ch, count, duration = job["ch"], job["count"], job["duration"]
+    if cost_inr is None:
+        cost_inr = (it * USD_PER_M_INPUT + ot * USD_PER_M_OUTPUT) / 1e6 * INR_PER_USD * price_mult
+    out_dir = OUT_DIR / subject_folder / grade_folder
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ftag = f"_{tag}" if tag else ""
+
+    raw_path = out_dir / f"ch_{ch:02d}{ftag}_{ts}_raw.txt"
+    raw_path.write_text(full, encoding="utf-8")
+
+    parsed, problems, repairs = parse_with_repair(full)
+    if parsed is not None:
+        problems = validate(parsed, count, job["expect_v11"])
+        if repairs:
+            print(f"  auto-repaired {len(repairs)} naked inner quote(s): "
+                  + "; ".join(repr(r) for r in repairs[:4]))
+    elif not problems:
+        problems = ["output is not valid JSON"]
+    status = "ok" if not problems else "problems"
+    repair_note = [f"auto-repaired {len(repairs)} naked quotes"] if repairs else []
+    if parsed is not None:
+        canon_path = out_dir / f"ch_{ch:02d}{ftag}_{ts}_canonical.json"
+        canon_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"  saved    : {canon_path}")
+        if not job["lp_only"] and not tag and not no_install:
+            installed = install_canonical(parsed, subject_folder, grade_folder, ch,
+                                          ts, duration, count, job["const_label"],
+                                          status, problems, variant=job["variant"])
+            print(f"  installed: {installed}"
+                  + ("" if status == "ok" else "  (validator findings recorded, not blocking)"))
+    print(f"  tokens   : {it:,} in / {ot:,} out · ₹{cost_inr:.2f} · {elapsed:.1f}s · {status}")
+    for p in problems:
+        print(f"  ⚠ {p}")
+
+    log_token_log("variant_generation" if job["variant"] else "canonical_generation",
+                  subject_folder, grade_folder, ch, job["title"], it, ot, cost_inr)
+    log_ledger({
+        "ts": ts, "mode": mode, "tag": tag, "model": model,
+        "variant": job["variant"] or "",
+        "subject": subject_folder, "grade": grade_folder, "chapter": ch,
+        "schedule": f"{count}x{duration}", "lp_only": job["lp_only"],
+        "constitution": job["const_label"],
+        "input_tokens": it, "output_tokens": ot,
+        "cost_inr": round(cost_inr, 2), "seconds": round(elapsed, 1),
+        "status": status, "problems": "; ".join(repair_note + problems)[:400],
+        "raw_file": raw_path.name,
+    })
+    return status, problems
+
+
+def cmd_one(args) -> int:
+    subject_folder = args.subject
+    grade_folder = args.grade.lower()
+    ch = args.chapter
+    job = prepare_job(subject_folder, grade_folder, ch, periods=args.periods,
+                      duration=args.duration, title=args.title, variant=args.variant,
+                      brief=args.brief, lp_only=args.lp_only, lp_const=args.lp_const,
+                      assess_const=args.assess_const)
+    if job is None:
+        return 2
+    system_blocks, user_blocks = job["system_blocks"], job["user_blocks"]
+    count, duration = job["count"], job["duration"]
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     tag = f"_{args.tag}" if args.tag else ""
@@ -517,52 +610,12 @@ def cmd_one(args) -> int:
         final = s.get_final_message()
     elapsed = time.time() - t0
     it, ot = final.usage.input_tokens, final.usage.output_tokens
-    cost_inr = (it * USD_PER_M_INPUT + ot * USD_PER_M_OUTPUT) / 1e6 * INR_PER_USD
-
-    raw_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_raw.txt"
-    raw_path.write_text(full, encoding="utf-8")
-
-    parsed, problems, repairs = parse_with_repair(full)
-    if parsed is not None:
-        problems = validate(parsed, count, expect_v11)
-        if repairs:
-            print(f"  auto-repaired {len(repairs)} naked inner quote(s): "
-                  + "; ".join(repr(r) for r in repairs[:4]))
-    elif not problems:
-        problems = ["output is not valid JSON"]
-    status = "ok" if not problems else "problems"
-    repair_note = [f"auto-repaired {len(repairs)} naked quotes"] if repairs else []
-    if parsed is not None:
-        canon_path = out_dir / f"ch_{ch:02d}{tag}_{ts}_canonical.json"
-        canon_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"  saved    : {canon_path}")
-        # Simultaneous install into the live library (founder, 2026-07-29): the live
-        # environment has no certification gate. Skipped for --lp-only (incomplete
-        # artefact), --tag (control runs must not touch the library), --no-install.
-        if not args.lp_only and not args.tag and not args.no_install:
-            installed = install_canonical(parsed, subject_folder, grade_folder, ch,
-                                          ts, duration, count, const_label,
-                                          status, problems, variant=args.variant)
-            print(f"  installed: {installed}"
-                  + ("" if status == "ok" else "  (validator findings recorded, not blocking)"))
-    print(f"  tokens   : {it:,} in / {ot:,} out · ₹{cost_inr:.2f} · {elapsed:.1f}s · {status}")
-    for p in problems:
-        print(f"  ⚠ {p}")
-
-    log_token_log("variant_generation" if args.variant else "canonical_generation",
-                  subject_folder, grade_folder, ch, title,
-                  it, ot, cost_inr)
-    log_ledger({
-        "ts": ts, "mode": "one", "tag": args.tag or "", "model": args.model,
-        "variant": args.variant or "",
-        "subject": subject_folder, "grade": grade_folder, "chapter": ch,
-        "schedule": f"{count}x{duration}", "lp_only": args.lp_only,
-        "constitution": const_label,
-        "input_tokens": it, "output_tokens": ot,
-        "cost_inr": round(cost_inr, 2), "seconds": round(elapsed, 1),
-        "status": status, "problems": "; ".join(repair_note + problems)[:400],
-        "raw_file": raw_path.name,
-    })
+    # Simultaneous install into the live library (founder, 2026-07-29): the live
+    # environment has no certification gate. Skipped for --lp-only (incomplete
+    # artefact), --tag (control runs must not touch the library), --no-install.
+    status, problems = finish_generation(
+        job, full, it, ot, elapsed, model=args.model, ts=ts, mode="one",
+        tag=args.tag or "", no_install=args.no_install)
     return 0 if status == "ok" else 1
 
 

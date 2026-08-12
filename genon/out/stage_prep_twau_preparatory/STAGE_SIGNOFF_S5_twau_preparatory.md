@@ -16,10 +16,15 @@ Written by Claude. Status in the tracker is set by Kumar.
 
 ## 0. The headline — S5 is CLEAR to enter C1, and the one real finding was in the ENGINE, not a constitution
 
-P1–P5.5 are complete. Nothing is owed and no gate is carried into the C-cycle. **P5.4 (the three
-test identities' teaching profiles for class V) is open by design** — it needs the live app, it is
-not consumed by generation or certification, and the founder ruling of 2026-08-02 permits a
-provisional signature with it open. C6 is its hard stop.
+P1–P5.5 are complete. Nothing is owed and no gate is carried into the C-cycle.
+
+> ★ **UPDATED 2026-08-11 (evening) — P5.4 CLOSED, so the signature is FULL, not provisional.**
+> This section first recorded P5.4 as open by design. The profiles were set up through the app
+> the same evening and satisfy the step in full: three identities on TWAU V with **different
+> sections** (kumar1 5A · kumar2 5B · kumar3 5C), and **kumar3 carries the mixed duration** C6's
+> matrix needs (40×4 + 50×1, ppw 5); budget 28 weeks on all three. S5 is only the third stage —
+> after S6 and S8 — to enter its C-cycle with a clean P5. §2's P5.4 entry below is superseded by
+> this note. Tracker rows written the same day (P1 · P2 · P4 · P5 · SIGN pass, P3 N/A).
 
 **The constitutional half was the cheapest of the campaign so far, and for a structural reason.**
 TWAU is the reference's own carrier family and already emits `time_bands`, so **P3 is genuinely
@@ -301,3 +306,74 @@ being wrong about the provenance costs nothing.
 - **The synthesis unit will carry `"synthesis": true`, not a token.** Anything downstream that
   looks for the reserved string on this stage is looking in a field that does not exist; read
   `carriers.is_synthesis`.
+
+---
+
+## 7. ADDENDUM — what C1 actually produced (2026-08-11 evening / 2026-08-12)
+
+Written after the fact, because a prep note that stops at the signature hides whether its own
+predictions held. Three of them did, one did not, and one thing this note did not anticipate at
+all turned out to be the sharpest finding.
+
+**C1 · PASS.** Library `[16, 13, 10]` on disk, deterministic ALL PASS, sweep clean across
+X = 8–18. **C2 · ₹94.00**, three runs, zero reruns — so clean-path equals all-in, and it is the
+cheapest chapter of the campaign (SS·IX was ₹110.99 clean). Input flat at ~15.5k, output
+24.1k → 19.1k → 15.5k.
+
+**Held.** §5's registry-token warning: the prose registry came back byte-identical, first-visit
+order clean, on all three files. §6's C4 debt: **paid** — 39 of 39 items nest under exactly their
+own `question_type` key, zero flat placements, so TWAU is no longer the last of the three stages
+owing MEMORY item 1 a live run. §6's `test_lp_standard` note: resolved the moment the library
+installed, as predicted.
+
+> **CLOSED 2026-08-12 (founder): ARV-D-121 is accepted as authored — no re-author, no second
+> amendment, rule text unchanged.** The paragraph below stands as the finding; it is no longer
+> an open defect. Full ruling in `C3_rule_table_twau_v_ch05.md`.
+
+**Did not hold — §5's own amendment was still short.** `section_context` breaches the *new*
+10–25 cap too: top 20–31, p13 13–35, p10 18–32 — **12 of 39 units over** (ARV-D-121). The P-prep
+check was right to look and still landed on a number the generator does not respect. S4's lesson
+applies to the fix as well as to the finding: the v1.4 sentence ("name every object the period
+actually used… do not drop an object to fit a length") is the rule doing the real work, and the
+number may be worth dropping rather than raising again.
+
+**Not anticipated, and the sharpest of the four — ARV-D-119, the artefact dependency.** The
+standard's last two teaching units are a PAIR: U15 *"Cultural Fair — Research and Prepare"* makes
+the posters, U16 (the mandated synthesis) presents them (`materials: ["Group posters and charts
+prepared previously"]`). The X−1+1 form at X=15 dropped U15 and kept U16, so the closer needed
+posters no unit in that plan ever made; at X=14 the prefix's own closer already ran the fair, so
+it ran twice. The certifier passes both, because the register's three bans are clock quantity /
+forward reference / calendar time and *"prepared previously"* is a **backward** reference, which
+the register explicitly legalises. **Per-unit independence lives only in the top brief and
+nothing tests it.** Same family as ARV-D-023 (*anchoring is not teaching*) and ARV-D-103.
+Partially fixed by a founder-declared one-off unit permutation on the top alone (U14 ↔ U15,
+`repair_unit_order.py`, re-certified free, ALL PASS): **X=15 fixed, X=14 still open**, since it
+serves the prefix of 13 and drops both units whatever their order.
+
+**Two other C3 defects:** ARV-D-120 — one item carries `question_type: "HI"`, a `dominant_mode`
+code outside the closed taxonomy, with `question_text: null`; the cause is visible in Rule 3's
+guidance table, which puts `dominant_mode` in the left column and the type in the right, and the
+model copied the left. ARV-D-118 (closed) — the synthesis unit was filed under the section it
+names, so the teacher never read "Synthesis"; ARV-D-101's shape on a third stage, fixed on the
+port and now guarded by a cross-stage test.
+
+**Three tooling gaps this stage exposed, all free to close and none stage-specific:**
+
+1. **The genon endpoint catches two exception classes and lets every other escape as an
+   unreadable 500.** A `KeyError` from the missing carrier surfaced to the teacher as
+   *"Couldn't build the lesson plan right now"* — the one message that identifies nothing.
+   Sibling of ARV-D-087, which fixed where the message goes but not whether it says anything.
+2. **No certifier gate reads `question_type` against the taxonomy, or checks that a
+   non-OPEN_TASK item has a stem.** Both are free at `--certify-only` time. Same class as
+   ARV-D-084 (a wrong answer shipped `verified: true`) — the pipeline does not look at the field.
+3. **`repair_unit_order.py` was the one repair tool of seven that did not purge derived plans**
+   (fixed 2026-08-11). `canonical_version` is the generation's `ledger_ts`, which an in-place
+   repair does not change, so a plan served before a move keeps exactly the filename the cache
+   looks for afterwards — ARV-D-034 verbatim, and loudest on a permutation, where the stale plan
+   is the very plan the move was made to stop serving. Nothing was lost here only because the
+   founder re-served after restarting the API.
+
+**And one workflow note for S9–S11.** Every stage's P5.5 now lands plugin code, and the C-cycle
+runs against a long-lived uvicorn started without `--reload`. **Restart the API after any P5.5
+carrier work** — otherwise the first serve check of each remaining stage reproduces this stage's
+`KeyError` and looks like a data defect.

@@ -4,6 +4,52 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v1.5 — 2026-08-12 · Rule 5's `section_context` word cap is REMOVED (ARV-D-121)
+
+**Third setting of this number, second time a live run has disproved it.**
+
+| version | cap | what the evidence said |
+|---|---|---|
+| ≤ v1.2 | 10–15 | 14 of 24 real corpus periods above it |
+| v1.4 (yesterday) | 10–25 | widened on exactly that evidence |
+| the run that evening | — | **12 of 39 units above 25** (top 20–31 · p13 13–35 · p10 18–32) |
+
+The founder accepted it at C3 rather than repairing, with a note: *"if it is ever revisited,
+DROP the upper bound rather than raise it a third time — S4's lesson is about numbers, and this
+one has now failed twice."* This is that revisit.
+
+**Why the number was always the wrong instrument.** `section_context` is a LABEL, not prose: it
+names the objects, phenomena or tasks a unit drew from, and the assessment reads it to ground
+what its question is about. Its length is a property of the **unit's content**, not of good
+writing — a unit that handled two objects has a short label, one that handled eight has a long
+one, and both are correct. A cap asks the model to choose between naming what it used and
+hitting a number, and on a dense unit the only way to satisfy it is to **drop an object**, which
+silently degrades the assessment's grounding to protect nothing. v1.4 already said so in its own
+sentence (*"do not drop an object to fit a length"*) — the number and the sentence were in
+contradiction, and the sentence is the one doing the work.
+
+**What replaces it: the rule in kind.** It is a LIST of what the period handled, not a sentence
+about it — name every object actually used, name nothing that was not, add no commentary, and
+let length follow content. Checkable by eye at C3, no arithmetic. The do-not-drop instruction is
+restated as the file's one new `MUST NOT`.
+
+**§9: RELAXATION-ONLY.** A constraint is removed and none is added — the single new `MUST NOT`
+restates an instruction v1.4 already carried as prose, and the edit script asserts the delta is
+exactly +1 so a later pass cannot smuggle a second in behind it. Every artefact authored under
+10–15 or 10–25 satisfies the new text by construction. **No library re-authors, no stage
+re-opens.**
+
+**The transferable rule, for S9–S11 and for the pre-warm:** when a constitution states a number
+about the LENGTH OF A FIELD WHOSE LENGTH IS SET BY CONTENT, the number is the defect. Widening it
+buys one run. Ask instead what the field is *for* — if the answer is "so something downstream can
+read it", the honest constraint is completeness, not size.
+
+Artefacts: `genon/out/stage_prep_twau_preparatory/` —
+`lp_twau_preparatory_v1.4_pre_dropcap.txt` · `lp_v1.4_to_v1.5.diff` ·
+`apply_s5_rule5_dropcap.py`.
+
+---
+
 ## v1.4 — 2026-08-11 · Rule 5's `section_context` cap widened to 10–25 words (S5 · P-prep)
 
 Not part of the constitutional carry-forward set, and raised because S8's standing rule for

@@ -90,6 +90,25 @@ def _serving_block():
         "text, method or phenomenon — never a unit's position or existence.",
         "- MATERIALS, OPENING MOVES AND HOMEWORK ARE PER-UNIT. No unit may require "
         "that another unit was taught, or that its homework was set, in order to run.",
+        # ARV-D-119 (2026-08-12, S5). The line above was already there and was already
+        # obeyed in the letter: nothing in TWAU V ch 5 said "as we did last time". The
+        # standard's closer instead listed `materials: ["Group posters and charts prepared
+        # previously"]` and opened "Groups set up their posters" — a dependency on an
+        # ARTEFACT that a DIFFERENT unit produces. Slot X then dropped the unit that made
+        # them, and the teacher arrived needing posters her plan never built.
+        #
+        # A materials list is not prose, so the register's three bans do not reach it, and
+        # "no unit may require that another unit was taught" reads to a model as a rule
+        # about REFERENCES rather than about THINGS. This says the quiet part.
+        "- NO UNIT MAY DEPEND ON A PHYSICAL ARTEFACT ANOTHER UNIT PRODUCES. If a unit "
+        "needs a poster, chart, model, collection or draft to exist, it must make it "
+        "itself within its own minutes, or the material must be something any classroom "
+        "already has. A unit that lists 'prepared previously', 'their charts from "
+        "earlier' or 'the models they built' in `materials`, `visual_aids` or an opening "
+        "band is asking for a sitting that may not have happened — it is the same failure "
+        "as naming another unit, arriving through the props instead of the prose. Where "
+        "the chapter genuinely wants a make-then-present pair, put BOTH acts inside ONE "
+        "unit.",
     ]
 
 
@@ -170,6 +189,16 @@ def _arc_brief(count, dur, chapter, standard):
         "that another unit's homework was set in order to run. Forward and backward "
         "references BETWEEN THE UNITS OF THIS PLAN are welcome — they are always "
         "served together (LP constitution v2.2, THE SELF-CONTAINED REGISTER).",
+        # ARV-D-119, the plan-granularity half. The reference ban is correctly relaxed here
+        # (every unit of a canonical is served with every other), but the ARTEFACT rule is
+        # NOT a reference rule and survives the relaxation: the closer of a K-unit arc is
+        # borrowed into a K+1 serve, where the unit that would have made its props is not
+        # guaranteed to be present.
+        "- NO UNIT MAY DEPEND ON A PHYSICAL ARTEFACT ANOTHER UNIT PRODUCES. Naming a "
+        "prior unit is fine here; needing its OUTPUT is not. If a unit needs a poster, "
+        "chart, model or draft to exist, it makes it itself, or the material is something "
+        "any classroom already has — the closing unit especially, since it is the one "
+        "that travels.",
         "- NO CLOCK QUANTITY and NO CALENDAR TIME in any band or note: the platform "
         "scales band minutes to the sitting that carries them, and keeps no calendar.",
     ]

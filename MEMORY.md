@@ -35,8 +35,14 @@ must confirm · source entry.
    items** across the three files nest under exactly their own `question_type` key — guide-key
    mismatches 0, FLAT placements of `what_each_option_reveals` / `expected_elements` / `look_for`
    0. Every type's mandated fields present (MCQ reveals keyed to the three non-correct labels and
-   never the correct one; SCR `expected_elements`; ECR `look_for`; OPEN_TASK's five). **Still owed:
-   TWAU** (v1.3) alone — both SS stages now have a live run behind the constitution text.
+   never the correct one; SCR `expected_elements`; ECR `look_for`; OPEN_TASK's five).
+   **★★ CLOSED 2026-08-12 — TWAU TESTED LIVE + PASSED (S5 · C4, V ch 5 library {16,13,10}).**
+   All **39 items** across the three files nest under exactly their own `question_type` key —
+   FLAT placements **0**, guide-key mismatches **0**, missing mandated fields **0** — and all 7
+   MCQs key `what_each_option_reveals` to exactly the non-correct labels, never the correct one.
+   **This item is now fully discharged: all three of its subjects (SS·secondary 2026-08-03,
+   SS·middle 2026-08-04, TWAU 2026-08-12) have a live run behind the constitution text.**
+   Nothing is owed. Do not reopen.
 
 2. **English MCQ option-reveals rewrite — owed into the generation prompt wrappers** — the
    corpus MCQs had their prose-`note` option analyses rewritten into the keyed
@@ -131,6 +137,14 @@ must confirm · source entry.
    `framework/social_sciences/middle/pedagogy_middle_social_sciences.txt` but IS a verbatim entry
    in the ASSESSMENT constitution's Rule 8 Open Task menu. The pre-warm check gains a second half:
    SS empty is a defect, and so is an approach no Pedagogy document contains.
+   **★ TWAU CONFIRMED 2026-08-12 (S5 · C4, V ch 5 {16,13,10}):** 0 empty across all **39 units**,
+   every value SPELLED OUT (Observe and Record · Hands-on Investigation · Discussion and Connection
+   · Create and Express · Reflect and Act), **zero acronyms leaked** into `Period.approach` and zero
+   off-taxonomy values. The ARV-D-043 caveat cannot arise on this stage: TWAU's five `dominant_mode`
+   values are a CLOSED set fixed in LP Rule 3 with an NCF §7.4 citation each, so "populated" and
+   "valid" are the same question — unlike SS, where the approach is drawn from a prose document.
+   **Mathematics·preparatory remains the only legitimate empty**; english (S9–S11) is the last
+   stage-family still unchecked.
 
 8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
    (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,

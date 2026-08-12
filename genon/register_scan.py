@@ -102,6 +102,31 @@ PATTERNS = [
     # always served whole (a plan-granularity stage) it is perfectly legal, so a human decides.
     ("artefact", False, re.compile(r"\btheir (earlier|previous) (chart|table|diagram|map|list|notes|model)\b", re.I)),
     ("artefact", False, re.compile(r"\b(the|that) \w+ (they|students) already (made|built|drew|created)\b", re.I)),
+    # ── ARTEFACT DEPENDENCE, second pass — added 2026-08-12 (S5 · C7, ARV-D-119) ───────
+    # The two patterns above look for a POSSESSIVE reference in prose ("their earlier chart").
+    # TWAU V ch 5's breach used neither shape: it wrote the dependency as a MATERIALS ENTRY,
+    # in the passive, with no owner and no unit named —
+    #     materials:    ["Group posters and charts PREPARED PREVIOUSLY"]
+    #     visual_aids:  "Group-created posters and charts from all states represented"
+    #     band 0-5:     "Groups SET UP THEIR POSTERS or displays around the classroom."
+    # A materials list is a shopping list, and a shopping list that includes an item only a
+    # previous sitting could have produced is the sharpest form of the dependency: not a
+    # reference to another unit but a PREREQUISITE on one. `_fields` now reads `materials[]`
+    # and `visual_aids` (see the dated note there) so these patterns have somewhere to fire.
+    #
+    # Kept ADVISORY, like the two above and for the same reason: on a plan-granularity stage
+    # every unit is served with every other, so the dependency is legal there and a human
+    # decides. The place it is now FORBIDDEN outright is the platform brief
+    # (`variant_plans.top_brief_for` / `briefs_for`, 2026-08-12), which is where a rule about
+    # serving belongs; this is the detector, not the rule.
+    ("artefact", False, re.compile(
+        r"\b(prepared|made|built|drawn|created|collected|written)\s+"
+        r"(previously|earlier|beforehand|in advance|last time)\b", re.I)),
+    ("artefact", False, re.compile(
+        r"\b(set up|bring out|hand back|redistribute|display)\s+their\s+"
+        r"(posters?|charts?|models?|displays?|drafts?|collections?)\b", re.I)),
+    ("artefact", False, re.compile(
+        r"\bfrom the (earlier|previous|last) (sitting|unit|session|lesson)\b", re.I)),
     # ── added 2026-08-03 (ARV-D-026) — three forward phrasings that sailed through a clean run:
     # "the monsoon regime that will follow", "the interlinkage that the Monsoon unit will extend",
     # "explored in upcoming units". The second is the general shape: a NAMED unit plus a future
@@ -153,6 +178,24 @@ BAND_TEXT = ("activity", "description")                     # description[] is t
 def _fields(unit):
     """The teacher-facing strings of one unit, as (label, text) pairs — shape-agnostic."""
     yield "activity_title", str(unit.get("activity_title") or "")
+    # ── MATERIALS AND VISUAL AIDS — added 2026-08-12 (S5 · C7, ARV-D-119) ──────────────
+    # These were not scanned, and that is where the breach was. TWAU V ch 5's closing unit
+    # named no other unit anywhere in its prose — it listed
+    # `materials: ["Group posters and charts prepared previously"]` and
+    # `visual_aids: "Group-created posters and charts from all states represented"`.
+    # The dependency arrived through the PROPS, so a scanner reading only titles, notes and
+    # bands reported 0 hits on a plan that could not be run as served.
+    #
+    # They are teacher-facing by definition — a materials list is the first thing a teacher
+    # reads when deciding whether she can run the sitting — so they belong here on the same
+    # ground as `homework[]`, which has always been scanned. Verified against every certified
+    # library before landing: adding them introduces ZERO new BAN hits corpus-wide (the
+    # discipline S6's note records, after six of its seven new patterns turned out wrong).
+    mats = unit.get("materials")
+    for i, m in enumerate(mats if isinstance(mats, list) else ([mats] if mats else [])):
+        yield f"materials[{i}]", m if isinstance(m, str) else json.dumps(m, ensure_ascii=False)
+    if unit.get("visual_aids"):
+        yield "visual_aids", str(unit["visual_aids"])
     for k in NOTE_KEYS:
         if unit.get(k):
             yield k, str(unit[k])

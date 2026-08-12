@@ -39,7 +39,9 @@ CHAPTERS = ROOT / "data/content/chapters"
 BACKUP = ROOT / "backup/c3_repair"
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+sys.path.insert(0, str(ROOT))
 from purge_derived import purge                                    # noqa: E402
+from aruvi_core.genon import carriers as _carriers                 # noqa: E402
 
 # The Pedagogy document's method names, verbatim. Source of truth for ARV-D-071.
 PEDAGOGY_METHODS = ["Play-way", "Discovery/Inquiry", "Problem solving", "Inductive", "Deductive"]
@@ -150,7 +152,32 @@ def pass_guide_shape(result, ctx):
 
 def pass_open_task_substitution(result, ctx):
     """ARV-D-082 — Rule 8 requires the guide to state that the teacher may substitute any other
-    menu format. Fixed sentence, so it is computable."""
+    menu format. Fixed sentence, so it is computable.
+
+    SUBJECT-GATED SINCE 2026-08-12 (S5), AND THE GATE IS THE POINT. This pass sits in the
+    GENERIC list, whose contract is "derive the correct value from an AUTHORITATIVE SOURCE …
+    intended to run over the whole corpus at the mass pre-warm". It is not generic. Its
+    authority is MATHEMATICS' Rule 8 open-task menu, and `SUBSTITUTION_CLAUSE` says so in
+    words — "any other format from the **Mathematics** open-task menu".
+
+    Run on TWAU it proposed **nine edits across the library** (4 + 3 + 2), appending that
+    sentence to OPEN_TASK guides on a stage whose Rule 8 is EXECUTABILITY BOUNDARY and which
+    has no open-task menu to substitute from. That is not a no-op that happens to be
+    harmless — it writes a false statement about a rule that does not exist, in another
+    subject's vocabulary, into a certified artefact. Found only because S5 ran this tool for
+    an unrelated declared repair; at the mass pre-warm it would have reached every non-maths
+    OPEN_TASK guide in the corpus.
+
+    The other four passes are safe on TWAU by accident rather than by design, and it is worth
+    recording which is which: `pass_method_label` keys on `pedagogical_method`, a field TWAU's
+    schema does not have (its equivalent is the closed five-value `dominant_mode`);
+    `pass_strip_internal_ids` matches `WE-N`/`E-N`, which TWAU never emits (its internal ids
+    are `T-N`, and the LP already forbids them); `pass_verbatim_descriptions` reads
+    `enumerated_worked_examples`/`enumerated_exercises` off the summary, which TWAU summaries
+    do not carry. Only `pass_guide_shape` is genuinely subject-agnostic. **When a fifth stage
+    arrives, check each pass's AUTHORITY, not its behaviour on one file.**"""
+    if ctx.get("subject") != "mathematics":
+        return []
     edits = []
     for pos, item in enumerate(iter_items(result), 1):
         if item.get("question_type") != "OPEN_TASK":
@@ -258,6 +285,46 @@ DECLARED = {
              "new": "a higher demand than rational-expression simplification."},
         ],
     },
+    # ── S5 · the_world_around_us · V · ch 5 (2026-08-12) ─────────────────────────────
+    # ARV-D-120 · the U11 item, two breaches on one item, and only ONE of them is mechanical.
+    #
+    # (a) `question_type: "HI"` — a `dominant_mode` code, outside the closed taxonomy
+    #     {MCQ, SCR, ECR, OPEN_TASK}. The correct value is not guessed: the item's OWN
+    #     `guide` is keyed `SCR`, it carries three `expected_elements` and an empty
+    #     `options` — the SCR shape in every particular — so the file already declares what
+    #     it is, and this pass makes the label agree with it. The cause is visible in
+    #     assessment Rule 3, whose guidance table puts `dominant_mode` in the LEFT column and
+    #     the type in the right ("HI / CG-6 inquiry steps … | SCR"); the model emitted the left.
+    #
+    # (b) `question_text: null` — A1 permits "" or [], never null, and for an SCR the stem IS
+    #     the question, so as authored there was nothing to ask. THIS HALF IS AUTHORED, NOT
+    #     DERIVED, and is therefore a DECLARED repair in the strictest sense: the stem below is
+    #     written to the item's own three `expected_elements`, one clause each —
+    #       1 "names one type of traditional headgear from the section"      -> "Name one …"
+    #       2 "identifies at least one reason … climate, cultural occasion,
+    #          or material available locally"                               -> "why … suits the
+    #                                                                          region it comes from"
+    #       3 "connects … to the broader idea that clothing reflects where
+    #          people live and who they are"                                -> "what it tells us
+    #                                                                          about the people who wear it"
+    #     — and grounded in the section the item is anchored to (Diversity Everywhere: saafa/pagri
+    #     from Rajasthan, topi from Himachal Pradesh, Textbook p. 87) and in its unit's activity
+    #     (U11 "Headgear from Every Region"). No element is added that the guide does not already
+    #     expect, and none is left unasked. The item's Rule 7 regional-variation annotation
+    #     already covers the answer's regional spread and is untouched.
+    "ch_05_canonical.json": {
+        "ARV-D-120a": [
+            {"item_where": {"period_ref": [11]}, "field": "question_type",
+             "old": "HI", "new": "SCR"},
+        ],
+        "ARV-D-120b": [
+            {"item_where": {"period_ref": [11]}, "field": "question_text",
+             "old": None,
+             "new": ("Name one traditional headgear worn in a particular region of India. "
+                     "In two or three sentences, explain why that headgear suits the region "
+                     "it comes from, and what it tells us about the people who wear it.")},
+        ],
+    },
     "ch_04_canonical_p09.json": {
         "ARV-D-070": [
             {"unit": 2, "field": "time_bands[0].activity",
@@ -333,7 +400,27 @@ def apply_declared(result, table, filename):
     edits, refusals = [], []
     for defect, entries in table.items():
         for entry in entries:
-            if "row" in entry:
+            if "item_where" in entry:
+                # THE ITEM SELECTOR (added 2026-08-12, S5 · ARV-D-120). The declared table
+                # could reach a period or a handoff row, but not an assessment item — so a
+                # defect in an item's own field had nowhere to be repaired.
+                #
+                # Selection is by EXACT MATCH on the item's own declared fields, never by a
+                # computed join. That is deliberate: how an item finds its unit is the verified
+                # 8-rule table's business and varies by subject·stage, so a selector that
+                # re-derived it here would be genon inventing linkage — exactly what P5.5's
+                # doctrine forbids. Matching literal field values invents nothing and reads the
+                # same on every stage. `raw_item_list` returns the LIVE items (it is
+                # container-shape aware), so the edit reaches the file.
+                where = entry["item_where"]
+                cands = [it for it in _carriers.raw_item_list(result)
+                         if all(it.get(k) == v for k, v in where.items())]
+                if len(cands) != 1:
+                    refusals.append(f"{filename}: item_where {where!r} matched "
+                                    f"{len(cands)} items, expected exactly 1")
+                    continue
+                container, label = cands[0], f"item{where}"
+            elif "row" in entry:
                 rows = [r for r in result["coverage_handoff"]
                         if r["section_number"] == entry["row"]]
                 if not rows:
@@ -399,7 +486,11 @@ def main() -> int:
         print(f"no library at {folder}")
         return 1
 
-    ctx = {"summary_items": load_summary_items(args.subject, args.grade, args.chapter)}
+    # `subject` rides in ctx so a pass whose AUTHORITY is one subject's constitution can gate
+    # itself (see pass_open_task_substitution, 2026-08-12). A pass that needs this is, by that
+    # fact, not generic — the gate is a declaration, not a convenience.
+    ctx = {"summary_items": load_summary_items(args.subject, args.grade, args.chapter),
+           "subject": args.subject, "grade": args.grade, "chapter": args.chapter}
     repaired_any = False
     now = datetime.datetime.now().replace(microsecond=0).isoformat()
     stamp = now.replace("-", "").replace(":", "").replace("T", "_")
