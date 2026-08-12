@@ -1,0 +1,33 @@
+--- lesson_plan_constitution.txt (v1.3)
++++ lesson_plan_constitution.txt (v1.4)
+@@ -1,4 +1,4 @@
+-ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.3
++ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.4
+ 
+ VOCABULARY (teacher-facing naming):
+ The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_facilitation_note, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too. Cross-reference another unit by the CONTENT it built, never by its position (see THE SELF-CONTAINED REGISTER below).
+@@ -149,10 +149,12 @@
+ from this activity (coin, aluminium foil, toothpick). Those belong in
+ section_context.
+ 
+-section_context — a compact label of 10–15 words naming the specific objects,
++section_context — a compact label of 10–25 words naming the specific objects,
+ phenomena, or tasks this period drew from. This is what the assessment question
+-is about. Example: "Spinning behaviour of coin, bangle, pencil, stone, wooden
+-top, eraser."
++is about. Name every object the period actually used; where a period draws on
++several, the label runs to the upper end and that is correct — do not drop an
++object to fit a length. Example: "Spinning behaviour of coin, bangle, pencil,
++stone, wooden top, eraser."
+ 
+ textbook_anchor — JSON-only field (not rendered in the lesson plan view).
+ Format: <section_title> — <paraphrase of the single tasks[].task_text this
+@@ -291,7 +293,7 @@
+           { "minutes": "string e.g. 0-5", "activity": "string" }
+         ],
+         "implied_lo": "string — transferable skill; no specific activity objects; format: 'Students can [skill verb phrase]'",
+-        "section_context": "string — 10–15 words naming the specific objects, phenomena, or tasks this period drew from",
++        "section_context": "string — 10–25 words naming the specific objects, phenomena, or tasks this period drew from",
+         "teacher_facilitation_note": "string — open question, grouping, or pacing guidance"
+       }
+     ]

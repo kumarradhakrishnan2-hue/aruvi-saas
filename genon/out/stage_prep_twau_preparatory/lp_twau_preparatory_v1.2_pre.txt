@@ -1,0 +1,298 @@
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.2
+
+VOCABULARY (teacher-facing naming):
+The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_facilitation_note, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+
+SUBJECT: the_world_around_us   STAGE: Preparatory (Grades III, IV, V)
+
+INPUTS (given — do not regenerate or supplement):
+1.  Competency mapping JSON — flat competencies[] array, every entry Weight 1
+    (TWAU has a flattened CG structure; there is no dominant competency). Each
+    competency carries sections[] — the summary section titles it develops —
+    used by Rule 5 to bind CG codes to periods.
+2.  Chapter summary JSON — sections[] (title, content_summary, tasks[]),
+    conceptual_demand, task_load, project_load, map_work, effort_index,
+    dual_strand {natural, human_cultural}.
+3.  NCF Pedagogy document for The World Around Us (Preparatory).
+4.  Period schedule — one or more rows of {duration_minutes, count}.
+
+OUTPUTS REQUIRED:
+1.  Human-readable lesson plan — prose + time-band format, one section of work
+    per period, for teacher use. Not machine-parsed.
+2.  Full LP JSON conforming exactly to Amendment A1 — the authoritative
+    machine-readable record, stored for delivery and read directly by the
+    Assessment Constitution as the source of cg_codes and implied_lo.
+
+DESIGN PRINCIPLE
+The World Around Us is organically interdisciplinary and activity-centric. The
+lesson plan's single structural axis is the textbook's named SECTIONS in
+reading order. The chapter's two strands — a natural phenomenon and the
+human-cultural response to it (dual_strand) — are both developed through that
+same section sequence; neither is a separate axis. Pedagogical approach (dominant_mode) is metadata attached to each period —
+it describes the period, it does not structure the plan. CG competency
+descriptions are a chapter-level input to the Assessment Constitution only;
+they are not attached to individual periods.
+
+================================================================================
+RULE 1 · SINGLE-AXIS SECTION ANCHORING
+
+MANDATE
+Walk the Chapter Summary's sections[] in textbook reading order. Every named
+section receives at least one period. A long or activity-dense section may span
+multiple consecutive periods, but the section order is never rearranged. Each
+period's content is drawn from the content_summary and tasks[] of the section
+it anchors to.
+
+PROHIBITION
+1. MUST NOT reorder, merge out of sequence, or skip any named section.
+2. MUST NOT front-load — exhausting early sections and compressing or dropping
+   later ones is prohibited.
+3. MUST NOT source period content from the competency statement. The section's
+   content is the only content vehicle.
+
+================================================================================
+RULE 2 · CONTENT-DRIVEN AGE CALIBRATION
+
+MANDATE
+Use the Chapter Summary's own vocabulary, examples, and conceptual_demand as the
+primary age-appropriateness signal. The Preparatory tone is concrete, local, and
+tangible at Grade III, rising toward classification and broader systems by
+Grade V — take this from the summary, not from the grade label alone.
+
+PROHIBITION
+MUST NOT retrieve grade-level calibration from the Pedagogy document. The
+Pedagogy document governs approach and method only; the Chapter Summary governs
+content complexity.
+
+================================================================================
+RULE 3 · DOMINANT MODE — PEDAGOGICAL APPROACH METADATA
+
+MANDATE
+Every period carries exactly one dominant_mode, selected to fit the anchored
+section's content. dominant_mode is unimodal — one value per period. It is
+metadata, not a structural axis. The five permitted values, each grounded in the
+NCF Pedagogy document for The World Around Us (Part C §7.4):
+
+- O&R · Observe and Record — structured observation and recording of the natural
+  or social environment.
+  [NCF §7.4.3.1a "observation … data collection"; "observe and record the growth
+   of plants from seeds"; §7.4.4.1 "structured observations".]
+
+- HI · Hands-on Investigation — experiment, test a hypothesis, build a model,
+  tinker, or carry out a simple inquiry.
+  [NCF §7.4.3.1a "experimentation to test hypotheses"; §7.4.3.1e(vii) "building
+   of models, scientific tinkering, and engaging in hands-on experiments to test
+   hypotheses"; CG-6 (simple inquiry) and CG-7 (scientific method).]
+
+- D&C · Discussion and Connection — dialogue, sharing of experiences, and
+  connecting the local/immediate to the wider world (near → far).
+  [NCF §7.4.3.1a "discussion"; §7.4.4.1 "dialogue with Teachers and peers",
+   "discussion of experiences and observations", and the near-to-far principle.]
+
+- C&E · Create and Express — present understanding through a creative mode:
+  drawing, model, poem, play, skit, craft, oral or written expression.
+  [NCF §7.4.3.1e modes; §7.4.4.1 "creation of simple models and toys …
+   communicate their understanding"; competency C-6.2 "presents observations and
+   findings through different creative modes (drawing, diagram, poem, play, skit,
+   oral and written expression)".]
+
+- R&A · Reflect and Act — examine a value or disposition and practise it as
+  behaviour (conservation, hygiene, safety, care, inclusion).
+  [NCF §7.4.3.1f environmental values; §7.4.4 "values and dispositions … best
+   developed if they are demonstrated … students must … practise them"; maps to
+   CG-3 (health/safety/wellbeing) and CG-4 (sustainable, equitable world).]
+
+PROHIBITION
+1. MUST NOT assign more than one dominant_mode to a period.
+2. MUST NOT use the same dominant_mode for more than two consecutive periods.
+3. MUST NOT invent modes outside these five.
+4. MUST NOT choose a mode for variety alone — it must fit the section content.
+
+================================================================================
+RULE 4 · ACTIVITY-PER-PERIOD (OPTION B)
+
+MANDATE
+Each period centres on ONE hands-on activity (where the section provides one). A
+light discussion or reflection task MAY be paired with that activity only if it
+directly consolidates the same activity — same content, same intended outcome.
+
+This is a type-based rule, not a numerical count cap. It exists to keep periods
+pedagogically clear in an activity-rich subject.
+
+PROHIBITION
+1. MUST NOT load a single period with two or more independent hands-on
+   activities.
+2. MUST NOT pair an unrelated discussion/reflection task with the primary
+   activity.
+
+================================================================================
+RULE 5 · IMPLIED LO + SECTION CONTEXT + TEXTBOOK ANCHOR + FACILITATION NOTE
+(formerly Rule 6)
+
+implied_lo — the transferable skill this period develops, stated independently
+of the specific objects or phenomena used in the activity. Derivation test:
+what can the student now do that they could apply equally in a different TWAU
+chapter? Format: "Students can [skill verb phrase]."
+Use a class of object or phenomenon where needed (e.g. "everyday objects",
+"the same material in different shapes") but MUST NOT name the specific items
+from this activity (coin, aluminium foil, toothpick). Those belong in
+section_context.
+
+section_context — a compact label of 10–15 words naming the specific objects,
+phenomena, or tasks this period drew from. This is what the assessment question
+is about. Example: "Spinning behaviour of coin, bangle, pencil, stone, wooden
+top, eraser."
+
+textbook_anchor — JSON-only field (not rendered in the lesson plan view).
+Format: <section_title> — <paraphrase of the single tasks[].task_text this
+period implements> (p. N). section_title must exactly match a sections[].title
+from the chapter summary; page must be a single integer from that task's
+tasks[].page. Internally identify the task and its page before writing; do
+not emit the id.
+
+time_bands — every band in which students or the teacher open, point to, or
+work from the textbook MUST weave a lightweight citation naturally into its
+prose using the form "Textbook p. N" or "Textbook pp. N–M" (English-LP
+style), with the page matching this period's textbook_anchor. Bands that are
+pure setup, oral discussion, board work, or notebook-only reflection need no
+citation. Example: "Students open Textbook p. 105 and collect the listed
+objects in the table…". Never surface T-IDs.
+
+teacher_facilitation_note — one brief note: an open question, grouping, or
+pacing cue.
+
+PROHIBITIONS
+1. implied_lo: one per period; observable verbs only (no internal-state verbs
+   such as "understand", "appreciate", "feel"); no specific objects or proper
+   nouns.
+2. textbook_anchor: one task, one page — no ranges, no bundles across pages,
+   not derived from content_summary or dual_strand.
+3. MUST NOT reference tasks by internal identifiers (T-1, T-2, etc.) anywhere
+   in teacher-facing fields (textbook_anchor, time_bands, activity_title).
+4. MUST NOT retrieve or reference any Learning Outcome document.
+
+================================================================================
+RULE 7 · NO PERIOD CAPS
+
+MANDATE
+Use the full period budget from the period schedule for teaching. Aruvi is
+suggestive, not prescriptive — the teacher sets the actual number of periods via
+the Allocate tab. Distribute the available budget across all sections per
+Rule 1 and Rule 5.
+
+PROHIBITION
+1. MUST NOT impose a maximum number of periods per chapter.
+2. MUST NOT reserve period budget for assessment, or embed assessment tasks in
+   the lesson plan.
+
+================================================================================
+RULE 8 · TIME DISCIPLINE
+
+MANDATE
+Each period has exactly one activity calibrated to its duration. The time_bands
+of a period MUST sum exactly to that period's period_duration_minutes, with at
+least three bands.
+
+PROHIBITION
+MUST NOT produce time_bands that overrun or underrun the period duration.
+
+================================================================================
+RULE 9 · COVERAGE HANDOFF EMISSION (REQUIRED OUTPUT)
+
+MANDATE
+Emit a coverage_handoff array — one entry per period — as a required sibling
+output. This is the SOLE lesson-plan input the Assessment Constitution reads.
+Each entry contains:
+  { "period_number", "period_duration_minutes", "section_ref",
+    "dominant_mode", "implied_lo",
+    "section_context", "textbook_anchor", "activity_summary" }
+
+implied_lo and section_context are copied exactly from the period that produced
+them. The assessment generator reads implied_lo to set cognitive demand and
+section_context to ground the question content. Competency selection for
+assessment is handled by the Assessment Constitution using a chapter-level
+competency descriptions block — cg_codes are NOT part of the handoff.
+
+PROHIBITION
+1. MUST NOT omit the coverage_handoff — it is required on every run.
+2. MUST NOT include cg_codes in any handoff entry.
+3. MUST NOT omit section_context from any handoff entry.
+
+================================================================================
+RULE 10 · INDIAN KNOWLEDGE SYSTEMS — INTEGRATED, NOT LABELLED
+
+MANDATE
+Indian Knowledge Systems (IKS) content — traditional practices, local vessels,
+seasonal knowledge, folk conservation, craft traditions — surfaces through
+faithful use of the section content_summary and tasks. Where IKS material is
+present in the section, the teacher_facilitation_note MUST include a brief
+prompt guiding the teacher to draw it out naturally in conversation.
+
+PROHIBITION
+1. MUST NOT create a dedicated time band or phase for IKS content.
+2. MUST NOT use the word "IKS" or the phrase "Indian Knowledge Systems"
+   anywhere in teacher-facing output — not in activity_title, time_bands,
+   teacher_facilitation_note, or any other field the teacher reads.
+3. MUST NOT treat IKS as a structural axis or label it as a moment — it is
+   woven into the activity, not appended to it.
+
+================================================================================
+INTEGRITY CONSTRAINTS (system-level; override any other instruction)
+
+- Chapter mapping is settled. MUST NOT reopen competency selection or alter the
+  listed competencies.
+- The Pedagogy document is the sole source for pedagogical approach; the five
+  dominant_mode values are the closed set for this subject.
+- Learning Outcomes are outputs only. No LO document is an input.
+- TIME: total minutes = sum of (duration × count) per schedule row; total period
+  count = sum of row counts. The full budget is teaching only.
+
+================================================================================
+AMENDMENT A1 — FULL LP JSON SCHEMA
+
+The system MUST populate every field. Empty strings and empty arrays are not
+permitted for required fields. visual_aids: name any visual resource the period
+naturally requires (textbook figure, printed map, board diagram); null if none.
+MUST NOT invent visual aid requirements.
+
+{
+  "grade": "string — iii | iv | v",
+  "subject": "the_world_around_us",
+  "chapter_number": "integer",
+  "chapter_title": "string — must match the chapter summary exactly",
+  "period_schedule": [
+    { "duration_minutes": "integer", "count": "integer" }
+  ],
+  "lesson_plan": {
+    "periods": [
+      {
+        "period_number": "integer",
+        "period_duration_minutes": "integer",
+        "activity_title": "string — short label for this period's activity",
+        "section_ref": "string — named chapter section this period anchors to",
+        "dominant_mode": "string — one of: O&R | HI | D&C | C&E | R&A",
+        "textbook_anchor": "string — <section_name> — brief description (p. X)",
+        "materials": ["string", "..."],
+        "visual_aids": "string | null",
+        "time_bands": [
+          { "minutes": "string e.g. 0-5", "activity": "string" }
+        ],
+        "implied_lo": "string — transferable skill; no specific activity objects; format: 'Students can [skill verb phrase]'",
+        "section_context": "string — 10–15 words naming the specific objects, phenomena, or tasks this period drew from",
+        "teacher_facilitation_note": "string — open question, grouping, or pacing guidance"
+      }
+    ]
+  },
+  "coverage_handoff": [
+    {
+      "period_number": "integer",
+      "period_duration_minutes": "integer",
+      "section_ref": "string",
+      "dominant_mode": "string — O&R | HI | D&C | C&E | R&A",
+      "implied_lo": "string — copied verbatim from the period",
+      "section_context": "string — copied verbatim from the period",
+      "textbook_anchor": "string — copied verbatim from the period",
+      "activity_summary": "string — one-line summary of the period's activity"
+    }
+  ]
+}

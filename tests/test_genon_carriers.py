@@ -787,9 +787,9 @@ class TestCompileEndToEnd(unittest.TestCase):
                     self.assertTrue(it.get("unit_ref"), f"{fixture}: item left unanchored")
 
     def test_known_LP_SHAPE_gaps_are_recorded_not_hidden(self):
-        """Two fixtures do NOT compile, and the reason is the LESSON PLAN shape, not the
-        carrier seam — their items extract fine (see the family tests above). Recorded
-        here so the gap is registered rather than skipped into silence. When either is
+        """ONE fixture does NOT compile, and the reason is the LESSON PLAN shape, not the
+        carrier seam — its items extract fine (see the family tests above). Recorded
+        here so the gap is registered rather than skipped into silence. When it is
         closed this test FAILS, which is the signal to update it.
 
           • science·middle  — periods carry `phases[]`, not `time_bands[]`. The Group B
@@ -799,8 +799,13 @@ class TestCompileEndToEnd(unittest.TestCase):
             missing `section_anchor` is NOT a gap for this stage — science·middle has no
             section axis by design (carriers.has_section_axis), so `time_bands` is the
             only thing standing between it and compiling.
-          • TWAU            — periods carry `textbook_anchor` / `section_ref`, no
-            `section_anchor`. TWAU's registry join has no owner yet; S5 owes it.
+
+        **TWAU LEFT THIS LIST on 2026-08-11 (S5's P5.5).** It used to sit here as
+        "periods carry `textbook_anchor` / `section_ref`, no `section_anchor`; TWAU's
+        registry join has no owner yet; S5 owes it." It is owed no longer — the join is
+        mediated on the plugin (`genon_unit_anchor`) and the positive proof is
+        `test_twau_preparatory_compiles_through_the_mediated_anchor` below. This is the
+        signal working exactly as the docstring promised.
 
         Assertion note (2026-08-07): the `section_anchor` read is now mediated by
         carriers.unit_anchor, which still raises KeyError on a section-axis stage but
@@ -808,16 +813,55 @@ class TestCompileEndToEnd(unittest.TestCase):
         test guards, so it matches on the substring rather than the bare key.
         """
         from aruvi_core.genon import compile_stream
-        for fixture, missing in (("science_vii_ch02_saved.json", "time_bands"),
-                                 ("twau_iii_ch01_saved.json", "section_anchor")):
+        for fixture, missing in (("science_vii_ch02_saved.json", "time_bands"),):
             with self.subTest(fixture=fixture):
                 with self.assertRaises(KeyError) as cm:
                     compile_stream(load(fixture))
                 self.assertIn(missing, str(cm.exception.args[0]))
-                # the seam itself is fine for both — items extract as dicts
+                # the seam itself is fine — items extract as dicts
                 plan = load(fixture)
                 items = assessment_items(plan, plan.get("result", plan))
                 self.assertTrue(all(isinstance(i, dict) for i in items))
+
+    def test_twau_preparatory_compiles_through_the_mediated_anchor(self):
+        """S5's P5.5, on the REAL saved shape rather than a fixture invented for it.
+
+        `backup/saved_plans/the_world_around_us/v/ch_05_*` — 9 units over 6 sections, 9
+        items (Rule 2's 1:1). Three properties, and the third is the one that earns the
+        word "verbatim": every unit gets an anchor; every item resolves with zero orphans;
+        and every anchor is a member of the registry drawn from the chapter summary's own
+        `sections[].title`, byte for byte. The certifier's registry arithmetic is string
+        comparison, so any reformatting in `genon_unit_anchor` would manufacture a mismatch
+        that then needs a second normalizer to undo."""
+        p = (Path(__file__).resolve().parents[1]
+             / "backup/saved_plans/the_world_around_us/v/ch_05_20260531_122055.json")
+        if not p.is_file():
+            self.skipTest("TWAU V prototype plan not on disk")
+        summ = (Path(__file__).resolve().parents[1]
+                / "data/content/chapters/the_world_around_us/v/summaries/ch_05_summary.json")
+        if not summ.is_file():
+            self.skipTest("TWAU V ch 5 summary not on disk")
+
+        from aruvi_core.genon import compile_stream
+        stream = compile_stream(json.loads(p.read_text(encoding="utf-8")))
+
+        anchors = [u.get("section_anchor") for u in stream["units"]]
+        self.assertEqual(len(anchors), 9)
+        self.assertTrue(all(a for a in anchors), "a unit compiled with no anchor")
+
+        items = stream["assessment_items"]
+        self.assertEqual(len(items), 9, "Rule 2 is 1:1 — one item per unit")
+        self.assertFalse([i for i in items if not i.get("unit_ref")],
+                         "row 8 is item-self-sufficient; nothing should orphan")
+
+        registry = [s["title"] for s in
+                    json.loads(summ.read_text(encoding="utf-8"))["sections"]]
+        self.assertEqual([a for a in anchors if a not in registry], [],
+                         "anchors must be VERBATIM members of the summary's registry")
+        # first-visit order, which is what the choice set does string arithmetic on
+        first_seen = list(dict.fromkeys(anchors))
+        self.assertEqual(first_seen, registry[:len(first_seen)],
+                         "sections must first-appear in registry order")
 
     def test_science_secondary_shape_compiles_with_its_questions_intact(self):
         """The live proof, on a real Grade IX file: 11 questions, not 8 wrapper keys."""
@@ -926,10 +970,15 @@ def _count(vp, subject, klass, chapter):
 class TestAnchorFieldPresent(unittest.TestCase):
     """The declaration itself — asked of the plugin, never sniffed from an override."""
 
-    def test_ten_stages_declare_the_field_present(self):
+    # THE MEDIATED STAGES, as of 2026-08-11 (S5): mathematics middle + preparatory, and
+    # now the_world_around_us preparatory. Three field names, one seam.
+    _MEDIATED = {("mathematics", "IV"), ("mathematics", "VII"),
+                 ("the_world_around_us", "IV")}
+
+    def test_the_field_stages_declare_the_field_present(self):
         from aruvi_core.genon.carriers import anchor_field_present
         for subject, klass in _STAGES:
-            if subject == "mathematics" and klass in ("IV", "VII"):
+            if (subject, klass) in self._MEDIATED:
                 continue
             with self.subTest(stage=f"{subject}·{klass}"):
                 self.assertTrue(anchor_field_present(subject, klass))
@@ -942,6 +991,19 @@ class TestAnchorFieldPresent(unittest.TestCase):
                                  "grep -c section_anchor is 0 in both constitutions")
         self.assertTrue(anchor_field_present("mathematics", "IX"),
                         "secondary keeps the field (LP A3) — one plugin, three answers")
+
+    def test_twau_preparatory_declares_it_absent(self):
+        """Landed 2026-08-11 at S5's P5.5. TWAU has a section axis (LP Rule 1 is titled
+        SINGLE-AXIS SECTION ANCHORING) and spells the anchor `section_ref` — a THIRD field
+        name, after maths·middle's `textbook_segments[].ref` and maths·prep's
+        `section_refs[]`. `grep -c section_anchor` is 0 in its LP constitution, and the
+        founder ruling of 2026-08-10 forbids adding one, so the read is mediated."""
+        from aruvi_core.genon.carriers import anchor_field_present, has_section_axis
+        for klass in ("III", "IV", "V"):
+            with self.subTest(klass=klass):
+                self.assertFalse(anchor_field_present("the_world_around_us", klass))
+                self.assertTrue(has_section_axis("the_world_around_us", klass),
+                                "the axis is real — only the field name differs")
 
     def test_it_is_not_the_same_question_as_the_section_axis(self):
         """maths·middle HAS a section axis and has no field; science·middle has neither.
@@ -983,14 +1045,33 @@ class TestStandardBriefSynthesisCarrier(unittest.TestCase):
         self.assertIn(f"first-appear across units 1..{n - 1}. "
                       'No other unit may carry `"synthesis": true`.', text)
 
-    def test_the_ten_field_stages_keep_BYTE_IDENTICAL_wording(self):
-        """The two lines this change touches, verbatim as they read before it. Ten
-        certified stages must not be re-briefed by a fix made for the eleventh."""
+    def test_twau_preparatory_is_asked_for_the_BOOLEAN(self):
+        """Added 2026-08-11 at S5's P5.5, and it is the same defect as maths·middle's on a
+        third field name: without `genon_anchor_field_present` the brief would have asked a
+        TWAU generation, at metered STEP 1, to put the reserved token in a `section_anchor`
+        its constitution does not define — and the certifier's synthesis gate would then
+        have found no synthesis unit in the library it had already paid for."""
+        vp = _vp()
+        for klass in ("III", "IV", "V"):
+            with self.subTest(klass=klass):
+                text = vp.top_brief_for("the_world_around_us", klass, 1)
+                n = _count(vp, "the_world_around_us", klass, 1)
+                self.assertIn('`"synthesis": true` on its period object', text)
+                self.assertIn(f"unit {n}, the final unit, is a WHOLE-CHAPTER SYNTHESIS",
+                              text)
+                self.assertNotIn("section_anchor", text)
+                self.assertNotIn("the single word: synthesis", text)
+
+    def test_the_field_stages_keep_BYTE_IDENTICAL_wording(self):
+        """The two lines this change touches, verbatim as they read before it. The
+        declared-field stages must not be re-briefed by a fix made for a mediated one.
+
+        `the_world_around_us·III` LEFT this list on 2026-08-11 (S5): it is a mediated stage
+        now, and is covered by `test_twau_preparatory_is_asked_for_the_BOOLEAN` above."""
         vp = _vp()
         for subject, klass in (("mathematics", "IX"), ("social_sciences", "IX"),
                                ("social_sciences", "VII"), ("science", "IX"),
-                               ("english", "IV"), ("english", "VII"), ("english", "IX"),
-                               ("the_world_around_us", "III")):
+                               ("english", "IV"), ("english", "VII"), ("english", "IX")):
             with self.subTest(stage=f"{subject}·{klass}"):
                 text = vp.top_brief_for(subject, klass, 1)
                 n = _count(vp, subject, klass, 1)
@@ -1004,6 +1085,95 @@ class TestStandardBriefSynthesisCarrier(unittest.TestCase):
         text = vp.top_brief_for("science", "VII", 1)
         self.assertIn('`"synthesis": true`', text)
         self.assertIn("THE ARC IS YOURS AT THIS COUNT", text)
+
+
+class TestSynthesisReadsAsSynthesisOnScreen(unittest.TestCase):
+    """The closing unit must reach the teacher as "Synthesis" — the DISPLAY half of §0.3.
+
+    This is the third time the same defect has been found by eye rather than by a test, on
+    a third stage, which is why it is now a test:
+
+      • ARV-D-016 (S1, SS·secondary)  — U12 filed under "Climate Change", the section it
+        happened to name, though it is a chapter-wide synthesis.
+      • ARV-D-101 (S7, maths·middle)  — every SERVED closer read "Equilateral Triangles
+        (Revisit)". The canonical on disk said "Synthesis" and the served plan did not,
+        which is the worse half: the served plan is what a teacher opens.
+      • S5, TWAU·preparatory (2026-08-11) — this port grouped purely on `section_ref`, and
+        TWAU's closer wears a REAL section title (its anchor is mediated, so there is no
+        reserved token to file it under), so the synthesis merged into a three-unit
+        "Spirit of Togetherness" group.
+
+    The guard is one property, asked of every SECTION-GROUPED port: given a unit the seam
+    calls a synthesis, the last group's label is `normalize.SYNTHESIS_DISPLAY` — not the
+    reserved token verbatim (lowercase among capitalised headings), not a section name, and
+    never "(Revisit)". Reading the fact off the title or the anchor instead of through
+    `carriers.is_synthesis` is what failed twice, so the probe deliberately gives each port
+    the carrier ITS stage uses and nothing else to go on.
+
+    `social_sciences` and `english` are NOT probed, and the reason is recorded rather than
+    skipped into silence: SS·secondary renders as a single flat "Units" group with no
+    per-section headings at all, so its synthesis is identified by its own `activity_title`
+    ("Atmosphere to Action: A Whole-Chapter Synthesis") and there is no group label to get
+    wrong. English has no genon carrier yet (rows 7, owed by S9–S11); when it lands, decide
+    which of the two shapes it is and either add it here or extend this docstring.
+    """
+
+    def test_every_section_grouped_port_labels_the_closer(self):
+        from aruvi_core import subjects as SUB
+        from aruvi_core.normalize import SYNTHESIS_DISPLAY
+        for m in ("science", "mathematics", "the_world_around_us"):
+            __import__(f"aruvi_core.subjects.{m}")
+
+        # Each stage's OWN synthesis carrier, and its own anchor field — a port that reads
+        # the right thing needs no more than this.
+        cases = {
+            "science":             {"section_anchor": "synthesis",     # token stage
+                                    "progression_stage": 9, "stage_label": "Synthesis"},
+            "mathematics":         {"section_anchor": "synthesis"},    # token stage (IX)
+            "the_world_around_us": {"section_ref": "Spirit of Togetherness"},  # mediated
+        }
+        for key, extra in cases.items():
+            with self.subTest(subject=key):
+                period = {"period_number": 1, "period_duration_minutes": 40,
+                          "activity_title": "Whole-Chapter Synthesis: Drawing It Together",
+                          "time_bands": [{"minutes": "0-40", "activity": "a"}],
+                          "synthesis": True, "materials": [], "implied_lo": "",
+                          "teacher_notes": "", **extra}
+                raw = {"lesson_plan": {"periods": [period]}, "coverage_handoff": [],
+                       "subject": key, "grade": "ix"}
+                view = SUB.get(key).lesson_plan_to_view(
+                    raw, grade="ix", chapter={"chapter_number": 1, "chapter_title": "t"})
+                self.assertTrue(view.groups, f"{key}: produced no groups at all")
+                self.assertEqual(
+                    view.groups[-1].label, SYNTHESIS_DISPLAY,
+                    f"{key}: the closer reads {view.groups[-1].label!r} — ARV-D-101's shape")
+
+    def test_twau_keeps_the_synthesis_out_of_its_section_group(self):
+        """The specific regression: TWAU's closer names a real registry section, so a port
+        that groups on `section_ref` alone MERGES it with that section's teaching units.
+        Two units, same `section_ref`, one of them the synthesis -> two groups, not one."""
+        from aruvi_core import subjects as SUB
+        from aruvi_core.normalize import SYNTHESIS_DISPLAY
+        import aruvi_core.subjects.the_world_around_us          # noqa: F401
+
+        def unit(n, synth=False):
+            p = {"period_number": n, "period_duration_minutes": 40,
+                 "activity_title": f"Unit {n}", "section_ref": "Spirit of Togetherness",
+                 "dominant_mode": "D&C", "materials": [], "implied_lo": "",
+                 "time_bands": [{"minutes": "0-40", "activity": "a"}]}
+            if synth:
+                p["synthesis"] = True
+            return p
+
+        raw = {"lesson_plan": {"periods": [unit(1), unit(2), unit(3, synth=True)]}}
+        view = SUB.get("the_world_around_us").lesson_plan_to_view(
+            raw, grade="v", chapter={"chapter_number": 5, "chapter_title": "t"})
+        self.assertEqual([g.label for g in view.groups],
+                         ["Spirit of Togetherness", SYNTHESIS_DISPLAY])
+        self.assertEqual([p.number for p in view.groups[0].periods], [1, 2])
+        self.assertEqual([p.number for p in view.groups[1].periods], [3])
+        # and the synthesis group must not claim the section as its own
+        self.assertFalse(view.groups[1].meta.get("section_ref"))
 
 
 class TestCompactBriefSynthesisCarrier(unittest.TestCase):

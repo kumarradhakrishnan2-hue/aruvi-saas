@@ -1,7 +1,14 @@
-ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.2
+ARUVI · LESSON PLAN GENERATION CONSTITUTION · THE WORLD AROUND US · VERSION 1.4
 
 VOCABULARY (teacher-facing naming):
-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_facilitation_note, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
+The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_facilitation_note, activity titles, homework, and any cross-reference to another chunk. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too. Cross-reference another unit by the CONTENT it built, never by its position (see THE SELF-CONTAINED REGISTER below).
+
+THE SELF-CONTAINED REGISTER (binds Rule 5's time_bands and teacher_facilitation_note, and Rule 10's IKS prompt)
+Three things no time band or facilitation note may do, each because the platform enforces it:
+1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick look round the classroom", "an unhurried sorting activity" — never in number. The band's own "minutes" field is the schema's, not prose, and is untouched by this ban.
+2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "now that we have named every landform" are wrong for someone. Each unit closes on its own ground.
+3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
+Backward continuity is welcome, and is best carried by naming the content built on ("The children have already watched water change state, …") rather than a unit's position.
 
 SUBJECT: the_world_around_us   STAGE: Preparatory (Grades III, IV, V)
 
@@ -14,7 +21,11 @@ INPUTS (given — do not regenerate or supplement):
     conceptual_demand, task_load, project_load, map_work, effort_index,
     dual_strand {natural, human_cultural}.
 3.  NCF Pedagogy document for The World Around Us (Preparatory).
-4.  Period schedule — one or more rows of {duration_minutes, count}.
+4.  Period schedule — exactly ONE row {duration_minutes, count}: the
+    class-standard duration (40 min for the Preparatory stage — the
+    master-plan calibration band) × the period count; total = that product.
+    Teacher timetable variation never reaches generation; it is handled
+    downstream at serve time.
 
 OUTPUTS REQUIRED:
 1.  Human-readable lesson plan — prose + time-band format, one section of work
@@ -138,10 +149,12 @@ Use a class of object or phenomenon where needed (e.g. "everyday objects",
 from this activity (coin, aluminium foil, toothpick). Those belong in
 section_context.
 
-section_context — a compact label of 10–15 words naming the specific objects,
+section_context — a compact label of 10–25 words naming the specific objects,
 phenomena, or tasks this period drew from. This is what the assessment question
-is about. Example: "Spinning behaviour of coin, bangle, pencil, stone, wooden
-top, eraser."
+is about. Name every object the period actually used; where a period draws on
+several, the label runs to the upper end and that is correct — do not drop an
+object to fit a length. Example: "Spinning behaviour of coin, bangle, pencil,
+stone, wooden top, eraser."
 
 textbook_anchor — JSON-only field (not rendered in the lesson plan view).
 Format: <section_title> — <paraphrase of the single tasks[].task_text this
@@ -156,10 +169,12 @@ prose using the form "Textbook p. N" or "Textbook pp. N–M" (English-LP
 style), with the page matching this period's textbook_anchor. Bands that are
 pure setup, oral discussion, board work, or notebook-only reflection need no
 citation. Example: "Students open Textbook p. 105 and collect the listed
-objects in the table…". Never surface T-IDs.
+objects in the table…". Never surface T-IDs. Every band's prose obeys THE
+SELF-CONTAINED REGISTER in full.
 
 teacher_facilitation_note — one brief note: an open question, grouping, or
-pacing cue.
+pacing cue. A pacing cue is given in KIND, never in number, and the note obeys
+THE SELF-CONTAINED REGISTER in full.
 
 PROHIBITIONS
 1. implied_lo: one per period; observable verbs only (no internal-state verbs
@@ -244,8 +259,8 @@ INTEGRITY CONSTRAINTS (system-level; override any other instruction)
 - The Pedagogy document is the sole source for pedagogical approach; the five
   dominant_mode values are the closed set for this subject.
 - Learning Outcomes are outputs only. No LO document is an input.
-- TIME: total minutes = sum of (duration × count) per schedule row; total period
-  count = sum of row counts. The full budget is teaching only.
+- TIME: the schedule is ONE row (A1), so total minutes = duration × count and the
+  total period count IS that count. The full budget is teaching only.
 
 ================================================================================
 AMENDMENT A1 — FULL LP JSON SCHEMA
@@ -260,7 +275,7 @@ MUST NOT invent visual aid requirements.
   "subject": "the_world_around_us",
   "chapter_number": "integer",
   "chapter_title": "string — must match the chapter summary exactly",
-  "period_schedule": [
+  "period_schedule": [                      // EXACTLY ONE row (INPUTS 4)
     { "duration_minutes": "integer", "count": "integer" }
   ],
   "lesson_plan": {
@@ -278,7 +293,7 @@ MUST NOT invent visual aid requirements.
           { "minutes": "string e.g. 0-5", "activity": "string" }
         ],
         "implied_lo": "string — transferable skill; no specific activity objects; format: 'Students can [skill verb phrase]'",
-        "section_context": "string — 10–15 words naming the specific objects, phenomena, or tasks this period drew from",
+        "section_context": "string — 10–25 words naming the specific objects, phenomena, or tasks this period drew from",
         "teacher_facilitation_note": "string — open question, grouping, or pacing guidance"
       }
     ]

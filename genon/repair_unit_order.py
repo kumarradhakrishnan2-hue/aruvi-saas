@@ -50,6 +50,7 @@ import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Dict
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -60,11 +61,33 @@ MOVES = {
     ("mathematics", "vii", 7): {
         "file": "data/content/saved_plans/mathematics/vii/ch_07_canonical.json",
         "order": [1, 2, 3, 11, 4, 5, 6, 7, 8, 9, 10, 12],
+        "family": "goal_cluster",
         "why": ("LP v3.6 Rule 1 (contiguity): unit 11 anchored section 7.2 after the plan had "
                 "moved through 7.3, 7.4 and 7.5. Moved to sit beside units 2 and 3, closing "
                 "section 7.2's run. Founder ruling 2026-08-10, declared a ONE-OFF: the unit is "
                 "self-contained on 7.2 (no later-section content, items and homework all 7.2 "
                 "and disjoint from units 2-3), and Rule 5 survives the move."),
+    },
+    ("the_world_around_us", "v", 5): {
+        "file": "data/content/saved_plans/the_world_around_us/v/ch_05_canonical.json",
+        "order": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14, 16],
+        "family": "item_self_sufficient",
+        "why": ("ARV-D-119, partial: the standard's last two teaching units are a PAIR — U15 "
+                "'Cultural Fair — Research and Prepare' MAKES the posters, U16 (the mandated "
+                "synthesis) presents them ('materials: Group posters and charts prepared "
+                "previously'). The X-1+1 form at X=15 serves U1..U14 + the synthesis and drops "
+                "U15, so the closer needs posters no unit in that plan ever made. Swapping U14 "
+                "and U15 puts the poster-making inside the X=15 prefix. Founder ruling "
+                "2026-08-11, declared a ONE-OFF on the TOP canonical alone.\n"
+                "SAFE: the two units are mutually independent and both sit on the same section "
+                "('Spirit of Togetherness'), so no anchor, registry, first-visit order or "
+                "contiguity fact moves. U14 (Local Contributors) sources elders and community "
+                "and names no Cultural Fair content; U15 sources Textbook p. 92 and family "
+                "knowledge and names no Local Contributors content; each already closes on its "
+                "own ground. Rule 3's cap survives (…O&R · C&E · HI · D&C — no run of two).\n"
+                "SCOPE, STATED: this does NOT fix X=14, which serves the prefix of 13 and drops "
+                "BOTH units whatever their order. X=14 needs the poster unit at position <=13 "
+                "— a three-unit move, not this swap — and stays open on ARV-D-119."),
     },
 }
 
@@ -104,6 +127,107 @@ def period_to_entry(periods, handoff):
         raise SystemExit(f"ABORT: {total} handoff entries vs {len(periods)} periods "
                          "(Rule 11 requires one per period). Nothing written.")
     return out
+
+
+def apply_move_item_self_sufficient(doc, order, why, key):
+    """The ITEM-SELF-SUFFICIENT family (8-rule rows 3 and 8: social_sciences, TWAU).
+
+    Added 2026-08-11 for TWAU·V ch 5. Everything the goal-cluster path has to RECONSTRUCT is
+    stated outright in this family, which is what makes it the simpler and safer of the two:
+
+      * the coverage handoff is a FLAT LIST whose entries carry their own `period_number`
+        (TWAU LP Rule 9: "one entry per period"), so period -> entry is read, never inverted
+        from an ordering rule;
+      * the items are a FLAT LIST carrying their own `period_ref[]` (the family's defining
+        property — no handoff bridge, no period-field join), so an item follows its unit by
+        renumbering that field and by nothing else.
+
+    So no item is reordered and no list is re-sorted: units and handoff entries move together
+    in the declared order, and every `period_ref` is rewritten through the same old->new map.
+    Nothing INSIDE a unit or an item is touched.
+    """
+    r = doc["result"]
+    periods = r["lesson_plan"]["periods"]
+    n = len(periods)
+    if sorted(order) != list(range(1, n + 1)):
+        raise SystemExit(f"ABORT: declared order is not a permutation of 1..{n}. Nothing written.")
+
+    handoff = r.get("coverage_handoff")
+    if not isinstance(handoff, list):
+        raise SystemExit("ABORT: this family expects a FLAT coverage_handoff list. Nothing written.")
+    if len(handoff) != n:
+        raise SystemExit(f"ABORT: {len(handoff)} handoff entries vs {n} periods — LP Rule 9 "
+                         "requires one per period. Nothing written.")
+    by_old_p = {p["period_number"]: p for p in periods}
+    by_old_h = {h["period_number"]: h for h in handoff}
+    if sorted(by_old_p) != list(range(1, n + 1)) or sorted(by_old_h) != list(range(1, n + 1)):
+        raise SystemExit("ABORT: period numbers are not exactly 1..N on both sides. Nothing written.")
+
+    old_to_new = {old: new for new, old in enumerate(order, start=1)}
+
+    # ── units and handoff entries, in the declared order, renumbered together ──
+    new_periods, new_handoff = [], []
+    for new_no, old_no in enumerate(order, start=1):
+        p, h = by_old_p[old_no], by_old_h[old_no]
+        p["period_number"] = new_no
+        h["period_number"] = new_no
+        new_periods.append(p)
+        new_handoff.append(h)
+    r["lesson_plan"]["periods"] = new_periods
+    r["coverage_handoff"] = new_handoff
+
+    # ── the items follow their own declared anchor, and only that ─────────────
+    items = r.get("assessment_items") or []
+    if not isinstance(items, list):
+        raise SystemExit("ABORT: this family expects a FLAT assessment_items list. Nothing written.")
+    def _refs(it):
+        v = it.get("period_ref")
+        return v if isinstance(v, list) else ([v] if v is not None else [])
+
+    # how many items each unit carried BEFORE — the invariant the remap must preserve
+    before: Dict[int, int] = {}
+    for it in items:
+        for x in _refs(it):
+            try:
+                old = int(x)
+            except (TypeError, ValueError):
+                raise SystemExit(f"ABORT: item carries a non-numeric period_ref {x!r}. "
+                                 "Nothing written.")
+            if old not in old_to_new:
+                raise SystemExit(f"ABORT: item anchors to unit {old}, which is not in 1..{n}. "
+                                 "Nothing written.")
+            before[old] = before.get(old, 0) + 1
+
+    moved = 0
+    for it in items:
+        refs = [int(x) for x in _refs(it)]
+        remapped = [old_to_new[x] for x in refs]
+        if remapped != refs:
+            moved += 1
+        it["period_ref"] = remapped
+
+    # THE ASSERTION THAT MATTERS: the unit a given item sat on before the move must be the
+    # SAME unit, at its new number, after it. Anything else means an item changed hands —
+    # which on this family would be a silent content error, since the item's stem was written
+    # for that unit's activity.
+    after: Dict[int, int] = {}
+    for it in items:
+        for x in it["period_ref"]:
+            after[x] = after.get(x, 0) + 1
+    expected = {old_to_new[old]: c for old, c in before.items()}
+    if after != expected:
+        raise SystemExit(f"ABORT: item/unit accounting changed in the remap "
+                         f"(expected {sorted(expected.items())}, got {sorted(after.items())}). "
+                         "Nothing written.")
+
+    gc = doc.setdefault("genon_canonical", {})
+    gc.setdefault("repairs", []).append({
+        "tool": "repair_unit_order.py", "at": datetime.now().isoformat(timespec="seconds"),
+        "kind": "unit_order", "family": "item_self_sufficient",
+        "key": "|".join(str(x) for x in key),
+        "order": order, "items_reanchored": moved, "why": why,
+    })
+    return doc
 
 
 def apply_move(doc, order, why, key):
@@ -189,7 +313,12 @@ def main() -> int:
             continue
         bak = path.with_suffix(".json.bak_pre_unit_order")
         shutil.copy2(path, bak)
-        doc = apply_move(doc, mv["order"], mv["why"], key)
+        # Dispatch on the 8-rule FAMILY, declared per move — never sniffed. The two paths
+        # differ only in how an item finds its unit, which is the one thing the table exists
+        # to say, and a wrong guess here silently re-anchors assessment.
+        fn = (apply_move_item_self_sufficient
+              if mv.get("family") == "item_self_sufficient" else apply_move)
+        doc = fn(doc, mv["order"], mv["why"], key)
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"    APPLIED — backup at {bak.name}")
     if not listing:

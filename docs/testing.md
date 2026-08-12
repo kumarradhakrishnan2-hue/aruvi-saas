@@ -411,7 +411,7 @@ before starting each stage):
 | S2 | social_sciences · middle | **2.8 ✓** | time_bands | ✓ | ✓ | ✓ (assess v2.4, 2026-08-04) |
 | S3 | science · secondary | **1.1 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-05) |
 | S4 | mathematics · secondary | **1.3 ✓** | time_bands | ✓ | ✓ | ✓ (assess v1.2, 2026-08-09) |
-| S5 | the_world_around_us · preparatory | 1.2 | time_bands | — | — | — |
+| S5 | the_world_around_us · preparatory | **1.4 ✓** | time_bands ✓ (never converted) | ✓ | ✓ | ✓ (assess v1.4, 2026-08-11) |
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (assess v3.4) |
 | S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
@@ -586,6 +586,11 @@ carried the item-18 prohibition, so A9 landed as the two lines alone, and the pr
 PERIOD-FIELD anchor (8-rule row 4) — `section_ref` resolved against the period's
 `textbook_segments[].ref`, with no `coverage_handoff` in the path. Removal N/A.
 `genon/out/stage_prep_mathematics_middle/`.
+**Done for S5 (2026-08-11):** the_world_around_us·preparatory assessment **v1.3 → v1.4**; A6 as
+the reference's OWN declared `period_ref[]` (8-rule **row 8**, item-self-sufficient — the first
+stage since S2 needing no translation, because it shares SS's family). Removal N/A, and the
+by-label prohibition purely additive (no prior "none of the above" ban to absorb).
+`genon/out/stage_prep_twau_preparatory/`.
 **Done for S8 (2026-08-11):** mathematics·preparatory assessment **v1.2 → v1.3**; A6 as the
 PERIOD-FIELD anchor on **`section_refs[]`** (8-rule **row 5** — the same family as middle on a
 DIFFERENT field, which is why neither may borrow the other's join). Removal N/A. One defect
@@ -621,6 +626,11 @@ Rule 11's guard case and the schema all followed the rename.
 (`PHASE NARRATION` → `BAND NARRATION`) and prose, Rule 7 and the schema followed. Note this
 leaves the middle/preparatory saved-plan corpus on the old shape; the mathematics plugin reads
 **both keys, newest first** (`subject.py:211-219`), which is what covers display.
+**N/A for S5 (2026-08-11)** — the_world_around_us·preparatory has emitted `time_bands` with an
+`activity` key since before the campaign (`grep -c 'phases\['` = 0, `'"phases"'` = 0,
+`time_bands` = 7). Recorded because it is the first stage since S2 where the N/A is genuine
+rather than a conversion already done: nothing was converted, and — unlike the maths and english
+stages — **no saved-plan corpus is left behind on the old shape**, so P3 leaves no display debt.
 
 **P4 [Kumar] History to the sidecar.** The amendment note goes to `CHANGELOG.md` beside the
 constitution, never into the file; the `VERSION` line stays in the file.
@@ -734,6 +744,34 @@ Verified on the real saved shape (`backup/saved_plans/mathematics/iii/ch_06_*.js
 zero orphans, every anchor equal to the independently computed last-period-teaching-the-section.
 `tests/test_genon_carriers.py` 82 (4 failing, all of them S7-era "preparatory is still owed"
 assertions) → **92, green**.
+**Done for S5 (2026-08-11) — and it adds a FIFTH part to the check above.** The four-part read
+passed on sight: row 8, item-self-sufficient, `period_ref[]` off the item, bare flat list, and
+the_world_around_us was never in `_NOT_YET` — its assessment half has always been right, which is
+why S3's `questions`-wrapper defect could not touch it. **The LESSON-PLAN half was missing and
+nothing in P5.5 looked at it.** `carriers.unit_anchor` reads `period["section_anchor"]`; TWAU
+periods carry **`section_ref`** and `grep -c section_anchor` is 0 in its LP constitution, so every
+TWAU chapter would have raised `KeyError` on its first period at compile — post-payment, reported
+as `does not compile` on every file, naming nothing. Closed as a mediation (four hooks on the
+plugin, no constitution touched; the anchor is a **prose section TITLE**, returned verbatim), and
+verified end-to-end on the real saved shape: 9 units, 9 items, zero orphans, every anchor a
+byte-identical registry member in first-visit order. `tests/test_genon_carriers.py` 92 with 3
+failures → **95, green** — the three were the "TWAU is still owed" assertions, one of which had
+carried the words *"S5 owes it"* in its own docstring.
+
+> ★ **P5.5 GAINS PART 5, from S5 (2026-08-11): WHERE DOES THIS STAGE'S PERIOD KEEP ITS SECTION
+> ANCHOR, AND DOES `carriers.unit_anchor` FIND IT?** Parts 1–4 audit how an ITEM finds its unit.
+> Nothing audited how a UNIT finds its section, and `_NOT_YET` cannot see it — it is an inventory
+> of the assessment seam only. Three field names are already in use (`section_anchor`,
+> `textbook_segments[].ref`, `section_refs[]`) and S5 found a fourth. The check is
+> `grep -c section_anchor <the stage's LP constitution>`: **0 means the stage needs
+> `genon_unit_anchor` + `genon_anchor_field_present: False` on its plugin**, and the second of
+> those is the expensive one — without it `top_brief_for` demands the reserved token in a field
+> the constitution never defines, **at metered STEP 1**, and the certifier then finds no synthesis
+> unit in the library it has already paid for. **Owed by S9–S11**: english is the last family, its
+> LP is spine-structured (`section_id` + `spines_taught[]`), and one grep across its three LP
+> constitutions decides whether three more stages need mediation. Free at P-prep; a full library
+> at C1.
+
 **Retro-note for S1/S3/S6:** all three satisfied P5.5 in substance before it existed — S3 is
 where `carriers.py` was created (the `questions`-wrapper defect) and S6 extended it with
 `progression_stage`. Nothing re-opens.
