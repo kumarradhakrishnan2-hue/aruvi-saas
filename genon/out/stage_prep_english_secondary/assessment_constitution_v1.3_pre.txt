@@ -1,4 +1,4 @@
-ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 1.4 (SECONDARY)
+ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 1.3 (SECONDARY)
 Stage: Secondary (Grade IX; extensible to X)
 Forked from English Assessment Constitution v3.1 (Middle). Secondary-only
 changes are flagged [SECONDARY DELTA].
@@ -122,10 +122,6 @@ Constraints:
 
 No fallback path: a cell with no section_contribution produces no item.
 Item count per chapter = total section_contributions across all spines.
-That count does NOT vary with the number of periods the chapter was taught
-in: the LP covers every spine the summary carries at every period count, so
-a shorter plan yields the same cells and the same items, tested on less
-anchored practice — never a shorter assessment.
 
 
 ================================================================================
@@ -223,16 +219,6 @@ TRUE_FALSE vs MCQ (critical):
      Carries `options[]`; `suggested_answer` is OMITTED (correct option
      already flagged via `is_correct`).
 
-MCQ OPTION ORDER IS NOT YOURS TO SET. Emit the four options in whatever order
-they were authored; order carries no meaning. Uneven letters across a chapter
-are coincidence, not a defect, and correcting them is not your job — the
-platform arranges options deterministically after generation.
-
-An option MUST NOT refer to another option by its label: no "both A and B",
-"none of the above", "all of the above", "either B or C". Those are the one
-construction a downstream arrangement cannot reorder without rewriting the
-item.
-
 ECR — NAME THE REFERENCED WORD: When an item requires the student to
 perform a cognitive act on a specific word or words within a larger
 sentence, the stem must state that word or those words explicitly, in
@@ -328,27 +314,6 @@ Every item carries, so the teacher sees the outcome tested and its source:
   - `source_lo`            — the implied_lo, copied verbatim from the handoff
   - `source_context`       — the section_context, copied verbatim
 
-
-================================================================================
-RULE 8A | ITEM ANCHORING — THE CELL IS THE ANCHOR, AND IT IS NOT YOURS TO NUMBER
-================================================================================
-
-An item's anchor is the (section × spine) CELL it was generated from, carried
-by the two Rule 8 fields it already has: `source_section_id` and
-`source_spine`, both copied verbatim from the handoff contribution consumed.
-Together they ARE the anchor — there is no third field to emit.
-
-The platform resolves that cell to the unit(s) that taught it by matching the
-pair against each period's own `section_id` + `spines_taught[]`. Where a cell
-is taught across several units, the item anchors at the LAST of them: an item
-tests the cell's whole `implied_lo`, so it becomes available only when the
-cell completes.
-
-MUST NOT emit `period_ref`, `period_number`, `unit_ref`, or any other unit
-number or position. The number of units a chapter is taught in varies per
-teacher and is decided long after this file is written; declaring the link
-would freeze an arrangement the platform varies, and the platform would then
-have to choose between your number and the truth.
 
 ================================================================================
 RULE 9 | VISUAL STIMULUS AND STRUCTURAL FIDELITY
@@ -512,5 +477,5 @@ ASSESSMENT JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-English Assessment Constitution · Version 1.4 (Secondary) · Internal Document
+English Assessment Constitution · Version 1.3 (Secondary) · Internal Document
 ================================================================================

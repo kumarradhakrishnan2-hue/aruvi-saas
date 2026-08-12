@@ -1,4 +1,4 @@
-ARUVI · CHAPTER ASSESSMENT CONSTITUTION · THE WORLD AROUND US · VERSION 1.4
+ARUVI · CHAPTER ASSESSMENT CONSTITUTION · THE WORLD AROUND US · VERSION 1.5
 
 SUBJECT: the_world_around_us   STAGE: Preparatory (Grades III, IV, V)
 
@@ -113,6 +113,11 @@ the student demonstrate the implied_lo for that strand.
 PROHIBITION
 1. MUST NOT use any question_type outside {MCQ, SCR, ECR, OPEN_TASK}.
 2. MUST NOT pick a type for variety alone.
+3. MUST NOT emit a dominant_mode code (O&R, HI, D&C, C&E, R&A) as a
+   question_type. The modes name how the PERIOD was taught; question_type
+   names what the ITEM asks. The two vocabularies share no values. In the
+   table above, the mode is the signal in the LEFT column; emit the type
+   from the RIGHT.
 
 ================================================================================
 RULE 4 · COGNITIVE DEMAND — SHARED BLOOM SPECTRUM
@@ -258,6 +263,9 @@ strings "" — never omitted.
                                  or any value outside the permitted set.
   "question_text":     string  — the stem/scenario for the student.
                                  OPEN_TASK items MUST have question_text: "".
+                                 MCQ, SCR and ECR MUST have a NON-EMPTY stem:
+                                 the stem is the question, and an item without
+                                 one cannot be asked.
   "options": [                 — MCQ only: exactly 4 items labelled A, B, C, D;
     { "label": string,           exactly one is_correct: true.
       "text": string,            Non-MCQ items MUST have options: [].
@@ -316,3 +324,4 @@ PROHIBITION
 5. MUST NOT anchor an item to more than one c_code.
 6. MUST NOT omit the guide block from any item.
 7. MUST NOT add fields not listed in this schema.
+8. MUST NOT emit null for any field — non-applicable fields are "" or [].

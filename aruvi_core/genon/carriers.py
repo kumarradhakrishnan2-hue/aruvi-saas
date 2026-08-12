@@ -129,16 +129,25 @@ _DISPLAY_TO_KEY = {
 # preparatory branch: the family helper, the anchor mediation (`genon_unit_anchor`, written
 # unexercised at S7) and the shape-based stage discrimination (`intent` vs `goal`) were all
 # already here. **Mathematics is now fully carried at all three stages.**
+#
+# `("english", "secondary")` was REMOVED 2026-08-12 (S11) — row 7 is implemented, and it is
+# the first stage in this table whose join key is a PAIR. The two remaining entries are its
+# own siblings, and what they owe is smaller than it looks: `EnglishSubject.genon_assessment`
+# and `cell_pairing` are stage-agnostic (they read `section_id` + `spines_taught[]`, which all
+# three constitutions define), so S9 and S10 should each confirm — not re-derive — three
+# things before deleting their line: that their spine SET matches the summary's (preparatory
+# carries fewer spines), that their assessment container is still the spine-grouped list, and
+# that their LP still emits `coverage_handoff` as a spine-keyed DICT, which is what
+# `_ENGLISH_SPINE_CELL` round-trips. If all three hold, the deletion is the whole job.
 _NOT_YET = {
     ("english", "preparatory"): (
         "period-field join on (source_section_id + source_spine) → (section_id + "
-        "spines_taught[]) (8-rule row 7) — owed by S9"),
+        "spines_taught[]) (8-rule row 7) — owed by S9; the code is in place, see the note "
+        "above this table for the three things to confirm before deleting this line"),
     ("english", "middle"): (
         "period-field join on (source_section_id + source_spine) (8-rule row 7) "
-        "— owed by S10"),
-    ("english", "secondary"): (
-        "period-field join on (source_section_id + source_spine) (8-rule row 7) "
-        "— owed by S11"),
+        "— owed by S10; the code is in place, see the note above this table for the three "
+        "things to confirm before deleting this line"),
 }
 
 
@@ -236,6 +245,23 @@ def item_groups(raw: Any) -> List[Dict[str, Any]] | None:
     return raw
 
 
+def group_key(g: Dict[str, Any], i: int) -> str:
+    """The code a container GROUP is known by, under whichever name its subject uses.
+
+    `section_code` for mathematics' A/B/C section and intent groups; `spine_code` for
+    english's spine-grouped list (S11, 2026-08-12). Serialization tolerance in the spirit of
+    `period_section_codes`, not a branch on subject — and it matters more than it looks: the
+    positional fallback (`str(i)`) is safe only while the groups on both sides of a serve are
+    the same list in the same order, which is exactly what stops being true when a unit is
+    BORROWED from a companion canonical that grouped its items differently.
+    """
+    for key in ("section_code", "spine_code"):
+        v = str(g.get(key) or "").strip()
+        if v:
+            return v
+    return str(i)
+
+
 def raw_item_list(result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """The LIVE item objects holding this chapter's assessment — NOT copies.
 
@@ -311,7 +337,7 @@ def item_container(result: Dict[str, Any]) -> Dict[str, Any] | None:
     by_item_id: Dict[str, str] = {}
     seen: set = set()
     for i, g in enumerate(groups):
-        key = str(g.get("section_code") or "").strip() or str(i)
+        key = group_key(g, i)
         if key in seen:                       # duplicated codes must not merge two groups
             key = f"{key}#{i}"
         seen.add(key)
@@ -421,11 +447,22 @@ def period_section_codes(period: Dict[str, Any]) -> List[str]:
 
         textbook_segments[].ref   mathematics·middle      ("section 5.2")
         section_refs[]            mathematics·preparatory ("S2")
+        section_id + spines_taught[]   english             ("A|listening")
         section_anchor            the declared-anchor stages (split on the V2 join)
 
     Read VERBATIM. The registry these codes are certified against is drawn from the chapter
     summary's own `sections[].ref`, and both sides are the same authored string — normalising
     here would only create a difference to reconcile later.
+
+    ENGLISH IS THE ONE COMPOSITE (2026-08-12, S11, 8-rule row 7). Its section axis is not a
+    textbook section but the (section × spine) CELL its own DESIGN PRINCIPLE names — "period
+    bin-packing is across (section × spine) cells, NOT across spines alone" — and the period
+    names the two halves separately. Post-split every english chapter is ONE main_section, so
+    the section half is a constant and the SPINE is what varies; the pair is still what is
+    read, because the constitution permits 1–3 main_sections and a plan that ever carries two
+    must not collapse their cells onto one code. `EnglishSubject.genon_unit_anchor` builds the
+    same token from the same two fields, so the anchor a unit reports and the code its items
+    join through are equal by construction rather than by agreement.
     """
     segs = period.get("textbook_segments")
     if isinstance(segs, list) and segs:
@@ -433,6 +470,10 @@ def period_section_codes(period: Dict[str, Any]) -> List[str]:
     refs = period.get("section_refs")
     if isinstance(refs, list) and refs:
         return [str(x or "") for x in refs]
+    spines = period.get("spines_taught")
+    if isinstance(spines, list) and spines:
+        sid = str(period.get("section_id") or "").strip()
+        return [f"{sid}|{str(sp or '').strip()}" for sp in spines if str(sp or "").strip()]
     anchor = str(period.get("section_anchor") or "").strip()
     return [a.strip() for a in anchor.split(_ANCHOR_JOINER) if a.strip()] if anchor else []
 
@@ -484,6 +525,39 @@ def items_by_period_field(result: Dict[str, Any], *, items, item_key: str,
     return out
 
 
+def items_with_units(items, units_for) -> List[Dict[str, Any]]:
+    """Stamp `unit_ref` from a resolution the CALLER supplies, applying the one anchoring rule.
+
+    The third family's second helper, written at S11 (2026-08-12) for the 8-rule table's
+    row 7. `items_by_period_field` above joins ONE code against one period field; english
+    joins a PAIR — (`source_section_id`, `source_spine`) against (`section_id`,
+    `spines_taught[]`) — and its resolution additionally has to tell a genuine SPAN (one item
+    re-tested across several units) from SEVERAL items that merely share a cell (2026-07-11,
+    `english/subject.py::cell_pairing`). Bending the single-key helper into that shape would
+    have meant inventing a second join here; instead the plugin passes the resolution its own
+    display path already computes, and this function does the ONE thing that must not be
+    re-implemented per stage: the anchoring rule.
+
+    `units_for(index, item)` returns the unit numbers that item belongs to. Anchoring is the
+    2026-08-05 ruling, identical to all three families: a cell taught across several units
+    anchors its items at the LAST of them, because an item tests the cell's whole
+    `implied_lo` and becomes available only when the cell completes. `period_ref` is honoured
+    as a fallback for legacy files that carry one; a cell no unit teaches yields `[]`, which
+    `compile.py` reports by name rather than guessing past.
+    """
+    out = []
+    for n, it in enumerate(items or []):
+        if not isinstance(it, dict):
+            continue
+        it2 = _copy(it)
+        units = list(units_for(n, it2) or [])
+        if not units:
+            units = [u for u in (it2.get("period_ref") or []) if isinstance(u, int)]
+        it2["unit_ref"] = _last(units)
+        out.append(it2)
+    return out
+
+
 def item_anchor_label(item: Dict[str, Any], n: int = 0) -> str:
     """A short human label for an item's anchor, for REPORTS only — never a join.
 
@@ -517,6 +591,7 @@ def item_anchor_label(item: Dict[str, Any], n: int = 0) -> str:
 
 _SCIENCE_SECTION = "science_section"
 _MATHS_GOAL_CLUSTER = "maths_goal_cluster"
+_ENGLISH_SPINE_CELL = "english_spine_cell"
 
 
 def _goal_clusters(ho: Any):
@@ -621,11 +696,116 @@ def _goal_clusters_from_engine(handoff: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
+def _spine_cells(ho: Any):
+    """The SPINE-KEYED handoff — a dict of spines each carrying `section_contributions[]` —
+    or None. English's native shape at all three stages (2026-08-12, S11):
+
+        {"reading_for_comprehension": {"section_contributions": [
+             {section_id, section_title, section_type, implied_lo, section_context,
+              tasks_anchored[]}, …]},
+         "listening": …, "speaking": …, "writing": …, "vocabulary_grammar": …,
+         "beyond_text": …}
+
+    Shape-based, and it must be: SS/TWAU blocks carry `los` and maths·middle's carry `goals`,
+    so neither can be mistaken for this, and EVERY value must qualify before the shape is
+    claimed. Without this branch the dict fell through `to_engine_handoff` unchanged, serve
+    read `c["los"]` as empty, filtered nothing, and a served 8-unit plan carried the full
+    six-cell handoff of the 17-unit canonical it was cut from — claiming coverage of spines
+    the class never met. Identical defect to the one `_MATHS_GOAL_CLUSTER` was written for at
+    S7; third shape, same seam.
+    """
+    if not isinstance(ho, dict) or not ho:
+        return None
+    for v in ho.values():
+        if not (isinstance(v, dict) and isinstance(v.get("section_contributions"), list)):
+            return None
+    return list(ho.items())
+
+
+def _spine_cells_to_engine(result: Dict[str, Any], spines) -> Dict[str, Any]:
+    """One engine block per CONTRIBUTION — per (section × spine) cell — with its own `los`.
+
+    Per contribution rather than per spine for the reason the goal-cluster branch gives: the
+    unit of filtering has to be the thing that can independently survive, and that is one
+    cell. A spine whose section B cell is served and whose section A cell is not must keep
+    the one and lose the other.
+
+    An entry's period set is THE UNITS THAT TEACH ITS CELL, read off the same
+    (section_id, spine) index the ITEMS join through — so a coverage row and the item testing
+    it can never disagree about which sittings they belong to. The entry survives filtering
+    iff at least one of those units is served. Nothing joins on it; it is what tells serve
+    whether the row is still true of the plan it is building.
+
+    Keyed `spine|section_id` — both halves are authored, closed vocabulary (the six spine keys
+    are fixed by the constitution, the section id comes from the summary's inventory), so the
+    key is stable ACROSS a chapter's canonicals, which is what serve's borrowed-row merge
+    depends on.
+    """
+    index = period_field_index(
+        [p for p in _periods_of(result) if not is_synthesis(p)], period_section_codes)
+    out: Dict[str, Any] = {}
+    for si, (spine, blk) in enumerate(spines):
+        rows = [c for c in (blk.get("section_contributions") or []) if isinstance(c, dict)]
+        common = {"_carrier": _ENGLISH_SPINE_CELL, "_spine": spine, "_spine_order": si,
+                  "_extra": {k: v for k, v in blk.items() if k != "section_contributions"}}
+        if not rows:
+            out[f"{spine}|"] = dict(common, _entry=None, _order=0, los=[])
+            continue
+        for n, c in enumerate(rows):
+            sid = str(c.get("section_id") or "")
+            key = f"{spine}|{sid}" if sid else f"{spine}|#{n}"
+            if key in out:
+                key = f"{key}#{n}"
+            out[key] = dict(
+                common, _entry=_copy(c), _order=n,
+                los=[{"period_number": int(p)}
+                     for p in index.get(norm_code(f"{sid}|{spine}"), [])],
+            )
+    return out
+
+
+def _spine_cells_from_engine(handoff: Dict[str, Any]) -> Dict[str, Any]:
+    """The inverse — engine blocks -> the native spine-keyed dict, after serve filtered.
+
+    Spines come back in their AUTHORED order (`_spine_order`, the canonical enumeration order
+    the LP's Rule 2 STEP 3 fixes) and each spine's contributions in their authored `_order`.
+
+    A spine left with NO surviving contribution is DROPPED, not kept empty — assessment Rule 1
+    omits a spine with zero contributions entirely, so an empty block would be a shape the
+    constitution does not describe. This is the opposite of the goal-cluster branch, where the
+    three clusters are structural and survive empty, and the difference is not a preference:
+    there the container is mandated, here it is derived from what was taught.
+    """
+    spines: Dict[str, Dict[str, Any]] = {}
+    for blk in handoff.values():
+        if not isinstance(blk, dict) or blk.get("_carrier") != _ENGLISH_SPINE_CELL:
+            continue
+        spine = str(blk.get("_spine") or "")
+        s = spines.setdefault(spine, {"order": blk.get("_spine_order", 0),
+                                      "extra": blk.get("_extra") or {}, "rows": []})
+        entry = blk.get("_entry")
+        if not isinstance(entry, dict) or not (blk.get("los") or []):
+            continue
+        s["rows"].append((blk.get("_order", 0), entry))
+    out: Dict[str, Any] = {}
+    for spine in sorted(spines, key=lambda k: (spines[k]["order"], k)):
+        s = spines[spine]
+        if not s["rows"]:
+            continue
+        s["rows"].sort(key=lambda t: t[0])
+        out[spine] = dict(s["extra"], section_contributions=[dict(e) for _, e in s["rows"]])
+    return out
+
+
 def to_engine_handoff(result: Dict[str, Any]) -> Any:
     """Native handoff -> the one shape serve speaks. Identity for the block-shaped
     families (SS, TWAU); a lossless wrapping for the section-array families (science,
-    maths·secondary) and for the goal-cluster family (maths·middle)."""
+    maths·secondary), the goal-cluster family (maths·middle) and the spine-cell family
+    (english)."""
     ho = result.get("coverage_handoff")
+    cells = _spine_cells(ho)
+    if cells is not None:
+        return _spine_cells_to_engine(result, cells)
     clusters = _goal_clusters(ho)
     if clusters is not None:
         return _goal_clusters_to_engine(result, clusters)
@@ -659,6 +839,10 @@ def from_engine_handoff(handoff: Any) -> Any:
     plan does not teach has no entry (unlike SS, which keeps the block with empty
     `los`). `total_sections` is recomputed to what this plan actually carries; the
     stale authored count would misdescribe a served plan."""
+    if isinstance(handoff, dict) and any(
+            isinstance(v, dict) and v.get("_carrier") == _ENGLISH_SPINE_CELL
+            for v in handoff.values()):
+        return _spine_cells_from_engine(handoff)
     if isinstance(handoff, dict) and any(
             isinstance(v, dict) and v.get("_carrier") == _MATHS_GOAL_CLUSTER
             for v in handoff.values()):
@@ -1012,7 +1196,7 @@ def _stamp_group_keys(result: Dict[str, Any],
         return items
     keys, seen = [], set()
     for i, g in enumerate(groups):
-        key = str(g.get("section_code") or "").strip() or str(i)
+        key = group_key(g, i)
         if key in seen:
             key = f"{key}#{i}"
         seen.add(key)

@@ -504,6 +504,20 @@ must confirm · source entry.
    quotes anyway, the Format line is not where the model is taking its cue and the
    amendment needs re-siting, not re-wording.
 
+20. **TWAU assessment v1.4 → v1.5 (2026-08-12, from ARV-D-120)** — three brief additions, no
+   mapping changed: Rule 3 Prohibition 3 (a `dominant_mode` code — O&R/HI/D&C/C&E/R&A — is
+   never a `question_type`; the mode is the LEFT column of Rule 3's table, the type is the
+   RIGHT); the A1 schema's `question_text` line now requires a NON-EMPTY stem on MCQ/SCR/ECR;
+   A1 Prohibition 8 forbids `null` on any field. *Cause:* the pilot's U11 item emitted
+   `question_type: "HI"` with `question_text: null` — a correct SCR wearing the wrong column's
+   label and asking nothing. Founder authorised the artefact back-fill; this closes the source.
+   The table itself was deliberately NOT inverted (founder, same day). *Validated:* text only.
+   *Wave 1 must confirm:* every `question_type` in `{MCQ, SCR, ECR, OPEN_TASK}`, zero mode
+   codes, every non-OPEN_TASK item with a non-empty stem, no `null` anywhere. Detection is
+   already gated (`build_library.py` item-shape gates, ARV-D-123) — this is the prevention half.
+   **Same table shape exists on science (mode) and SS (weight tier): amend at S9–S11's P-prep,
+   not mid-campaign.**
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.

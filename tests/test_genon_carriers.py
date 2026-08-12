@@ -703,6 +703,187 @@ class TestMathematicsPreparatoryLanded(unittest.TestCase):
                          "S2 / S3")
 
 
+class TestEnglishSecondaryLanded(unittest.TestCase):
+    """S11, 2026-08-12 — english·secondary is 8-rule ROW 7: the period-field family again,
+    and the first row in the table whose join key is a PAIR.
+
+    The item names a CELL (`source_section_id` + `source_spine`), the unit names the cells it
+    teaches (`section_id` + `spines_taught[]`), and the pair is the join — no coverage_handoff
+    in the path, and the LO rides on the item itself (`source_lo`), so it needs no bridge
+    either. What makes it its own row is that neither half identifies a cell alone.
+
+    Fixture: the real saved plan `backup/saved_plans/english/ix/ch_11_*.json` — 7 units over
+    one main_section (the post-split shape), 6 items in 6 SPINE groups, two cells genuinely
+    spanning several units (RFC over 1-3, VocGram over 4-5).
+    """
+
+    FIXTURE = "backup/saved_plans/english/ix/ch_11_20260608_213837.json"
+
+    def setUp(self):
+        p = Path(__file__).resolve().parents[1] / self.FIXTURE
+        if not p.is_file():
+            self.skipTest("english IX saved plan not on disk")
+        self.plan = json.loads(p.read_text(encoding="utf-8"))
+        self.result = self.plan["result"]
+
+    def test_the_stage_is_no_longer_owed_and_its_siblings_still_are(self):
+        from aruvi_core.genon.carriers import carrier_gap
+        self.assertIsNone(carrier_gap("english", "ix"))
+        self.assertIsNotNone(carrier_gap("english", "vii"), "S10 owes middle")
+        self.assertIsNotNone(carrier_gap("english", "iii"), "S9 owes preparatory")
+
+    def test_every_item_resolves_to_exactly_one_unit_with_zero_orphans(self):
+        items = assessment_items(self.plan, self.result)
+        self.assertEqual(len(items), 6, "6 items across 6 spine groups, flattened")
+        for it in items:
+            self.assertIsInstance(it, dict, "the spine wrapper must be flattened, not iterated")
+            self.assertEqual(len(it["unit_ref"]), 1,
+                             f"{it.get('id')} did not anchor to exactly one unit")
+
+    def test_every_anchor_equals_the_LAST_unit_teaching_THAT_CELL(self):
+        """The 2026-08-05 ruling, computed independently off the units. Both spanning cells
+        are real cases here: RFC is taught in units 1-3 and VocGram in 4-5, so an item that
+        anchored at the FIRST unit, or at the union, would show a different number."""
+        cells = {p["period_number"]: (p["section_id"], p["spines_taught"])
+                 for p in self.result["lesson_plan"]["periods"]}
+        self.assertEqual([n for n, (s, sp) in cells.items()
+                          if "reading_for_comprehension" in sp], [1, 2, 3])
+        self.assertEqual([n for n, (s, sp) in cells.items()
+                          if "vocabulary_grammar" in sp], [4, 5])
+        for it in assessment_items(self.plan, self.result):
+            last = max(n for n, (sid, sp) in cells.items()
+                       if sid == it["source_section_id"] and it["source_spine"] in sp)
+            self.assertEqual(it["unit_ref"], [last],
+                             f"{it['id']} anchored off its cell's last unit")
+
+    def test_the_join_is_the_PAIR_not_the_spine_alone(self):
+        """The reason row 7 is its own row, shown on the only shape that can prove it: a
+        MULTI-section english plan, where three different sections each teach RFC. Joining on
+        the spine alone would make every RFC item share one cell and collapse all three onto
+        the last section's unit. (The fixture is a middle-stage plan, so it goes through the
+        resolver directly — the gated seam would refuse it, which is S10's business.)"""
+        from aruvi_core.subjects.english.subject import cell_resolver
+        plan = load("english_vii_ch01_saved.json")
+        r = plan["result"]
+        periods = r["lesson_plan"]["periods"]
+        resolve = cell_resolver(periods, r["assessment_items"])
+        got = {}
+        for sg in r["assessment_items"]:
+            for it in sg["items"]:
+                if it["source_spine"] == "reading_for_comprehension":
+                    got[it["source_section_id"]] = resolve(it)
+                else:
+                    resolve(it)                      # keep the counters aligned
+        self.assertEqual(len(got), 3, "sections A, B and C each carry an RFC item")
+        self.assertEqual(len({tuple(v) for v in got.values()}), 3,
+                         "three sections, three DIFFERENT unit sets — not one shared cell")
+
+    def test_the_N_to_N_pairing_survives_into_the_carrier(self):
+        """Two items sharing a cell taught over exactly two units pair POSITIONALLY, one per
+        unit, instead of both anchoring at the close. This is the 2026-07-11 display fix, and
+        the carrier delegates to the same resolver so it cannot be lost on the served side.
+        Synthetic because no english chapter in the corpus authors two items for one cell —
+        Rule 10 emits one item per cell — but the shape is legal and the resolver supports it,
+        so the guard belongs here rather than in a comment."""
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 4, "section_id": "A", "spines_taught": ["vocabulary_grammar"]},
+            {"period_number": 5, "section_id": "A", "spines_taught": ["vocabulary_grammar"]}]},
+            "assessment_items": [{"spine_code": "vocabulary_grammar", "items": [
+                {"id": "Q1", "source_section_id": "A", "source_spine": "vocabulary_grammar"},
+                {"id": "Q2", "source_section_id": "A", "source_spine": "vocabulary_grammar"}]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
+        self.assertEqual([it["unit_ref"] for it in got], [[4], [5]])
+
+    def test_a_cell_no_unit_teaches_resolves_to_EMPTY_not_a_guess(self):
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 1, "section_id": "A", "spines_taught": ["listening"]}]},
+            "assessment_items": [{"spine_code": "writing", "items": [
+                {"id": "Q", "source_section_id": "B", "source_spine": "writing"}]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
+        self.assertEqual(got[0]["unit_ref"], [], "compile.py reports the orphan by name")
+
+    def test_a_synthesis_unit_is_not_indexed(self):
+        """A closing unit revisits several cells without teaching one. Indexed, it would be
+        the LAST unit of every cell it names and the whole chapter's items would collapse onto
+        it — the defect S7 met on maths·middle ch 7, third site, same seam."""
+        result = {"lesson_plan": {"periods": [
+            {"period_number": 1, "section_id": "A", "spines_taught": ["listening"]},
+            {"period_number": 2, "section_id": "A", "spines_taught": ["writing"]},
+            {"period_number": 3, "section_id": "A", "synthesis": True,
+             "spines_taught": ["listening", "writing"]}]},
+            "assessment_items": [{"spine_code": "listening", "items": [
+                {"id": "Q", "source_section_id": "A", "source_spine": "listening"}]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade IX"}, result)
+        self.assertEqual(got[0]["unit_ref"], [1], "unit 3 is a synthesis, not the cell's close")
+
+    def test_unit_anchor_is_the_COMPOSITE_cell_code(self):
+        from aruvi_core.genon.carriers import period_section_codes, unit_anchor
+        periods = self.result["lesson_plan"]["periods"]
+        self.assertEqual(unit_anchor(periods[0], subject="English", grade="Grade IX"),
+                         "A|reading_for_comprehension")
+        self.assertEqual(unit_anchor(periods[5], subject="English", grade="Grade IX"),
+                         "A|listening / A|speaking")
+        for p in periods:
+            got = unit_anchor(p, subject="English", grade="Grade IX")
+            self.assertEqual(got.split(" / "), period_section_codes(p),
+                             "the anchor and the join code are one expression, not two")
+
+    def test_the_spine_keyed_handoff_survives_a_ROUND_TRIP_and_filters(self):
+        """Without `_ENGLISH_SPINE_CELL` the dict fell through `to_engine_handoff` unchanged,
+        serve read `c["los"]` as empty and filtered nothing, so a short serve carried the full
+        canonical's coverage — claiming spines the class never met."""
+        from aruvi_core.genon.carriers import from_engine_handoff, to_engine_handoff
+        eng = to_engine_handoff(self.result)
+        self.assertEqual(len(eng), 6, "one engine block per (section × spine) CELL")
+        self.assertEqual([lo["period_number"] for lo in eng["vocabulary_grammar|A"]["los"]],
+                         [4, 5])
+        for blk in eng.values():                       # a serve that keeps units 1-4
+            blk["los"] = [lo for lo in blk["los"] if lo["period_number"] <= 4]
+        back = from_engine_handoff(eng)
+        self.assertEqual(list(back), ["reading_for_comprehension", "vocabulary_grammar"],
+                         "spines with no surviving cell are omitted (assessment Rule 1)")
+        self.assertEqual(back["reading_for_comprehension"]["section_contributions"][0],
+                         self.result["coverage_handoff"]["reading_for_comprehension"]
+                         ["section_contributions"][0], "contributions ride back verbatim")
+
+    def test_raw_item_list_returns_ITEMS_not_the_SPINE_groups(self):
+        from aruvi_core.genon.carriers import raw_item_list
+        got = raw_item_list(self.result)
+        self.assertEqual(len(got), 6, "6 spine groups would be the bug")
+        for it in got:
+            self.assertIn("source_spine", it)
+
+    def test_the_container_is_keyed_on_spine_code_not_on_position(self):
+        """Positional keys are safe only while both sides of a serve are the same list in the
+        same order — which is exactly what stops being true when a unit, and its item, is
+        BORROWED from a companion canonical."""
+        from aruvi_core.genon.carriers import from_engine_items, item_container
+        cont = item_container(self.result)
+        self.assertEqual([g["_gkey"] for g in cont["_groups"]],
+                         ["reading_for_comprehension", "listening", "speaking", "writing",
+                          "vocabulary_grammar", "beyond_text"])
+        out = from_engine_items(assessment_items(self.plan, self.result), cont)
+        self.assertEqual([g["spine_code"] for g in out],
+                         [g["_gkey"] for g in cont["_groups"]])
+        self.assertEqual([len(g["items"]) for g in out], [1] * 6)
+        self.assertTrue(all("_genon_group" not in it for g in out for it in g["items"]),
+                        "engine residue must never reach a served file")
+
+    def test_raw_item_fields_survive_the_seam(self):
+        it = next(i for i in assessment_items(self.plan, self.result)
+                  if i["id"] == "Q-RFC-A-1")
+        self.assertIn("teacher_guide", it)
+        self.assertIn("visual_stimulus", it)
+        self.assertIn("source_lo", it, "the LO rides on the item — row 7 needs no bridge")
+
+    def test_the_seam_does_not_need_a_grade(self):
+        """`genon_assessment` receives only `result`; the grade lives on the enclosing plan
+        (the S4 trap). English needs no stage discriminator at all — all three stages are
+        row 7 on the same two fields — but the method must still not reach for one."""
+        self.assertIsNone(self.result.get("grade"), "fixture: grade is on the plan, not here")
+        assessment_items(self.plan, self.result)
+
+
 class TestCarrierPreFlight(unittest.TestCase):
     """The gate must be FREE. Before 2026-08-08 the answer arrived at certification, which
     runs after the metered steps, so a missing carrier cost a whole library (₹110-150) and
@@ -712,14 +893,14 @@ class TestCarrierPreFlight(unittest.TestCase):
         from aruvi_core.genon.carriers import carrier_gap
         for subject, grade in (("mathematics", "ix"), ("mathematics", "vii"),
                                ("science", "ix"), ("science", "viii"),
-                               ("social_sciences", "ix"), ("the_world_around_us", "v")):
+                               ("social_sciences", "ix"), ("the_world_around_us", "v"),
+                               ("english", "ix")):          # row 7, landed 2026-08-12 (S11)
             self.assertIsNone(carrier_gap(subject, grade), f"{subject}·{grade}")
 
     def test_owed_stages_report_their_stage_and_row(self):
         from aruvi_core.genon.carriers import carrier_gap
         for subject, grade, owes in (("english", "iii", "S9"),
-                                     ("english", "vi", "S10"),
-                                     ("english", "ix", "S11")):
+                                     ("english", "vi", "S10")):
             gap = carrier_gap(subject, grade)
             self.assertIsNotNone(gap, f"{subject}·{grade} is not implemented")
             self.assertIn(owes, gap, "the gap must name the stage that owes it")
@@ -970,10 +1151,13 @@ def _count(vp, subject, klass, chapter):
 class TestAnchorFieldPresent(unittest.TestCase):
     """The declaration itself — asked of the plugin, never sniffed from an override."""
 
-    # THE MEDIATED STAGES, as of 2026-08-11 (S5): mathematics middle + preparatory, and
-    # now the_world_around_us preparatory. Three field names, one seam.
+    # THE MEDIATED STAGES, as of 2026-08-12 (S11): mathematics middle + preparatory,
+    # the_world_around_us preparatory, and now ENGLISH at all three stages. Four field
+    # shapes, one seam — and english's is the only COMPOSITE one (`section_id` +
+    # `spines_taught[]`, joined into "A|listening").
     _MEDIATED = {("mathematics", "IV"), ("mathematics", "VII"),
-                 ("the_world_around_us", "IV")}
+                 ("the_world_around_us", "IV"),
+                 ("english", "IV"), ("english", "VII"), ("english", "IX")}
 
     def test_the_field_stages_declare_the_field_present(self):
         from aruvi_core.genon.carriers import anchor_field_present
@@ -1004,6 +1188,19 @@ class TestAnchorFieldPresent(unittest.TestCase):
                 self.assertFalse(anchor_field_present("the_world_around_us", klass))
                 self.assertTrue(has_section_axis("the_world_around_us", klass),
                                 "the axis is real — only the field name differs")
+
+    def test_english_declares_it_absent_at_every_stage(self):
+        """Landed 2026-08-12 at S11's P5.5. `grep -c section_anchor` is 0 in ALL THREE
+        english LP constitutions — one grep, three stages, which is why this is asserted for
+        the family rather than for the certified stage alone. The axis is real and is the
+        (section × spine) CELL the constitution's own DESIGN PRINCIPLE names; only the field
+        is missing, and the anchor is built from the two fields that are there."""
+        from aruvi_core.genon.carriers import anchor_field_present, has_section_axis
+        for klass in ("III", "IV", "V", "VI", "VII", "VIII", "IX"):
+            with self.subTest(klass=klass):
+                self.assertFalse(anchor_field_present("english", klass))
+                self.assertTrue(has_section_axis("english", klass),
+                                "the axis is the cell — only the field name is absent")
 
     def test_it_is_not_the_same_question_as_the_section_axis(self):
         """maths·middle HAS a section axis and has no field; science·middle has neither.
@@ -1062,16 +1259,33 @@ class TestStandardBriefSynthesisCarrier(unittest.TestCase):
                 self.assertNotIn("section_anchor", text)
                 self.assertNotIn("the single word: synthesis", text)
 
+    def test_english_is_asked_for_the_BOOLEAN(self):
+        """Added 2026-08-12 at S11's P5.5 — the fourth stage-family to need it, and the one
+        where the token would have been hardest to spot as wrong: english's period carries
+        `section_id`, so a brief demanding `section_anchor` would have looked almost right
+        and produced a field the constitution never defines, at metered STEP 1."""
+        vp = _vp()
+        for klass in ("IV", "VII", "IX"):
+            with self.subTest(klass=klass):
+                text = vp.top_brief_for("english", klass, 1)
+                n = _count(vp, "english", klass, 1)
+                self.assertIn('`"synthesis": true` on its period object', text)
+                self.assertIn(f"unit {n}, the final unit, is a WHOLE-CHAPTER SYNTHESIS",
+                              text)
+                self.assertNotIn("section_anchor", text)
+                self.assertNotIn("the single word: synthesis", text)
+
     def test_the_field_stages_keep_BYTE_IDENTICAL_wording(self):
         """The two lines this change touches, verbatim as they read before it. The
         declared-field stages must not be re-briefed by a fix made for a mediated one.
 
-        `the_world_around_us·III` LEFT this list on 2026-08-11 (S5): it is a mediated stage
-        now, and is covered by `test_twau_preparatory_is_asked_for_the_BOOLEAN` above."""
+        `the_world_around_us·III` LEFT this list on 2026-08-11 (S5) and ENGLISH left it on
+        2026-08-12 (S11): both are mediated stages now, and are covered by
+        `test_twau_preparatory_is_asked_for_the_BOOLEAN` and
+        `test_english_is_asked_for_the_BOOLEAN` respectively."""
         vp = _vp()
         for subject, klass in (("mathematics", "IX"), ("social_sciences", "IX"),
-                               ("social_sciences", "VII"), ("science", "IX"),
-                               ("english", "IV"), ("english", "VII"), ("english", "IX")):
+                               ("social_sciences", "VII"), ("science", "IX")):
             with self.subTest(stage=f"{subject}·{klass}"):
                 text = vp.top_brief_for(subject, klass, 1)
                 n = _count(vp, subject, klass, 1)
@@ -1114,14 +1328,15 @@ class TestSynthesisReadsAsSynthesisOnScreen(unittest.TestCase):
     skipped into silence: SS·secondary renders as a single flat "Units" group with no
     per-section headings at all, so its synthesis is identified by its own `activity_title`
     ("Atmosphere to Action: A Whole-Chapter Synthesis") and there is no group label to get
-    wrong. English has no genon carrier yet (rows 7, owed by S9–S11); when it lands, decide
-    which of the two shapes it is and either add it here or extend this docstring.
+    wrong. ENGLISH JOINED THE PROBE at S11 (2026-08-12): it groups on the (section, spine
+    signature) pair, which is a section-grouped port by this test's definition, and its
+    closer would otherwise read as whichever spines it revisits.
     """
 
     def test_every_section_grouped_port_labels_the_closer(self):
         from aruvi_core import subjects as SUB
         from aruvi_core.normalize import SYNTHESIS_DISPLAY
-        for m in ("science", "mathematics", "the_world_around_us"):
+        for m in ("science", "mathematics", "the_world_around_us", "english"):
             __import__(f"aruvi_core.subjects.{m}")
 
         # Each stage's OWN synthesis carrier, and its own anchor field — a port that reads
@@ -1131,6 +1346,11 @@ class TestSynthesisReadsAsSynthesisOnScreen(unittest.TestCase):
                                     "progression_stage": 9, "stage_label": "Synthesis"},
             "mathematics":         {"section_anchor": "synthesis"},    # token stage (IX)
             "the_world_around_us": {"section_ref": "Spirit of Togetherness"},  # mediated
+            # english is mediated too, and on a COMPOSITE anchor: the closer names the
+            # spines it revisits, so a port grouping on the spine signature would file it
+            # under "Listening + Writing" (S11, 2026-08-12).
+            "english":             {"section_id": "A", "section_title": "T",
+                                    "spines_taught": ["listening", "writing"]},
         }
         for key, extra in cases.items():
             with self.subTest(subject=key):
@@ -1231,11 +1451,25 @@ class TestCompactBriefSynthesisCarrier(unittest.TestCase):
                     self.assertIn(_COVERAGE_LINE, text)
 
     def test_a_field_stage_compact_is_BYTE_IDENTICAL(self):
-        for subject, klass in (("mathematics", "IX"), ("social_sciences", "IX"),
-                               ("english", "VII")):
+        """english·VII LEFT this list on 2026-08-12 (S11) — it is a mediated stage now, so
+        its compacts get the field-neutral registry rule, asserted below."""
+        for subject, klass in (("mathematics", "IX"), ("social_sciences", "IX")):
             with self.subTest(stage=f"{subject}·{klass}"):
                 for text in self._briefs(subject, klass).values():
                     self.assertIn(_TOKEN_REGISTRY_RULE, text)
+                    self.assertNotIn('"synthesis": true', text)
+
+    def test_an_english_compact_gets_the_MEDIATED_registry_rule(self):
+        """Added 2026-08-12 (S11). A compact of a mediated stage must not be told to put its
+        anchor in `section_anchor`, and must still be told the closing synthesis belongs to
+        the standard alone — the pair maths·middle already gets, on a fourth field shape."""
+        for klass in ("IV", "VII", "IX"):
+            with self.subTest(klass=klass):
+                for text in self._briefs("english", klass).values():
+                    self.assertIn("in the field your own constitution already defines for "
+                                  "it", text)
+                    self.assertIn('Emit `"synthesis": false` on every unit', text)
+                    self.assertNotIn("section_anchor", text)
                     self.assertNotIn('"synthesis": true', text)
 
 
