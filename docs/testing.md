@@ -415,9 +415,9 @@ before starting each stage):
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (assess v3.4) |
 | S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
-| S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — |
-| S10 | english · middle | 1.6 (quote-format only) | phases[] → P3 | — | — | — |
-| S11 | english · secondary | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.4, 2026-08-12) |
+| S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — (assess **v1.3** — poem locator carried early, 2026-08-12) |
+| S10 | english · middle | 1.6 (quote-format only) | phases[] → P3 | — | — | — (assess **v3.5** — poem locator carried early, 2026-08-12) |
+| S11 | english · secondary | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v1.5**, 2026-08-12) |
 
 > ★ **CROSS-STAGE, 2026-08-11 — the narration format's JSON quote hazard is closed on all
 > five LP constitutions that carried it** (maths middle v3.9 · maths prep v1.4 · english
@@ -430,6 +430,19 @@ before starting each stage):
 > S9–S11 rows below are bumped by this alone; their P-prep is otherwise untouched. Pipeline
 > half of the same fix: `parse_with_repair`'s bound 10 → 500, plus
 > `genon/recover_from_raw.py`, so a parse failure never costs a re-generation again.
+
+> ★ **CROSS-STAGE, 2026-08-12 — THE POEM LOCATOR IS ALREADY IN ALL THREE ENGLISH ASSESSMENT
+> CONSTITUTIONS** (secondary v1.5 at its own C14, preparatory v1.2 → **v1.3** and middle
+> v3.4 → **v3.5** carried the same day, ahead of their P-preps). `poem_text` is the NCERT poem,
+> not a paraphrase — 13 of ch 2's 16 lines are verbatim in the textbook PDF — so an item that
+> quoted it put published verse into a CANONICAL, the one artefact class that reaches the cloud
+> (F2 of the copyright review). A poem section's stimulus is now a LOCATOR:
+> `Read lines N–M on p.PP, beginning "<incipit>"`, incipit capped at **eight words**, no
+> ellipsis, lines copied into no field. Secondary needed five edit sites (its Rule 9 carries the
+> 3–8 line extract block); prep and middle needed two each, both in Rule 3, because neither has
+> that block. **READING `poem_text` stays legal at all three** — only reproduction is closed.
+> Done early on purpose: §9 re-authors nothing while no english library exists, and would cost
+> ~₹80 a library afterwards. **S9 and S10 inherit this as done; their P2 owes only A6 and A9.**
 
 > ★ **S6 · science · middle is the campaign's ONE STRUCTURAL EXCEPTION** (2026-08-07, at its
 > P-prep; spec `docs/science_middle_stage_serve.md`, read it before any S6 work). It anchors
@@ -605,7 +618,7 @@ DIFFERENT field, which is why neither may borrow the other's join). Removal N/A.
 repaired alongside: the `what_each_option_reveals` example had lost `"B"` and gained a second
 `"C"` when S7's distractors-only pass rewrote one of its two lines in this file.
 `genon/out/stage_prep_mathematics_preparatory/`.
-**Done for S11 (2026-08-12):** english·secondary assessment **v1.3 → v1.4**; A6 landed as a NEW
+**Done for S11 (2026-08-12):** english·secondary assessment **v1.3 → v1.4**, then **→ v1.5** at C14 (the POEM LOCATOR, ARV-D-138: Rule 9's extract block no longer copies `poem_text` — a poem section carries `Read lines N–M on p.PP, beginning "<incipit>"`, incipit capped at eight words. F2's english conduit closed. S9/S10 owe the same five edits at their own P2, before any poem chapter of theirs is authored); A6 landed as a NEW
 rule (8A) because the anchoring facts had no home in the file — the anchor is the (section ×
 spine) **CELL**, carried by the item's own `source_section_id` + `source_spine` (8-rule **row 7**,
 the period-field family, and **the only PAIR key in the table**). Removal N/A. A9's two lines sit

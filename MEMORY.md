@@ -564,6 +564,21 @@ must confirm · source entry.
    [SECONDARY DELTA] drama branch — `drama_summary`, role-assigned reading, act-splitting
    through Rules 1/2A/3/4 — is untested by S11; ch 11 is class IX's only drama and the pre-warm
    sweep owes it a run.**
+   **★ AMENDED AGAIN AT C14 (2026-08-12): assessment v1.4 → v1.5, the POEM LOCATOR (ARV-D-138).** Rule 9's extract block copied `poem_text` verbatim, and `poem_text` is the NCERT poem — measured: 13 of ch 2's 16 lines appear verbatim in the textbook PDF, and 8 of english IX's 16 chapters are poems. A poem item would have put 3–8 published lines into a CANONICAL, which is what goes to the cloud: finding F2 of the copyright review, landing on the stage that owns it. Closed by replacing the block, for poem sections only, with a LOCATOR — `Read lines N–M on p.PP, beginning "<incipit>"`, incipit ≤ 8 words, no ellipsis, lines copied into no field. Five edit sites (Rule 4 type definition incl. its 'or inline' escape · Rule 3 REQUIRED · Rule 9 opening · Rule 9 formats · schema comment). READING `poem_text` stays legal (INPUTS §2, Rule 2(a), Rule 6) — the summary never leaves the machine. *Validated:* text only, plus the measurement above. *C1/C3 of the first POEM chapter must confirm:* the stimulus is a one-line locator, the incipit is ≤ 8 words, and no poem line appears in any field. **S9 and S10 owe the same five edits at their own P2** — free until their first poem chapter is authored, ~₹80 a library afterwards.
+
+22. **English preparatory + middle assessment — the POEM LOCATOR carried early (2026-08-12,
+   from S11's C14 · ARV-D-138)** — `assessment/english/preparatory` **v1.2 → v1.3** and
+   `assessment/english/middle` **v3.4 → v3.5**. Rule 3's REQUIRED line ("a specific line, image,
+   or phrase from `poem_text`") invited the poem into `item_stem` with nothing capping it; it now
+   reads ADDRESSED BY ITS PLACE, NOT COPIED OUT — a stanza/line reference plus an incipit of at
+   most eight words — and a matching PROHIBITED clause bans copying the lines into `item_stem`,
+   `visual_stimulus`, `suggested_answer` or any rubric field. Two edits per file, not secondary's
+   five, because neither stage carries the EXTRACT_ANALYSIS 3–8 line extract block. Reading
+   `poem_text` stays legal at both. *Validated:* text only. *C1/C3 of the first POEM chapter at
+   either stage must confirm:* no poem line in any field, the incipit ≤ 8 words, no ellipsis
+   continuation. **Sidecar CHANGELOGs created for both files** (neither had one) with the
+   pre-2026-08-12 history reconstructed from item 9's inventory and flagged as each stage's own
+   P4 to complete.
 
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable

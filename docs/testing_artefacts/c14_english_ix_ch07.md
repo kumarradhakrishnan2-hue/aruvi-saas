@@ -56,21 +56,60 @@ ref) or licensed before English plans are served commercially."*
 10, 12, 14 and 16, carrying 10 to 33 lines of `poem_text` each. This chapter is prose, so **nothing in this library is
 affected**; the exposure is in the constitution, not in the artefact.
 
-**The cheap fix already exists in the file.** The prose path is safe because the extract comes
-from a summary field that is Aruvi's own writing. Poem sections have exactly such a field —
-`poem_appreciation_summary`. One clause in Rule 9 — *the extract block is drawn from
-`prose_summary` / `drama_summary` / `poem_appreciation_summary`; `poem_text` may be cited by
-line reference but never reproduced* — closes it without touching the item type or the
-pedagogy. That is a P2 amendment, so under §9 it would re-author any poem-chapter library
-authored before it; none exists yet, which is why doing it now is free.
+---
+
+## CLOSED THE SAME DAY — assessment v1.4 → v1.5, the poem locator
+
+Founder ruling 2026-08-12: fix it now rather than accept or defer. Two things were checked
+before drafting, and both changed the design from my first proposal.
+
+**Is `poem_appreciation_summary` the safe substitute?** Mostly, but not cleanly. Measured across
+all eight poem chapters: it is Aruvi's own critical prose (108–189 words), with a **longest
+verbatim run against the textbooks of zero words in seven of eight** and a five-word fragment in
+ch 10. But three chapters quote short lines inside the commentary — ch 2 *"she's peerless, let's
+praise her!"*, ch 8 the refrain *"I cannot remember my mother"* (×3), ch 16 *"Step up to the
+challenge"*. Four to six words each, attributed, embedded in criticism. Pointing the extract
+block at it would **narrow** the conduit, not close it — and it would also cost the pedagogy,
+because an extract-analysis question on a poem *is* "read these lines closely".
+
+**So the fix is the one the copyright review itself names — paraphrase + page ref.** The student
+is holding the textbook; the stimulus does not have to reproduce the poem to point at it.
+
+**And the incipit is part of the design, not a hedge.** NCERT prints **no line numbers** on its
+poems, and ch 2's stanzas break across a page boundary mid-poem — "lines 5–8" alone would have a
+student counting. A few words of the first line find it at once, it identifies rather than
+substitutes, and it is the convention of every citation index and exam paper. The cap is hard
+and in the rule: **at most eight words, one line, no ellipsis, no second fragment.**
+
+**Five edit sites, not the one I first claimed** — the permission was written in five places,
+and two of them I had missed: Rule 4's type definition (which also carried an "or inline"
+escape into `item_stem`) and the schema comment.
+
+| # | site | change |
+|---|---|---|
+| 1 | Rule 4 · type definition | drops "verbatim"; poem branch closes the inline escape |
+| 2 | Rule 3 · REQUIRED | "a specific line … from `poem_text`" → identified by location, not reproduced |
+| 3 | Rule 9 · opening | stimulus = extract block (prose · drama) **or locator (poem)** |
+| 4 | Rule 9 · permitted formats | one bullet splits in two; the **poem locator** is the only form for a poem |
+| 5 | schema comment | the format list, which repeated the old wording |
+
+**Reading is untouched.** INPUTS §2, Rule 2(a) and Rule 6 still name `poem_text` as a content
+source — reading the poem is what makes a good question possible, and the summary never leaves
+the machine. Only reproduction into the artefact is closed; the edit script asserts `poem_text`
+survives in exactly those three read sites and nowhere else.
+
+**§9 — re-authors nothing.** A constitution change normally re-opens the stage; this one
+restricts a path the installed library does not use. ch 7 is prose, its single stimulus is a
+prose extract from `prose_summary`, no locator applies — so it satisfies v1.5 exactly as it
+satisfied v1.4, checked rather than assumed. No poem-chapter library exists anywhere, which is
+why this was free today and would not have been after the first poem chapter was generated.
 
 ---
 
 ## Exit
 
-**Zero unattributed or wholesale reproductions in the pilot library and its served plans.**
-Checks 1–3 pass for ch 7. One defect filed against the stage rather than the artefact:
-**ARV-D-138**, the poem-text conduit, which is F2 landing where the campaign review predicted it
-would. It does not block this chapter; it should be ruled on before english·secondary is
-certified, because certification is a statement about the constitution and not only about
-*Vitamin-M*.
+**Zero unattributed or wholesale reproductions in the pilot library and its served plans**;
+checks 1–3 pass for ch 7. **ARV-D-138 is CLOSED by assessment v1.5** — F2's English conduit is
+shut at this stage for both prose (already, by construction) and poems (now, by rule). S9 and
+S10 inherit the pattern and should carry the same five edits at their own P2, before any poem
+chapter of theirs is authored.

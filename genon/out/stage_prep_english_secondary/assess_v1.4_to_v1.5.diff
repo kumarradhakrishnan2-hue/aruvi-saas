@@ -1,0 +1,93 @@
+--- genon/out/stage_prep_english_secondary/assessment_constitution_v1.4_pre_poem_locator.txt	2026-08-12 16:30:51.432582493 +0530
++++ data/content/constitutions/assessment/english/secondary/assessment_constitution.txt	2026-08-12 16:30:51.434019991 +0530
+@@ -1,4 +1,4 @@
+-ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 1.4 (SECONDARY)
++ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 1.5 (SECONDARY)
+ Stage: Secondary (Grade IX; extensible to X)
+ Forked from English Assessment Constitution v3.1 (Middle). Secondary-only
+ changes are flagged [SECONDARY DELTA].
+@@ -138,7 +138,9 @@
+ REQUIRED — draw on at least ONE of:
+   - a named character, speaker, or person;
+   - a specific event/scene/episode/act from prose_/drama_summary;
+-  - a specific line, image, or phrase from poem_text;
++  - a specific image, phrase or turn in the poem — IDENTIFIED BY ITS
++    LOCATION, NOT REPRODUCED: a stanza or line reference plus an incipit
++    of at most eight words (Rule 9);
+   - the grammar/vocabulary concept as it appears in the section — for
+     Vocabulary/Grammar items the concept MUST be named in the stem
+     (e.g. "reported speech", "phrasal verbs", "prefixes giving negative
+@@ -176,13 +178,17 @@
+   MCQ          — Multiple Choice (4 options, exactly one correct)
+   SCR          — Short Constructed Response (1–3 sentences)
+   ECR          — Extended Constructed Response (paragraph)
+-  EXTRACT_ANALYSIS — [SECONDARY DELTA] a short verbatim extract (passage
+-                 or stanza) from the section, placed in `visual_stimulus`
+-                 (preferred) or inline, followed by 1–3 analytical
++  EXTRACT_ANALYSIS — [SECONDARY DELTA] a short extract from the section,
++                 placed in `visual_stimulus` (preferred) or inline,
++                 followed by 1–3 analytical
+                  sub-questions (inference, effect of language, tone,
+                  device, meaning) as a numbered list in `item_stem`
+                  (Rule 9). Mirrors "Critical Reflection". OPEN (Rule 5);
+                  carries `expected_elements`, not `options[]`.
++                 FOR A **POEM** SECTION THE EXTRACT IS NEVER REPRODUCED:
++                 `visual_stimulus` carries a LOCATOR instead (Rule 9), and
++                 the "or inline" alternative does not apply — a poem's
++                 lines may not appear in `item_stem` either.
+   MATCH        — Matching (Column 1 ↔ Column 2)
+   FILL_IN      — Blanks in a cloze set; at most ONE visual (Rule 9); multi-part
+                  A/B allowed ONLY if every part is textual (no visual)
+@@ -355,14 +361,29 @@
+ ================================================================================
+ 
+ `visual_stimulus` is non-empty only for tabular data grounded in the
+-section, OR [SECONDARY DELTA] for an EXTRACT_ANALYSIS verbatim extract.
++section, OR [SECONDARY DELTA] for an EXTRACT_ANALYSIS extract block
++(prose · drama) or LOCATOR (poem).
+ 
+ Permitted formats:
+   - Pipe-delimited table: 2+ lines, every line contains "|", first row is
+     header; built from the source text.
+-  - Verbatim extract block [SECONDARY DELTA]: a short passage/stanza copied
+-    verbatim from prose_/drama_summary / poem_text, plain lines (no "|"),
+-    3–8 lines. Used by EXTRACT_ANALYSIS.
++  - Verbatim extract block [SECONDARY DELTA] — PROSE · DRAMA · NARRATIVE ·
++    INFORMATIONAL ONLY: a short passage copied verbatim from
++    `prose_summary` / `drama_summary`, plain lines (no "|"), 3–8 lines.
++    Used by EXTRACT_ANALYSIS. (This is the summary's own prose, written for
++    Aruvi, which is what makes reproducing it safe.)
++  - Poem locator [SECONDARY DELTA] — the ONLY permitted form for a POEM
++    section: ONE line, in the shape
++        Read lines N–M on p.PP, beginning "<incipit>".
++    The incipit is AT MOST EIGHT WORDS, taken from the first line of the
++    span, in double quotes, with NO ellipsis and NO second fragment. Where
++    the printed stanzas are a clearer address than a line count, use
++    "the second stanza on p.PP" instead — NCERT prints no line numbers,
++    and a stanza may break across a page.
++    THE POEM'S LINES ARE NOT COPIED — not into `visual_stimulus`, not into
++    `item_stem`, not into `suggested_answer`, not into `expected_elements`.
++    The student reads them in her own textbook; the incipit is there to
++    find them, not to replace them.
+   - "" : none. Default for most items.
+ 
+ PROHIBITED: inline SVG, ASCII art, image markup, base64, external image
+@@ -484,8 +505,9 @@
+               "is_correct": boolean }
+           ],
+ 
+-          "visual_stimulus":      string,   // "" | pipe-table | verbatim
+-                                            // extract block (EXTRACT_ANALYSIS)
++          "visual_stimulus":      string,   // "" | pipe-table | extract
++                                            // block (prose/drama) | poem
++                                            // LOCATOR (Rule 9)
+ 
+           "transcript_ref":       string,   // Listening only; "" otherwise
+ 
+@@ -512,5 +534,5 @@
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-English Assessment Constitution · Version 1.4 (Secondary) · Internal Document
++English Assessment Constitution · Version 1.5 (Secondary) · Internal Document
+ ================================================================================

@@ -4,6 +4,67 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v1.5 — 2026-08-12 · the poem-text conduit is closed (ARV-D-138, at C14)
+
+**What was open.** Rule 9 permitted the EXTRACT_ANALYSIS stimulus to be "a short
+passage/stanza copied verbatim from `prose_/drama_summary` / **`poem_text`**", and Rule 3
+licensed an item to draw on "a specific line, image, or phrase from `poem_text`". For prose
+that is harmless and was measured so at C14: the extract is verbatim from **Aruvi's own
+`prose_summary`** — 12-word overlap with the summary, **zero** six-word runs shared with the
+NCERT PDF — so what reaches the cloud is Aruvi's prose.
+
+`poem_text` is not a paraphrase. It is the poem. Measured on ch 2 *Bharat Our Land*: the
+summary carries 16 poem lines and **13 appear verbatim in the NCERT chapter PDF**. A poem
+chapter's item would therefore have placed 3–8 lines of an NCERT-published poem into a
+**canonical**, and canonicals are precisely what the copyright review's v1.1 ruling sends to
+the cloud (summaries and PDFs never leave the machine). That is finding **F2** of
+`docs/NCERT_copyright_review.md` — the campaign's sole open copyright finding — landing on the
+stage that owns it. **8 of english IX's 16 chapters are poems.**
+
+**What changed — five sites, because the permission was written in five places.**
+
+1. **Rule 4** (the type definition) — EXTRACT_ANALYSIS is no longer "a short *verbatim*
+   extract"; and the poem branch closes the "or inline" escape, which would have put the lines
+   in `item_stem` instead.
+2. **Rule 3** (REQUIRED) — "a specific line, image, or phrase from `poem_text`" becomes "a
+   specific image, phrase or turn in the poem — IDENTIFIED BY ITS LOCATION, NOT REPRODUCED".
+3. **Rule 9** (opening sentence) — the stimulus is an extract block (prose · drama) **or a
+   locator (poem)**.
+4. **Rule 9** (permitted formats) — the single bullet splits in two. The extract block is
+   restricted to `prose_summary` / `drama_summary`, with the reason stated in the rule. The new
+   **poem locator** is the only permitted form for a poem section:
+   `Read lines N–M on p.PP, beginning "<incipit>".`
+5. **The schema comment** for `visual_stimulus`, which repeated the old format list.
+
+**Why the incipit is part of the design rather than a hedge.** NCERT prints **no line numbers**
+on its poems, and ch 2's stanzas break across a page boundary mid-poem — "lines 5–8" alone
+would have a student counting. A few words of the first line find it at once. Legally it is the
+smallest possible quotation: it identifies, it does not substitute, and it is the convention of
+every citation index and every exam paper. The only real risk is drift, so the cap is hard and
+in the rule — **at most eight words, one line, no ellipsis, no second fragment** — rather than
+left to judgement.
+
+**What did NOT change.** The item type, the item count, the sub-question structure, the
+cognitive demand, and the whole prose/drama path. **Reading is untouched**: INPUTS §2, Rule 2(a)
+and Rule 6 still name `poem_text` as a content source, because reading the poem is what makes a
+good question possible and the summary never leaves the machine. Only *reproduction into the
+artefact* is closed. The edit script asserts `poem_text` survives in exactly those three read
+sites and nowhere else.
+
+**§9 — a tightening, stage-scoped, and it re-authors nothing.** A constitution change normally
+re-opens the stage. This one restricts a path the installed library does not use: ch 7 is a
+**prose** chapter, its single stimulus is a prose extract drawn from `prose_summary`, and no
+poem locator applies to it — so the library satisfies v1.5 exactly as it satisfied v1.4,
+checked clause by clause rather than assumed. **No poem-chapter library exists anywhere**, which
+is why this was free today and would not have been after the first poem chapter was generated.
+
+Artefacts: `genon/out/stage_prep_english_secondary/` — `assessment_constitution_v1.4_pre_poem_locator.txt`
+· `assess_v1.4_to_v1.5.diff` · `apply_s11_poem_locator.py` (exactly-one-occurrence asserts on
+all five edits, plus guards that the three read sites are intact and the prose path is
+unmoved). Review: `docs/testing_artefacts/c14_english_ix_ch07.md`.
+
+---
+
 ## v1.4 — 2026-08-12 · S11 stage prep — A6 as a rule of its own, A9 as two lines
 
 The campaign carry-forward for this stage (testing.md §3, P2). The constitution carried no

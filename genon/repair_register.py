@@ -154,7 +154,9 @@ REPAIRS = {
     },
     # ── APPLIED 2026-08-03; kept as the record. Re-running this set will FAIL its own
     #    "declared text not found" assertion, because the text is already gone. That is the guard.
-    ("social_sciences", "ix"): {
+    #    MOVED to a 3-tuple SUPERSEDED key 2026-08-12 so the S-SS·IX wave-1 set below can own
+    #    the live ("social_sciences", "ix") key — same pattern as mathematics·IX v1.5.
+    ("social_sciences", "ix", "APPLIED-20260803"): {
         "ch_03_canonical_p07.json": [
             (5, "band:3",
              " This bridges toward the climate change and Punjab floods sections that follow.", "",
@@ -165,6 +167,136 @@ REPAIRS = {
              "is complete without it, so the trailing sentence goes whole"),
         ],
     },
+    # ── S-SS · social_sciences · secondary · IX · BATCH WAVE 1 (2026-08-12) ─────────
+    # The first set written against a BATCH-authored wave: 8 standards bought in one job
+    # (msgbatch_01G73foX7nA3cpHfNCX99Ui9, Rs 193.23), certified free, 14 ban hits over 7 of
+    # the 9 chapters. ch 3 (the pilot, authored 2026-08-03) and ch 9 scan clean.
+    #
+    # DISTRIBUTION, and it is a new one: 9 clock / 2 forward / 2 calendar / 1 completion.
+    # Every earlier stage was forward-dominated (maths·IX 6 forward / 0 clock; science·IX
+    # 1/2; SS·VIII 3/4). Here the CLOCK ban carries two-thirds of the breach on its own, and
+    # every one of the nine is the same sentence shape: "Students work individually for N
+    # minutes, then <share|compare>". That is not boilerplate the model reached for — it is
+    # the model pacing a band it can already see the length of. Worth taking to the brief:
+    # the clock ban is stated, but nothing tells the model how to express intra-band pacing
+    # WITHOUT a quantity, and it evidently wants to. All nine deletions leave the grouping
+    # ("individually", "in pairs") and the output ("then share", "then compare") standing —
+    # the pedagogy is entirely in those, never in the number.
+    #
+    # ALL THIRTEEN ARE PURE DELETIONS. No text is authored. Struck at the founder's
+    # instruction (2026-08-12): clock, forward and calendar. The single COMPLETION hit
+    # (ch 1 U13) is deliberately NOT declared here — see the note at the end of this set.
+    ("social_sciences", "ix"): {
+        # ── forward (2) ──
+        "ch_01_canonical.json": [
+            (5, "band:3",
+             ", previewing the four dedicated discipline sections without naming upcoming units.",
+             ".",
+             "register/forward",
+             "the model breached and self-certified in one clause — it wrote 'without naming "
+             "upcoming units' while naming them. The band's teaching act (list four disciplines "
+             "against their drought-web branch) is complete at the full stop; the promise is "
+             "false in any compact that drops a discipline section"),
+        ],
+        "ch_04_canonical.json": [
+            (8, "teacher_notes",
+             " 'cultural continuity' in the civilisation sections that follow.",
+             " 'cultural continuity'.",
+             "register/forward",
+             "the C/N annotation move is justified on its own terms; the pointer to later "
+             "civilisation sections is what makes the note false when Mehrgarh is the last "
+             "sitting a compact reaches. Deleting the prepositional phrase leaves the "
+             "analytical claim intact"),
+        ],
+        # ── clock (9) — the quantity goes, the grouping and the output stay ──
+        "ch_02_canonical.json": [
+            (11, "band:1",
+             "Students work individually for fifteen minutes, then compare maps in pairs",
+             "Students work individually, then compare maps in pairs",
+             "register/clock",
+             "band is 10-30 at 50 min; proportional scaling to a 40-min serve makes 'fifteen "
+             "minutes' silently wrong while the band's own minutes stay correct"),
+        ],
+        "ch_05_canonical.json": [
+            (2, "band:0",
+             "Students think independently for two minutes, then share",
+             "Students think independently, then share",
+             "register/clock",
+             "think-pair-share pacing; the quantity is the only scale-dependent token"),
+            (21, "band:0",
+             "Students work independently for five minutes, then share their labels",
+             "Students work independently, then share their labels",
+             "register/clock",
+             "U21 is the synthesis unit — the one unit a compact borrows verbatim, so a "
+             "hard-coded quantity here travels further than anywhere else in the library"),
+        ],
+        "ch_06_canonical.json": [
+            (3, "band:0",
+             "Students discuss in pairs for three minutes, then share",
+             "Students discuss in pairs, then share",
+             "register/clock",
+             "opens on the chapter's own THINK ABOUT IT prompt; pairing and share-back carry "
+             "the structure without the number"),
+            (7, "band:0",
+             "Students work individually for seven minutes, then share two examples with the class",
+             "Students work individually, then share two examples with the class",
+             "register/clock",
+             "the output is quantified ('two examples') and that quantity is scale-free — it "
+             "is only the minutes that falsify"),
+            (17, "band:0",
+             "Students write individually for four minutes, then share one action and one "
+             "community issue with the class",
+             "Students write individually, then share one action and one community issue with "
+             "the class",
+             "register/clock",
+             "scanner marked this quoted=True because the band opens on a quoted prompt; the "
+             "match itself sits outside the quotation, so it is a true ban hit"),
+        ],
+        "ch_07_canonical.json": [
+            (4, "band:0",
+             "Let students discuss in pairs for two minutes, then take responses",
+             "Let students discuss in pairs, then take responses",
+             "register/clock",
+             "constituency-size provocation; the teacher move is 'take responses', not the clock"),
+        ],
+        "ch_08_canonical.json": [
+            (1, "band:0",
+             "one choice they or their family made this week where they could not have both options",
+             "one choice they or their family made where they could not have both options",
+             "register/calendar",
+             "struck at the founder's instruction. Recorded dissent: this reads as the STUDENT'S "
+             "own life, not the teaching schedule, which is the same ground on which "
+             "'today'/'yesterday' were demoted to advisory. The deletion costs nothing — "
+             "'a choice they could not have both ways' is the scarcity example whole — so the "
+             "cheaper action was to strike rather than argue"),
+            (1, "band:2",
+             "students list three things their parents bought this month and classify",
+             "students list three things their parents bought and classify",
+             "register/calendar",
+             "same family and same dissent as U1 band:0; the LET'S EXPLORE task is unchanged "
+             "in substance without the window"),
+            (5, "band:3",
+             "They work individually for five minutes, then compare with a neighbour to catch gaps",
+             "They work individually, then compare with a neighbour to catch gaps",
+             "register/clock",
+             "band is 40-50, the last band of the unit — the one most exposed to scaling"),
+            (7, "band:1",
+             "Students work individually for ten minutes, then compare with a neighbour",
+             "Students work individually, then compare with a neighbour",
+             "register/clock",
+             "ten minutes of a 16-minute band; at a 40-min serve the band is ~13 and the "
+             "quantity crowds out the compare step it is paired with"),
+        ],
+    },
+    # NOT DECLARED, and left standing on purpose: ch_01 U13 teacher_notes, "Having covered all
+    # four disciplines, this unit turns to the chapter's explicit…" — family COMPLETION. It was
+    # outside the founder's 2026-08-12 instruction (clock/forward/calendar), and it is not the
+    # same kind of claim as the other twelve: U13 of 15 sits after all four discipline sections
+    # in the STANDARD, where the sentence is simply TRUE. It is false only in a compact that
+    # drops a discipline — and a compact borrowing U13 borrows this note with it. So the fix is
+    # a judgement about whether the completion ban is about the text or about the serve, which
+    # is a founder call, not a text edit. `--apply` will therefore report 1 surviving ban hit in
+    # ch_01 and exit 1. That is the declared state, not an incomplete repair.
     # ── S3 · science · secondary · ch 8 "Journey Inside the Atom" (2026-08-06) ──────
     # THE FIRST LIBRARY AUTHORED WITH THE REGISTER ALREADY IN ITS CONSTITUTION.
     # SS·VIII's 7 hits came from a library generated BEFORE its P1 amendment landed — the
