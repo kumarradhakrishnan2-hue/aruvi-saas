@@ -110,6 +110,66 @@ REPAIRS = {
          "semicolon composite plus a redundant repeat of the second section; the clean "
          "two-section form is emitted. Unit coverage is unchanged (sections 3-4)."),
     ],
+    # ── ch 2 + ch 8 · THE STANDARD UNDER-NAMED ITS OWN SECTIONS (2026-08-12) ──────
+    # THE FIRST TIME A COMPACT CAUGHT A DEFECT IN THE PLAN IT WAS AUTHORED FROM, and the
+    # reason it deserves this much comment is that the machine blamed the wrong file.
+    #
+    # ch_02_p09 and ch_08_p04 were QUARANTINED on "every anchor verbatim in the top registry"
+    # + "first-visit order". Both had anchored sections the registry did not contain. Every one
+    # of those sections is a real heading in the chapter summary (ch 2 "Running Water" at offset
+    # 6232; ch 8 "What to Produce and for Whom?" 4573, "How to Produce?" 5836, "Economic Systems
+    # and How Choices are Made" 6725, "Market Economy" 8031). The STANDARDS teach them and say
+    # so in their own unit titles — ch 2 U5 is titled "Agents of Gradation AND RUNNING WATER:
+    # Valley to Delta", ch 8 U5 is "Planned AND MARKET Economies", ch 8 U4 is "The Three Key
+    # Questions — What, How, and For Whom to Produce" — and then anchor one section each. The
+    # registry is derived from those anchors, so the omission was invisible to certification:
+    # runbook §4 trap 5, "the check cannot see what it is built from".
+    #
+    # ch 8's registry held 6 of the chapter's 10 sections. MARKET ECONOMY — a whole section of
+    # an economics chapter — was not in it.
+    #
+    # WHY THIS IS ANCHOR HYGIENE AND NOT A LAUNDERED CONTENT CHANGE (the line this tool's
+    # docstring draws): no teaching text is touched and no unit changes what it covers. Each
+    # edit names sections the unit ALREADY teaches, in registry order. Verified band by band:
+    # ch 2 U5 bands 8-30/30-42 teach the running-water course sequence, V-shaped valley to
+    # delta; ch 8 U4 bands 10-26/26-40 teach what-to-produce and how-to-produce; ch 8 U5 band
+    # 26-40 teaches the market economy from Fig. 8.7 with the referee analogy and examples.
+    #
+    # WORTH RECORDING FOR THE MECHANISM, not just the fix: p04's brief SHOWED it the 6-section
+    # registry and said anchors MUST be drawn verbatim from that list. It named seven sections
+    # anyway, three of them absent from its brief, because it had read the summary. The compact
+    # was right about the chapter and was quarantined for it. Cheap check for next time: diff
+    # every canonical's anchor set against its siblings' and flag disagreement — that alone
+    # would have caught both chapters automatically, at no cost, before either was quarantined.
+    "ch_02_canonical.json": [
+        (5,
+         "Agents of Gradation",
+         "Agents of Gradation / Running Water",
+         "V2/registry-omission",
+         "U5's own title names Running Water; bands 8-30 and 30-42 teach the full upper/middle/"
+         "lower course sequence. Registry 8 -> 9 sections; Running Water enters at position 4, "
+         "which is its summary order (between Agents of Gradation 5321 and Waves and Currents "
+         "7904), so first-visit order is unchanged"),
+    ],
+    "ch_08_canonical.json": [
+        (4,
+         "Key Questions in Economics",
+         "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+         "V2/registry-omission",
+         "U4 is titled 'The Three Key Questions — What, How, and For Whom to Produce' and its "
+         "bands work through both sub-sections explicitly (crop example for what-to-produce, "
+         "Fig. 8.6 factors of production for how-to-produce, and the THINK ABOUT IT is taken "
+         "from the 'What to Produce and for Whom?' section by name)"),
+        (5,
+         "Planned Economy",
+         "Economic Systems and How Choices are Made / Planned Economy / Market Economy",
+         "V2/registry-omission",
+         "THE SERIOUS ONE. U5 is titled 'Planned and Market Economies — Two Models of Answering "
+         "the Three Questions'; band 26-40 introduces the market economy from Fig. 8.7 with the "
+         "chapter's referee analogy, and band 40-50 has students build a Planned vs Market "
+         "comparison table. 'Economic Systems and How Choices are Made' is the parent section "
+         "whose framing question U5 band 0-12 opens on. Registry 6 -> 10 sections"),
+    ],
     # ── ch 4 "Early Humans and Beginning of Civilisation" · WAVE 1 (2026-08-12) ───
     # NOT A MODEL SLIP, and worth being explicit about because the repair record is also the
     # evidence base for whether to change the MECHANISM. "a. The Sumerians" is the ch 4
