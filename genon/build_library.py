@@ -67,6 +67,25 @@ KNOWN_ITEM_TYPES = {
     "FILL_IN", "MATCH", "TRUE_FALSE", "ORAL_PROMPT", "WRITING_TASK", "PROJECT",
     "EXTRACT_ANALYSIS",
 }
+
+# The item's STEM, under whichever name its constitution gives it (ARV-D-127, S11 · C1).
+# `question_text` is what SS, TWAU, science and mathematics emit; **english's assessment
+# constitution names it `item_stem`** at all three stages, and reading only the first
+# quarantined a clean english library on the day the shape gate landed. Order is
+# preference, not priority: a file carries one of them, and the tuple is the whole
+# inventory — verified by census over every saved plan and canonical on disk (2026-08-12).
+# `prompt` appears 471 times in the PROTOTYPE-era maths corpus and in no canonical, so it
+# is recorded here and deliberately not read: a gate should tolerate the shapes that exist,
+# not the shapes that might.
+_STEM_FIELDS = ("question_text", "item_stem")
+
+
+def item_stem(it):
+    """(field_name, value) for this item's stem — so a report can name the right field."""
+    for f in _STEM_FIELDS:
+        if f in it:
+            return f, it.get(f)
+    return _STEM_FIELDS[0], None
 from normalize_options import normalize_library, unarranged        # noqa: E402
 
 from aruvi_core.grades import stage_for                            # noqa: E402
@@ -455,11 +474,22 @@ def certify(subject, grade, ch, row):
     #     one look identical to a frequency test, and only the second should ever stop a build.
     #
     # (2) AN ITEM MUST HAVE SOMETHING TO ASK. Every schema in the corpus says the same two
-    #     things in opposite directions: a non-OPEN_TASK item's stem is `question_text`, and
-    #     an OPEN_TASK carries `question_text: ""` with the prompt in `task`. Both directions
-    #     are checked. `null` fails both — the schemas permit "" or [], never omitted and
-    #     never null — which is the half of ARV-D-120 that could not be repaired mechanically,
+    #     things in opposite directions: a non-OPEN_TASK item's stem is the stem field, and
+    #     an OPEN_TASK carries it EMPTY with the prompt in `task`. Both directions are
+    #     checked. `null` fails both — the schemas permit "" or [], never omitted and never
+    #     null — which is the half of ARV-D-120 that could not be repaired mechanically,
     #     because a missing question has to be written.
+    #
+    #     THE FIELD IS NOT CALLED THE SAME THING EVERYWHERE (ARV-D-127, found at S11's C1,
+    #     2026-08-12). This gate landed the same morning reading `question_text` alone, on a
+    #     census that missed english: its assessment constitution names the field
+    #     **`item_stem`** at all three stages, so a perfectly good english library came back
+    #     with "6 without" on every file and all three canonicals were quarantined — a FALSE
+    #     failure, on the first stage to meet the new gate. `item_stem_field` below is the
+    #     serialization tolerance the rest of the platform already practises
+    #     (`carriers.period_section_codes`, `carriers.unit_approaches`): read the names the
+    #     constitutions actually use, report the one this item carries, and never assume a
+    #     field name is universal because four subjects share it.
     lib_types = Counter()
     parsed = {}
     for name, s_ in lib:
@@ -496,24 +526,24 @@ def certify(subject, grade, ch, row):
         nostem, badopen = [], []
         for it in items:
             qt = str(it.get("question_type") or "")
-            stem = it.get("question_text")
+            field, stem = item_stem(it)
             ident = it.get("id") or f"unit {it.get('period_ref')}"
             if qt == "OPEN_TASK":
                 if stem != "":
-                    badopen.append((ident, stem))
+                    badopen.append((ident, field, stem))
             elif not (stem or "").strip():
-                nostem.append((ident, qt, stem))
+                nostem.append((ident, qt, field, stem))
         note(not nostem,
              f"{name}: every non-OPEN_TASK item carries a stem ({len(nostem)} without)",
              name if nostem else None)
-        for iid, qt, stem in nostem[:6]:
-            lines.append(f"      {iid}: {qt} has question_text {stem!r} — "
+        for iid, qt, field, stem in nostem[:6]:
+            lines.append(f"      {iid}: {qt} has {field} {stem!r} — "
                          "there is nothing to ask")
         note(not badopen,
-             f"{name}: every OPEN_TASK carries question_text \"\" ({len(badopen)} not)",
+             f"{name}: every OPEN_TASK carries an empty stem ({len(badopen)} not)",
              name if badopen else None)
-        for iid, stem in badopen[:6]:
-            lines.append(f"      {iid}: OPEN_TASK question_text is {str(stem)[:60]!r}, "
+        for iid, field, stem in badopen[:6]:
+            lines.append(f"      {iid}: OPEN_TASK {field} is {str(stem)[:60]!r}, "
                          "not \"\" — the prompt belongs in `task`")
 
     # ── MCQ ARRANGEMENT GATE (2026-08-03, ARV-D-032) ─────────────────────────────

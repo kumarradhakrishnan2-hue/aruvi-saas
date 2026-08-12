@@ -235,11 +235,15 @@ def cmd_submit(argv) -> int:
 
 # ── status ──────────────────────────────────────────────────────────────────────
 def latest_manifest() -> Path:
-    mans = sorted(BATCHES.glob("*.json"))
-    mans = [m for m in mans if not m.name.startswith("DRY_")]
+    """Newest by MTIME, not by name (2026-08-12). Sorting by filename made `--latest` pick
+    wave 1's `..._top_...` over wave 2's `..._compact_...` — 'c' sorts before 't' — so the
+    status of a fresh batch was read off the previous one, with a plausible-looking answer.
+    A default that silently reads the wrong object is worse than no default."""
+    mans = [m for m in BATCHES.glob("*.json")
+            if not m.name.startswith("DRY_") and not m.name.endswith(".collected.json")]
     if not mans:
         raise SystemExit("no manifests in genon/out/batches/")
-    return mans[-1]
+    return max(mans, key=lambda p: p.stat().st_mtime)
 
 
 def cmd_status(argv) -> int:

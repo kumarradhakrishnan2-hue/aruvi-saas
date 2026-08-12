@@ -337,17 +337,138 @@ REPAIRS = {
              "the number is not"),
         ],
     },
+    # ── v1.6, 2026-08-12 · S5 · the_world_around_us · preparatory · WAVE 1 of the corpus ──
+    # Eleven hits across ten of the 31 standards authored in the first Message-Batches wave
+    # (batch msgbatch_01Exqedy…, ₹438.72). Composition: 5 clock quantities, 4 calendar
+    # references, 1 completion phrase, 1 forward reference. FOUNDER RULING 2026-08-12:
+    # back-fill ALL ELEVEN, including the two I read as false positives — a library that
+    # scans to zero is a cleaner invariant than one carrying three standing "known and
+    # accepted" hits that every future certification re-raises.
+    #
+    # All eleven are PURE DELETIONS. No sentence is rewritten, no clause invented; each one
+    # reads correctly with the offending words struck, which is what the ban asks for.
+    #
+    # Two are worth naming because they are NOT the boilerplate the bans' examples describe:
+    #   * v ch09 U3 is the only structurally real one — the teacher note points at "the globe
+    #     task on Textbook p. 151", which lives in U4. X varies, so a class served 11 or 8
+    #     units never reaches it and the bridge dangles. Same family as ARV-D-119.
+    #   * v ch08 U3's "now that students have seen threads up close" refers to THIS unit's own
+    #     6-24 band, so nothing is assumed about another unit. Repaired under the ruling above,
+    #     recorded here as scanner-shape rather than dependency, so the corpus statistics do
+    #     not learn a defect that was not one.
+    # The four calendar hits are classroom talk ("could you do this tomorrow?"), not scheduling
+    # claims — but the Calendar Purge is absolute and the fix is one word each.
+    ("the_world_around_us", "iii"): {
+        "ch_11_canonical.json": [
+            (16, "band:4",
+             " this week", "",
+             "register/calendar",
+             "'ask one elder at home about one object' is the whole task; the week is a "
+             "calendar Aruvi does not model and cannot honour"),
+        ],
+    },
+    ("the_world_around_us", "iv"): {
+        "ch_04_canonical.json": [
+            (11, "band:2",
+             " this week", "",
+             "register/calendar",
+             "'Is this action something we could actually do?' is the question; feasibility "
+             "does not need a week to be a real question"),
+        ],
+        "ch_08_canonical.json": [
+            (6, "band:2",
+             "the easiest to start tomorrow?", "the easiest to start?",
+             "register/calendar",
+             "the reflection is about ease, not timing; 'tomorrow' is unknowable at authoring"),
+            (11, "band:1",
+             " do tomorrow?", " do?",
+             "register/calendar",
+             "same family, same unit's group discussion — 'could you actually do this?' "
+             "carries the whole pedagogical intent"),
+        ],
+        "ch_09_canonical.json": [
+            (9, "band:2",
+             " for a few minutes", "",
+             "register/clock",
+             "'students work in pairs, then share with the class' is the instruction; the "
+             "band's own 20-32 minutes carry the time and are rescaled per sitting"),
+        ],
+    },
+    ("the_world_around_us", "v"): {
+        "ch_01_canonical.json": [
+            (12, "band:0",
+             " for two minutes", "",
+             "register/clock",
+             "the architect prompt and the board-notes list stand alone; a stated two minutes "
+             "is falsified the moment the unit is served at any other duration"),
+        ],
+        "ch_04_canonical.json": [
+            (7, "band:0",
+             " for two minutes", "",
+             "register/clock",
+             "'brainstorm individually, then share ideas with a partner' is complete"),
+        ],
+        "ch_06_canonical.json": [
+            (15, "band:0",
+             " for 2–3 minutes", "",
+             "register/clock",
+             "'write without stopping' IS the instruction — the urgency is in the phrasing, "
+             "not the number (note the en dash: a ranged quantity, ARV-D-026's shape)"),
+        ],
+        "ch_08_canonical.json": [
+            (3, "band:3",
+             " now that students have seen threads up close", "",
+             "register/completion",
+             "SCANNER SHAPE, NOT A DEPENDENCY: the magnifying-glass examination is this same "
+             "unit's 6-24 band, so nothing about another unit is assumed. Struck under the "
+             "2026-08-12 all-eleven ruling; 'asks what that phrase might mean' is unchanged "
+             "teaching"),
+        ],
+        "ch_09_canonical.json": [
+            (3, "teacher_notes",
+             " This bridges to the globe task on Textbook p. 151 and keeps the inquiry open.", "",
+             "register/forward",
+             "THE ONE STRUCTURALLY REAL HIT. The globe task is U4; a class served 11 or 8 "
+             "units never reaches it. The question before it — 'when it is night here, what "
+             "is happening on the other side of the Earth?' — is exactly the open inquiry "
+             "the deleted sentence claimed to keep open, and the inclusivity note that "
+             "follows is untouched"),
+        ],
+        "ch_10_canonical.json": [
+            (7, "band:1",
+             " for a few minutes", "",
+             "register/clock",
+             "'students discuss in pairs, then share with the class' is the instruction; the "
+             "sugar-and-chilli connection at the end of the band is untouched"),
+        ],
+    },
 }
 
 DEFAULT_SET = ("social_sciences", "viii")
 
 
+# The teacher-note field is NOT called the same thing on every stage (2026-08-12, S5): SS
+# carries `teacher_notes`, TWAU carries `teacher_facilitation_note`. Reading only the first
+# returns "" on TWAU, which surfaces as "declared text not found" — a repair refused for a
+# reason that has nothing to do with the text. Same shape as the carrier seams in validate()
+# and the certifier: ask which field this artefact actually uses.
+_NOTE_FIELDS = ("teacher_notes", "teacher_facilitation_note")
+
+
+def _note_field(unit) -> str:
+    for f in _NOTE_FIELDS:
+        if f in unit:
+            return f
+    return _NOTE_FIELDS[0]
+
+
 def _get_set(unit, locator, new=None):
     """Read (new=None) or write the located string on a unit."""
     if locator == "teacher_notes":
+        f = _note_field(unit)
         if new is None:
-            return unit.get("teacher_notes", "")
-        unit["teacher_notes"] = new
+            return unit.get(f, "")
+        unit[f] = new
     elif locator.startswith("band:"):
         b = unit["time_bands"][int(locator.split(":")[1])]
         if new is None:
