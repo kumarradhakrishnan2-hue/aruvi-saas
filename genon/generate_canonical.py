@@ -343,6 +343,41 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
         },
     }
     dest.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # ── PURGE THE DERIVED PLANS (2026-08-12, S11 · C10, ARV-D-137) ───────────────────
+    # A canonical that changes invalidates every served plan built from it, and until now
+    # only the REPAIR tools said so: `purge_derived` was wired into normalize_options,
+    # repair_register, repair_anchors, repair_leaked_deliberation and repair_item_type —
+    # every repair, and no generator.
+    #
+    # The reasoning that left the generator out was that regenerating mints a new
+    # `ledger_ts`, so the cache key moves and no stale file can be hit
+    # (`api/data.canonical_version`). That holds for the CHOSEN variant and fails for a
+    # LENDER: a served plan can carry a unit BORROWED from another canonical, and the key
+    # names only the variant that was served. Measured at S11's C10 after the top was
+    # re-authored to remove ARV-D-136 — the X=11 and X=15 plans key on p10 and p14, whose
+    # versions did not move, so both would have been served from cache still carrying the
+    # withdrawn synthesis text: the two serves the re-author existed to fix.
+    #
+    # Same remedy as every repair tool, for the same reason, and the cost is the one
+    # already accepted in purge_derived's own header — a teacher holding a purged plan
+    # loses that file and re-prepares in ~11 ms. Deliberately unconditional: working out
+    # whether THIS canonical lends to any existing plan means reading every derived file
+    # and re-running the choice set, which is more machinery than deleting cheap artefacts.
+    try:
+        sys.path.insert(0, str(HERE))
+        from purge_derived import purge
+        purge(subject_folder, grade_folder, ch,
+              reason=f"re-authoring {fname}", apply=True)
+    except SystemExit:
+        # purge exits non-zero when a file cannot be removed (read-only mount). The
+        # canonical is already installed and correct; surfacing the failure must not undo
+        # that, so it is reported and the install stands.
+        print("  WARNING: derived plans could not be purged — delete them by hand before "
+              "serving this chapter, or the cache will hand back pre-regeneration bytes.")
+    except Exception as e:                                       # noqa: BLE001
+        print(f"  WARNING: derived-plan purge skipped ({e}). Delete "
+              f"ch_{ch:02d}_<matrix>_e*_c*.json by hand before serving this chapter.")
     return dest
 
 

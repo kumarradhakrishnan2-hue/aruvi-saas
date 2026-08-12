@@ -136,6 +136,56 @@ def test_repairs_do_not_rekey():
 
 
 
+def test_regenerating_a_canonical_purges_its_derived_plans():
+    """ARV-D-137 (S11 · C10, 2026-08-12) — the case the repair tools covered and the
+    generator did not.
+
+    The reasoning that left `generate_canonical` out was that regenerating mints a new
+    `ledger_ts`, so the cache key moves and no stale file can be hit. That holds for the
+    CHOSEN variant and fails for a LENDER: a served plan can carry a unit BORROWED from
+    another canonical, and the key names only the variant that was served. Re-authoring
+    english IX ch 7's top left the X=11 and X=15 plans — keyed on p10 and p14 — on disk
+    still carrying the withdrawn synthesis text, which is exactly what the re-author had
+    just been paid to remove.
+
+    The assertion is on the WIRING, not on the filesystem: `install_canonical` must call
+    `purge_derived.purge` for the chapter it installs. A test that wrote real files would
+    be testing purge_derived, which the test above already does."""
+    import importlib.util, pathlib as _p, sys as _s, types
+    root = _p.Path(__file__).resolve().parent.parent
+    _s.path.insert(0, str(root / "genon"))
+    spec = importlib.util.spec_from_file_location(
+        "generate_canonical", root / "genon" / "generate_canonical.py")
+    gc = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(gc)
+    except Exception as e:                                   # noqa: BLE001
+        print(f"SKIP  generate_canonical did not import ({e})")
+        return
+
+    calls = []
+    fake = types.ModuleType("purge_derived")
+    fake.purge = lambda subject, grade, ch, reason="", apply=True: calls.append(
+        (subject, grade, ch, apply)) or []
+    _s.modules["purge_derived"] = fake
+
+    import tempfile, json as _j
+    with tempfile.TemporaryDirectory() as tmp:
+        gc.REPO = _p.Path(tmp)
+        parsed = {"lesson_plan": {"periods": []}, "coverage_handoff": {},
+                  "assessment_items": []}
+        gc.install_canonical(parsed, "english", "ix", 7, "20260812_154258", 50, 17,
+                             "LP v1.2 / assessment v1.4", "ok", [])
+    assert calls, ("install_canonical must purge the chapter's derived plans — a "
+                   "re-authored canonical invalidates every plan that BORROWED from it, "
+                   "and the cache key does not name the lender (ARV-D-137)")
+    assert calls[0][:3] == ("english", "ix", 7), calls
+    assert calls[0][3] is True, "the purge must actually apply, not dry-run"
+    print("PASS  regenerating a canonical purges the plans derived from it")
+
+
+test_regenerating_a_canonical_purges_its_derived_plans()
+
 
 test_repairs_do_not_rekey()
 
