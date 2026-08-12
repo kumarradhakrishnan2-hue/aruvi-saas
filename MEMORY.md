@@ -518,13 +518,112 @@ must confirm · source entry.
    **Same table shape exists on science (mode) and SS (weight tier): amend at S9–S11's P-prep,
    not mid-campaign.**
 
+21. **English·secondary LP v1.2 + assessment v1.4 (2026-08-12, S11's P-prep)** — the
+   carry-forward (A1 · register · A6-as-Rule-8A · A9's two lines · P3) plus four measured
+   edits: **FULL SPINE COVERAGE** (Rule 2 STEP 3 no longer lets a short plan drop a spine),
+   Rule 1's closing-unit exception, `task_brief` ≤12 → ≤18, `section_context` 10–15 → 10–18,
+   and a 50-minute row in Rule 2 STEP 1's task budget. *Validated:* text only, plus a corpus
+   measurement of the two word caps and of the ch 12 spine drop the coverage mandate forbids.
+   No english library has ever been generated under any of it. *C1/C3 must confirm:* every
+   canonical of ch 7 teaches all six spines at 17, 14 AND 10 periods (the whole point of the
+   amendment, and the floor is where it binds); the closing unit of the standard names several
+   spines without the constitution having named a synthesis; `task_brief`s carry the locator
+   and fit 18; `section_context`s fit 10–18; and the bands arrive as `time_bands`/`activity`
+   with no `phases` residue. **Two numeric limits in this pair are still unexercised by any
+   generation and should be read at C3 with the S4 lesson in hand:** Rule 9's `≤10-word brief`
+   inside band narration (the corpus does not use the quoted-brief format at all) and Rule 11's
+   `expected_elements` "3–5 bullets, each ≤ 12 words". **The pilot is PROSE, so the whole
+   [SECONDARY DELTA] drama branch — `drama_summary`, role-assigned reading, act-splitting
+   through Rules 1/2A/3/4 — is untested by S11; ch 11 is class IX's only drama and the pre-warm
+   sweep owes it a run.**
+
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable
 > index of "changed but not run". Keep it current.
 
 ---
 
-## 2026-08-11 (newest) — A CONSTITUTION MANDATED A JSON-BREAKING FORMAT, AND THE
+## 2026-08-12 (newest) — S11 · ENGLISH·SECONDARY STAGE PREP: the family helper was
+## the WRONG thing to delegate to, and delegating to it would have looked right.
+
+**Landed:** LP **v1.1 → v1.2** · assessment **v1.3 → v1.4** · carrier row 7 open ·
+`_NOT_YET` down to english's two remaining stages. Class IX (already drawn), pilot **ch 7
+*Vitamin-M*** (1 main_section · 6 spines · 23 tasks · rec 17 · floor 10 · counts
+[17, 14, 10]). Full note:
+`genon/out/stage_prep_english_secondary/STAGE_SIGNOFF_S11_english_secondary.md`.
+P1–P5.5 complete and **P5.4 closed the same day** (9A · 9D · 9F, kumar3 at [50, 60]), so S11
+enters its C-cycle with a **clean P5 and no gate** — the fourth stage to do so.
+
+**THE REUSABLE LESSON — "delegation" is a claim about CODE, not about vocabulary.** P5.5's
+doctrine says a stage's carrier work delegates what the plugin already does. English is the
+period-field family, so `items_by_period_field` is the obvious call, and S7 and S8 both made
+it. Here it is wrong twice, and **the first way would have passed every test this campaign
+runs**: the helper takes ONE code, english's key is a PAIR (`source_section_id` +
+`source_spine`), and passing the spine alone produces correct anchors on the whole certified
+class — because every english IX chapter is ONE main_section post-split — and fails only on
+the multi-section chapters S9 and S10 are full of. The second way is quieter still: the helper
+anchors every item of a group at the group's last unit, which silently undoes the N-to-N
+pairing the DISPLAY path has carried since 2026-07-11 (two items of one cell taught over two
+units belong one per unit). So the delegation was made literal — the join, the pairing and the
+fallback were lifted out of `assessment_to_view` into `english/subject.py::cell_resolver` and
+**both paths call it**. Genon contributes only the anchoring RULE, via a new
+`carriers.items_with_units`. **The generalizable form: if the "delegation" is a call to a
+shared helper rather than a call to the plugin's own code, check whether the helper's
+CONTRACT is the plugin's rule — same family is not same join.**
+
+**THE CORPUS DECIDED THE CONSTITUTION AGAIN — third stage running (S7, S8, now S11).** Rule 2
+STEP 3 let a short plan stop and leave later spines unanchored, and `backup/saved_plans/
+english/ix/ch_12_*.json` does exactly that at 4 periods: **no `beyond_text` contribution at
+all**. Under v2.0 that makes a chapter's compacts a *different chapter* from its standard —
+they carry a shorter registry, and the Xth-unit choice set borrows "the unit that FIRST deals
+the next-due section", which cannot exist for a cell the compact never taught. Amended to
+FULL SPINE COVERAGE at every count, curation pushed down to TASK level where Rule 3 already
+lives. The arithmetic it introduces was swept before it was accepted: a six-spine chapter needs
+≥4 periods (VocGram alone + five spines at ≤2 adjacent), and **exactly one chapter in the class
+binds — ch 12, floor 3** → P5.1 override to 4, owed at pre-warm, not now. Three more numeric
+edits came off the same measurement: `task_brief` ≤12 → ≤18 (17 of 28 real briefs breach 12,
+because Rule 9's mandated page locator eats 3–4 words of it), `section_context` 10–15 → 10–18,
+and a 50-minute line in a task budget that named 40 and 60 but **not the class standard the
+stage authors at**.
+
+**ENGLISH'S SECTION AXIS IS NOT A SECTION — it is the (section × spine) CELL** (P5.2, the step
+testing.md wrote english's name into). Post-split every chapter is one `main_section`, so
+`section_id` is a constant and looks like no axis; what varies, in strict never-re-sequenced
+on-page order, is the spine. The token is `"<section_id>|<spine>"` — `A|reading_for_comprehension`,
+joined `A|listening / A|speaking` — both halves authored closed vocabulary, so the registry is
+stable across a chapter's canonicals by construction. **Two orders now coexist and must not be
+compared:** walking/registry order is the summary's on-page order; the handoff is keyed in
+canonical enumeration order. Rule 2 STEP 3 has always said they are independent; a C5 check that
+conflates them will fail a good plan. Consequence for C8: **six registry members against
+seventeen units is the thinnest ratio in the campaign.**
+
+**Three platform items landed with the stage, none of them stage-specific.** (a)
+`carriers.group_key` — containers were keyed on `section_code` with a fallback to the LIST
+INDEX; english keys `spine_code`, and a positional key is safe only until a unit and its item
+are BORROWED from a canonical that grouped differently. (b) `_ENGLISH_SPINE_CELL` — a THIRD
+handoff shape (spine-keyed dict of `section_contributions[]`) that fell through
+`to_engine_handoff` unfiltered, so a served 8-unit plan would have carried the 17-unit
+canonical's whole coverage. Same defect as S7's `_MATHS_GOAL_CLUSTER`, third shape, same seam;
+one deliberate difference — an empty spine is DROPPED where an empty goal cluster is kept,
+because assessment Rule 1 omits a spine with zero contributions. (c) The
+synthesis-reads-as-Synthesis probe's docstring had said "English has no genon carrier yet; when
+it lands, decide which shape it is" — it is a section-grouped port, so its closer would have
+read "Listening + Writing". **A note that names the decision its successor must make is worth
+what S7's was to S8; this is the second time one paid off.**
+
+**One quieter catch that P3 does not announce.** The english plugin read `p["phases"]` only.
+Converting the constitution to `time_bands` without touching the plugin would have rendered the
+ENTIRE existing english corpus — all three stages — with no timed spine the moment a new plan
+arrived. `_bands` (both keys, newest first) landed with the conversion, as mathematics carries
+it. **P3's exit criterion is about the constitution and says nothing about the reader; check the
+plugin every time.**
+
+`tests/test_genon_carriers.py` 97 with 8 failures → **113, green** (the eight were the "english
+is a declared-field stage / english is still owed" assertions this step invalidates).
+
+---
+
+## 2026-08-11 — A CONSTITUTION MANDATED A JSON-BREAKING FORMAT, AND THE
 ## PIPELINE'S REPAIR BOUND WAS AN ORDER OF MAGNITUDE TOO SMALL. Both fixed; ₹40.72
 ## recovered rather than re-spent.
 

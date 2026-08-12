@@ -417,7 +417,7 @@ before starting each stage):
 | S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
 | S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — |
 | S10 | english · middle | 1.6 (quote-format only) | phases[] → P3 | — | — | — |
-| S11 | english · secondary | 1.1 (quote-format only) | phases[] → P3 | — | — | — |
+| S11 | english · secondary | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.4, 2026-08-12) |
 
 > ★ **CROSS-STAGE, 2026-08-11 — the narration format's JSON quote hazard is closed on all
 > five LP constitutions that carried it** (maths middle v3.9 · maths prep v1.4 · english
@@ -539,6 +539,14 @@ before starting each stage):
   half is still banned).
 **Exit:** the amended file carries A1 + the one-block register; `VERSION` bumped; a diff against
 the pre-amendment file shows no pedagogical rule changed. **Artefact:** amended file + diff.
+**Done for S11 (2026-08-12):** english·secondary LP **v1.1 → v1.2**. Carry-forward as specified,
+plus **four non-carry-forward edits taken here because P-prep is where they are free** — full
+spine coverage (§below), Rule 1's closing-unit exception, `task_brief` ≤12 → ≤18 and
+`section_context` 10–15 → 10–18. **The corpus check is what decided the first and third**, which
+is the S8 rule doing its job: `backup/saved_plans/english/ix/ch_12_*.json` drops the
+`beyond_text` spine outright at 4 periods (Rule 2 STEP 3 permitted it, and under v2.0 that makes
+a compact a different chapter from its standard), and 17 of 28 real IX `task_brief`s exceed a cap
+the same rule's mandated page-locator makes unreachable. `genon/out/stage_prep_english_secondary/`.
 
 **P2 [Kumar] The assessment constitution — A6-confirm + A9.**
 - **A6 is a CONFIRMATION, not an amendment:** every item must carry its anchor **unit**
@@ -597,6 +605,12 @@ DIFFERENT field, which is why neither may borrow the other's join). Removal N/A.
 repaired alongside: the `what_each_option_reveals` example had lost `"B"` and gained a second
 `"C"` when S7's distractors-only pass rewrote one of its two lines in this file.
 `genon/out/stage_prep_mathematics_preparatory/`.
+**Done for S11 (2026-08-12):** english·secondary assessment **v1.3 → v1.4**; A6 landed as a NEW
+rule (8A) because the anchoring facts had no home in the file — the anchor is the (section ×
+spine) **CELL**, carried by the item's own `source_section_id` + `source_spine` (8-rule **row 7**,
+the period-field family, and **the only PAIR key in the table**). Removal N/A. A9's two lines sit
+in Rule 4, where english states its MCQ semantics, rather than in Rule 5's indented answer-layer
+list. `genon/out/stage_prep_english_secondary/`.
 **AMENDED AGAIN for S4 (2026-08-09, at C3 — the first stage to amend AFTER authoring):**
 LP **v1.2 → v1.3** (Rule 5 P1's consecutive-method cap gains a content-driven exception ·
 `activity_title` 10–13 → **6–13** words · `section_context` 10–12 → **6–12** words, upper bound
@@ -626,6 +640,13 @@ Rule 11's guard case and the schema all followed the rename.
 (`PHASE NARRATION` → `BAND NARRATION`) and prose, Rule 7 and the schema followed. Note this
 leaves the middle/preparatory saved-plan corpus on the old shape; the mathematics plugin reads
 **both keys, newest first** (`subject.py:211-219`), which is what covers display.
+**Done for S11 (2026-08-12)** — english·secondary: Rule 5, Rule 9's heading (`PHASE NARRATION` →
+`BAND NARRATION`) and prose, Rule 2A's "explicit timed phase" (the one place the word carried
+pedagogical weight) and the schema all followed the rename. **This stage added a step the others
+did not need:** english's plugin read `p["phases"]` only, so a converted constitution would have
+rendered every EXISTING english plan with no timed spine the moment a new one arrived — the
+both-keys-newest-first read (`english/subject.py::_bands`) landed with the conversion, as
+mathematics' did.
 **N/A for S5 (2026-08-11)** — the_world_around_us·preparatory has emitted `time_bands` with an
 `activity` key since before the campaign (`grep -c 'phases\['` = 0, `'"phases"'` = 0,
 `time_bands` = 7). Recorded because it is the first stage since S2 where the N/A is genuine
@@ -662,6 +683,28 @@ date and one-line rationale. **Artefact:** the changelog.
 its subjects list contains this stage's class and nothing left over from an earlier stage.
 **Artefact:** the note + the chapter's `canonical_plan` row + the three profiles + the carrier
 trace.
+**Done for S11 (2026-08-12) — P5.2 is the step this template wrote english's name into, and this
+is the definition.** The registry member is the **(section × spine) CELL**, not the main_section
+(post-split there is only one, so it is a constant) and not the spine (the constitution permits
+1–3 main_sections, and a multi-section plan would collapse three Reading cells onto one code —
+the middle fixture is a live example). The token is `"<section_id>|<spine_key>"`, both halves
+authored and closed vocabulary, so the registry is stable across a chapter's canonicals by
+construction; the on-page `section_name` is deliberately NOT used (ch 7's reading cell is the
+9-word merged string "Reflect and Respond + Reading for Meaning + Check Your Understanding +
+Critical Reflection"). First-visit order is the summary's on-page spine order, which Rule 1
+already forbids re-sequencing — **and it is NOT the canonical enumeration order the handoff is
+keyed by; a C5 check that compares one against the other will fail a good plan.** Pilot ch 7
+*Vitamin-M* (rec 17 · floor 10 · counts [17, 14, 10]), summary + mapping on disk, row
+non-placeholder. **P5.1 records one override owed elsewhere in the class:** full spine coverage
+has an arithmetic minimum of 4 periods (VocGram alone + five spines at ≤2 adjacent), and ch 12's
+floor of 3 is the only one below it — raise it to 4 (counts become [5, 4]) immediately before
+ch 12 is authored at pre-warm, not now, because `master_plan.py` regeneration wipes the row.
+**One more consequence worth carrying into C8:** six registry members against seventeen units is
+the thinnest ratio in the campaign. **P5.4 closed the same day** — english IX on all three
+identities through the app's own first-run flow, sections disjoint (9A · 9D · 9F) and the mixed
+duration on kumar3 ([50, 60], ppw {50: 5, 60: 1}), so S11 enters its C-cycle with a clean P5.
+The "nothing left over from an earlier stage" clause stays waived per the founder ruling of
+2026-08-07 (S6): the profiles still carry S1–S8's classes and the residue touches no english key.
 
 **P5.5 in full — the carrier (founder doctrine, settled; do not re-litigate it per stage).**
 
@@ -758,6 +801,31 @@ byte-identical registry member in first-visit order. `tests/test_genon_carriers.
 failures → **95, green** — the three were the "TWAU is still owed" assertions, one of which had
 carried the words *"S5 owes it"* in its own docstring.
 
+**Done for S11 (2026-08-12) — the one carrier in the campaign where "delegate to the family
+helper" was the WRONG answer, and the wrong answer would have passed.** Row 7, the period-field
+family's third stage and the table's only PAIR key: item (`source_section_id` + `source_spine`) →
+period (`section_id` + `spines_taught[]`), container a list of SPINE groups. `items_by_period_field`
+takes one code and anchors every item of a group at that group's last unit; on english that is
+wrong twice — it cannot express a pair, and it would undo the N-to-N pairing the app has carried
+since 2026-07-11 (two items of one cell taught over two units belong one per unit; anchoring both
+at the close is the exact defect that pairing was written to fix, re-created on the served side).
+**And the first error would have looked correct**: every english IX chapter has ONE main_section,
+so joining on the spine alone produces right answers across the whole certified class and fails
+only on the multi-section chapters S9 and S10 are full of. So the delegation was made literal —
+the join, the pairing and the fallback were lifted out of `assessment_to_view` into
+`english/subject.py::cell_resolver` and **both paths now call it**; genon adds only the anchoring
+RULE, via a new `carriers.items_with_units`. Three platform items landed with it: `carriers.group_key`
+(groups were keyed `section_code` with a positional fallback — english keys `spine_code`, and a
+positional key is safe only until a unit is borrowed), `_ENGLISH_SPINE_CELL` (a THIRD handoff
+shape — the spine-keyed dict fell through `to_engine_handoff` unfiltered, so a served 8-unit plan
+carried the 17-unit canonical's whole coverage), and english's entry in the
+synthesis-reads-as-Synthesis probe, whose docstring had asked for exactly this decision when the
+carrier landed. Verified on `backup/saved_plans/english/ix/ch_11_*.json`: 6 items, **zero
+orphans**, every anchor equal to the independently computed last-unit-teaching-that-cell.
+`tests/test_genon_carriers.py` 97 with 8 failures → **113, green**. `_NOT_YET` now holds
+english's two remaining stages only, each rewritten to name the three things S9/S10 must confirm
+before deleting a line.
+
 > ★ **P5.5 GAINS PART 5, from S5 (2026-08-11): WHERE DOES THIS STAGE'S PERIOD KEEP ITS SECTION
 > ANCHOR, AND DOES `carriers.unit_anchor` FIND IT?** Parts 1–4 audit how an ITEM finds its unit.
 > Nothing audited how a UNIT finds its section, and `_NOT_YET` cannot see it — it is an inventory
@@ -767,10 +835,14 @@ carried the words *"S5 owes it"* in its own docstring.
 > `genon_unit_anchor` + `genon_anchor_field_present: False` on its plugin**, and the second of
 > those is the expensive one — without it `top_brief_for` demands the reserved token in a field
 > the constitution never defines, **at metered STEP 1**, and the certifier then finds no synthesis
-> unit in the library it has already paid for. **Owed by S9–S11**: english is the last family, its
-> LP is spine-structured (`section_id` + `spines_taught[]`), and one grep across its three LP
-> constitutions decides whether three more stages need mediation. Free at P-prep; a full library
-> at C1.
+> unit in the library it has already paid for. **ANSWERED FOR THE WHOLE ENGLISH FAMILY at S11
+> (2026-08-12), by the one grep this note asked for:** `section_anchor` is **0 in all three**
+> english LP constitutions, so all three are mediated. `genon_unit_anchor` builds a COMPOSITE
+> token — `"<section_id>|<spine>"`, e.g. `A|reading_for_comprehension`, joined `A|listening /
+> A|speaking` — because english's axis is the (section × spine) CELL its own DESIGN PRINCIPLE
+> names, and neither half identifies a cell alone. `genon_anchor_field_present` returns False.
+> The methods are stage-agnostic, so **S9 and S10 inherit the answer** and owe only the
+> confirmation named in `carriers._NOT_YET`. Fifth field shape, one seam.
 
 **Retro-note for S1/S3/S6:** all three satisfied P5.5 in substance before it existed — S3 is
 where `carriers.py` was created (the `questions`-wrapper defect) and S6 extended it with
