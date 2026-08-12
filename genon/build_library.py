@@ -409,6 +409,19 @@ def certify(subject, grade, ch, row):
              f"{name}: register scan reached the band text ({bands_read} band(s) read: "
              f"{ {k: v for k, v in seen.items()} })", name)
         note(not bans, f"{name}: register clean ({len(bans)} ban hit(s))")
+        # ARTEFACT ADVISORIES ARE PRINTED (2026-08-12, S11 · C8). The scanner has carried an
+        # `artefact` family since S5 and a scoped pair since S11's C7, and every one of them is
+        # ADVISORY — the rule they detect lives in the platform brief, not in a constitution, so
+        # they must not fail a build. But advisories were never written to the report, which
+        # meant the detector for the defect this stage is regenerating to remove (ARV-D-136)
+        # would have fired into a void. A gate that cannot fail must at least be legible.
+        arte = [h for h in scan_plan(raw) if h["family"] == "artefact" and not h["ban"]]
+        if arte:
+            lines.append(f"      ADVISORY {name}: {len(arte)} artefact-dependency hit(s) — a "
+                         "unit reaching for something a PREVIOUS sitting produced. Read them: "
+                         "the brief forbids it, certification cannot.")
+            for h in arte[:6]:
+                lines.append(f"        U{h['unit']} {h['field']}: {h['match']!r} — {h['excerpt']}")
         for h in bans[:8]:
             lines.append(f"      U{h['unit']} {h['field']} [{h['family']}] {h['excerpt']}")
         if bans:

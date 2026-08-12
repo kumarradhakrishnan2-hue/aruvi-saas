@@ -108,7 +108,18 @@ def _serving_block():
         "band is asking for a sitting that may not have happened — it is the same failure "
         "as naming another unit, arriving through the props instead of the prose. Where "
         "the chapter genuinely wants a make-then-present pair, put BOTH acts inside ONE "
-        "unit.",
+        "unit. "
+        # ── added 2026-08-12 (S11 · C8) ──────────────────────────────────────────────
+        # "draft" was already in the list above and the model split an article across two
+        # units anyway — twice in one chapter (english·IX ch 7: U15 drafts paragraphs 1-2
+        # and U17 completes 3-4; p14's U11 writes it and U12 revises it). A student's own
+        # page does not read as a "physical artefact" the way a poster does, so the rule
+        # has to name it.
+        "A STUDENT'S OWN PIECE OF WRITING COUNTS: an article, essay, letter or story "
+        "drafted in one unit and continued, revised or finished in another is the same "
+        "dependency in a thinner disguise. Plan every writing task to begin AND end "
+        "inside a single unit — drafting, peer response and revision together, on a "
+        "scale that fits the minutes available.",
     ]
 
 
@@ -311,6 +322,21 @@ def top_brief_for(subject, klass, chapter):
         "concepts BY NAME — but it must NOT assume any particular earlier activity, "
         "reading, discussion, homework or material actually happened: it will be "
         "served to classes that covered the same sections through DIFFERENT units.",
+        # ── added 2026-08-12 (S11 · C8, from ARV-D-136) ───────────────────────────────
+        # The sentence above forbids ASSUMING an earlier activity. english·IX ch 7's
+        # synthesis unit obeyed that in its discussion bands and broke it in its last one,
+        # because CONTINUING a piece of work is not obviously "assuming an activity": U17
+        # asked the class to "complete the draft article (Paragraphs 3 and 4)" begun at U15.
+        # Read inside the standard that is coherent. Served, it is not — this unit is the
+        # Case-1 borrow, and BOTH compacts of that chapter write the whole article in one
+        # sitting, so every borrowing class arrives having already finished it. The prose
+        # rule needed the same treatment the artefact rule got at S5: say the quiet part.
+        "- THE SYNTHESIS UNIT STARTS AND FINISHES ITS OWN WORK. It may DRAW ON what the "
+        "chapter taught; it must not CONTINUE, complete, revise or hand back a piece of "
+        "student work another unit began — no 'complete the draft', no 'finish the poster', "
+        "no 'return to the essay you started'. A borrowing class may have done that work in "
+        "one sitting, or in a different form, or not yet at all. Any writing, making or "
+        "performing in this unit begins and ends inside its own minutes.",
         f"- COVERAGE COMPLETES BEFORE THE SYNTHESIS: all registry sections "
         f"first-appear across units 1..{count - 1}. {no_other}",
         *_synthesis_handoff_lines(subject, klass, count),

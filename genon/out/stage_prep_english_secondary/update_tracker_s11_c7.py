@@ -1,0 +1,24 @@
+import datetime, json, pathlib, shutil
+ROOT=pathlib.Path('/sessions/dreamy-eloquent-noether/mnt/aruvi-saas')
+STATE=ROOT/"data/testing/campaign_state.json"
+NOW=datetime.datetime.now().replace(microsecond=0).isoformat()
+KEY="english/secondary"
+C7="""AUDITED 2026-08-12 - PASS, zero live-ban hits. Scanned all TEN files: the 3 library canonicals and the 7 C6 served plans, including result.dropped_units (a teacher reads those on screen). Full artefact: docs/testing_artefacts/c7_english_ix_ch07.md
+
+(a) THE MACHINE GATE - 0 BAN HITS ON EVERY FILE, and register_scan reached the band text in all of them (54/57/26 bands plus titles, notes, materials, homework), so the zero is a real zero and not a shape it failed to read. This constitution received its three-ban block the SAME MORNING: the register held on its first live generation, across 41 authored units and 7 serves.
+
+(b) ADVISORIES RULED ON - two distinct hits. (1) calendar 'today's podcast on meditation' (p14 U9, propagating into the 12/13/15/mixed serves): NOT a breach - it names the lesson's own material, not a calendar position, and is self-consistent whenever the unit is taught, which is exactly the test the scanner's header sets for today/yesterday. No pattern change. (2) positional 'does not require any classroom artefact from an earlier unit' (p10 U10, riding into X=11): NOT a breach - backward reference is legal since v1.10 - and it is EVIDENCE rather than noise, because what the sentence does is DECLARE ARTEFACT INDEPENDENCE, which is the rule the standard canonical breaks in the same run.
+
+(c) WHAT REGEX COULD NOT SEE - one finding, and it reaches the teacher. The mandated SYNTHESIS unit (U17) carries materials ["Textbook pp.97-125", "Students' draft article (notebooks or draft sheets)"] and a band asking students to COMPLETE the draft begun at U15, twelve sittings earlier. C3 found this in the library (ARV-D-132, accepted as authored); C7's object is the SERVED artefact and there it is worse - the borrowed unit is the LAST SITTING of the X=11 and X=15 serves, where the host prefix comes from a DIFFERENT canonical. At X=11 the host is p10, whose U9 drafts the WHOLE four-paragraph article in one sitting, so the class is told to finish work it completed five sittings earlier and nothing in the plan reconciles the two. ARV-D-023's family in artefact form.
+
+WHY NO PATTERN SAW IT: the artefact family's five patterns (S5's C7) all require a TIME WORD ('prepared previously', 'from the previous unit') or possessive-plus-time ('their earlier chart'). English's shape has neither - a POSSESSIVE OWNER plus a PRODUCED ARTEFACT, no time word at all. A class cannot arrive holding 'students' draft article' unless an earlier sitting made it: the dependency is in the possession.
+
+TWO NEW PATTERNS ADDED to register_scan.py with a dated note, both ADVISORY - the rule they detect lives in the platform BRIEF, not in any constitution, and a ban would fail certification against a rule no constitution states. THE FIRST CUT WAS THROWN AWAY, and the corpus said so immediately: applied to ALL fields the possessive pattern fired 111 TIMES ACROSS THE 131 certified and served files on disk, almost every one of them 'students make their poster ... display their posters' INSIDE ONE UNIT, which the brief expressly licenses. That is a gate nobody would keep - the same mistake S6's C7 records making with six of seven patterns. Two things separate the defect from the noise and both are SHAPE not vocabulary: the possessive appears in MATERIALS/visual_aids (a shopping list naming an object only a previous sitting could produce), or a COMPLETION VERB governs a definite artefact ('complete the draft' presupposes it exists). So register_scan gained FIELD SCOPING (_FIELD_SCOPED, keyed by pattern object so the scope sits beside the pattern it governs and cannot drift). Result: artefact hits corpus-wide 36 before -> 111 unscoped -> 44 shipped, i.e. the 36 unchanged plus EXACTLY 8 new ones, all on english ch 7's synthesis unit and its served copies, ZERO new hits anywhere else. False-positive probe clean on every standing classroom item (draft paper, writing paper, students' notebooks, their notebooks, exercise books, blank graphic organiser). Verified after the change: --certify-only reports register clean (0 ban hits) on all three files and DETERMINISTIC CHECKS ALL PASS.
+
+WHAT C8 INHERITS, SHARPENED: the transition to read is X=11 - p10's ten units into the borrowed U17 - and the question is no longer 'is the seam smooth' but 'what does a class that already finished its article do with a closing sitting that asks it to finish the article'."""
+state=json.loads(STATE.read_text())
+shutil.copyfile(STATE, STATE.with_suffix(".json.bak_pre_s11_c7"))
+state["combos"][KEY]["C7"]={"status":"pass","by":"Claude","at":NOW,"comment":C7}
+state["updated_at"]=NOW
+STATE.write_text(json.dumps(state, indent=1, ensure_ascii=False))
+print("C7 pass written", NOW)

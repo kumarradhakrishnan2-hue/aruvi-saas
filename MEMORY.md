@@ -52,6 +52,15 @@ must confirm · source entry.
    confirm:* the English generation prompt itself produces keyed reveals (not prose notes) so
    new plans don't reintroduce the old shape. (src: 2026-07-10, "still deferred to generation
    milestone".)
+   **★ NOT TESTABLE AT S11 (C4, 2026-08-12), and the reason is structural rather than an
+   oversight:** the english·IX ch 7 library contains **zero MCQ items** across all three
+   canonicals — 18 items, all EXTRACT_ANALYSIS · TRUE_FALSE · FILL_IN · SCR · ORAL_PROMPT ·
+   WRITING_TASK · ECR. At secondary, Rule 4 prefers EXTRACT_ANALYSIS/ECR for analytical Reading
+   LOs and the other five spines default to non-MCQ types, so a six-cell english chapter can
+   legitimately produce none. **The item stays OWED, and its owner is now "the first
+   MCQ-bearing english chapter" rather than a stage** — S9 (preparatory, whose type set is
+   MCQ-heavier) is the likeliest place it fires. A9's arrangement half is in the same position
+   (C3 recorded it): one options-bearing item in the library, a TRUE_FALSE.
 
 3. **Constitution exact-counts audit (spec §J.3)** — deferred to the generation milestone: the
    per-type item-count expectations in the constitutions have not been reconciled against what
@@ -76,6 +85,13 @@ must confirm · source entry.
    true chapters from scratch yields coherent, single-section plans consistent with the split
    artifacts (title format `"<section> (<unit>)"`, per-chapter period spread, spine-top axis).
    (src: 2026-07-01 VI/VII/VIII entries; 2026-07-09 III/IX same-session split.)
+   **★ IX HALF TESTED LIVE + PASSED 2026-08-12 (S11 · C4, ch 7 *Vitamin-M*, library {17,14,10}) —
+   the first time a split chapter has been regenerated from scratch.** All three canonicals
+   reproduce the split contract exactly: title `"Vitamin-M (Vitamin-M)"` in the
+   `<section> (<unit>)` form; `main_sections_inventory` a single entry `{A, "Vitamin-M", prose}`;
+   `section_id: "A"` on all 41 units; and the port's singleton-section collapse putting SPINES at
+   the top level. Period spread 17 for a 29-page section, consistent with the `effort_index` 9.6
+   that set `recommended_periods`. **Grades VI, VII, VIII and III are still owed, by S10 and S9.**
 
 5. **English-middle Step 7d effort-index calibration reused across grades unverified** — the
    `task_density` tier cutoffs (≤2.0 / 2.1–2.9 / ≥3.0) calibrated on Grade VI were **reused
@@ -145,6 +161,18 @@ must confirm · source entry.
    "valid" are the same question — unlike SS, where the approach is drawn from a prose document.
    **Mathematics·preparatory remains the only legitimate empty**; english (S9–S11) is the last
    stage-family still unchecked.
+   **★★ CLOSED 2026-08-12 — ENGLISH·SECONDARY CONFIRMED (S11 · C4, IX ch 7 library {17,14,10}),
+   AND WITH IT THE WHOLE ITEM.** `unit_approaches` and the port's `Period.approach` are non-empty
+   for **41 of 41 units** across the three canonicals — english reads `pedagogical_methods`, a
+   `{spine: method}` DICT, joined in first-seen order ("comprehension-discussion",
+   "listen-and-respond; oral-presentation"), which is the one shape ARV-D-086 had returned `[]`
+   for. Every value is drawn from its spine's permitted list in LP Rule 4, so ARV-D-043's
+   populated-but-invalid caveat cannot arise here either: english's methods are a closed
+   per-spine enumeration inside the constitution, not a prose document to quote from. **The
+   field is identical at all three english stages, so S9 and S10 inherit the answer and owe
+   nothing.** What survives as a standing fact: **mathematics·preparatory is the only legitimate
+   empty in the portfolio, and an empty approach anywhere else is a defect.** Nothing is owed.
+   Do not reopen.
 
 8. **English (preparatory) FILL_IN + MATCH question types — assessment constitution rewritten**
    (`data/content/constitutions/assessment/english/preparatory/assessment_constitution.txt`,

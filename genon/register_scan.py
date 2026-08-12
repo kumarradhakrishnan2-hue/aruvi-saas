@@ -127,6 +127,46 @@ PATTERNS = [
         r"(posters?|charts?|models?|displays?|drafts?|collections?)\b", re.I)),
     ("artefact", False, re.compile(
         r"\bfrom the (earlier|previous|last) (sitting|unit|session|lesson)\b", re.I)),
+    # ── ARTEFACT DEPENDENCE, third pass — added 2026-08-12 (S11 · C7, from ARV-D-132) ─────
+    # english·IX ch 7's mandated SYNTHESIS unit — the one the engine lends to other plans —
+    # carried the dependency in a shape none of the five patterns above can see:
+    #     materials: ["Textbook pp.97–125", "STUDENTS' DRAFT ARTICLE (notebooks or draft sheets)"]
+    #     band 30-50: "Students COMPLETE THE DRAFT ARTICLE 'Our Inspiring Elderly' (Paragraphs
+    #                  3 and 4 …)"          [the draft is begun in U15, twelve sittings earlier]
+    # There is no time word ("previously", "earlier"), no named unit, and no "their … chart".
+    # The dependency is carried by a POSSESSIVE OWNER plus a PRODUCED artefact: a class cannot
+    # arrive holding "students' draft article" unless an earlier sitting produced it. That is
+    # the same prerequisite shape as S5's "posters prepared previously", stated in the one way
+    # the earlier patterns do not cover.
+    #
+    # SCOPED AWAY FROM STANDING CLASSROOM ITEMS on purpose. "their notebooks", "students'
+    # exercise books", "draft paper" and "writing paper" are things every class already has and
+    # must never fire — so the artefact noun list is PRODUCED objects only, and the possessive
+    # is required. Measured on the whole certified corpus when added: 2 hits, both the english
+    # synthesis unit and its served copies; zero elsewhere.
+    #
+    # ADVISORY, like every other pattern in this family and for one more reason of its own: the
+    # rule it detects lives in the platform BRIEF, not in any constitution, and a ban here would
+    # fail certification against a rule no constitution states. C7 and the human gate rule on it.
+    # MEASURED BEFORE IT WAS TRUSTED, and the first cut was thrown away. A possessive +
+    # produced-artefact pattern applied to ALL fields fires 111 times across the 131 certified
+    # and served files on disk — almost all of them "students make their poster … display their
+    # posters" INSIDE ONE unit, which the brief expressly licenses ("put BOTH acts inside ONE
+    # unit"). That is a gate nobody would keep. Two things separate the real defect from the
+    # noise, and both are in the shape rather than the words:
+    #   1. the possessive appears in MATERIALS or VISUAL_AIDS — a shopping list naming an object
+    #      only a previous sitting could have produced (field-scoped below, `_FIELD_SCOPED`);
+    #   2. a COMPLETION verb governs a definite artefact — "complete the draft", "revise their
+    #      article" — which presupposes the thing already exists.
+    # Scoped that way the two patterns catch english ch 7's synthesis unit and its served copies
+    # and NOTHING else in the corpus.
+    ("artefact", False, re.compile(
+        r"\b(students['’]|pupils['’]|their)\s+(?:\w+\s+){0,2}?"
+        r"(draft|article|essay|poster|chart|model|display|collection|slide[- ]?show|"
+        r"presentation)s?\b(?!\s+(paper|sheets?))", re.I)),
+    ("artefact", False, re.compile(
+        r"\b(complete|finish|revise|redraft|continue)\s+(the|their)\s+"
+        r"(draft|article|essay|poster|model|collection)\b", re.I)),
     # ── added 2026-08-03 (ARV-D-026) — three forward phrasings that sailed through a clean run:
     # "the monsoon regime that will follow", "the interlinkage that the Monsoon unit will extend",
     # "explored in upcoming units". The second is the general shape: a NAMED unit plus a future
@@ -163,7 +203,14 @@ PATTERNS = [
     # The {0,20} window keeps it to the same clause, so "asks for the map … minutes later" in a
     # different sentence is not swept in.
     ("clock", True, re.compile(r"\bfor\b[^.;]{0,20}\bminutes\b", re.I)),
-    ("clock", True, re.compile(r"\bthe remaining time\b|\bhalf the (session|period|class)\b", re.I)),
+    ("clock", True, re.compile(r"\bthe remaining time\b|\bhalf the (session|period)\b", re.I)),
+    # "half the class" is AMBIGUOUS and, in practice, almost never a clock quantity: it is how
+    # every teacher describes a grouping ("half the class will be plants and animals, the other
+    # half will be forest visitors" — TWAU iv ch03 role-play, 2026-08-12). Banning it would have
+    # had a repair strike correct pedagogy to satisfy a pattern written for "half the session".
+    # Advisory, so a genuine time use is still visible to a reader. Same treatment as "last
+    # term" at S4 (v1.5): when a phrase is a homonym, the scanner reports and the human rules.
+    ("clock", False, re.compile(r"\bhalf the class\b", re.I)),
     ("clock", True, re.compile(r"\bin the (first|last) \w+ minutes\b", re.I)),
     ("ids", True, re.compile(r"\(C-\d+\.\d+\)")),
     ("positional", False, re.compile(r"\b(previous|earlier|first|last) unit\b", re.I)),
@@ -229,6 +276,26 @@ def _quoted_spans(text):
     return [(m.start(1), m.end(1)) for m in _QUOTED.finditer(text)]
 
 
+# FIELD-SCOPED PATTERNS (2026-08-12, S11 · C7). One pattern in the list above is precise in a
+# materials list and noise everywhere else: a possessive + produced artefact is a PREREQUISITE
+# when it appears in `materials` / `visual_aids` (a class cannot arrive holding it) and ordinary
+# teaching prose when it appears in a band ("students display their posters" in the unit that
+# made them). Rather than weaken the pattern until it catches nothing, it is scoped to the
+# fields where the shape means what it says. Keyed by pattern object so the entry sits beside
+# the pattern it governs and cannot drift onto another one.
+_FIELD_SCOPED = {
+    # the possessive + produced-artefact pattern (S11 · C7): materials-shaped fields only
+    next(pat for fam, ban, pat in PATTERNS
+         if fam == 'artefact' and "students['\u2019]" in pat.pattern):
+        ('materials', 'visual_aids'),
+}
+
+
+def _scope_ok(pat, field: str) -> bool:
+    allowed = _FIELD_SCOPED.get(pat)
+    return True if allowed is None else any(field.startswith(f) for f in allowed)
+
+
 def scan_plan(plan: dict):
     """-> list of hits {unit, field, family, ban, match, excerpt}. Empty ban list = clean.
 
@@ -256,6 +323,8 @@ def scan_plan(plan: dict):
             quoted = _quoted_spans(text)
             taken = []
             for family, ban, pat in PATTERNS:
+                if not _scope_ok(pat, field):
+                    continue
                 for m in pat.finditer(text):
                     if any(m.start() < e and s_ < m.end() for s_, e in taken):
                         continue                       # already reported as another pattern

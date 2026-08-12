@@ -41,13 +41,42 @@ Artefacts: `genon/out/stage_prep_english_secondary/` — `assessment_constitutio
 
 ---
 
-## v1.3 and v1.2 — dates unrecorded
+## v1.3 — 2026-07-13 · the "no Part A/B" ban narrowed to the visual case
 
-**Both bumps are undocumented.** No sidecar existed, the constitution carries no in-document
-history, MEMORY.md's constitution inventory records this file only up to v1.1, and `data/` is
-git-ignored, so there is no trail to reconstruct from. Recorded as a gap rather than guessed
-at — the third stage running where a version moved without a record (S8 found the same on both
-mathematics·preparatory files). Nothing in the v1.4 pass depends on knowing what they were.
+*Recovered at C4 (2026-08-12) from MEMORY.md's amendment checklist item 13, which names this
+file's bump explicitly. It had been recorded here as undocumented; it is not.*
+
+Founder-directed. The blanket "one skill, one task, no Part A/B" was traced to its origin: it
+was never a pedagogical principle but the *mechanism* invoked to guarantee the real rendering
+rule (a FILL_IN owns at most ONE `visual_stimulus`; the schema slot is single). It over-caught
+purely TEXTUAL multi-part items, which render cleanly. Rule 4's FILL_IN line and Rule 9's
+combination clause were rewritten to split the two: the hard rule (≤1 visual, no inlining) is
+kept; the A/B ban is narrowed to *"a FILL_IN MAY carry multiple parts (A/B) ONLY if every part
+is textual/prose; any part needing its own table or visual must be a separate item."* Applied to
+all three stages together (prep 1.1→1.2, middle 3.3→3.4, secondary 1.2→1.3).
+
+**Vindicated live at S11's C4:** the 14-period canonical's `Q-VGR-A-1` emits Part A (reported
+speech) + Part B (prepositions), both prose, `visual_stimulus: ""` — exactly the case the
+narrowing permits, and an item the old blanket ban would have failed.
+
+---
+
+## v1.2 — 2026-07-13 · FILL_IN table anti-duplication
+
+*Also recovered at C4 from checklist item 12.*
+
+Rule 9 gained an explicit FILL_IN clause paralleling the existing MATCH one: a FILL_IN item with
+a `visual_stimulus` table must carry that table — header and every data/blank row — ENTIRELY in
+`visual_stimulus`, never reproduced as pipe-markdown, plain text or a paraphrased list in
+`item_stem`. Applied to all three stages (prep 1.0→1.1, middle 3.2→3.3, secondary 1.1→1.2).
+Cause: the anti-duplication prohibition had only ever been written for MATCH and for MCQ /
+TRUE_FALSE options, never FILL_IN, so `english/vii/ch_02` `Q-VG-B-1` inlined its antonym table
+as pipe-markdown in the stem AND partially in `visual_stimulus`. Two saved items were back-filled
+and the 41-file corpus re-scanned clean.
+
+**Satisfied but not exercised at S11's C4:** the four FILL_IN items in the IX ch 7 library carry
+no `visual_stimulus` at all — the cloze sets are prose with inline blanks — so the table-bearing
+case remains untested by live generation.
 
 ---
 

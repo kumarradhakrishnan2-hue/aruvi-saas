@@ -13,6 +13,14 @@ rubric. Same reason recorded at S1, S2, S3, S5 and S6.
 
 ---
 
+> **FOUNDER RULING, 2026-08-12 (same day): all eight findings ACCEPTED AS AUTHORED.** No
+> repair pass, no re-author, no constitution amendment. C3 is green on the library as it
+> stands — none of the eight is structural and none gated the step. The six defect rows
+> (ARV-D-128 … ARV-D-133) are marked `accepted` on the register rather than deleted, so the
+> rate stays readable when S9 and S10 meet the same caps. **One item is accepted here but not
+> settled:** ARV-D-132 is an authoring judgement at C3 and a SERVE question at C8, which
+> inspects exactly that transition — acceptance here is not acceptance there.
+
 ## Verdict
 
 **8 findings, none of them structural, and the library stands.** The two files obey the two-axis

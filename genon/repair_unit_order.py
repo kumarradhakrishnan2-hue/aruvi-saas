@@ -91,6 +91,29 @@ MOVES = {
                 "BOTH units whatever their order. X=14 needs the poster unit at position <=13 "
                 "— a three-unit move, not this swap — and stays open on ARV-D-119."),
     },
+    ("the_world_around_us", "iv", 8): {
+        "file": "data/content/saved_plans/the_world_around_us/iv/ch_08_canonical_p11.json",
+        "order": [1, 2, 3, 4, 6, 7, 8, 9, 10, 5, 11],
+        "family": "item_self_sufficient",
+        "why": ("FIRST-VISIT ORDER, wave 2 of S5's corpus (2026-08-12). p11's U5 'Observe and "
+                "Classify Paper Types' is the first visit to 'Different Types of Paper and "
+                "their Uses' — the registry's LAST section — arriving before sections 2, 3 and "
+                "4 are taught at all. Coverage is tracked as a single frontier, so any "
+                "truncated serve of p11 (X=9, X=10) would have taught section 5 while the "
+                "frontier claimed the whole registry was covered, under-reporting the drop. "
+                "The move puts U5 immediately before U11, its own section's other unit. "
+                "Founder ruling 2026-08-12, declared a ONE-OFF on this compact alone.\n"
+                "THE TOP IS NOT AT FAULT AND IS NOT TOUCHED: the chapter summary's section "
+                "order — taken from the textbook — is exactly the registry order (How Paper "
+                "is Made / Making Responsible Choices / Let Us Get Creative / Let us reflect "
+                "/ Different Types), so the top is faithful to the source and p11 is the "
+                "deviant. p08, the other compact, already keeps the section last and passes.\n"
+                "SAFE: the two units are the same section and read as a pair once adjacent — "
+                "U5 observes and matches samples to the Textbook p. 123 table, U11 'completes "
+                "any remaining portions' of that same table, so U11's existing backward "
+                "dependency gets stronger, not weaker. Neither names content from sections 2-4, "
+                "and each item follows its own unit through the remap."),
+    },
 }
 
 

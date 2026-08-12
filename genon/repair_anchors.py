@@ -55,8 +55,25 @@ from aruvi_core.genon.serve import (                               # noqa: E402
     _norm, is_synthesis_unit, section_registry, unit_range,
 )
 
-LIB = REPO / "data" / "content" / "saved_plans" / "social_sciences" / "ix"
+SAVED = REPO / "data" / "content" / "saved_plans"
+QUAR = REPO / "backup" / "quarantine"
+LIB = SAVED / "social_sciences" / "ix"          # rebound by main() per --subject/--grade
 BACKUP = REPO / "backup" / "anchor_repair"
+CHAPTER = 3                                     # rebound by main(); registry_of_library reads it
+
+# THE ANCHOR FIELD IS NOT CALLED THE SAME THING ON EVERY STAGE (2026-08-12, S5). SS writes
+# `section_anchor`; TWAU writes `section_ref` and the plugin mediates it. Reading only the
+# first returns "" on TWAU, so every declared repair would refuse with "text not found" for a
+# reason that has nothing to do with the text — the same seam `validate()`, the certifier and
+# repair_register.py all had to grow.
+_ANCHOR_FIELDS = ("section_anchor", "section_ref")
+
+
+def _anchor_field(unit) -> str:
+    for f in _ANCHOR_FIELDS:
+        if f in unit:
+            return f
+    return _ANCHOR_FIELDS[0]
 
 # ── the declared edits ───────────────────────────────────────────────────────────
 # file -> [(unit_number, old_anchor, new_anchor, rule_broken, note)]
@@ -67,6 +84,7 @@ BACKUP = REPO / "backup" / "anchor_repair"
 # the clean two-section form instead. unit_range would have tolerated the duplicate (it takes
 # min/max), but a duplicate anchor is not what V2 says and the next reader would trip on it.
 REPAIRS = {
+  ("social_sciences", "ix"): {
     "ch_03_canonical.json": [
         (4,
          "Weather and Climate; Elements of Weather and Climate",
@@ -92,13 +110,99 @@ REPAIRS = {
          "semicolon composite plus a redundant repeat of the second section; the clean "
          "two-section form is emitted. Unit coverage is unchanged (sections 3-4)."),
     ],
+  },
+
+  # ── v1.6, 2026-08-12 · S5 · the_world_around_us · WAVE 2 (the compacts) ──────────
+  # Four hits, three files, ONE defect: the mandated " / " joiner written as ";" or ",".
+  # Exactly the ARV-D-011 shape this tool was built for — and, as there, the corrupted
+  # composite ALSO produced the file's first-visit-order failure, because a joined string
+  # the registry cannot split enters it as one opaque section. Repairing the joiner is
+  # expected to clear both FAILs; nothing about which sections are taught, or in what
+  # order, changes.
+  #
+  # iv ch09 U8 is the interesting one and the reason a naive normalizer would be unsafe:
+  # this chapter's section TITLES CONTAIN COMMAS ("On the Seashore, with Chandni"), so
+  # splitting the anchor on "," yields four fragments that match nothing. The declared pair
+  # below was derived by matching registry entries as verbatim SUBSTRINGS — both appear,
+  # in registry order, and the repair states the result rather than computing it at apply
+  # time.
+  ("the_world_around_us", "iii"): {
+    "ch_08_canonical_p04.json": [
+        (3,
+         "We Eat Different Things; Where does food come from?",
+         "We Eat Different Things / Where does food come from?",
+         "V2/joiner",
+         "';' composite of two real, adjacent registry sections"),
+    ],
+  },
+  ("the_world_around_us", "iv"): {
+    "ch_09_canonical_p10.json": [
+        (8,
+         "On the Seashore, with Chandni, In the Mountains, with Nayan",
+         "On the Seashore, with Chandni / In the Mountains, with Nayan",
+         "V2/joiner",
+         "',' composite of registry sections 4 and 5, whose own titles carry commas — the "
+         "split point is the one that leaves both entries verbatim"),
+    ],
+  },
+  ("the_world_around_us", "v"): {
+    # ── ch 08, 2026-08-12: a REAL SECTION MISSING FROM THE REGISTRY ─────────────────
+    # Not a delimiter this time, so it is declared with its evidence and was ruled by the
+    # founder, not by this tool's usual "only the separator is wrong" licence.
+    #
+    # The chapter has six sections; the top anchors five. 'Recycle' — the textbook's closing
+    # reflection section (pp. 143-144: "We should not throw old clothes away, why?", the
+    # cloth-observation table, the silk life-cycle ordering) — is named ONLY by U10, the
+    # synthesis, and the registry excludes synthesis units by design (§0.3). So Recycle
+    # disappears from the registry, and the two compacts that teach it as an ordinary closing
+    # unit (p06 U6 "Cloth That Lives On", p08 U8 "Give Cloth a Second Life") fail
+    # anchor-verbatim — while skipping it would have failed coverage. They could not pass.
+    #
+    # THE EVIDENCE FOR THE REPAIR, which is about what U9 already does: its title is
+    # "Embroidery Stories and the Cloth We Recycle", and its closing band (36-40) has
+    # students write "One way my family or community reuses old cloth is…" — Recycle content,
+    # in a unit anchored only to Stitch and Decorate. The join states what the unit teaches.
+    #
+    # THE COST, STATED: the top gives Recycle one 4-minute band plus its synthesis, where a
+    # compact gives it a whole unit. The anchor is generous, not false. Re-authoring the top
+    # (~Rs 40 with its compacts) was the alternative and was declined: a clean chapter should
+    # not be re-rolled to fix a label.
+    #
+    # THE GENERAL FINDING, logged beyond this chapter: excluding the synthesis anchor from
+    # the registry is safe where the synthesis carries the reserved TOKEN, and lossy where the
+    # carrier is a BOOLEAN and the unit can name a real section (TWAU, and any stage like it).
+    # ARV-D-118's family, surfacing a second way.
+    "ch_08_canonical.json": [
+        (9,
+         "Stitch and Decorate",
+         "Stitch and Decorate / Recycle",
+         "V2/registry-omission",
+         "U9 already teaches both: the embroidery gallery walk (Stitch and Decorate) and a "
+         "closing band on reusing old cloth (Recycle). Naming the second section puts it in "
+         "the registry at the position the textbook gives it, and lets the compacts' Recycle "
+         "units anchor verbatim"),
+    ],
+    "ch_10_canonical_p10.json": [
+        (6,
+         "Story 4: The Sweet Story of Sugar!, Story 5: The Mexican Marigold Moves into India!",
+         "Story 4: The Sweet Story of Sugar! / Story 5: The Mexican Marigold Moves into India!",
+         "V2/joiner",
+         "',' composite of two adjacent registry stories"),
+        (8,
+         "Story 6: The Cows that Went to Brazil!, Web of Life",
+         "Story 6: The Cows that Went to Brazil! / Web of Life",
+         "V2/joiner",
+         "same file, same slip; 'Web of Life' is the chapter's closing registry section"),
+    ],
+  },
 }
 
 
 def registry_of_library():
     """Compile the library and derive the registry from the top canonical, exactly as
     build_library.certify does — so what is printed here is what certification will see."""
-    paths = [LIB / "ch_03_canonical.json"] + sorted(LIB.glob("ch_03_canonical_p*.json"))
+    nn = f"ch_{CHAPTER:02d}"
+    paths = [LIB / f"{nn}_canonical.json"] + sorted(LIB.glob(f"{nn}_canonical_p*.json"))
     lib = [(p.name, compile_stream(json.loads(p.read_text(encoding="utf-8"))))
            for p in paths if p.is_file()]
     lib.sort(key=lambda t: -len(t[1]["units"]))
@@ -139,23 +243,34 @@ def show_registry(label):
 def apply_file(fname, edits, dry):
     path = LIB / fname
     if not path.is_file():
-        raise SystemExit(f"missing: {path}")
-    plan = json.loads(path.read_text(encoding="utf-8"))
+        # QUARANTINE (2026-08-12): build_library moves a failed canonical out of the library,
+        # so the file a repair targets is usually not where the library keeps it. Repair the
+        # quarantined copy and put it back under its proper name — the same route
+        # repair_item_type.py takes, for the same reason.
+        qs = sorted((QUAR / LIB.parent.name / LIB.name).glob(fname[:-5] + "_*.json"))
+        if not qs:
+            raise SystemExit(f"missing: {path} (and nothing quarantined for it)")
+        print(f"  (library copy absent — repairing quarantined {qs[-1].name})")
+        path_src = qs[-1]
+    else:
+        path_src = path
+    plan = json.loads(path_src.read_text(encoding="utf-8"))
     units = {u["period_number"]: u for u in plan["result"]["lesson_plan"]["periods"]}
     done = []
     for unit_no, old, new, rule, note in edits:
         u = units.get(unit_no)
         if u is None:
             raise SystemExit(f"{fname}: no unit {unit_no}")
-        cur = u.get("section_anchor") or ""
+        fld = _anchor_field(u)
+        cur = u.get(fld) or ""
         if cur != old:
             raise SystemExit(
                 f"{fname} U{unit_no} section_anchor: declared text not found — the artefact "
                 f"has changed since this repair was written. Re-read it, do not force.\n"
                 f"  wanted: {old!r}\n  found : {cur!r}")
         if not dry:
-            u["section_anchor"] = new
-        done.append({"unit": unit_no, "field": "section_anchor", "rule": rule,
+            u[fld] = new
+        done.append({"unit": unit_no, "field": fld, "rule": rule,
                      "removed": old, "replaced_with": new, "note": note})
     if not dry:
         gc = plan.setdefault("genon_canonical", {})
@@ -171,17 +286,38 @@ def apply_file(fname, edits, dry):
     return done
 
 
+def _arg(flag, default):
+    return sys.argv[sys.argv.index(flag) + 1] if flag in sys.argv else default
+
+
 def main():
+    global LIB, CHAPTER
     dry = "--apply" not in sys.argv
+    subject = _arg("--subject", "social_sciences")
+    grade = _arg("--grade", "ix")
+    CHAPTER = int(_arg("--chapter", "3"))
+    key = (subject, grade)
+    if key not in REPAIRS:
+        raise SystemExit(f"no declared set for {key}; have {sorted(REPAIRS)}")
+    LIB = SAVED / subject / grade
+    repairs = {f: e for f, e in REPAIRS[key].items()
+               if int(f.split("_")[1]) == CHAPTER}
+    if not repairs:
+        raise SystemExit(f"no declared edits for {subject} {grade} ch {CHAPTER}; "
+                         f"chapters in this set: "
+                         f"{sorted({int(f.split('_')[1]) for f in REPAIRS[key]})}")
+    print(f"repair set {subject} {grade} ch {CHAPTER} -> {LIB.relative_to(REPO)}/")
     show_registry("BEFORE")
     if not dry:
         BACKUP.mkdir(parents=True, exist_ok=True)
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        for fname in REPAIRS:
-            shutil.copy2(LIB / fname, BACKUP / f"{fname[:-5]}_{ts}.json")
-        print(f"\nbacked up {len(REPAIRS)} file(s) -> {BACKUP.relative_to(REPO)}/")
+        for fname in repairs:
+            src = LIB / fname
+            if src.is_file():
+                shutil.copy2(src, BACKUP / f"{grade}_{fname[:-5]}_{ts}.json")
+        print(f"\nbacked up the library copies present -> {BACKUP.relative_to(REPO)}/")
     print()
-    for fname, edits in REPAIRS.items():
+    for fname, edits in repairs.items():
         done = apply_file(fname, edits, dry)
         print(f"=== {fname} — {len(done)} edit(s)"
               f"{' (DRY RUN, nothing written)' if dry else ''}")
@@ -194,7 +330,7 @@ def main():
         return 0
     # A repaired canonical invalidates every plan derived from it (ARV-D-034) — the serve
     # cache keys on the canonical's ledger_ts, which a repair does not move.
-    purge("social_sciences", "ix", 3, reason="genon/repair_anchors.py")
+    purge(subject, grade, CHAPTER, reason="genon/repair_anchors.py")
     reg = show_registry("AFTER")
     bad = [b for _, b, _, _ in first_visit_check(*registry_of_library()) if b]
     print(f"\nregistry is {len(reg)} sections; "

@@ -358,7 +358,7 @@ REPAIRS = {
     #     not learn a defect that was not one.
     # The four calendar hits are classroom talk ("could you do this tomorrow?"), not scheduling
     # claims — but the Calendar Purge is absolute and the fix is one word each.
-    ("the_world_around_us", "iii"): {
+    ("the_world_around_us", "iii", "SUPERSEDED_wave1_applied_20260812"): {
         "ch_11_canonical.json": [
             (16, "band:4",
              " this week", "",
@@ -367,7 +367,7 @@ REPAIRS = {
              "calendar Aruvi does not model and cannot honour"),
         ],
     },
-    ("the_world_around_us", "iv"): {
+    ("the_world_around_us", "iv", "SUPERSEDED_wave1_applied_20260812"): {
         "ch_04_canonical.json": [
             (11, "band:2",
              " this week", "",
@@ -394,7 +394,7 @@ REPAIRS = {
              "band's own 20-32 minutes carry the time and are rescaled per sitting"),
         ],
     },
-    ("the_world_around_us", "v"): {
+    ("the_world_around_us", "v", "SUPERSEDED_wave1_applied_20260812"): {
         "ch_01_canonical.json": [
             (12, "band:0",
              " for two minutes", "",
@@ -440,6 +440,138 @@ REPAIRS = {
              "register/clock",
              "'students discuss in pairs, then share with the class' is the instruction; the "
              "sugar-and-chilli connection at the end of the band is untouched"),
+        ],
+    },
+    # ── v1.7, 2026-08-12 · S5 · the_world_around_us · WAVE 2 (the 59 compacts) ───────
+    # 21 hits after one scanner fix (below), across 16 compact files. Composition: 9 clock,
+    # 7 calendar, 4 forward, 1 completion — the same families as wave 1, at a similar rate
+    # (10 of 31 tops, 16 of 59 compacts). All pure deletions.
+    #
+    # ONE HIT WAS FIXED AT SOURCE INSTEAD, and it matters: iv ch03 p10 U9 "half the class
+    # will be plants and animals, the other half will be forest visitors" is a GROUPING, not
+    # a clock quantity. register_scan's `half the (session|period|class)` pattern was written
+    # for session length and "class" is a homonym. Repairing it would have struck correct
+    # pedagogy to satisfy a regex, so "half the class" is now ADVISORY in register_scan.py —
+    # the S4 "last term" treatment. 22 ban hits became 21.
+    #
+    # Two are worth reading rather than skimming:
+    #   * iv ch07 p11 U8 "Boats are kept safe on desks for the exhibition in the following
+    #     unit" — the ARV-D-119 family again, now pointing FORWARD: on a short serve the
+    #     exhibition never happens and the boats wait for nothing.
+    #   * iv ch06 p15 U2 "Now that we have seen who helps the grain" — completion language
+    #     about a PRIOR unit's activity. The sentence's own opening already says the teacher
+    #     revisits earlier board words, which is a legal backward reference; only the
+    #     completion claim goes.
+    ("the_world_around_us", "iii"): {
+        "ch_03_canonical_p06.json": [
+            (6, "band:4", " for one or two minutes", "", "register/clock",
+             "the gallery walk is the activity; its band carries 35-40 and is rescaled"),
+        ],
+        "ch_03_canonical_p08.json": [
+            (8, "teacher_notes", " tomorrow", "", "register/calendar",
+             "'if a new student joined your school and could not read the signs' is the "
+             "whole thought experiment; the day is not part of it"),
+        ],
+        "ch_04_canonical_p08.json": [
+            (3, "teacher_notes", " this week", "", "register/calendar",
+             "'ask which grains the children ate' — the grain-grass discovery needs no week"),
+        ],
+        "ch_05_canonical_p08.json": [
+            (7, "band:0", " for a few minutes", "", "register/clock",
+             "'students discuss in pairs, recalling what they have observed' stands"),
+        ],
+        "ch_12_canonical_p13.json": [
+            (4, "band:1", " for a few minutes", "", "register/clock",
+             "'groups talk, then a speaker shares one idea' is the instruction"),
+            (6, "band:3", " this week", "", "register/calendar",
+             "'which of these will I try?' is the private commitment; the week narrows it "
+             "to a calendar the platform does not model"),
+        ],
+    },
+    ("the_world_around_us", "iv", "SUPERSEDED_wave2_applied_20260812"): {
+        "ch_01_canonical_p06.json": [
+            (4, "band:1", " for two minutes", "", "register/clock",
+             "'students think quietly, then share in groups of three' is complete"),
+        ],
+        "ch_03_canonical_p13.json": [
+            (3, "band:3", " as a bridge to the section's content on water-dwelling animals",
+             "", "register/forward",
+             "the naming task and the reflective question that follows are the teaching; "
+             "the bridge promises content this serve may not reach"),
+        ],
+        "ch_06_canonical_p11.json": [
+            (5, "band:0", " for a quiet two minutes", "", "register/clock",
+             "'observe the park scene picture without talking' keeps the quiet instruction "
+             "and drops only the quantity"),
+        ],
+        "ch_06_canonical_p15.json": [
+            (2, "band:0", "Now that we have seen who helps the grain, let's think",
+             "Let's think", "register/completion",
+             "the band already opens by revisiting earlier board words — a legal backward "
+             "reference. Only the completion claim goes"),
+            (6, "band:3", " this week", "", "register/calendar",
+             "'one specific change they will make in how they handle food at home' is the "
+             "commitment"),
+        ],
+        "ch_07_canonical_p11.json": [
+            (8, "band:4", " Boats are kept safe on desks for the exhibition in the following unit.",
+             "", "register/forward",
+             "ARV-D-119's shape pointing forward: on a short serve the exhibition never "
+             "comes. The notebook note is the unit's own closing act"),
+        ],
+        "ch_10_canonical_p08.json": [
+            (7, "band:2", " without claiming the chapter is complete", "",
+             "register/completion",
+             "authorial aside to the teacher; the consolidation sentence reads better "
+             "without a disclaimer about completeness"),
+        ],
+    },
+    # p11 was in QUARANTINE when the wave-2 set ran (first-visit order, ARV-D-1xx), so its
+    # own calendar hit could not be repaired with its siblings. Restored and reordered by
+    # repair_unit_order.py the same day; its unit numbering shifted, so the hit that the
+    # certification report showed at U9 is now U8 — declared here against the CURRENT file.
+    ("the_world_around_us", "iv"): {
+        "ch_08_canonical_p11.json": [
+            (8, "band:1", " tomorrow morning", "", "register/calendar",
+             "'what exactly will you do differently?' is the prompt that makes a vague step "
+             "specific; the morning is a calendar Aruvi does not model"),
+        ],
+    },
+    ("the_world_around_us", "v", "SUPERSEDED_wave2_applied_20260812"): {
+        "ch_01_canonical_p08.json": [
+            (3, "band:1", " for a few minutes", "", "register/clock",
+             "'students watch the inside of the bag and begin filling the I Observe column'"),
+        ],
+        "ch_01_canonical_p11.json": [
+            (10, "band:2", " for a few minutes", "", "register/clock",
+             "'pairs discuss, then share' — the scribing that follows is the real content"),
+        ],
+        "ch_02_canonical_p13.json": [
+            (8, "band:2", " this week", "", "register/calendar",
+             "'at least one action they could start, not just in principle' keeps the "
+             "concreteness the week was carrying"),
+            (9, "band:3", " These notes will be used in the role-play in the next unit of work on this section.",
+             "", "register/forward",
+             "the note-taking is complete in itself; the role-play may be a unit this "
+             "class never reaches"),
+        ],
+        "ch_04_canonical_p10.json": [
+            (9, "band:3", " this week", "", "register/calendar",
+             "'one behaviour they will practise in school' is the commitment"),
+        ],
+        "ch_04_canonical_p13.json": [
+            (11, "band:1", " for two minutes", "", "register/clock",
+             "'students think individually, then write their action on their leaf shape'"),
+        ],
+        "ch_09_canonical_p07.json": [
+            (3, "band:3", " The chart remains posted on the wall for the following unit.",
+             "", "register/forward",
+             "leaving the chart up is fine; SAYING it is for the following unit is the "
+             "breach, because there may not be one"),
+        ],
+        "ch_09_canonical_p10.json": [
+            (5, "band:3", " before the next unit's work", "", "register/forward",
+             "'a brief oral pause that plants the idea of seasonality' is the whole move"),
         ],
     },
 }
