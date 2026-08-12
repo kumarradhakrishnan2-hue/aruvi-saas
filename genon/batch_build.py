@@ -464,7 +464,15 @@ def main() -> int:
               + f" · log {row['log']}")
         if row["exit"] != 0:
             fails += 1
-            if fails >= max_fails:
+            # THE BRAKE IS FOR MONEY, AND --certify-only SPENDS NONE (2026-08-12, found on
+            # S5's wave-1 certify). The abort exists so a systematic defect is not BOUGHT
+            # thirty-one times. A free pass has nothing to protect: stopping at the second
+            # failure only hides the other twenty-nine reports — and between the two batch
+            # waves EVERY chapter fails the "library complete" check by construction,
+            # because its compacts do not exist yet. So the brake is off when nothing is
+            # being purchased. It also means the annotate step (which unlocks wave 2's
+            # briefs) reaches every chapter instead of the first two.
+            if fails >= max_fails and not certify_only:
                 aborted = (f"{fails} chapter(s) failed (limit {max_fails}) — stopped at "
                            f"{item['grade']} ch {item['ch']:02d}. Paid artefacts are on disk; "
                            f"re-running this command resumes without re-buying them.")

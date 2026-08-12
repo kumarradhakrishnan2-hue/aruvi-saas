@@ -381,3 +381,64 @@ lesson this pass acted on.
   never been exercised) and Rule 11's `expected_elements` "3–5 bullets, each ≤ 12 words". Read
   them at C3 with the S4 lesson in hand.
 - **ch 12's floor override is owed at pre-warm**, not now (§2, P5.1).
+
+---
+
+## 7. Addendum, same day — the English PROMPT BUILDER, lifted at C1's first attempt
+
+C1 stopped at STEP 1 with `NotImplementedError` from `prompt_assembly.build_lpa_prompts`:
+English was the one subject whose prompt wrapper had never been lifted from the prototype,
+**and the refusal named this exact moment as its condition** — *"lift
+`_build_lpa_prompts_english` verbatim when the English combo enters step 3/4 — its
+constitution is not yet genon-amended, so extracting it now would freeze a prompt that is
+about to change shape."* It raised inside `prepare_job`, before the API call, so **₹0 was
+spent**. Second time in two stages that a well-left note has done a successor's work.
+
+**Lifted** from `Project Aruvi/app/aruvi_streamlit/app.py` lines 584–901 (the same file and
+state the standard path came from), read programmatically rather than retyped.
+**Mechanical parity: 7 diff lines, all three edits declared** —
+
+1. `phases` → `time_bands` in the period sketch, and `Each phase description` → `Each time
+   band activity` in LENGTH CONSTRAINTS. **Forced, not chosen:** P3 renamed both this
+   morning and `compile.py` v0.5 is declared-only, so the verbatim string would have bought
+   a canonical that does not compile. This is the shape change the note predicted.
+2. The return annotation `tuple[str, str]` → `tuple[list, list]` — the prototype's was
+   already wrong, and deviation 3 made the same correction on the standard path.
+
+**It also settles the question §3 raised about the plugin's builders.** The prototype sends
+the summary **whole** — `tasks_verbatim` included, because LP Rule 3 draws its tasks from it
+and Rule 9's page locators come from each task's `page_ref` — and holds the assessment off
+those fields in prose ("DO NOT read summary.<spine>.tasks_verbatim[] … these are FORBIDDEN
+inputs"). `EnglishSubject.build_lesson_plan_prompt`, which strips them from BOTH prompts,
+would have made Rules 3 and 9 unsatisfiable. Confirmed: it is an unexercised draft, and
+nothing should be lifted from it.
+
+**Two prompt strings were left alone deliberately, and both are C3 reads rather than edits:**
+`rubric_bullets = "4-5"` at secondary where assessment Rule 11 permits 3–5 (narrower than
+the constitution, not contrary to it), and *"section_contributions … that have at least one
+anchored task"*, which is a residue of the drop licence §4 removed — harmless under the new
+mandate, since a taught cell always has an anchored task. Editing a prompt string that is
+merely *unnecessary* is how the "same way" guarantee dies.
+
+**One defect found and fixed in the lift itself**, on the first dry run: the inserted
+`{minutes, activity}` sits inside an f-string, so Python evaluated it —
+`NameError: name 'minutes' is not defined`. Doubled braces. Same family as the JSON-quote
+hazard of 2026-08-11, and the reason a `--dry` pass exists at all.
+
+**Dry run, verified before spending:** English · Grade IX · ch 7 — 17 × 50 min, LP+A,
+system 53,771 chars · user 48,689 (against SS·IX's 38.7k / 39.0k, so budget above SS's
+₹74/canonical). Present in the assembled prompt: **LP v1.2 · assessment v1.4**, the top
+brief with the **boolean** synthesis mandate, FULL SPINE COVERAGE, RULE 8A, the A9 line,
+`time_bands` in the sketch. Absent: `section_anchor`, `role_handoff`, and any surviving
+`phases` key (the one occurrence left is the assessment constitution's English prose,
+"two phases").
+
+Artefacts: `lift_english_prompt_builder.py` (reproducible, exactly-one-occurrence asserts,
+parity check) · `_lifted_english_prototype.txt` (the extracted source) ·
+`prompt_assembly_pre_english_lift.py` · `prompt_assembly_english_lift.diff`.
+
+**One thing seen in passing, NOT acted on:** the standard (non-English) path still injects
+`"role_handoff": <per LP Constitution>` into its output sketch (deviation 4, added at LP
+v1.2 in July), though A2/A3/A4 are cancelled and `role_handoff` is on the retired list. If
+the certified libraries carry a stray `role_handoff` key, that sketch is where it comes
+from. Worth a look after S11 — it touches every other stage and nothing here.
