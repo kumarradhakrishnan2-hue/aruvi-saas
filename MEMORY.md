@@ -639,7 +639,77 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-13 (newest) — CERTIFICATION COULD NOT SEE WHAT IT WAS BUILT FROM.
+## 2026-08-13 (newest) — S9 · ENGLISH·PREPARATORY STAGE PREP: A CONSTITUTION
+## NAMED A DURATION THE PLATFORM DOES NOT USE, AND `_NOT_YET` IS NOW EMPTY
+
+Full note: `genon/out/stage_prep_english_preparatory/STAGE_SIGNOFF_S9_english_preparatory.md`.
+Landed pair: english·preparatory LP **v1.1 → v1.2** · assessment **v1.4 → v1.5**. Drawn class
+**III**, pilot **ch 11 *The Big Laddoo*** (section B, poem, [12, 10, 7]). **The first stage in
+the campaign to sign with every P-step closed — P5.4 included, so no amber at all.**
+
+**1 · A1 IS NOT ONLY A QUESTION ABOUT THE ROW COUNT. IT IS A QUESTION ABOUT THE NUMBER.**
+Ten stages read A1 as "replace *one or more rows* with one row" — a shape correction, and at
+every one of them that was the whole of it. Preparatory needed that too, but its real defect was
+that the number was wrong: INPUTS 3 said *"`period_duration_minutes` is 30 or 35 at prep (35
+default)"*, Rule 2 STEP 1's ceiling table was written for 30- and 35-minute periods and named no
+40, and the schema comment said `// 30 or 35`. `master_plan.json` carries english III, IV **and**
+V at `standard_duration_minutes: 40`. A library authored under v1.1 would have run 12 × 35 = 420
+minutes against the row's own `canonical_minutes: 480` — internally consistent, externally wrong,
+and nothing in the pipeline compares the two. **It was live:** three of the four saved
+preparatory plans carry MIXED durations *inside one plan* (iii ch 2 = 2×40 + 2×35 · iv ch 1 =
+5×35 + 2×40 · v ch 1 = 3×35 + 2×40 + 1×30). **The carry-forward:** read every stage's A1 against
+`master_plan.json`'s `standard_duration_minutes` for its classes, not only against the phrase
+"one or more rows". A stage whose stated duration was never reconciled with the calibration
+bands looks compliant while being wrong, because the sentence it fails is one nobody thought to
+write. The cheap proof is the dry pre-flight's header line — ours now reads `12 × 40 min`.
+
+**2 · THE PAIR AMENDMENT LEFT THREE COPIES BEHIND, AND EACH WAS FOUND A STAGE LATER.**
+2026-08-12 moved three *assessment* constitutions to TWO items per cell. It did not move: the
+three *LP* constitutions beside them (S10 struck middle's, S9 struck preparatory's, secondary's
+is an open defect against a certified stage), **nor `genon/prompt_assembly.py`** — the english
+prompt builder, which said "one item per cell" in two places, **both citing Rule 2 while
+contradicting it**, and which is stage-agnostic so it said it to all three. S9's dry pre-flight
+caught it by sweeping the *assembled prompt* for stale strings rather than by reading a
+constitution, which is why two stages of P-prep had missed it. **It did not bite at S10** — its
+library came in at 12 items across 6 cells, the model following the constitution over the builder
+— and that is the argument for fixing it, not against: a coin-flip resolved favourably once, by a
+model that (curly quotes) keeps a habit for a whole run or drops it for a whole run. Fixed free,
+worded to defer to Rule 2 rather than restate a number. **Standing rule: after any cross-stage
+amendment, sweep the ASSEMBLED PROMPT, not only the files that were edited.** The prompt is where
+the constitution, its sibling and the builder finally meet, and it is free to read.
+
+**3 · `carriers._NOT_YET` IS EMPTY — every subject·stage in the 11-stage matrix is carried.**
+Row 7 for the third time; again no new code, again because a predecessor's note said what to
+*confirm* rather than what to build. The one difference it flagged was real — **preparatory's
+spine set is FIVE, not six** (`reading`, `oracy` with listening and speaking merged, `writing`,
+`word_work`, `beyond_text`) — and it cost nothing precisely because **no part of the carrier
+reads a spine NAME**: `cell_resolver` joins whatever `spines_taught[]` holds against whatever
+`source_spine` holds. A carrier that had hard-coded the six middle keys would have passed S11 and
+S10 and failed every chapter of this stage; that is now a test rather than a comment.
+**The table is KEPT though empty**, with the reason written above it: an empty `_NOT_YET` is not
+a dead switch but the pre-flight that makes `carrier_gap()` free, and the next subject·stage
+brought into genon belongs in it *before* it is authored, not after it is paid for. Three tests
+that only existed because a stage was owed were **kept alive against the empty table by a
+synthetic entry** rather than deleted — the refusal machinery, the stage/row reporting contract,
+and the conservative gradeless read. Deleting them would have retired the pre-flight silently.
+`tests/test_genon_carriers.py` 122 (6 failing) → **131, green**.
+
+**4 · Two class-V chapter summaries are UNPARSEABLE JSON** (ARV-D-143) — unescaped straight
+double quotes inside a string value, in *authored content*, which is the 2026-08-11 curly-quote
+hazard on the side of the pipe no constitution governs. Neither chapter can be read by anything.
+Nothing has ever asserted that every chapter summary parses; a corpus-wide `json.load()` belongs
+in the certifier's free checks.
+
+**5 · Smaller, worth carrying.** Preparatory's `task_brief` had **no word cap at all** against a
+Rule 9 that mandates a page locator — a hole, not a licence, and the kind that only shows when
+you measure the corpus *with the mandate simulated* (14 of 29 briefs go over 12 once the locator
+is costed at +4 words; 0 over 16). **55% of preparatory's 167 cells carry a MERGED
+`section_name`**, the longest 28 words — where middle's figure was 17% — so S10's "which
+subheading" clause is this stage's ordinary operating condition, not a tail risk.
+
+---
+
+## 2026-08-13 — CERTIFICATION COULD NOT SEE WHAT IT WAS BUILT FROM.
 ## C5 CHECK 11, AND THE PILOT IT CAUGHT
 
 **The hole, stated exactly.** Every section check in `certify()` measures the library

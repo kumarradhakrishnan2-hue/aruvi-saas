@@ -474,9 +474,11 @@ Produce a SINGLE valid JSON object with this top-level structure:
       "spine_title": "{_spine_title_enum}",
       "note":        "",
       "items": [
-        <one item per section_contribution in coverage_handoff for this
-         spine (Assessment Constitution Rule 2). Each item tests the
-         cell's implied_lo.
+        <the items Assessment Constitution Rule 2 requires for each
+         section_contribution in coverage_handoff for this spine — read
+         Rule 2 and its slot table for the count and the slot order; do
+         not assume one. Every item tests the cell's implied_lo, and a
+         cell's items sample it at DIFFERENT rungs.
 
          STRICT GENERATION RULES — these override everything else:
          - DO NOT read summary.<spine>.tasks_verbatim[] or question_bank[].
@@ -519,15 +521,17 @@ CRITICAL CONSTRAINTS:
   across (section × spine) cells in textbook order (LP Rule 1+2), with
   per-section period share roughly proportional to the section's
   page_count (±1 period tolerance).
-- Total assessment item count = number of section_contributions across
-  all spines in coverage_handoff that have at least one anchored task
-  (one item per spine-cell implied_lo, per Assessment Rule 2). Spines
-  with no section_contributions are omitted entirely. For each item,
-  read ONLY the cell's implied_lo from coverage_handoff and the
-  section's content sources ({_content_sources_short}).
+- Total assessment item count is set by ASSESSMENT RULE 2, applied to
+  every section_contribution across all spines in coverage_handoff that
+  has at least one anchored task. Rule 2 and its slot table are the only
+  authority on how many items a cell carries and in what order they are
+  emitted — read them; do not assume one per cell. Spines with no
+  section_contributions are omitted entirely. For each item, read ONLY
+  the cell's implied_lo from coverage_handoff and the section's content
+  sources ({_content_sources_short}).
   DO NOT read tasks_verbatim[] or question_bank[] for any purpose —
   these fields are forbidden inputs to the assessment generator.
-  Generate one original item per cell grounded in the section content.
+  Every item must be original and grounded in the section content.
 - C-codes MUST NOT appear anywhere in the LP or assessment JSON.
 - `pedagogical_methods` per period MUST be an object whose keys equal
   `spines_taught` exactly. Each value MUST be drawn from that spine's

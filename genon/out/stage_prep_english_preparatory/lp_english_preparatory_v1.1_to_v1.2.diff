@@ -1,0 +1,318 @@
+--- lesson_plan_constitution.txt (v1.1)
++++ lesson_plan_constitution.txt (v1.2)
+@@ -1,7 +1,15 @@
+-ARUVI — ENGLISH LESSON PLAN CONSTITUTION · PREPARATORY · VERSION 1.1
++ARUVI — ENGLISH LESSON PLAN CONSTITUTION · PREPARATORY · VERSION 1.2
+ 
+ VOCABULARY (teacher-facing naming):
+-The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk (e.g. "the previous unit", "this unit"). The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads.
++The atomic teaching chunk is called a "unit" in ALL teacher-facing prose — teacher_notes, activity titles, homework, and any cross-reference to another chunk. A cross-reference names the CONTENT built on, never a unit's position — see THE SELF-CONTAINED REGISTER below. The token "period" is retained ONLY in (a) schema field names (period_number, period_duration_minutes, periods[], etc.) and (b) the scheduling/allocation budget (period schedule, period count, per-period budget). Never write "period" in prose the teacher reads; "session" is outside the register too.
++
++THE SELF-CONTAINED REGISTER (binds Rule 9 and teacher_notes)
++Three things no time band or teacher note may do, each because the platform enforces it:
++1. NAME A CLOCK QUANTITY — the platform scales every band's minutes in proportion to the sitting that carries it, so a stated number is falsified silently: no "for three minutes", "the remaining time", "half the session". Where a task is genuinely brief or genuinely long, say so in kind — "a quick paired chant", "an unhurried reading aloud" — never in number.
++2. POINT FORWARD OR CLAIM COMPLETION — a teacher's plan may end, or hand over to a companion variant's unit, after any unit, so "the next unit", "as we will see", "now that we have recited the whole poem" are wrong for someone. Each unit closes on its own ground.
++3. NAME CALENDAR TIME — Aruvi keeps no calendar and sittings do not map to days: today, yesterday, this week, next class are unknowable at authoring.
++Backward continuity is welcome, and is best carried by naming the content built on ("Having chanted the laddoo rhyme together, …") rather than a unit's position.
++
+ Stage: Preparatory (Grades III–V)
+ 
+ ================================================================================
+@@ -47,9 +55,14 @@
+    `mirror/framework/english/preparatory/pedagogy_preparatory_english.txt`
+    — sources the permitted methods per spine (Rule 4).
+ 
+-3. Period schedule: `{ period_duration_minutes, period_count }`.
+-   `period_count = B` from the Allocate tab.
+-   `period_duration_minutes` is 30 or 35 at prep (35 default).
++3. Period schedule — exactly ONE row `{ period_duration_minutes,
++   period_count }`: the class-standard duration (40 min for classes up to
++   VII, 45 for VIII, 50 for IX–X — the master-plan calibration bands, not
++   NCF's flat 40) × the period count, where `period_count = B` from the
++   Allocate tab. Preparatory is classes III–V, so every preparatory plan is
++   authored at 40 MINUTES. There is no 30- or 35-minute preparatory period:
++   teacher timetable variation never reaches generation, it is handled
++   downstream at serve time.
+ 
+ 
+ ================================================================================
+@@ -74,6 +87,12 @@
+ only when (a) both spines exist in the same section, (b) both fit the
+ task budget (Rule 2 Step 1), (c) they are adjacent in the spine walk,
+ and (d) the secondary spine carries 1 task only.
++
++The one exception is a CLOSING unit that draws the whole main_section
++together — revisiting what several spines built rather than teaching a
++new cell. It may name as many spines as it genuinely revisits, it is not
++bound by clause (d), and it teaches no cell of its own. Every OTHER unit
++stays inside the one-or-two spine bound above.
+ 
+ 
+ ================================================================================
+@@ -88,8 +107,11 @@
+   writing                        → 1 task per 15–20 min
+   beyond_text                    → 1 task per 12–20 min
+ 
+-A 30-min period holds at most 2–3 tasks; a 35-min period holds 2–4.
+-Do not exceed these ceilings regardless of summary task count.
++A 40-minute period — the preparatory class-standard and the ONLY duration
++a plan is authored at (INPUTS 3) — holds at most 2–3 tasks across its
++spine(s). Do not exceed this ceiling regardless of summary task count.
++Sittings shorter or longer than 40 minutes are handled downstream at serve
++time and are never authored for.
+ 
+ STEP 2 — Distribute B periods across sections proportional to
+ `page_count` (textbook pages the section occupies — body, picture
+@@ -98,11 +120,22 @@
+ correction.
+ 
+ STEP 3 — Within each section, cover spines in textbook order, packing
+-tasks per Step 1 budget. When the section's allocated periods are
+-exhausted, stop. Remaining spines/tasks are NOT forced into a period
+-— flag them in `teacher_notes` of the section's last period as a
+-self-study pointer. This is an honest reflection of available time,
+-not a defect.
++tasks per Step 1 budget.
++
++FULL SPINE COVERAGE: every spine the summary records for a section MUST
++be taught in at least one of that section's periods. Dropping a spine is
++FORBIDDEN, at every period count — a shorter plan is the same chapter
++taught in fewer periods, not a smaller chapter. A class given seven
++periods instead of twelve should still read, talk, write and play with
++words; it should do less of each. A spine the summary does not carry for
++that section is simply absent and is not a drop.
++
++Curation happens at TASK level, where Rule 3 governs it: a spine under
++pressure is taught with fewer of its tasks anchored, never skipped.
++Unfitted TASKS go to homework (Rule 8) or are left unanchored and flagged
++in `teacher_notes` of the section's last period as a self-study pointer;
++that is an honest reflection of available time, not a defect. An unfitted
++SPINE is a defect.
+ 
+ STEP 4 — Vocabulary/Phonics/Word-Play isolation.
+ A period whose primary content is a phonics drill, sight-word
+@@ -117,7 +150,7 @@
+ ================================================================================
+ 
+ The teacher-led encounter with the section's primary text must appear
+-as an explicit timed phase within the periods allocated to that
++as an explicit timed band within the periods allocated to that
+ section. It does not consume a `tasks_in_class[]` slot but counts
+ toward the period's minutes (Rule 5). The period's `materials` must
+ include the textbook with page range.
+@@ -136,7 +169,7 @@
+                         typical 2–3 page picture story.
+ 
+ For a multi-period section, the full text encounter appears in the
+-FIRST period; later periods may include a 2–3 min re-recite phase but
++FIRST period; later periods may include a 2–3 min re-recite band but
+ are not required to.
+ 
+ 
+@@ -168,20 +201,20 @@
+ only some sub-items) is forbidden.
+ 
+ Task references in `tasks_in_class[]` use `{ spine, task_index }`
+-(0-based index into the section's `tasks_verbatim[]`). Phase
+-descriptions reference tasks by `spine_section_name` + brief; they do
++(0-based index into the section's `tasks_verbatim[]`). Band
++activities reference tasks by `spine_section_name` + brief; they do
+ not restate `task_text` or enumerate sub-items verbatim.
+ 
+ LISTENING TASKS INSIDE ORACY: when an anchored oracy task carries
+ `transcript_ref` + `transcript_text`, the period MUST include a 3–5
+-min listening phase (teacher reads the transcript aloud, 3–4
++min listening band (teacher reads the transcript aloud, 3–4
+ repetitions per NCF prep guidance) and a 2–3 min student response
+-phase. These phases sit inside the parent oracy task's period and do
++band. These bands sit inside the parent oracy task's period and do
+ NOT consume additional task slots.
+ 
+ A summary task split across two periods (e.g. writing: plan+draft in
+ period N, share+revise in N+1) lists the same task key in both
+-periods; phase descriptions distinguish the two halves.
++periods; band activities distinguish the two halves.
+ 
+ Forbidden:
+ - Exceeding the period's task budget.
+@@ -253,10 +286,10 @@
+ RULE 5 | TIME CONSTRAINT
+ ================================================================================
+ 
+-Each period's phases sum exactly to `period_duration_minutes`.
+-Minimum 3 phases; prep periods typically have 4–6.
+-
+-`phases[].minutes` is a STRING time-range (e.g. "0–8", "8–20").
++Each period's time bands sum exactly to `period_duration_minutes`.
++Minimum 3 bands; prep periods typically have 4–6.
++
++`time_bands[].minutes` is a STRING time-range (e.g. "0–8", "8–20").
+ Ranges tile 0..duration with no gaps and no overlaps. Overrun is not
+ permitted.
+ 
+@@ -292,19 +325,27 @@
+ an in-class brief does (Rule 9): "<Subheading> (pp.NN–MM): <plain brief>",
+ with the page taken from the task's `page_ref` (fall back to the section
+ page range when the task has none). This mirrors the "(page NN)" locator
+-a phase gives an in-class task — a homework item a teacher cannot locate
++a band gives an in-class task — a homework item a teacher cannot locate
+ is a defect.
+ 
+ 
+ ================================================================================
+-RULE 9 | PHASE NARRATION
+-================================================================================
+-
+-When a phase invokes a textbook task, the description names the task
+-by anchor location + brief (≤ 10 words).
++RULE 9 | BAND NARRATION
++================================================================================
++
++When a time band invokes a textbook task, the band's `activity` names the
++task by anchor location + brief (≤ 10 words).
+ 
+ Format: `<spine_section_name> (“brief ≤ 10 words”)`
+ Example: `Let us Learn — A. (“consonant-cluster blend-and-say drill”)`
++
++WHICH SUBHEADING. Where the summary's `section_name` for a cell is a
++MERGED string of several textbook subheadings (e.g. “Let us think + Let
++us write”), name the single subheading the task actually sits under, not
++the merged string. The merged form is the cell's identity, not a location
++a teacher can turn to. At preparatory this is the ordinary case, not the
++exception: more than half of the stage's cells carry a merged name, and
++the longest runs to 28 words — longer by itself than the whole brief.
+ 
+ Use the CURLY quotation marks shown (“ ”), never straight double
+ quotes. The plan is emitted as JSON, where a straight " inside a string value must
+@@ -313,7 +354,7 @@
+ version used straight quotes here; that form remains valid and is not a defect.)
+ 
+ THREE FIELDS ARE TEACHER-FACING and bound by this rule:
+-  - phase `description`
++  - time band `activity`
+   - `teacher_notes`
+   - `task_brief` (inside `tasks_in_class`, `homework`, and the handoff's
+     `tasks_anchored`) — must carry a location descriptor the teacher can
+@@ -336,7 +377,7 @@
+ 
+ VERIFICATION PASS (mandatory after every LP generation): run
+ `aruvi-scripts/lint_lp_teacher_prose.py <plan.json>` over the produced LP.
+-It scans every `teacher_notes`, phase `description`, and `task_brief` for
++It scans every `teacher_notes`, time band `activity`, and `task_brief` for
+ the leaks above and exits non-zero on any hit. Rewrite flagged text and
+ re-lint before considering the run complete.
+ 
+@@ -358,7 +399,7 @@
+                        using [section type / spine mode] as the vehicle."
+                        e.g. "Student infers and predicts events using a
+                        wordless picture story as the vehicle."
+-  - `section_context`  10–15 words naming the specific content the
++  - `section_context`  10–18 words naming the specific content the
+                        assessment item must be grounded in.
+                        e.g. "Consonant-cluster phonics (gr, cr, dr, pr),
+                        action words, alphabet repetition."
+@@ -368,10 +409,21 @@
+ 
+ The assessment generator reads `implied_lo` (drives question type and
+ cognitive demand) and `section_context` (drives what the question is
+-about). A spine with no anchored tasks emits its key with
+-`section_contributions: []`; the assessment generator omits it
+-entirely. Total assessment items = total `section_contributions`
+-across all spines (one item per (section × spine) cell).
++about).
++
++A spine the summary does not carry for ANY section is emitted with an
++empty `section_contributions: []` array, and the assessment generator
++omits that spine entirely. A spine the summary DOES carry may not arrive
++here empty — that is a breach of Rule 2 STEP 3's FULL SPINE COVERAGE, not
++a permitted state. Absent from the summary is a state; dropped for time is
++a defect.
++
++Total assessment item count is TWO per `section_contributions` entry
++across all spines in the handoff — a PAIR per (section × spine) cell,
++both items driven by the cell-level `implied_lo` and sampling it at two
++rungs, recognition then short production (assessment constitution Rule 2).
++The item count does not vary with the period count: a shorter plan yields
++the same items, tested on less anchored practice.
+ 
+ 
+ ================================================================================
+@@ -406,7 +458,9 @@
+ <period>:
+ {
+   "period_number":           integer,
+-  "period_duration_minutes": integer,         // 30 or 35
++  "period_duration_minutes": integer,         // 40 — the preparatory
++                                              // class-standard; the only
++                                              // duration authored (INPUTS 3)
+ 
+   "section_id":    string,                    // exactly one
+   "section_title": string,
+@@ -416,7 +470,7 @@
+                                               //   word_work,
+                                               //   beyond_text }
+ 
+-  "activity_title": string,                   // ≤ 10 words
++  "activity_title": string,                   // ≤ 12 words
+ 
+   "pedagogical_methods": {                    // keys equal `spines_taught`;
+                                               // values from Rule 4
+@@ -425,19 +479,24 @@
+ 
+   "tasks_in_class": [
+     { "spine": string, "task_index": integer, "task_brief": string }
++    // task_brief ≤ 18 words INCLUDING the Rule 9 locator; plain English,
++    // teacher-facing
+   ],
+ 
+   "homework": [ /* same shape; [] or 1 item max */ ],
+ 
+-  "phases": [
+-    { "minutes": string, "description": string }
+-    // minutes tiles 0..duration; description per Rule 9
++  "time_bands": [
++    { "minutes": string, "activity": string }
++    // minutes tiles 0..duration; activity per Rule 9
+   ],
+ 
+   "teacher_notes": string,                    // 2–3 sentences max. Scope
+                                               // (priority order):
+-                                              //  1. transition from prior unit;
+-                                              //     preview into next
++                                              //  1. backward continuity, naming
++                                              //     the CONTENT built on — never
++                                              //     a unit's position, and never
++                                              //     a preview of what comes next
++                                              //     (register ban 2)
+                                               //  2. common pitfall in this spine,
+                                               //     drawn from the section's text
+                                               //     summary (no fabrication)
+@@ -446,7 +505,7 @@
+                                               // No C-code refs.
+ 
+   "materials": [string]                       // include "Textbook pp. X–Y" for
+-                                              // any period with a Rule 2A phase
++                                              // any period with a Rule 2A band
+ }
+ 
+ <contribution>:
+@@ -455,14 +514,16 @@
+   "section_title":   string,
+   "section_type":    string,
+   "implied_lo":      string,                  // Rule 10 format
+-  "section_context": string,                  // 10–15 words
++  "section_context": string,                  // 10–18 words
+   "tasks_anchored": [
+     { "spine": string, "task_index": integer, "task_brief": string }
++    // task_brief ≤ 18 words, copied from tasks_in_class;
++    // LP audit record only — not read by assessment
+   ]
+ }
+ 
+ 
+ ================================================================================
+ Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
+-English Lesson Plan Constitution · Preparatory · Version 1.0
+-================================================================================
++English Lesson Plan Constitution · Preparatory · Version 1.2 · Internal Document
++================================================================================

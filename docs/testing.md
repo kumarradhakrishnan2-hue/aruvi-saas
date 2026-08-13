@@ -443,7 +443,7 @@ before starting each stage):
 | S6 | science · middle | **2.2 ✓ CERTIFIED** | time_bands ✓ | ✓ | ✓ **two-ban** | ✓ (assess v1.5, 2026-08-07) |
 | S7 | mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (assess v3.4) |
 | S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
-| S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — (assess **v1.3** — poem locator carried early, 2026-08-12) |
+| S9 | english · preparatory | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v1.5**, 2026-08-13) |
 | S10 | english · middle | **1.7 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v3.7**, 2026-08-13) |
 | S11 | english · secondary | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v1.5**, 2026-08-12) |
 
@@ -587,6 +587,29 @@ before starting each stage):
   half is still banned).
 **Exit:** the amended file carries A1 + the one-block register; `VERSION` bumped; a diff against
 the pre-amendment file shows no pedagogical rule changed. **Artefact:** amended file + diff.
+**Done for S9 (2026-08-13):** english·preparatory LP **v1.1 → v1.2**. Carry-forward as specified,
+including both removals P1 predicts for this family (VOCABULARY's `"the previous unit"` examples
+and the `teacher_notes` `"preview into next"` clause). **But A1 at this stage was not the usual
+one-row edit — the file named the WRONG BAND outright.** INPUTS 3 read "`period_duration_minutes`
+is 30 or 35 at prep (35 default)", Rule 2 STEP 1's ceiling table was stated for 30- and 35-minute
+periods and named no 40, and the schema comment read `// 30 or 35`; `master_plan.json` carries
+english III, IV **and** V at `standard_duration_minutes: 40`. So the constitution named a duration
+the platform does not use, in three places, and a library authored under it would have run
+12 × 35 = 420 minutes against the row's `canonical_minutes: 480`. It was live: **three of the four
+saved preparatory plans carry MIXED durations inside one plan** (iii ch 2 = 2×40 + 2×35 · iv ch 1 =
+5×35 + 2×40 · v ch 1 = 3×35 + 2×40 + 1×30). STEP 1 now states the 40-minute ceiling ALONE —
+preparatory spans one class-standard, unlike middle, so a table of alternatives would invite the
+author to branch on a number A1 has already fixed. **The general lesson for any stage still to
+come: read A1 as a question about the NUMBER, not only about the row count — "one or more rows" is
+the visible half, and a stage whose stated duration was never reconciled against the master plan
+looks compliant while being wrong.** Plus the same four non-carry-forward edits the siblings made
+(full spine coverage — `backup/saved_plans/english/iii/ch_01_*.json` carries 3 of its 5 cells;
+Rule 1's closing-unit exception; Rule 10's stale one-item-per-cell line, **the third discovery of
+the sentence S10 predicted would be here**; Rule 9's WHICH SUBHEADING clause, which at prep is the
+**majority** case — 93 of 167 cells are merged, the longest 28 words) and three caps: `task_brief`
+**no cap → ≤ 18** (a hole, not a relaxation — Rule 9 mandates a locator the schema never budgeted
+for), `activity_title` ≤ 10 → ≤ 12 (saturated), `section_context` 10–15 → 10–18 (**unforced**,
+recorded as such). `genon/out/stage_prep_english_preparatory/`.
 **Done for S10 (2026-08-13):** english·middle LP **v1.6 → v1.7**. Carry-forward as specified —
 and this is the file testing.md P1 names by hand ("english·middle's schema comment 'Transition
 from prior unit; preview into next'"), so the known contradiction was struck at the step that
@@ -669,6 +692,14 @@ DIFFERENT field, which is why neither may borrow the other's join). Removal N/A.
 repaired alongside: the `what_each_option_reveals` example had lost `"B"` and gained a second
 `"C"` when S7's distractors-only pass rewrote one of its two lines in this file.
 `genon/out/stage_prep_mathematics_preparatory/`.
+**Done for S9 (2026-08-13):** english·preparatory assessment **v1.4 → v1.5**. **A6 a genuine
+CONFIRMATION — the second in the campaign, and for the same reason as S10's:** Rule 8A landed a
+day early with the cross-stage PAIR pass (v1.4, 2026-08-12), carrying the row-7 CELL anchor, the
+two-stage SLOT scoping and the `period_ref`/`period_number`/`unit_ref` prohibition already.
+Removal N/A (this file never carried the item-18 prohibition); A9's two lines purely additive, in
+Rule 4 beside the MCQ semantics, as at middle and secondary. **P4 had the same removal S10 had:**
+v1.4 had written its seven-line changelog INTO the constitution above DESIGN PRINCIPLE — lifted
+out, back-filled as the sidecar's v1.4 entry. `genon/out/stage_prep_english_preparatory/`.
 **Done for S10 (2026-08-13):** english·middle assessment **v3.6 → v3.7**. **A6 was a genuine
 CONFIRMATION — the first in the campaign that required no amendment at all** — because Rule 8A
 landed a day early with the cross-stage PAIR pass (v3.6, 2026-08-12), carrying the row-7 CELL
@@ -713,6 +744,14 @@ Rule 11's guard case and the schema all followed the rename.
 (`PHASE NARRATION` → `BAND NARRATION`) and prose, Rule 7 and the schema followed. Note this
 leaves the middle/preparatory saved-plan corpus on the old shape; the mathematics plugin reads
 **both keys, newest first** (`subject.py:211-219`), which is what covers display.
+**Done for S9 (2026-08-13)** — english·preparatory: Rule 5, Rule 2A's "explicit timed phase" and
+its re-recite band, Rule 3's narration sentence **and its two LISTENING bands** (the prep-specific
+site no sibling has — listening is not a spine here, it rides inside `oracy` as per-task
+`transcript_ref`/`transcript_text` and Rule 3 gives it its own timed bands), Rule 8's locator
+mirror, Rule 9's heading, the lint-scope line and the schema all followed. The word "phase" now
+reaches **zero** occurrences, as at middle and secondary. This stage owed no plugin work either —
+S11's `_bands` both-keys read covers the whole english corpus, the third time a display debt one
+stage paid has made a successor's P3 free.
 **Done for S10 (2026-08-13)** — english·middle: Rule 5, Rule 2A's "explicit timed phase", Rule 3's
 two task-reference sentences, Rule 7's C-code surface list, Rule 8's locator mirror, Rule 9's
 heading, the lint-scope line, INPUTS 1 and the schema all followed the rename. **This stage owed
@@ -763,6 +802,27 @@ date and one-line rationale. **Artefact:** the changelog.
 its subjects list contains this stage's class and nothing left over from an earlier stage.
 **Artefact:** the note + the chapter's `canonical_plan` row + the three profiles + the carrier
 trace.
+**Done for S9 (2026-08-13) — the FIRST stage in the campaign to sign with NO amber: P5.4 was
+closed in the same session, so nothing at all is open.** **P5.1:** floor at the standing ratio,
+**no override owed anywhere in the STAGE** — a prep chapter with N cells needs 1 + ⌈(N−1)/2⌉
+periods and the sweep across all 39 preparatory chapters found nothing binding; the first stage
+where the whole three-class sweep is clear (caveat: 37 of 39 were readable — see the S9 defect
+row). **P5.2 inherits S11's definition unchanged; what preparatory changes is the VOCABULARY.**
+The spine set is **FIVE**, and three of the five keys differ from middle's — `reading` (not
+`reading_for_comprehension`) · `oracy` (listening **and** speaking merged) · `writing` ·
+`word_work` (not `vocabulary_grammar`) · `beyond_text`. **A C5 or C9 check written against
+middle's six keys is wrong for every chapter of this stage.** Same `B`-not-`A` trap as S10 (III
+is fully split, ids run A, B across a unit's chapters; five of seventeen are B, including the
+pilot). **P5.3:** pilot **III ch 11 *The Big Laddoo*** (section B, **poem**, pp. 70–77, 13
+verbatim lines, rec 12 · floor 7 · counts [12, 10, 7]) — chosen for the poem so preparatory's
+half of the copyright fix is proved live; the cost named is that `picture_narrative`,
+preparatory's own type and exercised nowhere else in the campaign, is left to the pre-warm sweep.
+Five registry members against twelve units is the **densest** cell-to-unit ratio in the english
+family. **P5.4 CLOSED the same day** — english III on all three identities through the app's own
+first-run flow, sections disjoint (**3C · 3B · 3E**) and the mixed duration on kumar3
+(`[40, 50]`, ppw {40: 3, 50: 2}, anchor 40) — a 1.25× stretch, the ordinary Indian-timetable
+case. **P5.5 CLOSED, and it was the LAST entry in `_NOT_YET`** — see the P5.5 note below.
+`genon/out/stage_prep_english_preparatory/STAGE_SIGNOFF_S9_english_preparatory.md`.
 **Done for S10 (2026-08-13) — P5.2 inherits S11's definition unchanged, and this is the stage
 that supplies its EVIDENCE.** The registry member is the same (section × spine) CELL, token
 `"<section_id>|<spine_key>"`, first-visit order the summary's on-page spine order. S11 could not
@@ -905,6 +965,29 @@ byte-identical registry member in first-visit order. `tests/test_genon_carriers.
 failures → **95, green** — the three were the "TWAU is still owed" assertions, one of which had
 carried the words *"S5 owes it"* in its own docstring.
 
+**Done for S9 (2026-08-13) — the LAST entry in `_NOT_YET`, and deleting it EMPTIED THE TABLE.**
+Row 7, third time. Every subject·stage in the 11-stage matrix is now carried. The note named one
+difference for a successor to check and it was real: **preparatory's spine set is FIVE, not six**.
+**Why that costs nothing is now a test rather than a comment:** no part of the carrier reads a
+spine NAME — `cell_resolver` joins whatever `spines_taught[]` holds against whatever
+`source_spine` holds, and `genon_unit_anchor` composes the cell token from both halves without a
+vocabulary. A carrier that had hard-coded the six middle keys — the obvious shortcut when
+secondary was the only stage — would have passed S11 and S10 and failed every chapter of this one.
+Confirmed on the real corpus before the line came out (`verify_s9_carrier.py`, re-runnable): 37
+readable chapters and 167 taught cells use the five prep keys and nothing else, all four saved
+plans group by `spine_code`, every handoff is the spine-keyed dict, and 18 items resolve with
+**zero orphans**. `tests/test_genon_carriers.py` 122 with 6 failures → **131, green**; three of
+the six were **kept alive against an empty table by a synthetic entry** — the refusal machinery,
+the stage/row reporting contract and the conservative gradeless read — because emptying the table
+would otherwise retire the pre-flight silently. **`_NOT_YET` is KEPT though empty**, and the
+comment above it says why: it is the pre-flight that makes `carrier_gap()` free, and the next
+subject·stage brought into genon belongs in it *before* it is authored, not after it is paid for.
+**One defect this step's dry pre-flight caught that no constitution read would have:**
+`genon/prompt_assembly.py` still said "one item per cell" — citing assessment Rule 2 while
+contradicting it — at all three english stages. Fixed free before C1; V-series, so §9 does not
+fire. **The general lesson: the PAIR amendment moved three assessment constitutions, and the two
+texts that sit between them and the model — the sibling LP and the prompt builder — were each
+found a stage or two later. Sweep the assembled prompt, not only the constitutions.**
 **Done for S10 (2026-08-13) — the FIRST carrier in the campaign that cost nothing, and the
 reason is a note.** Row 7 again. `carriers._NOT_YET` did not merely say middle was owed: S11
 had rewritten the entry to say the code was in place and to name **three things to confirm, not
@@ -965,6 +1048,12 @@ before deleting a line.
 > names, and neither half identifies a cell alone. `genon_anchor_field_present` returns False.
 > The methods are stage-agnostic, so **S9 and S10 inherit the answer** and owe only the
 > confirmation named in `carriers._NOT_YET`. Fifth field shape, one seam.
+> **CONFIRMED AT BOTH (S10 and S9, 2026-08-13)**, and S9 shows what the second half buys:
+> because `genon_anchor_field_present` is False, `top_brief_for` asked ch 11's brief for
+> `"synthesis": true` as a **boolean** and said in terms *"this stage's periods have no field to
+> hold a reserved token, so do not invent one"* — the metered-STEP-1 failure this note exists to
+> prevent, visibly not happening, and readable free in `genon/out/briefs/ch_11_top.txt`. **Read
+> the generated brief at every P-prep; it is the cheapest proof that part 5 landed.**
 
 **Retro-note for S1/S3/S6:** all three satisfied P5.5 in substance before it existed — S3 is
 where `carriers.py` was created (the `questions`-wrapper defect) and S6 extended it with

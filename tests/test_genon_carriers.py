@@ -245,19 +245,34 @@ class TestUnimplementedFamiliesFailLoudly(unittest.TestCase):
         with self.assertRaises(CarrierNotImplemented):
             assessment_items({"subject": "Mathematics", "grade": "Grade VI"}, result)
 
-    def test_english_raises_with_the_owing_stage_named(self):
-        """PREPARATORY is the one english stage still owed (S9).
+    def test_an_owed_stage_still_refuses_even_though_the_table_is_now_empty(self):
+        """`_NOT_YET` emptied at S9 (2026-08-13) — every campaign stage is carried.
 
-        This used to run on the VII fixture, which is the point of the stage-granular
-        table: secondary landed at S11 and middle at S10 without opening preparatory,
-        and each removal had to move this test rather than delete it.
+        This test has been MOVED at every english removal rather than deleted: it ran on
+        secondary until S11, middle until S10, and preparatory until S9. There is no owed
+        stage left to point it at, so it now inserts a synthetic entry and proves the
+        REFUSAL MACHINERY still works — which is the property that was ever under test.
+        Without it, emptying the table would quietly retire the pre-flight, and the next
+        subject·stage brought into genon would find out at certification, after paying.
         """
+        import aruvi_core.genon.carriers as C
+        self.assertEqual(C._NOT_YET, {}, "the campaign owes no carrier — S9 closed the last")
+
         plan = load("english_vii_ch01_saved.json")
         plan = dict(plan, grade="Grade III")
-        with self.assertRaises(CarrierNotImplemented) as cm:
-            assessment_items(plan, plan.get("result", plan))
-        self.assertIn("english", str(cm.exception))
-        self.assertIn("S9", str(cm.exception), "the gap names the stage that owes it")
+        saved = dict(C._NOT_YET)
+        C._NOT_YET[("english", "preparatory")] = "synthetic — owed by SX (row 7)"
+        try:
+            with self.assertRaises(CarrierNotImplemented) as cm:
+                assessment_items(plan, plan.get("result", plan))
+            self.assertIn("english", str(cm.exception))
+            self.assertIn("SX", str(cm.exception), "the gap names the stage that owes it")
+        finally:
+            C._NOT_YET.clear()
+            C._NOT_YET.update(saved)
+
+        # and the real table is genuinely open again afterwards
+        self.assertIsNone(C.carrier_gap("english", "iii"))
 
 
 class TestMathematicsSecondaryLanded(unittest.TestCase):
@@ -734,11 +749,11 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
         self.plan = json.loads(p.read_text(encoding="utf-8"))
         self.result = self.plan["result"]
 
-    def test_the_stage_is_no_longer_owed_and_its_siblings_still_are(self):
+    def test_the_stage_is_no_longer_owed_and_nor_are_its_siblings(self):
         from aruvi_core.genon.carriers import carrier_gap
         self.assertIsNone(carrier_gap("english", "ix"))
         self.assertIsNone(carrier_gap("english", "vii"), "S10 landed middle 2026-08-13")
-        self.assertIsNotNone(carrier_gap("english", "iii"), "S9 owes preparatory")
+        self.assertIsNone(carrier_gap("english", "iii"), "S9 landed preparatory 2026-08-13")
 
     def test_every_item_resolves_to_exactly_one_unit_with_zero_orphans(self):
         items = assessment_items(self.plan, self.result)
@@ -970,11 +985,11 @@ class TestEnglishMiddleLanded(unittest.TestCase):
         self.result = self.plan.get("result", self.plan)
         self.periods = (self.result.get("lesson_plan") or {}).get("periods") or []
 
-    def test_the_stage_is_no_longer_owed_and_preparatory_still_is(self):
+    def test_the_stage_is_no_longer_owed_and_nor_is_preparatory(self):
         from aruvi_core.genon.carriers import carrier_gap
         for g in ("vi", "vii", "viii"):
             self.assertIsNone(carrier_gap("english", g), f"S10 landed {g}")
-        self.assertIsNotNone(carrier_gap("english", "iii"), "S9 still owes preparatory")
+        self.assertIsNone(carrier_gap("english", "iii"), "S9 landed preparatory 2026-08-13")
 
     def test_the_multi_section_join_does_not_collapse_onto_the_spine(self):
         """THE test this stage adds. Reading is taught in A (units 1-2), B (6-7) and C (10).
@@ -1023,6 +1038,101 @@ class TestEnglishMiddleLanded(unittest.TestCase):
         self.assertFalse(anchor_field_present("english", "vii"))
 
 
+class TestEnglishPreparatoryLanded(unittest.TestCase):
+    """S9, 2026-08-13 — row 7's third and last stage, and the entry that emptied `_NOT_YET`.
+
+    No new code landed with this stage either. The `_NOT_YET` note named ONE difference for a
+    successor to check, and it was real: **preparatory's spine set is FIVE, not six** —
+    `reading` (not `reading_for_comprehension`), `oracy` (listening and speaking MERGED, with
+    listening riding as per-task `transcript_ref`/`transcript_text` inside it), `writing`,
+    `word_work` (not `vocabulary_grammar`) and `beyond_text`.
+
+    WHY A DIFFERENT SPINE SET COSTS NOTHING, and why that is worth a test rather than a
+    comment: no part of the carrier reads a spine NAME. `cell_resolver` joins whatever
+    `spines_taught[]` holds against whatever `source_spine` holds, and `genon_unit_anchor`
+    composes the cell token from both halves without a vocabulary. A carrier that had hard-coded
+    the six middle keys — the obvious shortcut when secondary was the only stage — would pass
+    S11 and S10 and fail every chapter of this one.
+
+    WHAT THIS FIXTURE ADDS that neither sibling has. IV ch 1 teaches `word_work` across units
+    4 AND 5 and carries TWO items for it, so the N-to-N pairing is exercised on prep's own
+    shape; `oracy` is taught across units 2-3 with ONE item, so the last-unit rule is exercised
+    beside it, in the same plan. The fixture predates assessment v1.4's PAIR, which is what
+    makes the two branches distinguishable at all.
+    """
+
+    FIXTURE = "english_iv_ch01_saved.json"
+
+    def setUp(self):
+        self.plan = load(self.FIXTURE)
+        self.result = self.plan.get("result", self.plan)
+        self.periods = (self.result.get("lesson_plan") or {}).get("periods") or []
+
+    def test_the_stage_is_no_longer_owed_and_the_table_is_empty(self):
+        import aruvi_core.genon.carriers as C
+        for g in ("iii", "iv", "v"):
+            self.assertIsNone(C.carrier_gap("english", g), f"S9 landed {g}")
+        self.assertEqual(C._NOT_YET, {}, "the last entry in the campaign")
+
+    def test_the_five_prep_spines_resolve_and_none_of_the_six_middle_keys_appear(self):
+        """The one difference `_NOT_YET` asked this stage to check."""
+        MIDDLE_ONLY = {"reading_for_comprehension", "listening",
+                       "speaking", "vocabulary_grammar"}
+        seen = {str(it["source_spine"]).strip()
+                for it in assessment_items(self.plan, self.result)}
+        self.assertEqual(seen, {"reading", "oracy", "writing", "word_work", "beyond_text"})
+        self.assertFalse(seen & MIDDLE_ONLY, "a middle spine key must never resolve here")
+
+    def test_a_cell_taught_over_two_units_with_two_items_pairs_N_to_N(self):
+        """`word_work` is taught in units 4 and 5 and carries two items — one per unit, in
+        order. Anchoring both at the close is the defect the pairing was written to fix."""
+        anchors = {it["id"]: it["unit_ref"]
+                   for it in assessment_items(self.plan, self.result)}
+        self.assertEqual(anchors["Q-WW-A-1"], [4])
+        self.assertEqual(anchors["Q-WW-A-2"], [5])
+
+    def test_a_cell_taught_over_two_units_with_ONE_item_anchors_at_the_close(self):
+        """`oracy` spans units 2-3 with a single item — the 2026-08-05 anchoring ruling, in
+        the same plan as the pairing above, which is what keeps the two branches honest."""
+        anchors = {it["id"]: it["unit_ref"]
+                   for it in assessment_items(self.plan, self.result)}
+        self.assertEqual(anchors["Q-ORACY-A-1"], [3])
+
+    def test_every_anchor_equals_the_LAST_unit_teaching_THAT_CELL(self):
+        """Computed independently off the units, so the test cannot drift into agreeing with
+        the code. Cells with an N-to-N pairing are excluded — they are the case above."""
+        units: dict = {}
+        for i, p in enumerate(self.periods, start=1):
+            for sp in p.get("spines_taught") or []:
+                units.setdefault((str(p.get("section_id")).strip(), str(sp).strip()), []).append(i)
+        items = assessment_items(self.plan, self.result)
+        self.assertEqual(len(items), 6, "5 cells taught, word_work carrying two items")
+        by_cell: dict = {}
+        for it in items:
+            cell = (str(it["source_section_id"]).strip(), str(it["source_spine"]).strip())
+            by_cell.setdefault(cell, []).append(it)
+        for cell, got in by_cell.items():
+            if len(got) == 1:
+                self.assertEqual(got[0]["unit_ref"], [units[cell][-1]],
+                                 f"{got[0]['id']} ({cell}) did not anchor at its cell's close")
+
+    def test_zero_orphans(self):
+        for it in assessment_items(self.plan, self.result):
+            self.assertTrue(it.get("unit_ref"), f"{it.get('id')} orphaned")
+
+    def test_unit_anchor_is_the_COMPOSITE_cell_code_at_this_stage_too(self):
+        from aruvi_core.genon.carriers import unit_anchor
+        self.assertEqual(unit_anchor(self.periods[0], subject="English", grade="Grade IV"),
+                         "A|reading")
+
+    def test_the_anchor_field_is_declared_ABSENT_for_preparatory(self):
+        """`section_anchor` is 0 in all three english LP constitutions. Without this,
+        `top_brief_for` demands the reserved token in a field the constitution never defines,
+        at metered STEP 1."""
+        from aruvi_core.genon.carriers import anchor_field_present
+        self.assertFalse(anchor_field_present("english", "iv"))
+
+
 class TestCarrierPreFlight(unittest.TestCase):
     """The gate must be FREE. Before 2026-08-08 the answer arrived at certification, which
     runs after the metered steps, so a missing carrier cost a whole library (₹110-150) and
@@ -1036,31 +1146,70 @@ class TestCarrierPreFlight(unittest.TestCase):
                                ("english", "ix")):          # row 7, landed 2026-08-12 (S11)
             self.assertIsNone(carrier_gap(subject, grade), f"{subject}·{grade}")
 
-    def test_owed_stages_report_their_stage_and_row(self):
-        from aruvi_core.genon.carriers import carrier_gap
-        for subject, grade, owes in (("english", "iii", "S9"),):
-            gap = carrier_gap(subject, grade)
-            self.assertIsNotNone(gap, f"{subject}·{grade} is not implemented")
-            self.assertIn(owes, gap, "the gap must name the stage that owes it")
+    def test_no_stage_is_owed_and_the_table_says_so_by_being_empty(self):
+        """S9 removed the last entry (english·preparatory, 2026-08-13). Every subject·stage
+        in the 11-stage matrix is carried, so the honest inventory is the empty dict."""
+        import aruvi_core.genon.carriers as C
+        self.assertEqual(C._NOT_YET, {})
+        for subject, grade in (("english", "iii"), ("english", "vi"), ("english", "ix")):
+            self.assertIsNone(C.carrier_gap(subject, grade), f"{subject}·{grade}")
+
+    def test_an_owed_stage_would_still_report_its_stage_and_row(self):
+        """The reporting contract, kept alive against an empty table by a synthetic entry.
+        The message must name the stage that owes it — that is what turns a paid, silent
+        "does not compile" into a free STOP at STEP 0."""
+        import aruvi_core.genon.carriers as C
+        saved = dict(C._NOT_YET)
+        C._NOT_YET[("english", "preparatory")] = "row 7 · period-field — owed by SX"
+        try:
+            gap = C.carrier_gap("english", "iii")
+            self.assertIsNotNone(gap)
+            self.assertIn("SX", gap, "the gap must name the stage that owes it")
+            self.assertIn("row 7", gap, "and its row in the 8-rule table")
+        finally:
+            C._NOT_YET.clear()
+            C._NOT_YET.update(saved)
 
     def test_a_missing_grade_is_conservative_not_optimistic(self):
         """Guessing "ready" is the expensive mistake, so an unknown grade on a subject that
-        still owes any stage reads as owed. English is the standing example: three of its
-        stages are owed (S9-S11), so a gradeless english call must not read as ready."""
-        from aruvi_core.genon.carriers import carrier_gap
-        self.assertIsNotNone(carrier_gap("english", None))
-        self.assertIsNone(carrier_gap("social_sciences", None), "owes nothing at any stage")
-        self.assertIsNone(carrier_gap("mathematics", None),
+        still owes ANY stage must read as owed. With `_NOT_YET` empty every gradeless call
+        is legitimately None, so the conservative branch is exercised against a synthetic
+        entry — otherwise emptying the table would delete the rule along with its last
+        instance, and the next subject brought into genon would inherit an optimistic read."""
+        import aruvi_core.genon.carriers as C
+        self.assertIsNone(C.carrier_gap("english", None), "no english stage is owed")
+        self.assertIsNone(C.carrier_gap("social_sciences", None), "owes nothing at any stage")
+        self.assertIsNone(C.carrier_gap("mathematics", None),
                           "all three maths stages landed — secondary S4, middle S7, "
                           "preparatory S8")
+        saved = dict(C._NOT_YET)
+        C._NOT_YET[("english", "preparatory")] = "row 7 · period-field — owed by SX"
+        try:
+            gap = C.carrier_gap("english", None)
+            self.assertIsNotNone(gap, "one owed stage makes the whole subject owed "
+                                      "when the grade is unknown")
+            self.assertIn("grade not given", gap)
+            self.assertIsNone(C.carrier_gap("english", "ix"),
+                              "and a KNOWN grade still resolves stage-granularly")
+        finally:
+            C._NOT_YET.clear()
+            C._NOT_YET.update(saved)
 
     def test_require_carrier_raises_only_for_owed(self):
         from aruvi_core.genon.carriers import require_carrier
+        import aruvi_core.genon.carriers as C
         require_carrier("mathematics", "ix")                       # must not raise
         require_carrier("mathematics", "vii")                      # landed 2026-08-10 (S7)
         require_carrier("mathematics", "iii")                      # landed 2026-08-11 (S8)
-        with self.assertRaises(CarrierNotImplemented):
-            require_carrier("english", "iii")                      # preparatory, owed by S9
+        require_carrier("english", "iii")                          # landed 2026-08-13 (S9)
+        saved = dict(C._NOT_YET)
+        C._NOT_YET[("english", "preparatory")] = "row 7 · period-field — owed by SX"
+        try:
+            with self.assertRaises(CarrierNotImplemented):
+                require_carrier("english", "iii")
+        finally:
+            C._NOT_YET.clear()
+            C._NOT_YET.update(saved)
 
 
 class TestItemAnchorFamilyIsDeclared(unittest.TestCase):

@@ -152,14 +152,30 @@ _DISPLAY_TO_KEY = {
 # pair key: unlike IX, its corpus is genuinely multi-section (A, B and C each teaching Reading),
 # so a join on `source_spine` alone — the thing S11 warned would look correct on secondary —
 # collapses three cells onto one here and is caught. The one remaining entry is preparatory's.
-_NOT_YET = {
-    ("english", "preparatory"): (
-        "period-field join on (source_section_id + source_spine) → (section_id + "
-        "spines_taught[]) (8-rule row 7) — owed by S9; the code is in place and carried at "
-        "TWO stages now, see the note above this table for the three things to confirm "
-        "before deleting this line. The one difference to check is the spine SET: "
-        "preparatory carries fewer than six"),
-}
+#
+# `("english", "preparatory")` was REMOVED 2026-08-13 (S9) — the LAST entry in this table,
+# which is now EMPTY: every subject·stage in the campaign is carried. The deletion was again
+# the whole job, no new code, and the one difference the note asked a successor to check was
+# real: **preparatory's spine set is FIVE, not six** — `reading` (not
+# `reading_for_comprehension`), `oracy` (listening and speaking MERGED, with listening riding
+# as per-task `transcript_ref`/`transcript_text` inside it), `writing`, `word_work` (not
+# `vocabulary_grammar`) and `beyond_text`. Nothing in the carrier reads a spine NAME, which is
+# why a different set costs nothing: `cell_resolver` joins whatever `spines_taught[]` holds
+# against whatever `source_spine` holds, and `genon_unit_anchor` composes the cell token from
+# both halves without a vocabulary. Confirmed across III, IV and V before the line came out
+# (`genon/out/stage_prep_english_preparatory/verify_s9_carrier.py`, re-runnable): 37 readable
+# chapters and 167 taught cells use the five prep keys and nothing else, all 5 are exercised,
+# no middle key leaks in as a KEY, all 4 saved plans group items by `spine_code`, every
+# `coverage_handoff` is the spine-keyed dict `_ENGLISH_SPINE_CELL` round-trips, the anchor is
+# mediated (`section_anchor` count 0 in the LP constitution, `genon_unit_anchor` returning
+# `'A|reading'`), and 18 items resolve with ZERO orphans — every anchor equal to the
+# independently computed last-unit-teaching-that-cell.
+#
+# KEEP THIS TABLE. An empty `_NOT_YET` is not a dead switch: it is the pre-flight that makes
+# `carrier_gap()` free, and the next subject·stage brought into genon — a new subject, or a
+# stage whose container shape changes — belongs in it before it is authored, not after it is
+# paid for.
+_NOT_YET: Dict[Any, str] = {}
 
 
 def carrier_gap(subject: Any, grade: Any) -> str | None:

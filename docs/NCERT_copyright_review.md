@@ -102,6 +102,80 @@ textbook content inside a software package. **Finding F2: the verbatim conduit m
 either closed (substitute a paraphrase + page ref) or licensed (§4.1) before English plans
 are served commercially.** This is exactly what C14 check 1 exists to police per stage.
 
+> ### ★ F2 MEASURED FOR THE FIRST TIME — S10 · english·middle · VI ch 8 (2026-08-13)
+>
+> F2 has been asserted since 2026-08-04 and never quantified: no English library existed to
+> measure. This is the first one, and it was chosen to be the hardest case available — a POEM
+> chapter (*What a Bird Thought*) whose summary carries the NCERT poem in full, 17 verbatim
+> lines, plus an 8-line listening transcript.
+>
+> **Measured against the textbook itself** (`textbooks/english/vi/Chapter 03 - Nurturing
+> Nature.pdf`, 5,373 words, shingled at n=8) across all 8 files — 3 canonicals and 5 served
+> plans, **19,355 teacher-facing words**:
+>
+> | | |
+> |---|---|
+> | book-matched words (runs ≥ 8) | **317 = 1.64%** |
+> | distinct matched strings | 12 |
+> | longest run | **14 words** (the poem's closing two lines) |
+> | runs in LESSON-PLAN fields | **36** |
+> | runs in ASSESSMENT ITEMS | **0** |
+> | brands · external images · URLs | 0 · 0 · 0 |
+> | task_briefs carrying a (p.NN) locator | **32 of 32 = 100%** |
+>
+> **The conduit is real, and it is narrower than the finding assumed.** The verbatim task-text
+> F2 names does appear — "the bird thought the world was made of straw", "how is a home
+> different from a house", the eight-word describing-words bank from p.90 — but every instance
+> is **8–10 words, in the lesson plan only, quoted, and carrying a page locator**. None is a
+> dialogue or a passage. And the assessment, which is the half that would be hardest to defend
+> as reference rather than reproduction, carries **not one 8-word sequence of the book**: the
+> constitutional firewall (the generator is forbidden to read `tasks_verbatim[]` /
+> `question_bank[]`) holds against the book itself, not merely against the exercise wording.
+>
+> **Why the fragments cannot simply be removed.** LP Rule 9 mandates that each task be named by
+> its anchor plus a brief, and Rule 3 draws tasks from the summary's `tasks_verbatim`. A plan
+> that contained none of these strings could not tell a teacher which task to run. So the
+> remedy F2 proposes — "substitute a paraphrase + page ref" — is already what the plan does
+> everywhere except at the point where naming the task IS the instruction. The residual is the
+> irreducible part.
+>
+> **Founder rulings folded in (2026-08-13, at S10's C3).** A short lift inside quotation marks
+> that frames a question is reference, not reproduction — "reading that line will mean nothing
+> if the overall poem is not seen" — and applies equally to the poem (12–18% of it appears
+> across the three canonicals) and to the listening transcript (25–27%, higher only because the
+> transcript is 8 lines long). No constitution was amended: the model already draws the line
+> where it should, and looser prose would give it room to drift.
+>
+> **Benchmark:** maths·middle's C14 (2026-08-10) read **1.15%** of its chapter with a longest
+> run of **18 words**. English·middle reaches slightly more in aggregate and lifts a shorter
+> longest string — so the English conduit, measured, is not worse than a subject with no F2
+> finding against it.
+>
+> **TWO THINGS THIS MEASUREMENT DEPENDS ON, both recorded so the number is not over-trusted.**
+>
+> 1. **`genon/copyright_scan.py` cannot find the book for ANY English chapter.** Its PDF
+>    resolver globs `chapter\s*0*{ch}` and assumes the plan's chapter number is the PDF's.
+>    The English split breaks that everywhere: VI/VII/VIII PDFs are named per UNIT
+>    ("Chapter 03 - Nurturing Nature.pdf" contains chapters 7, 8 and 9) and IX keeps the
+>    original section numbering ("chapter 04 - Vitamin-M.pdf" is chapter 7). So on all **101
+>    English chapters** the glob matches nothing, the book contributes ZERO words, and the scan
+>    reports a confident result **against Aruvi's own summary** — which can only ever show the
+>    pipeline quoting itself. Same class of silent hole as the `.txt`-only summary loader fixed
+>    at S7, on the opposite input. **S11's C14 was run under it too**, which is why its poem
+>    finding (ARV-D-138) came from reading rather than from the scanner. The mapping the
+>    resolver needs already exists in every split summary: `_source_unit.unit_chapter_number`.
+>    The figures above were obtained by pointing at the correct PDF by hand.
+> 2. **An 8-gram scan is blind to a compliant poem incipit by construction.** Assessment Rule 3
+>    caps the incipit at EIGHT words, and this poem's lines run 4–7, so a correctly-cited line
+>    can never form an 8-word run. The scanner found zero poem lines in assessment items;
+>    reading found three. The scanner catches wholesale lifting; **only reading catches the poem
+>    rule.** C14 on a poem chapter cannot be automated away.
+>
+> **Status: F2 stays OPEN, now with a number against it.** What the measurement changes is the
+> question — no longer "is there a conduit" (there is, bounded and locator-bearing) but "is an
+> 8–10 word task reference, in the lesson plan, with a page number, reproduction or citation".
+> That is a licensing judgement, not an engineering one, and it belongs at §4.1.
+
 **T6 (hosting online textbooks) — COMPLIANT.** Nothing is hosted, and the migration boundary
 is now ruled (v1.1): **only the canonicals go to the cloud** — summaries, mappings and the
 PDFs never enter any served bucket; the PDFs remain on the local hard disk permanently.
@@ -162,7 +236,10 @@ Aruvi's architecture is fundamentally on the right side of the NCERT statement: 
 act (download for reference) is the only act performed on the books themselves, and the
 product's value is original pedagogical work that *requires* the class to own the textbook.
 With the v1.1 founder rulings — canonicals-only to the cloud, GitHub as private personal
-backup, PDFs local forever — **one finding remains open: F2**, the English inline
+backup, PDFs local forever — **one finding remains open: F2** (first MEASURED 2026-08-13 at
+S10 · english·middle: 1.64% of teacher-facing text matches the book, longest run 14 words,
+**zero** in assessment items, 100% of task briefs carrying a page locator — see the boxed note
+at §3-T5), the English inline
 task-text substitution that can carry verbatim textbook text into a served (and eventually
 cloud-hosted) canonical. It is closable by an authoring change already within the pipeline's
 normal way of working, or by licence. Written permission from NCERT remains the decisive
