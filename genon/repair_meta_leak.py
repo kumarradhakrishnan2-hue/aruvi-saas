@@ -73,6 +73,114 @@ BACKUP = REPO / "backup" / "meta_leak_repair"
 # "subject/grade/file": [(unit, locator, old, new, note)]
 # CAP in a note = the deletion took a sentence opener, so the next word is capitalised.
 EDITS = {
+    # ══ WAVE 2 — THE "ASSUME" FAMILY (added 2026-08-13, at SS·IX's F1) ═════════════
+    # The first wave patterned on "without requiring/naming/claiming". Reading SS·IX's
+    # borrowed seams an hour later found the SAME defect in a phrasing none of those
+    # patterns touch — "must not assume", "no prior X is assumed", "may be used with any
+    # class", "may serve a class whose earlier units covered the sections through different
+    # paths". 11 more instances, and they are SYSTEMATIC rather than scattered: **every
+    # single SS·IX standard canonical explains its own self-containment in its synthesis
+    # unit's teacher note** (U15 of 15, U11 of 11, U19, U21, U17, U9, U7, U7), plus
+    # maths·vii and english·ix.
+    #
+    # That concentration is the finding. The synthesis unit is the one the brief talks about
+    # most, so it is the one whose note quotes the brief back most reliably — the leak is
+    # strongest exactly where the widest audience meets it, since a synthesis unit is the
+    # Case-1 borrow every class reaches through a different prefix.
+    #
+    # LESSON FOR THE METHOD, worth more than the edits: the first sweep declared the corpus
+    # clean on the strength of patterns derived from the instances the READING had found.
+    # Patterns generalise a phrasing, not a defect. The honest sequence is read → pattern →
+    # **read somewhere else** → re-pattern, and it took a second stage's reading to close it.
+    "english/ix/ch_07_canonical.json": [
+        (1, "teacher_notes",
+         "This unit is the chapter's entry point; no prior reading is assumed.",
+         "This unit is the chapter's entry point.",
+         "'entry point' already says it, to a reader who has a use for it"),
+    ],
+    "mathematics/vii/ch_07_canonical.json": [
+        (12, "teacher_notes",
+         "This synthesis unit deliberately does not assume any prior activity, worksheet, or "
+         "discussion from earlier units: the tasks are self-contained and solvable from "
+         "content alone. ", "",
+         "CAP-free: the note continues with real guidance on which problems suit whom"),
+        (12, "teacher_notes",
+         "the verbal review opening ensures students who met this content through different "
+         "routes can participate fully",
+         "the verbal review opening ensures all students can participate fully",
+         "'through different routes' is the serve model described to a teacher who has one"),
+    ],
+    # NB ch_01_canonical.json's wave-2 edit is declared in the WAVE 1 block below, not here.
+    # It was declared twice for a while — a duplicate dict key, so Python silently kept the
+    # later block and dropped U15. The scanner-vs-declared reconciliation caught it, which is
+    # the argument for running that reconciliation rather than trusting the edit count.
+    "social_sciences/ix/ch_02_canonical.json": [
+        (11, "teacher_notes",
+         " — but must not assume any particular activity, reading, or artefact from earlier "
+         "units, since it may be reached through a different sequence.", ".",
+         "'assumes familiarity with the chapter's full content' is legitimate and stays — "
+         "that is about the CHAPTER, which the teacher taught, not about our sequencing"),
+    ],
+    "social_sciences/ix/ch_04_canonical.json": [
+        (19, "teacher_notes",
+         " — without assuming any particular sequence of earlier activities took place, since "
+         "a class may have reached this point through different routes", "",
+         "the chapter arc it names is content and stands"),
+        (19, "teacher_notes",
+         ", requiring no prior draft or ongoing piece of work", "",
+         "'each self-contained writing tasks that begin and end within this unit's minutes' "
+         "already tells the teacher what she needs"),
+    ],
+    "social_sciences/ix/ch_05_canonical.json": [
+        (21, "teacher_notes",
+         " and may be used with any class that has covered the chapter's content, regardless "
+         "of which specific units preceded it", "",
+         "'may be used with any class' is the serve engine speaking"),
+        (21, "teacher_notes",
+         "; no single earlier activity or homework is required", "",
+         "the prompts' sufficiency is already stated positively before it"),
+    ],
+    "social_sciences/ix/ch_06_canonical.json": [
+        (17, "band:3",
+         " The personal commitment is completed and self-contained within this unit — no "
+         "follow-up collection is assumed.", "",
+         "BAND text. The commitment task and the share-out are untouched"),
+        (19, "teacher_notes",
+         " The cause-effect map begins and ends within this unit — no prior draft or artefact "
+         "from any earlier unit is needed or expected.", "",
+         "the synthesis unit of the same chapter, found only by the extended patterns. Its "
+         "'constant care' guidance is the teaching point and stands"),
+        (17, "teacher_notes",
+         " The personal commitment task begins and ends within this unit; no prior draft or "
+         "external preparation is needed.", "",
+         "a THIRD leak in ch 6 and the last in the corpus — a variant on 'external "
+         "preparation' that no pattern anticipated, surfaced by the post-apply re-scan. "
+         "Every one of this chapter's three was in a different phrasing"),
+    ],
+    "social_sciences/ix/ch_07_canonical.json": [
+        (9, "teacher_notes",
+         "No particular earlier activity, discussion, or homework is assumed; the three "
+         "rounds", "The three rounds",
+         "CAP. The self-scaffolding claim that follows is about the exercise's design, "
+         "which is the teacher's business, and stays"),
+    ],
+    "social_sciences/ix/ch_08_canonical.json": [
+        (7, "teacher_notes",
+         " — without assuming any particular sequence of activities led here", "",
+         "the three interlocking arguments are content and stand"),
+        (7, "teacher_notes",
+         ", so no earlier artefact is required", "",
+         "'built entirely within this unit from the chapter's named content' says it already"),
+    ],
+    "social_sciences/ix/ch_09_canonical.json": [
+        (7, "teacher_notes",
+         "Because it may serve a class whose earlier units covered the sections through "
+         "different paths, no particular earlier activity, reading or artefact is assumed — "
+         "the cause-effect map begins fresh here.",
+         "The cause-effect map begins fresh here.",
+         "CAP. 'may serve a class' is the engine's verb, in a teacher's note"),
+    ],
+    # ══ WAVE 1 — the "without requiring/naming/claiming" family ════════════════════
     # ── english ──────────────────────────────────────────────────────────────────
     "english/iii/ch_11_canonical.json": [
         (11, "teacher_notes",
@@ -105,6 +213,11 @@ EDITS = {
          "specific earlier units.", "",
          "same. NB this unit's OTHER breach — 'Having covered all four disciplines' — is "
          "ARV-D-157, accepted by founder ruling and deliberately left"),
+        (15, "teacher_notes",
+         " The concept map is built and completed within this unit; no prior map or draft is "
+         "assumed.", "",
+         "WAVE 2 (the 'assume' family), declared here to keep one key per file. The "
+         "cross-link guidance before it is the teaching point and stands"),
     ],
     "social_sciences/ix/ch_01_canonical_p09.json": [
         (9, "band:3",

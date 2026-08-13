@@ -277,7 +277,7 @@ const COMBOS = [ // ONE ROW PER SUBJECT·STAGE, in suggested execution order (§
 const BATCH = [
  ["W1","K","Wave 1 — top canonicals: collect &amp; certify","Author every non-pilot chapter's STANDARD canonical in one batch, install the results, and run the free certification pass over the whole stage. <b>Why it matters:</b> this is where the corpus is actually bought. The pilot proved the stage costs ~₹40 a chapter; this step spends that thirty times over, server-side, in one go.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">Gate first (runbook §0): P1–P5.5 signed · <code>require_carrier</code> returns · the pilot has been through the C-cycle · every chapter has summary AND mapping, master_plan rows non-placeholder · ~2× the estimate in API credit · <b>Terminal, never a Cowork sandbox</b>. Then <code>batch_api.py submit {subject} {grades} --wave top --dry</code> and READ the worklist — chapter count, period counts against the master plan, every skip line — and confirm the amended constitution reached the payload. Then submit → <code>status</code> until 'ended' → <code>collect</code> → <code>batch_build.py {subject} {grades} --certify-only</code>, which is FREE and REQUIRED (it is run for its ANNOTATE half; every chapter FAILS 'library complete' between the waves, and that is arithmetic, not a defect). Triage from the FAIL census, not individual reports; repair, never regenerate (regenerating is a lottery). Traps: a quarantined file skips later repair sweeps — re-scan anything restored · purge derived plans after any in-place repair and CHECK it worked (ARV-D-034) · <code>--max-fails</code> is a money brake, do not re-arm it under --certify-only.</div></details>","EXIT: every non-placeholder chapter has its standard installed; the certify pass annotates every row (basis authored_standard); the FAIL census is triaged and its repairs declared; spend reconciled from runtime_data/token_log.csv."],
  ["W2","K","Wave 2 — compacts: collect &amp; certify","Author every chapter's shorter versions in a second batch, then certify the whole stage properly — this is the first pass where a chapter's library is complete enough to be judged. <b>Why it matters:</b> it has to be a second wave, not one big one: a compact's instructions are built from its own standard's section list, which does not exist until wave 1 has landed.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\"><code>variant_plans.briefs_for</code> reads the top off disk and REFUSES a provisional row, so wave 2 cannot start until wave 1's certify pass has annotated. <code>submit --wave compact --dry</code> → <code>submit</code> → <code>status</code> → <code>collect</code> → <code>batch_build.py --certify-only</code>. Once two manifests exist, pass the path EXPLICITLY — <code>--latest</code> is by mtime and an explicit path cannot read the wrong wave. Closing checklist (runbook §5): every canonical the master plan expects is on disk · no quarantined file lacks a live counterpart · zero register ban hits stage-wide · every chapter ALL PASS, C5 check 11 included, and on a prose subject its advisory shortlist RULED ON rather than skimmed · every chapter serves at top/middle/floor/below-floor · no derived plans left on disk · spend reconciled.</div></details>","EXIT: every chapter ALL PASS on --certify-only; quarantine holds nothing without a live counterpart; the closing checklist's seven lines all true; total stage spend recorded."],
- ["F1","C","F1 — C8 across the batch (the X−1→X transition)","Read the join where a borrowed lesson was spliced in — the lesson before and the lesson itself, back to back, as a teacher meets them — across a sample of the batch rather than one pilot chapter. <b>Why it matters:</b> this join killed two earlier architectures, and it is a property of each chapter's own authored text, not of the stage. Certification proves no error was raised; it says nothing about whether the lesson reads.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">C8's procedure, applied to a STRATIFIED SAMPLE and the rate recorded here (an unwritten rate is not a sampling plan). Stratify by period-count band — floor compacts and the borrow slot are where defects concentrate, not the top — and include <b>100% of any chapter that needed a repair</b>: a chapter with one register breach is the likeliest place a paraphrased one survived. Per inspected transition: CLEAN / SERVICEABLE / JUMPY with the exact strings quoted. Every JUMPY is a defect; remedy deterministically first (certification gap → tie-break → brief wording), never by putting an LLM in the request path.</div></details>","EXIT: the sample size and stratification recorded; a rating per inspected transition with quoted evidence; zero JUMPY, or a defect per hit."],
+ ["F1","C","F1 — C8 across the batch (the borrowed X\u22121\u2192X seams)","Read the join where a lesson borrowed from ANOTHER version was spliced in \u2014 the lesson before and the lesson itself, back to back, as a teacher meets them on two consecutive days \u2014 and rate each one. <b>Why it matters:</b> this join killed two earlier architectures, and whether it reads is a property of what that chapter\u0027s versions happen to say, not of the engine. Certification proves no error was raised; it says nothing about whether the lesson lands.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\"><b>ENUMERATE, DO NOT SAMPLE (founder, 2026-08-13).</b> Only a GENUINELY BORROWED Xth unit is at risk: when the slot is filled from the plan being served (a self-fill, which the e14 SELF-FIRST tie-break makes the common case) the unit\u0027s priors are that plan\u0027s own earlier units, so there is no foreign prior and nothing to read. <code>serve.py</code> has carried <code>slot_fill.self_fill</code> since e12 and nothing was reading it. <code>python3 genon/borrowed_seams.py {subject} {grades}</code> sweeps every X in [floor\u22122, top+2] and keeps only the cross-canonical borrows. Measured: TWAU 325 serves \u2192 157 no borrow \u00b7 138 self-fill \u00b7 <b>30 to read</b>, collapsing to 19 distinct units; SS\u00b7IX \u2192 13 seams, 9 units. That is small enough to read in FULL, so there is no sample and no rate to defend \u2014 strictly better than a defensible sample. Read each borrowed unit against its SHORTEST prefix (the hardest case): titles, notes, opening move, bands, homework. Rate CLEAN / SERVICEABLE / JUMPY with the exact strings quoted. Every JUMPY is a defect; remedy deterministically first, never by putting an LLM in the request path.</div></details>","EXIT: the enumeration recorded (serves swept \u00b7 self-fills excluded \u00b7 seams read); a rating per borrowed unit with quoted evidence; zero JUMPY, or a defect per hit with a recorded ruling."],
  ["F2","C","F2 — C14 across the batch (copyright)","Check the batch for text lifted from the textbook, third-party material the book does not itself carry, and quotations with no attribution. <b>Why it matters:</b> this is legal exposure rather than quality, and it is per-chapter by definition — it depends on that chapter's own textbook pages. It is also the one thing on this row that a machine check does not touch at all.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">C14's three tests over the batch: (1) no verbatim reproduction beyond short quotation — <code>genon/copyright_scan.py</code> reduces this to a shortlist, but note it cannot find the book for ANY english chapter (its PDF glob assumes chapter number == PDF number, which the split breaks) and it read only .txt summaries until 2026-08-11 · (2) no third-party material (poems, lyrics, story excerpts, brands, images) the textbook itself does not carry — where it does, reference it by page/task ref, never reproduce · (3) every quotation attributed. Campaign reference <code>docs/NCERT_copyright_review.md</code>: F1 closed by founder ruling, <b>F2 — English verbatim task-text in served plans — is the sole open finding</b> and is what this step polices. Subjective calls (&ldquo;how short is short&rdquo;) are flagged with the strings quoted, not silently resolved. Same sample as F1 unless there is a reason to widen it, recorded.</div></details>","EXIT: the sample recorded; zero unattributed or wholesale reproductions, or a defect per hit; the review table in this comment."],
 ];
 const CROSS = [
@@ -421,18 +421,32 @@ function renderAll(){
      The precondition it was meant to show — runbook §0, "the pilot has been through the
      C-cycle, before any money moves" — is stated in W1's own specification, which is where a
      gate on spending belongs. */
-  $("batchTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th>"+
+  /* The stage's own notes are the longest text on the page and they were clamped under the
+     row label, which made eleven short rows read as eleven paragraphs. They now live behind
+     a NOTES link that expands a full-width row beneath — the step comments are HTML, so the
+     detail row renders them rather than escaping them. */
+  $("batchTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th><th>Notes</th>"+
     BATCH.map(b=>`<th class="hh" data-scope="batch" data-step="${b[0]}">${b[0]}</th>`).join("")+
     "<th>Released</th></tr>"+
     COMBOS.map((c,i)=>{
       const key=comboKey(c);
       const cells=BATCH.map(b=>cellHtml("batch",key,b[0])).join("");
       const released=BATCH.every(b=>["pass","na"].includes(item("batch",key,b[0]).status));
-      const note=item("batch",key,"W1").comment||"";
-      return `<tr><td>${i+1}</td><td class="rowlabel">${c[0]} · ${c[1]}
-        ${note?`<br><small class="rownote" title="click to expand" onclick="this.classList.toggle('open')">${note}</small>`:""}</td>
+      const notes=BATCH.map(b=>[b[0],(item("batch",key,b[0]).comment||"").trim()])
+                       .filter(n=>n[1]);
+      const id="bn-"+key.replace(/[^a-z]/gi,"");
+      const detail=notes.length
+        ? `<tr id="${id}" style="display:none"><td></td><td colspan="${BATCH.length+3}">`
+          + notes.map(n=>`<div style="margin:8px 0"><b>${n[0]}</b><div class="small"
+              style="margin-top:3px">${n[1]}</div></div>`).join("")
+          + `</td></tr>`
+        : "";
+      return `<tr><td>${i+1}</td><td class="rowlabel">${c[0]} · ${c[1]}</td>
+        <td class="small">${notes.length
+          ? `<a href="#" onclick="toggleBatchNote(event,'${id}',this)">notes (${notes.length}) ▸</a>`
+          : "—"}</td>
         ${cells}
-        <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>`;
+        <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>${detail}`;
     }).join("");
   // cross
   $("crossTbl").innerHTML = "<tr><th>#</th><th>Actor</th><th>Check</th><th style='width:60px'>Status</th></tr>"+
@@ -599,6 +613,15 @@ function commitDefect(id){
 /* ───────────────────────── shell ───────────────────────────────────────────────── */
 function showDrawer(){$("ovl").style.display="block";$("drawer").style.display="block";}
 function closeDrawer(){$("ovl").style.display="none";$("drawer").style.display="none";}
+/* Batch-release notes: expand in place. The arrow is the only state indicator, so it has to
+   flip — a link that does nothing visible on a row you cannot see reads as broken. */
+function toggleBatchNote(e,id,a){
+  e.preventDefault();
+  const tr=document.getElementById(id); if(!tr) return;
+  const open = tr.style.display==="none";
+  tr.style.display = open ? "table-row" : "none";
+  a.textContent = a.textContent.replace(open?"▸":"▾", open?"▾":"▸");
+}
 function switchTab(name){
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
   document.querySelectorAll("section.tab").forEach(s=>s.classList.toggle("active",s.id==="tab-"+name));

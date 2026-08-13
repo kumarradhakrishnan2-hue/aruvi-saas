@@ -20,7 +20,24 @@
     "constitution": "LP v1.2 / assessment v1.6",
     "source": "generate_canonical.py one english ix 7",
     "ledger_ts": "20260812_194816",
-    "validation": "clean"
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-13T18:08:34",
+        "tool": "genon/repair_meta_leak.py v1.0",
+        "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+        "edits": [
+          {
+            "unit": 1,
+            "field": "teacher_notes",
+            "rule": "register/meta-leak",
+            "removed": "This unit is the chapter's entry point; no prior reading is assumed.",
+            "replaced_with": "This unit is the chapter's entry point.",
+            "note": "'entry point' already says it, to a reader who has a use for it"
+          }
+        ]
+      }
+    ]
   },
   "result": {
     "lesson_plan": {
@@ -63,7 +80,7 @@
               "activity": "Teacher closes by naming the story's central character, Grandpa, and asking students to predict one tension that might arise between him and his city-dwelling family — a question held open for the reading ahead."
             }
           ],
-          "teacher_notes": "This unit is the chapter's entry point; no prior reading is assumed. The discussion draws on personal experience, so any student can contribute regardless of reading ability. Remind students that every observation is valid — Grandpa's story will surprise many of their assumptions about elderly people being passive or forgetful.",
+          "teacher_notes": "This unit is the chapter's entry point. The discussion draws on personal experience, so any student can contribute regardless of reading ability. Remind students that every observation is valid — Grandpa's story will surprise many of their assumptions about elderly people being passive or forgetful.",
           "materials": [
             "Textbook p.97 (Reflect and Respond graphic organiser)"
           ]
@@ -1071,17 +1088,17 @@
             "options": [
               {
                 "label": "1",
-                "text": "The podcast says meditation removes all thoughts from the mind permanently.",
-                "is_correct": false
-              },
-              {
-                "label": "2",
                 "text": "According to the podcast, meditation improves both physical and emotional well-being.",
                 "is_correct": true
               },
               {
-                "label": "3",
+                "label": "2",
                 "text": "The podcast recommends meditating only during examination periods.",
+                "is_correct": false
+              },
+              {
+                "label": "3",
+                "text": "The podcast says meditation removes all thoughts from the mind permanently.",
                 "is_correct": false
               }
             ],

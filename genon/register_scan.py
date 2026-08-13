@@ -251,6 +251,29 @@ PATTERNS = [
     ("meta-leak", True, re.compile(
         r"\bno\s+prior\s+(?:artefact|artifact|activity|unit|homework|material)\s+is\s+"
         r"(?:needed|required|assumed)\b", re.I)),
+    # ── THE "ASSUME" FAMILY (added the same day, at SS·IX's F1) ──────────────────
+    # The patterns above were derived from the instances the TWAU reading found, and they
+    # declared the corpus clean. An hour later, reading SS·IX's seams found 11 more in a
+    # phrasing none of them touch — and systematically: EVERY SS·IX standard canonical
+    # explains its own self-containment in its synthesis unit's note. Patterns generalise a
+    # phrasing, not a defect; it took a second stage's reading to close the family.
+    ("meta-leak", True, re.compile(
+        r"\b(?:must not|does not|do not|deliberately does not|without)\s+assum\w+\b[^.]{0,80}?"
+        r"\b(?:activity|activities|unit|units|sequence|worksheet|reading|artefact|artifact|"
+        r"homework|draft)\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\bno\s+(?:prior|particular|single|earlier|follow-up)\s+"
+        r"(?:reading|activity|discussion|homework|map|draft|artefact|artifact|collection|"
+        r"material|piece of work)[^.]{0,40}?\bis\s+(?:assumed|required|needed)\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\bmay\s+(?:be used with|serve)\s+(?:any|a)\s+class\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\breached?\s+(?:this\s+point\s+)?through\s+(?:a\s+)?different\b"
+        r"|\bmet\s+this\s+content\s+through\s+different\b"
+        r"|\bregardless\s+of\s+which\s+(?:specific\s+)?units\b"
+        r"|\bearlier\s+units\s+covered\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\brequiring\s+no\s+prior\s+(?:draft|artefact|artifact|activity|work)\b", re.I)),
     ("calendar", True, re.compile(r"\btomorrow\b", re.I)),
     ("calendar", True, re.compile(r"\b(this|next|last) (week|month)\b", re.I)),
     # "term" split out to ADVISORY, 2026-08-09. It was a ban, and it fired on maths·IX ch 4's
