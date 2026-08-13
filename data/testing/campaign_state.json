@@ -4020,6 +4020,48 @@
       "title": "SS·IX ch 1 U13 teacher_notes carries a completion claim — ACCEPTED, not repaired",
       "evidence": "ch_01_canonical.json U13 teacher_notes: \"Having covered all four disciplines, this unit turns to the chapter's explicit normative argument: why this field matters.\" register_scan family COMPLETION; it is the only surviving ban hit in the whole social_sciences/ix library and it makes ch 01's certification report read FAILURES.",
       "notes": "FOUNDER RULING 2026-08-13: accept the text, do not edit it. The reasoning is why it was never a clock/forward/calendar-style deletion in the first place — U13 of 15 sits after all four discipline sections in the STANDARD, where the sentence is simply TRUE. It is false only in a compact that drops a discipline, and a compact borrowing U13 borrows the note with it. So the open question was never 'is this text wrong' but 'is the completion ban about the TEXT or about the SERVE' — and the answer taken is the text stands. CONSEQUENCE, to be repeated wherever this stage is called clean: repair_register.py --apply still exits 1 on one surviving hit, and ch 01's report still says FAIL. SS·IX is 8 of 9 ALL PASS plus one accepted breach, and must never be written as 9 of 9."
+    },
+    {
+      "id": "ARV-D-158",
+      "combo": "campaign",
+      "step": "F1",
+      "severity": "S3",
+      "opened": "2026-08-13T18:01:08",
+      "closed": "2026-08-13T18:01:08",
+      "at": "2026-08-13T18:01:08",
+      "status": "closed",
+      "owner": "Claude",
+      "title": "The serve contract was narrated into teacher-facing text in 35 places across four subjects",
+      "evidence": "e.g. TWAU iv ch 2 U17 BAND text: 'This surfaces the full conceptual map of the chapter without requiring any specific earlier activity to have occurred.' Also SS·IX ch 5 p17 U17 'across seventeen units' (a count SELECTION falsifies) and 'no prior artefact is needed'. Census: TWAU 20 · SS 6+3 · english 2 · maths 1; 12 in band text.",
+      "notes": "Found by F1 reading borrowed seams, not by any scanner. The brief says 'this unit must not assume another unit' and the model writes the instruction down instead of obeying it. All 35 repaired by genon/repair_meta_leak.py (declared old->new pairs, pure deletions bar 5 capitalisations); corpus now scans 0. register_scan.py gained a 4th ban family 'meta-leak' so the unauthored batches cannot reintroduce it. UPSTREAM FIX NOT DONE: a brief phrased as a prohibition hands the model a sentence to repeat — state self-containment as a property of the output, never as a rule to acknowledge."
+    },
+    {
+      "id": "ARV-D-159",
+      "combo": "mathematics/preparatory",
+      "step": "C5",
+      "severity": "S2",
+      "opened": "2026-08-13T18:01:08",
+      "closed": "2026-08-13T18:01:08",
+      "at": "2026-08-13T18:01:08",
+      "status": "closed",
+      "owner": "Claude",
+      "title": "The item-stem gate did not know maths' own stem field and quarantined a paid library",
+      "evidence": "build_library._STEM_FIELDS = ('question_text','item_stem') with a comment asserting \"`prompt` appears 471 times in the PROTOTYPE-era maths corpus and in NO CANONICAL\". False: `prompt` is the stem field of mathematics·preparatory AND mathematics·middle. Census over every canonical on disk: question_text 1772 · prompt 123 · item_stem 96. The gate read 30-33 items per file as stemless and quarantined all three maths·iii ch 5 canonicals on a routine --certify-only.",
+      "notes": "Fixed by adding 'prompt' to _STEM_FIELDS; library restored and re-scanned per runbook trap 1 (the meta-leak repair survived in it). Stem failures 30 -> 1. The lesson is the one the old comment was reaching for and got backwards: a gate must tolerate the shapes that EXIST, and 'exists' is settled by a census covering every STAGE — maths is diverse within itself, so even a subject-level census would have missed it."
+    },
+    {
+      "id": "ARV-D-160",
+      "combo": "mathematics/preparatory",
+      "step": "C1",
+      "severity": "S2",
+      "opened": "2026-08-13T18:01:08",
+      "closed": null,
+      "at": "2026-08-13T18:01:08",
+      "status": "open",
+      "owner": "Kumar (founder)",
+      "title": "maths·iii ch 5 Q-C-2 is an empty MCQ stub — a blank question on a teacher's screen",
+      "evidence": "ch_05_canonical.json item Q-C-2: prompt '', options [], visual_stimulus '', expected_answer '', method_one_line '', what_each_option_reveals {}, verified:false, and inclusivity literally reads '[Verification failed] Refer to the book task anchored to S5.' Only exercise.book_ref survives ('Let us Do Q1, p.55').",
+      "notes": "PRE-EXISTING, not introduced today — it was invisible because the stem gate's own bug (ARV-D-159) buried it among 29 false positives on the same file. Now the sole stem failure. It re-quarantines the whole ch 5 library on every --certify-only until it is resolved, so the chapter is unservable meanwhile. Not repairable by declaration (there is no text to delete — a stem must be authored), so this is a founder call: author the stem, drop the item, or re-author the file."
     }
   ],
   "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",

@@ -73,15 +73,28 @@ KNOWN_ITEM_TYPES = {
 }
 
 # The item's STEM, under whichever name its constitution gives it (ARV-D-127, S11 · C1).
-# `question_text` is what SS, TWAU, science and mathematics emit; **english's assessment
-# constitution names it `item_stem`** at all three stages, and reading only the first
-# quarantined a clean english library on the day the shape gate landed. Order is
-# preference, not priority: a file carries one of them, and the tuple is the whole
-# inventory — verified by census over every saved plan and canonical on disk (2026-08-12).
-# `prompt` appears 471 times in the PROTOTYPE-era maths corpus and in no canonical, so it
+# `question_text` is what SS, TWAU, science and mathematics·SECONDARY emit; **english's
+# assessment constitution names it `item_stem`** at all three stages, and reading only the
+# first quarantined a clean english library on the day the shape gate landed.
+#
+# ★ `prompt` ADDED 2026-08-13, AND THE COMMENT IT REPLACES WAS FACTUALLY WRONG. It read:
+# "`prompt` appears 471 times in the PROTOTYPE-era maths corpus and in no canonical, so it
 # is recorded here and deliberately not read: a gate should tolerate the shapes that exist,
-# not the shapes that might.
-_STEM_FIELDS = ("question_text", "item_stem")
+# not the shapes that might." It is the stem field of **mathematics·preparatory and
+# mathematics·middle** — 123 items across every canonical on disk — so the gate failed 30-33
+# items per file and QUARANTINED the whole maths·iii ch 5 library, three paid canonicals,
+# on a routine `--certify-only`. The 2026-08-12 census that produced the tuple cannot have
+# read the maths family; the one that produced this line did, and is reproducible:
+#
+#   question_text 1772 (SS · TWAU · science · maths·ix) · prompt 123 (maths·iii, maths·vii)
+#   · item_stem 96 (english, all three stages)
+#
+# The lesson is the one the old comment was reaching for and got backwards: a gate must
+# tolerate the shapes that EXIST, and "exists" is settled by a census that covers every
+# stage — not by one that stops at the subjects you happened to open. Note maths is diverse
+# WITHIN itself (secondary parts company with its own middle and preparatory), which is why
+# a subject-level check would have missed it too.
+_STEM_FIELDS = ("question_text", "item_stem", "prompt")
 
 
 def item_stem(it):

@@ -185,6 +185,72 @@ PATTERNS = [
     ("completion", True, re.compile(r"\bhaving (worked through|covered|completed) (every|all|the whole)\b", re.I)),
     ("completion", True, re.compile(r"\bnow that (we|students|they) have (covered|completed)\b", re.I)),
     ("completion", True, re.compile(r"\bthe chapter is (now )?complete\b", re.I)),
+    # ── META-LEAK: THE SERVE CONTRACT NARRATED INTO TEACHER-FACING TEXT ───────────
+    # A FOURTH ban family, added 2026-08-13 after F1 (C8 across the TWAU batch) found the
+    # pattern by reading, not by scanning. The brief says "this unit must not assume another
+    # unit"; the model writes the instruction down instead of obeying it:
+    #
+    #   "This surfaces the full conceptual map of the chapter WITHOUT REQUIRING ANY SPECIFIC
+    #    EARLIER ACTIVITY TO HAVE OCCURRED."          — TWAU iv ch 2 U17, in BAND text
+    #
+    # It is not a false claim like the other three families — it is a TRUE claim addressed to
+    # the wrong reader. The teacher has never heard of a canonical or a slot fill; told her
+    # lesson does not require a prior activity, all she can infer is that another version of
+    # it exists and she has not got it. The machinery becoming visible on the one surface
+    # where it must not be.
+    #
+    # Corpus sweep the day it was found: 29 instances, FOUR subjects, 21 files, 16 chapters,
+    # 10 of them in band text. All 29 repaired by genon/repair_meta_leak.py, so this ban is
+    # green on the corpus as it stands and exists for the batches not yet authored.
+    #
+    # TIGHTLY SCOPED ON PURPOSE. "without naming" is ordinary good teaching — "read your
+    # clues without naming the destination", "reads a few aloud without naming the student",
+    # "guess the national bird without naming the answers" all appear in the corpus and are
+    # correct. The ban fires only where the object of the disclaimer is OUR vocabulary: a
+    # unit, a sitting, a prior/earlier activity, homework-from-elsewhere. A first draft that
+    # matched "without naming" alone flagged 89 places, 60 of them good pedagogy — and a gate
+    # that strikes good teaching to satisfy a regex is the wrong direction (runbook trap 4).
+    ("meta-leak", True, re.compile(
+        r"\b(?:without|not)\s+(?:requiring|naming|claiming|asking)\b[^.]{0,70}?"
+        r"\b(?:unit|units|sitting|sittings|prior activity|earlier activity|prior unit|"
+        r"specific prior|homework)\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\b(?:does not|do not|doesn't)\s+require\s+any\s+(?:specific\s+)?"
+        r"(?:earlier|prior)\s+activity\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\bdo not ask (?:children|students) to recall specific earlier activities\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\bsince this is a classroom sitting\b", re.I)),
+    ("meta-leak", True, re.compile(
+        r"\bencounters? this as (?:their|his|her) first sitting\b", re.I)),
+    # The DISCLAIMER variant — the model disclaiming completion instead of simply not
+    # claiming it. SS·IX ch 5 shipped "an integrative question that surveys the chapter's
+    # full arc WITHOUT CLAIMING THE CHAPTER IS COMPLETE", which trips the completion
+    # pattern on the very words it uses to disclaim completion; TWAU has "without claiming
+    # to finish any topic" and "without claiming any journey is complete". Note this fires
+    # where `completion` is exempt (the synthesis unit) — the exemption licenses a synthesis
+    # unit to ASSUME the chapter was taught, never to discuss its own scheduling.
+    ("meta-leak", True, re.compile(
+        r"\bwithout\s+claiming\b[^.]{0,45}?\b(?:complete|completed|finish|finished)\b", re.I)),
+    # The VARIABLE-COVERAGE variant: telling the teacher her class may or may not have met
+    # the material. True, and none of her business — it describes our serve, not her lesson.
+    ("meta-leak", True, re.compile(
+        r"\bwhether\s+(?:they|the class|students)\s+(?:covered|did|met|saw)\s+"
+        r"(?:all|every|the whole)\b", re.I)),
+    # A COUNT OF UNITS. "Having examined … across seventeen units" (SS·IX ch 5 p17) is the
+    # clock ban's shape in a different currency: it states a number that SELECTION falsifies.
+    # Seventeen is this variant's length, not the teacher's — every other serve of the chapter
+    # makes the sentence untrue. Deliberately narrow to a COUNT: "this unit" is how every
+    # constitution frames a period and is not touched here.
+    ("meta-leak", True, re.compile(
+        r"\b(?:across|over|through|in|spanning)\s+(?:all\s+|these\s+)?"
+        r"(?:\d+|[a-z]+teen|twenty|thirty|ten|eleven|twelve)\s+units\b", re.I)),
+    # The SELF-SUFFICIENCY BOAST: true, and again addressed to us. If the unit needs no prior
+    # artefact, it simply does not ask for one — saying so tells the teacher there is a
+    # version of her lesson in which it would have.
+    ("meta-leak", True, re.compile(
+        r"\bno\s+prior\s+(?:artefact|artifact|activity|unit|homework|material)\s+is\s+"
+        r"(?:needed|required|assumed)\b", re.I)),
     ("calendar", True, re.compile(r"\btomorrow\b", re.I)),
     ("calendar", True, re.compile(r"\b(this|next|last) (week|month)\b", re.I)),
     # "term" split out to ADVISORY, 2026-08-09. It was a ban, and it fired on maths·IX ch 4's

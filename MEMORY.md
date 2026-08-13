@@ -888,6 +888,68 @@ F1/F2 pending on both stages.
 
 ---
 
+## ★ F1 RAN ON TWAU THE SAME DAY, AND THE SAMPLE TURNED OUT TO BE UNNECESSARY
+
+**The founder's correction is the whole method.** F1 was specced as "sample the batch, record
+the rate". Two objections, both right: (a) **only a GENUINELY BORROWED Xth unit is at risk** —
+when the slot is filled from the plan being served (a self-fill, which the e14 SELF-FIRST
+tie-break makes the common case) the borrowed unit's priors are that plan's own earlier units,
+so there is no foreign prior and nothing to read; and (b) if the population is that small,
+enumerate and read it in FULL rather than sampling. `serve.py` has carried
+`slot_fill.self_fill` since e12 and **nothing was reading it**.
+
+Measured over all 32 TWAU chapters, every X in [floor−2, top+2] — 325 serves:
+
+| no borrow (identity · truncation · surrender) | 157 |
+| **SELF-fill — nothing to read** | **138** |
+| **cross-canonical borrow — read in full** | **30** |
+
+30 rows collapse to **19 distinct borrowed units** (one synthesis unit met from several
+prefixes), each read against its SHORTEST prefix — the hardest case. Enumerator:
+`genon/borrowed_seams.py`. **No sample, no rate to defend, which is strictly better than a
+defensible sample.** F1's step text in the tracker should be rewritten from sampling to
+enumeration for every remaining stage.
+
+**Result: one jumpy, and the founder closed it without a fix.** TWAU iv ch 1 at X=7 — the
+class completes the p.16 community action table at the close of sitting 6 and does the same
+table again at the open of the borrowed sitting 7. Not the "assumes what was never taught"
+half of jumpy but the other half, repetition. **Ruled NO ACTION (founder, 2026-08-13):** the
+only edit available is to strip the table out of p06's U6, and U6 is served at exactly two
+counts — X=7 (fixed) and X=6, where it is the plan's LAST sitting and the p.16 table's only
+appearance in that canonical. It fixes X=7 by unfixing X=6, and would orphan the unit's own
+title. The founder's diagnosis is the durable one: **a synthesis unit that runs a specific
+book activity can always collide with an earlier unit that ran it; a general synthesis cannot.
+We never asked synthesis to carry a named activity — but we cannot stop the model doing it.**
+Corollary the fix would not have reached anyway: the top canonical runs p.16's riddle task at
+U9 and p.16's table at U10, so **X=10 served as plain identity has the same collision with no
+borrowing involved at all.**
+
+**The cross-cutting finding was the valuable one — and it is now fixed corpus-wide.**
+See ARV-D-158/159/160. In one line: **the brief says "this unit must not assume another unit"
+and the model writes the instruction down instead of obeying it**, in text the teacher reads:
+
+> "This surfaces the full conceptual map of the chapter *without requiring any specific
+> earlier activity to have occurred*."  — TWAU iv ch 2 U17, **band** text
+
+Unlike the other three register bans this is not a FALSE claim; it is a true one addressed to
+the wrong reader. She has never heard of a canonical or a slot fill, so all she can infer is
+that another version of her lesson exists and she has not got it. **35 instances, four
+subjects, 24 files, 17 chapters, 12 of them in band text** — all repaired by
+`genon/repair_meta_leak.py` (declared old→new pairs, pure deletions but for five
+capitalisations; corpus now scans **0**), and `register_scan.py` gained a fourth ban family so
+the seven unauthored stages cannot reintroduce it. **The scanner outperformed the hand list
+in both directions** — it found three the reading missed (including one in the STANDARD's
+synthesis unit, the widest-read unit there is) and the post-apply re-scan found a fourth, a
+second leak in a unit already repaired for a first. Sequence worth keeping: *read to find the
+pattern, then scan to find its instances.*
+
+**Two things the sandbox could not finish, and they are founder actions:** 8 derived plans
+under `english/iii` could not be deleted (`Operation not permitted`), so ARV-D-034 applies —
+they will serve pre-repair bytes until removed by hand; and the superseded
+`backup/quarantine/mathematics/iii/*` copies likewise need deleting.
+
+---
+
 ## 2026-08-12 — S-SS · SOCIAL_SCIENCES · SECONDARY (IX) SHIPPED IN ONE DAY,
 ## ₹488.76 — AND A COMPACT CAUGHT A DEFECT IN THE PLAN IT WAS AUTHORED FROM
 
