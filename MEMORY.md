@@ -773,9 +773,27 @@ a 926-run corpus.
 
 **It was live, on a certified pilot.** `science·ix ch 8` — the S3 pilot chapter, ALL PASS,
 human-gated — has **no unit in any canonical anchoring `8.5 Atomic Number`**, a top-level
-numbered section its summary carries in full. TWAU `iii ch 1` and `iii ch 9` omit their
-closing `Let us reflect` the same way. Three chapters, found in the first minute the check
-existed, on two stages that had both been through the whole cycle.
+numbered section its summary carries in full. Found in the first minute the check existed,
+on a stage that had been through the whole cycle.
+
+**AND THE SAME SWEEP'S OTHER TWO HITS WERE WRONG, which is the more useful lesson.** TWAU
+`iii ch 1` and `iii ch 9` were reported as omitting `Let us reflect`. They do not.
+`section_registry` SKIPS the synthesis unit deliberately — it is the one unit whose only
+prior is full coverage, so it must never enter first-visit arithmetic — and the 2026-08-10
+note argued that skipping the unit and filtering its one anchor "are the same operation".
+**On a mediated-anchor stage they are not.** There the anchor is whatever the period fields
+yielded, and a census of every installed canonical shows it is a REAL section on **all**
+TWAU, mathematics and english tops (`Let us reflect`, `S1 / S2 / … / S8`,
+`A|reading_for_comprehension / A|beyond_text`) and the reserved token only on the
+token-carrying stages. Both TWAU chapters anchor `Let us reflect` on their closing unit and
+teach its tasks in full — ch 1's word-search, drawing and writing prompts, ch 9's weekly
+health table and 24-hour day circle, all verifiably present in the unit. So `reconcile()`
+now takes the standard's closing anchors as a third object and reports anything reached
+only that way on its own line, gating nothing. science·ix ch 8 is untouched: its synthesis
+unit carries the token, and the token is excluded from the allowance precisely so it cannot
+launder a real omission. **Generalisable:** a check built on the registry inherits every
+deliberate exclusion the registry makes, and the exclusions are only safe for the arithmetic
+they were reasoned about.
 
 **The fix: `genon/summary_sections.py` + C5 check 11** (testing.md 2.10; §9 treats it as a
 certifier change — free, `--certify-only`, no rupees). Design notes worth keeping:
@@ -810,8 +828,8 @@ certifier change — free, `--certify-only`, no rupees). Design notes worth keep
   locks exactly this.
 
 **Corpus state after the sweep (2026-08-13, `--certify-only` over both batched stages).**
-TWAU iii·iv·v: 32 chapters, **2 FAILs, both this check** (iii ch 1, iii ch 9), everything
-else clean. SS·IX: 9 chapters, **0 gating failures** (prose → advisory), 6 advisory
+TWAU iii·iv·v: **33 chapters, ALL PASS, zero failures**; iii ch 1 and ch 9 carry the
+closing-unit line. SS·IX: 9 chapters, **0 gating failures** (prose → advisory), 6 advisory
 shortlists of 1–7 leads — `Secondary-Stage Social Science` (ch 1), `Assemblies during Vedic
 Period` (ch 5), `Inside India's Election Machinery` (ch 7), `Economic Survey` (ch 8),
 `Tariffs by hotels` (ch 9) are the ones that read like real sections rather than sub-topics
@@ -823,6 +841,50 @@ hand across the batched corpus; they are irreducibly judgement and no tooling wa
 them. The other batch-vetting gaps discussed the same day and deliberately NOT taken up: a
 self-correction-marker regex (ARV-D-085, still a C5 tooling gap) and a copyright n-gram
 shortlist against the textbook text.
+
+**The BATCH RELEASE tab, same day (founder).** Those two owed steps now have somewhere to
+live. A fifth tracker scope, `batch`, keyed like `combos`, four steps: **W1** (top canonicals:
+collect + certify) · **W2** (compacts + the runbook's closing checklist) · **F1** (C8 across
+the batch) · **F2** (C14 across the batch) — F for final. `api/testing_campaign.py` gained the
+scope; the UI gained a tab, a renderer and a stat card. Two things the build surfaced that
+were not the point of it:
+
+1. **No stage carries a recorded human GATE.** All eleven have C1–C14 green and SIGN unset —
+   which means the two stages already batch-authored were authored without one. Hence the tab's
+   CYCLE column is THREE-state (✓ signed · ◐ C1–C14 pass, gate unrecorded · ⛔ C-steps
+   outstanding): collapsing it to two would either read as an accusation or hide the gap.
+2. **The rate is the deliverable.** The runbook said the founder "samples at a rate they
+   choose"; F1/F2 now require the sample size and stratification to be written into the step's
+   comment BEFORE the reading starts. Stratify by period-count band and take 100% of any chapter
+   that needed a repair.
+
+Prefilled from the run artefacts: **TWAU·preparatory W1 pass · W2 pass** (32 chapters, 93
+canonicals, ₹1,212.90, 28 declared repairs, zero re-bought; re-certified 2026-08-13 ALL PASS
+under check 11). **SS·secondary W1 pass · W2 GREEN the same day** — it opened amber on two
+register ban hits and closed on one repair plus one founder ruling:
+
+- **ch 05 REPAIRED, free** (`repair_register.py`, one declared deletion, 1 → 0 ban hits).
+  `ch_05_canonical_p13.json` U13 `time_bands[3]` was **the model narrating its own brief into
+  teacher-facing text** — "an integrative question that surveys the chapter's full arc *without
+  claiming the chapter is complete*", i.e. the compact brief's self-containment instruction
+  quoted back, tripping the completion pattern on the very words it uses to disclaim completion.
+  A scanner cannot rule on that and a reader does in one look. **This is the SECOND subject in
+  which a breach turned out to be the brief being paraphrased back** — mathematics·IX had one
+  where the model paraphrased the brief's description of the synthesis unit. Two subjects, same
+  shape: *a brief phrased as a prohibition hands the model a sentence to repeat.* That is an
+  argument about the BRIEF, not about `register_scan.py`, and it is now logged in
+  `repair_register.py`'s set header as a pattern to watch rather than a hit to repair forever.
+- **ch 01 ACCEPTED, not fixed — founder ruling, ARV-D-157.** U13 `teacher_notes`, "Having
+  covered all four disciplines…". The reasoning that always made it a judgement call is why the
+  ruling went this way: U13 of 15 sits after all four discipline sections **in the standard**,
+  where the sentence is simply TRUE; it is false only in a compact that drops a discipline, and
+  a compact borrowing U13 borrows the note with it. The question was never "is this text wrong"
+  but "is the completion ban about the TEXT or about the SERVE". **Consequence, to be repeated
+  wherever this stage is called clean:** `--apply` still exits 1 on the surviving hit and ch 01's
+  report still says FAILURES. SS·IX is **8 of 9 ALL PASS plus one accepted breach**, and must
+  never be written as 9 of 9.
+
+F1/F2 pending on both stages.
 
 ---
 

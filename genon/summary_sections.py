@@ -201,26 +201,60 @@ def _match(key, reg):
     return any(key and (key in a or a in key) for a in reg)
 
 
-def reconcile(registry, sections):
-    """(missing, extra). `missing` gates where the read is STRUCTURED; `extra` never does."""
+def reconcile(registry, sections, closing_anchors=()):
+    """(missing, closing, extra).
+
+    `missing` gates where the read is STRUCTURED. `closing` and `extra` never gate.
+
+    THE SYNTHESIS UNIT IS NOT IN THE REGISTRY, AND ON HALF THE STAGES IT TEACHES A REAL
+    SECTION (2026-08-13, the first sweep's two TWAU hits). `section_registry` skips that
+    unit deliberately — it is the one unit whose only prior is full coverage, so it must
+    never enter first-visit arithmetic. But skipping it is not the same as it teaching
+    nothing: on a MEDIATED-anchor stage its `section_anchor` is whatever its period fields
+    yielded, and measured over the corpus that is a real section on **every** TWAU,
+    mathematics and english canonical ("Let us reflect", "S1 / S2 / … / S8",
+    "A|reading_for_comprehension / A|beyond_text"), and the reserved token only on the
+    token-carrying stages. So TWAU iii ch 1 and ch 9 were reported as omitting "Let us
+    reflect" when their closing unit anchors exactly that and teaches its tasks —
+    the word-search, the weekly health table, the day circle, all present in the unit.
+
+    A section reached ONLY through the closing unit is therefore taught, and is reported
+    in `closing` rather than passed silently: it is the difference between "the chapter
+    covers this" and "a unit of the body covers this", and the human gate reads the
+    standard's synthesis unit in full anyway. `science·ix ch 8` is unaffected — its
+    synthesis unit carries the reserved token, so `8.5 Atomic Number` stays a failure."""
     reg = [_norm(a) for a in registry]
+    clo = [_norm(a) for a in closing_anchors if _norm(a) != "synthesis"]
     named = {a for s in sections for a in reg if _match(s["key"], [a])}
     direct = {s["key"] for s in sections if _match(s["key"], reg)}
+    by_closing = {s["key"] for s in sections
+                  if s["key"] not in direct and _match(s["key"], clo)}
 
-    missing = []
+    missing, closing = [], []
     for s in sections:
         if s["key"] in direct:
             continue
+        if s["key"] in by_closing:
+            closing.append(s["label"])
+            continue
         anc, hit = s["parent"], False
         while anc and not hit:
-            hit = anc in direct or _match(anc, reg)
+            hit = (anc in direct or anc in by_closing
+                   or _match(anc, reg) or _match(anc, clo))
             anc = _parent_ref(anc)
         if not hit:
             missing.append(s["label"])
-    return missing, [a for a, n in zip(registry, reg) if n not in named]
+    return missing, closing, [a for a, n in zip(registry, reg) if n not in named]
 
 
 # ── sweep (development instrument; certification calls the two functions above) ─
+
+def closing_anchors(stream):
+    """The STANDARD's synthesis unit's own anchors — taught, but not in the registry."""
+    from aruvi_core.genon.serve import _unit_anchors, is_synthesis_unit  # noqa: PLC0415
+
+    return [a for u in stream["units"] if is_synthesis_unit(u) for a in _unit_anchors(u)]
+
 
 def _sweep(argv):
     from aruvi_core.genon import compile_stream                          # noqa: PLC0415
@@ -236,7 +270,8 @@ def _sweep(argv):
         ch = int(re.search(r"ch_(\d+)", p.name).group(1))
         tag = f"{subj}/{gr}/ch{ch:02d}"
         try:
-            reg = section_registry(compile_stream(json.loads(p.read_text())))
+            top = compile_stream(json.loads(p.read_text()))
+            reg, clo = section_registry(top), closing_anchors(top)
         except Exception as e:                                           # noqa: BLE001
             print(f"  ERR  {tag}: {e}")
             continue
@@ -247,12 +282,13 @@ def _sweep(argv):
         if kind == NONE:
             print(f"  ??   {tag}: no section list readable from the summary")
             continue
-        missing, extra = reconcile(reg, secs)
+        missing, closing, extra = reconcile(reg, secs, clo)
         gated += bool(missing and kind == STRUCTURED)
         advisory += bool(missing and kind == PROSE)
         flag = ("FAIL" if kind == STRUCTURED else "ADVS") if missing else "ok  "
         print(f"  {flag} {tag} [{kind}]: {len(secs)} summary / {len(reg)} registry"
               + (f"  UNNAMED: {missing}" if missing else "")
+              + (f"  [closing unit teaches: {closing}]" if closing else "")
               + (f"  (+{len(extra)} registry-only)" if extra else ""))
     print(f"\ngating failures: {gated}   ·   advisory hits: {advisory}   of {len(tops)}")
 

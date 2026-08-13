@@ -1,0 +1,1316 @@
+{
+  "filename": "ch_07_canonical.json",
+  "saved_at": "2026-08-12T16:22:22",
+  "plan_status": "canonical",
+  "chapter_number": 7,
+  "chapter_title": "Elections",
+  "grade": "Grade IX",
+  "subject": "Social Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 9
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 9 periods = 450 minutes\nTotal: 9 periods · 7h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-12",
+    "schedule": "9x50",
+    "constitution": "LP v1.10 / assessment v1.7",
+    "source": "generate_canonical.py one social_sciences ix 7",
+    "ledger_ts": "20260812_160356_ss_ix_07_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-12T16:33:48",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 4,
+            "field": "band:0",
+            "rule": "register/clock",
+            "removed": "Let students discuss in pairs for two minutes, then take responses",
+            "replaced_with": "Let students discuss in pairs, then take responses",
+            "note": "constituency-size provocation; the teacher move is 'take responses', not the clock"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Why Elections Are Democracy's Heartbeat",
+          "section_anchor": "Why do Elections Matter?",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers",
+            "Textbook (Chapter 7)"
+          ],
+          "visual_aids": "Fig. 7.1 (elections linked to Representation, Equality, Accountability, Legitimacy)",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open with Fig. 7.1 displayed on the board. Ask students: 'What connects a school class representative election to a Lok Sabha election?' Take three or four quick responses, then draw attention to the five concepts radiating from 'Elections' in the figure — Representation, Equality, Accountability, Legitimacy — and the two blank boxes. Tell students they will decide what goes in those boxes by the end of this unit."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Work through the key distinctions in the section with the class. First, distinguish direct from indirect elections: in a direct election citizens vote personally for their representative (Lok Sabha, Vidhan Sabha, local bodies every five years), while in an indirect election citizens vote for representatives who then elect the leaders (President, Vice President, Rajya Sabha). Write the formula 'Direct = citizen → representative' and 'Indirect = citizen → elector → leader' on the board. Then pose: 'Why does the Constitution require elections to be held again at the end of every term — why can't a popular government simply continue?' Draw out the ideas of mandate, accountability, and the necessity of genuine choice (more than one contesting party)."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students individually write two or three sentences explaining why a representative who wins an election still cannot act without accountability, using the Gurmat class-representative example as their starting point. They must use the words 'mandate', 'accountability', and 'vote' in their response. Pairs then share and challenge each other: does the example fully explain why multi-party competition matters?"
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Return to Fig. 7.1's two empty boxes. In a whole-class exchange, invite proposals for what belongs there. Consolidate two agreed concepts on the board. Close by connecting the idea of vote-as-right-and-duty to the Voters' Pledge image (Fig. 7.5), noting it will be examined more fully later in the chapter."
+            }
+          ],
+          "section_context": "Direct vs indirect elections; Lok Sabha, Vidhan Sabha; mandate, accountability, legitimacy",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "This unit launches the chapter's central question — what makes elections genuinely democratic — so anchor every exchange in the concepts accountability, mandate, and legitimate choice rather than in lists of bodies. A common confusion is that indirect elections are somehow less democratic; clarify that the Constitution chose indirect routes for particular offices because those bodies are themselves elected rather than the public directly. The Fig. 7.1 blank-box task functions as a concept-formation anchor throughout the unit.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can explain why periodic elections are a structural requirement of democratic government, distinguishing direct from indirect electoral mechanisms.",
+              "cognitive_demand": "Understanding"
+            },
+            {
+              "c_code": "C-5.3",
+              "cg": "CG-5",
+              "weight": 1,
+              "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it.",
+              "implied_lo": "Students can articulate the vote as simultaneously a constitutional right and a civic duty, connecting it to the accountability of elected representatives.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "How Votes Become Seats: Three Electoral Systems Compared",
+          "section_anchor": "The Electoral System",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Printed or board-drawn Electoral Systems comparison table",
+            "Blank paper for group tables"
+          ],
+          "visual_aids": "Electoral Systems comparison table (Haritbhumi / Ratnadweep / Swarnalok); Fig. 7.3 (single transferable vote quota and counting steps)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Write on the board: '100 votes, 3 candidates — how does a winner get decided?' Take quick ideas from the class, then explain that the framers of India's Constitution had to choose between several different systems for converting votes into seats, and this unit examines what those choices mean in practice."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Walk students through the comparison table of three imaginary countries. For Haritbhumi (FPTP), show that a candidate can win with less than 50% of the vote if the others split the remainder — ask: 'Is that a fair result? What is lost?' For Ratnadweep (Majority System), trace the second-round mechanism that forces a candidate above 50%. For Swarnalok (Proportional Representation), show how seats are distributed in proportion to vote share. Record the key trade-off each system makes on the board: simplicity vs majority vs proportionality."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Groups of four each receive the vote totals from one of the three imaginary countries and must (a) calculate which party wins under that country's system, (b) re-run the same numbers under one of the other two systems to see if the winner changes, and (c) state in one sentence what democratic value their reassignment protects or sacrifices. Then use Fig. 7.3 to briefly walk through the single transferable vote quota formula and the four counting steps — tell students this is the method India uses for the Rajya Sabha and the President."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Each group reports its finding in one sentence. Consolidate on the board: which system did the Constitution choose for the Lok Sabha and Vidhan Sabha (FPTP) and why? Close by naming the six bicameral states — Andhra Pradesh, Bihar, Karnataka, Maharashtra, Telangana, Uttar Pradesh — and the mixed composition of the Vidhan Parishad, connecting proportional representation to upper-house design."
+            }
+          ],
+          "section_context": "FPTP, Majority System, PR; Haritbhumi, Ratnadweep, Swarnalok comparison table; STV quota Fig. 7.3",
+          "pedagogical_approaches": [
+            "Inquiry",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having established why elections matter in terms of accountability and mandate, this unit shifts to the technical question of how votes are counted — a move from purpose to mechanism. Students often conflate 'winning an election' with 'getting more than half the votes'; the Haritbhumi FPTP example is the sharpest corrective, so linger on it before moving to the other two systems. The group re-run task is the core analytical move: students must use the same data under a different rule and explain the democratic consequence.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can compare how FPTP, majority, and proportional representation systems convert votes into legislative seats, evaluating the democratic trade-off each system makes.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "The Legal Architecture of Elections",
+          "section_anchor": "The Laws",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Blackboard",
+            "Scenario cards (printed or teacher-dictated)"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Open by asking students to imagine they are designing rules for a school council election: what would they need to cover before voting day, on voting day, and after? Collect responses on the board under three columns — Before / During / After. Tell the class that India has two major Acts that do exactly this for national and state elections."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Walk through the Representation of the People Act, 1950 (allocation of seats, delimitation of constituencies, preparation of electoral rolls, right of every citizen above 18 to vote without discrimination) and the Representation of the People Act, 1951 (conduct of elections, nomination of candidates, campaign rules, voting procedures, post-election dispute resolution). Show students that the 1950 Act governs the 'before' and the 1951 Act governs the 'during and after' — mapping them onto the class's own three-column framework. Also note the Presidential and Vice-Presidential Act, 1952."
+            },
+            {
+              "minutes": "22-38",
+              "activity": "Present four scenario cards (dictate or display these): (1) A candidate distributes free cooking oil to voters two days before polling. (2) A party leader asks voters to support his party because they all belong to the same caste. (3) A District Magistrate campaigns at a public rally for a candidate. (4) A candidate promises a job in a government office to a rival if he withdraws. For each, students individually write: which Act is violated, which specific provision (gift/inducement, religious/caste appeal, government-personnel assistance), and why the provision exists. Share responses and correct through class discussion."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Return to the 'Before / During / After' columns and check whether the two Acts together cover every cell. Students identify any gap. Close with the question: 'Why is it not enough to have good candidates — why do you also need laws?' — drawing out the principle that the integrity of the process matters independently of the integrity of the participants."
+            }
+          ],
+          "section_context": "RPA 1950, RPA 1951, Presidential Act 1952; electoral offences, corrupt practices",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having seen how votes are counted, students now examine the legal rules that ensure the process is trustworthy before counting begins. A frequent confusion is treating the two RPA Acts as one undifferentiated law; the Before/During/After scaffold keeps them distinct throughout. The scenario cards work best if students are held to naming a specific provision rather than a general sense of 'unfairness' — precision is the learning here.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can apply the provisions of the Representation of the People Acts to classify electoral offences and corrupt practices, explaining the democratic principle each provision protects.",
+              "cognitive_demand": "Application"
+            },
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them.",
+              "implied_lo": "Students can identify categories of corrupt electoral practice and explain how the legal prohibition of each practice addresses a specific threat to free and fair elections.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Drawing Lines for Equal Representation: The Delimitation Commission",
+          "section_anchor": "Delimitation Commission",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Blank outline map of India (one per pair)",
+            "Markers"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose this problem on the board: 'Two constituencies — one has 5 lakh people, one has 50 lakh people — each sends one MP to the Lok Sabha. Is that equal representation?' Let students discuss in pairs, then take responses. Establish that unequal constituency sizes violate the principle of political equality that the electoral system is supposed to deliver."
+            },
+            {
+              "minutes": "10-26",
+              "activity": "Explain delimitation: the process of determining the number of seats and fixing territorial boundaries for Lok Sabha and Vidhan Sabha elections so that the ratio of seats to population stays as equal as possible. Walk through the constitutional basis — Article 82 mandates a Delimitation Commission after each Census — and the four Commissions India has established: 1952, 1963, 1973, and 2002. Write the four dates on the board and ask: 'What is striking about the gap between 1973 and 2002?' Let students speculate freely; note the question is also posed in the chapter itself and they can investigate further."
+            },
+            {
+              "minutes": "26-42",
+              "activity": "Pairs receive a blank outline map of India and a fictional population table (dictate: Region North: 80 lakh, Region South: 40 lakh, Region East: 60 lakh, Region West: 20 lakh — total seats available: 10). They must (a) allocate the 10 seats proportionally across the four regions, (b) identify which region would be disadvantaged most if seats had been allocated equally at 2.5 per region regardless of population, and (c) write one sentence explaining why regular re-delimitation is necessary as population shifts over decades."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Groups share allocations. Consolidate on the board: show the difference between the proportional and the flat allocation. Close with the observation that delimitation is a technical process with a democratic purpose — it prevents the distortion of the principle of equal representation that results from population movement."
+            }
+          ],
+          "section_context": "Delimitation Commission 1952, 1963, 1973, 2002; Article 82; constituency boundary revision",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Students who have just seen how electoral systems convert votes into seats now encounter the prior question of whether constituencies themselves are drawn fairly — a necessary step in understanding what 'equal representation' actually requires. The most common confusion is thinking that equal numbers of constituencies per state automatically means equal representation; the paired map task is designed to break that assumption with numbers. Encourage the question about the 1973–2002 gap as genuine intellectual inquiry rather than a factual retrieval exercise.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can analyse how delimitation connects population change to legislative seat allocation, evaluating its role in sustaining the principle of equal representation.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "The Election Commission: Architecture of an Autonomous Institution",
+          "section_anchor": "Election Commission of India (ECI)",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Blackboard",
+            "Printed or teacher-drawn Fig. 7.6 (ECI digital ecosystem)"
+          ],
+          "visual_aids": "Fig. 7.6 (ECI digital ecosystem: Suvidha, ETPBS, Voter Helpline App, Saksham App, cVIGIL App, Sugam, ERONET)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Ask: 'If the government itself ran elections, what could go wrong?' Take three responses and record them on one side of the board. Then read aloud Articles 324–329 — the constitutional foundation of the ECI — and ask students what problem the drafters were trying to solve by placing election management outside government control. Record the answer on the other side of the board."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Walk through the ECI's four major functions in sequence, using the board as a running diagram. (1) Electoral rolls: enumerators visit every household, rolls are prepared constituency- and polling-station-wise, the Special Intensive Revision process adds new eligible voters (especially those who have just turned 18) and deletes names on grounds of death, change of address, duplicate enrolment, or being permanently untraceable; claims and objections must be resolved before the final roll is published. (2) Scheduling elections: the ECI weighs weather, agricultural cycles, examination schedules, and festivals. (3) Registering parties and allocating symbols: only registered parties and independent candidates may contest; the ECI insists on periodic organisational elections for inner-party democracy; parties are classified as national, state/regional, or registered-unrecognised. (4) Ensuring free and fair elections: inclusion for Persons with Disabilities, senior citizens, transgender persons, and Particularly Vulnerable Tribal Groups — including home voting for those above 85 and PwDs with 40% benchmark disability, extended nationwide in the 2024 General Elections."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Display Fig. 7.6. For each app or portal — Suvidha, ETPBS, Voter Helpline App, Saksham App, cVIGIL App, Sugam, ERONET — students individually match it to one of the four ECI functions listed on the board, then write one sentence explaining which democratic problem each technology addresses. Pairs compare their matching and resolve disagreements."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Use the THINK ABOUT IT prompt from the section: students briefly discuss in their pairs what documents a first-time 18-year-old voter needs to register, and what the SIR process means for them personally. Close by noting the annual observance of 25 January as National Voters' Day, connecting voter registration to the civic duty established in the chapter's opening section."
+            }
+          ],
+          "section_context": "ECI Articles 324-329; electoral rolls, SIR, scheduling, party registration, inclusion; Fig. 7.6 digital ecosystem",
+          "pedagogical_approaches": [
+            "Inquiry",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Students now move from the laws governing elections to the body that administers them — a transition from legal architecture to institutional design. A common confusion is treating the ECI as a government department; the autonomy question in the opening move is specifically designed to surface and correct that assumption. The Fig. 7.6 matching task is analytical rather than definitional: students must identify which democratic problem each technology solves, not simply name the app.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can analyse the institutional design of the ECI — its autonomy, constitutional basis, and four core functions — explaining how each function supports the integrity of democratic elections.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them.",
+              "implied_lo": "Students can evaluate specific ECI inclusion initiatives and technologies as responses to accessibility barriers, explaining how each extends the democratic right to vote.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "No Voter Left Behind: Scale, Technology, and Inclusion",
+          "section_anchor": "No Voter to Be Left Behind",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Blackboard or chart paper",
+            "Figs. 7.7 and 7.8 (EVM with Braille; home voting)"
+          ],
+          "visual_aids": "Fig. 7.7 (EVM with Braille labels); Fig. 7.8 (home voting for senior citizens)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Write on the board: '96.8 crore eligible voters.' Ask students: 'What logistical, geographic, and social problems does a number that large create for a genuinely free and fair election?' Collect responses and group them under three headings on the board: Scale, Terrain, and Inclusion."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Walk through the section's content against those three headings. Under Scale: the ECI manages updating of rolls, candidate nominations, campaign regulation, law enforcement, inter-state coordination, security, counting, declaration of results, and dispute resolution — all simultaneously. Under Terrain: diverse regions and remote polling stations require extensive ICT and e-governance infrastructure. Under Inclusion: EVMs with Braille (Fig. 7.7) and home voting for senior citizens and PwDs (Fig. 7.8). Note the International Election Visitors' Programme and the 28 MoUs with Election Management Bodies and three international organisations (IFES, International IDEA, United Nations) as evidence of India's electoral scale drawing global attention."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Groups of four choose one of the three headings — Scale, Terrain, or Inclusion — and construct a 'challenge–response' table with at least three rows: in column one they name a specific challenge from the section, and in column two they identify a specific ECI measure that addresses it. They then add a third column — 'What remains unaddressed?' — where they identify a gap or limitation the section itself does not resolve. Each group writes their table on chart paper or in their notebooks."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "One spokesperson per group shares their 'What remains unaddressed?' column. Class discusses: are these gaps the ECI can solve alone, or do they require citizen action? This sets up the tension that the chapter's closing section on challenges will examine."
+            }
+          ],
+          "section_context": "96.8 crore voters; ICT, e-governance; EVM Braille Fig. 7.7; home voting Fig. 7.8; IEVP, 28 MoUs",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having examined the ECI's four constitutional functions in the previous unit's content, students now confront the sheer operational scale of executing them — a shift from institutional design to ground-level implementation. The most productive discussion usually emerges from the third column of the table ('What remains unaddressed?'), so allow sufficient exchange time there; students should name gaps from the section itself rather than speculate freely. The IEVP detail is worth emphasising because it positions India's elections as an object of international study, not merely a domestic concern.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them.",
+              "implied_lo": "Students can construct a challenge-response analysis of inclusion and scale barriers in India's electoral exercise, identifying measures taken and gaps that persist.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can assess how the scale and diversity of India's electorate tests the operational capacity of democratic institutions, drawing on specific inclusion measures and ICT applications.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Political Parties: Functions, Recognition, and the Anti-Defection Law",
+          "section_anchor": "Political Parties",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Blackboard",
+            "Figs. 7.9, 7.11, 7.12 (party functions; multi-party system; recognition criteria)"
+          ],
+          "visual_aids": "Fig. 7.12 (ECI criteria for National Party, State Party, and RUPP recognition)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Ask: 'If political parties did not exist, how would a voter decide whom to vote for?' Let students discuss briefly, then establish from the section that parties perform five critical functions — providing governance, accountability, representation, and public engagement; organising public opinion; campaigning on issues; and offering voters meaningful informed choices. Write these on the board."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Work through the section's structural content. India's multi-party system is a reflection of the country's diversity of languages, cultures, religions, and regions. Introduce defection — a member abandoning or switching from the party under whose banner they were elected — and present both readings: political opportunism versus an act of conscience. Then explain the Anti-Defection Law: the 52nd Constitutional Amendment Act (1985) under which a member who voluntarily gives up party membership or defies the party whip may be disqualified by the Speaker or Chairman. Use Fig. 7.12 to walk through the ECI's three-tier classification: National Party (6% of valid votes in four or more states plus four Lok Sabha seats, or 2% of Lok Sabha seats from at least three states, or state-party status in four states), State Party (vote-share and seat thresholds in the Legislative Assembly or Lok Sabha from the concerned state), and Registered Unrecognised Political Parties (never secured enough votes or never contested since registration)."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Students individually work through this analytical task: given a fictional party's results — 5% of valid votes in three states, 3 Lok Sabha seats from two states, contested only in two states — they must (a) determine whether it qualifies as a National Party under each of the three qualifying routes in Fig. 7.12, (b) decide which tier it falls into, and (c) write two sentences explaining what democratic purpose the recognition criteria serve. Partners then challenge each other's classification."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Take the LET'S EXPLORE prompt from the section as a closing discussion: trace the shift from single-party dominance to coalition politics — 1967, the Janata Party coalition of 1977 against the backdrop of the Emergency, and the later NDA and UPA formations. Ask: 'What does the shift from single-party to coalition government tell us about how India's multi-party system has evolved?' Record two or three student propositions on the board without resolving them — they are evidence of genuine democratic diversity."
+            }
+          ],
+          "section_context": "Multi-party system; defection; Anti-Defection Law 1985; Fig. 7.12 recognition criteria: National, State, RUPP",
+          "pedagogical_approaches": [
+            "Issues-based learning",
+            "Inquiry"
+          ],
+          "teacher_notes": "Students who have traced the ECI's role in registering parties now examine what parties actually do and how they are classified — a move from regulatory procedure to political function. The defection discussion tends to generate strong opinions; keep it anchored to the constitutional provision and the two interpretations the text itself offers rather than letting it drift into partisan territory. The classification task requires students to apply all three qualifying routes simultaneously, which is the analytical core of the unit — make sure students check each route independently before deciding.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.5",
+              "cg": "CG-5",
+              "weight": 2,
+              "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government.",
+              "implied_lo": "Students can analyse the functions of political parties in a democracy and apply the ECI's recognition criteria to classify parties by tier, explaining the democratic purpose each tier distinction serves.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can evaluate the role of political parties and the Anti-Defection Law as mechanisms that shape the quality and stability of democratic representation.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Challenges to Free and Fair Elections",
+          "section_anchor": "Challenges to Free and Fair Elections",
+          "materials": [
+            "Textbook (Chapter 7)",
+            "Printed or projected Fig. 7.13 ('road to free and fair elections' with potholes)",
+            "Blank sticky notes or paper slips"
+          ],
+          "visual_aids": "Fig. 7.13 (road to free and fair elections image with empty potholes)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Display Fig. 7.13. Read aloud the LET'S ANALYSE prompt from the section: students must fill the empty potholes in the 'road to free and fair elections' with further challenges and discuss how to overcome them. Before they begin, ask them to list the challenges the section itself names — misinformation, fake news, and intimidation — as a starting point, not an ending point."
+            },
+            {
+              "minutes": "8-24",
+              "activity": "Walk through the section's content: the scale of the challenge (over 96.8 crore voters, thousands of polling stations, hundreds of parties, diverse socio-economic realities); and the ECI's toolkit — Representation of the People Acts 1950 and 1951, the Model Code of Conduct, EVMs, the Voter Verifiable Paper Audit Trail (VVPAT), and voters' awareness campaigns. For each tool, ask: 'Which specific challenge does this address, and is it fully solved by that tool?'"
+            },
+            {
+              "minutes": "24-40",
+              "activity": "Groups of four now complete the Fig. 7.13 task in full. Each group names at least three additional potholes not listed in the section (these must be plausible, drawn from their understanding of the chapter and its laws, institutions, and inclusion themes), writes each on a slip of paper, and places it on the image. For each new pothole they must also propose one specific, feasible response — drawing on the ECI's powers, the law, or citizen action. Groups then briefly review each other's potholes and responses."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Whole-class share: each group contributes their most interesting new pothole. Consolidate a class list of five or six agreed challenges on the board. Close with the section's own conclusion as a discussion question: 'The text says constant vigilance and active citizen participation can make elections more representative — what does active participation mean beyond just voting?' Students give one concrete example each."
+            }
+          ],
+          "section_context": "Misinformation, fake news, intimidation; Model Code of Conduct; EVMs, VVPAT; citizen participation; Fig. 7.13",
+          "pedagogical_approaches": [
+            "Issues-based learning",
+            "Inquiry"
+          ],
+          "teacher_notes": "Having seen the ECI's institutional powers and its inclusion toolkit, students now confront the chapter's honest acknowledgement that even a robust system faces ongoing challenges — a move from institutional capacity to democratic accountability. The Fig. 7.13 pothole task is the chapter's own scaffold for this; use it as written rather than substituting a different prompt. The most revealing moment is usually when students propose a new pothole and then struggle to name a feasible response — that tension is the democratic insight the unit is building toward.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them.",
+              "implied_lo": "Students can evaluate the adequacy of existing electoral safeguards against named challenges, proposing citizen and institutional responses to gaps that persist.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-5.3",
+              "cg": "CG-5",
+              "weight": 1,
+              "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it.",
+              "implied_lo": "Students can evaluate what active civic participation in elections requires beyond voting, connecting specific citizen actions to the goal of free and fair elections.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Elections and Democracy: A Whole-Chapter Synthesis",
+          "section_anchor": "synthesis",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Blank paper for each student",
+            "Textbook (Chapter 7) for reference"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write on the board a single question that the chapter's entire arc builds toward: 'Can an election be held and democracy still fail?' Ask students to write a one-sentence initial response privately, without discussion. Collect a few responses aloud — expect a range from confident 'no' to qualified 'yes'. Tell the class they will build the evidence to answer this properly using every part of the chapter."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Run a structured analytical exercise in three rounds. Round 1 — Design: students identify one feature from each of these five pillars of the chapter — electoral systems (FPTP vs PR), laws (RPA 1950 and 1951 provisions), institutions (ECI autonomy and functions), parties (recognition, defection, Anti-Defection Law), and challenges (misinformation, fake news, intimidation, VVPAT) — and explain in one sentence how each feature either supports or can undermine genuine democracy. Round 2 — Connection: pairs compare their five sentences and identify which two pillars interact most directly (e.g. the law and the challenge of misinformation; the electoral system and the party recognition criteria). Round 3 — Synthesis: each pair formulates a single claim — no longer than two sentences — about whether elections alone are sufficient for democracy, citing at least two pillars as evidence."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Each pair shares their two-sentence claim with another pair, who must identify which part of the chapter supports that claim and which part complicates it. Then each student individually writes a structured paragraph (three to five sentences) answering the board question — 'Can an election be held and democracy still fail?' — that must mention: at least one structural mechanism (electoral system or law), at least one institutional actor (ECI, parties, or civil society), and at least one challenge from the chapter's closing section. Drafting, peer reading, and any revision all happen within this band."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Three or four volunteers read their paragraph aloud. The class identifies which chapter concepts each paragraph draws on and whether the argument is supported by chapter evidence. Close by returning to Fig. 7.1's five concepts — Representation, Equality, Accountability, Legitimacy — and the two boxes students completed in the chapter's opening content. Ask: 'After working through the whole chapter, would you change what you put in those boxes?' The question is not answered — it is left open as the genuine intellectual remainder of the chapter."
+            }
+          ],
+          "section_context": "Whole-chapter synthesis: electoral systems, laws, ECI, parties, challenges, democratic accountability",
+          "pedagogical_approaches": [
+            "Inquiry",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "This synthesis unit draws together the chapter's full arc — from the purpose of elections, through their legal and institutional architecture, to the parties and challenges that shape their democratic quality. No particular earlier activity, discussion, or homework is assumed; the three rounds of the exercise are designed to be self-scaffolding from the chapter's content alone. The closing return to Fig. 7.1 is deliberately unresolved — the open question is the point, signalling that democratic vigilance is ongoing rather than concluded.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-5.4",
+              "cg": "CG-5",
+              "weight": 3,
+              "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government.",
+              "implied_lo": "Students can construct an evidence-based argument about whether elections alone are sufficient for democracy, integrating structural, institutional, and civic dimensions of the chapter.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-5.5",
+              "cg": "CG-5",
+              "weight": 2,
+              "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government.",
+              "implied_lo": "Students can evaluate the contribution of political parties alongside other democratic actors in sustaining or undermining the legitimacy of the electoral process.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them.",
+              "implied_lo": "Students can synthesise multiple electoral challenges and institutional responses into a coherent assessment of the conditions required for elections to deliver genuine democracy.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-5.3",
+              "cg": "CG-5",
+              "weight": 1,
+              "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it.",
+              "implied_lo": "Students can integrate the right to vote and civic duty into a broader argument about democratic accountability, explaining what citizen participation must look like beyond the act of voting.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 9
+      }
+    ],
+    "coverage_handoff": {
+      "C-5.4": {
+        "cg": "CG-5",
+        "weight": 3,
+        "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government — from why periodic elections are essential (accountability, mandate, legitimacy), through the electoral systems that convert votes into seats (FPTP, the majority system, and proportional representation compared across three model countries), to the laws and institutions that conduct them.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "Why do Elections Matter?",
+            "section_context": "Direct vs indirect elections; Lok Sabha, Vidhan Sabha; mandate, accountability, legitimacy",
+            "implied_lo": "Students can explain why periodic elections are a structural requirement of democratic government, distinguishing direct from indirect electoral mechanisms.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 2,
+            "section_anchor": "The Electoral System",
+            "section_context": "FPTP, Majority System, PR; Haritbhumi, Ratnadweep, Swarnalok comparison table; STV quota Fig. 7.3",
+            "implied_lo": "Students can compare how FPTP, majority, and proportional representation systems convert votes into legislative seats, evaluating the democratic trade-off each system makes.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 3,
+            "section_anchor": "The Laws",
+            "section_context": "RPA 1950, RPA 1951, Presidential Act 1952; electoral offences, corrupt practices",
+            "implied_lo": "Students can apply the provisions of the Representation of the People Acts to classify electoral offences and corrupt practices, explaining the democratic principle each provision protects.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 4,
+            "section_anchor": "Delimitation Commission",
+            "section_context": "Delimitation Commission 1952, 1963, 1973, 2002; Article 82; constituency boundary revision",
+            "implied_lo": "Students can analyse how delimitation connects population change to legislative seat allocation, evaluating its role in sustaining the principle of equal representation.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 5,
+            "section_anchor": "Election Commission of India (ECI)",
+            "section_context": "ECI Articles 324-329; electoral rolls, SIR, scheduling, party registration, inclusion; Fig. 7.6 digital ecosystem",
+            "implied_lo": "Students can analyse the institutional design of the ECI — its autonomy, constitutional basis, and four core functions — explaining how each function supports the integrity of democratic elections.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 6,
+            "section_anchor": "No Voter to Be Left Behind",
+            "section_context": "96.8 crore voters; ICT, e-governance; EVM Braille Fig. 7.7; home voting Fig. 7.8; IEVP, 28 MoUs",
+            "implied_lo": "Students can assess how the scale and diversity of India's electorate tests the operational capacity of democratic institutions, drawing on specific inclusion measures and ICT applications.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "Political Parties",
+            "section_context": "Multi-party system; defection; Anti-Defection Law 1985; Fig. 7.12 recognition criteria: National, State, RUPP",
+            "implied_lo": "Students can evaluate the role of political parties and the Anti-Defection Law as mechanisms that shape the quality and stability of democratic representation.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 9,
+            "section_anchor": "synthesis",
+            "section_context": "Whole-chapter synthesis: electoral systems, laws, ECI, parties, challenges, democratic accountability",
+            "implied_lo": "Students can construct an evidence-based argument about whether elections alone are sufficient for democracy, integrating structural, institutional, and civic dimensions of the chapter.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-5.5": {
+        "cg": "CG-5",
+        "weight": 2,
+        "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government, and it names media, civil society, and voters as election stakeholders.",
+        "los": [
+          {
+            "period_number": 7,
+            "section_anchor": "Political Parties",
+            "section_context": "Multi-party system; defection; Anti-Defection Law 1985; Fig. 7.12 recognition criteria: National, State, RUPP",
+            "implied_lo": "Students can analyse the functions of political parties in a democracy and apply the ECI's recognition criteria to classify parties by tier, explaining the democratic purpose each tier distinction serves.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 9,
+            "section_anchor": "synthesis",
+            "section_context": "Whole-chapter synthesis: electoral systems, laws, ECI, parties, challenges, democratic accountability",
+            "implied_lo": "Students can evaluate the contribution of political parties alongside other democratic actors in sustaining or undermining the legitimacy of the electoral process.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-6.4": {
+        "cg": "CG-6",
+        "weight": 2,
+        "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them — inclusion initiatives, Model Code of Conduct, EVMs and VVPAT, and active citizen vigilance — so that the process becomes ever more inclusive, just, and trustworthy.",
+        "los": [
+          {
+            "period_number": 3,
+            "section_anchor": "The Laws",
+            "section_context": "RPA 1950, RPA 1951, Presidential Act 1952; electoral offences, corrupt practices",
+            "implied_lo": "Students can identify categories of corrupt electoral practice and explain how the legal prohibition of each practice addresses a specific threat to free and fair elections.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 5,
+            "section_anchor": "Election Commission of India (ECI)",
+            "section_context": "ECI Articles 324-329; electoral rolls, SIR, scheduling, party registration, inclusion; Fig. 7.6 digital ecosystem",
+            "implied_lo": "Students can evaluate specific ECI inclusion initiatives and technologies as responses to accessibility barriers, explaining how each extends the democratic right to vote.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 6,
+            "section_anchor": "No Voter to Be Left Behind",
+            "section_context": "96.8 crore voters; ICT, e-governance; EVM Braille Fig. 7.7; home voting Fig. 7.8; IEVP, 28 MoUs",
+            "implied_lo": "Students can construct a challenge-response analysis of inclusion and scale barriers in India's electoral exercise, identifying measures taken and gaps that persist.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 8,
+            "section_anchor": "Challenges to Free and Fair Elections",
+            "section_context": "Misinformation, fake news, intimidation; Model Code of Conduct; EVMs, VVPAT; citizen participation; Fig. 7.13",
+            "implied_lo": "Students can evaluate the adequacy of existing electoral safeguards against named challenges, proposing citizen and institutional responses to gaps that persist.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 9,
+            "section_anchor": "synthesis",
+            "section_context": "Whole-chapter synthesis: electoral systems, laws, ECI, parties, challenges, democratic accountability",
+            "implied_lo": "Students can synthesise multiple electoral challenges and institutional responses into a coherent assessment of the conditions required for elections to deliver genuine democracy.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-5.3": {
+        "cg": "CG-5",
+        "weight": 1,
+        "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "Why do Elections Matter?",
+            "section_context": "Direct vs indirect elections; Lok Sabha, Vidhan Sabha; mandate, accountability, legitimacy",
+            "implied_lo": "Students can articulate the vote as simultaneously a constitutional right and a civic duty, connecting it to the accountability of elected representatives.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 8,
+            "section_anchor": "Challenges to Free and Fair Elections",
+            "section_context": "Misinformation, fake news, intimidation; Model Code of Conduct; EVMs, VVPAT; citizen participation; Fig. 7.13",
+            "implied_lo": "Students can evaluate what active civic participation in elections requires beyond voting, connecting specific citizen actions to the goal of free and fair elections.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 9,
+            "section_anchor": "synthesis",
+            "section_context": "Whole-chapter synthesis: electoral systems, laws, ECI, parties, challenges, democratic accountability",
+            "implied_lo": "Students can integrate the right to vote and civic duty into a broader argument about democratic accountability, explaining what citizen participation must look like beyond the act of voting.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-5.4",
+          "cg": "CG-5",
+          "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government."
+        },
+        "implied_lo": "Students can compare how FPTP, majority, and proportional representation systems convert votes into legislative seats, evaluating the democratic trade-off each system makes.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          2
+        ],
+        "chapter_section": "The Electoral System",
+        "question_text": "In an election held under the First-Past-The-Post system, four candidates receive 32%, 28%, 24%, and 16% of the votes respectively. Which of the following statements best describes the democratic implication of this result?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A second round of voting must be held because no candidate crossed the 50% threshold required by the FPTP system.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The result is invalid under FPTP because the winning margin is less than 10%, triggering proportional seat distribution.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The winning candidate has a majority mandate because more voters chose them than chose any single rival.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The winning candidate is elected with a plurality, meaning 68% of voters preferred a different candidate — a limitation FPTP accepts in exchange for decisive, simple outcomes.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Allow students to restate their reasoning orally if written expression is a barrier; the analytical move — identifying the 68% implication — can be demonstrated verbally.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Confuses plurality with majority — a fundamental FPTP misconception the Haritbhumi example in the chapter is designed to correct.",
+              "A": "Applies the Majority System's second-round rule to FPTP — a cross-system confusion between Ratnadweep and Haritbhumi.",
+              "B": "Fabricates a margin-threshold rule that does not exist in any of the three systems — suggests the student is guessing rather than applying chapter content."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-5.4",
+          "cg": "CG-5",
+          "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government."
+        },
+        "implied_lo": "Students can analyse the institutional design of the ECI — its autonomy, constitutional basis, and four core functions — explaining how each function supports the integrity of democratic elections.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          5
+        ],
+        "chapter_section": "Election Commission of India (ECI)",
+        "question_text": "The Constitution places the ECI outside direct government control. Identify two of the ECI's four core functions and explain, for each, why that function would be compromised if a ministry of the ruling government controlled it instead.",
+        "options": [],
+        "expected_elements": [
+          "Names at least two of the four ECI functions: maintaining electoral rolls (SIR), scheduling elections, registering parties and allocating symbols, ensuring free and fair elections (including inclusion measures).",
+          "For each named function, gives a specific and different reason why ministerial control would compromise it — e.g. electoral roll manipulation to exclude opposition voters; scheduling elections at politically advantageous moments; denying registration to rival parties; designing inclusion measures to benefit aligned groups.",
+          "Connects each reason to a democratic value — integrity, impartiality, equal access, or trustworthiness — rather than stating only that it would be 'unfair'."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Names at least two of the four ECI functions: maintaining electoral rolls (SIR), scheduling elections, registering parties and allocating symbols, ensuring free and fair elections (including inclusion measures).",
+              "For each named function, gives a specific and different reason why ministerial control would compromise it — e.g. electoral roll manipulation to exclude opposition voters; scheduling elections at politically advantageous moments; denying registration to rival parties; designing inclusion measures to benefit aligned groups.",
+              "Connects each reason to a democratic value — integrity, impartiality, equal access, or trustworthiness — rather than stating only that it would be 'unfair'."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "SOURCE_INTERPRETATION",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-5.4",
+          "cg": "CG-5",
+          "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government."
+        },
+        "implied_lo": "Students can compare how FPTP, majority, and proportional representation systems convert votes into legislative seats, evaluating the democratic trade-off each system makes.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          2
+        ],
+        "chapter_section": "The Electoral System",
+        "question_text": "Study the table provided and answer the questions that follow.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [
+          {
+            "label": "a",
+            "text": "In Haritbhumi, which party wins the election, and what percentage of the total vote did it receive?",
+            "demand": "Understanding"
+          },
+          {
+            "label": "b",
+            "text": "In Swarnalok, if there are 100 seats in the legislature, how many seats would Party X receive with 38% of the vote? Show your working.",
+            "demand": "Application"
+          },
+          {
+            "label": "c",
+            "text": "Compare the outcomes in Haritbhumi and Swarnalok: which system produces a government that better reflects the overall vote distribution, and what democratic value does each system prioritise over the other?",
+            "demand": "Analysis"
+          },
+          {
+            "label": "d",
+            "text": "Ratnadweep holds a second round when no candidate crosses 50%. Evaluate whether this makes Ratnadweep's system more or less suitable for a highly diverse, multi-party country than FPTP. Use evidence from the table to support your view.",
+            "demand": "Analysis"
+          }
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": {
+          "type": "table",
+          "payload": "Electoral Systems Comparison Table (from Chapter 7)\n| Country | System | Party X Votes | Party Y Votes | Party Z Votes | Outcome |\n| Haritbhumi | First-Past-The-Post (FPTP) | 38% | 34% | 28% | Party X wins all seats in constituency; no second round |\n| Ratnadweep | Majority System | 42% | 35% | 23% | No party crosses 50%; second round held between Party X and Party Y |\n| Swarnalok | Proportional Representation | 38% | 34% | 28% | Seats distributed: X gets 38 seats, Y gets 34 seats, Z gets 28 seats (of 100) |"
+        },
+        "inclusivity": "Students who find the percentage calculation in (b) challenging may be prompted: 'If 100% of votes = 100 seats, what does 38% of votes equal in seats?' This scaffolds arithmetic without removing the analytical demand.",
+        "guide": {
+          "SOURCE_INTERPRETATION": {
+            "stimulus_rationale": "The three-country comparison table is the chapter's own analytical tool for teaching how different systems convert the same vote distribution into different outcomes; it is the natural stimulus for this LO because the table's data is the evidence base for comparing democratic trade-offs.",
+            "sub_question_expectations": [
+              "(a) Party X wins; it received 38% of the total vote — less than a majority. A complete response names both the winner and the below-50% share.",
+              "(b) 38 seats. A complete response shows the proportional calculation (38% × 100) and states the answer clearly.",
+              "(c) A strong response identifies that Swarnalok's PR outcome mirrors the vote distribution (38/34/28 seats matching 38/34/28% votes) while Haritbhumi's FPTP gives Party X all seats despite winning only 38% — then names the values: PR prioritises proportionality/representation; FPTP prioritises decisiveness/simplicity.",
+              "(d) A strong response uses the Ratnadweep data to argue that a second round ensures the winner has majority support, which in a diverse multi-party context reduces the legitimacy deficit of FPTP — but may also note the cost of a second round (time, resources, voter fatigue). Credit is given for a reasoned position supported by table evidence, not for a particular conclusion."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-5.4",
+          "cg": "CG-5",
+          "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government."
+        },
+        "implied_lo": "Students can construct an evidence-based argument about whether elections alone are sufficient for democracy, integrating structural, institutional, and civic dimensions of the chapter.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          9
+        ],
+        "chapter_section": "synthesis",
+        "question_text": "A student argues: 'As long as elections are held on schedule, a country is a democracy.' Using evidence from the chapter's examination of electoral systems, laws, institutions, political parties, and challenges, write a well-structured response that evaluates this claim.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Clearly takes a position on the claim — agrees, partially agrees, or disagrees — and sustains it through the response rather than hedging inconsistently.",
+          "Draws on at least three distinct chapter pillars (e.g. electoral system design, legal safeguards, ECI autonomy, party functions, challenges like misinformation or VVPAT) as evidence.",
+          "Demonstrates analysis rather than description: explains how each cited element supports or complicates the claim, not merely what it is.",
+          "Considers at least one counter-argument to their own position and addresses it.",
+          "Concludes with a synthesising statement that goes beyond restating the position — identifies the condition or set of conditions under which elections are sufficient or insufficient for democracy."
+        ],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students who struggle to organise extended writing may use a brief outline (claim → three pieces of evidence → counter-argument → conclusion) before drafting; the outline itself is not assessed but supports access.",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Clearly takes a position on the claim — agrees, partially agrees, or disagrees — and sustains it through the response rather than hedging inconsistently.",
+              "Draws on at least three distinct chapter pillars (e.g. electoral system design, legal safeguards, ECI autonomy, party functions, challenges like misinformation or VVPAT) as evidence.",
+              "Demonstrates analysis rather than description: explains how each cited element supports or complicates the claim, not merely what it is.",
+              "Considers at least one counter-argument to their own position and addresses it.",
+              "Concludes with a synthesising statement that goes beyond restating the position — identifies the condition or set of conditions under which elections are sufficient or insufficient for democracy."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-5.4",
+          "cg": "CG-5",
+          "competency_text": "The chapter is organised as a sustained analysis of elections as a basic feature of democratic government."
+        },
+        "implied_lo": "Students can analyse how delimitation connects population change to legislative seat allocation, evaluating its role in sustaining the principle of equal representation.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "Delimitation Commission",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "You are a member of a newly constituted Delimitation Commission. Four regions have the following populations: North — 80 lakh, South — 40 lakh, East — 60 lakh, West — 20 lakh. The legislature has 10 seats to allocate. Construct a cause-effect map that: (a) shows how each region's population causes a specific seat allocation under proportional delimitation, (b) traces the effect on equal representation if seats were instead allocated equally at 2–3 per region regardless of population, and (c) identifies one long-term democratic effect of failing to re-delimit after significant population shifts.",
+        "scaffold": "Start with four 'population' boxes (one per region) in a top row. Draw arrows downward to 'seats allocated' boxes showing your proportional calculation for each region. Then draw a second set of arrows from a 'flat allocation' box to show what changes. At the bottom, write one box labelled 'democratic effect of non-delimitation' and explain it in two sentences.",
+        "format_of_output": [
+          "A hand-drawn or written cause-effect map with labelled boxes and arrows",
+          "A two-sentence explanation of the long-term democratic effect in the final box"
+        ],
+        "visual_stimulus": "",
+        "inclusivity": "Students may draw the map in any format — flow diagram, table with arrows, or annotated column format — as long as the cause-effect relationship is visible. Oral explanation of the map is acceptable for students with motor difficulties.",
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "This task requires students to apply the principle of proportional delimitation to a concrete data set, trace the distortion produced by flat allocation, and reason to a long-term democratic consequence — the three analytical moves that the Delimitation Commission section is built around.",
+            "reading_the_scaffold": "The scaffold is structured as three acts: proportional calculation (arithmetic and concept), comparative distortion (comparison of two allocation rules), and democratic effect (evaluative inference). A student who completes only the first act has demonstrated application but not analysis; the third box is where evaluation enters.",
+            "strong_vs_weak_markers": "Strong: proportional allocations are correctly calculated (North 4, South 2, East 3, West 1 — or proportionally equivalent); the flat-allocation distortion is identified as over-representing small-population regions; the long-term democratic effect names a specific principle (unequal voter weight, malapportionment, or erosion of one-person-one-vote). Weak: seats allocated arbitrarily without calculation; distortion identified only as 'unfair' without specifying which region is over- or under-represented; democratic effect is a restatement of the task prompt rather than an inference.",
+            "format_type": "Cause-effect map",
+            "format_rationale": "A cause-effect map is the most natural demonstration vehicle for this LO because the section's core logic is causal — population shifts cause constituency imbalances, which cause unequal representation, which cause the democratic principle of equal suffrage to erode. The map makes that causal chain visible and assessable. The teacher may substitute any other format from the Open Task menu — a comparison table contrasting proportional and flat allocation across all four regions, or a structured discussion prompt with written output — that makes the same causal reasoning visible."
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-5.5",
+          "cg": "CG-5",
+          "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government."
+        },
+        "implied_lo": "Students can analyse the functions of political parties in a democracy and apply the ECI's recognition criteria to classify parties by tier, explaining the democratic purpose each tier distinction serves.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "Political Parties",
+        "question_text": "A party has contested elections in two states only. In those two states it won 5% of valid votes and 2 seats in the Legislative Assembly. It has never been given state-party status. Under the ECI's recognition criteria as described in the chapter, how should this party be classified, and what is the democratic implication of that classification?",
+        "options": [
+          {
+            "label": "A",
+            "text": "It cannot contest elections because it has not achieved recognition in any state and has never been given a symbol by the ECI.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "It is a National Party, because it has contested in more than one state and secured seats in both.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "It is a Registered Unrecognised Political Party, because it has not met the vote-share and seat thresholds required for State Party recognition in any state — meaning it cannot receive an exclusive symbol but may still contest elections.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "It is a State Party in those two states, because it has secured seats in the Legislative Assembly and a vote share above 4%.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "D": "Confuses the seat threshold with the full set of State Party criteria — suggests the student has partially read Fig. 7.12 but missed the combined vote-share-and-seat requirement.",
+              "B": "Conflates 'contesting in more than one state' with meeting the National Party threshold — a common over-generalisation that ignores the specific numerical criteria in the chapter.",
+              "A": "Misunderstands recognition as a precondition for contesting — the chapter clearly states that Registered Unrecognised parties may contest elections; this distractor identifies a student who has conflated symbol allocation with the right to stand."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-5.5",
+          "cg": "CG-5",
+          "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government."
+        },
+        "implied_lo": "Students can evaluate the contribution of political parties alongside other democratic actors in sustaining or undermining the legitimacy of the electoral process.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          9
+        ],
+        "chapter_section": "synthesis",
+        "question_text": "The chapter presents defection — a member switching parties after being elected — as either political opportunism or an act of conscience. Identify which democratic value the Anti-Defection Law of 1985 prioritises, and explain one democratic value it may compromise by doing so.",
+        "options": [],
+        "expected_elements": [
+          "Identifies the democratic value the Anti-Defection Law prioritises: political stability, party accountability, or the integrity of the electoral mandate (voters chose a party, not merely an individual).",
+          "Identifies a democratic value it may compromise: individual representative conscience, freedom of political belief, or the representative's duty to constituents over party loyalty.",
+          "Explains the tension between these two values rather than simply listing them — shows that protecting one necessarily constrains the other."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Identifies the democratic value the Anti-Defection Law prioritises: political stability, party accountability, or the integrity of the electoral mandate (voters chose a party, not merely an individual).",
+              "Identifies a democratic value it may compromise: individual representative conscience, freedom of political belief, or the representative's duty to constituents over party loyalty.",
+              "Explains the tension between these two values rather than simply listing them — shows that protecting one necessarily constrains the other."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-5.5",
+          "cg": "CG-5",
+          "competency_text": "Analyses the critical role of political parties — non-state, non-market participants — in the functioning of a democratic government."
+        },
+        "implied_lo": "Students can analyse the functions of political parties in a democracy and apply the ECI's recognition criteria to classify parties by tier, explaining the democratic purpose each tier distinction serves.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "Political Parties",
+        "question_text": "India's multi-party system is described in the chapter as a reflection of the country's diversity of languages, cultures, religions, and regions. Analyse how the ECI's three-tier recognition system — National Party, State Party, and Registered Unrecognised Political Party — shapes the way that diversity is represented in the electoral system. In your response, explain what democratic purpose the distinctions between the three tiers serve, and identify one risk to democratic representation that the system creates.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Accurately describes the three tiers and the criteria distinguishing them, drawing on Fig. 7.12 content (vote-share and seat thresholds, multi-state vs single-state recognition).",
+          "Analyses — not merely describes — how the tier system shapes representation: e.g. national parties gain resources and symbol exclusivity that allow them to contest across the country, while state parties can represent regional identities without meeting national thresholds.",
+          "Identifies a specific democratic purpose of the distinctions: e.g. preventing proliferation of tiny parties that fragment the legislature; ensuring parties with genuine popular support have access to recognised status.",
+          "Identifies a plausible risk: e.g. smaller regional parties that represent significant communities may be disadvantaged by thresholds; or the system may entrench larger parties at the expense of emerging voices.",
+          "The response integrates the multi-party/diversity point from the section: the risk or purpose identified should be connected to India's specific diversity rather than stated in abstract terms."
+        ],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students may structure their response as a short bulleted analysis before writing prose paragraphs; this is a thinking scaffold, not a format requirement.",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Accurately describes the three tiers and the criteria distinguishing them, drawing on Fig. 7.12 content (vote-share and seat thresholds, multi-state vs single-state recognition).",
+              "Analyses — not merely describes — how the tier system shapes representation: e.g. national parties gain resources and symbol exclusivity that allow them to contest across the country, while state parties can represent regional identities without meeting national thresholds.",
+              "Identifies a specific democratic purpose of the distinctions: e.g. preventing proliferation of tiny parties that fragment the legislature; ensuring parties with genuine popular support have access to recognised status.",
+              "Identifies a plausible risk: e.g. smaller regional parties that represent significant communities may be disadvantaged by thresholds; or the system may entrench larger parties at the expense of emerging voices.",
+              "The response integrates the multi-party/diversity point from the section: the risk or purpose identified should be connected to India's specific diversity rather than stated in abstract terms."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them."
+        },
+        "implied_lo": "Students can evaluate the adequacy of existing electoral safeguards against named challenges, proposing citizen and institutional responses to gaps that persist.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          8
+        ],
+        "chapter_section": "Challenges to Free and Fair Elections",
+        "question_text": "The chapter states that misinformation and fake news are challenges to free and fair elections, and lists the VVPAT, the Model Code of Conduct, and voters' awareness campaigns as among the ECI's responses. Which of the following best evaluates the adequacy of these measures specifically against the challenge of misinformation?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Misinformation is fully addressed by the Representation of the People Act, 1951, which makes all false statements about candidates illegal and enforceable.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "No ECI measure can address misinformation because the ECI's powers are limited to the election period, whereas misinformation spreads continuously throughout the year.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The VVPAT and Model Code of Conduct together fully address misinformation because they verify votes and regulate what candidates can say during campaigns.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Voters' awareness campaigns address misinformation most effectively because they equip citizens to identify false information, whereas the VVPAT and Model Code of Conduct address different challenges — vote tampering and campaign conduct respectively — leaving a residual gap that requires active citizen vigilance.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Conflates the functions of VVPAT and the Model Code of Conduct with misinformation control — a category confusion between vote-integrity measures and information-environment measures.",
+              "A": "Over-extends the RPA 1951's corrupt practices provisions to cover all misinformation — the chapter's provisions target inducements and appeals, not the broader misinformation ecosystem.",
+              "B": "Correctly identifies a limitation of ECI jurisdiction but draws an absolute conclusion ('no measure can') that the chapter's call for citizen vigilance explicitly contradicts."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them."
+        },
+        "implied_lo": "Students can construct a challenge-response analysis of inclusion and scale barriers in India's electoral exercise, identifying measures taken and gaps that persist.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          6
+        ],
+        "chapter_section": "No Voter to Be Left Behind",
+        "question_text": "The chapter records that the ECI introduced home voting for citizens above 85 and Persons with Disabilities with 40% benchmark disability, extended nationwide for the first time in the 2024 General Elections. Identify the specific inclusion barrier this measure addresses, and explain one gap in electoral access it does not resolve.",
+        "options": [],
+        "expected_elements": [
+          "Names the specific barrier: physical inaccessibility of polling stations for elderly and PwD voters who cannot travel.",
+          "Explains how home voting addresses that barrier — the ECI brings the ballot to the voter rather than requiring the voter to reach the station.",
+          "Identifies a specific gap not resolved by home voting: e.g. voters between 18 and 84 with severe disabilities who do not meet the 40% benchmark; voters in remote terrain who are neither elderly nor PwD; voters who lack awareness of the home-voting option.",
+          "The gap must be plausible and grounded in the section's content — not a general aspiration."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students who find it difficult to identify a gap independently may be prompted: 'Who is still left out after this measure is applied?' — this reframes the analytical task without providing the answer.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Names the specific barrier: physical inaccessibility of polling stations for elderly and PwD voters who cannot travel.",
+              "Explains how home voting addresses that barrier — the ECI brings the ballot to the voter rather than requiring the voter to reach the station.",
+              "Identifies a specific gap not resolved by home voting: e.g. voters between 18 and 84 with severe disabilities who do not meet the 40% benchmark; voters in remote terrain who are neither elderly nor PwD; voters who lack awareness of the home-voting option.",
+              "The gap must be plausible and grounded in the section's content — not a general aspiration."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "SOURCE_INTERPRETATION",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Recognition of political challenges to the electoral process and continuous efforts made to address them."
+        },
+        "implied_lo": "Students can identify categories of corrupt electoral practice and explain how the legal prohibition of each practice addresses a specific threat to free and fair elections.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          3
+        ],
+        "chapter_section": "The Laws",
+        "question_text": "Read the source provided and answer the questions that follow.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [
+          {
+            "label": "a",
+            "text": "According to the source, what is the definition of a 'corrupt practice' as given in the Representation of the People Act, 1951?",
+            "demand": "Understanding"
+          },
+          {
+            "label": "b",
+            "text": "The source lists three categories of corrupt practice. Identify the category that is violated when a candidate promises to pay a voter's household electricity bill if they vote for her, and explain why this act falls under that category.",
+            "demand": "Application"
+          },
+          {
+            "label": "c",
+            "text": "The Act prohibits appealing for votes on the basis of religion, caste, race, community, or language. Analyse why this specific prohibition is essential in a country with the diversity described in the chapter's 'Political Parties' section.",
+            "demand": "Analysis"
+          }
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": {
+          "type": "source_text",
+          "payload": "The Representation of the People Act, 1951, classifies as 'corrupt practices' any act that undermines the free exercise of the electoral right. The Act specifies three broad categories of such practices: First, any gift, offer, or promise of gratification by a candidate or their agent to induce a person to contest, withdraw from contesting, vote, or refrain from voting. Second, any appeal for votes on the basis of religion, caste, race, community, or language. Third, the taking of assistance from government-related personnel — including gazetted officers, judges and magistrates, members of the armed forces, police, and excise officers — in the furtherance of a candidate's prospects.\n— Adapted from 'The Laws' section, Chapter 7: Elections, Class IX Social Science textbook."
+        },
+        "inclusivity": "The source is drawn directly from the chapter; students may refer to their textbook to locate the relevant section if needed. Sub-question (c) invites students to draw on the Political Parties section of the chapter — cross-section reading is expected and may be noted in the task prompt by the teacher.",
+        "guide": {
+          "SOURCE_INTERPRETATION": {
+            "stimulus_rationale": "The adapted excerpt from the 'The Laws' section captures the chapter's own definition and categorisation of corrupt practices under the RPA 1951 — the natural source for an item testing whether students can classify specific acts and analyse the democratic purpose of the prohibition. The source text is the chapter's primary analytical tool for this section.",
+            "sub_question_expectations": [
+              "(a) A complete response restates the definition from the source: any act that undermines the free exercise of the electoral right, as specified in the three categories. Credit is given for accurately identifying that 'corrupt practice' is defined by the Act, not merely by common intuition.",
+              "(b) The promise of paying an electricity bill is an inducement — it falls under the first category (gift, offer, or promise of gratification to induce a person to vote). A complete response names the category, quotes or paraphrases the relevant clause, and explains that the bill-payment constitutes a 'promise of gratification' conditional on voting behaviour.",
+              "(c) A strong response connects the prohibition to India's multi-party diversity: appealing on the basis of religion or caste exploits social identities rather than policy positions, undermining the democratic ideal that votes should reflect informed choices about governance. It may also note that such appeals can divide communities and reduce elections to contests between identity groups rather than between competing visions of public good."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-5.3",
+          "cg": "CG-5",
+          "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it."
+        },
+        "implied_lo": "Students can articulate the vote as simultaneously a constitutional right and a civic duty, connecting it to the accountability of elected representatives.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Why do Elections Matter?",
+        "question_text": "The chapter states that casting a vote is 'a constitutional right as well as a duty of every citizen.' Which of the following best explains why the chapter treats voting as both a right and a duty, rather than as a right alone?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Voting is a duty because indirect elections such as those for the President and Vice President require all citizens to participate in order to produce a valid result.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Voting is a duty because the accountability of elected representatives depends on citizens exercising their right to vote — without participation, the mechanism that compels representatives to seek the people's mandate again loses its force.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Voting is a duty because the Constitution makes it compulsory — citizens who do not vote are subject to legal penalty under the Representation of the People Acts.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Voting is a duty because the ECI registers voters and expects them to appear on polling day — failure to vote results in removal from the electoral roll.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Confuses civic duty with legal compulsion — the chapter does not state that non-voting is penalised; this distractor identifies students who conflate moral obligation with legal enforcement.",
+              "A": "Misunderstands indirect elections — citizens do not directly vote in elections for the President and Vice President; this reveals a confusion between direct and indirect electoral mechanisms established in the chapter's opening.",
+              "D": "Fabricates an ECI consequence — the chapter's description of the Special Intensive Revision process does not link non-attendance at polling to removal from the roll; this identifies students who have invented a consequence not in the chapter."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-5.3",
+          "cg": "CG-5",
+          "competency_text": "Requiring students to reflect on the right to vote and the civic duty that accompanies it."
+        },
+        "implied_lo": "Students can evaluate what active civic participation in elections requires beyond voting, connecting specific citizen actions to the goal of free and fair elections.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          8
+        ],
+        "chapter_section": "Challenges to Free and Fair Elections",
+        "question_text": "The chapter concludes that 'constant vigilance and active citizen participation can make elections more representative and democracy more robust.' Identify two specific citizen actions — other than casting a vote — that the chapter's content supports as forms of active electoral participation, and explain for each why it contributes to free and fair elections.",
+        "options": [],
+        "expected_elements": [
+          "Names two citizen actions that are grounded in the chapter's content — e.g. reporting Model Code of Conduct violations via the cVIGIL App; registering to vote and encouraging others to register; scrutinising party manifestos and comparing policy positions; countering misinformation; participating in voters' awareness campaigns.",
+          "For each action, provides a specific explanation of how it contributes to free and fair elections — not a general statement that 'it helps democracy' but a causal link to a named electoral challenge or mechanism from the chapter.",
+          "The two actions must be distinct from each other and from the act of voting itself."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students may draw on any section of the chapter — the ECI's digital tools, the laws, the challenges section, or the political parties section — to identify their two actions; no single section is privileged.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Names two citizen actions that are grounded in the chapter's content — e.g. reporting Model Code of Conduct violations via the cVIGIL App; registering to vote and encouraging others to register; scrutinising party manifestos and comparing policy positions; countering misinformation; participating in voters' awareness campaigns.",
+              "For each action, provides a specific explanation of how it contributes to free and fair elections — not a general statement that 'it helps democracy' but a causal link to a named electoral challenge or mechanism from the chapter.",
+              "The two actions must be distinct from each other and from the act of voting itself."
+            ]
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

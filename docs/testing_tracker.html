@@ -122,6 +122,7 @@
   <button data-tab="step0">Step 0</button>
   <button data-tab="stages">Stage prep</button>
   <button data-tab="combos">Per-stage matrix</button>
+  <button data-tab="batch">Batch release</button>
   <button data-tab="cross">Cross-cutting</button>
   <button data-tab="defects">Defect register</button>
 </nav>
@@ -164,6 +165,18 @@
       PREP mirrors the stage sign-off. PROV opens the provenance & cost panel (C2/§6).
       A stage certifies when C1–C14 are all pass/n-a and the HUMAN GATE is signed.</p>
     <table id="combosTbl"></table>
+  </section>
+
+  <section class="tab" id="tab-batch">
+    <h2>Batch release — the OTHER ~30 chapters of each stage</h2>
+    <p class="small">The C-cycle certifies a stage on <b>one pilot chapter</b>. This is the rest of the
+      corpus: two authoring waves (runbook §2 — standards first, because a compact's brief is built
+      from its standard's registry), then the two judgement steps that no machine check covers.
+      <b>W1</b> and <b>W2</b> are collect + <code>--certify-only</code> and are deterministic.
+      <b>F1</b> and <b>F2</b> are <i>C8 and C14 read across the batch</i> — founder-run, sampled at a
+      rate the founder sets and records here. A stage is RELEASED only when all four are pass.
+      Runbook: <code>docs/batch_corpus_runbook.md</code>.</p>
+    <table id="batchTbl"></table>
   </section>
 
   <section class="tab" id="tab-cross">
@@ -254,6 +267,19 @@ const COMBOS = [ // ONE ROW PER SUBJECT·STAGE, in suggested execution order (§
  ["english","middle","english/middle","heaviest MEMORY burden; weak task_density fit — see X2"],
  ["english","preparatory","english/preparatory","last: items 8, 12, 13; no saved-plan corpus to fall back on"],
 ];
+/* ── BATCH RELEASE (added 2026-08-13) ─────────────────────────────────────────────
+   The C-cycle proves a STAGE on one pilot chapter. Nothing tracked the other ~30, which
+   is where the money is (TWAU: 32 chapters, ₹1,212.90 against the pilot's ~₹40) and where
+   the two irreducibly-human checks have no per-chapter coverage at all. Four steps, same
+   key space as COMBOS. W1/W2 are deterministic and free to re-run; F1/F2 are the founder's
+   own reading, sampled — the runbook already says the gate "samples at a rate the founder
+   chooses", and this is where that rate stops being unwritten. */
+const BATCH = [
+ ["W1","K","Wave 1 — top canonicals: collect &amp; certify","Author every non-pilot chapter's STANDARD canonical in one batch, install the results, and run the free certification pass over the whole stage. <b>Why it matters:</b> this is where the corpus is actually bought. The pilot proved the stage costs ~₹40 a chapter; this step spends that thirty times over, server-side, in one go.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">Gate first (runbook §0): P1–P5.5 signed · <code>require_carrier</code> returns · the pilot has been through the C-cycle · every chapter has summary AND mapping, master_plan rows non-placeholder · ~2× the estimate in API credit · <b>Terminal, never a Cowork sandbox</b>. Then <code>batch_api.py submit {subject} {grades} --wave top --dry</code> and READ the worklist — chapter count, period counts against the master plan, every skip line — and confirm the amended constitution reached the payload. Then submit → <code>status</code> until 'ended' → <code>collect</code> → <code>batch_build.py {subject} {grades} --certify-only</code>, which is FREE and REQUIRED (it is run for its ANNOTATE half; every chapter FAILS 'library complete' between the waves, and that is arithmetic, not a defect). Triage from the FAIL census, not individual reports; repair, never regenerate (regenerating is a lottery). Traps: a quarantined file skips later repair sweeps — re-scan anything restored · purge derived plans after any in-place repair and CHECK it worked (ARV-D-034) · <code>--max-fails</code> is a money brake, do not re-arm it under --certify-only.</div></details>","EXIT: every non-placeholder chapter has its standard installed; the certify pass annotates every row (basis authored_standard); the FAIL census is triaged and its repairs declared; spend reconciled from runtime_data/token_log.csv."],
+ ["W2","K","Wave 2 — compacts: collect &amp; certify","Author every chapter's shorter versions in a second batch, then certify the whole stage properly — this is the first pass where a chapter's library is complete enough to be judged. <b>Why it matters:</b> it has to be a second wave, not one big one: a compact's instructions are built from its own standard's section list, which does not exist until wave 1 has landed.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\"><code>variant_plans.briefs_for</code> reads the top off disk and REFUSES a provisional row, so wave 2 cannot start until wave 1's certify pass has annotated. <code>submit --wave compact --dry</code> → <code>submit</code> → <code>status</code> → <code>collect</code> → <code>batch_build.py --certify-only</code>. Once two manifests exist, pass the path EXPLICITLY — <code>--latest</code> is by mtime and an explicit path cannot read the wrong wave. Closing checklist (runbook §5): every canonical the master plan expects is on disk · no quarantined file lacks a live counterpart · zero register ban hits stage-wide · every chapter ALL PASS, C5 check 11 included, and on a prose subject its advisory shortlist RULED ON rather than skimmed · every chapter serves at top/middle/floor/below-floor · no derived plans left on disk · spend reconciled.</div></details>","EXIT: every chapter ALL PASS on --certify-only; quarantine holds nothing without a live counterpart; the closing checklist's seven lines all true; total stage spend recorded."],
+ ["F1","C","F1 — C8 across the batch (the X−1→X transition)","Read the join where a borrowed lesson was spliced in — the lesson before and the lesson itself, back to back, as a teacher meets them — across a sample of the batch rather than one pilot chapter. <b>Why it matters:</b> this join killed two earlier architectures, and it is a property of each chapter's own authored text, not of the stage. Certification proves no error was raised; it says nothing about whether the lesson reads.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">C8's procedure, applied to a STRATIFIED SAMPLE and the rate recorded here (an unwritten rate is not a sampling plan). Stratify by period-count band — floor compacts and the borrow slot are where defects concentrate, not the top — and include <b>100% of any chapter that needed a repair</b>: a chapter with one register breach is the likeliest place a paraphrased one survived. Per inspected transition: CLEAN / SERVICEABLE / JUMPY with the exact strings quoted. Every JUMPY is a defect; remedy deterministically first (certification gap → tie-break → brief wording), never by putting an LLM in the request path.</div></details>","EXIT: the sample size and stratification recorded; a rating per inspected transition with quoted evidence; zero JUMPY, or a defect per hit."],
+ ["F2","C","F2 — C14 across the batch (copyright)","Check the batch for text lifted from the textbook, third-party material the book does not itself carry, and quotations with no attribution. <b>Why it matters:</b> this is legal exposure rather than quality, and it is per-chapter by definition — it depends on that chapter's own textbook pages. It is also the one thing on this row that a machine check does not touch at all.<details style=\"margin-top:8px\"><summary style=\"cursor:pointer\">Full specification (what to actually run and check)</summary><div style=\"margin-top:6px\">C14's three tests over the batch: (1) no verbatim reproduction beyond short quotation — <code>genon/copyright_scan.py</code> reduces this to a shortlist, but note it cannot find the book for ANY english chapter (its PDF glob assumes chapter number == PDF number, which the split breaks) and it read only .txt summaries until 2026-08-11 · (2) no third-party material (poems, lyrics, story excerpts, brands, images) the textbook itself does not carry — where it does, reference it by page/task ref, never reproduce · (3) every quotation attributed. Campaign reference <code>docs/NCERT_copyright_review.md</code>: F1 closed by founder ruling, <b>F2 — English verbatim task-text in served plans — is the sole open finding</b> and is what this step polices. Subjective calls (&ldquo;how short is short&rdquo;) are flagged with the strings quoted, not silently resolved. Same sample as F1 unless there is a reason to widen it, recorded.</div></details>","EXIT: the sample recorded; zero unattributed or wholesale reproductions, or a defect per hit; the review table in this comment."],
+];
 const CROSS = [
  ["X1","B","Tenancy — every surface, the authorization case, and the archive rules","With kumar1/kumar2/kumar3: (1) plans-prepared isolated (NB an identity request registers the variant file itself — two teachers may legitimately share that filename) · (2) plan-archive isolated, restore works, per-caller flags in /plans · (3) section-state isolated · (4) readiness distinct + 409 cascade guard · (5) allocation isolated · (6) AUTHORIZATION: kumar2 fetches kumar1's plan by filename at /view + 3 export routes — expected to SUCCEED under current design (shared Bucket-A content); record verbatim, founder accepts (→ document) or rejects (→ S2) · (7) chapter notes: NO notes endpoint exists — client-side only, test as such · (8) ARCHIVE (fix 2026-08-01): archived plans excluded from the section-attach chooser and never front the tour — verify both; then put the two open judgment calls to the founder: PrepareLesson excludes archived plans from 'committed' (archiving un-prepares a chapter) while YearPlan still counts archived periods — the two screens disagree.","EXIT: 1–5 zero leakage; 6, 7, 8 recorded with founder decisions."],
  ["X2","C","Effort index vs the calibrated standard","Year Plan page values == GET /subjects/{s}/{g}/chapters == master_plan.json (calibrated first, NCF alongside-only); confirm the canonical_plan row shown is finalized, not a stale provisional after a master_plan.py run. English middle: also report the raw task_density distribution per grade — the VI-calibrated cutoffs are the thing under test (MEMORY item 5); a near-binary grade → defect against the calibration, owner founder.","EXIT: sampled grades match; English distribution report exists."],
@@ -331,7 +357,7 @@ function exportJSON(){
 }
 function exportCSV(){
   const rows=[["kind","id","scope","key","step","status","severity","by/owner","at","title","comment","evidence","notes"]];
-  for(const scope of ["step0","stages","combos","cross"])
+  for(const scope of ["step0","stages","combos","batch","cross"])
     for(const[key,steps]of Object.entries(S[scope]||{}))
       for(const[step,it]of Object.entries(steps||{}))
         rows.push([step==="provenance"?"provenance":"item","",scope,key,step,it.status||"","",
@@ -389,6 +415,25 @@ function renderAll(){
         ${cells}
         <td class="cell ${provOk?"s-pass":"s-pending"}" onclick="openProv('${key}')">${provOk?"₹"+prov.total_cost_inr:"…"}</td></tr>`;
     }).join("");
+  // batch release — same 11 rows as COMBOS, gated on the stage having been certified
+  /* NO "cycle" column here (removed 2026-08-13, founder): it duplicated the Per-stage matrix
+     one tab away, and every one of the eleven rows read the same, so it discriminated nothing.
+     The precondition it was meant to show — runbook §0, "the pilot has been through the
+     C-cycle, before any money moves" — is stated in W1's own specification, which is where a
+     gate on spending belongs. */
+  $("batchTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th>"+
+    BATCH.map(b=>`<th class="hh" data-scope="batch" data-step="${b[0]}">${b[0]}</th>`).join("")+
+    "<th>Released</th></tr>"+
+    COMBOS.map((c,i)=>{
+      const key=comboKey(c);
+      const cells=BATCH.map(b=>cellHtml("batch",key,b[0])).join("");
+      const released=BATCH.every(b=>["pass","na"].includes(item("batch",key,b[0]).status));
+      const note=item("batch",key,"W1").comment||"";
+      return `<tr><td>${i+1}</td><td class="rowlabel">${c[0]} · ${c[1]}
+        ${note?`<br><small class="rownote" title="click to expand" onclick="this.classList.toggle('open')">${note}</small>`:""}</td>
+        ${cells}
+        <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>`;
+    }).join("");
   // cross
   $("crossTbl").innerHTML = "<tr><th>#</th><th>Actor</th><th>Check</th><th style='width:60px'>Status</th></tr>"+
     CROSS.map(x=>`<tr><td>${x[0]}</td><td>${actorPill(x[1])}</td>
@@ -415,11 +460,14 @@ function renderOverview(){
   count("cross","campaign",CROSS.map(x=>x[0]));
   const openDef=(S.defects||[]).filter(d=>!["closed","accepted"].includes(d.status));
   const certified=COMBOS.filter(c=>CSTEPS.every(cs=>["pass","na"].includes(item("combos",comboKey(c),cs[0]).status))).length;
+  const released=COMBOS.filter(c=>BATCH.every(b=>["pass","na"].includes(item("batch",comboKey(c),b[0]).status))).length;
   let cost=0; COMBOS.forEach(c=>{const p=item("combos",comboKey(c),"provenance");
     if(p&&p.total_cost_inr!=null)cost+=Number(p.total_cost_inr)||0;});
   $("statCards").innerHTML=
     `<div class="stat"><b>${certified} / ${COMBOS.length}</b><span>stages certified</span>
        <div class="bar"><i style="width:${Math.round(certified/COMBOS.length*100)}%"></i></div></div>
+     <div class="stat"><b>${released} / ${COMBOS.length}</b><span>stages batch-released (W1·W2·F1·F2)</span>
+       <div class="bar"><i style="width:${Math.round(released/COMBOS.length*100)}%"></i></div></div>
      <div class="stat"><b>${done} / ${total}</b><span>steps ticked (pass or n/a)</span>
        <div class="bar"><i style="width:${total?Math.round(done/total*100):0}%"></i></div></div>
      <div class="stat"><b style="color:var(--fail)">${fails}</b><span>failing steps</span></div>
@@ -437,7 +485,8 @@ function renderOverview(){
 /* ───────────────────────── drawer: step detail ─────────────────────────────────── */
 function defFor(scope,step){
   const pool = scope==="step0"?STEP0.map(s=>[s[0],s[1],s[2],s[3],s[4]])
-             : scope==="stages"?PSTEPS : scope==="cross"?CROSS.map(x=>[x[0],x[1],x[2],x[3],""]) : CSTEPS;
+             : scope==="stages"?PSTEPS : scope==="batch"?BATCH
+             : scope==="cross"?CROSS.map(x=>[x[0],x[1],x[2],x[3],""]) : CSTEPS;
   return pool.find(p=>p[0]===step) || [step,"B",step,"",""];
 }
 function openStep(scope,key,step){

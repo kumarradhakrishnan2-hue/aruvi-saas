@@ -114,7 +114,10 @@ a handful of joiner slips. All were free. Budget effort, not money.
    be invisible** to certification: the check cannot see what it is built from. It is now
    **C5 check 11** (`genon/summary_sections.py`), which reconciles the registry against the
    chapter summary and fails on any section no unit anchors — it caught science·ix ch 8 omitting
-   `8.5 Atomic Number` on a library already certified ALL PASS. Read it as a defect family
+   `8.5 Atomic Number` on a library already certified ALL PASS. A section reached only through
+   the standard's closing SYNTHESIS unit is taught (that unit is outside the registry by design
+   but anchors a real section on every mediated-anchor stage) and is reported, not failed.
+   Read it as a defect family
    (below), not a trap. It gates on mathematics · english · TWAU · science and returns an
    ADVISORY shortlist on social_sciences, whose summaries carry no structural section marker.
 6. **Field names differ by stage.** `section_anchor`/`section_ref`, `teacher_notes`/
@@ -139,6 +142,15 @@ a handful of joiner slips. All were free. Budget effort, not money.
 Then, and only then, the **human gate**: the serve-sweep table, the synthesis unit read in
 full, each compact's ending, and any register judgement calls. Deterministic ALL PASS is a
 precondition, never the verdict — and in a batch the founder samples at a rate they choose.
+
+**Recorded in the tracker's BATCH RELEASE tab** (added 2026-08-13; `docs/testing_tracker.html`,
+scope `batch`, keyed subject·stage): **W1** = this document's wave 1, **W2** = wave 2 plus the
+closing checklist above, **F1** = C8 across the batch, **F2** = C14 across the batch. F1 and F2
+are the batch analogue of the human gate, and **the sample size and stratification go in the
+step's comment before the reading starts** — "a rate they choose" only means anything once it is
+written down. Stratify by period-count band (floor compacts and the borrow slot concentrate the
+defects, not the top) and include 100% of any chapter that took a repair: a chapter with one
+register breach is the likeliest place a paraphrased one survived.
 
 Record the stage in `MEMORY.md`: spend, defect families and rates, every repair declared, and
 anything the campaign should meet earlier next time.

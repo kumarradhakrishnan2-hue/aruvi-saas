@@ -305,7 +305,11 @@ REPAIRS = {
     # consistency with the standard, on the same instruction.
     #
     # All 14 are pure DELETIONS. No text is authored.
-    ("social_sciences", "ix"): {
+    #
+    # APPLIED 2026-08-12T20:02. Rotated to its 3-tuple key on 2026-08-13 so the live
+    # 2-tuple below can carry the ch 5 declaration; re-running THIS set would fail its own
+    # "declared text not found" guard on the first edit, which is the design.
+    ("social_sciences", "ix", "APPLIED-20260812-wave2"): {
         "ch_01_canonical_p09.json": [
             (8, "band:0",
              "Students brainstorm silently for two minutes, then share",
@@ -385,15 +389,44 @@ REPAIRS = {
              "and is scale-free"),
         ],
     },
-    # NOT DECLARED, and left standing on purpose: ch_01 U13 teacher_notes, "Having covered all
-    # four disciplines, this unit turns to the chapter's explicit…" — family COMPLETION. It was
-    # outside the founder's 2026-08-12 instruction (clock/forward/calendar), and it is not the
-    # same kind of claim as the other twelve: U13 of 15 sits after all four discipline sections
-    # in the STANDARD, where the sentence is simply TRUE. It is false only in a compact that
-    # drops a discipline — and a compact borrowing U13 borrows this note with it. So the fix is
-    # a judgement about whether the completion ban is about the text or about the serve, which
-    # is a founder call, not a text edit. `--apply` will therefore report 1 surviving ban hit in
-    # ch_01 and exit 1. That is the declared state, not an incomplete repair.
+    # ── S-SS · social_sciences · IX · ch 5 · THE META-CLAUSE (2026-08-13) ────────────
+    # ONE edit, and it is not the usual family. The breach is not the model pacing a band or
+    # promising a later unit — it is the model NARRATING ITS OWN BRIEF into teacher-facing
+    # text: "an integrative question that surveys the chapter's full arc without claiming the
+    # chapter is complete". The clause is the compact brief's self-containment instruction,
+    # quoted back. It trips the completion pattern on the very words it uses to disclaim
+    # completion, which is why a scanner cannot rule on it and a reader can in one look.
+    #
+    # A PURE DELETION, per the file's own line: nothing is authored. What the teacher is asked
+    # to do — the Nāśhik-inscription question, the paragraph-length response with two details
+    # from the inscription and one from elsewhere, the written formative check — is untouched
+    # and complete without the clause. Worth recording as a pattern for the brief rather than
+    # for register_scan.py: a brief phrased as a prohibition ("do not claim the chapter is
+    # complete") gives the model a sentence to repeat; the mathematics·IX set already found one
+    # hit that was the model paraphrasing the brief's description of the synthesis unit. That is
+    # twice now, in two subjects. It is an argument about the BRIEF.
+    ("social_sciences", "ix"): {
+        "ch_05_canonical_p13.json": [
+            (13, "band:3",
+             "The teacher closes with an integrative question that surveys the chapter's "
+             "full arc without claiming the chapter is complete: 'The Nāśhik inscription",
+             "The teacher closes with an integrative question: 'The Nāśhik inscription",
+             "register/completion",
+             "the compact brief's own self-containment instruction, quoted into the band. The "
+             "question, the two-details-plus-one requirement and the formative check all stand"),
+        ],
+    },
+    # NOT DECLARED, and left standing — now by FOUNDER RULING (2026-08-13), where before it was
+    # an open question: ch_01 U13 teacher_notes, "Having covered all four disciplines, this unit
+    # turns to the chapter's explicit…" — family COMPLETION. The reasoning that made it a
+    # judgement call rather than an edit is unchanged and is why the ruling went the way it did:
+    # U13 of 15 sits after all four discipline sections in the STANDARD, where the sentence is
+    # simply TRUE; it is false only in a compact that drops a discipline, and a compact borrowing
+    # U13 borrows this note with it. So the question was never "is this text wrong" but "is the
+    # completion ban about the text or about the serve" — and the founder has accepted the text.
+    # ACCEPTED, not fixed: `--apply` still reports 1 surviving ban hit in ch_01 and exits 1, and
+    # ch_01's certification report still says FAIL. That is the declared state. Anything that
+    # reads "SS·IX is clean" must say "one accepted breach" in the same breath.
     # ── S3 · science · secondary · ch 8 "Journey Inside the Atom" (2026-08-06) ──────
     # THE FIRST LIBRARY AUTHORED WITH THE REGISTER ALREADY IN ITS CONSTITUTION.
     # SS·VIII's 7 hits came from a library generated BEFORE its P1 amendment landed — the

@@ -56,7 +56,7 @@ import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
 from summary_sections import (                                     # noqa: E402
     NONE as SUMMARY_UNREADABLE, STRUCTURED as SUMMARY_STRUCTURED,
-    reconcile as reconcile_sections, summary_sections,
+    closing_anchors, reconcile as reconcile_sections, summary_sections,
 )
 
 # Every `question_type` the corpus actually uses — a census over all saved plans and the
@@ -316,8 +316,18 @@ def certify(subject, grade, ch, row):
             lines.append("      ADVISORY: no section list readable from the chapter "
                          "summary — registry <-> summary NOT reconciled for this chapter")
         else:
-            missing, extra = reconcile_sections(reg, secs)
+            # The standard's SYNTHESIS unit is not in the registry (it must never enter
+            # first-visit arithmetic) but on every mediated-anchor stage it anchors a real
+            # section — "Let us reflect", "S1 / … / S8" — and teaches it. Passing its
+            # anchors in is what stops the check reporting a chapter's closing section as
+            # untaught; see summary_sections.reconcile.
+            missing, closing, extra = reconcile_sections(reg, secs, closing_anchors(top))
             shape = f"{len(secs)} summary section(s) vs {len(reg)} registry entr(ies)"
+            if closing:
+                lines.append(
+                    f"      registry <-> summary: {len(closing)} section(s) reached only "
+                    f"through the standard's closing synthesis unit (taught, but outside "
+                    f"the registry — read it at the human gate): " + "; ".join(closing))
             if kind == SUMMARY_STRUCTURED:
                 note(not missing,
                      f"{top_name}: every section the chapter summary carries is anchored "

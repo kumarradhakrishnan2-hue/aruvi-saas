@@ -27,7 +27,7 @@ from .config import STATE_DIR
 router = APIRouter(prefix="/api/testing", tags=["testing-campaign"])
 
 _LOCK = threading.Lock()
-_SCOPES = ("step0", "stages", "combos", "cross")
+_SCOPES = ("step0", "stages", "combos", "cross", "batch")
 
 
 def _state_path() -> str:
@@ -44,6 +44,11 @@ def _default_state() -> Dict[str, Any]:
         "stages": {},    # key "english/preparatory" → {"P1": {...}}
         "combos": {},    # key "english/middle" → {"C1": {...}, "provenance": {...}}
         "cross": {},     # key "campaign" → {"X1": {...}}
+        # BATCH RELEASE (2026-08-13) — the certification cycle proves a stage on ONE pilot
+        # chapter; this scope tracks the OTHER ~30, which are authored in two waves and
+        # then read by the founder. Same key space as `combos` (subject·stage), four
+        # steps: W1 (top wave) · W2 (compact wave) · F1 (C8, batch) · F2 (C14, batch).
+        "batch": {},     # key "the_world_around_us/preparatory" → {"W1": {...}}
         "defects": [],   # [{id, combo, step, severity, title, evidence, owner, status, opened, closed, notes}]
     }
 
@@ -98,10 +103,11 @@ def put_campaign(req: FullState) -> Dict[str, Any]:
 class ItemPatch(BaseModel):
     """One recorded observation against one checklist step.
 
-    scope: step0 | stages | combos | cross
+    scope: step0 | stages | combos | cross | batch
     key:   "campaign" for step0/cross; "english/preparatory" for stages;
-           "english/middle" for combos (subject·STAGE rows)
+           "english/middle" for combos and batch (subject·STAGE rows)
     step:  "0.1".."0.8" | "P1".."P5" | "SIGN" | "C1".."C14" | "X1"/"X2" | "provenance"
+           | "W1"/"W2"/"F1"/"F2" (batch)
     patch: merged into the stored item (status / comment / by / any extra fields;
            set a field to null to delete it). `at` is stamped server-side.
     """

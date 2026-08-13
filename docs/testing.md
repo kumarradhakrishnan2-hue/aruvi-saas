@@ -12,8 +12,17 @@ section the registry never had it and all three agree happily. This was recorded
 `batch_corpus_runbook.md` trap 5 — "compare the registry against the chapter summary's
 section list by eye until that check exists" — and by-eye does not survive a batch.
 It is not hypothetical: the first sweep found **science·ix ch 8, the S3 pilot, certified
-ALL PASS, omitting `8.5 Atomic Number`**, and TWAU iii ch 1 and ch 9 omitting their
-closing `Let us reflect`. Three real misses in 33 gated chapters, zero false positives.
+ALL PASS, omitting `8.5 Atomic Number`** — one real miss in 33 gated chapters.
+**A THIRD OBJECT HAD TO BE ADDED THE SAME DAY, and the reason is worth keeping.** The
+same sweep flagged TWAU iii ch 1 and ch 9 as omitting their closing `Let us reflect`, and
+both were WRONG: `section_registry` skips the synthesis unit deliberately (it must never
+enter first-visit arithmetic), but on a MEDIATED-anchor stage that unit's
+`section_anchor` is a real section — measured over the corpus it is one on **every** TWAU,
+mathematics and english canonical, and the reserved token only on the token-carrying
+stages. Skipping a unit is not the same as it teaching nothing. The check now also reads
+the standard's closing anchors and reports anything reached only that way as a distinct
+informational line, gating on neither. science·ix ch 8 is unaffected — its synthesis unit
+carries the token, so the allowance cannot launder a real omission.
 **Asymmetric, like the handoff/anchor check:** a summary section no unit anchors GATES
 (the chapter is not taught at any period count, and unlike a register breach it is NOT
 repairable in place — the remedy is a re-author of the top, and therefore of the compacts
@@ -1282,9 +1291,14 @@ live artefacts; fails become defects. **Artefact:** the item table.
    **The remedy is not a repair.** A missing section cannot be written in by any `repair_*`
    tool; it is a re-author of the top (and therefore of the compacts, whose briefs are built
    from its registry), or an accepted-omission ruling at the human gate. Record which, and why.
-   First sweep, 2026-08-13: science·ix ch 8 (`8.5 Atomic Number`) and TWAU iii ch 1 + ch 9
-   (`Let us reflect`) — 3 of 33 gated chapters, 0 false positives; the SS advisory returned
-   1-7 leads on 6 of 10 chapters, most of them genuine sub-topics.
+   **A section reached only through the STANDARD's closing synthesis unit is TAUGHT** — that
+   unit is excluded from the registry by design, but on every mediated-anchor stage it anchors
+   a real section ("Let us reflect", "S1 / … / S8") — so it is reported on its own line and
+   gates nothing; the reserved `synthesis` token is not a section and grants no such allowance.
+   First sweep, 2026-08-13: **science·ix ch 8 (`8.5 Atomic Number`) — 1 of 33 gated chapters,
+   0 false positives**; TWAU iii ch 1 + ch 9 were flagged before the closing-unit allowance
+   existed and are clean under it. The SS advisory returned 1-7 leads on 6 of 10 chapters,
+   most of them genuine sub-topics.
 **Also:** `backup/quarantine/<subject>/<grade>/` must be EMPTY for this chapter. Failed files
 are moved there automatically (founder doctrine 2026-08-01: passing files stay live, only
 failures move; a failed TOP takes its whole library with it). Sweep rows carrying drop
@@ -1638,6 +1652,34 @@ renders §2–§5 as tickable steps with comments, the §7 register, the §8 mat
 comments/defects as CSV/JSON. Tracker item keys retired by this rewrite simply go unread; the
 state file is never hand-edited.
 
+**The BATCH RELEASE tab (added 2026-08-13, founder).** The C-cycle certifies a stage on ONE
+pilot chapter; nothing tracked the other ~30, which is where the money is (TWAU: 32 chapters,
+₹1,212.90, against the pilot's ~₹40) and where the two irreducibly-human checks have no
+per-chapter coverage. A fifth scope, `batch`, keyed like `combos` (subject·stage), with four
+steps in the runbook's own order:
+
+| step | actor | what it is |
+|---|---|---|
+| **W1** | Kumar | wave 1 — the STANDARD canonicals: submit · collect · `--certify-only` |
+| **W2** | Kumar | wave 2 — the COMPACTS (their briefs need W1's registries) + the closing checklist |
+| **F1** | Claude presents, founder rules | **C8 across the batch** — the X−1→X transition, sampled |
+| **F2** | Claude presents, founder rules | **C14 across the batch** — copyright, sampled |
+
+"F" is for final. F1 and F2 are the batch analogue of the human GATE: **the sample size and
+stratification are recorded in the step's comment before the reading begins** — the runbook says
+the gate "samples at a rate the founder chooses", and an unwritten rate is not a sampling plan.
+Stratify by period-count band (floor compacts and the borrow slot concentrate the defects) and
+include 100% of any chapter that took a repair. A stage is RELEASED when all four are pass.
+
+The tab carries the four steps and nothing else. A "cycle" column showing each stage's C-status
+was built and **removed the same day (founder)**: it duplicated the per-stage matrix one tab away
+and read identically on all eleven rows, so it discriminated nothing. The precondition it was
+meant to carry — runbook §0, *the pilot has been through the C-cycle, before any money moves* —
+belongs in W1's own specification, where the spending gate is. Standing note from building it,
+which is a finding rather than a UI detail: **no stage in the campaign carries a recorded human
+GATE.** All eleven have C1–C14 green and SIGN unset, so the two stages already batch-authored
+were authored without one. That belongs on the per-stage matrix beside GATE, not in this tab.
+
 ---
 
 ## 7. Defect register
@@ -1683,7 +1725,8 @@ Fixes that touch a constitution, the engine, the brief or the master plan trigge
 
 Maintained live in the tracker UI; the canonical column set per stage:
 
-`P1 P2 P3 P4 P5 · stage-sign-off` — then `C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14 · GATE`.
+`P1 P2 P3 P4 P5 · stage-sign-off` — then `C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14 · GATE`
+— then, for the rest of the stage's corpus, `W1 W2 · F1 F2` (the BATCH RELEASE tab, §6a).
 Step 0 and the cross-cutting X1–X2 sit above the matrix.
 
 Rows: social_sciences·secondary · social_sciences·middle · science·secondary ·
