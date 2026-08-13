@@ -95,14 +95,11 @@
   .small{font-size:12px;color:var(--muted)}
 
   /* Stage-row notes: some carry a whole stage's history (maths·secondary is 711 chars against
-     42-100 for the rest), which pushed the matrix off the screen. Clamp to two lines with a
-     real ellipsis; one click opens the full text in place. Not a <details> because this sits
-     inside a table cell that is rebuilt by innerHTML — a self-contained class toggle survives
-     the rebuild, a details' open state does not. */
-  .rownote { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-             overflow:hidden; cursor:pointer; }
-  .rownote.open { display:block; -webkit-line-clamp:unset; }
-  .rownote:hover { color:var(--fail); }
+     42-100 for the rest), which pushed the matrix off the screen. They were clamped under the
+     stage name; as of 2026-08-13 they live behind a NOTES link in their own column that
+     expands a full-width row beneath — the same pattern as the batch-release tab. The notes
+     are HTML, so the detail row renders them rather than escaping them. */
+  .noterow td { background:#f8fafc; }
 </style>
 </head>
 <body>
@@ -389,7 +386,11 @@ function renderAll(){
     STEP0.map(s=>`<tr><td>${s[0]}</td><td>${actorPill(s[1])}</td>
       <td><b>${s[2]}</b><div class="small">${s[3]}</div></td>${cellHtml("step0","campaign",s[0],"●")}</tr>`).join("");
   // stages
-  $("stagesTbl").innerHTML = "<tr><th>Stage</th><th>Group</th>"+
+  /* NO "Group" column (removed 2026-08-13, founder): the group letter is still the datum that
+     decides whether P3 applies, and it says so in P3's own n/a tooltip — a column of its own
+     added a letter the reader had to translate. Notes moved out of the stage name into their
+     own NOTES link, same pattern as the batch-release tab. */
+  $("stagesTbl").innerHTML = "<tr><th>Stage</th><th>Notes</th>"+
     PSTEPS.map(p=>`<th class="hh" data-scope="stages" data-step="${p[0]}">${p[0]}</th>`).join("")+"<th>C-cycle</th></tr>"+
     STAGES.map(st=>{
       const cells=PSTEPS.map(p=>{
@@ -397,9 +398,16 @@ function renderAll(){
         return cellHtml("stages",st.key,p[0]);
       }).join("");
       const unlocked=stageSigned(st.key);
-      return `<tr><td class="rowlabel">${st.key}<br><small class="rownote" title="click to expand" onclick="this.classList.toggle('open')">${st.note}</small></td>
-        <td>${st.group==="ref"?"—":st.group}</td>${cells}
-        <td class="small">${unlocked?"✅ unblocked":"⛔ blocked until SIGN"}</td></tr>`;
+      const id="sn-"+st.key.replace(/[^a-z]/gi,"");
+      const detail=st.note
+        ? `<tr class="noterow" id="${id}" style="display:none"><td></td>
+             <td colspan="${PSTEPS.length+2}"><div class="small">${st.note}</div></td></tr>`
+        : "";
+      return `<tr><td class="rowlabel">${st.key}</td>
+        <td class="small">${st.note
+          ? `<a href="#" onclick="toggleNoteRow(event,'${id}',this)">notes ▸</a>`
+          : "—"}</td>${cells}
+        <td class="small">${unlocked?"✅ unblocked":"⛔ blocked until SIGN"}</td></tr>${detail}`;
     }).join("");
   // combos
   $("combosTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th><th>PREP</th>"+
@@ -443,7 +451,7 @@ function renderAll(){
         : "";
       return `<tr><td>${i+1}</td><td class="rowlabel">${c[0]} · ${c[1]}</td>
         <td class="small">${notes.length
-          ? `<a href="#" onclick="toggleBatchNote(event,'${id}',this)">notes (${notes.length}) ▸</a>`
+          ? `<a href="#" onclick="toggleNoteRow(event,'${id}',this)">notes (${notes.length}) ▸</a>`
           : "—"}</td>
         ${cells}
         <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>${detail}`;
@@ -615,7 +623,7 @@ function showDrawer(){$("ovl").style.display="block";$("drawer").style.display="
 function closeDrawer(){$("ovl").style.display="none";$("drawer").style.display="none";}
 /* Batch-release notes: expand in place. The arrow is the only state indicator, so it has to
    flip — a link that does nothing visible on a row you cannot see reads as broken. */
-function toggleBatchNote(e,id,a){
+function toggleNoteRow(e,id,a){
   e.preventDefault();
   const tr=document.getElementById(id); if(!tr) return;
   const open = tr.style.display==="none";
