@@ -803,6 +803,45 @@ REPAIRS = {
              "'a brief oral pause that plants the idea of seasonality' is the whole move"),
         ],
     },
+
+    # ── english · VI · ch 8 (S10 · C7, 2026-08-13) ───────────────────────────────────────────
+    # TWO CLOCK QUANTITIES, and BOTH WERE INVISIBLE TO THE MACHINE GATE. `register_scan.py`'s
+    # clock patterns all key on a digit or on a fixed phrase ("for N minutes", "the remaining
+    # time", "half the session", "in the first/last N minutes"); a SPELLED-OUT number attached
+    # to anything else sails through. The certification report reads "0 ban hit(s)" on all three
+    # files and is wrong on two of them. Found by reading at C7, which is the step whose whole
+    # job is to see what the regex cannot.
+    #
+    # The first one is the sharper of the two because of WHERE it sits: the STANDARD's closing
+    # synthesis unit, which is the one unit v2.0 designs to be BORROWED. It is already in the
+    # X=11 serve and in kumar3's mixed week, and both happened to land it on a 40-minute sitting,
+    # so it is accidentally true today. Served at 50 the same sentence tells the teacher she has
+    # forty minutes for a fifty-minute sitting — demonstrated live at C7 (40 -> true, 50 -> false,
+    # 60 -> false). That is exactly the silent falsification ban 1 exists to prevent.
+    #
+    # Both edits are pure DELETIONS of an appositive clause. Nothing is invented, and neither
+    # sentence loses a pedagogical claim: "everything they need" is the point, "within these
+    # forty minutes" was only ever the packaging, and a discussion "genuinely philosophical" is
+    # the judgement the teacher needs — "worth five minutes" is a budget the platform overwrites.
+    # The trailing "all within the unit's own minutes" in U12 is deliberately LEFT: it names no
+    # quantity, scales with the sitting, and is the honest form of what the removed clause tried
+    # to say.
+    #
+    # FOUNDER RULING 2026-08-13: amend the teacher notes and nothing else. No new scanner
+    # pattern, no defect rows, and the 15 other canonicals across social_sciences and
+    # mathematics that carry the same shape are deliberately NOT touched here.
+    ("english", "vi"): {
+        "ch_08_canonical.json": [
+            (12, "teacher_notes", " within these forty minutes", "", "register/clock",
+             "the synthesis unit is the one unit designed to be borrowed, so its text travels "
+             "to sittings of every length; 'has everything they need' survives the deletion"),
+        ],
+        "ch_08_canonical_p10.json": [
+            (9, "teacher_notes", " and worth five minutes", "", "register/clock",
+             "'genuinely philosophical' is the judgement the teacher needs; the minute budget "
+             "is the platform's to set, not the plan's"),
+        ],
+    },
 }
 
 DEFAULT_SET = ("social_sciences", "viii")

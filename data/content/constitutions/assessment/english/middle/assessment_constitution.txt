@@ -1,11 +1,5 @@
-ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 3.6
+ARUVI — ENGLISH ASSESSMENT CONSTITUTION · VERSION 3.7
 Stage: Middle (Grades VI–VIII)
-
-v3.6 (2026-08-12) — THE PAIR. Rule 2 now emits TWO items per spine-cell, not
-one, on a prescriptive per-spine slot table; a new Rule 8A scopes them in two
-stages across the cell's teaching span. Amended in step with english/secondary
-v1.6 and english/preparatory v1.4. Reasoning:
-docs/english_secondary_item_density.md.
 
 ================================================================================
 DESIGN PRINCIPLE
@@ -296,6 +290,16 @@ TRUE_FALSE vs MCQ disambiguation (critical):
                flagged in `options[].is_correct`).
 
   Do NOT classify "select the true statements" tasks as MCQ.
+
+MCQ OPTION ORDER IS NOT YOURS TO SET. Emit the four options in whatever
+order they were authored; order carries no meaning. Uneven letters across a
+chapter are coincidence, not a defect, and correcting them is not your job —
+the platform arranges options deterministically after generation.
+
+An option MUST NOT refer to another option by its label: no "both A and B",
+"none of the above", "all of the above", "either B or C". Those are the one
+construction a downstream arrangement cannot reorder without rewriting the
+item.
 
 ECR — NAME THE REFERENCED WORD: When an item requires the student to
 perform a cognitive act on a specific word or words within a larger
@@ -622,5 +626,5 @@ ASSESSMENT JSON SCHEMA
 
 ================================================================================
 Aruvi · NCF 2023-Aligned Pedagogical Platform · Knowledge Commons
-English Assessment Constitution · Version 3.6 · Internal Document
+English Assessment Constitution · Version 3.7 · Internal Document
 ================================================================================

@@ -1,7 +1,35 @@
 # Aruvi SaaS — Test Campaign Plan (the 11-stage certification sweep)
 
-VERSION 2.9 · 2026-08-09 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
+VERSION 2.10 · 2026-08-13 · Actors: **[Kumar]** (runs the pipeline in Terminal, supplies
 artefacts) · **[Claude]** (inspects artefacts, checks compliance, reports)
+
+*2.10 (2026-08-13, after the TWAU + SS·secondary batches): **C5 gains check 11 — the
+registry is reconciled against the CHAPTER SUMMARY**, and it is the first deterministic
+check that looks outside the library. Every other section check is built FROM the top
+canonical's derived registry, so none of them can see what the top canonical omitted:
+checks 3-5 measure the compacts against that registry, and if the standard never named a
+section the registry never had it and all three agree happily. This was recorded as
+`batch_corpus_runbook.md` trap 5 — "compare the registry against the chapter summary's
+section list by eye until that check exists" — and by-eye does not survive a batch.
+It is not hypothetical: the first sweep found **science·ix ch 8, the S3 pilot, certified
+ALL PASS, omitting `8.5 Atomic Number`**, and TWAU iii ch 1 and ch 9 omitting their
+closing `Let us reflect`. Three real misses in 33 gated chapters, zero false positives.
+**Asymmetric, like the handoff/anchor check:** a summary section no unit anchors GATES
+(the chapter is not taught at any period count, and unlike a register breach it is NOT
+repairable in place — the remedy is a re-author of the top, and therefore of the compacts
+whose briefs are built from its registry, or an accepted-omission ruling at the human
+gate); a registry entry the summary does not name is ADVISORY (an unlabelled opening, a
+merge, a rename). It does not quarantine — the library serves perfectly well; what is
+wrong is what it teaches. **It GATES only where the summary declares its sections** —
+JSON `sections[]`/`main_sections[]` (mathematics, english, TWAU) and numbered headings
+(science) — and reports an ADVISORY shortlist for social_sciences at both stages, whose
+summaries are prose that names its sections differently in every chapter; every extractor
+tried on them recovered real sections AND sub-topics ("Waterfall", "Deltas", "GLOFs" under
+Running Water), and a gate that fails good chapters is switched off in a week (runbook
+trap 4). The SS remedy is upstream — a section list in the chapter-summary prompt's output
+— and is NOT scheduled. Implementation `genon/summary_sections.py`, tests
+`tests/test_summary_sections.py` (16 green). §9 applies as a **certifier change**: free,
+corpus-wide, `--certify-only` + diff the reports; no stage re-authors and no rupees move.*
 
 *2.9 (2026-08-09, after S4's C3): **C3 gains a MATHS-ONLY sub-check — every determinate answer
 is re-derived, and it is re-derived from the STEM.** S4's C3 found one wrong answer in 23
@@ -416,7 +444,7 @@ before starting each stage):
 | S7 | mathematics · middle | **3.9 ✓** | time_bands ✓ | ✓ | ✓ | ✓ (assess v3.4) |
 | S8 | mathematics · preparatory | **1.4 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess v1.3, 2026-08-11) |
 | S9 | english · preparatory | 1.1 (quote-format only) | phases[] → P3 | — | — | — (assess **v1.3** — poem locator carried early, 2026-08-12) |
-| S10 | english · middle | 1.6 (quote-format only) | phases[] → P3 | — | — | — (assess **v3.5** — poem locator carried early, 2026-08-12) |
+| S10 | english · middle | **1.7 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v3.7**, 2026-08-13) |
 | S11 | english · secondary | **1.2 ✓** | phases[] → **time_bands ✓** | ✓ | ✓ | ✓ (assess **v1.5**, 2026-08-12) |
 
 > ★ **CROSS-STAGE, 2026-08-11 — the narration format's JSON quote hazard is closed on all
@@ -443,6 +471,13 @@ before starting each stage):
 > that block. **READING `poem_text` stays legal at all three** — only reproduction is closed.
 > Done early on purpose: §9 re-authors nothing while no english library exists, and would cost
 > ~₹80 a library afterwards. **S9 and S10 inherit this as done; their P2 owes only A6 and A9.**
+> **S10 took the inheritance and put it under test (2026-08-13):** its pilot is a POEM chapter —
+> english VI ch 8 *What a Bird Thought*, whose summary carries the NCERT poem in full, 17
+> verbatim lines — chosen over two identically-banded narrative chapters precisely so middle's
+> half of this fix is proved by live generation rather than carried untested. Until a poem
+> chapter is authored under it the rule is a claim. C3 reads it under the PAIR, where two items
+> per cell means two chances to drift and the slot-2 (analysis) item is the one with a reason to
+> quote.
 
 > ★ **S6 · science · middle is the campaign's ONE STRUCTURAL EXCEPTION** (2026-08-07, at its
 > P-prep; spec `docs/science_middle_stage_serve.md`, read it before any S6 work). It anchors
@@ -552,6 +587,22 @@ before starting each stage):
   half is still banned).
 **Exit:** the amended file carries A1 + the one-block register; `VERSION` bumped; a diff against
 the pre-amendment file shows no pedagogical rule changed. **Artefact:** amended file + diff.
+**Done for S10 (2026-08-13):** english·middle LP **v1.6 → v1.7**. Carry-forward as specified —
+and this is the file testing.md P1 names by hand ("english·middle's schema comment 'Transition
+from prior unit; preview into next'"), so the known contradiction was struck at the step that
+predicted it; VOCABULARY was ALSO teaching the positional cross-reference (its worked examples
+were `"the previous unit"` and `"this unit"`) and was re-cut with it. Plus **four non-carry-forward
+edits, three of which the corpus or the sibling constitution forced**: full spine coverage
+(`backup/saved_plans/english/vii/ch_06_*.json` is a ONE-unit plan carrying ONE of its section's
+six spines — the drop licence at its limit); Rule 1's closing-unit exception; `task_brief` ≤12 →
+≤18 and `section_context` 10–15 → 10–18 on the same measurement secondary made independently;
+and **Rule 10's item-count line, which was contradicting this stage's own assessment constitution
+outright** — it said ONE item per cell where assessment v3.6 emits TWO. **The general lesson: a
+cross-stage amendment that moves three assessment constitutions and none of the three LPs beside
+them leaves the pair disagreeing, and the LP's half is the one the generator reads while it
+writes the handoff.** english·secondary carries the same stale line against a CERTIFIED library
+and is filed as a §7 defect; preparatory carries it free and should strike it at S9's P1.
+`genon/out/stage_prep_english_middle/`.
 **Done for S11 (2026-08-12):** english·secondary LP **v1.1 → v1.2**. Carry-forward as specified,
 plus **four non-carry-forward edits taken here because P-prep is where they are free** — full
 spine coverage (§below), Rule 1's closing-unit exception, `task_brief` ≤12 → ≤18 and
@@ -618,6 +669,15 @@ DIFFERENT field, which is why neither may borrow the other's join). Removal N/A.
 repaired alongside: the `what_each_option_reveals` example had lost `"B"` and gained a second
 `"C"` when S7's distractors-only pass rewrote one of its two lines in this file.
 `genon/out/stage_prep_mathematics_preparatory/`.
+**Done for S10 (2026-08-13):** english·middle assessment **v3.6 → v3.7**. **A6 was a genuine
+CONFIRMATION — the first in the campaign that required no amendment at all** — because Rule 8A
+landed a day early with the cross-stage PAIR pass (v3.6, 2026-08-12), carrying the row-7 CELL
+anchor, the resolution rule and the `period_ref`/`period_number`/`unit_ref` prohibition already.
+Removal N/A (this file never carried the item-18 prohibition); A9's two lines purely additive,
+in Rule 4 beside the MCQ semantics, as at secondary. **P4 had a removal of its own here:** v3.6
+had written its five-line changelog INTO the constitution above DESIGN PRINCIPLE, which is what
+P4 forbids — lifted out and back-filled as the sidecar's v3.6 entry.
+`genon/out/stage_prep_english_middle/`.
 **Done for S11 (2026-08-12):** english·secondary assessment **v1.3 → v1.4**, then **→ v1.5** at C14 (the POEM LOCATOR, ARV-D-138: Rule 9's extract block no longer copies `poem_text` — a poem section carries `Read lines N–M on p.PP, beginning "<incipit>"`, incipit capped at eight words. F2's english conduit closed. S9/S10 owe the same five edits at their own P2, before any poem chapter of theirs is authored); A6 landed as a NEW
 rule (8A) because the anchoring facts had no home in the file — the anchor is the (section ×
 spine) **CELL**, carried by the item's own `source_section_id` + `source_spine` (8-rule **row 7**,
@@ -653,6 +713,13 @@ Rule 11's guard case and the schema all followed the rename.
 (`PHASE NARRATION` → `BAND NARRATION`) and prose, Rule 7 and the schema followed. Note this
 leaves the middle/preparatory saved-plan corpus on the old shape; the mathematics plugin reads
 **both keys, newest first** (`subject.py:211-219`), which is what covers display.
+**Done for S10 (2026-08-13)** — english·middle: Rule 5, Rule 2A's "explicit timed phase", Rule 3's
+two task-reference sentences, Rule 7's C-code surface list, Rule 8's locator mirror, Rule 9's
+heading, the lint-scope line, INPUTS 1 and the schema all followed the rename. **This stage owed
+no plugin work** — S11's `english/subject.py::_bands` both-keys-newest-first read is
+stage-agnostic and already covers the whole english corpus, which is the second time a display
+debt one stage paid has made the next stage's P3 free (maths·prep inherited maths·middle's the
+same way).
 **Done for S11 (2026-08-12)** — english·secondary: Rule 5, Rule 9's heading (`PHASE NARRATION` →
 `BAND NARRATION`) and prose, Rule 2A's "explicit timed phase" (the one place the word carried
 pedagogical weight) and the schema all followed the rename. **This stage added a step the others
@@ -696,6 +763,30 @@ date and one-line rationale. **Artefact:** the changelog.
 its subjects list contains this stage's class and nothing left over from an earlier stage.
 **Artefact:** the note + the chapter's `canonical_plan` row + the three profiles + the carrier
 trace.
+**Done for S10 (2026-08-13) — P5.2 inherits S11's definition unchanged, and this is the stage
+that supplies its EVIDENCE.** The registry member is the same (section × spine) CELL, token
+`"<section_id>|<spine_key>"`, first-visit order the summary's on-page spine order. S11 could not
+disprove the alternative — every english IX chapter has one `main_section`, so the spine alone
+joins correctly there — and middle is where it fails: the VII fixture teaches Reading in
+sections A, B and C, and a spine-only join collapses three cells onto one. **One trap worth
+carrying: english VI is fully split (16 chapters, one `main_section` each) but the split KEPT
+each section's position in its original textbook unit, so the ids run A, B, C, D across a unit's
+chapters — the pilot's is `B`.** A C5 check that assumes `A` is wrong for eleven of sixteen.
+**P5.1:** floor accepted at the standing ratio with **no override anywhere in the class** — the
+full-coverage minimum (VocGram alone + ⌈5/2⌉ = 4 periods for a six-spine chapter) was swept
+across all 46 middle chapters, VI, VII and VIII, and nothing binds; the first stage since S6
+where that sweep found nothing to raise. **P5.3:** pilot **VI ch 8 *What a Bird Thought***
+(section B, **poem**, rec 12 · floor 7 · counts [12, 10, 7]), summary + mapping on disk, row
+non-placeholder — chosen for the poem so the C14 locator rule is tested rather than inherited.
+**P5.4 CLOSED the same day** — english VI on all three identities through the app's own first-run
+flow, sections disjoint (**6A · 6B · 6C**) and the mixed duration on kumar3 (`[40, 50]`, ppw
+{40: 4, 50: 1}, anchor 40), so **S10 enters its C-cycle with a clean P5** — the fifth stage to do
+so, after S6, S8, S5 and S11. Note the stretch is **1.25× (40 → 50)** where S11's was 1.2×: a
+canonical authored at 40 min served into a 50-minute sitting is the ordinary Indian-timetable
+case, so C6 gets a realistic scaling test rather than an exotic one. The "nothing left over from
+an earlier stage" clause stays waived per the founder ruling of 2026-08-07 (S6); the residue
+touches no english-VI key.
+`genon/out/stage_prep_english_middle/STAGE_SIGNOFF_S10_english_middle.md`.
 **Done for S11 (2026-08-12) — P5.2 is the step this template wrote english's name into, and this
 is the definition.** The registry member is the **(section × spine) CELL**, not the main_section
 (post-split there is only one, so it is a constant) and not the spine (the constitution permits
@@ -814,6 +905,24 @@ byte-identical registry member in first-visit order. `tests/test_genon_carriers.
 failures → **95, green** — the three were the "TWAU is still owed" assertions, one of which had
 carried the words *"S5 owes it"* in its own docstring.
 
+**Done for S10 (2026-08-13) — the FIRST carrier in the campaign that cost nothing, and the
+reason is a note.** Row 7 again. `carriers._NOT_YET` did not merely say middle was owed: S11
+had rewritten the entry to say the code was in place and to name **three things to confirm, not
+re-derive** — spine set, container shape, spine-keyed handoff. All three held, and **the
+deletion was the whole job: no new code landed with this stage.** Confirmed against the real
+saved corpus before the line came out (`verify_s10_carrier.py`, re-runnable): 46 chapters and
+272 taught cells use the six spine keys and nothing else, all 12 saved plans group items by
+`spine_code`, every `coverage_handoff` is the spine-keyed dict `_ENGLISH_SPINE_CELL`
+round-trips, and 53 items resolve with **zero orphans**, every anchor equal to the
+independently computed last-unit-teaching-that-cell. **Middle is also where the PAIR key stops
+being untestable:** S11 recorded that at secondary a join on `source_spine` alone gives correct
+answers across the whole certified class, because every english IX chapter has one
+`main_section`; middle's corpus is genuinely multi-section — the VII fixture teaches Reading in
+A, B and C — so the wrong join finally shows, and it is now a test asserting three Reading cells
+reach three different units. `tests/test_genon_carriers.py` 116 with 3 failures → **122, green**;
+the three were the "middle is still owed" assertions, and the one that proves an owed stage
+still REFUSES was moved to preparatory rather than deleted. `_NOT_YET` now holds english's
+preparatory entry alone.
 **Done for S11 (2026-08-12) — the one carrier in the campaign where "delegate to the family
 helper" was the WRONG answer, and the wrong answer would have passed.** Row 7, the period-field
 family's third stage and the table's only PAIR key: item (`source_section_id` + `source_spine`) →
@@ -1067,6 +1176,26 @@ live artefacts; fails become defects. **Artefact:** the item table.
    counts) — the purpose is to turn a silent miss into a visible rate across 926 authoring runs.
    Read the advisory block at C5 and carry any miss into the stage's C4 record; promote it to a
    gate only if the founder later prices the rate.
+11. **registry ⟷ chapter summary** (added 2026-08-13, `genon/summary_sections.py`) — the one
+   check that looks OUTSIDE the library, and the reason it had to exist is that checks 3-5 are
+   all built from the top canonical's own registry and so cannot see a section the top canonical
+   never named. Every section the chapter summary carries must be anchored by some unit of the
+   standard. **Asymmetric:** a summary section no unit anchors FAILS certification (and does NOT
+   quarantine — the library serves; what is wrong is what it teaches); a registry entry the
+   summary does not name is ADVISORY (SS quite properly names an unlabelled opening,
+   "Introduction to the Atmosphere"). A sub-section is covered by its parent (8.2.1 under 8.2);
+   a top-level ref has no parent, because its "parent" is the chapter and a chapter is not a
+   section. **It GATES only where the summary DECLARES its sections** — JSON
+   `sections[]`/`main_sections[]` (mathematics, english, TWAU; english's entries are the SPINE
+   CELLS, since a post-split chapter is one main_section) and numbered headings (science) — and
+   reports an ADVISORY shortlist of unmatched prose leads for social_sciences at both stages,
+   which is "compare by eye" reduced from a whole summary to one-to-seven lines.
+   **The remedy is not a repair.** A missing section cannot be written in by any `repair_*`
+   tool; it is a re-author of the top (and therefore of the compacts, whose briefs are built
+   from its registry), or an accepted-omission ruling at the human gate. Record which, and why.
+   First sweep, 2026-08-13: science·ix ch 8 (`8.5 Atomic Number`) and TWAU iii ch 1 + ch 9
+   (`Let us reflect`) — 3 of 33 gated chapters, 0 false positives; the SS advisory returned
+   1-7 leads on 6 of 10 chapters, most of them genuine sub-topics.
 **Also:** `backup/quarantine/<subject>/<grade>/` must be EMPTY for this chapter. Failed files
 are moved there automatically (founder doctrine 2026-08-01: passing files stay live, only
 failures move; a failed TOP takes its whole library with it). Sweep rows carrying drop

@@ -137,6 +137,37 @@ export function markPrepared(subject, grade, filename, periods) {
   })).catch(() => {});
 }
 
+/* ───────── period apportionment — ONE method, defined once (2026-08-13) ─────────
+ * Largest-remainder: split `total` whole periods across `weights`, giving every
+ * remainder-ranked chapter one extra until the total is exactly used. This is the method
+ * `genon/master_plan.py` used to compute each chapter's `recommended_periods`, and the one
+ * `aruvi_core/allocate.py` uses server-side — so a client figure computed this way matches
+ * both the number the canonicals were AUTHORED at and the number the backend would allocate.
+ *
+ * IT LIVES HERE BECAUSE DIVIDING AND ROUNDING PER CHAPTER IS NOT THE SAME THING, and the
+ * difference reached a teacher. PrepareLesson used to compute its own suggestion as
+ * `Math.round(weight / ΣweightS × budget)`, independently per chapter. On english VI ch 8 that
+ * is `16.5 / 182.5 × 140 = 12.658 → 13`, where the master plan says 12: eleven chapters were
+ * entitled to the +1 and ch 8's .658 remainder came twelfth. Two consequences, both real:
+ * the column summed to 142 against a 140 budget, and — because the chapter's TOP canonical is
+ * authored at 12 — a teacher accepting the default asked for 13 against a 12-period library and
+ * was served the "above the top" SURRENDER path. It affects 40 of the master plan's 340
+ * chapters (11.8%), across five subjects. Any screen suggesting periods must call this, never
+ * re-derive it. (ARV-D-142.) */
+export function largestRemainder(total, weights) {
+  const sum = weights.reduce((a, b) => a + b, 0);
+  if (!total || sum <= 0) return weights.map(() => 0);
+  const raw = weights.map((w) => (total * w) / sum);
+  const base = raw.map(Math.floor);
+  const rem = total - base.reduce((a, b) => a + b, 0);
+  const order = raw
+    .map((r, i) => ({ i, frac: r - Math.floor(r) }))
+    .sort((a, b) => b.frac - a.frac);
+  const out = base.slice();
+  for (let k = 0; k < rem; k++) out[order[k % order.length].i] += 1;
+  return out;
+}
+
 /* Annual budget in PERIODS for a subject·grade, read from the CANONICAL readiness.subjects[]
  * (not the active-subject projection). Mirrors Readiness.computeBudget / Allocate's copy so the
  * Prepare screen's budget meter and Allocate agree. budget is { gradeIdx: {method, value} }:

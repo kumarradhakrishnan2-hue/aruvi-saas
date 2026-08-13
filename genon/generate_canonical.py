@@ -335,8 +335,16 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
             "lesson_plan": parsed.get("lesson_plan", {}),
             "period_schedule": parsed.get("period_schedule"),
             "coverage_handoff": parsed.get("coverage_handoff", {}),
-            "role_handoff": parsed.get("role_handoff", {}),
-            "unit_handoff": parsed.get("unit_handoff", {}),
+            # ★ `role_handoff` / `unit_handoff` REMOVED 2026-08-13 (founder ruling, S10 C3).
+            # Both are RETIRED declarations — they went with Amendments A2/A3/A4 and the
+            # partition engine, and testing.md §1 lists them under "never tested again;
+            # never reintroduced". No live constitution has defined either since, so the
+            # models stopped emitting them and these two lines were writing `{}` into every
+            # canonical: a retired key, present and empty, in the one artefact class that
+            # reaches the cloud. Found on the ch 8 library, which carries both on all three
+            # files. Nothing READS them off a new canonical — `compile.py` and `api/data.py`
+            # still read them where they are POPULATED, which only prototype- and v1.3-era
+            # saved plans are, and those are untouched by this.
             "assessment_items": parsed.get("assessment_items", []) or [],
             "competency_gap_note": parsed.get("competency_gap_note", ""),
             "section_coverage_note": parsed.get("section_coverage_note"),
@@ -627,8 +635,8 @@ def cmd_one(args) -> int:
                     n_items = max(sofar.count('"question_type"', ai),
                                   sofar.count('"period_ref"', ai))
                     stage = f"periods {count}/{count} · assessment item {n_items}"
-                elif '"role_handoff"' in sofar:
-                    stage = f"periods {count}/{count} · role handoff"
+                # (a `"role_handoff"` branch sat here until 2026-08-13; the sketch no longer
+                # asks for the key, so it could never fire again)
                 elif '"coverage_handoff"' in sofar:
                     n_los = max(0, sofar.count('"period_number"') - count)
                     stage = f"periods {count}/{count} · handoff LO {n_los}"

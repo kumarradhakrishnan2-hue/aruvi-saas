@@ -54,6 +54,10 @@ from aruvi_core.genon.serve import (                               # noqa: E402
 from aruvi_core.assessment_norm import mistyped_tag                # noqa: E402
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
+from summary_sections import (                                     # noqa: E402
+    NONE as SUMMARY_UNREADABLE, STRUCTURED as SUMMARY_STRUCTURED,
+    reconcile as reconcile_sections, summary_sections,
+)
 
 # Every `question_type` the corpus actually uses — a census over all saved plans and the
 # backup corpus, 2026-08-12 (ARV-D-123). This is the union across ELEVEN stages, not one
@@ -274,6 +278,64 @@ def certify(subject, grade, ch, row):
     if not section_axis:
         lines.append("N/A   anchors verbatim / first-visit order / registry coverage "
                      "— this stage has no section axis (checks 3-5 do not apply)")
+
+    # ── REGISTRY ↔ CHAPTER SUMMARY (2026-08-13, batch-runbook trap 5) ────────────
+    # THE ONE CHECK THAT LOOKS OUTSIDE THE LIBRARY, and it exists because every other
+    # section check is built FROM the top canonical's registry and therefore cannot see
+    # what the top canonical omitted. Checks 3-5 measure the compacts against that
+    # registry; if the standard never named a section, the registry never had it and all
+    # three agree happily. The runbook's instruction was "compare the registry against
+    # the chapter summary's section list by eye until that check exists".
+    #
+    # It found science·ix ch 8 — the S3 pilot, certified ALL PASS — omitting **8.5 Atomic
+    # Number**, and TWAU iii ch 1 and ch 9 omitting their closing `Let us reflect`.
+    #
+    # ASYMMETRIC, like the handoff/anchor check below it. A summary section no unit
+    # anchors GATES: the chapter is not taught at any period count. A registry entry the
+    # summary does not name is ADVISORY: SS quite properly names an unlabelled opening
+    # ("Introduction to the Atmosphere"), and merges and renames are legitimate.
+    #
+    # It does NOT quarantine — the register-gate precedent. The library serves perfectly
+    # well; what is wrong is what it teaches. Unlike a register breach it is NOT
+    # repairable in place: the remedy is a regeneration of the top (and therefore the
+    # compacts, whose briefs are built from its registry) or an accepted-omission ruling
+    # at the human gate. That is a founder call, which is why this reports a failure
+    # rather than moving files.
+    #
+    # It gates only where the summary DECLARES its sections — JSON `sections[]` /
+    # `main_sections[]` (maths, english, TWAU) and numbered headings (science). Social
+    # science summaries are prose that names its sections differently in every chapter,
+    # so there it reports an advisory shortlist instead: measured over the corpus, every
+    # extractor tried recovered real sections AND sub-topics ("Waterfall", "Deltas",
+    # "GLOFs" under Running Water), and a gate that fails good chapters gets switched off
+    # (runbook trap 4). The real fix is upstream — a section list in the SS summary
+    # prompt's output. Reasoning and measurements: genon/summary_sections.py.
+    if section_axis:
+        secs, kind = summary_sections(subject, grade, ch)
+        if kind == SUMMARY_UNREADABLE:
+            lines.append("      ADVISORY: no section list readable from the chapter "
+                         "summary — registry <-> summary NOT reconciled for this chapter")
+        else:
+            missing, extra = reconcile_sections(reg, secs)
+            shape = f"{len(secs)} summary section(s) vs {len(reg)} registry entr(ies)"
+            if kind == SUMMARY_STRUCTURED:
+                note(not missing,
+                     f"{top_name}: every section the chapter summary carries is anchored "
+                     f"by some unit ({shape})"
+                     + (" — UNNAMED BY ANY UNIT: " + "; ".join(missing) if missing else ""))
+            elif missing:
+                lines.append(
+                    f"      ADVISORY {top_name}: {len(missing)} prose lead(s) in the "
+                    f"summary match no registry entry ({shape}) — rule on each by eye, "
+                    f"a sub-topic is not a section: " + "; ".join(missing))
+            else:
+                lines.append(f"      registry <-> summary: no unmatched prose lead ({shape})")
+            if extra:
+                lines.append(
+                    f"      ADVISORY {top_name}: {len(extra)} registry entr(ies) the "
+                    f"summary does not name (an unlabelled opening, a merge or a rename "
+                    f"— never a failure): " + "; ".join(extra[:6])
+                    + (" …" if len(extra) > 6 else ""))
 
     for name, s in lib:
         is_top = name == top_name

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { annualBudgetPeriods, getJSON, pad } from "../lib/format";
+import { annualBudgetPeriods, getJSON, largestRemainder, pad } from "../lib/format";
 
 /* ───────── YearPlan — the whole teaching year for ONE subject·class, at a glance ─────────
  * This is the restructured "allocation report" (founder decision, 2026-07-21): a LIVING mobile
@@ -40,22 +40,9 @@ import { annualBudgetPeriods, getJSON, pad } from "../lib/format";
  * Props: subjectName (display), sSlug, gSlug (slugs), readiness (page projection), onAllocate.
  */
 
-// Largest-remainder apportionment: split `total` whole periods across `weights`, giving every
-// remainder-ranked chapter one extra until the total is exactly used. Same method the backend
-// allocator uses, so the client figure matches how periods actually get allocated.
-function largestRemainder(total, weights) {
-  const sum = weights.reduce((a, b) => a + b, 0);
-  if (!total || sum <= 0) return weights.map(() => 0);
-  const raw = weights.map((w) => (total * w) / sum);
-  const base = raw.map(Math.floor);
-  let rem = total - base.reduce((a, b) => a + b, 0);
-  const order = raw
-    .map((r, i) => ({ i, frac: r - Math.floor(r) }))
-    .sort((a, b) => b.frac - a.frac);
-  const out = base.slice();
-  for (let k = 0; k < rem; k++) out[order[k % order.length].i] += 1;
-  return out;
-}
+// `largestRemainder` moved to lib/format.js on 2026-08-13 so PrepareLesson shares it rather
+// than re-deriving its suggestion with a per-chapter Math.round (ARV-D-142). The method is
+// unchanged; this screen was already the correct one.
 
 export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAllocate }) {
   const [chapters, setChapters] = useState(null); // null = loading, [] = none

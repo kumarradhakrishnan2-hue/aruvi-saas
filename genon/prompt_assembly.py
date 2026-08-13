@@ -17,9 +17,20 @@ The ONLY deviations, each mechanical and declared:
    exposed as functions returning (system_prompt_blocks, user_message_blocks).
    The non-English inline block is wrapped as _build_lpa_prompts_standard —
    its body is the verbatim inline code.
-4. (2026-07-25, LP v1.2) "role_handoff": <per LP Constitution> added to the
+4. (2026-07-25, LP v1.2) "role_handoff": <per LP Constitution> was added to the
    top-level output sketch in both schema branches — the sketch must track
    Amendment A1's top level or the model drops constitution-mandated siblings.
+   ★ REVERSED 2026-08-13 (founder ruling, at S10's C3). The sketch no longer asks
+   for it. `role_handoff` and `unit_handoff` are RETIRED declarations — they went
+   with Amendments A2/A3/A4 and the partition engine, and testing.md §1 lists both
+   under "never tested again; never reintroduced". No live constitution has carried
+   either since; only three CHANGELOGs mention them, as the record of their removal.
+   So the sketch was asking the model for a key its own constitution no longer
+   defines, and the only reason it stayed invisible is that a model asked for
+   "<per LP Constitution>" against a constitution that says nothing sensibly emits
+   nothing. Found at S10's C3 as the follow-up S11's sign-off left open — the ch 8
+   library carries `role_handoff: {}` and `unit_handoff: {}` on all three canonicals,
+   injected downstream (see generate_canonical.py), not authored.
 5. (2026-08-12, S11) `_build_lpa_prompts_english` lifted from the same app.py
    state, with `phases` -> `time_bands` / `description` -> `activity` in its
    period sketch and length constraints. FORCED by english LP v1.2's P3
@@ -222,7 +233,6 @@ def _build_lpa_prompts_standard(
   "period_schedule": <derived from teacher period schedule above>,
   "lesson_plan": {{ "periods": [ <one object per period per LP constitution> ] }},
   "coverage_handoff": <per LP Constitution>,
-  "role_handoff": <per LP Constitution>,
   "assessment_items": <per Assessment Constitution>
 }}"""
         _intro_line = "Follow the Lesson Plan Constitution and Assessment Constitution exactly."
@@ -235,8 +245,7 @@ def _build_lpa_prompts_standard(
   "chapter_title": "{chapter.get('chapter_title', '')}",
   "period_schedule": <derived from teacher period schedule above>,
   "lesson_plan": {{ "periods": [ <one object per period per LP constitution> ] }},
-  "coverage_handoff": <per LP Constitution>,
-  "role_handoff": <per LP Constitution>
+  "coverage_handoff": <per LP Constitution>
 }}"""
         _intro_line = "Follow the Lesson Plan Constitution exactly."
         _task_line  = "Generate a complete lesson plan for the following chapter."

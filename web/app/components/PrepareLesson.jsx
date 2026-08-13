@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods, largestRemainder } from "../lib/format";
 import { verifiedWrite, planIsPrepared } from "../lib/verify";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
@@ -160,17 +160,46 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
   );
 
   // Aruvi's suggested periods for a chapter: its effort-index SHARE of the teacher's OWN annual
-  // budget (weight_c / Σweights × budget) — the same basis Allocate uses. NCF is deliberately NOT
-  // used here (2026-07-08): by the time this route runs the class has been created and its annual
-  // budget collected, so the suggestion keys off her real budget. A flat default is the only
-  // fallback (e.g. a chapter with no effort weight); NCF never drives the number.
+  // budget — the same basis Allocate uses. NCF is deliberately NOT used here (2026-07-08): by the
+  // time this route runs the class has been created and its annual budget collected, so the
+  // suggestion keys off her real budget. A flat default is the only fallback (e.g. a chapter with
+  // no effort weight); NCF never drives the number.
+  //
+  // ★ APPORTIONED, NOT ROUNDED (2026-08-13, ARV-D-142). This used to be an independent
+  // `Math.round(weight_c / Σweights × budget)` per chapter, which is a different number from the
+  // one the rest of the product uses and does not conserve the budget. On english VI ch 8 it
+  // suggested 13 where `master_plan.recommended_periods` says 12 — and since that chapter's TOP
+  // canonical is authored at 12, accepting the default asked for MORE PERIODS THAN THE LIBRARY
+  // HOLDS and fell into the serve engine's "above the top" surrender path. The column also summed
+  // to 142 against a 140 budget, and YearPlan (which always apportioned) disagreed with this
+  // screen for the same teacher on the same chapter. 40 of 340 chapters were affected.
+  // `largestRemainder` over the whole chapter list is now the one method: it conserves the budget
+  // exactly and reproduces `recommended_periods` whenever her budget matches the calibrated one.
+  //
+  // The list INCLUDES the master plan's placeholder ("Book awaited") chapters — the API adds them
+  // and their weights are what make the listed weights sum to `syllabus_total_weight` — so the
+  // founder's 2026-07-25 rule (divide by the FULL syllabus, never the listed subset, or every
+  // suggestion inflates until the books ship) is preserved by construction rather than by a
+  // separate denominator.
+  const sugByChapter = useMemo(() => {
+    const out = {};
+    if (annualBudget == null || !chapters.length) return out;
+    const ws = chapters.map((c) => (Number(c.weight) > 0 ? Number(c.weight) : 0));
+    const listed = ws.reduce((a, b) => a + b, 0);
+    if (listed <= 0) return out;
+    // Guard for the case the API could not supply the placeholder rows: apportion across the
+    // listed chapters PLUS one synthetic bucket carrying the syllabus weight they don't cover,
+    // then discard it. With a complete list the bucket is 0 and this is a plain apportionment.
+    const missing = Math.max(0, (Number(sumW) || listed) - listed);
+    const dist = largestRemainder(annualBudget, missing > 0 ? [...ws, missing] : ws);
+    chapters.forEach((c, i) => { out[c.chapter_number] = dist[i] > 0 ? dist[i] : 1; });
+    return out;
+  }, [chapters, annualBudget, sumW]);
+
   const suggestionFor = (c) => {
     if (!c) return DEFAULT_PERIODS;
-    if (annualBudget != null && sumW > 0 && c.weight != null) {
-      const v = Math.round(((Number(c.weight) || 0) / sumW) * annualBudget);
-      return v > 0 ? v : 1;
-    }
-    return DEFAULT_PERIODS;
+    const v = sugByChapter[c.chapter_number];
+    return v != null ? v : DEFAULT_PERIODS;
   };
 
   const chosen = chapters.find((c) => String(c.chapter_number) === String(chapterNo));

@@ -4,6 +4,70 @@ The `VERSION` line lives in the constitution; the history lives here (testing.md
 
 ---
 
+## v3.7 — 2026-08-13 · S10's P-prep — A6 confirmed, A9 added, and the history moved to this file
+
+Campaign step: `docs/testing.md` §3, stage **S10 · english · middle**. Artefacts (script,
+pre-file, diff): `genon/out/stage_prep_english_middle/`.
+
+**A6 — CONFIRMED, not amended.** P2 asks that every item carry its anchor unit, or the subject's
+equivalent, copied from the LO row consumed. **Rule 8A already says it**, having landed a day
+early with the PAIR amendment: the anchor is the (section × spine) **CELL**, carried by the
+item's own `source_section_id` + `source_spine` — the 8-rule table's **row 7**, and its only PAIR
+key — the platform resolves it against each period's `section_id` + `spines_taught[]`, and
+`period_ref` / `period_number` / `unit_ref` MUST NOT be emitted. The v1.2-era band-level
+`phase_ref` is absent (`grep -c` = 0) and was not reintroduced. Nothing to amend; asserted by
+guard.
+
+**A9 — the two lines, and the removal is N/A.** This file never carried the MEMORY-item-18
+position prohibition — testing.md P2 names the four files that do (SS and Science, middle and
+secondary) and this is not one; `consecutive`, `same label` and `vary in position` all assert 0.
+So A9 lands as the addition alone, in the v1.7 wording, **purely additive** because there was no
+prior "none of the above" ban to absorb:
+
+- MCQ option order carries no meaning and is not the model's to set — emit them as authored;
+  uneven letters across a chapter are coincidence, not a defect, and the platform arranges them
+  deterministically after generation (`genon/normalize_options.py`, STEP 6 of `build_library.py`).
+- An option MUST NOT refer to another option **by its label** — "both A and B", "none of the
+  above", "all of the above", "either B or C" — the one construction a downstream sort cannot
+  reorder without rewriting the item.
+
+They sit in **Rule 4**, where english states its MCQ semantics, rather than in Rule 5's indented
+answer-layer list where a two-paragraph block reads as part of a bullet. Same site
+english·secondary chose at v1.4, for the same reason. **No arrangement sentence was added** —
+`alphabetic`, `never led with` and `first word at which they differ` all assert 0, and re-adding
+any rule that names a label position is forbidden (v1.6 and v1.7 both).
+
+**P4 — the version history left the constitution.** v3.6 wrote its own five-line changelog into
+the top of the file, above DESIGN PRINCIPLE. P4 puts history in this sidecar and leaves only the
+`VERSION` line in the file; the block is lifted out and its content is the v3.6 entry below.
+
+---
+
+## v3.6 — 2026-08-12 · THE PAIR (carried from S11, back-filled here at P4)
+
+*Recorded from the block that stood at the top of the constitution until v3.7 lifted it out.*
+
+**Rule 2 now emits TWO items per spine-cell, not one**, on a prescriptive per-spine slot table:
+slot 1 at the comprehension/application rung, slot 2 at inference/analysis/creation, the two
+types MUST differ (sole exception Speaking and Writing, whose spines permit exactly one type
+each and which differ by mode or form instead). Both items carry the SAME `source_lo` — they
+sample one outcome twice rather than splitting it into two — and where the `implied_lo` is
+compound they must take different strands of it. Item count per chapter = 2 × total
+`section_contributions`.
+
+**A new Rule 8A scopes the pair in two stages** across the cell's teaching span: slot 1 is
+answerable once the cell's early teaching has happened, slot 2 presumes the whole cell. That
+declaration is what licenses the platform to DISPERSE a cell's items across the units that
+taught it, in slot order, instead of anchoring both at the close — which is why Rule 2 forbids
+emitting slot 2 first. Scoping is declared by SLOT, never by number.
+
+Amended in step with english/secondary v1.6 and english/preparatory v1.4. Reasoning:
+`docs/english_secondary_item_density.md` — english was the only subject whose assessment axis is
+capacity-bounded (the six spines, fixed) rather than content-bounded, so post-split its grid
+collapsed to 1×6 and the item ceiling was 6 at any period count.
+
+---
+
 ## v3.5 — 2026-08-12 · the poem is addressed, not reproduced (ARV-D-138, carried from S11)
 
 **Landed ahead of this stage's own P-prep**, because the window closes the moment a poem

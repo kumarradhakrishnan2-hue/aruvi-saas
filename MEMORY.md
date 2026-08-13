@@ -61,6 +61,19 @@ must confirm · source entry.
    MCQ-bearing english chapter" rather than a stage** — S9 (preparatory, whose type set is
    MCQ-heavier) is the likeliest place it fires. A9's arrangement half is in the same position
    (C3 recorded it): one options-bearing item in the library, a TRUE_FALSE.
+   **★ TESTED LIVE + PASSED 2026-08-13 (S10 · C4, VI ch 8 *What a Bird Thought*, library
+   {12, 10, 7}) — the owner S11 named turned up at the very next stage.** Ch 8 carries an MCQ in
+   EVERY canonical (`Q-RFC-B-1` ×3): assessment v3.6's PAIR slot table puts a lower-rung item at
+   Reading slot 1 and MCQ leads its permitted set, so at middle the type is structurally likely
+   rather than incidental — which is why secondary could legitimately produce none and this stage
+   produces three. All three emit `what_each_option_reveals` **keyed to exactly the incorrect
+   labels and never the correct one** (A·B·D against correct C in the standard and p10; A·C·D
+   against correct B in p07 — the labels differ because STEP 6 re-ordered them, which is the
+   arrangement stage visibly working), `suggested_answer` empty as Rule 5 requires of MCQ, and
+   `note` empty on all three, so nothing fell back to the prose-`note` shape the 2026-07-10
+   rewrite took out of the corpus. **The generation prompt wrapper produces keyed reveals
+   unaided. Discharged for english·middle.** english·preparatory (S9) is the last stage owing
+   it; secondary owes it only if a later chapter of that class ever yields an MCQ.
 
 3. **Constitution exact-counts audit (spec §J.3)** — deferred to the generation milestone: the
    per-type item-count expectations in the constitutions have not been reconciled against what
@@ -92,6 +105,19 @@ must confirm · source entry.
    `section_id: "A"` on all 41 units; and the port's singleton-section collapse putting SPINES at
    the top level. Period spread 17 for a 29-page section, consistent with the `effort_index` 9.6
    that set `recommended_periods`. **Grades VI, VII, VIII and III are still owed, by S10 and S9.**
+   **★ VI HALF TESTED LIVE + PASSED 2026-08-13 (S10 · C4, ch 8 *What a Bird Thought*, library
+   {12, 10, 7}).** The split contract is reproduced on all three canonicals: title
+   `"What a Bird Thought (Nurturing Nature)"` in the `<section> (<unit>)` form;
+   `main_sections_inventory` a single entry `{B, "What a Bird Thought", poem}`; `section_id: "B"`
+   on all **29 units** across the three files; the singleton-section collapse putting SPINES on
+   top. Period spread 12 for an 8-page section, consistent with `effort_index` 16.5.
+   **ONE THING THE IX RUN COULD NOT SHOW, AND THIS ONE DOES: the section id is `B`, not `A`.**
+   The split kept each chapter's position inside its original textbook Unit — ch 8 is the SECOND
+   section of "Nurturing Nature" — so across a class the ids run A, B, C, D and only the first
+   chapter of each Unit gets `A`. IX's ch 7 was an `A`, which made the id look like a constant.
+   Anything keyed on `A` is wrong for eleven of VI's sixteen chapters; S10's P5.2 recorded the
+   trap and this is the live confirmation. **Grades VII and VIII are owed by the pre-warm sweep
+   — both are true multi-section classes, which neither IX nor VI exercises — and III by S9.**
 
 5. **English-middle Step 7d effort-index calibration reused across grades unverified** — the
    `task_density` tier cutoffs (≤2.0 / 2.1–2.9 / ≥3.0) calibrated on Grade VI were **reused
@@ -613,7 +639,76 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-12 (newest) — S-SS · SOCIAL_SCIENCES · SECONDARY (IX) SHIPPED IN ONE DAY,
+## 2026-08-13 (newest) — CERTIFICATION COULD NOT SEE WHAT IT WAS BUILT FROM.
+## C5 CHECK 11, AND THE PILOT IT CAUGHT
+
+**The hole, stated exactly.** Every section check in `certify()` measures the library
+against the section registry, and the registry is DERIVED from the top canonical. So a
+section the chapter has and the top canonical never named is invisible to all of them:
+check 3 (anchors verbatim) passes because no unit anchors it, check 4 (first-visit order)
+passes because it is not in the walk, check 5 (coverage reaches the final registry
+section) passes because the registry it is measured against is the short one. The compacts
+then inherit the omission through their briefs, which `variant_plans.briefs_for` builds
+from that same registry. **The check cannot see what it is built from** — it was written
+down as batch-runbook trap 5 with the remedy "compare by eye", and by-eye does not survive
+a 926-run corpus.
+
+**It was live, on a certified pilot.** `science·ix ch 8` — the S3 pilot chapter, ALL PASS,
+human-gated — has **no unit in any canonical anchoring `8.5 Atomic Number`**, a top-level
+numbered section its summary carries in full. TWAU `iii ch 1` and `iii ch 9` omit their
+closing `Let us reflect` the same way. Three chapters, found in the first minute the check
+existed, on two stages that had both been through the whole cycle.
+
+**The fix: `genon/summary_sections.py` + C5 check 11** (testing.md 2.10; §9 treats it as a
+certifier change — free, `--certify-only`, no rupees). Design notes worth keeping:
+
+- **Asymmetric, like the handoff/anchor check.** A summary section no unit anchors GATES;
+  a registry entry the summary does not name is ADVISORY (SS quite properly names an
+  unlabelled opening — "Introduction to the Atmosphere" — and merges and renames are
+  legitimate). Gating both directions would have failed good chapters immediately.
+- **It does not quarantine, and its remedy is not a repair.** The library serves perfectly
+  well; what is wrong is what it teaches. But unlike a register breach there is no
+  `repair_*` for it — the fix is a re-author of the top AND its compacts (~₹37/run × the
+  plan size), or an accepted-omission ruling at the human gate. It is the first defect
+  family in the runbook's triage table that costs money.
+- **It gates only where the summary DECLARES its sections** — JSON `sections[]` /
+  `main_sections[]` (mathematics, TWAU, english — english's entries are the SPINE CELLS,
+  since post-split a chapter is one main_section and a section-level list would reconcile
+  1 against 6) and numbered headings (science). **social_sciences gets an ADVISORY
+  shortlist instead**: its summaries are prose that declares sections differently in every
+  chapter ("Title: This section explains…" in IX ch 3, "Plate Tectonics presents…" in IX
+  ch 2, a bare heading paragraph in VIII ch 3 — each an independent generation), and every
+  extractor tried recovered real sections AND sub-topics (Waterfall, Deltas, GLOFs under
+  Running Water). A gate firing on those would be switched off in a week (runbook trap 4).
+  **The real fix is upstream — a section list in the SS chapter-summary prompt's output —
+  and it is NOT scheduled.** Until then SS is "compare by eye" reduced from a whole summary
+  to one-to-seven leads, which is the honest thing to claim for it.
+- **The bug that nearly shipped it silent.** The first draft gave `8.5` the parent `8`,
+  matched ancestors by containment, and `"8"` is contained in `"8.1 Rediscovering…"` — so
+  every section in the chapter was "covered by its ancestor" and the gate reported ALL PASS
+  on the one library already proved defective by hand. A top-level ref has NO parent: its
+  parent is the chapter, and a chapter is not a section anything can anchor. Refs are now
+  matched by boundary, titles by containment. `tests/test_summary_sections.py` (16 green)
+  locks exactly this.
+
+**Corpus state after the sweep (2026-08-13, `--certify-only` over both batched stages).**
+TWAU iii·iv·v: 32 chapters, **2 FAILs, both this check** (iii ch 1, iii ch 9), everything
+else clean. SS·IX: 9 chapters, **0 gating failures** (prose → advisory), 6 advisory
+shortlists of 1–7 leads — `Secondary-Stage Social Science` (ch 1), `Assemblies during Vedic
+Period` (ch 5), `Inside India's Election Machinery` (ch 7), `Economic Survey` (ch 8),
+`Tariffs by hotels` (ch 9) are the ones that read like real sections rather than sub-topics
+and are owed a ruling. Unrelated and pre-existing, surfaced by the same sweep: **SS·IX ch 1
+and ch 5 p13 each carry 1 register ban hit** — `repair_register.py`, free.
+
+**Owed, not done.** C8 (the X−1→X transition) and C14 (copyright) remain founder-run by
+hand across the batched corpus; they are irreducibly judgement and no tooling was built for
+them. The other batch-vetting gaps discussed the same day and deliberately NOT taken up: a
+self-correction-marker regex (ARV-D-085, still a C5 tooling gap) and a copyright n-gram
+shortlist against the textbook text.
+
+---
+
+## 2026-08-12 — S-SS · SOCIAL_SCIENCES · SECONDARY (IX) SHIPPED IN ONE DAY,
 ## ₹488.76 — AND A COMPACT CAUGHT A DEFECT IN THE PLAN IT WAS AUTHORED FROM
 
 **The stage.** 9 real chapters (ch 10–18 are NCERT placeholders with no summary/mapping and

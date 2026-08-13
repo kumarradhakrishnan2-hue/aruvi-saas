@@ -90,6 +90,7 @@ grep -h "^FAIL" genon/out/library_reports/{subject}_*_<stamp>*.md \
 | section missing from registry | a compact anchors a real section the top never named | `repair_anchors.py` + judgement | free |
 | first-visit order | a compact teaches a late section early | `repair_unit_order.py` | free |
 | wrong-column `question_type` | a mode/tier code where a type belongs | `repair_item_type.py` | free |
+| **section the summary carries and no unit anchors** | C5 check 11 FAILs, naming the section | **none — re-author the top + its compacts, or rule the omission accepted** | **~₹37/run × the chapter's plan size** |
 
 **Regenerating is a lottery (founder, 2026-08-02).** Repair unless the fix is a real teaching
 change. Every repair is a STATED (old → new) pair with its evidence in the declaration, applied
@@ -109,9 +110,13 @@ a handful of joiner slips. All were free. Budget effort, not money.
 4. **A false positive is fixed at the scanner, not in the text.** If a pattern flags correct
    pedagogy ("half the class will be…"), make it advisory in `register_scan.py` and say why.
    Striking good teaching to satisfy a regex is the wrong direction.
-5. **The registry is derived from the top, so top-level omissions are invisible** to
-   certification — the check cannot see what it is built from. Compare the registry against the
-   chapter summary's section list by eye until that check exists.
+5. **CLOSED 2026-08-13 — the registry is derived from the top, so a top-level omission used to
+   be invisible** to certification: the check cannot see what it is built from. It is now
+   **C5 check 11** (`genon/summary_sections.py`), which reconciles the registry against the
+   chapter summary and fails on any section no unit anchors — it caught science·ix ch 8 omitting
+   `8.5 Atomic Number` on a library already certified ALL PASS. Read it as a defect family
+   (below), not a trap. It gates on mathematics · english · TWAU · science and returns an
+   ADVISORY shortlist on social_sciences, whose summaries carry no structural section marker.
 6. **Field names differ by stage.** `section_anchor`/`section_ref`, `teacher_notes`/
    `teacher_facilitation_note`. Every tool reads through a carrier seam; if a repair refuses
    with "declared text not found", suspect the field before the text.
@@ -124,7 +129,8 @@ a handful of joiner slips. All were free. Budget effort, not money.
 # 1. every canonical the master plan expects is on disk
 # 2. no quarantined file lacks a live counterpart
 # 3. zero register ban hits library-wide
-# 4. every chapter ALL PASS
+# 4. every chapter ALL PASS — including C5 check 11, and on a prose subject
+#    (social_sciences) its advisory shortlist has been ruled on rather than skimmed
 # 5. every chapter serves at top / middle / floor / below-floor
 # 6. no derived plans left on disk
 # 7. spend reconciled from runtime_data/token_log.csv

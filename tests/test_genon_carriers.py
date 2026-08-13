@@ -246,10 +246,18 @@ class TestUnimplementedFamiliesFailLoudly(unittest.TestCase):
             assessment_items({"subject": "Mathematics", "grade": "Grade VI"}, result)
 
     def test_english_raises_with_the_owing_stage_named(self):
+        """PREPARATORY is the one english stage still owed (S9).
+
+        This used to run on the VII fixture, which is the point of the stage-granular
+        table: secondary landed at S11 and middle at S10 without opening preparatory,
+        and each removal had to move this test rather than delete it.
+        """
         plan = load("english_vii_ch01_saved.json")
+        plan = dict(plan, grade="Grade III")
         with self.assertRaises(CarrierNotImplemented) as cm:
             assessment_items(plan, plan.get("result", plan))
         self.assertIn("english", str(cm.exception))
+        self.assertIn("S9", str(cm.exception), "the gap names the stage that owes it")
 
 
 class TestMathematicsSecondaryLanded(unittest.TestCase):
@@ -729,7 +737,7 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
     def test_the_stage_is_no_longer_owed_and_its_siblings_still_are(self):
         from aruvi_core.genon.carriers import carrier_gap
         self.assertIsNone(carrier_gap("english", "ix"))
-        self.assertIsNotNone(carrier_gap("english", "vii"), "S10 owes middle")
+        self.assertIsNone(carrier_gap("english", "vii"), "S10 landed middle 2026-08-13")
         self.assertIsNotNone(carrier_gap("english", "iii"), "S9 owes preparatory")
 
     def test_every_item_resolves_to_exactly_one_unit_with_zero_orphans(self):
@@ -934,6 +942,87 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
         assessment_items(self.plan, self.result)
 
 
+class TestEnglishMiddleLanded(unittest.TestCase):
+    """S10, 2026-08-13 — english·middle is row 7 too, and the deletion WAS the whole job.
+
+    No new code landed with this stage: `cell_resolver`, `genon_assessment`,
+    `genon_unit_anchor` and `_ENGLISH_SPINE_CELL` are all stage-agnostic and all arrived at
+    S11. The `_NOT_YET` note asked a successor to CONFIRM three things rather than re-derive
+    them — spine set, container shape, spine-keyed handoff — and all three held across VI,
+    VII and VIII (46 chapters, 272 taught cells, 12 saved plans, 53 items, zero orphans;
+    `genon/out/stage_prep_english_middle/verify_s10_carrier.py`).
+
+    WHY THIS CLASS EXISTS ANYWAY, ALONGSIDE THE SECONDARY ONE. Middle is the stage where the
+    PAIR key is load-bearing. Every english IX chapter is one `main_section`, so joining on
+    `source_spine` alone produces correct anchors across the whole certified secondary class —
+    S11 recorded that as the error that "would have looked correct". Middle's corpus is
+    genuinely multi-section: this fixture teaches Reading in sections A, B and C, so a
+    spine-only join collapses three cells onto one and the wrong answer finally shows.
+
+    The fixture predates assessment v3.6's PAIR (one item per cell, not two), which is what
+    makes it a clean test of the JOIN in isolation.
+    """
+
+    FIXTURE = "english_vii_ch01_saved.json"
+
+    def setUp(self):
+        self.plan = load(self.FIXTURE)
+        self.result = self.plan.get("result", self.plan)
+        self.periods = (self.result.get("lesson_plan") or {}).get("periods") or []
+
+    def test_the_stage_is_no_longer_owed_and_preparatory_still_is(self):
+        from aruvi_core.genon.carriers import carrier_gap
+        for g in ("vi", "vii", "viii"):
+            self.assertIsNone(carrier_gap("english", g), f"S10 landed {g}")
+        self.assertIsNotNone(carrier_gap("english", "iii"), "S9 still owes preparatory")
+
+    def test_the_multi_section_join_does_not_collapse_onto_the_spine(self):
+        """THE test this stage adds. Reading is taught in A (units 1-2), B (6-7) and C (10).
+        A spine-only join anchors all three RFC items at unit 10; the pair key does not."""
+        anchors = {it["id"]: it["unit_ref"]
+                   for it in assessment_items(self.plan, self.result)}
+        self.assertEqual(anchors["Q-RFC-A-1"], [2])
+        self.assertEqual(anchors["Q-RFC-B-1"], [7])
+        self.assertEqual(anchors["Q-RFC-C-1"], [10])
+        self.assertEqual(len({tuple(anchors[k]) for k in
+                              ("Q-RFC-A-1", "Q-RFC-B-1", "Q-RFC-C-1")}), 3,
+                         "three Reading cells must reach three different units")
+
+    def test_every_anchor_equals_the_LAST_unit_teaching_THAT_CELL(self):
+        """The 2026-08-05 ruling, computed independently off the units rather than asserted
+        as a literal, so the test cannot drift into agreeing with the code by construction."""
+        last: dict = {}
+        for i, p in enumerate(self.periods, start=1):
+            for sp in p.get("spines_taught") or []:
+                last[(str(p.get("section_id")).strip(), str(sp).strip())] = i
+        items = assessment_items(self.plan, self.result)
+        self.assertEqual(len(items), 14, "14 cells taught, one item each pre-v3.6")
+        for it in items:
+            cell = (str(it["source_section_id"]).strip(), str(it["source_spine"]).strip())
+            self.assertEqual(it["unit_ref"], [last[cell]],
+                             f"{it['id']} ({cell}) did not anchor at its cell's close")
+
+    def test_zero_orphans(self):
+        for it in assessment_items(self.plan, self.result):
+            self.assertTrue(it.get("unit_ref"), f"{it.get('id')} orphaned")
+
+    def test_unit_anchor_is_the_COMPOSITE_cell_code_at_this_stage_too(self):
+        """`section_anchor` is 0 in all three english LP constitutions, so the read is
+        mediated. A unit teaching two spines joins them with the V2 joiner."""
+        from aruvi_core.genon.carriers import unit_anchor
+        self.assertEqual(unit_anchor(self.periods[0], subject="English", grade="Grade VII"),
+                         "A|reading_for_comprehension")
+        self.assertEqual(unit_anchor(self.periods[2], subject="English", grade="Grade VII"),
+                         "A|listening / A|speaking")
+
+    def test_the_anchor_field_is_declared_ABSENT_for_middle(self):
+        """The expensive half: without this, `top_brief_for` demands the reserved token in a
+        field the constitution never defines — at metered STEP 1 — and the certifier then
+        finds no closing unit in a library already paid for."""
+        from aruvi_core.genon.carriers import anchor_field_present
+        self.assertFalse(anchor_field_present("english", "vii"))
+
+
 class TestCarrierPreFlight(unittest.TestCase):
     """The gate must be FREE. Before 2026-08-08 the answer arrived at certification, which
     runs after the metered steps, so a missing carrier cost a whole library (₹110-150) and
@@ -949,8 +1038,7 @@ class TestCarrierPreFlight(unittest.TestCase):
 
     def test_owed_stages_report_their_stage_and_row(self):
         from aruvi_core.genon.carriers import carrier_gap
-        for subject, grade, owes in (("english", "iii", "S9"),
-                                     ("english", "vi", "S10")):
+        for subject, grade, owes in (("english", "iii", "S9"),):
             gap = carrier_gap(subject, grade)
             self.assertIsNotNone(gap, f"{subject}·{grade} is not implemented")
             self.assertIn(owes, gap, "the gap must name the stage that owes it")

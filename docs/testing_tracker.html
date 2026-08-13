@@ -10,6 +10,11 @@
     --pass:#15803d; --pass-bg:#dcfce7; --fail:#b91c1c; --fail-bg:#fee2e2;
     --na:#64748b; --na-bg:#e2e8f0; --blocked:#b45309; --blocked-bg:#fef3c7;
     --pending:#94a3b8; --pending-bg:#f1f5f9; --accent:#1d4ed8; --accent-bg:#dbeafe;
+    /* amber = provisionally signed with P5.4 open (testing.md §3). Distinct from
+       `blocked`: the C-cycle IS open, and C6 is the hard stop. Added 2026-08-13 —
+       three scripts had been writing "amber" since S7 and the page had no rule for
+       it, so the cell rendered as untinted white and read as "nothing recorded". */
+    --amber:#a16207; --amber-bg:#fef9c3;
   }
   *{box-sizing:border-box}
   body{margin:0;font:14px/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -42,6 +47,7 @@
   .s-fail{background:var(--fail-bg);color:var(--fail)}
   .s-na{background:var(--na-bg);color:var(--na)}
   .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .s-amber{background:var(--amber-bg);color:var(--amber)}
   .hasnote::after{content:"✎";font-size:9px;margin-left:2px;opacity:.7}
   .rowlabel{white-space:nowrap;font-weight:600}
   .rowlabel small{color:var(--muted);font-weight:400;
@@ -65,6 +71,7 @@
   .statusbtns button.sel-fail{background:var(--fail-bg);border-color:var(--fail);color:var(--fail)}
   .statusbtns button.sel-na{background:var(--na-bg);border-color:var(--na);color:var(--na)}
   .statusbtns button.sel-blocked{background:var(--blocked-bg);border-color:var(--blocked);color:var(--blocked)}
+  .statusbtns button.sel-amber{background:var(--amber-bg);border-color:var(--amber);color:var(--amber)}
   .statusbtns button.sel-pending{background:var(--pending-bg);border-color:var(--pending);color:var(--pending)}
   textarea{width:100%;min-height:90px}
   .exit{background:#f8fafc;border-left:3px solid var(--accent);padding:8px 10px;font-size:13px;
@@ -130,7 +137,7 @@
     <p class="small">Click any cell anywhere to open it: read the exit criterion, set
       Pass / Fail / N-A / Blocked, and leave a comment. Everything saves to
       <code>data/testing/campaign_state.json</code> through the API. Legend:
-      <span class="pill s-pass">pass</span> <span class="pill s-fail">fail</span>
+      <span class="pill s-pass">pass</span> <span class="pill s-amber">amber</span> <span class="pill s-fail">fail</span>
       <span class="pill s-na">n/a</span> <span class="pill s-blocked">blocked</span>
       <span class="pill s-pending">pending</span> · ✎ = has a comment.</p>
   </section>
@@ -206,7 +213,7 @@ const STAGES = [
  {key:"mathematics/middle",       group:"B",  note:"LP v3.8 · assessment v3.4 ✓ · engine e19 · class vii · 40 min · pilot ch 7 · P1–P4 CLEAR, P5 amber (P5.4 profiles open) · C1–C11 + C14 PASS; C12 and C13 remain before the GATE · 17 defects: 9 closed, 5 accepted, 3 open · P3 converted, Group B and real · carrier landed (8-rule row 4, period-field) · NO new field: anchor mediated from textbook_segments[].ref and the goal-cluster handoff derived (founder 2026-08-10, prototype precedent) · LP amended FOUR times on live output — v3.5 Rule 5's method cap, v3.6 aligning Rules 1 and 2 with SECONDARY (the two-adjacent-period cap was forcing revisits whenever body units > 2 × sections; §9 full re-author), v3.7 the other direction of the same cap, v3.8 deleting the SURPLUS bullet that caused the hoarding it tried to cure · ARV-D-089 accepted on p10 · clean path ₹86.03 / 3 runs, ₹28.68 per run — 22% under the ₹37 benchmark · 4 read-path bugs fixed at ₹0 · <b>C14 PASS</b> on 13 plans (3 canonicals + all 10 C6 rows SERVED FRESH, since only 3 C6 files survived the ARV-D-107 purge), 1,193 teacher-facing strings: <b>1.15% of the chapter reached, longest textbook run 18 words (16 for prose), and 5 of the 10 long runs are measurement data</b> — 0 brands / 0 poems / 0 external images / 0 populated visual_stimulus across 114 items; 9 locator-free quotations, all ours, 0 matching the book. The textbook was scored APART from our own summary: merged it reads 45 words, book-only 18 — the 45 was the pipeline quoting itself. <b>ARV-D-108 raised</b>: Rule 10's 10-word inline-quotation cap is breached by 75 of 88 band quotations (85%), median 18.5, max 39 — the copyright pass holds only because ch 7's summary paraphrases, so the guarantee is doing no work. <b>Maths·middle DOES carry an F2-shaped conduit</b> (Rule 10 quotes the exercise inline) unlike maths·secondary, so S4's C14 conclusion does not port across the family. Tooling: copyright_scan.py read only .txt summaries, so on mathematics, english and TWAU — 7 of 11 stages — the summary silently counted as zero words; fixed, with a --book-only flag"},
  {key:"mathematics/preparatory",  group:"B",  note:"LP v1.4 · assessment v1.3 ✓ · class iii · 40 min · pilot ch 5 <i>Fun with Shapes</i> (8 sections, counts [14,11,8]) · P1–P4 CLEAR, P5 amber (P5.4 profiles open) · P3 converted, Group B and real · carrier landed (8-rule row 5, period-field on section_refs[]) — <b>mathematics is now carried at all three stages</b>, and S7 had already written both halves of the seam, so P5.5 was three lines plus a deletion · <b>Rules 1 and 2 ALIGNED with middle + secondary at LP v1.3</b>, same day, on founder challenge — both numeric caps out, contiguity sentence + secondary's two prohibitions in, middle's <i>end state</i> (v3.8) ported so the retired SURPLUS bullet never arrives, no section_goal invented. The first read recommended leaving them (the pilot dodges the arithmetic case, 13 body vs cap 16) and was wrong: <b>the real corpus already exceeds the cap with slack</b> — maths IV ch 8 runs one section across three periods on 9 body vs cap 12 — and prep was the sole outlier left in the maths family. Free: §9 full sense, three new obligations, but no library exists yet (S7 paid ~₹106 for the same conclusion). Three residues fixed with it, incl. the schema comment — <b>grep the number, not the rule</b>"},
  {key:"english/preparatory",      group:"B",  note:"v1.0 · phases[] → P3 · classes iii/iv/v · 40 min · registry definition needed (P5.2)"},
- {key:"english/middle",           group:"B",  note:"v1.5 · phases[] → P3 · classes vi/vii/viii · strike 'preview into next' · registry definition (P5.2)"},
+ {key:"english/middle",           group:"B",  note:"LP v1.7 · assessment v3.7 ✓ · class vi · 40 min · pilot ch 8 <i>What a Bird Thought</i> (section B, <b>POEM</b>, 6 cells, counts [12,10,7]) · P1–P5 CLEAR (P5.4 closed the same day — 6A/6B/6C disjoint, kumar3 at [40,&nbsp;50]), SIGN pass — <b>nothing owed at any P-step</b>, C6 inherits real profiles · P3 converted, Group B and real, and <b>free</b>: S11's stage-agnostic <code>_bands</code> both-keys read already covers the corpus · <b>carrier closed at zero cost</b> (8-rule row 7, the pair key) — S11's <code>_NOT_YET</code> note named three things to CONFIRM, not re-derive, all three held, and the deletion was the whole job; 46 chapters / 272 cells / 12 saved plans / 53 items / <b>zero orphans</b>, preparatory still shut. <b>Middle is where the PAIR key stops being untestable</b>: its corpus is genuinely multi-section, so a spine-only join collapses three Reading cells onto one — now a test (116 w/ 3 failures → <b>122 green</b>) · <b>The pilot is a poem on purpose</b>: ch 8's summary carries the NCERT poem in full, 17 verbatim lines, so the v3.5 locator rule (F2, the sole open copyright finding) is finally proved by live generation instead of inherited untested · <b>Rule 10 was contradicting its own assessment constitution</b> — 'one item per cell' where v3.6 emits TWO; struck here, <b>english·secondary carries it live against a CERTIFIED library</b> (defect row) and preparatory carries it free (strike at S9's P1) · FULL SPINE COVERAGE replaces the drop licence — the VII corpus has a ONE-unit plan carrying ONE of six spines — and the ≥4-period sweep across all 46 middle chapters finds <b>no chapter binding</b>, so no floor override is owed · task_brief ≤12→≤18 and Rule 9 now names WHICH subheading (16 of VI's 96 cells carry a 13-word MERGED section_name that busts the cap by itself) · dry pre-flight ₹0: v1.7 + v3.7 assembled, no stale strings"},
  {key:"english/secondary",        group:"B",  note:"v1.0 · phases[] → P3 · class ix · 50 min · registry definition (P5.2)"},
 ];
 const PSTEPS = [
@@ -263,7 +270,7 @@ const PROVFIELDS = [["klass","Class drawn"],["draw","Draw seed / method"],["chap
    the `reruns` row, which would read as a defect rerun in a chapter that had none.
    Stages a combo does not use render empty and contribute 0 to the total. */
 const PROVSTAGES = ["top_canonical","variant_a","variant_b","variant_c","variant_d","reruns"];
-const STATUSES = ["pass","fail","na","blocked","pending"];
+const STATUSES = ["pass","amber","fail","na","blocked","pending"];
 
 /* ───────────────────────── state + API ─────────────────────────────────────────── */
 let S = null;                 // server-shaped state

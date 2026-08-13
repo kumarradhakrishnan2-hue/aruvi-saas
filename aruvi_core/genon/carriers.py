@@ -139,15 +139,26 @@ _DISPLAY_TO_KEY = {
 # carries fewer spines), that their assessment container is still the spine-grouped list, and
 # that their LP still emits `coverage_handoff` as a spine-keyed DICT, which is what
 # `_ENGLISH_SPINE_CELL` round-trips. If all three hold, the deletion is the whole job.
+#
+# `("english", "middle")` was REMOVED 2026-08-13 (S10) — and it is the note above doing its
+# work: all three conditions held on the real saved corpus and the deletion WAS the whole job,
+# no new code. Confirmed across VI, VII and VIII before the line came out
+# (`genon/out/stage_prep_english_middle/verify_s10_carrier.py`, re-runnable): 46 chapters and
+# 272 taught cells use the six spine keys and nothing else, all 12 saved plans group items by
+# `spine_code`, every `coverage_handoff` is the spine-keyed dict `_ENGLISH_SPINE_CELL`
+# round-trips, and 53 items across those plans resolve with ZERO orphans — every anchor equal
+# to the independently computed last-unit-teaching-that-cell, with the N-to-N pairing intact
+# where a cell's item count equals its unit count. Middle is the stage that MATTERS for the
+# pair key: unlike IX, its corpus is genuinely multi-section (A, B and C each teaching Reading),
+# so a join on `source_spine` alone — the thing S11 warned would look correct on secondary —
+# collapses three cells onto one here and is caught. The one remaining entry is preparatory's.
 _NOT_YET = {
     ("english", "preparatory"): (
         "period-field join on (source_section_id + source_spine) → (section_id + "
-        "spines_taught[]) (8-rule row 7) — owed by S9; the code is in place, see the note "
-        "above this table for the three things to confirm before deleting this line"),
-    ("english", "middle"): (
-        "period-field join on (source_section_id + source_spine) (8-rule row 7) "
-        "— owed by S10; the code is in place, see the note above this table for the three "
-        "things to confirm before deleting this line"),
+        "spines_taught[]) (8-rule row 7) — owed by S9; the code is in place and carried at "
+        "TWO stages now, see the note above this table for the three things to confirm "
+        "before deleting this line. The one difference to check is the spine SET: "
+        "preparatory carries fewer than six"),
 }
 
 
