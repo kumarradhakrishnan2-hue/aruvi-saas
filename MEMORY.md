@@ -118,6 +118,15 @@ must confirm · source entry.
    Anything keyed on `A` is wrong for eleven of VI's sixteen chapters; S10's P5.2 recorded the
    trap and this is the live confirmation. **Grades VII and VIII are owed by the pre-warm sweep
    — both are true multi-section classes, which neither IX nor VI exercises — and III by S9.**
+   **★ III HALF TESTED LIVE + PASSED 2026-08-13 (S9 · C4, ch 11 *The Big Laddoo*, library
+   {12, 10, 7}).** Title `"The Big Laddoo (The Big Laddoo)"` in the `<section> (<unit>)` form;
+   `main_sections_inventory` a single `{B, "The Big Laddoo", poem}`; **`section_id: "B"` on all
+   29 units** across the three files; the singleton-section collapse putting SPINES on top.
+   Period spread 12 for an 8-page section, consistent with `effort_index` 11.5. **`B` again, not
+   `A` — the second independent confirmation of S10's trap**, and III is fully split at 17
+   chapters with the ids running A/B across a Unit's chapters (five of the seventeen are `B`).
+   **Only VII and VIII are still owed, and they are the ones that matter most: both are true
+   MULTI-SECTION classes, which none of IX, VI or III exercises.**
 
 5. **English-middle Step 7d effort-index calibration reused across grades unverified** — the
    `task_density` tier cutoffs (≤2.0 / 2.1–2.9 / ≥3.0) calibrated on Grade VI were **reused
@@ -220,6 +229,20 @@ must confirm · source entry.
    MATCH with a structured `{left,right}` `answer_key` (+ fallback string) and a clean pipe-table
    stimulus. ⚠️ **Confirm the exact intent with the founder** — this item was reconstructed from
    the current constitution file, not from a logged change description.
+   **★ TESTED LIVE 2026-08-13 (S9 · C4, ch 11, all three canonicals) — MATCH PASSES, FILL_IN
+   FAILS, and this was the item's FIRST test by anything.** MATCH: 5 of 5 carry the structured
+   `answer_key: [{left, right}]` (4–6 pairs) PLUS the short fallback string, with the pipe-table
+   entirely in `visual_stimulus` and an instruction-only stem — the whole contract, satisfied on
+   first contact. FILL_IN: **4 of 4 fail the answer shape.** The rule wants "each blank's answer
+   NUMBERED TO ITS BLANK"; the model emits column-grouped or object-keyed prose ("That can be
+   eaten: Apple, Orange, Grape. That cannot be eaten: Football, Globe, Coin."). **There is
+   nothing to number, because these are not cloze items** — they are a two-column sorting table
+   and a predict-and-record grid. **Same root as ARV-D-146** (C3): FILL_IN was chosen for
+   `writing` slot 1 in 3 of 3 files, where the slot table prescribes SCR, because the content IS
+   a sort; the type choice then drags in an answer contract the content cannot satisfy. One
+   decision, two rule breaches — **decide them together**: if `writing` slot 1 legitimately
+   admits FILL_IN, this item needs a second permitted answer shape for non-cloze FILL_INs.
+   ARV-D-151.
 
 9. **★ WHOLE recent constitution-edit WAVE (Jul 12–13) is untracked and untested ★** — item 8 is
    one instance of a broader batch. Memory's newest dated entry is 2026-07-11, but 11 constitution
@@ -557,6 +580,18 @@ must confirm · source entry.
    compact is the first generation under the new wording.** If it comes back with straight
    quotes anyway, the Format line is not where the model is taking its cue and the
    amendment needs re-siting, not re-wording.
+   **★ TESTED LIVE 2026-08-13 (S9 · C4) — FAILED, AND THIS CLAUSE IS WHAT FIRED.** Curly marks
+   emitted across the english family: **0 / 0 / 0** in S9's three files, **21** at english VI
+   (S10), **0** at english IX (S11). Straight DOUBLE quotes: **0 everywhere**. The model wrote
+   111 / 168 / 71 straight SINGLE quotes instead. So **the amendment's PURPOSE is fully met** —
+   the JSON escape hazard cannot occur in any english library — **and its FORMAT is not**, at two
+   of the three stages. The operative cue is "do not put a double quote inside a JSON string",
+   which the model obeys perfectly; not "use U+201C". Per this clause the amendment needs
+   **RE-SITING, not re-wording**. **And C3 reached the same conclusion from the other end the
+   same day:** ARV-D-145 found Rule 9's *narration Format* followed by 1 of 199 bands across
+   three stages. The curly marks and the parenthetical shape are **the same two lines of the same
+   rule** — two independent measurements now say Rule 9's Format block is not load-bearing on
+   generation. ARV-D-152.
 
 20. **TWAU assessment v1.4 → v1.5 (2026-08-12, from ARV-D-120)** — three brief additions, no
    mapping changed: Rule 3 Prohibition 3 (a `dominant_mode` code — O&R/HI/D&C/C&E/R&A — is
@@ -632,6 +667,19 @@ must confirm · source entry.
    except Speaking/Writing; both carry the SAME `source_lo`/`source_context`; the pair takes
    DIFFERENT strands of a compound `implied_lo` rather than the same strand twice; and at
    preparatory the pair stays light (no two WRITING_TASKs, oral preferred for slot 2).
+   **★ PREPARATORY TESTED LIVE + PASSED 2026-08-13 (S9 · C1/C3/C4, ch 11, 15 pairs across three
+   canonicals) — THE FIRST ENGLISH LIBRARY EVER GENERATED UNDER THE PAIR.** Every clause holds:
+   exactly 2 per contribution **15/15** (and **10 items at 12, 10 AND 7 units** — v1.4's
+   invariance line proved live); slot 1 before slot 2 with no interleaving; types differ 15/15;
+   same `source_lo`/`source_context` 15/15; different strands of a compound LO where the LO is
+   genuinely compound (`word_work` splits MATCH→animal pairs, ORAL_PROMPT→describing words;
+   weaker on `reading`, where both slots lean structure); and the **preparatory lightness clause
+   holds** — zero double-WRITING_TASK pairs, slot 2 oral in **11 of 15**. **Live density: 0.83
+   items/unit at the top and 1.43 at the floor**, against the 0.35 that caused the amendment.
+   **The one clause that FAILS is the SLOT TABLE** — `writing` slot 1 emitted FILL_IN in 3 of 3
+   files where the table prescribes SCR, plus two one-offs (ARV-D-146). Counting is solved;
+   slotting is not — the same split SS·secondary's C4 found on 2026-08-03.
+   **Middle and secondary are still owed a live PAIR run.**
 
 > Process rule: `data/` (constitutions + saved plans) is git-ignored, so these amendments have
 > **no VCS trail** beyond this list and their dated entries — this checklist is the only durable

@@ -1,0 +1,650 @@
+{
+ "library": {
+  "counts": [
+   12,
+   10,
+   7
+  ],
+  "floor": 7,
+  "authored_duration": 40
+ },
+ "rows": [
+  {
+   "label": "identity X=12 (top)",
+   "identity": "kumar1",
+   "rows": [
+    [
+     40,
+     12
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "identity": true,
+    "filename": "ch_11_canonical.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 12,
+    "compression": {
+     "ratio": 1.0,
+     "regime": "canonical"
+    },
+    "seam_periods": [],
+    "coverage_note": null
+   },
+   "new_files": []
+  },
+  {
+   "label": "identity X=10 (p10)",
+   "identity": "kumar1",
+   "rows": [
+    [
+     40,
+     10
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "identity": true,
+    "filename": "ch_11_canonical_p10.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 10,
+    "compression": {
+     "ratio": 1.0,
+     "regime": "canonical"
+    },
+    "seam_periods": [],
+    "coverage_note": null
+   },
+   "new_files": []
+  },
+  {
+   "label": "identity X=7 (p07)",
+   "identity": "kumar1",
+   "rows": [
+    [
+     40,
+     7
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "identity": true,
+    "filename": "ch_11_canonical_p07.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 7,
+    "compression": {
+     "ratio": 1.0,
+     "regime": "canonical"
+    },
+    "seam_periods": [],
+    "coverage_note": null
+   },
+   "new_files": []
+  },
+  {
+   "label": "complete fill X=9",
+   "identity": "kumar2",
+   "rows": [
+    [
+     40,
+     9
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_40m9_e19_c20260813124142.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 9,
+    "compression": {
+     "ratio": 0.9,
+     "regime": "fill"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 10,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": {
+      "mode": "fill",
+      "fill_class": "single",
+      "first_section": "B|beyond_text",
+      "borrowed_from": 10,
+      "self_fill": true,
+      "overlap_sections": [],
+      "uncovered_sections": [],
+      "synthesis_only": false,
+      "below_floor": false,
+      "dropped_unit_count": 0,
+      "reference_count": null,
+      "withheld_units": [],
+      "rescued_from": null
+     },
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": null
+   },
+   "new_files": []
+  },
+  {
+   "label": "rescue/complete X=8",
+   "identity": "kumar2",
+   "rows": [
+    [
+     40,
+     8
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_40m8_e19_c20260813124508.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 8,
+    "compression": {
+     "ratio": 1.143,
+     "regime": "complete_rescue"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 7,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": {
+      "mode": "complete_rescue",
+      "fill_class": null,
+      "first_section": null,
+      "borrowed_from": 12,
+      "self_fill": false,
+      "overlap_sections": [],
+      "uncovered_sections": [],
+      "synthesis_only": false,
+      "below_floor": false,
+      "dropped_unit_count": 0,
+      "reference_count": null,
+      "withheld_units": [],
+      "rescued_from": 10
+     },
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": "Every section is covered; the closing sitting draws the chapter together in one synthesis."
+   },
+   "new_files": []
+  },
+  {
+   "label": "synthesis X=11",
+   "identity": "kumar2",
+   "rows": [
+    [
+     40,
+     11
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_40m11_e19_c20260813123304.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 11,
+    "compression": {
+     "ratio": 0.917,
+     "regime": "synthesis"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 12,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": {
+      "mode": "synthesis",
+      "fill_class": null,
+      "first_section": null,
+      "borrowed_from": 12,
+      "self_fill": true,
+      "overlap_sections": [],
+      "uncovered_sections": [],
+      "synthesis_only": false,
+      "below_floor": false,
+      "dropped_unit_count": 0,
+      "reference_count": null,
+      "withheld_units": [
+       11
+      ],
+      "rescued_from": null
+     },
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": "Every section is covered; the closing sitting draws the chapter together in one synthesis."
+   },
+   "new_files": []
+  },
+  {
+   "label": "surrender X=13 (top+1)",
+   "identity": "kumar2",
+   "rows": [
+    [
+     40,
+     13
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_40m13_e19_c20260813123304.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 13,
+    "compression": {
+     "ratio": 1.083,
+     "regime": "surrender"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 12,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": null,
+     "surrendered_periods": 1,
+     "surrender_note": "1 period(s) (40 minutes) exceed this chapter's fullest plan and return to your budget."
+    },
+    "coverage_note": "1 period(s) (40 minutes) exceed this chapter's fullest plan and return to your budget."
+   },
+   "new_files": []
+  },
+  {
+   "label": "below floor X=6",
+   "identity": "kumar2",
+   "rows": [
+    [
+     40,
+     6
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_40m6_e19_c20260813124508.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 6,
+    "compression": {
+     "ratio": 0.857,
+     "regime": "fill"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 7,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": {
+      "mode": "fill",
+      "fill_class": "single",
+      "first_section": "B|word_work",
+      "borrowed_from": 7,
+      "self_fill": true,
+      "overlap_sections": [],
+      "uncovered_sections": [
+       "B|beyond_text"
+      ],
+      "synthesis_only": false,
+      "below_floor": false,
+      "dropped_unit_count": 1,
+      "reference_count": null,
+      "withheld_units": [],
+      "rescued_from": null
+     },
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": "Time budget short of the chapter's full span: B|beyond_text could not be scheduled — the material is included for you to share as guided self-study or homework."
+   },
+   "new_files": []
+  },
+  {
+   "label": "mixed 7x40 + 5x50",
+   "identity": "kumar3",
+   "rows": [
+    [
+     40,
+     7
+    ],
+    [
+     50,
+     5
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_50m5-40m7_e19_c20260813123304.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 12,
+    "compression": {
+     "ratio": 1.0,
+     "regime": "full"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 12,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": null,
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": null
+   },
+   "new_files": []
+  },
+  {
+   "label": "X=12 at 50 min (not 40)",
+   "identity": "kumar1",
+   "rows": [
+    [
+     50,
+     12
+    ]
+   ],
+   "status": 200,
+   "response": {
+    "status": "prepared",
+    "cached": true,
+    "already_yours": true,
+    "filename": "ch_11_50m12_e19_c20260813123304.json",
+    "chapter_number": 11,
+    "chapter_title": "The Big Laddoo (The Big Laddoo)",
+    "periods": 12,
+    "compression": {
+     "ratio": 1.0,
+     "regime": "full"
+    },
+    "seam_periods": [],
+    "serve": {
+     "variant_used": 12,
+     "library": [
+      12,
+      10,
+      7
+     ],
+     "slot_fill": null,
+     "surrendered_periods": 0,
+     "surrender_note": null
+    },
+    "coverage_note": null
+   },
+   "new_files": []
+  }
+ ],
+ "prepared": {
+  "kumar1": [
+   "english/iii/ch_11_50m12_e19_c20260813123304.json",
+   "english/iii/ch_11_canonical.json",
+   "english/iii/ch_11_canonical_p07.json",
+   "english/iii/ch_11_canonical_p10.json",
+   "english/ix/ch_07_canonical.json",
+   "english/ix/ch_07_canonical_p10.json",
+   "english/ix/ch_07_canonical_p14.json",
+   "english/vi/ch_08_canonical.json",
+   "english/vi/ch_08_canonical_p07.json",
+   "english/vi/ch_08_canonical_p10.json",
+   "mathematics/iii/ch_05_40m10_e19_c20260811110409.json",
+   "mathematics/iii/ch_05_40m12_e19_c20260811104138.json",
+   "mathematics/iii/ch_05_40m13_e19_c20260811104138.json",
+   "mathematics/iii/ch_05_40m4_e19_c20260811123037.json",
+   "mathematics/iii/ch_05_40m6_e19_c20260811123037.json",
+   "mathematics/iii/ch_05_40m7_e19_c20260811123037.json",
+   "mathematics/iii/ch_05_40m9_e19_c20260811123037.json",
+   "mathematics/iii/ch_05_canonical.json",
+   "mathematics/iii/ch_05_canonical_p08.json",
+   "mathematics/iii/ch_05_canonical_p11.json",
+   "mathematics/ix/ch_04_50m5_e18_c20260809102058.json",
+   "mathematics/ix/ch_04_50m8_e18_c20260809101448.json",
+   "mathematics/ix/ch_04_canonical.json",
+   "mathematics/ix/ch_04_canonical_p09.json",
+   "mathematics/ix/ch_04_canonical_p12.json",
+   "mathematics/vii/ch_07_40m10_e19_c20260810184152.json",
+   "mathematics/vii/ch_07_40m11_e19_c20260810184152.json",
+   "mathematics/vii/ch_07_canonical.json",
+   "mathematics/vii/ch_07_canonical_p07.json",
+   "mathematics/vii/ch_07_canonical_p10.json",
+   "science/ix/ch_08_45m12_e16_c20260806100029.json",
+   "science/ix/ch_08_50m10_e16_c20260806100029.json",
+   "science/ix/ch_08_50m11_e16_c20260806100029.json",
+   "science/ix/ch_08_50m16_e15_c20260806100029.json",
+   "science/ix/ch_08_50m19_e15_c20260806100029.json",
+   "science/ix/ch_08_50m21_e15_c20260806100029.json",
+   "science/ix/ch_08_50m4_e15_c20260806101157.json",
+   "science/ix/ch_08_50m5_e15_c20260806101157.json",
+   "science/ix/ch_08_50m8_e16_c20260806101157.json",
+   "science/ix/ch_08_50m9_e15_c20260806100653.json",
+   "science/ix/ch_08_50m9_e16_c20260806100029.json",
+   "science/ix/ch_08_50m9_e16_c20260806100653.json",
+   "science/ix/ch_08_canonical.json",
+   "science/ix/ch_08_canonical_p07.json",
+   "science/ix/ch_08_canonical_p10.json",
+   "science/ix/ch_91_50m11_e16_c20260806100029.json",
+   "science/viii/ch_06_canonical.json",
+   "science/viii/ch_06_canonical_p07.json",
+   "science/viii/ch_06_canonical_p08.json",
+   "science/viii/ch_06_canonical_p10.json",
+   "social_sciences/ix/ch_03_50m10_e10_c20260801143756.json",
+   "social_sciences/ix/ch_03_50m15_e16_c20260803141938.json",
+   "social_sciences/ix/ch_03_50m17_e13_c20260803141938r45661.json",
+   "social_sciences/ix/ch_03_50m8_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m9_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m9_e16_c20260803142658.json",
+   "social_sciences/ix/ch_03_55m5_e13_c20260803143426.json",
+   "social_sciences/ix/ch_03_55m8_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_60m2-55m7_e16_c20260803142658.json",
+   "social_sciences/ix/ch_03_60m3-55m8_e13_c20260803141938.json",
+   "social_sciences/ix/ch_03_canonical.json",
+   "social_sciences/ix/ch_03_canonical_p07.json",
+   "social_sciences/ix/ch_03_canonical_p09.json",
+   "social_sciences/ix/ch_03_canonical_p10.json",
+   "social_sciences/ix/ch_08_50m4_e19_c20260812160356ssix08top.json",
+   "social_sciences/ix/ch_08_55m7_e19_c20260812160356ssix08top.json",
+   "social_sciences/ix/ch_08_canonical.json",
+   "social_sciences/viii/ch_03_60m11_e14_c20260804162039.json",
+   "social_sciences/viii/ch_03_60m12_e14_c20260804162039.json",
+   "social_sciences/viii/ch_03_60m14_e13_c20260804161018.json",
+   "social_sciences/viii/ch_03_60m14_e14_c20260804161018.json",
+   "social_sciences/viii/ch_03_60m16_e13_c20260804161018.json",
+   "social_sciences/viii/ch_03_canonical.json",
+   "social_sciences/viii/ch_03_canonical_p10.json",
+   "social_sciences/viii/ch_03_canonical_p13.json",
+   "the_world_around_us/iv/ch_08_40m11_e19_c20260812135929twauiv08top.json",
+   "the_world_around_us/iv/ch_08_canonical.json",
+   "the_world_around_us/iv/ch_08_canonical_p11.json",
+   "the_world_around_us/v/ch_05_40m15_e19_c20260811194002.json",
+   "the_world_around_us/v/ch_05_canonical.json",
+   "the_world_around_us/v/ch_05_canonical_p10.json",
+   "the_world_around_us/v/ch_05_canonical_p13.json"
+  ],
+  "kumar2": [
+   "english/iii/ch_11_40m11_e19_c20260813123304.json",
+   "english/iii/ch_11_40m13_e19_c20260813123304.json",
+   "english/iii/ch_11_40m6_e19_c20260813124508.json",
+   "english/iii/ch_11_40m8_e19_c20260813124508.json",
+   "english/iii/ch_11_40m9_e19_c20260813124142.json",
+   "english/ix/ch_07_50m11_e19_c20260812142824.json",
+   "english/ix/ch_07_50m12_e19_c20260812142352.json",
+   "english/ix/ch_07_50m13_e19_c20260812142352.json",
+   "english/ix/ch_07_50m15_e19_c20260812142352.json",
+   "english/ix/ch_07_50m16_e19_c20260812141916.json",
+   "english/ix/ch_07_50m16_e19_c20260812154258.json",
+   "english/ix/ch_07_50m9_e19_c20260812142824.json",
+   "english/ix/ch_07_60m3-50m9_e19_c20260812142352.json",
+   "english/vi/ch_08_40m11_e19_c20260813100302.json",
+   "english/vi/ch_08_40m13_e19_c20260813100302.json",
+   "english/vi/ch_08_40m6_e19_c20260813102846.json",
+   "english/vi/ch_08_40m8_e19_c20260813102509.json",
+   "english/vi/ch_08_40m9_e19_c20260813102509.json",
+   "english/vi/ch_08_canonical.json",
+   "mathematics/iii/ch_05_40m13_e19_c20260811104138.json",
+   "mathematics/ix/ch_04_50m10_e17_c20260809101448.json",
+   "mathematics/ix/ch_04_50m11_e17_c20260809101448.json",
+   "mathematics/ix/ch_04_50m11_e18_c20260809101448.json",
+   "mathematics/ix/ch_04_50m13_e17_c20260809094843.json",
+   "mathematics/ix/ch_04_50m13_e18_c20260809094843.json",
+   "mathematics/ix/ch_04_50m16_e17_c20260809094843.json",
+   "mathematics/ix/ch_04_50m5_e17_c20260809102058.json",
+   "mathematics/ix/ch_04_50m7_e17_c20260809102058.json",
+   "mathematics/ix/ch_04_50m8_e17_c20260809102058.json",
+   "mathematics/ix/ch_04_50m8_e18_c20260809102058.json",
+   "mathematics/ix/ch_04_canonical.json",
+   "mathematics/ix/ch_04_canonical_p11.json",
+   "mathematics/vii/ch_07_40m11_e18_c20260810184152.json",
+   "mathematics/vii/ch_07_40m11_e19_c20260810184152.json",
+   "mathematics/vii/ch_07_40m13_e18_c20260810184152.json",
+   "mathematics/vii/ch_07_40m5_e18_c20260810191516.json",
+   "mathematics/vii/ch_07_40m5_e19_c20260810191516.json",
+   "mathematics/vii/ch_07_40m6_e18_c20260810191516.json",
+   "mathematics/vii/ch_07_40m8_e18_c20260810191053.json",
+   "mathematics/vii/ch_07_40m8_e19_c20260810224534.json",
+   "mathematics/vii/ch_07_40m9_e18_c20260810191053.json",
+   "mathematics/vii/ch_07_40m9_e19_c20260810220416.json",
+   "mathematics/vii/ch_07_40m9_e19_c20260810224534.json",
+   "science/ix/ch_08_45m11_e16_c20260806100029.json",
+   "science/ix/ch_08_45m14_e16_c20260806100029.json",
+   "science/ix/ch_08_45m6_e16_c20260806101157.json",
+   "science/ix/ch_08_45m8_e16_c20260806101157.json",
+   "science/ix/ch_08_50m11_e15_c20260806100029.json",
+   "science/ix/ch_08_50m11_e16_c20260806100029.json",
+   "science/ix/ch_08_50m13_e15_c20260806100029.json",
+   "science/ix/ch_08_50m19_e15_c20260806100029.json",
+   "science/ix/ch_08_50m6_e15_c20260806101157.json",
+   "science/ix/ch_08_50m6_e16_c20260806101157.json",
+   "science/ix/ch_08_50m8_e15_c20260806101157.json",
+   "science/ix/ch_08_50m8_e16_c20260806101157.json",
+   "science/ix/ch_08_50m9_e15_c20260806100653.json",
+   "science/ix/ch_08_50m9_e16_c20260806100653.json",
+   "science/ix/ch_08_canonical.json",
+   "science/ix/ch_08_canonical_p07.json",
+   "science/ix/ch_08_canonical_p10.json",
+   "science/viii/ch_06_45m11_e17_c20260807180450.json",
+   "science/viii/ch_06_45m13_e17_c20260807191622.json",
+   "science/viii/ch_06_45m15_e17_c20260807191622.json",
+   "science/viii/ch_06_45m5_e17_c20260807181536.json",
+   "science/viii/ch_06_45m6_e17_c20260807181536.json",
+   "science/viii/ch_06_45m9_e17_c20260807181029.json",
+   "science/viii/ch_06_canonical_p07.json",
+   "social_sciences/ix/ch_03_35m12_e13_c20260803141938r45661.json",
+   "social_sciences/ix/ch_03_40m11_e13_c20260803141938r45661.json",
+   "social_sciences/ix/ch_03_50m10_e10_c20260801143756.json",
+   "social_sciences/ix/ch_03_50m11_e10_c20260801143756.json",
+   "social_sciences/ix/ch_03_50m11_e12_c20260803141938.json",
+   "social_sciences/ix/ch_03_50m11_e16_c20260803141938.json",
+   "social_sciences/ix/ch_03_50m13_e10_c20260801143756.json",
+   "social_sciences/ix/ch_03_50m13_e12_c20260803141938.json",
+   "social_sciences/ix/ch_03_50m14_e13_c20260803141938r45661.json",
+   "social_sciences/ix/ch_03_50m5_e11_c20260801150218.json",
+   "social_sciences/ix/ch_03_50m5_e13_c20260803143426r4d21e.json",
+   "social_sciences/ix/ch_03_50m6_e10_c20260801150218.json",
+   "social_sciences/ix/ch_03_50m6_e12_c20260803143426.json",
+   "social_sciences/ix/ch_03_50m6_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m6_e13_c20260803142658r307eb.json",
+   "social_sciences/ix/ch_03_50m6_e13_c20260803143426r4d21e.json",
+   "social_sciences/ix/ch_03_50m6_e16_c20260803143426.json",
+   "social_sciences/ix/ch_03_50m8_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m8_e16_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m9_e12_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m9_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m9_e16_c20260803142658.json",
+   "social_sciences/ix/ch_03_55m4-45m5_e13_c20260803142658r307eb.json",
+   "social_sciences/ix/ch_03_55m9_e13_c20260803142658r307eb.json",
+   "social_sciences/ix/ch_03_60m6_e13_c20260803143426r4d21e.json",
+   "social_sciences/ix/ch_03_canonical.json",
+   "social_sciences/ix/ch_03_canonical_p07.json",
+   "social_sciences/ix/ch_03_canonical_p09.json",
+   "social_sciences/ix/ch_05_55m21_e19_c20260812160356ssix05top.json",
+   "social_sciences/viii/ch_03_45m11_e16_c20260804162039.json",
+   "social_sciences/viii/ch_03_45m12_e14_c20260804162039.json",
+   "social_sciences/viii/ch_03_45m12_e16_c20260804162039.json",
+   "social_sciences/viii/ch_03_45m15_e13_c20260804161018.json",
+   "social_sciences/viii/ch_03_45m15_e14_c20260804161018.json",
+   "social_sciences/viii/ch_03_45m15_e16_c20260804161018.json",
+   "social_sciences/viii/ch_03_45m17_e13_c20260804161018.json",
+   "social_sciences/viii/ch_03_45m8_e13_c20260804162946.json",
+   "social_sciences/viii/ch_03_45m9_e13_c20260804162946.json",
+   "social_sciences/viii/ch_03_45m9_e14_c20260804162946.json",
+   "social_sciences/viii/ch_03_45m9_e16_c20260804162946.json",
+   "the_world_around_us/v/ch_05_40m11_e19_c20260811194722.json",
+   "the_world_around_us/v/ch_05_40m12_e19_c20260811194722.json",
+   "the_world_around_us/v/ch_05_40m14_e19_c20260811194002.json",
+   "the_world_around_us/v/ch_05_40m15_e19_c20260811194002.json",
+   "the_world_around_us/v/ch_05_40m8_e19_c20260811195254.json",
+   "the_world_around_us/v/ch_05_40m9_e19_c20260811195254.json"
+  ],
+  "kumar3": [
+   "english/iii/ch_11_50m4-40m7_e19_c20260813123304.json",
+   "english/iii/ch_11_50m5-40m7_e19_c20260813123304.json",
+   "english/ix/ch_07_60m2-50m13_e19_c20260812142352.json",
+   "english/vi/ch_08_50m2-40m9_e19_c20260813100302.json",
+   "mathematics/iii/ch_05_40m12_e19_c20260811104138.json",
+   "mathematics/iii/ch_05_50m5-40m7_e19_c20260811104138.json",
+   "mathematics/ix/ch_04_60m4-50m10_e17_c20260809094843.json",
+   "mathematics/vii/ch_07_50m4-40m7_e18_c20260810184152.json",
+   "science/ix/ch_08_60m3-45m9_e16_c20260806100029.json",
+   "science/ix/ch_08_60m4-50m7_e15_c20260806100029.json",
+   "science/ix/ch_08_60m4-50m7_e16_c20260806100029.json",
+   "science/viii/ch_06_45m9_e17_c20260807181029.json",
+   "science/viii/ch_06_60m10_e17_c20260807180450.json",
+   "science/viii/ch_06_60m3-45m7_e17_c20260807180450.json",
+   "social_sciences/ix/ch_03_45m10_e12_c20260803142658.json",
+   "social_sciences/ix/ch_03_45m9_e10_c20260801144458.json",
+   "social_sciences/ix/ch_03_45m9_e13_c20260803142658.json",
+   "social_sciences/ix/ch_03_50m6_e13_c20260803143426.json",
+   "social_sciences/ix/ch_03_60m2-50m8_e10_c20260801143756.json",
+   "social_sciences/ix/ch_03_60m4-50m6_e12_c20260803142658.json",
+   "social_sciences/ix/ch_03_60m4-50m7_e13_c20260803141938.json",
+   "social_sciences/ix/ch_03_canonical.json",
+   "social_sciences/viii/ch_03_45m14_e14_c20260804161018.json",
+   "social_sciences/viii/ch_03_60m3-45m9_e14_c20260804162039.json",
+   "social_sciences/viii/ch_03_60m4-45m10_e13_c20260804161018.json",
+   "the_world_around_us/v/ch_05_50m3-40m11_e19_c20260811194002.json"
+  ]
+ }
+}

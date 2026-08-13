@@ -149,8 +149,39 @@ def load_source(subject: str, grade: str, ch: int, book_only: bool = False) -> t
     indistinguishable in the report — scan twice and diff, rather than once and guess.
     """
     words, parts = [], []
+    # THE SPLIT-CHAPTER RESOLVER (fixed 2026-08-13, at S9's C14) ─────────────────────────
+    # This globbed `chapter\s*0*{ch}` against the PDF names and assumed the PLAN's chapter
+    # number is the BOOK's. English breaks that everywhere, because its chapters were split
+    # out of textbook UNITS: VI/VII/VIII PDFs are named per unit ("Chapter 03 - Nurturing
+    # Nature.pdf" contains chapters 7, 8 and 9) and IX keeps the original section numbering
+    # ("chapter 04 - Vitamin-M.pdf" is chapter 7). The copyright review recorded the
+    # consequence as "matches nothing on all 101 English chapters, so the book contributes
+    # ZERO words and the scan reports a confident result against Aruvi's own summary".
+    #
+    # AT PREPARATORY IT IS WORSE THAN NOTHING, and that is why this is now fixed rather than
+    # worked around by hand a fourth time. English III has 12 unit-chapters and 17 split
+    # chapters, so the two numbering spaces COLLIDE: the glob resolves split ch 11
+    # ("The Big Laddoo", unit ch 7) to "chapter 11 - Chanda Mama Counts the Stars.pdf" — a
+    # DIFFERENT CHAPTER'S BOOK — and scores against it. A wrong book scores ~0% overlap and
+    # reads as a clean pass, which is the most expensive way for this check to fail.
+    #
+    # The mapping needed was in the split summary all along: `_source_unit.unit_chapter_number`.
+    # Read it first and fall back to the plan's own number for every unsplit subject, so this
+    # is additive — no non-english stage changes behaviour.
+    book_ch = ch
+    for ext, load in ((".json", lambda p: json.load(open(p))),):
+        s = CONTENT / "chapters" / subject / grade / "summaries" / f"ch_{ch:02d}_summary{ext}"
+        if s.exists():
+            try:
+                src = (load(s) or {}).get("_source_unit") or {}
+                if src.get("unit_chapter_number"):
+                    book_ch = int(src["unit_chapter_number"])
+            except Exception:                                    # noqa: BLE001
+                pass
     pdfs = sorted(p for p in (TEXTBOOKS / subject / grade).glob("*.pdf")
-                  if re.match(rf"chapter\s*0*{ch}\b", p.name, re.I))
+                  if re.match(rf"chapter\s*0*{book_ch}\b", p.name, re.I))
+    if book_ch != ch:
+        parts.append(f"[split chapter: plan ch {ch} -> textbook unit ch {book_ch}]")
     for p in pdfs:
         import pdfplumber
         with pdfplumber.open(p) as doc:

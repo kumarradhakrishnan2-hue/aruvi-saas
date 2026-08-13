@@ -214,6 +214,39 @@ PATTERNS = [
     ("clock", True, re.compile(r"\bin the (first|last) \w+ minutes\b", re.I)),
     ("ids", True, re.compile(r"\(C-\d+\.\d+\)")),
     ("positional", False, re.compile(r"\b(previous|earlier|first|last) unit\b", re.I)),
+    # ── added 2026-08-13 (S9 · english·preparatory · C7, found by reading) ─────────────────
+    # PLANNER VOCABULARY IN TEACHER PROSE. Not a register ban — this is LP Rule 9's "do not
+    # expose internal planning machinery" (schema keys and planner identifiers), which had no
+    # pattern at all because it is not one of the three bans. It fired three times on english
+    # III ch 11's TOP canonical and ZERO times on either compact, same model, same prompt,
+    # same chapter: "the word-work SPINE content" (u6), "the invented stanzas in the final
+    # BAND" (u11), "participate fully in every BAND" (u12). `spines_taught` / `time_bands` /
+    # `source_spine` are schema keys, and a teacher reading her own plan should never meet one.
+    #
+    # ADVISORY, deliberately, and the reason is the near-miss that came with it. "band" and
+    # "cell" are ordinary English ("a band of colour", "a cell in the table"), and one of the
+    # three hits above was very nearly filed as a FORWARD REFERENCE before it was read: u11's
+    # "the invented stanzas in the final band" appears to point at u12's invented-stanza band,
+    # and does not — u11's own closing band invites children to complete the 'If all the ___'
+    # frame aloud. A gate that fired on it would have failed a correct plan. Report, and let
+    # C7 rule.
+    # NARROWED THE SAME DAY IT WAS ADDED, before it was trusted — the discipline the S6 note
+    # above demands, and it was needed. The first cut matched bare `spine` and `canonical`
+    # and scored 3 true positives in 14 corpus-wide: "the structural SPINE of this unit" and
+    # "'Monsoon' at the SPINE" of a cause-effect diagram (SS·IX), "the chapter's chronological
+    # SPINE" (SS·IX), "the angle-sum property is the CANONICAL check" (maths·VII) — and, the
+    # one that settles it, a sea creature's "shell, fins, branching shape, SPINES" (TWAU·IV).
+    # `spine` and `canonical` are ordinary English and ordinary mathematics; the schema keys
+    # are what leak. So `canonical` is dropped entirely and `spine` matches ONLY when preceded
+    # by one of Aruvi's actual spine names — which is the shape of the real hit, "the word-work
+    # SPINE content". Re-verified after narrowing: 3 hits corpus-wide, all three real, all in
+    # the file that produced them.
+    ("planner-vocab", False,
+     re.compile(r"\b(reading|oracy|writing|word[_ -]work|beyond[_ -]text|listening|speaking"
+                r"|vocabulary[_ -]grammar|reading[_ ]for[_ ]comprehension)[\s-]spines?\b"
+                r"|\b(spines?[_ ]taught|source[_ ]spine|time[_ ]bands?|section[_ ]anchor"
+                r"|coverage[_ ]handoff|implied[_ ]lo|task[_ ]index)\b"
+                r"|\bthe (final|opening|first|last|next) band\b|\bevery band\b", re.I)),
 ]
 
 
@@ -288,6 +321,15 @@ _FIELD_SCOPED = {
     next(pat for fam, ban, pat in PATTERNS
          if fam == 'artefact' and "students['\u2019]" in pat.pattern):
         ('materials', 'visual_aids'),
+    # PLANNER VOCABULARY (S9 · C7, 2026-08-13): PROSE fields only. `homework[i]` and
+    # `tasks_in_class[i]` are scanned as their SERIALIZED DICTS, which legitimately contain
+    # the keys `spine` and `task_index` — so an unscoped pattern reports every homework item
+    # in the corpus and the three real hits drown in them. The rule being enforced (LP Rule 9)
+    # is about prose a TEACHER READS; a structured field is not that. Found immediately on
+    # landing the pattern: 7 advisories on the top canonical, of which 3 were real.
+    next(pat for fam, ban, pat in PATTERNS if fam == 'planner-vocab'):
+        ('activity_title', 'teacher_notes', 'teacher_facilitation_note', 'time_bands',
+         'phases'),
 }
 
 

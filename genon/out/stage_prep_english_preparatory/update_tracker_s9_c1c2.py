@@ -65,7 +65,11 @@ THE PILOT IS NOT A FLATTERING RATE SOURCE: ch 11 is tied for the LARGEST chapter
 def main() -> None:
     state = json.loads(STATE.read_text(encoding="utf-8"))
     shutil.copyfile(STATE, STATE.with_suffix(".json.bak_pre_s9_c1c2"))
-    row = state.setdefault("stages", {}).setdefault(KEY, {})
+    # C-STEPS LIVE UNDER `combos`, NOT `stages` — the tracker renders the C-cycle
+    # matrix from cellHtml("combos", comboKey(c), ...) while the P-steps come from
+    # cellHtml("stages", ...). The two keys are the same string, so writing a C-step
+    # to `stages` yields a state file that looks right and renders nothing.
+    row = state.setdefault("combos", {}).setdefault(KEY, {})
     for step, (status, by, comment) in ROWS.items():
         row[step] = {"status": status, "by": by, "at": NOW, "comment": comment}
     state["updated_at"] = NOW
