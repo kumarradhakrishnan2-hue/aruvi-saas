@@ -37,6 +37,9 @@ from typing import Any, Dict, List, Optional
 from .report_competency import grade_roman, subject_display
 from .pdf_fonts import font_face_css
 from .grades import stage_for
+from .compound_options import (
+    display_label, group_of, grouped_option_sets,
+)
 
 
 # ── palette (green assessment world) ────────────────────────────────────────
@@ -487,16 +490,28 @@ def _question_block(it: Dict[str, Any], qn: int, include_answers: bool, is_first
     # statements above ARE the options; showing both would repeat every line.
     opts = n.get("options") or []
     if opts and not is_tf:
-        rows = ""
-        for o in opts:
-            correct = include_answers and o.get("is_correct")
-            tick = " ✓" if correct else ""
-            cls = " opt-correct" if correct else ""
-            rows += (
-                f'<tr class="{cls.strip()}"><td class="opt-lab">{_esc(o.get("label"))}.</td>'
-                f'<td class="opt-txt">{_esc(o.get("text"))}{tick}</td></tr>'
-            )
-        parts.append(f'<table class="opts">{rows}</table>')
+        def _rows(option_list, letter_key="label"):
+            out = ""
+            for o in option_list:
+                correct = include_answers and o.get("is_correct")
+                tick = " ✓" if correct else ""
+                cls = " opt-correct" if correct else ""
+                out += (
+                    f'<tr class="{cls.strip()}">'
+                    f'<td class="opt-lab">{_esc(o.get(letter_key))}.</td>'
+                    f'<td class="opt-txt">{_esc(o.get("text"))}{tick}</td></tr>'
+                )
+            return out
+        # COMPOUND (two sub-questions in one item): each set under its own question,
+        # lettered A–D. The grouped storage label (1A…2D) never prints. See
+        # aruvi_core/compound_options.py.
+        sets = grouped_option_sets(opts)
+        if sets:
+            for s in sets:
+                parts.append(f'<div class="opt-grp">Question {_esc(s["group"])}</div>')
+                parts.append(f'<table class="opts opts-sub">{_rows(s["options"], "display")}</table>')
+        else:
+            parts.append(f'<table class="opts">{_rows(opts)}</table>')
 
     # student-facing task framing (belongs on the question paper, mirrors the on-screen
     # question tab order): WHAT TO PRODUCE (format_of_output) → SCAFFOLD. The open-task
@@ -574,9 +589,15 @@ def _answer_block(n: Dict[str, Any], opts: List[Dict[str, Any]]) -> str:
             inner += f'<div class="ans-sub"><span class="ans-k">Answer key</span><table>{rows}</table></div>'
         return f'<div class="ans"><div class="ans-title">Answer section</div>{inner}</div>' if inner else ""
     # correct option letter(s)
+    # On a compound item there is one correct answer PER sub-question, so each is named
+    # with its question ("Q1 · C"); an unqualified "C, B" reads as one question with two.
     correct = [o.get("label") for o in opts if o.get("is_correct")]
     if correct:
-        inner += _block("Correct answer:", ", ".join(str(c) for c in correct))
+        shown = []
+        for c in correct:
+            g = group_of(opts, c)
+            shown.append(f"Q{g} · {display_label(opts, c)}" if g else str(c))
+        inner += _block("Correct answer:", ", ".join(shown))
     # model answer / key
     if n.get("answer_parts"):
         rows = "".join(
@@ -595,7 +616,9 @@ def _answer_block(n: Dict[str, Any], opts: List[Dict[str, Any]]) -> str:
             if lab == "note":
                 rows += f'<tr class="rev-row"><td colspan="2">{_esc(txt)}</td></tr>'
             else:
-                rows += (f'<tr class="rev-row"><td class="rev-lab">{_esc(lab)}</td>'
+                g = group_of(opts, lab)
+                shown = f'Q{g} · {display_label(opts, lab)}' if g else str(lab)
+                rows += (f'<tr class="rev-row"><td class="rev-lab">{_esc(shown)}</td>'
                          f'<td>{_esc(txt)}</td></tr>')
         inner += f'<div class="ans-sub"><span class="ans-k">What each choice reveals</span><table>{rows}</table></div>'
     inner += _ticks("Expected elements", n.get("expected_elements") or [])

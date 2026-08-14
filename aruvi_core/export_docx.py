@@ -29,6 +29,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 from .report_competency import grade_roman, subject_display
+from .compound_options import display_label, group_of, grouped_option_sets
 from .export_lesson_pdf import (
     targeted_competencies, _duration_breakdown, _group_word as _lp_group_word,
     _phase_duration, AXIS_INFO,
@@ -457,9 +458,15 @@ def _answer_block(doc, n):
                     _run(p, f" — {s.get('reason')}", size=9, color=RGBColor(0x1F, 0x3A, 0x30))
         return
     bits = []
-    correct = [o.get("label") for o in (n.get("options") or []) if o.get("is_correct")]
+    _opts = n.get("options") or []
+    correct = [o.get("label") for o in _opts if o.get("is_correct")]
     if correct:
-        bits.append(("Correct answer:", ", ".join(str(c) for c in correct)))
+        # Compound item: one correct answer per sub-question, each named with its question.
+        _shown = []
+        for c in correct:
+            g = group_of(_opts, c)
+            _shown.append(f"Q{g} \u00b7 {display_label(_opts, c)}" if g else str(c))
+        bits.append(("Correct answer:", ", ".join(_shown)))
     if n.get("model_answer"):
         bits.append(("Model answer:", n.get("model_answer")))
     reveals = n.get("option_reveals") or {}
@@ -480,7 +487,9 @@ def _answer_block(doc, n):
         for lab, txt in reveals.items():
             p = _para(doc, space_after=1)
             if lab != "note":
-                _run(p, f"{lab}  ", bold=True, size=8.5, color=G_ACCENT)
+                _g = group_of(_opts, lab)
+                _lab = f"Q{_g} \u00b7 {display_label(_opts, lab)}" if _g else str(lab)
+                _run(p, f"{_lab}  ", bold=True, size=8.5, color=G_ACCENT)
             _run(p, txt, size=9, color=RGBColor(0x1F, 0x3A, 0x30))
     for label, items in (("Expected elements", elems), ("Look for", looks)):
         if items:

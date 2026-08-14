@@ -1409,6 +1409,17 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .assess-opts2 li { display:flex; gap:8px; align-items:baseline; font-size:13px; color:var(--ink); margin:4px 0; line-height:1.5; }
 .assess-opts2 li.correct { color:#0c3a2e; font-weight:600; }
 .assess-opt-lab { font-family:var(--f-mono); font-size:10px; color:#0f6e56; min-width:14px; flex:none; }
+/* ── COMPOUND items: one sub-question, then its OWN A–D set (founder 2026-08-14) ──
+   Two questions live in one item and the schema gives them a single options[] array,
+   grouped by a storage label (1A…2D) the teacher never sees. On screen each set sits
+   under its question and is lettered A–D, like any simple MCQ. The indent is what does
+   the work — it is the only thing saying "these four belong to that question". */
+.assess-subq + .assess-subq { margin-top:14px; }
+.assess-opts-sub { margin-top:6px; padding-left:18px; border-left:1px solid var(--line-soft); }
+.assess-opt-grp { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+/* The sub-question tag on a correct answer / reveal row. Without it a pair of ticks reads
+   as one question with two answers. */
+.assess-corr-q { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.06em; color:var(--ink-soft); min-width:18px; flex:none; }
 .assess-tickmark { color:#0f6e56; font-size:11px; }
 /* typed stimulus blocks — tables arrive PRE-SPLIT from the engine, never re-split here */
 .assess-vs { margin-top:10px; overflow-x:auto; }

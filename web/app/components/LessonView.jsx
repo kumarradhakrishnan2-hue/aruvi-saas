@@ -543,6 +543,37 @@ function APartsList({ lead, parts }) {
   );
 }
 
+/* A COMPOUND item's options, split back under the sub-question each belongs to.
+ *
+ * Some listening items ask two questions in one item and carry BOTH option sets in the
+ * single `options[]` array the schema gives them. They are distinguished by a GROUPED
+ * label — "1A".."1D" for sub-question 1, "2A".."2D" for sub-question 2 — which is the
+ * storage key and was never meant to be read by a teacher. On screen the sets belong
+ * under their own question, each lettered A–D, exactly as a simple MCQ is
+ * (founder, 2026-08-14).
+ *
+ * Returns null for anything that is NOT compound — a flat A–D list, a TRUE_FALSE
+ * statement list, an empty array, or a single group — so every ordinary item keeps the
+ * existing render path untouched. That null is deliberate: this is the only new branch,
+ * and it can only be entered by the two items in the corpus that need it.
+ */
+const GROUPED_LABEL = /^(\d+)([A-Z])$/;
+
+export function groupedOptionSets(opts) {
+  const list = opts || [];
+  if (list.length < 2 || !list.every((o) => GROUPED_LABEL.test(String(o.label || "")))) return null;
+  const order = [];
+  const by = new Map();
+  list.forEach((o) => {
+    const [, group, letter] = String(o.label).match(GROUPED_LABEL);
+    if (!by.has(group)) { by.set(group, []); order.push(group); }
+    // `display` is what the teacher reads; `label` stays the storage key so the reveals
+    // map, the correct-answer list and the choice popup all still join on it.
+    by.get(group).push({ ...o, display: letter });
+  });
+  return order.length > 1 ? order.map((group) => ({ group, opts: by.get(group) })) : null;
+}
+
 // A labelled answer block. Renders the engine-structured multi-part key (n.answer_parts)
 // as rows when present; otherwise the plain model_answer prose.
 function AAnswerBlock({ k, n }) {
@@ -570,13 +601,20 @@ function ATicks({ k, items }) {
 // "What each choice reveals" — label → misconception rows. The "note" key is the
 // tolerated legacy prose fallback (un-migrated English MCQs, older SS/TWAU annotations)
 // and renders as a plain paragraph, not a labelled row.
-function AReveals({ reveals, opts = [] }) {
+function AReveals({ reveals, opts = [], sets = null }) {
   const entries = Object.entries(reveals || {});
   // Which choice's wording is popped open (label), or null. Lets the teacher relate a
   // "what this reveals" line back to the actual choice text (founder 2026-07-11).
   const [shown, setShown] = useState(null);
   if (!entries.length) return null;
   const optFor = (lab) => opts.find((o) => o.label === lab) || null;
+  // On a compound item the reveals are keyed by the STORAGE label (1A…2D) but must read
+  // as the sub-question's own letter — "Q2 · C", never "2C".
+  const setFor = (lab) => sets?.find((s) => s.opts.some((x) => x.label === lab)) || null;
+  const shownLab = (lab) => {
+    const s = setFor(lab);
+    return s ? s.opts.find((x) => x.label === lab).display : lab;
+  };
   const popped = shown ? optFor(shown) : null;
   return (
     <div className="assess-look">
@@ -587,12 +625,13 @@ function AReveals({ reveals, opts = [] }) {
             ? <div className="assess-look-t" key={i}>{txt}</div>
             : (
               <div className="assess-revrow" key={i}>
-                <span className="assess-rev-lab">{lab}</span>
+                {setFor(lab) ? <span className="assess-corr-q">Q{setFor(lab).group}</span> : null}
+                <span className="assess-rev-lab">{shownLab(lab)}</span>
                 <span>
                   {txt}
                   {optFor(lab) ? (
                     <button type="button" className="assess-rev-choice" onClick={() => setShown(lab)}>
-                      Choice {lab}
+                      Choice {shownLab(lab)}
                     </button>
                   ) : null}
                 </span>
@@ -605,7 +644,9 @@ function AReveals({ reveals, opts = [] }) {
         <div className="assess-choicepop" role="dialog" aria-modal="true" onClick={() => setShown(null)}>
           <div className="assess-choicepop-box" onClick={(e) => e.stopPropagation()}>
             <button className="assess-choicepop-x" aria-label="Close" onClick={() => setShown(null)}>✕</button>
-            <span className="assess-choicepop-lab">Choice {shown}</span>
+            <span className="assess-choicepop-lab">
+              {setFor(shown) ? `Question ${setFor(shown).group} · ` : ""}Choice {shownLab(shown)}
+            </span>
             <p className="assess-choicepop-t">{popped.text}</p>
           </div>
         </div>
@@ -717,11 +758,15 @@ function AOverviewPanel({ n, lo, nav }) {
   );
 }
 
-function AQuestionPanel({ n, opts, nav }) {
+function AQuestionPanel({ n, opts, sets, nav }) {
   // TRUE_FALSE: statements are stored twice at source (in the stem AND as options). The
   // engine folds them into `tf_statements`; show that ONCE as the statement list and NEVER
   // the options block (which would repeat every statement). The instruction line is stem_lead.
   const isTF = n.template === "true_false" && n.tf_statements?.length;
+  // A compound item's sets can sit under their own sub-question only when the engine's
+  // stem split produced exactly one part per set. When it did not, they are still shown
+  // grouped (below), never merged back into one list.
+  const interleaved = !!(sets && !isTF && n.stem_parts?.length === sets.length);
   return (
     <div className="assess-qnavwrap">
       <div className="assess-qnavmain">
@@ -738,6 +783,29 @@ function AQuestionPanel({ n, opts, nav }) {
               </div>
             ))}
           </div>
+        </div>
+      ) : interleaved ? (
+        /* COMPOUND: each sub-question followed by its OWN choices, lettered A–D. The
+           grouped storage label (1A…2D) is never shown. */
+        <div className="assess-prompt assess-prompt-tab">
+          {n.stem_lead ? <p className="assess-parts-lead">{n.stem_lead}</p> : null}
+          {sets.map((set, si) => (
+            <div className="assess-subq" key={set.group}>
+              <div className="assess-ansrow">
+                {n.stem_parts[si].marker
+                  ? <span className="assess-ans-lab">{n.stem_parts[si].marker}</span> : null}
+                <span className="assess-ans-t">{n.stem_parts[si].text}</span>
+              </div>
+              <ul className="assess-opts2 assess-opts-sub">
+                {set.opts.map((o, i) => (
+                  <li key={i}>
+                    <span className="assess-opt-lab">{o.display}</span>
+                    <span>{o.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       ) : n.stem_parts?.length ? (
         /* When the engine found a numbered/lettered list inside the stem, render the intro
@@ -762,15 +830,35 @@ function AQuestionPanel({ n, opts, nav }) {
       <ATyped b={n.visual_stimulus} />
       {/* Options are PLAIN here — the tick lives in the ANSWER tab. TRUE_FALSE never shows
           them (the statements above ARE the options; showing both duplicates every line). */}
-      {opts.length && !isTF ? (
-        <ul className="assess-opts2">
-          {opts.map((o, i) => (
-            <li key={i}>
-              <span className="assess-opt-lab">{o.label}</span>
-              <span>{o.text}</span>
-            </li>
-          ))}
-        </ul>
+      {opts.length && !isTF && !interleaved ? (
+        sets ? (
+          /* Compound, but the stem's parts did not line up one-to-one with the option
+             sets — so the sets could not be placed under their questions above. Show them
+             grouped and NUMBERED here rather than as one undifferentiated list: the
+             grouping is still the truth, only its placement is degraded. */
+          sets.map((set) => (
+            <div className="assess-subq" key={set.group}>
+              <span className="assess-opt-grp">Question {set.group}</span>
+              <ul className="assess-opts2 assess-opts-sub">
+                {set.opts.map((o, i) => (
+                  <li key={i}>
+                    <span className="assess-opt-lab">{o.display}</span>
+                    <span>{o.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <ul className="assess-opts2">
+            {opts.map((o, i) => (
+              <li key={i}>
+                <span className="assess-opt-lab">{o.label}</span>
+                <span>{o.text}</span>
+              </li>
+            ))}
+          </ul>
+        )
       ) : null}
       <ATicks k="WHAT TO PRODUCE" items={n.format_of_output} />
       <AScaffold n={n} />
@@ -803,7 +891,7 @@ function AQuestionPanel({ n, opts, nav }) {
   );
 }
 
-function AAnswerPanel({ n, correct, opts = [] }) {
+function AAnswerPanel({ n, correct, opts = [], sets = null }) {
   // TRUE_FALSE: one verdict + reason per statement, from the engine's collapsed key. This
   // REPLACES both the "CORRECT ANSWER" tick-list (which showed only the true statements, a
   // misleading half-answer) and the standalone suggested-answer prose (already folded in).
@@ -842,19 +930,27 @@ function AAnswerPanel({ n, correct, opts = [] }) {
       {correct.length ? (
         <div className="assess-look">
           <span className="assess-look-k">CORRECT ANSWER</span>
-          {correct.map((o, i) => (
-            <div className="assess-corr-row" key={i}>
-              <span className="assess-opt-lab">{o.label}</span>
-              <span>{o.text}<span className="assess-tickmark"> ✓</span></span>
-            </div>
-          ))}
+          {/* A compound item has one correct answer PER sub-question. Naming which
+              question each belongs to is the whole point — an unlabelled pair of ticks
+              reads as a two-answer question. */}
+          {correct.map((o, i) => {
+            const set = sets?.find((s) => s.opts.some((x) => x.label === o.label));
+            const shown = set ? set.opts.find((x) => x.label === o.label).display : o.label;
+            return (
+              <div className="assess-corr-row" key={i}>
+                {set ? <span className="assess-corr-q">Q{set.group}</span> : null}
+                <span className="assess-opt-lab">{shown}</span>
+                <span>{o.text}<span className="assess-tickmark"> ✓</span></span>
+              </div>
+            );
+          })}
         </div>
       ) : null}
       {n.template === "selected_response" ? (
         <>
           {/* TRUE_FALSE verdict+justification arrives as model_answer, not reveals. */}
           <AAnswerBlock k="ANSWER" n={n} />
-          <AReveals reveals={n.option_reveals} opts={opts} />
+          <AReveals reveals={n.option_reveals} opts={opts} sets={sets} />
         </>
       ) : n.template === "scr" ? (
         <>
@@ -919,7 +1015,9 @@ function itemTabSet(n) {
     || n.look_fors?.length || Object.keys(n.option_reveals || {}).length || n.method_one_line
     || n.tf_statements?.length || n.match_pairs?.length);
   return {
-    opts, correct,
+    // `opts` stays the FLAT list on purpose — hasAnswer above, and every non-compound
+    // consumer, still read it. `sets` is the compound view layered on top, null otherwise.
+    opts, correct, sets: groupedOptionSets(opts),
     tabs: [
       ["ov", "Overview"],
       ["q", "Question"],
@@ -1015,7 +1113,7 @@ function AssessBody({ it, tab, qn, onNext, onTab, mathsMiddle = false, mathsSeco
     );
   }
   const set = itemTabSet(n);
-  const { opts, correct } = set;
+  const { opts, correct, sets } = set;
   const hasTab = (id) => set.tabs.some(([t]) => t === id);
   // Forward tab nav (founder 2026-07-16): a right-aligned link carrying the teacher to the
   // next window — Overview → Question, Question → Answer. Same pine-mono look as "Next
@@ -1032,10 +1130,10 @@ function AssessBody({ it, tab, qn, onNext, onTab, mathsMiddle = false, mathsSeco
     <div className="assess-flat">
       {qmark}
       {tab === "ov" ? <AOverviewPanel n={n} lo={lo} nav={tabNav("q", "Question")} /> : null}
-      {tab === "q" ? <AQuestionPanel n={n} opts={opts} nav={tabNav("an", "Answer")} /> : null}
+      {tab === "q" ? <AQuestionPanel n={n} opts={opts} sets={sets} nav={tabNav("an", "Answer")} /> : null}
       {tab === "an" ? (
         <div className="assess-qnavwrap">
-          <div className="assess-qnavmain"><AAnswerPanel n={n} correct={correct} opts={opts} /></div>
+          <div className="assess-qnavmain"><AAnswerPanel n={n} correct={correct} opts={opts} sets={sets} /></div>
           {nextQ}
         </div>
       ) : null}

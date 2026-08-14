@@ -863,6 +863,146 @@ REPAIRS = {
     # FOUNDER RULING 2026-08-13: amend the teacher notes and nothing else. No new scanner
     # pattern, no defect rows, and the 15 other canonicals across social_sciences and
     # mathematics that carry the same shape are deliberately NOT touched here.
+    # ── v1.6, 2026-08-14 · S11 · english IX · the wave-1 top canonicals ──────────────
+    #
+    # 14 ban hits across 9 of the 16 chapters — a higher rate than S5's ~1 per 3 files. The
+    # census is what makes this set different from every one before it, so read it before
+    # the edits:
+    #
+    #     meta-leak   6   the model NARRATING the register rule into teacher-facing prose
+    #     forward     5   4 of them in ch 7 alone
+    #     clock       2
+    #     completion  1
+    #
+    # THE META-LEAK FAMILY IS NEW, AND IT IS NOT A TEACHING DEFECT. Six times the model wrote
+    # its own compliance into the plan — "without assuming any specific earlier activity took
+    # place", "No prior activity is assumed". The self-contained register asks a unit to make
+    # no backward claim; it does not ask the unit to SAY it makes none. The teacher gains
+    # nothing from the assurance and loses a sentence to read, and the phrasing itself names
+    # "earlier units", which is the very reference the ban exists to remove. Every one is a
+    # trailing clause that deletes whole — the sentence before it is the teaching content and
+    # stands alone. Five of the six sit on SYNTHESIS units, which is where the constitution
+    # presses hardest on independence, so the leak is a predictable consequence of the rule's
+    # placement rather than model noise. Worth carrying to the constitution as a prohibition
+    # ("do not narrate this rule"), not just repairing here — noted for the human gate.
+    #
+    # ch 7 IS NOT FROM THIS BATCH. Its 4 forward references are the 2026-08-13 SYNC file that
+    # the batch correctly skipped as already-installed, and it has never been through a repair
+    # sweep. Its rate (4 hits in 17 units) against the batch's (10 in 143) is the clearest
+    # evidence available that the batch path is not worse than the sync path.
+    #
+    # ONE HIT IS DELIBERATELY LEFT PARTIAL, and it is declared rather than hidden: ch 7 U8's
+    # whole band is a preview of what the next unit will feel like. The trailing "so students
+    # know what the next unit will feel like" is struck, which removes the unknowable claim,
+    # but "names the Critical Reflection tasks ahead and previews the kind of thinking they
+    # demand" survives. That residue is STRUCTURAL — the band's teaching purpose is the
+    # preview — and this tool must not launder a structural change as text hygiene. It goes
+    # to the human gate as a waiver or a re-author decision on ch 7.
+    ("english", "ix"): {
+        "ch_03_canonical.json": [
+            (14, "teacher_notes",
+             ", without assuming any specific activity or discussion from earlier units "
+             "actually took place", "",
+             "register/meta-leak",
+             "synthesis unit. 'draws on the story's world and the two texts … as content "
+             "students have encountered' is the whole instruction; the assurance that follows "
+             "narrates the register rule at the teacher and names 'earlier units' while doing "
+             "it"),
+        ],
+        "ch_04_canonical.json": [
+            (6, "band:2",
+             "Each student speaks for one to two minutes adopting that vocation's voice",
+             "Each student speaks, adopting that vocation's voice",
+             "register/clock",
+             "the band's own 20–50 carries the time and the platform rescales it; the "
+             "speaking task — one vocation per student, in voice — is untouched. The comma "
+             "is punctuation the deletion strands, not new text"),
+        ],
+        "ch_05_canonical.json": [
+            (9, "band:3",
+             "Students spend the remaining time selecting a craft from their region and "
+             "completing notes",
+             "Students select a craft from their region and complete notes",
+             "register/clock",
+             "'the remaining time' is measured against a sitting length the plan does not "
+             "know. The task — choose a craft, note at least four of the eight planning "
+             "points — is unchanged; only the two verbs the deletion stranded are re-formed"),
+        ],
+        "ch_07_canonical.json": [
+            (2, "band:3",
+             " — building a bridge toward the story's setting before reading begins", "",
+             "register/forward",
+             "the share itself is the teaching act: a surprising word, used in a sentence. "
+             "What it bridges TOWARD is unknowable to a plan that may be served at any count"),
+            (3, "band:3",
+             " before comprehension questions are tackled in the next unit", "",
+             "register/forward",
+             "'a quick verbal check of first impressions' closes on its own ground"),
+            (7, "band:2",
+             " — a personal response that anchors the analytical work in the following unit",
+             "", "register/forward",
+             "the two-to-three sentences on the ending stand as their own output; the "
+             "analytical work may sit in the next unit, in a borrowed one, or nowhere"),
+            (8, "band:3",
+             " — so students know what the next unit will feel like", "",
+             "register/forward",
+             "PARTIAL BY DESIGN — see the header. This strikes the unknowable claim about the "
+             "next unit; the band's preview purpose survives and is referred to the human "
+             "gate rather than repaired here"),
+        ],
+        "ch_08_canonical.json": [
+            (7, "teacher_notes",
+             " — all without requiring any specific earlier activity to have occurred", "",
+             "register/meta-leak",
+             "synthesis unit. The three things it brings together are named before the dash; "
+             "the assurance is the rule narrated back. The sentences that follow already say "
+             "the unit runs without the shiuli research, concretely and usefully"),
+        ],
+        "ch_11_canonical.json": [
+            (8, "teacher_notes",
+             " before the writing task in a later unit requires students to include an aside "
+             "of their own", "",
+             "register/forward",
+             "the aside/soliloquy distinction 'is worth pinning down here' — the reason is "
+             "the confusion itself, which is true at any count. Whether a later unit demands "
+             "an aside depends on what X the teacher is served"),
+        ],
+        "ch_14_canonical.json": [
+            (9, "teacher_notes",
+             " — without assuming any specific earlier activity or written work", "",
+             "register/meta-leak",
+             "synthesis unit. The list of what the debate draws on ends at 'quality over "
+             "quantity'; the assurance adds nothing a teacher acts on"),
+            (9, "band:0",
+             " — without requiring that any particular earlier activity be recalled", "",
+             "register/meta-leak",
+             "same unit, the opening band. The sentence-completion round and the three images "
+             "it surfaces are the activity; the trailing clause is the rule spoken aloud"),
+        ],
+        "ch_15_canonical.json": [
+            (8, "band:0",
+             "working through all five sections:", "working through the sections:",
+             "register/completion",
+             "'all five' asserts a completion the band cannot guarantee once its 0–25 is "
+             "rescaled to a shorter sitting. The five are named immediately after the colon, "
+             "so nothing is lost — only the promise that every one gets done"),
+        ],
+        "ch_16_canonical.json": [
+            (1, "teacher_notes",
+             "No prior activity is assumed; the pre-reading prompts here are entirely "
+             "self-contained.",
+             "The pre-reading prompts here are entirely self-contained.",
+             "register/meta-leak",
+             "unit 1 — there IS no prior activity to assume, which is what makes the "
+             "assurance pure noise. The second half is a real and useful statement about the "
+             "prompts and is kept; only its capital is restored"),
+            (9, "band:0",
+             " without assuming any specific prior activity", "",
+             "register/meta-leak",
+             "synthesis unit. 'This surfaces the chapter's analytical work' is the sentence; "
+             "the qualifier is the rule narrated"),
+        ],
+    },
     ("english", "vi"): {
         "ch_08_canonical.json": [
             (12, "teacher_notes", " within these forty minutes", "", "register/clock",

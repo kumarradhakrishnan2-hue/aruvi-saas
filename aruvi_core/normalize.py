@@ -135,16 +135,21 @@ def normalize_options(raw: Any) -> tuple:
     Return (list_of_display_texts, answer_label) so the renderer shows clean text and can
     mark the correct one. Generic — used by every subject."""
     options: List[str] = []
-    answer = ""
+    # EVERY correct option, not the last one (2026-08-14). `answer` was a scalar assigned
+    # inside the loop, so an item with two correct options silently reported only the
+    # second — which is exactly the shape a COMPOUND item has (two sub-questions in one
+    # item, one answer each; see aruvi_core/compound_options.py). Single-correct items,
+    # which is all but two in the corpus, are byte-identical to before.
+    correct: List[str] = []
     for o in raw or []:
         if isinstance(o, dict):
             txt = o.get("text") or o.get("option") or o.get("label") or ""
             options.append(str(txt))
             if o.get("is_correct"):
-                answer = str(o.get("label") or txt)
+                correct.append(str(o.get("label") or txt))
         elif str(o).strip():
             options.append(str(o))
-    return options, answer
+    return options, ", ".join(correct)
 
 
 GROUP_LABEL_CAP = 56          # ~the longest real section title in the corpus

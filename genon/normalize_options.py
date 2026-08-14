@@ -66,6 +66,16 @@ CROSSREF = re.compile(r"\b(option|options)\s+[A-D]\b|\b(both|either|neither)\s+[
 # correctly-arranged prose item was re-sorted by a latitude buried mid-sentence.
 NUMERIC = re.compile(r"^\s*([-+]?\d[\d,]*\.?\d*)")
 
+# A FLAT label — one question, one option set. Anything else means the labels are GROUPED
+# ("1A"–"1D" for sub-question 1, "2A"–"2D" for sub-question 2) and the grouping is
+# load-bearing: sorting all the texts as one list moves options ACROSS the sub-question
+# boundary while the label sequence stays put, so sub-question 1's labels end up holding
+# sub-question 2's answers. That is ARV-D-156 (english·ix ch 5 Q-LST-A-1, 2026-08-14), and
+# it was invisible to certification because the result IS in arrangement order — faithfully,
+# and wrongly. The sort has no way to know where one group ends, so it must not try.
+FLAT_LABEL = re.compile(r"^[A-Da-d1-9]$")
+
+
 
 def _numeric_key(text):
     """Ascending numeric key when an option OPENS with a number; None when it does not."""
@@ -95,14 +105,42 @@ def sort_options(options):
     return sorted(options, key=lambda o: _word_key(o["text"]))
 
 
+def skip_reason(item):
+    """Why this item must not be arranged, or None when it may be. THE SINGLE RULE — both the
+    normalizer and certify()'s `unarranged` gate ask it, so a file this tool refuses can never
+    be failed by the gate for still being unarranged. They disagreed once (2026-08-14): the
+    guard below landed in `normalize_item` only, and the gate went on applying the flat sort to
+    the very item the normalizer had just declined, so a correctly repaired compound MCQ would
+    have FAILED certification in perpetuity with no legal way to pass."""
+    opts = item.get("options") or []
+    if len(opts) < 2:
+        return ""                                       # nothing to arrange; not a refusal
+    if any(CROSSREF.search(o.get("text", "")) for o in opts):
+        return "cross-references an option label — left untouched, needs a human"
+    # A compound item (grouped labels, or one correct answer per sub-question) cannot be
+    # sorted as a single list — see FLAT_LABEL. Refuse it; do not partially arrange it.
+    bad = [str(o.get("label")) for o in opts if not FLAT_LABEL.match(str(o.get("label", "")))]
+    if bad:
+        return (f"grouped option labels {sorted(set(bad))} — a compound item, "
+                f"arrangement would cross its sub-question boundary; needs a human")
+    # Scoped to MCQ deliberately. A TRUE_FALSE statement list legitimately marks several
+    # entries true, so "more than one correct" only signals a compound item for the type
+    # whose distractors Rule 7 arranges. (Whether STEP 6 should be sorting TRUE_FALSE
+    # statements at all is a separate, open question — it does today, and this guard
+    # deliberately does not change that.)
+    if item.get("question_type") == "MCQ" and sum(1 for o in opts if o.get("is_correct")) > 1:
+        return ("more than one correct option on an MCQ — a compound item; "
+                "arrangement would cross its sub-question boundary; needs a human")
+    return None
+
+
 def normalize_item(item):
     """Arrange one item's options in place. Returns (changed, detail) where detail records the
     label movement, or (False, reason) when the item is skipped."""
     opts = item.get("options") or []
-    if len(opts) < 2:
-        return False, None
-    if any(CROSSREF.search(o.get("text", "")) for o in opts):
-        return False, "cross-references an option label — left untouched, needs a human"
+    reason = skip_reason(item)
+    if reason is not None:
+        return False, (reason or None)
 
     labels = sorted(o["label"] for o in opts)          # A–D, or 1–4 where a stage uses digits
     before = [o["label"] for o in opts]
@@ -252,7 +290,7 @@ def unarranged(path):
     bad = []
     for n, item in enumerate(_items_of(doc), 1):
         opts = item.get("options") or []
-        if len(opts) < 2 or any(CROSSREF.search(o.get("text", "")) for o in opts):
+        if skip_reason(item) is not None:               # the same rule the normalizer applies
             continue
         if [o["text"] for o in opts] != [o["text"] for o in sort_options(list(opts))] \
            or [o["label"] for o in opts] != sorted(o["label"] for o in opts):

@@ -1,0 +1,1167 @@
+{
+ "filename": "ch_05_canonical.json",
+ "saved_at": "2026-08-14T11:03:12",
+ "plan_status": "canonical",
+ "chapter_number": 5,
+ "chapter_title": "Winds of Change (Winds of Change)",
+ "grade": "Grade IX",
+ "subject": "English",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 50,
+   "count": 10
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 10 periods = 500 minutes\nTotal: 10 periods · 8h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-14",
+  "schedule": "10x50",
+  "constitution": "LP v1.2 / assessment v1.6",
+  "source": "generate_canonical.py one english ix 5",
+  "ledger_ts": "20260813_193359_eng_ix_05_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "tool": "repair_compound_mcq.py",
+    "kind": "compound_mcq",
+    "at": "2026-08-14T11:25:30",
+    "why": "ARV-D-156 — STEP 6 flattened a grouped-label compound MCQ across its sub-question boundary; the authored map was read off the surviving item_stem and restored. normalize_options.py now refuses this shape.",
+    "items": [
+     {
+      "item_id": "Q-LST-A-1",
+      "relabelled": {
+       "2C": "1A",
+       "2B": "1B",
+       "2D": "1C",
+       "1A": "1D",
+       "1D": "2A",
+       "2A": "2B",
+       "1B": "2C",
+       "1C": "2D"
+      },
+      "correct_before": [
+       "2A",
+       "2D"
+      ],
+      "correct_after": [
+       "1C",
+       "2B"
+      ],
+      "diagnostics_rekeyed": {
+       "2C": "1A",
+       "2B": "1B",
+       "1A": "1D",
+       "1D": "2A",
+       "1B": "2C",
+       "1C": "2D"
+      }
+     }
+    ]
+   },
+   {
+    "tool": "repair_stem_option_echo.py",
+    "kind": "stem_option_echo",
+    "at": "2026-08-14T11:34:24",
+    "why": "The stem repeated the item's own options as an A–D list. After STEP 6 sorted and relabelled options[], that echo named a different letter as the answer. Deleted; options[] is the single source of truth. Every removed line was a verbatim echo of an option on disk.",
+    "items": [
+     {
+      "item_id": "Q-LST-A-1",
+      "removed": [
+       "A. Lightweight bamboo with delicate beadwork",
+       "B. Heavy brass fan from a craft fair",
+       "C. Something medium-weight and decorative enough to",
+       "D. A small plain fan easy to store under a pillow",
+       "A. He thinks brass fans are too expensive.",
+       "B. He worries a heavy fan would be hard to move aro",
+       "C. He believes Grandma does not like metal objects.",
+       "D. He feels brass fans are not traditional enough."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Entering the World of the Pankha",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "shared-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 0,
+       "task_brief": "Reflect and Respond (p.69): oral warm-up — hand fans, names, materials in students' languages"
+      },
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 1,
+       "task_brief": "Reflect and Respond (p.69): paired picture-study — shape and material of Assam, Kerala, UP fans"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher opens with the oral warm-up from Reflect and Respond: students share what they call a hand fan in their own language, what it is made of, and whether anyone at home uses one. A quick round of sharing builds a multilingual map of the word 'fan' on the board."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Teacher reads the chapter opening aloud, pages 69–72, with students following. Attention is drawn to how the text defines 'pankh', 'pankha', and 'pankhi', and to the Ajanta wall-painting reference as historical evidence."
+      },
+      {
+       "minutes": "25–45",
+       "activity": "Students work in pairs on the picture-study task from Reflect and Respond: they examine the photographs and complete the shape-and-material observations for fans from Assam, Kerala, and Uttar Pradesh. Pairs share answers aloud; teacher corrects and consolidates on the board."
+      },
+      {
+       "minutes": "45–50",
+       "activity": "Teacher closes with a brief whole-class discussion: what do all three fans have in common despite being from different regions? Students articulate one shared feature before the unit ends."
+      }
+     ],
+     "teacher_notes": "The chapter opens with etymology — 'pankh' (feather) leading to 'pankha' — which grounds the pre-reading discussion in a genuine linguistic hook rather than a trivial question. Students may confuse 'pankhi' (a small plumed fan) with the general term 'pankha'; clarify both at first encounter. An uncovered open task (finding more word pairs) is noted for self-study.",
+     "materials": [
+      "Textbook pp. 69–72 (Winds of Change, Reflect and Respond and opening text)"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Mapping Regional Pankha Diversity",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "guided-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 2,
+       "task_brief": "Reading for Meaning (p.70): paired word-matching — indigenous, innovative, industrious, intricate, invoked, initiatives"
+      },
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 3,
+       "task_brief": "Check Your Understanding (p.73–74): paired table-completion — state, fan type, material for six regions"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher reads pages 72–74 aloud, covering the regional survey from Rajasthan through Bihar. Students follow, noting unfamiliar words and the variety of materials described in each region."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students work in pairs on the vocabulary-matching task from Reading for Meaning: they locate each underlined word in context, match it to its meaning, and discuss whether the meaning changes if the word is replaced with a synonym. Pairs share answers; teacher confirms."
+      },
+      {
+       "minutes": "22–47",
+       "activity": "Students work in pairs on the pankha-table task from Check Your Understanding, filling in state, fan type, and material for Rajasthan, Gujarat, West Bengal, Uttar Pradesh, and Bihar. Teacher circulates, prompting students to return to the text for evidence rather than guessing."
+      },
+      {
+       "minutes": "47–50",
+       "activity": "Teacher draws a quick regional map on the board, asking one student per region to name the material that makes that state's pankha distinctive, consolidating the diversity surveyed."
+      }
+     ],
+     "teacher_notes": "Having read the regional survey aloud, students often conflate Gujarat's three fan types (mirror-work cotton, beaded silver-handled, and Kutch leather) — use the table to keep them distinct. The Bihar bamboo fan is often under-described; prompt students to re-read that sentence carefully.",
+     "materials": [
+      "Textbook pp. 70–74 (Reading for Meaning vocabulary, Check Your Understanding table)"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Close Reading the Extract Pair",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "close-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 4,
+       "task_brief": "Critical Reflection (p.74–75): extract-based analysis — Extract 1 and Extract 2, ten sub-questions on fact/opinion, inference, and effect of language"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher reads both extracts aloud (pages 74–75) with the class following. Before answering, students mark any phrase they find interesting or difficult, then share two with a partner."
+      },
+      {
+       "minutes": "8–28",
+       "activity": "Whole class works through Extract 1's five sub-questions from Critical Reflection: the true/false statement about commerce, why 'traditional' is used, completing the fact-versus-opinion sentence, inferring a reason for commonality, and selecting the correct assertion. Teacher models the fact/opinion distinction explicitly."
+      },
+      {
+       "minutes": "28–47",
+       "activity": "Class works through Extract 2's five sub-questions: inferring a negative impact of technology, completing the sentence about pankha as 'culture', identifying the line that shows the role-change, listing an artisan benefit, and selecting the commercialisation factor. Discussion is discussion-first; writing follows."
+      },
+      {
+       "minutes": "47–50",
+       "activity": "Teacher poses one synthesis question aloud: 'If Extract 1 celebrates the pankha's past and Extract 2 raises a concern about its present, what does that tell us about the author's purpose?' Students offer one-sentence responses."
+      }
+     ],
+     "teacher_notes": "Having read the regional diversity sections, students are now positioned to read Extract 1's claim that pankhas were 'significant cultural goods' with genuine content behind it. A common difficulty is distinguishing the fact/opinion item: ensure students understand that 'exotic and stylish' is a judgment, not a measurable observation, and that this is what makes it opinion. The task is anchored in full — all ten sub-questions are in class; nothing is deferred.",
+     "materials": [
+      "Textbook pp. 74–75 (Critical Reflection extracts)"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Evaluating the Chapter's Argument",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "critical-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 5,
+       "task_brief": "Critical Reflection (p.75–76): six extended-answer questions — title justification, cultural identity, craft preservation, workshops, celebration, decorative shift"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher poses the title question — 'What might 'Winds of Change' mean for a chapter about a hand fan?' — and takes three student responses to surface possible interpretations before the written work begins."
+      },
+      {
+       "minutes": "8–35",
+       "activity": "Students work independently on the six extended-answer questions from Critical Reflection, choosing any four to write fully and annotating the other two with bullet notes. Teacher circulates, prompting students to use textual evidence from the regional survey and the extract pair they studied."
+      },
+      {
+       "minutes": "35–47",
+       "activity": "Pairs exchange responses for two questions — the title question and the workshop-preservation question — and provide one piece of written peer feedback using a simple agree/challenge/add structure."
+      },
+      {
+       "minutes": "47–50",
+       "activity": "Teacher selects one student response to the 'decorative shift' question and reads it aloud (anonymised), inviting the class to evaluate whether it uses evidence or opinion — modelling the analytical standard expected."
+      }
+     ],
+     "teacher_notes": "Having worked through the extract pair, students now have the evidence base to write analytically rather than descriptively. A frequent weakness is treating 'The structure and design of pankhas are testimony to cultural identity' as a statement to agree with rather than a claim to support with named examples — insist on at least two specific regional examples. Students who finish quickly may annotate the two questions they did not write in full.",
+     "materials": [
+      "Textbook pp. 75–76 (Critical Reflection extended-answer questions)",
+      "Loose paper or exercise books for written responses"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "vocabulary_grammar"
+     ],
+     "activity_title": "Binomials, Fixed Expressions, and Collocations",
+     "pedagogical_methods": {
+      "vocabulary_grammar": "domain-vocabulary"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 0,
+       "task_brief": "Vocabulary and Structures in Context (p.76): classify word-pairs — Appearance, Place, Material; find more pairs from the text"
+      },
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 1,
+       "task_brief": "Vocabulary and Structures in Context (p.77): complete fixed expressions and match seven meanings"
+      }
+     ],
+     "homework": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 2,
+       "task_brief": "Vocabulary and Structures in Context (p.78): choose correct collocations for five sentences — take/give, take/have, dashed against/ran into, take/own, tone up/improve"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Teacher writes 'exotic and stylish' and 'thread and wool' on the board and asks: what kind of pairing is this? Students name any pairs they remember from the chapter text, setting up the classification task."
+      },
+      {
+       "minutes": "5–20",
+       "activity": "Students classify the six given word-pairs (exotic and stylish, villages and towns, thread and wool, silk and brass, ornate and encrusted, within and outside) into Appearance, Place, or Material, then search the chapter text for at least two more pairs. Pairs share their additional finds; teacher records on the board."
+      },
+      {
+       "minutes": "20–45",
+       "activity": "Students work on the fixed-expressions task: they reconstruct each binomial expression from the two-word clues (high/tear, cut/fast, etc.) and then match each expression to its meaning using the seven-item meaning list. Teacher goes through answers question by question, pausing on 'hard and dry' and 'thick and thin' to check for confusion."
+      },
+      {
+       "minutes": "45–50",
+       "activity": "Teacher previews the collocation homework task briefly: students are shown one example ('take the English exam') and the difference between 'take' and 'give' in that context is discussed, ensuring they can complete the task independently."
+      }
+     ],
+     "teacher_notes": "Having encountered 'exotic and stylish', 'silk and brass', and 'ornate and encrusted' in the informational text, students approach binomial classification with real examples rather than invented ones. A common error is classifying 'ornate and encrusted' under Material rather than Appearance — the words describe how something looks, not what it is made of. Collocation task (p.78) is set as homework so the grammar extension has sufficient in-class depth.",
+     "materials": [
+      "Textbook pp. 76–77 (Vocabulary and Structures in Context — word-pairs and fixed expressions)"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "vocabulary_grammar"
+     ],
+     "activity_title": "Present Perfect in Context",
+     "pedagogical_methods": {
+      "vocabulary_grammar": "grammar-in-writing"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 3,
+       "task_brief": "Vocabulary and Structures in Context (p.78–79): identify present perfect verbs in model sentences; fill in present perfect forms for five puppet-craft sentences"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher writes two sentences from the pankha text on the board — one using 'have become' and one using 'has transformed' — and asks students what these verb forms tell us about time and relevance. Students articulate the idea that the action began in the past and is still relevant now."
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Students read the four model sentences from the chapter (have become, have worked, have adopted, has transformed) and underline the present perfect verb in each. Teacher confirms answers and explains the auxiliary 'have/has' + past participle structure on the board."
+      },
+      {
+       "minutes": "20–42",
+       "activity": "Students complete the present perfect fill-in paragraph about puppetry: they write the correct form for 'create', 'master', 'evolve', 'pass', and 'perform'. Teacher circulates to check agreement (singular 'Puppetry' → 'has evolved') and irregular past participles."
+      },
+      {
+       "minutes": "42–50",
+       "activity": "Teacher invites students to write two original sentences about any traditional craft — not pankhas — using the present perfect. One or two are shared aloud and the class decides whether the form is correct and whether the sentence is relevant to today."
+      }
+     ],
+     "teacher_notes": "Having worked through the chapter's collocation and binomial exercises, students are now engaging with grammar that appears in the text itself, which improves retention. A frequent error is forming 'Puppetry have evolved' — draw attention to the singular subject requiring 'has'. The extension sentences about other crafts give students a low-stakes chance to produce the structure independently.",
+     "materials": [
+      "Textbook pp. 78–79 (Vocabulary and Structures in Context — present perfect)",
+      "Textbook pp. 76–78 for context sentences"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "listening"
+     ],
+     "activity_title": "Listening to a Gift Dilemma",
+     "pedagogical_methods": {
+      "listening": "listen-and-respond"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "listening",
+       "task_index": 0,
+       "task_brief": "Listen and Respond (p.79): identify four true statements from seven about Rohan and Priya's pankha discussion"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher sets the scene: two siblings are choosing a birthday pankha for their grandmother. Students predict — based on what they know about pankha varieties — what criteria might matter: weight, material, decorativeness, size. Predictions are noted on the board."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Teacher reads the transcript aloud at natural pace (first listening). Students listen without writing, building an overall sense of the siblings' discussion and the two final options they narrow down to."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Teacher reads the transcript a second time. Students mark each of the seven statements as true or false as they listen, selecting four they are confident about. Immediately after, individuals share their four choices with a partner."
+      },
+      {
+       "minutes": "35–47",
+       "activity": "Whole-class answer check: teacher reads each statement and students signal agreement. Teacher explains why statements 1, 4, 5, and 7 are false — using specific lines from the transcript — and confirms the four true statements."
+      },
+      {
+       "minutes": "47–50",
+       "activity": "Teacher poses a quick reflective question: 'Whose reasoning about the pankha was more careful — Rohan's or Priya's? Why?' Students give a one-sentence response aloud, practising the skill of supporting a view with evidence from what they heard."
+      }
+     ],
+     "teacher_notes": "The dialogue involves two speakers making concessions and compromises; students who listen only for facts sometimes miss that Rohan raises the weight concern and Priya proposes the middle-ground. On a second listening, prompt students to track who introduces each criterion. Statement 4 is a common error — it was Rohan, not Priya, who mentioned keeping things under the pillow.",
+     "materials": [
+      "Textbook p.79 (Listen and Respond, seven statements)",
+      "Transcript text (p.263 of textbook appendix)"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "speaking"
+     ],
+     "activity_title": "Becoming the Fan — In-Role Oral Presentation",
+     "pedagogical_methods": {
+      "speaking": "role-play"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "speaking",
+       "task_index": 0,
+       "task_brief": "Speaking Activity (p.79–80): each student in a group of four role-plays as one kind of fan — introduction, features, strength, weakness, uniqueness"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher explains the task: each student in a group of four picks one of the four fan types (hand fan, ceiling fan, table fan, handheld fan) and will speak as that fan. Teacher models a two-sentence opening — 'I am a ceiling fan. I have been spinning in Indian homes for over a century' — to show what first-person fan-voice sounds like."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Groups form and each student spends quiet time preparing their two-minute talk using the five prompts: introduction, features, one thing you like about yourself, one weakness, one unique quality. Students jot brief bullet notes only — no full scripts."
+      },
+      {
+       "minutes": "18–43",
+       "activity": "Each student delivers their in-role talk within the group. After each talk, the group gives one piece of positive feedback and names one thing they learned about that fan type. Teacher circulates and listens to at least two full rounds."
+      },
+      {
+       "minutes": "43–50",
+       "activity": "Two volunteers present their role-play to the whole class. Teacher leads a brief comparison: which fan claimed the most cultural significance, and why? Students connect the pankha's story to the debate about traditional versus modern objects."
+      }
+     ],
+     "teacher_notes": "Having studied the pankha's cultural history and regional diversity, students can draw on specific material knowledge when speaking as a traditional hand fan — encourage them to name a material or region rather than speaking generically. A common difficulty is moving from listing features to explaining what makes the object unique; prompt with 'What could only you offer that the others cannot?'",
+     "materials": [
+      "Textbook p.79–80 (Speaking Activity, five prompt points)",
+      "Loose paper for brief planning notes"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "writing",
+      "beyond_text"
+     ],
+     "activity_title": "Describing a Craft and Exploring Beyond the Text",
+     "pedagogical_methods": {
+      "writing": "guided-writing",
+      "beyond_text": "project-work"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "writing",
+       "task_index": 0,
+       "task_brief": "Writing Task (p.80–81): factual description of an artefact — collect facts using given pointers, draft without personal opinion"
+      },
+      {
+       "spine": "beyond_text",
+       "task_index": 0,
+       "task_brief": "Learning Beyond the Text (p.82–83): identify a regional craft item; plan and begin a structured presentation across eight given points"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Teacher briefly distinguishes factual description from opinion-based writing, using one sentence from the pankha chapter as a factual model ('The sola fan is made from the milky-white centre of the sola plant') versus one opinion-shaped sentence to avoid."
+      },
+      {
+       "minutes": "5–25",
+       "activity": "Students plan and draft their factual description of a craft artefact they have made or learned to make, following the pointer sequence from the Writing Task. Teacher circulates and intervenes where students slip into evaluative language, redirecting them to observable facts."
+      },
+      {
+       "minutes": "25–35",
+       "activity": "Students exchange drafts with a partner who checks for any opinion-language that has crept in, underlining one sentence to revise. Writers revise that sentence before the draft is complete. Both the draft and the revised sentence are finished inside this unit."
+      },
+      {
+       "minutes": "35–48",
+       "activity": "Teacher introduces the regional craft project from Learning Beyond the Text. Students spend the remaining time selecting a craft from their region and completing notes for at least four of the eight planning points — enough for a clear start. These notes are personal reference material, not a dependency for any other class."
+      },
+      {
+       "minutes": "48–50",
+       "activity": "Quick sharing: two students name their chosen craft item and one distinctive fact about it. Teacher encourages the class to consider crafts beyond what the chapter lists."
+      }
+     ],
+     "teacher_notes": "The factual description task requires students to suspend the evaluative tone that the Critical Reflection work actively encouraged — make the register shift explicit at the opening of this unit. The beyond-text project is introduced here so students have a focused thinking task, but the project will be completed by those classes that reach the synthesis unit; classes that do not will hold their notes as a self-directed reference.",
+     "materials": [
+      "Textbook pp. 80–83 (Writing Task pointers and Learning Beyond the Text project points)",
+      "Exercise books or loose paper for drafting"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 50,
+     "synthesis": true,
+     "section_id": "A",
+     "section_title": "Winds of Change",
+     "spines_taught": [
+      "reading_for_comprehension",
+      "beyond_text"
+     ],
+     "activity_title": "Winds of Change — Chapter Synthesis and Cultural Argument",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "critical-reading",
+      "beyond_text": "interdisciplinary-study"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "beyond_text",
+       "task_index": 1,
+       "task_brief": "Learning Beyond the Text (p.83–85): connect the pankha's story to 'The Last Leaf' — art, will, and craft as life-sustaining forces"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher poses the synthesis question that frames the whole unit: 'The chapter argues that celebrating pankha culture is the key to preserving it. Do you agree, or is there a stronger argument?' Students write a one-paragraph personal position before any discussion."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Structured whole-class debate in two rounds: one side argues that commercialisation saves craft, the other that only living practice saves it. Students draw on the regional diversity content, the extract pair about cultural goods and technology, and the artisan livelihood argument from the closing pages."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Teacher introduces the enrichment story 'The Last Leaf' (pp.83–85): teacher reads a summarised account of Behrman's painted leaf and Johnsy's recovery, then poses the interdisciplinary question — 'Behrman's art saved a life. The pankha artisans' craft sustains livelihoods. What does this chapter as a whole say about what art and craft are for?' Students discuss in groups of three."
+      },
+      {
+       "minutes": "38–47",
+       "activity": "Each group produces a three-sentence written synthesis statement that connects the pankha's cultural history, the artisan's livelihood argument, and Behrman's story. Groups share; teacher annotates two responses on the board to show strong and weak use of evidence."
+      },
+      {
+       "minutes": "47–50",
+       "activity": "Teacher closes by returning to the chapter title: 'Winds of Change' referred to both the pankha's shift from functional to decorative and to the possibility of renewal. Students name one thing from the chapter that they would argue deserves to be preserved — and say why, in one sentence each."
+      }
+     ],
+     "teacher_notes": "This synthesis unit draws on the full arc of the chapter: the etymological opening, the regional diversity survey, the extract pair about commerce and technology, the craft-description writing, and the beyond-text project research. Students who have not undertaken the writing or project units in earlier sittings can still participate fully — the synthesis debate and the 'Last Leaf' connection require only the content knowledge, not any prior artefact or draft.",
+     "materials": [
+      "Textbook pp. 69–85 (full chapter, including 'The Last Leaf' pp.83–85)",
+      "Exercise books for the opening paragraph and group synthesis statement"
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "period_duration_minutes": 50,
+    "period_count": 10
+   }
+  ],
+  "coverage_handoff": {
+   "reading_for_comprehension": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student analyses an informational text for fact versus opinion, authorial purpose, and cultural argument using an informational chapter as the vehicle.",
+      "section_context": "Pankha's shift from functional object to cultural commodity and the argument for preservation through workshops and celebration.",
+      "tasks_anchored": [
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 0,
+        "task_brief": "Reflect and Respond (p.69): oral warm-up — hand fans, names, materials in students' languages"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 1,
+        "task_brief": "Reflect and Respond (p.69): paired picture-study — shape and material of Assam, Kerala, UP fans"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 2,
+        "task_brief": "Reading for Meaning (p.70): paired word-matching — indigenous, innovative, industrious, intricate, invoked, initiatives"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 3,
+        "task_brief": "Check Your Understanding (p.73–74): paired table-completion — state, fan type, material for six regions"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 4,
+        "task_brief": "Critical Reflection (p.74–75): extract-based analysis — Extract 1 and Extract 2, ten sub-questions on fact/opinion, inference, and effect of language"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 5,
+        "task_brief": "Critical Reflection (p.75–76): six extended-answer questions — title justification, cultural identity, craft preservation, workshops, celebration, decorative shift"
+       }
+      ]
+     }
+    ]
+   },
+   "listening": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student listens to a dialogue for specific information and evaluates the reasoning of speakers using a listening task as the vehicle.",
+      "section_context": "Rohan and Priya weighing weight, design, and grandmother's preferences while choosing a pankha gift.",
+      "tasks_anchored": [
+       {
+        "spine": "listening",
+        "task_index": 0,
+        "task_brief": "Listen and Respond (p.79): identify four true statements from seven about Rohan and Priya's pankha discussion"
+       }
+      ]
+     }
+    ]
+   },
+   "speaking": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student delivers a structured first-person oral presentation, articulating features, strengths, weaknesses, and a distinctive quality using role-play as the vehicle.",
+      "section_context": "Students speaking in role as one of four fan types, drawing on the chapter's account of functional versus decorative value.",
+      "tasks_anchored": [
+       {
+        "spine": "speaking",
+        "task_index": 0,
+        "task_brief": "Speaking Activity (p.79–80): each student in a group of four role-plays as one kind of fan — introduction, features, strength, weakness, uniqueness"
+       }
+      ]
+     }
+    ]
+   },
+   "writing": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student writes an objective factual description of a craft artefact, sustaining an impersonal register throughout using guided-writing as the vehicle.",
+      "section_context": "Traditional craft items as vessels of cultural knowledge, regional identity, and artisan livelihood in contemporary India.",
+      "tasks_anchored": [
+       {
+        "spine": "writing",
+        "task_index": 0,
+        "task_brief": "Writing Task (p.80–81): factual description of an artefact — collect facts using given pointers, draft without personal opinion"
+       }
+      ]
+     }
+    ]
+   },
+   "vocabulary_grammar": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student identifies and uses binomial word-pairs, fixed expressions, collocations, and present perfect constructions drawn from an informational text as the vehicle.",
+      "section_context": "Language patterns in the pankha chapter — paired descriptors, fixed binomials, and present perfect verbs tracing the craft's evolution.",
+      "tasks_anchored": [
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 0,
+        "task_brief": "Vocabulary and Structures in Context (p.76): classify word-pairs — Appearance, Place, Material; find more pairs from the text"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 1,
+        "task_brief": "Vocabulary and Structures in Context (p.77): complete fixed expressions and match seven meanings"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 3,
+        "task_brief": "Vocabulary and Structures in Context (p.78–79): identify present perfect verbs in model sentences; fill in present perfect forms for five puppet-craft sentences"
+       }
+      ]
+     }
+    ]
+   },
+   "beyond_text": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Winds of Change",
+      "section_type": "informational",
+      "implied_lo": "Student researches and presents a regional craft item, connecting its cultural history and contemporary relevance using project-work as the vehicle.",
+      "section_context": "Regional craft traditions in India as living cultural heritage, examined through the lens of origin, evolution, and present-day significance.",
+      "tasks_anchored": [
+       {
+        "spine": "beyond_text",
+        "task_index": 0,
+        "task_brief": "Learning Beyond the Text (p.82–83): identify a regional craft item; plan and begin a structured presentation across eight given points"
+       },
+       {
+        "spine": "beyond_text",
+        "task_index": 1,
+        "task_brief": "Learning Beyond the Text (p.83–85): connect the pankha's story to 'The Last Leaf' — art, will, and craft as life-sustaining forces"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "spine_code": "reading_for_comprehension",
+    "spine_title": "Reading for Comprehension",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-RFC-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "reading_for_comprehension",
+      "source_lo": "Student analyses an informational text for fact versus opinion, authorial purpose, and cultural argument using an informational chapter as the vehicle.",
+      "source_context": "Pankha's shift from functional object to cultural commodity and the argument for preservation through workshops and celebration.",
+      "item_stem": "Read the following statements about pankhas and decide whether each is a FACT or an OPINION. Write F or O against each statement and give a one-sentence reason for your choice.\n1. The word 'pankha' originates from 'pankh', meaning a bird's feather.\n2. Pankhas were the most beautiful objects ever traded on Indian trade routes.\n3. Buddhist wall paintings at Ajanta dating to the 2nd century CE depict the use of pankhas.\n4. Restricting the pankha to decorative use is the best way to keep the craft alive.",
+      "question_type": "TRUE_FALSE",
+      "options": [
+       {
+        "label": "1",
+        "text": "Buddhist wall paintings at Ajanta dating to the 2nd century CE depict the use of pankhas.",
+        "is_correct": true
+       },
+       {
+        "label": "2",
+        "text": "Pankhas were the most beautiful objects ever traded on Indian trade routes.",
+        "is_correct": false
+       },
+       {
+        "label": "3",
+        "text": "Restricting the pankha to decorative use is the best way to keep the craft alive.",
+        "is_correct": false
+       },
+       {
+        "label": "4",
+        "text": "The word 'pankha' originates from 'pankh', meaning a bird's feather.",
+        "is_correct": true
+       }
+      ],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "1 — F (verifiable from etymology given in the text). 2 — O (a subjective judgment of beauty, not a measurable claim). 3 — F (a datable historical record cited in the chapter). 4 — O (a debatable position on craft preservation strategy, not established fact).",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-RFC-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "reading_for_comprehension",
+      "source_lo": "Student analyses an informational text for fact versus opinion, authorial purpose, and cultural argument using an informational chapter as the vehicle.",
+      "source_context": "Pankha's shift from functional object to cultural commodity and the argument for preservation through workshops and celebration.",
+      "item_stem": "Read the following passage from the chapter and answer the three questions below it.",
+      "question_type": "EXTRACT_ANALYSIS",
+      "options": [],
+      "visual_stimulus": "Over time, pankhas became significant cultural goods traded across routes and were considered exotic and stylish. Though pankhas shared common usage across India, each region developed distinct varieties defined by local materials and intricate designs. With time and the advent of technology, pankhas have shifted from functional to decorative objects, now serving as traditional craft items and a commercial livelihood for artisans.",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Identifies 'considered exotic and stylish' as opinion; explains it is a judgment not verifiable as fact.",
+        "Links regional material diversity to cultural distinctiveness using at least one named example.",
+        "Explains how the shift to decorative use changes artisans' relationship to the craft economically.",
+        "Evaluates the author's argument — preservation through celebration — as a response to the technology threat."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "listening",
+    "spine_title": "Listening",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-LST-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "listening",
+      "source_lo": "Student listens to a dialogue for specific information and evaluates the reasoning of speakers using a listening task as the vehicle.",
+      "source_context": "Rohan and Priya weighing weight, design, and grandmother's preferences while choosing a pankha gift.",
+      "item_stem": "After listening to the conversation between Rohan and Priya, choose the correct answer for each question.\n1. Which of the following best describes the pankha Priya proposes as a suitable gift?\n2. Why does Rohan raise a concern about the brass fans Priya first mentions?",
+      "question_type": "MCQ",
+      "options": [
+       {
+        "label": "1A",
+        "text": "Lightweight bamboo with delicate beadwork",
+        "is_correct": false
+       },
+       {
+        "label": "1B",
+        "text": "Heavy brass fan from a craft fair",
+        "is_correct": false
+       },
+       {
+        "label": "1C",
+        "text": "Something medium-weight and decorative enough to show friends",
+        "is_correct": true
+       },
+       {
+        "label": "1D",
+        "text": "A small plain fan easy to store under a pillow",
+        "is_correct": false
+       },
+       {
+        "label": "2A",
+        "text": "He thinks brass fans are too expensive.",
+        "is_correct": false
+       },
+       {
+        "label": "2B",
+        "text": "He worries a heavy fan would be hard to move around.",
+        "is_correct": true
+       },
+       {
+        "label": "2C",
+        "text": "He believes Grandma does not like metal objects.",
+        "is_correct": false
+       },
+       {
+        "label": "2D",
+        "text": "He feels brass fans are not traditional enough.",
+        "is_correct": false
+       }
+      ],
+      "visual_stimulus": "",
+      "transcript_ref": "p. 263",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {
+        "1A": "Student may have confused the final two options discussed; the bamboo fan is one of two choices, not Priya's proposal for what is ideal.",
+        "1B": "Student recalls brass fans were mentioned but did not track that Rohan's concern led both siblings away from them.",
+        "1D": "Student has attached Rohan's detail about keeping things under the pillow to a separate description of the gift, rather than hearing it as a storage habit.",
+        "2A": "Student has inferred a likely reason (cost) not stated in the dialogue.",
+        "2C": "Student has inferred a preference not mentioned by Rohan.",
+        "2D": "Student may be drawing on background knowledge about brass being non-traditional, but this reason is not given in the dialogue."
+       },
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-LST-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "listening",
+      "source_lo": "Student listens to a dialogue for specific information and evaluates the reasoning of speakers using a listening task as the vehicle.",
+      "source_context": "Rohan and Priya weighing weight, design, and grandmother's preferences while choosing a pankha gift.",
+      "item_stem": "Having listened to Rohan and Priya's conversation, answer the following in 2–3 sentences: Rohan and Priya use several pieces of evidence about their grandmother's preferences to narrow down their choice. Identify two pieces of evidence they use and explain how each one shapes the final shortlist of pankhas.",
+      "question_type": "SCR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "p. 263",
+      "teacher_guide": {
+       "suggested_answer": "Rohan recalls that Grandma mentioned liking items with a bit of weight, which rules out very lightweight options and keeps the medium-weight embroidered fan in the running. He also notes she likes sitting in the verandah in the evenings, suggesting a fan for personal, habitual use rather than pure display, which supports a practical size. These two pieces of evidence together explain why the final shortlist is a lightweight bamboo fan with beadwork and a medium-weight embroidered fan with mirror work — both portable and both decorative enough to show friends.",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "speaking",
+    "spine_title": "Speaking",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-SPK-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "speaking",
+      "source_lo": "Student delivers a structured first-person oral presentation, articulating features, strengths, weaknesses, and a distinctive quality using role-play as the vehicle.",
+      "source_context": "Students speaking in role as one of four fan types, drawing on the chapter's account of functional versus decorative value.",
+      "item_stem": "Choose one of the following: a traditional hand-stitched pankha, a ceiling fan, a table fan, or a battery-powered handheld fan. Speak for one and a half to two minutes in the first person as that object. Your talk must cover: who you are and where you come from; what you are made of and what you look like; one thing you consider your greatest strength; one genuine limitation; and what makes you irreplaceable or unique.",
+      "question_type": "ORAL_PROMPT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Clear first-person voice maintained throughout without slipping to third person.",
+        "At least one specific material or origin detail named (e.g. bamboo, cotton, mirror work).",
+        "Strength and limitation are distinct and honestly presented, not both positives.",
+        "Uniqueness claim connects the object to a cultural, functional, or personal value.",
+        "Fluency and audibility sustained across the full time without reading from notes."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-SPK-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "speaking",
+      "source_lo": "Student delivers a structured first-person oral presentation, articulating features, strengths, weaknesses, and a distinctive quality using role-play as the vehicle.",
+      "source_context": "Students speaking in role as one of four fan types, drawing on the chapter's account of functional versus decorative value.",
+      "item_stem": "A classmate has just argued that the traditional hand-stitched pankha should be preserved as a cultural object, not replaced by electric fans. You may agree or disagree. Speak for one to one and a half minutes: state your position clearly, give two reasons with evidence from what you know about pankhas or fans, and acknowledge one point from the opposing view before closing.",
+      "question_type": "ORAL_PROMPT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Position stated clearly in the opening sentence.",
+        "Two reasons given, each with a specific supporting detail or example.",
+        "One concession to the opposing view made genuinely, not as a dismissal.",
+        "Logical order: position — reasons — concession — closing restatement.",
+        "Formal register maintained; no filler-heavy or conversational hedging."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "writing",
+    "spine_title": "Writing",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-WRT-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "writing",
+      "source_lo": "Student writes an objective factual description of a craft artefact, sustaining an impersonal register throughout using guided-writing as the vehicle.",
+      "source_context": "Traditional craft items as vessels of cultural knowledge, regional identity, and artisan livelihood in contemporary India.",
+      "item_stem": "Your school is compiling a catalogue of traditional Indian craft objects for its annual heritage display. Write a factual description (120–150 words) of one craft object you know — it may be a textile, a clay or metal object, a woven item, or any hand-made artefact. Cover: its name and physical appearance; the material it is made from; the region it comes from; how it has traditionally been used; and how it is used or valued today. Do not include your personal opinion. Write in the third person throughout.",
+      "question_type": "WRITING_TASK",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Third-person, impersonal register sustained with no first-person opinion.",
+        "Physical description names material, colour, shape, or size specifically.",
+        "Regional or cultural origin clearly stated.",
+        "Traditional use and contemporary use or value both addressed.",
+        "Paragraph structure and approximate word count (120–150) observed."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-WRT-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "writing",
+      "source_lo": "Student writes an objective factual description of a craft artefact, sustaining an impersonal register throughout using guided-writing as the vehicle.",
+      "source_context": "Traditional craft items as vessels of cultural knowledge, regional identity, and artisan livelihood in contemporary India.",
+      "item_stem": "A local craft collective is applying for government funding to run weekend workshops where artisans demonstrate and teach their craft to the public. Write a letter to the District Arts Officer (150–180 words) arguing that such workshops are valuable for both cultural preservation and the economic wellbeing of artisans. Your letter must: state the purpose clearly; give two reasons why workshops benefit the community; acknowledge one possible concern about funding such events; and close with a specific recommendation. Use formal letter format.",
+      "question_type": "WRITING_TASK",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Formal letter format: sender address, date, salutation, body, closing.",
+        "Purpose stated in the opening paragraph without personal anecdote.",
+        "Two distinct community benefits argued with supporting reasoning.",
+        "One genuine concern acknowledged and countered, not dismissed.",
+        "Specific recommendation given in the closing paragraph."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "vocabulary_grammar",
+    "spine_title": "Vocabulary and Grammar",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-VG-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "vocabulary_grammar",
+      "source_lo": "Student identifies and uses binomial word-pairs, fixed expressions, collocations, and present perfect constructions drawn from an informational text as the vehicle.",
+      "source_context": "Language patterns in the pankha chapter — paired descriptors, fixed binomials, and present perfect verbs tracing the craft's evolution.",
+      "item_stem": "Match each fixed expression in Column A with its meaning in Column B.",
+      "question_type": "MATCH",
+      "options": [],
+      "visual_stimulus": "| Column A | Column B |\n|---|---|\n| thick and thin | the damage to an object from normal use |\n| cut and run | in a difficult situation without money or help |\n| wear and tear | even when there are problems or difficulties |\n| high and dry | to make a quick or sudden escape |\n| time and again | often; on many or all occasions |",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "thick and thin — even when there are problems or difficulties; cut and run — to make a quick or sudden escape; wear and tear — the damage to an object from normal use; high and dry — in a difficult situation without money or help; time and again — often; on many or all occasions.",
+       "expected_elements": [],
+       "answer_key": [
+        {
+         "left": "thick and thin",
+         "right": "even when there are problems or difficulties"
+        },
+        {
+         "left": "cut and run",
+         "right": "to make a quick or sudden escape"
+        },
+        {
+         "left": "wear and tear",
+         "right": "the damage to an object from normal use"
+        },
+        {
+         "left": "high and dry",
+         "right": "in a difficult situation without money or help"
+        },
+        {
+         "left": "time and again",
+         "right": "often; on many or all occasions"
+        }
+       ],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-VG-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "vocabulary_grammar",
+      "source_lo": "Student identifies and uses binomial word-pairs, fixed expressions, collocations, and present perfect constructions drawn from an informational text as the vehicle.",
+      "source_context": "Language patterns in the pankha chapter — paired descriptors, fixed binomials, and present perfect verbs tracing the craft's evolution.",
+      "item_stem": "The sentences below are about traditional Indian craft communities. Rewrite each sentence by changing the verb in brackets to the correct present perfect form. Then, for sentences (iii) and (iv), add a short clause of your own (introduced by 'and' or 'because') that explains why the action matters today.\n(i) Weavers of Varanasi (pass) their silk-weaving techniques from parent to child for generations.\n(ii) The indigo-dyeing tradition of Rajasthan (survive) despite competition from synthetic dyes.\n(iii) Many craft collectives (adopt) online platforms to reach buyers across the country.\n(iv) The government (recognise) several traditional crafts under the Geographical Indication scheme.",
+      "question_type": "SCR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "(i) Weavers of Varanasi have passed their silk-weaving techniques from parent to child for generations. (ii) The indigo-dyeing tradition of Rajasthan has survived despite competition from synthetic dyes. (iii) Many craft collectives have adopted online platforms to reach buyers across the country, and this has helped artisans earn a sustainable livelihood beyond their local markets. (iv) The government has recognised several traditional crafts under the Geographical Indication scheme, because this protects the craft's regional identity and prevents imitation.",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "beyond_text",
+    "spine_title": "Beyond the Text",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-BXT-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "beyond_text",
+      "source_lo": "Student researches and presents a regional craft item, connecting its cultural history and contemporary relevance using project-work as the vehicle.",
+      "source_context": "Regional craft traditions in India as living cultural heritage, examined through the lens of origin, evolution, and present-day significance.",
+      "item_stem": "Choose one traditional craft from your state or region that you know something about (it should not be pankha-making). Write an extended paragraph of 100–120 words answering the following: What is the craft called and what does the finished object look like? What materials does it use? How has the craft been used or valued historically? How has it changed or been adapted in recent decades?",
+      "question_type": "ECR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Craft named and its appearance described with at least one specific detail.",
+        "At least one material named correctly in relation to the craft.",
+        "Historical use or cultural significance stated with some specificity.",
+        "A change or adaptation in recent decades identified and explained.",
+        "Writing is organised in coherent paragraphs, not a list of isolated facts."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-BXT-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Winds of Change",
+      "source_section_type": "informational",
+      "source_spine": "beyond_text",
+      "source_lo": "Student researches and presents a regional craft item, connecting its cultural history and contemporary relevance using project-work as the vehicle.",
+      "source_context": "Regional craft traditions in India as living cultural heritage, examined through the lens of origin, evolution, and present-day significance.",
+      "item_stem": "Design a project plan (not the project itself) for a short documentary video or illustrated blog post about a traditional craft from your region. Your plan must include: (a) a title and a one-sentence statement of what the documentary or blog will argue; (b) a list of at least four sections or segments with a one-line description of what each will cover; (c) two types of primary sources (e.g. interviews, visits, observations) you would use and why each is valuable; (d) one way in which your documentary or blog would connect the craft to a wider cultural or social theme beyond the object itself.",
+      "question_type": "PROJECT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Title and argument statement are specific, not generic ('about a craft').",
+        "Four sections planned with distinct, non-overlapping focus for each.",
+        "Two primary sources named with a clear reason why each adds value.",
+        "Connection to wider cultural or social theme is explicit and reasoned.",
+        "Plan is written in formal, organised prose — not bullet fragments."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}
