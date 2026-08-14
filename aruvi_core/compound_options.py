@@ -32,7 +32,31 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional
 
-GROUPED_LABEL = re.compile(r"^(\d+)([A-Z])$")
+# PREFIX + LETTER, with the separator optional — NOT one fixed notation (2026-08-14).
+# The corpus already holds two, invented by the model on successive runs because the
+# assessment constitution declares no notation for a compound item at all:
+#
+#     wave 1 tops      "1A" … "2D"      english·ix ch 5, ch 9
+#     wave 2 compacts  "Q1-A" … "Q2-D"  english·ix ch 5 p06, ch 11 p11
+#
+# A third is a matter of time, so this matches the SHAPE rather than either spelling. The
+# prefix must contain a digit — that is what makes it a sub-question number and stops a
+# two-letter label from grouping by accident.
+GROUPED_LABEL = re.compile(r"^(.+?)[\s\-_.]*([A-Z])$")
+_DIGITS = re.compile(r"\d+")
+
+
+def _split_label(label: Any):
+    """(group, letter) for a grouped label, or None. Group is the sub-question NUMBER, so
+    "1A" and "Q1-A" land on the same group "1" and read identically on screen."""
+    m = GROUPED_LABEL.match(str(label or ""))
+    if not m:
+        return None
+    prefix, letter = m.group(1), m.group(2)
+    digits = _DIGITS.search(prefix)
+    if not digits:
+        return None
+    return digits.group(0), letter
 
 
 def grouped_option_sets(options: Any) -> Optional[List[Dict[str, Any]]]:
@@ -44,13 +68,12 @@ def grouped_option_sets(options: Any) -> Optional[List[Dict[str, Any]]]:
     opts = list(options or [])
     if len(opts) < 2:
         return None
-    marks = [GROUPED_LABEL.match(str(o.get("label") or "")) for o in opts]
+    marks = [_split_label(o.get("label")) for o in opts]
     if not all(marks):
         return None
     order: List[str] = []
     by: Dict[str, List[Dict[str, Any]]] = {}
-    for opt, m in zip(opts, marks):
-        group, letter = m.group(1), m.group(2)
+    for opt, (group, letter) in zip(opts, marks):
         if group not in by:
             by[group] = []
             order.append(group)

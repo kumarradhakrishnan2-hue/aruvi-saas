@@ -30,7 +30,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from aruvi_core.genon import compile_stream                      # noqa: E402
-from aruvi_core.genon.serve import section_registry              # noqa: E402
+from aruvi_core.genon.serve import authored_registry              # noqa: E402
 
 MP = os.path.join(ROOT, "data/content/allocation_norms/master_plan.json")
 SAVED = os.path.join(ROOT, "data/content/saved_plans")
@@ -60,14 +60,20 @@ def library_paths(subject, klass, chapter):
 
 
 def standard_registry(subject, klass, chapter):
-    """The chapter's section registry from the AUTHORED standard canonical
-    (the synthesis token is excluded by section_registry itself). None when
-    the standard is not on disk or does not compile."""
+    """The chapter's section registry from the AUTHORED standard canonical, as the BRIEF
+    must see it. None when the standard is not on disk or does not compile.
+
+    Reads `authored_registry`, not `section_registry` (ARV-D-157, 2026-08-14): the serve
+    registry omits the standard's synthesis unit, so a cell taught ONLY there never reached
+    the brief — and the brief's "drawn verbatim from this list" then FORBADE the compact from
+    teaching it. Six english·ix floor compacts were briefed against four cells instead of six
+    and dropped `writing`. The same function now feeds certification, so the two cannot
+    disagree again."""
     top_path, _ = library_paths(subject, klass, chapter)
     if not os.path.isfile(top_path):
         return None
     try:
-        return section_registry(compile_stream(json.load(open(top_path))))
+        return authored_registry(compile_stream(json.load(open(top_path))))
     except Exception:                                # noqa: BLE001
         return None
 

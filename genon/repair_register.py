@@ -898,7 +898,9 @@ REPAIRS = {
     # demand" survives. That residue is STRUCTURAL — the band's teaching purpose is the
     # preview — and this tool must not launder a structural change as text hygiene. It goes
     # to the human gate as a waiver or a re-author decision on ch 7.
-    ("english", "ix"): {
+    # APPLIED 2026-08-14 to the 15 wave-1 TOP canonicals (14 hits -> 0). Kept as the
+    # cost record; stale by design — re-running it fails its own assertion.
+    ("english", "ix", "APPLIED-20260814-wave1-tops"): {
         "ch_03_canonical.json": [
             (14, "teacher_notes",
              ", without assuming any specific activity or discussion from earlier units "
@@ -1001,6 +1003,138 @@ REPAIRS = {
              "register/meta-leak",
              "synthesis unit. 'This surfaces the chapter's analytical work' is the sentence; "
              "the qualifier is the rule narrated"),
+        ],
+    },
+    # ── v1.7, 2026-08-14 · S11 · english IX · the wave-2 COMPACTS ────────────────────
+    #
+    # 15 ban hits across 12 of the 23 compacts. The census is the interesting half, read
+    # against wave 1's (meta-leak 6 · forward 5 · clock 2 · completion 1):
+    #
+    #     forward     6      clock       7      meta-leak   1      completion  1
+    #
+    # THE META-LEAK FAMILY ALL BUT VANISHED — 6 in 15 tops, 1 in 23 compacts. That is not
+    # luck: 5 of wave 1's 6 sat on SYNTHESIS units, and a compact has none (§0.3 reserves
+    # the token to the standard). It is direct evidence that the leak is produced by the
+    # synthesis unit's independence pressure rather than by the register block in general
+    # — which is the argument for fixing it in the constitution at the synthesis mandate,
+    # not by widening the ban.
+    #
+    # CLOCK OVERTOOK IT, and for a reason worth recording: 5 of the 7 are "the remaining
+    # time" or "for N minutes" inside a band that is doing MORE work than the standard's
+    # equivalent, because a compact folds two spines into one unit. The phrase is the
+    # model reaching for a way to say "this is the elastic part" — which the platform
+    # already handles by rescaling the band. All are pure deletions.
+    #
+    # All 15 delete or contract without inventing a clause. Where a deletion strands a
+    # verb or a preposition the replacement is stated in full and named in its note.
+    ("english", "ix"): {
+        "ch_03_canonical_p08.json": [
+            (1, "band:3", " before the reading is consolidated in the next unit", "",
+             "register/forward",
+             "the oral comprehension check is complete in itself; where consolidation "
+             "happens depends on the count served"),
+            (2, "band:2",
+             " This oral consolidation prepares the class for the close-reading work in "
+             "the next unit.", "",
+             "register/forward",
+             "whole trailing sentence. Tracing Sentila's journey aloud is the teaching "
+             "act and the band closes on it"),
+        ],
+        "ch_03_canonical_p11.json": [
+            (10, "band:0", " for a few minutes", "", "register/clock",
+             "the band's own 0-10 carries it; 'brainstorm individually … and jot down key "
+             "words' is unchanged"),
+        ],
+        "ch_04_canonical_p04.json": [
+            (4, "band:0", " for about one to two minutes", "", "register/clock",
+             "same speaking activity as the top's U6, same repair. Each student still "
+             "'prepares to speak as that vocation's representative'"),
+        ],
+        "ch_05_canonical_p06.json": [
+            (6, "band:3", " within the remaining time", "", "register/clock",
+             "'identify their chosen craft and note the first three headings' is the "
+             "instruction and the count of headings is the real bound, not the clock"),
+        ],
+        "ch_06_canonical_p04.json": [
+            (4, "band:2",
+             "Students spend the remaining time reading the options, asking questions, and "
+             "writing",
+             "Students read the options, ask questions, and write",
+             "register/clock",
+             "the three acts and the two-or-three bullet plan survive intact; only the "
+             "verbs the deletion stranded are re-formed"),
+        ],
+        "ch_07_canonical_p14.json": [
+            (12, "band:1", " for three minutes", "", "register/clock",
+             "'plan their article (key idea per paragraph in two to three words), then "
+             "draft all four paragraphs' — the word budget is the real constraint"),
+        ],
+        "ch_09_canonical_p09.json": [
+            (2, "teacher_notes",
+             " Having read the interview aloud, students are now well placed to "
+             "distinguish fact from opinion in the next unit.", "",
+             "register/forward",
+             "whole trailing sentence. The two notes before it — the Arjuna/Khel Ratna "
+             "confusion and the seven-row fact table — are what the teacher needs"),
+        ],
+        "ch_10_canonical_p05.json": [
+            (2, "teacher_notes", " before the extract-based work in the following unit", "",
+             "register/forward",
+             "the homework stands on its own stated purpose ('to consolidate unfamiliar "
+             "vocabulary'); what follows it is unknowable at authoring"),
+        ],
+        "ch_13_canonical_p12.json": [
+            (12, "teacher_notes",
+             "Students who wrote condolence messages in the writing unit will notice the "
+             "form overlaps in occasion but diverges sharply in register and length; that "
+             "contrast is pedagogically valuable and worth naming aloud.",
+             "The condolence message overlaps the telegram in occasion but diverges "
+             "sharply in register and length; that contrast is pedagogically valuable and "
+             "worth naming aloud.",
+             "register/forward",
+             "the CONTRAST is real teaching and must survive; only its dependency on "
+             "students having written condolence messages in an earlier unit is removed. "
+             "The note's own last sentence already says the telegram task stands alone"),
+        ],
+        "ch_14_canonical_p05.json": [
+            (2, "teacher_notes", " before the next unit teaches device analysis further",
+             "", "register/forward",
+             "phrases (v)-(vii) are set as self-study; the deadline is the reference, and "
+             "it names a unit that may not be served"),
+        ],
+        "ch_14_canonical_p07.json": [
+            (6, "band:2", " within the remaining time", "", "register/clock",
+             "'writers note feedback and complete or revise their draft' — the peer-response "
+             "checklist above it is the real scope"),
+        ],
+        "ch_15_canonical_p05.json": [
+            (2, "teacher_notes",
+             "are richer than can be done well in the remaining time; they are set as "
+             "homework",
+             "are richer than can be done well in class; they are set as homework",
+             "register/clock",
+             "the JUDGEMENT is the teaching content and is kept — three extended answers do "
+             "not fit a sitting. 'in class' says it without measuring against a clock the "
+             "plan does not know"),
+        ],
+        "ch_15_canonical_p07.json": [
+            (7, "teacher_notes",
+             " Both are completed within this unit so no prior artefact is required.",
+             " Both are completed within this unit.",
+             "register/meta-leak",
+             "the only meta-leak in wave 2. 'Both are completed within this unit' is a real "
+             "and useful scoping fact and stays; the assurance drawn from it is the rule "
+             "narrated. The sentence after it already says there is no dependency, "
+             "concretely"),
+            (7, "band:0",
+             "told they will complete all five sections in a condensed written-and-drawn "
+             "form today",
+             "told they will work through the five sections in a condensed "
+             "written-and-drawn form",
+             "register/completion",
+             "same defect as the top's U8 and the same repair. The five are named in the "
+             "sentence before, so nothing is lost but the promise that every one is "
+             "finished; 'today' also goes, as a calendar reference in the same clause"),
         ],
     },
     ("english", "vi"): {

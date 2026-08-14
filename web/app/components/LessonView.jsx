@@ -557,15 +557,30 @@ function APartsList({ lead, parts }) {
  * existing render path untouched. That null is deliberate: this is the only new branch,
  * and it can only be entered by the two items in the corpus that need it.
  */
-const GROUPED_LABEL = /^(\d+)([A-Z])$/;
+/* PREFIX + LETTER, separator optional — NOT one fixed notation. The corpus holds two
+ * ("1A"…"2D" from the wave-1 tops, "Q1-A"…"Q2-D" from the wave-2 compacts) because the
+ * assessment constitution declares none for a compound item, so the model invents one per
+ * run. Match the SHAPE. The prefix must contain a digit — that is the sub-question number,
+ * and requiring it stops a two-letter label grouping by accident. Mirrors
+ * aruvi_core/compound_options.py; keep the two in step. */
+const GROUPED_LABEL = /^(.+?)[\s\-_.]*([A-Z])$/;
+
+function splitLabel(label) {
+  const m = String(label || "").match(GROUPED_LABEL);
+  if (!m) return null;
+  const digits = m[1].match(/\d+/);
+  return digits ? [digits[0], m[2]] : null;   // group = the sub-question NUMBER
+}
 
 export function groupedOptionSets(opts) {
   const list = opts || [];
-  if (list.length < 2 || !list.every((o) => GROUPED_LABEL.test(String(o.label || "")))) return null;
+  if (list.length < 2) return null;
+  const marks = list.map((o) => splitLabel(o.label));
+  if (marks.some((m) => !m)) return null;
   const order = [];
   const by = new Map();
-  list.forEach((o) => {
-    const [, group, letter] = String(o.label).match(GROUPED_LABEL);
+  list.forEach((o, i) => {
+    const [group, letter] = marks[i];
     if (!by.has(group)) { by.set(group, []); order.push(group); }
     // `display` is what the teacher reads; `label` stays the storage key so the reveals
     // map, the correct-answer list and the choice popup all still join on it.

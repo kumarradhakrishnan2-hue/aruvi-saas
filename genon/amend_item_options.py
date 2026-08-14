@@ -62,6 +62,59 @@ TRANSCRIPT = (
 )
 
 AMENDMENTS = [
+ {"file": "data/content/saved_plans/english/ix/ch_09_canonical_p07.json",
+  "item_id": "Q-LST-A-1",
+  "why": ("The 7-period COMPACT of ch 9 has the SAME defect as its standard, authored "
+          "independently in a different wave: two sub-questions in the stem, one option set. "
+          "Sub-question 2 ('Which group will stage a presentation on inclusion?') is "
+          "unanswerable. That it recurred across two independent generations says the "
+          "listening section's shape invites it, not that one run slipped."),
+  # sub-question 1 here is the VENUE question — different from the standard's, which asks
+  # the date/time — so only its label prefix changes; its four options are untouched.
+  "regroup": {"A": "1A", "B": "1B", "C": "1C", "D": "1D"},
+  "add": [
+      {"label": "2A", "text": "Guest speakers at the panel discussion", "is_correct": False},
+      {"label": "2B", "text": "Interact Club", "is_correct": True},
+      {"label": "2C", "text": "Principal", "is_correct": False},
+      {"label": "2D", "text": "School's dance team", "is_correct": False},
+  ],
+  "add_reveals": {
+      "2A": ("Student has reached past the staging to a later item on the programme — the "
+             "guest speakers hold the panel discussion, which comes after the performances."),
+      "2C": ("Student has taken the assembly's opening — the Principal gives the welcome "
+             "speech that the staging FOLLOWS, not the staging itself."),
+      "2D": ("The closest distractor, and the one worth discussing: the dance team does "
+             "perform, on diversity and acceptance, but the announcement assigns the "
+             "'staging on inclusion' to the Interact Club."),
+  },
+  "source": TRANSCRIPT,
+  "evidence": (
+    "IDENTICAL SET TO THE STANDARD'S, and deliberately so: both plans ask the same\n"
+    "  sub-question of the same transcript, so authoring a second wording would make two\n"
+    "  versions of one chapter disagree about a fact. Correct — verbatim: '…followed by a\n"
+    "  staging on inclusion by the Interact Club.'\n"
+    "\n"
+    "DISTRACTORS — the other agents the SAME transcript names, in programme order:\n"
+    "    Principal              'commence with a welcome speech by our Principal'\n"
+    "    School's dance team    'a special performance by the school's dance team'\n"
+    "    Guest speakers         'a panel discussion featuring guest speakers'\n"
+    "\n"
+    "ARRANGEMENT (Rule 7, within sub-question 2's own set): first differing word —\n"
+    "  guest / interact / principal / school's — sorts g < i < p < s, so 2A/2B/2C/2D as\n"
+    "  declared and the answer lands at 2B because the sort put it there.\n"
+    "\n"
+    "SUB-QUESTION 1 IS THIS COMPACT'S OWN and is untouched: it asks WHERE the assembly is\n"
+    "  held (auditorium / canteen / library / sports ground), where the standard asks WHEN.\n"
+    "  Its four options keep their text, order and correctness — only the label prefix\n"
+    "  changes — and they are already in Rule 7 order (auditorium < canteen < library <\n"
+    "  sports ground), which the tool asserts.\n"
+    "\n"
+    "NOTATION: labels are written 1A…2D, matching the wave-1 tops. The wave-2 compacts of\n"
+    "  ch 5 and ch 11 use Q1-A…Q2-D for the same idea. Both render identically — the display\n"
+    "  layer matches the shape, not the spelling — but the divergence is itself the finding:\n"
+    "  the assessment constitution declares NO notation for a compound item, so each run\n"
+    "  invents one. That belongs in the constitution, not in a repair tool."),
+ },
  {"file": "data/content/saved_plans/english/ix/ch_09_canonical.json",
   "item_id": "Q-LIS-A-1",
   "why": ("The stem asks two sub-questions and the item carries options for only the first, "

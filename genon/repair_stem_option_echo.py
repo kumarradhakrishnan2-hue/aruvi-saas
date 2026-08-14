@@ -42,7 +42,70 @@ sys.path.insert(0, str(REPO))
 
 ECHO = re.compile(r"^\s*([A-D])[.)]\s+(.*)$")
 
+# THE SAME ECHO, ALL ON ONE LINE (2026-08-14). ch 11 p11 writes its four choices as
+#   "A. Sitar   B. Sarod   C. Veena   D. Santoor"
+# — one line, four markers. The line-based ECHO above captures that as a single body
+# ("Sitar   B. Sarod   …"), matches no option, and the tool correctly REFUSES the file
+# rather than deleting prose it cannot account for. Failing safe is right; failing safe
+# forever is not. This splits a run of inline markers so each piece can be checked against
+# the options individually, and the line is dropped only if EVERY piece is a verbatim echo.
+INLINE = re.compile(r"(?:(?<=^)|(?<=\s))([A-D])[.)]\s+")
+
+
+def inline_echo_bodies(line):
+    """(lead, [(label, body), …]) for a line holding a RUN of inline options, else None.
+
+    `lead` is any prose before the first marker and is always preserved — a line reading
+    "Choose one:  A. x  B. y" keeps its instruction and loses only the choices.
+    """
+    marks = list(INLINE.finditer(line))
+    if len(marks) < 2:                     # a single marker is the line-based case
+        return None
+    lead = line[:marks[0].start()].strip()
+    out = []
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(line)
+        out.append((m.group(1), line[m.end():end].strip()))
+    return lead, out
+
 REPAIRS = [
+ # ── WAVE 2 COMPACTS (2026-08-14). Same three shapes as the tops, one wave later. The two
+ # compound items use a DIFFERENT grouped notation from wave 1 ("Q1-A" vs "1A") — see
+ # aruvi_core/compound_options.py; the display layer matches the shape, not the spelling,
+ # so nothing here depends on which one a run invents.
+ {"file": "data/content/saved_plans/english/ix/ch_05_canonical_p06.json",
+  "item_id": "Q-LIS-A-1",
+  "why": ("Compound listening MCQ (labels Q1-A…Q2-D): both sub-questions' choices are printed "
+          "in the stem AND carried in options[]. STEP 6 correctly REFUSED this item — the "
+          "grouped-label guard held and the option texts still agree with the stem verbatim, "
+          "so nothing is being recovered here, only de-duplicated."),
+  "stem_after": (
+    "Listen to the dialogue between Rohan and Priya. Then choose the correct answer for each "
+    "question below.\n\n"
+    "(1) Who first mentions that Grandma likes sitting in the verandah in the evenings?\n\n"
+    "(2) What type of pankha does Priya suggest after they narrow down their options?"),
+ },
+ {"file": "data/content/saved_plans/english/ix/ch_11_canonical_p11.json",
+  "item_id": "Q-LIS-A-1",
+  "why": ("Same shape, and the reason the tool needed the INLINE branch: this stem writes all "
+          "four choices on ONE line ('A. Sitar   B. Sarod   C. Veena   D. Santoor'), which the "
+          "line-based matcher read as a single unmatched body and refused."),
+  "stem_after": (
+    "Listen to the musician's description of the yazh. Then select the correct option for each "
+    "question below.\n\n"
+    "(1) The yazh is described as the ancestor of which modern Indian instrument?\n\n"
+    "(2) According to the description, what material were the strings of the yazh made from?"),
+ },
+ {"file": "data/content/saved_plans/english/ix/ch_05_canonical_p08.json",
+  "item_id": "Q-RFC-A-1",
+  "why": ("Simple MCQ whose stem echoes its own options, and the letters DISAGREE with the "
+          "array after STEP 6 sorted it: stem A is array D, stem C is array A, stem D is array "
+          "C. Only B agrees — and B is the answer, so the key is not wrong, but three of the "
+          "four letters mislead a teacher reading the stem."),
+  "stem_after": (
+    "Which of the following statements best explains why pankhas from different regions of "
+    "India can be distinguished from one another?"),
+ },
  {"file": "data/content/saved_plans/english/ix/ch_05_canonical.json",
   "item_id": "Q-LST-A-1",
   "why": ("Compound listening item: both sub-questions' option sets are printed in the stem "
@@ -107,7 +170,14 @@ def apply_one(doc, spec):
         if m and m.group(2).strip() in texts:
             dropped.append((m.group(1), m.group(2).strip()))
             continue
-        if m:
+        run = inline_echo_bodies(line)
+        if run and all(body in texts for _, body in run[1]):
+            lead, pieces = run
+            dropped += pieces
+            if lead:                       # an instruction before the choices survives
+                kept.append(lead)
+            continue
+        if m or (run and any(body in texts for _, body in run[1])):
             raise SystemExit(f"ABORT: {spec['item_id']} stem line {line.strip()[:60]!r} looks "
                              f"like an option but matches no option text — it may carry prose "
                              f"of its own; refusing to delete it")

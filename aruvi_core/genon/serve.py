@@ -196,6 +196,47 @@ def section_registry(stream):
     return out
 
 
+def authored_registry(stream):
+    """The registry as AUTHORING and CERTIFICATION must see it: `section_registry` plus the
+    cells the standard teaches ONLY in its closing synthesis unit (ARV-D-157, 2026-08-14).
+
+    NOT FOR SERVING. `section_registry` above is the serve registry and must keep excluding
+    the synthesis unit — `unit_range` returns None for it, and §0.4 Case 1 depends on that
+    unit being rangeless. This function exists because two OTHER readers need a different
+    answer, and until now they silently got the serve one:
+
+        variant_plans.standard_registry  -> writes the compact's brief
+        build_library.certify            -> judges the compact against it
+
+    On a MEDIATED-anchor stage the standard's closing unit may be the only place a real cell
+    is taught: a short english chapter folds `writing` and `beyond_text` into its synthesis
+    unit, so neither entered the registry. The brief then listed four cells instead of six and
+    said "every unit's section reference MUST be drawn verbatim from this list" — so the
+    compact was FORBIDDEN to teach writing, complied, and was certified incomplete. The one
+    compact that taught the missing cell anyway was quarantined for anchoring outside the
+    registry. Brief and judge agreed with each other and disagreed with the chapter.
+
+    The tail is appended in the order the synthesis unit names it, which is also its true
+    teaching order — that unit is last. So first-appearance order still reads straight.
+
+    ONE function, both call sites, deliberately: the bug was not that either reader was wrong
+    on its own, it was that the brief and the check could drift apart at all.
+    """
+    reg = section_registry(stream)
+    body = {_norm(a) for u in stream["units"] if not is_synthesis_unit(u)
+            for a in _unit_anchors(u)}
+    seen, tail = set(), []
+    for u in stream["units"]:
+        if not is_synthesis_unit(u):
+            continue
+        for a in _unit_anchors(u):
+            k = _norm(a)
+            if k != SYNTH_TOKEN and k not in body and k not in seen:
+                seen.add(k)
+                tail.append(a)
+    return reg + tail
+
+
 def unit_range(unit, registry_index):
     """Unit -> (lo, hi) inclusive indices into the registry. None if any anchor
     is unknown to the registry (the candidate then simply doesn't qualify).

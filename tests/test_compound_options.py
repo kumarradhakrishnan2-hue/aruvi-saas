@@ -42,10 +42,29 @@ def test_flat_items_are_untouched():
     assert grouped_option_sets([opt("1A", "a"), opt("1B", "b")]) is None
     # mixed labels never group (half-migrated data must fall back, not half-render)
     assert grouped_option_sets([opt("1A", "a"), opt("B", "b")]) is None
+    # a prefix WITHOUT a digit is not a sub-question number — two-letter labels must not group
+    assert grouped_option_sets([opt("AA", "a"), opt("AB", "b")]) is None
     # labels are unchanged for flat items
     assert display_label(flat, "B") == "B"
     assert group_of(flat, "B") is None
     print("  ok  flat items untouched")
+
+
+def test_both_notations_group_identically():
+    """The corpus holds TWO grouped notations, invented on successive runs because the
+    assessment constitution declares none: "1A".."2D" (wave-1 tops) and "Q1-A".."Q2-D"
+    (wave-2 compacts). They must render the same, or the same defect reads two ways."""
+    a = [opt("1A", "w"), opt("1B", "x", True), opt("2A", "y"), opt("2B", "z", True)]
+    b = [opt("Q1-A", "w"), opt("Q1-B", "x", True), opt("Q2-A", "y"), opt("Q2-B", "z", True)]
+    sa, sb = grouped_option_sets(a), grouped_option_sets(b)
+    assert sa and sb
+    strip = lambda ss: [(s["group"], [(o["display"], o["text"]) for o in s["options"]]) for s in ss]
+    assert strip(sa) == strip(sb) == [("1", [("A", "w"), ("B", "x")]),
+                                      ("2", [("A", "y"), ("B", "z")])], strip(sb)
+    # the storage label is untouched in both, so every label join still works
+    assert display_label(b, "Q2-B") == "B" and group_of(b, "Q2-B") == "2"
+    assert display_label(a, "2B") == "B" and group_of(a, "2B") == "2"
+    print("  ok  1A-2D and Q1-A-Q2-D group identically")
 
 
 def test_compound_groups_and_letters():
@@ -112,12 +131,13 @@ def test_the_two_real_items():
             assert set(rev) == labels - correct, (path.name, it["id"], sorted(rev))
             print(f"  ok  {path.name} {it['id']} — 2 sub-questions, A–D each, "
                   f"answers {sorted(group_of(it['options'], c) + '·' + display_label(it['options'], c) for c in correct)}")
-    assert seen == 2, f"expected exactly 2 compound items in english·ix, found {seen}"
+    assert seen >= 2, f"expected at least 2 compound items in english·ix, found {seen}"
 
 
 if __name__ == "__main__":
     os.environ.setdefault("ARUVI_DATA_DIR", str(REPO / "data" / "content"))
     test_flat_items_are_untouched()
+    test_both_notations_group_identically()
     test_compound_groups_and_letters()
     test_normalize_options_keeps_every_correct_answer()
     test_the_two_real_items()

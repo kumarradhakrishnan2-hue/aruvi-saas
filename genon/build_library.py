@@ -49,7 +49,8 @@ from aruvi_core.genon.carriers import (                           # noqa: E402
     has_section_axis, raw_item_list, serve_granularity,
 )
 from aruvi_core.genon.serve import (                               # noqa: E402
-    _norm, _unit_anchors, is_synthesis_unit, section_registry, unit_range,
+    _norm, _unit_anchors, authored_registry, is_synthesis_unit, section_registry,
+    unit_range,
 )
 from aruvi_core.assessment_norm import mistyped_tag                # noqa: E402
 import variant_plans as vp_mod                                     # noqa: E402
@@ -273,6 +274,33 @@ def certify(subject, grade, ch, row):
     ridx = {_norm(a): i for i, a in enumerate(reg)}
     vp = row["canonical_plan"]
 
+    # ── THE SYNTHESIS-ONLY TAIL (2026-08-14, S11 · ARV-D-157) ────────────────────
+    # `section_registry` skips the synthesis unit, and it MUST — serve's `unit_range`
+    # depends on that unit being rangeless (§0.4 Case 1, the S7 fix). But on a stage
+    # whose anchors are MEDIATED, the standard's closing unit may be the only place a
+    # real cell is taught: a short english chapter folds `writing` and `beyond_text`
+    # into the synthesis unit, so neither ever enters the registry.
+    #
+    # Checks 3-5 then measure the compacts against a registry MISSING those cells, and
+    # the result inverts the test. A compact that teaches `beyond_text` anchors a cell
+    # the registry does not contain and FAILS; a compact that silently DROPS it passes.
+    # Wave 2 quarantined english·ix ch 2's 4-period compact — which covers all six
+    # spines — while certifying ch 4's and ch 10's, which drop the chapter's only
+    # Writing Task. Certification was rewarding the incomplete plan.
+    #
+    # The fix is scoped to authoring + certification and does not touch serve. It lives in
+    # ONE function — `serve.authored_registry` — which BOTH this check and
+    # `variant_plans.standard_registry` (the brief writer) now call, because the bug was not
+    # that either was wrong alone: it was that the brief and the judge could drift apart.
+    # `section_registry` itself is unchanged, so no serve arithmetic moves.
+    reg_ext = authored_registry(top)
+    synth_only = reg_ext[len(reg):]
+    ridx_ext = {_norm(a): i for i, a in enumerate(reg_ext)}
+    if synth_only:
+        lines.append(f"      registry tail: {len(synth_only)} cell(s) taught ONLY in the "
+                     f"standard's synthesis unit are legal anchors for a compact "
+                     f"(ARV-D-157): " + "; ".join(synth_only))
+
     note(len(lib) == len(vp["counts"]),
          f"library complete: {[n for n, _ in lib]} vs plan {vp['counts']}")
 
@@ -379,7 +407,9 @@ def certify(subject, grade, ch, row):
         if not section_axis:
             continue                              # checks 3-5 are section arithmetic
         body = [u for u in s["units"] if not is_synthesis_unit(u)]
-        rr = [unit_range(u, ridx) for u in body]
+        # Measured against the EXTENDED registry (see the synthesis-only tail above), so a
+        # compact teaching a cell the standard reached only in its closing unit is legal.
+        rr = [unit_range(u, ridx_ext) for u in body]
         note(all(r is not None for r in rr),
              f"{name}: every anchor verbatim in the top registry", name)
         okorder, seen_hi = True, -1
@@ -392,9 +422,25 @@ def certify(subject, grade, ch, row):
                     okorder = False
                 seen_hi = r[1]
         note(okorder, f"{name}: first-visit order follows the registry", name)
-        note(seen_hi == len(reg) - 1,
+        # `>=`, not `==`: the TOP's body stops at the last BODY section by construction
+        # (the tail is taught in the synthesis unit it excludes), while a compact may run
+        # past it into the tail. Both are complete; only the compact reaches further.
+        note(seen_hi >= len(reg) - 1,
              f"{name}: coverage reaches the final registry section"
              + (" before the synthesis unit" if is_top else ""), name)
+        # ── REPORTED, NEVER GATED: cells this canonical does not teach at all ──────
+        # The three checks above are ORDER and VALIDITY tests; none of them notices a
+        # cell skipped INSIDE a unit's (lo, hi) span. That is how ch 4's and ch 10's
+        # compacts certified while dropping the chapter's only Writing Task. Naming the
+        # omission is the founder's to rule on — a compact legitimately teaches less —
+        # but it must not be invisible, which is what it was until now.
+        if not is_top:
+            taught = {_norm(a) for u in s["units"] for a in _unit_anchors(u)}
+            dropped = [a for a in reg_ext if _norm(a) not in taught]
+            if dropped:
+                lines.append(f"      OMITS {len(dropped)} cell(s) the standard teaches "
+                             f"— {name}: " + "; ".join(dropped)
+                             + "  (reported, not gated — rule at the human gate)")
 
     # ── HANDOFF ↔ ANCHOR AGREEMENT (2026-08-08, S4 · maths·IX ch 4) ───────────────
     # Added because nothing compared the two objects that BETWEEN them decide where an
