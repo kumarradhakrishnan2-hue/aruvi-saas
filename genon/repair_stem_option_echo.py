@@ -69,6 +69,28 @@ def inline_echo_bodies(line):
     return lead, out
 
 REPAIRS = [
+ # ── THE SIX RE-BOUGHT FLOOR COMPACTS (2026-08-14). Two of six echo their options, and in
+ # both the stem's letters DISAGREE with the array after STEP 6 sorted it — the same shape
+ # as ch 6/8/15 in wave 1. Two waves and a re-buy have now produced it eight times, which
+ # makes it the most reliable defect in the stage and the clearest candidate for a
+ # constitution line ("the options live in options[]; never restate them in item_stem").
+ {"file": "data/content/saved_plans/english/ix/ch_08_canonical_p05.json",
+  "item_id": "Q-RFC-B-1",
+  "why": ("Stem echoes the options and mis-letters three of four: stem A is array D, stem C "
+          "is array A, stem D is array C. Only B agrees — and B is the answer, so the key "
+          "survives, but a teacher reading the stem would mark three distractors wrong."),
+  "stem_after": (
+    "In the first stanza of the poem, the speaker says a tune seems to hover over his "
+    "playthings. Which of the following best describes what the hovering tune represents?"),
+ },
+ {"file": "data/content/saved_plans/english/ix/ch_10_canonical_p06.json",
+  "item_id": "Q-RFC-B-1",
+  "why": ("Same shape: stem A is array D, stem C is array A, stem D is array C. The passage "
+          "reference that opens the stem is teaching content and is kept."),
+  "stem_after": (
+    "Read the second stanza on p.157, beginning \"The spectators gathered around the old "
+    "field\". Which of the following best describes the mood established in this stanza?"),
+ },
  # ── WAVE 2 COMPACTS (2026-08-14). Same three shapes as the tops, one wave later. The two
  # compound items use a DIFFERENT grouped notation from wave 1 ("Q1-A" vs "1A") — see
  # aruvi_core/compound_options.py; the display layer matches the shape, not the spelling,

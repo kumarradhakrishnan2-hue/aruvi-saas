@@ -62,6 +62,84 @@ TRANSCRIPT = (
 )
 
 AMENDMENTS = [
+ # ── A THIRD SHAPE FOR ONE COMPOUND ITEM (2026-08-14) ──────────────────────────────
+ # ch 4 p05's listening item answers its two sub-questions with FOUR COMBINED options —
+ # "Answers: (1) manuals — (2) line supervisor…". It is not broken: every combination is
+ # there and the item is answerable. It is WEAK, and inconsistent: a student who knows
+ # either half can eliminate on that half alone, so the second sub-question stops being
+ # assessed independently; and it is the third notation the corpus has now seen for one
+ # idea (1A…2D · Q1-A…Q2-D · combined). Split into the grouped form the other two use.
+ #
+ # THE SPLIT INVENTS NOTHING. All eight option texts are already in the stem, which STEP 6
+ # never touches, as the (i)–(iv) lists under each sub-question; the tool asserts each one
+ # appears there verbatim before it writes. Correctness is read off the combined option
+ # currently flagged, not decided here.
+ #
+ # ★ THE SIX DIAGNOSTICS ARE AUTHORED, and are the part that needs your eye. The three on
+ # disk describe COMBINATIONS that no longer exist, so they cannot be re-keyed — they are
+ # replaced. They are written from the stem and `source_context` (the boy's father is an
+ # automobile mechanic; Aruna's mother is a factory line supervisor) because THE TRANSCRIPT
+ # ITSELF IS NOT IN THIS FILE. Every other amendment in this tool quotes its source in
+ # full; this one cannot, and says so rather than implying a check it did not make.
+ {"file": "data/content/saved_plans/english/ix/ch_04_canonical_p05.json",
+  "item_id": "Q-LIS-B-1",
+  "mode": "split_combined",
+  "why": ("Two sub-questions answered by four COMBINED options. Split into 1A–1D / 2A–2D so "
+          "each sub-question is assessed on its own, matching the grouped form used by "
+          "ch 5, ch 9 and ch 11."),
+  "expect_labels": ["A", "B", "C", "D"],
+  "expect_correct_text": ("Answers: (1) manuals — (2) line supervisor overseeing production "
+                          "and quality control"),
+  "options": [
+      {"label": "1A", "text": "manuals", "is_correct": True},
+      {"label": "1B", "text": "observation alone", "is_correct": False},
+      {"label": "1C", "text": "science textbooks", "is_correct": False},
+      {"label": "1D", "text": "the supervisor's instructions", "is_correct": False},
+      {"label": "2A", "text": "factory accounts manager", "is_correct": False},
+      {"label": "2B", "text": "line supervisor overseeing production and quality control",
+       "is_correct": True},
+      {"label": "2C", "text": "quality inspector on the shop floor", "is_correct": False},
+      {"label": "2D", "text": "tool maintenance technician", "is_correct": False},
+  ],
+  "reveals": {
+      "1B": ("Student has taken watching his father work for the boy's source of detail; "
+             "he says he uses the manuals."),
+      "1C": ("Student has drawn on the boy's general interest in science rather than on what "
+             "he says he reads about the tools."),
+      "1D": ("Student has crossed the two accounts — the supervisor belongs to Aruna's "
+             "mother's workplace, not to the boy's father's."),
+      "2A": ("Student has placed Aruna's mother in an office role; the conversation puts her "
+             "on the shop floor."),
+      "2C": ("The closest distractor — quality control is part of what she oversees, but she "
+             "supervises the production line rather than inspecting it."),
+      "2D": ("Student has carried the tools from the boy's account across to Aruna's "
+             "mother's."),
+  },
+  "stem_after": (
+    "Listen to the conversation between the two friends and answer the following questions. "
+    "Select the correct option for each.\n\n"
+    "(1) What does the boy use to understand the details of the tools his father works with?\n\n"
+    "(2) What is Aruna's mother's role at the automobile spare-parts manufacturing unit?"),
+  "source": "(transcript not carried in this artefact — see the note above)",
+  "evidence": (
+    "EVERY OPTION TEXT IS ALREADY IN THE STEM, and the tool asserts it:\n"
+    "  (1) (i) observation alone · (ii) manuals · (iii) the supervisor's instructions ·\n"
+    "      (iv) science textbooks\n"
+    "  (2) (i) quality inspector on the shop floor · (ii) line supervisor overseeing\n"
+    "      production and quality control · (iii) tool maintenance technician ·\n"
+    "      (iv) factory accounts manager\n"
+    "\n"
+    "CORRECTNESS is read off the combined option currently flagged is_correct — 'Answers:\n"
+    "  (1) manuals — (2) line supervisor overseeing production and quality control' — so\n"
+    "  the split cannot silently move an answer. The tool asserts that exact string first.\n"
+    "\n"
+    "ARRANGEMENT (Rule 7, within each set): manuals < observation < science < the\n"
+    "  supervisor's → 1A–1D, answer at 1A; factory < line < quality < tool → 2A–2D,\n"
+    "  answer at 2B. Position falls out of the sort in both.\n"
+    "\n"
+    "THE STEM'S (i)–(iv) LISTS GO, for the same reason every other echo went: options[] is\n"
+    "  the single source of truth once it holds them."),
+ },
  {"file": "data/content/saved_plans/english/ix/ch_09_canonical_p07.json",
   "item_id": "Q-LST-A-1",
   "why": ("The 7-period COMPACT of ch 9 has the SAME defect as its standard, authored "
@@ -180,6 +258,62 @@ def reveal_block(item):
     return None
 
 
+def apply_split(doc, spec, it):
+    """Replace COMBINED options ("Answers: (1) x — (2) y") with the grouped per-sub-question
+    sets. Assertable because the split's raw material is the stem, which STEP 6 never edits:
+    every declared option text must appear there verbatim, and correctness must be carried by
+    the combined option the file itself flags. The DIAGNOSTICS are authored — see the header."""
+    from normalize_options import skip_reason, sort_options    # noqa: E402
+
+    opts = it.get("options") or []
+    if [o.get("label") for o in opts] != spec["expect_labels"]:
+        raise SystemExit(f"ABORT: {spec['item_id']} labels {[o.get('label') for o in opts]} "
+                         f"!= declared {spec['expect_labels']} — already split, or another file")
+    correct_now = [o for o in opts if o.get("is_correct")]
+    if len(correct_now) != 1 or correct_now[0]["text"].strip() != spec["expect_correct_text"]:
+        raise SystemExit(f"ABORT: {spec['item_id']} correct option is "
+                         f"{[o['text'][:60] for o in correct_now]!r}, declaration expects "
+                         f"{spec['expect_correct_text'][:60]!r}")
+    stem = it.get("item_stem") or ""
+    for o in spec["options"]:
+        if o["text"] not in stem:
+            raise SystemExit(f"ABORT: {spec['item_id']} declared option {o['label']} "
+                             f"{o['text']!r} does not appear VERBATIM in the stem — the split "
+                             f"would be inventing content")
+    new = [dict(o) for o in spec["options"]]
+    groups = {}
+    for o in new:
+        groups.setdefault(str(o["label"])[:-1], []).append(o)
+    for g, s in groups.items():
+        if [o["text"] for o in s] != [o["text"] for o in sort_options(list(s))]:
+            raise SystemExit(f"ABORT: {spec['item_id']} group {g} is not in Rule 7 order")
+        if sum(1 for o in s if o["is_correct"]) != 1:
+            raise SystemExit(f"ABORT: {spec['item_id']} group {g} needs exactly one answer")
+    if len(groups) < 2:
+        raise SystemExit(f"ABORT: {spec['item_id']} split produced one group, not a compound")
+    it["options"] = new
+    it["item_stem"] = spec["stem_after"]
+
+    block = reveal_block(it)
+    if block is None:
+        raise SystemExit(f"ABORT: {spec['item_id']} has no what_each_option_reveals container")
+    labels = [o["label"] for o in new]
+    correct = {o["label"] for o in new if o["is_correct"]}
+    superseded = sorted(block["what_each_option_reveals"])
+    block["what_each_option_reveals"] = {l: spec["reveals"][l] for l in labels
+                                         if l in spec["reveals"]}
+    if set(block["what_each_option_reveals"]) != set(labels) - correct:
+        raise SystemExit(f"ABORT: {spec['item_id']} diagnostic key set != the non-correct labels")
+    if skip_reason(it) is None:
+        raise SystemExit("ABORT: normalize_options would still arrange this item — the "
+                         "grouped-label guard is not in force; do not write this file")
+    return {"item_id": spec["item_id"], "mode": "split_combined",
+            "options_before": spec["expect_labels"], "options_after": labels,
+            "correct_after": sorted(correct),
+            "diagnostics_superseded": superseded,
+            "diagnostics_authored": sorted(spec["reveals"])}
+
+
 def apply_one(doc, spec):
     from normalize_options import skip_reason, sort_options    # noqa: E402
 
@@ -187,6 +321,8 @@ def apply_one(doc, spec):
     if len(hit) != 1:
         raise SystemExit(f"ABORT: {spec['item_id']} matched {len(hit)} items, expected 1")
     it = hit[0]
+    if spec.get("mode") == "split_combined":
+        return apply_split(doc, spec, it)
     opts = it.get("options") or []
 
     # ── the file must be the one the declaration describes ──────────────────────
@@ -254,7 +390,7 @@ def main() -> int:
         print(f"\n=== {spec['file']}  ·  {spec['item_id']}   ★ AUTHORED CONTENT")
         print(f"    why: {spec['why']}")
         print(f"    new options:")
-        for o in spec["add"]:
+        for o in spec.get("add") or spec.get("options") or []:
             print(f"      {o['label']}  {'✓' if o['is_correct'] else ' '}  {o['text']}")
         print(f"    source (transcript, verbatim):\n      {spec['source']}")
         for line in spec["evidence"].splitlines():

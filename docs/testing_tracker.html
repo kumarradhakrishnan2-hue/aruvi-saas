@@ -433,18 +433,29 @@ function renderAll(){
      row label, which made eleven short rows read as eleven paragraphs. They now live behind
      a NOTES link that expands a full-width row beneath — the step comments are HTML, so the
      detail row renders them rather than escaping them. */
+  /* The three scale columns sit between the steps and the verdict because that is the order
+     the question gets asked in: what passed, how much of it was there, what it cost. Counts
+     are on-disk facts (`files` on the W1/W2 items); the ₹ is ALL metered spend on the stage
+     from token_log.csv, pilot and reruns included — the per-batch split is in the note, since
+     a corpus projection built on the wrong one of those two figures is off by ~54% at SS·IX. */
   $("batchTbl").innerHTML = "<tr><th>#</th><th>Subject · stage</th><th>Notes</th>"+
     BATCH.map(b=>`<th class="hh" data-scope="batch" data-step="${b[0]}">${b[0]}</th>`).join("")+
+    "<th title='top canonicals on disk'>W1 files</th>"+
+    "<th title='compact canonicals on disk'>W2 files</th>"+
+    "<th title='all metered spend on this stage — pilot and reruns included'>Total ₹</th>"+
     "<th>Released</th></tr>"+
     COMBOS.map((c,i)=>{
       const key=comboKey(c);
       const cells=BATCH.map(b=>cellHtml("batch",key,b[0])).join("");
       const released=BATCH.every(b=>["pass","na"].includes(item("batch",key,b[0]).status));
+      const w1f=item("batch",key,"W1").files, w2f=item("batch",key,"W2").files;
+      const spend=item("batch",key,"spend");
       const notes=BATCH.map(b=>[b[0],(item("batch",key,b[0]).comment||"").trim()])
                        .filter(n=>n[1]);
+      if((spend.comment||"").trim()) notes.push(["SPEND",spend.comment.trim()]);
       const id="bn-"+key.replace(/[^a-z]/gi,"");
       const detail=notes.length
-        ? `<tr id="${id}" style="display:none"><td></td><td colspan="${BATCH.length+3}">`
+        ? `<tr id="${id}" style="display:none"><td></td><td colspan="${BATCH.length+6}">`
           + notes.map(n=>`<div style="margin:8px 0"><b>${n[0]}</b><div class="small"
               style="margin-top:3px">${n[1]}</div></div>`).join("")
           + `</td></tr>`
@@ -454,6 +465,10 @@ function renderAll(){
           ? `<a href="#" onclick="toggleNoteRow(event,'${id}',this)">notes (${notes.length}) ▸</a>`
           : "—"}</td>
         ${cells}
+        <td class="small" style="text-align:right">${w1f!=null?w1f:"—"}</td>
+        <td class="small" style="text-align:right">${w2f!=null?w2f:"—"}</td>
+        <td class="small" style="text-align:right">${spend.cost_inr!=null
+            ? "₹"+Number(spend.cost_inr).toLocaleString("en-IN",{maximumFractionDigits:0}) : "—"}</td>
         <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>${detail}`;
     }).join("");
   // cross

@@ -1005,6 +1005,43 @@ REPAIRS = {
              "the qualifier is the rule narrated"),
         ],
     },
+    # ── v1.8, 2026-08-14 · S11 · english IX · the SIX RE-BOUGHT FLOOR COMPACTS ──────
+    #
+    # 3 ban hits in 6 fresh plans — clock 2, forward 1. The rate is flat against W1
+    # (14/15) and W2 (15/23), which is the expected result and worth stating plainly: all
+    # three source fixes made this week were to the PIPELINE (STEP 6's compound-item guard,
+    # the brief/certifier registry split, normalize_options' scalar answer). Nothing
+    # upstream of the model changed, so nothing about the model's output should have.
+    # The register families are a CONSTITUTION problem and will keep arriving until the
+    # constitution is amended.
+    ("english", "ix"): {
+        "ch_06_canonical_p05.json": [
+            (5, "band:2",
+             "spend the remaining time brainstorming three to four guiding research questions",
+             "brainstorm three to four guiding research questions",
+             "register/clock",
+             "the mini-project orientation. 'three to four' is the real bound and it survives; "
+             "'the remaining time' measures against a sitting length the plan cannot know"),
+        ],
+        "ch_08_canonical_p05.json": [
+            (4, "band:2", " for two or three minutes", "", "register/clock",
+             "'Students prepare for Speaking Activity — I (p.133) individually, noting their "
+             "memorable object, song, or place and the five prompts' — the five prompts are "
+             "the scope. Note the SAME band already says partners speak 'for an unhurried "
+             "stretch', which is how the register wants duration expressed"),
+        ],
+        "ch_10_canonical_p06.json": [
+            (5, "teacher_notes",
+             " — the poster creation task in the following unit is a separate, independent act "
+             "and students do not need today's slogans to complete it", "",
+             "register/forward",
+             "the clause is trying to do the register's own work — asserting independence — and "
+             "breaks it twice doing so, naming 'the following unit' and 'today'. The sentence "
+             "before it stands: the slogan task is a full cycle inside its own minutes, which "
+             "is the fact that MAKES it independent. Same shape as the meta-leak family: the "
+             "rule narrated instead of obeyed"),
+        ],
+    },
     # ── v1.7, 2026-08-14 · S11 · english IX · the wave-2 COMPACTS ────────────────────
     #
     # 15 ban hits across 12 of the 23 compacts. The census is the interesting half, read
@@ -1027,7 +1064,8 @@ REPAIRS = {
     #
     # All 15 delete or contract without inventing a clause. Where a deletion strands a
     # verb or a preposition the replacement is stated in full and named in its note.
-    ("english", "ix"): {
+    # APPLIED 2026-08-14 to the 23 wave-2 compacts (15 hits -> 0). Stale by design.
+    ("english", "ix", "APPLIED-20260814-wave2-compacts"): {
         "ch_03_canonical_p08.json": [
             (1, "band:3", " before the reading is consolidated in the next unit", "",
              "register/forward",
