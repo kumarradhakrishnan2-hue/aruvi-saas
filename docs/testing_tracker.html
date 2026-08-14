@@ -470,7 +470,8 @@ function renderAll(){
         <td class="small" style="text-align:right">${spend.cost_inr!=null
             ? "₹"+Number(spend.cost_inr).toLocaleString("en-IN",{maximumFractionDigits:0}) : "—"}</td>
         <td class="cell ${released?"s-pass":"s-pending"}">${released?"✅":"…"}</td></tr>${detail}`;
-    }).join("");
+    }).join("")
+    + batchTotalsRow();
   // cross
   $("crossTbl").innerHTML = "<tr><th>#</th><th>Actor</th><th>Check</th><th style='width:60px'>Status</th></tr>"+
     CROSS.map(x=>`<tr><td>${x[0]}</td><td>${actorPill(x[1])}</td>
@@ -636,6 +637,34 @@ function commitDefect(id){
 /* ───────────────────────── shell ───────────────────────────────────────────────── */
 function showDrawer(){$("ovl").style.display="block";$("drawer").style.display="block";}
 function closeDrawer(){$("ovl").style.display="none";$("drawer").style.display="none";}
+/* CORPUS TO DATE, not a projection. It says how many of the eleven stages it is summing,
+   because a bare ₹ total under a mostly-empty table invites being read as the whole corpus —
+   and the remaining stages are the majority of the chapters. The ₹ is all metered spend,
+   pilot and reruns included, so it also is NOT the number to extrapolate from: SS·IX alone
+   carries ~54% R&D. Read the per-stage SPEND notes before quoting any of it. */
+function batchTotalsRow(){
+  let w1=0,w2=0,cost=0,stages=0,costStages=0;
+  COMBOS.forEach(c=>{
+    const key=comboKey(c);
+    const a=item("batch",key,"W1").files, b=item("batch",key,"W2").files;
+    const s=item("batch",key,"spend").cost_inr;
+    if(a!=null||b!=null) stages++;
+    w1+=Number(a)||0; w2+=Number(b)||0;
+    if(s!=null){ cost+=Number(s)||0; costStages++; }
+  });
+  if(!stages) return "";
+  const money="₹"+cost.toLocaleString("en-IN",{maximumFractionDigits:0});
+  return `<tr style="border-top:2px solid var(--line);font-weight:600">
+    <td></td><td class="rowlabel">Corpus to date</td>
+    <td class="small">${stages} of ${COMBOS.length} stages</td>
+    <td colspan="${BATCH.length}" class="small" style="font-weight:400">
+      all metered spend — pilot and reruns included; not an extrapolation base</td>
+    <td class="small" style="text-align:right">${w1}</td>
+    <td class="small" style="text-align:right">${w2}</td>
+    <td class="small" style="text-align:right">${money}</td>
+    <td></td></tr>`;
+}
+
 /* Batch-release notes: expand in place. The arrow is the only state indicator, so it has to
    flip — a link that does nothing visible on a row you cannot see reads as broken. */
 function toggleNoteRow(e,id,a){

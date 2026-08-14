@@ -1,6 +1,6 @@
 # Batch evidence record · english · grade(s) ix
 
-Generated 2026-08-14T15:56:12 by `genon/batch_stats.py`. Counts only — no verdict. Every figure is reproducible by re-running the command.
+Generated 2026-08-14T18:13:43 by `genon/batch_stats.py`. Counts only — no verdict. Every figure is reproducible by re-running the command.
 
 ## F1 — the borrowed-seam review (C8 across the batch)
 
@@ -24,13 +24,13 @@ Generated 2026-08-14T15:56:12 by `genon/batch_stats.py`. Counts only — no verd
 | textbook PDFs NOT found | 0 |
 | canonicals scanned | 42 |
 | source words (textbook only, no Aruvi summary) | 107,776 |
-| teacher-facing words scanned | 93,831 |
-| words inside a book-matching run | 1,876 |
-| **share of teacher-facing text matching the book** | **2.00%** |
-| runs ≥ 10 words | 76 |
-| longest run | 87 words |
-| … carrying a page locator in the same field | 12 (15%) |
-| populated `visual_stimulus` on assessment items | 0 |
+| teacher-facing words scanned | 94,194 |
+| words inside a book-matching run | 2,366 |
+| **share of teacher-facing text matching the book** | **2.51%** |
+| runs ≥ 10 words | 80 |
+| longest run | 126 words |
+| … carrying a page locator in the same field | 38 (47%) |
+| populated `visual_stimulus` on assessment items | 85 |
 | external image references / URLs | 0 |
 | brand-name occurrences | 0 |
 | verse-structure words (stanza · couplet · refrain · lyrics) | 316 |
@@ -41,35 +41,40 @@ Generated 2026-08-14T15:56:12 by `genon/batch_stats.py`. Counts only — no verd
 
 | words | chapter | field | locator | text |
 |---|---|---|---|---|
-| 87 | ix/ch07 | item1 visual_stimulus | — | grandpa hated the noise and bustle of city life and when they were on their own he often spoke longingly of his small brick house in town such a wonde |
-| 66 | ix/ch07 | item2 visual_stimulus | — | i had a quiet morning but i don t know about ravi he just disappeared instead of staying at home to look after me like you told him to answered grandp |
-| 65 | ix/ch03 | item2 visual_stimulus | — | onula saw her taking out some clay and the implements from her basket quietly she watched sentila s clumsy efforts to make a pot and noticed that sent |
-| 65 | ix/ch03 | item2 visual_stimulus | — | onula saw her taking out some clay and the implements from her basket quietly she watched sentila s clumsy efforts to make a pot and noticed that sent |
-| 63 | ix/ch09 | item1 visual_stimulus | — | i love sports and had been a swimmer too so i decided to switch to para athletics this is how my paralympics journey began my breakthrough moment came |
-| 56 | ix/ch13 | item2 visual_stimulus | — | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
-| 56 | ix/ch13 | item2 visual_stimulus | — | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
-| 56 | ix/ch13 | item2 visual_stimulus | — | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
-| 45 | ix/ch09 | item2 visual_stimulus | — | honestly i feel sports especially paralympics have the extraordinary ability to challenge stereotypes and change attitudes towards disability when peo |
-| 32 | ix/ch03 | item2 visual_stimulus | — | said don t worry little one i shall teach you how to make a perfect pot sentila watched in amazement as onula fashioned a beautiful pot and asked her  |
-| 32 | ix/ch03 | item2 visual_stimulus | — | said don t worry little one i shall teach you how to make a perfect pot sentila watched in amazement as onula fashioned a beautiful pot and asked her  |
+| 126 | ix/ch01 | item2 visual_stimulus | yes | tradition but today the reverse had happened it was not correct she said i am touching the feet of a teacher not my granddaughter a teacher who taught |
+| 110 | ix/ch15 | item2 visual_stimulus | yes | it starts with a passion for a particular interest then comes the conviction that it is imperative to realise it count the cost in years of effort fin |
+| 87 | ix/ch07 | item1 visual_stimulus | yes | grandpa hated the noise and bustle of city life and when they were on their own he often spoke longingly of his small brick house in town such a wonde |
+| 86 | ix/ch07 | item2 visual_stimulus | yes | i had a quiet morning but i don t know about ravi he just disappeared instead of staying at home to look after me like you told him to answered grandp |
+| 67 | ix/ch11 | item2 visual_stimulus | yes | worked his fingers to the bone and see where the violin got him nabin i underestimated the power of our own music i was afraid you would be lost to us |
+| 65 | ix/ch03 | item2 visual_stimulus | yes | onula saw her taking out some clay and the implements from her basket quietly she watched sentila s clumsy efforts to make a pot and noticed that sent |
+| 65 | ix/ch03 | item2 visual_stimulus | yes | onula saw her taking out some clay and the implements from her basket quietly she watched sentila s clumsy efforts to make a pot and noticed that sent |
+| 63 | ix/ch09 | item1 visual_stimulus | yes | i love sports and had been a swimmer too so i decided to switch to para athletics this is how my paralympics journey began my breakthrough moment came |
+| 63 | ix/ch09 | item2 visual_stimulus | yes | i love sports and had been a swimmer too so i decided to switch to para athletics this is how my paralympics journey began my breakthrough moment came |
+| 56 | ix/ch13 | item2 visual_stimulus | yes | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
+| 56 | ix/ch13 | item2 visual_stimulus | yes | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
+| 56 | ix/ch13 | item2 visual_stimulus | yes | there is one letter delivery he dreads the envelope with the right corner torn off which signifies that the missive bears news of death ashubh samacha |
+| 46 | ix/ch09 | item2 visual_stimulus | yes | 2 honestly i feel sports especially paralympics have the extraordinary ability to challenge stereotypes and change attitudes towards disability when p |
+| 41 | ix/ch11 | item2 visual_stimulus | yes | leela your own father shruti had to go against his family s wishes to play the violin his was a family of vocalists your grandfather his father and yo |
+| 39 | ix/ch01 | item2 visual_stimulus | yes | to the puja place and made me sit down on a stool she gave me a gift of frock material then she did something unusual she bent down and touched my fee |
+| 32 | ix/ch03 | item2 visual_stimulus | yes | said don t worry little one i shall teach you how to make a perfect pot sentila watched in amazement as onula fashioned a beautiful pot and asked her  |
+| 32 | ix/ch03 | item2 visual_stimulus | yes | said don t worry little one i shall teach you how to make a perfect pot sentila watched in amazement as onula fashioned a beautiful pot and asked her  |
 | 29 | ix/ch13 | served u5 band2 | yes | khetaram s khaki turban and uniform are his only protection against the desert s furies the scorching summer winds and swirling sandstorms which turn  |
+| 25 | ix/ch13 | item2 visual_stimulus | yes | people like khetaram are a part and parcel of our social fabric and are a great support our salute to all the people like khetaram |
+| 21 | ix/ch01 | item2 visual_stimulus | yes | the dassara festival came as usual secretly i bought kashi yatre which had been published as a novel by that time |
+| 21 | ix/ch07 | item1 visual_stimulus | yes | off he went twirling his walking stick jauntily leaving ravi in a dilemma his grandfather would feel hurt if he insisted |
 | 20 | ix/ch07 | served u11 band1 | — | pottering boomed twirling crouch bustle crawl creeping thudded ducked shrieks zigzagging whirr evicted briskly sprinting grunted jumping darted traili |
-| 20 | ix/ch15 | item2 visual_stimulus | yes | it starts with a passion for a particular interest then comes the conviction that it is imperative to realise it |
-| 20 | ix/ch15 | item2 visual_stimulus | yes | only by the knowledge that you are doing what you love best and are doing the right thing when stamina |
+| 20 | ix/ch09 | item1 visual_stimulus | yes | that i would be bound to a wheelchair for the rest of my life as i was paralysed waist down |
 | 19 | ix/ch11 | served u6 band3 | — | play i don t want papa to feel that i don t care about his opinions because i do |
 | 18 | ix/ch04 | served u7 band4 | — | line the voice of their vocation is the voice of their identity i hear bharat celebrating the varied |
 | 18 | ix/ch05 | served u5 band2 | — | exotic and stylish villages and towns thread and wool silk and brass ornate and encrusted within and outside |
 | 18 | ix/ch11 | served u11 band1 | — | i don t want papa to feel that i don t care about his opinions because i do |
-| 18 | ix/ch11 | item2 visual_stimulus | — | i underestimated the power of our own music i was afraid you would be lost to us i |
+| 18 | ix/ch11 | item2 visual_stimulus | yes | through thick and thin nabin s desire to take up a western instrument rather than cultivating his voice |
 | 18 | ix/ch11 | served u8 band2 | — | i don t want papa to feel that i don t care about his opinions because i do |
-| 17 | ix/ch09 | item2 visual_stimulus | — | i love sports and had been a swimmer too so i decided to switch to para athletics |
 | 17 | ix/ch11 | item2 visual_stimulus | — | i underestimated the power of our own music i was afraid you would be lost to us |
-| 16 | ix/ch09 | item1 visual_stimulus | — | the 2016 rio paralympic games when i secured the silver medal in the shot put event |
-| 15 | ix/ch01 | item2 visual_stimulus | — | secretly i bought kashi yatre which had been published as a novel by that time |
 | 15 | ix/ch01 | served u7 band1 | — | secretly i bought kashi yatre which had been published as a novel by that time |
+| 15 | ix/ch09 | item1 visual_stimulus | yes | spine tumour i underwent a surgery but misfortune raised its ugly head again the doctors |
 | 14 | ix/ch03 | served u5 teacher_notes | — | as a result the clay seemed unable or unwilling to yield the right shape |
 | 14 | ix/ch03 | served u8 band1 | — | dao dough pounding bamboo clay kiln spatula basket cylinders rotating bed of hay shaping |
 | 14 | ix/ch03 | served u5 band1 | yes | dao dough pounding bamboo clay kiln spatula basket cylinders rotating bed of hay shaping |
 | 14 | ix/ch03 | served u6 band1 | — | dao dough pounding bamboo clay kiln spatula basket cylinders rotating bed of hay shaping |
 | 14 | ix/ch03 | served u7 band1 | — | arenla took sentila to the riverbank where the grey and red clay was found |
-| 14 | ix/ch11 | item2 visual_stimulus | — | i trust you shruti and i will root for your group at the concert |

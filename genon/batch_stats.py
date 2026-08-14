@@ -51,6 +51,7 @@ sys.path.insert(0, str(REPO))
 
 from aruvi_core.genon import compile_stream, serve_plan                  # noqa: E402
 from api.data import standard_duration_minutes                          # noqa: E402
+from aruvi_core.genon.carriers import raw_item_list      # noqa: E402
 from borrowed_seams import library                                       # noqa: E402
 from copyright_scan import (                                             # noqa: E402
     item_fields, load_source, longest_runs, lp_fields, norm_words, shingles,
@@ -63,7 +64,10 @@ SAVED = REPO / "data" / "content" / "saved_plans"
 # re-run then costs seconds, which is what makes this usable as a REPEATABLE evidence record
 # rather than a one-off someone has to be talked into re-running.
 CACHE = REPO / "genon" / "out" / "book_text_cache"
-LOCATOR = re.compile(r"\b(?:textbook|book)\b[^.]{0,25}?\bp{1,2}\.?\s*\d|\bp\.\s?\d+", re.I)
+# `pp.232–233` is a locator and `p.109` is a locator; the second alternative used to be
+# `\bp\.` , which matches only the single-page form — so every MULTI-page citation read as
+# UNLOCATED and the attribution rate was understated by half (2026-08-14, S11 F2).
+LOCATOR = re.compile(r"\b(?:textbook|book)\b[^.]{0,25}?\bp{1,2}\.?\s*\d|\bpp?\.\s?\d+", re.I)
 POEM_TEXT = re.compile(r"\b(?:stanza|couplet|refrain|lyrics)\b", re.I)
 BRAND = re.compile(r"\b(coca[- ]?cola|pepsi|maggi|amul|nestl[eé]|cadbury|parle|britannia|"
                    r"samsung|nike|adidas|mcdonald)\b", re.I)
@@ -152,8 +156,12 @@ def f2_stats(subject, grades, n=8, min_run=10):
                 s["brand_hits"] += len(BRAND.findall(blob))
                 s["image_refs"] += len(IMG.findall(blob))
                 s["verse_words"] += len(POEM_TEXT.findall(blob))
-                for it in (plan["result"].get("assessment_items") or []):
-                    if str(it.get("visual_stimulus") or "").strip():
+                # THROUGH THE CARRIER SEAM. Reading `assessment_items` directly counts the
+                # SPINE GROUPS on english, which carry no `visual_stimulus`, so this
+                # reported 0 while 85 items had one — the single number a legal reader
+                # would rely on (2026-08-14, S11 F2).
+                for it in raw_item_list(plan.get("result") or {}):
+                    if isinstance(it, dict) and str(it.get("visual_stimulus") or "").strip():
                         s["visual_stimulus"] += 1
                 for label, text in list(lp_fields(plan)) + list(item_fields(plan)):
                     w = norm_words(text)

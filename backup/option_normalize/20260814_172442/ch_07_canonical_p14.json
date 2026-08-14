@@ -1,0 +1,1291 @@
+{
+ "filename": "ch_07_canonical_p14.json",
+ "saved_at": "2026-08-14T13:49:58",
+ "plan_status": "canonical",
+ "chapter_number": 7,
+ "chapter_title": "Vitamin-M (Vitamin-M)",
+ "grade": "Grade IX",
+ "subject": "English",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 50,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 14 periods = 700 minutes\nTotal: 14 periods · 11h 40min",
+ "genon_canonical": {
+  "generated": "2026-08-14",
+  "schedule": "14x50",
+  "constitution": "LP v1.2 / assessment v1.6",
+  "source": "generate_canonical.py one english ix 7",
+  "ledger_ts": "20260814_121627_eng_ix_07_p14",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-14T14:03:47",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 12,
+      "field": "band:1",
+      "rule": "register/clock",
+      "removed": "for three minutes",
+      "replaced_with": "",
+      "note": "'plan their article (key idea per paragraph in two to three words), then draft all four paragraphs' — the word budget is the real constraint"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "amend_missing_questions.py",
+    "kind": "authored_questions",
+    "at": "2026-08-14T17:15:23",
+    "why": "The item's stem promised questions and carried none, while its teacher_guide carried a full mark scheme. Questions AUTHORED from that mark scheme and from the NCERT Critical Reflection questions the chapter summary records for the same extract. Every expected_element is asserted to be claimed by at least one question.",
+    "items": [
+     {
+      "item_id": "Q-RFC-A-1",
+      "questions_added": 3,
+      "elements_covered": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "coverage": {
+       "Q1": [
+        0,
+        1
+       ],
+       "Q2": [
+        2
+       ],
+       "Q3": [
+        3
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "tool": "repair_stem_direction.py",
+    "kind": "stem_direction",
+    "at": "2026-08-14T17:24:32",
+    "why": "EXTRACT_ANALYSIS routes its stimulus to `passage`, which every renderer places BEFORE the stem. The stems said 'the following passage' / 'the passage below'. Only the passage-facing direction was changed; 'the questions below' and 'the questions that follow' are correct and untouched.",
+    "items": [
+     {
+      "item_id": "Q-RFC-A-1",
+      "before": "Read the following passage and answer the questions below.",
+      "after": "Read the passage above and answer the questions below."
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Activating Prior Knowledge: The Elderly Among Us",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "comprehension-discussion"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 0,
+       "task_brief": "Reflect and Respond (p.97): graphic organiser on elderly — paired discussion"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher introduces the chapter title 'Vitamin-M' and invites brief speculation: what vitamin could this be? Students share first impressions aloud in a quick paired exchange."
+      },
+      {
+       "minutes": "10–30",
+       "activity": "Students individually fill the graphic organiser from Reflect and Respond (p.97) — four prompts on why we care for the elderly, problems they face, possible causes, and ways to help. Teacher circulates and prompts deeper thinking."
+      },
+      {
+       "minutes": "30–50",
+       "activity": "Whole-class discussion: pairs share one point each; teacher draws connections across responses and records key ideas on the board to anchor the story's themes of intergenerational dignity and autonomy."
+      }
+     ],
+     "teacher_notes": "The graphic organiser (p.97) serves as a pre-reading schema-builder; students with no elderly relatives at home should be encouraged to draw on neighbourhood or community observations. A common pitfall is surface responses — push students to explain causes, not just name problems. The vocabulary-awareness task (p.98) is left for self-study before the next read-aloud.",
+     "materials": [
+      "Textbook p.97",
+      "Whiteboard / chart paper for recording class responses"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Reading the Story Aloud: Grandpa Arrives (pp.97–102)",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "shared-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 3,
+       "task_brief": "Check Your Understanding (p.102): four short-answer questions on Grandpa's city life and Ravi's dilemma"
+      }
+     ],
+     "homework": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 1,
+       "task_brief": "Reflect and Respond (p.98): vocabulary table for six words — frail, shuddered, poky, forbid, pottering, winced"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Teacher briefly recaps the four themes surfaced in the earlier discussion — caring for the elderly, autonomy, dignity, memory — and tells students to keep these in mind as they read."
+      },
+      {
+       "minutes": "5–30",
+       "activity": "Unhurried shared reading of the story pp.97–102: teacher reads the opening passages, students follow; teacher pauses at key moments (Grandpa overhearing Vidya, the incidents that led to his move) to model fluent phrasing and invite brief reactions."
+      },
+      {
+       "minutes": "30–50",
+       "activity": "Students work in pairs to answer all four Check Your Understanding questions (p.102); teacher facilitates a brisk whole-class check of responses, clarifying Grandpa's sense of lost independence and Ravi's conflicted loyalty."
+      }
+     ],
+     "teacher_notes": "Having activated the theme of elderly care, students are ready to meet Grandpa on his own terms; draw attention to Asha Nehemiah's humorous yet empathetic narrative voice. Watch for students who conflate Vidya's protectiveness with disrespect — this ambiguity is central to the story's ethical texture. The vocabulary table (p.98) is set as homework so dictionary work does not consume shared-reading time.",
+     "materials": [
+      "Textbook pp.97–102"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Reading Aloud: Grandpa's Escape and Ravi's Comic Chase (pp.102–109)",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "shared-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 4,
+       "task_brief": "Check Your Understanding (p.106): flow chart — Grandpa's day out, seven blanks"
+      },
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 5,
+       "task_brief": "Check Your Understanding (p.107): three short-answer questions on Grandpa's return and Ravi's relief"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–25",
+       "activity": "Shared reading of pp.102–109: teacher reads Grandpa's manoeuvring of Ravi, the elephant-bush incident, the tea-stall scene, and the Ladies' Hairdressing Salon episode; students follow and are invited to anticipate what happens next at key comic moments."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students individually complete the seven-blank flow chart (p.106) tracing Grandpa's day out; teacher then invites responses from volunteers and fills the chart on the board together."
+      },
+      {
+       "minutes": "38–50",
+       "activity": "Paired discussion of the three Check Your Understanding questions (p.107) on whether Grandpa was truly lost, how Ravi would feel, and whether Vidya will find out; brief whole-class share-out to close."
+      }
+     ],
+     "teacher_notes": "The comedy of Ravi's surveillance — crouching behind an elephant-shaped bush, being evicted from a Ladies' Salon — rewards reading at pace; do not slow it down with too many interruptions. Students sometimes miss that Ravi boards the wrong bus because of the yellow cap; clarify this detail when reviewing the flow chart. The three closing SCR questions are short enough for paired oral drafting before writing.",
+     "materials": [
+      "Textbook pp.102–109",
+      "Whiteboard for flow chart"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Close Reading: The Birthday Twist and Character Inference",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "close-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 6,
+       "task_brief": "Check Your Understanding (p.109): three inference questions on Ravi's relief, Grandpa's gift-giving, and the detective book"
+      }
+     ],
+     "homework": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 2,
+       "task_brief": "Reflect and Respond (p.97): share a family tradition or recipe passed down by an elderly relative"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher reads pp.107–109 aloud (the return home, Grandpa's cool revelation, the birthday gifts) while students follow; stop at Grandpa's suggestion that Vidya herself needs Vitamin-M and invite a quick oral prediction of what the gift to Ravi will be."
+      },
+      {
+       "minutes": "10–35",
+       "activity": "Students work individually on the three Check Your Understanding questions (p.109): what Ravi's emotional reaction reveals about his feelings, the significance of Grandpa's gift-giving tradition, and what the detective-story book implies about Grandpa's awareness. Teacher circulates, asking probing questions."
+      },
+      {
+       "minutes": "35–50",
+       "activity": "Whole-class discussion: teacher calls on three pairs to share their inferences, then draws out the interpretive stakes — Grandpa's sharp wit vs. the family's assumption of his forgetfulness. Class is invited to form a first view of who really needs Vitamin-M."
+      }
+     ],
+     "teacher_notes": "Having read Grandpa's comic day out, students now encounter the story's emotional and ironic resolution; the three inference questions at p.109 require students to move beyond plot recall. A common pitfall is treating the birthday gift as mere plot detail — push students to read it as evidence of Grandpa's sustained awareness and quiet dignity. The personal-tradition task (p.97) is set as homework to extend the intergenerational theme beyond class time.",
+     "materials": [
+      "Textbook pp.107–109"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Critical Reflection: Extract Analysis — Grandpa's Nostalgia and the Story's Tone",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "critical-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 7,
+       "task_brief": "Critical Reflection (p.109–110): Extract 1 — five questions on Grandpa's emotion, his nostalgia for the small-town house, and the idiom 'hear a leaf fall'"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher reads Extract 1 aloud ('Grandpa hated the noise and bustle…'), then asks students to name the emotion in their own words before looking at options — this prevents anchoring to the MCQ choices too quickly."
+      },
+      {
+       "minutes": "8–35",
+       "activity": "Students work through all five Critical Reflection questions (p.109–110): selecting the correct emotion from four options, completing a sentence with a reason, explaining why Grandpa came to the city despite his dislike, interpreting the idiom 'you can even hear a leaf fall', and stating one advantage and one disadvantage of his small-town life. Teacher circulates and prompts."
+      },
+      {
+       "minutes": "35–50",
+       "activity": "Whole-class review: teacher asks students to defend their choice between 'nostalgic' and 'wistful' with textual evidence, and to explain how the idiom creates a vivid contrast with city bustle. Teacher charts the advantage/disadvantage responses and connects them to the story's central tension."
+      }
+     ],
+     "teacher_notes": "The distinction between 'nostalgic' and 'wistful' in the MCQ is a productive analytical discussion point — both are plausible, but 'nostalgic' is better supported because Grandpa actively recalls specific details of his small-town home. Students often struggle with interpreting the idiom literally; model unpacking figurative language using the immediate context of city noise as the contrasting frame. All five sub-questions of this task must be completed together since the task is anchored as a whole.",
+     "materials": [
+      "Textbook pp.109–110"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Critical Reflection: Extract 2 and Character Analysis",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "literary-analysis"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 8,
+       "task_brief": "Critical Reflection (p.110–111): Extract 2 — five questions on Grandpa's cool tone, Ravi's embarrassment, and the true/false statement"
+      },
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 9,
+       "task_brief": "Critical Reflection II (p.111): questions 1–3 — disproving the 'failing memory' claim, character traits of all three characters, Ravi's worry at the tea stall"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–20",
+       "activity": "Students read Extract 2 silently ('I had a quiet morning…') and answer all five Critical Reflection questions (pp.110–111): Grandpa's tone, Ravi's confusion, completing the sentence about Ravi's mother's impatience, the true/false statement on Grandpa's memory, and why Grandpa said he didn't know what kind of morning Ravi had."
+      },
+      {
+       "minutes": "20–40",
+       "activity": "Students move to Critical Reflection II questions 1–3 (p.111): two pieces of evidence that disprove Grandpa's failing-memory portrayal, two character traits each for Grandpa, Ravi, and Ravi's mother, and why Ravi was worried about what Grandpa ate at the tea stall. Pairs compare their trait lists."
+      },
+      {
+       "minutes": "40–50",
+       "activity": "Whole-class discussion: teacher draws a three-column character map on the board and invites the class to populate it; probe how Asha Nehemiah uses comic incident to reveal character rather than explicit description."
+      }
+     ],
+     "teacher_notes": "Having worked through Extract 1's nostalgia, students are now ready to analyse the story's comic and ironic resolution through Extract 2. The true/false item on Grandpa's memory is a pivot point — students who missed the birthday-gifts detail earlier should revisit pp.107–109 to locate evidence. Character-trait analysis (question 2) benefits from insisting on trait plus textual evidence; generic adjectives without anchoring are not acceptable at this stage.",
+     "materials": [
+      "Textbook pp.110–111"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "reading_for_comprehension"
+     ],
+     "activity_title": "Critical Reflection: Argument, Evaluation, and Societal Bias",
+     "pedagogical_methods": {
+      "reading_for_comprehension": "critical-reading"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "reading_for_comprehension",
+       "task_index": 9,
+       "task_brief": "Critical Reflection II (p.111): questions 4–8 — evaluating Ravi as detective, Grandpa's awareness, who needs Vitamin-M, and age-based discrimination"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Quick recap: teacher invites one student to state the strongest piece of evidence that Grandpa was NOT forgetful, connecting to the prior unit's character map. This frames the evaluative questions to follow."
+      },
+      {
+       "minutes": "10–35",
+       "activity": "Students individually work through Critical Reflection II questions 4–8 (p.111): whether it was easy for Ravi to follow Grandpa, the argument for and against Ravi being a good detective, whether Grandpa was aware he was being followed, who really needs Vitamin-M and why, and a personal example of age-based bias."
+      },
+      {
+       "minutes": "35–50",
+       "activity": "Open-class discussion: teacher facilitates debate on question 5 ('Is Ravi a good detective?') with students taking sides and citing evidence; teacher closes by noting that question 8 connects the story to broader social commentary on how society infantilises both the very young and the very old."
+      }
+     ],
+     "teacher_notes": "Having built character understanding through the two extracts and the trait analysis, students are equipped to evaluate rather than merely describe. Question 8 on age-based discrimination may elicit strong personal responses — validate these while steering students to connect them to the story's themes rather than letting discussion drift too far from the text. Questions 4–8 form a single anchored task and must all be addressed in this unit.",
+     "materials": [
+      "Textbook p.111"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "vocabulary_grammar"
+     ],
+     "activity_title": "Movement, Sound, and Synonym Hunting in the Story's Language",
+     "pedagogical_methods": {
+      "vocabulary_grammar": "domain-vocabulary"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 0,
+       "task_brief": "Vocabulary and Structures in Context (p.112): classify movement/sound words and fill Detective Shankar passage"
+      },
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 1,
+       "task_brief": "Vocabulary and Structures in Context (p.113): synonym puzzle for DILEMMA — QUANDARY and PREDICAMENT"
+      }
+     ],
+     "homework": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 2,
+       "task_brief": "Vocabulary and Structures in Context (p.113): word table for craftily, dilemma, furious, boomed, humiliation, attire"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Teacher writes two words from the story on the board — 'crouch' and 'shrieks' — and asks students whether they describe motion or sound. This frames the classification task."
+      },
+      {
+       "minutes": "5–30",
+       "activity": "Students classify all twenty words from the box (p.112) into movement (Column 1) and sound (Column 2), then complete the ten blanks of the Detective Shankar passage using their classified words. Teacher reviews answers aloud, drawing attention to how these words create the comic chase feel."
+      },
+      {
+       "minutes": "30–50",
+       "activity": "Students tackle the synonym puzzle (p.113): using the crossword grid, they decode QUANDARY and PREDICAMENT as synonyms for DILEMMA, then discuss in pairs why the story's language is rich with words for predicament. Teacher closes by connecting 'dilemma' to Ravi's central problem in the story."
+      }
+     ],
+     "teacher_notes": "Having read the comic chase at length, students encounter the story's vivid movement and sound vocabulary in a focused classification exercise; this rewards re-reading with fresh attention to craft. Watch for students placing 'bustle' in sound (it functions as movement in context); accept either if students can justify their choice. The six-word dictionary table (p.113) is set as homework to keep the dictionary-work task unhurried.",
+     "materials": [
+      "Textbook pp.112–113",
+      "Dictionaries"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "vocabulary_grammar"
+     ],
+     "activity_title": "Matching Emotions, Prepositions in Context, and Reported Speech",
+     "pedagogical_methods": {
+      "vocabulary_grammar": "grammar-in-writing"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 3,
+       "task_brief": "Vocabulary and Structures in Context (p.113): match five emotion/expression words to meanings — one extra meaning"
+      },
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 4,
+       "task_brief": "Vocabulary and Structures in Context (p.114): underline prepositions in four phrases, then fill six blanks"
+      },
+      {
+       "spine": "vocabulary_grammar",
+       "task_index": 5,
+       "task_brief": "Vocabulary and Structures in Context (pp.114–116): interrogative sentence types and Arvind–Priya reported speech conversation"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students match the five emotion/expression words (embarrassed, countered, flushed, stricken, gleam) to meanings in Column 2 (p.113), noting that one meaning is extra. Pairs compare and discuss the distractor."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students underline the prepositions in the four story phrases (p.114), then fill blanks (i)–(vi) in the passage with appropriate prepositions from the given options. Teacher reviews each blank and asks students to explain why each choice fits the spatial or directional context."
+      },
+      {
+       "minutes": "28–50",
+       "activity": "Teacher leads through the interrogative-sentence type exercise (pp.114–115): students choose correct answers for the four MCQs, then study the direct-to-indirect speech transformation table before completing the six reported-speech blanks for the Arvind–Priya conversation (p.116). Teacher clarifies pronoun and tense shifts."
+      }
+     ],
+     "teacher_notes": "Having classified story vocabulary in the previous unit, students now work at the sentence level — emotions, spatial prepositions, and reported speech. The reported-speech transformation (p.116) is the most demanding item in the grammar spine and benefits from the teacher modelling one conversion before students attempt the rest. Ensure students understand that 'gleam' (expression of emotion) is different from 'expression' as a synonym for 'countenance' — the table's extra meaning is a deliberate distractor.",
+     "materials": [
+      "Textbook pp.113–116"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "listening"
+     ],
+     "activity_title": "Listen and Respond: Meditation Podcast Completion",
+     "pedagogical_methods": {
+      "listening": "note-taking-from-listening"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "listening",
+       "task_index": 0,
+       "task_brief": "Listen and Respond (p.116–117): five sentence-completion blanks from meditation podcast — no more than three exact words each"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher introduces the podcast topic (meditation and well-being) and asks students to predict what words might fill a sentence like 'Meditation helps with ___'. This activates listening schema before the audio begins."
+      },
+      {
+       "minutes": "8–28",
+       "activity": "Teacher reads the transcript aloud (or plays the audio) at natural pace; students listen and complete all five sentence-completion blanks (pp.116–117) using no more than three exact words heard. A second reading is offered for students to check and refine."
+      },
+      {
+       "minutes": "28–45",
+       "activity": "Students compare answers with a partner, then teacher reviews each blank against the transcript, noting the exact phrasing required. Teacher probes why paraphrases do not satisfy 'exact words' — developing precision in listening."
+      },
+      {
+       "minutes": "45–50",
+       "activity": "Brief discussion: how does the podcast's emphasis on meditation and memory connect, even lightly, to the story's comic treatment of memory (Vitamin-M)? A quick paired exchange closes the unit."
+      }
+     ],
+     "teacher_notes": "The listening task requires exact words from the transcript (p.266); students often paraphrase rather than replicate phrasing — stress that the instruction says 'exact words'. The five blanks test different parts of the transcript, so students must sustain attention throughout; a second reading is built into the plan to support accuracy. The thematic link to memory is light but worth drawing out at the close to keep the chapter's ideas coherent.",
+     "materials": [
+      "Textbook pp.116–117",
+      "Transcript p.266 (teacher copy)",
+      "Audio device (if available)"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "speaking"
+     ],
+     "activity_title": "Speaking: Intonation Practice and Personal Caregiving Presentation",
+     "pedagogical_methods": {
+      "speaking": "oral-presentation"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "speaking",
+       "task_index": 0,
+       "task_brief": "Speaking Activity (p.117): intonation practice — select questions from the story and speak them with correct pitch pattern in pairs"
+      },
+      {
+       "spine": "speaking",
+       "task_index": 1,
+       "task_brief": "Speaking Activity (p.117–118): structured personal presentation on a caregiving experience using four given prompts"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher demonstrates the five intonation patterns (falling for Wh-questions, rising for Yes/No questions, rising for negative question tags, falling for affirmative question tags, rise-fall for choice questions) using examples on the board. Pairs then select questions from the story and practise aloud, with teacher monitoring for pitch accuracy."
+      },
+      {
+       "minutes": "15–35",
+       "activity": "Students have a brief preparation window to structure their personal caregiving presentation using the four prompts: background, self-reflection, understanding the older person's needs, and insights into ageing. Students may use brief notes but not read aloud."
+      },
+      {
+       "minutes": "35–50",
+       "activity": "Four to five students deliver their presentations (approximately two minutes each); class listens and is invited to offer one appreciative observation after each. Teacher notes strong use of the prompts and variety of caregiving experiences shared."
+      }
+     ],
+     "teacher_notes": "Intonation patterns are easiest to practise using familiar text — the story's dialogue-rich middle section offers natural examples of Wh-questions, Yes/No questions, and question tags. Students sometimes read their presentation from notes rather than speaking; remind them the task is a spoken narrative. Volunteers should present first to model the structure for those less confident.",
+     "materials": [
+      "Textbook pp.117–118",
+      "Whiteboard for intonation pattern chart"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "writing"
+     ],
+     "activity_title": "Writing Task: Article for the School Magazine — 'Our Inspiring Elderly'",
+     "pedagogical_methods": {
+      "writing": "guided-writing"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "writing",
+       "task_index": 0,
+       "task_brief": "Writing Task (p.118): four-paragraph article for school magazine on 'Our Inspiring Elderly' — plan, draft, peer response, revise"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher models the four-paragraph structure on the board (introduction / details and examples / challenges and impact / conclusion) and discusses one strong example of an inspiring elderly person — drawing on the story's Grandpa as a starting point, then inviting students to think of their own."
+      },
+      {
+       "minutes": "10–30",
+       "activity": "Students plan their article (key idea per paragraph in two to three words), then draft all four paragraphs. Teacher circulates, prompting students who are stuck on paragraph 3 (challenges and inspiring impact) with story-based and personal examples."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Peer response: students exchange drafts with a partner, who reads and writes one specific strength and one suggested improvement on a sticky note or in the margin. Writers then make targeted revisions based on feedback."
+      },
+      {
+       "minutes": "42–50",
+       "activity": "Two volunteers read their revised articles aloud; teacher offers brief formative feedback on register (formal magazine article tone), structure (paragraph sequence), and one craft observation per article."
+      }
+     ],
+     "teacher_notes": "The article task requires the formal register of a school magazine piece — students familiar with informal prose will need a reminder to avoid first-person anecdote in the body paragraphs. Planning and drafting, peer response, and revision are all contained within this unit so the complete writing cycle is experienced in one sitting. Watch for students who write about Grandpa from the story alone — they should bring in examples from their own knowledge too.",
+     "materials": [
+      "Textbook p.118",
+      "Lined writing paper or notebooks",
+      "Sticky notes (for peer feedback)"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "beyond_text"
+     ],
+     "activity_title": "Beyond the Text: Image, Memory, and Mulk Raj Anand's 'The Lost Child'",
+     "pedagogical_methods": {
+      "beyond_text": "comparative-study"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "beyond_text",
+       "task_index": 0,
+       "task_brief": "Learning Beyond the Text (p.119): identify the correct image of Grandpa's walking stick from four options"
+      },
+      {
+       "spine": "beyond_text",
+       "task_index": 2,
+       "task_brief": "Learning Beyond the Text (pp.120–125): read 'The Lost Child' by Mulk Raj Anand and discuss themes of attachment and parental authority in class"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Students examine the four walking-stick images (p.119) and identify the one matching Grandpa's mahogany stick with a brass eagle-head handle. Brief discussion: why does the detail of the stick matter as a character marker?"
+      },
+      {
+       "minutes": "8–28",
+       "activity": "Students read 'The Lost Child' by Mulk Raj Anand (pp.120–125) silently or in a quick read-aloud relay. Teacher then asks: what does the child want before and after being separated from his parents?"
+      },
+      {
+       "minutes": "28–50",
+       "activity": "Guided discussion comparing the two narratives: in 'Vitamin-M', Grandpa resists the safety his family imposes; in 'The Lost Child', the child discovers the overwhelming pull of parental security once it is gone. Teacher draws a two-column comparison on the board — autonomy vs. attachment — and students contribute examples from both stories."
+      }
+     ],
+     "teacher_notes": "The comparative-study approach links 'Vitamin-M' to 'The Lost Child' thematically rather than merely summarising the supplementary story. Students often focus only on plot; push them to the thematic level — both stories explore what happens when a person is separated from their sense of security, whether by choice or accident. The image-identification task is intentionally brief — it serves as a warm-up that re-anchors students in the story's physical details before moving to the supplementary text.",
+     "materials": [
+      "Textbook pp.119–125",
+      "Whiteboard for comparison chart"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 50,
+     "section_id": "A",
+     "section_title": "Vitamin-M",
+     "synthesis": false,
+     "spines_taught": [
+      "beyond_text"
+     ],
+     "activity_title": "Memory, Photographs, and a Personal Slide-Show Plan",
+     "pedagogical_methods": {
+      "beyond_text": "project-work"
+     },
+     "tasks_in_class": [
+      {
+       "spine": "beyond_text",
+       "task_index": 1,
+       "task_brief": "Learning Beyond the Text (p.119): plan a personal photograph slide show — caption, people, memorable significance of each photograph"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher invites students to recall one family photograph they remember vividly — who is in it, when it was taken, and why it stays with them. A few volunteers share; teacher connects this to the story's theme of memory and intergenerational bonds."
+      },
+      {
+       "minutes": "10–30",
+       "activity": "Students plan their slide-show project (p.119): they sketch a sequence of four to six slides, each with the three required captions (when/where clicked, who the people are, why it is memorable). Teacher circulates, asking students to articulate why each photograph is meaningful rather than just descriptive."
+      },
+      {
+       "minutes": "30–45",
+       "activity": "Students share their planned slide shows in groups of three or four, narrating their captions aloud. Each group identifies the most striking 'why it is memorable' caption among their members and shares it with the class."
+      },
+      {
+       "minutes": "45–50",
+       "activity": "Teacher closes by returning to the chapter's central question: what is Vitamin-M, and who in our own lives might need it? Students offer a final one-sentence reflection connecting the photograph project to the story's themes of memory, care, and intergenerational love."
+      }
+     ],
+     "teacher_notes": "Having compared 'Vitamin-M' with 'The Lost Child' in terms of autonomy and attachment, students now create their own personal reflection on memory and family — the project brings the chapter's themes home. Students who do not have family photographs available should be encouraged to plan around a vivid shared memory described in words. The project planning is completed entirely within this unit; there is no physical artefact required from any other unit.",
+     "materials": [
+      "Textbook p.119",
+      "Notebooks or blank paper for slide-show planning sketches"
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "period_duration_minutes": 50,
+    "period_count": 14
+   }
+  ],
+  "coverage_handoff": {
+   "reading_for_comprehension": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student analyses character motivation, theme, and authorial purpose using prose as the vehicle.",
+      "section_context": "Grandpa's insistence on independence despite Vidya's protectiveness, and his wit in the story's comic resolution.",
+      "tasks_anchored": [
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 0,
+        "task_brief": "Reflect and Respond (p.97): graphic organiser on elderly — paired discussion"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 3,
+        "task_brief": "Check Your Understanding (p.102): four short-answer questions on Grandpa's city life and Ravi's dilemma"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 4,
+        "task_brief": "Check Your Understanding (p.106): flow chart — Grandpa's day out, seven blanks"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 5,
+        "task_brief": "Check Your Understanding (p.107): three short-answer questions on Grandpa's return and Ravi's relief"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 6,
+        "task_brief": "Check Your Understanding (p.109): three inference questions on Ravi's relief, Grandpa's gift-giving, and the detective book"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 7,
+        "task_brief": "Critical Reflection (p.109–110): Extract 1 — five questions on Grandpa's emotion, nostalgia, and the idiom"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 8,
+        "task_brief": "Critical Reflection (p.110–111): Extract 2 — five questions on Grandpa's cool tone, Ravi's embarrassment, and the true/false statement"
+       },
+       {
+        "spine": "reading_for_comprehension",
+        "task_index": 9,
+        "task_brief": "Critical Reflection II (p.111): eight analytical questions on character, detective argument, Vitamin-M, and age bias"
+       }
+      ]
+     }
+    ]
+   },
+   "listening": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student extracts precise information from a spoken text using note-taking from listening as the vehicle.",
+      "section_context": "A podcast on meditation, its benefits for physical and emotional well-being, and daily practice.",
+      "tasks_anchored": [
+       {
+        "spine": "listening",
+        "task_index": 0,
+        "task_brief": "Listen and Respond (p.116–117): five sentence-completion blanks from meditation podcast — no more than three exact words each"
+       }
+      ]
+     }
+    ]
+   },
+   "speaking": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student structures and delivers a personal oral narrative using oral presentation as the vehicle.",
+      "section_context": "A personal caregiving experience with an elderly person, structured around four reflective prompts.",
+      "tasks_anchored": [
+       {
+        "spine": "speaking",
+        "task_index": 0,
+        "task_brief": "Speaking Activity (p.117): intonation practice — select questions from the story and speak them with correct pitch pattern in pairs"
+       },
+       {
+        "spine": "speaking",
+        "task_index": 1,
+        "task_brief": "Speaking Activity (p.117–118): structured personal presentation on a caregiving experience using four given prompts"
+       }
+      ]
+     }
+    ]
+   },
+   "writing": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student plans and drafts a structured article in an appropriate formal register using functional writing as the vehicle.",
+      "section_context": "An article for a school magazine on elderly people who contribute wisdom and inspiration to those around them.",
+      "tasks_anchored": [
+       {
+        "spine": "writing",
+        "task_index": 0,
+        "task_brief": "Writing Task (p.118): four-paragraph article for school magazine on 'Our Inspiring Elderly' — plan, draft, peer response, revise"
+       }
+      ]
+     }
+    ]
+   },
+   "vocabulary_grammar": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student identifies, classifies, and applies domain vocabulary and grammatical structures in context using linguistic-aspects-in-context as the vehicle.",
+      "section_context": "Movement and sound vocabulary from the comic chase, emotion-word matching, prepositions, and reported speech transformations.",
+      "tasks_anchored": [
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 0,
+        "task_brief": "Vocabulary and Structures in Context (p.112): classify movement/sound words and fill Detective Shankar passage"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 1,
+        "task_brief": "Vocabulary and Structures in Context (p.113): synonym puzzle for DILEMMA — QUANDARY and PREDICAMENT"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 3,
+        "task_brief": "Vocabulary and Structures in Context (p.113): match five emotion/expression words to meanings — one extra meaning"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 4,
+        "task_brief": "Vocabulary and Structures in Context (p.114): underline prepositions in four phrases, then fill six blanks"
+       },
+       {
+        "spine": "vocabulary_grammar",
+        "task_index": 5,
+        "task_brief": "Vocabulary and Structures in Context (pp.114–116): interrogative sentence types and Arvind–Priya reported speech conversation"
+       }
+      ]
+     }
+    ]
+   },
+   "beyond_text": {
+    "section_contributions": [
+     {
+      "section_id": "A",
+      "section_title": "Vitamin-M",
+      "section_type": "prose",
+      "implied_lo": "Student compares themes across texts and connects personal experience to literary ideas using comparative study and project work as the vehicle.",
+      "section_context": "Comparing the themes of autonomy and attachment in 'Vitamin-M' and Mulk Raj Anand's 'The Lost Child', and personal family memory.",
+      "tasks_anchored": [
+       {
+        "spine": "beyond_text",
+        "task_index": 0,
+        "task_brief": "Learning Beyond the Text (p.119): identify the correct image of Grandpa's walking stick from four options"
+       },
+       {
+        "spine": "beyond_text",
+        "task_index": 1,
+        "task_brief": "Learning Beyond the Text (p.119): plan a personal photograph slide show — caption, people, memorable significance of each photograph"
+       },
+       {
+        "spine": "beyond_text",
+        "task_index": 2,
+        "task_brief": "Learning Beyond the Text (pp.120–125): read 'The Lost Child' by Mulk Raj Anand and discuss themes in class"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "spine_code": "reading_for_comprehension",
+    "spine_title": "Reading for Comprehension",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-RFC-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "reading_for_comprehension",
+      "source_lo": "Student analyses character motivation, theme, and authorial purpose using prose as the vehicle.",
+      "source_context": "Grandpa's insistence on independence despite Vidya's protectiveness, and his wit in the story's comic resolution.",
+      "item_stem": "Read the passage above and answer the questions below.\n\n1. What does Grandpa’s description of his small brick house — the big mango tree, the quiet in which “you can even hear a leaf fall” — reveal about why he dislikes living in the city? Refer to two details from the passage.\n2. The passage turns from Grandpa’s longing for his old home to his fall in the garden. What tension does this turn set up between the independence Grandpa wants and what he can safely manage alone?\n3. Given the accident described at the end of the passage, do you read Vidya’s insistence that Grandpa not go out alone as protective of him or as disrespectful towards him? Justify your view.",
+      "question_type": "EXTRACT_ANALYSIS",
+      "options": [],
+      "visual_stimulus": "Grandpa hated the noise and bustle of city life and when they were on their own, he often spoke longingly of his small brick house in town. \"Such a wonderful place…! With that big mango tree in the garden! It is so quiet that at dusk you can even hear a leaf fall!\" But then Grandpa had slipped and fallen in the garden late one evening while he was pottering around and lain outside all night because there was no one at home to help him up.",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Identifies Grandpa's longing for the small-town house as the motivation.",
+        "Contrasts the tranquillity Grandpa values with the city's noise and bustle.",
+        "Explains the tension: his independence endangered him physically.",
+        "Notes Vidya's response is protective, not disrespectful, given the accident."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-RFC-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "reading_for_comprehension",
+      "source_lo": "Student analyses character motivation, theme, and authorial purpose using prose as the vehicle.",
+      "source_context": "Grandpa's insistence on independence despite Vidya's protectiveness, and his wit in the story's comic resolution.",
+      "item_stem": "At the end of the story, Grandpa calmly tells Vidya that he 'had a quiet morning' but that Ravi had disappeared, and then gives Ravi a copy of The Best Detective Stories while winking at him. Evaluate what these two actions together reveal about Grandpa's character and the story's overall theme. Use evidence from the story to support your answer.",
+      "question_type": "ECR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Grandpa's calm account shows he was aware of Ravi's surveillance all along.",
+        "The detective book is ironic — it rewards Ravi's amateur sleuthing with humour.",
+        "Grandpa's wit counters the family's assumption that he is forgetful or helpless.",
+        "The theme of intergenerational dignity: Grandpa reclaims agency through intelligence, not confrontation.",
+        "Student supports each point with a specific detail from the prose summary."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "listening",
+    "spine_title": "Listening",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-LST-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "listening",
+      "source_lo": "Student extracts precise information from a spoken text using note-taking from listening as the vehicle.",
+      "source_context": "A podcast on meditation, its benefits for physical and emotional well-being, and daily practice.",
+      "item_stem": "Listen to the meditation podcast and answer: Which two areas of health does the speaker say meditation improves, and what specific emotional benefit does the speaker mention alongside physical well-being?",
+      "question_type": "SCR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "p. 266",
+      "teacher_guide": {
+       "suggested_answer": "The speaker says meditation improves both physical and emotional health. The specific emotional benefit mentioned alongside physical well-being is an enhanced state of well-being, and the speaker also notes that it reduces negative emotions.",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-LST-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "listening",
+      "source_lo": "Student extracts precise information from a spoken text using note-taking from listening as the vehicle.",
+      "source_context": "A podcast on meditation, its benefits for physical and emotional well-being, and daily practice.",
+      "item_stem": "Listen again to the podcast and complete the following statements with no more than three exact words from what you hear.\n1. The speaker says that after meditation a person gains a new ___ on stressful situations.\n2. According to the speaker, practising meditation regularly can help lessen ___.",
+      "question_type": "FILL_IN",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "p. 266",
+      "teacher_guide": {
+       "suggested_answer": "1. perspective  2. exam-related pressure",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "speaking",
+    "spine_title": "Speaking",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-SPK-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "speaking",
+      "source_lo": "Student structures and delivers a personal oral narrative using oral presentation as the vehicle.",
+      "source_context": "A personal caregiving experience with an elderly person, structured around four reflective prompts.",
+      "item_stem": "Briefly describe a moment when you helped or observed someone help an elderly person. Mention who the person was and what the help involved. Speak for approximately one minute.",
+      "question_type": "ORAL_PROMPT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Identifies a specific elderly person and a concrete moment of care.",
+        "Describes the help clearly — what was done and why it was needed.",
+        "Uses relevant vocabulary related to care and ageing.",
+        "Maintains a clear narrative sequence within the time limit."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-SPK-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "speaking",
+      "source_lo": "Student structures and delivers a personal oral narrative using oral presentation as the vehicle.",
+      "source_context": "A personal caregiving experience with an elderly person, structured around four reflective prompts.",
+      "item_stem": "In 'Vitamin-M', Vidya restricts Grandpa's freedom to keep him safe. Do you agree that keeping an elderly person safe is more important than respecting their independence? Argue your position with reasons, speaking for two to three minutes. You may refer to the story or to your own experience.",
+      "question_type": "ORAL_PROMPT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "States a clear position on safety versus independence.",
+        "Provides at least two supporting reasons with evidence from the story or experience.",
+        "Acknowledges the opposing view and offers a reasoned counter.",
+        "Maintains a coherent argument structure throughout.",
+        "Uses appropriate formal register for a persuasive spoken task."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "writing",
+    "spine_title": "Writing",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-WRT-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "writing",
+      "source_lo": "Student plans and drafts a structured article in an appropriate formal register using functional writing as the vehicle.",
+      "source_context": "An article for a school magazine on elderly people who contribute wisdom and inspiration to those around them.",
+      "item_stem": "Your school is publishing a special edition of its newsletter on community service. Write a notice (80–100 words) to be displayed on the school notice board, inviting students to volunteer for a weekly afternoon visit programme at a nearby senior citizens' home. Include the purpose of the programme, date of the first orientation meeting, and a contact name.",
+      "question_type": "WRITING_TASK",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Uses correct notice format: heading, date, and issuing authority.",
+        "States the purpose of the programme clearly and concisely.",
+        "Includes a specific meeting date and a named contact for queries.",
+        "Maintains formal, impersonal register appropriate to a public notice.",
+        "Stays within the 80–100 word count without sacrificing key information."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-WRT-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "writing",
+      "source_lo": "Student plans and drafts a structured article in an appropriate formal register using functional writing as the vehicle.",
+      "source_context": "An article for a school magazine on elderly people who contribute wisdom and inspiration to those around them.",
+      "item_stem": "Write a letter to the editor of a local newspaper (150–180 words) arguing that city planners should design more age-friendly public spaces — such as parks with seating, accessible shops, and safe pedestrian crossings — so that elderly residents can move about independently with dignity. Support your argument with specific reasons and examples.",
+      "question_type": "WRITING_TASK",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Follows letter-to-editor format with sender's address, date, salutation, and sign-off.",
+        "States the central argument clearly in the opening paragraph.",
+        "Provides two or more specific, reasoned examples of age-friendly design features.",
+        "Uses a formal, persuasive register appropriate to a newspaper letter.",
+        "Concludes with a direct appeal for action or policy change."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "vocabulary_grammar",
+    "spine_title": "Vocabulary and Grammar",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-VGR-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "vocabulary_grammar",
+      "source_lo": "Student identifies, classifies, and applies domain vocabulary and grammatical structures in context using linguistic-aspects-in-context as the vehicle.",
+      "source_context": "Movement and sound vocabulary from the comic chase, emotion-word matching, prepositions, and reported speech transformations.",
+      "item_stem": "Match each word from the story's comic chase sequence with the correct category and meaning.",
+      "question_type": "MATCH",
+      "options": [],
+      "visual_stimulus": "Word | Category\ncrouch | ?\nshrieks | ?\ndarted | ?\nthudded | ?\nzigzagging | ?",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "1-b, 2-d, 3-a, 4-e, 5-c",
+       "expected_elements": [],
+       "answer_key": [
+        {
+         "left": "crouch",
+         "right": "movement — to bend low to avoid being seen"
+        },
+        {
+         "left": "shrieks",
+         "right": "sound — loud, high-pitched cries"
+        },
+        {
+         "left": "darted",
+         "right": "movement — moved suddenly and quickly"
+        },
+        {
+         "left": "thudded",
+         "right": "sound — made a heavy, dull impact sound"
+        },
+        {
+         "left": "zigzagging",
+         "right": "movement — moving in a sharp alternating pattern"
+        }
+       ],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-VGR-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "vocabulary_grammar",
+      "source_lo": "Student identifies, classifies, and applies domain vocabulary and grammatical structures in context using linguistic-aspects-in-context as the vehicle.",
+      "source_context": "Movement and sound vocabulary from the comic chase, emotion-word matching, prepositions, and reported speech transformations.",
+      "item_stem": "Change the following sentences from direct speech to reported speech. Make all necessary changes to pronouns, tense, and question form.\n1. Grandpa said to Ravi, \"I had a quiet morning, but I don't know where you were.\"\n2. Vidya asked her father, \"Have you forgotten that Ravi's birthday was three months ago?\"\n3. Ravi thought, \"Will Grandpa get into trouble if he goes out alone?\"",
+      "question_type": "SCR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "1. Grandpa told Ravi that he had had a quiet morning but that he did not know where Ravi had been. 2. Vidya asked her father whether he had forgotten that Ravi's birthday had been three months before. 3. Ravi wondered whether Grandpa would get into trouble if he went out alone.",
+       "expected_elements": [],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "spine_code": "beyond_text",
+    "spine_title": "Beyond the Text",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-BTX-A-1",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "beyond_text",
+      "source_lo": "Student compares themes across texts and connects personal experience to literary ideas using comparative study and project work as the vehicle.",
+      "source_context": "Comparing the themes of autonomy and attachment in 'Vitamin-M' and Mulk Raj Anand's 'The Lost Child', and personal family memory.",
+      "item_stem": "Both 'Vitamin-M' and 'The Lost Child' show characters who are separated — in different ways — from their sense of security. In a paragraph of five to seven sentences, explain what each story says about the relationship between freedom and the need for belonging. Refer to at least one specific moment from each story.",
+      "question_type": "ECR",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Identifies Grandpa's desire for autonomy versus Vidya's protectiveness in 'Vitamin-M'.",
+        "Identifies the child's suppressed desires versus overwhelming attachment in 'The Lost Child'.",
+        "Draws a comparative point: both stories show freedom and belonging in tension.",
+        "References at least one specific moment or detail from each story.",
+        "Offers a considered personal or evaluative observation on the shared theme."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-BTX-A-2",
+      "source_section_id": "A",
+      "source_section_title": "Vitamin-M",
+      "source_section_type": "prose",
+      "source_spine": "beyond_text",
+      "source_lo": "Student compares themes across texts and connects personal experience to literary ideas using comparative study and project work as the vehicle.",
+      "source_context": "Comparing the themes of autonomy and attachment in 'Vitamin-M' and Mulk Raj Anand's 'The Lost Child', and personal family memory.",
+      "item_stem": "Design a project titled 'Voices Across Generations'. Your project should include: (a) a brief comparison of how elderly people are treated in two different cultural or regional contexts you know of (from literature, film, or personal experience); (b) two to three photographs or sketched images with captions that represent intergenerational bonds in your own family or community; (c) a short reflective note (100–120 words) on what you learned about memory, care, and belonging through this project.",
+      "question_type": "PROJECT",
+      "options": [],
+      "visual_stimulus": "",
+      "transcript_ref": "",
+      "teacher_guide": {
+       "suggested_answer": "",
+       "expected_elements": [
+        "Compares elderly treatment in two identifiable cultural or regional contexts with specifics.",
+        "Photographs or sketches are meaningfully captioned with context and significance.",
+        "Reflective note addresses memory, care, and belonging — not just plot summary.",
+        "Project shows personal engagement and goes beyond surface description.",
+        "Presentation is coherent and the three parts connect thematically."
+       ],
+       "answer_key": [],
+       "what_each_option_reveals": {},
+       "note": ""
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}
