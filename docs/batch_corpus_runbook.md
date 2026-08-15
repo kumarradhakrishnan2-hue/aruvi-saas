@@ -27,10 +27,19 @@ expect. Then confirm the amended constitution actually reached the payload:
 
 ```bash
 python3 -c "
-import json,glob
-t=json.load(open(sorted(glob.glob('genon/out/batches/DRY_*top*.json'))[-1]))[0]['params']['system'][0]['text']
+import json,glob,os
+f=max(glob.glob('genon/out/batches/DRY_{subject}_top_*.json'), key=os.path.getmtime)
+print(f)
+t=json.load(open(f))[0]['params']['system'][0]['text']
 print([l for l in t.splitlines() if 'VERSION' in l][:2])"
 ```
+
+**Scope the glob to `{subject}` and sort by mtime — both, always.** This check was written at S5
+when TWAU was the only subject with dry files on disk. `sorted(glob('DRY_*top*'))[-1]` sorts
+ALPHABETICALLY, so from S2·social_sciences onward it silently read
+`DRY_the_world_around_us_top_*` and printed TWAU's versions against an SS submit (2026-08-15).
+A gate that cannot fail loudly is not a gate: print the filename too, and confirm the SUBJECT
+on the version lines before the version number.
 
 ## 1. Price it first
 

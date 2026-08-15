@@ -264,6 +264,17 @@ const COMBOS = [ // ONE ROW PER SUBJECT·STAGE, in suggested execution order (§
  ["english","middle","english/middle","heaviest MEMORY burden; weak task_density fit — see X2"],
  ["english","preparatory","english/preparatory","last: items 8, 12, 13; no saved-plan corpus to fall back on"],
 ];
+/* BATCH RELEASE ROW ORDER (2026-08-15, founder). COMBOS is in suggested EXECUTION order —
+   pilot first, then the cheapest proof, and so on — which is the right axis for the Per-stage
+   matrix, where the question is "what do I do next?". It is the wrong axis here. The batch tab
+   is read as an inventory: "where has english got to?", "is every preparatory stage bought?".
+   So this tab alone re-sorts to SUBJECT (alphabetical), then STAGE in teaching order
+   preparatory → middle → secondary — never by the numeric grades behind them, which would put
+   secondary first. COMBOS itself is untouched; every other tab keeps execution order. */
+const STAGE_RANK = {preparatory: 0, middle: 1, secondary: 2};
+const BATCH_ROWS = COMBOS.slice().sort((a, b) =>
+  a[0].localeCompare(b[0]) || (STAGE_RANK[a[1]] ?? 9) - (STAGE_RANK[b[1]] ?? 9));
+
 /* ── BATCH RELEASE (added 2026-08-13) ─────────────────────────────────────────────
    The C-cycle proves a STAGE on one pilot chapter. Nothing tracked the other ~30, which
    is where the money is (TWAU: 32 chapters, ₹1,212.90 against the pilot's ~₹40) and where
@@ -444,7 +455,7 @@ function renderAll(){
     "<th title='compact canonicals on disk'>W2 files</th>"+
     "<th title='all metered spend on this stage — pilot and reruns included'>Total ₹</th>"+
     "<th>Released</th></tr>"+
-    COMBOS.map((c,i)=>{
+    BATCH_ROWS.map((c,i)=>{
       const key=comboKey(c);
       const cells=BATCH.map(b=>cellHtml("batch",key,b[0])).join("");
       const released=BATCH.every(b=>["pass","na"].includes(item("batch",key,b[0]).status));

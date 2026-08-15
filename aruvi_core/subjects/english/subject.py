@@ -121,6 +121,41 @@ def _disperse(units: List[int], n: int) -> List[List[int]]:
     return out
 
 
+def _backfill(units: List[int], n: int) -> List[List[int]]:
+    """N items over M units with 2 <= M < N: anchor BACKWARDS FROM THE CLOSE, one item per
+    unit, and pile the surplus (the EARLIEST items) on the cell's first unit.
+
+    ADDED 2026-08-15 (S11·W1, founder ruling: back-fill to close, do not touch the
+    constitution). `cell_resolver`'s dispersion guard is `M >= N`, and everything failing it
+    fell to the shared-span branch, whose comment reads "MORE items than units — anchoring at
+    the close then does the right thing". That is true of the case the branch was written for
+    (M == 1: there is no other unit to reach). It is NOT true once M >= 2. The english
+    preparatory W1 corpus produced two cells where it visibly is not — iii ch 3 (A, oracy),
+    three units [4, 5, 6] and four items, and iii ch 15 (B, word_work), two units [4, 5] and
+    four — and in both every item collapsed onto the closing unit while the earlier sittings,
+    which teach that very cell, carried no Assess tab at all.
+
+    Both arose the same way: TWO authored pairs sharing one (section × spine) address, the
+    cell key being coarser than `source_lo`. Whether the upstream double-filing is worth
+    changing is a separate question and deliberately not answered here — the resolver should
+    behave sanely either way.
+
+    WHY BACKWARDS and not `_disperse`'s forward largest-remainder. Rule 8A scopes the LAST
+    item of a cell to that cell's completion, so the invariant the shared-span branch was
+    protecting is real and must survive: **the final item anchors at the cell's close**.
+    Dealing forward would break it whenever the remainder fell the other way. Filling from the
+    close backwards keeps it by construction, and the overflow lands on the cell's FIRST unit,
+    which is where the earliest-authored (lowest-rung) items belong anyway.
+
+        [4, 5, 6] × 4 items -> [[4], [4], [5], [6]]
+        [4, 5]    × 4 items -> [[4], [4], [4], [5]]
+
+    Caller guarantees 2 <= M < N. Tested in `cell_resolver`.
+    """
+    m = len(units)
+    return [[units[max(m - 1 - (n - 1 - i), 0)]] for i in range(n)]
+
+
 def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
     """Return `resolve(item) -> [period numbers]` for row 7, pairing INCLUDED.
 
@@ -150,8 +185,16 @@ def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
     those constitutions is what licenses this — it declares slot 1 scoped to the cell's early
     teaching and slot 2 to its completion, so the split is authored-for, not imposed.
 
-    Every other shape — one item over many units (a true span), or MORE items than units —
-    keeps the full set, and anchoring at the close then does the right thing.
+    M < N OVER MORE THAN ONE UNIT BACK-FILLS TO THE CLOSE (2026-08-15, S11·W1, founder). The
+    shared-span branch below used to take this shape too, on the reasoning that more items than
+    units "cannot be dealt". That holds at M == 1 and nowhere else: english·preparatory W1 threw
+    two cells at M = 3 / N = 4 and M = 2 / N = 4 where every item collapsed onto the closing
+    unit and the earlier sittings that teach the cell showed no Assess tab. `_backfill` anchors
+    one item per unit BACKWARDS from the close and piles the surplus on the cell's first unit,
+    which keeps Rule 8A's real invariant — the last item lands at the cell's completion.
+
+    Every other shape — one item over many units (a true span), or a cell taught in a SINGLE
+    unit — keeps the full set, and anchoring at the close then does the right thing.
 
     STANDING CAVEAT (carried from 2026-07-11, and now load-bearing): dispersion assumes items
     are authored in teaching order. Rule 2 of all three constitutions now MANDATES that order
@@ -190,6 +233,8 @@ def cell_resolver(periods: List[Dict[str, Any]], spine_groups: Any):
         uniq = sorted(set(exact)) if exact else []
         if exact and len(its) >= 2 and len(uniq) >= len(its):
             key_periods[k] = _disperse(uniq, len(its))     # N-to-N (M==N) / blocks (M>N)
+        elif exact and len(its) >= 2 and len(uniq) >= 2:
+            key_periods[k] = _backfill(uniq, len(its))     # M<N over >1 unit: fill to close
         else:
             span = exact if exact else section_index.get(sid, [])
             key_periods[k] = [span for _ in its]           # true span / fallback: shared set

@@ -1565,6 +1565,345 @@ REPAIRS = {
              "under the obligation. The three strands are named before the dash and kept"),
         ],
     },
+    # ══ v1.8, 2026-08-15 · S11 · english PREPARATORY · BATCH WAVE 1 (the 38 tops) ══════
+    #
+    # 17 ban hits over 14 files — 8 clock · 6 forward · 2 meta-leak · 1 calendar, across
+    # 39 chapters. 1 breach per 2.8 files, dead on the runbook's expected 1-in-3, and no
+    # family is concentrated in one grade. 16 declared, 1 struck.
+    #
+    # THE CLOCK FAMILY IS THE HEADLINE, and it is a different shape from every previous
+    # stage's. All 8 are a duration written into a READING or DISCUSSION instruction —
+    # "re-read silently for two minutes", "brainstorm in pairs for a few minutes" — never
+    # the boilerplate "for the remaining time" the earlier sets struck. That is a
+    # preparatory-stage tell: at classes III–V the model reaches for a duration because
+    # young children need the task bounded, which is correct teaching expressed in the one
+    # unit the register cannot carry (proportional scaling falsifies it silently). Every
+    # one is a pure deletion — the act, the grouping and the output all stand without it,
+    # and the band's own `minutes` already bounds the task. Worth saying at the next
+    # stage's brief rather than repairing forever.
+    #
+    # META-LEAK FELL TO 2, from W1·english-middle's 17. These 38 files were authored under
+    # the corrected `variant_plans._serving_block()` (2026-08-15), and this is the second
+    # corpus to confirm it: 1.6 per 1000 units here against 40.5 pre-fix. Both survivors
+    # are the same shape as vi ch 5 p09 U8 and take the same doctrine — the scoping FACT
+    # is kept, the narration of the constraint is struck.
+    #
+    # ONE IS NOT DECLARED — put to the founder as a false positive rather than repaired,
+    # on the precedent set for this exact pattern at S10 (runbook trap 4: a false positive
+    # is fixed at the scanner, not in the text):
+    #   · iii ch 13 U2 [forward] "foreshadows" — "the tree's warning foreshadows Madhu's
+    #     trouble" is narrative structure INSIDE the story, and both the warning and the
+    #     trouble are read in this same unit's comprehension work. Nothing points at
+    #     another sitting. IDENTICAL in shape to vii ch 2 p06 U1, struck at S10 for the
+    #     same reason, and the third time `foreshadow\w*` has fired on literary content
+    #     (maths·vii ch 7 U4 is a fourth, in-section). The pattern at register_scan.py:85
+    #     bans `previewing` and `foreshadow\w*` together; `previewing` is earning its keep
+    #     (v ch 9 U10 below is a true forward reference and IS declared), `foreshadow` has
+    #     now produced four hits and no true positive. RECOMMENDED: split `foreshadow\w*`
+    #     out to ADVISORY with a dated note, leaving `previewing` a ban. Not done here —
+    #     a scanner change is the founder's call, and until it is made iii ch 13 will keep
+    #     failing certification on a sentence that should stand.
+    #
+    # ONE JUDGEMENT CALL, declared but flagged: iv ch 6 U11's "could actually do tomorrow"
+    # is a student-facing reflection about acting in their own life, not a claim about when
+    # the lesson sits — closer to legal than not. It is repaired anyway because the repair
+    # is lossless ("start doing" keeps the soon-and-actionable sense the prompt needs) and
+    # leaving a bare calendar word in teacher-facing prose costs more than the edit. It is
+    # NOT the S10 Helen Keller shape: that word was the essay's, this one is Aruvi's.
+    ("english", "iii", "SUPERSEDED_W1_applied_20260815"): {
+        "ch_03_canonical.json": [
+            (1, "teacher_notes", "; meaning will deepen across later units", "",
+             "register/forward",
+             "'Resist the urge to explain every word during the first read' is the whole "
+             "instruction and stands alone; where the meaning deepens is a claim about "
+             "sittings this class may never receive"),
+            (2, "band:0", " for two minutes", "", "register/clock",
+             "the re-read is silent and self-limiting, and the band carries 0–6; the "
+             "teacher's re-reading of the pit-and-rescue passage after it is untouched"),
+        ],
+        "ch_08_canonical.json": [
+            (4, "band:4", " This bridges to the word-work activity on colour words.", "",
+             "register/forward",
+             "a 38–40 closing band in an 11-unit plan, and any unit may be a borrowed Xth "
+             "or a last sitting. 'Teacher asks what colours the poem mentions and children "
+             "call them out' is the complete reflection"),
+        ],
+    },
+    ("english", "iv", "SUPERSEDED_W1_applied_20260815"): {
+        "ch_01_canonical.json": [
+            (5, "band:1", " for a few minutes", "", "register/clock",
+             "'Small groups of three discuss, then each group nominates a spokesperson' "
+             "carries the grouping and the output; the 6–22 band carries the time"),
+        ],
+        "ch_02_canonical.json": [
+            (7, "teacher_notes",
+             ", which supports the grammar and vocabulary work that follows in later units",
+             "", "register/forward",
+             "'a light bridge between word recognition and contextual use' already states "
+             "what the activity does. What it feeds is the forward claim"),
+        ],
+        "ch_06_canonical.json": [
+            (11, "band:3", " could actually do tomorrow", " could actually start doing",
+             "register/calendar",
+             "THE JUDGEMENT CALL described in the set header. 'Start doing' keeps the "
+             "soon-and-actionable sense the reflection needs without naming a day; the "
+             "homework sentence after it is untouched"),
+        ],
+        "ch_08_canonical.json": [
+            (2, "band:0", " for two minutes", "", "register/clock",
+             "'skim pp. 73–76 quietly, then invite one student to retell' is the act; the "
+             "'in two sentences' bound on the retell is the real constraint and stands"),
+            (3, "band:0", " for four minutes", "", "register/clock",
+             "same unit-pair, same shape — 'paying attention to the sequence of match "
+             "events' is what actually directs the re-read"),
+        ],
+        "ch_10_canonical.json": [
+            (9, "band:3", " for a few minutes", "", "register/clock",
+             "the gallery walk is bounded by the sticky-note each student leaves, not by "
+             "a duration"),
+        ],
+    },
+    ("english", "v", "SUPERSEDED_W1_applied_20260815"): {
+        "ch_01_canonical.json": [
+            (10, "band:2", " for two minutes", "", "register/clock",
+             "'Pairs discuss their guesses in whispers' is the act, and the band's own "
+             "22–35 holds the time; the riddle, the withheld answer and the debate stand"),
+        ],
+        "ch_02_canonical.json": [
+            (10, "band:0", " for two minutes", "", "register/clock",
+             "'Students discuss in pairs to warm up for writing' keeps the purpose, which "
+             "is what the band is for"),
+            (16, "teacher_notes", " No prior artefact or draft is needed; each", " Each",
+             "register/meta-leak",
+             "ONE OF THE TWO SURVIVORS, and the vi ch 5 p09 U8 shape exactly: 'each "
+             "mini-task begins and closes within its own few minutes' IS the scoping fact "
+             "and is kept whole. What is struck is the sentence that narrates the "
+             "constraint to a teacher who is not the party under it"),
+        ],
+        "ch_03_canonical.json": [
+            (4, "band:0", " for a few minutes", "", "register/clock",
+             "the brainstorm is bounded by the share-out that follows it, and the five "
+             "expected answers (boat, bridge, ferry, stepping stones, swimming) stand"),
+        ],
+        "ch_05_canonical.json": [
+            (11, "band:4",
+             " without requiring any particular prior activity to have happened", "",
+             "register/meta-leak",
+             "the second survivor. 'This brief round-the-room closing celebrates the "
+             "chapter's ideas' is the whole of what the teacher does; the trailing clause "
+             "is the brief's independence requirement read back to her"),
+        ],
+        "ch_09_canonical.json": [
+            (10, "teacher_notes",
+             ", previewing the writing and beyond-text tasks that follow", "",
+             "register/forward",
+             "the true positive that earns `previewing` its place as a ban — it names two "
+             "later sittings by their spine. 'Extends the poem's single-tool imagery "
+             "(spade, lantern) to a much wider world of vocations' is the observation, and "
+             "the stethoscope example after it is untouched"),
+        ],
+        "ch_10_canonical.json": [
+            (1, "teacher_notes", " — comprehension tasks come in the next unit", "",
+             "register/forward",
+             "U1 of an 11-unit plan and a likely first exposure either way. 'This is the "
+             "text-encounter unit for the chapter, so unhurried reading aloud is the "
+             "priority' says why without naming what follows"),
+        ],
+    },
+    # ══ v1.9, 2026-08-15 · S11 · english PREPARATORY · BATCH WAVE 2 (the 70 compacts) ══
+    #
+    # 32 ban hits over 24 of the 70 compacts — 19 clock · 9 forward · 2 completion ·
+    # 2 meta-leak. 1 breach per 2.9 files, statistically identical to W1's 1-per-2.8 on the
+    # tops. (The stage census reads 33/25 because it also counts iii ch 13's `foreshadows`,
+    # a TOP, ruled ignore by the founder 2026-08-15.) 29 declared, 3 struck.
+    #
+    # CLOCK IS AGAIN THE LARGEST FAMILY AND AGAIN THE SAME SHAPE — 19 of 32, every one a
+    # duration inside a reading or discussion instruction ("discuss in pairs for two
+    # minutes", "think quietly for two minutes"), never the "for the remaining time"
+    # boilerplate the middle-stage sets struck. Two waves now say the same thing: at classes
+    # III–V the model bounds a task with a duration because young children need it bounded,
+    # which is correct teaching in the one unit the register cannot carry. It is 19 of 32
+    # here after 8 of 17 in W1, so the pressure RISES on compacts — a shorter plan makes
+    # every band feel tighter. This is a BRIEF problem, not a model problem, and the next
+    # preparatory stage should say so in the brief rather than pay for 27 repairs again.
+    #
+    # META-LEAK HELD AT 2, exactly as in W1, on 70 files instead of 38 — 1.6 → 0.9 per 1000
+    # units. Third corpus confirming the corrected `variant_plans._serving_block()`
+    # (2026-08-15). Both are the vi ch 5 p09 U8 shape and take the same doctrine.
+    #
+    # COMPLETION APPEARED FOR THE FIRST TIME AT THIS STAGE — 2 hits, both in a compact's
+    # CLOSING unit ("built across the chapter"). It is absent from W1's tops for a
+    # structural reason worth recording: a top's closing unit is the mandated `synthesis`,
+    # which the completion ban EXEMPTS by design (build_library.py, "licensed to assume the
+    # chapter's CONTENT has been taught"). A compact is FORBIDDEN a synthesis anchor, so its
+    # last unit does the same summing-up job with none of the licence. Expect this family on
+    # every compact wave; it will never show on a top.
+    #
+    # THREE ARE NOT DECLARED — all three the `bridges? (toward|towards|to) the` pattern
+    # (register_scan.py:184), and all three pointing somewhere that is NOT a later sitting
+    # (runbook trap 4: a false positive is fixed at the scanner, not in the text):
+    #   · iv ch 11 p09 U6 band:2 "Bridge to the body-part task" — the body-part task is
+    #     band:3 OF THE SAME UNIT, 18–20 → 20–35. Two minutes later, same sitting.
+    #   · iv ch 5 p08 U8 "a natural bridge to the adverb work explored EARLIER in the
+    #     chapter" — a BACKWARD reference, which v1.10 legalised outright. The pattern
+    #     matches on "bridge to the" and never reads the direction word four tokens on.
+    #   · iii ch 9 p07 U3 "an oral bridge to the story's THEME, not an assessed task" — the
+    #     destination is a theme, not a unit, and the clause says in terms that nothing is
+    #     being deferred.
+    # The 2026-08-15 bridge ruling is NOT disturbed: viii ch 14 p09 U6's "bridge to the
+    # space-travel speaking task" named a real later sitting and rightly stands. These three
+    # do not. RECOMMENDED: do not fire when the destination is qualified backward
+    # ("earlier", "in the previous"), and the same-unit case argues for reading the band
+    # index. Deliberately NOT word-swapped to dodge the regex — "bridge" → "link" would
+    # clean the corpus while leaving the pattern broken for the next stage to rediscover.
+    ("english", "iii"): {
+        "ch_03_canonical_p10.json": [
+            (10, "teacher_notes", " built across the chapter", "", "register/completion",
+             "the first of the two completion hits. U10 of a p10 compact is its LAST unit "
+             "but carries no synthesis licence. The five strands are NAMED in the same "
+             "sentence and all survive; what goes is the claim that a chapter was worked "
+             "through, which is false whenever this plan is a teacher's first exposure"),
+        ],
+        "ch_04_canonical_p09.json": [
+            (2, "band:0", " for two minutes", "", "register/clock",
+             "'re-read pp.25–28 silently, then asks Who are the four friends' is the whole "
+             "move; the band's own 0–6 holds the time"),
+        ],
+        "ch_08_canonical_p09.json": [
+            (4, "teacher_notes", " that follows later", "", "register/forward",
+             "'links the poem to the word-work on describing words' is a true statement "
+             "about the chapter's shape; WHEN that word-work happens is the breach"),
+        ],
+        "ch_12_canonical_p07.json": [
+            (4, "band:1", " for two minutes", "", "register/clock",
+             "the thinking is bounded by the turn that follows it — 'each takes a short "
+             "turn' — and the sentence frame is untouched"),
+        ],
+        "ch_16_canonical_p07.json": [
+            (1, "teacher_notes", " before answering questions in a later unit", "",
+             "register/forward",
+             "'worth slowing down on so students absorb the meaning' is the instruction "
+             "and stands alone; the Chanda Mama / Sun warning after it is untouched"),
+            (3, "band:2", " for two minutes", "", "register/clock",
+             "'Students work in pairs, then share with the class' keeps the structure; the "
+             "'I can see…' frame is the real scaffold and stays"),
+        ],
+        "ch_17_canonical_p09.json": [
+            (3, "band:1", " for five minutes", "", "register/clock",
+             "the brainstorm is bounded by its own output — a list of 10 items — and by the "
+             "pair-into-four move that follows"),
+        ],
+    },
+    ("english", "iv"): {
+        "ch_01_canonical_p10.json": [
+            (10, "band:3", " built across the chapter", "", "register/completion",
+             "the second completion hit, same shape and same remedy. 'This revisits the "
+             "recitation and oracy work' is true of any sitting that reaches U10; that it "
+             "was built across a whole chapter is not"),
+        ],
+        "ch_02_canonical_p11.json": [
+            (5, "band:1", " for two minutes", "", "register/clock",
+             "the two probing questions after it ('What did Kamala say…') are what actually "
+             "shapes the discussion and are untouched"),
+        ],
+        "ch_06_canonical_p07.json": [
+            (3, "band:0", " for a few minutes", "", "register/clock",
+             "the two named discussion questions bound the task; the board-charting closes it"),
+        ],
+        "ch_06_canonical_p10.json": [
+            (2, "band:3", " for two minutes", "", "register/clock",
+             "FOUR HITS IN ONE FILE, the batch's densest, and all four the same reading- or "
+             "discussion-duration shape. 'Students revisit the text independently to check "
+             "one answer they are unsure about' is self-bounding"),
+            (3, "band:2", " for two minutes", "", "register/clock",
+             "the prompt is named in full before it; the board list closes it"),
+            (8, "band:0", " for two minutes", "", "register/clock",
+             "'study the five-panel picture story silently' is bounded by the panels "
+             "themselves — five — and by the eliciting that follows"),
+            (10, "band:1", " for three minutes", "", "register/clock",
+             "the four charted answers (large-print notes, reading aloud, sitting nearer "
+             "the board, describing pictures) are the real shape of this band"),
+        ],
+        "ch_10_canonical_p09.json": [
+            (2, "band:1", " for two minutes", "", "register/clock",
+             "bounded by the board list of swing materials the pairs feed"),
+        ],
+    },
+    ("english", "v"): {
+        "ch_03_canonical_p13.json": [
+            (1, "teacher_notes", "; comprehension tasks follow in a later unit", "",
+             "register/forward",
+             "'This first encounter is entirely about sound and feel' already scopes the "
+             "sitting from its own ground; the anaphoric-'But' note after it is the "
+             "teaching and is untouched"),
+            (3, "band:2", " for a few minutes", "", "register/clock",
+             "'Pairs talk; then each pair shares one idea with the class' carries the whole "
+             "structure"),
+            (13, "band:1", " for five minutes", "", "register/clock",
+             "the two groups and their assigned topics bound the task; the spokesperson "
+             "share-out closes it"),
+        ],
+        "ch_04_canonical_p09.json": [
+            (8, "band:2", " for two minutes", "", "register/clock",
+             "bounded by 'then share in pairs' and the four-or-five report-backs"),
+            (9, "teacher_notes", " without requiring any prior sitting to have occurred", "",
+             "register/meta-leak",
+             "ONE OF THE TWO SURVIVORS. 'The closing connection to the narrative theme of "
+             "freedom and the natural world gives this final sitting its own coherent "
+             "meaning' IS the scoping fact and is kept whole; the trailing clause is the "
+             "brief's independence requirement read back to a teacher who is not the party "
+             "under it"),
+        ],
+        "ch_05_canonical_p07.json": [
+            (3, "teacher_notes", " in a later unit on that spine", "", "register/forward",
+             "'the tongue twisters' repeated fr cluster will naturally lead into word-work "
+             "on consonant patterns' is a true observation about the material; naming the "
+             "sitting it lands in is the breach"),
+        ],
+        "ch_05_canonical_p09.json": [
+            (3, "band:0", " for a couple of minutes", "", "register/clock",
+             "a RANGED-adjacent phrasing the pattern list already covers; 'Children turn to "
+             "a partner and share, then two pairs report' is the move"),
+        ],
+        "ch_06_canonical_p08.json": [
+            (1, "teacher_notes",
+             " Comprehension questions are reserved for the next unit so that listening and "
+             "reading are unhurried here.", " Keep listening and reading unhurried here.",
+             "register/forward",
+             "THE ONE EDIT THAT REPLACES RATHER THAN DELETES. Deleting the sentence would "
+             "lose 'unhurried', which is the actual instruction to the teacher — so the "
+             "instruction is restated from this unit's own ground and only the deferral "
+             "claim goes. The Oorani / Panam Keni / Tanka pronunciation note is untouched"),
+            (8, "teacher_notes", " without requiring any preparation from an earlier unit", "",
+             "register/meta-leak",
+             "the second survivor. 'Brings the chapter's informational and imaginative "
+             "strands together' is the whole of what the closing reflection does; the "
+             "self-study flag on Task A after it is untouched"),
+        ],
+        "ch_06_canonical_p11.json": [
+            (3, "band:2", " for two minutes", "", "register/clock",
+             "bounded by the partner share and the four-to-five presentations"),
+        ],
+        "ch_07_canonical_p11.json": [
+            (3, "band:1", " for two minutes", "", "register/clock",
+             "the named prompt bounds it; the board note of varied reasons closes it"),
+        ],
+        "ch_07_canonical_p15.json": [
+            (1, "teacher_notes", ", as word meaning is explored in a later unit", "",
+             "register/forward",
+             "'point them out without defining them fully yet' is the complete instruction "
+             "— 'yet' already does the deferring without naming a sitting"),
+        ],
+        "ch_08_canonical_p08.json": [
+            (2, "band:2", " for two minutes", "", "register/clock",
+             "the two named questions bound the discussion; the board consolidation closes it"),
+        ],
+        "ch_09_canonical_p15.json": [
+            (7, "band:2", " for two minutes", "", "register/clock",
+             "'Students think quietly, then share in pairs first' keeps the two-stage shape "
+             "the band is built on"),
+        ],
+    },
 }
 
 DEFAULT_SET = ("social_sciences", "viii")

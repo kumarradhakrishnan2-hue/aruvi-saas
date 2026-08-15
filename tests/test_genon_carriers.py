@@ -856,9 +856,34 @@ class TestEnglishSecondaryLanded(unittest.TestCase):
                                {"lesson_plan": {"periods": periods}, "assessment_items": groups})
         self.assertEqual([it["unit_ref"] for it in got], [[4]], "anchors at the close")
 
-    def test_MORE_items_than_units_keeps_the_shared_set(self):
-        """M < N — a pair whose cell was taught in a single unit — cannot be dealt. Both items
-        keep the full set and both anchor there; splitting would invent a unit."""
+    def test_MORE_items_than_units_BACK_FILLS_when_the_cell_spans_units(self):
+        """M < N over MORE THAN ONE unit back-fills to the close (2026-08-15, S11·W1).
+
+        The regression this pins: english·preparatory iii ch 3 (A, oracy) is taught in units
+        4, 5 and 6 and carries FOUR items — two authored pairs that share one (section × spine)
+        address because the cell key is coarser than `source_lo`. The old guard (`M >= N`)
+        failed, the cell fell to the shared-span branch, and all four items anchored on unit 6
+        while units 4 and 5 — which teach that very cell — showed no Assess tab at all.
+
+        Back-fill anchors one item per unit BACKWARDS from the close and piles the surplus on
+        the first unit, so the last item still lands at the cell's completion (Rule 8A) and the
+        earlier sittings stop coming up empty."""
+        result = {"lesson_plan": {"periods": [
+            {"period_number": n, "section_id": "A", "spines_taught": ["oracy"]}
+            for n in (4, 5, 6)]},
+            "assessment_items": [{"spine_code": "oracy", "items": [
+                {"id": f"Q{i}", "source_section_id": "A", "source_spine": "oracy"}
+                for i in range(1, 5)]}]}
+        got = assessment_items({"subject": "English", "grade": "Grade III"}, result)
+        self.assertEqual([it["unit_ref"] for it in got], [[4], [4], [5], [6]],
+                         "surplus on the first unit; the LAST item still closes the cell")
+        self.assertEqual(len({tuple(it["unit_ref"]) for it in got}), 3,
+                         "all three teaching units carry an item, not just the close")
+
+    def test_MORE_items_than_units_keeps_the_shared_set_in_a_SINGLE_unit_cell(self):
+        """M == 1 — a pair whose cell was taught in a single unit — cannot be dealt. Both items
+        keep the full set and both anchor there; splitting would invent a unit. This is the one
+        shape the 2026-08-15 back-fill deliberately leaves alone."""
         result = {"lesson_plan": {"periods": [
             {"period_number": 12, "section_id": "A", "spines_taught": ["listening"]}]},
             "assessment_items": [{"spine_code": "listening", "items": [
