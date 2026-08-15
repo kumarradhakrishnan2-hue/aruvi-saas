@@ -1232,7 +1232,7 @@ REPAIRS = {
     # teacher's business" line. FOUNDER RULING: no constitution is touched for a defect
     # the brief created. So THESE 36 REPAIRS ARE THE LAST OF THEIR KIND ON THIS STAGE —
     # W2's compacts are authored under the corrected brief and are the live test of it.
-    ("english", "vi"): {
+    ("english", "vi", "SUPERSEDED_W1_applied_20260815"): {
         "ch_03_canonical.json": [
             (8, "teacher_notes", " in the speaking unit", "", "register/forward",
              "the CONTENT ('have spoken with contractions') is the continuity the teacher "
@@ -1301,7 +1301,7 @@ REPAIRS = {
              "to the class' carries the grouping, which is what the band is for"),
         ],
     },
-    ("english", "vii"): {
+    ("english", "vii", "SUPERSEDED_W1_applied_20260815"): {
         "ch_01_canonical.json": [
             (8, "band:3", " in the following unit", "", "register/forward",
              "the teaching act is collecting the notebooks and commenting; WHEN they come "
@@ -1350,7 +1350,115 @@ REPAIRS = {
              "whole of the guidance"),
         ],
     },
+    # ══ v1.7, 2026-08-15 · S10 · english MIDDLE · BATCH WAVE 2 (the 72 compacts) ═══════
+    #
+    # 14 ban hits over 11 files — 7 forward · 3 clock · 1 meta-leak · 1 completion ·
+    # 1 calendar. THE HEADLINE IS THE FAMILY THAT DID NOT APPEAR. These 72 files are the
+    # first authored under the corrected `variant_plans._serving_block()` (2026-08-15), and
+    # meta-leak fell 40.5 → 2.1 per 1000 units against W1's tops: 17 hits became 1. The
+    # brief was the cause, exactly as the pre-brief corpus predicted, and rewording it at
+    # source did in one edit what 36 declared repairs did after the fact.
+    #
+    # TWO OF THE 14 ARE NOT DECLARED — they are put to the founder as false positives
+    # rather than repaired, because striking them would falsify chapter content (runbook
+    # trap 4: a false positive is fixed at the scanner, not in the text):
+    #   · vii ch 2 p06 U1 [forward] "foreshadow" — the pre-reading pictures foreshadow the
+    #     poem's spider metaphor, and the poem is READ IN THIS SAME UNIT. Nothing points at
+    #     another sitting. The pattern has no same-unit exemption.
+    #   · vii ch 3 p07 U3 [calendar] "tomorrow" — this is Helen Keller's own argument
+    #     ("use their eyes as if tomorrow they might be blind"), paraphrased from p.33. The
+    #     word is the ESSAY'S, not a scheduling reference. The scanner drops a calendar hit
+    #     to advisory inside quotation marks; this one is a close paraphrase and misses the
+    #     exemption by its punctuation alone.
+    # A third stays by the 2026-08-15 bridge ruling: viii ch 14 p09 U6's "bridge to the
+    # space-travel speaking task". Its unit's REAL breach is declared below.
+    #
+    # ONE EDIT WAS NOT FLAGGED, same reading discipline as W1: viii ch 14 p09 U6's closing
+    # sentence is a plain forward reference AND narrates the constraint, and the scanner
+    # stopped at "bridge to the" three clauses earlier. 11 flagged + 1 read = 12 edits.
+    ("english", "vi"): {
+        "ch_04_canonical_p07.json": [
+            (1, "band:3", " that will follow when they return to the text", "",
+             "register/forward",
+             "holding an image in mind IS the closing act and needs no destination; U1 of a "
+             "7-period compact is a likely last sitting"),
+        ],
+        "ch_05_canonical_p09.json": [
+            (2, "teacher_notes",
+             " before the more demanding extract analysis in the next unit", "",
+             "register/forward",
+             "'they build confidence' is the pedagogical point and stands; what it builds "
+             "confidence FOR is a claim about a sitting this class may not receive"),
+            (8, "teacher_notes", "; no prior material is assumed", "",
+             "register/meta-leak",
+             "THE ONE SURVIVING META-LEAK IN THE WHOLE WAVE, and it takes the same doctrine "
+             "as W1's fifteen: 'All making and displaying happens within this sitting' is "
+             "the scoping fact and is kept whole"),
+        ],
+        "ch_06_canonical_p07.json": [
+            (7, "teacher_notes",
+             "vocabulary built across the chapter", "the chapter's vocabulary",
+             "register/completion",
+             "U7 of 7 — the last unit of a compact, where a claim that the chapter was "
+             "worked through is exactly what the completion ban exists for. The qualities "
+             "are NAMED in the next clause ('loyal, caring, honest'), which is the "
+             "content-naming the register asks for, so nothing is lost"),
+        ],
+        "ch_06_canonical_p10.json": [
+            (3, "teacher_notes",
+             " are addressed in the following unit", " are not taken up here",
+             "register/forward",
+             "the W1 viii ch 12 U2 shape, and the same remedy: deleting the clause leaves "
+             "'The remaining questions are addressed', which asserts the opposite of the "
+             "truth. Stated from this unit's own ground instead"),
+            (4, "band:2", " for the remaining time", "", "register/clock",
+             "the band already carries its minutes, and the sentence after it ('completed "
+             "as homework') is where the work actually lands"),
+        ],
+    },
+    ("english", "vii"): {
+        "ch_07_canonical_p05.json": [
+            (4, "band:3", " in the remaining time", "", "register/clock",
+             "'Writers revise that section' is the act; the peer-response instructions "
+             "before it are untouched"),
+        ],
+        "ch_09_canonical_p08.json": [
+            (5, "teacher_notes",
+             "; carry-over to a later unit is not intended", "",
+             "register/forward",
+             "BOTH bans in one clause — a forward reference AND the constraint narrated. "
+             "'fully drafted, peer-reviewed, and revised within this sitting' is the "
+             "scoping fact, is kept, and already says everything the struck clause said"),
+        ],
+    },
     ("english", "viii"): {
+        "ch_07_canonical_p09.json": [
+            (2, "teacher_notes",
+             " — the fact-vs-opinion task in the next unit will build on this distinction",
+             "", "register/forward",
+             "'Watch for students who conflate fact and opinion' is the whole of what the "
+             "teacher acts on"),
+            (7, "band:3", " to the next unit", "", "register/forward",
+             "homework set and answers brought back is the act; WHICH sitting they are "
+             "brought to is not this plan's to promise"),
+        ],
+        "ch_10_canonical_p08.json": [
+            (5, "band:0", " for two minutes", "", "register/clock",
+             "'Pairs share any prior knowledge' is the act. Note the five guiding points "
+             "and the Van Mahotsav framing are untouched"),
+        ],
+        "ch_14_canonical_p09.json": [
+            (6, "teacher_notes",
+             " The writing task on dialogue between Deepa and Asma is taken up in the next "
+             "sitting and should not be previewed here.", "",
+             "register/forward",
+             "NOT FLAGGED — the scanner stopped at 'bridge to the' three clauses earlier "
+             "(and that hit stands, per the 2026-08-15 bridge ruling). This sentence is the "
+             "unit's real breach and is a double one: it names a later sitting AND tells "
+             "the teacher what the plan is withholding, which is the brief talking"),
+        ],
+    },
+    ("english", "viii", "SUPERSEDED_W1_applied_20260815"): {
         "ch_01_canonical.json": [
             (7, "band:2", "spend the remaining time drafting", "draft", "register/clock",
              "the OUTLINE and its three parts are the teaching content and are untouched"),

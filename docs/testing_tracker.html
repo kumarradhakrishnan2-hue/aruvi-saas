@@ -453,6 +453,13 @@ function renderAll(){
       const notes=BATCH.map(b=>[b[0],(item("batch",key,b[0]).comment||"").trim()])
                        .filter(n=>n[1]);
       if((spend.comment||"").trim()) notes.push(["SPEND",spend.comment.trim()]);
+      /* WAIVER (2026-08-15, S10): a stage may close with known register hits that were
+         RULED rather than repaired — scanner false positives, per runbook trap 4. It is
+         not a step and must not gate `released`; it is the record that closing-checklist
+         §5 item 3 ("zero register ban hits library-wide") was met by decision, not by
+         accident. Rendered like SPEND: only when the stage has one. */
+      const waiver=item("batch",key,"waiver");
+      if((waiver.comment||"").trim()) notes.push(["WAIVER",waiver.comment.trim()]);
       const id="bn-"+key.replace(/[^a-z]/gi,"");
       const detail=notes.length
         ? `<tr id="${id}" style="display:none"><td></td><td colspan="${BATCH.length+6}">`
