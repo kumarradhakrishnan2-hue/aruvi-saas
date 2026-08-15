@@ -90,10 +90,42 @@ def _serving_block():
         "this plan — the unit that FIRST introduces the section her class has reached. "
         "So ANY unit of this plan may be somebody's last sitting, met by a class that "
         "never had the units before it.",
-        "- Therefore every unit CLOSES ON ITS OWN GROUND: it names no other unit, "
-        "promises nothing that follows it, and never claims the chapter has been "
-        "covered. Where continuity helps, name the CONTENT already taught — the idea, "
-        "text, method or phenomenon — never a unit's position or existence.",
+        # ── REWRITTEN 2026-08-15 (ARV-D-1xx, S10 · W1) — THE BRIEF WAS THE CAUSE ─────
+        # This bullet used to be three prohibitions with their reasoning attached: "it
+        # names no other unit, promises nothing that follows it, and never claims the
+        # chapter has been covered". A model told what not to assume writes that it is
+        # not assuming it. The brief's own rationale came back as teacher-facing prose —
+        # "no prior draft or homework is assumed", "without claiming coverage is
+        # complete" (that one verbatim, twice) — 67 self-containment disclaimers in 2297
+        # authored units, against ZERO in the 385 units of the pre-brief corpus
+        # (backup/saved_plans/, measured 2026-08-15). Nothing else changed between the
+        # two corpora, and the same measurement shows the brief doing the job it was
+        # written for: forward references fell 88.3 → 19.2 per 1000 units.
+        #
+        # So the fix belongs HERE and nowhere else (founder ruling 2026-08-15: "let us
+        # not touch a constitution for an issue the brief created"). Stated positively,
+        # with the negative form given ONCE as its consequence rather than as three
+        # separate bans to be echoed back.
+        "- Therefore every unit CLOSES ON ITS OWN GROUND. Write each unit as though it "
+        "were the only sitting this class receives: it stands up on the material it "
+        "teaches inside its own minutes. Where continuity helps, name the CONTENT "
+        "already taught — the idea, text, method or phenomenon — never a unit's "
+        "position or existence.",
+        # ── added 2026-08-15, same finding ───────────────────────────────────────────
+        # The missing instruction, and the reason a prohibition alone could never have
+        # produced it: the model was told not to DEPEND on another unit and obeyed, but
+        # nothing told it not to DISCUSS the dependency. Reassuring the teacher that no
+        # prior sitting is assumed tells her there is a version of her lesson in which
+        # one would have been — which is the serve engine's business, never hers. 59% of
+        # these land on the closing unit and 19% in the first half of the plan, so this
+        # is addressed to EVERY unit, not to the synthesis.
+        "- THE SERVE MODEL IS NEVER THE TEACHER'S BUSINESS. Everything above constrains "
+        "how you BUILD the plan; none of it is a subject the plan may discuss. Do not "
+        "reassure the teacher that a unit assumes no prior draft, requires no earlier "
+        "activity, needs no particular sitting to have happened, or stands alone — simply "
+        "write a unit of which those things are true. State what THIS sitting does; say "
+        "nothing about what it does not need. If a sentence would be pointless to a "
+        "teacher who had never heard of variant plans, cut it.",
         "- MATERIALS, OPENING MOVES AND HOMEWORK ARE PER-UNIT. No unit may require "
         "that another unit was taught, or that its homework was set, in order to run.",
         # ARV-D-119 (2026-08-12, S5). The line above was already there and was already

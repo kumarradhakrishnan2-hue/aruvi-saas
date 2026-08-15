@@ -1175,7 +1175,11 @@ REPAIRS = {
              "finished; 'today' also goes, as a calendar reference in the same clause"),
         ],
     },
-    ("english", "vi"): {
+    # ── SUPERSEDED — applied 2026-08-13 to the S10 PILOT library (english VI ch 8,
+    #    "What a Bird Thought"). Moved off the live 2-tuple key 2026-08-15 so the W1
+    #    batch set below can own ("english", "vi"); re-running it would fail its own
+    #    "declared text not found" assertion, which is the guard working.
+    ("english", "vi", "SUPERSEDED_pilot_applied_20260813"): {
         "ch_08_canonical.json": [
             (12, "teacher_notes", " within these forty minutes", "", "register/clock",
              "the synthesis unit is the one unit designed to be borrowed, so its text travels "
@@ -1185,6 +1189,272 @@ REPAIRS = {
             (9, "teacher_notes", " and worth five minutes", "", "register/clock",
              "'genuinely philosophical' is the judgement the teacher needs; the minute budget "
              "is the platform's to set, not the plan's"),
+        ],
+    },
+
+    # ══ v1.6, 2026-08-15 · S10 · english MIDDLE · BATCH WAVE 1 (the 45 top canonicals) ══
+    #
+    # 36 ban hits over 22 of the 46 chapters — ~1 breach per 2 files, against S5's 1-per-3.
+    # Family split, and it is the first library where META-LEAK is the LARGEST family:
+    # 17 meta-leak · 11 forward · 8 clock. Two founder rulings shape what follows.
+    #
+    # RULING 1 (2026-08-15) — FIVE HITS ARE NOT REPAIRED, and are not scanner changes
+    # either: "ignore it, no repair needed". Three are the `bridges? (to|toward) the`
+    # pattern firing where nothing points forward — vi ch 1 U6 "a bridge to the phonics
+    # work FROM the speaking unit" (a BACKWARD reference, legal since v1.10), vii ch 2 U10
+    # "a genuine bridge to the science curriculum" (cross-curricular), viii ch 6 U1 "bridge
+    # to the text" (into this unit's own text). Two are the meta-leak disclaimer regex
+    # spanning a semicolon into an unrelated clause — vii ch 2 U9 (the disclaimer's object
+    # is "prepared specimens", a materials fact) and vii ch 6 U7 (its object is "revision
+    # time"). Left as authored, deliberately, and left flagged: the next english library
+    # re-raises them, which is the cheaper error than a pattern quietly narrowed.
+    #
+    # RULING 2 (2026-08-15) — THE META-LEAK DOCTRINE, stated once and applied to all 15:
+    # KEEP THE SCOPING FACT, CUT THE ASSURANCE DRAWN FROM IT. "Both writing tasks begin and
+    # conclude within this unit; no prior draft or previously produced material is required"
+    # keeps its first clause and loses its second. The first is a fact a teacher acts on;
+    # the second tells her there is a version of her lesson in which she could not have.
+    # This is the english·IX p07 precedent (wave 2, S11) promoted to a rule.
+    #
+    # FIVE EDITS BELOW WERE NOT FLAGGED BY THE SCANNER — found by reading the whole note
+    # once its flagged sibling was located (vi ch 9 U11, vii ch 4 U12, viii ch 5 U9,
+    # viii ch 11 U11, viii ch 12 U9). Every one is a second disclaimer in the SAME
+    # teacher_notes as a flagged one. This is runbook trap 1's shape in a new place — the
+    # paraphrase that survives the sweep — and it is why the census is read per FILE and
+    # not per hit. 31 flagged + 5 read = 36 edits.
+    #
+    # THE CAUSE IS FIXED SEPARATELY AND UPSTREAM (2026-08-15, same day): the meta-leak was
+    # created by `variant_plans._serving_block()` stating self-containment as three
+    # prohibitions with their rationale attached, which the model echoed back as
+    # teacher-facing prose. Measured: 0 self-containment disclaimers in the 385 units of
+    # the pre-brief corpus (backup/saved_plans/) against 67 in 2297 authored units. The
+    # brief is reworded positively and gains an explicit "the serve model is never the
+    # teacher's business" line. FOUNDER RULING: no constitution is touched for a defect
+    # the brief created. So THESE 36 REPAIRS ARE THE LAST OF THEIR KIND ON THIS STAGE —
+    # W2's compacts are authored under the corrected brief and are the live test of it.
+    ("english", "vi"): {
+        "ch_03_canonical.json": [
+            (8, "teacher_notes", " in the speaking unit", "", "register/forward",
+             "the CONTENT ('have spoken with contractions') is the continuity the teacher "
+             "needs and it survives whole; 'the speaking unit' is a POSITION, and a class "
+             "served a different X may never have had it. v1.10's rule exactly: name the "
+             "content already taught, never a unit's existence"),
+        ],
+        "ch_04_canonical.json": [
+            (4, "band:1",
+             " then spend the remaining time on a class discussion of the open question",
+             " then move to a class discussion of the open question",
+             "register/clock",
+             "the SEQUENCE (analogy and fill-in quickly, then discussion) is the teaching "
+             "act and is kept; 'the remaining time' measures against a budget the platform "
+             "rescales, so it is false in every sitting but the authored one"),
+            (11, "teacher_notes",
+             " — but it begins fresh: no prior discussion or homework is assumed", "",
+             "register/meta-leak",
+             "the list of what the unit draws on ends at 'the grammar of connection' and "
+             "reads better closed there. The scoping fact survives in the NEXT sentence, "
+             "which is kept in full: 'The reflective writing in the third band is new work "
+             "begun and completed here'"),
+        ],
+        "ch_06_canonical.json": [
+            (6, "teacher_notes",
+             " without requiring any prior unit to have occurred", "",
+             "register/meta-leak",
+             "'keeps the thematic thread alive' is the judgement; the assurance is the "
+             "brief narrated back"),
+            (7, "teacher_notes",
+             " without requiring any specific prior discussion to have taken place", "",
+             "register/meta-leak",
+             "same shape. 'anchors the abstract discussion in concrete narrative examples' "
+             "is the whole of what a teacher acts on"),
+            (8, "teacher_notes",
+             "; no prior draft or previously produced material is required", "",
+             "register/meta-leak",
+             "THE DOCTRINE CASE. 'Both writing tasks begin and conclude within this unit' "
+             "is a real scoping fact and stays; the clause after the semicolon is the same "
+             "fact restated as a promise to the teacher"),
+        ],
+        "ch_09_canonical.json": [
+            (11, "teacher_notes",
+             " — so students can connect ideas regardless of which activities their class "
+             "covered", "",
+             "register/meta-leak",
+             "NOT FLAGGED — read alongside its sibling below. 'which activities their class "
+             "covered' is the serve model addressed to the teacher; the list of chapter "
+             "content before the dash is what she needs"),
+            (11, "teacher_notes", ", requiring no prior draft", "",
+             "register/meta-leak",
+             "the scoping half is kept whole — 'new and complete within this unit: it "
+             "begins, develops, and ends here' already says it, concretely and twice"),
+        ],
+        "ch_12_canonical.json": [
+            (6, "teacher_notes",
+             " — students can connect across these strands regardless of which units they "
+             "previously encountered", "",
+             "register/meta-leak",
+             "the three strands are named in the sentence and stand; 'which units they "
+             "previously encountered' is a fact about OUR selection, not her class"),
+        ],
+        "ch_13_canonical.json": [
+            (5, "band:2", ", each for about two to three minutes", "", "register/clock",
+             "a RANGED clock quantity (ARV-D-026's family). 'Five or six students present "
+             "to the class' carries the grouping, which is what the band is for"),
+        ],
+    },
+    ("english", "vii"): {
+        "ch_01_canonical.json": [
+            (8, "band:3", " in the following unit", "", "register/forward",
+             "the teaching act is collecting the notebooks and commenting; WHEN they come "
+             "back is a promise no borrowed sitting can keep"),
+        ],
+        "ch_02_canonical.json": [
+            (1, "band:2", " before the next unit's closer analysis", "",
+             "register/forward",
+             "'so students can visualise the action' is the reason for the pause and stands "
+             "alone. U1 is the likeliest unit of any plan to be somebody's LAST sitting"),
+        ],
+        "ch_03_canonical.json": [
+            (4, "band:0", " for a few minutes", "", "register/clock",
+             "'respond freely … to warm up the reflective register' is the instruction; the "
+             "band already carries 0-8"),
+        ],
+        "ch_04_canonical.json": [
+            (12, "teacher_notes",
+             " — without assuming any particular activity happened in a specific unit", "",
+             "register/meta-leak",
+             "the three ideas the synthesis draws together are named and kept"),
+            (12, "teacher_notes",
+             "; no prior writing is continued or handed back", "",
+             "register/meta-leak",
+             "NOT FLAGGED — the second disclaimer in the same note. 'planned, drafted, and "
+             "completed within this unit' is the scoping fact and is kept"),
+        ],
+        "ch_06_canonical.json": [
+            (8, "teacher_notes", " and the next unit", "", "register/forward",
+             "'left for self-study' is true in every serve; naming where the rest lands is "
+             "true only in this one"),
+        ],
+        "ch_10_canonical.json": [
+            (4, "band:3", " within the remaining time", "", "register/clock",
+             "'Students revise' is the act"),
+            (7, "band:2", " within the remaining time", "", "register/clock",
+             "same phrase, same deletion; the volunteers' share after it is kept and gives "
+             "the band its close"),
+        ],
+        "ch_12_canonical.json": [
+            (8, "teacher_notes",
+             " without requiring any specific activity from earlier units to have happened "
+             "in a particular form", "",
+             "register/meta-leak",
+             "the four strands students connect are named immediately before and are the "
+             "whole of the guidance"),
+        ],
+    },
+    ("english", "viii"): {
+        "ch_01_canonical.json": [
+            (7, "band:2", "spend the remaining time drafting", "draft", "register/clock",
+             "the OUTLINE and its three parts are the teaching content and are untouched"),
+        ],
+        "ch_04_canonical.json": [
+            (5, "band:1", " for roughly one to two minutes", "", "register/clock",
+             "'Presenters speak' and the teacher's one-strength-one-suggestion response are "
+             "the act; the duration is the platform's"),
+            (8, "teacher_notes",
+             " — but it does not assume any specific prior activity happened in any "
+             "particular form", "",
+             "register/meta-leak",
+             "everything the chapter taught is listed before the dash and kept. Note what "
+             "is NOT touched two sentences later: 'where they have not done the research, "
+             "the class discussion and oral presentations carry the synthesis on their "
+             "own' is real differentiation guidance, and 'the board map … requires nothing "
+             "prepared in advance' is a materials fact — both stay"),
+        ],
+        "ch_05_canonical.json": [
+            (9, "teacher_notes",
+             " without assuming any specific earlier activity has taken place;", "",
+             "register/meta-leak",
+             "the clause AFTER the semicolon is the good half and is kept — 'every concept "
+             "referenced here is grounded in the poem's own lines' is a substantive claim "
+             "about the unit's self-sufficiency stated as CONTENT, which is the form the "
+             "register wants"),
+            (9, "teacher_notes",
+             ": students are not continuing an earlier draft but composing a fresh, compact "
+             "piece that demonstrates",
+             ": a fresh, compact piece that demonstrates",
+             "register/meta-leak",
+             "NOT FLAGGED — the second disclaimer in the same note. 'designed to begin and "
+             "end within this unit' is kept; the negative half is the only clause cut, and "
+             "the sentence closes on what the piece IS"),
+        ],
+        "ch_10_canonical.json": [
+            (10, "band:2", " for eight to ten minutes", "", "register/clock",
+             "the length spec that MATTERS is kept ('five to seven sentences') — it is a "
+             "quantity of work, not of clock. The band's closing sentence, 'Students begin "
+             "and complete the piece within this band', is scoping and stays"),
+        ],
+        "ch_11_canonical.json": [
+            (1, "teacher_notes",
+             " No prior reading or homework is assumed for this encounter.", "",
+             "register/meta-leak",
+             "U1 of the plan, and the leak with the least excuse: there IS no prior unit "
+             "to assume, which is what makes the assurance pure noise. Nothing is kept "
+             "because nothing in the sentence is about the lesson"),
+            (11, "teacher_notes",
+             " — without assuming any specific prior activity, discussion, or written "
+             "piece", "",
+             "register/meta-leak",
+             "the five strands the synthesis draws together are named and kept"),
+            (11, "teacher_notes",
+             "; students who have engaged with any part of the chapter will have something "
+             "to say, regardless of which path they took through it", "",
+             "register/meta-leak",
+             "NOT FLAGGED — the second disclaimer in the same note. 'which path they took "
+             "through it' is the serve model in plain words. 'designed to begin and close "
+             "entirely within this sitting' is kept, and the note still ends on the line "
+             "that matters: 'The synthesis is not a test — it is a space to connect'"),
+            (11, "band:3", "; no prior draft or homework is assumed", "",
+             "register/meta-leak",
+             "'Paragraphs are self-contained' is an instruction to students about the "
+             "paragraph and stays; the assurance after it is addressed to us"),
+        ],
+        "ch_12_canonical.json": [
+            (1, "teacher_notes", " for a later unit", "", "register/forward",
+             "'rich but time-intensive and are set aside' is the judgement the teacher acts "
+             "on — she needs to know they are NOT being done here, not where they go"),
+            (2, "teacher_notes",
+             " are addressed in a later unit", " are not taken up here",
+             "register/forward",
+             "THE ONE REPLACEMENT IN THIS SET, and it is declared as such. A pure deletion "
+             "leaves 'The deeper analytical questions … are addressed.', which asserts the "
+             "opposite of the truth. The replacement says the same thing the other four "
+             "ch 12 hits say after deletion, from this unit's own ground"),
+            (3, "teacher_notes", ", which is explored in a later unit", "",
+             "register/forward",
+             "the CONNECTION to the fallowing material is the teaching point and is kept; "
+             "only its scheduling goes"),
+            (7, "teacher_notes",
+             " to allow sufficient time in the next unit for the ten-blank production "
+             "exercise on tenses", "",
+             "register/forward",
+             "'The tense identification task is set as homework' stands; the reason is a "
+             "claim about a sitting this class may never receive"),
+            (9, "teacher_notes", ", not from any assumed prior activity", "",
+             "register/meta-leak",
+             "'all content from the chapter' is the true and useful half"),
+            (9, "teacher_notes", " — no prior draft is assumed", "",
+             "register/meta-leak",
+             "NOT FLAGGED — the second disclaimer in the same note. 'The journal-entry "
+             "writing task begins and ends within this unit' is the scoping fact and is "
+             "kept whole"),
+        ],
+        "ch_14_canonical.json": [
+            (11, "teacher_notes",
+             " — it may name those concepts freely but must not assume any particular "
+             "activity, discussion or written work a student produced in earlier units", "",
+             "register/meta-leak",
+             "the clearest case in the batch: 'must not assume' is the BRIEF's own "
+             "imperative, printed into a note addressed to a teacher, who is not the party "
+             "under the obligation. The three strands are named before the dash and kept"),
         ],
     },
 }
