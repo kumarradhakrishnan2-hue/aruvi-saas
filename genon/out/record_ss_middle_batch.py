@@ -66,6 +66,28 @@ post("campaign/item", {
     },
 })
 
+# THE ₹ COLUMN IS ITS OWN ITEM, not a number parsed out of a comment. testing_tracker.html
+# reads `item("batch", key, "spend").cost_inr` for the Total ₹ column and for the corpus
+# totals row; W1/W2 comments are rendered as NOTES and are never scanned for figures. Posting
+# the cost inside the wave comments therefore left the column blank while the data was on
+# record — which is how it looked on 2026-08-16 until the tracker source was read.
+# The column is ALL METERED SPEND on the stage, pilot and reruns included (its own tooltip
+# says so), so it is NOT the batch total: the VIII ch 3 pilot on 2026-08-04 adds ₹149.28.
+post("campaign/item", {
+    "scope": "batch", "key": KEY, "step": "spend",
+    "patch": {
+        "cost_inr": 2481.92,
+        "comment": "₹2,481.92 = all metered SS·middle spend, 124 runs, from "
+                   "runtime_data/token_log.csv. SPLIT: ₹149.28 pilot (VIII ch 3, 2026-08-04, "
+                   "pre-batch) + ₹2,332.64 batch (2026-08-16) — the batch itself being "
+                   "₹881.64 wave 1 (40 standards) + ₹1,422.83 wave 2 (80 compacts) + ₹28.17 "
+                   "for the single re-author (VIII ch 15 p14). Reconciled to the rupee against "
+                   "the three collected manifests. Per-run: ~₹22 at wave 1, ~₹18 at wave 2. "
+                   "ONE file regenerated in the whole stage; every other defect was repaired "
+                   "by declaration at ₹0 — 232 declared edits across 90 files.",
+    },
+})
+
 post("campaign/defect", {
     "id": "ARV-D-161",
     "combo": KEY, "step": "W1", "severity": "S3", "owner": "Kumar (founder)",
@@ -290,9 +312,12 @@ post("campaign/defect", {
 
 post("campaign/item", {
     "scope": "batch", "key": KEY, "step": "W2",
+    # `files` on W1/W2 is CANONICALS ON DISK, not chapters — the tracker's two columns are
+    # "top canonicals" and "compact canonicals". Posted as 41/41 first time round, which read
+    # as though wave 2 had bought one file per chapter instead of two.
     "patch": {
         "status": "pass", "by": "Kumar (ran) · Claude (diagnosed + declared)",
-        "comment": W2_COMMENT, "files": 41,
+        "comment": W2_COMMENT, "files": 82,        # 82 compacts (41 chapters x 2)
     },
 })
 
@@ -427,4 +452,83 @@ post("campaign/defect", {
              "because it too tests a frontier.",
 })
 
-print("recorded: W1 + W2 + F1 + 11 defect rows")
+F2_COMMENT = (
+    "<b>SAMPLING PLAN — recorded before reading.</b> The scanner is free, so the whole stage "
+    "was scanned and the SAMPLING is of the READING, by evidence rather than by chapter: "
+    "<code>copyright_scan.py --book-only</code>, 8-gram shingles, runs ≥12 words, over "
+    "<b>all 41 chapters × 3 canonicals</b> against each chapter's own textbook PDF.<br><br>"
+    "<b>RESULT: 790,321 teacher-facing words scanned · 2,426 inside a run ≥12 · 0.31% reach · "
+    "longest run 28 words · 14 of 41 chapters produce no run ≥12 at all.</b> Cleaner than "
+    "english·middle (1.64%) and mathematics·middle (1.15%); the longest run is longer than "
+    "either (28 vs 14 and 18). Read: 100% of the 11 runs ≥20 words, plus 15 of the 159 in the "
+    "12–19 band, seed <code>social_sciences|middle|F2|2026-08-16</code> — 26 runs in full. "
+    "Pack: <code>docs/testing_artefacts/F2_ss_middle_copyright_20260816.md</code>.<br><br>"
+    "<b>VERDICT — PASS (founder, 2026-08-16).</b><br><br>"
+    "Three things the reading should be remembered for:<br>"
+    "1. <b>The long runs are institutional prose</b>, not narrative lifting — the 28-word top "
+    "hit is judicial appointment procedure (\"appointed by the President of India in "
+    "consultation with the Chief Justice…\"), which recurs 3× across two ch 11 files and once "
+    "inside an assessment question_text. Constitutional and procedural language is where "
+    "paraphrase is genuinely constrained.<br>"
+    "2. <b>Class VIII carries 126 of 170 runs (74%)</b> — the THIRD time in this stage that "
+    "VIII concentrated a defect, after the registry omissions (ARV-D-165) and the ch 8 "
+    "mis-anchoring (ARV-D-170). Worth asking whether VIII's SUMMARIES quote the book more "
+    "closely than VI/VII's, which would make it upstream of generation.<br>"
+    "3. <b>SECTION NAMES ARE EXEMPT</b> (copyright_scan line 102, per NCERT_copyright_review "
+    "§5): anchors are registry-verbatim by design and counted as structural references, not "
+    "reproduction. So 0.31% is reach across teacher-facing PROSE, excluding headings — and "
+    "every chapter does ship its section headings verbatim, ~60 words per canonical on a "
+    "15-section chapter. Defensible, but the figure must not be quoted as \"0.31% of our words "
+    "match the book\"."
+)
+
+post("campaign/item", {
+    "scope": "batch", "key": KEY, "step": "F2",
+    "patch": {"status": "pass", "by": "Claude (presented) · Kumar (ruled)",
+              "comment": F2_COMMENT, "files": 41},
+})
+
+# WAIVER — the tracker's own channel for "closing-checklist §5 item 3 was met by DECISION".
+post("campaign/item", {
+    "scope": "batch", "key": KEY, "step": "waiver",
+    "patch": {
+        "comment": "Item 3 (zero register ban hits stage-wide) is met at ZERO, but the last "
+                   "five hits were cleared by NARROWING THE SCANNER, not by repairing text — "
+                   "runbook trap 4, and the record belongs here rather than in a passing "
+                   "sentence. (a) `tomorrow` and `this|next|last week|month` dropped from BAN "
+                   "to ADVISORY: measured across all five stages, every hit they produced was "
+                   "CONTENT — the chapter's own definition of weather (\"rain today, sunshine "
+                   "tomorrow\"), a credit-timing question, an idiom, two hypotheticals. "
+                   "`(next|last) class` stays a ban: it names a SITTING, which is what the rule "
+                   "is for. (b) The clock ban now requires a classroom actor in the sentence "
+                   "carrying the quantity, so it no longer fires on Jallianwala Bagh's "
+                   "\"fired approximately 1,650 rounds for about ten minutes\" (ARV-D-162) "
+                   "while keeping all 58 real pacing hits. (c) A possessive-apostrophe bug in "
+                   "quote detection was fixed in the same change (ARV-D-167), which also "
+                   "EXPOSED two hits it had been wrongly suppressing in released stages. "
+                   "No artefact text was altered to reach zero.",
+    },
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-171", "combo": KEY, "step": "F2", "severity": "S3",
+    "owner": "Kumar (founder)", "status": "open",
+    "title": "VI ch 1 has NO textbook chapter on disk — C14 cannot be run on it, and the "
+             "scanner would have passed it clean against the wrong book",
+    "evidence": "textbooks/social_sciences/vi/ holds 14 numbered PDFs, but the book's "
+                "\"Chapter 01\" is \"Why Social Science\" (a themes/contents page) while our "
+                "ch 1 is \"Locating Places on the Earth\". Extracted and checked: that PDF "
+                "mentions \"Locating Places\" twice, both in the theme map, and carries none "
+                "of the chapter's text. No other VI PDF contains it. The scanner's glob "
+                "resolves ch 1 -> \"Chapter 01 - Why Social Science.pdf\" and scored 0.2% "
+                "overlap — a wrong book scores ~0% and reads as a clean pass, which "
+                "load_source's own docstring calls \"the most expensive way for this check to "
+                "fail\".",
+    "notes": "EXCLUDED from the F2 pack rather than passed silently; F2's result covers 40 of "
+             "41 chapters. Close the content gap (obtain the missing PDF) before the next VI "
+             "batch. Worth a guard in copyright_scan.py: refuse, rather than report, when the "
+             "matched PDF's title does not resemble the chapter's — the title check is what "
+             "caught this, and it cost nothing.",
+})
+
+print("recorded: W1 + W2 + F1 + F2 + waiver + spend + 12 defect rows — stage RELEASED")
