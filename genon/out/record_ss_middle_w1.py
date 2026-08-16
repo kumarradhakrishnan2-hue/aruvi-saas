@@ -154,4 +154,146 @@ post("campaign/defect", {
              "scripts for module-level writes.",
 })
 
-print("recorded: W1 + 4 defect rows")
+W2_COMMENT = (
+    "S2 · wave 2 · 2026-08-16. <b>80 compacts, ₹1,422.83</b> (msgbatch_011ezdQUpviWiYgZmANzzDp4), "
+    "80/80 ok, plus a <b>₹28.17</b> re-author of viii ch 15 p14. <b>Stage total ₹2,332.64.</b><br><br>"
+    "<b>Certification: 36 of 41 chapters ALL PASS.</b> `library complete` cleared for every "
+    "chapter except viii ch 8 (see below). The five remaining failures are: four chapters "
+    "carrying one ruled-exclusion register hit each (vii ch 3, vii ch 11, viii ch 9, viii ch 14) "
+    "and viii ch 8 on `library complete`, because its p08 is held in quarantine by design.<br><br>"
+    "<b>Structural defects, all closed without re-authoring except one.</b> The compacts "
+    "produced the failures wave 1 could not — 10 first-visit-order, 6 anchor-verbatim, 3 "
+    "coverage — and the diagnosis inverted the obvious reading in three of five cases: "
+    "<i>vi ch 7</i> (coverage) was an anchor-GRANULARITY defect, its U18–U21 wearing "
+    "first-exposure anchors on revisit units; re-anchoring took the registry 21→17 and cleared "
+    "p13 with no teaching change. <i>vii ch 3</i> (order, 2 files) was ONE under-labelled token "
+    "— U6 is titled 'Winds AND TOPOGRAPHY' and anchored only Winds, which pushed Topography's "
+    "first exposure to U16 and made two correct compacts look like they jumped. <i>vii ch 8 "
+    "p13</i> was a genuine transposition, fixed by declared permutation. <i>viii ch 15 p14</i> "
+    "was re-authored (₹28.17): its worst defect — [2] Regional saints first taught in the "
+    "CLOSING unit — is gone, and it drew two milder breaks instead, one fixed by permutation. "
+    "<i>viii ch 7/10/12</i> were nine anchor token-drops.<br><br>"
+    "<b>229 repair edits recorded across 90 files today</b> — 87 register (wave 1) + 126 "
+    "register (wave 2) + 9 anchor token-drops + 5 anchor re-grains + 2 permutations. Every one "
+    "declared (old→new) and applied by assertion; none hand-edited; one file regenerated in the "
+    "whole stage.<br><br>"
+    "<b>Closing checklist status:</b> item 3 (zero register hits) is NOT met — 5 remain by "
+    "ruling (4 calendar + ARV-D-162 Jallianwala). Item 2 (no quarantined file lacking a live "
+    "counterpart) is NOT met — viii ch 8 p08 and p11 hold the two orphan units. Both are "
+    "deliberate and both are F1 business, not W2 defects."
+)
+
+post("campaign/item", {
+    "scope": "batch", "key": KEY, "step": "W2",
+    "patch": {
+        "status": "pass", "by": "Kumar (ran) · Claude (diagnosed + declared)",
+        "comment": W2_COMMENT, "files": 41,
+    },
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-165",
+    "combo": KEY, "step": "W2", "severity": "S2", "owner": "Kumar (founder)",
+    "status": "open",
+    "title": "15 of 41 standards omit a real chapter-summary section from their registry (46 "
+             "sections, 14 of the 15 in class VIII) — and C5 check 11's SS matcher cannot see it",
+    "evidence": "Found because six compacts were quarantined for anchoring sections the top "
+                "registry lacks — every one of those anchors is a real summary heading "
+                "(viii ch 8 'Ocean currents'/'Ocean trenches'/'Smaller water bodies'; ch 10 "
+                "'Churches in India'/'Colonial Architecture'; ch 12 'Right to life'/'Right "
+                "against exploitation'/'Right to constitutional remedies'; ch 7 'Factors of "
+                "Production'/'People as a resource'). Check 11's advisory for viii ch 7 claims "
+                "the summary does not name 'Introduction', 'Land (natural resources)', 'Labour "
+                "(human resources)' — all three are verbatim headings — and it found 6 summary "
+                "sections where there are 14, offering 'The section' and 'This section' as "
+                "unmatched leads.",
+    "notes": "FOUNDER RULING 2026-08-16: the top's editorial selection IS the contract; a "
+             "section the top folds in is in all likelihood integrated into the lesson anyway; "
+             "the only concern is jump risk from compact-top anchor misalignment. So the 46 are "
+             "accepted and the compacts were aligned to the registry (teaching untouched, only "
+             "the section CLAIM withdrawn). What remains open is the GATE, not the content: "
+             "check 11 is the mechanism meant to catch this at W1, before money is spent on "
+             "compacts cut against short registries, and on SS it is not fit to be ruled on — "
+             "which is what closing-checklist item 4 requires of it. Fixing the matcher is free "
+             "and should precede the next SS batch.",
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-166",
+    "combo": KEY, "step": "F1", "severity": "S2", "owner": "Kumar (founder)",
+    "status": "open",
+    "title": "Two ORPHAN units — the wave's only genuine jump risk — held in quarantine for F1",
+    "evidence": "viii ch 8 p08 (one unit anchored solely to 'Smaller water bodies and "
+                "waterways') and viii ch 8 p11 (one unit anchored solely to 'Ocean currents / "
+                "Ocean trenches'). Unlike the nine token-drop units, neither carries ANY "
+                "registry anchor, so the engine cannot compute the unit's range and cannot "
+                "reason about what a borrower assumes at that slot.",
+    "notes": "Deliberately not repaired and not re-authored (founder ruling 2026-08-16: take "
+             "the jump risk to F1). Consequence to keep visible: viii ch 8 will FAIL `library "
+             "complete` on every certify run until this is ruled, and closing-checklist item 2 "
+             "cannot be met meanwhile. Also at F1: viii ch 15 p14's U7 anchors [6] Gardens and "
+             "[9] Vocational education jointly, pulling 9 ahead of 7 and 8 — no permutation "
+             "fixes it (moving the unit just makes 6 late) and 9 is taught nowhere else in that "
+             "compact, so the token cannot be dropped either. Plus the 8 artefact-dependency "
+             "advisories from W1, which certification cannot gate.",
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-167",
+    "combo": "campaign", "step": "W2", "severity": "S2", "owner": "Claude",
+    "status": "fixed-awaiting-recheck",
+    "title": "register_scan: a possessive apostrophe broke quote detection, so the "
+             "\"calendar hit inside quotes is advisory\" rule protected almost nothing",
+    "evidence": "_QUOTED treated every ' as a delimiter, so in \"residents' quality of life. "
+                "Teacher asks: 'If you were appointed urban planner for your own town "
+                "tomorrow…'\" it paired residents' with the prompt's opening quote. Every span "
+                "shifted by one and the quoted prompt fell OUTSIDE a quoted span — reported as "
+                "a hard ban hit (SS·VIII ch 14 U10). Any band using a possessive before a "
+                "quoted prompt lost its protection, which is most of them.",
+    "notes": "FIXED: an opening quote must now sit at a boundary (start, whitespace, : ( - —); "
+             "closers are unrestricted. Verified corpus-wide in both directions — it cleared "
+             "ch 14 AND exposed two hits the bug had been WRONGLY SUPPRESSING in released "
+             "stages (SS·IX ch 4 U16, TWAU·V ch 10 U7), both hypotheticals, both now correctly "
+             "advisory under the calendar narrowing below. Same change set: `tomorrow` and "
+             "`this|next|last week|month` dropped from BAN to ADVISORY (every hit across all "
+             "five stages was content — a definition of weather, a credit-timing question, an "
+             "idiom, two hypotheticals; `(next|last) class` stays a ban because it names a "
+             "SITTING), and the clock ban now fires only when the sentence carrying the "
+             "quantity names a classroom actor, which closes ARV-D-162 without touching the "
+             "Jallianwala text and without weakening the 58 real pacing hits.",
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-162", "combo": KEY, "step": "W2", "severity": "S3",
+    "owner": "Kumar (founder)", "status": "closed",
+    "title": "register_scan clock ban fires on a narrated HISTORICAL duration — repairing it "
+             "would falsify the history",
+    "evidence": "viii ch 9 U11: \"Brigadier-General Dyer sealed the main exit and fired "
+                "approximately 1,650 rounds FOR ABOUT TEN MINUTES\" — the duration of the "
+                "Jallianwala Bagh massacre, not the pacing of a classroom activity.",
+    "notes": "CLOSED 2026-08-16 at the scanner, never in the text (runbook trap 4). The clock "
+             "ban now requires a classroom actor in the sentence carrying the quantity. Kept "
+             "deliberately crude: if a sentence mentions the class at all the ban still fires, "
+             "so the gate can only release a sentence that is about somebody else entirely.",
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-166",
+    "combo": KEY, "step": "W2", "severity": "S2", "owner": "Kumar (founder)",
+    "status": "closed",
+    "title": "Two orphan units in viii ch 8 — resolved by re-anchoring to the parent section, "
+             "not by re-authoring",
+    "evidence": "viii ch 8 p08 U3 (\"Smaller water bodies and waterways\") and p11 U3 (\"Ocean "
+                "currents / Ocean trenches\") carried no registry anchor at all.",
+    "notes": "CLOSED 2026-08-16, and the closing is the lesson. Claude classified both as "
+             "unfixable — drop the label and the unit is unplaceable, so re-author (~₹27) or "
+             "rule accepted — and sent them to F1. The founder pointed at the registry, which "
+             "already carries the parent section: 'The Blue of the Blue Planet, the Oceans' / "
+             "'The oceans'. Currents, trenches and smaller water bodies are that section's "
+             "material, so the label is REPLACED rather than dropped. Both files then returned "
+             "0 unknown anchors, 0 order-breaks, 12/12 coverage, and viii ch 8 is ALL PASS. "
+             "These eleven units were always ONE fix; they had been split into two categories "
+             "on the accident of whether a valid anchor happened to sit alongside the stray.",
+})
+
+print("recorded: W1 + W2 + 8 defect rows")

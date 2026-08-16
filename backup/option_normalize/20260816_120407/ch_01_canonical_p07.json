@@ -1,0 +1,914 @@
+{
+  "filename": "ch_01_canonical_p07.json",
+  "saved_at": "2026-08-16T10:16:16",
+  "plan_status": "canonical",
+  "chapter_number": 1,
+  "chapter_title": "Locating Places on the Earth",
+  "grade": "Grade VI",
+  "subject": "Social Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 7 periods = 280 minutes\nTotal: 7 periods · 4h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-16",
+    "schedule": "7x40",
+    "constitution": "LP v2.8 / assessment v2.4",
+    "source": "generate_canonical.py one social_sciences vi 1",
+    "ledger_ts": "20260816_095242_ss_vi_01_p07",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "activity_title": "Reading the Map: Components in Action",
+          "section_anchor": "A Map and Its Components",
+          "materials": [
+            "Printed or projected atlas page showing a physical/political map",
+            "Blank paper for student sketch activity",
+            "Pencil, ruler"
+          ],
+          "visual_aids": "Atlas map showing scale bar, north arrow, and legend with Survey of India symbols",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students examine an atlas map and are asked three questions to orient their reading: Where is north on this map? What does 1 cm represent here? Name three symbols you can identify. They write brief answers individually, then share with a partner."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Teacher introduces the three types of maps — physical (mountains, oceans, rivers), political (countries, states, boundaries, cities), and thematic (vegetation, population patterns) — using the atlas page as evidence. Students identify which type they are holding and justify their answer in one sentence."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Students sketch a rough map of their school and the two or three nearest streets, marking at least four features using Survey of India symbols (road, building, open ground, water body if present). They add a north arrow and a simple written scale (e.g., '1 cm = 10 metres'). They then annotate their map in the margin, labelling which component each mark represents: symbol, direction, or scale."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Pairs exchange maps and check each other's work against three criteria: Is a north arrow present? Is the scale stated? Are symbols used consistently? Each pair reports one improvement made and one thing done well."
+            }
+          ],
+          "section_context": "Physical, political, thematic maps; scale, direction, Survey of India symbols",
+          "pedagogical_approaches": [
+            "Project work"
+          ],
+          "teacher_notes": "This unit opens the chapter's central idea: a map is a selective, scaled, symbolic representation of real space. A common confusion is that the scale printed on a map is decorative rather than functional — insist that students state what one centimetre actually represents in real distance. Circulate during the sketch activity and prompt students who draw freehand without a reference direction or scale to add those components before the peer review.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can construct a map using scale, directional indicators, and standardised symbols to represent spatial information accurately.",
+              "cognitive_demand": "Application"
+            }
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "activity_title": "Why Can't We Flatten the Earth? The Globe as a Faithful Model",
+          "section_anchor": "Mapping the Earth",
+          "materials": [
+            "One orange per group of four students (or one for teacher demonstration)",
+            "A physical globe or projected globe image",
+            "Blank paper"
+          ],
+          "visual_aids": "Globe showing continental outlines alongside a flat world map for comparison",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Each group peels their orange in one or two large pieces, then tries to press the peel flat on paper without tearing it. Students observe the result and answer: What happens to the edges of the peel? What does this tell us about flattening a curved surface?"
+            },
+            {
+              "minutes": "8-18",
+              "activity": "Teacher connects the orange analogy to the Earth: the planet is approximately spherical, and any attempt to project its surface onto flat paper introduces distortion of shape, area, distance, or direction. Students examine the globe and the flat world map side by side, identifying one feature (e.g., Greenland's apparent size) that looks different on each."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Students draw two columns on their paper headed 'Globe' and 'Flat Map'. In each column they list three advantages and one limitation of that representation, drawing specifically on what they observed during the orange activity and the globe comparison. Groups compare lists and agree on the single most important advantage of the globe over a flat map."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Each group shares their chosen advantage. Teacher consolidates: because the globe shares the Earth's spherical shape, it is the most faithful representation of the Earth's geography. Students write one summarising sentence in their own words: 'A globe is more faithful than a flat map because…'"
+            }
+          ],
+          "section_context": "Spherical Earth, orange-peel analogy, globe versus flat map distortion",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Having established in the map-components work that a map is a compressed representation of real space, this unit confronts the deeper problem: the Earth's curvature makes any flat map an imperfect translation. Students often assume flat maps are simply 'zoomed out' versions of real space without distortion — the orange activity makes the distortion physically visible and memorable. If oranges are unavailable, a rubber ball with a drawn outline and scissors to cut it flat achieves the same effect.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can evaluate the trade-offs between a globe and a flat map as representational tools for the Earth's surface.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "activity_title": "From Chessboard to Globe: How Coordinates Locate Any Point",
+          "section_anchor": "a) Understanding coordinates",
+          "materials": [
+            "Printed or drawn chessboard grid (one per pair)",
+            "Projected or printed globe coordinate grid diagram"
+          ],
+          "visual_aids": "Chessboard grid with labelled columns (a–h) and rows (1–8) alongside a globe grid showing latitude and longitude lines",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher presents the scenario: 'A pawn moves from d2 to d4. Which square did it start on? Which did it land on?' Students use the printed chessboard to mark both squares. They then answer: What are the two pieces of information you need to find any square on the board?"
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Teacher extends the analogy: a market stall is found by naming its row and column; a chess square by its letter and number; any point on the globe by two similar values. Students examine the globe grid diagram and identify what corresponds to the chessboard's columns (lines running one way) and what corresponds to its rows (lines running the other way), labelling them on their diagram."
+            },
+            {
+              "minutes": "20-33",
+              "activity": "In pairs, students are given five grid references on the globe diagram (e.g., a point at the intersection of two visible grid lines) and must describe where each point lies relative to the centre horizontal line and the centre vertical line, using the words 'above/below' and 'left/right' before the formal vocabulary is introduced. They then match these descriptions to the terms the teacher writes on the board: the horizontal reference line and the vertical reference line."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Each pair writes one sentence explaining why two values — one from each axis — are necessary to locate a point on a grid, using either the chessboard or the market example. Volunteers share; teacher confirms that the same logic will govern the latitude-longitude system studied next."
+            }
+          ],
+          "section_context": "Grid-based location logic: chessboard notation, market row-column, globe grid axes",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "The coordinate idea introduced here — that two independent values, one per axis, together fix any position — is the conceptual foundation that the latitude and longitude subsections build on directly. Students frequently confuse which axis provides which value; the chessboard concretely shows that a letter alone or a number alone is insufficient. Resist introducing the words latitude and longitude in this unit; keeping the vocabulary general keeps the abstraction visible and transferable.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can explain how a two-axis coordinate system uniquely identifies any position on a grid or spherical surface.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "activity_title": "Parallels of Latitude: Measuring Distance from the Equator",
+          "section_anchor": "b) Latitudes",
+          "materials": [
+            "Globe or projected latitude diagram",
+            "Printed latitude reference strip (showing Equator at 0°, Tropics, Arctic/Antarctic Circles, Poles at 90°)",
+            "World map with latitude lines marked"
+          ],
+          "visual_aids": "Diagram showing parallels of latitude from 0° (Equator) to 90°N and 90°S, with climate zone bands shaded",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher displays the climate-zone diagram and asks: 'Why are some parts of the Earth always hot, some always cold, and some in between?' Students propose reasons in pairs. Teacher records hypotheses on the board without confirming any, then states: the answer is connected to a measurable property of every point on Earth — its angular distance from the Equator."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Teacher explains latitude: the Equator is 0°, the poles are 90°N and 90°S, and parallels of latitude are the complete circles that run at fixed angular distances between them. Students study the latitude diagram and answer: Which parallel is the longest? Why do the circles grow smaller towards the poles? They annotate the diagram by marking the approximate latitude of three places — the Equator, the North Pole, and a mid-latitude city such as Delhi."
+            },
+            {
+              "minutes": "22-34",
+              "activity": "Students use the world map to match three latitude bands to their climate descriptions: 0°–30° (equatorial/torrid), 30°–60° (temperate), 60°–90° (frigid/polar). For each band they name one country or region that falls within it and write one sentence explaining what the latitude tells them about that region's expected climate."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Quick written check: students answer two questions — (1) What is the angular distance of the Equator from itself? (2) A place lies at 45°N — is it in the torrid, temperate, or frigid zone? — and explain their reasoning in one sentence each."
+            }
+          ],
+          "section_context": "Equator at 0°, poles at 90°, parallels as circles, latitude-climate zone correlation",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having established that a globe coordinate needs two values, this unit introduces the first — latitude — as an angular measurement from the Equator. A very common error is treating latitude lines as straight horizontal lines rather than complete circles; emphasising that each parallel encircles the entire Earth and that the Equator is simply the largest of these circles corrects this. The climate-zone connection gives latitude immediate real-world significance and opens an analytical question students can reason about rather than merely recall.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can interpret latitude values to determine a location's position relative to the Equator and its associated climate zone.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 1,
+              "competency_text": "Correlate physical geographical features with natural phenomena and human conditions.",
+              "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "activity_title": "Meridians and the Prime Meridian: Locating East and West",
+          "section_anchor": "c) Longitudes",
+          "materials": [
+            "Globe or projected longitude diagram",
+            "World political map with longitude lines marked",
+            "Index card per student"
+          ],
+          "visual_aids": "Diagram of meridians from 0° (Greenwich) to 180°E and 180°W, with New York (74°W), Delhi (77°E), and Tokyo (140°E) marked",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher displays a globe and asks: 'Unlike latitude, which has the Equator as a natural zero line, what would you choose as the zero line for east-west measurement, and why?' Students discuss in pairs and report. Teacher explains that because all meridians are equal half-circles from pole to pole, the choice is conventional, and since 1884 the international convention has been the meridian through Greenwich, London."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Teacher explains: meridians run from the North Pole to the South Pole, longitude is measured 0°–180° east or west of the Prime Meridian, and 180°E and 180°W coincide. Students plot New York at 74°W, Delhi at 77°E, and Tokyo at 140°E on their world map, then answer: Which city is furthest east? Which is closest to the Prime Meridian?"
+            },
+            {
+              "minutes": "22-34",
+              "activity": "Teacher introduces the madhya rekhā sidebar: Indian astronomers, including Varāhamihira, used a prime meridian through Ujjayinī (modern Ujjain) for all astronomical calculations long before the Greenwich convention. Students discuss: Why might different cultures have chosen different reference lines? What made an agreed international convention necessary? Each student writes two sentences connecting India's ancient astronomical tradition to the modern Greenwich convention."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Students write on their index card: (1) the longitude of Delhi, (2) whether a place at 100°W is east or west of Greenwich, (3) one reason why the Prime Meridian is conventional rather than natural. Cards are collected as an exit check."
+            }
+          ],
+          "section_context": "Meridians, Prime Meridian at Greenwich, New York/Delhi/Tokyo longitudes, madhya rekhā at Ujjain",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "With latitude established as the first coordinate, this unit introduces longitude as the second — closing the coordinate pair the earlier grid-logic unit prepared students to receive. Students often confuse meridians with parallels; stressing that meridians are half-circles meeting at the poles (unlike parallels, which are full circles that never meet) resolves this. The madhya rekhā discussion reveals that the choice of 0° is cultural and historical, not mathematical — a point that rewards analytical rather than recall-based engagement.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can locate places on a map using longitude values east and west of the Prime Meridian.",
+              "cognitive_demand": "Application"
+            },
+            {
+              "c_code": "C-10.1",
+              "cg": "CG-10",
+              "weight": 1,
+              "competency_text": "Identify and explain India's contributions to knowledge systems and scientific traditions.",
+              "implied_lo": "Students can explain India's historical contribution to the concept of a prime meridian through the madhya rekhā tradition of Ujjain.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "activity_title": "Time Zones: Why the Same Sun Sets at Different Clocks",
+          "section_anchor": "Understanding Time Zones",
+          "materials": [
+            "World time zone map (printed or projected)",
+            "Calculator or worked calculation on the board",
+            "Blank table template (one per student) with columns: City | Longitude | Hours from GMT | Standard Time if GMT is 12:00"
+          ],
+          "visual_aids": "World time zone map showing 15°-wide bands, IST zone, and International Date Line at 180°",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher poses the Porbandar–Tinsukia scenario: two friends in the same country, one in Gujarat and one in Assam, watch the sun set at different moments. Students predict which city sees sunset first and explain their reasoning in one sentence before any instruction."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Teacher presents the calculation: 360° ÷ 24 hours = 15° per hour. For every 15° of longitude eastward, local time advances one hour. Students apply this: if a city is 75° east of Greenwich and GMT is 12:00, what is its local time? They work through two more examples from the table template, then check answers with a partner."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Students examine the world time zone map and answer: (1) Why does India use IST (GMT+5:30) rather than two or three separate local times? (2) Why do time zone boundaries follow country borders rather than straight meridian lines? (3) What happens to the calendar date when someone crosses the International Date Line eastward? They write one sentence per question."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students return to their opening prediction about Porbandar and Tinsukia, revise it if needed, and write a two-sentence explanation using the vocabulary: longitude, 15° per hour, eastward, local time. Volunteers share; teacher confirms that Tinsukia (further east) sees sunset first."
+            }
+          ],
+          "section_context": "15°/hour rotation, IST GMT+5:30, Porbandar–Tinsukia, International Date Line, Russia and USA multiple zones",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "With both longitude and the coordinate grid now in place, this unit applies longitude to the practical problem of timekeeping — showing that the east-west coordinate is not merely locational but temporal. Students commonly assume that all of India experiences the same clock time because it is one country, missing that IST is a political convenience rather than a natural consequence of the sun; the Porbandar–Tinsukia example makes the underlying solar difference vivid. Emphasise that the International Date Line is placed at 180° precisely because it is directly opposite the Prime Meridian — the two lines together divide the globe into eastern and western hemispheres of time.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can apply the 15°-per-hour relationship between longitude and time to calculate time differences between locations.",
+              "cognitive_demand": "Application"
+            }
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "activity_title": "Putting the Grid Together: Locating Places Using Latitude and Longitude",
+          "section_anchor": "b) Latitudes / c) Longitudes",
+          "materials": [
+            "World map with full latitude and longitude grid (one per student)",
+            "List of six coordinate pairs to locate (teacher-prepared)",
+            "Coloured pencils"
+          ],
+          "visual_aids": "Full latitude-longitude grid world map with Equator, Prime Meridian, Tropics, and Arctic/Antarctic Circles labelled",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students receive the coordinate list and locate each of the six coordinate pairs on their world map, marking each with a dot and a letter (A–F). Pairs include: 0°, 0° (Gulf of Guinea); 28°N, 77°E (Delhi); 35°N, 139°E (Tokyo); 40°N, 74°W (New York); 64°N, 21°W (Reykjavik); 34°S, 18°E (Cape Town). They label each dot with the city or region name once located."
+            },
+            {
+              "minutes": "12-24",
+              "activity": "Students use their completed map to answer an analysis set: (1) Which of the six locations is in the torrid zone? (2) Which are in the temperate zone? (3) Which is furthest from the Prime Meridian? (4) If GMT is 06:00, what is the local solar time at Tokyo (139°E)? They show their working for question 4."
+            },
+            {
+              "minutes": "24-36",
+              "activity": "Students write a structured comparison: choose any two of their six marked cities and write four sentences — (a) the latitude and longitude of each, (b) the climate zone each falls in and why, (c) which city's local time is ahead and by approximately how many hours, (d) one question about either city that the coordinate alone cannot answer."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Students share their question from part (d) aloud. Teacher collects these as a record of what the coordinate system does not tell us — reinforcing that maps and grids are powerful but selective representations, closing the chapter's central argument."
+            }
+          ],
+          "section_context": "Six world cities located by latitude-longitude pairs; climate zones and time differences applied",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Having worked through the coordinate components separately — latitudes for north-south position and climate, longitudes for east-west position and time — this unit has students synthesise both dimensions simultaneously on a single map. A persistent error is reversing the order of the coordinate pair, reading longitude before latitude; remind students that latitude (the north-south value) is always stated first in the conventional pair. The closing discussion on what coordinates cannot reveal (culture, history, landscape texture) keeps the activity analytical rather than purely procedural.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-1.2",
+              "cg": "CG-1",
+              "weight": 3,
+              "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+              "implied_lo": "Students can locate and analyse places on a world map using combined latitude and longitude coordinates.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 1,
+              "competency_text": "Correlate physical geographical features with natural phenomena and human conditions.",
+              "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 40,
+        "count": 7
+      }
+    ],
+    "coverage_handoff": {
+      "C-1.2": {
+        "cg": "CG-1",
+        "weight": 3,
+        "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "A Map and Its Components",
+            "section_context": "Physical, political, thematic maps; scale, direction, Survey of India symbols",
+            "implied_lo": "Students can construct a map using scale, directional indicators, and standardised symbols to represent spatial information accurately.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 2,
+            "section_anchor": "Mapping the Earth",
+            "section_context": "Spherical Earth, orange-peel analogy, globe versus flat map distortion",
+            "implied_lo": "Students can evaluate the trade-offs between a globe and a flat map as representational tools for the Earth's surface.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 3,
+            "section_anchor": "a) Understanding coordinates",
+            "section_context": "Grid-based location logic: chessboard notation, market row-column, globe grid axes",
+            "implied_lo": "Students can explain how a two-axis coordinate system uniquely identifies any position on a grid or spherical surface.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 4,
+            "section_anchor": "b) Latitudes",
+            "section_context": "Equator at 0°, poles at 90°, parallels as circles, latitude-climate zone correlation",
+            "implied_lo": "Students can interpret latitude values to determine a location's position relative to the Equator and its associated climate zone.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 5,
+            "section_anchor": "c) Longitudes",
+            "section_context": "Meridians, Prime Meridian at Greenwich, New York/Delhi/Tokyo longitudes, madhya rekhā at Ujjain",
+            "implied_lo": "Students can locate places on a map using longitude values east and west of the Prime Meridian.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 6,
+            "section_anchor": "Understanding Time Zones",
+            "section_context": "15°/hour rotation, IST GMT+5:30, Porbandar–Tinsukia, International Date Line, Russia and USA multiple zones",
+            "implied_lo": "Students can apply the 15°-per-hour relationship between longitude and time to calculate time differences between locations.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "b) Latitudes / c) Longitudes",
+            "section_context": "Six world cities located by latitude-longitude pairs; climate zones and time differences applied",
+            "implied_lo": "Students can locate and analyse places on a world map using combined latitude and longitude coordinates.",
+            "cognitive_demand": "Analysis"
+          }
+        ]
+      },
+      "C-6.1": {
+        "cg": "CG-6",
+        "weight": 1,
+        "competency_text": "Correlate physical geographical features with natural phenomena and human conditions.",
+        "los": [
+          {
+            "period_number": 4,
+            "section_anchor": "b) Latitudes",
+            "section_context": "Equator at 0°, poles at 90°, parallels as circles, latitude-climate zone correlation",
+            "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "b) Latitudes / c) Longitudes",
+            "section_context": "Six world cities located by latitude-longitude pairs; climate zones and time differences applied",
+            "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+            "cognitive_demand": "Analysis"
+          }
+        ]
+      },
+      "C-10.1": {
+        "cg": "CG-10",
+        "weight": 1,
+        "competency_text": "Identify and explain India's contributions to knowledge systems and scientific traditions.",
+        "los": [
+          {
+            "period_number": 5,
+            "section_anchor": "c) Longitudes",
+            "section_context": "Meridians, Prime Meridian at Greenwich, New York/Delhi/Tokyo longitudes, madhya rekhā at Ujjain",
+            "implied_lo": "Students can explain India's historical contribution to the concept of a prime meridian through the madhya rekhā tradition of Ujjain.",
+            "cognitive_demand": "Understanding"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-1.2",
+          "cg": "CG-1",
+          "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems."
+        },
+        "implied_lo": "Students can construct a map using scale, directional indicators, and standardised symbols to represent spatial information accurately.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "A Map and Its Components",
+        "question_text": "A student draws a map of her neighbourhood and writes '1 cm = 200 metres' on it. She also draws an arrow labelled 'N'. Which statement best describes what these two additions do for the map?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both additions are decorative and help the map look more like an official document.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The scale allows readers to calculate real distances from map measurements, and the north arrow tells them which way is north.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The scale shows the type of map (physical, political, or thematic), and the north arrow gives the map's title.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The scale tells readers the map's direction, and the north arrow tells them the actual distances.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Accept a labelled diagram in place of a written explanation if the student circles the correct option and draws a quick annotated sketch to confirm understanding.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "D": "Confuses the functions of scale and direction — swaps their roles, indicating the student has not understood what each component communicates.",
+              "A": "Treats both components as decorative, indicating a misconception that map conventions are stylistic rather than functional.",
+              "C": "Confuses scale with map type and north arrow with title — suggests rote association of terms without understanding their purpose."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-1.2",
+          "cg": "CG-1",
+          "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems."
+        },
+        "implied_lo": "Students can apply the 15°-per-hour relationship between longitude and time to calculate time differences between locations.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          6
+        ],
+        "chapter_section": "Understanding Time Zones",
+        "question_text": "Refer to the table provided.",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both cities experience noon at exactly the same moment because they are in the same country.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "City P, because it is further west.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "City P, because westward longitude means time is ahead.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "City Q, because it is further east.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "City | Longitude\nCity P | 68°E\nCity Q | 93°E",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Reverses east-west time direction — student may have confused 'further west = later sun' with 'further west = earlier time'.",
+              "A": "Applies the political convention of a single national standard time to the underlying solar reality — a key misconception the Porbandar-Tinsukia example is designed to address.",
+              "C": "Inverts the east-west rule, claiming that westward longitude advances time — indicates a fundamental reversal of the longitude-time relationship."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-1.2",
+          "cg": "CG-1",
+          "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems."
+        },
+        "implied_lo": "Students can evaluate the trade-offs between a globe and a flat map as representational tools for the Earth's surface.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          2
+        ],
+        "chapter_section": "Mapping the Earth",
+        "question_text": "A geographer says: 'No flat map of the entire Earth is perfectly accurate.' Using what you know about the Earth's shape, explain why this is true and identify one thing a globe can show more faithfully than a flat map.",
+        "options": [],
+        "expected_elements": [
+          "States that the Earth is approximately spherical (not flat).",
+          "Explains that a curved surface cannot be projected onto a flat sheet without distortion (of shape, area, distance, or direction).",
+          "Identifies one specific advantage of the globe — e.g., it preserves the relative sizes of continents, or it correctly shows distances between any two points."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Student may draw a labelled diagram (e.g., an orange peel analogy sketch) in addition to or instead of written sentences.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "States that the Earth is approximately spherical (not flat).",
+              "Explains that a curved surface cannot be projected onto a flat sheet without distortion (of shape, area, distance, or direction).",
+              "Identifies one specific advantage of the globe — e.g., it preserves the relative sizes of continents, or it correctly shows distances between any two points."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-1.2",
+          "cg": "CG-1",
+          "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems."
+        },
+        "implied_lo": "Students can locate and analyse places on a world map using combined latitude and longitude coordinates.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "b) Latitudes / c) Longitudes",
+        "question_text": "Three cities have the following coordinates: City X is at 5°N, 10°E; City Y is at 48°N, 2°E; City Z is at 72°N, 25°E. (a) For each city, state which climate zone it falls in (torrid, temperate, or frigid) and explain why. (b) If GMT is 12:00 noon, calculate the approximate local solar time at City X and City Z. (c) Which of these three cities is furthest from the Prime Meridian, and what is the significance of the Prime Meridian being at 0° longitude?",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Correctly assigns each city to its climate zone (X = torrid, Y = temperate, Z = frigid) with reference to its latitude value and the 0°–30°, 30°–60°, 60°–90° bands.",
+          "Applies the 15°-per-hour rule to calculate local solar time: City X at 10°E ≈ 40 minutes ahead of GMT = ~12:40; City Z at 25°E ≈ 1 hour 40 minutes ahead = ~13:40.",
+          "Identifies City Z (25°E) as furthest from the Prime Meridian among the three and explains that 0° longitude is a conventional reference chosen internationally (Greenwich, 1884) rather than a natural geographical feature.",
+          "Uses geographical vocabulary consistently: latitude, longitude, climate zone, Prime Meridian, GMT."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students who find extended writing difficult may present parts (a) and (b) as a labelled table and part (c) as two sentences.",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Correctly assigns each city to its climate zone (X = torrid, Y = temperate, Z = frigid) with reference to its latitude value and the 0°–30°, 30°–60°, 60°–90° bands.",
+              "Applies the 15°-per-hour rule to calculate local solar time: City X at 10°E ≈ 40 minutes ahead of GMT = ~12:40; City Z at 25°E ≈ 1 hour 40 minutes ahead = ~13:40.",
+              "Identifies City Z (25°E) as furthest from the Prime Meridian among the three and explains that 0° longitude is a conventional reference chosen internationally (Greenwich, 1884) rather than a natural geographical feature.",
+              "Uses geographical vocabulary consistently: latitude, longitude, climate zone, Prime Meridian, GMT."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-1.2",
+          "cg": "CG-1",
+          "competency_text": "Represent and interpret geographical data using maps, grids, and coordinate systems."
+        },
+        "implied_lo": "Students can interpret latitude values to determine a location's position relative to the Equator and its associated climate zone.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "b) Latitudes",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "You are given five latitude values: 0°, 23°N, 45°S, 66°N, and 90°S. For each value, complete the following: (a) State which climate zone it falls in. (b) Explain what the latitude value tells you about that location's distance and direction from the Equator. (c) Predict one feature of daily life (such as the length of daylight, type of clothing, or agricultural possibility) that might be shaped by being at that latitude. Present your analysis as a structured table.",
+        "scaffold": "Your table should have five columns: Latitude Value | Climate Zone | Distance and Direction from Equator | One Prediction About Daily Life | Reason for Your Prediction. Complete one row at a time. For the 'Reason' column, connect your prediction directly to what that latitude means for how much solar energy the location receives.",
+        "format_of_output": [
+          "A completed five-row table with all five columns filled for each latitude value."
+        ],
+        "visual_stimulus": "",
+        "inclusivity": "Students may write their reasoning in bullet points within each table cell rather than full sentences. Students who need language support may use a bilingual glossary for climate-zone terms.",
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "This task requires students to move beyond recalling that latitude correlates with climate and instead analyse why — by reasoning from angular distance from the Equator to solar energy received to observable life conditions. It assesses the Analysis-level LO from Unit 4.",
+            "reading_the_scaffold": "The scaffold directs students to reason causally (the 'Reason' column) rather than simply label. A student who fills all five columns with correct labels but leaves the Reason column as a restatement of the zone name has not met the analysis demand. Look for the causal chain: latitude → solar angle → energy received → climate feature → life condition.",
+            "strong_vs_weak_markers": "Strong: correctly assigns all five zones; explains that lower latitudes receive more direct solar energy because the sun is closer to overhead; makes plausible, latitude-specific life predictions with a connected reason (e.g., 66°N — long winter nights → limited crop-growing season). Weak: correct zone labels but no causal reasoning; life predictions that could apply anywhere (e.g., 'people wear clothes'); confusion between latitude and longitude in the distance-and-direction column.",
+            "format_type": "Comparison table",
+            "format_rationale": "A comparison table is the most natural demonstration vehicle for this LO: it requires the student to hold five latitude values in parallel, apply the same analytical lens to each, and make the pattern of climate-zone variation visible — which is precisely the analytical operation the LO targets."
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Correlate physical geographical features with natural phenomena and human conditions."
+        },
+        "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "b) Latitudes",
+        "question_text": "A place lies at 15°N latitude. Based on its latitude alone, which climate description best fits this location?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Cold and frigid, with long periods of snow and ice.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Extremely dry and arid regardless of its distance from the Equator.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Hot and torrid, receiving intense solar energy because it is close to the Equator.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Mild and temperate, with moderate rainfall throughout the year.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "A": "Confuses low latitude with high latitude — student may have inverted the latitude-climate relationship, associating numbers near zero with cold rather than hot.",
+              "D": "Assigns the temperate zone description to a latitude that falls within the torrid zone — indicates imprecise recall of the 0°–30° boundary.",
+              "B": "Introduces aridity as a climate descriptor independent of latitude — student is conflating climate zone with a specific biome type not established by latitude alone."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Correlate physical geographical features with natural phenomena and human conditions."
+        },
+        "implied_lo": "Students can correlate latitude bands with climate zones to explain expected climatic conditions at a given location.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "b) Latitudes / c) Longitudes",
+        "question_text": "Refer to the table provided.",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both cities are in the temperate zone because they are not near the Equator.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "City J is in the torrid zone and City K is in the frigid zone, so City J is hotter.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "City K is hotter because it is at a higher latitude number.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Neither city's climate can be determined from latitude alone.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "City | Latitude\nCity J | 20°N\nCity K | 70°N",
+        "inclusivity": "Teacher may read the table aloud for students with visual processing needs.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "A": "Applies the temperate label to both cities without checking whether their latitudes fall within the 30°–60° band — indicates imprecise use of zone boundaries.",
+              "C": "Confuses higher latitude number with higher temperature — inverts the latitude-climate relationship by treating latitude magnitude as a proxy for heat rather than distance from the Equator.",
+              "D": "Over-applies a methodological caution; while latitude is not the only climate determinant, the chapter explicitly uses latitude bands as a first-order climate indicator."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-10.1",
+          "cg": "CG-10",
+          "competency_text": "Identify and explain India's contributions to knowledge systems and scientific traditions."
+        },
+        "implied_lo": "Students can explain India's historical contribution to the concept of a prime meridian through the madhya rekhā tradition of Ujjain.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          5
+        ],
+        "chapter_section": "c) Longitudes",
+        "question_text": "Long before the 1884 international agreement on the Greenwich Prime Meridian, Indian astronomers used their own reference meridian for calculations. Which of the following correctly describes this tradition?",
+        "options": [
+          {
+            "label": "A",
+            "text": "India adopted the Greenwich Meridian directly from the British and has never had its own reference meridian.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Indian astronomers used a meridian through Delhi, called the rājadhānī rekhā, for political rather than astronomical purposes.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The madhya rekhā passed through Ujjayinī (modern Ujjain) and served as the reference meridian for Indian astronomical calculations.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Varāhamihira established a meridian through Varanasi that was later moved to Ujjain by later astronomers.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Invents a name and purpose not in the chapter — indicates fabrication or confusion with another term, suggesting the student did not engage with the sidebar content.",
+              "A": "Denies India an independent astronomical tradition entirely — a misconception the sidebar specifically exists to correct.",
+              "D": "Partially recalls the content (Varāhamihira, Ujjain) but introduces a false detail about the meridian being moved, indicating partial but inaccurate reading of the sidebar."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-10.1",
+          "cg": "CG-10",
+          "competency_text": "Identify and explain India's contributions to knowledge systems and scientific traditions."
+        },
+        "implied_lo": "Students can explain India's historical contribution to the concept of a prime meridian through the madhya rekhā tradition of Ujjain.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          5
+        ],
+        "chapter_section": "c) Longitudes",
+        "question_text": "What does the existence of the madhya rekhā tell us about the development of the concept of a prime meridian?",
+        "options": [
+          {
+            "label": "A",
+            "text": "It shows that Indian astronomers independently developed the concept of a reference meridian for astronomical calculations long before the Greenwich convention.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "It shows that the concept of a reference meridian for longitude is purely a modern invention with no ancient precedent.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "It shows that the idea of a reference meridian was invented by European astronomers at Greenwich and adopted globally in 1884.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "It shows that Ujjain was geographically superior to Greenwich as a location for a prime meridian.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Attributes the entire concept to European origin — fails to recognise the independent Indian tradition, the opposite of what the sidebar establishes.",
+              "B": "Denies any ancient precedent for the concept — directly contradicts the chapter's sidebar content and indicates the student did not process it.",
+              "D": "Confuses geographical advantage with historical contribution — introduces a comparative superiority claim not present in the chapter, indicating a misreading of why the madhya rekhā is significant."
+            }
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

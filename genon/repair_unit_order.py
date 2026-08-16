@@ -60,6 +60,49 @@ from purge_derived import purge                                  # noqa: E402
 # `order` is the NEW sequence written in OLD period numbers. It must be a permutation of
 # 1..N — asserted below, so a typo cannot silently drop or duplicate a unit.
 MOVES = {
+    ("social_sciences", "viii", 15): {
+        "file": "data/content/saved_plans/social_sciences/viii/ch_15_canonical_p14.json",
+        "order": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 12, 14],
+        "family": "competency_los",
+        "why": ("S2 batch wave 2, AFTER a re-author. The original p14 first-taught [2] Regional "
+                "saints in its CLOSING unit; it was re-bought at Rs 28.17 (2026-08-16) and that "
+                "defect is gone — saints now sit third. The re-author drew two milder breaks "
+                "instead, which is the lottery working exactly as the doctrine says it does.\n"
+                "THIS MOVE FIXES ONE OF THEM: U12 anchors [15] Regional Architectural "
+                "Developments and sits BEFORE U13's [13,14] Cultural Exchange — Food/Clothing. "
+                "Swapping the two restores registry order for the tail. Founder ruling "
+                "2026-08-16: move 15 where it belongs and close the case.\n"
+                "SAFE: the two units share no section and neither references the other — U13 "
+                "is the food/clothing pair, U12 the architecture close; the compact's final "
+                "unit (U14) consolidates all 16 sections either way, so nothing downstream "
+                "depends on which of the two it follows.\n"
+                "NOT FIXED HERE, and deliberately: U7 anchors [6, 9] jointly (Gardens bundled "
+                "with Vocational education), which pulls 9 ahead of 7 and 8. No permutation "
+                "can resolve that — moving the unit later just makes 6 late — and 9 is taught "
+                "nowhere else in the compact, so the token cannot be dropped either. It is an "
+                "authoring choice and it goes to F1 with the viii ch 8 orphans."),
+    },
+    ("social_sciences", "vii", 8): {
+        "file": "data/content/saved_plans/social_sciences/vii/ch_08_canonical_p13.json",
+        "order": [1, 2, 3, 4, 5, 6, 8, 7, 10, 9, 11, 12, 13],
+        "family": "competency_los",
+        "why": ("S2 batch wave 2. Two ADJACENT TRANSPOSITIONS against the top's registry: the "
+                "compact teaches [6] Sacred Geography Beyond India before [5] From Pilgrimage "
+                "to Trade, and [8] Restoring and Conserving the Sacred before [7] More Sacred "
+                "Sites. Founder ruling 2026-08-16, declared a ONE-OFF.\n"
+                "CHECKED FIRST, because the two sibling cases this wave LOOKED like order "
+                "defects and were not — vi ch 7 and vii ch 3 were both under-labelled anchors, "
+                "fixed with one token each and no unit moved. This one is different: each of "
+                "the four units genuinely teaches its own registry section (U7 'Sacred Land "
+                "Beyond India: Global Patterns' = [6]; U8 'Sacred Routes, Sacred Trade: the "
+                "Uttarapatha and Dakṣhinapātha' = [5]), so no anchor edit can reconcile it. "
+                "The order is the defect.\n"
+                "SAFE: U8's note reads 'Having established the sacred networks and the idea of "
+                "pilgrimage as cultural exchange' — that is units 1-6, not U7, so it may "
+                "precede U7; U7 'repositions the chapter's Indian examples within a global "
+                "frame', which reads no worse after the trade routes. The top's own sequence "
+                "is 5 → 6 → 7 → 8, which is what this restores."),
+    },
     ("mathematics", "vii", 7): {
         "file": "data/content/saved_plans/mathematics/vii/ch_07_canonical.json",
         "order": [1, 2, 3, 11, 4, 5, 6, 7, 8, 9, 10, 12],
@@ -255,6 +298,126 @@ def apply_move_item_self_sufficient(doc, order, why, key):
     return doc
 
 
+def apply_move_competency_los(doc, order, why, key):
+    """The COMPETENCY-LOS family (social_sciences · middle and secondary).
+
+    Added 2026-08-16 for SS·VIII ch 15. The goal-cluster path aborts on this subject with
+    "period 1 goal '' routes to no cluster", and that abort is CORRECT: SS periods carry no
+    `section_goal`, so there is no cluster to route to. Its handoff is not a flat list either,
+    so the item-self-sufficient path does not fit. It is a THIRD shape:
+
+        coverage_handoff = {"C-7.1": {..., "los": [{period_number, section_anchor, ...}, ...]}}
+
+    and that shape needs no reconstruction at all — every entry states its own
+    `period_number`. So, like the TWAU family, period -> entry is READ, never inverted from an
+    ordering rule.
+
+    WHAT MAKES THIS THE SAFEST OF THE THREE, and the reason it is worth having rather than
+    re-authoring at ~Rs 28 a roll: each entry ALSO carries `section_anchor`. After the remap we
+    can assert that every entry's anchor is still one of the anchors of the unit it now points
+    at. The maths path can only check that a reconstructed goal matches; here the artefact
+    carries an independent witness, so a wrong remap cannot pass quietly.
+
+    Nothing inside a unit, an entry or an item is touched. Only `period_number` / `period_ref`
+    change, and only because a unit's position did.
+    """
+    r = doc["result"]
+    periods = r["lesson_plan"]["periods"]
+    n = len(periods)
+    if sorted(order) != list(range(1, n + 1)):
+        raise SystemExit(f"ABORT: declared order is not a permutation of 1..{n}. Nothing written.")
+
+    handoff = r.get("coverage_handoff")
+    if not isinstance(handoff, dict) or not handoff:
+        raise SystemExit("ABORT: this family expects a DICT coverage_handoff keyed by "
+                         "competency. Nothing written.")
+    by_old_p = {p["period_number"]: p for p in periods}
+    if sorted(by_old_p) != list(range(1, n + 1)):
+        raise SystemExit("ABORT: period numbers are not exactly 1..N. Nothing written.")
+
+    old_to_new = {old: new for new, old in enumerate(order, start=1)}
+
+    def anchors_of(period):
+        raw = period.get("section_anchor") or ""
+        return [s.strip() for s in raw.split(" / ") if s.strip()]
+
+    # anchors keyed by OLD number, captured before anything is renumbered
+    anchors_by_old = {old: anchors_of(p) for old, p in by_old_p.items()}
+
+    # ── units, in the declared order, renumbered ─────────────────────────────
+    new_periods = []
+    for new_no, old_no in enumerate(order, start=1):
+        p = by_old_p[old_no]
+        p["period_number"] = new_no
+        new_periods.append(p)
+    r["lesson_plan"]["periods"] = new_periods
+
+    # ── every LO entry follows its own unit, then is re-sorted into new order ─
+    moved = 0
+    for code, block in handoff.items():
+        los = block.get("los") or []
+        for e in los:
+            old = e.get("period_number")
+            if old not in old_to_new:
+                raise SystemExit(f"ABORT: handoff {code} entry points at unit {old!r}, which is "
+                                 f"not in 1..{n}. Nothing written.")
+            new = old_to_new[old]
+            # THE WITNESS: the entry named a section; that section must still be taught by the
+            # unit the entry now points at. A wrong remap fails here, not in a teacher's hand.
+            # An entry may name ONE section or the unit's whole composite ("A / B"), so the
+            # test is subset, not membership — split both sides and require the entry's
+            # sections to be among the unit's. (Membership alone aborted SS·VIII ch 15 p14 on
+            # a correct artefact: the entry named "Gardens / Vocational education" whole.)
+            want = (e.get("section_anchor") or "").strip()
+            want_set = {s.strip() for s in want.split(" / ") if s.strip()}
+            if want_set and not want_set <= set(anchors_by_old[old]):
+                raise SystemExit(f"ABORT: handoff {code} entry claims section(s) {sorted(want_set)} "
+                                 f"on unit {old}, whose anchors are {anchors_by_old[old]}. The "
+                                 "artefact disagrees with itself — not a remap this tool may make.")
+            e["period_number"] = new
+            moved += 1
+        block["los"] = sorted(los, key=lambda x: x["period_number"])
+
+    # ── items follow their unit by renumbering period_ref, nothing else ──────
+    items = r.get("assessment_items")
+    if items is not None and not isinstance(items, list):
+        raise SystemExit("ABORT: this family expects a FLAT assessment_items list. "
+                         "Nothing written.")
+    before: Dict[int, int] = {}
+    for it in (items or []):
+        v = it.get("period_ref")
+        for x in ([v] if isinstance(v, int) else list(v or [])):
+            if not isinstance(x, int) or x not in old_to_new:
+                raise SystemExit(f"ABORT: item carries period_ref {x!r}, not a unit in 1..{n}. "
+                                 "Nothing written.")
+            before[x] = before.get(x, 0) + 1
+    for it in (items or []):
+        v = it.get("period_ref")
+        if isinstance(v, int):
+            it["period_ref"] = old_to_new[v]
+        elif v:
+            it["period_ref"] = [old_to_new[x] for x in v]
+    after: Dict[int, int] = {}
+    for it in (items or []):
+        v = it.get("period_ref")
+        for x in ([v] if isinstance(v, int) else list(v or [])):
+            after[x] = after.get(x, 0) + 1
+    expected = {old_to_new[old]: c for old, c in before.items()}
+    if after != expected:
+        raise SystemExit(f"ABORT: item/unit accounting changed in the remap "
+                         f"(expected {sorted(expected.items())}, got {sorted(after.items())}). "
+                         "Nothing written.")
+
+    gc = doc.setdefault("genon_canonical", {})
+    gc.setdefault("repairs", []).append({
+        "tool": "repair_unit_order.py", "at": datetime.now().isoformat(timespec="seconds"),
+        "kind": "unit_order", "family": "competency_los",
+        "key": "|".join(str(x) for x in key),
+        "order": order, "handoff_entries_remapped": moved, "why": why,
+    })
+    return doc
+
+
 def apply_move(doc, order, why, key):
     r = doc["result"]
     periods = r["lesson_plan"]["periods"]
@@ -341,8 +504,9 @@ def main() -> int:
         # Dispatch on the 8-rule FAMILY, declared per move — never sniffed. The two paths
         # differ only in how an item finds its unit, which is the one thing the table exists
         # to say, and a wrong guess here silently re-anchors assessment.
-        fn = (apply_move_item_self_sufficient
-              if mv.get("family") == "item_self_sufficient" else apply_move)
+        fn = {"item_self_sufficient": apply_move_item_self_sufficient,
+              "competency_los": apply_move_competency_los}.get(
+                  mv.get("family"), apply_move)
         doc = fn(doc, mv["order"], mv["why"], key)
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"    APPLIED — backup at {bak.name}")

@@ -84,6 +84,240 @@ def _anchor_field(unit) -> str:
 # the clean two-section form instead. unit_range would have tolerated the duplicate (it takes
 # min/max), but a duplicate anchor is not what V2 says and the next reader would trip on it.
 REPAIRS = {
+  # ── S2 · social_sciences · VIII · BATCH WAVE 2 TOKEN-DROPS — founder ruling 2026-08-16.
+  # Six compacts were quarantined for anchoring sections the top registry does not contain.
+  # Diagnosed unit by unit before any edit: of the eleven offending units, NINE also carry a
+  # VALID registry anchor — the stray name sits BESIDE a correct one, at a finer granularity
+  # than the standard chose. Those nine are dropped here. The other two — viii ch 8 p08 U3
+  # ("Smaller water bodies and waterways") and p11 U3 ("Ocean currents / Ocean trenches") —
+  # carry NO valid anchor and were first called unfixable orphans bound for F1. They are not:
+  # see the note above their declarations. Both are re-anchored to the parent section the
+  # registry already carries, and NOTHING from this wave now goes to F1 on anchor grounds.
+  #
+  # WHAT THIS DOES AND DOES NOT DO. Every dropped token names a real heading in the chapter
+  # summary — the compacts did not invent content, the standards omitted it (15 of 41 chapters
+  # omit at least one real summary section; 14 of those 15 are class VIII). The founder ruled
+  # on 2026-08-16 that the top's editorial selection IS the contract, that a section the top
+  # folds in is in all likelihood integrated into the lesson anyway, and that the only concern
+  # is jump risk from compact-top anchor misalignment. So: the TEACHING STAYS — not a band,
+  # note or item is touched — and only the claim that it constitutes its own registry section
+  # is withdrawn, which is what restores the borrow math.
+  ("social_sciences", "viii"): {
+    "ch_07_canonical_p07.json": [
+        (1,
+         "Introduction / Factors of Production",
+         "Introduction",
+         "V2/unregistered-section",
+         "the chapter's own title used as a second token beside a correct 'Introduction'. "
+         "The four-way classification it labels is taught inside the unit and stays there; "
+         "only the label goes | dropped: Factors of Production"),
+    ],
+    # ── THE TWO "ORPHANS", RESOLVED 2026-08-16 (founder). I had called these unfixable —
+    # a unit whose ONLY label is unregistered, so dropping it leaves the unit unplaceable and
+    # the choice is re-author or rule it accepted. That was wrong, and the founder named why:
+    # the registry already carries the parent section, "The Blue of the Blue Planet, the
+    # Oceans" / "The oceans". Ocean currents, ocean trenches and smaller water bodies are all
+    # that section's material, so the label is not dropped — it is REPLACED by the section that
+    # contains it. Same ruling as the token-drops (the top's selection is the contract, the
+    # teaching stays put), applied to a whole label instead of a stray one.
+    # Verified before declaring: both files come back 0 unknown anchors, 0 order-breaks, 12/12
+    # coverage. No jump risk remains and neither file needs re-authoring — Rs 0 against the
+    # ~Rs 27 a re-author would have cost, on a roll that might have returned a fresh defect.
+    "ch_08_canonical_p08.json": [
+        (3,
+         "Smaller water bodies and waterways",
+         "The oceans",
+         "V2/unregistered-section",
+         "the unit's only label, and not a registry section. Its material belongs to the "
+         "oceans section the compact already teaches at U2, so the unit is re-anchored there "
+         "rather than left unplaceable"),
+    ],
+    "ch_08_canonical_p11.json": [
+        (3,
+         "Ocean currents / Ocean trenches",
+         "The oceans",
+         "V2/unregistered-section",
+         "same case in the sibling compact: currents and trenches are ocean-section material, "
+         "not sections of their own"),
+        # U4's token-drop ("The Great Barrier Reef / Smaller water bodies and waterways" ->
+        # "The Great Barrier Reef") was APPLIED on 2026-08-16 and is removed from the live set:
+        # re-declaring it fails the "declared text not found" guard, which is the guard doing
+        # its job on an already-repaired file.
+    ],
+    "ch_10_canonical_p07.json": [
+        (7,
+         "Churches in India / Colonial Architecture / Before we move on …",
+         "Before we move on …",
+         "V2/unregistered-section",
+         "two summary headings the standard never named, appended to the chapter's closing "
+         "section. The church and colonial material remains in the unit; it is no longer "
+         "claimed as its own registry section | dropped: Churches in India; Colonial "
+         "Architecture"),
+    ],
+    "ch_10_canonical_p10.json": [
+        (9,
+         "Traditional Houses / Churches in India / Colonial Architecture",
+         "Traditional Houses",
+         "V2/unregistered-section",
+         "same two tokens as p07, here beside Traditional Houses | dropped: Churches in "
+         "India; Colonial Architecture"),
+    ],
+    "ch_12_canonical_p08.json": [
+        (3,
+         "Right to equality / Right to freedom / Right to life",
+         "Right to equality / Right to freedom",
+         "V2/unregistered-section",
+         "finer-grained rights/duties headings than the registry carries; each sits beside "
+         "the registry section that contains it | dropped: Right to life"),
+        (4,
+         "Right against exploitation / Right to freedom of religion / Cultural and educational rights / Right to constitutional remedies / Key Constitutional Articles That Guide Our Rights",
+         "Right to freedom of religion / Key Constitutional Articles That Guide Our Rights",
+         "V2/unregistered-section",
+         "finer-grained rights/duties headings than the registry carries; each sits beside "
+         "the registry section that contains it | dropped: Right against exploitation; "
+         "Cultural and educational rights; Right to constitutional remedies"),
+        (5,
+         "Duties / What are duties? / Understanding duties",
+         "Duties / Understanding duties",
+         "V2/unregistered-section",
+         "finer-grained rights/duties headings than the registry carries; each sits beside "
+         "the registry section that contains it | dropped: What are duties?"),
+        (7,
+         "Discrimination / Understanding discrimination / Visible and invisible discrimination",
+         "Discrimination",
+         "V2/unregistered-section",
+         "finer-grained rights/duties headings than the registry carries; each sits beside "
+         "the registry section that contains it | dropped: Understanding discrimination; "
+         "Visible and invisible discrimination"),
+        (8,
+         "Inclusion / Understanding inclusion",
+         "Inclusion",
+         "V2/unregistered-section",
+         "finer-grained rights/duties headings than the registry carries; each sits beside "
+         "the registry section that contains it | dropped: Understanding inclusion"),
+    ],
+  },
+  # ── S2 · social_sciences · VI · ch 7 "India's Cultural Roots" — ONE-OFF, founder ruling
+  #    2026-08-16. NOT the joiner family, and the difference matters enough to state.
+  #
+  # U18–U21 anchored ASPECT COMPOSITES, semicolon-joined:
+  #    "Buddhism — ahimsa; Jainism — ahimsa extended to all living beings"
+  # The first instinct — swap ';' for ' / ' as everywhere else in this file — is WRONG here
+  # and was checked before being declared: splitting these four strings yields ELEVEN new
+  # registry entries instead of four, so ch_07_canonical_p13's coverage failure goes from
+  # omitting 4 cells to omitting 11. The delimiter was never the defect.
+  #
+  # The defect is GRANULARITY. Units 1–17 anchor sections; 18–21 anchor aspects OF sections
+  # already taught. Their own teacher notes say so — "drawing on the full Buddhist and Jain
+  # sections", "synthesises the contributions thread", "uses the full chapter's range" — they
+  # are comparative revisit units wearing first-exposure anchors. So they are re-anchored to
+  # the sections they revisit. Registry 21 → 17; p13 then covers all 17 and certifies.
+  #
+  # SAFE BECAUSE, checked not assumed: every entry named below is FIRST visited in U1–U17,
+  # so all four units remain pure backward revisits — no first-visit order changes, no cell
+  # loses its first exposure, and the standard still reaches the final registry section before
+  # its synthesis unit (U22, untouched). Nothing inside any unit is edited: not a band, not a
+  # note, not an item. Only the anchor string changes.
+  #
+  # WHICH entry each aspect maps to is a JUDGEMENT (the registry has no bare "Jainism" or
+  # "Folk and Tribal Roots" head — every family is split into lettered sub-sections), and it
+  # is recorded per edit below. Because these are revisits, a different defensible choice
+  # would change which entries are back-referenced and nothing else.
+  ("social_sciences", "vi"): {
+    "ch_07_canonical.json": [
+        (18,
+         "Buddhism — ahimsa; Jainism — ahimsa extended to all living beings",
+         "Buddhism / Jainism — Mahāvīra's life and the meaning of 'Jain'",
+         "V2/granularity",
+         "comparative ahimsa unit. Buddhism -> the section head [6]; the Jain formulation of "
+         "ahimsa is doctrine introduced with Mahāvīra, so [9] carries it"),
+        (19,
+         "The Vedas — UNESCO recognition; Buddhism — spread across Asia; "
+         "Jainism — anekāntavāda as intellectual contribution",
+         "The Vedas and Vedic Culture — a. What are the Vedas? / Buddhism / "
+         "Jainism — Jainism's historical influence and the Chārvāka school",
+         "V2/granularity",
+         "the 'contributions to humanity' thread. UNESCO recognition is of Vedic chanting, so "
+         "it revisits [1]; anekāntavāda as an INTELLECTUAL contribution sits with Jainism's "
+         "historical influence [11]"),
+        (20,
+         "Buddhism — enduring influence; Jainism — rock-cut caves and monasteries; "
+         "Folk and Tribal Roots — continued tribal worship practices",
+         "Buddhism / Jainism — Rohineya's story and Jain monasticism / "
+         "Folk and Tribal Roots — tribal sacred concepts: Toda, Donyipolo, Singbonga",
+         "V2/granularity",
+         "the persistence argument. Monasteries -> the monasticism section [10]; continued "
+         "tribal worship -> the tribal sacred concepts section [15]"),
+        (21,
+         "Buddhism — ahimsa and the Sangha; Jainism — anekāntavāda; "
+         "Folk and Tribal Roots — mutual exchange; Vedic schools — brahman and ātman",
+         "Buddhism / Jainism — Jainism's historical influence and the Chārvāka school / "
+         "Folk and Tribal Roots — mutual interaction: Jagannath, tribal epics, shared sacred "
+         "concepts / The Vedas and Vedic Culture — c. Vedic schools of thought "
+         "(yajña and Upaniṣhads)",
+         "V2/granularity",
+         "the four-tradition role play. 'mutual exchange' is the Jagannath/tribal-epics "
+         "section [14]; brahman and ātman are Upaniṣhadic, so [3]"),
+    ],
+    # The 18-period compact COMPRESSES the standard's U18–U21 into one unit and carries all
+    # four composites in a single anchor. It certifies today, and it would BREAK the moment
+    # the standard's registry changes under it — the four strings it names would no longer
+    # exist. Found by checking the siblings before applying, not by watching it fail after.
+    # The replacement is the union of the four re-anchorings above, deduplicated, in registry
+    # order; every entry is first visited earlier in this same compact, so U18 stays a pure
+    # backward revisit.
+    "ch_07_canonical_p18.json": [
+        (18,
+         "Buddhism — ahimsa; Jainism — ahimsa extended to all living beings / "
+         "The Vedas — UNESCO recognition; Buddhism — spread across Asia; "
+         "Jainism — anekāntavāda as intellectual contribution / "
+         "Buddhism — enduring influence; Jainism — rock-cut caves and monasteries; "
+         "Folk and Tribal Roots — continued tribal worship practices / "
+         "Buddhism — ahimsa and the Sangha; Jainism — anekāntavāda; "
+         "Folk and Tribal Roots — mutual exchange; Vedic schools — brahman and ātman",
+         "The Vedas and Vedic Culture — a. What are the Vedas? / "
+         "The Vedas and Vedic Culture — c. Vedic schools of thought (yajña and Upaniṣhads) / "
+         "Buddhism / Jainism — Mahāvīra's life and the meaning of 'Jain' / "
+         "Jainism — Rohineya's story and Jain monasticism / "
+         "Jainism — Jainism's historical influence and the Chārvāka school / "
+         "Folk and Tribal Roots — mutual interaction: Jagannath, tribal epics, shared sacred "
+         "concepts / Folk and Tribal Roots — tribal sacred concepts: Toda, Donyipolo, "
+         "Singbonga",
+         "V2/granularity",
+         "one unit doing the work of the standard's four; the anchor becomes the union of "
+         "their re-anchorings so the compact keeps naming exactly what it revisits"),
+    ],
+  },
+  # ── S2 · social_sciences · VII · ch 3 "Climates of India" — SAME one-off ruling, 2026-08-16.
+  # Presented as an ORDER defect: p13 and p17 both teach Topography at position 7, beside the
+  # other Factors, while the registry put it at index 12 — first visited only at the top's U16,
+  # inside its consolidation phase. The obvious reading is that the compacts jumped.
+  #
+  # They did not. The top's U6 is titled "Winds AND TOPOGRAPHY: How Moving Air and Landforms
+  # Shape Climate" and its own note says it "covers two factors together because the chapter
+  # treats them as complementary — winds carry air masses, and topography either channels or
+  # blocks them". It TEACHES topography and anchors only Winds. U16 is an application unit
+  # ("Having studied topography as one of five climate factors, this unit requires students to
+  # apply multiple factors together"), so it was carrying a first-exposure anchor for content
+  # it revisits.
+  #
+  # So this is under-labelling, not misordering, and the fix is ONE token — no unit is moved,
+  # no compact is touched. Verified on copies before declaring: registry stays 13, Topography
+  # moves to index 6, and all three files return 0 unknown anchors, 0 order-breaks, 13/13
+  # coverage. U16's Topography anchor becomes a legal backward revisit.
+  ("social_sciences", "vii"): {
+    "ch_03_canonical.json": [
+        (6,
+         "Factors Determining the Climate — Winds",
+         "Factors Determining the Climate — Winds / "
+         "Factors Determining the Climate — Topography",
+         "V2/granularity",
+         "the unit teaches both factors and its title says so; anchoring only Winds pushed "
+         "Topography's first exposure to U16 and made two correct compacts look like they "
+         "jumped"),
+    ],
+  },
+
   ("social_sciences", "ix"): {
     "ch_03_canonical.json": [
         (4,

@@ -274,8 +274,19 @@ PATTERNS = [
         r"|\bearlier\s+units\s+covered\b", re.I)),
     ("meta-leak", True, re.compile(
         r"\brequiring\s+no\s+prior\s+(?:draft|artefact|artifact|activity|work)\b", re.I)),
-    ("calendar", True, re.compile(r"\btomorrow\b", re.I)),
-    ("calendar", True, re.compile(r"\b(this|next|last) (week|month)\b", re.I)),
+    # ADVISORY, not a ban (2026-08-16, founder ruling · ARV-D-167). Measured across the whole
+    # installed corpus — five stages — EVERY hit these two patterns produced was content, and
+    # none was a plan assuming a calendar: "weather is day-to-day (rain today, sunshine
+    # TOMORROW)" is the chapter's definition of weather; "agrees to pay Rs 300 NEXT WEEK —
+    # which function is in use?" is a credit-timing question; "if the Sindhu lipi were
+    # deciphered TOMORROW?" and "today's novelty may become TOMORROW's staple" are a
+    # hypothetical and an idiom; "three weather events they noticed THIS WEEK" is an
+    # observation task with no cross-sitting dependency. Striking any of them damages teaching
+    # to satisfy a regex, which is the wrong direction (runbook trap 4).
+    # `(next|last) class` stays a BAN below — that one names a SITTING, which is what the
+    # calendar ban actually exists to stop.
+    ("calendar", False, re.compile(r"\btomorrow\b", re.I)),
+    ("calendar", False, re.compile(r"\b(this|next|last) (week|month)\b", re.I)),
     # "term" split out to ADVISORY, 2026-08-09. It was a ban, and it fired on maths·IX ch 4's
     # "identify the square root of the first term, the square root of the LAST TERM" — the term
     # of a polynomial, not the school calendar. Across mathematics that reading is the common
@@ -388,7 +399,42 @@ def scanned_fields(plan: dict):
     return seen
 
 
-_QUOTED = re.compile(r"[\u2018\u2019\u201c\u201d\'\"]([^\u2018\u2019\u201c\u201d\'\"]{0,300}?)[\u2018\u2019\u201c\u201d\'\"]")
+# AN OPENING QUOTE CANNOT FOLLOW A LETTER (2026-08-16, ARV-D-167). The straight apostrophe is
+# also the possessive, so the previous pattern paired `residents'` with the `'If` that opened
+# the next sentence's prompt \u2014 every span shifted by one, and the actual quoted prompt fell
+# OUTSIDE a quoted span. Effect: the "calendar hit inside quotation marks drops to advisory"
+# rule silently stopped protecting any band that used a possessive before a quoted prompt,
+# which is most of them. Found on SS\u00b7VIII ch 14 U10 ("\u2026for your own town tomorrow\u2026"), reported
+# as a hard ban hit while sitting inside quotes.
+# So an opener must sit at a boundary \u2014 start of string, whitespace, or `:` `(` `\u2014` `-`.
+# Closers are unrestricted, because a closing quote legitimately follows a letter.
+_QUOTED = re.compile(
+    r"(?:(?<=^)|(?<=[\s:(\u2014-]))"
+    r"[\u2018\u2019\u201c\u201d\'\"]([^\u2018\u2019\u201c\u201d\'\"]{0,300}?)[\u2018\u2019\u201c\u201d\'\"]")
+
+
+# A CLOCK QUANTITY IS ONLY A BREACH IF IT PACES THE CLASS (2026-08-16, ARV-D-162).
+# The clock ban exists because a band carries its own `minutes` and the platform rescales them,
+# so "Students discuss for two minutes" is falsified silently at every other sitting length.
+# It has nothing to say about a duration inside NARRATED CONTENT. SS·VIII ch 9 U11 reads
+# "Brigadier-General Dyer sealed the main exit and fired approximately 1,650 rounds FOR ABOUT
+# TEN MINUTES" — the duration of the Jallianwala Bagh massacre. Repairing that would falsify
+# the history, so the distinction is drawn here instead: the sentence carrying the quantity
+# must have a CLASSROOM ACTOR as its subject. Deliberately kept crude and inclusive — if a
+# sentence mentions the class at all the ban still fires, so the gate can only ever release a
+# sentence that talks about somebody else entirely.
+_ACTOR = re.compile(r"\b(students?|teacher|pupils?|learners?|pairs?|partners?|groups?|"
+                    r"class|each (?:student|group|pair)|they|volunteers?)\b", re.I)
+_SENT_END = re.compile(r"[.?!]\s")
+
+
+def _instructional(text, start, end):
+    """True if the sentence containing [start,end) names a classroom actor."""
+    s = 0
+    for m in _SENT_END.finditer(text, 0, start):
+        s = m.end()
+    m = _SENT_END.search(text, end)
+    return bool(_ACTOR.search(text[s:m.end() if m else len(text)]))
 
 
 def _quoted_spans(text):
@@ -479,7 +525,10 @@ def scan_plan(plan: dict):
                                    # the new pattern failed CERTIFIED science·VIII ch 6
                                    # p08 on "built across the chapter". Found by running
                                    # the pattern corpus-wide before trusting it.
-                                   and not (family == "completion" and _is_synth(u)),
+                                   and not (family == "completion" and _is_synth(u))
+                                   # a clock quantity in narrated content, not class pacing
+                                   and not (family == "clock"
+                                            and not _instructional(text, m.start(), m.end())),
                         "quoted": in_quote, "match": m.group(0),
                         "excerpt": ("…" if a else "") + text[a:b].strip() + ("…" if b < len(text) else ""),
                     })
