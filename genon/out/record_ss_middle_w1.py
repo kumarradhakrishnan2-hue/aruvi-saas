@@ -217,10 +217,75 @@ F1_COMMENT = (
     "certification cannot gate and which only a reader can rule on."
 )
 
+F1_VERDICT = (
+    "<br><br><b>VERDICT — PASS (founder, 2026-08-16).</b> All 17 chapters presented at both "
+    "borrow boundaries (34 serves). Census: 17 synthesis · 10 complete_rescue · 7 fill · "
+    "<b>zero dropped sections</b>. Only the 7 FILL seams borrow an ordinary teaching unit and "
+    "are therefore the only places jumpiness can enter; the founder read all seven — some were "
+    "addressed in-session (below), the rest read clean.<br><br>"
+    "<b>THREE DEFECTS FOUND, none of which any deterministic check could see — which is the "
+    "case for this gate existing:</b><br>"
+    "1. <b>viii ch 8's STANDARD was mislabelled</b> (ARV-D-170): seven of thirteen units "
+    "carried the section BEFORE the one they taught — a unit anchored `North America` titled "
+    "\"Australia's Deserts, the Spinifex People, and Antarctica\". It certified ALL PASS "
+    "because the registry is DERIVED from the standard, so a self-consistent mislabelling is "
+    "invisible. Re-anchored (Fable 5 against a constrained prompt, verified before applying); "
+    "registry 12 -> 15; three earlier compact repairs REVERTED because they had been "
+    "compensating for it.<br>"
+    "2. <b>Coverage was counted as a FRONTIER, not a set</b> (ARV-D-168) — found by the "
+    "founder asking why a borrowed unit that skips sections declares no drops. Fixed.<br>"
+    "3. <b>The coverage registry was re-derived from the SERVED variant</b> (ARV-D-169), so a "
+    "compact could never appear to drop what was never on its own list. Fixed.<br><br>"
+    "<b>The pattern is one mistake in three places</b> — the code repeatedly asked \"how far "
+    "did we get?\" where the question is \"what did we cover?\". The same shape sits in C5's "
+    "coverage check (`seen_hi >= len(reg)-1`) and in check 11, both still open."
+)
+
 post("campaign/item", {
     "scope": "batch", "key": KEY, "step": "F1",
-    "patch": {"status": "in-progress", "by": "Claude (plan) · founder (rules)",
-              "comment": F1_COMMENT, "files": 17},
+    "patch": {"status": "pass", "by": "Claude (presented) · Kumar (ruled)",
+              "comment": F1_COMMENT + F1_VERDICT, "files": 17},
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-168", "combo": "campaign", "step": "F1", "severity": "S2",
+    "owner": "Claude", "status": "fixed-awaiting-recheck",
+    "title": "serve.py counted coverage as a FRONTIER, so a borrowed unit with non-contiguous "
+             "anchors silently swallowed the sections inside its own span",
+    "evidence": "SS·VIII ch 15 X=11: the borrowed unit anchors [12, 15]; `unit_range` collapses "
+                "it to (12,15) and `uncovered = list(registry[b+1:])` concluded 13 and 14 were "
+                "taught. Served plan omitted Cultural Exchange — Food and Clothing with "
+                "uncovered_sections: [], dropped_units: NONE. 43 of 1,519 SS·middle units have "
+                "non-contiguous anchors; the docstring ASSUMED otherwise ('Contiguity (V2) "
+                "makes every co-dealt section adjacent to M').",
+    "notes": "Found at F1 by the founder, not by any check. FIXED with a new `unit_sections()` "
+             "returning a SET, and uncovered computed as a set difference; selection and "
+             "preference deliberately untouched so the change is measurable on its own. "
+             "OUTCOME BETTER THAN A DECLARED DROP: honest counting made Case 2's fill show "
+             "uncovered sections, which is Case 1b's trigger, so X=11 now serves the 10-period "
+             "canonical COMPLETE plus the synthesis — 16/16 sections, zero drops. The bug had "
+             "been suppressing a better branch by making a torn fill look complete. Verified "
+             "corpus-wide: 1,444 serves, 0 errors, mode distribution intact.",
+})
+
+post("campaign/defect", {
+    "id": "ARV-D-169", "combo": "campaign", "step": "F1", "severity": "S2",
+    "owner": "Claude", "status": "fixed-awaiting-recheck",
+    "title": "serve.py judged coverage against the SERVED variant's registry, not the top's",
+    "evidence": "`serve_plan` computes `registry_top` and then the unit-granularity branch "
+                "re-derived `registry = section_registry(chosen)` for `fill_slot`. SS·VIII ch 8 "
+                "X=7 picks the 8-period compact, whose own registry omits Ocean currents and "
+                "Ocean trenches, so it reported full coverage of a chapter it teaches 13 of 15 "
+                "sections of.",
+    "notes": "Founder's call: the architecture establishes the registry ONCE from the top. "
+             "Measured before changing — on 1,398 of 1,400 serves the two registries are "
+             "IDENTICAL, so this corrects a real hole without moving the common case; both "
+             "exceptions are ch 8. Now passes `registry_top`. Consequence: ch 8 X=7 declares "
+             "all three uncovered sections where it previously declared one. NOTE the residual "
+             "— only Australia has a unit able to ride as a dropped unit, because the lender "
+             "(p08) never teaches currents or trenches, so `section_coverage_note` promises "
+             "material for two sections it does not ship. p08's brief was itself built from "
+             "the mislabelled registry (ARV-D-170), so re-authoring it closes both.",
 })
 
 post("campaign/item", {
@@ -336,4 +401,30 @@ post("campaign/defect", {
              "on the accident of whether a valid anchor happened to sit alongside the stray.",
 })
 
-print("recorded: W1 + W2 + 8 defect rows")
+post("campaign/defect", {
+    "id": "ARV-D-170", "combo": KEY, "step": "F1", "severity": "S2",
+    "owner": "Kumar (founder)", "status": "closed",
+    "title": "viii ch 8's STANDARD carried the wrong section on seven of thirteen units — and "
+             "certified ALL PASS",
+    "evidence": "U7 anchored `Asia` taught the Urals/European Plain/Alps; U8 `Europe` taught "
+                "the Sahara/Savannah/Nile; U11 `North America` was titled \"Australia's "
+                "Deserts, the Spinifex People, and Antarctica\"; U12 `The Australian Continent` "
+                "taught, by its own band text, \"the chapter's dedicated mountain-roles passage "
+                "in the Asia section\". The chapter's own compacts were labelled CORRECTLY, so "
+                "standard and compacts disagreed about what every unit was.",
+    "notes": "CLOSED 2026-08-16. Invisible to certification by construction: the registry is "
+             "DERIVED from the standard, so anchors were 'verbatim in the registry' (the one "
+             "they themselves created), order held, coverage reached the end. Surfaced only "
+             "when the F1 seam pack printed an anchor beside its unit's title. Re-anchored by "
+             "Fable 5 against a constrained prompt (docs/testing_artefacts/"
+             "PROMPT_reanchor_ss_viii_ch08.md); every `old` verified verbatim and the chain "
+             "simulated on copies first. Registry 12 -> 15. THE LESSON WORTH KEEPING: three "
+             "compact repairs made earlier the same day were REVERTED, because 'align the "
+             "compact to the top' had been quietly compensating for a top that was wrong — "
+             "that rule holds only while the top is trustworthy, and nothing deterministic "
+             "tells you when it is not. Residual: p08 now covers 13/15 (its brief was built "
+             "from the mislabelled registry) and C5's coverage check cannot see the gap "
+             "because it too tests a frontier.",
+})
+
+print("recorded: W1 + W2 + F1 + 11 defect rows")

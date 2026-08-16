@@ -237,6 +237,27 @@ def authored_registry(stream):
     return reg + tail
 
 
+def unit_sections(unit, registry_index):
+    """The registry indices a unit ACTUALLY anchors — a SET, not a span.
+
+    `unit_range` collapses a unit to (min, max), which is right for ordering and wrong
+    for coverage: a unit anchored [12, 15] reports (12, 15) and the caller concludes it
+    taught 13 and 14. It did not. Coverage must be counted section by section
+    (ARV-D-168, 2026-08-16 · found at F1 on SS·VIII ch 15 X=11, where the served plan
+    silently omitted Cultural Exchange — Food and Clothing with uncovered_sections: []).
+    Contiguity was ASSUMED here — this function's docstring said "Contiguity (V2) makes
+    every co-dealt section adjacent to M" — and 43 of 1,519 units in SS·middle alone
+    break it. A synthesis unit is rangeless and therefore sectionless, same as above."""
+    if is_synthesis_unit(unit):
+        return set()
+    out = set()
+    for a in _unit_anchors(unit):
+        i = registry_index.get(_norm(a))
+        if i is not None:
+            out.add(i)
+    return out
+
+
 def unit_range(unit, registry_index):
     """Unit -> (lo, hi) inclusive indices into the registry. None if any anchor
     is unknown to the registry (the candidate then simply doesn't qualify).
@@ -532,11 +553,22 @@ def fill_slot(streams, chosen, requested, registry):
         fill_class = ("forward" if c["overlap"] == 0 and b > m
                       else "single" if c["overlap"] == 0
                       else "backward")
-        uncovered = list(registry[b + 1:])
+        # COVERAGE IS A SET, NOT A FRONTIER (ARV-D-168, 2026-08-16). This was
+        # `list(registry[b + 1:])` — everything past the borrowed unit's highest
+        # anchor — which silently swallowed any section sitting INSIDE a
+        # non-contiguous unit's span. Preference and selection are deliberately
+        # untouched: the engine still prefers the furthest-reaching candidate and
+        # still borrows the same unit. Only the accounting changes, so a gap is
+        # now DECLARED and its sections ride from the lender exactly as §0.4 says.
+        taught = set()
+        for pu in units[:requested - 1]:
+            taught |= unit_sections(pu, ridx)
+        taught |= unit_sections(c["unit"], ridx)
+        uncov_idx = {i for i in range(last + 1) if i not in taught}
+        uncovered = [registry[i] for i in sorted(uncov_idx)]
         s = c["stream"]
         drop_units = []
         if uncovered:
-            uncov_idx = set(range(b + 1, last + 1))
             for w in s["units"][c["unit_index"] + 1:]:
                 r = unit_range(w, ridx)
                 if r and set(range(r[0], r[1] + 1)) <= uncov_idx:
@@ -658,7 +690,17 @@ def serve_plan(streams, matrix):
     else:
         # ── UNIT GRANULARITY: the standard engine, unchanged (§0.4).
         chosen, surrendered = choose_variant(streams, requested)
-        registry = section_registry(chosen)
+        # THE REGISTRY IS THE TOP'S, ESTABLISHED ONCE (ARV-D-169, 2026-08-16).
+        # This re-derived it from `chosen`, so coverage was judged against the SERVED
+        # variant's own section list — and a compact can never appear to drop what was
+        # never on its list. SS·VIII ch 8 X=7 picks the 8-period compact, whose registry
+        # omits "Ocean currents" and "Ocean trenches"; it reported full coverage of a
+        # chapter it teaches 13 of 15 sections of. Measured before changing: on 1,398 of
+        # 1,400 serves the two registries are IDENTICAL, so this corrects a real hole
+        # without moving the common case. Same failure shape as C5 check 11 and as the
+        # frontier bug (ARV-D-168) — the thing being measured was derived from the thing
+        # being judged.
+        registry = registry_top
         units = chosen["units"]
         n_units = len(units)
         fill = None
@@ -681,7 +723,7 @@ def serve_plan(streams, matrix):
                     rescued_from = n_units           # the richer plan we declined
                     s_syn, u_syn = syn
                     chosen, units, n_units = d, d["units"], len(d["units"])
-                    registry = section_registry(chosen)
+                    registry = registry_top          # unchanged by a base swap
                     fill = {"mode": "complete_rescue", "fill_class": None,
                             "first_section": None, "stream": s_syn, "unit": u_syn,
                             "borrowed_from": len(s_syn["units"]),

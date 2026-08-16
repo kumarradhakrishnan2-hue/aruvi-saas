@@ -1,7 +1,7 @@
 {
   "version": 1,
   "campaign": "aruvi-11-stage-certification",
-  "updated_at": "2026-08-16T12:21:15",
+  "updated_at": "2026-08-16T18:58:00",
   "step0": {
     "campaign": {
       "0.1": {
@@ -2178,7 +2178,7 @@
     },
     "social_sciences/middle": {
       "W1": {
-        "at": "2026-08-16T12:21:15",
+        "at": "2026-08-16T18:58:00",
         "status": "pass",
         "by": "Kumar (ran) · Claude (recorded)",
         "comment": "S2 · classes vi/vii/viii · 2026-08-15/16. <b>41 chapters, 40 standards bought</b> in one job (msgbatch_012rg61LP1SVF4ay2JM34bt2), <b>₹881.64</b>, 40/40 ok, zero errors, zero canonicals re-bought; viii ch 3 correctly skipped as the C-cycle pilot. Est. was ₹760 at the runbook's fit — SS runs longer than TWAU per period (~₹22/run vs ₹12–15).<br><br><b>Structurally the wave is spotless.</b> Across all 41 chapters, zero failures on synthesis-token placement, anchors verbatim in the registry, first-visit order, coverage reaching the final registry section before synthesis, stimulus-type resolution, question-type validity, stems, and MCQ arrangement order; every X in every sweep returned a non-empty choice set. The only FAIL families are <i>library complete</i> (×40 — arithmetic, the compacts do not exist until W2) and <i>register clean</i>.<br><br><b>Register: 90 ban hits over 34 of 40 files</b> (~2.25/file, against S5's ~1 per 3). 42 clock · 33 forward · <b>10 meta-leak (new family, ARV-D-161)</b> · 2 ids · 2 calendar · 1 completion. Plus 8 artefact-dependency advisories, which certification cannot gate and which are owed a read at F1.<br><br><b>87 repairs declared</b> in genon/repair_register.py under (social_sciences, vi/vii/viii) — every one a deletion, none hand-edited, none regenerated. Verified by applying the full set to a copy of the library: 87/87 resolve verbatim and the residual is exactly the 3 deliberate exclusions (ARV-D-162 and the two calendar hits, founder ruling 2026-08-16 to leave them). <b>The library is therefore NOT yet at zero ban hits</b> — closing-checklist item 3 is met only once those three are ruled or the scanner is narrowed.<br><br>Also worth carrying to W2: <i>options arranged 15 of 16 on a first pass</i> — this is a freshly generated library, the only pass where that number means anything, and it confirms the model still does not arrange MCQ options unaided. Two items were SKIPPED by the arranger because they cross-reference an option label; those need a human.",
@@ -2189,14 +2189,14 @@
         "by": "Kumar (ran) · Claude (diagnosed + declared)",
         "comment": "S2 · wave 2 · 2026-08-16. <b>80 compacts, ₹1,422.83</b> (msgbatch_011ezdQUpviWiYgZmANzzDp4), 80/80 ok, plus a <b>₹28.17</b> re-author of viii ch 15 p14. <b>Stage total ₹2,332.64.</b><br><br><b>Certification: 36 of 41 chapters ALL PASS.</b> `library complete` cleared for every chapter except viii ch 8 (see below). The five remaining failures are: four chapters carrying one ruled-exclusion register hit each (vii ch 3, vii ch 11, viii ch 9, viii ch 14) and viii ch 8 on `library complete`, because its p08 is held in quarantine by design.<br><br><b>Structural defects, all closed without re-authoring except one.</b> The compacts produced the failures wave 1 could not — 10 first-visit-order, 6 anchor-verbatim, 3 coverage — and the diagnosis inverted the obvious reading in three of five cases: <i>vi ch 7</i> (coverage) was an anchor-GRANULARITY defect, its U18–U21 wearing first-exposure anchors on revisit units; re-anchoring took the registry 21→17 and cleared p13 with no teaching change. <i>vii ch 3</i> (order, 2 files) was ONE under-labelled token — U6 is titled 'Winds AND TOPOGRAPHY' and anchored only Winds, which pushed Topography's first exposure to U16 and made two correct compacts look like they jumped. <i>vii ch 8 p13</i> was a genuine transposition, fixed by declared permutation. <i>viii ch 15 p14</i> was re-authored (₹28.17): its worst defect — [2] Regional saints first taught in the CLOSING unit — is gone, and it drew two milder breaks instead, one fixed by permutation. <i>viii ch 7/10/12</i> were nine anchor token-drops.<br><br><b>229 repair edits recorded across 90 files today</b> — 87 register (wave 1) + 126 register (wave 2) + 9 anchor token-drops + 5 anchor re-grains + 2 permutations. Every one declared (old→new) and applied by assertion; none hand-edited; one file regenerated in the whole stage.<br><br><b>CLOSING CHECKLIST — items 1,2,3,6,7 MET as of 2026-08-16 12:20.</b> (1) 123 canonical files on disk = exactly 41 chapters × 3, none missing. (2) nothing quarantined without a live counterpart. (3) <b>zero register ban hits stage-wide</b> — the last five were cleared at the SCANNER, never in the text (ARV-D-162/167): every calendar hit across all five stages was content, and the clock ban now requires a classroom actor. (6) no derived plans on disk. (7) spend reconciled to the rupee — ₹2,332.64 from the three collected manifests AND from 121 rows of runtime_data/token_log.csv. Item 4 (every chapter ALL PASS) confirmed chapter-by-chapter; item 5 (serves at top/middle/floor/below-floor) is the remaining deterministic step before the human gate.",
         "files": 41,
-        "at": "2026-08-16T12:21:15"
+        "at": "2026-08-16T18:58:00"
       },
       "F1": {
-        "status": "in-progress",
-        "by": "Claude (plan) · founder (rules)",
-        "comment": "<b>SAMPLING PLAN — recorded before any reading begins</b> (runbook §5 / testing.md §6a).<br><br><b>The runbook's own stratification rule does not survive this wave and is deliberately replaced.</b> It says include 100% of any chapter that took a repair — written at S5, where 28 repairs were unusual. Here <b>40 of 41 chapters took one</b> (232 edits), so that rule selects the whole corpus and stops being a sample. The replacement splits by WHAT was repaired: a register edit is a text deletion and cannot move a borrow seam, whereas anchor and order edits are precisely what the X−1→X math reads.<br><br><b>MANDATORY — 8 chapters whose STRUCTURE was touched, read at 100%:</b> vi ch 7 (anchor re-grain, registry 21→17) · vii ch 3 (anchor re-grain, Topography's first visit moved) · vii ch 8 (unit permutation, 2 transpositions) · viii ch 7, ch 10, ch 12 (anchor token-drops) · viii ch 8 (two orphan units re-anchored to the parent section) · viii ch 15 (re-author + permutation).<br><br><b>RANDOM SAMPLE — 25% of the remaining 33, stratified by top-canonical period band</b>, seed <code>social_sciences|middle|F1|2026-08-16</code>, <code>random.Random(seed).sample(sorted(pool), k)</code> per band, drawn in band order small→mid→large: <b>small ≤11p</b> (pool 6, k=2): vi ch 13, viii ch 13 · <b>mid 12–17p</b> (pool 16, k=4): vi ch 4, vi ch 8, viii ch 2, viii ch 5 · <b>large ≥18p</b> (pool 11, k=3): vi ch 6, vii ch 1, vii ch 10.<br><br><b>TOTAL: 17 of 41 chapters (41%).</b> Read at each chapter's borrow boundary — X just above a canonical count, where the Xth unit is borrowed — not at the identity counts, since identity serves cannot jump.<br><br><b>Carried into the reading as known items, not defects:</b> viii ch 15 p14 U7 anchors [6] Gardens and [9] Vocational education jointly, pulling 9 ahead of 7 and 8 — no permutation fixes it and 9 is taught nowhere else in that compact; and the 8 artefact-dependency advisories from W1 (a unit reaching for something a previous sitting produced), which certification cannot gate and which only a reader can rule on.",
+        "status": "pass",
+        "by": "Claude (presented) · Kumar (ruled)",
+        "comment": "<b>SAMPLING PLAN — recorded before any reading begins</b> (runbook §5 / testing.md §6a).<br><br><b>The runbook's own stratification rule does not survive this wave and is deliberately replaced.</b> It says include 100% of any chapter that took a repair — written at S5, where 28 repairs were unusual. Here <b>40 of 41 chapters took one</b> (232 edits), so that rule selects the whole corpus and stops being a sample. The replacement splits by WHAT was repaired: a register edit is a text deletion and cannot move a borrow seam, whereas anchor and order edits are precisely what the X−1→X math reads.<br><br><b>MANDATORY — 8 chapters whose STRUCTURE was touched, read at 100%:</b> vi ch 7 (anchor re-grain, registry 21→17) · vii ch 3 (anchor re-grain, Topography's first visit moved) · vii ch 8 (unit permutation, 2 transpositions) · viii ch 7, ch 10, ch 12 (anchor token-drops) · viii ch 8 (two orphan units re-anchored to the parent section) · viii ch 15 (re-author + permutation).<br><br><b>RANDOM SAMPLE — 25% of the remaining 33, stratified by top-canonical period band</b>, seed <code>social_sciences|middle|F1|2026-08-16</code>, <code>random.Random(seed).sample(sorted(pool), k)</code> per band, drawn in band order small→mid→large: <b>small ≤11p</b> (pool 6, k=2): vi ch 13, viii ch 13 · <b>mid 12–17p</b> (pool 16, k=4): vi ch 4, vi ch 8, viii ch 2, viii ch 5 · <b>large ≥18p</b> (pool 11, k=3): vi ch 6, vii ch 1, vii ch 10.<br><br><b>TOTAL: 17 of 41 chapters (41%).</b> Read at each chapter's borrow boundary — X just above a canonical count, where the Xth unit is borrowed — not at the identity counts, since identity serves cannot jump.<br><br><b>Carried into the reading as known items, not defects:</b> viii ch 15 p14 U7 anchors [6] Gardens and [9] Vocational education jointly, pulling 9 ahead of 7 and 8 — no permutation fixes it and 9 is taught nowhere else in that compact; and the 8 artefact-dependency advisories from W1 (a unit reaching for something a previous sitting produced), which certification cannot gate and which only a reader can rule on.<br><br><b>VERDICT — PASS (founder, 2026-08-16).</b> All 17 chapters presented at both borrow boundaries (34 serves). Census: 17 synthesis · 10 complete_rescue · 7 fill · <b>zero dropped sections</b>. Only the 7 FILL seams borrow an ordinary teaching unit and are therefore the only places jumpiness can enter; the founder read all seven — some were addressed in-session (below), the rest read clean.<br><br><b>THREE DEFECTS FOUND, none of which any deterministic check could see — which is the case for this gate existing:</b><br>1. <b>viii ch 8's STANDARD was mislabelled</b> (ARV-D-170): seven of thirteen units carried the section BEFORE the one they taught — a unit anchored `North America` titled \"Australia's Deserts, the Spinifex People, and Antarctica\". It certified ALL PASS because the registry is DERIVED from the standard, so a self-consistent mislabelling is invisible. Re-anchored (Fable 5 against a constrained prompt, verified before applying); registry 12 -> 15; three earlier compact repairs REVERTED because they had been compensating for it.<br>2. <b>Coverage was counted as a FRONTIER, not a set</b> (ARV-D-168) — found by the founder asking why a borrowed unit that skips sections declares no drops. Fixed.<br>3. <b>The coverage registry was re-derived from the SERVED variant</b> (ARV-D-169), so a compact could never appear to drop what was never on its own list. Fixed.<br><br><b>The pattern is one mistake in three places</b> — the code repeatedly asked \"how far did we get?\" where the question is \"what did we cover?\". The same shape sits in C5's coverage check (`seen_hi >= len(reg)-1`) and in check 11, both still open.",
         "files": 17,
-        "at": "2026-08-16T12:21:15"
+        "at": "2026-08-16T18:58:00"
       }
     }
   },
@@ -4289,12 +4289,12 @@
       "owner": "Kumar (founder)",
       "status": "open",
       "notes": "Not a teaching defect and not the 2026-08-02 lottery case — the constitution states the register and the model is OBEYING it, out loud, in prose addressed to the constitution rather than to the teacher. So this is brief-side: the next SS·middle constitution pass should say that self-containment is demonstrated by the unit working, never by asserting it. Same shape as the S4 finding (repair v1.4) where the model paraphrased the brief's own description of the synthesis unit. Repaired in place for this wave at the founder's instruction 2026-08-16; the row stays open against the brief, not the artefacts.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-162",
       "opened": "2026-08-16T09:45:14",
-      "closed": "2026-08-16T12:21:15",
+      "closed": "2026-08-16T18:58:00",
       "combo": "social_sciences/middle",
       "step": "W2",
       "severity": "S3",
@@ -4303,7 +4303,7 @@
       "owner": "Kumar (founder)",
       "status": "closed",
       "notes": "CLOSED 2026-08-16 at the scanner, never in the text (runbook trap 4). The clock ban now requires a classroom actor in the sentence carrying the quantity. Kept deliberately crude: if a sentence mentions the class at all the ban still fires, so the gate can only release a sentence that is about somebody else entirely.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-163",
@@ -4317,7 +4317,7 @@
       "owner": "Claude",
       "status": "fixed-awaiting-recheck",
       "notes": "Fixed by moving the pilot set to (\"social_sciences\",\"viii\",\"APPLIED-20260804\") — the pattern the file already uses for ix/APPLIED-20260803 and mathematics·IX v1.5. The guard caught it, which is the guard working; the key layout is what made it possible. Worth a one-line check in the tool that no 2-tuple key is declared twice.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-164",
@@ -4331,7 +4331,7 @@
       "owner": "Claude",
       "status": "fixed-awaiting-recheck",
       "notes": "Recovered free and exactly: `python3 genon/variant_plans.py` re-annotated 188 authored rows, and a field-by-field diff against git HEAD showed the ONLY remaining difference was the 40 SS·middle rows going provisional true→false — which is W1's own annotation, i.e. correct. Every count, budget and pin identical. FIX: the write and its prints now sit under `if __name__ == '__main__'`, so a rebuild is an explicit act and an import is inert (verified: artefact byte-identical after import, canonical_periods still callable). Standing lesson for the campaign: a module that mutates a data artefact at import will eventually be imported by something that only wanted a helper, and the damage shows up somewhere else entirely. Worth grepping the other genon scripts for module-level writes.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-165",
@@ -4345,12 +4345,12 @@
       "owner": "Kumar (founder)",
       "status": "open",
       "notes": "FOUNDER RULING 2026-08-16: the top's editorial selection IS the contract; a section the top folds in is in all likelihood integrated into the lesson anyway; the only concern is jump risk from compact-top anchor misalignment. So the 46 are accepted and the compacts were aligned to the registry (teaching untouched, only the section CLAIM withdrawn). What remains open is the GATE, not the content: check 11 is the mechanism meant to catch this at W1, before money is spent on compacts cut against short registries, and on SS it is not fit to be ruled on — which is what closing-checklist item 4 requires of it. Fixing the matcher is free and should precede the next SS batch.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-166",
       "opened": "2026-08-16T12:19:27",
-      "closed": "2026-08-16T12:21:15",
+      "closed": "2026-08-16T18:58:00",
       "combo": "social_sciences/middle",
       "step": "W2",
       "severity": "S2",
@@ -4359,7 +4359,7 @@
       "owner": "Kumar (founder)",
       "status": "closed",
       "notes": "CLOSED 2026-08-16, and the closing is the lesson. Claude classified both as unfixable — drop the label and the unit is unplaceable, so re-author (~₹27) or rule accepted — and sent them to F1. The founder pointed at the registry, which already carries the parent section: 'The Blue of the Blue Planet, the Oceans' / 'The oceans'. Currents, trenches and smaller water bodies are that section's material, so the label is REPLACED rather than dropped. Both files then returned 0 unknown anchors, 0 order-breaks, 12/12 coverage, and viii ch 8 is ALL PASS. These eleven units were always ONE fix; they had been split into two categories on the accident of whether a valid anchor happened to sit alongside the stray.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
     },
     {
       "id": "ARV-D-167",
@@ -4373,7 +4373,49 @@
       "owner": "Claude",
       "status": "fixed-awaiting-recheck",
       "notes": "FIXED: an opening quote must now sit at a boundary (start, whitespace, : ( - —); closers are unrestricted. Verified corpus-wide in both directions — it cleared ch 14 AND exposed two hits the bug had been WRONGLY SUPPRESSING in released stages (SS·IX ch 4 U16, TWAU·V ch 10 U7), both hypotheticals, both now correctly advisory under the calendar narrowing below. Same change set: `tomorrow` and `this|next|last week|month` dropped from BAN to ADVISORY (every hit across all five stages was content — a definition of weather, a credit-timing question, an idiom, two hypotheticals; `(next|last) class` stays a ban because it names a SITTING), and the clock ban now fires only when the sentence carrying the quantity names a classroom actor, which closes ARV-D-162 without touching the Jallianwala text and without weakening the 58 real pacing hits.",
-      "at": "2026-08-16T12:21:15"
+      "at": "2026-08-16T18:58:00"
+    },
+    {
+      "id": "ARV-D-168",
+      "opened": "2026-08-16T18:58:00",
+      "closed": null,
+      "combo": "campaign",
+      "step": "F1",
+      "severity": "S2",
+      "title": "serve.py counted coverage as a FRONTIER, so a borrowed unit with non-contiguous anchors silently swallowed the sections inside its own span",
+      "evidence": "SS·VIII ch 15 X=11: the borrowed unit anchors [12, 15]; `unit_range` collapses it to (12,15) and `uncovered = list(registry[b+1:])` concluded 13 and 14 were taught. Served plan omitted Cultural Exchange — Food and Clothing with uncovered_sections: [], dropped_units: NONE. 43 of 1,519 SS·middle units have non-contiguous anchors; the docstring ASSUMED otherwise ('Contiguity (V2) makes every co-dealt section adjacent to M').",
+      "owner": "Claude",
+      "status": "fixed-awaiting-recheck",
+      "notes": "Found at F1 by the founder, not by any check. FIXED with a new `unit_sections()` returning a SET, and uncovered computed as a set difference; selection and preference deliberately untouched so the change is measurable on its own. OUTCOME BETTER THAN A DECLARED DROP: honest counting made Case 2's fill show uncovered sections, which is Case 1b's trigger, so X=11 now serves the 10-period canonical COMPLETE plus the synthesis — 16/16 sections, zero drops. The bug had been suppressing a better branch by making a torn fill look complete. Verified corpus-wide: 1,444 serves, 0 errors, mode distribution intact.",
+      "at": "2026-08-16T18:58:00"
+    },
+    {
+      "id": "ARV-D-169",
+      "opened": "2026-08-16T18:58:00",
+      "closed": null,
+      "combo": "campaign",
+      "step": "F1",
+      "severity": "S2",
+      "title": "serve.py judged coverage against the SERVED variant's registry, not the top's",
+      "evidence": "`serve_plan` computes `registry_top` and then the unit-granularity branch re-derived `registry = section_registry(chosen)` for `fill_slot`. SS·VIII ch 8 X=7 picks the 8-period compact, whose own registry omits Ocean currents and Ocean trenches, so it reported full coverage of a chapter it teaches 13 of 15 sections of.",
+      "owner": "Claude",
+      "status": "fixed-awaiting-recheck",
+      "notes": "Founder's call: the architecture establishes the registry ONCE from the top. Measured before changing — on 1,398 of 1,400 serves the two registries are IDENTICAL, so this corrects a real hole without moving the common case; both exceptions are ch 8. Now passes `registry_top`. Consequence: ch 8 X=7 declares all three uncovered sections where it previously declared one. NOTE the residual — only Australia has a unit able to ride as a dropped unit, because the lender (p08) never teaches currents or trenches, so `section_coverage_note` promises material for two sections it does not ship. p08's brief was itself built from the mislabelled registry (ARV-D-170), so re-authoring it closes both.",
+      "at": "2026-08-16T18:58:00"
+    },
+    {
+      "id": "ARV-D-170",
+      "opened": "2026-08-16T18:58:00",
+      "closed": "2026-08-16T18:58:00",
+      "combo": "social_sciences/middle",
+      "step": "F1",
+      "severity": "S2",
+      "title": "viii ch 8's STANDARD carried the wrong section on seven of thirteen units — and certified ALL PASS",
+      "evidence": "U7 anchored `Asia` taught the Urals/European Plain/Alps; U8 `Europe` taught the Sahara/Savannah/Nile; U11 `North America` was titled \"Australia's Deserts, the Spinifex People, and Antarctica\"; U12 `The Australian Continent` taught, by its own band text, \"the chapter's dedicated mountain-roles passage in the Asia section\". The chapter's own compacts were labelled CORRECTLY, so standard and compacts disagreed about what every unit was.",
+      "owner": "Kumar (founder)",
+      "status": "closed",
+      "notes": "CLOSED 2026-08-16. Invisible to certification by construction: the registry is DERIVED from the standard, so anchors were 'verbatim in the registry' (the one they themselves created), order held, coverage reached the end. Surfaced only when the F1 seam pack printed an anchor beside its unit's title. Re-anchored by Fable 5 against a constrained prompt (docs/testing_artefacts/PROMPT_reanchor_ss_viii_ch08.md); every `old` verified verbatim and the chain simulated on copies first. Registry 12 -> 15. THE LESSON WORTH KEEPING: three compact repairs made earlier the same day were REVERTED, because 'align the compact to the top' had been quietly compensating for a top that was wrong — that rule holds only while the top is trustworthy, and nothing deterministic tells you when it is not. Residual: p08 now covers 13/15 (its brief was built from the mislabelled registry) and C5's coverage check cannot see the gap because it too tests a frontier.",
+      "at": "2026-08-16T18:58:00"
     }
   ],
   "_carried_from": "backup/testing/campaign_state_v1_25combo_20260802_090447.json",
