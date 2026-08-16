@@ -66,7 +66,7 @@ BACKUP = REPO / "backup" / "register_repair"
 
 # ── the declared edits ───────────────────────────────────────────────────────────
 # file -> [(unit_number, field_locator, old, new, rule_broken, note)]
-# field_locator: "teacher_notes" | "band:<index>" | "homework:<index>"
+# field_locator: "teacher_notes" | "band:<index>" | "homework:<index>" | "materials:<index>"
 #
 # DECLARATIONS REWRITTEN 2026-08-03 (v1.1). The previous set was written against the
 # 2026-08-01 library (12/9/7) and went stale the moment that library was regenerated under
@@ -109,7 +109,782 @@ BACKUP = REPO / "backup" / "register_repair"
 # what the register asks for — the band already carries its own `minutes`, and the platform
 # rescales them.
 REPAIRS = {
+    # ── S2 · social_sciences · MIDDLE · VI/VII/VIII · BATCH WAVE 1 (2026-08-16) ────────
+    # 40 standards bought in one job (msgbatch_012rg61LP1SVF4ay2JM34bt2, Rs 881.64), certified
+    # free: 90 ban hits over 34 of the 40 files — ~2.25/file against S5's ~1 per 3. The wave is
+    # structurally spotless (zero anchor, order, coverage, synthesis, stimulus or item-type
+    # failures across 41 chapters), so every hit here is text, and every edit is a deletion.
+    #
+    # DISTRIBUTION: 42 clock / 33 forward / 10 meta-leak / 2 ids / 2 calendar / 1 completion.
+    # Two of those families are NEW to the campaign:
+    #
+    #   * meta-leak (10) — the model narrating its own compliance INSIDE the artefact:
+    #     "…without requiring any earlier unit to have happened", "…without requiring any
+    #     particular prior activity to have occurred". This is not a teaching defect and not a
+    #     lottery case; it is the brief inviting a proof. The register block tells the model its
+    #     units must stand alone, and the model answers in prose addressed to the constitution
+    #     rather than to the teacher. Repaired here at the founder's instruction (2026-08-16)
+    #     AND logged as a brief-side finding: the next SS·middle constitution pass should say
+    #     that self-containment is demonstrated by the unit working, never by asserting it.
+    #     Same shape as the S4 note (v1.4) where the model paraphrased the brief's own
+    #     description of the synthesis unit — an argument about the BRIEF, not the model.
+    #
+    #   * ids (2) — leaked competency codes (C-2.2, C-7.3) in a teacher note. Struck as codes
+    #     only: the sentence's teaching claim is kept, the mapping apparatus goes.
+    #
+    # THREE HITS ARE DELIBERATELY NOT DECLARED, and the reasons matter more than the count:
+    #   1. viii ch_09 U11 band:0 "fired approximately 1,650 rounds FOR ABOUT TEN MINUTES" —
+    #      Jallianwala Bagh. The quantity is the duration of the massacre, not the pacing of an
+    #      activity. Repairing it would falsify the history to satisfy a regex, which is the
+    #      wrong direction (runbook trap 4). Belongs at the scanner: the clock ban is about
+    #      instructions to the teacher, and nothing in the pattern distinguishes an instruction
+    #      from a narrated historical event.
+    #   2/3. vii ch_11 U4 and viii ch_14 U10 [calendar] — "agrees to pay Rs 300 next week"
+    #      (a credit-timing question in From Barter to Money) and "if you were appointed urban
+    #      planner for your own town tomorrow". Both are question content, not the teacher's
+    #      calendar. Left alone per founder ruling 2026-08-16; they keep the census at 3 until
+    #      the scanner is narrowed or they are ruled accepted.
+    #
+    # One hit needed a locator the tool did not have: vi ch_07 U21 is a clock quantity in a
+    # MATERIALS line. `materials:<i>` is added to _get_set in the same change rather than
+    # hand-editing the artefact.
+    ("social_sciences", "vi"): {
+        # 27 edits across 12 chapter(s)
+        "ch_01_canonical.json": [
+            (9, "teacher_notes",
+             ", requiring no prior draft or material.",
+             ".",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …his. The sketch-map task is designed "
+             "to be completed and checked within the sitting itself.…"),
+        ],
+        "ch_02_canonical.json": [
+            (4, "teacher_notes",
+             "The causal-chain sentence at the close is the conceptual bridge to the water-cycle role oceans play in the 'Oceans and Life' section.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …e visible in daily life; the data strip "
+             "on proportions directly disrupts this assumption.…"),
+            (8, "teacher_notes",
+             ", and it sets up the size-ranking activity in the next unit.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …is the chapter's clearest example of "
+             "cultural and historical labelling overriding geology.…"),
+            (13, "band:0",
+             "This primes the normative reasoning the unit will develop.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …blem caused by one person and a problem "
+             "that requires collective responsibility to solve?…"),
+        ],
+        "ch_03_canonical.json": [
+            (6, "teacher_notes",
+             "The volcanic-origin explanation for the Deccan is important groundwork for the livelihood discussion in the next unit.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …and elevated position are the critical "
+             "distinguishing markers and need explicit emphasis.…"),
+            (12, "band:1",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …and animals would survive in a desert? What features would they "
+             "need?' Students brainstorm, then teacher confirms with textbook-level content: "
+             "sparse,…"),
+        ],
+        "ch_05_canonical.json": [
+            (1, "teacher_notes",
+             "Let students' predictions about name-sources remain tentative so that later units can confirm or correct them.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …ty makes clear that the Subcontinent's "
+             "boundaries and labels have shifted over millennia.…"),
+        ],
+        "ch_06_canonical.json": [
+            (16, "band:2",
+             " They write for approximately ten minutes.",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …with named evidence, and briefly acknowledge why a different "
+             "choice could also be argued.…"),
+            (20, "band:2",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …to name this civilisation, what name would you choose and why?' "
+             "Students discuss in pairs, then share with the class. Names from the chapter — "
+             "Indus,…"),
+        ],
+        "ch_07_canonical.json": [
+            (17, "teacher_notes",
+             "The tree metaphor revisit connects this closing directly to the chapter's opening frame without requiring any earlier activity to have occurred.",
+             "",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …gned to make students earn the "
+             "conclusion from evidence rather than simply agree with it.…"),
+            (21, "materials:1",
+             " in the first five minutes",
+             "",
+             "register/clock",
+             "a clock quantity in a MATERIALS line, not a band — the only one in the wave. 'Role "
+             "cards prepared by students' is the material; when they were made is the sitting's "
+             "business"),
+            (22, "band:0",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …nk (the shared concepts), and the branches (what grew from these "
+             "roots). Work individually, then we compare.' Students work silently.…"),
+        ],
+        "ch_08_canonical.json": [
+            (3, "band:1",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …se) and 'What differs?' (fabric, weave, dye, print, draping "
+             "style). They work individually, then share with a neighbour.…"),
+            (10, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …rment, and their major harvest festival. The teacher explains "
+             "that each student will speak as that person, describing one thing about their life "
+             "that…"),
+        ],
+        "ch_09_canonical.json": [
+            (3, "teacher_notes",
+             "This unit grounds the chapter's value framework in students' own family experience before moving to the narrative vignettes in the next unit.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …A common confusion is treating dharma as "
+             "a religious term exclusively — clarify that the chapter uses it in the sense of "
+             "one's duty or right action w…"),
+            (5, "teacher_notes",
+             "The drama-outline task lets students own the model without requiring a fully performed roleplay within the sitting.",
+             "",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …ion — frame this as the chapter "
+             "showing that sevā within a family is not gender-assigned.…"),
+        ],
+        "ch_10_canonical.json": [
+            (1, "band:2",
+             " for three to four minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …a school rule feels unfair, can students do anything about it?' "
+             "Students discuss in pairs, then share. Draw out the idea that citizens — like "
+             "student…"),
+            (15, "band:3",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …or labelled most clearly, and one element I think could be made "
+             "clearer.' Partners revise. Class closes with one final question: 'If you had to "
+             "expla…"),
+            (15, "teacher_notes",
+             " — without requiring any particular prior activity to have occurred.",
+             ".",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …vels of Government, and "
+             "representative and grassroots democracy from the Democracy section. A common risk "
+             "in synthesis work is that students list fact…"),
+        ],
+        "ch_11_canonical.json": [
+            (1, "teacher_notes",
+             ", giving you diagnostic information for later units.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …face their intuitions about which level "
+             "of government should handle which scale of problem.…"),
+            (3, "band:2",
+             "This bridges toward the Exemplary Sarpanch cases in a later unit.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …connect this to what the Gram Sabha means "
+             "when it includes women in collective decisions.…"),
+            (6, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …about drought — is water management within a Gram Panchayat's "
+             "power?' Students brainstorm and share ideas. Then introduce Popatrao Baguji Pawar "
+             "and H…"),
+            (8, "band:1",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …children formally naming what they need and adults responding?' "
+             "Students discuss in pairs, then share the key distinction they arrived at — "
+             "ownership…"),
+            (10, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …esolutions — what problems do you think they would choose to "
+             "address?' Students brainstorm and share four or five ideas. Then introduce the "
+             "Children's…"),
+            (15, "band:2",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …Panchayati Raj system, or is it acceptable variation?' Students "
+             "discuss in groups of three, then one spokesperson per group shares the group's "
+             "positio…"),
+        ],
+        "ch_13_canonical.json": [
+            (7, "band:3",
+             "This prepares the ground for Van Mahotsav in the next unit.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …tence answering: 'What must be true about "
+             "a community for Swachh Bharat Abhiyan to work?'…"),
+        ],
+        "ch_14_canonical.json": [
+            (2, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …Project the chapter's illustrated sector diagram. Students study "
+             "it in silence, noting every activity listed under each sector. Teacher then covers "
+             "th…"),
+        ],
+    },
+    ("social_sciences", "vii"): {
+        # 32 edits across 10 chapter(s)
+        "ch_01_canonical.json": [
+            (5, "band:2",
+             " for about six minutes total",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …alongside. Class selects the most productive question from each "
+             "cluster and discusses both, with students offering reasoning rather than the "
+             "teacher s…"),
+            (7, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …historically important — for farming, for trade, for cities?' "
+             "Students brainstorm in pairs, then share.…"),
+            (16, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …and which would allow passage — and from which direction.' "
+             "Students study the map silently and mark entry-possible and entry-blocked zones "
+             "with symbol…"),
+        ],
+        "ch_03_canonical.json": [
+            (3, "band:2",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …ear; what does that tell us about the role of latitude relative "
+             "to seasons?' Pairs discuss, then share answers aloud.…"),
+            (3, "teacher_notes",
+             "; distinguish them clearly here since altitude is the subject of the next unit.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …m. Students may conflate latitude with "
+             "altitude (both make places cooler as they increase).…"),
+            (7, "band:3",
+             "This grounds the mechanism in cultural significance before the next unit explores climate and livelihoods.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …e the subject of classical music in a "
+             "farming civilisation?' Students write one sentence.…"),
+            (13, "band:3",
+             " — it sets up the next unit's deeper engagement with mitigation.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …lifestyles) often conflict with economic "
+             "growth goals. This question is not resolved here.…"),
+        ],
+        "ch_04_canonical.json": [
+            (1, "teacher_notes",
+             "The two-column chart anchors the contrast and will serve as a reference frame for the sections that follow.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …nd Urbanisation (late Vedic, Buddhist, "
+             "Jain) are distinctly later than the Harappan peak.…"),
+            (19, "band:0",
+             " for four minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …most significant changes the chapter describes in each domain.' "
+             "Students work individually, then compare with a partner.…"),
+        ],
+        "ch_05_canonical.json": [
+            (4, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …hy would joining a guild benefit you more than working alone?' "
+             "Students think individually, then share.…"),
+            (18, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …common and where did they differ in how they built and held "
+             "their empires?' Students think.…"),
+        ],
+        "ch_06_canonical.json": [
+            (6, "teacher_notes",
+             "The mapping task fixes geographic positions that later units build on.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …conditions produce organised literary "
+             "assemblies connects cultural and political history.…"),
+            (10, "teacher_notes",
+             " (C-2.2)",
+             "",
+             "register/ids",
+             "leaked competency code in prose the teacher reads. The claim — this section is a "
+             "primary carrier of cultural continuity — is the teaching point and stands; the "
+             "code is mapping apparatus and belongs nowhere near the classroom | survives: …s is "
+             "one of two sections the mapping identifies as primary carriers of cultural "
+             "continuity, and it also carries the inclusion theme (C-7.3). A common…"),
+            (10, "teacher_notes",
+             " (C-7.3)",
+             "",
+             "register/ids",
+             "second code in the same sentence, same reason | survives: …s primary carriers of "
+             "cultural continuity (C-2.2), and it also carries the inclusion theme. A common "
+             "confusion is reading the Indo-Greek period purely…"),
+            (12, "teacher_notes",
+             "The map task grounds the abstract scale claim in a visual form that the art-school discussion in the next unit can then build on.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …ognising it as a deliberate political act "
+             "by a ruler governing a vast and diverse empire.…"),
+            (18, "teacher_notes",
+             "The timeline on the board provides a shared scaffold that makes the breadth of the chapter visible without requiring any particular prior activity to have happened.",
+             "",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …tion on the most important thread of "
+             "continuity, not simply enumerate what they remember.…"),
+        ],
+        "ch_07_canonical.json": [
+            (7, "teacher_notes",
+             " — the revenue-to-patronage chain students reconstruct here will resurface when they examine Nālandā and the arts in later units.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …etes the economic picture needed to "
+             "understand how Gupta cultural achievements were funded. A common confusion is "
+             "imagining the Indian Ocean as a peri…"),
+            (12, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …Display all four images simultaneously. Students observe "
+             "silently, then write: 'These four works come from different places and show "
+             "different subject…"),
+        ],
+        "ch_09_canonical.json": [
+            (1, "band:1",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …ool had no rules and no one to enforce them, what would happen?' "
+             "Students discuss in pairs, then share briefly. The teacher uses this to anchor the "
+             "ch…"),
+            (6, "band:3",
+             " — that distinguishes this system and will be contrasted with the presidential model in the next unit of study.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …tary democracy: it is the indirect "
+             "accountability chain — people → legislature → executive.…"),
+            (9, "band:3",
+             " — and that the next unit will examine Uttaramerur as a second, more detailed case.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …ibution to the history of governance — an "
+             "early example of merit-based, elected leadership.…"),
+            (17, "teacher_notes",
+             "The closing teacher note about oligarchy as a tendency previews the challenges section without naming it as the next unit.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …es students to hold both examples "
+             "simultaneously rather than treating them as sequential.…"),
+            (18, "teacher_notes",
+             ", and it requires students to draw on evidence from all the government types covered across the chapter.",
+             ".",
+             "register/completion",
+             "completion claim — untrue in any compact that does not carry every government type "
+             "| survives: …This unit is the chapter's explicit comparative argument for "
+             "democracy. Having examined monarchy, theocracy, dictatorship, and oligarchy in "
+             "detail, st…"),
+        ],
+        "ch_10_canonical.json": [
+            (10, "band:3",
+             ", which the next unit will examine.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …ing in their own words) in their "
+             "response. Teacher closes by noting the contrast with DPSP.…"),
+            (10, "teacher_notes",
+             ", setting up a conceptual contrast with DPSP that the following unit will complete.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …his unit introduces justiciability as the "
+             "key distinguishing feature of Fundamental Rights. A common confusion: students "
+             "often think all constitutiona…"),
+            (14, "teacher_notes",
+             "The note that 'Socialist' and 'Secular' were added in 1976 connects this unit to the living document concept without requiring that unit to have been taught.",
+             "",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …all religious beliefs and practices "
+             "with equal respect') is precise and worth repeating.…"),
+            (17, "teacher_notes",
+             "The chart activity works as a retrieval and consolidation exercise that sets up the synthesis unit without requiring any specific prior activity to have occurred.",
+             "",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …rather than by constitutional "
+             "function; the evaluative task forces a functional argument.…"),
+            (18, "teacher_notes",
+             ", and the teacher's closing statement restates the constitutional design logic without requiring students to have heard any particular unit's framing before.",
+             ".",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …nto four columns makes the full "
+             "chapter architecture visible as a whole for the first time.…"),
+        ],
+        "ch_11_canonical.json": [
+            (6, "band:2",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …bout how widespread and durable coin-based exchange became in "
+             "India?' Small groups discuss and share one-sentence conclusions.…"),
+        ],
+        "ch_12_canonical.json": [
+            (1, "band:1",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …market near your home? Which require you to go further, or to go "
+             "online?' Partners discuss and report back.…"),
+            (2, "band:1",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …'You are the buyer — you have ₹25 and want at least a dozen "
+             "guavas.' Pairs negotiate aloud and record the price they agreed on (or note if "
+             "they could…"),
+            (5, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …w does it reach the kitchen of a family in Chennai?' Students "
+             "brainstorm in groups of four and write the steps they imagine on strips of paper, "
+             "one st…"),
+        ],
+    },
     ("social_sciences", "viii"): {
+        # 29 edits across 11 chapter(s)
+        "ch_01_canonical.json": [
+            (11, "band:2",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …Gallery: groups post maps and circulate, reading other groups' "
+             "work. Each student places a star on the branch they find most analytically "
+             "compelling a…"),
+        ],
+        "ch_02_canonical.json": [
+            (3, "band:3",
+             " — and that its cultural peak under one ruler will form the next unit's focus.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …her closes by noting that Vijayanagara "
+             "became a 'significant political and cultural force'.…"),
+            (7, "band:3",
+             " — content beyond this chapter but foreshadowed here.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …the post-1707 fragmentation sets the "
+             "stage for the Maratha rise and eventual British entry.…"),
+            (8, "band:2",
+             " for eight minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …Groups of four discuss using the prompt card. Each group must "
+             "identify: one shared factor across all three forms of resistance, one factor "
+             "unique to R…"),
+            (11, "teacher_notes",
+             " — it differs from European feudalism and from the Mughal mansabdari in important ways that the next unit will develop.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …The non-hereditary nature of the iqta is "
+             "the key analytical feature. Students often treat 'tax burden on peasantry' as a "
+             "moral statement rather than a…"),
+            (15, "band:3",
+             " for the remaining minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …y significant, and why? Use one specific example to support your "
+             "position.' Students write — this is a take-away prompt, not assessed in this "
+             "sitting.…"),
+        ],
+        "ch_04_canonical.json": [
+            (5, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …painting 'The East offering its riches to Britannia' without "
+             "commentary. Students observe, then write: (1) Who is depicted and in what posture? "
+             "(2) W…"),
+            (14, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …eacher displays the 1856 sketch of the Santhal rebels without "
+             "commentary. Students observe and write: (1) How are the Santhal rebels depicted — "
+             "postur…"),
+        ],
+        "ch_06_canonical.json": [
+            (1, "teacher_notes",
+             "Draw students back to their board-listed ideas when later units examine specific mechanisms of that oversight.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …s and guides the government, which is the "
+             "architecture the rest of the chapter builds on.…"),
+            (2, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …e alone have that made the Constitution-makers add a second?' "
+             "Students brainstorm in pairs, then contribute ideas. Teacher lists responses "
+             "without eva…"),
+        ],
+        "ch_07_canonical.json": [
+            (9, "band:3",
+             ", which sets up the next unit's focus on how factors interact.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …k at their best without some technology?' "
+             "Students write one final sentence answering this.…"),
+        ],
+        "ch_08_canonical.json": [
+            (3, "band:1",
+             " — these will be revisited in the next unit.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …terrain mean for ocean currents and for "
+             "the creatures that live in the deep?' Hold answers.…"),
+            (3, "band:2",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …→ (at least three downstream consequences they can reason out). "
+             "Students work individually, then share chains with a partner.…"),
+            (3, "teacher_notes",
+             "The climate-regulation mechanism here is the foundation for understanding ocean currents in the following unit — name the heat-release principle explicitly so students can recall it when warm and cold currents are explained.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …A common confusion is that rainfall comes "
+             "directly 'from rivers or clouds' without students connecting moisture to ocean "
+             "evaporation; the step-by-ste…"),
+            (5, "teacher_notes",
+             " — naming coral bleaching as a human-caused phenomenon keeps that thread explicit without requiring any earlier activity to have occurred.",
+             ".",
+             "register/meta-leak",
+             "the model narrating its own compliance to a reader who does not exist; the "
+             "teaching note stands without it | survives: …vances the conservation competency "
+             "first raised in the ocean-pollution plankton discussion. Students often confuse a "
+             "gulf with a bay; the clearest dis…"),
+        ],
+        "ch_09_canonical.json": [
+            (2, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …states. What advantages might each arrangement have for the "
+             "British?' Students think aloud, then the teacher establishes the Crown's 1858 "
+             "takeover fro…"),
+            (3, "band:3",
+             " for eight minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …hanging this practice mattered to a future independent India.' "
+             "Students write individually; two volunteers read their responses for class "
+             "comment.…"),
+            (8, "band:0",
+             " for five minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …and 'What do you notice in the boxes on either side of the "
+             "daily's title?' Students write, then share. Teacher adds: the same 1906 Calcutta "
+             "session d…"),
+            (9, "band:3",
+             ", previewing the next content threads.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …Ghadar Movement and the 'German Plot' as "
+             "further expressions of this revolutionary energy.…"),
+            (12, "band:3",
+             "Teacher closes by previewing the Civil Disobedience Movement's Salt March as the chosen instrument to implement Purna Swaraj.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …olution, explain why 1929 marked a "
+             "decisive turn in the independence movement's demands.'…"),
+        ],
+        "ch_10_canonical.json": [
+            (3, "band:2",
+             " for four minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …tionship between religious practice and architectural form?' "
+             "Small groups of three discuss, then one member reports. Teacher records key points "
+             "on the…"),
+            (4, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …: 'How would you carve a cave using only hammers and chisels?' "
+             "Students individually write, listing the sequence of steps, the challenges, and "
+             "what wo…"),
+            (10, "band:0",
+             " for three minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …f privacy, convenience, rainfall management and cooling?' "
+             "Students brainstorm individually, listing at least one advantage per category, "
+             "then share wi…"),
+        ],
+        "ch_11_canonical.json": [
+            # NOTE 2026-08-16: the mechanical span for this hit ran from ", as established…"
+            # to the end of the sentence and would have left an unbalanced parenthesis
+            # ("…(Supreme Court via SLP under Article 136. The 2023…"). Replaced by the two
+            # surgical deletions below, which take the backward dependency and the meta-leak
+            # separately and leave the parenthetical closing correctly.
+            (11, "teacher_notes",
+             ", as established in the earlier unit on Supreme Court jurisdiction",
+             "",
+             "register/backward",
+             "a BACKWARD unit dependency the scanner did not flag, inside the same sentence as "
+             "the meta-leak below: the SLP answer is false as written for any served count where "
+             "that unit is not present. The parenthetical closes correctly without it | "
+             "survives: …tribunal decisions can be challenged; the answer (Supreme Court via SLP "
+             "under Article 136) shows how the chapter's sections connect without requiring…"),
+            (11, "teacher_notes",
+             " without requiring any earlier unit to have happened",
+             "",
+             "register/meta-leak",
+             "the same sentence then narrates its own compliance with the rule it has just "
+             "broken | survives: …n the earlier unit on Supreme Court jurisdiction) shows how "
+             "the chapter's sections connect. The 2023 legislative renewal is worth noting as "
+             "evidence t…"),
+        ],
+        "ch_12_canonical.json": [
+            (3, "teacher_notes",
+             "; the reference table in 'Key Constitutional Articles' will give them granular detail in a later unit.",
+             ".",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …han retelling. Watch for students who "
+             "conflate the six categories with individual articles.…"),
+            (5, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform rescales "
+             "them | survives: …aised differently? How should schools handle student opinions? "
+             "Students think individually, then share responses orally.…"),
+        ],
+        "ch_13_canonical.json": [
+            (4, "teacher_notes",
+             "The migration discussion naturally bridges to the resource-strain theme and can be carried into later conversations about urban planning.",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …text's clarification that it is an "
+             "average under current conditions is worth dwelling on.…"),
+        ],
+    },
+    # ── APPLIED 2026-08-04 (the VIII ch 3 pilot); MOVED to a 3-tuple SUPERSEDED key on
+    #    2026-08-16 so the batch wave-1 set above can own the live ("social_sciences","viii")
+    #    key — same pattern as ix/APPLIED-20260803 and mathematics·IX v1.5. It was a DUPLICATE
+    #    dict key for one run and silently shadowed the new set (Python keeps the last), which
+    #    surfaced as this set's own "declared text not found" guard firing on already-repaired
+    #    text. The guard caught it; the key layout is what made it possible.
+    ("social_sciences", "viii", "APPLIED-20260804"): {
         "ch_03_canonical.json": [
             (2, "band:3",
              " as a preview of the next unit's content", "",
@@ -1936,6 +2711,11 @@ def _get_set(unit, locator, new=None):
         if new is None:
             return b.get("activity", "")
         b["activity"] = new
+    elif locator.startswith("materials:"):
+        i = int(locator.split(":")[1])
+        if new is None:
+            return unit["materials"][i]
+        unit["materials"][i] = new
     elif locator.startswith("homework:"):
         i = int(locator.split(":")[1])
         if new is None:

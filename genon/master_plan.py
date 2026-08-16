@@ -245,8 +245,21 @@ out = {
     },
     "combos": plan,
 }
-with open(NORMS / "master_plan.json", "w") as f:
-    json.dump(out, f, indent=2, ensure_ascii=False)
+# WRITING IS GUARDED — an IMPORT MUST NOT REBUILD THE ARTEFACT (2026-08-16, ARV-D-164).
+# This file's whole body used to run at import, master_plan.json write included. Anything
+# that did `import master_plan` to reach a pure helper — `canonical_periods` is the obvious
+# one — silently regenerated the plan from the workbook, which DROPS every `canonical_plan`
+# annotation `variant_plans.py` had written. That is not a cosmetic loss: `briefs_for`
+# refuses a provisional row, so the next compact wave refuses all 40 chapters with
+# "Row is provisional", pointing at the standards rather than at the import that erased
+# their annotation. Cost to recover is one free re-annotate; cost to DIAGNOSE is the
+# expensive part, so the guard lives here rather than in a runbook note.
+# The rebuild is now an explicit act: `python3 genon/master_plan.py`.
+if __name__ == "__main__":
+    with open(NORMS / "master_plan.json", "w") as f:
+        json.dump(out, f, indent=2, ensure_ascii=False)
+    print("wrote", (NORMS / "master_plan.json").relative_to(REPO),
+          "— re-run `python3 genon/variant_plans.py` to restore canonical_plan annotations")
 
 # ---- no derived md: master_plan.json is the single artifact (2026-07-31) ----
 # The human-readable master_plan.md was RETIRED after it served a stale floor
@@ -255,16 +268,16 @@ with open(NORMS / "master_plan.json", "w") as f:
 # JSON fresh (python3 -m json.tool) or GET /subjects/{s}/{g}/chapters, which
 # carries recommended_periods, floors, and canonical_plan per chapter.
 
-for _who, _computed, _pinned, _why in PINS_USED:
-    print(f"PINNED  {_who}: rule says {_computed}, pinned to {_pinned}")
-    print(f"        {_why[:150]}")
-if PINS_USED:
-    print(f"({len(PINS_USED)} pin(s) applied from canonical_period_pins.json — remove a "
-          f"pin once its chapter is regenerated to the current rule)\n")
-print("combos planned:", len(plan), "| skipped:", len(skipped))
-for s, c, why in skipped:
-    print("  skipped:", s, c, "-", why)
-tot = sum(p["annual_budget_periods"] for p in plan.values())
-print("total annual periods across portfolio:", tot)
-ss9 = plan["social_sciences|IX"]["chapters"][4]
-print("spot check SS IX ch5:", ss9)
+    for _who, _computed, _pinned, _why in PINS_USED:
+        print(f"PINNED  {_who}: rule says {_computed}, pinned to {_pinned}")
+        print(f"        {_why[:150]}")
+    if PINS_USED:
+        print(f"({len(PINS_USED)} pin(s) applied from canonical_period_pins.json — remove a "
+              f"pin once its chapter is regenerated to the current rule)\n")
+    print("combos planned:", len(plan), "| skipped:", len(skipped))
+    for s, c, why in skipped:
+        print("  skipped:", s, c, "-", why)
+    tot = sum(p["annual_budget_periods"] for p in plan.values())
+    print("total annual periods across portfolio:", tot)
+    ss9 = plan["social_sciences|IX"]["chapters"][4]
+    print("spot check SS IX ch5:", ss9)
