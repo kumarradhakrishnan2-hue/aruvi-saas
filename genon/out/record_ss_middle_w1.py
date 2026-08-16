@@ -177,11 +177,51 @@ W2_COMMENT = (
     "register (wave 2) + 9 anchor token-drops + 5 anchor re-grains + 2 permutations. Every one "
     "declared (old→new) and applied by assertion; none hand-edited; one file regenerated in the "
     "whole stage.<br><br>"
-    "<b>Closing checklist status:</b> item 3 (zero register hits) is NOT met — 5 remain by "
-    "ruling (4 calendar + ARV-D-162 Jallianwala). Item 2 (no quarantined file lacking a live "
-    "counterpart) is NOT met — viii ch 8 p08 and p11 hold the two orphan units. Both are "
-    "deliberate and both are F1 business, not W2 defects."
+    "<b>CLOSING CHECKLIST — items 1,2,3,6,7 MET as of 2026-08-16 12:20.</b> (1) 123 canonical "
+    "files on disk = exactly 41 chapters × 3, none missing. (2) nothing quarantined without a "
+    "live counterpart. (3) <b>zero register ban hits stage-wide</b> — the last five were "
+    "cleared at the SCANNER, never in the text (ARV-D-162/167): every calendar hit across all "
+    "five stages was content, and the clock ban now requires a classroom actor. (6) no derived "
+    "plans on disk. (7) spend reconciled to the rupee — ₹2,332.64 from the three collected "
+    "manifests AND from 121 rows of runtime_data/token_log.csv. Item 4 (every chapter ALL "
+    "PASS) confirmed chapter-by-chapter; item 5 (serves at top/middle/floor/below-floor) is "
+    "the remaining deterministic step before the human gate."
 )
+
+F1_COMMENT = (
+    "<b>SAMPLING PLAN — recorded before any reading begins</b> (runbook §5 / testing.md §6a).<br><br>"
+    "<b>The runbook's own stratification rule does not survive this wave and is deliberately "
+    "replaced.</b> It says include 100% of any chapter that took a repair — written at S5, "
+    "where 28 repairs were unusual. Here <b>40 of 41 chapters took one</b> (232 edits), so that "
+    "rule selects the whole corpus and stops being a sample. The replacement splits by WHAT was "
+    "repaired: a register edit is a text deletion and cannot move a borrow seam, whereas anchor "
+    "and order edits are precisely what the X−1→X math reads.<br><br>"
+    "<b>MANDATORY — 8 chapters whose STRUCTURE was touched, read at 100%:</b> vi ch 7 (anchor "
+    "re-grain, registry 21→17) · vii ch 3 (anchor re-grain, Topography's first visit moved) · "
+    "vii ch 8 (unit permutation, 2 transpositions) · viii ch 7, ch 10, ch 12 (anchor "
+    "token-drops) · viii ch 8 (two orphan units re-anchored to the parent section) · viii ch 15 "
+    "(re-author + permutation).<br><br>"
+    "<b>RANDOM SAMPLE — 25% of the remaining 33, stratified by top-canonical period band</b>, "
+    "seed <code>social_sciences|middle|F1|2026-08-16</code>, "
+    "<code>random.Random(seed).sample(sorted(pool), k)</code> per band, drawn in band order "
+    "small→mid→large: <b>small ≤11p</b> (pool 6, k=2): vi ch 13, viii ch 13 · <b>mid 12–17p</b> "
+    "(pool 16, k=4): vi ch 4, vi ch 8, viii ch 2, viii ch 5 · <b>large ≥18p</b> (pool 11, k=3): "
+    "vi ch 6, vii ch 1, vii ch 10.<br><br>"
+    "<b>TOTAL: 17 of 41 chapters (41%).</b> Read at each chapter's borrow boundary — X just "
+    "above a canonical count, where the Xth unit is borrowed — not at the identity counts, "
+    "since identity serves cannot jump.<br><br>"
+    "<b>Carried into the reading as known items, not defects:</b> viii ch 15 p14 U7 anchors [6] "
+    "Gardens and [9] Vocational education jointly, pulling 9 ahead of 7 and 8 — no permutation "
+    "fixes it and 9 is taught nowhere else in that compact; and the 8 artefact-dependency "
+    "advisories from W1 (a unit reaching for something a previous sitting produced), which "
+    "certification cannot gate and which only a reader can rule on."
+)
+
+post("campaign/item", {
+    "scope": "batch", "key": KEY, "step": "F1",
+    "patch": {"status": "in-progress", "by": "Claude (plan) · founder (rules)",
+              "comment": F1_COMMENT, "files": 17},
+})
 
 post("campaign/item", {
     "scope": "batch", "key": KEY, "step": "W2",

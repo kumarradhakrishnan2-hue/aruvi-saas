@@ -51,29 +51,6 @@
             "note": "same case in the sibling compact: currents and trenches are ocean-section material, not sections of their own"
           }
         ]
-      },
-      {
-        "at": "2026-08-16T12:42:54",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 3,
-            "field": "section_anchor",
-            "rule": "V2/revert-to-authored",
-            "removed": "The oceans",
-            "replaced_with": "Ocean currents / Ocean trenches",
-            "note": "restores the compact's own authored anchor; this unit was the 'orphan' — it was never orphaned, its section simply did not exist in a mislabelled registry"
-          },
-          {
-            "unit": 4,
-            "field": "section_anchor",
-            "rule": "V2/revert-to-authored",
-            "removed": "The Great Barrier Reef",
-            "replaced_with": "The Great Barrier Reef / Smaller water bodies and waterways",
-            "note": "restores the token dropped when the registry lacked the section"
-          }
-        ]
       }
     ]
   },
@@ -192,7 +169,7 @@
           "period_number": 3,
           "period_duration_minutes": 45,
           "activity_title": "Rivers in the Ocean: Currents, Trenches, and Life at the Extremes",
-          "section_anchor": "Ocean currents / Ocean trenches",
+          "section_anchor": "The oceans",
           "materials": [
             "World map showing major ocean currents (projected)",
             "Index cards (one per student)"
@@ -237,7 +214,7 @@
           "period_number": 4,
           "period_duration_minutes": 45,
           "activity_title": "Rainforests of the Sea: The Great Barrier Reef, Smaller Water Bodies, and Human Threats",
-          "section_anchor": "The Great Barrier Reef / Smaller water bodies and waterways",
+          "section_anchor": "The Great Barrier Reef",
           "materials": [
             "Classification table handout (sea, gulf, bay, strait, canal with blanks)",
             "World map for locating water bodies",

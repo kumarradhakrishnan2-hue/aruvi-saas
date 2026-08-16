@@ -84,6 +84,85 @@ def _anchor_field(unit) -> str:
 # the clean two-section form instead. unit_range would have tolerated the duplicate (it takes
 # min/max), but a duplicate anchor is not what V2 says and the next reader would trip on it.
 REPAIRS = {
+  # ── S2 · social_sciences · VIII · ch 8 "World Geography: Some Glimpses" — THE STANDARD WAS
+  #    THE DEFECT (F1 finding, 2026-08-16). Nine units re-anchored; authored by Fable 5 against
+  #    a constrained prompt (docs/testing_artefacts/PROMPT_reanchor_ss_viii_ch08.md), verified
+  #    here before application.
+  #
+  # FOUND AT THE HUMAN GATE, NOT BY A CHECK, and that is the point: this chapter certified ALL
+  # PASS while seven of its thirteen units carried the wrong section name. The registry is
+  # DERIVED from the standard, so a self-consistent mislabelling is invisible to every
+  # deterministic test — anchors were verbatim (they are, in the registry they themselves
+  # created), first-visit order held, coverage reached the end. It surfaced only when the F1
+  # borrow-seam pack put a unit labelled `North America` next to a title reading "Australia's
+  # Deserts, the Spinifex People, and Antarctica".
+  #
+  # NOT a clean off-by-one: U12 is a BACKWARD REVISIT of Asia (its band says it teaches "the
+  # chapter's dedicated mountain-roles passage in the Asia section") wearing Australia's label,
+  # and U4/U5/U6 each teach TWO sections where the standard named one.
+  #
+  # THE CONSEQUENCE THAT MATTERS: restoring U4 and U5 puts "Ocean currents", "Ocean trenches"
+  # and "Smaller water bodies and waterways" into the registry — the exact three names the
+  # COMPACTS had anchored and which were repaired AWAY from them earlier the same day, on the
+  # reasoning that the top's selection is the contract. The compacts were right; they were
+  # describing a chapter the standard had mislabelled. Those three edits are therefore REVERTED
+  # below, and the lesson is recorded rather than quietly fixed: "align the compact to the top"
+  # is only sound while the top is trustworthy, and nothing in the deterministic set can tell
+  # you when it is not.
+  #
+  # Verified on copies before declaring: all 9 old strings resolve verbatim · registry 12 -> 15
+  # · p11 returns 15/15 coverage, 0 unknown anchors, 0 order-breaks · p08 returns 13/15 (it
+  # genuinely does not teach currents or trenches at 8 periods) and still reaches the final
+  # registry section.
+  ("social_sciences", "viii"): {
+    "ch_08_canonical.json": [
+        (4, "The oceans", "The oceans / Ocean currents / Ocean trenches", "V2/mis-anchored",
+         "the five-ocean survey plus currents and the deepest places — the title 'Five Oceans, "
+         "Currents, and the Deepest Places on Earth' names all three"),
+        (5, "The Great Barrier Reef",
+         "The Great Barrier Reef / Smaller water bodies and waterways", "V2/mis-anchored",
+         "the band introduces the reef but the title 'Reefs, Seas, Gulfs, and Canals — Smaller "
+         "Marine Formations' shows it also teaches the smaller water bodies and waterways"),
+        (6, "The Continents: Variety on Land",
+         "The Continents: Variety on Land / Asia", "V2/mis-anchored",
+         "opens with the continent definition and landform types, then 'Orient students to the "
+         "Asia section'; the title 'Asia's Roof, Deserts, and Steppes' confirms both"),
+        (7, "Asia", "Europe", "V2/mis-anchored",
+         "title 'Urals, the European Plain, and the Alps — Europe's Landform Triangle'; the "
+         "band introduces the Urals as the Europe-Asia boundary"),
+        (8, "Europe", "Africa", "V2/mis-anchored",
+         "title 'Africa: Sahara, Savannah, and the Nile'; the band opens on the Sahara as the "
+         "largest hot desert"),
+        (9, "Africa", "South America", "V2/mis-anchored",
+         "title 'Andes, Amazon, and Atacama — South America's Extremes'; the band introduces "
+         "the Andes and Mount Aconcagua"),
+        (10, "South America", "North America", "V2/mis-anchored",
+         "title names the Colorado Plateau, Rockies, Appalachians and Great Lakes; the band "
+         "opens on the Colorado Plateau and Grand Canyon"),
+        (11, "North America", "The Australian Continent", "V2/mis-anchored",
+         "title 'Australia's Deserts, the Spinifex People, and Antarctica'; the Antarctica "
+         "case serves that section's 'not all deserts are hot' corrective"),
+        (12, "The Australian Continent", "Asia", "V2/mis-anchored",
+         "a BACKWARD REVISIT: the band states it 'focuses on the chapter's dedicated "
+         "mountain-roles passage in the Asia section', so it anchors back to Asia, not forward"),
+    ],
+    # ── the three reverts. `old` is what the earlier repair left on disk.
+    "ch_08_canonical_p08.json": [
+        (3, "The oceans", "Smaller water bodies and waterways", "V2/revert-to-authored",
+         "restores the compact's own authored anchor, now that the standard names the section"),
+    ],
+    "ch_08_canonical_p11.json": [
+        (3, "The oceans", "Ocean currents / Ocean trenches", "V2/revert-to-authored",
+         "restores the compact's own authored anchor; this unit was the 'orphan' — it was "
+         "never orphaned, its section simply did not exist in a mislabelled registry"),
+        (4, "The Great Barrier Reef",
+         "The Great Barrier Reef / Smaller water bodies and waterways", "V2/revert-to-authored",
+         "restores the token dropped when the registry lacked the section"),
+    ],
+  },
+  # ── APPLIED 2026-08-16 (wave-2 token-drops) — retired to a 3-tuple key so the ch 8 set above
+  #    owns the live one. ch 8's two entries here are SUPERSEDED by the reverts, not merely
+  #    applied: they were correct against a registry that was itself wrong.
   # ── S2 · social_sciences · VIII · BATCH WAVE 2 TOKEN-DROPS — founder ruling 2026-08-16.
   # Six compacts were quarantined for anchoring sections the top registry does not contain.
   # Diagnosed unit by unit before any edit: of the eleven offending units, NINE also carry a
@@ -102,7 +181,7 @@ REPAIRS = {
   # is jump risk from compact-top anchor misalignment. So: the TEACHING STAYS — not a band,
   # note or item is touched — and only the claim that it constitutes its own registry section
   # is withdrawn, which is what restores the borrow math.
-  ("social_sciences", "viii"): {
+  ("social_sciences", "viii", "APPLIED-20260816-tokendrops"): {
     "ch_07_canonical_p07.json": [
         (1,
          "Introduction / Factors of Production",

@@ -62,85 +62,6 @@
         ],
         "ban_hits_before": 4,
         "ban_hits_after": 0
-      },
-      {
-        "at": "2026-08-16T12:42:54",
-        "tool": "genon/repair_anchors.py v1.0",
-        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
-        "edits": [
-          {
-            "unit": 4,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "The oceans",
-            "replaced_with": "The oceans / Ocean currents / Ocean trenches",
-            "note": "the five-ocean survey plus currents and the deepest places — the title 'Five Oceans, Currents, and the Deepest Places on Earth' names all three"
-          },
-          {
-            "unit": 5,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "The Great Barrier Reef",
-            "replaced_with": "The Great Barrier Reef / Smaller water bodies and waterways",
-            "note": "the band introduces the reef but the title 'Reefs, Seas, Gulfs, and Canals — Smaller Marine Formations' shows it also teaches the smaller water bodies and waterways"
-          },
-          {
-            "unit": 6,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "The Continents: Variety on Land",
-            "replaced_with": "The Continents: Variety on Land / Asia",
-            "note": "opens with the continent definition and landform types, then 'Orient students to the Asia section'; the title 'Asia's Roof, Deserts, and Steppes' confirms both"
-          },
-          {
-            "unit": 7,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "Asia",
-            "replaced_with": "Europe",
-            "note": "title 'Urals, the European Plain, and the Alps — Europe's Landform Triangle'; the band introduces the Urals as the Europe-Asia boundary"
-          },
-          {
-            "unit": 8,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "Europe",
-            "replaced_with": "Africa",
-            "note": "title 'Africa: Sahara, Savannah, and the Nile'; the band opens on the Sahara as the largest hot desert"
-          },
-          {
-            "unit": 9,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "Africa",
-            "replaced_with": "South America",
-            "note": "title 'Andes, Amazon, and Atacama — South America's Extremes'; the band introduces the Andes and Mount Aconcagua"
-          },
-          {
-            "unit": 10,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "South America",
-            "replaced_with": "North America",
-            "note": "title names the Colorado Plateau, Rockies, Appalachians and Great Lakes; the band opens on the Colorado Plateau and Grand Canyon"
-          },
-          {
-            "unit": 11,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "North America",
-            "replaced_with": "The Australian Continent",
-            "note": "title 'Australia's Deserts, the Spinifex People, and Antarctica'; the Antarctica case serves that section's 'not all deserts are hot' corrective"
-          },
-          {
-            "unit": 12,
-            "field": "section_anchor",
-            "rule": "V2/mis-anchored",
-            "removed": "The Australian Continent",
-            "replaced_with": "Asia",
-            "note": "a BACKWARD REVISIT: the band states it 'focuses on the chapter's dedicated mountain-roles passage in the Asia section', so it anchors back to Asia, not forward"
-          }
-        ]
       }
     ]
   },
@@ -305,7 +226,7 @@
           "period_number": 4,
           "period_duration_minutes": 45,
           "activity_title": "Five Oceans, Currents, and the Deepest Places on Earth",
-          "section_anchor": "The oceans / Ocean currents / Ocean trenches",
+          "section_anchor": "The oceans",
           "materials": [
             "Physical world map with ocean labels",
             "Student notebooks",
@@ -351,7 +272,7 @@
           "period_number": 5,
           "period_duration_minutes": 45,
           "activity_title": "Reefs, Seas, Gulfs, and Canals — Smaller Marine Formations",
-          "section_anchor": "The Great Barrier Reef / Smaller water bodies and waterways",
+          "section_anchor": "The Great Barrier Reef",
           "materials": [
             "Physical world map",
             "Printed or projected table of marine formations (sea, gulf, bay, strait, canal)",
@@ -405,7 +326,7 @@
           "period_number": 6,
           "period_duration_minutes": 45,
           "activity_title": "Asia's Roof, Deserts, and Steppes — Landforms of the Largest Continent",
-          "section_anchor": "The Continents: Variety on Land / Asia",
+          "section_anchor": "The Continents: Variety on Land",
           "materials": [
             "Physical map of Asia",
             "Satellite image pair of Tibetan Plateau (1987 and 2021)",
@@ -467,7 +388,7 @@
           "period_number": 7,
           "period_duration_minutes": 45,
           "activity_title": "Urals, the European Plain, and the Alps — Europe's Landform Triangle",
-          "section_anchor": "Europe",
+          "section_anchor": "Asia",
           "materials": [
             "Physical map of Europe",
             "Political map of Europe (textbook end-map)",
@@ -537,7 +458,7 @@
           "period_number": 8,
           "period_duration_minutes": 45,
           "activity_title": "Africa: Sahara, Savannah, and the Nile",
-          "section_anchor": "Africa",
+          "section_anchor": "Europe",
           "materials": [
             "Physical map of Africa",
             "Outline map of Africa for student annotation",
@@ -599,7 +520,7 @@
           "period_number": 9,
           "period_duration_minutes": 45,
           "activity_title": "Andes, Amazon, and Atacama — South America's Extremes",
-          "section_anchor": "South America",
+          "section_anchor": "Africa",
           "materials": [
             "Physical map of South America",
             "Student notebooks",
@@ -669,7 +590,7 @@
           "period_number": 10,
           "period_duration_minutes": 45,
           "activity_title": "Colorado Plateau, Rockies, Appalachians, and Great Lakes — North America",
-          "section_anchor": "North America",
+          "section_anchor": "South America",
           "materials": [
             "Physical map of North America",
             "Student notebooks"
@@ -738,7 +659,7 @@
           "period_number": 11,
           "period_duration_minutes": 45,
           "activity_title": "Australia's Deserts, the Spinifex People, and Antarctica",
-          "section_anchor": "The Australian Continent",
+          "section_anchor": "North America",
           "materials": [
             "Physical map of Australia and Antarctica",
             "Student notebooks"
@@ -799,7 +720,7 @@
           "period_number": 12,
           "period_duration_minutes": 45,
           "activity_title": "Mountains as Water Towers, Boundaries, and Biodiversity Hotspots",
-          "section_anchor": "Asia",
+          "section_anchor": "The Australian Continent",
           "materials": [
             "Physical world map",
             "Student notebooks",
