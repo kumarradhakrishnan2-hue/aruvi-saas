@@ -57,7 +57,8 @@ import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
 from summary_sections import (                                     # noqa: E402
     NONE as SUMMARY_UNREADABLE, STRUCTURED as SUMMARY_STRUCTURED,
-    closing_anchors, reconcile as reconcile_sections, summary_sections,
+    closing_anchors, reconcile as reconcile_sections, section_waivers,
+    summary_sections,
 )
 
 # Every `question_type` the corpus actually uses — a census over all saved plans and the
@@ -363,6 +364,14 @@ def certify(subject, grade, ch, row):
             # anchors in is what stops the check reporting a chapter's closing section as
             # untaught; see summary_sections.reconcile.
             missing, closing, extra = reconcile_sections(reg, secs, closing_anchors(top))
+            # DECLARED WAIVERS (2026-08-17): an accepted-omission ruling at the human gate
+            # is recorded in summary_sections.SECTION_WAIVERS and read here, so a decided
+            # question stops re-raising as a FAIL while any NEW omission still gates.
+            waivers = section_waivers(subject, grade, ch)
+            waived = [m for m in missing if m in waivers]
+            missing = [m for m in missing if m not in waivers]
+            for m in waived:
+                lines.append(f"      WAIVED {top_name}: {m} — {waivers[m]}")
             shape = f"{len(secs)} summary section(s) vs {len(reg)} registry entr(ies)"
             if closing:
                 lines.append(

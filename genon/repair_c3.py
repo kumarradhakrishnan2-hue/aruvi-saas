@@ -215,6 +215,19 @@ GENERIC_PASSES = [
 # ARV-D-070 · Rule 10 continuity by CONTENT, never by position. In every case the content is
 #   already named, so the repair is deletion of the positional clause.
 DECLARED = {
+    # ── S3 · science · IX · ch 7 p18 (2026-08-17, batch wave 2) ──────────────────────
+    # ARV-D-172 · `question_text: null` on the file's single OPEN_TASK (7.6.3 Lever,
+    # the beam-balance table task). Unlike ARV-D-120b nothing is authored here: on an
+    # OPEN_TASK the stem MUST be empty ("" — the prompt lives in `task`, where this
+    # item's already is, in full). null -> "" is the whole repair; the certifier's
+    # str(None) rendering ('None') is what tripped the gate.
+    "ch_07_canonical_p18.json": {
+        "ARV-D-172": [
+            {"item_where": {"question_type": "OPEN_TASK", "section_label": "7.6.3 Lever"},
+             "field": "question_text",
+             "old": None, "new": ""},
+        ],
+    },
     "ch_04_canonical.json": {
         "ARV-D-069": [
             {"unit": 3, "field": "time_bands[2].activity",
@@ -377,7 +390,13 @@ def unit_of(result, number):
 def get_nested(container, field):
     match = re.fullmatch(r"(\w+)\[(\d+)\](?:\.(\w+))?", field)
     if not match:
-        return container[field]
+        # An ABSENT top-level field reads as None rather than raising (2026-08-17,
+        # ARV-D-172): science·ix ch 7 p18's OPEN_TASK omitted `question_text` entirely,
+        # and the certifier's str(item.get(...)) renders absent and null identically —
+        # a declared edit with old=None must be able to reach both states. The
+        # refuse-on-drift guard is unchanged: any OTHER current value still mismatches
+        # the declared old and refuses.
+        return container.get(field) if isinstance(container, dict) else container[field]
     name, idx, leaf = match.group(1), int(match.group(2)), match.group(3)
     target = container[name][idx]
     return target[leaf] if leaf else target
@@ -478,6 +497,10 @@ def main() -> int:
     parser.add_argument("grade")
     parser.add_argument("chapter", type=int)
     parser.add_argument("--dry-run", action="store_true")
+    # --declared-only (2026-08-17, founder ruling at S3 wave 2): touch certified artefacts
+    # only where a gate flagged them. The generic passes stay available for the corpus
+    # pre-warm, but a declared repair must be appliable without dragging them along.
+    parser.add_argument("--declared-only", action="store_true")
     args = parser.parse_args()
 
     folder = PLANS / args.subject / args.grade
@@ -501,7 +524,7 @@ def main() -> int:
         result = doc["result"]
         by_defect = {}
 
-        for defect, label, fn in GENERIC_PASSES:
+        for defect, label, fn in ([] if args.declared_only else GENERIC_PASSES):
             edits = fn(result, ctx)
             if edits:
                 by_defect.setdefault(defect, {"label": label, "edits": []})["edits"].extend(edits)

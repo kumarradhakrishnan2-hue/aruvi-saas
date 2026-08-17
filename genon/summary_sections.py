@@ -190,6 +190,87 @@ def summary_sections(subject, grade, chapter):
         return [], NONE
 
 
+# ── declared waivers (2026-08-17, S3 human gate) ─────────────────────────────
+# Check 11's FAIL is repairable only by a re-author or a HUMAN RULING — and until this
+# table existed the ruling had nowhere to live that certification could read, so every
+# future run re-raised a decided question as a fresh FAIL (and a genuinely NEW omission
+# would have had to be spotted among familiar ones). Same doctrine as every repair tool:
+# declared in code with its evidence, keyed exactly, never computed. A waived section
+# reports as a WAIVED line, not a FAIL, and does not gate; anything not in this table
+# fails exactly as before.
+#
+# THE S3 PATTERN, for the record (all seven rulings, founder, 2026-08-17): not one was a
+# teaching gap. science·secondary's authoring style anchors at the SUBSECTION level and
+# merges small sections into dense units, so a parent heading ("5.3 Methods of
+# Separation") or a merged section's label ("13.3.2 Carbon cycle", taught inside the
+# water+carbon unit) goes unnamed while its content is verifiably present. The one real
+# loss in the whole wave: ch 4's two-sentence oscillatory-motion mention.
+#
+# keyed (subject, grade, chapter) -> {summary section LABEL (verbatim): ruling}
+SECTION_WAIVERS = {
+    ("science", "ix", 4): {
+        "4.1 Motion in a Straight Line":
+            "parent heading; children 4.1.1-4.1.4 anchored U1-U4; only the intro's "
+            "oscillatory-motion mention is absent (the wave's one real loss)",
+        "4.2 Graphical Representation of Motion":
+            "parent heading; children 4.2.1-4.2.3 anchored U5-U7 + revisits U17-U18",
+    },
+    ("science", "ix", 5): {
+        "5.3 Methods of Separation of Homogeneous Mixtures":
+            "bare parent heading, no body text; children anchored U6-U9, U15",
+        "5.4 How Can We Separate the Components of Heterogeneous Mixtures?":
+            "bare parent heading, no body text; children anchored U10-U13",
+    },
+    ("science", "ix", 7): {
+        "7.4 Mechanical Energy":
+            "parent heading (one definitional paragraph); children taught across 8 "
+            "units, 'mechanical energy' 36x in the plan",
+    },
+    ("science", "ix", 8): {
+        "8.5 Atomic Number":
+            "content distributed: Z defined and used in U7 (Symbols, 4x), U8 (Mass "
+            "Number, 3x), U9, U11; only the label is unanchored (ruled 2026-08-17, "
+            "closing the 2026-08-13 pilot finding)",
+    },
+    ("science", "ix", 10): {
+        "10.6 Characteristics of a Sound Wave":
+            "bare parent heading; children anchored U8-U11 + revisit U17",
+    },
+    ("science", "ix", 11): {
+        "11.5 Reproduction in Human Beings":
+            "block compressed into U12-U14; model documented the merge in its own "
+            "teacher notes",
+        "11.5.1 Reproductive maturity":
+            "overview paragraph; gametogenesis U12, 'from puberty' U13, maturity U14",
+        "11.5.3 What are the parts of the female reproductive system?":
+            "taught U12 band 2 (ovaries, oviducts, uterus, cervix, vagina, labelled)",
+        "11.5.4 How are reproductive cells made?":
+            "taught U12 band 3 (meiosis in testes/ovaries, sperm-egg comparison)",
+        "11.5.6 What happens when an egg is not fertilised?":
+            "taught U13 bands 2+4 (full menstrual-cycle diagram, causal sequence)",
+        "11.5.8 Mother's health during pregnancy":
+            "taught U14 band 2 (diet, check-ups, rest, avoidance list)",
+        "11.5.9 What does it mean to be sexually mature?":
+            "taught U14 band 3 (biological vs emotional maturity)",
+        "11.5.10 How can unwanted pregnancies and infections be prevented?":
+            "taught U14 band 4 (barrier/hormonal/IUD/surgical, STI prevention)",
+    },
+    ("science", "ix", 13): {
+        "13.3 Biogeochemical Cycles":
+            "opening paragraph read aloud in U6 band 1; four cycles taught U6-U7",
+        "13.3.2 Carbon cycle":
+            "taught U6 bands 3-5 (fast/slow cycle, ocean CO2 reasoning)",
+        "13.3.4 Oxygen cycle":
+            "taught U7 bands 4-5 (respiration/combustion/photosynthesis balance table)",
+    },
+}
+
+
+def section_waivers(subject, grade, chapter):
+    """The declared accepted-omission rulings for one chapter ({} when none)."""
+    return SECTION_WAIVERS.get((str(subject), str(grade), int(chapter)), {})
+
+
 # ── reconciliation ────────────────────────────────────────────────────────────
 
 def _match(key, reg):

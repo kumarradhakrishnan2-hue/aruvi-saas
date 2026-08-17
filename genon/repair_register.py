@@ -2442,7 +2442,9 @@ REPAIRS = {
     # ch 09 U20 carries ONE unflagged same-family edit (" a second" -> " an"), declared
     # rather than left, because "a second opportunity" presumes an earlier sitting ran the
     # challenge — the same completion family the scanner flagged two sentences later.
-    ("science", "ix"): {
+    # APPLIED 2026-08-17 (0 surviving hits, re-certified 20260817_1040); renamed so the
+    # wave-2 set below owns the live key.
+    ("science", "ix", "APPLIED-20260817-wave1"): {
         "ch_01_canonical.json": [
             (4, "band:0",
              " for five minutes", "",
@@ -2566,6 +2568,170 @@ REPAIRS = {
              "register/forward",
              "'The 315-to-420 ppm data point is a strong anchor.' stands — the data "
              "point's value does not depend on which sitting discusses human impact"),
+        ],
+    },
+    # ── S3 · science · SECONDARY · BATCH WAVE 2 (the COMPACTS) — 2026-08-17 ───────────
+    # 24 compacts bought in msgbatch_0196ajLwMtEnpwdE2LxPVHxt. 23 ban hits over 14 of 24
+    # files — 0.96/file, BELOW wave 1's 1.33 (S2's compacts matched their standards at
+    # 2.3; science's improved). Distribution: 16 forward / 4 clock / 3 completion, no
+    # meta-leak, no calendar. The completion shift wave-1 0 -> 3 on compacts repeats the
+    # S2 observation: a compact asserting "across the chapter" is false by construction.
+    # All edits are pure deletions except three hand-narrowed spans (ch_05 p15 U12,
+    # ch_07 p18 U18, ch_13 p07 U7 — the completion openers, where deleting the clause
+    # alone would orphan the sentence's subject; same-word rearrangements, no new
+    # content). Backward references ("the previous sitting", "the preceding unit") are
+    # the POSITIONAL advisory family, not bans, and are left standing.
+    ("science", "ix"): {
+        "ch_02_canonical_p12.json": [
+            (11, "teacher_notes",
+             " in the following unit", "",
+             "register/forward",
+             "'prepares the ground for thinking about contact inhibition and cancer' "
+             "stands; where that thinking happens is not this unit's claim"),
+        ],
+        "ch_03_canonical_p12.json": [
+            (8, "band:3",
+             " in the next unit", "",
+             "register/forward",
+             "'before reading Section 3.5' survives — a section is a chapter fact; the "
+             "unit pointer is the breach"),
+        ],
+        "ch_04_canonical_p13.json": [
+            (4, "band:0",
+             " for three minutes", "",
+             "register/clock",
+             "'Pairs discuss, then share their proposed method' is the instruction; the "
+             "band carries its own minutes"),
+        ],
+        "ch_04_canonical_p18.json": [
+            (12, "teacher_notes",
+             " in the following unit", "",
+             "register/forward",
+             "'The transition to circular motion will build on the recognition…' keeps "
+             "the teaching point (circular = simplest 2D case); the unit pointer goes"),
+        ],
+        "ch_05_canonical_p11.json": [
+            (1, "band:3",
+             " as ideas that the chapter will develop further", "",
+             "register/forward",
+             "'connecting both to particle size and light scattering' is complete; the "
+             "development promise is false for a served count that ends early"),
+            (10, "band:0",
+             " for two minutes", "",
+             "register/clock",
+             "'They observe each, record whether particles are visible' stands; the "
+             "band carries its own minutes"),
+        ],
+        "ch_05_canonical_p15.json": [
+            (2, "teacher_notes",
+             " before the formulas in the next unit", "",
+             "register/forward",
+             "'to surface the ratio thinking needed' is the teaching act; when the "
+             "formulas arrive is not this unit's claim"),
+            (12, "band:2",
+             " from either direct observation or the principles established across the "
+             "chapter.",
+             " from either direct observation or established principles.",
+             "register/completion",
+             "hand-narrowed rearrangement, same words: the whole-chapter completion "
+             "claim is false for any served count below the top; the fill-from-two-"
+             "sources instruction survives intact"),
+        ],
+        "ch_07_canonical_p13.json": [
+            (3, "band:3",
+             " Students note this as a bridge to the next section's energy content.", "",
+             "register/forward",
+             "whole sentence is a sequencing pointer; the consolidation ('positive work "
+             "adds energy, negative work removes it') is the teaching and stands"),
+        ],
+        "ch_07_canonical_p18.json": [
+            (18, "teacher_notes",
+             "Having worked through all the chapter's quantitative content, this unit "
+             "asks students to synthesise",
+             "This unit asks students to synthesise",
+             "register/completion",
+             "hand-narrowed: the completion opener is false for any served count that "
+             "dropped a quantitative unit; the synthesis instruction keeps its subject"),
+        ],
+        "ch_08_canonical_p07.json": [
+            (2, "band:1",
+             " for two minutes", "",
+             "register/clock",
+             "'Students discuss in pairs, then share' stands; the band carries its own "
+             "minutes"),
+            (3, "band:1",
+             " for three minutes", "",
+             "register/clock",
+             "'Students reason individually, then share' stands; same pattern"),
+            (5, "band:3",
+             " and tell students the next unit will show why this structural feature "
+             "governs how atoms combine", "",
+             "register/forward",
+             "'Draw out the answer — filled outermost shell' is the teaching act and "
+             "closes cleanly; the promise is false for X ending here"),
+        ],
+        "ch_09_canonical_p13.json": [
+            (5, "teacher_notes",
+             " that follow", "",
+             "register/forward",
+             "minimal cut: 'the conceptual frame that the two bonding sections depend "
+             "on' keeps the dependency claim — sections are chapter facts; their "
+             "sequence is not this unit's to assert"),
+            (11, "teacher_notes",
+             " — it is developed fully in the next unit", "",
+             "register/forward",
+             "'Keep the NaCl counter-example brief here.' is complete advice"),
+        ],
+        "ch_09_canonical_p18.json": [
+            (11, "teacher_notes",
+             " in the next unit", "",
+             "register/forward",
+             "'that distinction will matter immediately' survives without promising "
+             "which sitting delivers it"),
+            (17, "teacher_notes",
+             " and should anchor the opening of the next unit", "",
+             "register/forward",
+             "'Collect the exit questions genuinely — they will reveal which step most "
+             "students are uncertain about' stands complete"),
+            (17, "band:3",
+             " to inform the next unit's opening", "",
+             "register/forward",
+             "'Teacher collects the questions.' is the whole classroom act"),
+        ],
+        "ch_10_canonical_p11.json": [
+            (5, "teacher_notes",
+             " the class will formalise in the next unit", "",
+             "register/forward",
+             "'The second written prompt anticipates amplitude and should surface "
+             "intuitions' stands"),
+            (7, "teacher_notes",
+             " (introduced in the next unit)", "",
+             "register/forward",
+             "'loudness is subjective' is true wherever loudness is taught; the "
+             "parenthetical schedules it, which no unit may do"),
+            (10, "teacher_notes",
+             " The concept map can be left on the board for reference in the next "
+             "unit.", "",
+             "register/forward",
+             "whole sentence is a logistics pointer to a sitting that may never follow "
+             "this one"),
+        ],
+        "ch_11_canonical_p12.json": [
+            (7, "teacher_notes",
+             " The causal chain task at the close is an important bridge to the "
+             "fertilisation content students will encounter next.", "",
+             "register/forward",
+             "whole sentence is a sequencing pointer; the pollination misconception "
+             "teaching above it is untouched"),
+        ],
+        "ch_13_canonical_p07.json": [
+            (7, "teacher_notes",
+             "Building on the cycles and sphere interactions covered throughout the "
+             "chapter, this unit asks students to evaluate",
+             "This unit asks students to evaluate",
+             "register/completion",
+             "hand-narrowed: the whole-chapter opener is false below the top count; the "
+             "evaluation instruction keeps its subject"),
         ],
     },
     # ── v1.6, 2026-08-12 · S5 · the_world_around_us · preparatory · WAVE 1 of the corpus ──

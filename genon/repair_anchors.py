@@ -788,6 +788,41 @@ REPAIRS = {
          "note both name only 4.2.2/4.2.3/4.3); last routed unit stays U13, so item "
          "anchoring is unmoved"),
     ],
+    # ch 8 p07: the SS·viii ch 8 family in miniature — the unit's TEACHING is right and its
+    # LABEL is short. U3's closing band presents "Bohr's 1913 resolution: electrons occupy
+    # fixed-energy stationary states (shells K, L, M, N)… resolving the collapse problem" —
+    # that IS section 8.2.3, and the handoff row correctly routes 8.2.3's cell to U3. The
+    # anchor named only 8.2.2. Extending it to the ' / '-joined pair (both tokens verbatim
+    # from the top registry) clears, in one edit: the mis-route, the first-visit skip of
+    # 8.2.3, and the OMITS advisory.
+    "ch_08_canonical_p07.json": [
+        (3,
+         "8.2.2 Testing Thomson's model: The gold foil experiment",
+         "8.2.2 Testing Thomson's model: The gold foil experiment / "
+         "8.2.3 Bohr's model of the atom",
+         "V2/mis-anchored",
+         "the 35-50 band teaches Bohr's stationary states after Rutherford; the handoff "
+         "already routes 8.2.3 -> [3]; both tokens verbatim in the top registry"),
+    ],
+    # ch 12 p12: U9 anchored "12.7.1 The hierarchical nature of classification" — a REAL
+    # summary section the top never anchored, so it is outside the registry (the runbook's
+    # "section missing from registry" family). Check 11 never flagged the top's omission:
+    # its 17-vs-17 count coincides because the registry counts 12.6.5 twice while the
+    # summary counts 12.7.1. Serving validates compact anchors ⊆ top registry, so X=10 and
+    # X=11 raised SERVE INVALID. FOUNDER RULING 2026-08-17: align the compact to the top —
+    # strip the foreign token; the hierarchy teaching stays in U9 as its opening bands
+    # (units may teach more than their anchor names). The handoff row's label is left as
+    # authored: the new anchor is a substring of it, so the agreement check passes, and its
+    # section_context keeps the full cell description.
+    "ch_12_canonical_p12.json": [
+        (9,
+         "12.7.1 The hierarchical nature of classification / "
+         "12.8 Scientific Naming — The Binomial System",
+         "12.8 Scientific Naming — The Binomial System",
+         "V2/registry-omission",
+         "the top registry has no 12.7.1; one label edit clears anchor-verbatim, "
+         "first-visit and both SERVE INVALIDs; no teaching text changes"),
+    ],
   },
 }
 

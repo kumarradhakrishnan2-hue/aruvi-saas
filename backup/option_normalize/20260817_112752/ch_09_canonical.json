@@ -1,0 +1,1787 @@
+{
+  "filename": "ch_09_canonical.json",
+  "saved_at": "2026-08-17T10:06:42",
+  "plan_status": "canonical",
+  "chapter_number": 9,
+  "chapter_title": "Atomic Foundations of Matter",
+  "grade": "Grade IX",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 22
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 22 periods = 1100 minutes\nTotal: 22 periods · 18h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "22x50",
+    "constitution": "LP v1.1 / assessment v1.2",
+    "source": "generate_canonical.py one science ix 9",
+    "ledger_ts": "20260816_191811_sci_ix_09_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-17T10:29:49",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 16,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "preparation for the next unit on formula unit mass",
+            "replaced_with": "",
+            "note": "pure truncation: 'The closing sentence linking molecular mass to covalent-only applicability is important; the distinction between the two terms matters.' — the distinction survives, the unit pointer goes"
+          },
+          {
+            "unit": 20,
+            "field": "teacher_notes",
+            "rule": "register/completion",
+            "removed": "built across the chapter",
+            "replaced_with": "",
+            "note": "'with enough conceptual grounding to connect their result to Dalton's theory' stands; the whole-chapter completion claim is false for any served count below the top"
+          },
+          {
+            "unit": 20,
+            "field": "teacher_notes",
+            "rule": "register/completion",
+            "removed": "a second opportunity",
+            "replaced_with": "an opportunity",
+            "note": "UNFLAGGED same-family edit, declared not left: 'a second opportunity' presumes an earlier sitting ran the design challenge, which a compact or borrowed serving may not have"
+          }
+        ],
+        "ban_hits_before": 2,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Weighing Before and After: Mass in Physical Changes",
+          "section_anchor": "9.1 Law of Conservation of Mass",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "balance or digital scale",
+            "beaker",
+            "common salt",
+            "water",
+            "spatula",
+            "marker for labelling"
+          ],
+          "visual_aids": "Board diagram of the experimental set-up: beaker on balance before and after dissolution",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Pose the opening question: when salt dissolves in water, where does the salt go — and does anything change about the total amount of matter? Students predict whether the mass of the solution will be greater than, less than, or equal to the sum of the masses of salt and water taken, and write their prediction with a brief reason."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Students carry out Activity 9.1: tare the beaker on the balance, record the mass of approximately 50 mL of water, add a spatula of common salt, record the mass of salt added, then measure the mass of the resulting solution. Each group records the three readings in a table."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Groups share their readings. Students calculate the sum of the masses of salt and water and compare it to the mass of the solution. The class discusses why the readings match — or, if they do not, what experimental sources of error could explain any discrepancy."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Teacher formalises the finding: the total mass of matter is conserved in a physical change. Students write one sentence in their notebooks stating the pattern they observed and one sentence explaining it in terms of matter not being created or destroyed."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter's empirical thread, so orient students to the question the chapter is exploring — whether mass changes when matter undergoes physical or chemical transformations. Watch for the common prediction that the solution will be lighter because the salt 'disappears'; probe this by asking where students think the salt particles go after dissolving. A useful checkpoint before closing: ask a student to state the pattern from their data in their own words before you formalise it.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Open and Closed Systems: Mass in Chemical Reactions",
+          "section_anchor": "9.1 Law of Conservation of Mass",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "conical flask",
+            "balloon",
+            "baking soda (sodium hydrogencarbonate)",
+            "vinegar",
+            "digital balance",
+            "elastic band or tape"
+          ],
+          "visual_aids": "Board diagram showing Set-up 1 (open) and Set-up 2 (closed balloon on flask mouth) side by side",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students predict: if a chemical reaction produces a gas, will the total mass of the system change? They record predictions and the reasoning behind them before touching any apparatus."
+            },
+            {
+              "minutes": "8-30",
+              "activity": "Students run Activity 9.2. Set-up 1: vinegar in flask and baking soda beside it, weigh together, then mix with the balloon hanging open — record the final mass. Set-up 2: repeat with the balloon fixed to the flask mouth so CO₂ is captured — record the final mass. Students tabulate both sets of readings."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Groups compare the two set-ups. Students reason about why Set-up 1 shows a lower final mass and Set-up 2 does not. The teacher draws out the distinction between an open and a closed system and connects it to the concept that matter (gas) escaping the system is not the same as matter being destroyed."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students work through the first worked example from the section numerically — verifying conservation for the calcium carbonate and hydrochloric acid reaction — and check each other's arithmetic."
+            }
+          ],
+          "teacher_notes": "Having established conservation in a physical change, this unit asks students to test whether the same holds in a chemical reaction where a gas is produced. A very common error is concluding that mass is not conserved when the open-system reading drops; press students to locate the missing mass rather than abandoning the law. If groups finish the numerical verification quickly, ask them to write one sentence distinguishing what happens to mass versus what happens to matter.",
+          "homework": [
+            "Apply the Law of Conservation of Mass proportionally: if burning 12 g of carbon produces 44 g of carbon dioxide, how much carbon dioxide would be produced by burning 3 g of carbon? Show your working and explain which law you used."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Designing a Test: Zinc, Acid, and Conservation of Mass",
+          "section_anchor": "9.1 Law of Conservation of Mass",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "zinc granules",
+            "dilute hydrochloric acid",
+            "conical flask or test tube",
+            "balloon or stopper",
+            "digital balance",
+            "safety goggles"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students read the Think as a Scientist prompt: design and perform their own experiment using zinc and dilute hydrochloric acid to test whether mass is conserved. In pairs they sketch a set-up, identify what they will measure, and predict the outcome before any apparatus is assembled."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Groups carry out their chosen set-up. They record initial masses of acid and zinc, allow the reaction to proceed, and record the final mass. Groups that use an open system and see a mass drop are encouraged to redesign with the flask capped before they draw a conclusion."
+            },
+            {
+              "minutes": "30-43",
+              "activity": "Each group shares its set-up and result. The class evaluates which set-ups give reliable data and why. Students articulate the distinction between a flawed experimental design and a violation of the law."
+            },
+            {
+              "minutes": "43-50",
+              "activity": "Students write a brief conclusion stating whether their data support the Law of Conservation of Mass and identifying one source of error in their set-up. Teacher reviews Activity 9.3 (sodium sulfate and barium chloride) as a second verification, noting the white precipitate forms but total mass is unchanged."
+            }
+          ],
+          "teacher_notes": "The design-your-own structure of this unit surfaces whether students understand what the law requires them to control for, not just what the law says. Watch for groups who weigh only the zinc or only the acid rather than the whole system; redirect them by asking what matter is present in the system at the start and what is present at the end. Reinforce that both experiments in this unit — the zinc-acid design and Activity 9.3 — are verifications of the same law Antoine Lavoisier proposed in 1789.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Fixed Ratios Always: Exploring the Law of Constant Proportions",
+          "section_anchor": "9.2 Law of Constant Proportions",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "calculator"
+          ],
+          "visual_aids": "Board table: source of water (river, borewell, ocean) vs. mass of hydrogen and oxygen obtained on decomposition",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher presents the central question: if a compound can be obtained from different natural sources or synthesised in different laboratories, is its composition always the same? Students discuss in pairs and predict before any examples are given."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Teacher presents the Law of Constant Proportions using water as the main example: regardless of source, 9 g of water always yields 1 g of hydrogen and 8 g of oxygen. Students verify the ratio 1:8 numerically. The Threads of Curiosity passage about cinnabar (hingula) is read aloud: mercury and sulfur always appear in approximately 86.22% and 13.78% by mass regardless of origin."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Students work through the sodium chloride worked example: Na:Cl mass ratio is 23:35.5; if 46 g of sodium reacts, how much chlorine is needed? Students solve it, then construct a parallel problem of their own using the same law."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students write two sentences distinguishing the Law of Conservation of Mass from the Law of Constant Proportions — what each law says, and what each law is about. Pairs compare sentences and refine wording."
+            }
+          ],
+          "teacher_notes": "Students frequently conflate the two laws introduced so far — conservation of mass concerns total mass across a reaction, while constant proportions concerns the fixed composition within a compound. The cinnabar example is effective for showing the law transcends any single laboratory or civilisation; draw out that 'regardless of source' is the key phrase. A useful exit check: ask one student to explain, in one sentence, what would be false about the world if this law did not hold.",
+          "homework": [
+            "A sample of sodium chloride obtained from seawater and a sample obtained from a salt mine are each decomposed. Predict the mass of chlorine obtained from 11.5 g of each sample, using the Na:Cl mass ratio of 23:35.5. Explain why your answer for both samples is the same."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Particles That Rearrange: Dalton's Atomic Theory Explained",
+          "section_anchor": "9.3 Dalton's Atomic Theory",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks"
+          ],
+          "visual_aids": "Board diagram: before and after a reaction showing atoms rearranging (e.g. H₂ + O → H₂O) with atom count verified on both sides",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher poses the bridge question: the two laws we have verified tell us what happens to mass — but why does it happen? Students suggest possible explanations in pairs before any theory is introduced."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Teacher presents Dalton's six postulates, 1808, connecting each postulate explicitly to one of the two laws: atoms are indestructible and merely rearrange → conservation of mass; atoms of a given element are identical and combine in fixed ratios → constant proportions. Students annotate their notes with the law each postulate explains."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students work through the What if… prompt: if atoms could combine in any ratio rather than fixed whole-number ratios, what would change about the substances around us? Students write three consequences and share with a neighbour."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Class discussion evaluates the What if… responses. Teacher highlights the magnesium burning in air example: magnesium oxide always has a fixed formula because the postulates demand it. Students write one sentence linking Dalton's theory to each of the two laws by name."
+            }
+          ],
+          "teacher_notes": "Having verified both empirical laws experimentally and numerically, students are now ready for the particle-level explanation those laws demand. A persistent misconception is that atoms are created or destroyed during reactions; use the board diagram of atom counts before and after to show directly that the same atoms are present — only their arrangement changes. The What if… activity works best if students are pressed to name specific substances that would cease to be reliable, not just say 'everything would be different'.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Stable Arrangements: How and Why Atoms Form Chemical Bonds",
+          "section_anchor": "9.4 How Atoms Combine?",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "periodic table or element card set"
+          ],
+          "visual_aids": "Board diagram: energy level diagram showing that combined atoms have lower total energy than separate atoms; duplet and octet rule summary table",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher recalls the concept from Chapter 8 that atoms with eight electrons in their valence shell (or two if the K-shell is the outermost) are stable. Students identify the valence electron counts of H, O, Cl, Na from memory or the periodic table and mark which are stable and which are not."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Teacher explains why atoms combine: the total energy of the combined system is lower than the sum of individual atomic energies, making the bonded arrangement more stable. The concept of a chemical bond as the force holding atoms together is introduced. Students define molecule, note the condition for independent existence, and identify why helium exists as a single atom."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Students classify atoms from a short list (He, Ne, H, O, Cl, Na, Mg) as (a) already stable, (b) likely to share electrons, or (c) likely to transfer electrons, giving a one-line reason for each classification based on valence electron count."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Pairs present one classification to the class and receive feedback. Teacher introduces the two broad bonding pathways — sharing (covalent) and transfer (ionic) — as the framework the next several units will develop in detail."
+            }
+          ],
+          "teacher_notes": "This unit establishes the conceptual framework that all bonding discussion depends on — why atoms bond at all, and what determines which pathway they take. Students sometimes believe that noble gases do bond because they recall learning about compounds like XeF₄; acknowledge this honestly and note the chapter focuses on the common bonding patterns for main-group elements. The classification activity is a useful diagnostic: if students classify Na as 'sharing', the valence electron count reasoning needs more attention before moving to ionic bonding.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Sharing Electrons: Covalent Bonds in Hydrogen and Chlorine Molecules",
+          "section_anchor": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "coloured chalk or markers for board work"
+          ],
+          "visual_aids": "Board diagrams: electron-dot (Lewis dot) structures and bond-line representations for H₂ and Cl₂",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher reviews valence electron counts for H (1) and Cl (7) and asks: what would each atom need to do to achieve a stable configuration? Students answer before the bonding mechanism is shown."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Teacher develops the electron-sharing explanation for H₂: each H atom contributes one electron to a shared pair, both achieve the duplet, forming a single bond H—H. Then for Cl₂: each Cl atom has seven valence electrons and contributes one to a shared pair, both achieve the octet, forming a single bond Cl—Cl. Students draw the electron-dot structures and bond-line representations for both molecules in their notebooks."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Teacher extends to O₂: each O atom has six valence electrons and needs two more; two O atoms share two electrons each, forming a double bond O=O. Students draw the structure and explain in writing why a single bond would leave oxygen short of its octet."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students answer three diagnostic questions without notes: (1) How many electrons does each H atom contribute to the bond in H₂? (2) How many shared pairs are in O₂? (3) Why is the bond in O₂ called a double bond? Pairs check each other's answers."
+            }
+          ],
+          "teacher_notes": "The most frequent confusion at this point is between the number of electrons contributed by each atom and the total number of electrons in the bond; make the distinction explicit by labelling 'contributed by atom A' and 'contributed by atom B' in the shared region of the dot diagram. The move from single bond (H₂, Cl₂) to double bond (O₂) is the key progression this unit builds; check that students can explain the double bond in terms of the number of electron pairs shared, not just recognise the symbol O=O.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Sharing Across Elements: Covalent Bonds in HCl and Water",
+          "section_anchor": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "coloured chalk or markers"
+          ],
+          "visual_aids": "Board diagrams: electron-dot structures and bond-line representations for HCl and H₂O",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Brief recall: students state from memory the valence electron count of H, Cl, and O, and the number of electrons each needs to reach stability. Teacher records answers on the board for reference during the unit."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Teacher develops HCl: hydrogen needs one electron, chlorine needs one, so one shared pair forms a single covalent bond H—Cl. Students draw the electron-dot structure and bond-line diagram. Teacher then develops H₂O: oxygen needs two electrons while each hydrogen needs one, so two H atoms each share one electron with the same O atom, forming two single bonds. Students draw the structure and count shared and unshared electron pairs."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students attempt to draw the covalent structure of NH₃ (nitrogen has five valence electrons and needs three more; three H atoms each share one electron) without teacher guidance, applying the same logic. Pairs compare diagrams and identify any discrepancies."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class discusses the NH₃ diagrams. Teacher confirms the correct structure and notes the lone pair on nitrogen. Students write a generalisation: 'The number of covalent bonds an atom forms equals the number of electrons it needs to reach its stable configuration.'"
+            }
+          ],
+          "teacher_notes": "Having built the pattern for same-element molecules, students now apply it across two different elements — the essential extension. A common error with H₂O is drawing only one bond between H and O, forgetting that oxygen needs two electrons; ask students to verify the octet on O after drawing any proposed structure. The NH₃ extension task is a productive struggle that reveals whether students have internalised the logic or are pattern-matching from examples.",
+          "homework": [
+            "Draw the electron-dot structure and bond-line diagram for hydrogen sulfide (H₂S), given that sulfur has six valence electrons. State how many bonds H₂S contains and explain why."
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Naming Covalent Compounds Using the Prefix System",
+          "section_anchor": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "formula cards: CO, CO₂, CS₂, PCl₃, SF₆, N₂O₄, N₂O₅, H₂S"
+          ],
+          "visual_aids": "Board table: prefix (mono through hexa), number of atoms, example compound name",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher introduces the prefix naming system for covalent compounds: the first element keeps its name (no prefix for mono-); the second element ends in -ide; prefixes mono- through hexa- indicate atom count. Vowel-dropping rules and the hydrogen exception (no prefix for hydrogen as first element) are noted with examples."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students name eight compounds from formula cards (CO, CO₂, CS₂, PCl₃, SF₆, N₂O₄, N₂O₅, H₂S) and write each name alongside its formula. Pairs check each other, then the class verifies against the textbook worked examples."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Reverse task: students are given the systematic names dinitrogen tetroxide, phosphorus trichloride, and carbon disulfide and must write the correct formula. They also identify which common names (water, ammonia) override the systematic name."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Quick class quiz: teacher reads five compound names (or formulae) and students write the corresponding formula (or name). Errors are corrected immediately through class discussion."
+            }
+          ],
+          "teacher_notes": "Prefix naming is a procedural skill with two common failure points: applying mono- to the first element when the rule forbids it, and forgetting the vowel-dropping rule (monoxide, not monooxide). The reverse task — name to formula — is more demanding than formula to name and is a good indicator of genuine understanding rather than rote recall. Note that H₂O and NH₃ always carry their common names in scientific usage; students should not produce 'dihydrogen monoxide' for water.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Electron Transfer and the Formation of Ionic Bonds",
+          "section_anchor": "9.4.2 Bonding by electron transfer — Ionic bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "periodic table"
+          ],
+          "visual_aids": "Board diagram: stepwise electron transfer from Na to Cl, showing Na⁺ (11 protons, 10 electrons) and Cl⁻ (17 protons, 18 electrons) with the ionic bond arrow between them",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher revisits the bonding framework from the unit on how atoms combine: atoms with fewer than four valence electrons tend to donate electrons; atoms with more than four tend to accept them. Students predict what Na (1 valence electron) and Cl (7 valence electrons) will each do, and write their prediction."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Teacher develops the NaCl example step by step: Na loses its one valence electron to become Na⁺ (11 protons, 10 electrons, stable octet); Cl gains one electron to become Cl⁻ (17 protons, 18 electrons, stable octet). Students draw the before-and-after diagram, labelling proton count, electron count, and charge for each ion."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Teacher introduces the Threads of Curiosity content: ionic compounds form 3-D crystal lattices, not individual molecules; in NaCl each Na⁺ is surrounded by six Cl⁻ and vice versa. Students sketch the lattice arrangement and write one sentence explaining why NaCl does not exist as an isolated Na⁺Cl⁻ pair."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students define cation, anion, ion, and ionic bond in their own words and check their definitions against the textbook. Quick pair check: each student tests their partner's definition with one probing question."
+            }
+          ],
+          "teacher_notes": "The proton-count versus electron-count distinction is the single most important precision this unit builds — students routinely forget that the proton count is unchanged when a charge forms. Ask students to state explicitly that Na⁺ still has 11 protons after losing an electron; this is the clearest way to correct the misconception that the nucleus changes. The crystal lattice content extends neatly from the ionic bond concept: the force that holds Na⁺ and Cl⁻ together pairwise also organises them into the extended 3-D structure.",
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Naming Ionic Compounds and Reading the Ion Table",
+          "section_anchor": "9.4.2 Bonding by electron transfer — Ionic bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "Table 9.1 (ion list)",
+            "notebooks"
+          ],
+          "visual_aids": "Board display of Table 9.1: monoatomic ions (Na⁺ through Al³⁺, F⁻ through S²⁻) and polyatomic ions (OH⁻, NO₃⁻, HCO₃⁻, CO₃²⁻, SO₄²⁻, NH₄⁺) with formulae and valencies",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher presents the naming rule for ionic compounds: cation name first, then anion name; simple anions end in -ide; polyatomic ions generally do not end in -ide. Students read Table 9.1 and group its ions into monoatomic cations, monoatomic anions, and polyatomic ions."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students name six ionic compounds from formulae given by the teacher (e.g. KCl, MgO, AlF₃, CaCO₃, Fe₂O₃, NH₄Cl) using Table 9.1 as reference. Pairs share and verify, then the class discusses any disagreements."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Reverse task: students write the formula for iron(II) chloride, barium sulfate, potassium hydroxide, and copper(II) nitrate given the ion table. Students identify which ion is the cation and which is the anion before writing the formula."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a rule summary in their own words covering: when an anion ends in -ide, why polyatomic ion names differ, and how to determine which ion in a pair is the cation. Pairs compare and refine."
+            }
+          ],
+          "teacher_notes": "A common confusion is applying the -ide suffix to polyatomic ions such as sulfate or nitrate; the rule that polyatomic ions do not end in -ide should be stated as a positive feature of those ions' names, not just a list of exceptions. When students reach the reverse task, watch for errors in identifying the cation from the formula alone — they may forget that metals form cations and non-metals form anions. Table 9.1 is the working tool here; fluency with it matters more than memorisation at this stage.",
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Criss-Cross in Action: Writing Formulae for Covalent Compounds",
+          "section_anchor": "9.5 Writing Chemical Formulae",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "Table 9.1"
+          ],
+          "visual_aids": "Board worked example: stepwise criss-cross for H₂S — write symbols, write valencies below, criss-cross as subscripts, simplify if possible",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher introduces the criss-cross method for covalent compounds as a shortcut that bypasses drawing electron configurations: write element symbols, write their valencies below each symbol, swap the valency numbers to become subscripts on the opposite element. The three steps are demonstrated for HCl (valencies 1 and 1 → HCl, subscript 1 not written)."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students apply the criss-cross method to H₂S (valencies 1 and 2 → H₂S) and CCl₄ (valencies 4 and 1 → CCl₄), following the textbook worked examples. They check that a subscript of 1 is not written in the final formula."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students practise on four additional covalent compounds of their own choosing from the periodic table (teacher approves valency assignments), applying all three steps. Pairs check each other's work and flag any subscript or valency errors."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class debriefs common errors. Students write one sentence explaining why the criss-cross method gives the same result as working through the octet rule, connecting the procedure to the underlying concept."
+            }
+          ],
+          "teacher_notes": "The criss-cross method is procedurally simple but students frequently forget the simplification step — confirm that valencies that are equal produce subscripts of 1:1 which simplify to no subscript on either element. Emphasise that the method is a tool derived from the same valency logic as electron-sharing; it is not arbitrary, and the sentence students write at the close reinforces this connection. Watch for students writing the valency as a superscript (charge notation) rather than below the symbol during the criss-cross procedure.",
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "activity_title": "Criss-Cross for Ionic Compounds: Brackets, Ratios, and Simplification",
+          "section_anchor": "9.5 Writing Chemical Formulae",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "Table 9.1",
+            "notebooks"
+          ],
+          "visual_aids": "Board worked examples: CaCl₂, Al₂O₃, MgO, CaCO₃, Mg(OH)₂, Al(OH)₃, Al₂(SO₄)₃ — each showing the criss-cross step and simplification step",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher states the additional rule for ionic compounds: write the cation first and the anion second; write the charges beneath the symbols (not as superscripts); criss-cross only the numbers; divide by any common factor to reach the simplest ratio. Charges are not shown in the final formula."
+            },
+            {
+              "minutes": "8-30",
+              "activity": "Teacher works through CaCl₂ (Ca²⁺ and Cl⁻ → subscripts 1 and 2 → CaCl₂), Al₂O₃ (Al³⁺ and O²⁻), and MgO (Mg²⁺ and O²⁻ — equal charges, simplify to 1:1). Students copy each worked example and annotate the simplification step."
+            },
+            {
+              "minutes": "30-43",
+              "activity": "Students work independently through CaCO₃, Mg(OH)₂, Al(OH)₃, and Al₂(SO₄)₃, noting that brackets are required when a polyatomic ion appears more than once. They use Table 9.1 for all ion charges."
+            },
+            {
+              "minutes": "43-50",
+              "activity": "Pairs check their formulae against the textbook worked examples. Students list the two situations where brackets appear in an ionic formula and write the rule as a sentence."
+            }
+          ],
+          "teacher_notes": "Two errors dominate this unit: forgetting to simplify when the criss-crossed subscripts share a common factor (MgO is the key example), and omitting brackets when a polyatomic ion appears with a subscript greater than one. When checking Mg(OH)₂ and Al₂(SO₄)₃, ask students to read their formula aloud — 'magnesium-bracket-O-H-bracket-two' often surfaces missing brackets faster than visual inspection. Reinforce that charges do not appear in the final formula, only the element symbols and subscripts.",
+          "homework": [
+            "Using the criss-cross method and Table 9.1, write the correct chemical formula for: (a) barium chloride, (b) iron(III) oxide, (c) ammonium sulfate. Show your criss-cross steps and simplification for each."
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 50,
+          "activity_title": "Testing Compounds: Solubility and Conductivity in Ionic and Covalent Substances",
+          "section_anchor": "9.6 Properties of the Ionic and the Covalent Compounds",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "camphor",
+            "sodium chloride",
+            "copper sulfate",
+            "sugar",
+            "naphthalene",
+            "water",
+            "kerosene",
+            "petrol",
+            "test tubes",
+            "spatula",
+            "conductivity circuit (9 V battery, bulb, electrodes, connecting wires)",
+            "beakers"
+          ],
+          "visual_aids": "Board version of Table 9.2: compounds vs. solubility in water/kerosene/petrol and conductivity in solid/dissolved state",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students predict for each of the five compounds — camphor, NaCl, CuSO₄, sugar, naphthalene — whether it will dissolve in water and whether it will conduct electricity in solution, recording predictions in their Table 9.2 before any testing."
+            },
+            {
+              "minutes": "8-33",
+              "activity": "Students carry out Activity 9.4 in groups: test solubility of each compound in water, kerosene, and petrol; then test conductivity of each compound in solid form and in aqueous solution using the conductivity circuit. Groups record all observations in Table 9.2."
+            },
+            {
+              "minutes": "33-45",
+              "activity": "Groups compare results and group the five compounds into those with similar behaviour. Class discussion: which properties distinguish ionic from covalent compounds? Students articulate why NaCl conducts in solution (ions free to move) but not as a solid (ions fixed in lattice)."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Students write two summary statements: one for ionic compounds (solubility, conductivity, and the ion-movement explanation) and one for covalent compounds (solubility in organic solvents, no ions produced in solution, low melting and boiling points)."
+            }
+          ],
+          "teacher_notes": "Set up the conductivity circuit before the unit starts and verify it lights with a salt solution so troubleshooting does not consume experiment time. The most common conceptual error is believing that solid NaCl should conduct because it contains charged ions — press students to explain why the presence of ions is not sufficient and what condition for conductivity is missing in the solid state. Sugar dissolving without conducting is the clearest evidence that dissolution and ionisation are separate events.",
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 50,
+          "activity_title": "Explaining Ionic and Covalent Properties: Ion Movement and Bonding Strength",
+          "section_anchor": "9.6 Properties of the Ionic and the Covalent Compounds",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "data from Activity 9.4"
+          ],
+          "visual_aids": "Board diagram: NaCl lattice with ions fixed (solid, no conductivity) versus NaCl in water with ions free (solution, conductivity); covalent compound molecule with no ions",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students revisit their Table 9.2 observations and are asked to construct an explanation — not just a description — for each of three findings: (a) NaCl conducts in solution but not as a solid, (b) camphor dissolves in kerosene but not water, (c) ionic compounds have high melting points. They work individually first."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Small groups compare their three explanations and identify the underlying cause in each case: ion mobility, like-dissolves-like polarity, and strong inter-ionic electrostatic attractions for high melting points. Teacher facilitates with probing questions, not answers."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Each group receives a novel compound identity (e.g. potassium bromide, benzene, glucose) and must predict its solubility and conductivity behaviour from its bonding type, justifying each prediction in writing before any data are given."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Groups share predictions. Teacher reveals the actual behaviour and groups evaluate where their reasoning was correct and where it needs refinement. Students revise their prediction statements accordingly."
+            }
+          ],
+          "teacher_notes": "This unit moves students from recording observations to constructing causal explanations — a distinct and harder step. Watch for groups whose 'explanation' for high melting points in ionic compounds is simply 'strong bonds' without specifying that the bonds are electrostatic attractions between oppositely charged ions in a 3-D lattice. The novel compound prediction task is the key diagnostic: if students can apply the bonding-type logic to an unfamiliar compound, the explanations are genuine rather than memorised.",
+          "homework": []
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 50,
+          "activity_title": "Calculating Molecular Mass for Covalent Compounds",
+          "section_anchor": "9.7 Molecular Mass of Covalent Compounds",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "calculator",
+            "periodic table with standard atomic masses"
+          ],
+          "visual_aids": "Board worked example: H₂O molecular mass step by step — formula → atom count per element → atomic mass contribution → sum",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher defines molecular mass: the total mass of one molecule, calculated by summing the atomic masses of all atoms in the molecular formula (in unified atomic mass units, u). The key restriction is stated: molecular mass applies to covalent compounds that form discrete molecules, not to ionic compounds."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Teacher works through Worked Examples 9.4 and 9.5: H₂O = (1 × 2) + (16 × 1) = 18 u; CO₂ = (12 × 1) + (16 × 2) = 44 u. Students replicate the calculations in their notebooks and check arithmetic."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Students calculate molecular masses independently for four additional compounds: NH₃ (17 u), HCl (36.5 u), CH₄ (16 u), and H₂S (34 u). They must show each step: list the atoms, apply atomic masses, sum the contributions."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write one sentence explaining why ionic compounds such as NaCl do not have a molecular mass, connecting back to the crystal lattice structure established in the ionic bonding unit."
+            }
+          ],
+          "teacher_notes": "The most common arithmetic error here is forgetting to multiply the atomic mass by the number of atoms of that element before summing — for example, writing H₂O = 1 + 16 = 17 instead of (2 × 1) + 16 = 18. Insist students write out the multiplication step explicitly for every element before adding. The closing sentence linking molecular mass to covalent-only applicability is important; the distinction between the two terms matters.",
+          "homework": [
+            "Calculate the molecular mass of sulfuric acid (H₂SO₄) and glucose (C₆H₁₂O₆), showing all steps. State the atomic masses you used for each element."
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 50,
+          "activity_title": "Formula Unit Mass: The Mass Concept for Ionic Compounds",
+          "section_anchor": "9.8 Formula Unit Mass of Ionic Compounds",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "calculator",
+            "Table 9.1",
+            "periodic table"
+          ],
+          "visual_aids": "Board worked example: Ca(NO₃)₂ formula unit mass — identify each element, count atoms carefully using bracket expansion, apply atomic masses, sum",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher explains why ionic compounds need a different mass term: they do not form molecules but rather a repeating lattice, so the relevant unit is the formula unit — the simplest whole-number ratio of ions in the empirical formula. Formula unit mass is calculated the same way as molecular mass but the term is different and applies only to ionic compounds."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Teacher works through Worked Example 9.6: Na₂O = (23 × 2) + (16 × 1) = 62 u. Then Worked Example 9.7: Ca(NO₃)₂ — students must expand the bracket: Ca = 40, N = 14 × 2 = 28, O = 16 × 6 = 96, total = 164 u. Students replicate both calculations."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Students calculate formula unit masses independently for NaCl, MgCl₂, Al₂O₃, and CaCO₃. For CaCO₃ they must use the correct atom count from the formula unit. Pairs verify each other's bracket-expansion step."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a summary table with two columns: 'Molecular mass (covalent)' and 'Formula unit mass (ionic)' — entering one example of each type with the calculated value, and one sentence defining the difference."
+            }
+          ],
+          "teacher_notes": "The most consequential error in this unit is miscounting atoms in formulae with brackets, especially Ca(NO₃)₂ — students forget to multiply both N and O by 2 when expanding the bracket. Require students to write out the expanded atom count explicitly before multiplying by atomic masses. The two-column summary at the close solidifies the distinction between the two mass terms, which is conceptually straightforward once the crystal-lattice nature of ionic compounds is understood.",
+          "homework": []
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 50,
+          "activity_title": "Applying Criss-Cross and Mass Calculations: Mixed Compound Practice",
+          "section_anchor": "9.5 Writing Chemical Formulae",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "Table 9.1",
+            "notebooks",
+            "calculator"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher presents a set of six compound descriptions — three ionic, three covalent — each described only by the identities and valencies (or charges) of its constituent atoms or ions. Students must first classify each as ionic or covalent before writing any formula."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Students apply the criss-cross method to derive the formula for each of the six compounds. For ionic compounds they include the simplification step and bracket rule; for covalent compounds they note the subscript-of-one convention. Pairs check each other's formulae."
+            },
+            {
+              "minutes": "28-43",
+              "activity": "Students calculate the molecular mass or formula unit mass for each compound, choosing the correct term based on their classification in the first step. Each student shows all multiplication steps explicitly."
+            },
+            {
+              "minutes": "43-50",
+              "activity": "Class debrief: teacher selects two compounds where errors were common and walks through the reasoning. Students correct any mistakes and write one sentence explaining the link between the type of bonding and the appropriate mass term."
+            }
+          ],
+          "teacher_notes": "This unit consolidates two procedural skills — formula writing and mass calculation — across both compound types in one sitting, so the classification step at the start is essential: a student who mis-classifies a compound will use the wrong mass term throughout. Selecting the six compounds in advance to include at least one with a polyatomic ion and one that requires bracket simplification will make the debrief maximally productive. Students who finish quickly can be challenged to work backwards: given the formula unit mass of an unknown ionic compound, can they determine its formula?",
+          "homework": []
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 50,
+          "activity_title": "From Electrons to Formulae: Connecting Bonding to Formula Writing",
+          "section_anchor": "9.4.2 Bonding by electron transfer — Ionic bond",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "Table 9.1",
+            "notebooks",
+            "periodic table"
+          ],
+          "visual_aids": "Board diagram: electron transfer diagram for MgCl₂ alongside the criss-cross derivation of MgCl₂ — showing both routes give the same formula",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher poses the linking question: if you know which electrons are transferred in forming an ionic compound, can you predict the formula without the criss-cross table? Students predict the formula for MgCl₂ by drawing the electron transfer diagram for Mg (2 valence electrons) donating one electron to each of two Cl atoms."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students derive the formulae for three ionic compounds — K₂O, AlCl₃, and CaO — using electron transfer logic alone (counting how many anions are needed to accept all of the cation's valence electrons). They then verify each formula using the criss-cross method and confirm both routes agree."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students design a short explanation (three to four sentences) addressed to a peer who knows the criss-cross method but has never seen electron transfer diagrams, explaining why both methods produce the same formula and what the underlying chemical reason is."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pairs exchange explanations and identify any gap in reasoning. Students revise their explanation based on the feedback before writing a final version."
+            }
+          ],
+          "teacher_notes": "This unit asks students to move between two representations of the same bonding event — electron transfer diagrams and criss-cross notation — and to articulate why they converge. The key insight is that the valency (number of electrons lost or gained) is the bridge between the two methods. Students who can write the explanation in the third task have genuinely unified the two approaches; students who treat criss-cross as a separate, disconnected algorithm will struggle here and need targeted questioning about what the numbers in the criss-cross represent.",
+          "homework": []
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 50,
+          "activity_title": "Investigating the Laws: Designing Verification Experiments",
+          "section_anchor": "9.1 Law of Conservation of Mass",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "notebooks",
+            "balance",
+            "zinc granules",
+            "dilute hydrochloric acid",
+            "conical flask",
+            "balloon or stopper"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher revisits the Think as a Scientist challenge from the Law of Conservation of Mass section: design a verification experiment using zinc and dilute hydrochloric acid. Students each write a brief experimental design — what they will measure, how they will ensure the system is closed, what data will count as evidence for or against conservation."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Students carry out their designed experiment, recording all masses before and after reaction. Groups whose designs differ compare their results and discuss whether design differences affected the outcome."
+            },
+            {
+              "minutes": "30-43",
+              "activity": "Students write a formal conclusion: does their data support the Law of Conservation of Mass? They identify at least one source of experimental error and evaluate how it could affect the result. They also state which Dalton postulate their result supports and why."
+            },
+            {
+              "minutes": "43-50",
+              "activity": "Class shares conclusions. Teacher draws the explicit connection: the empirical law, the experimental verification, and the theoretical explanation (Dalton's postulate about atomic indestructibility) all point to the same fact about matter."
+            }
+          ],
+          "teacher_notes": "This unit gives students an opportunity to engage with the experimental design challenge, with enough conceptual grounding to connect their result to Dalton's theory. The most important move is the final synthesis in the last time band: ensure students articulate the three-level connection — observation, law, theory — rather than simply confirming their numbers. Watch for conclusions that state the law was 'proven' rather than 'supported'; precision in scientific language matters here.",
+          "homework": []
+        },
+        {
+          "period_number": 21,
+          "period_duration_minutes": 50,
+          "activity_title": "Nuclear Energy and India's Atomic Science: Bridging Atoms to Applications",
+          "section_anchor": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher introduces the Bridging Science and Society content embedded in Section 9.4.1: atomic and nuclear energy arise from atomic-level processes — specifically nuclear reactions — and have wide applications in electricity generation, medicine, and research. Students recall what they know about energy and atoms before the content is presented."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Teacher presents the key content: nuclear energy from atomic reactions drives steam turbines for electricity generation; medical and research applications include diagnostics and treatment; India's nuclear energy programme has promoted peaceful use of nuclear science. Raja Ramanna's role as a key figure in India's nuclear programme is introduced. Students note three domains of application and one fact about the Indian programme."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students write a short structured response (five to six sentences) connecting atomic structure — specifically the concept that reactions involve atomic-level changes — to one of the three application domains they find most significant, explaining the link between the science and the application."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pairs share responses and provide one piece of feedback: is the connection between atomic science and the chosen application clearly explained, or is it asserted without explanation? Students revise one sentence based on the feedback."
+            }
+          ],
+          "teacher_notes": "This unit covers the Bridging Science and Society material embedded in Section 9.4.1 and rounds out the chapter's content before the synthesis unit. The goal is not depth in nuclear physics — that is a separate chapter — but the recognition that atomic-scale science has societal consequences, and that India has been an active participant in developing peaceful applications. Students sometimes conflate nuclear reactions with chemical reactions; clarify that nuclear energy comes from changes in the nucleus, distinct from the electron-sharing and electron-transfer processes the rest of the chapter develops.",
+          "homework": []
+        },
+        {
+          "period_number": 22,
+          "period_duration_minutes": 50,
+          "activity_title": "Atomic Foundations Unified: From Laws to Bonds to Masses",
+          "section_anchor": "synthesis",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "Table 9.1",
+            "periodic table",
+            "notebooks",
+            "calculator"
+          ],
+          "visual_aids": "Board concept map scaffold: nodes for Conservation of Mass, Constant Proportions, Dalton's Theory, Covalent Bond, Ionic Bond, Chemical Formula, Molecular Mass, Formula Unit Mass — connections blank for students to fill",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students receive the blank concept map scaffold and work individually to add labelled connections between nodes, using the chapter's content to justify each link. They are not given any prompts about which nodes connect; the placement and labelling of arrows is their own reasoning."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "In groups of three, students compare concept maps and resolve disagreements about connections by referring to the chapter content. They identify the two or three connections that the group found most difficult to justify and prepare to share those with the class."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Each group presents one contested connection. The class evaluates the justification: is the link between nodes grounded in the chapter, and does the label on the arrow accurately describe the relationship? Refinements are made in real time. Teacher draws out the central chain: the two empirical laws → Dalton's theory (why fixed ratios) → bonding mechanisms (how fixed ratios arise) → criss-cross formula writing (representing fixed ratios) → mass calculations (quantifying those ratios)."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students work individually on a novel scenario: a student claims that a newly synthesised compound of element X (valency 3) and element Y (valency 2) can have the formula XY. Students must (a) write the correct formula using criss-cross, (b) explain why the claimed formula violates the chapter's principles, and (c) calculate the formula unit mass given that X has atomic mass 27 u and Y has atomic mass 16 u. All three parts are answered in writing."
+            }
+          ],
+          "teacher_notes": "The concept map comparison in groups surfaces reasoning gaps that individual work conceals — students who have memorised procedures separately often cannot articulate why the bonding mechanism determines the type of mass calculation. The novel scenario in the final band is the sharpest test of synthesis: a student who has unified criss-cross, bonding type, and mass calculation can answer all three parts coherently, while a student who has learned each skill in isolation will answer parts (a) and (c) correctly but struggle with part (b). Give full attention to the written explanations in part (b); they are the most diagnostic output of the chapter.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 22
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_label": "9.1 Law of Conservation of Mass",
+        "total_sections": 10,
+        "period_numbers": [
+          1,
+          2,
+          3,
+          20
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students investigate conservation of mass in physical and chemical changes through dissolution, gas-capture, and precipitation experiments, then design and evaluate their own verification experiment using zinc and hydrochloric acid.",
+        "implied_lo": "Students can design and evaluate an experimental procedure to test whether a measurable quantity is conserved across a physical or chemical change.",
+        "section_context": "Mass conservation in physical changes, gas-capturing set-ups, precipitation reactions, Lavoisier 1789",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_label": "9.2 Law of Constant Proportions",
+        "total_sections": 10,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students apply the Law of Constant Proportions numerically using water and sodium chloride, then distinguish the law from conservation of mass in writing.",
+        "implied_lo": "Students can apply a fixed mass-ratio relationship to calculate the quantity of one constituent given the quantity of another in a compound.",
+        "section_context": "Fixed mass ratios in water (1:8) and sodium chloride (23:35.5), Proust's Law, cinnabar cross-cultural example",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_label": "9.3 Dalton's Atomic Theory",
+        "total_sections": 10,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students connect each of Dalton's six postulates to one of the two empirical laws and evaluate a counterfactual scenario about variable atomic ratios.",
+        "implied_lo": "Students can explain how a theoretical model accounts for previously observed empirical regularities by mapping each postulate to the phenomenon it explains.",
+        "section_context": "Dalton's six postulates (1808), atomic indestructibility, fixed ratios, hydrogen-oxygen and magnesium-air examples",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_label": "9.4 How Atoms Combine?",
+        "total_sections": 10,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students classify elements as stable, likely to share, or likely to transfer electrons based on valence electron count and identify the two bonding pathways.",
+        "implied_lo": "Students can classify entities by a structural criterion and justify each classification with a stated rule.",
+        "section_context": "Duplet and octet stability, energy lowering on bonding, chemical bond definition, covalent vs. ionic pathways, molecule definition",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_label": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+        "total_sections": 10,
+        "period_numbers": [
+          7,
+          8,
+          9,
+          21
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students draw electron-dot structures and bond-line diagrams for same-element and cross-element covalent molecules, apply the prefix naming system, and connect atomic bonding to nuclear energy applications and India's nuclear programme.",
+        "implied_lo": "Students can represent bond formation in a covalent molecule using an electron-sharing model and derive the molecule's systematic name from its formula.",
+        "section_context": "H₂, Cl₂, O₂ single and double bonds; HCl, H₂O compound bonds; prefix naming system; nuclear energy applications; Raja Ramanna",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_label": "9.4.2 Bonding by electron transfer — Ionic bond",
+        "total_sections": 10,
+        "period_numbers": [
+          10,
+          11,
+          19
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students trace electron transfer in NaCl formation, distinguish proton count from electron count in ion formation, read and apply the ion table for naming, and connect electron transfer logic to formula derivation.",
+        "implied_lo": "Students can trace the movement of electrons during ionic bond formation and use the resulting ion charges to derive and name the compound's formula.",
+        "section_context": "Na→Na⁺ and Cl→Cl⁻ electron transfer, proton vs. electron counts, NaCl crystal lattice, Table 9.1 monoatomic and polyatomic ions",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_label": "9.5 Writing Chemical Formulae",
+        "total_sections": 10,
+        "period_numbers": [
+          12,
+          13,
+          18
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students apply the criss-cross method to write and simplify chemical formulae for covalent and ionic compounds, including those with polyatomic ions requiring brackets.",
+        "implied_lo": "Students can apply a systematic procedure to derive and simplify the chemical formula of a compound from the valencies or charges of its constituent atoms or ions.",
+        "section_context": "Criss-cross method for covalent (HCl, H₂S, CCl₄) and ionic (CaCl₂, Al₂O₃, MgO, CaCO₃, Mg(OH)₂, Al₂(SO₄)₃) compounds; bracket and simplification rules",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_label": "9.6 Properties of the Ionic and the Covalent Compounds",
+        "total_sections": 10,
+        "period_numbers": [
+          14,
+          15
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students test and compare the solubility and electrical conductivity of five compounds, construct causal explanations for each property difference, and apply the bonding-type logic to predict behaviour of novel compounds.",
+        "implied_lo": "Students can construct a causal explanation linking the microscopic structure of a substance to its observable physical and chemical properties.",
+        "section_context": "Solubility of NaCl, CuSO₄, camphor, naphthalene, sugar in water and organic solvents; conductivity in solid and dissolved states; ion mobility; melting points",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_label": "9.7 Molecular Mass of Covalent Compounds",
+        "total_sections": 10,
+        "period_numbers": [
+          16
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate the molecular mass of covalent compounds by summing atomic mass contributions and explain why the term does not apply to ionic compounds.",
+        "implied_lo": "Students can calculate a derived quantity by systematically applying given values to a formula and explain the scope conditions under which the calculation is valid.",
+        "section_context": "Molecular mass definition; H₂O = 18 u, CO₂ = 44 u; atomic mass contributions; applicability restricted to covalent compounds",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_label": "9.8 Formula Unit Mass of Ionic Compounds",
+        "total_sections": 10,
+        "period_numbers": [
+          17
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate the formula unit mass of ionic compounds including those with polyatomic ions and brackets, and contrast the term with molecular mass.",
+        "implied_lo": "Students can calculate the formula unit mass of an ionic compound by correctly expanding bracketed polyatomic ions and summing all atomic mass contributions.",
+        "section_context": "Formula unit mass definition; Na₂O = 62 u; Ca(NO₃)₂ = 164 u; bracket expansion; distinction from molecular mass",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 11,
+        "section_label": "synthesis",
+        "total_sections": 10,
+        "period_numbers": [
+          22
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct a concept map linking all major chapter ideas, resolve contested connections through group discussion, and apply criss-cross formula writing, bonding-type identification, and mass calculation to a novel compound scenario.",
+        "implied_lo": "Students can integrate the empirical laws, bonding mechanisms, formula-writing procedures, and mass calculations of the chapter into a coherent explanatory account of a novel compound.",
+        "section_context": "Synthesis across conservation of mass, constant proportions, Dalton's theory, covalent and ionic bonding, criss-cross formulae, molecular and formula unit mass",
+        "c_code": "C-1.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "science",
+      "stage": "secondary",
+      "chapter_number": 9,
+      "chapter_title": "Atomic Foundations of Matter",
+      "chapter_cg": "CG-1",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_label": "9.1 Law of Conservation of Mass",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can design and evaluate an experimental procedure to test whether a measurable quantity is conserved across a physical or chemical change.",
+          "section_context": "Mass conservation in physical changes, gas-capturing set-ups, precipitation reactions, Lavoisier 1789",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "In Activity 9.2, students react vinegar with baking soda in two set-ups. In Set-up 1 the balloon containing baking soda hangs beside the open flask; in Set-up 2 the balloon is fixed to the flask mouth before mixing. The final mass recorded in Set-up 1 is lower than the initial mass, but in Set-up 2 the final mass equals the initial mass. Which statement best explains this difference?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Carbon dioxide gas escapes the open system in Set-up 1, so the mass measured after mixing is less than the total mass of matter that was present.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "The baking soda in Set-up 1 is not fully used up, so only a fraction of the reactant mass is counted at the end.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The chemical reaction in Set-up 1 destroys some of the matter as heat is released, reducing the total mass.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The vinegar evaporates during the reaction in Set-up 1, carrying away water vapour and reducing the recorded mass.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "C": "Confuses conservation of mass with conservation of energy; believes chemical reactions consume matter when heat is produced — a common misconception about exothermic reactions.",
+                "B": "Attributes the mass drop to incomplete reaction rather than to gas escaping the system; conflates reaction yield with mass accounting.",
+                "D": "Identifies a real phenomenon (evaporation) but misapplies it; CO₂, not water vapour, is the dominant gaseous product, and the set-up difference is about whether gas is captured, not about evaporation."
+              },
+              "inclusivity": "Students who recall the experimental result without a full causal explanation can eliminate options A and D through the experimental context. Students who approach the question by reasoning about what left the system (open vs. closed) can arrive at the correct answer through logical elimination even without detailed procedural memory."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 1,
+          "section_label": "9.1 Law of Conservation of Mass",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can design and evaluate an experimental procedure to test whether a measurable quantity is conserved across a physical or chemical change.",
+          "section_context": "Mass conservation in physical changes, gas-capturing set-ups, precipitation reactions, Lavoisier 1789",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A student reacts zinc granules with dilute hydrochloric acid in an open beaker. She records the mass of zinc and acid before the reaction and the mass of the contents after the reaction stops. Her final mass reading is 0.18 g less than the initial total mass. She concludes that the Law of Conservation of Mass does not hold for this reaction. (a) Identify the flaw in her experimental design that explains the lower final mass. (b) Describe one change to the set-up that would allow her to obtain a final mass equal to the initial mass. (c) State what the result would be after the redesigned experiment and explain why.",
+          "options": [],
+          "expected_elements": [
+            "Identifies that hydrogen gas is produced in the reaction and escapes the open beaker, accounting for the 0.18 g mass difference.",
+            "Proposes sealing the system — for example, fitting a balloon or a stopper to the flask to capture the hydrogen gas before it escapes.",
+            "States that after the redesign the final mass recorded will equal the initial mass of zinc plus acid.",
+            "Explains that with the gas captured inside the system, no matter leaves, so the total mass is unchanged — consistent with the Law of Conservation of Mass."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": "Students who struggle with part (b) can be credited for correctly identifying hydrogen gas as the escaped matter in part (a), demonstrating the core understanding. Students who prefer a diagrammatic explanation may sketch the redesigned set-up alongside or instead of a written description; this should be accepted as equivalent evidence."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_label": "9.2 Law of Constant Proportions",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can apply a fixed mass-ratio relationship to calculate the quantity of one constituent given the quantity of another in a compound.",
+          "section_context": "Fixed mass ratios in water (1:8) and sodium chloride (23:35.5), Proust's Law, cinnabar cross-cultural example",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "The mass ratio of sodium to chlorine in sodium chloride is always 23 : 35.5, regardless of how the compound is prepared or where it is found. (a) A sample of sodium chloride contains 69 g of sodium. Calculate the mass of chlorine present in this sample. Show your working. (b) A second sample of sodium chloride is obtained from seawater and is found to contain 71 g of chlorine. Calculate the mass of sodium in this sample. Show your working. (c) Cinnabar (mercury sulfide) from two different ancient civilisations always yields mercury and sulfur in approximately 86.22% and 13.78% by mass respectively. State which law this illustrates and explain what 'regardless of source' means in the context of this law.",
+          "options": [],
+          "expected_elements": [
+            "Part (a): Uses ratio 23:35.5; if 23 g Na corresponds to 35.5 g Cl, then 69 g Na corresponds to (69/23) × 35.5 = 106.5 g Cl.",
+            "Part (b): Uses ratio 23:35.5; if 35.5 g Cl corresponds to 23 g Na, then 71 g Cl corresponds to (71/35.5) × 23 = 46 g Na.",
+            "Part (c): Names the Law of Constant Proportions (or Proust's Law / Law of Definite Proportions).",
+            "Part (c): Explains that 'regardless of source' means the composition of a pure compound is fixed by the identities of its constituent elements, not by where or how it was obtained — so cinnabar from any civilisation has the same percentage composition."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": "Students who set up the ratio correctly but make arithmetic errors should receive credit for method. Students who can name and explain the law in part (c) but make calculation errors in parts (a) and (b) demonstrate conceptual understanding; both dimensions should be assessed separately."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_label": "9.3 Dalton's Atomic Theory",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can explain how a theoretical model accounts for previously observed empirical regularities by mapping each postulate to the phenomenon it explains.",
+          "section_context": "Dalton's six postulates (1808), atomic indestructibility, fixed ratios, hydrogen-oxygen and magnesium-air examples",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "When magnesium burns in air, it forms magnesium oxide. The total mass of magnesium oxide produced equals the sum of the masses of magnesium and oxygen that reacted. Which postulate of Dalton's Atomic Theory directly accounts for this observation?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Atoms are indivisible and cannot be created or destroyed; they merely rearrange during chemical reactions.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Atoms combine in simple whole-number ratios to form compounds.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Atoms of a given element are identical in mass and chemical properties.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Atoms of different elements have different masses and chemical properties.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "D": "Recalls a real postulate but misapplies it; different masses across elements explains why compounds have specific compositions, not why total mass is conserved.",
+                "B": "Confuses the postulate that explains constant proportions (whole-number ratios) with the postulate that explains conservation of mass; both are Dalton's postulates but they account for different laws.",
+                "C": "Correctly recalls the postulate about identical atoms within an element, which underlies constant proportions, but conflates it with the indestructibility postulate that underlies mass conservation."
+              },
+              "inclusivity": "Students who approach the question by asking 'which postulate says atoms are not created or destroyed?' can locate the answer without needing to recall all six postulates. Students who know the postulates only as a list may benefit from being guided to ask which law the observation illustrates first."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_label": "9.4 How Atoms Combine?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can classify entities by a structural criterion and justify each classification with a stated rule.",
+          "section_context": "Duplet and octet stability, energy lowering on bonding, chemical bond definition, covalent vs. ionic pathways, molecule definition",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "An atom of element Q has six electrons in its valence shell. Based on the octet rule and the bonding pathways introduced in Section 9.4, which statement best predicts how Q will achieve stability?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Q is already stable because six is close to eight, so it will not form bonds.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Q will donate its six valence electrons to form a cation with a 6+ charge.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Q will lose two electrons to achieve the same configuration as the nearest noble gas with fewer electrons.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Q will share or gain two electrons to complete its octet, making covalent or ionic bonding with electron gain the likely pathway.",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {
+                "B": "Applies the electron-donation rule to an atom that has too many valence electrons to donate efficiently; reflects confusion about which atoms donate versus which accept or share.",
+                "A": "Misreads 'close to eight' as equivalent to 'eight'; the rule requires exactly eight (or two for the K-shell), not approximately eight.",
+                "C": "Applies the donation pathway incorrectly — losing two electrons from a six-electron valence shell would leave four valence electrons, not zero, so this does not achieve a noble gas configuration."
+              },
+              "inclusivity": "Students who count how many electrons Q needs to reach eight (two) can reason to the correct answer without memorising a rule about 'more than four'. Students who prefer a visual approach can be encouraged to draw the valence shell and mark the gap to eight."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_label": "9.4.1 Bonding by sharing of electrons — Covalent Bond",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can represent bond formation in a covalent molecule using an electron-sharing model and derive the molecule's systematic name from its formula.",
+          "section_context": "H₂, Cl₂, O₂ single and double bonds; HCl, H₂O compound bonds; prefix naming system; nuclear energy applications; Raja Ramanna",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "Nitrogen has five valence electrons and needs three more to achieve a stable octet. Two nitrogen atoms combine to form N₂. (a) State how many electrons each nitrogen atom contributes to the bond and how many shared pairs exist in N₂. (b) Draw the electron-dot structure of N₂ and represent the bond using a bond-line diagram. Label the shared and unshared electron pairs. (c) Using the prefix naming system for covalent compounds, explain why N₂ is named 'dinitrogen' and not simply 'nitrogen' when it appears as a component in a compound name.",
+          "options": [],
+          "expected_elements": [
+            "Part (a): Each nitrogen atom contributes three electrons to the bond; there are three shared pairs (a triple bond).",
+            "Part (b): Electron-dot structure shows three pairs of dots between the two N atoms and one lone pair on each N; bond-line diagram shows N≡N with a lone pair marked on each atom.",
+            "Part (c): The prefix 'di' indicates two atoms of nitrogen; in systematic covalent naming, a prefix is always used for the first element when there is more than one atom of it, so two nitrogen atoms requires 'di-' to specify the count."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "Students who cannot draw the dot structure may describe it in words (three shared pairs, one lone pair on each atom) for equivalent credit on part (b). Students who know the prefix rule but apply it to the second element only demonstrate partial understanding and should receive partial credit for part (c)."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_label": "9.4.2 Bonding by electron transfer — Ionic bond",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can trace the movement of electrons during ionic bond formation and use the resulting ion charges to derive and name the compound's formula.",
+          "section_context": "Na→Na⁺ and Cl→Cl⁻ electron transfer, proton vs. electron counts, NaCl crystal lattice, Table 9.1 monoatomic and polyatomic ions",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "question_text": "A student claims: 'When sodium loses an electron to chlorine, sodium becomes lighter because it now has fewer particles.' Analyse this claim. In your response, distinguish between what changes and what remains unchanged when Na becomes Na⁺, explain the nature of the force that holds Na⁺ and Cl⁻ together, and explain why NaCl does not exist as an isolated Na⁺Cl⁻ pair in its solid state.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Correctly identifies that the electron count of sodium decreases from 11 to 10 when it forms Na⁺, but the proton count remains 11 — so the nuclear mass is unchanged.",
+            "Explains that an electron has negligible mass compared to a proton or neutron, so the mass change is immeasurably small and the student's claim that sodium 'becomes lighter' is practically incorrect and conceptually misleading.",
+            "Identifies the ionic bond as the electrostatic force of attraction between the oppositely charged ions Na⁺ and Cl⁻.",
+            "Explains that in the solid state, NaCl forms a 3-D crystal lattice in which each Na⁺ is surrounded by six Cl⁻ ions and each Cl⁻ is surrounded by six Na⁺ ions; the extended lattice, not an isolated pair, is the stable arrangement."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who correctly distinguish proton count from electron count but struggle with the lattice explanation should receive credit for the first part of the analysis. Students who prefer to diagram the lattice arrangement with labels may do so as part of their response; a well-labelled diagram showing Na⁺ surrounded by six Cl⁻ is equivalent to a prose description."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_label": "9.5 Writing Chemical Formulae",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can apply a systematic procedure to derive and simplify the chemical formula of a compound from the valencies or charges of its constituent atoms or ions.",
+          "section_context": "Criss-cross method for covalent (HCl, H₂S, CCl₄) and ionic (CaCl₂, Al₂O₃, MgO, CaCO₃, Mg(OH)₂, Al₂(SO₄)₃) compounds; bracket and simplification rules",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": "Ion | Charge/Valency\nAluminium (Al) | 3+\nSulfate (SO₄) | 2−\nMagnesium (Mg) | 2+\nHydroxide (OH) | 1−\nIron(III) (Fe) | 3+\nOxide (O) | 2−",
+          "question_text": "Refer to the table provided. Using the criss-cross method, derive the correct chemical formula for each of the following compounds. Show all steps: writing the ion symbols, recording their charges, criss-crossing the numbers, and simplifying where necessary. Use brackets where required. (a) Aluminium sulfate (b) Magnesium hydroxide (c) Iron(III) oxide",
+          "options": [],
+          "expected_elements": [
+            "Part (a): Al³⁺ and SO₄²⁻ → criss-cross gives Al₂(SO₄)₃; brackets used because SO₄ appears more than once; no simplification needed.",
+            "Part (b): Mg²⁺ and OH⁻ → criss-cross gives Mg(OH)₂; brackets used because OH appears more than once.",
+            "Part (c): Fe³⁺ and O²⁻ → criss-cross gives Fe₂O₃; no common factor, no simplification needed; no brackets needed for monoatomic ion."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who arrive at the correct formula through a different but valid route (e.g. charge-balance method rather than criss-cross) should receive full credit if the steps are shown. Students who correctly identify the need for brackets but place them incorrectly (e.g. (MgOH)₂ rather than Mg(OH)₂) demonstrate partial understanding of the bracket rule and should receive partial credit."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_label": "9.6 Properties of the Ionic and the Covalent Compounds",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can construct a causal explanation linking the microscopic structure of a substance to its observable physical and chemical properties.",
+          "section_context": "Solubility of NaCl, CuSO₄, camphor, naphthalene, sugar in water and organic solvents; conductivity in solid and dissolved states; ion mobility; melting points",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": "Compound | Dissolves in water? | Dissolves in kerosene? | Conducts electricity when dissolved in water?\nCompound P | Yes | No | Yes\nCompound Q | No | Yes | No\nCompound R | Yes | No | No\nCompound S | No | Yes | No",
+          "question_text": "",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "Refer to the table provided. Four unknown compounds — P, Q, R, and S — have been tested for solubility and electrical conductivity. Use the data to answer the following: (a) Classify each compound as ionic or covalent and justify your classification using at least two properties from the table for each compound. (b) Compound R dissolves in water but does not conduct electricity. Explain, at the particle level, why dissolving in water is not sufficient for a compound to conduct electricity. (c) A student proposes that Compound S could be used as an electrical insulator in a circuit that operates in a water-based environment. Evaluate this proposal, using the data and your knowledge of the properties of covalent compounds.",
+          "scaffold": "For part (a): for each compound, identify which properties in the table match ionic behaviour and which match covalent behaviour before stating your classification. For part (b): consider what particles are present in solution and which of those particles can carry charge. For part (c): consider all the relevant properties of Compound S — not just conductivity — before deciding whether the proposal is sound.",
+          "format_of_output": [
+            "Written classification with justification for each compound (part a)",
+            "Written particle-level explanation for part (b)",
+            "Written evaluative judgment with reasoning for part (c)"
+          ],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "Data interpretation (provided table or graph)",
+              "format_rationale": "The section's implied_lo — constructing causal explanations from microscopic structure to observable properties — is best demonstrated when students must read real data and reason backward from observed behaviour to structural cause; a data table is the most direct vehicle for this.",
+              "what_this_demonstrates": "Students demonstrate the ability to read patterns across multiple properties, classify unknown substances by bonding type, and construct particle-level explanations that connect structural features (presence of freely moving ions, polarity) to observable outcomes (conductivity, solubility).",
+              "reading_the_scaffold": "The scaffold directs students to use two properties per compound in part (a), preventing classification on a single criterion; part (b)'s scaffold focuses attention on particle identity rather than the act of dissolving; part (c)'s scaffold asks students to consider all properties, not just conductivity, prompting evaluation of whether non-polar covalent compounds might dissolve and introduce other issues.",
+              "strong_vs_weak_markers": "Strong responses: correctly classify all four compounds with two justified properties each; explain part (b) by distinguishing between molecular dissolution (sugar produces no ions) and ionic dissolution (NaCl produces free ions); evaluate part (c) by noting Compound S does not dissolve in water so ion release is not a concern, making it suitable as an insulator in that environment. Weak responses: classify compounds using only one property; state that dissolving conducts electricity without mentioning ions; evaluate part (c) based on conductivity data alone without considering solubility.",
+              "inclusivity": "Students who struggle with part (c)'s evaluative demand can be credited for correctly identifying the relevant properties of Compound S from the table. Students who prefer a tabular format for part (a) classifications should receive full credit if the two-property justification is present in the table. The teacher may substitute the classification/sorting format from the Open Task menu as an alternative vehicle for the same implied_lo."
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_label": "9.7 Molecular Mass of Covalent Compounds",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can calculate a derived quantity by systematically applying given values to a formula and explain the scope conditions under which the calculation is valid.",
+          "section_context": "Molecular mass definition; H₂O = 18 u, CO₂ = 44 u; atomic mass contributions; applicability restricted to covalent compounds",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A student calculates the 'molecular mass' of sodium chloride (NaCl) as 23 + 35.5 = 58.5 u and records it in her notebook. Which statement best explains why this calculation uses the wrong terminology, even though the arithmetic is correct?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Molecular mass applies only to elements, not to compounds, so the calculation should not be performed for sodium chloride at all.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Sodium chloride does not form discrete molecules; its ions arrange in a 3-D crystal lattice, so the correct term for the mass of one formula unit is 'formula unit mass', not 'molecular mass'.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "The calculation is wrong because sodium chloride contains a polyatomic ion and the mass of the polyatomic ion must be looked up separately.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The term 'molecular mass' is incorrect because the atomic masses of sodium and chlorine are not whole numbers, so the result cannot represent a true molecular mass.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {
+                "C": "Confuses the naming distinction (molecular vs. formula unit mass) with a calculation method issue involving polyatomic ions; the polyatomic ion content is irrelevant to this terminology question.",
+                "D": "Introduces an irrelevant criterion — whether atomic masses are whole numbers has no bearing on whether a substance forms discrete molecules.",
+                "A": "Overgeneralises by restricting molecular mass to elements; molecular mass applies to all covalent compounds, not only to elements."
+              },
+              "inclusivity": "Students who remember that NaCl forms a lattice rather than molecules can reason to the correct answer even without knowing the term 'formula unit mass'; the term appears in the correct option and confirms their reasoning. Students who know the term 'formula unit mass' but are unsure about the lattice structure can use the term itself as the discriminating criterion."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_label": "9.8 Formula Unit Mass of Ionic Compounds",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can calculate the formula unit mass of an ionic compound by correctly expanding bracketed polyatomic ions and summing all atomic mass contributions.",
+          "section_context": "Formula unit mass definition; Na₂O = 62 u; Ca(NO₃)₂ = 164 u; bracket expansion; distinction from molecular mass",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "Calculate the formula unit mass of aluminium sulfate, Al₂(SO₄)₃. Use the following atomic masses: Al = 27 u, S = 32 u, O = 16 u. Show all steps: expand the bracket, count the atoms of each element, calculate the contribution of each element, and sum the contributions.",
+          "options": [],
+          "expected_elements": [
+            "Expands the bracket correctly: Al₂(SO₄)₃ contains 2 Al atoms, 3 S atoms, and 12 O atoms (3 × 4 = 12).",
+            "Calculates the contribution of each element: Al = 27 × 2 = 54 u; S = 32 × 3 = 96 u; O = 16 × 12 = 192 u.",
+            "Sums the contributions: 54 + 96 + 192 = 342 u.",
+            "States the final answer as the formula unit mass of Al₂(SO₄)₃ = 342 u."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "Students who correctly expand the bracket (identifying 12 oxygen atoms) but make an arithmetic error in the final sum should receive credit for the correct expansion step. Students who write the atom count for O as 4 (forgetting to multiply by the bracket subscript 3) reveal the most common bracket-expansion error and should receive feedback targeting that specific step."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 11,
+          "section_label": "synthesis",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can integrate the empirical laws, bonding mechanisms, formula-writing procedures, and mass calculations of the chapter into a coherent explanatory account of a novel compound.",
+          "section_context": "Synthesis across conservation of mass, constant proportions, Dalton's theory, covalent and ionic bonding, criss-cross formulae, molecular and formula unit mass",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Explain how atoms combine to form covalent and ionic compounds by applying bonding principles, valency-based formula writing, and mass calculations, anchored in empirical laws and Dalton's atomic theory."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "question_text": "Element X has atomic number 12 and atomic mass 24 u. Element Y has atomic number 17 and atomic mass 35.5 u. A student proposes that X and Y can combine in two different ratios — XY and XY₂ — to form two different stable compounds, and that both compounds are equally valid because 'atoms can arrange in different ways'. (a) Determine the valence electron count of X and Y. Use these counts to predict how many Y atoms one X atom will bond with to reach stability, and write the correct formula for the compound. (b) Write the correct formula using the criss-cross method, showing all steps and the simplification check. Calculate the formula unit mass of the correct compound. (c) Evaluate the student's proposal that both XY and XY₂ are equally valid. Your evaluation must refer to at least two principles from the chapter — including one empirical law and one postulate of Dalton's theory — and explain what the chapter's framework predicts about whether a given pair of elements can combine in variable ratios.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Part (a): X has atomic number 12, so electron configuration 2,8,2 — two valence electrons; Y has atomic number 17, so configuration 2,8,7 — seven valence electrons, needs one more. One X atom must bond with two Y atoms so that X loses two electrons (one to each Y) and both Y atoms gain one electron each. Correct formula: XY₂.",
+            "Part (b): Criss-cross — X²⁺ and Y¹⁻ → subscripts 1 and 2 → XY₂; no common factor, no simplification needed. Formula unit mass = (24 × 1) + (35.5 × 2) = 24 + 71 = 95 u.",
+            "Part (c): Identifies the Law of Constant Proportions — a compound has a fixed composition regardless of source, so X and Y combine in one definite ratio only. Identifies Dalton's postulate that atoms combine in simple whole-number ratios and that the relative number and kinds of atoms are constant in a given compound. Explains that the chapter's framework predicts one stable formula (XY₂) determined by the valencies/charges; XY would require X to have a 1+ charge and Y a 1- charge, but X has two valence electrons and loses both to form X²⁺, not one — so XY is chemically invalid for this pair. A strong response distinguishes between different compounds of the same elements (which are possible, as with iron(II) and iron(III) compounds) and a single compound having variable composition (which is what Proust's law forbids)."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": "Students who correctly derive the formula in parts (a) and (b) but provide a weaker evaluative argument in part (c) — for example, naming only one principle — should receive credit for the procedural demonstration. Students who struggle with part (c)'s evaluative structure can be credited for correctly stating what Proust's law says, even if they do not fully apply it to the student's claim. A student who recognises the distinction between variable oxidation states in transition metals and variable composition being prohibited is demonstrating sophisticated reasoning and should be recognised accordingly."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
