@@ -2581,6 +2581,25 @@ REPAIRS = {
     # alone would orphan the sentence's subject; same-word rearrangements, no new
     # content). Backward references ("the previous sitting", "the preceding unit") are
     # the POSITIONAL advisory family, not bans, and are left standing.
+    # ── S6 · science · middle · batch WAVE 1 (2026-08-17) ────────────────────────────
+    # One clock hit in 36 standards, and it is a homonym: the ranged pattern
+    # (`for…{0,20}minutes`) matched "the causal explanation FOR THE 50-MINUTES-later
+    # moonrise rule" — the ~50-minute daily lag of moonrise, an astronomical FACT the unit
+    # teaches, not class pacing. Founder ruling 2026-08-17: repair the TEXT, keep the
+    # scanner strict — the phrasing moves off the pattern ("of the 50-minute-later…",
+    # compound-modifier singular), the astronomy is untouched, and the pattern keeps its
+    # full reach for the real breaches it was written for.
+    ("science", "viii"): {
+        "ch_11_canonical.json": [
+            (6, "band:0",
+             "for the 50-minutes-later moonrise rule",
+             "of the 50-minute-later moonrise rule",
+             "register/clock",
+             "homonym, not a breach in substance: the 50-minute moonrise lag is the "
+             "unit's content; two-word rephrase clears the ranged-clock pattern with "
+             "the fact intact"),
+        ],
+    },
     ("science", "ix"): {
         "ch_02_canonical_p12.json": [
             (11, "teacher_notes",

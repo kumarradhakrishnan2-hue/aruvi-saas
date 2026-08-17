@@ -387,6 +387,89 @@ EDITS = {
          " without requiring prior homework to have been completed", "",
          "trailing clause; the bridge into the classroom stands"),
     ],
+
+    # ══ WAVE 3 — SCIENCE·MIDDLE BATCH W1 (added 2026-08-17, S6 wave 1 census) ══════
+    # The header's prediction ("science has not been batch-authored yet — it will recur")
+    # lands here: 8 of 36 standards narrate the travel instruction in the SYNTHESIS unit's
+    # teacher note, the same concentration wave 2 found on SS·IX (the synthesis unit is the
+    # one the brief talks about most, so its note quotes the brief back most reliably).
+    # Science·middle nuance: this stage serves at PLAN granularity — its synthesis unit is
+    # never a Case-1 borrow, every class meets it with the plan's own arc behind it — so the
+    # "may have reached this through a different path" framing is not merely leaked
+    # machinery, it is FALSE for this stage. All edits are deletions; two capitalise the
+    # following word (CAP). The teaching instruction survives every edit.
+    "science/vi/ch_02_canonical.json": [
+        (21, "teacher_notes",
+         "Do not assume any particular earlier activity was completed; if", "If",
+         "CAP; the reasoning instruction (reason from observable features) stands whole"),
+    ],
+    "science/vi/ch_08_canonical.json": [
+        (20, "teacher_notes",
+         "This closing unit is designed to travel: it may serve a class that reached the "
+         "chapter's central ideas through a completely different arc of activities, so it "
+         "builds its own context and does not rely on any specific stage, activity, or "
+         "discussion having occurred. Any student", "Any student",
+         "whole opening sentence is the serve contract; false at this stage (plan-granular "
+         "serve). CAP-free: the surviving sentence already opens capitalised"),
+        (20, "teacher_notes",
+         ", not to any particular experiment or unit", "",
+         "assume-family trailing clause; 'returning to observable properties and "
+         "conditions' is the real instruction and stands"),
+    ],
+    "science/vi/ch_09_canonical.json": [
+        (20, "teacher_notes",
+         "This synthesis unit is designed to travel — it assumes that students have covered "
+         "the chapter's content and reached the ability to reason from properties to "
+         "methods, but it does not assume any particular sequence of activities or stage "
+         "labels.",
+         "This synthesis unit assumes that students have covered the chapter's content and "
+         "reached the ability to reason from properties to methods.",
+         "'assumes the chapter's content' is about the CHAPTER and stays (SS·IX ch 2 "
+         "precedent); the travel framing and 'stage labels' go"),
+        (20, "teacher_notes",
+         " that holds regardless of the arc that preceded it", "",
+         "'drawing the chapter to a conceptual close' stands on its own"),
+    ],
+    "science/vi/ch_12_canonical.json": [
+        (14, "teacher_notes",
+         " and may be received by a class that took a different path through the content, "
+         "so do not assume any particular earlier activity happened. Begin", ". Begin",
+         "'draws every strand of the chapter together' is the whole claim the teacher "
+         "needs"),
+    ],
+    "science/vii/ch_03_canonical.json": [
+        (18, "teacher_notes",
+         " — but does not assume any particular earlier activity, discussion, or "
+         "material.", ".",
+         "the dash-bracketed content list before it names the chapter's actual strands "
+         "and stands"),
+    ],
+    "science/vii/ch_04_canonical.json": [
+        (17, "teacher_notes",
+         " — it does not assume any particular activity or discussion actually took "
+         "place.", ".",
+         "'assumes the chapter's content has been taught' stays — about the chapter, not "
+         "our sequencing"),
+    ],
+    "science/vii/ch_05_canonical.json": [
+        (15, "teacher_notes",
+         "This unit does not assume any particular earlier activity happened — it builds "
+         "from the concepts alone.",
+         "It builds from the concepts alone.",
+         "the positive half of the sentence is the teacher's actual orientation; the "
+         "prohibition half is ours"),
+    ],
+    "science/viii/ch_04_canonical.json": [
+        (15, "teacher_notes",
+         "This is the whole-chapter synthesis unit and it travels: the class",
+         "This is the whole-chapter synthesis unit: the class",
+         "'it travels' is the serve engine speaking (SS·IX ch 5 precedent)"),
+        (15, "teacher_notes",
+         "Pose the synthesis question broadly without assuming any particular activity "
+         "the class completed, relying on the concepts themselves.",
+         "Pose the synthesis question broadly, relying on the concepts themselves.",
+         "the instruction (concepts, broadly) survives; the assume-clause goes"),
+    ],
 }
 
 

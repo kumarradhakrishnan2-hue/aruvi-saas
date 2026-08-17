@@ -228,6 +228,20 @@ DECLARED = {
              "old": None, "new": ""},
         ],
     },
+    # ── S6 · science · middle · VI ch 8 (2026-08-17, batch wave 1) ───────────────────
+    # ARV-D-173 · same defect as ARV-D-172, next stage over: `question_text: null` on the
+    # file's single OPEN_TASK (the water-cycle classification table, stage 5). The item is
+    # complete — task, scaffold, format_of_output, full guide — so null -> "" is again the
+    # whole repair. Science·middle items carry no section_label (stage-anchored), so the
+    # selector is question_type alone, which the certify report confirms is unique in this
+    # library. Run as: python3 genon/repair_c3.py science vi 8 --declared-only
+    "ch_08_canonical.json": {
+        "ARV-D-173": [
+            {"item_where": {"question_type": "OPEN_TASK"},
+             "field": "question_text",
+             "old": None, "new": ""},
+        ],
+    },
     "ch_04_canonical.json": {
         "ARV-D-069": [
             {"unit": 3, "field": "time_bands[2].activity",
