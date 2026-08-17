@@ -2402,7 +2402,10 @@ REPAIRS = {
              "breach, so the timing phrase alone goes"),
         ],
     },
-    ("science", "ix"): {
+    # APPLIED 2026-08-06 (recorded in the artefact's genon_canonical.repairs[]); renamed
+    # 2026-08-17 so the batch wave-1 set below can own the live ("science", "ix") key.
+    # Re-running it would fail its own "declared text not found" assertion — the guard.
+    ("science", "ix", "APPLIED-20260806-pilot"): {
         "ch_08_canonical.json": [
             (5, "band:3",
              " — that rule is the subject of a later unit", "",
@@ -2423,6 +2426,146 @@ REPAIRS = {
              "same pattern in the synthesis unit's opening — 'students work individually "
              "listing everything they would need to know' is complete and unfalsifiable; "
              "the number is not"),
+        ],
+    },
+    # ── S3 · science · SECONDARY · BATCH WAVE 1 (the STANDARDS) — 2026-08-17 ──────────
+    # 16 ban hits over 9 of the 12 standards bought in batch msgbatch_01PQV9xposrif1tLAfD43a6u
+    # (certification 20260817_1006*): 8 forward / 4 clock / 2 completion / 2 meta-leak.
+    # 1.33 hits/file — worse than S5's wave 1 (0.35) but under S2's 2.25. Ch 03 scanned clean.
+    #
+    # Nearly all are PURE DELETIONS of trailing forward-reference appositives or clock
+    # quantities. Three spans were narrowed or minimally rearranged BY HAND because the
+    # mechanical sentence-span would have deleted teaching (the S2 wave-2 precedent):
+    # ch 04 U20 (antecedent swap "them" -> "the motion types"), ch 06 U5 ("for emphasis"
+    # replaces the bridge clause so 'is flagged' keeps a complement), ch 06 U20 (clause
+    # rearranged around the deletion so the imperative keeps its subject).
+    # ch 09 U20 carries ONE unflagged same-family edit (" a second" -> " an"), declared
+    # rather than left, because "a second opportunity" presumes an earlier sitting ran the
+    # challenge — the same completion family the scanner flagged two sentences later.
+    ("science", "ix"): {
+        "ch_01_canonical.json": [
+            (4, "band:0",
+             " for five minutes", "",
+             "register/clock",
+             "'Students write individually' is the instruction; the band carries its own "
+             "minutes and the platform rescales them"),
+            (6, "band:0",
+             " for four minutes", "",
+             "register/clock",
+             "same pattern — 'Students write, then share one idea with a partner' stands "
+             "complete without the quantity"),
+        ],
+        "ch_04_canonical.json": [
+            (12, "band:4",
+             ", leaving the formal answers to unfold in the next unit", "",
+             "register/forward",
+             "the teaching act — addressing the collated questions with brief pointer "
+             "statements — stands alone; the promise of a NEXT unit is false for any X "
+             "ending here. Section 4.4.1 by name is a chapter fact and stays"),
+            (20, "teacher_notes",
+             "Having worked through all motion types individually, students now synthesise "
+             "across them",
+             "Students now synthesise across the motion types",
+             "register/completion",
+             "the completion assertion is false for any served count that dropped a motion "
+             "unit; deleting the clause alone orphans 'them', so the antecedent is swapped "
+             "in — no new content, the motion types are this unit's own comparison table"),
+        ],
+        "ch_05_canonical.json": [
+            (2, "teacher_notes",
+             ", which prepares students to engage seriously with the formulae in the next unit", "",
+             "register/forward",
+             "trailing appositive; 'the ORS and pesticide scenarios are effective because "
+             "they give concentration a tangible consequence' is the complete teaching "
+             "point"),
+        ],
+        "ch_06_canonical.json": [
+            (5, "band:4",
+             " as a bridge to the law students will formalise next",
+             " for emphasis",
+             "register/forward",
+             "the thought-experiment outcome (frictionless motion continues forever) is "
+             "real teaching and must survive; 'is flagged' needs a complement, so the "
+             "forward clause is replaced by two neutral words — hand-narrowed, S2 wave-2 "
+             "precedent"),
+            (20, "teacher_notes",
+             "The one-sentence three-law summary at the close is an explicit conceptual "
+             "bridge to the synthesis unit; encourage",
+             "For the one-sentence three-law summary at the close, encourage",
+             "register/forward",
+             "the synthesis unit may not be the sitting that follows for any served X; the "
+             "clause is rearranged around the deletion so the imperative keeps its subject "
+             "— every content word survives, only the bridge claim goes"),
+        ],
+        "ch_07_canonical.json": [
+            (5, "teacher_notes",
+             " The connection the chapter makes between mechanical energy and the earlier "
+             "study of forces is the conceptual anchor for the next unit on kinetic and "
+             "potential energy.", "",
+             "register/forward",
+             "whole sentence is a planning pointer, not classroom teaching; the note ends "
+             "on the chemical-energy redirect, which is complete"),
+            (8, "teacher_notes",
+             " before the formal derivation of U = mgh in the next unit", "",
+             "register/forward",
+             "'the rubber band and spring examples are essential for breaking that "
+             "narrowness' is the teaching act; when the derivation arrives is not this "
+             "unit's claim to make"),
+        ],
+        "ch_09_canonical.json": [
+            (16, "teacher_notes",
+             " preparation for the next unit on formula unit mass", "",
+             "register/forward",
+             "pure truncation: 'The closing sentence linking molecular mass to "
+             "covalent-only applicability is important; the distinction between the two "
+             "terms matters.' — the distinction survives, the unit pointer goes"),
+            (20, "teacher_notes",
+             " built across the chapter", "",
+             "register/completion",
+             "'with enough conceptual grounding to connect their result to Dalton's "
+             "theory' stands; the whole-chapter completion claim is false for any served "
+             "count below the top"),
+            (20, "teacher_notes",
+             " a second opportunity", " an opportunity",
+             "register/completion",
+             "UNFLAGGED same-family edit, declared not left: 'a second opportunity' "
+             "presumes an earlier sitting ran the design challenge, which a compact or "
+             "borrowed serving may not have"),
+        ],
+        "ch_10_canonical.json": [
+            (5, "teacher_notes",
+             " to bridge to the piston analogy", "",
+             "register/forward",
+             "the question ('what would the compressions and rarefactions correspond "
+             "to?') is the teaching act and ends the note cleanly; the piston analogy "
+             "lives in another unit"),
+        ],
+        "ch_11_canonical.json": [
+            (7, "teacher_notes",
+             " this unit", "",
+             "register/meta-leak",
+             "'use it to make the inquiry concrete without requiring physical materials' "
+             "is complete; 'this unit' is planner vocabulary leaking into the teacher "
+             "note"),
+            (10, "teacher_notes",
+             " without requiring that any earlier unit was taught in any particular way", "",
+             "register/meta-leak",
+             "the clause is the BRIEF's own self-containment language leaked verbatim "
+             "into the note (ARV-D-161 family); 'consolidates the chapter's two main "
+             "threads' is the teaching point and stands"),
+        ],
+        "ch_13_canonical.json": [
+            (3, "teacher_notes",
+             " The polar-albedo discussion is a natural bridge to the latitude and "
+             "Earth's shape content that this chapter presents next.", "",
+             "register/forward",
+             "whole sentence is a sequencing pointer; the note's albedo/absorption "
+             "teaching is untouched"),
+            (6, "teacher_notes",
+             " for the human-impact discussion in a later unit", "",
+             "register/forward",
+             "'The 315-to-420 ppm data point is a strong anchor.' stands — the data "
+             "point's value does not depend on which sitting discusses human impact"),
         ],
     },
     # ── v1.6, 2026-08-12 · S5 · the_world_around_us · preparatory · WAVE 1 of the corpus ──

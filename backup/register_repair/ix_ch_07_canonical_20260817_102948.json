@@ -1,0 +1,1755 @@
+{
+  "filename": "ch_07_canonical.json",
+  "saved_at": "2026-08-17T10:06:42",
+  "plan_status": "canonical",
+  "chapter_number": 7,
+  "chapter_title": "Work, Energy, and Simple Machines",
+  "grade": "Grade IX",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 22
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 22 periods = 1100 minutes\nTotal: 22 periods · 18h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "22x50",
+    "constitution": "LP v1.1 / assessment v1.2",
+    "source": "generate_canonical.py one science ix 7",
+    "ledger_ts": "20260816_191811_sci_ix_07_top",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Calculating Work Done When Force Moves an Object",
+          "section_anchor": "7.1 Work Done by a Constant Force",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "ruler",
+            "whiteboard",
+            "chalk/markers"
+          ],
+          "visual_aids": "Force-displacement graph from textbook (area under graph = work done)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Open with the wheat-bag scenario from the chapter: ask students to compare lifting one bag 2 m versus two bags 1 m and predict which takes more effort, then poll for reasoning. Record responses on the board without evaluating."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Develop the formal definition W = F × s, tracing how both force and displacement independently scale the work done, using the wheat-bag numbers as a running example. Introduce the joule as the SI unit and work through a brief numerical: a 10 N force over 3 m."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Draw and interpret the force-displacement graph: show a constant-force rectangle and establish that area = work. Pose a varying-force graph (stepped or trapezoidal) and ask pairs to estimate the total work by counting approximate areas, then compare answers."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students individually write the formal definition in their own words, sketch a force-displacement graph for a 5 N force over 4 m, label the axes, shade the area, and calculate the work. Pairs exchange and check each other's shading and calculation."
+            }
+          ],
+          "teacher_notes": "This unit is the chapter's entry point into the scientific meaning of work, so it is worth spending a moment letting students surface their everyday sense of 'effort' before introducing the formal definition — the contrast will pay off in the next section on zero work. Watch for students who confuse force alone with work; the wheat-bag comparison is specifically designed to show that displacement is equally essential. A useful checkpoint: students should be able to state why pushing a stationary wall involves no work before you move on.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Identifying Conditions Where Scientific Work Equals Zero",
+          "section_anchor": "7.1.1 When is work done equal to zero?",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "index cards (one per pair)"
+          ],
+          "visual_aids": "Board diagram showing three scenarios: zero force, zero displacement, force perpendicular to displacement",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose three scenarios on the board without labelling them: a person pushing a brick wall, a porter carrying luggage horizontally at a steady pace, and a weightlifter holding a loaded barbell overhead without moving. Ask pairs to decide whether scientific work is being done in each case and write a one-sentence justification on their index card."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Take paired responses for each scenario and use disagreements to drive the class toward the three conditions for zero work: force = 0, displacement = 0, force ⊥ displacement. Anchor each condition to W = F × s by substituting the zero quantity explicitly on the board."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Work through the Pause-and-Ponder questions from section 7.1.1: the weightlifter holding a barbell (zero scientific work despite muscular strain) and friction on a sliding coin stack (negative or zero work — explore direction of friction relative to motion). Students write their own answer, then share with a neighbour before whole-class discussion."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Each student independently constructs a two-column table: one column lists three real-life situations (they choose), the other states which zero-work condition applies and why. Pairs compare tables and flag any disagreement for brief class resolution."
+            }
+          ],
+          "teacher_notes": "Having established that work equals force times displacement, this unit probes the boundary cases — a critical conceptual move because students routinely equate physical effort with scientific work. The most persistent confusion is the porter scenario: carrying a load horizontally feels like work, and students need to see that the upward holding force is perpendicular to the horizontal displacement. Ask a student to demonstrate holding a heavy textbook at arm's length while walking across the room, then prompt: in which direction did the force act, and in which direction did you move?",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Determining the Sign of Work Done in Opposing-Force Situations",
+          "section_anchor": "7.1.2 Positive and negative work done",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "spring balance (demonstration)"
+          ],
+          "visual_aids": "Board diagram: dumbbell lift/lower with force and displacement arrows; goalkeeper stopping a football",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Briefly demonstrate pulling a spring balance downward while it stretches upward, and ask students to identify the direction of force and the direction of motion in each phase. Establish the sign convention: same direction → positive product, opposite direction → negative product."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Work through the dumbbell example from the chapter: a girl lifts a dumbbell (positive work) then lowers it (negative work). Students calculate both values numerically using their own chosen mass and height, then write the sign and the physical interpretation of each."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Present the goalkeeper scenario: 200 N exerted over 15 cm opposite to the ball's motion, giving –30 J. Students re-derive this and then explore the Newton's third law note: the ball also exerts a force on the goalkeeper in the same direction as the goalkeeper's displacement — ask them to classify the sign of the work done by the ball on the goalkeeper."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students solve two fresh problems: (a) a 500 N braking force on a car moving 20 m — calculate work and state the sign; (b) a child sliding down a frictionless slide under gravity — state whether gravity does positive or negative work. Students write complete solutions including direction reasoning, then exchange with a partner for checking."
+            }
+          ],
+          "teacher_notes": "Building on the definition W = F × s from section 7.1, this unit introduces the signed nature of work, which students will need when tracking energy changes through the work-energy theorem in section 7.2. The goalkeeper example is powerful because it forces students to separate the force direction from the motion direction — watch for students who assume that exerting a large force always means doing positive work. The Newton's third law extension (the ball does positive work on the goalkeeper) is genuinely surprising and worth dwelling on briefly.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Applying the Work-Energy Theorem to Track Energy Transfers",
+          "section_anchor": "7.2 The Work-Energy Theorem",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "carom board and striker (or description cards if unavailable)"
+          ],
+          "visual_aids": "Board diagram: carrom collision sequence — striker → white coin → black coin, with force and displacement arrows at each collision",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Ask students: when you throw a ball at a wicket and it knocks the bails off, where did the energy to move the bails come from? Take responses, then connect: the ball had the capacity to do work on the bails — that capacity is energy. Establish the theorem W = ΔE in words before writing it symbolically."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Work through the carrom example step by step: the striker hits the white coin (positive work on white coin → white coin gains energy), white coin hits the black coin (positive work on black → black gains energy, white slows so loses energy — negative work done on white). Students draw the collision sequence and label the sign of work at each contact."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Pose the Pause-and-Ponder bicycle question: when pedalling on a flat road at constant speed, where does the muscular energy go? Students work in pairs to trace the chain (muscles → pedals → wheels → road friction → heat and sound), recording each energy form in sequence. Groups share their chains and the class converges on a consensus."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students individually write a three-sentence explanation of the work-energy theorem — what it states, what it means physically, and one example not from the chapter — and submit as an exit slip."
+            }
+          ],
+          "teacher_notes": "The work-energy theorem is the conceptual bridge between the mechanical definition of work and the language of energy that carries through the rest of the chapter. Students often think of energy as a thing an object 'has' rather than as a measure of capacity to do work; the carrom example is valuable precisely because it shows energy being transferred across objects at each collision. Watch for students who think the white coin loses all its energy in the first collision — ask them to reason about what determines how much energy transfers.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Classifying and Converting Between Forms of Energy",
+          "section_anchor": "7.3 Forms of Energy",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "flashlight or torch (demonstration)",
+            "small buzzer or bell (demonstration)"
+          ],
+          "visual_aids": "Board diagram: energy-form web with conversion arrows (electrical → light, chemical → mechanical, mechanical → sound)",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Place a switched-off flashlight on the table. Ask students to trace every energy form present from the moment the battery was manufactured to the moment light leaves the bulb — chemical in the battery, electrical in the circuit, light and thermal at the bulb. Record the chain on the board, labelling each form."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Build the full catalogue from section 7.3: mechanical, thermal, light, sound, electrical, nuclear, chemical. For each, elicit a student-generated example, then add the textbook example where it differs. Draw conversion arrows between forms on the board as students suggest them, constructing an energy-form web."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work in groups of three: each group is given one device or scenario (ringing alarm clock, person eating then running, solar panel on a rooftop, nuclear power plant) and must draw their own energy-form conversion chain, naming the form at each stage and the conversion process. Groups display their chains for a brief gallery walk."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Each student individually writes a one-paragraph explanation of why mechanical energy is the primary focus of this chapter, connecting it to the forces and motions studied before this chapter, using at least one specific example from their group's chain."
+            }
+          ],
+          "teacher_notes": "This unit catalogues the major energy forms students will encounter and establishes that energy conversion — not creation or destruction — is the pattern to look for. Students sometimes treat mechanical energy as more 'real' than other forms; gently challenge this by noting that chemical energy in food is what starts every mechanical motion in their body. The connection the chapter makes between mechanical energy and the earlier study of forces is the conceptual anchor for the next unit on kinetic and potential energy.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Deriving Kinetic Energy from Newton's Second Law and Kinematics",
+          "section_anchor": "7.4.1 Kinetic energy",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "calculators"
+          ],
+          "visual_aids": "Board derivation: W = F × s → ma × s → ½m(v² − u²) with each step labelled",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Frame the question: if an object of mass m starts from rest and a constant force accelerates it to speed v, how much work was done on it? Ask students to write a prediction in their notebooks before the derivation begins."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Work through the derivation step by step on the board: W = F × s = ma × s; substitute v² = u² + 2as to get s = (v² − u²)/(2a); substitute back to obtain W = ½m(v² − u²). When u = 0, kinetic energy K = ½mv². Pause at each substitution and ask students to identify which law or equation is being used."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Work through the cricket ball example from the chapter: convert 154.8 km h⁻¹ to m s⁻¹, use K = ½mv² to find ≈184.9 J. Then pose: if velocity doubles, by what factor does KE change? Students derive this algebraically (factor of 4) before the aircraft problem is introduced."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students solve the jet aircraft problem from the chapter (367,500 N stopping force over 100 m → find landing speed) independently. They must show the full chain: W = F × s gives ΔKE, set final KE = 0, solve for initial speed. Collect solutions as an exit check."
+            }
+          ],
+          "teacher_notes": "The derivation of K = ½mv² is one of the chapter's two core algebraic results, and students need to see it as an application of Newton's second law and kinematics working together — not as a formula to memorise. A common error is substituting v for the change in velocity rather than recognising that u = 0 is a special case; make the general expression W = ½m(v² − u²) visible throughout before simplifying. The velocity-doubling question is a useful probe: students who answer 'twice' have not yet internalised the square relationship.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Exploring How Positive and Negative Work Changes Kinetic Energy",
+          "section_anchor": "7.4.1 Kinetic energy",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "calculators",
+            "worksheets with KE-change scenarios"
+          ],
+          "visual_aids": "Board table: scenario, sign of work, direction of KE change, final KE value",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Pose three situations: (a) a ball in free fall, (b) a ball thrown upward, (c) a satellite in circular orbit. Ask students to predict how kinetic energy changes in each case, justifying using the sign of work done by gravity. Take responses and surface any disagreement."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Resolve each scenario on the board using W = ΔKE: gravity does positive work on the falling ball (KE increases), negative work on the rising ball (KE decreases), and zero work on the orbiting satellite (force perpendicular to motion, KE unchanged). Connect back to the zero-work conditions established in section 7.1.1."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Work through the Pause-and-Ponder question from 7.4.1: two objects with the same kinetic energy but masses m and 4m — which has the greater speed? Students set ½mv₁² = ½(4m)v₂², solve for the ratio v₁/v₂ = 2, and interpret physically. Then: does an object at constant velocity change its kinetic energy as its position changes? Students write their answer with justification."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write three original one-sentence claims about kinetic energy (e.g. 'A heavier object moving at the same speed as a lighter one has more KE'), then classify each as true or false with a calculation or reasoning to support the classification. Pairs swap and verify."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the kinetic energy expression derived previously by testing it across a range of scenarios, building the habit of connecting the sign of work to the direction of KE change. The satellite orbit case is particularly productive: students who have mastered 'force perpendicular to displacement means zero work' (section 7.1.1) will correctly predict constant KE, while those who have not will incorrectly predict an increase. The equal-KE, different-mass comparison is a good conceptual probe for whether students understand that KE depends on both mass and the square of speed.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Investigating Stored Energy in Deformed Objects and Position",
+          "section_anchor": "7.4.2 Potential energy",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "textbook",
+            "rubber band and small projectile (demonstration)",
+            "compressed spring or spring toy (demonstration)",
+            "whiteboard"
+          ],
+          "visual_aids": "Board diagram: slingshot with stretched rubber band, bow with bent limb, compressed spring — each labelled with stored potential energy",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Stretch a rubber band and release it to launch a small paper ball; compress a spring toy and let it jump. Ask students: where was the energy before the object moved? Guide them to articulate that the deformed object stored energy due to its shape, and that the energy was converted to kinetic energy on release."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Catalogue the examples from section 7.4.2: rubber band in a slingshot, bent bow and arrow, compressed/stretched spring. Establish the general principle: whenever objects interact through gravitational, electric, or magnetic forces, the system stores energy due to relative positions. Introduce potential energy as the name for this stored energy."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Shift to gravitational potential energy: ask students to explain verbally why a ball dropped from 2 m makes a deeper dent in sand than one dropped from 1 m. After discussion, introduce the concept that the ball-Earth system stores more energy at greater height. Students sketch the ball-Earth system at three heights and label the relative potential energy at each."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a two-paragraph response: the first paragraph explains potential energy in deformed systems (citing two examples), the second explains gravitational potential energy using the ball-Earth system language. A self-check question: which stores more potential energy — a 1 kg ball at 5 m or a 5 kg ball at 1 m? Students calculate informally using U = mgh to verify."
+            }
+          ],
+          "teacher_notes": "The key conceptual move here is widening 'potential energy' from the specific (gravitational) to the general (any stored energy due to position or deformation in an interacting system). Students frequently think potential energy only applies to height; the rubber band and spring examples are essential for breaking that narrowness before the formal derivation of U = mgh in the next unit. Watch for students who say the rubber band 'creates' energy — redirect to the work done in stretching it.",
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Deriving Gravitational Potential Energy Using the Work-Energy Theorem",
+          "section_anchor": "7.4.2 Potential energy",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "heavy ball (or stone)",
+            "container of loose sand or soft soil",
+            "metre ruler",
+            "whiteboard",
+            "calculators"
+          ],
+          "visual_aids": "Board derivation: F = mg, W = mgh; table recording drop height vs depression depth from Activity 7.1",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Conduct Activity 7.1 as a class demonstration: drop the heavy ball into sand from 1 m and measure the depression depth, then drop from 2 m and compare. Students record both measurements in a two-column table (height / depression depth) and describe the pattern in one sentence before any formula is introduced."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Lead the derivation: to raise mass m to height h at constant speed, the applied force equals mg (no net force); work done = F × h = mgh. By the work-energy theorem, this equals the energy stored — gravitational potential energy U = mgh. Students annotate each step with the principle used (Newton's second law, W = F × s, work-energy theorem)."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Work through the cricket ball example from the chapter: 200 g ball, height 10 m, g = 10 m s⁻²; U = 0.2 × 10 × 10 = 20 J. Students then construct and solve their own numerical: choose any mass and height, calculate U, then check by asking: how much kinetic energy would the ball have if dropped from that height?"
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pairs explain to each other why the Earth is treated as essentially stationary in this derivation, then write a two-sentence answer. Exit check: if a 500 g ball is raised 4 m, what is its gravitational potential energy? Students solve and compare with a partner."
+            }
+          ],
+          "teacher_notes": "Activity 7.1 does real empirical work here — the sand depression is a direct proxy for energy stored, and students should articulate the proportional relationship before they see the formula. A common error in the derivation is treating the applied force as greater than mg; emphasise that 'constant speed' means zero net force, so the applied force equals mg exactly. The self-check question linking U to KE at the bottom of a drop anticipates the conservation argument in section 7.4.3.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Proving Conservation of Mechanical Energy with a Pendulum",
+          "section_anchor": "7.4.3 Conservation of mechanical energy",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "string (1 m)",
+            "heavy bob (metal nut or stone)",
+            "clamp stand or door frame",
+            "metre ruler",
+            "whiteboard",
+            "calculators"
+          ],
+          "visual_aids": "Board diagram: pendulum at three positions — extreme left (all PE), bottom (all KE), extreme right (all PE) — with energy bar charts",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Set up a simple pendulum. Release the bob from a measured height h and ask students to observe whether it reaches approximately the same height on the other side. Students measure both heights and calculate the percentage difference. Briefly note that friction and air resistance cause any small shortfall."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Draw the pendulum at three positions on the board with energy bar charts: at height h all energy is mgh potential, at the bottom all is ½mv² kinetic, at the other extreme all is mgh potential again. Establish algebraically that at every intermediate point PE + KE = mgh — the conservation of mechanical energy principle."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Work through the slide worked example from the chapter: a child slides down a frictionless slide of height h; using conservation of energy, v = √(2gh) at the bottom, independent of mass and slide shape. Students verify numerically for h = 5 m and h = 1.25 m, then explain in one sentence why mass cancels out."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students work through the Pause-and-Ponder roller coaster problem: trace KE and PE at each peak and valley on a sketch, explain why successive peaks are lower (friction converts mechanical energy to heat), and calculate the speed at a valley given height data. Students submit their annotated sketch and calculation as an exit product."
+            }
+          ],
+          "teacher_notes": "The pendulum activity gives students a concrete, measurable system in which they can watch energy change form without any net loss — the near-equality of the two extreme heights is the physical proof of conservation. The most important misconception to address is that the bob 'loses energy' at the bottom; make explicit that at the bottom KE = mgh, so no energy has vanished — it has simply changed form. The height-independence of the slide speed is a surprising result worth pausing on: it means a ball and a bowling ball reach the same speed at the bottom of the same frictionless slide.",
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Solving Conservation-of-Mechanical-Energy Problems in Novel Contexts",
+          "section_anchor": "7.4.3 Conservation of mechanical energy",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "calculators",
+            "problem cards (one per group)"
+          ],
+          "visual_aids": "Board diagram: truck on inclined sand ramp — height, length, force, speed labelled",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Pose a novel scenario: a ball is launched horizontally from a cliff of height 20 m. Ask students to predict its speed just before hitting the ground using conservation of energy alone (without projectile kinematics). Students write their prediction and method in their notebooks, then share reasoning with a partner."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Work through the truck-on-sand-ramp problem from the chapter: 10,000 kg truck at 72 km h⁻¹, resisting force 50,000 N on a 30° incline, find the minimum ramp length. Students must identify that KE at bottom = work done by resistance + PE gained; set up the equation and solve step by step, labelling each energy term."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Groups of three receive a problem card with a new conservation scenario (e.g. a ball swung on a string as a conical pendulum at constant height — does its KE change?; or a ball rolling up a hill, given initial speed, find maximum height). Each group solves the problem and prepares a three-sentence explanation of which energy form changes and why."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Groups share their problem and solution; the class identifies whether each group correctly applied the conservation principle or introduced an error. Students write a self-correction note if their own group's solution contained an error."
+            }
+          ],
+          "teacher_notes": "Having established the conservation principle and worked the standard examples in the previous unit, this unit moves students into applying it to less-familiar setups — the mark of genuine understanding rather than pattern-matching. A common error in the truck problem is forgetting that the truck also gains gravitational PE as it climbs the incline, not only losing KE; make sure students include both terms. The conical pendulum group question is deliberately tricky: constant height means constant PE, so if the object moves at constant speed, KE is also constant — energy is conserved trivially.",
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Defining Power and Calculating the Rate of Doing Work",
+          "section_anchor": "7.5 Power",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "textbook",
+            "whiteboard",
+            "calculators",
+            "stopwatch (demonstration)"
+          ],
+          "visual_aids": "Board table: same work done (climbing stairs) in different times — comparing power values",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Ask two students to 'race' up an imaginary staircase (count steps aloud) — one 'runs' (counts fast) and one 'walks' (counts slowly). Ask the class: did both students do the same work? Who is more powerful? Establish the contrast: same work, different time, different power."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Define P = W/t and introduce the watt as the SI unit (1 J s⁻¹). Work through the weightlifter example from the chapter: 75 kg raised 2 m in 5 s, P = (75 × 10 × 2)/5 = 300 W. Students calculate how long it would take the same person to do the same work at 150 W and at 600 W — reinforcing the inverse relationship between power and time."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Work through the car acceleration example: 1000 kg car from rest to 72 km h⁻¹ in 10 s, P = ΔKE/t = (½ × 1000 × 20²)/10 = 20,000 W. Students verify the unit conversion (km h⁻¹ to m s⁻¹) before substituting. Ask: if the same car accelerated to the same speed in 5 s, what power would be needed? Students calculate and explain."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students solve two original power problems they write themselves — one involving lifting a known object at a known speed, one involving a vehicle — then exchange with a partner to solve. Each student returns the partner's paper with a check mark or a correction note."
+            }
+          ],
+          "teacher_notes": "Power is the chapter's most conceptually accessible section after the heavy derivations of kinetic and potential energy, but students often confuse 'powerful' with 'strong' — a very strong person lifting slowly may have lower power than a lighter person who moves quickly. The car problem is important because it routes through kinetic energy, tying back to section 7.4.1 rather than treating power in isolation. Watch for errors in unit conversion from km h⁻¹ to m s⁻¹; it is worth doing the conversion explicitly and slowly the first time.",
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "activity_title": "Introducing Simple Machines: Effort, Load, and Mechanical Advantage",
+          "section_anchor": "7.6 Simple Machines",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "textbook",
+            "spring balance",
+            "heavy book or bag",
+            "long ruler or metre stick",
+            "whiteboard"
+          ],
+          "visual_aids": "Board diagram: general simple machine with effort arrow, load arrow, and MA = load/effort label",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Ask students to lift a heavy book bag directly with one hand (using the spring balance to measure force) and then to push it up a gently tilted metre stick resting against a table edge. Record both forces on the board. Ask: in which case was the force smaller? Did the machine reduce the work done? Guide students to articulate that the force was smaller but the distance was greater."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Introduce the vocabulary from section 7.6: effort (force applied by person), load (force to be overcome), and mechanical advantage MA = load/effort. Calculate MA for both cases from the measured forces. Emphasise that simple machines redistribute force and distance but do not reduce total work — work done is conserved."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students examine three scenarios on the board (a flag pulley, a ramp at a loading dock, a pair of scissors) and for each: (a) identify the effort and load, (b) predict whether MA is greater than, equal to, or less than 1, and (c) describe what changes in the direction or magnitude of force the machine provides. Pairs share and compare predictions."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a three-sentence summary: what simple machines do, what mechanical advantage measures, and why total work is still conserved despite the force reduction. A quick check question: if a machine has MA = 3 and the load is 90 N, what effort is required? Students solve and check with a partner."
+            }
+          ],
+          "teacher_notes": "This unit opens the simple machines strand of the chapter, which is structurally and cognitively distinct from the energy strand. The most important idea to establish here — before the individual machines are studied — is that MA > 1 is not a violation of energy conservation; the smaller force acts over a proportionally longer distance. Students who miss this will later struggle with the work-energy derivations of MA in the inclined plane and lever units. The flag pulley example anticipates section 7.6.1 and gives students a concrete, familiar image to anchor the vocabulary.",
+          "homework": []
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 50,
+          "activity_title": "Analysing Fixed and Movable Pulleys and Their Mechanical Advantages",
+          "section_anchor": "7.6.1 Pulley",
+          "pedagogical_approach": "Demonstration",
+          "materials": [
+            "single fixed pulley (or improvised with a smooth rod and string)",
+            "spring balance",
+            "known weights (200 g, 500 g)",
+            "whiteboard"
+          ],
+          "visual_aids": "Board diagram: fixed pulley (effort = load, direction changes) and movable pulley (effort = load/2, MA = 2) with force arrows",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Demonstrate the fixed pulley: hang a 500 g weight and measure the effort needed to hold it steady via the spring balance on the rope's other end. Record on the board: load = 5 N, effort ≈ 5 N, MA = 1. Ask: what did the pulley actually do? Guide students to articulate the direction change — the effort is now directed downward rather than upward."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Describe and diagram the movable pulley system (if apparatus not available, use a clear board diagram with rope segments): two rope segments support the load, each carrying half the weight, so effort = load/2 and MA = 2. Students verify: for a 500 g load, effort = 2.5 N. Ask: what is the trade-off? (The effort rope must move twice as far as the load.)"
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work through two problems: (a) a fixed pulley is used to lift a 600 N engine part — what effort is needed and what is the advantage? (b) a movable pulley system lifts a 400 N load with an effort of 200 N — verify the MA and state what length of rope must be pulled to raise the load by 1 m. Students write full solutions."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students draw and annotate both pulley types in their notebooks, labelling effort direction, load direction, MA value, and one real-life application (elevator, crane, flagpole) for each type. Pairs check each other's diagrams for correct arrow directions."
+            }
+          ],
+          "teacher_notes": "The fixed pulley's MA of 1 often surprises students who expect a machine to always amplify force — take time to make the 'direction change is still useful' argument concrete: pulling downward on a rope is much more natural than pushing upward on a heavy load. The movable pulley's MA = 2 should be derived from the rope-segment argument rather than just stated, so students see that it is another instance of the work-conservation principle introduced in section 7.6. Watch for students who think the movable pulley eliminates the need to do any work.",
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 50,
+          "activity_title": "Measuring How Incline Angle Affects the Effort Needed to Raise a Load",
+          "section_anchor": "7.6.2 Inclined plane",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "plank (about 60 cm)",
+            "stack of books (to vary height)",
+            "toy cart or block",
+            "spring balance",
+            "metre ruler",
+            "whiteboard",
+            "calculators"
+          ],
+          "visual_aids": "Board diagram: inclined plane with effort F′ along slope, weight mg vertically, height h, length L labelled; table of angle vs force readings",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Activity 7.3: set the plank at a steep angle (books stacked high) and use the spring balance to pull the toy cart up the slope, recording the force. Reduce the angle (fewer books) and repeat for at least three angles. Students record angle, measured force, and slope length in a table. Ask: as the slope gets shallower, what happens to the force? What happens to the distance?"
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Derive the mechanical advantage from the work-energy theorem on the board: effort × length = weight × height, so MA = L/h. Since L > h for any incline, MA > 1 always. Students verify using their own measured values: calculate MA = measured load / measured effort and compare with the geometric ratio L/h."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Work through the textbook example: ramp 50 cm long raising a load 30 cm, MA = 50/30 = 1.67. Students then design their own problem: choose an MA and a load, calculate the required effort and slope dimensions, then check that effort × L = load × h. Pairs swap problems and verify the arithmetic."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students address the Pause-and-Ponder questions from section 7.6.2: (a) why do hill roads wind in gentle curves rather than going straight up — write a one-sentence answer in terms of MA and L/h; (b) why is a slanted ladder easier to climb — connect to the reduced force required at a smaller angle."
+            }
+          ],
+          "teacher_notes": "Activity 7.3 is the empirical core of this unit: students should see the trade-off between force and distance in their own data before the derivation is presented. A common measurement error is pulling the spring balance at an angle rather than parallel to the slope; instruct students to keep the balance parallel to the plank surface during each pull. The hill-road question at the end is a genuine application of the L/h argument to everyday infrastructure and is worth treating as a real reasoning task rather than a quick recall question.",
+          "homework": []
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 50,
+          "activity_title": "Discovering the Lever Principle Through a Ruler-and-Pencil Investigation",
+          "section_anchor": "7.6.3 Lever",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "30 cm ruler",
+            "pencil (fulcrum)",
+            "stapler (heavy load)",
+            "erasers (effort weights)",
+            "whiteboard"
+          ],
+          "visual_aids": "Board diagram: ruler on pencil fulcrum with stapler near fulcrum, erasers far end — effort arm and load arm labelled",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Activity 7.4: students place the stapler near the pencil fulcrum and add erasers one by one to the far end of the ruler, counting how many are needed to lift the stapler. Students record: position of stapler from fulcrum, number of erasers needed, position of erasers from fulcrum. Ask: what pattern do you notice between the distance from the fulcrum and the force needed?"
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Derive the lever principle from the work-energy theorem: if the effort side moves distance d₁ while the load side moves d₂, then F₁ × d₁ = F₂ × d₂. Restate as: effort × effort arm = load × load arm, giving MA = effort arm / load arm. Students verify using their Activity 7.4 data."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Work through the seesaw example from the chapter: 15 kg child at 2 m from fulcrum, 30 kg child at 1 m — verify balance using the lever equation. Then ask: where should a 20 kg child sit to balance a 40 kg child at 0.8 m? Students solve, then extend: what MA does each arrangement provide?"
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a two-sentence explanation of why the lever does not create energy — the smaller force acts over a longer distance, so total work done is equal at both ends. Exit question: a lever has effort arm 60 cm and load arm 20 cm; what effort is needed to lift a 120 N load? Students solve and record."
+            }
+          ],
+          "teacher_notes": "Activity 7.4 works best when students discover the principle from their own data before the algebraic form is presented — resist the urge to announce the rule before they have completed the activity. The key insight is that the ruler does not reduce the total work; it redistributes force and distance. A common error is confusing the effort arm with the full length of the lever; reinforce that the arms are measured from the fulcrum to each point of application.",
+          "homework": []
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 50,
+          "activity_title": "Building a Beam Balance and Classifying Lever Types by Fulcrum Position",
+          "section_anchor": "7.6.3 Lever",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "scale or ruler (beam)",
+            "pencil (fulcrum)",
+            "small paper cups",
+            "coins of known denominations",
+            "string",
+            "whiteboard",
+            "rulers for measuring distances"
+          ],
+          "visual_aids": "Board diagram: three lever classes — fulcrum, load, effort positions for Class I, II, III with a real example each",
+          "time_bands": [
+            {
+              "minutes": "0-20",
+              "activity": "Activity 7.5: students construct a beam balance by suspending paper cups from either end of a ruler balanced on a pencil. They add coins to one side and adjust the balance point distance until the beam is level, recording load mass, effort mass, load arm, and effort arm in a table. Students verify the lever principle numerically: effort × effort arm = load × load arm for each trial."
+            },
+            {
+              "minutes": "20-35",
+              "activity": "Introduce the three lever classes from section 7.6.3 on the board, defining each by the relative position of fulcrum, load, and effort. For each class give two examples from the chapter (Class I: scissors, seesaw, crowbar; Class II: lemon squeezer, wheelbarrow; Class III: tweezers, broom, hammer). Students classify each example and verify the MA prediction for that class."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Students address the Pause-and-Ponder questions from section 7.6.3: (a) why does a spoon make it easier to open a can lid — identify the class and the relevant arm; (b) why should hard objects be pushed close to the fulcrum of scissors — use the MA formula; (c) why a perpetual motion machine is impossible — connect to energy dissipation through friction."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Each student writes one sentence per lever class, naming the class, its fulcrum position, one example, and its MA relative to 1. Collect as an exit check."
+            }
+          ],
+          "teacher_notes": "Activity 7.5 extends Activity 7.4 by providing a more precise, quantitative verification of the lever principle. Students often struggle to identify whether a given tool is a Class I, II, or III lever — it helps to draw the tool in use and ask: where is the fulcrum? Where does the load push? Where do I apply effort? The perpetual motion question is a good conceptual closer: it connects the lever's energy-conservation property back to the broader principle of mechanical energy conservation established earlier in the chapter.",
+          "homework": []
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 50,
+          "activity_title": "Tracing Energy Transformation in the Gharat and Hydroelectric Systems",
+          "section_anchor": "7.6.3 Lever",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "textbook (Bridging Science and Society box)",
+            "whiteboard",
+            "blank A4 paper for energy-chain diagrams"
+          ],
+          "visual_aids": "Board diagram: water flowing downhill → wheel rotating → grinding stone turning; alongside modern dam → turbine → generator → electrical output",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Read aloud the Bridging Science and Society passage on the gharat (panchakki) from the chapter. Ask students: what energy form does the water have at the top of the hill? What happens to that energy as the water flows down and strikes the wheel? Students write a brief energy chain before discussion begins."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Build the full energy transformation chain for the gharat on the board: gravitational PE (water at height) → kinetic energy (water in motion) → mechanical energy (rotating wheel) → mechanical energy (grinding stone) → thermal and sound energy (friction). Students copy and annotate each arrow with the conversion mechanism."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students draw a parallel energy chain for a modern hydroelectric dam independently: water behind dam stores gravitational PE, released water gains KE, turbine converts KE to rotational mechanical energy, generator converts mechanical energy to electrical energy, transmission lines deliver it to homes. Students compare the two chains and identify where they are structurally identical and where they differ."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class discussion: why does the gharat community build the channel at a height rather than alongside the river at the same level? Students write one paragraph connecting the answer to gravitational potential energy (U = mgh) and the concept of work done by gravity established earlier in the chapter."
+            }
+          ],
+          "teacher_notes": "This unit uses the gharat example to show that the energy principles of this chapter — gravitational potential energy, kinetic energy, and conversion — are not abstract but are embedded in centuries of practical technology. Students may not be familiar with the gharat; a brief description of its geographical context (Himalayan hill communities) makes the scenario vivid. Watch for students who describe the water as 'producing' energy at the wheel rather than 'transferring' energy it already had as stored gravitational PE — this is the key distinction to reinforce.",
+          "homework": []
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 50,
+          "activity_title": "Connecting Mechanical Advantage Across All Three Simple Machines",
+          "section_anchor": "7.6.3 Lever",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "whiteboard",
+            "calculators",
+            "problem-set cards (one per group)",
+            "spring balances and assorted masses (for verification if available)"
+          ],
+          "visual_aids": "Board comparison table: machine type, MA formula, condition for MA > 1, real-life example — one row each for pulley, inclined plane, lever",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students individually complete the comparison table for the three simple machines (pulley, inclined plane, lever) from memory: MA formula, condition for MA > 1, one example. Pairs compare tables and flag disagreements for class resolution."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Build a unified derivation argument on the board: all three machines satisfy effort × effort distance = load × load distance (from the work-energy theorem). Show how MA = load/effort = effort distance/load distance in each case. Students verify the pulley (rope length / load displacement), inclined plane (L/h), and lever (effort arm / load arm) against this unified form."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Groups of three receive a problem card: (a) a fixed plus movable pulley combination lifting a 600 N load — calculate the effort and draw the rope arrangement; (b) an inclined plane 3 m long raising a 1.5 m crate — calculate MA and the effort needed for a 200 N load; (c) a Class II lever with a 2 m beam, fulcrum at one end, load 0.5 m from fulcrum — calculate MA and compare with a Class I lever in the same configuration. Groups solve and present a two-sentence summary."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class debrief: a student from each group presents their calculation, and the class checks whether the work-energy conservation equation holds for the final answers. Students write a one-sentence generalisation: what do all simple machines have in common?"
+            }
+          ],
+          "teacher_notes": "This unit draws the simple machines strand together by showing that the three machines are all instances of the same principle — work input equals work output, so force and distance trade against each other. Students who treated pulley, inclined plane, and lever as three separate topics to memorise will benefit most from the unified table and derivation. A useful probe question: can a simple machine ever have MA less than 1? Students should recognise that Class III levers do have MA < 1 — the pay-off is a gain in speed or range of motion rather than force amplification.",
+          "homework": []
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 50,
+          "activity_title": "Applying W = F × s and KE = ½mv² to Multi-Step Problem Sets",
+          "section_anchor": "7.4.1 Kinetic energy",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "whiteboard",
+            "calculators",
+            "printed or board-displayed problem set"
+          ],
+          "visual_aids": "Board: worked solution framework — given/find/law/substitute/solve for each problem",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Pose a diagnostic problem: a 2 kg ball is pushed with a 10 N horizontal force over 5 m on a frictionless surface, starting from rest. Students individually predict (a) the work done, (b) the final KE, and (c) the final speed — writing only the answer without working, as a rapid self-assessment. Collect by show of hands for answer choices written on the board."
+            },
+            {
+              "minutes": "12-32",
+              "activity": "Work through a sequence of three problems on the board, each adding a layer of complexity: (1) work done from force-displacement graph (area calculation), (2) KE change from net work — object decelerated by friction over a known distance, find change in speed, (3) combined: a ball rolled off a table — find KE just before hitting the floor using conservation of energy, then find the stopping force if it embeds 2 cm into soft ground. Students attempt each before the solution is shown."
+            },
+            {
+              "minutes": "32-45",
+              "activity": "Students independently solve two fresh problems: (a) a 0.5 kg ball thrown vertically upward at 20 m s⁻¹ — find maximum height using KE/PE conversion; (b) a worker uses a rope over a fixed pulley to raise a 50 kg box 3 m in 15 s — find the work done, the power, and the MA. Students show complete working."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Pairs exchange solutions and check each other's unit conversions and sign conventions. Identify the most common error type across the class and discuss it briefly as a whole group."
+            }
+          ],
+          "teacher_notes": "This unit is a deliberate practice session that integrates the quantitative skills from sections 7.1 through 7.5 — work, kinetic energy, potential energy, conservation, and power — in multi-step problems. Students who are comfortable with individual formulae often struggle when two or three concepts are combined in sequence; the layered problem structure is designed to surface exactly that difficulty. The pulley problem in part (b) of the independent set is intentionally cross-strand: it requires both the energy calculation and the simple machine vocabulary from section 7.6.",
+          "homework": []
+        },
+        {
+          "period_number": 21,
+          "period_duration_minutes": 50,
+          "activity_title": "Reasoning About Energy Conservation and Mechanical Advantage in New Scenarios",
+          "section_anchor": "7.4.3 Conservation of mechanical energy",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "whiteboard",
+            "calculators",
+            "scenario cards (one per pair)"
+          ],
+          "visual_aids": "Board: energy pie charts for a ball at three positions on a roller coaster — showing fraction of total energy as KE vs PE at each point",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Show the roller coaster energy pie charts on the board without labels. Ask pairs to identify which chart corresponds to the top of a peak and which to the bottom of a valley, and to write a one-sentence justification using the language of conservation of mechanical energy. Take responses and address any who confuse the two."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Work through a two-part scenario: a ball is released from height H on a frictionless roller coaster. Part A — find its speed at height h < H. Part B — the same track now has friction; successive peaks are measured at heights H, 0.85H, 0.72H. Ask: is energy conserved? Where did the lost mechanical energy go? Calculate the energy dissipated between the first and second peak for a 0.2 kg ball at H = 2 m."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Pairs receive scenario cards with one of three problems: (a) a pendulum swung to 30° — find the speed at the lowest point and explain what happens to the amplitude over many swings; (b) a skier descending a 40 m slope, starting from rest, with a friction force of 200 N over a 100 m slope — find the speed at the bottom; (c) a crane using a movable pulley system to lift a 2000 N beam to 5 m in 40 s — find power and compare with the theoretical minimum power from the work-energy theorem. Pairs solve and explain to another pair."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Each student writes a one-paragraph answer to: 'Why do real machines always require more effort than the ideal mechanical advantage predicts?' The answer must reference at least two of the following: friction, energy conservation, the work-energy theorem, and thermal energy."
+            }
+          ],
+          "teacher_notes": "This unit pushes students to apply conservation of mechanical energy to imperfect real-world situations, where friction causes mechanical energy to decrease over time — a crucial step beyond the idealised pendulum and slide problems. The skier problem with a known friction force requires students to use the work-energy theorem rather than simple conservation, because not all the initial PE converts to KE; watch for students who set mgh = ½mv² without accounting for the friction work. The closing paragraph question is a genuine evaluative task and should be given sufficient quiet time.",
+          "homework": []
+        },
+        {
+          "period_number": 22,
+          "period_duration_minutes": 50,
+          "activity_title": "Whole-Chapter Synthesis: Connecting Work, Energy, and Simple Machines",
+          "section_anchor": "synthesis",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "whiteboard",
+            "calculators",
+            "blank A4 paper",
+            "concept-web worksheet (blank grid)"
+          ],
+          "visual_aids": "Board: central concept web with 'Work W = F × s' at the centre, radiating to KE, PE, conservation, power, simple machines, and energy forms",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Students individually construct a concept web on blank paper, starting from W = F × s at the centre and drawing connections to every major concept of the chapter — kinetic energy, gravitational potential energy, conservation of mechanical energy, power, mechanical advantage, the three simple machines, and energy forms. Each connection must carry a brief label explaining the relationship (e.g. 'KE changes when work is done on/by an object')."
+            },
+            {
+              "minutes": "15-32",
+              "activity": "Pose an integrative scenario: a person uses a lever (Class I, effort arm 1.5 m, load arm 0.5 m) to pry open a 300 N boulder, then rolls it to the edge of a 4 m ramp, and it slides down (frictionless). Ask students to (a) calculate the effort needed at the lever, (b) calculate the KE at the bottom of the ramp, (c) state the minimum power a motor would need to push an identical boulder up the same ramp in 6 s. Students work through all three parts, connecting lever MA, conservation of energy, and power in one chain."
+            },
+            {
+              "minutes": "32-44",
+              "activity": "Class discussion: where in this scenario did a simple machine redistribute force and distance? Where did energy change form but the total remain constant? Where did the rate of doing work matter? Students annotate their calculations to label which principle of the chapter governs each step."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Each student writes a single paragraph: 'A simple machine does not reduce the work you must do — it changes how you do it.' The paragraph must defend this claim using at least one specific numerical result from the integrative scenario and one reference to the conservation of mechanical energy or the work-energy theorem."
+            }
+          ],
+          "teacher_notes": "This unit draws together both strands of the chapter — the energy strand (work, KE, PE, conservation, power) and the simple machines strand (MA, pulley, inclined plane, lever) — in a single coherent scenario. Students should be encouraged to treat the concept web as a personal synthesis tool rather than a copy of the board diagram; the connections they draw and label reveal the depth of their understanding. The closing paragraph is the most demanding task of the unit: a strong response will name a specific number from their calculation and tie it explicitly to a principle, not just assert the claim.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 22
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_label": "7.1 Work Done by a Constant Force",
+        "total_sections": 11,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate work using W = F × s, interpret the force-displacement graph as area, and apply the formula to original numerical problems.",
+        "implied_lo": "Students can calculate the work done by a constant force using the product of force and displacement and represent this on a force-displacement graph.",
+        "section_context": "W = F × s definition, joule unit, force-displacement graph area, wheat-bag proportionality examples",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 2,
+        "section_label": "7.1.1 When is work done equal to zero?",
+        "total_sections": 11,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students classify scenarios by the three zero-work conditions and justify each classification using W = F × s.",
+        "implied_lo": "Students can identify and justify conditions under which a force acting on an object does zero scientific work.",
+        "section_context": "Three zero-work conditions: zero force, zero displacement, force perpendicular to displacement; porter and weightlifter examples",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 3,
+        "section_label": "7.1.2 Positive and negative work done",
+        "total_sections": 11,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students determine the sign of work in opposing-force scenarios and calculate numerical values of positive and negative work.",
+        "implied_lo": "Students can determine the sign and magnitude of work done when force and displacement are in the same or opposite directions.",
+        "section_context": "Sign convention for work, dumbbell lift and lower, goalkeeper stopping football, Newton's third law and work signs",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 4,
+        "section_label": "7.2 The Work-Energy Theorem",
+        "total_sections": 11,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students apply W = ΔE to trace energy transfers through a carrom collision sequence and trace muscular energy forms during cycling.",
+        "implied_lo": "Students can apply the work-energy theorem to trace energy transfer between objects in a sequence of interactions.",
+        "section_context": "W = ΔE theorem, energy as capacity to do work, carrom striker-coin collision chain, energy gain and loss at each contact",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 5,
+        "section_label": "7.3 Forms of Energy",
+        "total_sections": 11,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct energy conversion chains for assigned devices and explain each conversion step using the catalogue of energy forms.",
+        "implied_lo": "Students can construct a sequential energy conversion chain for a given device or process, naming each form and the conversion mechanism.",
+        "section_context": "Seven energy forms (mechanical, thermal, light, sound, electrical, nuclear, chemical), conversion examples: bulb, food-muscles, bell",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 6,
+        "section_label": "7.4.1 Kinetic energy",
+        "total_sections": 11,
+        "period_numbers": [
+          6,
+          7
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students derive K = ½mv² from Newton's second law and kinematics, then apply it to calculate KE changes under positive and negative work across varied scenarios.",
+        "implied_lo": "Students can derive and apply the kinetic energy expression to calculate speed or energy change when work is done on or by an object.",
+        "section_context": "Derivation of K = ½mv² via W = mas and v² = u² + 2as, KE sign changes, velocity-doubling factor-of-four result, cricket ball and aircraft problems",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 7,
+        "section_label": "7.4.2 Potential energy",
+        "total_sections": 11,
+        "period_numbers": [
+          8,
+          9
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students investigate stored energy in deformed objects, conduct Activity 7.1 to observe height-depression proportionality, and derive U = mgh from the work-energy theorem.",
+        "implied_lo": "Students can derive the gravitational potential energy expression and use it to calculate the energy stored in an object at a given height.",
+        "section_context": "Potential energy in deformed systems (rubber band, spring, bow), U = mgh derivation via W = F × s with F = mg, Activity 7.1 sand depression, Earth-ball system",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 8,
+        "section_label": "7.4.3 Conservation of mechanical energy",
+        "total_sections": 11,
+        "period_numbers": [
+          10,
+          11
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students verify conservation of mechanical energy with a pendulum, derive the algebraic proof, and apply the principle to solve novel multi-step problems including friction-modified systems.",
+        "implied_lo": "Students can apply conservation of mechanical energy to predict speeds or heights in frictionless and friction-modified systems.",
+        "section_context": "ME = KE + PE, algebraic proof via free fall, Activity 7.2 pendulum, frictionless slide speed v = √(2gh), truck ramp problem, friction causes ME loss",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 9,
+        "section_label": "7.5 Power",
+        "total_sections": 11,
+        "period_numbers": [
+          12
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate power as the rate of doing work and solve problems involving the inverse relationship between power, time, and work.",
+        "implied_lo": "Students can calculate power from work and time and compare the power requirements of different scenarios doing equal or unequal amounts of work.",
+        "section_context": "P = W/t, watt unit, weightlifter and car-acceleration worked examples, power-time inverse relationship",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 10,
+        "section_label": "7.6 Simple Machines",
+        "total_sections": 11,
+        "period_numbers": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students investigate and derive mechanical advantage for pulleys, inclined planes, and levers through hands-on activities and work-energy derivations, classify lever types, and trace energy transformations in traditional and modern machines.",
+        "implied_lo": "Students can derive and calculate the mechanical advantage of simple machines and explain why total work is conserved despite the force redistribution.",
+        "section_context": "MA = load/effort, fixed and movable pulleys, inclined plane MA = L/h (Activity 7.3), lever principle F₁d₁ = F₂d₂ (Activities 7.4 and 7.5), three lever classes, gharat energy chain",
+        "c_code": "C-2.6",
+        "co_central": true
+      },
+      {
+        "section_number": 11,
+        "section_label": "7.4.1 Kinetic energy",
+        "total_sections": 11,
+        "period_numbers": [
+          20
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students solve multi-step problems integrating work, kinetic energy, potential energy, conservation of energy, and power in combined scenarios.",
+        "implied_lo": "Students can integrate work, kinetic energy, potential energy, and power concepts to solve multi-step quantitative problems.",
+        "section_context": "W = F × s combined with KE = ½mv², PE = mgh, conservation ME, and P = W/t in layered multi-step problems including pulley integration",
+        "c_code": "C-2.5",
+        "co_central": true
+      },
+      {
+        "section_number": 12,
+        "section_label": "synthesis",
+        "total_sections": 11,
+        "period_numbers": [
+          22
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct a whole-chapter concept web and solve an integrative scenario connecting lever mechanical advantage, conservation of mechanical energy, and power in a single problem chain.",
+        "implied_lo": "Students can connect the work-energy theorem, conservation of mechanical energy, and mechanical advantage of simple machines in an integrated multi-concept analysis.",
+        "section_context": "Integrative chain: lever MA calculation, conservation of ME on ramp, power of motor — drawing on W = F × s, U = mgh, K = ½mv², P = W/t, MA = load/effort",
+        "c_code": "C-2.5",
+        "co_central": true
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "science",
+      "stage": "secondary",
+      "chapter_number": 7,
+      "chapter_title": "Work, Energy, and Simple Machines",
+      "chapter_cg": "CG-2",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_label": "7.1 Work Done by a Constant Force",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can calculate the work done by a constant force using the product of force and displacement and represent this on a force-displacement graph.",
+          "section_context": "W = F × s definition, joule unit, force-displacement graph area, wheat-bag proportionality examples",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A force-displacement graph for an object shows a horizontal line at 8 N from a displacement of 0 m to 3 m, and then drops to 0 N. What is the total work done on the object?",
+          "options": [
+            {
+              "label": "A",
+              "text": "3 J",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "8 J",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "11 J",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "24 J",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "C": "Adds force and displacement (8 + 3 = 11) instead of multiplying — treats work as a sum rather than a product.",
+                "B": "Reads only the force value (8 N) without multiplying by displacement — confuses force with work.",
+                "A": "Reads only the displacement value (3 m) without multiplying by force — confuses displacement with work."
+              },
+              "inclusivity": "Students who struggle with graph reading may still demonstrate the concept correctly if the question is posed as a direct W = F × s calculation; the graph format is a representation task, not a barrier to the underlying skill."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_label": "7.1.1 When is work done equal to zero?",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can identify and justify conditions under which a force acting on an object does zero scientific work.",
+          "section_context": "Three zero-work conditions: zero force, zero displacement, force perpendicular to displacement; porter and weightlifter examples",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A porter carries a heavy suitcase horizontally at a steady pace across a level floor. She exerts an upward force to support the suitcase throughout. Which statement correctly explains whether scientific work is done on the suitcase?",
+          "options": [
+            {
+              "label": "A",
+              "text": "No work is done on the suitcase because the porter is not accelerating the suitcase.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "No work is done on the suitcase because the upward force is perpendicular to the horizontal displacement.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "Work is done on the suitcase because the porter exerts a large force over a long distance.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Work is done on the suitcase because the porter's muscles are consuming energy.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "C": "Equates effort or exertion with scientific work — the most common everyday-to-scientific language confusion this section targets.",
+                "A": "Partially correct reasoning (no net force in the direction of motion) but gives the wrong condition — conflates zero net force with zero work, not the perpendicularity condition.",
+                "D": "Correctly notes energy expenditure by the porter but conflates internal muscular energy use with work done on the external object."
+              },
+              "inclusivity": "Students who find the abstract perpendicularity condition difficult may benefit from sketching the force arrow (upward) and the displacement arrow (horizontal) and observing that they form a right angle before choosing their answer."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_label": "7.1.2 Positive and negative work done",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can determine the sign and magnitude of work done when force and displacement are in the same or opposite directions.",
+          "section_context": "Sign convention for work, dumbbell lift and lower, goalkeeper stopping football, Newton's third law and work signs",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A goalkeeper exerts a force of 200 N on a football that is moving toward her. The football travels 15 cm in the direction it was originally moving before coming to rest in her hands. (a) Calculate the work done by the goalkeeper on the football. (b) State the sign of this work and explain in one sentence what the sign tells you about the relationship between the force direction and the displacement direction.",
+          "options": [],
+          "expected_elements": [
+            "Convert displacement: 15 cm = 0.15 m",
+            "W = F × s = 200 × 0.15 = 30 J in magnitude",
+            "Sign is negative: W = –30 J because the goalkeeper's force is opposite to the ball's displacement",
+            "The negative sign means force and displacement point in opposite directions, so the goalkeeper's force opposes the ball's motion"
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students who arrive at the correct magnitude but give a positive sign should receive partial credit; the sign interpretation in part (b) assesses whether the student understands the directional relationship, not just the arithmetic."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_label": "7.2 The Work-Energy Theorem",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can apply the work-energy theorem to trace energy transfer between objects in a sequence of interactions.",
+          "section_context": "W = ΔE theorem, energy as capacity to do work, carrom striker-coin collision chain, energy gain and loss at each contact",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A cricket ball travelling at 20 m s⁻¹ strikes a set of stumps and comes to rest. The ball has a mass of 0.16 kg. (a) Calculate the kinetic energy of the ball just before impact. (b) Using the work-energy theorem, calculate the work done by the stumps on the ball. (c) State the sign of this work and identify which object gains energy in this interaction.",
+          "options": [],
+          "expected_elements": [
+            "KE = ½mv² = ½ × 0.16 × 20² = ½ × 0.16 × 400 = 32 J",
+            "By W = ΔE: work done on ball = final KE – initial KE = 0 – 32 = –32 J",
+            "Sign is negative: the stumps exert a force opposite to the ball's displacement",
+            "By Newton's third law the ball exerts an equal and opposite force on the stumps in the direction of the ball's motion, doing positive work on the stumps; the stumps gain energy (they are knocked over or vibrate)"
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who correctly apply W = ΔE but omit the Newton's third law identification of the energy-receiving object should receive most of the credit; the third-law extension is an enrichment step that tests a deeper application of the theorem."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_label": "7.3 Forms of Energy",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can construct a sequential energy conversion chain for a given device or process, naming each form and the conversion mechanism.",
+          "section_context": "Seven energy forms (mechanical, thermal, light, sound, electrical, nuclear, chemical), conversion examples: bulb, food-muscles, bell",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "When a person eats food and then runs a race, which sequence correctly describes the energy conversions that take place?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Chemical energy in food → mechanical energy in muscles → kinetic energy of the body",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Chemical energy in food → nuclear energy in cells → kinetic energy of the body",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Mechanical energy in food → chemical energy in muscles → kinetic energy of the body",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Thermal energy in food → electrical energy in nerves → mechanical energy in muscles",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {
+                "D": "Confuses the role of the nervous system (signal transmission, not energy storage) with an energy conversion step, and incorrectly names thermal energy as the initial form in food.",
+                "B": "Substitutes nuclear energy for the biological conversion step — conflates energy stored in atomic nuclei with the chemical energy in food molecules.",
+                "C": "Reverses the initial form: food stores chemical energy, not mechanical energy; this distractor catches students who conflate chewing (mechanical action) with the form of energy stored in food."
+              },
+              "inclusivity": "Students may draw the conversion chain as a diagram with arrows rather than selecting from text options; this does not change the cognitive demand but accommodates different representational preferences."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_label": "7.4.1 Kinetic energy",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can derive and apply the kinetic energy expression to calculate speed or energy change when work is done on or by an object.",
+          "section_context": "Derivation of K = ½mv² via W = mas and v² = u² + 2as, KE sign changes, velocity-doubling factor-of-four result, cricket ball and aircraft problems",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A net force of 367,500 N acts on a jet aircraft of mass 10,500 kg over a distance of 100 m, bringing the aircraft from its landing speed to rest. (a) Calculate the work done by this force on the aircraft. (b) Using the work-energy theorem, show that the aircraft's landing speed was 70 m s⁻¹. (c) A second aircraft of mass 42,000 kg lands at the same speed. Compare its kinetic energy to the first aircraft's kinetic energy and explain the result.",
+          "options": [],
+          "expected_elements": [
+            "W = F × s = 367,500 × 100 = 36,750,000 J (sign negative as force opposes motion, but magnitude used for KE calculation)",
+            "W = ΔKE → 36,750,000 = ½ × 10,500 × v² → v² = 7000 → v = √7000 ≈ 83.7; OR using the textbook values: ½ × 10,500 × 70² = ½ × 10,500 × 4900 = 25,725,000 J — accept textbook derivation showing K = ½mv² and substituting v = 70 m s⁻¹ to verify",
+            "Second aircraft KE = ½ × 42,000 × 70² = ½ × 42,000 × 4900 = 102,900,000 J",
+            "Ratio = 102,900,000 / 25,725,000 = 4; the second aircraft has four times the KE because its mass is four times greater and KE is directly proportional to mass at constant speed"
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who correctly apply K = ½mv² in parts (a) and (b) but make an arithmetic error in part (c) should receive credit for the proportional reasoning if they correctly state that doubling the mass doubles the KE at the same speed. Students may express the comparison as a ratio or in words."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_label": "7.4.2 Potential energy",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can derive the gravitational potential energy expression and use it to calculate the energy stored in an object at a given height.",
+          "section_context": "Potential energy in deformed systems (rubber band, spring, bow), U = mgh derivation via W = F × s with F = mg, Activity 7.1 sand depression, Earth-ball system",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "In the derivation of gravitational potential energy U = mgh, why is the applied force taken to be exactly equal to mg rather than greater than mg?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Gravity does no work when the object moves upward, so the applied force need only equal mg.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The applied force is always equal to weight regardless of the motion of the object.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The formula only works when the object is stationary at the top and bottom positions.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The object is raised at constant speed, so the net force is zero and the applied force equals the gravitational force.",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {
+                "B": "Over-generalises: students who choose this confuse the specific condition (constant speed) with a universal rule, ignoring Newton's second law.",
+                "C": "Conflates a boundary condition with the general derivation — this is a misreading of what 'constant speed' means in the context of calculus-free derivation.",
+                "A": "Directly contradicts the energy analysis — gravity does negative work on an upward-moving object; this distractor catches students who confuse direction of force with whether work is done."
+              },
+              "inclusivity": "Students who struggle with the verbal reasoning may write out Newton's second law symbolically (F_net = 0 → F_applied – mg = 0 → F_applied = mg) as a supporting step before selecting their answer."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_label": "7.4.3 Conservation of mechanical energy",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can apply conservation of mechanical energy to predict speeds or heights in frictionless and friction-modified systems.",
+          "section_context": "ME = KE + PE, algebraic proof via free fall, Activity 7.2 pendulum, frictionless slide speed v = √(2gh), truck ramp problem, friction causes ME loss",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "question_text": "A 0.5 kg ball is released from rest at the top of a smooth (frictionless) curved ramp of height 3.2 m. It rolls along a flat surface at the bottom, then encounters a rough patch where a friction force of 2 N acts over a distance of 1 m. (a) Calculate the speed of the ball at the bottom of the ramp, just before the rough patch. (b) Calculate the kinetic energy of the ball after it has crossed the rough patch. (c) Explain why the ball's speed at the end of the rough patch is less than your answer to part (a), using the principle of conservation of mechanical energy and the role of friction.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Part (a): applies conservation of ME correctly — mgh = ½mv², cancels m, v = √(2 × 10 × 3.2) = √64 = 8 m s⁻¹; states that mass cancels so the result is independent of mass",
+            "Part (b): KE at bottom = mgh = 0.5 × 10 × 3.2 = 16 J; work done by friction = –F × d = –2 × 1 = –2 J; KE after rough patch = 16 – 2 = 14 J",
+            "Part (c): clearly states that the total mechanical energy decreased by 2 J because friction converted it to thermal energy; distinguishes between the frictionless case (ME conserved) and the real case (ME decreases); uses language such as 'mechanical energy is not conserved when friction acts' and connects the energy loss to the heat generated in the rough patch"
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "Students who correctly set up and solve parts (a) and (b) but give an incomplete explanation in part (c) should receive partial credit; a strong part (c) names both the mechanism (friction converts ME to thermal energy) and the principle (ME is not conserved when non-conservative forces act). Students who work part (a) without cancelling mass but arrive at the correct numerical speed should receive full marks for part (a)."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_label": "7.5 Power",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can calculate power from work and time and compare the power requirements of different scenarios doing equal or unequal amounts of work.",
+          "section_context": "P = W/t, watt unit, weightlifter and car-acceleration worked examples, power-time inverse relationship",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A car of mass 1000 kg accelerates from rest to 72 km h⁻¹ in 10 s. (a) Convert 72 km h⁻¹ to m s⁻¹ and calculate the kinetic energy gained by the car. (b) Calculate the power of the engine during this acceleration. (c) If a second engine performs the same acceleration in 5 s, what power does it require? Explain in one sentence what changes between the two engines.",
+          "options": [],
+          "expected_elements": [
+            "72 km h⁻¹ = 72 × (1000/3600) = 20 m s⁻¹",
+            "KE = ½ × 1000 × 20² = ½ × 1000 × 400 = 200,000 J",
+            "P = W/t = 200,000 / 10 = 20,000 W",
+            "Second engine: P = 200,000 / 5 = 40,000 W",
+            "The same work is done but in half the time, so twice the power is required; the more powerful engine does not do more work — it does the same work at a greater rate"
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "Students who correctly calculate P in part (b) but give an incomplete sentence in part (c) should receive full numerical credit; the sentence in part (c) assesses conceptual understanding beyond arithmetic and may be expressed in words, a ratio, or an equation."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_label": "7.6 Simple Machines",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can derive and calculate the mechanical advantage of simple machines and explain why total work is conserved despite the force redistribution.",
+          "section_context": "MA = load/effort, fixed and movable pulleys, inclined plane MA = L/h (Activity 7.3), lever principle F₁d₁ = F₂d₂ (Activities 7.4 and 7.5), three lever classes, gharat energy chain",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-2.6",
+            "competency_text": "Demonstrates the principle of mechanical advantage by constructing simple machines (system of levers and pulleys)."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": "Machine | Effort applied (N) | Load lifted (N) | Effort distance (m) | Load distance (m)\nInclined plane | 120 | 200 | 2.5 | 1.5\nLever (Class I) | 50 | 200 | 0.8 | 0.2\nMovable pulley | 110 | 200 | 2.0 | 1.0",
+          "question_text": "",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "The table shows measurements for three simple machines, each used to lift a 200 N load. Study the data and answer the following: (a) Calculate the mechanical advantage of each machine from the force measurements. (b) For each machine, calculate the work done by the effort and the work done on the load. (c) One of the three machines shows a greater discrepancy between effort work and load work than the others. Identify which machine this is, suggest one reason for the discrepancy, and explain whether this violates the principle of conservation of energy.",
+          "scaffold": "Refer to the table provided. For part (a) use MA = load/effort. For part (b) use W = force × distance. For part (c) compare your work values across the three machines and consider what physical factors in a real machine could cause effort work to exceed load work.",
+          "format_of_output": [
+            "A table showing MA and work values for all three machines",
+            "A written explanation (3–5 sentences) for part (c) identifying the machine, suggesting a cause, and explaining the energy principle"
+          ],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "Data interpretation (provided table)",
+              "format_rationale": "The section's implied_lo requires students to derive and evaluate MA from measurements and reason about work conservation; a data table provides the realistic numerical context in which both operations — calculation and evaluative reasoning — can be demonstrated simultaneously.",
+              "what_this_demonstrates": "Students demonstrate they can calculate MA from force measurements, apply W = F × s to verify work conservation across machine types, and evaluate deviations from ideal behaviour in terms of the energy principle rather than treating them as formula errors.",
+              "reading_the_scaffold": "The scaffold confirms which formulae to use for parts (a) and (b) and gives a direction for part (c) without revealing the answer; the teacher should check that students understand 'discrepancy' means a difference between the two work values before they begin.",
+              "strong_vs_weak_markers": "Strong responses: correctly calculate MA and work for all three machines; identify the inclined plane (effort work = 300 J, load work = 300 J — ideal) or the pulley (effort work = 220 J, load work = 200 J — 10% discrepancy) as showing the largest gap; attribute the discrepancy to friction or rope weight; state explicitly that energy is still conserved because the extra effort work is converted to heat or sound, not created or destroyed. Weak responses: calculate MA only; confuse effort work with load work; or claim the discrepancy violates energy conservation.",
+              "inclusivity": "Students who find the written explanation in part (c) challenging may first draw an energy flow diagram showing where the 'extra' work goes before writing their sentences; this representational step supports the reasoning without reducing the cognitive demand."
+            }
+          }
+        },
+        {
+          "section_number": 11,
+          "section_label": "7.4.1 Kinetic energy",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can integrate work, kinetic energy, potential energy, and power concepts to solve multi-step quantitative problems.",
+          "section_context": "W = F × s combined with KE = ½mv², PE = mgh, conservation ME, and P = W/t in layered multi-step problems including pulley integration",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A worker uses a movable pulley system (MA = 2) to raise a 60 kg crate from the ground to a height of 4 m. She applies the effort at a steady speed, completing the lift in 20 s. (a) Calculate the weight of the crate and the effort force she applies. (b) Calculate the work done by the worker's effort force. (c) Calculate the power output of the worker during the lift. (d) Verify that the work done by the effort equals the gravitational potential energy gained by the crate.",
+          "options": [],
+          "expected_elements": [
+            "Weight = mg = 60 × 10 = 600 N; effort = load/MA = 600/2 = 300 N",
+            "Effort distance = 2 × load distance = 2 × 4 = 8 m; W_effort = 300 × 8 = 2400 J",
+            "P = W/t = 2400/20 = 120 W",
+            "PE gained = mgh = 60 × 10 × 4 = 2400 J = W_effort — confirms work conservation; MA redistributes force and distance but total work is the same"
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": "Students who correctly calculate PE and work done but do not explicitly state the verification in part (d) should receive most of the credit if their numerical values match; the verbal statement of work conservation in part (d) is the evaluative component and rewards students who connect arithmetic to principle."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 12,
+          "section_label": "synthesis",
+          "total_sections": 11,
+          "implied_lo_assessed": "Students can connect the work-energy theorem, conservation of mechanical energy, and mechanical advantage of simple machines in an integrated multi-concept analysis.",
+          "section_context": "Integrative chain: lever MA calculation, conservation of ME on ramp, power of motor — drawing on W = F × s, U = mgh, K = ½mv², P = W/t, MA = load/effort",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-2.5",
+            "competency_text": "Defines work in scientific terms and represents the relationship between potential and kinetic energy in mathematical expressions."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "question_text": "A construction worker needs to move a 500 N boulder to the top of a 3 m high wall. She has two options: Option 1 — use a Class I lever (effort arm 2 m, load arm 0.5 m) to lift it vertically straight up. Option 2 — roll it up a frictionless inclined plane (length 5 m, height 3 m). Once at the top, the boulder is released from rest and slides down a frictionless curved ramp, reaching the ground in 2 s. (a) Calculate the effort required in each option and identify which requires less effort. (b) Show that the work done by the effort is the same in both options. (c) Using conservation of mechanical energy, calculate the speed of the boulder at the base of the curved ramp. (d) Evaluate: a student claims that Option 2 is always better than Option 1 because it requires less effort. Write two or three sentences assessing this claim, referring to at least one limitation or trade-off the student has ignored.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Part (a): Lever effort = load × load arm / effort arm = 500 × 0.5 / 2 = 125 N; Inclined plane effort = load × h/L = 500 × 3/5 = 300 N; lever requires less effort",
+            "Part (b): Lever: effort distance = (load arm / effort arm) × load distance = (2/0.5) × 3 = 12 m; W = 125 × 12 = 1500 J; OR Inclined plane: W = 300 × 5 = 1500 J; both equal mgh = 500 × 3 = 1500 J — work is conserved in both cases",
+            "Part (c): mgh = ½mv² → 500 × 3 = ½ × (500/10) × v² → 1500 = 25v² → v² = 60 → v ≈ 7.7 m s⁻¹ (using g = 10, m = 50 kg)",
+            "Part (d): strong response notes that the lever requires less effort but the effort must act over a much longer distance (12 m vs 5 m), which may be impractical in a confined space; also that both options require the same total work, so the energy cost is identical; and that the 'better' option depends on the specific constraints of the task (available space, type of machine accessible) rather than effort alone"
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": "Students who correctly complete parts (a)–(c) but write a thin evaluative response in part (d) should receive partial credit; the quality of the evaluation in part (d) distinguishes between students who understand that MA redistributes force and distance versus those who only compare effort values. Students may express their evaluation as bullet points if prose is a barrier, provided the two distinct trade-offs are named."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

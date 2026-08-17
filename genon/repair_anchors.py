@@ -34,6 +34,17 @@ SAME SAFETY DOCTRINE as repair_register.py:
 
     python3 genon/repair_anchors.py           # dry run: show the declared edits + both registries
     python3 genon/repair_anchors.py --apply   # back up, apply, record, re-derive
+
+v1.1, 2026-08-17 (S3 · science·IX wave 1): HANDOFF-ROW LABEL edits join the tool (founder
+ruling 2026-08-17: extend, not a sibling). The S3 defect family is the check's mirror image:
+the UNIT anchors are right (precise slices, correct registry) and the `coverage_handoff`
+row's `section_label` names the MERGED assessment cell ("7.6 Simple Machines" over units
+anchoring 7.6.1/7.6.2/7.6.3), so the substring test fails in both directions. The truthful
+fix is on the handoff side — shorten the label to the common stem of the anchors it routes
+to. `period_numbers` are NEVER touched (the science port rejoins LO by period_number, and
+which unit receives which items is the routing, which is correct). A handoff edit is
+declared with the unit slot set to the string "handoff"; old/new are the row's verbatim
+`section_label`. Same assertions: not found verbatim, or found twice -> fail loudly.
 """
 from __future__ import annotations
 
@@ -690,16 +701,116 @@ REPAIRS = {
          "same file, same slip; 'Web of Life' is the chapter's closing registry section"),
     ],
   },
+  # ── S3 · science · IX · BATCH WAVE 1 — HANDOFF-ROW LABEL RE-STEMS (2026-08-17, v1.1) ──
+  # 16 mis-routed units across 4 standards (certification 20260817_1006*), ALL one family:
+  # the handoff row's `section_label` names the merged assessment CELL while the units
+  # anchor precise slices, so the substring test fails in both directions. The routing
+  # (`period_numbers`) is pedagogically correct in every case and is not touched; each
+  # label is shortened to the common stem of the anchors it routes to. Every new stem was
+  # verified against serve._norm and every routed unit's anchor tokens before declaring.
+  # The full cell description survives in each row's `section_context`.
+  # ch 02 and ch 12 are in quarantine — apply_file repairs the quarantined copy and
+  # writes it back under its library name, which IS the restoration (trap 1: the whole
+  # library is re-scanned at the follow-up --certify-only).
+  # APPLIED 2026-08-17 (all four chapters; re-certified 20260817_1040 clean); renamed so
+  # the wave-2 set below owns the live key.
+  ("science", "ix", "APPLIED-20260817-wave1"): {
+    "ch_02_canonical.json": [
+        ("handoff",
+         "Section 2.3.1 – Organelles: Nucleus, Ribosomes, ER, Golgi Apparatus, Lysosomes",
+         "Section 2.3.1 – Organelles",
+         "handoff/label-stem",
+         "routes U6 (nucleus and ribosomes) + U7 (ER, Golgi, lysosomes); the stem is the "
+         "prefix both anchors share"),
+        ("handoff",
+         "Section 2.4 and 2.4.1 – Cell Growth, Division: Mitosis and Meiosis",
+         "Section 2.4",
+         "handoff/label-stem",
+         "routes U10 (2.4 – how do normal cells grow and divide?) + U11 (2.4.1 – mitosis "
+         "and meiosis); 'Section 2.4' is a stem of both"),
+        ("handoff",
+         "Section 2.5 and 2.5.1 – Cell Theory, Lifespan, Cancer, and Cell Culture",
+         "Section 2.5",
+         "handoff/label-stem",
+         "routes U12 (2.5 – cell theory) + U13/U14 (2.5.1 – lifespan / cell culture); "
+         "'Section 2.5' is a stem of all three"),
+    ],
+    "ch_04_canonical.json": [
+        ("handoff",
+         "4.4.1 Uniform circular motion",
+         "4.4",
+         "handoff/label-stem",
+         "routes U12 (4.4 motion in a plane) + U13-15/19-20 (4.4.1 uniform circular "
+         "motion); only the bare '4.4' stems both — the cell genuinely spans parent and "
+         "child section"),
+    ],
+    "ch_07_canonical.json": [
+        ("handoff",
+         "7.6 Simple Machines",
+         "7.6",
+         "handoff/label-stem",
+         "routes U13 (7.6 simple machines) + U14-19 (7.6.1 pulley / 7.6.2 inclined plane "
+         "/ 7.6.3 lever); '7.6' stems all four anchors"),
+    ],
+    "ch_12_canonical.json": [
+        ("handoff",
+         "12.6.1–12.6.3 Monera, Protista and Fungi",
+         "12.6.1 Kingdom Monera",
+         "handoff/label-stem",
+         "routes U8, whose single anchor is the ' / '-joined triple (monera / protista / "
+         "fungi); the check splits anchors into tokens and needs any one match, so the "
+         "first kingdom's stem is the honest minimal label — the row's section_context "
+         "still records all three kingdoms"),
+        ("handoff",
+         "12.6.5 Kingdom Animalia — Invertebrates",
+         "12.6.5 Kingdom Animalia",
+         "handoff/label-stem",
+         "routes U10 (12.6.5 kingdom animalia — multicellular, heterotrophic eukaryotes); "
+         "dropping the '— Invertebrates' qualifier leaves the shared stem"),
+    ],
+  },
+  # ── S3 · science · IX · BATCH WAVE 2 (the COMPACTS) — 2026-08-17, v1.2 ──────────────
+  # ch 4 p13: the FIRST true route correction (founder ruling 2026-08-17). The 4.4.1 row
+  # routes [11, 12, 13], but U12 is a pure graphs+kinematics consolidation — its own note
+  # says it "weaves together 4.2.2, 4.2.3, 4.3", its anchor carries exactly those three
+  # tokens, and the unit contains zero occurrences of "circular", "4.4" or "plane". An
+  # item routed there lands on a sitting that never taught its section. U12 is struck;
+  # U11 (first teach) and U13 (closing consolidation, 4.4.1 token in its anchor) remain.
+  # ANCHOR-AT-LAST-UNIT: the section's last routed unit is U13 before and after the edit,
+  # so no item moves.
+  ("science", "ix"): {
+    "ch_04_canonical_p13.json": [
+        ("handoff-route",
+         ("4.4.1 Uniform circular motion", [11, 12, 13]),
+         [11, 13],
+         "handoff/route",
+         "U12 verifiably does not teach 4.4.1 (0 hits for circular/4.4/plane; anchor and "
+         "note both name only 4.2.2/4.2.3/4.3); last routed unit stays U13, so item "
+         "anchoring is unmoved"),
+    ],
+  },
 }
 
 
 def registry_of_library():
     """Compile the library and derive the registry from the top canonical, exactly as
-    build_library.certify does — so what is printed here is what certification will see."""
+    build_library.certify does — so what is printed here is what certification will see.
+    v1.1: a file absent from the library is read from its newest quarantined copy (the
+    same route apply_file takes) so the BEFORE registry of a quarantined chapter prints
+    instead of raising."""
     nn = f"ch_{CHAPTER:02d}"
     paths = [LIB / f"{nn}_canonical.json"] + sorted(LIB.glob(f"{nn}_canonical_p*.json"))
-    lib = [(p.name, compile_stream(json.loads(p.read_text(encoding="utf-8"))))
-           for p in paths if p.is_file()]
+    lib = []
+    for p in paths:
+        src = p
+        if not p.is_file():
+            qs = sorted((QUAR / LIB.parent.name / LIB.name).glob(p.name[:-5] + "_*.json"))
+            if not qs:
+                continue
+            src = qs[-1]
+        lib.append((p.name, compile_stream(json.loads(src.read_text(encoding="utf-8")))))
+    if not lib:
+        raise SystemExit(f"no canonical for ch {CHAPTER} in the library or quarantine")
     lib.sort(key=lambda t: -len(t[1]["units"]))
     reg = section_registry(lib[0][1])
     return lib, reg
@@ -735,6 +846,40 @@ def show_registry(label):
     return reg
 
 
+def handoff_agreement():
+    """Mirror build_library's handoff/anchor gate for this chapter's library — a handoff
+    repair that leaves the agreement broken must be visible immediately (v1.1)."""
+    nn = f"ch_{CHAPTER:02d}"
+    paths = [LIB / f"{nn}_canonical.json"] + sorted(LIB.glob(f"{nn}_canonical_p*.json"))
+    out = []
+    for p in paths:
+        if not p.is_file():
+            continue
+        raw = json.loads(p.read_text(encoding="utf-8"))
+        s = compile_stream(raw)
+        anchors_of = {}
+        for u in s["units"]:
+            raw_u = next((x for x in raw["result"]["lesson_plan"]["periods"]
+                          if x.get("period_number") == u["unit"]), {})
+            a = raw_u.get("section_anchor") or raw_u.get("section_ref") or ""
+            anchors_of[u["unit"]] = ({"synthesis"} if is_synthesis_unit(u)
+                                     else {_norm(t) for t in a.split(" / ")})
+        mis = []
+        for e in (raw["result"].get("coverage_handoff") or []):
+            if not isinstance(e, dict):
+                continue
+            ref = _norm(e.get("section_ref") or e.get("section_label")
+                        or e.get("section_title") or "")
+            for pn in [int(x) for x in (e.get("period_numbers") or []) if x is not None]:
+                have = anchors_of.get(pn)
+                if have is None:
+                    mis.append(f"U{pn} (no such unit) <- {ref or '?'}")
+                elif ref and not any(ref in a or a in ref for a in have):
+                    mis.append(f"U{pn} anchors {sorted(have)} <- routed {ref!r}")
+        out.append((p.name, mis))
+    return out
+
+
 def apply_file(fname, edits, dry):
     path = LIB / fname
     if not path.is_file():
@@ -753,6 +898,42 @@ def apply_file(fname, edits, dry):
     units = {u["period_number"]: u for u in plan["result"]["lesson_plan"]["periods"]}
     done = []
     for unit_no, old, new, rule, note in edits:
+        if unit_no == "handoff-route":
+            # v1.2 handoff ROUTE edit (founder ruling 2026-08-17, ch 4 p13): strike a unit
+            # from a row's period_numbers when the unit verifiably does not teach the row's
+            # section. old = (verbatim section_label, exact current period_numbers);
+            # new = the corrected list. The anchor-at-last-unit invariant must be argued in
+            # the note — an edit that moves a section's LAST routed unit moves its items.
+            label, old_pns = old
+            rows = [e for e in (plan["result"].get("coverage_handoff") or [])
+                    if isinstance(e, dict) and e.get("section_label") == label
+                    and [int(x) for x in (e.get("period_numbers") or [])] == list(old_pns)]
+            if len(rows) != 1:
+                raise SystemExit(
+                    f"{fname} handoff-route: declared (label, period_numbers) matched "
+                    f"{len(rows)} row(s), need exactly 1 — the artefact has changed since "
+                    f"this repair was written. Re-read it, do not force.\n"
+                    f"  wanted: {label!r} {list(old_pns)!r}")
+            if not dry:
+                rows[0]["period_numbers"] = list(new)
+            done.append({"unit": "handoff-route", "field": "period_numbers", "rule": rule,
+                         "removed": f"{label!r} {list(old_pns)!r}",
+                         "replaced_with": f"{list(new)!r}", "note": note})
+            continue
+        if unit_no == "handoff":
+            # v1.1 handoff-row label edit: locate the row by its verbatim section_label.
+            rows = [e for e in (plan["result"].get("coverage_handoff") or [])
+                    if isinstance(e, dict) and e.get("section_label") == old]
+            if len(rows) != 1:
+                raise SystemExit(
+                    f"{fname} handoff: declared label matched {len(rows)} row(s), need "
+                    f"exactly 1 — the artefact has changed since this repair was written. "
+                    f"Re-read it, do not force.\n  wanted: {old!r}")
+            if not dry:
+                rows[0]["section_label"] = new
+            done.append({"unit": "handoff", "field": "section_label", "rule": rule,
+                         "removed": old, "replaced_with": new, "note": note})
+            continue
         u = units.get(unit_no)
         if u is None:
             raise SystemExit(f"{fname}: no unit {unit_no}")
@@ -768,13 +949,19 @@ def apply_file(fname, edits, dry):
         done.append({"unit": unit_no, "field": fld, "rule": rule,
                      "removed": old, "replaced_with": new, "note": note})
     if not dry:
+        kinds = {str(d["unit"]).startswith("handoff") for d in done}
+        reason = ("handoff-row repair (label re-stem and/or route correction; unit "
+                  "anchors stand untouched — certification's handoff/anchor agreement "
+                  "gate, 2026-08-17)"
+                  if kinds == {True} else
+                  "V2 section-anchor joiner repair (';' read as one opaque registry "
+                  "section; corrupted the derived registry, falsely quarantined p10, "
+                  "and mis-served X=8/X=9)")
         gc = plan.setdefault("genon_canonical", {})
         gc.setdefault("repairs", []).append({
             "at": datetime.now().isoformat(timespec="seconds"),
-            "tool": "genon/repair_anchors.py v1.0",
-            "reason": "V2 section-anchor joiner repair (';' read as one opaque registry "
-                      "section; corrupted the derived registry, falsely quarantined p10, "
-                      "and mis-served X=8/X=9)",
+            "tool": "genon/repair_anchors.py v1.1",
+            "reason": reason,
             "edits": done,
         })
         path.write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -817,7 +1004,8 @@ def main():
         print(f"=== {fname} — {len(done)} edit(s)"
               f"{' (DRY RUN, nothing written)' if dry else ''}")
         for d in done:
-            print(f"  U{d['unit']:<3} section_anchor   [{d['rule']}]")
+            loc = "handoff row" if d["unit"] == "handoff" else f"U{d['unit']}"
+            print(f"  {loc:<12} {d['field']:<16} [{d['rule']}]")
             print(f"        - {d['removed']}")
             print(f"        + {d['replaced_with']}")
     if dry:
@@ -830,7 +1018,14 @@ def main():
     bad = [b for _, b, _, _ in first_visit_check(*registry_of_library()) if b]
     print(f"\nregistry is {len(reg)} sections; "
           f"{'ALL plans pass first-visit order.' if not bad else 'FAILURES REMAIN — read above.'}")
-    return 1 if bad else 0
+    ho_bad = 0
+    print("handoff/anchor agreement:")
+    for name, mis in handoff_agreement():
+        ho_bad += len(mis)
+        print(f"    {name:<28} {'OK' if not mis else f'{len(mis)} mis-route(s)'}")
+        for m in mis:
+            print(f"        {m}")
+    return 1 if (bad or ho_bad) else 0
 
 
 if __name__ == "__main__":

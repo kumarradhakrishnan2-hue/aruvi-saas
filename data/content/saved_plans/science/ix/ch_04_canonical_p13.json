@@ -1,0 +1,1322 @@
+{
+  "filename": "ch_04_canonical_p13.json",
+  "saved_at": "2026-08-17T10:56:56",
+  "plan_status": "canonical",
+  "chapter_number": 4,
+  "chapter_title": "Describing Motion Around Us",
+  "grade": "Grade IX",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 13
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 13 periods = 650 minutes\nTotal: 13 periods · 10h 50min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "13x50",
+    "constitution": "LP v1.1 / assessment v1.2",
+    "source": "generate_canonical.py one science ix 4",
+    "ledger_ts": "20260817_104548_sci_ix_04_p13",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-17T11:07:24",
+        "tool": "genon/repair_anchors.py v1.1",
+        "reason": "handoff-row repair (label re-stem and/or route correction; unit anchors stand untouched — certification's handoff/anchor agreement gate, 2026-08-17)",
+        "edits": [
+          {
+            "unit": "handoff-route",
+            "field": "period_numbers",
+            "rule": "handoff/route",
+            "removed": "'4.4.1 Uniform circular motion' [11, 12, 13]",
+            "replaced_with": "[11, 13]",
+            "note": "U12 verifiably does not teach 4.4.1 (0 hits for circular/4.4/plane; anchor and note both name only 4.2.2/4.2.3/4.3); last routed unit stays U13, so item anchoring is unmoved"
+          }
+        ]
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Locating Objects Using a Reference Point on a Number Line",
+          "section_anchor": "4.1.1 Describing position",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Metre ruler or tape",
+            "Chalk or masking tape for marking a number line on the floor",
+            "Sticky labels or cards for marking positions",
+            "Textbook"
+          ],
+          "visual_aids": "Number line on the floor/board with origin O, positive right, negative left",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students stand along a taped number-line on the floor. The teacher designates one student as the origin O. Each other student receives a card stating a position (e.g. +3, -2). Students place themselves at the corresponding metre marks and state their position aloud relative to O, including direction."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students work in pairs: one student closes their eyes while the other moves to a new position on the number line. The first student opens their eyes and must describe the partner's position — number and direction from O — by writing it as a signed value. Pairs swap roles and repeat. The teacher circulates and probes: 'What information do you need besides the number to fully describe the position?'"
+            },
+            {
+              "minutes": "22-35",
+              "activity": "The teacher introduces the formal vocabulary: reference point, origin, signed position. Students sketch a number line in their notebooks, label O, and mark five positions — some positive, some negative — describing each in a sentence that includes both the magnitude and the direction from O. They then write a two-sentence rule: when is an object at rest, and when is it in motion?"
+            },
+            {
+              "minutes": "35-50",
+              "activity": "Whole-class discussion: the teacher poses two objects at positions –4 m and +4 m and asks whether their distances from O are the same or different, and what additional information direction provides. Students revise their two-sentence rule if needed and share with a partner before a brief class share-out."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter's entry point: the idea that any description of motion must start with a fixed reference. Watch for the common confusion that position and distance are the same thing — students often strip the sign from a negative position and treat it as a plain distance. The probing question 'What does the minus sign tell you that the number alone cannot?' is effective at surfacing this.",
+          "homework": [
+            "Draw a number line representing a street. Place your home at the origin, school at +800 m, and a market at –300 m. Write a sentence for each location that includes both its distance from home and its direction."
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Comparing Distance and Displacement for a Moving Object",
+          "section_anchor": "4.1.2 Distance travelled and displacement",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "Number line on board or floor (from section 4.1.1 vocabulary)",
+            "Worksheets with blank tables (columns: start position, end position, total distance, displacement)",
+            "Rulers",
+            "Coloured pens or pencils"
+          ],
+          "visual_aids": "Board diagram showing an athlete's back-and-forth path on a number line with arrows for each leg of the journey",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "The teacher draws an athlete's path on the board: start at O, run to +60 m, return to +20 m. Students are asked to estimate — without calculating — whether the distance covered equals the gap between start and finish. A quick show of hands captures predictions before any formula is discussed."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students work through Activity 4.1 adapted: they fill a table for a ball thrown upward from O to +20 m and falling back to O, recording positions at each instant, the total path length, and the net change in position. They calculate displacement (final position minus initial position, with sign) and total distance separately for each phase and for the whole journey, noting when the two quantities are equal and when they differ."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students annotate their table with two labels — 'scalar' and 'vector-like' — and write one sentence each defining distance and displacement in their own words. They then construct a second example of their own: any journey that returns partway — and fill the same table for it, predicting before computing."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Pairs exchange notebooks and check each other's table and definitions. The teacher draws out the key insight: the magnitude of displacement can never exceed total distance, and they are equal only when the object never reverses direction. Students correct or confirm their sentence definitions."
+            }
+          ],
+          "teacher_notes": "Having established how to express position using a signed number line, this unit builds the distinction between path length and net change in position. The most persistent error is treating displacement as always positive — students copy the magnitude of the final position without preserving the sign that records direction. Asking 'If the athlete ends up behind the start, what sign should the displacement carry?' catches this before it solidifies.",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Calculating and Comparing Average Speed and Average Velocity",
+          "section_anchor": "4.1.3 Average speed and average velocity",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Worked example cards (printed or on board)",
+            "Calculators",
+            "Textbook (Equations 4.1 and 4.2a–b)",
+            "Notebooks"
+          ],
+          "visual_aids": "Board layout showing Eq. 4.1 (average speed) and Eq. 4.2 (average velocity) side by side with units labelled",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "The teacher presents Equation 4.1 and Equation 4.2a–b on the board and explains the distinction: speed uses total distance; velocity uses displacement and carries a sign. Students copy both equations, label each symbol, and note the SI unit m s⁻¹ for both quantities. The teacher emphasises that average velocity is the average rate of change of position with respect to time."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Students work through two structured problems: (a) a runner completes 400 m around a track and returns to the start in 80 s — find average speed and average velocity; (b) a car travels 150 m east then 50 m west in 40 s — find average speed and average velocity. Students write full working, including the sign convention for direction, and circle the difference in their answers."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "The teacher introduces the distinction between uniform and non-uniform motion using Equation 4.1: if equal distances are covered in equal time intervals, speed is constant and motion is uniform. Students examine a small data table (distance at equal time intervals) and classify each set of readings as uniform or non-uniform, justifying their classification in one sentence per row."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students solve one integrative problem: an object moves from –10 m to +30 m in 5 s. They find displacement, distance (if the path was direct), average speed, and average velocity, then write a sentence explaining why average speed and average velocity have the same magnitude here but would differ if the object had reversed direction."
+            }
+          ],
+          "teacher_notes": "Having worked with displacement as a signed quantity, students are now applying it inside a ratio. A frequent slip is dividing total distance by time to get 'velocity' — the word 'average velocity' sounds interchangeable with 'average speed'. Pausing after each problem to ask 'Did we use distance or displacement in the numerator — and why does it matter here?' reinforces the distinction before it blurs.",
+          "homework": [
+            "A cyclist travels 600 m north and then 200 m south in 100 s. Calculate the average speed and average velocity for the whole journey, showing full working and including the direction of average velocity."
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Determining Average Acceleration from Velocity Changes Over Time",
+          "section_anchor": "4.1.4 Average acceleration",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Printed data tables with velocity at successive time intervals (bus and free-fall scenarios from Examples 4.3 and 4.4)",
+            "Calculators",
+            "Notebooks",
+            "Textbook"
+          ],
+          "visual_aids": "Board equations for Eq. 4.3a–c with direction annotation showing when acceleration and velocity are parallel vs. anti-parallel",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students are given a table of velocities for a bus at successive 10-second intervals: 0, 10, 20, 30, 20, 10, 0 m s⁻¹ (first accelerating, then braking). Without being told the formula, they are asked: 'What is changing between each row? How would you measure how fast that change is happening?' Pairs discuss for three minutes, then share their proposed method."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "The teacher formalises students' proposals into Equation 4.3 and defines average acceleration. Students calculate the average acceleration for each 10-second interval of the bus scenario, entering results in a table. They label each interval with '+' or '–' and write one sentence explaining what the sign indicates about the relationship between the acceleration direction and the direction of motion."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students analyse the free-fall data from Example 4.4, computing average acceleration across successive intervals and checking whether it remains constant. They compare the value obtained with g = 9.8 m s⁻² and discuss why consecutive intervals yield nearly the same result. The teacher asks: 'Is this acceleration in the same direction as the velocity throughout the fall — and how do you know from the sign?'"
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students write a structured summary contrasting three scenarios: (a) object speeding up — relationship of acceleration direction to velocity; (b) object slowing down — relationship of acceleration direction to velocity; (c) constant velocity — what the acceleration value is and why. Each scenario gets a signed calculation as evidence."
+            }
+          ],
+          "teacher_notes": "Having established velocity as a signed, direction-carrying quantity, this unit asks students to measure how quickly velocity changes. The most important misconception to watch for is equating 'deceleration' with 'negative acceleration' universally — a negative acceleration is only opposite to velocity if velocity is positive, and students who have not thought about signs carefully will get confused in free-fall problems. Example 4.4's constant g provides a clean check: if their calculated values are not approximately equal across intervals, they have made a sign or arithmetic error.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Plotting a Position-Time Graph from Tabulated Vehicle Data",
+          "section_anchor": "4.2.1 Plotting graph",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "Graph paper (one sheet per student)",
+            "Pencils, rulers, erasers",
+            "Printed Table 4.3 (constant-velocity vehicle data) and Table 4.4 (accelerating vehicle data)",
+            "Textbook"
+          ],
+          "visual_aids": "Board example of labelled axes with scale markings and a sample plotted point",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "The teacher demonstrates on the board how to construct axes for a position-time graph: labelling each axis with quantity and unit, choosing a scale that spreads the data across most of the paper, and marking uniform intervals. Students identify what would go wrong with a poorly chosen scale using a contrived example (all points compressed into a corner)."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Students carry out Activity 4.3: using Table 4.3 data, they set up axes on graph paper, choose and record their scale, plot all points, and connect them. They observe that the result is a straight line and note this in a caption beneath the graph."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students repeat the plotting procedure using Table 4.4 (Example 4.5 — accelerating vehicle). They observe that the points do not lie on a straight line and draw a smooth curve through them. Below each graph they write one sentence contrasting the shape of the two plots and proposing what the shape tells them about the object's motion."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students compare their two completed graphs with a partner, checking scale choices and point positions. Pairs write a joint two-sentence statement explaining why a straight line and a curve represent fundamentally different motions, then share with the class."
+            }
+          ],
+          "teacher_notes": "Having computed average velocity and acceleration numerically, this unit builds the graphical representation that makes those quantities visible. Scale choice is the most common source of error: students who use intervals of 1 unit on an axis ranging to 200 produce a graph too compressed to read. A quick check before they start plotting — 'What is the largest position value, and how many boxes do you have?' — prevents this without removing the scale-choice task from the student.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Reading Slope and Interpreting Motion from Position-Time Graphs",
+          "section_anchor": "4.2.2 Position-time graphs",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Completed position-time graphs from the previous unit (students bring their own graph paper) OR printed versions of the same graphs",
+            "Rulers",
+            "Pencils",
+            "Notebooks"
+          ],
+          "visual_aids": "Board diagram of triangle ABC construction on a position-time graph, with BC labelled Δx and CA labelled Δt",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "The teacher presents three sketched position-time graphs on the board — a straight line with positive slope, a line parallel to the time axis, and a curve with increasing slope — and asks students to rank the objects by velocity and identify which is at rest, writing their reasoning in one sentence each before any instruction."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students carry out Activity 4.4: on their plotted straight-line graph (Table 4.3), they select a segment AB, draw construction lines to form triangle ABC, measure BC (change in position) and CA (change in time), and calculate BC/CA. They compare this value to the average velocity they computed in the earlier numerical work and record whether the two agree."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students are given two straight-line position-time graphs for different objects on the same axes. They calculate the slope for each, determine which object has higher velocity, and write a justified conclusion. The teacher then asks: 'What would a steeper slope mean for the object's motion — and what would a slope of zero mean?' Students answer in their notebooks."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Whole-class consolidation: the teacher sketches a curved position-time graph and asks students to draw tangent lines at two different points and compare their slopes qualitatively. Students articulate in writing why a changing slope indicates changing velocity and therefore non-uniform motion."
+            }
+          ],
+          "teacher_notes": "Building on the plotted graphs, this unit asks students to extract a physical quantity — average velocity — from a geometric operation on the graph. A persistent confusion is between the steepness of the line (slope = velocity) and the height of the line (position): students sometimes read a high position as 'fast'. The question 'Does where the line is matter, or how it is tilted?' usually resolves this quickly. Checking that students' slope calculation matches their earlier numerical average velocity provides a built-in self-correction.",
+          "homework": [
+            "Sketch three position-time graphs in your notebook: one for an object at rest, one for an object moving at constant velocity, and one for an accelerating object. For each, write one sentence explaining how the shape of the graph tells you about the object's motion."
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Extracting Acceleration and Displacement from Velocity-Time Graphs",
+          "section_anchor": "4.2.3 Velocity-time graphs",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Printed velocity-time graph set (Figs. 4.17a–e equivalents showing constant velocity, positive slope, negative slope)",
+            "Rulers",
+            "Calculators",
+            "Graph paper",
+            "Textbook"
+          ],
+          "visual_aids": "Board diagrams of velocity-time graph shapes (flat line, positive slope, negative slope) with shaded areas for displacement (rectangle and trapezoid)",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "The teacher presents a velocity-time graph with a flat line and leads students through the interpretation: constant velocity means zero acceleration (slope = 0), and the rectangular area under the line equals displacement. Students calculate one numerical example of each — slope and area — from a simple graph on the board."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Students examine two graphs: one with a positive slope (object speeding up) and one with a negative slope (object slowing down). Using the triangle method (Figs. 4.17d and 4.17e equivalents), they calculate average acceleration for each. They then explain in one sentence per graph what the sign of the acceleration tells them about the direction of acceleration relative to velocity."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work through the trapezoid area calculation for a velocity-time graph where an object starts at 10 m s⁻¹ and accelerates to 30 m s⁻¹ over 5 s. They divide the trapezoid into a rectangle and a triangle, calculate each area separately, sum them, and state the displacement. They cross-check by using the average-velocity formula: displacement = average velocity × time."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students write a summary table with three columns — graph shape, what slope gives, what area gives — for each of the three velocity-time graph types covered. Pairs compare their tables before a brief class review."
+            }
+          ],
+          "teacher_notes": "This unit extends the slope-equals-rate idea from position-time graphs to velocity-time graphs, and introduces a second graphical operation — area under the curve equals displacement. Students frequently conflate the two graphs' slopes: they may say the slope of a velocity-time graph gives velocity rather than acceleration. Asking 'What quantity is on the vertical axis — and what does a ratio of that quantity to time give you?' re-anchors the interpretation. The trapezoid decomposition into rectangle plus triangle is the step most likely to produce arithmetic errors, so a quick check of whether the two sub-areas add up to a reasonable displacement is worth building in.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Deriving and Applying the Three Kinematic Equations Step by Step",
+          "section_anchor": "4.3 Kinematic Equations for Motion in a Straight Line with Constant Acceleration",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Textbook (Section 4.3, Fig. 4.19, Equations 4.4a–c, Example 4.8)",
+            "Notebooks",
+            "Calculators",
+            "Board"
+          ],
+          "visual_aids": "Velocity-time graph (Fig. 4.19 equivalent) on the board with labels u, v, t, area s annotated to support derivation",
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "The teacher draws the velocity-time graph for constant acceleration on the board. Starting from the definition of average acceleration, students follow each algebraic step to derive v = u + at (Eq. 4.4a), writing each step in their notebooks. The teacher then reads off the area under the graph as displacement s and guides students to derive s = ut + ½at² (Eq. 4.4b), labelling the rectangle and triangle components."
+            },
+            {
+              "minutes": "15-25",
+              "activity": "Students independently derive Eq. 4.4c (v² = u² + 2as) by eliminating t from Equations 4.4a and 4.4b, writing out the algebraic steps and checking each other's working in pairs. The teacher confirms the result and asks: 'Which of the five quantities — s, u, v, a, t — does Eq. 4.4c not involve, and why is that useful?'"
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Students work through Example 4.8 from the textbook: a car decelerating at –4 m s⁻² from two different initial speeds. They apply Eq. 4.4c to find stopping distance in each case, then examine the ratio of distances and explain in writing why doubling the initial speed quadruples the stopping distance. The road-safety implication (braking distance, V2V technology) is noted by the teacher as a real-world application."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students construct a reference card in their notebooks listing each kinematic equation, the five symbols, their meanings and SI units, and the condition under which all three equations are valid. They also write a one-sentence validity statement: 'These equations apply only when...'"
+            }
+          ],
+          "teacher_notes": "The derivation in this unit rests on the relationship between the velocity-time graph's area and displacement — a link built in the preceding graphical work. Watch for students substituting values before identifying which equation is appropriate: the most efficient approach is always to list known and unknown quantities first. Equation 4.4c is particularly prone to sign errors when the acceleration is negative — checking that the stopping distance comes out positive (since v = 0 and s must be a positive length) is a good self-check prompt.",
+          "homework": [
+            "A ball is thrown vertically upward at 20 m s⁻¹ and decelerates at 10 m s⁻² (taking upward as positive). Use the kinematic equations to find (a) the time to reach the highest point and (b) the maximum height reached. Show full working and state the equation you used for each part."
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Solving Kinematic Problems Using the Three Equations Fluently",
+          "section_anchor": "4.3 Kinematic Equations for Motion in a Straight Line with Constant Acceleration",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Problem set (four problems of varying type — find v, find s, find u, find a — printed or on board)",
+            "Calculators",
+            "Notebooks",
+            "Reference card students built in the previous unit"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students are given four kinematic scenarios and asked — before attempting any calculation — to identify for each: the known quantities, the unknown, and which equation connects them. They complete this triage table individually, then compare with a partner."
+            },
+            {
+              "minutes": "8-30",
+              "activity": "Students solve all four problems in full, showing working in a structured format: list knowns, state equation chosen, substitute, solve, check units. The four problems are designed so each requires a different equation or combination — one uses Eq. 4.4a alone, one Eq. 4.4b, one Eq. 4.4c, and one requires two equations in sequence."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Small groups compare solutions to the two-equation sequential problem. Groups that chose different solution paths present their method; the teacher facilitates discussion of which path was more efficient and why. Students annotate their own solution with a note on the strategic choice."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "The teacher poses a challenge problem — the stopping-distance ratio scenario from Example 4.8, but now with tripled initial speed — and students predict the ratio of stopping distances before calculating, testing whether they have internalised the v² dependence. Results are shared and the quadratic relationship is confirmed algebraically."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the kinematic equations through problem-solving rather than re-derivation. The triage step — identifying knowns, unknowns, and the right equation before touching numbers — is the discipline that separates fluent solvers from those who try equations at random; it is worth enforcing as a written step rather than a mental one. The v² stopping-distance ratio prediction is a good diagnostic: students who predict a linear relationship (triple speed, triple distance) have not yet connected the algebraic structure to physical meaning.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Characterising Two-Dimensional Motion and Defining Motion in a Plane",
+          "section_anchor": "4.4 Motion in a Plane",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "Printed photographs or sketches of: a vehicle overtaking, a kicked ball's parabolic path, a satellite orbit (or textbook equivalents)",
+            "Notebooks",
+            "Textbook"
+          ],
+          "visual_aids": "Board sketches of three example paths — overtaking vehicle, kicked ball arc, circular orbit — labelled as 2D paths",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students examine the three printed images. Without teacher input, they write two observations per image: (a) how many independent directions of motion they can identify and (b) whether a single number line would be enough to describe the object's position at any instant. Pairs share observations before the teacher draws out the key distinction."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "The teacher formalises the definition: motion in a plane is movement in two dimensions and cannot be fully described by a single signed number. Students contrast this with the one-dimensional motion they have studied: they write a two-column comparison (1D vs 2D) covering: number of coordinates needed to specify position, whether a single number line suffices, and one real example of each."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Students focus on the circular orbit image. They reason from first principles: if a satellite moves in a circle at constant speed, does its position change? Does its velocity direction change? They sketch the circular path, draw velocity arrows at four points on the circle, and observe that each arrow points in a different direction even though the speed is constant. They write a one-sentence conclusion about what kind of motion this must be."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Class discussion: the teacher asks why the tools developed for straight-line motion (single number line, sign convention) are insufficient for circular motion, and what new information would be needed to describe position in a plane. Students articulate the limitation in their notebooks, setting up the conceptual need that the next section addresses."
+            }
+          ],
+          "teacher_notes": "Having worked entirely within one-dimensional motion, students now encounter the extension to two dimensions. The most important conceptual preparation is the idea that velocity is a direction-carrying quantity — already established in the displacement and velocity units — so changes in direction count as changes in velocity. A productive question is: 'If I know an object is at +5 m on a number line, do I know everything about its position?' followed by 'What if it could also be above or below the line?'",
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Investigating Velocity Direction and Speed in Uniform Circular Motion",
+          "section_anchor": "4.4.1 Uniform circular motion",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "Marbles (one per group)",
+            "Circular rings or bangles large enough for a marble to roll inside (one per group)",
+            "Smooth flat surface (table or floor)",
+            "Textbook"
+          ],
+          "visual_aids": "Circular path diagram on the board showing tangent velocity arrows at four points and labelling that speed = constant, direction changes",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Each group places a marble inside a ring on a smooth surface and spins it so it moves along the inner boundary. Before lifting the ring, each student predicts in their notebook: 'When I lift the ring, in which direction will the marble travel?' They sketch the circle and draw an arrow from a chosen point showing their prediction."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Groups carry out Activity 4.5: they lift the ring at various points while the marble is moving and observe the subsequent straight-line path of the marble. They compare the observed direction with their prediction and annotate their circle sketch with the actual direction. The teacher asks: 'What determines the direction the marble travels after release — the direction to the centre, or the direction along the edge?'"
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students draw a circle in their notebooks and mark four equally spaced points. At each point they draw the tangent direction as the velocity arrow. They note that all arrows have the same length (constant speed) but point in different directions. They write a formal definition of uniform circular motion and state explicitly: 'Because velocity direction changes continuously, this is an example of accelerated motion even though speed is constant.'"
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students apply Equation 4.5: given a circular track of radius R = 5 m and a period T = 10 s, they calculate the average speed for one revolution (v_av = 2πR/T) and state the average velocity over one complete revolution, explaining why average velocity is zero while average speed is not. They connect this to the distinction between distance and displacement established in section 4.1.2."
+            }
+          ],
+          "teacher_notes": "The hands-on observation — the marble travelling in a straight line tangent to the circle after the ring is lifted — provides the concrete grounding for the abstract claim that velocity is always tangential. The dominant misconception is that the marble will fly outward (away from the centre) or inward (toward the centre) when released; students who predict tangential motion without prompting are already reasoning correctly about direction of velocity. Reinforce that 'acceleration' in physics means any change in velocity, including direction alone — this is the conceptual payoff the whole chapter has been building toward.",
+          "homework": [
+            "A cyclist travels around a circular track of radius 50 m in 40 s. (a) Calculate the average speed for one complete lap. (b) State the magnitude of the average velocity for one complete lap and explain why it is different from the average speed, referring to the concepts of distance and displacement."
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Integrating Graphical and Algebraic Tools to Analyse Varied Motion Scenarios",
+          "section_anchor": "4.2.2 Position-time graphs / 4.2.3 Velocity-time graphs / 4.3 Kinematic Equations for Motion in a Straight Line with Constant Acceleration",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Printed multi-part problem worksheets (each problem requires graph interpretation, a slope or area calculation, and a kinematic equation)",
+            "Graph paper",
+            "Rulers",
+            "Calculators",
+            "Notebooks"
+          ],
+          "visual_aids": "Sample velocity-time graph on the board with labelled slope triangle and shaded area for reference",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "The teacher distributes worksheets. Each student reads all problems silently and identifies — without solving — which graphical operation (slope or area) and which kinematic equation each part requires. Students write this triage in the margin of their worksheet."
+            },
+            {
+              "minutes": "8-32",
+              "activity": "Students work through the multi-part problems, which are structured as: (a) read a velocity-time graph to find acceleration and displacement; (b) use the kinematic equations to predict the velocity at a time not shown on the graph; (c) sketch the corresponding position-time graph shape and justify why it has the shape it does. Students work independently, then check with a partner after each part."
+            },
+            {
+              "minutes": "32-44",
+              "activity": "Groups of three reconstruct the full motion narrative for one problem in words: they write a paragraph describing what the object was doing at each phase, using the graph features and equation results as evidence. Each claim in the paragraph must cite either a calculated value or a graph feature."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "One group reads their paragraph aloud. The class identifies any claim not supported by a graph feature or calculation and suggests a revision. The teacher closes by asking students to identify the one concept they found most challenging to connect — graphical or algebraic — and write it as a question in their notebook."
+            }
+          ],
+          "teacher_notes": "This unit weaves together the graphical representations of sections 4.2.2 and 4.2.3 with the kinematic equations of section 4.3 — the connection that makes both tools useful in the same analysis. Watch for students who apply kinematic equations correctly but cannot relate the result back to the graph shape: asking 'If the object is accelerating uniformly, what kind of curve should the position-time graph be — and does your answer to (c) match that?' bridges the gap. The evidence-linked paragraph is a useful diagnostic of whether students understand each tool or are pattern-matching.",
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "activity_title": "Constructing and Defending Explanations Across the Chapter's Motion Concepts",
+          "section_anchor": "4.1.1 Describing position / 4.1.2 Distance travelled and displacement / 4.4.1 Uniform circular motion",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Printed scenario cards (four scenarios — two 1D motion problems, one uniform circular motion scenario, one requiring students to identify whether circular motion is truly uniform)",
+            "Calculators",
+            "Notebooks",
+            "Textbook"
+          ],
+          "visual_aids": "Board summary table: rows for each core concept (position, displacement, velocity, acceleration, uniform circular motion), columns for definition, formula, SI unit, and one example",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students receive scenario cards. Without calculating, they classify each scenario by type — 1D uniform, 1D uniformly accelerated, or uniform circular — and write a one-sentence justification for each classification, citing the definition from the chapter."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Students solve the two 1D motion scenarios fully, choosing among scalar/vector definitions, kinematic equations, and graph interpretation as appropriate. They annotate each step with the concept it applies and the section it comes from (e.g. 'displacement — net change in position, section 4.1.2'). This builds the summary table entries as a side product."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students address the uniform circular motion scenario: a satellite at radius R completes one orbit in period T. They calculate average speed, state average velocity, draw a diagram with four tangent velocity arrows, and explain in two sentences why the satellite is accelerating even though its speed is constant — distinguishing the physics meaning of acceleration from its everyday meaning."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students complete the board summary table individually, filling each cell from memory or calculation. They then write a two-sentence response to: 'A friend says that if a car's speedometer never changes, the car cannot be accelerating. Using specific concepts from this chapter, explain why your friend is correct for straight-line motion but wrong for circular motion.' Responses are shared in pairs."
+            }
+          ],
+          "teacher_notes": "This unit draws together the chapter's defining idea — that acceleration means any change in velocity, including direction — with the foundational distinction between scalar and vector-like quantities established at the chapter's opening. The summary table helps students see which quantities require direction and which do not; a student who puts 'direction' in the wrong column almost certainly confuses speed with velocity. The final writing task is a reliable diagnostic: a complete response requires both the constancy of speed in circular motion and the changing direction of velocity, so incomplete answers reveal exactly which thread is still loose.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 13
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_label": "4.1.1 Describing position",
+        "total_sections": 10,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students locate objects on a signed number line, assign positions with direction relative to an origin, and formulate rules for rest and motion.",
+        "implied_lo": "Students can assign and interpret signed positional values relative to a chosen reference point on a number line.",
+        "section_context": "Reference point, origin O, signed position, number line, rest and motion",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_label": "4.1.2 Distance travelled and displacement",
+        "total_sections": 10,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students fill tables of positions, total distances, and displacements for back-and-forth journeys and articulate when distance and displacement are equal and when they differ.",
+        "implied_lo": "Students can calculate and distinguish between the scalar total distance and the vector-like displacement for a described journey.",
+        "section_context": "Distance as path length, displacement as net signed position change, scalar vs vector-like quantities",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_label": "4.1.3 Average speed and average velocity",
+        "total_sections": 10,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students apply Equations 4.1 and 4.2 to compute average speed and average velocity for journeys, classify motion as uniform or non-uniform, and explain why the two quantities can differ.",
+        "implied_lo": "Students can apply the definitions of average speed and average velocity to compute and compare these quantities for a described motion.",
+        "section_context": "Average speed (total distance/time), average velocity (displacement/time), uniform vs non-uniform motion, SI unit m s⁻¹",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_label": "4.1.4 Average acceleration",
+        "total_sections": 10,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate average acceleration across successive time intervals from velocity data, assign direction using sign, and contrast intervals of increasing and decreasing speed.",
+        "implied_lo": "Students can calculate average acceleration from velocity-time data and interpret the sign of acceleration relative to the direction of motion.",
+        "section_context": "Average acceleration as change in velocity over time, sign indicating direction, constant g = 9.8 m s⁻², SI unit m s⁻²",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_label": "4.2.1 Plotting graph",
+        "total_sections": 10,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students plot position-time graphs from Tables 4.3 and 4.4, choose scales, and compare the straight-line result for constant-velocity data with the curve for accelerating data.",
+        "implied_lo": "Students can construct a position-time graph from tabulated data, selecting an appropriate scale and inferring motion type from graph shape.",
+        "section_context": "Axes setup, scale choice, plotting from Table 4.3 and Table 4.4, straight line vs curve for constant vs changing velocity",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_label": "4.2.2 Position-time graphs",
+        "total_sections": 10,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students calculate the slope of a position-time graph using triangle ABC construction and confirm it equals average velocity, then interpret different graph shapes qualitatively.",
+        "implied_lo": "Students can determine average velocity from the slope of a position-time graph and interpret the motion described by different graph shapes.",
+        "section_context": "Slope of position-time graph equals average velocity, triangle ABC construction, flat line indicates rest, curve indicates acceleration",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_label": "4.2.3 Velocity-time graphs",
+        "total_sections": 10,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students compute acceleration from the slope and displacement from the area under velocity-time graphs, handling both rectangular and trapezoidal cases.",
+        "implied_lo": "Students can extract acceleration from the slope and displacement from the enclosed area of a velocity-time graph.",
+        "section_context": "Slope of v-t graph equals acceleration, area under v-t graph equals displacement, rectangle and trapezoid cases",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_label": "4.3 Kinematic Equations for Motion in a Straight Line with Constant Acceleration",
+        "total_sections": 10,
+        "period_numbers": [
+          8,
+          9
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students derive the three kinematic equations algebraically from the velocity-time graph, apply them to solve for unknown quantities, and relate the v² dependence to stopping-distance ratios.",
+        "implied_lo": "Students can select and apply kinematic equations to determine unknown motion quantities for straight-line motion with constant acceleration.",
+        "section_context": "v = u + at, s = ut + ½at², v² = u² + 2as, constant acceleration condition, stopping-distance ratio from Example 4.8",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_label": "4.4 Motion in a Plane",
+        "total_sections": 10,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students analyse examples of two-dimensional motion, contrast 1D and 2D position description, and reason about why a single number line cannot describe circular motion.",
+        "implied_lo": "Students can distinguish one-dimensional from two-dimensional motion and explain why a single coordinate axis is insufficient to describe planar motion.",
+        "section_context": "Two-dimensional motion, examples of overtaking, kicked ball, satellite orbit, limitations of a single number line",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_label": "4.4.1 Uniform circular motion",
+        "total_sections": 10,
+        "period_numbers": [
+          11,
+          13
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students observe tangential marble release to confirm velocity direction, draw tangent arrows on a circular path, compute average speed using Eq. 4.5, and explain why constant speed yet changing direction constitutes acceleration.",
+        "implied_lo": "Students can explain why uniform circular motion is accelerated motion and calculate average speed for one revolution using the period and radius.",
+        "section_context": "Uniform circular motion, tangential velocity direction, v_av = 2πR/T, zero average velocity per revolution, changing direction as acceleration",
+        "c_code": "C-2.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "science",
+      "stage": "secondary",
+      "chapter_number": 4,
+      "chapter_title": "Describing Motion Around Us",
+      "chapter_cg": "CG-2",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_label": "4.1.1 Describing position",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can assign and interpret signed positional values relative to a chosen reference point on a number line.",
+          "section_context": "Reference point, origin O, signed position, number line, rest and motion",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "On a number line with origin O, an object is placed at position –6 m. A second object is placed at +6 m. Which statement correctly describes both objects?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Both objects are 6 m from O but on opposite sides of O.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Both objects are the same distance from O and on the same side of O.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The object at –6 m is at rest because its position value is negative.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The sign of a position value has no meaning on a number line.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "B": "Student conflates magnitude of position with position itself and does not recognise that opposite signs indicate opposite sides of the origin.",
+                "C": "Student confuses the sign convention for direction with a statement about the object's state of motion — a category error between position and motion.",
+                "D": "Student has not grasped that the sign encodes direction information, reducing a signed position to a plain distance."
+              },
+              "inclusivity": "Students who struggle with abstract signed values may describe the positions using a physical number line or diagram, arriving at the correct interpretation through a spatial representation."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_label": "4.1.2 Distance travelled and displacement",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can calculate and distinguish between the scalar total distance and the vector-like displacement for a described journey.",
+          "section_context": "Distance as path length, displacement as net signed position change, scalar vs vector-like quantities",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "An athlete starts at the origin O, runs to position +80 m, then turns and runs back to position +20 m. Calculate (a) the total distance travelled and (b) the displacement from start to finish. State the SI unit for each and explain in one sentence why the two values are different.",
+          "options": [],
+          "expected_elements": [
+            "Total distance = 80 m + 60 m = 140 m, SI unit: metre (m)",
+            "Displacement = final position – initial position = +20 m – 0 m = +20 m (in the positive direction), SI unit: metre (m)",
+            "Explanation that distance counts the full path length regardless of direction, while displacement records only the net change in position from start to finish, which is shorter because the athlete reversed direction."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": "Students who find the algebraic sign convention challenging may draw the journey on a number line and measure the net gap between start and end, arriving at the displacement geometrically before expressing it algebraically."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_label": "4.1.3 Average speed and average velocity",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can apply the definitions of average speed and average velocity to compute and compare these quantities for a described motion.",
+          "section_context": "Average speed (total distance/time), average velocity (displacement/time), uniform vs non-uniform motion, SI unit m s⁻¹",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A car travels 300 m east and then 100 m west in a total time of 80 s. Which statement about its average speed and average velocity is correct?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Average speed = 2.5 m s⁻¹; average velocity = 2.5 m s⁻¹ east.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Average speed = 2.5 m s⁻¹; average velocity = 5 m s⁻¹ east.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Average speed = 5 m s⁻¹; average velocity = 2.5 m s⁻¹ east.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "Average speed and average velocity are always equal for any journey.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "A": "Student has used displacement (200 m) as the numerator for both speed and velocity, conflating the two definitions and applying the wrong numerator to average speed.",
+                "B": "Student has swapped the numerators — using total distance (400 m) for velocity and displacement (200 m) for speed — indicating a reversal of the two definitions.",
+                "D": "Student holds the common misconception that average speed and average velocity are equivalent quantities, not recognising that they differ whenever an object reverses direction."
+              },
+              "inclusivity": "Students who struggle to hold both formulas simultaneously may write them side by side before substituting, making the difference between the numerators explicit before computing."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_label": "4.1.4 Average acceleration",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can calculate average acceleration from velocity-time data and interpret the sign of acceleration relative to the direction of motion.",
+          "section_context": "Average acceleration as change in velocity over time, sign indicating direction, constant g = 9.8 m s⁻², SI unit m s⁻²",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": "Time (s) | Velocity (m s⁻¹)\n0 | 0\n2 | 8\n4 | 16\n6 | 24\n8 | 18\n10 | 12",
+          "question_text": "Refer to the table provided. (a) Calculate the average acceleration for the interval 0–6 s. (b) Calculate the average acceleration for the interval 6–10 s. (c) For interval 6–10 s, state whether the acceleration is in the same direction as the velocity or opposite to it, and explain your reasoning using the sign of each quantity.",
+          "options": [],
+          "expected_elements": [
+            "Interval 0–6 s: a = (24 – 0) / (6 – 0) = +4 m s⁻², positive — acceleration in the direction of (positive) velocity.",
+            "Interval 6–10 s: a = (12 – 24) / (10 – 6) = –12/4 = –3 m s⁻², negative — acceleration is opposite to the positive velocity.",
+            "Explanation: velocity is positive (+) throughout 6–10 s (object still moving in the original direction), but acceleration is negative (–), so acceleration acts opposite to the direction of motion, causing the object to slow down."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who find the sign reasoning abstract may first describe in words what is happening (the object is slowing down), then connect that description to the sign — confirming that 'slowing down while moving in the positive direction' must mean negative acceleration."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_label": "4.2.1 Plotting graph",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can construct a position-time graph from tabulated data, selecting an appropriate scale and inferring motion type from graph shape.",
+          "section_context": "Axes setup, scale choice, plotting from Table 4.3 and Table 4.4, straight line vs curve for constant vs changing velocity",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A student plots position-time data for two vehicles on graph paper. Vehicle P produces a straight line and Vehicle Q produces a curve that bends upward. What does each graph shape indicate about the vehicle's motion?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Both vehicles have the same type of motion — only their speeds differ.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Vehicle P has constant velocity; Vehicle Q has changing velocity (accelerated motion).",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "Vehicle P has constant velocity; Vehicle Q has constant velocity in a different direction.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Vehicle P is at rest; Vehicle Q is moving at constant velocity.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {
+                "C": "Student recognises that a straight line means constant velocity but incorrectly extends the 'straight line' interpretation to the curve, not connecting curvature to changing velocity.",
+                "D": "Student confuses a straight line with a horizontal line (rest), misreading the slope of a non-horizontal straight line as zero.",
+                "A": "Student has not connected graph shape to motion type — treating shape as irrelevant and reducing the interpretation to a speed comparison only."
+              },
+              "inclusivity": "Students who are uncertain about graph shape meaning can return to the specific example: Table 4.3 gave a straight line for constant velocity, Table 4.4 gave a curve for increasing velocity — connecting the abstract shape to a concrete case they have plotted."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_label": "4.2.2 Position-time graphs",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can determine average velocity from the slope of a position-time graph and interpret the motion described by different graph shapes.",
+          "section_context": "Slope of position-time graph equals average velocity, triangle ABC construction, flat line indicates rest, curve indicates acceleration",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A position-time graph shows a straight line passing through the points (2 s, 10 m) and (6 s, 30 m). (a) Using the triangle construction method, calculate the average velocity of the object. (b) A second line on the same graph is parallel to the time axis. What is the velocity of that object and what does this tell you about its state of motion? Show all working.",
+          "options": [],
+          "expected_elements": [
+            "Slope = (change in position) / (change in time) = (30 – 10) / (6 – 2) = 20 / 4 = 5 m s⁻¹; average velocity = 5 m s⁻¹ (in the positive direction).",
+            "A line parallel to the time axis has a slope of zero: velocity = 0 m s⁻¹.",
+            "Zero velocity means the object is at rest — its position is not changing with time."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who find coordinate subtraction prone to error can draw the triangle on a sketch of the graph, reading off the vertical and horizontal legs visually before dividing — this geometric approach reaches the same result and reduces arithmetic slips."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_label": "4.2.3 Velocity-time graphs",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can extract acceleration from the slope and displacement from the enclosed area of a velocity-time graph.",
+          "section_context": "Slope of v-t graph equals acceleration, area under v-t graph equals displacement, rectangle and trapezoid cases",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A velocity-time graph shows a straight line from the point (0 s, 10 m s⁻¹) to the point (4 s, 30 m s⁻¹). (a) Calculate the average acceleration using the slope of the graph. (b) Calculate the displacement of the object over this 4-second interval using the area under the graph. Show the decomposition of the trapezoid into a rectangle and a triangle.",
+          "options": [],
+          "expected_elements": [
+            "Slope = (30 – 10) / (4 – 0) = 20 / 4 = 5 m s⁻²; average acceleration = 5 m s⁻².",
+            "Rectangle area = 10 m s⁻¹ × 4 s = 40 m.",
+            "Triangle area = ½ × (30 – 10) m s⁻¹ × 4 s = ½ × 20 × 4 = 40 m.",
+            "Total displacement = 40 + 40 = 80 m."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who find the trapezoid decomposition unfamiliar can verify their area answer using the average-velocity method: displacement = ½(u + v) × t = ½(10 + 30) × 4 = 80 m — both methods should give the same result, providing a self-check."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_label": "4.3 Kinematic Equations for Motion in a Straight Line with Constant Acceleration",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can select and apply kinematic equations to determine unknown motion quantities for straight-line motion with constant acceleration.",
+          "section_context": "v = u + at, s = ut + ½at², v² = u² + 2as, constant acceleration condition, stopping-distance ratio from Example 4.8",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A car travelling at 20 m s⁻¹ brakes with a constant deceleration of 4 m s⁻² until it stops. (a) State the values of u, v, and a for this situation, including signs. (b) Identify which kinematic equation is most efficient to use and explain why. (c) Calculate the stopping distance. (d) If the same car had been travelling at 40 m s⁻¹ with the same deceleration, calculate the new stopping distance and find the ratio of the two stopping distances.",
+          "options": [],
+          "expected_elements": [
+            "u = 20 m s⁻¹, v = 0 m s⁻¹, a = –4 m s⁻² (negative because deceleration opposes motion).",
+            "Equation 4.4c (v² = u² + 2as) is most efficient because t is not given and not required.",
+            "0 = (20)² + 2(–4)s → 0 = 400 – 8s → s = 50 m.",
+            "For u = 40 m s⁻¹: 0 = 1600 – 8s → s = 200 m; ratio = 200/50 = 4 — stopping distance quadruples when initial speed doubles."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "Students who are unsure which equation to select can list all known and unknown quantities in a table first — this structured listing often makes the appropriate equation self-evident without requiring pattern recognition from memory."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_label": "4.4 Motion in a Plane",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can distinguish one-dimensional from two-dimensional motion and explain why a single coordinate axis is insufficient to describe planar motion.",
+          "section_context": "Two-dimensional motion, examples of overtaking, kicked ball, satellite orbit, limitations of a single number line",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Which of the following statements correctly explains why the path of a kicked ball cannot be fully described using a single number line?",
+          "options": [
+            {
+              "label": "A",
+              "text": "A ball moves too quickly for a number line to record its position accurately.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "A kicked ball is always at rest relative to the ground, so position cannot change.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "A kicked ball moves in two dimensions simultaneously, so a single axis can only capture motion in one direction at a time.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "Number lines can only represent negative positions, not positive ones.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {
+                "A": "Student conflates the practical difficulty of measurement with the theoretical limitation of a one-dimensional coordinate system, not recognising that the issue is geometric, not about speed.",
+                "D": "Student holds a misconception about the range of a number line — possibly from an incomplete memory of how signed positions work — and applies it incorrectly to this context.",
+                "B": "Student has confused a frame-of-reference scenario with the question of dimensionality, indicating a misreading of the motion description."
+              },
+              "inclusivity": "Students who find abstract dimensional arguments difficult can test each scenario concretely: 'If I only knew how far east the ball was, would I know where it is?' — this spatial reasoning approach makes the limitation tangible."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_label": "4.4.1 Uniform circular motion",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can explain why uniform circular motion is accelerated motion and calculate average speed for one revolution using the period and radius.",
+          "section_context": "Uniform circular motion, tangential velocity direction, v_av = 2πR/T, zero average velocity per revolution, changing direction as acceleration",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-2.1",
+            "competency_text": "Describe and analyse motion in one dimension and uniform circular motion by applying the concepts of displacement, velocity, and acceleration."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "question_text": "A marble moves along the inner edge of a circular ring of radius 0.3 m at constant speed and completes one revolution in 2 s. (a) Calculate the average speed for one revolution. (b) State the magnitude of the average velocity for one complete revolution and justify your answer. (c) A student claims: 'The marble is not accelerating because its speed does not change.' Analyse this claim. In your response, use the physics definition of acceleration, explain how it applies to the marble's motion, and state what would happen to the marble's direction of travel if the ring were removed at any point during its motion.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Correct calculation: v_av = 2π × 0.3 / 2 = 0.3π ≈ 0.94 m s⁻¹.",
+            "Average velocity over one complete revolution is zero, justified by recognising that the displacement for a full revolution is zero (start and end positions are identical).",
+            "The student's claim is incorrect: acceleration in physics means any change in velocity, including change in direction, not only change in speed.",
+            "The marble's velocity direction changes continuously — it is always tangential to the circle — so the velocity vector changes at every instant, constituting acceleration.",
+            "If the ring were removed, the marble would travel in a straight line in the direction of the tangent at the instant of release, demonstrating that the ring was continuously redirecting the marble's velocity."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "Students who find the conceptual argument about direction difficult to express in prose can first draw a circle with four velocity arrows at equally spaced points, then use their diagram as evidence in their written explanation — the diagram counts as part of their response."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
