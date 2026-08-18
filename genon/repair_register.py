@@ -2304,7 +2304,66 @@ REPAIRS = {
     # the resume bought the compacts, so they now sit under the APPLIED key below: leaving them
     # here would make the whole set fail its own "declared text not found" guard on the first
     # edit and block the p12 repair. Once applied, a declaration is a record, not an instruction.
+    # ── S4 · mathematics · IX · BATCH WAVE 1 (the STANDARDS) — 2026-08-18 ─────────────
+    # The ch 4 p12 edit that used to be the live content of this key is APPLIED and has been
+    # retired to the 3-tuple key below: re-running it now fails its own "declared text not
+    # found" guard on the first edit, which would block every wave-1 repair behind it. Once
+    # applied, a declaration is a record, not an instruction (the same move made for the top
+    # on 2026-08-09).
+    #
+    # WAVE 1: 7 canonicals bought for ₹146.34 (msgbatch_01GTfeRXJ796mC7PeAhXNsyk). FIVE ban
+    # hits over four of the seven files — 0.71/file, well under S2's 2.25–2.3 per file.
+    # DISTRIBUTION: 4 forward · 1 completion · 0 clock · 0 calendar · 0 meta-leak.
+    #
+    # ONE OF THE FIVE IS NOT DECLARED and was fixed at the SCANNER instead (runbook trap 4):
+    # ch 7 U4's "Discuss part (iii) as a class to bridge toward the LAW OF LARGE NUMBERS"
+    # names an idea, not a later sitting — no unit or section of ch 7 is the Law of Large
+    # Numbers, so the sentence survives any serve. `register_scan.py`'s blanket
+    # "bridges? toward the" pattern was split: ban when it bridges toward a named SECTION /
+    # UNIT / CHAPTER part (the ARV-D-038 shape it was written for), advisory otherwise.
+    #
+    # ALL FOUR EDITS BELOW STRIKE A TRAILING CLAUSE AND NOTHING ELSE. Each unit's teaching is
+    # complete without it: what is removed is the sentence telling the teacher what the NEXT
+    # sitting will do — exactly the thing that stops being true when a serve ends there.
     ("mathematics", "ix"): {
+        "ch_03_canonical.json": [
+            (4, "teacher_notes",
+             " Section 3.2.1 (philosophical roots) is addressed in the next unit, so this unit focuses entirely on the mathematical formulation.",
+             "",
+             "register/forward",
+             "the note's teaching value is the Brahmagupta-invented-zero misconception and "
+             "the circular-reasoning watch, both of which precede this sentence intact. The "
+             "struck clause only explains what U5 will do"),
+            (12, "teacher_notes",
+             " Exercise Set End of Chapter Q2, p.64 (prove √5 irrational) is a direct homework candidate for the next unit.",
+             "",
+             "register/forward",
+             "a homework pointer aimed at the following sitting. The proof-technique guidance "
+             "and the parity-step warning — the note's substance — are untouched, and the "
+             "exercise itself remains in the book for any teacher who wants it"),
+        ],
+        "ch_05_canonical.json": [
+            (8, "teacher_notes",
+             " Students may benefit from reading the opening definitions in Section 5.7 independently before the next unit.",
+             "",
+             "register/forward",
+             "the minor/major-arc confusion is the note's teaching content and stays whole. "
+             "The struck clause sets pre-reading for a sitting that may never be served"),
+        ],
+        "ch_08_canonical.json": [
+            (11, "teacher_notes",
+             "Having covered all sections, this unit consolidates the AP through problems that require",
+             "This unit consolidates the AP through problems that require",
+             "register/completion",
+             "a COMPLETION claim, and false on every serve that reaches U11 with sections "
+             "dropped. The clause is removed and the sentence restarted — the consolidation "
+             "purpose, the index-error warning and the two benchmark items all stand"),
+        ],
+    },
+
+    # ── APPLIED 2026-08-09 (the ch 4 p12 compact). Kept as the record; re-running would
+    #    fail the guard, which is the guard working.
+    ("mathematics", "ix", "APPLIED-p12-20260809"): {
         "ch_04_canonical_p12.json": [
             (9, "band:3",
              " for the next unit's work", "",

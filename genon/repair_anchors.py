@@ -95,6 +95,73 @@ def _anchor_field(unit) -> str:
 # the clean two-section form instead. unit_range would have tolerated the duplicate (it takes
 # min/max), but a duplicate anchor is not what V2 says and the next reader would trip on it.
 REPAIRS = {
+  # ── S4 · mathematics · IX · W1 wave-1 triage (2026-08-18) ──────────────────────────────
+  # ONE FAMILY, TWO CHAPTERS: a unit teaches two (or four) sections and its anchor names
+  # only the first. This is the joiner defect in its plainest form — no section is missing
+  # from the plan, no teaching changes, the ' / ' between the names was simply never
+  # written. C5 check 11 reads it as an omitted section and the handoff/anchor gate reads
+  # it as a mis-route; both clear on the same edit.
+  #
+  # Every `new` string below is quoted from the artefact's own text, not inferred:
+  # the unit's title or a band names the second section explicitly. Verified on the
+  # quarantined copies before declaring.
+  #
+  # NOT REPAIRED HERE, deliberately: ch 3 section 3.2.2 has no coverage_handoff row at
+  # all. The U4 anchor edit puts it in the registry (which is what check 11 reconciles);
+  # creating a handoff row is authoring, not repair, and the advisory "a unit anchors a
+  # section the handoff does not route through" is the correct, non-gating signal for it.
+  ("mathematics", "ix"): {
+    "ch_03_canonical.json": [
+        (4, "3.2", "3.2 / 3.2.2", "V2/joiner",
+         "the unit title is 'Zero as a Number: Brahmagupta's Rules and the Bakhśhālī "
+         "Manuscript' — 3.2.2's exact subject; band 10-22 states Brahmagupta's definition "
+         "and derives the three laws, band 36-50 examines the Bakhśhālī bindu. 3.2 (the "
+         "placeholder-vs-number distinction) is band 0-10. Both sections, one unit."),
+        (12, "3.5", "3.5 / 3.5.1", "V2/joiner",
+         "band 10-30 reads 'Teacher presents the eight-step proof by contradiction FROM "
+         "SECTION 3.5.1'; band 30-42 runs its think-and-reflect. The handoff already "
+         "routes 3.5.1 to U12 — only the anchor disagreed."),
+        (16, "3.6.2", "3.6.2 / 3.6.3 / 3.6", "V2/joiner",
+         "the unit's own teacher note states it: 'This unit covers both the cyclic-number "
+         "curiosity (3.6.2) and the irrational-decimal contrast (3.6.3) and closes with "
+         "the real-line definition (3.6).' Band 28-40 introduces 3.6.3 by name; band 40-50 "
+         "is the 3.6 closure. The handoff routes all three to U16."),
+        ("handoff-route", ("3.7", (16,)), [17], "V2/handoff-route",
+         "3.7 'Conclusion: The Never-Ending Journey' is not taught in U16 — U16 ends on "
+         "the R = Q ∪ I closure of 3.6. It is taught in U17, the synthesis unit, whose "
+         "final band reads 'Section 3.7 open question: the teacher poses √(-1)'. The row "
+         "is re-pointed at the unit that teaches it. ANCHOR-AT-LAST-UNIT holds and is the "
+         "reason this is safe: 3.7 is a single-unit section, its last routed unit moves "
+         "16 -> 17, and 17 is the final unit of the canonical, so nothing can be pushed "
+         "past the end of a serve. Paired with the synthesis carve-out added to the "
+         "agreement gate the same day: a row routed to the synthesis unit is reported, "
+         "not failed. "
+         "CORRECTED 2026-08-18, same day, by the verification pass: this rationale first "
+         "read '3.7 anchors no assessment item (the chapter's items stop at 3.6)' and that "
+         "was WRONG. The chapter has 23 items and item section_number 19 / section_ref 3.7 "
+         "(N ⊂ Z ⊂ Q, √(-1)) resolves through the handoff, so its unit_ref moved [16] -> "
+         "[17] with the row. Measured downstream: at X=17 the item simply lands on the "
+         "sitting that teaches it; at X<=16 it is DROPPED where before it rode a unit that "
+         "never taught 3.7 (assessment_items_unserved 1 -> 2). Read as a correction — an "
+         "item now tests taught content or is declared unserved, never neither — but it is "
+         "a real behaviour change and the founder ruled on it knowing the true version."),
+    ],
+    "ch_07_canonical.json": [
+        (2, "7.1.1", "7.1.1 / 7.1.2", "V2/joiner",
+         "the handoff routes 7.1.2 'The Probability Scale' to U2, and U2's band 28-50 reads "
+         "'Introduce the probability scale (section 7.1.2) formally' — the section named in "
+         "the unit's own text. Bands 0-10 and 10-28 are 7.1.1 (randomness, random "
+         "experiment, rainfall). Both sections, one unit. (The 'read and assign values on "
+         "the probability scale' wording quoted in the first draft of this note is the "
+         "HANDOFF ROW's implied_lo, not a field of U2 — corrected 2026-08-18.)"),
+        # 7.3 'Elements of Probability: Sample Spaces and Events' is NOT repaired and is
+        # not a defect: it is a PARENT container whose children 7.3.1 (Sample Space) and
+        # 7.3.2 (Events) anchor at U7 and U8 respectively, and it carries no handoff row.
+        # Check 11 counts a parent with no anchor of its own as unnamed; teaching it as
+        # its two children is the correct pedagogy, not an omission.
+    ],
+  },
+
   # ── S2 · social_sciences · VIII · ch 8 "World Geography: Some Glimpses" — THE STANDARD WAS
   #    THE DEFECT (F1 finding, 2026-08-16). Nine units re-anchored; authored by Fable 5 against
   #    a constrained prompt (docs/testing_artefacts/PROMPT_reanchor_ss_viii_ch08.md), verified
@@ -909,6 +976,8 @@ def handoff_agreement():
                 have = anchors_of.get(pn)
                 if have is None:
                     mis.append(f"U{pn} (no such unit) <- {ref or '?'}")
+                elif have == {"synthesis"}:
+                    continue          # synthesis carve-out — mirrors build_library (2026-08-18)
                 elif ref and not any(ref in a or a in ref for a in have):
                     mis.append(f"U{pn} anchors {sorted(have)} <- routed {ref!r}")
         out.append((p.name, mis))
@@ -940,8 +1009,16 @@ def apply_file(fname, edits, dry):
             # new = the corrected list. The anchor-at-last-unit invariant must be argued in
             # the note — an edit that moves a section's LAST routed unit moves its items.
             label, old_pns = old
+            # TRAP 6 (runbook §4): the row's label field differs by stage. SS·IX carries
+            # `section_label`; mathematics·IX carries `section_ref` + `section_title` and no
+            # label at all, so a matcher that reads one key finds zero rows and the repair
+            # refuses with "declared text not found" against text that is plainly there.
+            # Read through the same seam the agreement check reads through (2026-08-18).
+            def _rowlabel(e):
+                return (e.get("section_label") or e.get("section_ref")
+                        or e.get("section_title") or "")
             rows = [e for e in (plan["result"].get("coverage_handoff") or [])
-                    if isinstance(e, dict) and e.get("section_label") == label
+                    if isinstance(e, dict) and _rowlabel(e) == label
                     and [int(x) for x in (e.get("period_numbers") or [])] == list(old_pns)]
             if len(rows) != 1:
                 raise SystemExit(

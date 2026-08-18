@@ -181,7 +181,20 @@ PATTERNS = [
     # that unit. Every unit is a potential last sitting, so a closing band that points at what
     # comes next is a landmine for whichever request lands there.
     ("forward", True, re.compile(r"\bsections?\s+that\s+follows?\b", re.I)),
-    ("forward", True, re.compile(r"\bbridges?\s+(toward|towards|to)\s+the\b", re.I)),
+    # "bridge toward the …" SPLIT INTO TWO, 2026-08-18 (maths·IX W1, founder ruling).
+    # The ARV-D-038 phrase that earned this ban pointed at STRUCTURE — "bridges toward the
+    # climate change and Punjab floods SECTIONS THAT FOLLOW" — which is false the moment a
+    # serve ends on that unit. The blanket pattern then fired on maths ix ch 7 U4's "Discuss
+    # part (iii) as a class to bridge toward the LAW OF LARGE NUMBERS", which names an IDEA
+    # the convergence exercise illustrates, not a later sitting: no unit, no section and no
+    # chapter part of ch 7 is the Law of Large Numbers, so the sentence stays true wherever
+    # the plan ends. Striking it would delete the point of the activity to satisfy a regex —
+    # the wrong direction (runbook trap 4). The ban is kept where it belongs: bridging toward
+    # a named STRUCTURAL unit of the book. The bare form is advisory.
+    ("forward", True, re.compile(
+        r"\bbridges?\s+(toward|towards|to)\s+the\s+[\w\s,'’-]{0,60}?"
+        r"\b(section|sections|unit|units|lesson|lessons|chapter|topic|topics)\b", re.I)),
+    ("forward", False, re.compile(r"\bbridges?\s+(toward|towards|to)\s+the\b", re.I)),
     ("completion", True, re.compile(r"\bhaving (worked through|covered|completed) (every|all|the whole)\b", re.I)),
     ("completion", True, re.compile(r"\bnow that (we|students|they) have (covered|completed)\b", re.I)),
     ("completion", True, re.compile(r"\bthe chapter is (now )?complete\b", re.I)),

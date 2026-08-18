@@ -323,6 +323,25 @@ def reconcile(registry, sections, closing_anchors=()):
             hit = (anc in direct or anc in by_closing
                    or _match(anc, reg) or _match(anc, clo))
             anc = _parent_ref(anc)
+        # A PARENT IS TAUGHT THROUGH ITS CHILDREN (2026-08-18, maths·IX W1). The walk above
+        # runs one way only — a child is covered when its parent is anchored — and the
+        # reverse case was simply never met until maths ix ch 7, whose "7.3 Elements of
+        # Probability: Sample Spaces and Events" is a CONTAINER: its whole content is
+        # 7.3.1 Sample Space and 7.3.2 Events, anchored at U7 and U8. Teaching a container
+        # as its constituents is correct pedagogy, and demanding a separate unit for the
+        # heading would be the gate dictating structure. Required: EVERY child the summary
+        # lists is covered — one anchored child of three does not carry the parent.
+        #
+        # KNOWN COST, recorded rather than hidden (verification pass, 2026-08-18): a
+        # children-only test cannot see a parent's OWN body text. science·ix ch 4 carries a
+        # declared SECTION_WAIVER saying exactly that — "only the intro's oscillatory-motion
+        # mention is absent (the wave's one real loss)" — and this rule now subsumes that
+        # waiver, so six of the seven declared waivers stop surfacing in the sweep. A future
+        # chapter with the same shape and a genuinely untaught parent paragraph will read ok.
+        # The waiver table is the remaining record; the human gate is the remaining reader.
+        if not hit:
+            kids = [t["key"] for t in sections if t["parent"] == s["key"]]
+            hit = bool(kids) and all(k in direct or k in by_closing for k in kids)
         if not hit:
             missing.append(s["label"])
     return missing, closing, [a for a, n in zip(registry, reg) if n not in named]
@@ -330,11 +349,36 @@ def reconcile(registry, sections, closing_anchors=()):
 
 # ── sweep (development instrument; certification calls the two functions above) ─
 
-def closing_anchors(stream):
-    """The STANDARD's synthesis unit's own anchors — taught, but not in the registry."""
+def closing_anchors(stream, raw=None):
+    """The STANDARD's synthesis unit's own anchors — taught, but not in the registry.
+
+    v1.1, 2026-08-18 (maths·IX W1): on a TOKEN-CARRYING stage the synthesis unit's anchor
+    is the reserved word `synthesis` and nothing else, so this returned nothing and a
+    wrap-up section taught there read as omitted (maths ix ch 3 "3.7 Conclusion", whose
+    teaching is U17's closing band: "Section 3.7 open question: the teacher poses √(-1)").
+    On those stages the `coverage_handoff` is the ONLY place the synthesis unit can declare
+    what it teaches, so a row that routes a section to it is read as an anchor here.
+
+    THIS DOES NOT WEAKEN THE CHECK, and that was tested before it was written: science·ix
+    ch 8 — the chapter this check was built for, which omitted `8.5 Atomic Number` from an
+    already-certified library — has exactly one handoff row touching its synthesis unit and
+    that row's `section_ref` is the literal string "synthesis". No row claims 8.5. It stays
+    a failure. Only a section the handoff NAMES as taught in the closing unit is recognised.
+    """
     from aruvi_core.genon.serve import _unit_anchors, is_synthesis_unit  # noqa: PLC0415
 
-    return [a for u in stream["units"] if is_synthesis_unit(u) for a in _unit_anchors(u)]
+    out = [a for u in stream["units"] if is_synthesis_unit(u) for a in _unit_anchors(u)]
+    if raw is None:
+        return out
+    synth = {u["unit"] for u in stream["units"] if is_synthesis_unit(u)}
+    for e in ((raw.get("result") or {}).get("coverage_handoff") or []):
+        if not isinstance(e, dict):
+            continue
+        ref = e.get("section_ref") or e.get("section_label") or e.get("section_title") or ""
+        pns = {int(p) for p in (e.get("period_numbers") or []) if p is not None}
+        if ref and _norm(ref) != "synthesis" and pns and pns <= synth:
+            out.append(ref)
+    return out
 
 
 def _sweep(argv):
@@ -351,8 +395,9 @@ def _sweep(argv):
         ch = int(re.search(r"ch_(\d+)", p.name).group(1))
         tag = f"{subj}/{gr}/ch{ch:02d}"
         try:
-            top = compile_stream(json.loads(p.read_text()))
-            reg, clo = section_registry(top), closing_anchors(top)
+            raw = json.loads(p.read_text())
+            top = compile_stream(raw)
+            reg, clo = section_registry(top), closing_anchors(top, raw)
         except Exception as e:                                           # noqa: BLE001
             print(f"  ERR  {tag}: {e}")
             continue

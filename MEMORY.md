@@ -687,7 +687,100 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-13 (newest) — S9 · ENGLISH·PREPARATORY STAGE PREP: A CONSTITUTION
+## 2026-08-17/18 (newest) — S6 · SCIENCE·MIDDLE BATCH-RELEASED, AND THE STAGE'S
+## ONE STRUCTURAL EXCEPTION EARNED A DESIGN CORRECTION READ OUT OF ITS OWN SERVES
+
+**The stage is released**: W1·W2·F1·F2 all pass, **₹2,395.71 / 236 metered runs all-in**
+(pilot ₹151.65 · 36 standards ₹600.05 · 114 compacts ₹1,529.19 · 43 synthesis re-authors
+₹79.75 · 38 polish runs ₹35.06). 154 canonicals + 37 re-authored-and-polished synthesis
+units, every X in every band servable, zero register hits, zero canonicals re-bought —
+every repair across the stage was a free declared edit. Tracker rows and rulings:
+`docs/testing_tracker.html` BATCH RELEASE tab, science·middle (the fullest single record).
+
+**THE HEADLINE FINDING — the K+1 synthesis borrow was pedagogically wrong, and only
+READING found it.** Certification was ALL PASS when the F1 full enumeration (all 114 K+1
+serves — this stage has NO self-fills and NO content borrows; every seam is the top's
+synthesis appended to a complete compact) returned **10 CLEAN · 57 MATERIAL · 44 MILD ·
+3 JUMPY**. Two families, one root: the top's synthesis was authored against the top's own
+arc by a brief that never knew compacts existed. (a) **Double capstone** — every compact
+correctly closes its own arc, so K+1 served two chapter-closings on consecutive days,
+half the corpus repeating the same signature device (the Gandhian quote read aloud twice,
+the shell question re-answered, "Happy investigating!" twice). (b) **Intersection
+violations** — the synthesis demanded skills a compact never taught (distance-time graphs
+vs p08/p10; the §13.6 response framework vs p06), a family certification is structurally
+blind to on a stage with no section registry. **The founder's correction is the entry's
+biggest lesson**: the first design (a per-chapter CODA asset with its own serve mode,
+fallback and staleness gate — built, engine-verified) was **struck within the hour**
+because it gave one stage of eleven its own algorithm and a maintenance surface forever.
+v1.3 instead RE-AUTHORS THE TOP'S SYNTHESIS IN PLACE against the whole library
+(`genon/resynth.py`, `--wave resynth`, ~₹2/run): serve law byte-identical, nothing new to
+maintain, residual lightness confined to the top's identity serve. Spec:
+`docs/science_middle_stage_serve.md` §6 (v1.3; §6.2 records the struck design and why).
+
+**EVIDENCE-FED-FORWARD BRIEFS, proven three rungs deep.** The first resynth killed both
+acid-test jumps but the read found 4 NEW ones — the model checks compacts in aggregate
+and misses the floor, and once INVENTED untaught content (viii ch 4's parallel-circuit
+reasoning: taught by NO plan in the chapter, the standard included). Two generic brief
+lines fixed 3 of 4 ("the SHORTEST plan's map is the binding one"; "the setting is new,
+its physics is entirely the chapter's"). vi ch 12 missed TWICE more — the general
+instruction cannot tell the model what "Beyond Earth" cut from an 8-unit plan — and
+landed only when the read's findings were fed into the brief VERBATIM as a per-chapter
+EXCLUSIONS note (craters, Pleiades/Krittika, Mars-by-colour, named). The pattern is now
+mechanism: `resynth.EXCLUSIONS` + `resynth.POLISH_NOTES`, read-derived, never guessed.
+**The reading is part of the authoring loop, not a gate after it.**
+
+**THE POLISH PASS + LICENSED GAP-FILL (a doctrine change).** Founder flagged 259-word
+mean teacher notes (constitution: 2–3 sentences; corpus norm 79w) — the resynth brief
+had given card text and table designs nowhere else to live. One ₹1/run pass per unit
+moved prepared content into **typed `visual_aids`** ({table|prose, title, payload};
+tables pre-split through `normalize.parse_table` at the PORT — one splitter, every
+renderer), condensed notes to ≤3 sentences with "(see material)" pointers, and rendered
+across screen (`MaterialPanel`), PDF and DOCX with content-weighted column widths
+(xhtml2pdf collapses empty columns and cannot wrap mid-word — widths must be computed;
+verified by rendering the actual PDF and reading the page image). The fidelity read
+found ZERO losses and 12 "inventions" that were really the model SPECIFYING content the
+old plans told the teacher to prepare unspecified — **founder LICENSED the category**
+(brief now permits filling unspecified teacher-prepared blanks with chapter-level
+science; specified content is moved, never rewritten) with 5 read corrections
+(ARV-D-177) and two template-style aids filled deterministically by hand-declared
+arithmetic (ch 10's observation cards + evidence grid split for print; ch 8's courier
+table computed against its own design note's constraints, avg 12.14 vs the promised 12).
+Also: `pedagogical_approach` came back as 62-word essays into a 2-word label field —
+37 read-derived labels declared (`repair_approach_labels.py`), brief + validator capped.
+
+**TRAPS, new and repeated.** (1) **The duplicate-dict-key silent shadow struck TWICE in
+one day** (repair_c3's filename-keyed DECLARED let maths·ix edits reach science files
+AND let a second same-name key silently drop the first — re-keyed by (subject, grade);
+then ARV-D-178 was shadowed the same way inside one grade's dict). A startup
+duplicate-key assertion in the repair tools is OWED. The mandatory post-repair rescan is
+what caught both. (2) **Collect's skip guard must be batch-aware**: `is_reauthored` is
+always true after wave 3, so a --redo re-run's collect silently discarded paid results —
+rescued only because batches keep 29 days; guard now compares the manifest's own
+ledger_ts. (3) **parse_with_repair grew its second repair family** — the one-character
+wrong-closer (`{"stage": 4)`) — after a complete ₹14 response sat unrecoverable;
+`recover_from_raw.py` learned batch filenames. (4) The clock homonym recurred THREE
+times (moonrise 50-minutes, eclipse totality ×2 — the polish re-phrased the same fact
+back onto the pattern from a different surface); founder's standing ruling each time:
+**repair the text, keep the scanner strict**. (5) `repair_register._get_set` grew a
+`visual_aid:<i>` locator — new artefact surfaces need repair reach the day they exist.
+
+**F2 in one line**: 155 files enumerated, 117 runs ≥12w, all laws/definitions/answer-key
+facts except one 28-word book-phrased MCQ option — founder ruled rephrase (ARV-D-178);
+third-party and attribution clean (fabricated settings throughout; WHO + Gandhian quote
+attributed inline).
+
+**CARRY-FORWARD to S7 (mathematics·middle, next Group B):** (a) run resynth + polish as
+standard waves after W2 — the brief now carries every lesson above; (b) expect the
+synthesis-note meta-leak family at W1 (8/36 here) and the OPEN_TASK null stem (~1.5% —
+ARV-D-172/173/174; constitution-side fix only if S7 holds the rate); (c) the polish
+brief should author split tables from the start (prose column + write-in grid never
+merge on portrait A4) and watch the re-author's house style (6 of 13 viii vehicles were
+coastal); (d) science·middle's Material-tab live render + mobile pass is STILL OWED
+(statically verified only); (e) the repair-tool duplicate-key assertion.
+
+---
+
+## 2026-08-13 — S9 · ENGLISH·PREPARATORY STAGE PREP: A CONSTITUTION
 ## NAMED A DURATION THE PLATFORM DOES NOT USE, AND `_NOT_YET` IS NOW EMPTY
 
 Full note: `genon/out/stage_prep_english_preparatory/STAGE_SIGNOFF_S9_english_preparatory.md`.

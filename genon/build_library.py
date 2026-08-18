@@ -363,7 +363,11 @@ def certify(subject, grade, ch, row):
             # section — "Let us reflect", "S1 / … / S8" — and teaches it. Passing its
             # anchors in is what stops the check reporting a chapter's closing section as
             # untaught; see summary_sections.reconcile.
-            missing, closing, extra = reconcile_sections(reg, secs, closing_anchors(top))
+            # `top` is the compiled stream; the raw artefact carries the coverage_handoff,
+            # which on a token-carrying stage is the synthesis unit's only voice (2026-08-18).
+            top_raw = json.loads((lib_dir_of(subject, grade) / top_name).read_text())
+            missing, closing, extra = reconcile_sections(
+                reg, secs, closing_anchors(top, top_raw))
             # DECLARED WAIVERS (2026-08-17): an accepted-omission ruling at the human gate
             # is recorded in summary_sections.SECTION_WAIVERS and read here, so a decided
             # question stops re-raising as a FAIL while any NEW omission still gates.
@@ -490,7 +494,7 @@ def certify(subject, grade, ch, row):
             for u in s["units"]:
                 anchors_of[u["unit"]] = ({"synthesis"} if is_synthesis_unit(u)
                                          else set(_norm(a) for a in _unit_anchors(u)))
-            mis, unrouted, missing_row = [], [], []
+            mis, unrouted, missing_row, via_synth = [], [], [], []
             routed = set()
             for e in handoff:
                 if not isinstance(e, dict):
@@ -503,12 +507,32 @@ def certify(subject, grade, ch, row):
                     have = anchors_of.get(pn)
                     if have is None:
                         mis.append(f"U{pn} (no such unit) <- {ref or '?'}")
+                    elif have == {"synthesis"}:
+                        # SYNTHESIS CARVE-OUT (founder, 2026-08-18 · maths·IX W1 triage).
+                        # The SAME exception C5 check 11 already carries, applied to the
+                        # other half of the reconciliation. A wrap-up section is taught in
+                        # the closing synthesis unit and nowhere else (maths ix ch 3's
+                        # "3.7 Conclusion": U17's last band poses √(-1) and names the
+                        # section). That unit is anchored by the reserved token `synthesis`
+                        # by design (architecture v2.0 §0.3), so the substring test can
+                        # never match a section ref against it — routing such a row
+                        # ANYWHERE fails: at a lettered unit because it does not teach the
+                        # section, at the synthesis unit because it wears no section label.
+                        # A check no artefact can satisfy is not a check. Reported, never
+                        # failed — exactly as check 11 reports "reached only through the
+                        # standard's closing synthesis unit".
+                        via_synth.append(f"U{pn} <- {ref or '?'}")
                     elif ref and not any(ref in a or a in ref for a in have):
                         mis.append(f"U{pn} anchors {sorted(have)} but is routed as {ref!r}")
             note(not mis,
                  f"{name}: every handoff row routes to a unit that anchors its section"
                  + (f" — {len(mis)} mis-route(s): " + "; ".join(mis[:4]) if mis else ""),
                  name)
+            if via_synth:
+                lines.append(
+                    f"      {len(via_synth)} handoff row(s) route to the closing synthesis "
+                    f"unit, which carries no section label by design — taught there and "
+                    f"reported, not failed: " + "; ".join(via_synth[:4]))
             # ADVISORY (never gates) — see the reasoning block above.
             for u in s["units"]:
                 un = u["unit"]

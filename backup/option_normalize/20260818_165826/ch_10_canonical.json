@@ -1,0 +1,1651 @@
+{
+ "filename": "ch_10_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 10,
+ "chapter_title": "Light: Mirrors and Lenses",
+ "grade": "Grade VIII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 15
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 15 periods = 675 minutes\nTotal: 15 periods · 11h 15min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "15x45",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science viii 10",
+  "ledger_ts": "20260817_113057_sci_viii_10_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_viii_10_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_10_canonical_p13.json": "2026-08-17T12:37:59",
+    "ch_10_canonical_p11.json": "2026-08-17T12:38:00",
+    "ch_10_canonical_p09.json": "2026-08-17T12:37:59"
+   },
+   "replaced": {
+    "period_number": 15,
+    "period_duration_minutes": 45,
+    "progression_stage": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "pedagogical_approach": "Didactic approach",
+    "synthesis": true,
+    "activity_title": "The Whole Chapter in One Table: From Surface to Image",
+    "activity_description": "Students construct a master synthesis table covering all four optical surfaces — concave mirror, convex mirror, convex lens, concave lens — with columns for surface type, beam behaviour (converging/diverging), image characteristics at close and distant object positions, the reflection or refraction principle governing it, and one real-world application. They then apply the completed table to answer two novel-scenario prediction questions.",
+    "roles": [
+     {
+      "actor": "Students (Individual)",
+      "role_description": "Each student independently constructs the master synthesis table from memory and notes, then uses it to answer the two novel-scenario prediction questions in writing."
+     },
+     {
+      "actor": "Teacher",
+      "role_description": "Introduces the synthesis table structure, confirms the column headings without pre-filling any cells, and poses the two novel-scenario questions after table completion."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-8",
+      "activity": "Teacher introduces the synthesis task: a master table bringing all four optical surfaces together across the same set of dimensions — students will build it from what they know."
+     },
+     {
+      "minutes": "8-28",
+      "activity": "Students independently complete the master synthesis table, drawing on everything covered across the chapter."
+     },
+     {
+      "minutes": "28-38",
+      "activity": "Teacher poses two novel-scenario prediction questions (e.g., which surface would a designer choose for a security mirror at a shop corner, and why; which surface would produce an enlarged upright image of a patient's tooth) — students write answers using their tables."
+     },
+     {
+      "minutes": "38-45",
+      "activity": "Class shares and evaluates answers to the novel-scenario questions, with teacher confirming the complete causal chain: surface shape → beam behaviour → image outcome → application choice."
+     }
+    ],
+    "teacher_notes": "This synthesis unit is designed to work for any class that has covered the chapter's content, regardless of how their earlier units were structured — it requires only that students have encountered all four optical surfaces and the converging/diverging distinction. The master table is the scaffold: students who fill it correctly demonstrate that they can organise the full conceptual structure of the chapter. The novel-scenario questions are the test: students who can correctly select a surface and justify it through beam behaviour to image outcome to application have reached the dissolution test's operation.",
+    "materials": [
+     "Blank master synthesis table (column headers only: surface type, beam behaviour, image at close distance, image at far distance, governing principle, one application)",
+     "Pencil"
+    ],
+    "homework": []
+   }
+  },
+  "repairs": [
+   {
+    "at": "2026-08-18T08:16:26",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 15,
+      "field": "band:3",
+      "rule": "register/clock",
+      "removed": "Groups write for two minutes.",
+      "replaced_with": "Groups write.",
+      "note": "the writing task is the instruction; the band carries its minutes"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 15,
+      "field": "pedagogical_approach",
+      "removed": "Design-brief inquiry: a realistic but unfamiliar site scenario places the chapter's optical principles under practical constraint, requiring groups to translate image characteristics and beam behaviour into engineering choices and to articulate the causal link between each principle and each design decision. The diagram-and-justification format keeps the task concrete while making reasoning visible.",
+      "replaced_with": "Design-brief Inquiry"
+     }
+    ]
+   }
+  ],
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_viii_10_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced": {
+    "teacher_notes": "This unit works as a chapter close in either of its two contexts. When it follows the sequence of fourteen units, students arrive with dense procedural experience and the task asks them to synthesise across all four conceptual layers simultaneously — mirror and lens types, image properties at varying distances, laws of reflection, and convergence/divergence of beams. When it is added to a shorter complete plan, it asks students who have already consolidated the chapter to carry their consolidated knowledge into a setting that is genuinely new: the street-safety frame is not an analogy for any earlier activity, so there is no shortcut through memory.\n\nFour problems are provided because the chapter has four conceptual pillars that must each be exercised: (1) the blind-corner problem requires a convex mirror — erect, diminished, wide field; (2) the pedestrian-crossing lighting problem requires a concave mirror used as a reflector — converging beam, directing light outward; (3) the shopfront display problem requires a convex lens or concave mirror used close to the object — erect, enlarged image; (4) the security-arc problem reinforces the convex mirror for field of view. Problems 1 and 4 both call for a convex mirror but for slightly different stated reasons (driver safety vs. security monitoring), which rewards students who can articulate field-of-view as the shared mechanism rather than just naming the device.\n\nThe beam-trace diagram is the critical element: it forces students to draw the incident and reflected or refracted rays, mark the normal, confirm the angle relationships, and show whether the emergent beam converges or diverges. A student who writes a correct device name but draws diverging rays for a concave mirror has revealed a conceptual gap. Circulate during group work and ask groups to defend their diagrams before they write their justifications.\n\nFor the second law of reflection, ask groups working on the lighting problem to state explicitly that the incident ray, normal, and reflected ray all lie in the same plane — this is the element most likely to be omitted without prompting.\n\nIf any group finishes early, pose an extension: a fifth problem in which the site engineer has only a concave lens available and must explain which of the four problems it is least unsuited to solve, and why. This drives home the diverging, always-erect, always-diminished character of the concave lens by contrast.\n\nThe closing debrief should not summarise the chapter as a list — instead, ask one representative to trace the light path for one problem aloud while pointing at their diagram, and ask the class to name which chapter principle each segment of the trace invokes. The closure is in seeing the trace as a whole, unified by the chapter's ideas.",
+    "materials": [
+     "One printed site-brief card per group (describing the intersection and its four optical problems in plain language — no optical vocabulary used in the brief itself)",
+     "One blank A3 diagram sheet per group showing the intersection as a simple overhead-view sketch with the four problem locations marked",
+     "Rulers",
+     "Pencils and pens",
+     "A set of small mirror-and-lens reference cards (one card per device type, listing only: device name, shape description, beam behaviour, and image properties at close and far distances) — produced by the teacher before the lesson from chapter content"
+    ],
+    "visual_aids": null
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and distinguish mirror types",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "The Spoon Mirror: Inward and Outward Curves",
+     "activity_description": "Students use a shiny metallic spoon to observe images formed by its inner (concave) and outer (convex) surfaces. They record the orientation and relative size of the image seen in each surface, noting that the inner surface produces an inverted image while the outer surface produces an erect but smaller one.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student uses a spoon to observe and sketch the image from each surface, recording orientation and size in a two-column observation chart."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates to prompt students to tilt the spoon and vary their viewing distance, asking what changes and what stays the same."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher orients the class to the chapter's starting point — curved mirrors as an extension of the plane-mirror knowledge from Grade 7 — and distributes spoons."
+      },
+      {
+       "minutes": "8-30",
+       "activity": "Students individually explore both surfaces of the spoon, sketching observations of orientation and size for each surface in a two-column chart."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Pairs share their charts and reconcile any disagreements about orientation or size."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Brief whole-class consolidation: teacher names the two mirror types — concave (curves inward) and convex (curves outward) — and connects them to students' spoon observations."
+      }
+     ],
+     "teacher_notes": "This opening unit grounds the chapter in direct sensory experience before any definitions are given, so resist naming the mirror types until the final consolidation band. Watch for students who describe the inner-surface image as 'upside down only when far' — that anticipates a later unit but is worth a quick note to return to rather than resolving now. A useful checkpoint: can every student correctly identify which surface is concave and which is convex before the unit closes?",
+     "materials": [
+      "Shiny metallic spoons (one per student or pair)",
+      "Observation chart worksheet (two columns: inner surface / outer surface)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and distinguish mirror types",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Identifying Curvature: Which Way Does It Curve?",
+     "activity_description": "Students examine a set of concave and convex mirrors (or printed schematic diagrams) from different viewing angles to identify the direction of curvature. They sort the mirrors into two labelled groups and justify each placement using the direction the reflecting surface faces — inward or outward.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Each group examines the provided mirrors or schematics, sorts them into concave and convex categories, and writes a one-sentence justification for each classification."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Poses guiding questions to push groups toward articulating the direction of curvature as the defining criterion, not just the image appearance."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Quick recall from the previous unit: students name the two mirror types and state the key difference in one word each."
+      },
+      {
+       "minutes": "5-25",
+       "activity": "Groups examine mirrors or schematic cards and sort them, writing a brief justification for each placement."
+      },
+      {
+       "minutes": "25-38",
+       "activity": "Groups compare their sortings with a neighbouring group and resolve any disagreements by referring to the direction of curvature."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher consolidates with schematic representations of concave and convex mirrors drawn on the board, emphasising that the label comes from the reflecting surface direction."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the spoon exploration: students now apply the distinction they observed to a classification task that requires them to articulate a criterion, not just report a sensation. A common confusion at this stage is sorting by which image the mirror gives rather than by the direction of curvature — press groups to justify using surface geometry, not image outcome, since image-based reasoning belongs to the next stage. If mirrors are unavailable, printed schematics from the chapter work well.",
+     "materials": [
+      "Concave and convex mirror pairs (or printed schematic cards)",
+      "Sorting labels (Concave / Convex)",
+      "Whiteboard or chart paper"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify image characteristics by mirror type and distance",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Moving Closer, Moving Away: Image Changes in a Concave Mirror",
+     "activity_description": "Students place a small object in front of a concave mirror at a close distance and then gradually move it farther away, observing and recording how the image's orientation and size change at each position. They discover that a close object gives an erect, enlarged image and a distant object gives an inverted, progressively smaller image.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Each group systematically varies object distance from the concave mirror and records orientation (erect/inverted) and relative size (enlarged/same/diminished) in a results table."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the first position for the whole class before groups work independently, and circulates to ensure students are recording orientation and size separately."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the previous two units: now that students can identify mirror types, the question is how the image behaves — teacher demonstrates the close-object position for a concave mirror."
+      },
+      {
+       "minutes": "7-30",
+       "activity": "Groups work through a systematic sequence of object distances for the concave mirror, recording orientation and size at each step in a structured table."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups compare tables and identify the distance at which the image flips from erect to inverted."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher leads a brief discussion connecting the close-distance erect image to the dentist's mirror application and the distant inverted image to torch reflectors."
+      }
+     ],
+     "teacher_notes": "This unit opens the second stage, which is about classifying rather than merely distinguishing — students must now connect distance to image outcome systematically. The most common error is recording 'no image' when the image becomes very large and blurry near the transition point; reassure students this is an expected observation and worth recording. The dentist's mirror and torch reflector examples from the chapter make good anchors for the consolidation discussion.",
+     "materials": [
+      "Concave mirror (one per group)",
+      "Small object (e.g. pencil or eraser)",
+      "Structured observation table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify image characteristics by mirror type and distance",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Always Erect, Always Smaller: The Convex Mirror",
+     "activity_description": "Students repeat the distance-variation investigation using a convex mirror, recording image orientation and size at multiple object distances. They discover that the convex mirror always produces an erect, diminished image regardless of how close or far the object is, in contrast to the concave mirror's distance-dependent behaviour.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Groups use the same structured table format from the previous unit to record convex mirror image characteristics across a range of object distances."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Guides groups to explicitly compare their convex mirror table with their concave mirror table from the previous unit to identify the key difference in behaviour."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Quick recall: groups state in one sentence what they found for the concave mirror in the previous unit before starting on convex."
+      },
+      {
+       "minutes": "5-28",
+       "activity": "Groups carry out the distance-variation investigation with the convex mirror, completing the same structured table as before."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups place their concave and convex tables side by side and write a comparative summary: what is the same, what is different."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher connects the always-erect, wider-field image of the convex mirror to vehicle side-view mirrors and intersection safety mirrors from the chapter."
+      }
+     ],
+     "teacher_notes": "The previous unit established the concave mirror's distance-dependent behaviour; this unit completes the classification picture by contrasting it with the convex mirror's invariant behaviour. Students often expect the convex mirror to flip the image at some distance, as the concave does — let the data correct this expectation rather than announcing it upfront. The vehicle side-view mirror application is a strong closing anchor because most students have seen it and can verify the erect, diminished image from memory.",
+     "materials": [
+      "Convex mirror (one per group)",
+      "Small object (e.g. pencil or eraser)",
+      "Structured observation table worksheet (same format as previous unit)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify image characteristics by mirror type and distance",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Mapping Image Behaviour: A Three-Mirror Comparison",
+     "activity_description": "Students construct a comparative summary table covering all three mirror types — concave, convex, and plane — showing how orientation and size change (or stay constant) as object distance increases. They annotate the table with one real-world application per mirror type drawn from the chapter.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student independently completes the comparative summary table and adds application annotations before a partner review."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the plane mirror column explicitly, connecting it to Grade 7 learning, and confirms that lateral inversion is present in all three types."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher presents the plane mirror column for the class, explicitly connecting Grade 7 knowledge and noting that lateral inversion is common to all three types."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students individually complete the full three-mirror comparison table using data from the two previous units and the plane mirror information just presented."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Students exchange tables with a partner and check each other's application annotations against the chapter's listed uses."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher closes by asking: given only the image description, which mirror type is it? — a quick verbal classification drill to consolidate the stage."
+      }
+     ],
+     "teacher_notes": "This unit consolidates the two hands-on units into a structured comparison, which is also where lateral inversion — mentioned in the chapter for all three mirror types — should be confirmed so students do not treat it as unique to plane mirrors. Watch for students who leave the plane mirror column blank thinking it was already 'done' in Grade 7; the explicit teacher presentation at the start is designed to pre-empt this. The verbal classification drill at the close is a good checkpoint: students who can reverse-engineer the mirror type from an image description have genuinely internalised the classification.",
+     "materials": [
+      "Blank three-mirror comparison table worksheet",
+      "Chapter notes or diagrams from previous two units"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Investigate and verify the laws of reflection",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Tracing Beams: Discovering the Equality of Angles",
+     "activity_description": "Students use a plane mirror, a comb-and-torch setup to create a narrow beam of light, and a white paper sheet to trace incident and reflected beams at multiple angles. They draw the normal at the point of incidence, measure the angle of incidence and angle of reflection for each trial, and examine whether a pattern exists across all trials.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Groups trace at least three incident beams at different angles, measure both angles for each, and record results in a data table before looking for a pattern."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the correct procedure for drawing the normal and measuring from it, then allows groups to work independently and collect their own data."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the classification stage: now that students know what images curved mirrors form, the unit asks why — introducing reflection laws as the mechanism; teacher demonstrates normal-drawing procedure."
+      },
+      {
+       "minutes": "8-32",
+       "activity": "Groups trace beams at three or more different angles, draw normals, measure angle of incidence and angle of reflection for each, and record in a table."
+      },
+      {
+       "minutes": "32-42",
+       "activity": "Groups examine their data tables and write a one-sentence statement of the pattern they observe."
+      },
+      {
+       "minutes": "42-45",
+       "activity": "Teacher names the pattern as the first law of reflection and confirms it holds for curved mirrors too."
+      }
+     ],
+     "teacher_notes": "This unit opens the third stage, which shifts from classification to causal investigation — students are now discovering the mechanism behind the images they classified earlier. The most common procedural error is measuring angles from the mirror surface rather than from the normal; the teacher demonstration at the start is essential for establishing this correctly. Students who find slight discrepancies (a degree or two) due to pencil width should be encouraged to average their values rather than dismiss the law.",
+     "materials": [
+      "Plane mirror",
+      "Torch and comb (to produce narrow beam)",
+      "White paper sheets",
+      "Protractor and pencil",
+      "Ruler"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Investigate and verify the laws of reflection",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "The Bent Paper Test: Coplanarity of Incident and Reflected Rays",
+     "activity_description": "Students use a chart paper with one section bent at the edge of a table and direct a light beam so the reflected beam falls on the bent portion. When the paper is flat the reflected beam is visible; when the paper is bent the reflected beam disappears from that surface, demonstrating that the incident ray, normal, and reflected ray are coplanar.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Each group sets up the bent-paper arrangement, directs the beam, observes and records what happens to the reflected beam when the paper is flat versus bent."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates and asks groups to articulate what the disappearance of the beam on the bent surface tells them about where all three rays must lie."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher reviews the first law from the previous unit and frames this unit's question: are the incident ray, normal, and reflected ray in the same plane?"
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups set up the bent-paper arrangement and carry out the observation with paper flat and paper bent, recording what happens to the reflected beam in each case."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups write an explanation of the observation in terms of which plane the rays occupy."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher formalises the second law: the incident ray, normal, and reflected ray all lie in the same plane; confirms both laws apply to all mirror types."
+      }
+     ],
+     "teacher_notes": "The previous unit gave students the first law from their angle data; this unit gives them the second law through a qualitative but decisive observation. Students sometimes struggle to see why the beam disappears rather than simply not hitting the bent portion — the key is that the reflected beam exists in the original plane of the paper and the bent section has left that plane; probing this verbally is more productive than repeating the demonstration. Confirming at the close that both laws apply to plane and spherical mirrors connects back to the classification stage without reopening it.",
+     "materials": [
+      "Chart paper (one sheet per group, with a fold line marked)",
+      "Torch",
+      "Plane mirror",
+      "Table or flat surface"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Investigate and verify the laws of reflection",
+     "pedagogical_approach": "Demonstration",
+     "activity_title": "Parallel Beams and Three Mirrors: Converge, Diverge, or Stay Parallel?",
+     "activity_description": "The teacher uses a multi-slit comb to produce several parallel beams and directs them in sequence onto a plane mirror, a concave mirror, and a convex mirror. Students observe and sketch the reflected beam patterns for each, labelling them as parallel, convergent, or divergent and connecting this to the image characteristics they classified earlier.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up and runs the three-mirror parallel-beam demonstration, pausing after each mirror for students to sketch and label before moving to the next."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student sketches the incident and reflected beam pattern for each mirror type and writes a one-sentence connection to the image characteristics from Stage 2."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher sets up the multi-slit comb and briefly recaps that the two laws of reflection have been verified; now the class will see what those laws produce for different mirror shapes."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Teacher demonstrates parallel beams on the plane mirror, then concave, then convex — pausing after each for students to complete their sketch and labelling."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Students write one sentence connecting each beam pattern to the image characteristics from the classification stage (e.g., convergence explains the enlarged real image from a concave mirror at distance)."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Teacher consolidates the causal chain: reflection laws → beam behaviour → image characteristics, closing the third stage."
+      }
+     ],
+     "teacher_notes": "This unit closes the reflection-laws stage by making the causal chain explicit: what students investigated in the two previous units now explains the classifications from Stage 2. The parallel-beam demonstration is more convincing than a single-beam setup, so using a multi-slit comb (even a homemade cardboard one) is worth the brief preparation. Students who write only 'concave converges, convex diverges' without connecting it to image behaviour have stopped one step short — the one-sentence connection task is designed to push beyond that.",
+     "materials": [
+      "Multi-slit comb or cardboard with multiple slits",
+      "Torch",
+      "Plane mirror",
+      "Concave mirror",
+      "Convex mirror",
+      "Dark or semi-dark room if possible"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Explore lenses as refracting optical surfaces",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "A Water-Drop Lens: Discovering Refraction at a Curved Surface",
+     "activity_description": "Students place a small water drop on an oiled glass strip and hold it over printed text. They observe that the curved water surface enlarges the letters beneath, functioning as a primitive convex lens. They then compare this to looking through a flat glass plate and explain why the curved surface produces magnification while the flat one does not.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Groups set up the water-drop experiment, observe the magnification effect, and then use a flat glass plate as a control comparison, recording observations for both."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the transition from reflection to refraction, frames the water-drop activity as a discovery of the lens effect, and guides groups to articulate the role of the curved surface."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects the previous stage to this new one: mirrors reflected light; now the chapter asks what curved transparent surfaces do — teacher introduces refraction as bending of light at a surface (without full derivation)."
+      },
+      {
+       "minutes": "8-30",
+       "activity": "Groups set up the water-drop on oiled glass, observe magnification, then observe through a flat glass plate for comparison, recording both observations."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups write an explanation for why the curved water surface magnifies but the flat plate does not, using the idea that curvature bends the light."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher names the water-drop as a convex lens and introduces the formal definitions: convex lens thicker at the middle, concave lens thicker at the edges."
+      }
+     ],
+     "teacher_notes": "This unit opens the lens stage and is deliberately structured as a discovery: students should reach the idea that curvature of the transparent surface is what causes magnification before the teacher introduces the term lens. The most important misconception to watch for is students thinking the water drop magnifies because water is special — redirect them to ask what shape the water surface has and what would happen if it were flat. The flat-glass-plate control is essential for this redirection.",
+     "materials": [
+      "Glass strips or microscope slides",
+      "Cooking oil or petroleum jelly (to make surface water-repellent)",
+      "Eyedropper and water",
+      "Printed text sheet",
+      "Flat glass plate"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Explore lenses as refracting optical surfaces",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Close Up and Far Away: Image Characteristics Through Both Lens Types",
+     "activity_description": "Students systematically vary object distance in front of a convex lens and then a concave lens, recording image orientation and size at each position. They discover that the convex lens produces an erect enlarged image when the object is close and an inverted image when the object is distant, while the concave lens always produces an erect, diminished image.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Groups carry out the distance-variation investigation for both lens types using the same structured table format used for mirrors in Stage 2, then compare lens results to mirror results."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates and prompts groups to explicitly compare their lens table with their mirror comparison table from Stage 2, asking which mirror each lens most resembles in its image behaviour."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects this unit to the previous one: now that students know what a lens is, the question is whether a lens's distance-dependence pattern matches what they found for mirrors."
+      },
+      {
+       "minutes": "6-30",
+       "activity": "Groups carry out systematic distance variation for first the convex and then the concave lens, recording orientation and size in a structured table."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups compare their lens table to the mirror comparison table from Stage 2, writing which mirror each lens parallels in behaviour."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher confirms the parallel: convex lens behaves like concave mirror (converges); concave lens behaves like convex mirror (diverges)."
+      }
+     ],
+     "teacher_notes": "This unit deliberately echoes the Stage 2 investigation design so students can make the converging/diverging parallel explicit — that is the cognitive payoff of using the same table format. Students often expect the concave lens to eventually invert the image at large distances, just as the concave mirror does; the data will correct this, but only if they test at genuinely large object distances. The mirror-lens parallel confirmed at the close prepares students well for the beam-behaviour demonstration in the next unit.",
+     "materials": [
+      "Convex lens (one per group)",
+      "Concave lens (one per group)",
+      "Small object (e.g. pencil or letter card)",
+      "Structured observation table (same format as Stage 2 mirror table)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Explore lenses as refracting optical surfaces",
+     "pedagogical_approach": "Demonstration",
+     "activity_title": "Parallel Beams Through Glass: Flat Plate, Convex, and Concave Lens",
+     "activity_description": "The teacher passes parallel light beams through a flat glass plate, a convex lens, and a concave lens in sequence. Students observe and sketch that the flat plate leaves beams unchanged, the convex lens converges them, and the concave lens diverges them — directly paralleling the mirror beam-behaviour demonstration from Stage 3.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up and runs the three-surface beam demonstration, pausing after each surface for students to sketch."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student sketches beam patterns for all three surfaces and annotates each with the term 'unchanged', 'converging', or 'diverging'."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects to the parallel-beam mirror demonstration from Stage 3, asking students to predict what will happen for each lens type before the demonstration begins."
+      },
+      {
+       "minutes": "5-25",
+       "activity": "Teacher demonstrates beams through flat plate, then convex lens, then concave lens — students sketch and label after each."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Students annotate their sketches with a connecting sentence to the image-behaviour table from the previous unit (e.g., convergence explains enlarged image at close range)."
+      },
+      {
+       "minutes": "37-45",
+       "activity": "Teacher closes by noting the flat-glass-plate result confirms that curvature, not simply transparency, is what bends light."
+      }
+     ],
+     "teacher_notes": "This unit mirrors (structurally) the parallel-beam mirror demonstration from the third stage, which is deliberate — students who made the causal chain for mirrors in that stage can now extend the same logic to lenses. Watch for students who annotate 'converging' for the convex lens without connecting it to the convergence that explains focusing; the annotation task is designed to push this connection. The flat-plate result is the cleanest way to neutralise the misconception that any transparent material bends light.",
+     "materials": [
+      "Multi-slit comb or cardboard with multiple slits",
+      "Torch",
+      "Flat glass plate",
+      "Convex lens",
+      "Concave lens",
+      "Dark or semi-dark space if possible"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Burning Paper with Mirror and Lens: Applying Convergence",
+     "activity_description": "Students apply the concepts of convergence to a focused sunlight activity: first using a concave mirror and then a convex lens to concentrate sunlight onto a small piece of paper, observing whether the concentrated light generates enough heat to ignite or scorch the paper. They explain why only these two optical surfaces — not the convex mirror or concave lens — can produce this effect.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Under teacher supervision, groups attempt to focus sunlight with a concave mirror and then a convex lens, recording observations, and then write an explanation of why only converging surfaces produce this effect."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Supervises the activity with strict attention to the Safety First warning in the chapter, ensures no student looks directly at the reflected sunlight, and leads the explanatory discussion."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher opens the final stage by framing its goal: moving from classifying and observing to predicting and explaining — and introduces this activity as a test of whether students can predict which surfaces will converge light before trying."
+      },
+      {
+       "minutes": "7-10",
+       "activity": "Groups predict in writing which optical surfaces (of the four they know) can concentrate sunlight and why, before the activity begins."
+      },
+      {
+       "minutes": "10-32",
+       "activity": "Under strict supervision, groups use the concave mirror and then the convex lens to focus sunlight onto paper, recording what happens in each case."
+      },
+      {
+       "minutes": "32-45",
+       "activity": "Groups compare predictions with observations and write an explanation connecting convergence of beams (from Stages 3 and 4) to the heat concentration effect."
+      }
+     ],
+     "teacher_notes": "This unit opens the highest-order stage by requiring students to predict before observing — the prediction task is the critical move that separates application from mere recall. Enforce the Safety First warning rigorously: no student should look at reflected sunlight, and the activity should be stopped immediately if anyone does. The written explanation connecting beam convergence to heat concentration is the key product; students who write only 'because it focuses light' have not yet made the mechanism explicit.",
+     "materials": [
+      "Concave mirror",
+      "Convex lens",
+      "Small pieces of dark paper",
+      "Safety instructions posted visibly"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Angle Calculations and Assertion-Reason: Applying the Laws",
+     "activity_description": "Students work through angle-of-incidence and angle-of-reflection calculation problems from the end-of-chapter exercises, and then evaluate assertion-reason question pairs about convex mirrors. For each assertion-reason pair, they must not only identify whether the reasoning is correct but also provide a one-sentence justification grounded in the laws or image-classification findings.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student works through the calculation problems and assertion-reason items independently, writing justifications for each answer."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "After individual work, leads a discussion of common errors and presses students to explain reasoning rather than just state answers."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher frames this unit as applying the laws to problems: the class will use the reflection laws they verified in Stage 3 to calculate angles and evaluate claims."
+      },
+      {
+       "minutes": "5-25",
+       "activity": "Students work independently on the angle-calculation problems from the chapter's exercise section, writing each step explicitly."
+      },
+      {
+       "minutes": "25-38",
+       "activity": "Students tackle the assertion-reason items about convex mirrors, writing one justification sentence per item."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher leads a brief discussion of the assertion-reason items, pressing students to name the specific law or classification finding that resolves each."
+      }
+     ],
+     "teacher_notes": "This unit shifts from physical manipulation to symbolic and evaluative application of the same laws students verified in Stage 3, which is a significant cognitive step. The most common error on angle problems is confusing angle of incidence with the angle between the ray and mirror surface rather than the normal — the correction applies the same insight as the original tracing activity in Stage 3. For the assertion-reason items, students who can name which law or classification finding resolves each claim have genuinely reached the application level this stage requires.",
+     "materials": [
+      "Chapter exercise problems (angle calculations and assertion-reason items)",
+      "Pencil, ruler, protractor"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Match the Image: Predicting Mirror and Lens Type from Description",
+     "activity_description": "Students receive a set of image descriptions (e.g., 'always erect and diminished regardless of distance', 'erect and enlarged when close, inverted when far') and must identify which mirror or lens type produces each, then explain the converging or diverging behaviour of that surface that causes the described image. They also complete the chapter's matching exercises linking image descriptions to mirror types and lens types.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Groups work through the image-description matching task and write a causal explanation for each match, connecting image outcome to beam behaviour."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "After group work, selects two or three items for whole-class explanation, asking groups to justify their causal explanation by tracing back through beam behaviour to the surface's shape."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects this unit to the previous one: students moved from applying laws to problems; now they work from image description backwards to surface type."
+      },
+      {
+       "minutes": "5-28",
+       "activity": "Groups work through the image-description matching task and write causal explanations for each match."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Two or three groups share their explanations for selected items; the class evaluates whether the causal chain is complete."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher confirms the completed causal chain for the chapter: surface shape → beam behaviour (convergence or divergence) → image characteristics."
+      }
+     ],
+     "teacher_notes": "This unit is the final content unit before the synthesis, and it brings together every thread: mirror classification from Stage 2, beam behaviour from Stages 3 and 4, and the image prediction required by the dissolution test. Students who write causal explanations that skip beam behaviour (e.g., 'concave mirrors make inverted images' without mentioning convergence) have not completed the chain — the whole-class share is the right moment to require the missing step. The causal chain statement at the close is a deliberate preparation for the synthesis unit.",
+     "materials": [
+      "Image-description matching cards or worksheet (adapted from chapter exercise)",
+      "Chapter exercise matching sections (mirror types and lens types)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student independently constructs the master synthesis table from memory and notes, then uses it to answer the two novel-scenario prediction questions in writing."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the synthesis table structure, confirms the column headings without pre-filling any cells, and poses the two novel-scenario questions after table completion."
+      }
+     ],
+     "activity_title": "Designing the Optical Station: A Street-Safety Installation",
+     "activity_description": "Groups receive a site brief describing a busy urban intersection with four specific optical problems — a blind corner, a poorly lit pedestrian crossing, a shopfront display window that must show passers-by an enlarged view of small items, and a security post that must monitor the widest possible arc of the street without moving. For each problem, the group traces the path of light through their chosen optical surface on a diagram, labels every relevant image property and beam behaviour, and writes a two-sentence engineering justification connecting the optical principle to the practical need. The four-problem diagram-and-justification sheet is the sole artefact; completing it forces every concept from the chapter to be deployed together.",
+     "teacher_notes": "This synthesis unit asks groups to deploy all four conceptual pillars of the chapter simultaneously — mirror and lens types, image properties, laws of reflection, and beam convergence/divergence — by solving a four-problem street-safety design brief. The beam-trace diagram is the critical accountability tool: circulate and ask groups to defend their diagrams aloud before they write justifications, pressing explicitly for both laws of reflection whenever a mirror is chosen (see material: 'Mirror and lens reference cards'). Problems 1 and 4 both resolve to a convex mirror but for different stated reasons, rewarding students who articulate field-of-view as the shared mechanism rather than simply naming the device.",
+     "materials": [
+      "One printed site-brief card per group (see visual aid: 'Street-intersection site brief')",
+      "One blank A3 diagram sheet per group showing the intersection as a simple overhead-view sketch with the four problem locations marked",
+      "Rulers",
+      "Pencils and pens",
+      "Mirror and lens reference cards — one card per device type (see visual aid: 'Mirror and lens reference cards')"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher distributes the site-brief card and reads the scenario aloud: a municipal engineer has been asked to install optical devices at four locations in a street intersection, each with a different safety or commercial function. The four problems are read one by one without naming any optical device. Teacher asks: 'Before you open any notes, what kinds of image properties would each location need?' — taking one or two quick oral responses per problem to surface initial thinking, then directing groups to begin the task."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups work on the diagram-and-justification sheet. For each of the four problems they: choose an optical device (concave mirror, convex mirror, convex lens, or concave lens); draw the relevant light path on the site diagram, including incident ray, normal, and reflected or refracted ray with arrows; label the image properties the device produces in this configuration; and write two sentences connecting the beam behaviour or image property to the specific requirement stated in the site brief. Reference cards are available but groups are encouraged to attempt each problem from memory first. Teacher circulates, asking groups to read their beam diagrams aloud and pressing for explicit mention of both laws of reflection wherever a mirror is chosen."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Whole-class share-out: one group presents their diagram for Problem 2 (the pedestrian-crossing lighting problem, which most directly tests convergence and the laws of reflection together) by holding up their A3 sheet and narrating the light path. A second group presents Problem 3 (the shopfront display, which requires image-distance reasoning for a convex lens or close-object concave mirror). After each presentation the class is asked: 'Does their diagram satisfy both laws of reflection — or, for the lens, does it correctly show convergence or divergence?' Disagreements between groups are aired and resolved by returning to the beam-behaviour principle, not by majority vote."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher asks each group to complete one final sentence at the bottom of their sheet: 'All the converging devices in our design share one property, and all the diverging devices share one property — state both.' Groups write. Teacher takes two or three responses aloud. Closure: teacher names the central idea the task has demonstrated — that concave mirrors and convex lenses converge light and produce images that depend on object distance, while convex mirrors and concave lenses diverge light and always produce erect, diminished images — and notes that the entire street installation works because these principles are reliable laws, not device-specific tricks."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Design-brief Inquiry",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Street-intersection site brief",
+       "text": "A municipal engineer has been asked to install optical devices at four locations in a busy urban street intersection. No optical vocabulary is used in this brief — students must supply the device choices themselves.\n\nProblem 1 — Blind corner: Drivers approaching a sharp blind corner cannot see oncoming traffic or pedestrians stepping off the pavement. The installation must give drivers the widest possible view of what is around the corner from a single fixed device.\n\nProblem 2 — Pedestrian-crossing lighting: A pedestrian crossing is poorly lit at night. A single lamp is available but its light spreads in all directions. The installation must redirect as much of that light as possible onto the crossing in a controlled beam.\n\nProblem 3 — Shopfront display window: A jeweller wants passers-by to see an enlarged view of small items placed near the window. The image must be upright and noticeably larger than the actual object.\n\nProblem 4 — Security monitoring post: A security officer seated at a fixed post must monitor the widest possible arc of the street in front of the building without turning or moving. One device, fixed to the wall, must cover the whole arc."
+      },
+      {
+       "type": "table",
+       "title": "Mirror and lens reference cards",
+       "table": "Device | Shape description | Beam behaviour | Image properties: object close | Image properties: object far\nConcave mirror | Curved inward (cave-shaped) | Converges reflected rays | Erect, enlarged, virtual (behind mirror) | Inverted, real, size depends on distance\nConvex mirror | Curved outward (dome-shaped) | Diverges reflected rays | Erect, diminished, virtual (always) | Erect, diminished, virtual (always)\nConvex lens | Thicker at centre | Converges refracted rays | Erect, enlarged, virtual (same side as object) | Inverted, real, size depends on distance\nConcave lens | Thinner at centre | Diverges refracted rays | Erect, diminished, virtual (always) | Erect, diminished, virtual (always)"
+      },
+      {
+       "type": "prose",
+       "title": "Extension problem (early finishers)",
+       "text": "A fifth problem for groups that finish early: the site engineer has only a concave lens available and must decide which of the four original problems it is least unsuited to solve. The group must write two sentences explaining their choice, making explicit reference to the concave lens's diverging behaviour, its always-erect and always-diminished image, and why those properties partially — but imperfectly — address the chosen problem."
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 45,
+    "count": 15
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and distinguish mirror types",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students use a spoon and then schematic/physical mirrors to observe and classify concave and convex mirror types by the direction of curvature of the reflecting surface.",
+    "implied_lo": "Students can identify a curved mirror as concave or convex by examining the direction of curvature of its reflecting surface and justify the classification using geometric terms.",
+    "cg": "CG-2",
+    "c_code": "C-2.4",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify image characteristics by mirror type and distance",
+    "total_stages": 5,
+    "period_numbers": [
+     3,
+     4,
+     5
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students systematically vary object distance in front of concave and convex mirrors and compile a three-mirror comparison table showing how image orientation and size change with distance for each mirror type, with real-world applications.",
+    "implied_lo": "Students can classify the image characteristics (orientation, size) produced by concave, convex, and plane mirrors at different object distances and connect each mirror type to at least one real-world application.",
+    "cg": "CG-2",
+    "c_code": "C-2.4",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Investigate and verify the laws of reflection",
+    "total_stages": 5,
+    "period_numbers": [
+     6,
+     7,
+     8
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students trace and measure incident and reflected beams to verify that the angle of incidence equals the angle of reflection and that all three rays are coplanar, then observe how parallel beams reflect differently off plane, concave, and convex mirrors.",
+    "implied_lo": "Students can state both laws of reflection, cite the evidence from their own beam-tracing measurements, and explain how beam behaviour (parallel, convergent, or divergent reflection) differs across plane, concave, and convex mirrors.",
+    "cg": "CG-2",
+    "c_code": "C-2.4",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Explore lenses as refracting optical surfaces",
+    "total_stages": 5,
+    "period_numbers": [
+     9,
+     10,
+     11
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students discover the lens effect using a water drop, then investigate image characteristics of convex and concave lenses at different object distances, and observe parallel-beam convergence and divergence through both lens types.",
+    "implied_lo": "Students can describe how a convex lens converges light to form an erect enlarged image at close range and an inverted image at distance, and how a concave lens always diverges light to form an erect diminished image, drawing a parallel to the equivalent mirror behaviours.",
+    "cg": "CG-2",
+    "c_code": "C-2.4",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "total_stages": 5,
+    "period_numbers": [
+     12,
+     13,
+     14,
+     15
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students apply convergence to a sunlight-focusing prediction task, work through angle-calculation and assertion-reason problems, reverse-engineer surface type from image descriptions, and construct a master synthesis table to predict image outcomes for novel scenarios.",
+    "implied_lo": "Students can explain and predict image formation by any of the four curved optical surfaces by applying the laws of reflection and the converging or diverging behaviour of that surface, and justify their predictions by tracing the causal chain from surface shape through beam behaviour to image characteristics.",
+    "cg": "CG-2",
+    "c_code": "C-2.4",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and distinguish mirror types",
+    "implied_lo_assessed": "Students can identify a curved mirror as concave or convex by examining the direction of curvature of its reflecting surface and justify the classification using geometric terms.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student looks at the side of a curved mirror and notices that the reflecting surface curves away from the observer — like the outside of a bowl. Which type of mirror is this, and which surface of a metallic spoon shows the same type of curvature?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Concave mirror; the inner surface of the spoon",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Convex mirror; the inner surface of the spoon",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Convex mirror; the outer surface of the spoon",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Plane mirror; neither surface of the spoon",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "A": "Confuses the direction of curvature: the student associates 'curving away from the observer' with the inward-facing (concave) surface rather than the outward-facing one.",
+       "B": "Correctly identifies the mirror type as convex but maps it to the wrong spoon surface — the inner (concave) surface rather than the outer (convex) surface.",
+       "D": "Does not connect curved mirrors to the spoon activity at all, defaulting to the plane mirror studied in Grade 7."
+      },
+      "inclusivity": "Students who struggle with the verbal description of curvature direction can be offered a physical spoon to handle before answering; the tactile experience of the two surfaces is a valid alternative pathway to the same classification."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and distinguish mirror types",
+    "implied_lo_assessed": "Students can identify a curved mirror as concave or convex by examining the direction of curvature of its reflecting surface and justify the classification using geometric terms.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Which statement correctly describes how the reflecting surface of a concave mirror is oriented?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The reflecting surface curves inward at the centre but outward at the edges.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The reflecting surface curves inward, like the inside of a hollow sphere.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The reflecting surface curves outward, like the outside of a hollow sphere.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The reflecting surface is flat but ground to remove imperfections.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Confuses the direction definitions: the student has swapped concave and convex, applying the outward-curving description to concave.",
+       "D": "Conflates the manufacturing process (grinding) mentioned in the chapter's 'step further' box with the definition of the reflecting surface — a recall confusion within the chapter.",
+       "A": "Invents a hybrid geometry not present in the chapter, possibly from overgeneralising the spoon's uneven curvature near the edges."
+      },
+      "inclusivity": "Students who find verbal geometry descriptions ambiguous can be asked to draw the cross-section of a concave mirror and label the reflecting surface — a diagram-based pathway to the same demonstrable understanding."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify image characteristics by mirror type and distance",
+    "implied_lo_assessed": "Students can classify the image characteristics (orientation, size) produced by concave, convex, and plane mirrors at different object distances and connect each mirror type to at least one real-world application.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Object position | Image orientation | Image size relative to object\nVery close to mirror | Erect | Enlarged\nModerate distance | Erect | Same as object\nFar from mirror | Inverted | Diminished",
+    "question_text": "A student records image observations for a curved mirror at different object distances. Refer to the table provided. Which mirror type produced these results, and which real-world device uses this mirror for the same reason as the 'very close' row?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Concave mirror; dentist's mirror",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Concave mirror; vehicle headlight reflector",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Convex mirror; vehicle side-view mirror",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Plane mirror; bathroom mirror",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Confuses the two curved mirror types: the student sees 'erect' and 'diminished' in the table (even though the close-range row shows enlarged) and defaults to convex mirror, which always gives erect diminished images.",
+       "B": "Correctly identifies the mirror as concave but selects the headlight application, which exploits convergence at distance rather than the close-range enlarged image that characterises the dentist's mirror use.",
+       "D": "Does not connect the distance-dependent orientation change to a curved mirror at all, defaulting to the plane mirror that always gives an erect same-size image."
+      },
+      "inclusivity": "Students who struggle with the data table can first be asked to describe what happens in each row in words and then match to a mirror type — separating the data-reading task from the classification task provides an accessible entry point."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify image characteristics by mirror type and distance",
+    "implied_lo_assessed": "Students can classify the image characteristics (orientation, size) produced by concave, convex, and plane mirrors at different object distances and connect each mirror type to at least one real-world application.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A traffic safety mirror is placed at a blind intersection to allow drivers to see vehicles approaching from the side. The image it shows is always erect and smaller than the actual vehicle. Which mirror type is used, and why is this image characteristic useful for this purpose?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Concave mirror; the enlarged erect image makes distant vehicles appear closer and easier to see.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Convex mirror; the diminished erect image provides a wider field of view, allowing more of the road to be seen in a single mirror.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Convex mirror; the diminished image appears inverted at greater distances, warning the driver that the vehicle is far away.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Plane mirror; the same-size erect image gives an undistorted view of approaching vehicles.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "A": "Confuses mirror types: the student associates the need to see distant objects with concave mirror enlargement, not recognising that the chapter specifies convex mirrors for safety use because of wide field of view.",
+       "D": "Defaults to plane mirror; the student may not have connected the 'always erect and smaller' characteristic to the convex mirror type, treating 'undistorted' as the primary design criterion.",
+       "C": "Correctly identifies the convex mirror but invents an inversion at distance — projecting the concave mirror's distance-dependent behaviour onto the convex mirror, which always gives erect images."
+      },
+      "inclusivity": "Students who are unfamiliar with intersection safety mirrors can be redirected to vehicle side-view mirrors as an equivalent context before re-attempting; the image characteristic is the same and the side-view mirror is explicitly discussed in the chapter."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify image characteristics by mirror type and distance",
+    "implied_lo_assessed": "Students can classify the image characteristics (orientation, size) produced by concave, convex, and plane mirrors at different object distances and connect each mirror type to at least one real-world application.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A dentist holds a small mirror very close to a patient's tooth and sees a large, erect image. The same mirror, when held further away, would produce a very different image. (a) What type of mirror is the dentist using? (b) Describe what the image would look like if the mirror were moved to a much greater distance from the tooth. (c) Explain why the image characteristics change as the mirror moves farther away.",
+    "options": [],
+    "expected_elements": [
+     "Identifies the mirror as concave.",
+     "Describes the distant image as inverted and smaller (diminished) compared to the close-range image.",
+     "Explains the change by connecting distance to the mirror's convergence behaviour — at close range the object is within the region where the mirror produces an erect enlarged image; at greater distance the reflected beams converge to form an inverted real image."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle to articulate the convergence explanation in part (c) may first be asked to describe what happens to the reflected beams from a concave mirror when the object is far away — this bridges from the beam-behaviour observation to the image explanation without requiring recall of formal terminology."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Investigate and verify the laws of reflection",
+    "implied_lo_assessed": "Students can state both laws of reflection, cite the evidence from their own beam-tracing measurements, and explain how beam behaviour (parallel, convergent, or divergent reflection) differs across plane, concave, and convex mirrors.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Trial | Angle of incidence (°) | Angle of reflection (°)\n1 | 20 | 20\n2 | 35 | 35\n3 | 50 | 50\n4 | 65 | 65",
+    "question_text": "A student traces incident and reflected beams at four different angles and records the measurements. Refer to the table provided. Which law of reflection is directly supported by this data, and which part of the experimental setup was essential for these angles to be measured correctly?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both laws simultaneously; the data table alone is sufficient evidence for both without any additional setup.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The first law (angle of incidence equals angle of reflection); drawing the normal at the point of incidence before measuring.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The first law (angle of incidence equals angle of reflection); measuring the angle between the ray and the mirror surface rather than the normal.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The second law (incident ray, normal, and reflected ray are coplanar); bending the paper to check whether the reflected beam disappears.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Confuses which experimental setup corresponds to which law — the bent-paper setup is evidence for the second law (coplanarity), not for the angle-equality data in the table.",
+       "C": "Correctly identifies the first law but names the wrong reference line — measuring from the mirror surface rather than from the normal is the classic procedural error this activity was designed to prevent.",
+       "A": "Conflates the two laws and over-claims that the angle-equality table provides evidence for coplanarity, which requires a separate experimental demonstration."
+      },
+      "inclusivity": "Students who can state both laws verbally but confuse which evidence supports which law can be asked to describe, in their own words, what the bent-paper experiment shows and how it differs from the angle-measurement activity — separating the two evidential bases is the key cognitive move."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Investigate and verify the laws of reflection",
+    "implied_lo_assessed": "Students can state both laws of reflection, cite the evidence from their own beam-tracing measurements, and explain how beam behaviour (parallel, convergent, or divergent reflection) differs across plane, concave, and convex mirrors.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Several parallel beams of light are directed at the surface of a curved mirror. The reflected beams spread out away from each other and never meet. Which mirror type produced this result, and what does this beam behaviour explain about the images this mirror forms?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Concave mirror; the diverging reflected beams explain why the image becomes inverted when the object is far away.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Convex mirror; the diverging reflected beams explain why this mirror always produces erect, diminished images regardless of object distance.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Convex mirror; the diverging reflected beams mean the mirror cannot form any image — only converging beams can produce an image.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Plane mirror; parallel beams always diverge after reflection because the flat surface scatters them.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "A": "Assigns diverging beam behaviour to the concave mirror — the reverse of the chapter's demonstration — possibly confusing divergence with the spreading of an erect image at close range.",
+       "C": "Correctly identifies the convex mirror but makes a false claim that diverging beams cannot form an image, confusing image formation with real-image convergence.",
+       "D": "Misidentifies the plane mirror as the source of diverging beams; the parallel-beam demonstration shows that plane mirrors keep reflected beams parallel, which this student has not retained."
+      },
+      "inclusivity": "Students who cannot recall beam behaviour from memory can be asked to sketch what happens to three parallel arrows hitting a curved outward surface and trace each reflected arrow using the angle-equality rule — rebuilding the result from the verified law rather than from recall."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Investigate and verify the laws of reflection",
+    "implied_lo_assessed": "Students can state both laws of reflection, cite the evidence from their own beam-tracing measurements, and explain how beam behaviour (parallel, convergent, or divergent reflection) differs across plane, concave, and convex mirrors.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "In the beam-tracing activity, a student bends part of the chart paper at the mirror's edge and notices that the reflected beam, which was visible on the flat paper, disappears from the bent section. (a) State the law of reflection this observation provides evidence for. (b) Explain, using that law, why bending the paper causes the reflected beam to disappear from the bent section.",
+    "options": [],
+    "expected_elements": [
+     "Names the second law of reflection: the incident ray, normal, and reflected ray all lie in the same plane.",
+     "Explains that when the paper is flat, the bent section is in the same plane as the incident ray and normal, so the reflected ray falls on it; when the paper is bent, the bent section is no longer in that plane, so the reflected ray does not reach it."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who state the law correctly but cannot complete the plane-geometry explanation in part (b) can be asked to draw a top-view diagram showing the flat paper, the bent section, and the path of the reflected ray — spatial reasoning through diagram is an equally valid demonstration of understanding the coplanarity requirement."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explore lenses as refracting optical surfaces",
+    "implied_lo_assessed": "Students can describe how a convex lens converges light to form an erect enlarged image at close range and an inverted image at distance, and how a concave lens always diverges light to form an erect diminished image, drawing a parallel to the equivalent mirror behaviours.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "In the water-drop lens activity, a small drop of water on an oiled glass strip magnifies the letters beneath it. A flat glass plate placed over the same letters does not magnify them. What does this comparison tell us about what causes the magnification?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both surfaces bend light equally, but the water drop appears to magnify because it is closer to the letters than the glass plate.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The curved surface of the water drop bends light as it passes through, causing magnification; the flat surface does not bend light and so produces no magnification.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The water drop magnifies because it is thinner than the glass plate; thinner transparent materials always produce larger images.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Water magnifies because it is a liquid; the solid glass plate does not magnify because solids cannot bend light.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Attributes the magnification to the material property of being a liquid rather than to the geometry of the surface — a substance-based misconception rather than a shape-based understanding.",
+       "C": "Inverts the correct relationship: the water drop is actually thicker at the centre (convex lens shape), not thinner; this student has confused concave and convex lens geometry.",
+       "A": "Attempts a proximity explanation, dismissing the role of surface curvature entirely — likely has not connected the water-drop activity to the concept of refraction at a curved surface."
+      },
+      "inclusivity": "Students who struggle with the abstract concept of surface curvature bending light can be asked to compare the cross-section shape of the water drop with the cross-section of the glass plate — drawing both profiles and labelling them as 'curved' or 'flat' is a concrete route to the same conceptual conclusion."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explore lenses as refracting optical surfaces",
+    "implied_lo_assessed": "Students can describe how a convex lens converges light to form an erect enlarged image at close range and an inverted image at distance, and how a concave lens always diverges light to form an erect diminished image, drawing a parallel to the equivalent mirror behaviours.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Lens type | Object position | Image orientation | Image size\nConvex | Close | Erect | Enlarged\nConvex | Far | Inverted | Diminished\nConcave | Close | Erect | Diminished\nConcave | Far | Erect | Diminished",
+    "question_text": "Refer to the table provided showing image results for two lens types. A student claims: 'A concave lens behaves just like a convex mirror because both always give the same type of image regardless of distance.' Evaluate this claim using the data in the table and what you know about mirror behaviour.",
+    "options": [
+     {
+      "label": "A",
+      "text": "The claim is correct: both a concave lens and a convex mirror always produce an erect, diminished image regardless of object distance, and both diverge light.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The claim is incorrect: a concave lens produces an inverted image at large distances, while a convex mirror always produces an erect image.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The claim is incorrect: a concave lens converges light and can produce a real image, whereas a convex mirror only diverges light.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The claim is partially correct: both produce erect images, but a concave lens produces an enlarged image at close range while a convex mirror always produces a diminished image.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Projects the concave mirror's distance-dependent inversion onto the concave lens — a within-chapter confusion between concave mirror behaviour and concave lens behaviour.",
+       "C": "Swaps the converging/diverging properties of the lens types: this student has assigned convergence to the concave lens when the chapter and parallel-beam demonstration show it diverges light.",
+       "D": "Confuses the close-range image size: the concave lens always produces a diminished image (like a convex mirror), whereas the close-range enlarged image is produced by a convex lens (paralleling a concave mirror)."
+      },
+      "inclusivity": "Students who have the mirror-lens parallel in principle but cannot apply it to evaluate the claim can first be asked to write the image description for a convex mirror in their own words and then compare it column by column with the concave lens rows in the table — structured comparison reduces the cognitive load of simultaneous recall."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explore lenses as refracting optical surfaces",
+    "implied_lo_assessed": "Students can describe how a convex lens converges light to form an erect enlarged image at close range and an inverted image at distance, and how a concave lens always diverges light to form an erect diminished image, drawing a parallel to the equivalent mirror behaviours.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "In the parallel-beam demonstration, light passed through a flat glass plate, then a convex lens, then a concave lens. (a) Describe what happened to the parallel beams in each case. (b) Explain why the flat glass plate produced a different result from both lenses, even though all three are transparent.",
+    "options": [],
+    "expected_elements": [
+     "Flat glass plate: beams remain parallel (unchanged).",
+     "Convex lens: beams converge (meet at a point).",
+     "Concave lens: beams diverge (spread apart).",
+     "Explains that the flat glass plate does not bend the light because it has no curved surface; it is the curvature of the lens surface that causes the bending (convergence or divergence), not merely the transparency of the material."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who correctly describe the three outcomes but cannot articulate the role of curvature in part (b) can be prompted to compare the shapes of the three surfaces and ask which physical property differs — guiding them from observation to mechanism without providing the answer directly."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "implied_lo_assessed": "Students can explain and predict image formation by any of the four curved optical surfaces by applying the laws of reflection and the converging or diverging behaviour of that surface, and justify their predictions by tracing the causal chain from surface shape through beam behaviour to image characteristics.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student holds a convex lens in sunlight and slowly moves a piece of paper toward the lens from a large distance until the paper begins to scorch. Which explanation correctly traces the causal chain from the lens's surface shape to the paper scorching?",
+    "options": [
+     {
+      "label": "A",
+      "text": "All lenses concentrate sunlight equally; the scorching happens because the paper absorbs more heat than the glass does.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The convex lens diverges sunbeams and the paper scorches because it intercepts more diverging rays over a larger area.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The convex lens is thicker at the centre, so it converges the parallel sunbeams to a focal point; at that point the concentrated light energy heats the paper enough to scorch it.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The convex lens reflects sunlight rather than transmitting it, and the reflected beams converge onto the paper just as a concave mirror would.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Confuses the mechanism: the student substitutes reflection for refraction and attributes the convergence to the mirror-like action of the lens surface, collapsing the distinction between mirrors and lenses.",
+       "A": "Overgeneralises: the student has not distinguished converging from diverging surfaces and claims all lenses concentrate sunlight, ignoring that the concave lens diverges rather than converges.",
+       "B": "Inverts the convex lens's beam behaviour: the student assigns divergence to the convex lens, which is the property of the concave lens — a within-chapter mirror-lens property swap."
+      },
+      "inclusivity": "Students who understand the outcome (scorching) but cannot produce the full causal chain can be given the scaffold of three blanks: 'Surface shape → ___ → ___ → scorching' and asked to fill in beam behaviour and concentration — the template externalises the chain structure."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "implied_lo_assessed": "Students can explain and predict image formation by any of the four curved optical surfaces by applying the laws of reflection and the converging or diverging behaviour of that surface, and justify their predictions by tracing the causal chain from surface shape through beam behaviour to image characteristics.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A solar concentrator uses curved mirrors to generate steam for industrial heat. An engineer claims: 'A convex mirror would be a better choice than a concave mirror for this application because it gives a wider field of view and collects light from a larger area.' Evaluate this claim.",
+    "options": [
+     {
+      "label": "A",
+      "text": "The claim is correct: a wider field of view means the convex mirror intercepts more sunlight and transfers more total energy to the collector.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The claim is correct: because a convex mirror produces an erect image, the solar collector would receive an undistorted beam, making conversion more efficient.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The claim is incorrect: a convex mirror diverges reflected beams and cannot concentrate sunlight at a point; only a concave mirror converges beams to generate the high temperature needed.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The claim is incorrect: neither concave nor convex mirrors can concentrate sunlight — only convex lenses can generate enough heat for industrial use.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Confuses field-of-view (relevant for imaging applications) with energy concentration (relevant for solar applications); the student applies the vehicle-mirror rationale to an inappropriate context.",
+       "B": "Confuses image orientation with beam convergence: 'erect image' is an image characteristic unrelated to whether the reflected beams converge to a focal point for energy concentration.",
+       "D": "Overgeneralises from the convex lens paper-burning demonstration: the student excludes concave mirrors from energy concentration, ignoring the equivalent paper-burning demonstration done with the concave mirror in the chapter."
+      },
+      "inclusivity": "Students who know the correct answer intuitively but cannot evaluate the claim formally can be asked to trace what happens to parallel beams hitting a convex mirror — the divergence result directly refutes the claim and requires no additional information beyond what the chapter demonstrates."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "implied_lo_assessed": "Students can explain and predict image formation by any of the four curved optical surfaces by applying the laws of reflection and the converging or diverging behaviour of that surface, and justify their predictions by tracing the causal chain from surface shape through beam behaviour to image characteristics.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student is given four optical devices to examine: Device P produces an always-erect, always-diminished image of any object placed in front of it. Device Q produces an erect enlarged image when the object is close but an inverted image when the object is far. Device R, when parallel beams hit it, makes the beams converge. Device S, when parallel beams hit it, makes the beams diverge. (a) For each device, identify whether it is a mirror or a lens, and state the specific type. Justify each identification. (b) Explain which two devices are functionally equivalent in terms of both image behaviour and beam behaviour, and why.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly identifies all four devices: P = convex mirror or concave lens; Q = concave mirror or convex lens; R = concave mirror or convex lens; S = convex mirror or concave lens — with the recognition that beam and image data together are needed to distinguish mirror from lens within each pair.",
+     "Uses both image behaviour and beam behaviour as justification criteria, not just one.",
+     "Identifies that a concave mirror and convex lens are functionally equivalent (both converge beams, both produce erect enlarged close-range and inverted far-range images) and that a convex mirror and concave lens are functionally equivalent (both diverge beams, both always produce erect diminished images).",
+     "Explains the functional equivalence through the converging/diverging mechanism — not merely by listing matching image characteristics — connecting surface shape to beam behaviour to image outcome."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who can identify each device individually but struggle to articulate functional equivalence in part (b) can be asked to write a single sentence for each pair stating what the beams do and what the image does — the parallelism between the two sentences for each pair makes the equivalence visible without requiring abstract language."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+    "implied_lo_assessed": "Students can explain and predict image formation by any of the four curved optical surfaces by applying the laws of reflection and the converging or diverging behaviour of that surface, and justify their predictions by tracing the causal chain from surface shape through beam behaviour to image characteristics.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.4",
+     "competency_text": "Demonstrate rectilinear propagation and verify the laws of reflection through manipulation of light sources, objects, and apparatus including curved mirrors."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Optical surface | Beam behaviour (converging / diverging / unchanged) | Image when object is close (orientation + size) | Image when object is far (orientation + size) | Governing principle (reflection / refraction) | One real-world application\nConcave mirror | | | | |\nConvex mirror | | | | |\nConvex lens | | | | |\nConcave lens | | | | |\nFlat glass plate | | | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. (1) Complete all empty cells for all five optical surfaces. (2) A designer needs to select one optical surface for each of the following three devices: (a) a security mirror at a shop corner that must show as wide an area as possible with an always-upright image; (b) a torch reflector that must project a strong parallel beam of light forward; (c) a simple magnifying glass for reading small text. For each device, state which surface you would select, identify its beam behaviour and image behaviour, and explain — using the laws or principles in your completed table — why it is the correct choice.",
+    "scaffold": "Start by completing the table row by row. For the beam behaviour column, ask: does this surface converge, diverge, or leave beams unchanged? For the image columns, ask: what did the investigation at close range and at far range show? For the governing principle column, ask: does this surface work by reflection or refraction? Once the table is complete, use it directly to justify each device choice — do not work from memory alone.",
+    "format_of_output": [
+     "Completed table with all cells filled",
+     "Three device justifications, each including: selected surface name, beam behaviour, image behaviour, and one sentence connecting surface principle to device requirement"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The Final Stage implied LO requires students to trace the causal chain from surface shape through beam behaviour to image characteristics across all four curved optical surfaces; a classification table with device-justification tasks is the most direct demonstration vehicle because it requires students to organise the full conceptual structure and then apply it to novel selection decisions.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can organise the complete optical surface taxonomy by beam behaviour and image characteristics, apply the governing principle (reflection or refraction) correctly to each surface, and reason from those properties to a justified selection decision for a novel application — the full dissolution test operation.",
+      "reading_the_scaffold": "The scaffold directs students to build the table before attempting the device questions, making the table the reasoning tool rather than a product that is filled in after the fact; teachers should check that device justifications explicitly reference the table rather than stating remembered answers independently.",
+      "strong_vs_weak_markers": "Strong: all five table rows correctly completed including the flat glass plate row (unchanged beam, no magnification, refraction); device justifications name beam behaviour AND image behaviour AND connect both to the specific device requirement using the correct governing principle. Weak: table rows mostly correct but flat glass plate row omitted or incorrect; device justifications state the correct surface without explaining the causal connection, or explain image behaviour without mentioning beam behaviour.",
+      "inclusivity": "Students who cannot recall all four curved surface rows from memory can be asked to fill in the one surface they remember most clearly first and then use the mirror-lens parallel (concave mirror parallels convex lens; convex mirror parallels concave lens) to derive the remaining rows — turning recall difficulty into a reasoning task that demonstrates the same conceptual integration."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

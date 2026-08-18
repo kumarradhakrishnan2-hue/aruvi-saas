@@ -266,6 +266,22 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   6-item files.** The remaining gap (most cells are single-unit, so coverage reaches ~9/17 not
   17/17) is closed only by raising the number of CELLS upstream in LP Rule 10 — option C of the
   analysis doc, deliberately deferred.
+- ★ **SCIENCE·MIDDLE IS BATCH-RELEASED, and its top synthesis units are RE-AUTHORED +
+  POLISHED (2026-08-18).** The F1 full enumeration found the K+1 synthesis borrow
+  produced double capstones (101/114 serves) and floor-gap jumps certification cannot
+  see; the founder struck a same-day separate-CODA design (one flow across eleven
+  stages, no new asset) in favour of re-authoring the TOP'S synthesis in place against
+  the whole library (`genon/resynth.py`, `batch_api --wave resynth`), then a POLISH pass
+  (`--wave polish`) that moved prepared content into **typed `visual_aids`**
+  ({table|prose, title, payload}; tables pre-split via `normalize.parse_table` in the
+  science port — renderers consume structure, never re-split) with 2–3-sentence notes,
+  "(see material)" pointers, and 2–5-word `pedagogical_approach` labels. Rendered on
+  screen (LessonView `MaterialPanel`), PDF and DOCX with content-weighted column widths.
+  Gap-fill doctrine: the model may SPECIFY content a unit tells the teacher to prepare
+  unspecified (founder licence 2026-08-18); specified content is moved, never rewritten.
+  Read-derived per-chapter brief notes (`resynth.EXCLUSIONS` / `POLISH_NOTES`) are the
+  mechanism when the generic brief misses. Spec `docs/science_middle_stage_serve.md` §6
+  v1.3; full story MEMORY.md 2026-08-17/18. Material-tab live render + mobile pass OWED.
 - ★ **ONE STAGE IS SERVED DIFFERENTLY — science·middle (2026-08-07, engine e17).** Spec:
   `docs/science_middle_stage_serve.md`. Its LP is organised by the chapter's COGNITIVE
   PROGRESSION ARC, not by textbook sections, so it has no `section_anchor`, no registry, and
