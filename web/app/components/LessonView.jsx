@@ -118,8 +118,44 @@ function OverviewPanel({ u, chapterTitle }) {
 }
 
 function MaterialPanel({ u }) {
-  if (!u.materials?.length) return <div className="empty">Nothing to prepare — this unit needs no materials.</div>;
-  return <div className="uv-mat"><ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul></div>;
+  // Typed prepared content (polish pass, 2026-08-18): the science port pre-splits
+  // table payloads via normalize.parse_table, so this renders STRUCTURE only —
+  // never re-splitting a raw pipe string. Legacy string visual_aids stay a quiet
+  // reference line; the typed list renders as real blocks under the checklist.
+  const aids = Array.isArray(u.meta?.visual_aids) ? u.meta.visual_aids : [];
+  const legacyAid = typeof u.meta?.visual_aids === "string" && u.meta.visual_aids
+    ? u.meta.visual_aids : null;
+  if (!u.materials?.length && !aids.length && !legacyAid)
+    return <div className="empty">Nothing to prepare — this unit needs no materials.</div>;
+  return (
+    <div className="uv-mat">
+      {u.materials?.length ? <ul>{u.materials.map((m, i) => <li key={i}>{m}</li>)}</ul> : null}
+      {legacyAid ? <p className="uv-va-legacy">{legacyAid}</p> : null}
+      {aids.map((va, i) => (
+        <div className="uv-va" key={i}>
+          <div className="kicker kicker-soft uv-va-kicker">
+            {va.type === "table" ? "Prepared table" : "Prepared text"}
+            {va.title ? <span className="uv-va-title"> · {va.title}</span> : null}
+          </div>
+          {va.type === "table" && va.table ? (
+            <table className="uv-va-table">
+              {va.table.caption ? <caption>{va.table.caption}</caption> : null}
+              <thead><tr>{(va.table.header || []).map((h, j) => <th key={j}>{h}</th>)}</tr></thead>
+              <tbody>
+                {(va.table.rows || []).map((r, j) => (
+                  <tr key={j}>{r.map((c, k) => <td key={k}>{c}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          ) : null}
+          {va.type === "table" && va.table?.source_note ? (
+            <p className="uv-va-src">{va.table.source_note}</p>
+          ) : null}
+          {va.type === "prose" ? <p className="uv-va-prose">{va.text}</p> : null}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 /* ───────── The phase BOOKMARK — the teacher's one place-marker on the chapter ─────────

@@ -1,0 +1,1736 @@
+{
+ "filename": "ch_05_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 5,
+ "chapter_title": "Measurement of Length and Motion",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "14x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 5",
+  "ledger_ts": "20260817_113057_sci_vi_05_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_vi_05_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_05_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_05_canonical_p10.json": "2026-08-17T12:38:00",
+    "ch_05_canonical_p08.json": "2026-08-17T12:37:59"
+   },
+   "replaced": {
+    "period_number": 14,
+    "period_duration_minutes": 40,
+    "synthesis": true,
+    "progression_stage": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "pedagogical_approach": "Hands-on Science",
+    "activity_title": "Whole-Chapter Synthesis: Measuring and Describing Motion",
+    "activity_description": "Students receive a rich scenario involving multiple objects moving in different ways and are asked to produce a complete measurement-and-motion description: choose the correct instrument, measure relevant lengths in SI units with correct technique, identify a reference point, state whether each object is at rest or in motion relative to it, and classify each motion by the path it traces.",
+    "roles": [
+     {
+      "actor": "Students (Groups)",
+      "role_description": "Work through the synthesis scenario, producing a written description that integrates all chapter threads: standard units and conversions, correct measurement technique, reference point, definition of motion, and classification by path."
+     },
+     {
+      "actor": "Teacher",
+      "role_description": "Facilitates without leading — asks groups to justify each decision by connecting it to a chapter concept, and ensures the final written description is coherent as a whole rather than a list of disconnected answers."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-6",
+      "activity": "Teacher presents the synthesis scenario — a set of objects in and around a described space, some moving, some stationary, with measurements to be made — and clarifies that the task requires both measurement and motion description woven together."
+     },
+     {
+      "minutes": "6-26",
+      "activity": "Groups work through the scenario: selecting instruments, converting units, applying correct technique, naming a reference point, classifying motion, and writing a connected description of each object's position and movement."
+     },
+     {
+      "minutes": "26-36",
+      "activity": "Groups share their descriptions with another group, checking that every required component is present — unit, technique, reference point, motion status, and path type — and flagging any missing element."
+     },
+     {
+      "minutes": "36-40",
+      "activity": "Teacher draws the full chapter arc together, naming both central ideas — accurate length measurement in SI units and motion description relative to a reference point — and asking the class to state in one sentence how the two are connected in what they just did."
+     }
+    ],
+    "teacher_notes": "This synthesis unit assumes the full chapter content has been covered and asks students to use all of it in one integrated task. No particular earlier activity needs to have been done in any specific way — the task is self-contained. Watch for groups that treat measurement and motion description as two separate checklists rather than an integrated account; prompt them to write one flowing description of each object rather than two separate sections. The closing whole-class moment is important: the connection between measuring position (length, SI units, technique) and describing motion (reference point, change, path) is what the chapter as a whole is about.",
+    "materials": [
+     "Metre tapes",
+     "15-cm scales",
+     "Flexible measuring tapes",
+     "Thread",
+     "Notebooks",
+     "Pencils",
+     "Synthesis scenario cards (prepared by teacher)"
+    ],
+    "homework": []
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question non-standard measurement",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Balisht and Beyond: Why Handspans Fail",
+     "activity_description": "Students measure the same classroom object using their own handspans, record their counts, and compare across the class. The variation in results is surfaced and examined as a shared class dataset, leading to the question of what a reliable measurement actually requires.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the opening scenario of Deepa's table measurement, prompts students to measure the same surface, and collects results visibly on the board."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Measure a shared object using their handspan, record their count, and compare their result with neighbours to notice the spread."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss within small groups why different students obtained different counts for the same object."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces Deepa's scenario and asks each student to measure the teacher's table or a shared desk using handspans and record the result."
+      },
+      {
+       "minutes": "8-18",
+       "activity": "Results are collected on the board; students examine the spread and discuss in small groups why counts differ even though the object is the same."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Whole-class discussion surfaces the two-part structure of measurement — a number and a unit — and the problem of a unit that varies from person to person."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Students individually write one sentence explaining why the handspan cannot serve as a shared measurement unit, consolidating the unit's central insight."
+      }
+     ],
+     "teacher_notes": "This unit opens the chapter by anchoring the need for standard units in a concrete, lived experience rather than a definition. Watch for students who think the problem is simply that some people measured carelessly — redirect them to notice that even careful measurement yields different numbers when the unit itself varies. A useful checkpoint: if most students can articulate that the handspan's size differs between people, they are ready to move forward.",
+     "materials": [
+      "Shared classroom desk or table",
+      "Ruler or blank paper for recording",
+      "Blackboard or whiteboard"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question non-standard measurement",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "From Angula to Metre: The Story of Standard Units",
+     "activity_description": "Students trace the historical evolution from body-part and regional units (angula, dhanusa, yojana) through the problem of inter-regional trade confusion to the adoption of SI units. The metre, centimetre, millimetre, and kilometre are introduced with their conversion relationships, and students practice converting between them.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Narrates the historical progression and explains SI unit relationships, writing key conversions on the board for student reference."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Listen, take notes, and practice unit conversion calculations using the relationships 1 km = 1000 m, 1 m = 100 cm, 1 cm = 10 mm."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher briefly revisits the previous unit's finding and narrates how ancient Indian units such as angula, dhanusa, and yojana were used, connecting to the same person-dependence problem students just discovered."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Teacher explains the SI system, the metre as the standard unit for length, and introduces cm, mm, and km with their conversion relationships written clearly on the board."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Students practice converting given lengths between units (e.g., express 2.5 km in metres, 350 mm in centimetres) and identify which unit is most appropriate for measuring a pencil, a room, and a road."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Quick pair-check: each student exchanges their conversion answers with a neighbour and verifies, flagging any discrepancy for the teacher."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the previous unit's insight that units must be consistent: the SI system is the answer the class was implicitly looking for. A common error is confusing the direction of conversion — students may multiply when dividing is needed; prompt them to ask whether the new unit is larger or smaller before computing. The angula-to-SI narrative also signals that non-standard units are not wrong historically, only insufficient for shared use.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Notebooks and pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Practise and refine correct measurement technique",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Scale Placement, Eye Level, and the Broken Zero",
+     "activity_description": "Students measure several everyday objects using a 15-cm scale, deliberately practising the three correct-technique rules: flat placement along the object, eye directly above the reading point, and using a non-zero start mark when the zero end is unclear. They record raw readings and compute lengths as differences.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates each of the three technique rules with a physical scale and object, pointing out what an incorrect posture looks like for parallax and misalignment."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Measure a comb, pen, pencil, and eraser using the scale, applying all three technique rules and recording start and end readings with computed lengths."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compare measurements within groups and identify any pair where results differ significantly, diagnosing which technique error likely caused it."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher demonstrates the three measurement rules physically — flat placement, vertical eye position eliminating parallax, and using a non-zero reference mark — showing what each error looks like."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students individually measure four objects (comb, pen, pencil, eraser), recording start mark, end mark, and computed length; they then deliberately use a non-zero start mark for at least one object."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups compare results, identify discrepancies, and discuss which of the three technique errors most plausibly caused each discrepancy."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher asks one student from each group to state one technique rule in their own words, confirming class-wide retention."
+      }
+     ],
+     "teacher_notes": "The previous unit established what units to use; this unit addresses how to use the instrument correctly. The most persistent error here is parallax — students tend to tilt their head rather than position their eye directly above the mark, and they often do not realise they are doing it. Encourage students to describe why the broken-zero technique gives the same answer as a clean-zero measurement before accepting the procedure as sensible.",
+     "materials": [
+      "15-cm school scales (one per student or pair)",
+      "Comb, pen, pencil, and eraser for each group",
+      "Notebooks for recording"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Practise and refine correct measurement technique",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Measuring What a Ruler Cannot Follow: Curved Lengths",
+     "activity_description": "Students investigate the problem of measuring a curved line or surface with a rigid straight scale. They use a thread-and-scale method and a flexible tape to measure curved paths drawn on paper and a curved object, compare both methods, and reason about when each is appropriate.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the problem of the arched verandah string-lights and asks students to propose methods before guiding them through both the thread and flexible tape approaches."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Design and carry out the thread-and-scale method on a curved line drawn on paper, then repeat with a flexible tape, comparing results and identifying sources of error in each method."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the curved verandah scenario and asks groups to predict whether a rigid ruler can measure the curved string-light path directly, and why."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups carefully lay a thread along a curved line drawn on paper, mark the thread, straighten it, and measure its length with the scale, recording their result."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups repeat the measurement using a flexible tape and compare the two results, discussing which method gave more consistent readings and why."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Each group states one situation where a rigid scale is sufficient and one where only a flexible method works, sharing with the class."
+      }
+     ],
+     "teacher_notes": "This unit extends the previous unit's technique work to a new class of measurement problem, so students should already feel confident with scale-reading before the curved-line challenge is introduced. A common difficulty is keeping the thread taut but not stretched while laying it along the curve — prompt students to notice that a stretched thread will give a shorter reading than the actual curve length. Ask groups to justify why a rigid ruler is inadequate here in terms of contact, not just common sense.",
+     "materials": [
+      "Thread (about 30 cm per group)",
+      "Flexible measuring tapes",
+      "15-cm scales",
+      "Paper with curved lines drawn in advance",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Practise and refine correct measurement technique",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Choosing the Right Tool for the Job",
+     "activity_description": "Students are presented with a set of measurement tasks — a short pencil, a room's width, a bottle's circumference, a corridor's length — and must select the most appropriate instrument for each, justify their choice in terms of what the instrument can and cannot do, and then carry out at least two of the measurements to verify their reasoning.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Examine each measurement task, write down the instrument choice and a one-sentence justification before any measurement begins."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compare individual choices within the group, resolve disagreements through discussion, and carry out at least two agreed measurements to test their selections."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates to probe justifications and challenge groups that select an instrument without reasoning about straight vs curved surface or range of measurement."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Students individually read the five measurement tasks and write their instrument choice and justification for each without discussing with peers."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Groups compare individual choices, surface disagreements, and agree on the best instrument for each task through brief discussion."
+      },
+      {
+       "minutes": "22-36",
+       "activity": "Each group carries out at least two of the measurements using their chosen instruments, verifying that the instrument is actually usable for the task."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Class shares one case where a group changed their initial instrument choice after attempting the measurement and why the change was necessary."
+      }
+     ],
+     "teacher_notes": "Building on the previous two units, students here synthesise technique and instrument selection into a single decision-making process. A misconception to watch for is that any measuring tape is automatically better than a rigid scale — students may not recognise that a rigid scale is more precise for short, flat objects. Push groups to articulate the mismatch when it exists rather than defaulting to 'tape is easier.'",
+     "materials": [
+      "15-cm scales",
+      "Metre scales",
+      "Flexible measuring tapes",
+      "Pencils, bottles, and other classroom objects of varied shapes",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Construct and apply the concept of reference point",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Whose Distance? The Reference Point Problem",
+     "activity_description": "Students recreate Deepa's disagreement: each student measures the distance from their seat to the classroom door and to the window, then the class finds that comparisons are meaningless without a shared starting point. Students derive the concept of a reference point and apply it by re-measuring from a single agreed classroom reference point.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Narrates the Deepa-and-friends scenario about school vs garden distances and poses the classroom analogy, then asks students to identify what information is missing from each individual distance claim."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Measure from their own seat to two fixed classroom features and record the values, then compare with a student seated elsewhere."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Agree on a single classroom reference point, re-measure from that point, and confirm that comparisons now yield consistent relative distances."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher narrates the Deepa garden-vs-school scenario and invites students to explain why Deepa and her friends disagree about which is closer."
+      },
+      {
+       "minutes": "8-18",
+       "activity": "Each student measures from their seat to the classroom door and to the blackboard, recording both values; pairs across the room compare and find their numbers are not directly comparable."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Groups agree on one fixed classroom reference point (e.g., front-left corner), re-measure from that point, and record the new consistent set of distances."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Class discusses: what changed between the two sets of measurements, and what the term 'reference point' means in the context of the kabaddi court and kilometre-stone examples from the chapter."
+      }
+     ],
+     "teacher_notes": "This unit opens the second major thread of the chapter — describing position and motion — and the shift from measurement technique to positional reasoning should feel like a natural extension rather than a new topic. Watch for students who think any starting point is equally valid for comparison; help them see that validity is not the issue — comparability is. The kabaddi court and kilometre-stone examples are strong anchors because students are likely familiar with both.",
+     "materials": [
+      "Metre scales or long measuring tapes",
+      "Notebooks",
+      "Chalk or tape to mark the reference point on the floor"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Construct and apply the concept of reference point",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Laying Out the Kabaddi Court: Reference Points in Action",
+     "activity_description": "Working outdoors or in a large indoor space, student groups mark a simplified play-court layout using a single agreed reference point, measuring all boundary lines and features from that one point. They experience directly why all measurements must originate from the same reference to produce a consistent and replicable layout.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Choose a reference point, measure and mark the court's corners and boundary lines using metre tapes from that single origin, and check whether the resulting shape is correct."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Guides groups to consistently return to the reference point for each new measurement rather than chaining measurements end-to-end, and asks groups to predict what would go wrong if they used a different starting point for each line."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher revisits the previous unit's reference-point definition and explains the task: mark a simplified rectangular court layout using only one reference point and metre tapes."
+      },
+      {
+       "minutes": "8-30",
+       "activity": "Groups work in an open space, marking the reference point, measuring each corner's position from it, and marking the layout; teacher circulates and intervenes when groups start chaining measurements."
+      },
+      {
+       "minutes": "30-38",
+       "activity": "Groups examine their completed layout and compare it with another group's to verify that consistent use of the same reference point yields matching results."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Brief class debrief: students state in one sentence what happens to the layout if the reference point shifts mid-measurement."
+      }
+     ],
+     "teacher_notes": "The previous unit introduced the reference point conceptually; this unit makes that concept physical and spatial. Students frequently chain measurements — measuring from a previously marked corner rather than returning to the reference point — which compounds errors; this is the key behaviour to interrupt. If outdoor space is unavailable, a scaled-down version on large chart paper works equally well.",
+     "materials": [
+      "Metre tapes or long measuring tapes",
+      "Chalk or stakes for marking",
+      "Open floor or outdoor space",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Define and observe motion relative to a reference point",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "At Rest or Moving? It Depends on Where You Stand",
+     "activity_description": "Students investigate Deepa's bus observation: they set up simple scenarios in the classroom to identify objects that are simultaneously at rest relative to one reference point and in motion relative to another, then classify each scenario and write a justification for each classification.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Narrates the bus scenario and sets up a slow-moving trolley or moving student-volunteer to create a real reference-point ambiguity in the classroom."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Observe the scenario from two different positions in the room, classify the object as at rest or in motion from each vantage point, and write a justification naming their reference point each time."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Share classifications and resolve any contradictions by identifying which reference point each student implicitly used."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher narrates the bus scenario — Deepa sees fellow passengers as at rest but a building outside shows they are moving — and asks students to explain the contradiction."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Teacher sets up a classroom analogy (a student slowly walking while carrying an object, or a book placed on a sliding tray) and students observe from two fixed positions, recording at-rest or in-motion for each reference point."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Groups compare their classifications and identify the reference point behind each, resolving apparent contradictions by making the reference point explicit."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Students write the chapter's definition of motion and rest in their own words, explicitly naming the reference point as the required component."
+      }
+     ],
+     "teacher_notes": "This unit introduces the formal definition of motion and rest, grounded in the reference-point concept built in the previous two units. The critical misconception to intercept is that motion is an absolute property of the object — students may insist the moving bus passenger 'is' moving, full stop; insist they name the reference point before accepting any classification. Activity 5.2's instruction to write justifications for each classification is a useful template here.",
+     "materials": [
+      "A book or object on a flat surface that can be slid slowly",
+      "Notebooks",
+      "Blackboard"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Define and observe motion relative to a reference point",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Five in Motion, Five at Rest: A Justified Inventory",
+     "activity_description": "Students systematically observe their immediate surroundings — the classroom, corridor, and schoolyard visible from the classroom — identify five objects they classify as in motion and five as at rest, and produce a written inventory with a one-sentence justification for each entry that explicitly names the reference point used.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Observe surroundings, select five objects in motion and five at rest, and write one justification per object that names the reference point used for the classification."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Exchange inventories, challenge any entry where the reference point is not explicitly stated, and propose an alternative reference point that would reverse the classification."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates and asks any student whose justification omits the reference point to revise before sharing with the group."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher sets the observation task: students must name their reference point in every justification, not just say 'it is moving.'"
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Students individually observe and write their ten-item justified inventory, working silently to notice objects rather than recalling from memory."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Groups exchange inventories, challenge entries with missing reference points, and try to find an alternative reference point that reverses each at-rest classification."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Class surfaces one example where the same object was classified differently by two students and resolves it by making both reference points explicit."
+      }
+     ],
+     "teacher_notes": "The previous unit established the definition; this unit consolidates it through independent application across a broader set of observations. A reliable check on readiness: if a student's justification says 'the fan is moving because it is spinning,' ask them to name the reference point — if they can add 'relative to the ceiling' or 'relative to the wall,' they have the concept. Students who list only obvious examples (spinning fan, walking person) should be nudged toward less obvious ones (a book on a moving cart, a bird perched on a moving train).",
+     "materials": [
+      "Notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Classify and explain types of motion by path",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Tracing Paths: Linear, Circular, and Oscillatory Motion",
+     "activity_description": "Students perform three hands-on activities — dropping an eraser to observe linear motion, whirling an eraser on a thread to trace a circular path, and swinging a pendulum eraser to observe oscillatory motion — then sketch each path and label it with the type of motion and a real-world example from the chapter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the three motion types by naming them and demonstrating the eraser-drop and thread-whirl before students take over, emphasising that classification is based on the shape of the path."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Perform all three activities in sequence, sketch the path for each, agree on the type label, and record one real-world example of each type named in the chapter."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher names the three motion types and demonstrates the eraser-drop (linear) and thread-whirl (circular), asking students to describe the path shape before naming the type."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups perform all three activities — eraser drop, thread-whirled eraser, and pendulum swing — sketching the path for each and noting path shape, then agreeing on a type label."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups record one real-world example of each motion type from the chapter (e.g., marching students for linear, merry-go-round for circular, playground swing for oscillatory)."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher checks that every group's sketches show the correct path shape for each type before closing the unit."
+      }
+     ],
+     "teacher_notes": "This unit opens the final arc of the chapter, transitioning from identifying whether motion occurs to classifying the kind of motion by its path shape. Students often confuse oscillatory motion with circular motion because both involve repeated movement — emphasise that oscillatory motion reverses direction about a fixed position whereas circular motion continues in one direction along a closed loop. The thread-whirl activity (Activity 5.4) and pendulum activity (Activity 5.5) are direct chapter anchors.",
+     "materials": [
+      "Erasers (one per group)",
+      "Thread (about 30 cm per group)",
+      "Small weight or second eraser for pendulum",
+      "Support to hang pendulum (e.g., ruler across two stacks of books)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Classify and explain types of motion by path",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Vibrating Strip: Explaining Oscillatory Motion",
+     "activity_description": "Students clamp a thin metal strip at one end, press the free end, and release it, observing the oscillatory motion produced. They then investigate what changes when the free-end displacement is varied, and explain the motion in terms of the to-and-fro path about a fixed position — connecting to the periodic nature shared with circular motion.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Set up the clamped strip, observe its oscillation after release, vary the initial displacement, and describe any change in the motion pattern, then write an explanation connecting their observations to the definition of oscillatory motion."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the question of whether varying the initial push changes the type of motion or only its extent, and prompts groups to distinguish path shape from amplitude."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher sets up one demonstration strip and asks students to predict what path the free end will trace before releasing it."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups set up their own strips, release from small and large displacements, and record observations about whether the path shape changes or only the extent of swing."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups write an explanation connecting their observations to the definition of oscillatory motion — to-and-fro about a fixed position — and note whether this motion is periodic and why."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher brings out the 'More to know' point that circular and oscillatory motions are both periodic, asking students to explain in their own words what periodic means in this context."
+      }
+     ],
+     "teacher_notes": "The previous unit introduced all three types; this unit deepens understanding of oscillatory motion specifically and introduces periodicity. A common confusion is that a larger displacement creates a different type of motion — confirm for students that amplitude change does not change path type. Linking periodicity to the thread-whirling circular motion from the previous unit strengthens the 'More to know' connection the chapter makes explicitly.",
+     "materials": [
+      "Thin metal or plastic strips (one per group)",
+      "Clamps or heavy books to fix one end",
+      "Notebooks",
+      "Rulers"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Classify and explain types of motion by path",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Park Observation: Classifying Real Equipment Motions",
+     "activity_description": "Using a structured observation sheet, students observe (or recall from memory) the motions of equipment in a children's park — swings, slides, merry-go-rounds, see-saws, and spinning tops — classify each as linear, circular, or oscillatory, and justify each classification by naming the path the object traces.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the observation sheet by classifying each piece of park equipment and writing a justification that names the path shape."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compare classifications, resolve any disagreements by returning to the path-shape definition, and identify any equipment that could exhibit more than one type of motion depending on the reference point."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates to challenge justifications that name the equipment rather than the path shape, and surfaces one ambiguous case (such as a swing's seat vs the swing's chain endpoint) for whole-class discussion."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher distributes the observation sheet listing park equipment and reminds students that justification must name path shape, not equipment type."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Students individually complete the sheet, classifying and justifying each entry."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Groups compare classifications, resolve disagreements using the path-shape criterion, and flag any equipment that posed a classification difficulty."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Whole-class discussion addresses the one ambiguous or most-disagreed-upon case, reinforcing path shape as the classification basis."
+      }
+     ],
+     "teacher_notes": "The two previous units built the definitions and observed them in controlled settings; this unit transfers classification skill to familiar real-world contexts as Activity 5.7 directs. Students sometimes classify a slide as circular because it is curved — correct this by asking them to trace the path a child's body follows (straight line from top to bottom), distinguishing the shape of the equipment from the path of motion. Any equipment the class has not encountered physically can be recalled from description or the teacher can sketch it.",
+     "materials": [
+      "Pre-prepared observation sheet listing park equipment",
+      "Notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Measured Motion: Quantifying Position Change",
+     "activity_description": "Students design and execute a simple walking-motion investigation: one student walks in a straight line while others measure their position from a fixed reference point at regular intervals, recording distance in standard SI units. The resulting data is used to describe and discuss how position changes with time and which type of motion is demonstrated.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Assign roles within the group — walker, measurer, and recorder — and collect a series of position measurements at agreed intervals, then use the data to describe the motion in terms of both measurement (SI units, correct technique) and motion type (path shape, reference point)."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Ensures groups set up a proper reference point before starting and prompts them to connect their position-change data to the chapter's definition of motion — change of position with respect to reference point over time."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher sets the investigation scenario: measure a classmate's position from a fixed reference point at several moments during a slow, steady walk, and plan how to do this using available instruments."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups assign roles, mark their reference point, and collect position measurements in SI units as the walker moves, recording each value and noting the change from measurement to measurement."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups analyse their data: they write a description of the motion that names the reference point, states the unit used, and identifies the type of motion from the path traced."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Each group shares one sentence summarising their description, and the class identifies the two chapter threads — measurement technique and motion description — that the investigation drew on simultaneously."
+      }
+     ],
+     "teacher_notes": "This unit is the first to require students to use measurement skill and motion description together, which is the integration the chapter's dissolution test names. Watch for groups that correctly measure distances but then describe the motion without naming a reference point — the description is incomplete without it. This unit sets up the synthesis unit by surfacing which elements students can combine fluently and which still feel like separate skills.",
+     "materials": [
+      "Metre tapes",
+      "Chalk or tape to mark reference point",
+      "Notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Work through the synthesis scenario, producing a written description that integrates all chapter threads: standard units and conversions, correct measurement technique, reference point, definition of motion, and classification by path."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates without leading — asks groups to justify each decision by connecting it to a chapter concept, and ensures the final written description is coherent as a whole rather than a list of disconnected answers."
+      }
+     ],
+     "activity_title": "The Harbour Scene: Reading a Place Through Measurement and Motion",
+     "activity_description": "Students receive a detailed written description of a small harbour at a single moment in time — a scene the chapter never visits. The description names several objects and events: a fishing boat gliding away from the dock, a lighthouse beam sweeping in a circle, a buoy bobbing up and down on the water, a crane moving cargo in a straight line along a rail, and a fisherman sitting still in his boat. Students work first individually, then in pairs, to build a structured evidence table for the scene: for each object they state (a) its motion type and the path it traces, (b) the reference point relative to which that motion or rest is observed, (c) the most appropriate tool and technique for measuring any length or distance relevant to it, and (d) the unit in which that measurement would be recorded. The evidence table is not a summary exercise — students must apply measurement concepts and motion concepts together for each object, using the scene's details as raw material. Pairs then share one row of their table with the class, and the teacher assembles a class-wide version on the board. The unit closes by using the completed board table to name, concretely, the ideas that made the task possible.",
+     "teacher_notes": "Read the harbour description aloud at the start — once slowly and expressively — before students see the printed copy. This gives the scene weight and ensures every student has the same information regardless of reading pace. The five objects are chosen to cover all three motion types (boat = linear, lighthouse beam = circular, buoy = oscillatory, crane = linear, fisherman = rest), reference-point relativity (the fisherman is at rest relative to the boat but in motion relative to the dock), and all three measurement tool choices (scale, metre tape, flexible tape or thread for a curved path). Watch for students who classify the fisherman as simply 'at rest' without naming a reference point — push them to specify 'at rest relative to the boat' and 'in motion relative to the harbour wall'. Similarly, watch for entries that name a measurement tool correctly but omit the unit. The board table should have four columns matching the four evidence items; as pairs contribute, stack identical answers and highlight any genuine disagreement for brief class discussion. The closing band should name the chapter's ideas by their proper terms, earned by pointing at the table the class just built — not by restating a summary from memory.",
+     "materials": [
+      "One printed harbour description card per student (teacher prints or writes the following on a half-sheet: 'At the harbour this morning: a fishing boat glides away from the dock in a straight line; the lighthouse beam sweeps round and round in a full circle; a buoy bobs up and down on the waves about a fixed spot; a crane slides a crate along a straight rail from one end of the dock to the other; a fisherman sits quietly in his seat inside the moving boat.')",
+      "Blackboard and chalk (or whiteboard and marker)",
+      "Notebook and pencil"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher reads the harbour description aloud once, clearly and without interruption, while students listen. Printed cards are then distributed. Teacher says: 'This harbour is our workspace for today. Everything you need is in this description and in what you already know from this chapter. Your job is to read the scene like a scientist — precisely, with evidence for every claim.'"
+      },
+      {
+       "minutes": "5-8",
+       "activity": "Students copy a four-column table into their notebooks with headings: Object | Motion type and path (or: at rest) | Reference point | Measurement tool, technique, and unit. Teacher reads the five objects in the scene aloud once more and confirms that every student has listed all five as row labels before individual work begins."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Individual work. Students complete their evidence table for all five objects. Teacher circulates, asking individuals who have written a motion type to also describe the path in their own words, and asking individuals who have written a measurement tool to specify the unit and justify why a flexible tape or thread is needed for any curved path in the scene. No pair discussion yet."
+      },
+      {
+       "minutes": "20-28",
+       "activity": "Pairs form with the nearest neighbour. Each partner reads their entry for the fisherman row aloud. Pairs discuss: can the fisherman be both at rest and in motion at the same time? They must agree on a single joint answer that names two different reference points. Pairs then check all remaining rows together, flag any row where their entries differ, and prepare to contribute one row to the class table."
+      },
+      {
+       "minutes": "28-37",
+       "activity": "Class builds the board table. Teacher draws the four-column table on the board. Pairs are called on one at a time, each contributing one row; teacher writes their entry exactly as given, then invites a brief challenge or confirmation from the rest of the class before moving on. The fisherman row is taken last and discussed in full: the class agrees that reference point determines whether the same object is classified as in motion or at rest, and both answers are recorded side by side on the board."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher points at the completed board table and closes the chapter by naming its ideas through what the table shows: 'Every entry in the motion-type column needed a path description — that is what makes a classification a justification, not just a label. Every entry in the reference-point column shows that motion and rest are not absolute facts about an object; they depend on the point from which we observe. Every entry in the measurement column shows that a measurement is only complete when it carries both a number and a unit, and that choosing the right tool depends on whether the path is straight or curved. These are the tools this chapter has given you. You just used all of them on a harbour you had never seen before.'"
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Structured individual and paired analysis of an unfamiliar written scenario, followed by collaborative class synthesis. The scenario functions as a primary source: students extract data, apply concepts, and construct justified entries rather than recall facts. The board table built from pair contributions makes the whole-chapter integration visible as an object the class has collectively produced."
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 14
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and question non-standard measurement",
+    "total_stages": 6,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students measure using informal body-part units, discover the variability problem, then trace the historical evolution from regional units to the SI system and practice unit conversions.",
+    "implied_lo": "Students can explain why body-part units are unreliable for shared measurement and correctly convert lengths between mm, cm, m, and km.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Practise and refine correct measurement technique",
+    "total_stages": 6,
+    "period_numbers": [
+     3,
+     4,
+     5
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students apply the three scale-use rules (placement, eye position, non-zero start), measure curved lengths using thread and flexible tape, and select appropriate instruments for a range of measurement tasks.",
+    "implied_lo": "Students can correctly measure both straight and curved lengths using appropriate instruments and techniques, including using a non-zero reference mark on a damaged scale.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Construct and apply the concept of reference point",
+    "total_stages": 6,
+    "period_numbers": [
+     6,
+     7
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students derive the need for a shared reference point through classroom distance comparisons and apply it by laying out a measured court layout from a single origin.",
+    "implied_lo": "Students can identify a reference point, explain why distances are only comparable when measured from the same fixed point, and apply this to a practical marking task.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Define and observe motion relative to a reference point",
+    "total_stages": 6,
+    "period_numbers": [
+     8,
+     9
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students observe scenarios where the same object is at rest relative to one reference point and in motion relative to another, and produce a justified inventory of ten objects with explicit reference points named for each classification.",
+    "implied_lo": "Students can classify objects as at rest or in motion by explicitly naming the reference point and can demonstrate that the same object can have different classifications for different reference points.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Classify and explain types of motion by path",
+    "total_stages": 6,
+    "period_numbers": [
+     10,
+     11,
+     12
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students perform hands-on activities to observe linear, circular, and oscillatory motion, investigate the clamped-strip vibration and periodicity, and classify real park equipment motions with path-shape justifications.",
+    "implied_lo": "Students can classify a given motion as linear, circular, or oscillatory by identifying the path shape the object traces and can justify each classification including distinguishing circular from oscillatory in periodic motion.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "total_stages": 6,
+    "period_numbers": [
+     13,
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students design a walking-motion investigation that uses SI-unit measurements from a fixed reference point to produce a complete description of how position changes over time, then synthesise all chapter concepts in a rich whole-chapter scenario.",
+    "implied_lo": "Students can produce an integrated description of motion that applies accurate SI-unit length measurement with correct technique and describes how an object's position changes relative to a named reference point over time, classifying the motion by path.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question non-standard measurement",
+    "implied_lo_assessed": "Students can explain why body-part units are unreliable for shared measurement and correctly convert lengths between mm, cm, m, and km.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Five students each use their own handspan to measure the length of the same table. They get five different counts. What is the most accurate explanation for why the counts differ?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Each student's handspan is a different size, so the same length gives a different count for each student.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Handspans give the same count for the same object; the students must have started from different ends of the table.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Some students placed their hands incorrectly, so only the smallest count is the correct measurement.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The table changed length slightly between measurements because wood expands and contracts.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Student attributes measurement variation to individual error rather than to the unit itself — they understand that technique matters but have not grasped that the unit's size is the fundamental problem.",
+       "D": "Student imports an irrelevant physical phenomenon (thermal expansion) rather than recognising that the unit variability is the chapter's core insight.",
+       "B": "Student believes body-part units are consistent and explains away the variation by blaming procedure — a direct inversion of the chapter's central argument."
+      },
+      "inclusivity": "Students who struggle to articulate 'unit size varies' may be supported by asking them to physically compare two students' handspans before answering. Students who answer quickly can be asked to predict whether the angula unit described in the chapter would have the same problem."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question non-standard measurement",
+    "implied_lo_assessed": "Students can explain why body-part units are unreliable for shared measurement and correctly convert lengths between mm, cm, m, and km.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A road sign states that a town is 3.5 km away. A student wants to express this distance in metres. Which value is correct?",
+    "options": [
+     {
+      "label": "A",
+      "text": "3.5 m",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "35 000 m",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "350 m",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "3500 m",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Student multiplied by 100 rather than 1000 — confusing the km-to-m relationship with the m-to-cm relationship.",
+       "B": "Student multiplied by 10 000 — a magnitude error suggesting the student guessed a large multiplier without applying the 1 km = 1000 m relationship.",
+       "A": "Student dropped the unit conversion entirely and simply rewrote the number, indicating the relationship 1 km = 1000 m has not been retained."
+      },
+      "inclusivity": "Students who compute incorrectly may benefit from being asked to write the relationship 1 km = 1000 m before attempting the conversion. Students confident with the conversion can be asked to also express the answer in centimetres as an extension."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Practise and refine correct measurement technique",
+    "implied_lo_assessed": "Students can correctly measure both straight and curved lengths using appropriate instruments and techniques, including using a non-zero reference mark on a damaged scale.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student places a pencil against a scale. The tip of the pencil aligns with the 2.0 cm mark and the other end aligns with the 11.6 cm mark. The zero end of the scale is broken and unreadable. What is the correct length of the pencil?",
+    "options": [
+     {
+      "label": "A",
+      "text": "2.0 cm",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "9.6 cm",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "11.6 cm",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "13.6 cm",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Student read the end-mark reading as the length, not recognising that the non-zero start requires subtraction — the broken-zero technique was not applied.",
+       "A": "Student read the start-mark reading as the length, confusing the reference mark value with the object's dimension.",
+       "D": "Student added the two readings rather than subtracting — a procedural error in applying the difference formula."
+      },
+      "inclusivity": "Students who select an incorrect option can be prompted to draw the scale scenario and mark the two readings before computing. Students who answer correctly quickly can be asked to explain why starting from zero and starting from 2.0 cm yield the same length."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Practise and refine correct measurement technique",
+    "implied_lo_assessed": "Students can correctly measure both straight and curved lengths using appropriate instruments and techniques, including using a non-zero reference mark on a damaged scale.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student wants to measure the length of a curved decorative string laid along an arched doorway. Which method will give the most accurate measurement?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Estimate the length by counting how many hand-lengths fit along the curve.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Hold a rigid 15-cm scale at the start of the curve and read where the scale's end aligns with the doorway arch.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Lay a thread carefully along the curve, mark where the string ends on the thread, then straighten the thread and measure its marked length against a metre scale.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Measure the straight-line distance between the two endpoints of the arch with a metre scale.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "B": "Student uses the correct instrument type (scale) but does not address the fundamental problem that a rigid scale cannot conform to a curved surface — instrument choice is correct but application is not.",
+       "A": "Student reverts to a non-standard unit (hand-length), reversing the learning from Stage 1 that body-part units are unreliable.",
+       "D": "Student measures the straight-line chord of the arch rather than its curved length — confusing straight-line distance with path length along a curve."
+      },
+      "inclusivity": "Students uncertain between options A and D can be asked to physically trace a curved line on paper and then lay a ruler from endpoint to endpoint to see that the ruler measure and the curve measure differ. Students who answer confidently can be asked to identify when a flexible tape would be preferable to the thread method."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Practise and refine correct measurement technique",
+    "implied_lo_assessed": "Students can correctly measure both straight and curved lengths using appropriate instruments and techniques, including using a non-zero reference mark on a damaged scale.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student measuring a pencil holds the scale above the pencil and reads the marking while looking at it from an angle rather than from directly above. Explain what error this introduces and how the student should correct their technique.",
+    "options": [],
+    "expected_elements": [
+     "Names the error as parallax error (or describes it as reading from an angle giving a false value).",
+     "Explains that viewing from an angle makes the line of sight cut across the scale markings rather than going straight down to the mark, giving a reading that is either too high or too low.",
+     "States the correction: position the eye directly above the point being read so the line of sight is perpendicular to the scale."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who cannot name 'parallax' can still demonstrate understanding by describing the geometry of the error in their own words. Students who answer fully can be asked to predict whether the angled reading would be systematically higher or lower than the true value."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Construct and apply the concept of reference point",
+    "implied_lo_assessed": "Students can identify a reference point, explain why distances are only comparable when measured from the same fixed point, and apply this to a practical marking task.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Deepa says the school is 500 m from her house. Anish says the school is 300 m from his house. Can we conclude from these two statements that Deepa's house is farther from the school than Anish's house?",
+    "options": [
+     {
+      "label": "A",
+      "text": "No, because Deepa and Anish measured from different reference points — their own houses — so the two distances cannot be directly compared.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "No, because distances measured in metres are only valid for short paths, not for routes between buildings.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Yes, because 500 m is greater than 300 m, so Deepa's house must be farther regardless of where each child lives.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Yes, because the school is the common object, so it acts as the reference point for both measurements.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student compares the numerical values directly without recognising that different origins make the numbers incommensurable — the reference-point concept has not been applied.",
+       "B": "Student introduces an invalid constraint on metre-measurements — a confusion about unit applicability rather than reference-point reasoning.",
+       "D": "Student recognises the school as a common object but reasons that it therefore serves as the shared reference point, reversing the direction: the school is the destination, not the origin of either measurement."
+      },
+      "inclusivity": "Students who select D can be asked to draw the scenario on paper and mark which point each measurement starts from, making the different origins visible. Students who answer correctly can be asked to describe what information would be needed to make a valid comparison."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Construct and apply the concept of reference point",
+    "implied_lo_assessed": "Students can identify a reference point, explain why distances are only comparable when measured from the same fixed point, and apply this to a practical marking task.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A group of students is marking a kabaddi court on the playground. Ravi suggests marking the first line from the boundary wall, the second line from a tree, and the third line from the first marked line. What problem will this approach cause?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The court lines will not have consistent relative positions because each line was measured from a different starting point rather than from one shared reference point.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The court will be correctly marked as long as each individual line is measured accurately with a metre tape.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The problem is only that the tree is not a reliable fixed object, so replacing it with a stake would fix the approach.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Using different starting points makes the measurement faster, so the court will actually be more accurate.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Student focuses on technique accuracy (how well each line is measured) rather than reference-point consistency — correct individual measurements from inconsistent origins still produce a distorted layout.",
+       "D": "Student misidentifies convenience as accuracy, showing the reference-point principle has not been connected to the purpose of consistent spatial layout.",
+       "C": "Student partially grasps the problem (tree reliability) but does not recognise that the fundamental issue is having multiple different starting points, not the instability of any one of them."
+      },
+      "inclusivity": "Students who select D can be asked what happens if the wall and the stake are also not collinear — helping them see that the problem is the multiplicity of origins, not the instability of any particular one. Students who answer correctly can be asked to describe what a single shared reference point for the entire court would look like."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Construct and apply the concept of reference point",
+    "implied_lo_assessed": "Students can identify a reference point, explain why distances are only comparable when measured from the same fixed point, and apply this to a practical marking task.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A kilometre stone on a highway reads 'Delhi 120 km'. Another stone, seen later on the same road, reads 'Delhi 95 km'. Explain what Delhi is acting as in these measurements and what the two stones together tell us about the position of the second stone relative to the first.",
+    "options": [],
+    "expected_elements": [
+     "Identifies Delhi as the reference point from which both distances are measured.",
+     "States that because both measurements share the same reference point, the two positions can be directly compared.",
+     "Calculates or states that the second stone is 25 km closer to Delhi (or 25 km ahead of the first stone in the direction of Delhi)."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who can identify Delhi as the reference point but struggle with the relative position calculation can be prompted to draw a simple line diagram marking both stones and Delhi. Students who complete the response quickly can be asked to explain what information would be lost if the stones showed distance from different cities."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Define and observe motion relative to a reference point",
+    "implied_lo_assessed": "Students can classify objects as at rest or in motion by explicitly naming the reference point and can demonstrate that the same object can have different classifications for different reference points.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Deepa is sitting in a moving bus. Her friend Priya is standing on the footpath watching the bus pass. Which statement correctly describes Deepa's motion?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Deepa is at rest because she is sitting and not walking inside the bus.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Deepa is at rest relative to the bus seat and in motion relative to the footpath.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Deepa is in motion relative to the bus seat and at rest relative to the footpath.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Deepa is in motion relative to the bus seat because the bus is moving.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Student conflates the bus's motion with Deepa's motion relative to the bus — not distinguishing the object (Deepa) from the reference point (bus seat).",
+       "A": "Student uses the informal definition of motion as physical activity (walking, running) rather than the chapter's definition of position change relative to a reference point.",
+       "C": "Student reverses the two classifications — showing awareness that two reference points exist but applying the correct classification to the wrong one."
+      },
+      "inclusivity": "Students who select C can be redirected by asking them whether a book sitting on a moving cart is 'at rest' — this surfaces the distinction between activity and position change. Students who answer correctly can be asked to add a third reference point (the driver's seat) and state Deepa's classification relative to it."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Define and observe motion relative to a reference point",
+    "implied_lo_assessed": "Students can classify objects as at rest or in motion by explicitly naming the reference point and can demonstrate that the same object can have different classifications for different reference points.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "According to the chapter's definition, an object is said to be in motion when which of the following is true?",
+    "options": [
+     {
+      "label": "A",
+      "text": "It is not touching any fixed surface.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "It is travelling faster than the objects around it.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Its position changes with respect to a reference point over time.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Its shape or size changes as it moves.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Student confuses motion with relative speed — implying that slower-moving or equally-moving objects are not in motion, which removes the reference-point definition entirely.",
+       "A": "Student applies an informal everyday criterion (not touching a surface) rather than the chapter's position-change definition.",
+       "D": "Student conflates motion (change in position) with deformation (change in shape or size), importing an irrelevant physical property."
+      },
+      "inclusivity": "Students who select C or D may benefit from revisiting the bus scenario and testing their chosen criterion against it. Students who answer correctly can be prompted to state the definition of 'at rest' as its complement."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Define and observe motion relative to a reference point",
+    "implied_lo_assessed": "Students can classify objects as at rest or in motion by explicitly naming the reference point and can demonstrate that the same object can have different classifications for different reference points.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A book is placed on a cart that is being pushed slowly across the classroom floor. Is the book in motion or at rest? Write two separate statements — one for each of two different reference points — and name the reference point in each statement.",
+    "options": [],
+    "expected_elements": [
+     "Statement 1 names the cart (or cart surface) as the reference point and correctly classifies the book as at rest relative to it, with a brief justification (the book's position on the cart does not change).",
+     "Statement 2 names a fixed classroom feature (wall, floor, teacher's desk) as the reference point and correctly classifies the book as in motion relative to it, with a brief justification (the book's distance from the fixed feature changes as the cart moves).",
+     "Both statements are in the form 'The book is [at rest / in motion] relative to [named reference point] because [position change justification].'"
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who produce one correct statement but struggle with the second can be asked to physically stand in two different positions in the room and describe what they observe from each. Students who complete the task readily can be asked to add a third reference point and predict the classification before checking."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Classify and explain types of motion by path",
+    "implied_lo_assessed": "Students can classify a given motion as linear, circular, or oscillatory by identifying the path shape the object traces and can justify each classification including distinguishing circular from oscillatory in periodic motion.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "An eraser is tied to one end of a thread and the other end is held fixed. The eraser is whirled so that it moves in a horizontal plane. What type of motion does the eraser show, and what is the key feature of its path that determines this classification?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Circular motion, because the eraser traces a closed loop around the fixed point without reversing direction.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Linear motion, because the thread keeps the eraser at a constant distance from the fixed point, making the path straight.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Oscillatory motion, because both circular and oscillatory motions are periodic, so the classification is interchangeable.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Oscillatory motion, because the eraser moves repeatedly and returns to positions it has already passed through.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Student confuses repetition (returning to previously occupied positions) with the to-and-fro reversal that defines oscillatory motion — not distinguishing path shape from the periodic property.",
+       "B": "Student reasons about the thread length (constant distance) and incorrectly infers a straight path — confusing the constraint on distance with the shape of the trajectory.",
+       "C": "Student has learned that both types are periodic but incorrectly treats periodicity as the classification criterion, collapsing the distinction between circular and oscillatory motion."
+      },
+      "inclusivity": "Students who select B or D can be asked to physically trace the eraser's path on paper — a closed circle — and the pendulum's path — a back-and-forth arc — to see the difference. Students who answer correctly can be asked to explain why a merry-go-round seat also shows circular motion using the same path-shape reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Classify and explain types of motion by path",
+    "implied_lo_assessed": "Students can classify a given motion as linear, circular, or oscillatory by identifying the path shape the object traces and can justify each classification including distinguishing circular from oscillatory in periodic motion.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A thin metal strip is clamped firmly at one end. The free end is pressed down and released. Which of the following correctly describes the motion of the free end and the property it shares with a merry-go-round?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The free end moves along a straight line (linear motion) because it only moves up and down relative to its clamped end.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The free end moves in a circle (circular motion) because it curves away from and back to its rest position in a continuous loop.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The free end moves to and fro about a fixed position (oscillatory motion); both this motion and the merry-go-round's circular motion are periodic — they repeat after a fixed interval.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The free end moves to and fro (oscillatory motion); unlike the merry-go-round, this motion is not periodic because the strip slows down and eventually stops.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Student correctly identifies oscillatory motion but rejects periodicity by focusing on the strip's eventual damping (stopping), not recognising that periodicity is defined by the pattern of the motion while it continues.",
+       "B": "Student sees the strip return to its rest position and interprets this as continuous circular motion — not distinguishing a closed loop from a to-and-fro reversal.",
+       "A": "Student focuses on the vertical displacement direction and labels it linear — confusing one spatial dimension with the motion type, which requires path shape assessment."
+      },
+      "inclusivity": "Students who select D can be asked to watch the strip's free end from above and describe the shape the tip traces over time, helping them see the to-and-fro arc rather than a point moving linearly. Students who answer correctly can be challenged to explain why the strip's motion is periodic even if the amplitude decreases over time."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Classify and explain types of motion by path",
+    "implied_lo_assessed": "Students can classify a given motion as linear, circular, or oscillatory by identifying the path shape the object traces and can justify each classification including distinguishing circular from oscillatory in periodic motion.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Equipment | Path traced | Motion type | Periodic?\nPlayground swing (seat) | | |\nMerry-go-round (outer edge) | | |\nChild sliding down a slide | | |\nSee-saw (one end) | | |",
+    "question_text": "Refer to the table provided. For each piece of park equipment, complete the path traced and motion type columns. Then fill in the Periodic column with Yes or No, and for each Yes, write one sentence explaining what repeats.",
+    "options": [],
+    "expected_elements": [
+     "Swing: path is to-and-fro arc, oscillatory, periodic — the swing repeats its back-and-forth movement after a fixed interval.",
+     "Merry-go-round outer edge: path is a circle, circular, periodic — the edge completes the same circular loop repeatedly.",
+     "Slide: path is a straight line (downward), linear, not periodic — the child moves in one direction only and does not repeat the path.",
+     "See-saw one end: path is to-and-fro arc (up and down), oscillatory, periodic — the end moves up and down repeatedly."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who misclassify the slide as circular because of its curved structure can be asked to trace the path of the child's body from top to bottom — a straight line — rather than the shape of the slide equipment. Students who complete the table correctly can be asked to identify what would need to change about the slide for it to show periodic motion."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "implied_lo_assessed": "Students can produce an integrated description of motion that applies accurate SI-unit length measurement with correct technique and describes how an object's position changes relative to a named reference point over time, classifying the motion by path.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Moment | Distance from reference point (m)\n1 | 0.50\n2 | 1.00\n3 | 1.50\n4 | 2.00\n5 | 2.50",
+    "question_text": "A student records a classmate's position from a fixed reference point at five equal moments during a walk. Refer to the table provided. Which statement best describes the classmate's motion based on this data?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The classmate is at rest because the reference point itself is fixed and has not moved.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The classmate is in linear motion — the distance from the reference point increases by an equal amount at each step, showing movement along a straight line away from the reference point.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The classmate is in oscillatory motion because the distance values follow a repeating numerical pattern.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The motion type cannot be determined from distance measurements alone — the student would need to measure speed.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "C": "Student notices the regular numerical increment and associates 'repeating pattern' with oscillatory motion, confusing mathematical regularity in a distance sequence with the to-and-fro path shape that defines oscillatory motion.",
+       "A": "Student confuses the fixed reference point with the object being at rest — not applying the definition that motion is the object's position change, not the reference point's change.",
+       "D": "Student believes motion classification requires speed data, showing the path-shape criterion from the chapter has not been connected to positional measurement data."
+      },
+      "inclusivity": "Students who select B can be asked to sketch the classmate's positions at each moment on a line diagram and check whether the path reverses direction. Students who answer correctly can be asked to predict what the table would look like if the classmate turned around and walked back."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "implied_lo_assessed": "Students can produce an integrated description of motion that applies accurate SI-unit length measurement with correct technique and describes how an object's position changes relative to a named reference point over time, classifying the motion by path.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explain the importance of measurement and measure physical properties of matter in indigenous, non-standard, and standard units using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "Two students measure the same object's position from the same reference point. Student A uses a flexible measuring tape laid along a straight path; Student B estimates by counting floor tiles each of roughly 30 cm. Student A records 1.85 m; Student B records 'about 6 tiles, so roughly 1.8 m'. Which description of position is better suited for a scientific record, and why?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both are equally suited because both give approximately the same numerical answer (1.85 m vs 1.8 m).",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Student A's measurement is better only if the tape was started from the zero mark; if a non-zero mark was used, the measurements are equally unreliable.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Student A's measurement is better suited because it uses a standard SI unit (metres) with a calibrated instrument, giving a precise and reproducible value that does not depend on tile size assumptions.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Student B's measurement is better suited because it uses an existing feature of the room as the measuring unit, making it easier to check without any instrument.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "D": "Student values convenience and reproducibility-without-instrument but does not apply the chapter's argument that non-standard units (tile size varies) have the same reliability problem as body-part units.",
+       "A": "Student treats numerical proximity as equivalence in scientific quality, not distinguishing precision and reproducibility from approximate agreement.",
+       "B": "Student has learned the non-zero reference mark technique but over-applies it to invalidate any non-zero-start measurement as unreliable, misunderstanding that the difference method restores accuracy."
+      },
+      "inclusivity": "Students who select C can be asked what would happen if the tiles in a different school are a different size — making the non-reproducibility concrete. Students who answer correctly can be asked to evaluate a third scenario where Student C uses a metre scale with a broken zero, applying the difference method correctly."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "implied_lo_assessed": "Students can produce an integrated description of motion that applies accurate SI-unit length measurement with correct technique and describes how an object's position changes relative to a named reference point over time, classifying the motion by path.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student is set the task of recording the motion of a toy car that is pushed along the classroom floor in a straight line. The student measures the car's distance from a wall at three moments and records: '60, 90, 120'. A classmate says this record is incomplete as a scientific description of motion. Identify all the missing elements in the student's record and explain what each missing element contributes to a complete description of the car's motion.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Identifies that the unit is missing — numbers alone are not a measurement; the SI unit (cm or m) must be stated alongside each value to make the measurement meaningful and reproducible.",
+     "Identifies that the reference point is not named — stating 'a wall' is imprecise; a specific fixed point (e.g., the front-left corner of the wall) must be named so that another person can repeat or verify the measurement.",
+     "Identifies that the moments are not described — even relative sequencing (first, second, third observation) or any indication that positions are compared over time is needed to connect the measurements to the definition of motion.",
+     "Connects all missing elements to the complete definition: motion is a change in position (requiring both a unit-bearing measurement and a named reference point) with time (requiring the temporal dimension to be recorded).",
+     "Classifies the motion as linear and justifies this using the equal increments in position values as evidence of straight-line movement away from the reference point."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "inclusivity": "Students who identify only one or two missing elements can be prompted to re-read the chapter's definition of motion and check each component (position, reference point, time, unit) against the student's record. Students who produce a complete response can be asked to rewrite the student's record as a corrected scientific description, applying all missing elements."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Integrate measurement and motion: describe how position changes over time using standard units",
+    "implied_lo_assessed": "Students can produce an integrated description of motion that applies accurate SI-unit length measurement with correct technique and describes how an object's position changes relative to a named reference point over time, classifying the motion by path.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Describe one-dimensional and path-characterised motion using physical measurements of position."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Object | Instrument to use | Reference point named | Position measurement (SI units) | Change in position? (Yes/No) | Motion type | Justification (path shape + reference point)\nA book placed on a stationary table | | | | | |\nA student walking from one wall to the opposite wall | | | | | |\nA playground swing seat at the highest point of its arc | | | | | |\nA merry-go-round seat completing one full turn | | | | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "You are a scientist recording the motion of objects in a school. Refer to the table provided. For each object: (1) name the instrument you would use to measure its position, (2) name a specific reference point, (3) record or estimate a position measurement in SI units with the correct unit stated, (4) decide whether its position changes over time and classify the motion type, and (5) write a justification that names the path shape and the reference point.",
+    "scaffold": "Before filling in the table, answer these questions in a few sentences: (a) What two things must every measurement include? (b) What must stay the same for two position measurements to be comparable? (c) How do you decide which type of motion an object shows? Use your answers to guide your table entries.",
+    "format_of_output": [
+     "Completed table with all five columns filled for all four objects.",
+     "Two to three sentences of introductory reasoning answering the scaffold questions before the table."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The Final Stage implied LO requires simultaneous demonstration of accurate SI-unit measurement and motion description relative to a reference point across multiple object types — a classification task with justification is the most natural vehicle because it directly requires students to apply both chapter threads to each object and articulate the reasoning that integrates them.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can identify the appropriate measuring instrument, apply SI units with a named unit, define a specific reference point, determine position change over time, classify motion by path shape, and produce an integrated written justification — all simultaneously, as the dissolution test sentence specifies.",
+      "reading_the_scaffold": "The scaffold's three pre-table questions are designed to activate both chapter threads before the student fills the table: question (a) targets measurement (number + unit), question (b) targets the reference point, and question (c) targets motion classification by path shape. A student who answers all three correctly in the scaffold but fills the table poorly has a procedure execution gap; a student whose scaffold answers are vague will likely show shallow justifications in the table.",
+      "strong_vs_weak_markers": "Strong responses name a specific reference point (e.g., 'the left wall of the classroom') rather than a general one ('a wall'), state the SI unit explicitly alongside each number, and write justifications that mention both the path shape and the reference point by name. Weak responses omit units from measurements, name vague reference points, or write justifications that describe the activity of the object rather than the shape of its path.",
+      "inclusivity": "Students who struggle to complete all four rows can be asked to complete the book and the walking student first — one at rest and one in linear motion — before attempting the swing and merry-go-round. Students who complete the table fluently can be asked to add a fifth row of their own choosing, selecting an object they have personally observed and classifying it using the same framework."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

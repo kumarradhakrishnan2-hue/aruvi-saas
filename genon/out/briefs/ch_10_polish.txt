@@ -5,8 +5,12 @@ correct; the problem is WHERE things live. Its teacher_notes currently carry pre
 detail — card text, table designs, accept-lists, profiles — that belongs in structured
 materials, leaving the notes far beyond their mandated 2–3 sentences.
 
-REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
-must already be in the unit you were given.
+REORGANISE. Drop nothing the teacher needs; every fact in your output must already be
+in the unit you were given — with ONE licensed exception (founder ruling, 2026-08-18):
+where the unit tells the teacher to PREPARE content it never specifies (cards, data
+rows, reference answers), you may write that content out, provided every fact in it is
+standard chapter-level science consistent with the unit's own bands. Specified content
+is moved, never rewritten; only unspecified blanks may be filled.
 
 Return exactly this JSON object, nothing else:
 {
@@ -33,51 +37,70 @@ keep describing the same content.
 THE UNIT, in full:
 
 {
- "period_number": 15,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+ "period_number": 17,
+ "period_duration_minutes": 40,
+ "progression_stage": 6,
+ "stage_label": "Synthesise: Apply the Full Framework to Distinguish Living from Non-living",
  "synthesis": true,
  "roles": [
   {
-   "actor": "Students (Individual)",
-   "role_description": "Each student independently constructs the master synthesis table from memory and notes, then uses it to answer the two novel-scenario prediction questions in writing."
+   "actor": "Teacher",
+   "role_description": "Presents the four ambiguous cases and facilitates a structured justification-sharing discussion, pressing students on the quality of their characteristic-by-characteristic evidence."
   },
   {
-   "actor": "Teacher",
-   "role_description": "Introduces the synthesis table structure, confirms the column headings without pre-filling any cells, and poses the two novel-scenario questions after table completion."
+   "actor": "Students (Individual)",
+   "role_description": "Applies the full seven-characteristic framework to each case in writing, produces a classification decision with a structured justification, and then discusses with the class."
   }
  ],
- "activity_title": "Designing the Optical Station: A Street-Safety Installation",
- "activity_description": "Groups receive a site brief describing a busy urban intersection with four specific optical problems — a blind corner, a poorly lit pedestrian crossing, a shopfront display window that must show passers-by an enlarged view of small items, and a security post that must monitor the widest possible arc of the street without moving. For each problem, the group traces the path of light through their chosen optical surface on a diagram, labels every relevant image property and beam behaviour, and writes a two-sentence engineering justification connecting the optical principle to the practical need. The four-problem diagram-and-justification sheet is the sole artefact; completing it forces every concept from the chapter to be deployed together.",
- "teacher_notes": "This unit works as a chapter close in either of its two contexts. When it follows the sequence of fourteen units, students arrive with dense procedural experience and the task asks them to synthesise across all four conceptual layers simultaneously — mirror and lens types, image properties at varying distances, laws of reflection, and convergence/divergence of beams. When it is added to a shorter complete plan, it asks students who have already consolidated the chapter to carry their consolidated knowledge into a setting that is genuinely new: the street-safety frame is not an analogy for any earlier activity, so there is no shortcut through memory.\n\nFour problems are provided because the chapter has four conceptual pillars that must each be exercised: (1) the blind-corner problem requires a convex mirror — erect, diminished, wide field; (2) the pedestrian-crossing lighting problem requires a concave mirror used as a reflector — converging beam, directing light outward; (3) the shopfront display problem requires a convex lens or concave mirror used close to the object — erect, enlarged image; (4) the security-arc problem reinforces the convex mirror for field of view. Problems 1 and 4 both call for a convex mirror but for slightly different stated reasons (driver safety vs. security monitoring), which rewards students who can articulate field-of-view as the shared mechanism rather than just naming the device.\n\nThe beam-trace diagram is the critical element: it forces students to draw the incident and reflected or refracted rays, mark the normal, confirm the angle relationships, and show whether the emergent beam converges or diverges. A student who writes a correct device name but draws diverging rays for a concave mirror has revealed a conceptual gap. Circulate during group work and ask groups to defend their diagrams before they write their justifications.\n\nFor the second law of reflection, ask groups working on the lighting problem to state explicitly that the incident ray, normal, and reflected ray all lie in the same plane — this is the element most likely to be omitted without prompting.\n\nIf any group finishes early, pose an extension: a fifth problem in which the site engineer has only a concave lens available and must explain which of the four problems it is least unsuited to solve, and why. This drives home the diverging, always-erect, always-diminished character of the concave lens by contrast.\n\nThe closing debrief should not summarise the chapter as a list — instead, ask one representative to trace the light path for one problem aloud while pointing at their diagram, and ask the class to name which chapter principle each segment of the trace invokes. The closure is in seeing the trace as a whole, unified by the chapter's ideas.",
+ "activity_title": "The Tide Pool Census: Reading Life Where You Do Not Expect It",
+ "activity_description": "Students receive a printed data card describing seven objects found in a shallow coastal tide pool — a hermit crab inside a borrowed shell, a sea anemone attached to a rock, a clump of seaweed, a barnacle cemented to a stone, a fragment of dry coral skeleton, a small fish darting between rocks, and a pebble — along with one short observation note for each object. Working first alone and then in pairs, students complete a structured evidence grid that tests each object against every shared life characteristic from the chapter, then use the grid to place each object on a 'Certainty Line' drawn on a shared sheet: from 'definitely living' through 'needs more evidence' to 'definitely non-living'. The pair then chooses one object from the uncertain middle zone and writes a paragraph explaining exactly which characteristics could resolve the uncertainty and what observation or experiment would supply the missing evidence. The unit closes with a whole-class reveal in which pairs report their middle-zone object and the class builds a single agreed census, naming the chapter's concepts as the tools that made the sorting possible.",
+ "teacher_notes": "This synthesis unit asks students to apply the full seven-characteristic framework to seven tide pool objects, moving from individual evidence grids through a paired Certainty Line negotiation to a whole-class census. The hermit crab and barnacle are the richest cases for pressing students past surface appearances — when pairs disagree on Certainty Line placement, require each to name their strongest characteristic-level evidence rather than repeat their conclusion. Object descriptions and the evidence grid are prepared before the lesson (see materials); the accept-list of key teaching points for each object lives in the visual aid 'Tide pool object profiles'.",
  "materials": [
-  "One printed site-brief card per group (describing the intersection and its four optical problems in plain language — no optical vocabulary used in the brief itself)",
-  "One blank A3 diagram sheet per group showing the intersection as a simple overhead-view sketch with the four problem locations marked",
-  "Rulers",
-  "Pencils and pens",
-  "A set of small mirror-and-lens reference cards (one card per device type, listing only: device name, shape description, beam behaviour, and image properties at close and far distances) — produced by the teacher before the lesson from chapter content"
+  "Printed data card (one per student) listing seven tide pool objects with two-sentence observation notes each (see visual aid: 'Tide pool object profiles')",
+  "Evidence grid worksheet (one per student) (see visual aid: 'Evidence grid layout')",
+  "A4 sheet (one per pair) with a horizontal Certainty Line pre-drawn and labelled 'Definitely Living' at the left, 'Needs More Evidence' in the centre, and 'Definitely Non-living' at the right",
+  "Small sticky notes or pen for marking object positions on the Certainty Line",
+  "Blackboard or whiteboard for the whole-class census tally"
  ],
  "time_bands": [
   {
-   "minutes": "0-7",
-   "activity": "Teacher distributes the site-brief card and reads the scenario aloud: a municipal engineer has been asked to install optical devices at four locations in a street intersection, each with a different safety or commercial function. The four problems are read one by one without naming any optical device. Teacher asks: 'Before you open any notes, what kinds of image properties would each location need?' — taking one or two quick oral responses per problem to surface initial thinking, then directing groups to begin the task."
+   "minutes": "0-5",
+   "activity": "Teacher distributes the data card and reads the tide pool scene aloud: a rocky shelf exposed briefly by low tide, holding seven objects. Teacher names each object and its observation note, then asks: 'Before you write anything — which of these do you think is the hardest to classify, and why?' Two or three students respond briefly. Teacher does not confirm or correct; instead says: 'Your grid will tell you — let's find out.'"
   },
   {
-   "minutes": "7-28",
-   "activity": "Groups work on the diagram-and-justification sheet. For each of the four problems they: choose an optical device (concave mirror, convex mirror, convex lens, or concave lens); draw the relevant light path on the site diagram, including incident ray, normal, and reflected or refracted ray with arrows; label the image properties the device produces in this configuration; and write two sentences connecting the beam behaviour or image property to the specific requirement stated in the site brief. Reference cards are available but groups are encouraged to attempt each problem from memory first. Teacher circulates, asking groups to read their beam diagrams aloud and pressing for explicit mention of both laws of reflection wherever a mirror is chosen."
+   "minutes": "5-18",
+   "activity": "Students work individually to complete the evidence grid. For each object they tick, cross, or write a question mark in each characteristic column, then record a verdict in the final column. Teacher circulates, pausing at students who have marked the barnacle or hermit crab as straightforwardly non-living and asking: 'Which characteristic are you least sure about for this one? What would you need to see?' No answers are given; questions are left open."
+  },
+  {
+   "minutes": "18-28",
+   "activity": "Students pair up and compare grids. Together they place all seven objects on the Certainty Line on their shared A4 sheet, negotiating any disagreements. Each pair then selects one object from the middle 'Needs More Evidence' zone and writes a short paragraph (four to six sentences) naming: which characteristic(s) produced the uncertainty, what specific observation or simple test would resolve it, and what verdict they predict the test would give and why."
   },
   {
    "minutes": "28-38",
-   "activity": "Whole-class share-out: one group presents their diagram for Problem 2 (the pedestrian-crossing lighting problem, which most directly tests convergence and the laws of reflection together) by holding up their A3 sheet and narrating the light path. A second group presents Problem 3 (the shopfront display, which requires image-distance reasoning for a convex lens or close-object concave mirror). After each presentation the class is asked: 'Does their diagram satisfy both laws of reflection — or, for the lens, does it correctly show convergence or divergence?' Disagreements between groups are aired and resolved by returning to the beam-behaviour principle, not by majority vote."
+   "activity": "Whole-class census: teacher draws seven object names on the board. Pairs report their Certainty Line position for each object; teacher marks the range of responses. For any object where pairs disagree, one pair from each camp states their strongest evidence. The class votes on a final verdict. Teacher records the agreed census column by column, reading aloud the characteristic that clinched each contested verdict."
   },
   {
-   "minutes": "38-45",
-   "activity": "Teacher asks each group to complete one final sentence at the bottom of their sheet: 'All the converging devices in our design share one property, and all the diverging devices share one property — state both.' Groups write. Teacher takes two or three responses aloud. Closure: teacher names the central idea the task has demonstrated — that concave mirrors and convex lenses converge light and produce images that depend on object distance, while convex mirrors and concave lenses diverge light and always produce erect, diminished images — and notes that the entire street installation works because these principles are reliable laws, not device-specific tricks."
+   "minutes": "38-40",
+   "activity": "Teacher closes by pointing to the completed census and naming the chapter's framework directly: 'Every decision you just made used one or more of seven characteristics — movement, growth, nutrition, respiration, excretion, sensitivity, reproduction — and the understanding that a living thing can be at any stage of its life cycle, including a stage where some characteristics are temporarily hidden. That framework is what made a tide pool census possible for a class that has never studied the sea. That is what this chapter gave you.'"
   }
  ],
  "homework": [],
- "pedagogical_approach": "Design-brief inquiry: a realistic but unfamiliar site scenario places the chapter's optical principles under practical constraint, requiring groups to translate image characteristics and beam behaviour into engineering choices and to articulate the causal link between each principle and each design decision. The diagram-and-justification format keeps the task concrete while making reasoning visible."
+ "pedagogical_approach": "Inquiry approach — students construct evidence-based arguments from data rather than recalling facts; the tide pool setting is novel throughout the chapter and the vehicle (evidence grid feeding into a positional Certainty Line, followed by a targeted 'missing evidence' paragraph) appears in none of the final units of the shorter plans.",
+ "visual_aids": [
+  {
+   "type": "prose",
+   "title": "Tide pool object profiles",
+   "text": "Write each description as two sentences on the printed data card so students must reason rather than read off a verdict.\n\n1. HERMIT CRAB — Living, but hidden inside a borrowed shell that is non-living. This is the richest case: it directly echoes the chapter's germination logic — capacity not currently visible does not mean absent — without reusing the chapter's own shell narrative.\n\n2. SEA ANEMONE — Living, attached to a rock. Lack of obvious locomotion may mislead students; steer them toward sensitivity and nutrition as the decisive characteristics.\n\n3. CLUMP OF SEAWEED — Living. Straightforward once students apply nutrition (photosynthesis) and growth.\n\n4. BARNACLE — The most productive uncertain case. Cemented still, showing no obvious movement, but it feeds, respires, and reproduces. Steer pairs who pick it toward asking which single observation would be most decisive.\n\n5. FRAGMENT OF DRY CORAL SKELETON — Intentionally non-living. It is the residue of a once-living organism; students may debate whether past life counts. Hold firm: the chapter's definition requires current exhibition of characteristics.\n\n6. SMALL FISH — Living. Intended as the clearest anchor case on the 'Definitely Living' end.\n\n7. PEBBLE — Non-living. Intended as the clearest anchor case on the 'Definitely Non-living' end.\n\nIn the closing band, name all seven characteristics explicitly as you consolidate — movement, growth, nutrition, respiration, excretion, sensitivity, reproduction — so closure does not remain at the level of 'we sorted the objects'. If the class has already closed the chapter in a previous lesson, open by telling students the tide pool is a place where the same tools they already have meet an entirely unfamiliar cast of organisms — the point is not new knowledge but sharpened use."
+  },
+  {
+   "type": "table",
+   "title": "Evidence grid layout",
+   "table": "Object | Movement | Growth | Nutrition | Respiration | Excretion | Sensitivity | Reproduction | Verdict\nHermit crab | | | | | | | |\nSea anemone | | | | | | | |\nSeaweed | | | | | | | |\nBarnacle | | | | | | | |\nDry coral skeleton | | | | | | | |\nSmall fish | | | | | | | |\nPebble | | | | | | | |"
+  }
+ ]
 }
+
+======================================================================
+FOUNDER DIRECTION FOR THIS UNIT (2026-08-18): exactly TWO aids. Aid 1 — the student worksheet, ONE merged table: Object | Observation notes | Movement | Growth | Nutrition | Respiration | Excretion | Sensitivity | Reproduction | Verdict, where Observation notes carries exactly two authored sentences per object written so students must reason (no verdict words, no characteristic named as an answer) and all other cells are blank for the student. These fourteen sentences are the licensed teacher-prepared blank — author them. There is NO separate printed data card; the description lives beside the grid it feeds. Aid 2 — the teacher key, a second table only the teacher sees: Object | Intended verdict | Decisive characteristic | one-line steer. This replaces the current prose essay entirely (its design intent survives as columns; its repetition of the teacher notes does not). Materials should note the worksheet prints best landscape.
 
 Reorganise it now, as the single JSON object specified.

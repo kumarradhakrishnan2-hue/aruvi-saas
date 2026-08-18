@@ -144,7 +144,8 @@ OUTPUT — exactly this JSON object, nothing else:
   "synthesis_unit": {{
     "activity_title": "…",
     "activity_description": "…",
-    "pedagogical_approach": "…",
+    "pedagogical_approach": "a 2–5 word LABEL naming the method (e.g. 'Problem-based
+      Collaborative Inquiry') — never a sentence; it prints beside the duration",
     "teacher_notes": "…",
     "materials": ["…"],
     "time_bands": [
@@ -246,6 +247,10 @@ def validate_resynth(parsed: dict, duration: int) -> list[str]:
     for k in ("activity_title", "teacher_notes", "pedagogical_approach"):
         if not u.get(k):
             problems.append(f"{k} missing")
+    pa = u.get("pedagogical_approach") or ""
+    if len(pa.split()) > 6:
+        problems.append(f"pedagogical_approach {len(pa.split())} words — it is a "
+                        "LABEL (2–5 words), it prints beside the duration")
     extra = set(u) - set(AUTHORED)
     if extra:
         problems.append(f"unexpected keys {sorted(extra)} — identity fields are the "
@@ -371,8 +376,12 @@ correct; the problem is WHERE things live. Its teacher_notes currently carry pre
 detail — card text, table designs, accept-lists, profiles — that belongs in structured
 materials, leaving the notes far beyond their mandated 2–3 sentences.
 
-REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
-must already be in the unit you were given.
+REORGANISE. Drop nothing the teacher needs; every fact in your output must already be
+in the unit you were given — with ONE licensed exception (founder ruling, 2026-08-18):
+where the unit tells the teacher to PREPARE content it never specifies (cards, data
+rows, reference answers), you may write that content out, provided every fact in it is
+standard chapter-level science consistent with the unit's own bands. Specified content
+is moved, never rewritten; only unspecified blanks may be filled.
 
 Return exactly this JSON object, nothing else:
 {
@@ -397,6 +406,27 @@ table out of running prose) · time_bands are not yours to touch and their narra
 keep describing the same content."""
 
 
+# Per-chapter polish notes, read-derived (same doctrine as the resynth EXCLUSIONS:
+# when the fidelity read finds a shape the generic brief missed, the finding is fed
+# forward verbatim rather than re-rolled blind).
+POLISH_NOTES = {
+    ("science", "vi", 10):
+        "FOUNDER DIRECTION FOR THIS UNIT (2026-08-18): exactly TWO aids. Aid 1 — the "
+        "student worksheet, ONE merged table: Object | Observation notes | Movement | "
+        "Growth | Nutrition | Respiration | Excretion | Sensitivity | Reproduction | "
+        "Verdict, where Observation notes carries exactly two authored sentences per "
+        "object written so students must reason (no verdict words, no characteristic "
+        "named as an answer) and all other cells are blank for the student. These "
+        "fourteen sentences are the licensed teacher-prepared blank — author them. "
+        "There is NO separate printed data card; the description lives beside the grid "
+        "it feeds. Aid 2 — the teacher key, a second table only the teacher sees: "
+        "Object | Intended verdict | Decisive characteristic | one-line steer. This "
+        "replaces the current prose essay entirely (its design intent survives as "
+        "columns; its repetition of the teacher notes does not). Materials should note "
+        "the worksheet prints best landscape.",
+}
+
+
 def prepare_polish_job(subject_folder: str, grade_folder: str, ch: int) -> dict | None:
     mp_row = master_plan_entry(subject_folder, grade_folder, ch)
     if mp_row and mp_row.get("placeholder"):
@@ -407,7 +437,9 @@ def prepare_polish_job(subject_folder: str, grade_folder: str, ch: int) -> dict 
     if unit.get("synthesis") is not True:
         return None
     title = (mp_row and str(mp_row["title"]).split(": ", 1)[-1]) or ""
+    note = POLISH_NOTES.get((subject_folder, grade_folder, ch))
     user_text = ("THE UNIT, in full:\n\n" + json.dumps(unit, ensure_ascii=False, indent=1)
+                 + (("\n\n" + "=" * 70 + "\n" + note) if note else "")
                  + "\n\nReorganise it now, as the single JSON object specified.")
     system_text = polish_system_block()
     return {
@@ -426,9 +458,17 @@ def validate_polish(parsed: dict) -> list[str]:
     tn = parsed.get("teacher_notes")
     if not isinstance(tn, str) or not tn.strip():
         return ["teacher_notes missing"]
+    # The constitutional gate is SENTENCES (Rule 10: "2–3 sentences of flowing prose"),
+    # not words — the first word-count gate (~90) refused a compliant 3-sentence/119-word
+    # result on the densest unit in the corpus (vi ch 11, 2026-08-18). 130 words stays as
+    # a sanity ceiling only.
+    import re as _re
+    sents = [s for s in _re.split(r"(?<=[.!?])\s+", tn.strip()) if s]
+    if len(sents) > 3:
+        problems.append(f"teacher_notes {len(sents)} sentences — Rule 10 caps it at 3")
     words = len(tn.split())
-    if words > 100:
-        problems.append(f"teacher_notes {words} words — the cap is ~90")
+    if words > 130:
+        problems.append(f"teacher_notes {words} words — beyond any 3-sentence reading")
     if not isinstance(parsed.get("materials"), list) or not parsed["materials"]:
         problems.append("materials missing/empty")
     vas = parsed.get("visual_aids")

@@ -2607,6 +2607,24 @@ REPAIRS = {
         ],
     },
     ("science", "vii"): {
+        # ── the polish pass moved the eclipse card into visual_aids and re-phrased the
+        # SAME homonym back onto the clock pattern (third occurrence, 2026-08-18). Same
+        # standing ruling, same two-word class of fix; the duration is the fact that
+        # identifies a TOTAL eclipse and stays.
+        "ch_12_canonical.json": [
+            (14, "visual_aid:0",
+             "covered it completely — for about two minutes.",
+             "covered it completely, two minutes of darkness.",
+             "register/clock",
+             "eclipse-card content, not pacing (ruling of 2026-08-17/18, third "
+             "instance); rephrase clears the for…minutes pattern, duration fact "
+             "intact"),
+        ],
+    },
+    # Applied 2026-08-18 morning (wave-3 resynth clock hits); the ch_12 teacher_notes
+    # edit's target text was later REPLACED wholesale by the polish pass, so re-running
+    # this set would fail its own guard. Renamed off the live key same day.
+    ("science", "vii", "APPLIED-20260818-wave3"): {
         "ch_12_canonical.json": [
             (14, "teacher_notes",
              "the Sun vanishing for two minutes at midday",
@@ -4140,6 +4158,15 @@ def _get_set(unit, locator, new=None):
         if new is None:
             return unit["materials"][i]
         unit["materials"][i] = new
+    elif locator.startswith("visual_aid:"):
+        # typed prepared content (polish pass, 2026-08-18): prose entries carry `text`,
+        # table entries carry `table` — repair whichever the entry has.
+        i = int(locator.split(":")[1])
+        va = unit["visual_aids"][i]
+        key = "text" if "text" in va else "table"
+        if new is None:
+            return va.get(key, "")
+        va[key] = new
     elif locator.startswith("homework:"):
         i = int(locator.split(":")[1])
         if new is None:

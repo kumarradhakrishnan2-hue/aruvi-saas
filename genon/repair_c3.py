@@ -313,6 +313,57 @@ DECLARED = {
              "old": None, "new": ""},
         ],
     },
+    # ── ARV-D-177 · polish-fidelity read findings (2026-08-18, founder-licensed). The
+    # gap-fill inventions were ACCEPTED as authored content; these five edits are the
+    # read's specific corrections. All on the FINAL (synthesis) unit's visual_aids;
+    # units are the top's last period per chapter.
+    "ch_02_canonical.json": {
+        "ARV-D-177": [
+            # the response-sheet aid dropped the old materials' neutralisation-equation
+            # box; restored as a footer row so the printed sheet has somewhere to write.
+            {"unit": 15, "field": "visual_aids[1].table",
+             "old": "4 — Stream water (downstream) | Red rose extract turns red to "
+                    "green | | |",
+             "new": "4 — Stream water (downstream) | Red rose extract turns red to "
+                    "green | | |\nWrite the neutralisation reaction for one "
+                    "correction: | | | |"},
+        ],
+    },
+    "ch_03_canonical.json": {
+        "ARV-D-177": [
+            # "Semiconductor" is above the chapter's register (the chapter treats the
+            # LED only through polarity / long-wire-positive); "Resistive" likewise.
+            {"unit": 18, "field": "visual_aids[1].table",
+             "old": "Semiconductor component; polarity must be respected",
+             "new": "Polarity-sensitive component; long wire connects to positive"},
+            {"unit": 18, "field": "visual_aids[1].table",
+             "old": "Resistive component; no polarity requirement",
+             "new": "Glows whichever way current flows; no polarity requirement"},
+        ],
+    },
+    "ch_05_canonical.json": {
+        "ARV-D-177": [
+            # "particulate reasoning" is not a strand this chapter's plans teach —
+            # unsourced concept claim in two aids.
+            {"unit": 15, "field": "visual_aids[2].text",
+             "old": "reversibility with particulate reasoning",
+             "new": "reversibility"},
+            {"unit": 15, "field": "visual_aids[3].text",
+             "old": "desirability, particulate reasoning, slow natural change",
+             "new": "desirability, slow natural change"},
+        ],
+    },
+    "ch_11_canonical.json": {
+        "ARV-D-177": [
+            # the scene-card aid claims luminous vs non-luminous is covered but its
+            # mapping table assigns it to no scene — the claim goes, the scenes stand.
+            {"unit": 18, "field": "visual_aids[0].text",
+             "old": "Principles covered across the five scenes: luminous vs. "
+                    "non-luminous sources; rectilinear propagation",
+             "new": "Principles covered across the five scenes: rectilinear "
+                    "propagation"},
+        ],
+    },
   },
   ("mathematics", "ix"): {
     "ch_04_canonical.json": {
@@ -405,6 +456,19 @@ DECLARED = {
         "ARV-D-075": [
             {"row": 5, "field": "c_code", "old": "C-9.3", "new": "C-3.1"},
             {"row": 6, "field": "c_code", "old": "C-3.1", "new": "C-9.3"},
+        ],
+    },
+  },
+  ("science", "viii"): {
+    # ── ARV-D-177 (continued) · the mangrove data table's salinity row is the one
+    # gap-fill whose DIRECTION has no source anywhere (DO and silt directions come from
+    # band 4; salinity is wholly new). Student-facing data the task computes on — the
+    # row goes rather than stands unsourced.
+    "ch_12_canonical.json": {
+        "ARV-D-177": [
+            {"unit": 12, "field": "visual_aids[1].table",
+             "old": "\nSalinity | 18 ppt | 22 ppt",
+             "new": ""},
         ],
     },
   },

@@ -1,0 +1,1587 @@
+{
+ "filename": "ch_07_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 7,
+ "chapter_title": "Heat Transfer in Nature",
+ "grade": "Grade VII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "14x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vii 7",
+  "ledger_ts": "20260817_113057_sci_vii_07_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_vii_07_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_07_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_07_canonical_p10.json": "2026-08-17T12:38:00",
+    "ch_07_canonical_p08.json": "2026-08-17T12:38:00"
+   },
+   "replaced": {
+    "period_number": 14,
+    "period_duration_minutes": 40,
+    "progression_stage": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "pedagogical_approach": "Inquiry approach",
+    "activity_title": "Heat, Water, and Weather — A Chapter-Wide Reasoning Challenge",
+    "activity_description": "Students receive a multi-part scenario involving a coastal town with a heating problem, a depleting well, and an unusual weather pattern. They produce a connected written explanation that draws on all three modes of heat transfer, the water cycle, infiltration, and temperature measurement to account for each part of the scenario.",
+    "roles": [
+     {
+      "actor": "Teacher",
+      "role_description": "Presents the scenario in parts, facilitates whole-class reasoning at each handoff point, and orchestrates a closing discussion that makes the conceptual arc of the chapter explicit."
+     },
+     {
+      "actor": "Students (Groups)",
+      "role_description": "Collaboratively produce a written explanation for each part of the scenario, then identify which concept from the chapter is doing the explanatory work in each section."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-8",
+      "activity": "Teacher presents the scenario: a coastal town where the sea breeze has weakened, the well water level has dropped after a dry season, and the residents debate whether to use iron pots or clay pots for cooking on their traditional bukhari stoves."
+     },
+     {
+      "minutes": "8-22",
+      "activity": "Groups address each part of the scenario in sequence — explaining the weakened sea breeze in terms of differential heating and convection, connecting the low well level to infiltration and the water cycle, and justifying pot-material choice using conduction and radiation."
+     },
+     {
+      "minutes": "22-32",
+      "activity": "Groups identify, for each part of their explanation, which concept is doing the explanatory work and annotate their written response accordingly."
+     },
+     {
+      "minutes": "32-40",
+      "activity": "Whole-class sharing: each group contributes the sharpest sentence from their response; teacher closes by naming the chapter's central idea — that temperature differences drive movement of heat and water at every scale, from a strip of metal to an ocean coastline — without referencing any particular stage or activity."
+     }
+    ],
+    "teacher_notes": "This synthesis unit assumes students have engaged with the full chapter content; it may name concepts and phenomena directly without re-teaching them. The scenario is deliberately unfamiliar in its combination while drawing entirely on chapter content — students should feel that they are using their knowledge, not recalling it. Watch for groups that explain each part correctly in isolation but fail to connect them; the annotation step (identifying which concept does the work) is designed to surface these connections explicitly.",
+    "materials": [
+     "Scenario card (three-part, printed or on board)",
+     "Plain paper for written responses",
+     "Pencils"
+    ],
+    "homework": [],
+    "synthesis": true
+   }
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_vii_07_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced": {
+    "teacher_notes": "Distribute one full set of five scenario cards to each group; groups do not divide the cards — all members read all five and discuss before writing. The order in which groups tackle the cards does not matter. During the share-out, assign one problem to one group but invite additions or corrections from the rest of the class before moving on. The most productive errors to watch for: (a) attributing the shed's warmth to convection rather than radiation — the worker is not touching the shed and there is no described air current, so radiation is the primary mode; press with 'is there any material between the shed and the worker that the heat must travel through?'; (b) explaining the greenhouse overheating without distinguishing that solar radiation enters through the glass but convection of hot air is trapped inside — both modes are at work, and the fix involves ventilation (convection) or a light-coloured surface (radiation reflection); (c) treating the soil-cooling observation as a conduction difference rather than a differential heat-capacity / radiation loss phenomenon — accept both conduction and radiation as valid contributions and reward reasoning that names both. The rainwater problem (card 4) targets infiltration and groundwater recharge rather than heat transfer directly; students who connect it to the water cycle driven by solar radiation are demonstrating the chapter's largest synthesis move. The closing band should name all five chapter threads — conduction, convection, radiation, differential heating of materials, infiltration and the water cycle — and point to the rooftop as the place where all of them appeared together.",
+    "materials": [
+     "Scenario-card sets (one set of 5 cards per group — printed or hand-written before class, text provided in this unit)",
+     "Plain paper or notebooks for group response sheets",
+     "Pencils or pens",
+     "One large sheet of paper or a section of the board for the shared class table (columns: Problem | Mode/s responsible | Proposed change | Principle used)"
+    ],
+    "visual_aids": null
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and record heat-transfer phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Pins on a Metal Strip",
+     "activity_description": "Students attach wax-held pins at equal intervals along a metal strip, heat one end, predict the order of pin fall, then observe and record what actually happens. The gap between prediction and observation anchors the idea that heat travels along a solid.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates safe flame handling, prompts written predictions before heating begins, and guides whole-class comparison of predicted vs observed order."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Set up the strip, write individual predictions, observe pin-fall sequence, and record findings in a shared table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the opening scenario — Pema and Palden at the fireplace — and asks why the end of a metal spoon in hot soup eventually becomes warm; students share ideas briefly before the activity begins."
+      },
+      {
+       "minutes": "8-16",
+       "activity": "Groups attach wax-coated pins at equal intervals on the metal strip and write individual predictions about which pin will fall first, second, and so on."
+      },
+      {
+       "minutes": "16-28",
+       "activity": "Teacher heats one end of the strip safely; groups observe and record the actual sequence of pin falls in a results table."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Whole-class discussion compares predictions with observations; teacher introduces the term 'conduction' and the idea that heat travels from the hotter end toward the cooler end without particles moving."
+      }
+     ],
+     "teacher_notes": "This unit opens the chapter by grounding students in a concrete observation before any definition is given — resist naming conduction until the discussion at the end. A common error to watch for: students often predict that all pins fall simultaneously or that the middle pin falls first because 'heat spreads outward'; use the actual sequence to challenge this. Checking that every student has written a prediction before heating begins is a good readiness checkpoint.",
+     "materials": [
+      "Metal strip (approx. 30 cm)",
+      "Wax or candle",
+      "Four metal pins",
+      "Candle or spirit lamp",
+      "Heat-resistant mat",
+      "Observation recording sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and record heat-transfer phenomena",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Watching Smoke and Swirling Colour",
+     "activity_description": "Students observe smoke rising from a candle and then watch potassium permanganate crystals dissolve and move in heated water, recording the path of the coloured stream. These two observations reveal that heated fluids move in visible loops.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates both observations safely, pausing after each for students to sketch the movement they see and annotate arrows on a diagram."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Sketch the observed paths of smoke and the coloured water stream, labelling where the fluid moves up and where it moves down."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Brief recap of the previous unit: students state in one sentence what they observed about how heat moved along the metal strip, connecting that to the question of whether heat moves differently through air and water."
+      },
+      {
+       "minutes": "6-18",
+       "activity": "Teacher lights a candle; students observe and sketch the path of smoke above the flame, annotating the direction of movement with arrows."
+      },
+      {
+       "minutes": "18-32",
+       "activity": "Teacher places potassium permanganate crystals at the base of a beaker of water and gently heats from one side; students sketch the visible circulation of the coloured stream."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Students compare their smoke sketch and water sketch, identifying what is common; teacher introduces the term 'convection' as heat transfer by actual particle movement in fluids, without formalising it further yet."
+      }
+     ],
+     "teacher_notes": "This unit bridges from solid conduction to fluid behaviour — invite students to notice that unlike the pin-strip, the fluid itself is visibly moving. A frequent misconception here is that smoke rises because it is 'light' rather than because heated air expands and becomes less dense; probe this by asking why the air near the flame is the part that rises. Ensure students annotate arrows on both sketches before the comparison discussion.",
+     "materials": [
+      "Candle",
+      "Potassium permanganate crystals",
+      "Glass beaker (250 mL)",
+      "Water",
+      "Tripod stand and wire gauze",
+      "Spirit lamp or gas burner",
+      "Sketching paper or observation sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and record heat-transfer phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Soil and Water Heat Race",
+     "activity_description": "Students place thermometers in bowls of soil and water set in sunlight (or under a lamp) and record temperatures at regular intervals. The resulting data table shows that soil heats and cools faster than water.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the two bowls, explains the measurement procedure, and models how to read and record thermometer values accurately."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Take turns reading thermometer values, record them in a shared data table, and describe in writing what the pattern in their numbers shows."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects this unit to the previous two: 'We observed how heat moves through a solid and through a fluid — now we investigate whether different materials heat up at different rates,' setting the purpose for measurement."
+      },
+      {
+       "minutes": "6-14",
+       "activity": "Groups set up bowls of soil and water with embedded thermometers, take an initial reading, and record it as the starting value."
+      },
+      {
+       "minutes": "14-30",
+       "activity": "Students take repeated temperature readings at intervals for both bowls under the heat source, recording each value in a two-column table."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups write a one-sentence observation comparing the two columns and share with the class; teacher notes that this difference in heating rate is what drives large-scale air movement near coastlines — a preview for the next unit."
+      }
+     ],
+     "teacher_notes": "This unit gives students their first direct experience of temperature measurement for evidence — emphasise recording exactly what the thermometer reads, including values that seem 'wrong', as an example of scientific honesty from the chapter's pedagogical values. Students sometimes assume water will heat faster because it 'conducts heat'; the data will challenge this. Confirming that every group's table has consistent units (°C) before they begin taking readings avoids messy comparisons later.",
+     "materials": [
+      "Two bowls of equal size",
+      "Soil (dry)",
+      "Water",
+      "Two thermometers",
+      "Lamp or access to sunlight",
+      "Stopwatch or clock visible to students",
+      "Data recording sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify materials and phenomena by mode of heat transfer",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Conductors, Insulators, and the Air in Your Woolly Jumper",
+     "activity_description": "Students sort a list of materials — metals, glass, wood, clay, air, wool — into conductors and insulators using evidence from the chapter, then explain in writing why woollen clothes and hollow bricks keep warmth in.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the definitions of conductor and insulator, links them to particle-level explanation from conduction, and poses the sorting challenge."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the sorting table and write a two-sentence explanation connecting trapped air in wool and hollow bricks to poor thermal conductivity."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher formalises the definition of conduction and introduces the conductor/insulator distinction, using the cooking utensil example from the chapter to anchor each category."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Students individually sort a provided list of materials into a conductor/insulator table, citing one reason from the chapter's content for each placement."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Teacher draws attention to air as an insulator and to wool's fibre structure trapping air; students write an explanation of why two thin blankets are warmer than one thick blanket of the same total thickness."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Pairs share their blanket explanation; teacher consolidates the idea that traditional Himalayan wall construction and hollow bricks exploit the same insulation principle before previewing convection classification in the next unit."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the pin-strip observation from the first unit — students now have a conceptual label for what they saw. The most persistent misconception to address here is that wool itself is warm; wool only traps air, and it is the air that insulates. A useful probe: ask whether a tightly compressed wool blanket would be as warm as a fluffy one of the same mass.",
+     "materials": [
+      "Printed or drawn material-sorting table",
+      "Pencils",
+      "Reference: chapter notes on conductors and insulators"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify materials and phenomena by mode of heat transfer",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Mapping the Convection Loop",
+     "activity_description": "Students construct a labelled diagram of a convection loop in a fluid — identifying where fluid is heated, expands, rises, cools, and descends — and then use that diagram to classify three given scenarios as convection or not.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses three scenarios (heated room air, boiling water in a pot, hot air balloon) and asks students to classify each using their diagram."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Draw and label the convection loop, then classify each scenario in writing with a one-sentence justification referencing particle movement."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher revisits the potassium permanganate observation from the second unit and asks students to reconstruct the path of the coloured stream in words before drawing anything."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Students draw and fully label a convection loop diagram: heat source at base, fluid expanding and rising, cooling at the top, descending at the sides, and arrows showing direction."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Teacher presents three scenarios verbally; students classify each as 'convection' or 'not convection' with a written justification citing particle movement from their diagram."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Whole-class review of classifications; teacher emphasises that convection requires a fluid medium and particle movement — a contrast with conduction — and links to radiation as the mode that needs no medium, previewing the next unit."
+      }
+     ],
+     "teacher_notes": "This unit moves students from passive observation to active classification using a self-constructed diagram — the diagram is the scaffold for reasoning, so check that every student has arrows and labels before they attempt classification. A common error is classifying conduction in a metal pan as convection because 'heat is moving'; probe by asking whether the metal particles travel. Students who produce accurate loop diagrams with correct arrow direction are ready for the explanation stage ahead.",
+     "materials": [
+      "Blank A4 paper or diagram sheets",
+      "Pencils and coloured pens",
+      "Three scenario cards or board display"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify materials and phenomena by mode of heat transfer",
+     "pedagogical_approach": "Demonstration",
+     "activity_title": "The Third Mode — Radiation Without a Medium",
+     "activity_description": "Teacher holds hands near (but not touching) a lit lamp and a hot utensil, demonstrating warmth felt without contact or fluid movement. Students classify this observation, compare it with conduction and convection, and complete a three-mode comparison table.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Performs the demonstration, directs student attention to the absence of contact and fluid flow, and guides table completion through questioning."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Observe, discuss within groups, and complete a three-column comparison table distinguishing conduction, convection, and radiation by medium required, particle movement, and an example."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher holds a hand near a hot lamp without touching it and asks: how is warmth reaching my hand if there is no contact and the air is barely moving? Students propose ideas in pairs."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Teacher formalises radiation — heat travelling from a hot object to cooler surroundings without a material medium — using sunlight across space and the fireplace warmth from the chapter as anchoring examples."
+      },
+      {
+       "minutes": "20-34",
+       "activity": "Groups complete a three-column comparison table: mode, medium required, particle movement, and one example from the chapter for each of the three modes."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Groups share one row of their table each; teacher consolidates by noting that all three modes can operate simultaneously — as when water is heated in a pan — setting up causal reasoning in the next stage."
+      }
+     ],
+     "teacher_notes": "This unit completes the classification of all three modes and gives students a side-by-side reference table they will use in the explanation stage. The key misconception to address is that radiation requires air to 'carry' the warmth — the sun-to-Earth example (across empty space) is the sharpest counter-evidence in the chapter. Verify that every group's table distinguishes 'no medium required' for radiation before moving on.",
+     "materials": [
+      "Lamp or lit candle",
+      "Hot utensil (cooled sufficiently after prior use)",
+      "Printed or hand-drawn three-column comparison table",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Does the Sea Breeze Blow Toward the Land?",
+     "activity_description": "Students use their soil-and-water temperature data and their convection loop diagram to construct a step-by-step causal explanation for the sea breeze during the day and the land breeze at night, then predict window placement in a coastal house.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents a simplified diagram of a coastline and poses the causal question, guiding students to chain the steps from differential heating through convection to wind direction."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Write a numbered causal chain (at least four steps) for each breeze and annotate a coastline diagram with arrows showing air movement direction."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher displays the coastline diagram and recalls the soil-versus-water heating data from the third unit, asking: given that soil heats faster, which surface will have warmer air above it during the day?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups construct a four-step causal chain for the daytime sea breeze: land heats faster → air above land warms and rises → cooler sea air moves in → wind blows from sea to land."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups reverse the chain for the night-time land breeze, annotating the coastline diagram with arrows for both day and night scenarios."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Groups share their predictions for which direction coastal house windows should face; teacher confirms the chapter's reasoning and flags that the same convection principle scales from a beaker to an ocean coastline."
+      }
+     ],
+     "teacher_notes": "This unit is the first full causal explanation task — students are now connecting multiple concepts (differential heating, density, convection) into a chain rather than classifying individual phenomena. A common error is reversing day and night breezes; the soil-versus-water data from the third unit is the corrective evidence students already hold. Groups that produce accurate annotated arrows on the coastline diagram before the sharing phase are demonstrating the target reasoning.",
+     "materials": [
+      "Printed or drawn coastline diagram (two copies per group — day and night)",
+      "Pencils and coloured pens",
+      "Groups' data tables from the third unit (or a shared class copy)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "The Water Cycle as a Heat-Driven Engine",
+     "activity_description": "Students trace the complete water cycle — evaporation by solar radiation, condensation into clouds, precipitation, and return to water bodies — constructing a labelled flow diagram and identifying which mode of heat transfer drives each stage.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the three states of water in nature, explains solar radiation as the energy input, and guides students through annotating the flow diagram with the relevant heat-transfer mode at each arrow."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Construct and label the water cycle flow diagram, annotating each stage with the heat-transfer mode responsible and a brief causal phrase."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher opens by recalling radiation from the sixth unit and asks: if sunlight can heat a room through a window, what do you think it does to the surface of the ocean? Students propose ideas before the diagram work begins."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Students draw and label a water cycle flow diagram with at least five labelled stages: evaporation, rise of vapour, condensation, cloud formation, and precipitation; teacher circulates and prompts."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Students annotate each arrow on their diagram with the heat-transfer mode responsible: radiation drives evaporation, convection carries vapour upward, radiation loss drives condensation."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher consolidates the idea that the water cycle is powered by solar radiation and shaped by convection in the atmosphere, connecting it to the earlier sea-breeze explanation as another large-scale convection system."
+      }
+     ],
+     "teacher_notes": "This unit extends causal reasoning from a coastline to a planetary scale — emphasise that students are applying the same convection principles they already used, not learning a new mechanism. A frequent error is labelling evaporation as convection rather than radiation-driven phase change; probe by asking what energy source drives water molecules to escape the liquid surface. Students who correctly annotate the arrows with heat-transfer modes before the consolidation are ready for the groundwater extension in the next unit.",
+     "materials": [
+      "Blank A4 paper for flow diagrams",
+      "Pencils and coloured pens",
+      "Board diagram of water cycle stages (reference)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "How Fast Does Water Seep? — Infiltration Investigation",
+     "activity_description": "Students compare the rate of water seepage through gravel, sand, and clay by timing how long water takes to pass through equal columns of each material, recording results in a table and explaining the pattern in terms of particle spacing.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the three filter columns in advance, demonstrates safe pouring technique, and guides students to connect their timing results to the particle-size explanation."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Pour equal volumes of water through each column, time the seepage, record results, and write an explanation linking pore-space size to infiltration rate."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects this unit to the water cycle from the previous unit: 'Precipitation reaches the surface — where does it go next?' Students predict whether water seeps at the same rate through all soils."
+      },
+      {
+       "minutes": "6-24",
+       "activity": "Groups pour equal volumes of water into columns of gravel, sand, and clay, timing how long water takes to pass through each, and record all three values in a comparison table."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Groups write an explanation of their results using the idea of pore-space size: gravel has largest spaces and most connected pathways, clay has smallest and least connected."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher introduces the terms infiltration, groundwater, and aquifer, connecting them to the seepage observations; teacher also notes that reduced infiltration from urban concretisation affects groundwater replenishment."
+      }
+     ],
+     "teacher_notes": "This unit grounds the abstract concept of infiltration in a measurable observation — the timing data is the evidence, not a demonstration to be trusted on authority. Students often expect clay to allow fastest seepage because it is 'smooth'; the actual results challenge this, so avoid correcting before they observe. Groups that can connect pore-space size to their timing numbers (rather than simply reporting 'gravel was fastest') have met the explanation target for this stage.",
+     "materials": [
+      "Three filter funnels or cut plastic bottles as columns",
+      "Gravel, sand, dry clay (equal volumes)",
+      "Measuring cylinders",
+      "Water",
+      "Stopwatch",
+      "Data recording sheets",
+      "Cotton wool to plug column bases"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Bukhari and the Ice Stupa — All Three Modes at Work",
+     "activity_description": "Students read brief descriptions of the bukhari stove and the ice stupa, identify which heat-transfer mode operates at each stage of each system, and write a connected explanation of how each device functions as a thermal system.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the two case descriptions, poses the analytical question, and facilitates sharing of student explanations, drawing out links between the two cases."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Annotate the case descriptions with mode labels, then write a paragraph explaining each device as a thermal system using all three modes where applicable."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher reads the bukhari and ice stupa descriptions aloud; students listen and mark any phrase that suggests heat moving, being stored, or being released."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Groups annotate both descriptions, labelling each marked phrase with the relevant heat-transfer mode (conduction, convection, or radiation) and a brief reason."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Groups write a short paragraph for each device explaining how it functions as a thermal system, referencing the annotated modes and linking cause to effect."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Groups share one key sentence from each paragraph; teacher draws out the pattern that real devices often involve all three modes simultaneously, and notes this also applies to heating water in a pan."
+      }
+     ],
+     "teacher_notes": "This unit asks students to apply all three modes to novel but chapter-anchored cases — the bukhari and ice stupa are specifically in the chapter, so no external content is introduced. A common error is attributing the warmth felt near the bukhari solely to convection; probe by asking whether someone sitting to the side but not in the rising air stream would still feel warmth. Students who can distinguish which mode is operating at which stage of each device have reached the target for this stage.",
+     "materials": [
+      "Printed or written descriptions of the bukhari and ice stupa (drawn from chapter text)",
+      "Pencils and coloured pens for annotation",
+      "Plain paper for paragraph writing"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Temperature Scales and What They Mean",
+     "activity_description": "Students read thermometer diagrams showing both Celsius and Fahrenheit scales, convert between them using a provided relationship, and interpret a set of temperature readings in the context of weather and body temperature scenarios.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces Celsius and Fahrenheit scales, demonstrates reading a thermometer at a specific value, and presents the conversion relationship for students to apply."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Read thermometer diagrams, apply the conversion relationship to a set of values, and write a brief interpretation of what each converted reading means in a practical context."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher introduces thermometers and temperature scales, demonstrating how to read a value on both Celsius and Fahrenheit scales from a diagram, emphasising accuracy of reading as a scientific value."
+      },
+      {
+       "minutes": "10-24",
+       "activity": "Students individually read a set of thermometer diagrams, record the values, and apply the Celsius-Fahrenheit conversion relationship to convert each to the other scale."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Students write a one-sentence interpretation of each converted value in context: body temperature, comfortable room temperature, water boiling point, cold winter day in Gangtok."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Brief whole-class check: teacher asks students to justify one conversion result; this establishes measurement accuracy as a foundation for the application task in the next unit."
+      }
+     ],
+     "teacher_notes": "This unit develops the measurement strand that runs alongside the phenomena strand throughout the chapter — students practise the precision of reading and recording that was introduced in the soil-and-water activity. A common error is inverting the conversion (multiplying where division is needed); have students estimate first to catch this. Students who can correctly interpret a converted value in a physical context — not just compute it — are demonstrating the measurement competency.",
+     "materials": [
+      "Printed thermometer diagrams showing Celsius and Fahrenheit scales",
+      "Conversion relationship card or board display",
+      "Pencils",
+      "Calculation workspace sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Is Kerala Warmer Than Sikkim?",
+     "activity_description": "Students apply heat-transfer knowledge to explain the chapter's opening question — why Kerala is warmer than Sikkim — by connecting radiation, altitude, and atmospheric effects, and then extend their reasoning to explain a new scenario: why a high-altitude desert can be cold despite intense sunlight.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the Kerala-Sikkim question as an open challenge, provides a brief altitude-and-atmosphere prompt if groups are stuck, and orchestrates sharing of different reasoning paths."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss and write a causal explanation for the Kerala-Sikkim difference, then apply the same reasoning to the high-altitude desert extension scenario."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the chapter's opening question — why is Kerala warmer than Sikkim — without providing the answer, and asks groups to propose what factors might matter using only heat-transfer concepts already studied."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups discuss and draft a causal explanation connecting solar radiation, atmospheric thickness or distance from the equator, and temperature; teacher circulates asking probing questions rather than supplying answers."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Teacher introduces the high-altitude desert extension: a desert plateau at 5000 m receives intense sunlight but has very low temperatures at night — students apply the same radiation and radiation-loss reasoning to explain this."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Groups share their desert reasoning; teacher consolidates both explanations, noting that the chapter's phenomena always connect back to one of the three modes and that measurement (temperature data) is what lets us confirm or challenge such explanations."
+      }
+     ],
+     "teacher_notes": "This unit revisits the chapter's opening scenario — now students have the conceptual tools to answer what Pema and Palden were wondering — making the unit a satisfying application closure for the phenomena strand. The key error to anticipate is conflating 'closer to the equator means closer to the sun'; probe by noting that the difference in distance is negligible and redirect to atmospheric effects and angle of incidence. Groups that can extend their Kerala-Sikkim reasoning to the novel desert scenario without direct prompting have met the application target.",
+     "materials": [
+      "Map showing Kerala and Sikkim locations (printed or drawn on board)",
+      "Pencils",
+      "Blank paper for drafting explanations"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Rainwater Harvesting — Applying Infiltration to a Real Problem",
+     "activity_description": "Students are given a scenario of a neighbourhood with increasing concrete cover and falling groundwater levels. They apply their infiltration knowledge to design a written proposal for recharge pits, justifying material choice and placement using seepage-rate evidence.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the neighbourhood scenario, clarifies that proposals must cite specific evidence from the seepage investigation, and facilitates a brief gallery of proposals at the end."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Write a proposal identifying the problem cause, recommending recharge pit materials with evidence-based justification, and specifying where pits should be placed relative to concrete surfaces."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher presents the neighbourhood scenario — rising concrete coverage, falling water table — and asks students to diagnose the cause using their infiltration and groundwater knowledge from the ninth unit."
+      },
+      {
+       "minutes": "8-26",
+       "activity": "Groups write a proposal: identify why concrete reduces infiltration, recommend specific fill materials for recharge pits citing their seepage timing data, and justify pit placement."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Groups exchange proposals with another group and provide one specific evidence-based improvement suggestion in writing before returning the proposal."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher consolidates by connecting recharge pits to the water cycle from the eighth unit — showing that the applied problem and the planetary-scale system are part of the same cycle."
+      }
+     ],
+     "teacher_notes": "This unit closes the arc before the synthesis — students must now use evidence from their own investigation to justify a real-world recommendation rather than simply reporting results. A common weakness is recommending gravel without linking the pore-space explanation; prompt groups to cite their timing data. Groups that connect recharge pit placement to reduced concrete cover (fewer impermeable surfaces = more infiltration pathways) are demonstrating the highest-order application of this stage.",
+     "materials": [
+      "Neighbourhood scenario card (written or on board)",
+      "Groups' seepage timing data from the ninth unit (or a shared class summary)",
+      "Plain paper for proposal writing",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the scenario in parts, facilitates whole-class reasoning at each handoff point, and orchestrates a closing discussion that makes the conceptual arc of the chapter explicit."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Collaboratively produce a written explanation for each part of the scenario, then identify which concept from the chapter is doing the explanatory work in each section."
+      }
+     ],
+     "activity_title": "The Rooftop Garden Problem: Designing a Heat-Smart Urban Space",
+     "activity_description": "Groups receive a design brief describing a flat concrete rooftop in a hot city that is to be converted into a community garden. A set of scenario cards presents five specific problems: (1) metal water pipes on the roof are scalding to touch by afternoon; (2) a small glass greenhouse on the roof overheats inside; (3) the surrounding concrete pavement stays warm long after sunset while the garden soil cools quickly; (4) rainwater runs straight off the concrete roof edges and is lost; (5) workers sitting near a dark metal storage shed feel uncomfortably hot even without touching it. For each problem, groups identify which mode or modes of heat transfer are responsible, propose one material or structural change that uses a heat-transfer principle to solve it, and write a one-sentence justification. Groups then share one problem each, and the class constructs a shared explanation of how the chapter's concepts together account for every problem on the rooftop.",
+     "teacher_notes": "This unit asks groups to apply the chapter's full conceptual framework — conduction, convection, radiation, differential heating, infiltration — to a single unfamiliar rooftop scenario, making the synthesis visible as the reason the task succeeds. All members read all five cards together before writing; during share-out, assign one card per group but open each entry to the class before moving on. Key misconceptions to probe are detailed (see material: 'Facilitation notes for scenario cards').",
+     "materials": [
+      "Five scenario cards per group (see visual aid: 'Rooftop scenario cards 1–5')",
+      "Plain paper or notebooks for group response sheets",
+      "Pencils or pens",
+      "One large sheet of paper or board space for the shared class table (see visual aid: 'Shared class table')"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher presents the rooftop garden setting with a brief verbal picture: a flat concrete roof in a city, midday sun, five complaints from the people who work and sit there. The five scenario cards are distributed face-down. Teacher reads card 1 aloud (metal pipes scalding to touch) and asks the class for an immediate, undefended guess: which chapter concept explains this? Responses are taken quickly without evaluation, establishing that the chapter's language is the toolkit for the session. Cards are turned face-up and groups begin."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Groups work through all five scenario cards together. For each card they: (i) name the mode or modes of heat transfer responsible, (ii) propose one material or structural change grounded in a heat-transfer principle, and (iii) write one justification sentence. Teacher circulates, asking clarifying questions rather than confirming answers — 'what is the medium heat is moving through here?', 'is anything actually moving, or is the heat crossing empty space?', 'what happens to rainwater that cannot seep through concrete?' Groups who finish early are asked to identify which single card required the most concepts from the chapter at once and to write a sentence explaining why."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Whole-class share-out using the table on the board. Each of five groups (or five volunteers if groups are fewer) presents one card; the teacher records the group's mode identification and proposed change in the shared table, then opens each entry to additions or challenges from the rest of the class before moving to the next card. After all five entries are recorded, the teacher asks: 'Which card needed more than one mode?' and 'Which card connected heat transfer to water?' — drawing out the greenhouse (convection and radiation) and the rainwater card (infiltration, water cycle, solar radiation) as the most integrative."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher points to the completed table and names each of the chapter's central ideas as it appears in a cell: conduction through metal pipes, convection in trapped greenhouse air, radiation from the dark shed, differential heating of soil versus concrete, infiltration and groundwater recharge driven by the water cycle. The rooftop needed all of them. That is what the chapter built — not five separate topics but one framework for understanding how heat moves, through what, and with what consequence for the materials and water around us."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Problem-based collaborative reasoning: students apply the chapter's full conceptual framework — conduction, convection, radiation, infiltration, and the differential heating of materials — to a single unfamiliar setting that they did not encounter in the chapter. The scenario-card structure ensures every group works with the same evidence base while allowing different entry points; the whole-class share-out requires groups to listen, evaluate, and integrate rather than simply repeat their own answers. Closure is earned by the class collectively accounting for all five problems using the chapter's concepts, making the synthesis visible as the reason the task succeeded.",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Rooftop scenario cards 1–5",
+       "text": "Card 1 — Metal pipes: Metal water pipes on the roof are scalding to touch by afternoon.\nCard 2 — Glass greenhouse: A small glass greenhouse on the roof overheats inside.\nCard 3 — Concrete vs soil: The surrounding concrete pavement stays warm long after sunset while the garden soil cools quickly.\nCard 4 — Rainwater loss: Rainwater runs straight off the concrete roof edges and is lost.\nCard 5 — Dark shed: Workers sitting near a dark metal storage shed feel uncomfortably hot even without touching it.\n\nFor each card, groups must: (i) name the mode or modes of heat transfer responsible, (ii) propose one material or structural change grounded in a heat-transfer principle, and (iii) write one justification sentence."
+      },
+      {
+       "type": "table",
+       "title": "Shared class table",
+       "table": "Problem | Mode/s responsible | Proposed change | Principle used\n1 – Metal pipes scalding to touch | | | \n2 – Greenhouse overheats inside | | | \n3 – Concrete stays warm; soil cools fast | | | \n4 – Rainwater runs off and is lost | | | \n5 – Workers hot near dark shed | | | "
+      },
+      {
+       "type": "prose",
+       "title": "Facilitation notes for scenario cards",
+       "text": "Card 5 (dark shed) — Most productive error: students attribute the worker's discomfort to convection rather than radiation. The worker is not touching the shed and no air current is described, so radiation is the primary mode. Press with: 'Is there any material between the shed and the worker that the heat must travel through?'\n\nCard 2 (greenhouse) — Students may explain overheating without distinguishing that solar radiation enters through the glass while convection of hot air is trapped inside. Both modes are at work. The fix involves ventilation (convection) or a light-coloured surface (radiation reflection).\n\nCard 3 (concrete vs soil) — Students may treat soil cooling as a conduction difference alone rather than also involving differential heat capacity and radiation loss. Accept both conduction and radiation as valid contributions and reward reasoning that names both.\n\nCard 4 (rainwater) — This card targets infiltration and groundwater recharge rather than heat transfer directly. Students who connect it to the water cycle driven by solar radiation are making the chapter's largest synthesis move.\n\nClosing move — After the shared table is complete, name each chapter thread as it appears in a cell: conduction through metal pipes, convection in trapped greenhouse air, radiation from the dark shed, differential heating of soil versus concrete, infiltration and groundwater recharge driven by the water cycle. The rooftop needed all of them — not five separate topics but one framework for understanding how heat moves, through what, and with what consequence for the materials and water around us."
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 40,
+    "count": 14
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and record heat-transfer phenomena",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2,
+     3
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students conduct and observe three hands-on investigations — pin-fall along a metal strip, smoke and potassium permanganate circulation, and differential heating of soil versus water — recording results in tables and sketches.",
+    "implied_lo": "Students can describe what they observed in each investigation using accurate observational language and record results in a structured table or annotated sketch.",
+    "cg": "CG-1",
+    "c_code": "C-1.4",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify materials and phenomena by mode of heat transfer",
+    "total_stages": 5,
+    "period_numbers": [
+     4,
+     5,
+     6
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students sort materials into conductors and insulators, construct and use a labelled convection loop diagram to classify scenarios, and complete a three-mode comparison table distinguishing conduction, convection, and radiation.",
+    "implied_lo": "Students can correctly classify a given material or phenomenon as an instance of conduction, convection, or radiation, providing a one-sentence justification referencing medium and particle movement.",
+    "cg": "CG-1",
+    "c_code": "C-1.4",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+    "total_stages": 5,
+    "period_numbers": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students construct step-by-step causal chains for sea and land breezes, annotate a water cycle flow diagram with heat-transfer modes, investigate infiltration rates through different materials, and explain the bukhari and ice stupa as thermal systems.",
+    "implied_lo": "Students can produce a multi-step causal explanation connecting a temperature difference to a natural phenomenon — including land and sea breezes, the water cycle, and groundwater infiltration — identifying the heat-transfer mode responsible at each step.",
+    "cg": "CG-1",
+    "c_code": "C-1.4",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+    "total_stages": 5,
+    "period_numbers": [
+     11,
+     12,
+     13
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students read and convert thermometer values between Celsius and Fahrenheit, apply heat-transfer reasoning to explain regional temperature differences and novel scenarios, and use infiltration evidence to propose rainwater harvesting solutions.",
+    "implied_lo": "Students can apply heat-transfer reasoning and temperature measurement to explain a novel scenario or propose a solution to a real problem, citing evidence from investigation data and chapter concepts.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "total_stages": 5,
+    "period_numbers": [
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students produce a connected written explanation for a multi-part coastal-town scenario, drawing simultaneously on all three modes of heat transfer, the water cycle, infiltration, and temperature measurement.",
+    "implied_lo": "Students can construct a coherent, connected explanation of a complex scenario by simultaneously applying knowledge of heat-transfer modes and temperature measurement, identifying which concept does the explanatory work at each step.",
+    "cg": "CG-1",
+    "c_code": "C-1.4",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and record heat-transfer phenomena",
+    "implied_lo_assessed": "Students can describe what they observed in each investigation using accurate observational language and record results in a structured table or annotated sketch.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Recall",
+    "visual_stimulus": null,
+    "question_text": "In the pin-fall investigation, a metal strip is heated at one end. What is the correct order in which the pins fall?",
+    "options": [
+     {
+      "label": "A",
+      "text": "All pins fall at the same moment because heat spreads instantly through metal.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The pin at the cool end falls first because heat accumulates there.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The pin closest to the heated end falls first, followed by each successive pin in order toward the cool end.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The pin in the middle of the strip falls first because it receives heat from both sides.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "A": "Student holds the misconception that conduction is instantaneous rather than a progressive transfer from particle to particle along the strip.",
+       "D": "Student incorrectly applies a symmetry intuition — heat spreading from both ends — without recognising that only one end is heated.",
+       "B": "Student has inverted the direction of heat flow, believing heat accumulates at the cold end rather than travelling toward it."
+      },
+      "inclusivity": "Students who struggled to write predictions during the activity can still demonstrate this outcome by reasoning about the direction of heat travel. Allow oral justification as an alternative to written response for students with writing difficulties."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and record heat-transfer phenomena",
+    "implied_lo_assessed": "Students can describe what they observed in each investigation using accurate observational language and record results in a structured table or annotated sketch.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "In the potassium permanganate experiment, crystals are placed at the base of a water-filled beaker and the beaker is heated from one side. What does the path of the coloured stream tell us?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The coloured stream moves sideways toward the heat source because water is pulled by the flame.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The coloured stream rises at the heated side and descends at the cooler side, showing that heated water moves upward and cooler water moves downward.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The coloured stream sinks immediately because potassium permanganate is denser than water.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The coloured stream spreads evenly outward from the crystals because heat makes water molecules vibrate without moving.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Student is confusing convection with conduction — applying the 'particles vibrate in place' description of conduction to a fluid where particles actually move.",
+       "C": "Student is applying a density misconception in isolation, ignoring the heating effect that reduces the density of water near the heat source.",
+       "A": "Student has a naive causal model in which the flame 'attracts' water, rather than recognising that the heated fluid becomes less dense and rises."
+      },
+      "inclusivity": "Students who found the live observation fast-moving can demonstrate this outcome by annotating a static diagram of the beaker with arrows. Students who are more confident in verbal reasoning may explain the path orally before selecting an option."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify materials and phenomena by mode of heat transfer",
+    "implied_lo_assessed": "Students can correctly classify a given material or phenomenon as an instance of conduction, convection, or radiation, providing a one-sentence justification referencing medium and particle movement.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student holds a hand near (but not touching) a burning candle and feels warmth. Which mode of heat transfer is primarily responsible, and what is its key distinguishing feature?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Conduction — heat travels along invisible particles between the candle and the hand.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Conduction — heat travels through the air from the candle to the hand, air being a conductor.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Convection — heated air particles rise from the candle and transfer heat to the hand.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Radiation — heat travels from the candle to the hand without requiring any material medium.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Student has classified this as convection because air is present, confusing the presence of a fluid medium with the specific convection mechanism of bulk fluid circulation.",
+       "B": "Student incorrectly classifies air as a conductor and applies the conduction mechanism to a gas, conflating any heat movement through air with conduction.",
+       "A": "Student applies conduction terminology without recognising that conduction requires particle-to-particle contact in a solid or fluid, not action at a distance."
+      },
+      "inclusivity": "Students who benefit from concrete reference can first classify the mode for sunlight reaching Earth (a chapter example with no medium) and then transfer that reasoning to the candle scenario. Peer discussion before individual response supports students who think more effectively through dialogue."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify materials and phenomena by mode of heat transfer",
+    "implied_lo_assessed": "Students can correctly classify a given material or phenomenon as an instance of conduction, convection, or radiation, providing a one-sentence justification referencing medium and particle movement.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Woollen clothes keep us warm in winter, yet wool is not a metal. What is the correct explanation for this warmth?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Wool absorbs heat from the surroundings by radiation and passes it to the body.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Wool fibres trap air in their pores, and air is a poor conductor that reduces heat loss from the body.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Wool generates heat on its own because its fibres are in constant motion.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Wool is a good conductor that quickly distributes body heat evenly, making us feel warm all over.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Student attributes warmth to a property of wool itself rather than to the insulation principle, reflecting the common misconception that wool is 'intrinsically warm'.",
+       "D": "Student has confused conductor with insulator — good conductors would move heat away from the body rapidly, which is the opposite of warmth retention.",
+       "A": "Student has misapplied radiation, treating wool as a heat-absorbing medium rather than recognising the insulation role of trapped air."
+      },
+      "inclusivity": "Students who respond better to analogies can consider the Himalayan wall construction (cow dung and mud layers trapping air) from the chapter as a parallel case before reasoning about wool. Students with weaker writing can demonstrate the same understanding by labelling a diagram of a wool fibre cross-section."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify materials and phenomena by mode of heat transfer",
+    "implied_lo_assessed": "Students can correctly classify a given material or phenomenon as an instance of conduction, convection, or radiation, providing a one-sentence justification referencing medium and particle movement.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A metal cooking utensil is placed on a flame. The handle, which is made of wood, stays cool enough to hold. (a) Identify the mode of heat transfer operating in the metal part of the utensil. (b) Explain why the wooden handle stays cool, using the conductor/insulator distinction.",
+    "options": [],
+    "expected_elements": [
+     "Names conduction as the mode operating in the metal part.",
+     "States that metal is a good conductor of heat, allowing heat to pass through it easily.",
+     "States that wood is a poor conductor (insulator) of heat.",
+     "Explains that because wood does not allow heat to pass through easily, the handle stays cool even while the metal part is hot."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who find written explanation difficult can annotate a simple diagram of the utensil — labelling the metal as 'conductor' and the wood as 'insulator' with a brief phrase — as an equivalent demonstration. Pair discussion before written response is appropriate."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+    "implied_lo_assessed": "Students can produce a multi-step causal explanation connecting a temperature difference to a natural phenomenon — including land and sea breezes, the water cycle, and groundwater infiltration — identifying the heat-transfer mode responsible at each step.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "During the day, people living on the coast feel a breeze blowing from the sea toward the land. What is the correct causal sequence that produces this sea breeze?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Land and sea heat at the same rate, but sea air is heavier and sinks, pushing lighter land air upward → breeze blows from sea to land.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Land heats faster than sea → air above land becomes warm and rises → cooler air from the sea moves in to replace it → breeze blows from sea to land.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Sea heats faster than land → air above the sea becomes warm and rises → cooler air from the land moves toward the sea → breeze blows from land to sea.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Solar radiation heats the sea surface directly → water vapour rises and creates low pressure → land air is sucked toward the sea.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student has the day-night relationship inverted — this is the land breeze sequence (night), not the sea breeze (day). Suggests confusion between which surface heats faster during the day.",
+       "A": "Student has applied a density misconception in which sea air is treated as inherently heavier, bypassing the differential heating mechanism entirely.",
+       "D": "Student has correctly identified radiation as a driver but then confused the direction of the resulting air movement, applying the water cycle's evaporation mechanism to wind generation."
+      },
+      "inclusivity": "Students who approach this visually can first sketch a coastline with arrows before selecting an option. Peer discussion is appropriate since the causal chain has multiple steps that benefit from collaborative articulation."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+    "implied_lo_assessed": "Students can produce a multi-step causal explanation connecting a temperature difference to a natural phenomenon — including land and sea breezes, the water cycle, and groundwater infiltration — identifying the heat-transfer mode responsible at each step.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "After rainfall, water seeps into the ground and eventually reaches an aquifer. Which of the following correctly ranks three soil types from fastest to slowest infiltration, with the correct reason?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Clay → sand → gravel; clay particles are smooth, reducing friction and allowing water to slide through fastest.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Gravel → clay → sand; gravel is fastest but clay comes second because its fine particles pack tightly, creating channels.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Gravel → sand → clay; gravel has the largest pore spaces and most interconnected pathways, allowing water to pass through most quickly.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Sand → gravel → clay; sand grains are intermediate in size and therefore have the most uniform pore spaces for water flow.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "A": "Student applies a naive 'smoothness = speed' reasoning from everyday experience rather than the pore-space explanation, and inverts the correct ranking entirely.",
+       "D": "Student places sand first based on an intermediate-size intuition, misapplying a 'middle is best' heuristic rather than reasoning about pore space connectivity.",
+       "B": "Student correctly identifies gravel as fastest but then confuses clay packing with channel formation — a plausible-sounding but incorrect mechanism drawn from within the chapter context."
+      },
+      "inclusivity": "Students who completed the seepage investigation can refer to their own timing data as evidence for ranking. Students who find abstract reasoning easier can be asked to draw a cross-section showing particle sizes before selecting an option."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain causal mechanisms linking heat transfer to natural phenomena",
+    "implied_lo_assessed": "Students can produce a multi-step causal explanation connecting a temperature difference to a natural phenomenon — including land and sea breezes, the water cycle, and groundwater infiltration — identifying the heat-transfer mode responsible at each step.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Explain, in no more than four steps, how solar radiation drives the movement of water from the ocean surface back to the ocean through the water cycle. Identify the heat-transfer mode responsible at each step.",
+    "options": [],
+    "expected_elements": [
+     "Step 1: Solar radiation heats the ocean surface, causing evaporation — water changes from liquid to vapour. Mode: radiation.",
+     "Step 2: Water vapour rises into the atmosphere, carried upward by convection currents in warm air. Mode: convection.",
+     "Step 3: Rising vapour cools at higher altitudes, condenses into water droplets, and forms clouds. Mode: heat loss by radiation or conduction to cooler surroundings.",
+     "Step 4: Water returns to the surface as precipitation (rain, snow, hail) and eventually flows back to the ocean. Connection to the cycle is complete."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who express ideas better visually may annotate a blank water cycle diagram with mode labels instead of writing prose steps — both demonstrate the same causal reasoning. Students who find the full cycle overwhelming can be asked to explain just the evaporation-to-cloud segment as a first step."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+    "implied_lo_assessed": "Students can apply heat-transfer reasoning and temperature measurement to explain a novel scenario or propose a solution to a real problem, citing evidence from investigation data and chapter concepts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explaining the importance of measurement and measuring physical properties of matter including temperature using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A thermometer reads 37°C. A student says this is the same as 98.6°F. Is the student correct, and what does this temperature represent?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Correct; 37°C equals 98.6°F, which is the boiling point of water.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Correct; 37°C equals 98.6°F, which is the normal human body temperature.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Incorrect; 37°C equals 100°F because the conversion always adds 63 to the Celsius value.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Incorrect; 37°C equals 37°F because Celsius and Fahrenheit are the same scale.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Student holds a fundamental misconception that the two scales are equivalent, having not engaged with the conversion relationship or the physical difference between scale definitions.",
+       "A": "Student has the conversion correct but has confused two significant temperature benchmarks from the chapter — body temperature and boiling point of water.",
+       "C": "Student has attempted a conversion but applied an incorrect operation, suggesting partial recall of the conversion formula without accurate execution."
+      },
+      "inclusivity": "Students who process numerical relationships better with a reference can use a Celsius-Fahrenheit scale diagram. For students who find unit conversion abstract, asking them first to estimate whether 37°C 'feels' more like body temperature or boiling water grounds the numerical work in physical context."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+    "implied_lo_assessed": "Students can apply heat-transfer reasoning and temperature measurement to explain a novel scenario or propose a solution to a real problem, citing evidence from investigation data and chapter concepts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explaining the importance of measurement and measuring physical properties of matter including temperature using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A scientist records air temperature above a large concrete plaza and above a nearby park at the same time of day. The plaza temperature is 6°C higher than the park. Which explanation, grounded in heat-transfer principles, best accounts for this difference?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Concrete heats up faster than the soil and grass of the park, so the air above the plaza warms more by conduction and convection from the hotter surface.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Concrete is a better conductor than soil, so heat from the sun passes through it faster and reaches the air on the other side.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The concrete plaza is darker and therefore emits more radiation than the park, heating the air above it by radiation alone.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The park has more water vapour from plants, and water vapour absorbs heat, leaving the park cooler.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "C": "Student applies the colour-and-radiation principle from the chapter correctly in isolation but attributes the entire difference to radiation alone, ignoring the conduction-convection chain from surface to air.",
+       "D": "Student introduces a water vapour absorption mechanism not developed in the chapter, suggesting retrieval of a half-remembered idea rather than application of chapter content.",
+       "B": "Student correctly recalls that concrete is a good conductor but misapplies the direction of heat flow — treating the ground as a source below the concrete rather than the sun as the source above it."
+      },
+      "inclusivity": "Students who benefit from drawing can sketch the plaza and park cross-sections with arrows showing heat movement before selecting an option. This scenario is analogous to the soil-versus-water experiment, and students who explicitly make that connection are demonstrating the transfer of reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply heat-transfer reasoning and temperature measurement to unfamiliar contexts",
+    "implied_lo_assessed": "Students can apply heat-transfer reasoning and temperature measurement to explain a novel scenario or propose a solution to a real problem, citing evidence from investigation data and chapter concepts.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explaining the importance of measurement and measuring physical properties of matter including temperature using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A neighbourhood has replaced most of its open soil with concrete driveways and pavements. Residents notice that the well in the centre of the neighbourhood has been getting shallower every year. Using your knowledge of infiltration, groundwater, and the water cycle, explain why this is happening and propose one specific, evidence-based change that could help restore the groundwater level. Your response should connect the surface change to the underground effect and support your proposal with evidence about infiltration rates.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Identifies that concrete is impermeable, preventing rainwater from infiltrating into the soil.",
+     "Links reduced infiltration to reduced recharge of the groundwater stored in the aquifer below.",
+     "Connects the aquifer depletion to the falling well level — groundwater is extracted but not replenished.",
+     "Proposes a specific change (e.g., recharge pits filled with gravel or sand) and justifies the material choice by citing larger pore spaces enabling faster infiltration.",
+     "Shows awareness that the water cycle's precipitation stage is interrupted at the infiltration step by the concrete cover."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who find extended writing difficult can respond using an annotated diagram showing the surface, soil layers, and aquifer, with brief labels at each stage. Students who are stronger in verbal reasoning may first outline their argument in bullet points and then develop it into prose. Both formats can demonstrate the same level of analysis."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "implied_lo_assessed": "Students can construct a coherent, connected explanation of a complex scenario by simultaneously applying knowledge of heat-transfer modes and temperature measurement, identifying which concept does the explanatory work at each step.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Situation | Observation | Heat-transfer mode identified by student\nMetal spoon left in hot soup | Handle becomes warm after some time | \nSmoke above a candle | Smoke rises in a column above the flame | \nWarmth felt near a fireplace | Person sitting away from fire feels warm without air movement | \nIce melting in a glass | Ice melts faster when glass is held in the hand than when left on the table | ",
+    "question_text": "Refer to the table provided. A student is asked to identify the primary heat-transfer mode for each situation. Which row has been filled in correctly?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Ice melting in a glass — radiation; body heat radiates from the hand across the glass to the ice.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Metal spoon — conduction; the heat travels along the spoon from the hot soup to the cooler handle through particle-to-particle contact.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Smoke above a candle — conduction; heated air particles pass heat to neighbouring air particles without moving themselves.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Warmth near a fireplace — convection; hot air rises from the fire and reaches the person sitting nearby.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Student has applied the conduction definition (particles don't move) to a gas situation (rising smoke), conflating the definition with the wrong mode — a classification error that reveals incomplete differentiation of convection.",
+       "D": "Student has associated 'fire' with convection and applied it without checking whether the person is in the path of rising air — missing that radiation is responsible for warmth felt sideways from a fire without air movement.",
+       "A": "Student has misapplied radiation to a contact scenario; heat from the hand conducts through the glass to the ice, not radiates — suggesting confusion between the two modes that require no fluid."
+      },
+      "inclusivity": "Students can use their three-mode comparison table as a reference while reasoning about each row. This table-format question is accessible to students who find extended prose responses difficult, as reasoning is distributed across discrete rows."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "implied_lo_assessed": "Students can construct a coherent, connected explanation of a complex scenario by simultaneously applying knowledge of heat-transfer modes and temperature measurement, identifying which concept does the explanatory work at each step.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explaining the importance of measurement and measuring physical properties of matter including temperature using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "Two students measure the temperature of water being heated in a pan. Student A records the reading before the bubbling stops, while Student B waits until the water is fully still before recording. Their readings differ by 4°C. Which student's method is more scientifically reliable, and why?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both are equally reliable because the thermometer gives the correct reading at any moment during the heating process.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Student A; a thermometer responds instantly and so the reading taken first is always more accurate than a delayed reading.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Student A; taking the reading during active heating captures the true maximum temperature before heat is lost to the surroundings.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Student B; waiting for the water to be still ensures a stable temperature reading, reducing the effect of local convection currents near the thermometer bulb.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Student conflates 'highest temperature' with 'most reliable measurement', ignoring that convection currents during boiling create local temperature variation that reduces measurement reliability.",
+       "A": "Student treats the thermometer as infallible regardless of conditions, not recognising that measurement reliability depends on the stability of what is being measured.",
+       "B": "Student applies a 'first is best' heuristic from everyday experience and incorrectly assumes thermometers respond instantaneously, missing the role of thermal equilibration in accurate measurement."
+      },
+      "inclusivity": "Students who reason better through analogy can be prompted to think about whether it would be reliable to measure the temperature of a stirred pot versus an unstirred pot — both accessible analogies from everyday kitchen experience. Students who find the reasoning abstract can sketch the thermometer in each scenario with arrows showing convection currents before evaluating."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "implied_lo_assessed": "Students can construct a coherent, connected explanation of a complex scenario by simultaneously applying knowledge of heat-transfer modes and temperature measurement, identifying which concept does the explanatory work at each step.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "When water is heated in a metal pan on a flame, all three modes of heat transfer operate simultaneously. Explain, in a connected paragraph, how each mode operates in this scenario — identifying what is being heated, by which mode, and what effect it produces. Your explanation should make clear why all three modes are needed to fully describe what happens.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Identifies conduction as the mode by which heat travels from the flame through the metal base and walls of the pan.",
+     "Identifies convection as the mode by which heat is distributed through the water inside the pan — heated water at the base rises and cooler water descends.",
+     "Identifies radiation as the mode by which warmth is felt around the flame and the hot pan, without requiring contact or fluid movement.",
+     "Connects all three descriptions into a coherent account of a single scenario, showing that each mode operates on a different part or medium.",
+     "Makes explicit why only citing one or two modes would give an incomplete description of what happens in the pan scenario."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who organise ideas better spatially can annotate a diagram of the flame-pan-water system with mode labels and connecting arrows before writing the paragraph. Students who are stronger verbally can dictate or outline their argument before committing to prose. Both pathways reach the same analytical target."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Synthesise heat-transfer reasoning and temperature measurement across the whole chapter",
+    "implied_lo_assessed": "Students can construct a coherent, connected explanation of a complex scenario by simultaneously applying knowledge of heat-transfer modes and temperature measurement, identifying which concept does the explanatory work at each step.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-1.4",
+     "competency_text": "Observing and explaining phenomena caused due to differences in temperature."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Scenario | What is observed | Nature of the heat-transfer problem | Mode(s) responsible | Measurement needed to confirm | Proposed change and reason\nA highland village in winter loses heat rapidly through its stone walls at night | Rooms become very cold despite a bukhari stove | | | |\nA coastal town's sea breeze has weakened; residents report hotter afternoons than usual | Wind from the sea is weaker; afternoon temperature has risen by 4°C | | | |\nA farm's well is running dry after a dry season; the surrounding fields have been newly paved | Water table has dropped; well yields less water than before | | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. Three communities face different problems involving heat transfer and temperature. For each scenario: (1) identify the nature of the heat-transfer problem, (2) name the mode or modes of heat transfer responsible, (3) state what temperature or measurement a scientist would need to confirm the cause, and (4) propose one specific change and explain, using heat-transfer reasoning, why it would help. Your completed table should show that the same principles of heat transfer and measurement connect all three problems.",
+    "scaffold": "For each row, think about which surface or material is at the centre of the problem, which mode of heat transfer is either helping or failing, what a thermometer or other measurement would reveal, and what change to the material, surface, or structure would improve the situation. Your final row (the farm) will also require you to connect heat-driven evaporation and infiltration.",
+    "format_of_output": [
+     "Completed table with all six columns filled for each of the three scenario rows.",
+     "A closing sentence (below the table) identifying the single heat-transfer principle that connects all three problems."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Data interpretation task (provided table or graph)",
+      "format_rationale": "A partially completed scenario table is the most natural demonstration vehicle for the Final Stage implied LO because it requires students to simultaneously apply heat-transfer mode reasoning and temperature measurement thinking to multiple distinct but connected contexts, mirroring the co-central structure of the chapter's two competencies.",
+      "what_this_demonstrates": "A complete response demonstrates the student's ability to reason simultaneously across heat-transfer modes and temperature measurement in novel, real-world-grounded scenarios — connecting cause, observable evidence, measurement method, and remediation into a single coherent analytical framework.",
+      "reading_the_scaffold": "The scaffold directs students to think structurally — surface, mode, measurement, change — rather than narratively, preventing responses that describe scenarios without actually applying concepts. The closing-sentence requirement forces students to look across rows and identify a unifying principle, which is the synthesis target of this stage.",
+      "strong_vs_weak_markers": "Strong responses name the correct mode for each scenario with a reason (not just a label), specify a measurable quantity (e.g., temperature difference between indoor and outdoor, sea and land surface temperatures, soil infiltration rate) rather than a vague reference to measurement, and propose a change tied explicitly to a heat-transfer mechanism (e.g., adding an insulating layer of trapped air, removing a concrete surface to restore infiltration). Weak responses name modes without justification, propose changes without connecting them to a mechanism, or treat the three rows as independent rather than finding the connecting principle in the closing sentence.",
+      "inclusivity": "Students who find the full table daunting can begin with the farm row (most directly connected to investigation work) and work backward. Students who express reasoning better verbally can dictate their responses for each column before writing. The table format itself is an accessibility support — it breaks the open-ended task into bounded columns, reducing cognitive load for students who struggle with unstructured extended writing."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

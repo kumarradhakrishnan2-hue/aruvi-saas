@@ -22,12 +22,36 @@ from ...grades import stage_for
 from ...link_resolver import (handoff_period_index, period_number_by_field,
                               platform_anchor, stamp)
 from ...normalize import (as_list as _as_list, classify_stimulus, normalize_options,
-                          phases_from, SYNTHESIS_DISPLAY)
+                          parse_table, phases_from, SYNTHESIS_DISPLAY)
 from ...genon.carriers import is_synthesis as _is_synth   # token OR boolean (S7)
 from ...ports import Prompt
 from ...view_model import (
     AssessmentGroup, AssessmentItem, AssessmentView, Group, LessonPlanView, Period,
 )
+
+
+def _typed_visual_aids(raw: Any):
+    """Normalize `visual_aids` to what the renderer consumes (polish pass, 2026-08-18).
+
+    Legacy shape is a plain STRING (a textbook-figure reference) — passed through
+    unchanged. The polished synthesis units carry a LIST of typed entries
+    ({type: table|prose, title, table|text}); table payloads are split HERE through
+    normalize.parse_table — the single splitter every renderer shares — so no consumer
+    ever re-splits the raw pipe string (the recurring drift-bug class its docstring
+    records)."""
+    if not isinstance(raw, list):
+        return raw or ""
+    out = []
+    for va in raw:
+        if not isinstance(va, dict):
+            continue
+        if va.get("type") == "table" and va.get("table"):
+            out.append({"type": "table", "title": va.get("title", ""),
+                        "table": parse_table(va["table"])})
+        elif va.get("type") == "prose" and va.get("text"):
+            out.append({"type": "prose", "title": va.get("title", ""),
+                        "text": va["text"]})
+    return out
 
 
 def _phase_lines(phases: Any) -> List[str]:
@@ -286,7 +310,7 @@ class ScienceSubject:
             meta={"pedagogical_approach": p.get("pedagogical_approach", ""),
                   "roles": p.get("roles", ""),
                   "materials": p.get("materials", ""),
-                  "visual_aids": p.get("visual_aids", ""),
+                  "visual_aids": _typed_visual_aids(p.get("visual_aids")),
                   "duration_minutes": p.get("period_duration_minutes")},
         )
 

@@ -3527,6 +3527,33 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .uv-mat ul { list-style: none; margin: 0; padding: 0; }
 .uv-mat li { font-size: 14px; line-height: 1.5; padding: 3px 0 3px 16px; position: relative; }
 .uv-mat li::before { content: "—"; position: absolute; left: 0; color: var(--ink-soft); }
+/* ── typed prepared content (polish pass, 2026-08-18): tables + card text under the
+   checklist. Ledger hairlines + mono kickers per the design system; the table scrolls
+   sideways inside its own box at phone widths rather than widening the page. */
+.uv-va { margin-top: 14px; padding-top: 11px; border-top: 1px solid var(--line); }
+.uv-va-kicker { display: block; margin-bottom: 7px; }
+.uv-va-title { text-transform: none; letter-spacing: 0; font-family: var(--f-body);
+  font-style: italic; color: var(--ink-soft); }
+.uv-va-table-wrap, .uv-va { max-width: 100%; }
+.uv-va table.uv-va-table { width: 100%; border-collapse: collapse; font-size: 13.5px;
+  display: block; overflow-x: auto; }
+.uv-va-table caption { caption-side: top; text-align: left; font-family: var(--f-body);
+  font-style: italic; font-size: 13px; color: var(--ink-soft); padding-bottom: 5px; }
+.uv-va-table th { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-soft); text-align: left;
+  padding: 4px 12px 6px 10px; border-bottom: 1px solid var(--ink); white-space: nowrap; }
+.uv-va-table td { padding: 6px 12px 6px 10px; border-bottom: 1px solid var(--line);
+  line-height: 1.45; vertical-align: top; }
+/* column separators (founder, 2026-08-18): lighter than the header's bottom rule,
+   so the grid reads without shouting. First column keeps its flush left edge. */
+.uv-va-table th:not(:first-child), .uv-va-table td:not(:first-child) {
+  border-left: 1px solid var(--line); }
+.uv-va-table th:first-child, .uv-va-table td:first-child { padding-left: 0; }
+.uv-va-table tr:last-child td { border-bottom: none; }
+.uv-va-src { font-size: 12px; font-style: italic; color: var(--ink-soft); margin: 6px 0 0; }
+.uv-va-prose { font-family: var(--f-body); font-size: 14px; line-height: 1.6;
+  margin: 0; white-space: pre-wrap; }
+.uv-va-legacy { font-size: 13px; font-style: italic; color: var(--ink-soft); margin: 10px 0 0; }
 .uv-phases { margin-top: 2px; position: relative; }
 .uv-phase { display: grid; grid-template-columns: 34px 1fr; gap: 0 10px; padding: 13px 0; }
 .uv-phase + .uv-phase { border-top: 1px solid var(--clay); }

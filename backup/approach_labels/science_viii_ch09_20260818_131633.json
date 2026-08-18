@@ -1,0 +1,1693 @@
+{
+ "filename": "ch_09_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 9,
+ "chapter_title": "The Amazing World of Solutes, Solvents, and Solutions",
+ "grade": "Grade VIII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 17
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 17 periods = 765 minutes\nTotal: 17 periods · 12h 45min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "17x45",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science viii 9",
+  "ledger_ts": "20260817_113057_sci_viii_09_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:05",
+   "ledger_ts": "20260817_203333_sci_viii_09_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_09_canonical_p15.json": "2026-08-17T12:38:00",
+    "ch_09_canonical_p13.json": "2026-08-17T12:38:00",
+    "ch_09_canonical_p11.json": "2026-08-17T12:38:00",
+    "ch_09_canonical_p09.json": "2026-08-17T12:37:59"
+   },
+   "replaced": {
+    "period_number": 17,
+    "period_duration_minutes": 45,
+    "progression_stage": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "pedagogical_approach": "Inquiry approach",
+    "synthesis": true,
+    "activity_title": "Bringing the Chapter Together: Solutions, Density, and the World They Explain",
+    "activity_description": "Students revisit the chapter's two central questions — what determines a solution's properties, and what determines whether an object floats or sinks — and construct a unified concept map connecting solute, solvent, saturation, solubility, density, temperature, pressure, and ecological consequences. They then apply this map to explain one novel scenario that requires reasoning across both strands simultaneously.",
+    "roles": [
+     {
+      "actor": "Teacher",
+      "role_description": "Poses the two central questions, provides the concept map template with key nodes pre-filled, and circulates to probe the quality of links students draw between nodes."
+     },
+     {
+      "actor": "Students (Groups)",
+      "role_description": "Complete the concept map collaboratively, then each member individually writes a short explanation of the novel scenario using the map as a reference."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-8",
+      "activity": "Teacher poses the two central chapter questions and explains that this unit's task is to show how the answers connect — a concept map is the vehicle."
+     },
+     {
+      "minutes": "8-28",
+      "activity": "Groups complete the concept map, drawing and labelling links between all key nodes: solute, solvent, saturation, solubility, temperature effect on solubility (solid vs gas), density formula, temperature effect on density, pressure effect on density, float-or-sink rule, and ecological consequences."
+     },
+     {
+      "minutes": "28-40",
+      "activity": "Each student individually writes a short explanation of the novel scenario provided, using the completed concept map as a reference and ensuring both strands appear in the explanation."
+     },
+     {
+      "minutes": "40-45",
+      "activity": "Two or three students share their explanations; the class identifies which map links each explanation relies on, closing the chapter with an audit of what has been learned."
+     }
+    ],
+    "teacher_notes": "This synthesis unit draws the entire chapter together into a single connected picture, and it is designed so that a student who has engaged with the chapter's content — regardless of the specific activities that preceded this unit — can participate fully. The concept map template provides the nodes; the links are what students must supply, and the quality of the links is the diagnostic. Watch for maps that list nodes without labelling the links — the label on each arrow is the causal or definitional claim, and unlabelled links indicate surface rather than relational understanding.",
+    "materials": [
+     "Concept map template with pre-filled nodes",
+     "Novel scenario card (one per student)"
+    ],
+    "homework": []
+   }
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_viii_09_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced": {
+    "teacher_notes": "This unit works in two situations: as the close of the longest plan, where students have met every concept individually and need to see them working together in a genuinely new setting; and as an extra period after any shorter plan's own consolidation, where the reef scenario adds breadth without repeating a card-set or scenario-worksheet format already used. In either case, resist the urge to pre-teach the reef context — the field report gives everything students need, and working out what applies where is the cognitive work. The annotation sheet has two columns: 'Concept applied' and 'Reasoning'. Students must name the concept (e.g. 'solubility decreases with temperature for gases', 'density = mass ÷ volume', 'relative density < 1 → floats') before writing the reasoning — this prevents vague correct answers. Watch for groups that annotate the solution sections well but skip the density entries for organisms; push them with 'how would you measure whether this organism is denser than the water around it?' The field report is read silently first; do not summarise it aloud before students have read it. The closing discussion should be driven by the annotation sheet, not by the teacher narrating the chapter — ask groups to read one annotation aloud and have the class decide whether the concept name and reasoning genuinely match.",
+    "materials": [
+     "Coral Reef Field Report sheet (one per student — text and data table printed together; full content provided in the opening band so no pre-printing is required if the teacher reads it aloud and writes the data table on the board)",
+     "Analyst's Annotation Sheet (one per student — two-column table with rows pre-labelled for each data item in the report)",
+     "Blackboard or whiteboard and chalk or markers (for projecting or writing the data table if printed sheets are unavailable)"
+    ],
+    "visual_aids": null
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and Classify Mixtures",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Uniform or Not? Sorting Everyday Mixtures",
+     "activity_description": "Students prepare and observe two mixtures — salt in water and sand in water — recording whether each looks the same throughout. They classify each mixture as uniform or non-uniform, then extend the classification to a third mixture (e.g. soil in water) they predict before observing.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up materials, poses the opening classification question, and circulates to probe student reasoning during observation."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Prepare the two mixtures, record observations in a two-column table, and classify each as uniform or non-uniform with a brief written justification."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces the chapter's central question — what makes mixtures different from one another — and distributes materials; groups make their predictions before mixing."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups prepare salt-in-water and sand-in-water, observe each carefully, and complete a two-column observation table recording appearance and uniformity."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups share their classifications aloud; teacher records contrasting responses on the board and guides the class toward the definition of a uniform mixture as a solution."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Students individually write one sentence defining a solution and one sentence explaining why sand-in-water does not qualify, consolidating the distinction."
+      }
+     ],
+     "teacher_notes": "This opening unit launches the chapter by anchoring the abstract word 'solution' in something students can see and touch. A common error to watch for is students calling any clear liquid a solution — sand-in-water turns cloudy, which is the key observable cue to press on. Ask groups: 'Could you tell the top from the bottom of your mixture after it settled?' to sharpen the uniform-vs-non-uniform distinction.",
+     "materials": [
+      "Salt",
+      "Fine sand",
+      "Water",
+      "Transparent cups or beakers (two per group)",
+      "Stirring rods",
+      "Observation worksheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and Classify Mixtures",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Naming the Parts: Solute, Solvent, and Mixed-Liquid Solutions",
+     "activity_description": "Students receive three pre-labelled solution cards (salt-water, sugar-water, vinegar-water) and one liquid-liquid scenario (alcohol-water). They identify solute and solvent in each case using the chapter's proportion rule for liquid mixtures, then debate whether a gas dissolved in water also qualifies as a solution.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the proportion rule for liquid-liquid solutions and poses the gas-in-water scenario as a closing challenge question."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Completes the solution card worksheet, labelling solute and solvent for each scenario and writing a one-sentence rule they derive from the pattern."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher briefly recaps the previous unit's uniform-vs-non-uniform distinction and introduces the terms solute and solvent with the salt-water anchor example."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Students work individually through the four solution cards, applying the proportion rule to the liquid-liquid case and recording solute and solvent labels with justifications."
+      },
+      {
+       "minutes": "25-35",
+       "activity": "Pairs compare answers, resolve any disagreement about the liquid-liquid case, and jointly write the proportion rule in their own words."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Teacher poses the gas-in-water challenge; students vote and give reasons, setting up the gas-solubility concept to be explored in a later unit."
+      }
+     ],
+     "teacher_notes": "Building on the previous unit's classification work, this unit sharpens the vocabulary students need throughout the chapter. Watch for the misconception that the solute must always be a solid — the liquid-liquid case directly challenges this, and the proportion rule is the chapter's own resolution. The gas-in-water debate at the close is a productive open question; leave it unresolved here because it is revisited in a dedicated unit later.",
+     "materials": [
+      "Solution scenario cards (printed or written on slips)",
+      "Worksheet with four labelling tasks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Investigate Saturation and Concentration",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "How Much Is Too Much? Exploring Saturation (Activity 9.1)",
+     "activity_description": "Students progressively add measured spoonfuls of salt to a fixed volume of water, stirring after each addition and recording whether the salt dissolves. They identify the point at which the solution becomes saturated and produce a results table distinguishing unsaturated from saturated states at each addition step.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the first two additions, then hands over to groups, circulating to prompt recording of the 'no more dissolves' transition point."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Conduct Activity 9.1 methodically, recording each addition and its result, and marking the saturation point on their table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects this unit to the previous unit's solute-solvent vocabulary and poses the investigation question: is there a limit to how much solute a solvent can hold?"
+      },
+      {
+       "minutes": "6-10",
+       "activity": "Teacher demonstrates the first two salt additions and models correct recording technique for the results table."
+      },
+      {
+       "minutes": "10-30",
+       "activity": "Groups continue adding salt in measured increments, stirring thoroughly after each, and recording 'dissolved' or 'did not dissolve' for each step."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups identify their saturation point and discuss: what would happen if we added more water — would the extra salt dissolve?"
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Class shares saturation points; teacher introduces the terms unsaturated, saturated, and solubility and maps them to the groups' recorded data."
+      }
+     ],
+     "teacher_notes": "This unit transitions from classifying mixtures to investigating the quantitative limits of dissolution, so the connection to the previous stage is natural — we know what a solution is; now we find its ceiling. Watch for groups who stir too briefly and declare the solution saturated prematurely; press them with 'Did you stir for long enough to be sure?' The discussion about adding more water is the conceptual bridge to understanding solubility as temperature- and volume-dependent.",
+     "materials": [
+      "Salt",
+      "Water",
+      "Measuring cylinder (100 mL)",
+      "Teaspoon or measured scoop",
+      "Transparent cups or beakers",
+      "Stirring rods",
+      "Results table worksheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Investigate Saturation and Concentration",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Dilute, Concentrated, and the Meaning of Solubility",
+     "activity_description": "Students examine a set of four labelled beakers with increasing amounts of sugar dissolved in the same volume of water. They rank them from most dilute to most concentrated, then work through the formal definition of solubility as the maximum amount of solute in a fixed quantity of solvent at a given temperature, and solve two numerical comparison problems.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads the class through the ranking task using the board diagram, formalises the definition of solubility, and works through the first numerical problem as a model."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Completes the ranking task in their notebooks, then independently solves the second numerical comparison problem."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher displays or draws four beakers on the board with different solute amounts but equal solvent volumes; students rank them and share reasoning."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Teacher formalises the terms dilute, concentrated, and solubility, explicitly linking solubility to the saturation point identified in the previous unit."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Teacher works through the first numerical comparison problem step by step; students follow and annotate."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Students independently attempt the second problem and then compare answers with a neighbour before the teacher provides the correct reasoning."
+      }
+     ],
+     "teacher_notes": "The previous unit gave students an experiential anchor for saturation; this unit overlays the formal vocabulary and the numerical meaning of solubility. A persistent misconception is treating 'concentrated' as synonymous with 'saturated' — make explicit that a concentrated solution need not be saturated if more solute could still dissolve. The numerical problems ground the vocabulary in calculation, which also previews the quantitative reasoning students will use when density calculations appear later in the chapter.",
+     "materials": [
+      "Board or projected beaker diagram",
+      "Numerical problem worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Investigate Saturation and Concentration",
+     "pedagogical_approach": "Demonstration",
+     "activity_title": "Temperature and Solubility: The Baking Soda Demonstration (Activity 9.2)",
+     "activity_description": "The teacher demonstrates Activity 9.2: a saturated baking soda solution at room temperature is heated in stages to 50 °C and then 70 °C; students observe that additional baking soda dissolves at each higher temperature. Students record observations and construct a generalisation about the direction of the relationship between temperature and solid solubility.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Conducts the demonstration safely, pausing at each temperature stage for students to record observations before adding more baking soda."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Records observations at each temperature stage and writes a generalisation sentence linking temperature increase to solubility change for solids."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher recaps the definition of a saturated solution from the previous unit and poses the question: what happens to the saturation ceiling if we heat the solvent?"
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Teacher conducts the three-stage demonstration (room temperature, 50 °C, 70 °C), pausing at each stage for students to observe and record whether additional baking soda dissolves."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Students write a generalisation sentence in their own words and share with a neighbour, then the class converges on the chapter's stated finding."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher poses the contrasting preview question: does temperature affect gas solubility the same way? — students vote and give brief reasons, setting up the next unit."
+      }
+     ],
+     "teacher_notes": "This demonstration unit extends the saturation investigation into a variable-control context, deepening the same stage's cognitive work. Watch for the misconception that heating always increases solubility — the chapter explicitly contrasts this with gas solubility, and the closing vote intentionally surfaces that assumption before it is addressed. Keep the demonstration at the front so all students can observe the visual change in the solution clearly at each temperature stage.",
+     "materials": [
+      "Baking soda",
+      "Water",
+      "Beaker or flask",
+      "Heat source (spirit lamp or hot plate)",
+      "Thermometer",
+      "Stirring rod",
+      "Observation recording sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Investigate Saturation and Concentration",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Gas Solubility: Dissolved Oxygen and the Temperature Contrast",
+     "activity_description": "Students examine the dissolved-oxygen scenario from the chapter and compare it to the baking soda demonstration. They construct a two-column comparison table (solid solubility vs gas solubility, each column: effect of rising temperature), then reason about the ecological consequence — why cold water sustains more aquatic life — and write a causal explanation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Provides the dissolved-oxygen scenario from the chapter and guides the class through the comparison table structure before releasing groups to work."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Build the comparison table collaboratively and then each member writes an independent causal explanation of the ecological consequence."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher revisits the previous unit's closing vote on gas solubility, reveals the chapter's contrast finding, and introduces the dissolved-oxygen scenario."
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Groups construct the two-column comparison table, drawing on the baking soda demonstration for the solid column and the dissolved-oxygen scenario for the gas column."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Groups discuss the ecological consequence — fish in warm vs cold water — and each member drafts a causal explanation connecting temperature, dissolved oxygen, and aquatic life."
+      },
+      {
+       "minutes": "37-45",
+       "activity": "Two or three groups share their explanations; the class identifies the key causal chain and the teacher confirms or corrects the reasoning."
+      }
+     ],
+     "teacher_notes": "This unit closes the saturation-and-concentration stage by introducing the solid-vs-gas solubility contrast, which requires students to hold two opposing relationships simultaneously — a genuine cognitive step up from the previous units. Watch for explanations that say 'cold water has more oxygen in it naturally' without naming solubility as the mechanism; push students to include the word 'dissolves' in their causal chain. The ecological reasoning here also previews the floating-ice ecological argument that appears in the density stage.",
+     "materials": [
+      "Chapter dissolved-oxygen scenario text",
+      "Comparison table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Observe Float-or-Sink and Build the Density Concept",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "What Makes Things Float or Sink? Observing and Predicting",
+     "activity_description": "Students receive a set of small objects (a wooden block, a metal washer, a piece of wax, a plastic chip) and predict — before testing — whether each will float or sink in water. They then test each, record results, and attempt to articulate what property of the object determines the outcome, using the chapter's husk-and-rice and oil-on-water examples as reference points.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes the objects and the prediction sheet, then circulates during testing to prompt students to articulate their reasoning beyond 'it is heavy'."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Record predictions, run the float-or-sink tests, and collaboratively draft a one-sentence rule that accounts for all their results."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects this unit to the chapter's progression — we now know what a solution is and how much solute it can hold; the next question is what determines whether objects interact with a liquid by floating or sinking."
+      },
+      {
+       "minutes": "6-14",
+       "activity": "Groups record predictions for each object with a written reason, before any testing begins."
+      },
+      {
+       "minutes": "14-30",
+       "activity": "Groups test each object in water, record the actual result, and note which predictions were wrong and why."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups draft their one-sentence rule and compare it with the chapter's examples of husk-and-rice and oil-on-water, checking whether their rule handles these cases."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Class shares rules; teacher names 'density' as the property underlying the pattern without yet defining it formally, creating a productive gap to be closed in the next unit."
+      }
+     ],
+     "teacher_notes": "This unit opens a new progression stage by anchoring the abstract concept of density in a concrete observational puzzle. The most common alternative conception to watch for is that heavy objects always sink — a metal needle can float on still water, and oil floats despite being liquid; press students whose rules rely only on 'heaviness' to account for these. Leaving the word 'density' undefined at the close is deliberate: naming it without defining it creates the right motivational hook for the next unit.",
+     "materials": [
+      "Small wooden block",
+      "Metal washer",
+      "Piece of wax or candle stub",
+      "Plastic chip",
+      "Basin or large transparent container with water",
+      "Prediction-and-results worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Observe Float-or-Sink and Build the Density Concept",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Defining Density: Mass per Unit Volume",
+     "activity_description": "Students work through the chapter's formal definition of density as mass divided by volume, explore the crowded-bus and dense-forest analogies from the chapter text, and then verify that the formula is consistent with their float-or-sink observations from the previous unit by comparing the density of each tested material to the density of water.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the formula, works through the analogy sequence from the chapter, and then leads a class-wide verification linking the formula output to the previous unit's float-or-sink results."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Annotates the formula in their notebook, records the analogy reasoning, and completes the verification table linking each tested material to a float-or-sink outcome."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher returns to the previous unit's named-but-undefined 'density' and formally introduces the definition: density equals mass divided by volume."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Teacher works through the crowded-bus and dense-forest analogies from the chapter, linking them to the formula: same volume, more mass means higher density."
+      },
+      {
+       "minutes": "20-33",
+       "activity": "Students complete the verification table — for each object tested in the previous unit, they note whether it floated or sank and whether its density is greater or less than water's, using provided density values."
+      },
+      {
+       "minutes": "33-45",
+       "activity": "Teacher introduces SI units (kg/m³) and the common alternatives (g/mL, g/cm³) with the chapter's conversion table; students record units and note the relative density concept as a dimensionless ratio."
+      }
+     ],
+     "teacher_notes": "This unit formalises what the previous unit surfaced as a puzzle, so the link is direct: density is the property that determines float-or-sink. A key misconception from the chapter is that density depends on the size or shape of the object — stress that the formula gives the same value regardless of how big a sample you take, and the analogy sequence from the chapter makes this vivid. Introducing units here, alongside the formula, prepares students for the measurement activities that follow in the next units.",
+     "materials": [
+      "Board or projected formula display",
+      "Density values table (provided)",
+      "Verification table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure Mass and Volume Using Standard Instruments",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Measuring Mass: Using the Digital Balance and the Tare Function (Activity 9.3)",
+     "activity_description": "Students use a digital weighing balance to measure the mass of a solid object, practising the tare function to zero out the container's mass. They also distinguish mass from weight by recording both terms' definitions and units, and practise writing mass values in grams and kilograms.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the tare function and the correct placement of the object on the balance before groups begin their own measurements."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Each group measures the mass of two assigned objects, records values in grams and kilograms, and notes the mass-vs-weight distinction in their worksheets."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the density formula from the previous unit — to calculate density, we need to measure mass and volume separately, and this unit addresses mass."
+      },
+      {
+       "minutes": "7-15",
+       "activity": "Teacher demonstrates the digital balance: switching on, placing the container, using tare, and placing the solid object; students observe and note the procedure."
+      },
+      {
+       "minutes": "15-33",
+       "activity": "Groups measure the mass of their two assigned objects, record values in grams, convert to kilograms, and note the tare value used."
+      },
+      {
+       "minutes": "33-45",
+       "activity": "Teacher formalises the mass-vs-weight distinction (mass in grams/kilograms, weight in newtons) and students record both definitions before a brief class check."
+      }
+     ],
+     "teacher_notes": "This unit opens the measurement stage, which is the practical foundation for calculating density. The most common confusion to anticipate is students using 'mass' and 'weight' interchangeably — the chapter makes the distinction explicit, and the unit distinction (grams vs newtons) is the clearest diagnostic. If only one balance is available, run groups in rotation while the others record the mass-vs-weight distinction in their notebooks.",
+     "materials": [
+      "Digital weighing balance (one per group or shared)",
+      "Two solid objects per group (e.g. a stone and an eraser)",
+      "Worksheet with mass-recording table and mass-vs-weight distinction"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure Mass and Volume Using Standard Instruments",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Measuring Volume of Liquids: Meniscus, Least Count, and Reading Technique (Activities 9.4 and 9.5)",
+     "activity_description": "Students examine a measuring cylinder, determine its least count, and practise reading the meniscus at eye level for a colourless liquid. They measure a series of water volumes with increasing precision, recording each reading and identifying the correct reading position relative to the meniscus curve.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates how to determine least count and how to hold the eye at the correct level relative to the meniscus before groups practise independently."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Determine the least count of their cylinder, measure three assigned water volumes, record readings, and note which direction they read the meniscus for colourless liquid."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the previous unit — we can now measure mass; the next measurement needed for density is volume, and this unit covers liquid volume."
+      },
+      {
+       "minutes": "7-16",
+       "activity": "Teacher demonstrates least count determination (Activity 9.4) and correct meniscus reading technique (Activity 9.5) for colourless and coloured liquids."
+      },
+      {
+       "minutes": "16-34",
+       "activity": "Groups practise measuring three assigned water volumes, recording each reading, and noting the meniscus type and reading rule applied."
+      },
+      {
+       "minutes": "34-45",
+       "activity": "Groups compare readings across the class; the teacher highlights any systematic errors in eye-level positioning and notes the difference in reading technique for coloured liquids."
+      }
+     ],
+     "teacher_notes": "This unit continues the measurement strand, moving from mass to liquid volume. The persistent error with measuring cylinders is reading from the top of the meniscus rather than the bottom for colourless liquids — have students bend down or raise the cylinder to eye level rather than looking down at it, which is the error the chapter specifically names. The least count activity (9.4) is essential groundwork because students who skip it tend to record volumes beyond the instrument's resolution.",
+     "materials": [
+      "Measuring cylinders of varying sizes (one per group)",
+      "Water",
+      "Recording worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure Mass and Volume Using Standard Instruments",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Volume of Regular and Irregular Solids: Formula and Displacement (Activities 9.6 and 9.7)",
+     "activity_description": "Students calculate the volume of a rectangular block using l×w×h (Activity 9.6), then measure the volume of an irregular solid using the water displacement method in a measuring cylinder (Activity 9.7). They record both measurements and compare results where both methods are applicable.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces Activity 9.6 for regular solids, then demonstrates the displacement setup for Activity 9.7 before groups run the displacement method themselves."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Measure and calculate the volume of the rectangular block using the formula, then measure the volume of an assigned irregular solid by water displacement and record both results."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher recaps the previous unit's liquid volume measurement and poses the question: how do we find the volume of a solid that has no formula for its shape?"
+      },
+      {
+       "minutes": "7-18",
+       "activity": "Groups measure the dimensions of the rectangular block and calculate volume using the l×w×h formula, recording all steps."
+      },
+      {
+       "minutes": "18-36",
+       "activity": "Teacher demonstrates the displacement method setup; groups then submerge their irregular solid, record initial and final water levels, and calculate the displaced volume."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Groups record both volume values in their worksheets and the teacher leads a brief discussion on which method is general and why displacement works for any shape."
+      }
+     ],
+     "teacher_notes": "This unit completes the volume-measurement toolkit begun in the previous unit, moving from liquid to solid volume. A common error is students recording the final water level as the volume rather than the difference between initial and final levels — have them write the subtraction explicitly in their worksheets. The comparison between the two methods also reinforces that volume is a property of the object, not of the method used to find it.",
+     "materials": [
+      "Rectangular wooden or plastic block (one per group)",
+      "Irregular solid (pebble or metal chunk, one per group)",
+      "Measuring cylinders",
+      "Ruler or vernier calipers",
+      "Water",
+      "Recording worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure Mass and Volume Using Standard Instruments",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Calculating Density: Combining Measurements",
+     "activity_description": "Students use the mass and volume data they collected in the previous units for the rectangular block to calculate its density, then apply the same calculation to the irregular solid. They convert their answers into different unit systems using the chapter's conversion table and verify whether each object would float or sink, linking back to the stage 3 prediction.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Works through the chapter's model density calculation as a reference before students apply the same steps to their own data."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Calculates density for both objects using their own recorded mass and volume data, performs unit conversions, and writes a float-or-sink verdict with a justification referencing water's density."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher models the density calculation from the chapter's worked example, emphasising the importance of consistent units before dividing."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Students independently calculate density for the rectangular block and the irregular solid using their own recorded data, showing all working steps."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Students convert their density values into at least two unit systems using the chapter's conversion table, recording the converted values."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Students write their float-or-sink verdict for each object and compare it to what they actually observed in the stage 3 float-or-sink activity, noting any discrepancy."
+      }
+     ],
+     "teacher_notes": "This unit brings the measurement stage to its logical conclusion by combining mass and volume into a density value, then looping back to the observation from the float-or-sink units. Watch for students who forget to divide and instead multiply, or who mix units (e.g. mass in grams, volume in cubic metres) — unit consistency is the most frequent source of calculation error here. The float-or-sink verification is a powerful self-check: if a student's calculated density places a floating object above water's density, there is a measurement error to trace.",
+     "materials": [
+      "Students' own recorded mass and volume data from previous units",
+      "Unit conversion table (from chapter)",
+      "Calculator (optional)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Does Density Change? Temperature, Particles, and Hot Air Balloons",
+     "activity_description": "Students read the chapter's particle-level explanation of why heating decreases density, then apply it to two scenarios from the chapter: hot air rising in the atmosphere and the operation of a hot air balloon. They construct a cause-effect diagram linking temperature increase to particle spacing, volume change, and final density change.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the particle-level reasoning from the chapter and models the first step of the cause-effect diagram before releasing students to complete it."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Complete the cause-effect diagram collaboratively, then each member individually applies the completed diagram to explain the hot air balloon scenario in two to three sentences."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the previous stage — we can now calculate density; the question now is what changes density, starting with temperature."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Teacher presents the particle-level mechanism from the chapter (rising temperature → particles spread → volume increases, mass constant → density decreases) and starts the cause-effect diagram."
+      },
+      {
+       "minutes": "20-33",
+       "activity": "Groups complete the cause-effect diagram, inserting the missing links for both the hot-air-rising and hot-air-balloon scenarios."
+      },
+      {
+       "minutes": "33-45",
+       "activity": "Each student writes an individual explanation of the hot air balloon and shares with a partner; the teacher selects one strong and one incomplete explanation to discuss as a class."
+      }
+     ],
+     "teacher_notes": "This unit opens the final content stage, requiring students to reason causally about density change rather than simply measure it. Watch for explanations that say 'hot air is lighter' without grounding the claim in the particle-spacing mechanism — the chapter is explicit about mass remaining constant while volume increases, and this distinction is what separates a causal explanation from a label. The cause-effect diagram structure scaffolds the reasoning before students write it in prose.",
+     "materials": [
+      "Cause-effect diagram template",
+      "Chapter text passage on temperature and density"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Anomalous Water: Density at 4°C, Ice Floating, and Ecological Significance",
+     "activity_description": "Students examine the anomalous density behaviour of water — maximum density at 4 °C, expansion on freezing — and explain why ice floats. They then reason about the ecological consequence (floating ice insulates water below, sustaining aquatic life in cold climates) and connect this to the parallel ecological consequence of gas solubility from stage 2.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Explains the anomalous behaviour of water using the chapter's account and explicitly draws the parallel to the dissolved-oxygen ecological argument from the earlier stage."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Records the anomaly explanation, writes a two-step ecological reasoning chain, and then notes the parallel with the gas-solubility ecological consequence from the earlier unit."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher opens by asking: does the rule 'density decreases with temperature' always hold? — then introduces water as the chapter's named exception."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Teacher explains the water anomaly (maximum density at 4 °C, expansion on freezing, ice less dense than liquid water) and students record the explanation with a simple annotated diagram."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Students individually write the two-step ecological reasoning chain: ice floats → forms insulating layer → water below stays warm enough for aquatic life."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Teacher draws the explicit parallel to the cold-water/dissolved-oxygen ecological consequence from the gas-solubility unit, and students note the connection in their own words."
+      }
+     ],
+     "teacher_notes": "This unit addresses the most conceptually surprising part of the chapter — water's anomalous density behaviour — and uses it to deepen causal reasoning about ecological consequences. The misconception to watch for is students thinking ice floats because it is 'lighter' in an unqualified sense; insist on the phrase 'less dense than liquid water' and connect it to the particle-level expansion argument from the previous unit. Drawing the parallel to the dissolved-oxygen argument from the gas-solubility stage shows students that ecology appears twice in this chapter through density and solubility, reinforcing the chapter's unity.",
+     "materials": [
+      "Chapter text passage on water anomaly",
+      "Annotated diagram template"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Pressure and Density: Gases, Liquids, and Solids Compared",
+     "activity_description": "Students compare how pressure affects the density of gases, liquids, and solids, using the chapter's compressibility account. They construct a three-column summary table (state of matter, compressibility under pressure, magnitude of density change) and explain why gases are so much more affected by pressure than liquids or solids.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the chapter's compressibility argument for each state of matter and guides students in constructing the three-column table."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Completes the three-column table, then writes a one-paragraph explanation of why gases compress more than liquids and why this matters for density calculations."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the previous two units on temperature effects, framing pressure as the second variable that changes density."
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Teacher presents the chapter's account for gases (compressible, large density change), liquids (nearly incompressible, small density change), and solids (least compressible, negligible change) in sequence."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Students individually complete the three-column summary table, filling in each state of matter's compressibility level and density-change magnitude."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Students write the one-paragraph explanation and share with a neighbour for peer review before the teacher resolves any remaining confusion."
+      }
+     ],
+     "teacher_notes": "This unit completes the causal-explanation stage by adding pressure as a second variable acting on density. A common confusion is treating all states of matter as equally compressible — the chapter is clear that gases are dramatically more affected than liquids or solids, and the particle-spacing argument from the temperature unit extends naturally here. The three-column table is intentionally comparative because the chapter presents the three states in contrast, not in isolation.",
+     "materials": [
+      "Three-column summary table worksheet",
+      "Chapter text passage on pressure and density"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Applying Both Strands: Classify Solutions and Predict Float-or-Sink with Density Reasoning",
+     "activity_description": "Students receive a set of scenario cards presenting unfamiliar situations — e.g. a substance dissolving partially at room temperature but fully at 50 °C, an object denser than oil but less dense than water. For each, they classify the solution property and predict the float-or-sink behaviour, then write a unified explanation referencing both the solution classification and the density reasoning.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes the scenario cards and models the dual-strand reasoning approach for one card before releasing groups to work through the remaining cards."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Work through each scenario card, classifying the solution property and predicting float-or-sink behaviour, then write a joint explanation integrating both reasoning strands."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces the dual-strand application task and models the reasoning for one scenario card, showing how the solution classification and density prediction are written together."
+      },
+      {
+       "minutes": "8-30",
+       "activity": "Groups work through three or four scenario cards, recording their classification, prediction, and joint explanation for each."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups share their explanations for the most challenging card; the class evaluates each explanation for completeness and accuracy."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher consolidates the session by naming what students have just done — applying both strands of the chapter simultaneously — and frames the next unit as a whole-chapter synthesis."
+      }
+     ],
+     "teacher_notes": "This unit is the application peak of the plan, requiring students to reason across both chapter strands in a single task — the co-central character of the chapter is made explicit here. Watch for explanations that address only one strand; the scenario cards are designed so that a complete answer requires both, and groups that produce one-strand answers should be prompted with 'what does the solution classification tell you? what does the density tell you?' The teacher's closing frame is important: explicitly naming what students achieved prepares them for the synthesis unit that follows.",
+     "materials": [
+      "Scenario card set (four cards per group)",
+      "Dual-strand explanation worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the two central questions, provides the concept map template with key nodes pre-filled, and circulates to probe the quality of links students draw between nodes."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Complete the concept map collaboratively, then each member individually writes a short explanation of the novel scenario using the map as a reference."
+      }
+     ],
+     "activity_title": "The Coral Reef Report: Reading a Marine Ecosystem Through Solutions and Density",
+     "activity_description": "Students receive a one-page field report describing a shallow coral reef site — including water temperature at two depths, salinity measurements, a list of objects and organisms found at each depth, and a small data table of masses and volumes. Working as marine scientists, they must interpret every piece of data using the chapter's two strands: classifying the water samples as solutions (with saturation and concentration reasoning) and applying density and relative-density reasoning to explain which organisms and objects are found at which depth. The task produces a completed analyst's annotation sheet; the act of annotating IS the synthesis.",
+     "teacher_notes": "This synthesis unit casts students as marine scientists annotating a coral reef field report, requiring them to apply both the solutions strand and the density strand to a single unfamiliar dataset. Resist pre-teaching the reef context — reading the report silently before any class discussion is the crucial first move, and the annotation sheet's two-column structure (concept named before reasoning written) is what prevents vague answers (see material). For the closing discussion, ask groups to read one annotation aloud and let the class judge whether the concept name and the reasoning genuinely match.",
+     "materials": [
+      "Coral Reef Field Report sheet, one per student (see visual aid: 'Coral Reef Field Report')",
+      "Analyst's Annotation Sheet, one per student (see visual aid: 'Analyst's Annotation Sheet')",
+      "Blackboard or whiteboard and chalk or markers (for writing the data table if printed sheets are unavailable)"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher distributes the Coral Reef Field Report sheet and reads the opening paragraph aloud while students follow: 'A research team recorded conditions at two depths in a warm, shallow reef — the surface layer (30 °C) and the bottom layer (18 °C). At the surface they measured higher salinity: 38 g of salt dissolved per litre of water. At the bottom salinity was 34 g per litre. The team also found that fish and sea creatures were far more numerous at the bottom than the surface. They collected three objects from the reef floor: Object A (mass 48 g, volume 40 cm³), Object B (mass 27 g, volume 36 cm³), and Object C (mass 55 g, volume 50 cm³). The water density at the bottom layer is 1.026 g/cm³.' Teacher then poses the opening question to the whole class without accepting answers yet: 'Which layer holds more dissolved oxygen, and why? Which objects would you expect to find resting on the floor rather than floating up?' Students read the full report silently and begin the annotation sheet individually."
+      },
+      {
+       "minutes": "8-18",
+       "activity": "Students work individually on the first half of the annotation sheet: the three rows covering the solution strand — (1) classifying both water layers as solutions and identifying solute and solvent, (2) comparing the concentration of the two layers using the salinity figures and stating which is more concentrated, and (3) explaining the dissolved-oxygen contrast between the warm surface and the cool bottom using the gas-solubility rule. Teacher circulates, checking that the 'Concept applied' column names a specific term from the chapter (not just 'solutions') and that the reasoning column uses the numerical salinity data, not just a general statement."
+      },
+      {
+       "minutes": "18-32",
+       "activity": "Students move to the density strand rows — (4) calculating the density of each of the three objects using mass ÷ volume and recording units, (5) comparing each object's density to the bottom-layer water density (1.026 g/cm³) and predicting float or sink with a relative-density statement, (6) explaining in one sentence why the surface layer water is denser than pure water and how the dissolved salt contributes to that. Groups of three are formed at this point; students compare their calculations for Objects A, B, and C, resolve any discrepancies, and agree on a single set of values. Teacher moves between groups and asks: 'What does your relative density value tell you? State it as a comparison to 1.' A brief whole-class check is called at minute 28: teacher asks one group to call out the three density values; class confirms or corrects. (Object A: 1.2 g/cm³ — sinks; Object B: 0.75 g/cm³ — floats; Object C: 1.1 g/cm³ — sinks.)"
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Groups tackle the final two rows of the annotation sheet, which require both strands together: (7) explaining why fish concentrate at the bottom layer by linking dissolved-oxygen availability (gas solubility decreasing with temperature) to the conditions at 18 °C versus 30 °C, and (8) predicting what would happen to Object B if the temperature of the water dropped significantly — whether the water's density would change, whether that affects the float-or-sink outcome, and what the particle-level reason is. Each group writes a two-sentence combined answer for row 8 that names one concept from each strand. Teacher listens in and selects two groups with different phrasings of row 8 to share in the closing band."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "The two selected groups read their row-8 annotation aloud. Class evaluates: does each sentence name a distinct concept, and do the two sentences connect? Teacher then closes not by summarising the chapter but by naming what the annotation sheet demonstrated: every entry required either identifying what kind of mixture the water is and how much it can hold, or measuring and comparing how much matter occupies a given space — and the reef made both questions necessary at the same time. The chapter's work — defining solutions and measuring density — turned a pile of field data into explanations."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Problem-based learning: students are cast as analysts working from authentic-style field data rather than constructed word problems, so the chapter's concepts are tools they reach for rather than steps they are told to follow. The unfamiliar marine setting demands that they decide which concept applies at each point in the report, making the integration visible.",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Coral Reef Field Report",
+       "text": "A research team recorded conditions at two depths in a warm, shallow reef — the surface layer (30 °C) and the bottom layer (18 °C). At the surface they measured higher salinity: 38 g of salt dissolved per litre of water. At the bottom salinity was 34 g per litre. The team also found that fish and sea creatures were far more numerous at the bottom than the surface. They collected three objects from the reef floor: Object A (mass 48 g, volume 40 cm³), Object B (mass 27 g, volume 36 cm³), and Object C (mass 55 g, volume 50 cm³). The water density at the bottom layer is 1.026 g/cm³."
+      },
+      {
+       "type": "table",
+       "title": "Coral Reef Field Report — Object Data",
+       "table": "Object | Mass (g) | Volume (cm³)\nA | 48 | 40\nB | 27 | 36\nC | 55 | 50"
+      },
+      {
+       "type": "table",
+       "title": "Analyst's Annotation Sheet",
+       "table": "Row | Data item from report | Concept applied | Reasoning\n1 | Both water layers | Classifying solutions — identify solute and solvent | \n2 | Salinity figures: 38 g/L (surface) vs 34 g/L (bottom) | Concentration — which layer is more concentrated | \n3 | Dissolved oxygen contrast between layers | Gas solubility decreases with temperature | \n4 | Objects A, B, C — mass and volume given | Density = mass ÷ volume (record units) | \n5 | Each object vs bottom-layer water (1.026 g/cm³) | Relative density — float or sink prediction | \n6 | Surface layer vs pure water | Dissolved salt increases density of water | \n7 | Fish concentrated at bottom layer | Link dissolved-oxygen availability to temperature (18 °C vs 30 °C) | \n8 | Object B if water temperature drops significantly | Combined: density strand + solubility/solution strand (two sentences) | "
+      },
+      {
+       "type": "prose",
+       "title": "Answer Key — Density Calculations and Float/Sink Outcomes",
+       "text": "Object A: density = 48 ÷ 40 = 1.2 g/cm³. Relative density compared to bottom-layer water (1.026 g/cm³) is greater than 1 — sinks.\nObject B: density = 27 ÷ 36 = 0.75 g/cm³. Relative density less than 1 — floats.\nObject C: density = 55 ÷ 50 = 1.1 g/cm³. Relative density greater than 1 — sinks.\nFor row 8 (Object B and falling temperature): as water temperature drops, its density increases; if the water becomes denser than 0.75 g/cm³ by a greater margin the float outcome is reinforced. Accept any two-sentence answer that names one concept from each strand — e.g. 'Colder water is denser because its particles are closer together (density strand); colder water also holds more dissolved gas such as oxygen because gas solubility increases as temperature falls (solution strand).' Push groups that skip the density entries for organisms with: 'How would you measure whether this organism is denser than the water around it?'"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 45,
+    "count": 17
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and Classify Mixtures",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students observe and classify uniform and non-uniform mixtures, identify solute and solvent in solid-liquid and liquid-liquid solutions, and apply the proportion rule to classify the components of each solution type.",
+    "implied_lo": "Students can classify a given mixture as a solution or non-solution, identify its solute and solvent, and justify the classification using observable characteristics and the proportion rule.",
+    "cg": "CG-1",
+    "c_code": "C-1.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Investigate Saturation and Concentration",
+    "total_stages": 5,
+    "period_numbers": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students investigate the saturation limit of a solution experimentally, formalise the terms unsaturated, saturated, dilute, concentrated, and solubility, observe the effect of temperature on solid solubility through a demonstration, and compare solid-solubility and gas-solubility temperature trends, explaining the ecological consequence for aquatic life.",
+    "implied_lo": "Students can determine whether a solution is saturated or unsaturated, explain how temperature affects solubility differently for solids and gases, and construct a causal explanation of the ecological consequence of dissolved oxygen availability in water of different temperatures.",
+    "cg": "CG-1",
+    "c_code": "C-1.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Observe Float-or-Sink and Build the Density Concept",
+    "total_stages": 5,
+    "period_numbers": [
+     7,
+     8
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students observe and predict float-or-sink behaviour for a set of objects, formulate a rule grounded in their results, and connect that rule to the formal definition of density as mass per unit volume, including SI units and the relative density concept.",
+    "implied_lo": "Students can articulate why objects float or sink using the concept of density, apply the formula density equals mass divided by volume, and express density values in standard units.",
+    "cg": "CG-1",
+    "c_code": "C-1.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Measure Mass and Volume Using Standard Instruments",
+    "total_stages": 5,
+    "period_numbers": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students measure mass using a digital balance with the tare function, measure liquid volume using a measuring cylinder with correct meniscus reading technique, measure the volume of regular solids using the formula and irregular solids using water displacement, and combine their measurements to calculate density and verify float-or-sink predictions.",
+    "implied_lo": "Students can measure mass and volume using appropriate instruments and techniques, calculate density from their own data, convert between unit systems, and use calculated density to predict and verify float-or-sink behaviour.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "total_stages": 5,
+    "period_numbers": [
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students explain how temperature and pressure affect density using the particle-level mechanism, apply this reasoning to hot air, anomalous water behaviour, and ecological consequences, compare pressure effects across states of matter, and integrate both the solution-classification and density-reasoning strands to explain novel scenarios.",
+    "implied_lo": "Students can classify mixtures by their solution properties and measure or calculate physical properties of matter — specifically mass, volume, and density — and apply both simultaneously to explain float-or-sink behaviour and the effect of temperature and pressure on density in familiar and unfamiliar contexts.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and Classify Mixtures",
+    "implied_lo_assessed": "Students can classify a given mixture as a solution or non-solution, identify its solute and solvent, and justify the classification using observable characteristics and the proportion rule.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student dissolves sugar in water and stirs until no sugar grains are visible. Which statement correctly identifies the solute and solvent in this mixture?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both sugar and water are solvents, because the final mixture is uniform throughout.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Sugar is the solute and water is the solvent, because sugar is the substance that disperses evenly throughout water.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Sugar is the solvent because it is the substance that changes — it disappears into the liquid.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Water is the solute and sugar is the solvent, because water is added to the sugar to make it dissolve.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Confuses the direction of the proportion rule — the student thinks the substance added in larger quantity (water) must be the solute rather than the solvent.",
+       "A": "Overgeneralises the uniformity criterion: the student knows a solution is uniform but incorrectly applies 'uniform' as a label for both components rather than for the mixture as a whole.",
+       "C": "Identifies the solute by visible disappearance rather than by proportion — a common perceptual confusion where 'vanishing into the liquid' is read as evidence of being the solvent."
+      },
+      "inclusivity": "Students who struggle with the vocabulary can be directed to draw and label the scenario before choosing an option. A bilingual glossary of solute and solvent anchored to the salt-in-water example supports students still internalising the terms."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and Classify Mixtures",
+    "implied_lo_assessed": "Students can classify a given mixture as a solution or non-solution, identify its solute and solvent, and justify the classification using observable characteristics and the proportion rule.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Mixture | Appearance after stirring | Settles on standing?\nP (salt + water) | Clear, no visible particles | No\nQ (sand + water) | Cloudy, visible grains | Yes\nR (vinegar + water) | Clear throughout | No\nS (soil + water) | Muddy, uneven colour | Yes",
+    "question_text": "Refer to the table provided. Which mixtures qualify as solutions?",
+    "options": [
+     {
+      "label": "A",
+      "text": "All four mixtures, because all are prepared by mixing two substances together.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "P and R only, because they remain uniform and do not settle.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "P only, because a solution must involve a solid dissolving in a liquid.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "P, R, and Q, because all three involve a liquid as one of the components.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Uses the presence of liquid as the classification criterion rather than uniformity — the student has not yet connected the definition of a solution to the 'uniform throughout' observable.",
+       "C": "Restricts the definition of a solution to solid-in-liquid only, overlooking that liquid-liquid mixtures that are uniform throughout (like vinegar in water) also qualify as solutions.",
+       "A": "Confuses the act of mixing with the result of forming a solution — equates any combination of two substances with a solution, ignoring the uniformity requirement."
+      },
+      "inclusivity": "Students who find the table dense can be supported by circling the 'Settles on standing?' column first as the most decisive observable cue. Oral explanation of their reasoning (teacher asking 'why did you exclude Q?') is an equally valid demonstration for students who find written classification tasks difficult."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate Saturation and Concentration",
+    "implied_lo_assessed": "Students can determine whether a solution is saturated or unsaturated, explain how temperature affects solubility differently for solids and gases, and construct a causal explanation of the ecological consequence of dissolved oxygen availability in water of different temperatures.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student adds salt to water at 25 °C until no more salt dissolves. She then heats the solution to 60 °C and finds that more salt dissolves. Which statement best describes the solution at 25 °C before heating?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The solution at 25 °C was concentrated, because it contained the maximum possible amount of salt.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The solution at 25 °C was dilute, because all the added salt eventually dissolved.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The solution at 25 °C was saturated, because no additional solute could dissolve at that temperature.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The solution at 25 °C was unsaturated, because it could dissolve more salt when heated.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "A": "Confuses 'saturated' with 'concentrated' — the student associates maximum solute content with the term concentrated rather than with the temperature-specific saturation boundary.",
+       "D": "Uses the outcome of heating (more dissolved) to classify the original state — the student applies the post-heating condition to relabel the before-heating state, conflating what happens later with what was true earlier.",
+       "B": "Recalls that dilute means 'little solute' and misapplies it here because the salt did dissolve — the student is not applying the saturation definition but a vague notion of how much dissolved."
+      },
+      "inclusivity": "Students can be invited to draw a 'before heating' and 'after heating' diagram showing solute particles, using the diagrams to anchor their classification before selecting an option. The scenario can also be acted out with a cup of water if the student benefits from a concrete reference."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate Saturation and Concentration",
+    "implied_lo_assessed": "Students can determine whether a solution is saturated or unsaturated, explain how temperature affects solubility differently for solids and gases, and construct a causal explanation of the ecological consequence of dissolved oxygen availability in water of different temperatures.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A river runs through a warm industrial area where factory cooling water raises the river temperature significantly. A scientist predicts that fish populations in this river will decline. Which explanation, grounded in the chapter's account of gas solubility, best supports this prediction?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The factory's warm water introduces chemical pollutants that destroy dissolved oxygen in the river.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Warmer water holds less dissolved oxygen because gas solubility decreases as temperature increases, leaving insufficient oxygen for fish to survive.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Warmer water holds more dissolved oxygen because, as with solid solutes, solubility always increases with temperature.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Warmer water makes fish less active, so they consume more oxygen, depleting the supply faster.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Overgeneralises the solid-solubility rule to gases — the student applies the 'solubility increases with temperature' pattern without recognising that gases behave in the opposite direction.",
+       "D": "Introduces a biological mechanism (fish activity) not present in the chapter's account — the student is reasoning from general biology rather than from the solubility concept taught.",
+       "A": "Introduces chemical pollution as a cause, which is plausible in real life but is not the chapter's explanation — the student bypasses the solubility mechanism entirely."
+      },
+      "inclusivity": "Students who find the scenario abstract can be directed to restate the solid-vs-gas solubility contrast in their own words before evaluating each option. Pair discussion before individual selection supports students who need to verbalise the comparison."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate Saturation and Concentration",
+    "implied_lo_assessed": "Students can determine whether a solution is saturated or unsaturated, explain how temperature affects solubility differently for solids and gases, and construct a causal explanation of the ecological consequence of dissolved oxygen availability in water of different temperatures.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student prepares a saturated solution of baking soda at 20 °C. She then raises the temperature to 70 °C and adds more baking soda, which dissolves completely. Classify the solution at 20 °C and at 70 °C (before the extra baking soda was added), and explain in one sentence why the classification changes.",
+    "options": [],
+    "expected_elements": [
+     "Correctly classifies the solution at 20 °C as saturated.",
+     "Correctly classifies the solution at 70 °C (before extra addition) as unsaturated — because raising temperature increases solubility for solids, so the existing solute amount is now below the new maximum.",
+     "Gives a causal explanation linking higher temperature to higher solubility ceiling for solid solutes."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle with the two-classification structure can be supported by a prompt: 'Complete this sentence — at 20 °C the solution is ___ because ___; at 70 °C it is ___ because ___.' Oral response with teacher scribing is an equivalent demonstration for students who need it."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Observe Float-or-Sink and Build the Density Concept",
+    "implied_lo_assessed": "Students can articulate why objects float or sink using the concept of density, apply the formula density equals mass divided by volume, and express density values in standard units.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Object X has a mass of 60 g and a volume of 20 cm³. Object Y has a mass of 20 g and a volume of 40 cm³. The density of water is 1 g/cm³. Which statement correctly predicts the behaviour of each object in water?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both objects float because neither is as dense as a typical stone or metal object.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Object X floats because it is heavier and has more matter in it; Object Y sinks because it is lighter.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Object X sinks because it has a larger mass; Object Y floats because it has a larger volume.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Object X sinks because its density (3 g/cm³) is greater than water's density; Object Y floats because its density (0.5 g/cm³) is less than water's density.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Reverts to the 'heavy objects sink' alternative conception — uses mass alone as the predictor and ignores the volume component of the density formula entirely.",
+       "C": "Separates mass and volume rather than combining them into density — the student recognises both quantities are relevant but does not apply the ratio.",
+       "A": "Applies a subjective scale ('typical stone or metal') rather than the precise comparison to water's density — the student has not internalised the threshold rule."
+      },
+      "inclusivity": "Students who struggle with the calculation can be provided a partially completed division step. The prediction itself (float or sink) can also be checked by asking students to physically place objects in water if materials are available, before connecting the observation to the calculated density."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Observe Float-or-Sink and Build the Density Concept",
+    "implied_lo_assessed": "Students can articulate why objects float or sink using the concept of density, apply the formula density equals mass divided by volume, and express density values in standard units.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classify matter based on observable physical characteristics."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student cuts a piece of iron into four equal smaller pieces. She predicts that the smaller pieces will float in water because they are lighter than the original block, which sank. Which statement best evaluates her prediction?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Her prediction is correct because smaller pieces displace less water, so they experience more upward force.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Her prediction is correct because smaller pieces have less mass, which means they are less dense.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Her prediction is incorrect because density depends on mass divided by volume and does not change when an object is cut into smaller pieces of the same material.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Her prediction is incorrect because the pieces are still made of iron, and heavier materials always sink regardless of size.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Conflates mass with density — the student correctly notes that mass decreases but incorrectly concludes that density therefore decreases, missing that volume decreases proportionally.",
+       "A": "Introduces the concept of upward (buoyant) force, which is not the chapter's explanatory framework — the student is importing an external concept rather than applying density.",
+       "D": "Reaches the correct conclusion (sinks) but for the wrong reason — 'heavier materials always sink' is the original misconception the chapter directly addresses; the correct reason is density, not heaviness."
+      },
+      "inclusivity": "Students who need a concrete anchor can be asked to write the density formula and substitute halved mass and halved volume to verify the ratio is unchanged. Peer explanation — one student who selected A explaining to one who selected B — is a productive inclusion strategy here."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure Mass and Volume Using Standard Instruments",
+    "implied_lo_assessed": "Students can measure mass and volume using appropriate instruments and techniques, calculate density from their own data, convert between unit systems, and use calculated density to predict and verify float-or-sink behaviour.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Step | Reading\nInitial water level in measuring cylinder | 30.0 mL\nFinal water level after submerging the object | 47.5 mL\nMass of object (from digital balance) | 52.5 g",
+    "question_text": "A student uses the water displacement method to find the volume of an irregular pebble. Refer to the table provided. What is the density of the pebble, and what does this predict about its behaviour in water?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Density = 1.8 g/mL; the pebble sinks because the student should have used the final water level (47.5 mL) as the volume.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Density = 3.0 g/mL; the pebble floats because the displaced water volume (17.5 mL) is greater than 10 mL.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Density = 3.0 g/mL; the pebble sinks because its density is greater than water's density of 1 g/mL.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Density = 52.5 g/mL; the pebble sinks because volume should be read as the initial water level (30.0 mL) subtracted from the mass.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Calculates density correctly but applies an incorrect float-or-sink rule — the student does not compare the calculated density to water's density of 1 g/mL as the threshold.",
+       "A": "Uses the final water level alone as the volume (47.5 mL) rather than the difference — the most common procedural error in the water displacement method, leading to an incorrect density.",
+       "D": "Conflates mass with volume in the subtraction — the student subtracts the initial water level from the mass, indicating a fundamental confusion between the two measured quantities."
+      },
+      "inclusivity": "Students can be given a two-step scaffold: first write 'volume = final − initial = ___', then write 'density = mass ÷ volume = ___'. Students who need additional support can verify their volume step by redrawing the before-and-after cylinder diagrams."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure Mass and Volume Using Standard Instruments",
+    "implied_lo_assessed": "Students can measure mass and volume using appropriate instruments and techniques, calculate density from their own data, convert between unit systems, and use calculated density to predict and verify float-or-sink behaviour.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student places a container on a digital balance, which reads 45 g. She then places a rock in the container without pressing tare, and records the reading of 172 g as the mass of the rock. A classmate says the recorded mass is wrong. Which error did the student make, and what is the correct mass of the rock?",
+    "options": [
+     {
+      "label": "A",
+      "text": "She forgot to use the tare function; the correct mass of the rock is 172 + 45 = 217 g.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "She forgot to use the tare function; the correct mass of the rock is 172 − 45 = 127 g.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "She measured weight instead of mass; she should convert 172 g to newtons to get the correct answer.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "She placed the rock in the wrong container; the mass is correct as long as the container is included.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "A": "Identifies the tare error correctly but applies an additive correction rather than subtracting — the student understands the container's mass was included but reverses the direction of the adjustment.",
+       "C": "Confuses the mass-vs-weight distinction taught in the chapter — the student recognises a measurement concept issue but applies the wrong one (unit conversion rather than tare function).",
+       "D": "Misunderstands the purpose of the tare function — the student believes that including the container's mass is acceptable practice, which would make every mass measurement container-dependent."
+      },
+      "inclusivity": "Students who find the subtraction confusing can be shown the balance display sequence: empty balance, container placed, tare pressed (resets to 0), then rock placed — and asked 'what does the display show after tare?' to ground the subtraction in the instrument's operation."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure Mass and Volume Using Standard Instruments",
+    "implied_lo_assessed": "Students can measure mass and volume using appropriate instruments and techniques, calculate density from their own data, convert between unit systems, and use calculated density to predict and verify float-or-sink behaviour.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student measures the dimensions of a rectangular block and finds it is 5 cm long, 4 cm wide, and 2 cm tall. Its mass is 160 g. Calculate the density of the block in g/cm³ and state whether the block would float or sink in water. Show all working steps.",
+    "options": [],
+    "expected_elements": [
+     "Correctly calculates volume using l × w × h: 5 × 4 × 2 = 40 cm³.",
+     "Correctly calculates density: 160 g ÷ 40 cm³ = 4 g/cm³.",
+     "States units correctly as g/cm³.",
+     "Correctly predicts the block sinks because its density (4 g/cm³) is greater than water's density (1 g/cm³)."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who need scaffolding can be given a structured template: Volume = ___ × ___ × ___ = ___ cm³; Density = ___ ÷ ___ = ___ g/cm³; Prediction: ___. Students who prefer a verbal explanation of the float-or-sink reasoning can provide it orally while writing only the calculation steps."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "implied_lo_assessed": "Students can classify mixtures by their solution properties and measure or calculate physical properties of matter — specifically mass, volume, and density — and apply both simultaneously to explain float-or-sink behaviour and the effect of temperature and pressure on density in familiar and unfamiliar contexts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A scientist observes that a hot air balloon rises when the air inside is heated. Using the chapter's particle-level explanation of how temperature affects density, which chain of reasoning correctly explains why the balloon rises?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Heating causes air particles inside the balloon to move faster → the particles hit the balloon walls harder → the balloon gets lighter → the balloon rises.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Heating causes air particles inside the balloon to spread further apart → the volume of the enclosed air increases while mass stays constant → density of the inside air decreases → the inside air is less dense than the cooler surrounding air → the balloon rises.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Heating causes air particles to compress tightly together inside the balloon → the density of the inside air increases → the balloon experiences a greater upward push → the balloon rises.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Heating the air inside the balloon increases the mass of the air → the balloon becomes heavier than the surrounding air → the surrounding air pushes the heavier balloon upward.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Captures one true fact (particles move faster) but breaks the causal chain by jumping to 'lighter' without the density mechanism — the student is not reasoning through the volume-mass-density relationship.",
+       "C": "Reverses the direction of the particle-spacing effect: the student applies a pressure-based compression model to a temperature scenario, conflating the two variables.",
+       "D": "Incorrectly states that heating increases mass — the student has not internalised that mass is constant while volume changes, which is the chapter's central claim in this section."
+      },
+      "inclusivity": "Students can be invited to reconstruct the cause-effect chain on paper before evaluating options — writing 'temperature increases → particles ___ → volume ___ → density ___' as a pre-selection step. Students who struggle with the chain can also draw particle diagrams for hot and cold air inside the balloon."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "implied_lo_assessed": "Students can classify mixtures by their solution properties and measure or calculate physical properties of matter — specifically mass, volume, and density — and apply both simultaneously to explain float-or-sink behaviour and the effect of temperature and pressure on density in familiar and unfamiliar contexts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Water has its highest density at 4 °C. Below this temperature, water expands as it freezes into ice at 0 °C. A student claims: 'Because ice is less dense than liquid water, it sinks to the bottom of a lake in winter, protecting fish by keeping them away from the cold surface.' Is the student's claim correct? Explain why or why not.",
+    "options": [
+     {
+      "label": "A",
+      "text": "The claim is correct: ice does sink because it is denser than liquid water at 0 °C, and the insulating layer forms at the bottom rather than the surface.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The claim is correct: ice forms at the bottom because it is colder and colder substances are always denser, causing them to settle.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The claim is incorrect: ice floats — not sinks — because it is less dense than liquid water, and this forms a surface layer that insulates the water below and protects aquatic life.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The claim is incorrect: ice floats, but this harms aquatic life because it blocks sunlight from reaching the water below.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Applies the general rule 'cooling increases density' without recognising water's anomalous behaviour — the student treats water like every other substance and misses the chapter's explicit exception.",
+       "B": "Extends the 'colder means denser' rule without any exception, again missing the anomaly; the student also conflates settling with freezing, treating them as the same process.",
+       "D": "Correctly identifies that ice floats but introduces a harmful consequence (blocking sunlight) that the chapter does not name — the chapter's ecological claim is specifically the insulating benefit, not a sunlight-blocking harm."
+      },
+      "inclusivity": "Students can first draw a cross-section of a frozen lake and label where they think ice forms before evaluating options. Students who need additional support with the ecological reasoning can be shown the parallel to the dissolved-oxygen argument from the earlier stage as an analogy."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "implied_lo_assessed": "Students can classify mixtures by their solution properties and measure or calculate physical properties of matter — specifically mass, volume, and density — and apply both simultaneously to explain float-or-sink behaviour and the effect of temperature and pressure on density in familiar and unfamiliar contexts.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student argues: 'Pressure affects the density of all substances equally — if you double the pressure on any substance, its density doubles.' Using the chapter's account of how pressure affects solids, liquids, and gases differently, evaluate this claim. Explain where the student is right, where they are wrong, and why the difference exists.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly identifies that the student's claim is wrong as a general statement: pressure does not affect all substances equally.",
+     "States that gases are significantly compressible — increased pressure reduces their volume considerably, leading to a large increase in density.",
+     "States that liquids are nearly incompressible — pressure has only a small effect on their volume and therefore a small effect on their density.",
+     "States that solids are the least compressible — under normal pressure conditions, changes in density of solids are negligible.",
+     "Provides a mechanistic explanation: the difference arises because particles in gases are far apart and can be pushed closer together, while particles in liquids and solids are already much closer together and resist further compression.",
+     "Acknowledges the partial truth in the student's claim: pressure does increase density for all substances, but the magnitude of the effect differs greatly."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who find the full evaluation structure challenging can be given three sentence starters: 'For gases, the student is ___ because ___'; 'For liquids, ___'; 'For solids, ___'. Students who prefer a diagrammatic approach can draw particle arrangements for all three states under low and high pressure as part of their response."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+    "implied_lo_assessed": "Students can classify mixtures by their solution properties and measure or calculate physical properties of matter — specifically mass, volume, and density — and apply both simultaneously to explain float-or-sink behaviour and the effect of temperature and pressure on density in familiar and unfamiliar contexts.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties such as volume, weight, and density using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Scenario | Observation | Classification of mixture | Nature of density change | Explanation needed\nA cook adds salt to boiling water (100 °C) and finds it dissolves faster and more of it dissolves than in cold water. An oil drop is placed in the same boiling salt water and floats to the surface. | Salt dissolves fully; oil floats. | ? | ? | Why does more salt dissolve, and why does the oil float?\nA scuba diver descends to a great depth in the ocean where temperature is near 0 °C and pressure is much higher than at the surface. The diver observes that bubbles of air from the tank compress noticeably. | Air bubbles smaller at depth. | Not a solution; pure gas | ? | Why do the bubbles compress?\nA lake in a cold region is covered with a layer of ice. Fish are observed alive beneath the ice in winter. Scientists measure more dissolved oxygen in the deep cold water than in the warmer surface water before it froze. | Ice floats; fish survive below. | ? | ? | Explain the ice layer's role and the dissolved oxygen pattern.",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. For each scenario, complete the missing columns and write a brief explanation in the final column. Your explanation must use at least two of the following concepts from the chapter: saturated/unsaturated, solubility, density, temperature effect on density, pressure effect on density, and float-or-sink rule.",
+    "scaffold": "For each scenario: (1) Classify the mixture (solution or non-solution; if solution, is it saturated or unsaturated?). (2) Name the nature of the density change occurring (increasing, decreasing, or no significant change — and for which substance). (3) Write your explanation in two to three sentences, linking the concepts to the observation.",
+    "format_of_output": [
+     "Completed table with all three rows filled in for 'Classification of mixture' and 'Nature of density change' columns.",
+     "A two-to-three sentence written explanation for each scenario in the 'Explanation needed' column, referencing at least two chapter concepts per scenario."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The final stage's co-central implied LO requires students to classify mixtures by solution properties and reason about density simultaneously; a classification-with-justification table is the most natural vehicle because it structures both operations in parallel across three scenarios, making both strands equally visible and independently assessable.",
+      "what_this_demonstrates": "A complete response evidences the student's ability to simultaneously apply solution classification (saturated/unsaturated, solubility, temperature effect on solid and gas solubility) and density reasoning (density formula, temperature and pressure effects on density, float-or-sink rule) to unfamiliar scenarios — the terminal cognitive operation of the chapter.",
+      "reading_the_scaffold": "The table separates the two classification columns from the explanation column deliberately: a student who fills the classification columns correctly but writes a weak explanation has demonstrated classification without causal integration; a student who writes a good explanation but leaves classifications blank has reasoned without grounding. Both patterns are diagnostic. Scenario 2 is the pressure-only case and tests whether students can isolate the pressure variable from temperature. Scenario 3 requires the ecological reasoning from both strands (floating ice and dissolved oxygen), making it the most integrative row.",
+      "strong_vs_weak_markers": "Strong responses: name specific chapter concepts in explanations (e.g. 'solubility increases with temperature for solids, so more salt dissolves'); connect density change to the particle-level mechanism (volume increases while mass stays constant); correctly classify the solution in scenario 1 as unsaturated at boiling temperature and use the float-or-sink rule for oil; explain compressed bubbles via gas compressibility under pressure; link floating ice to density less than liquid water and dissolved oxygen to gas solubility decreasing with temperature. Weak responses: use vague language ('the water gets different'); classify all scenarios as saturated; explain floating by 'it is lighter' without density; fail to link the ecological outcomes to the mechanisms.",
+      "inclusivity": "Students who need additional support can be given a concept bank (saturated, unsaturated, solubility, density, temperature increases → solid solubility increases / gas solubility decreases, pressure → gases compress) to draw from when writing explanations. Students who prefer diagrams can annotate the scenario descriptions with particle-level sketches as part of their explanation column, with the teacher reading the diagram as equivalent evidence."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

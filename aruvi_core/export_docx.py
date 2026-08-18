@@ -115,6 +115,25 @@ def _fixed_table(table, col_inches):
             row.cells[i].width = Inches(w)
 
 
+def _grid_hairlines(table, color=LINE_HEX, v_color="ECE5D8"):
+    """Hairlines PLUS light column separators (founder, 2026-08-18) — for the prepared
+    worksheet/key tables only, where the columns must read on paper. The vertical rules
+    are lighter than the horizontal ones; outer left/right stay open like every other
+    table in the export."""
+    b = OxmlElement("w:tblBorders")
+    for edge, col, sz in (("top", color, "4"), ("bottom", color, "4"),
+                          ("insideH", color, "4"), ("insideV", v_color, "4")):
+        e = OxmlElement(f"w:{edge}")
+        e.set(qn("w:val"), "single"); e.set(qn("w:sz"), sz)
+        e.set(qn("w:space"), "0"); e.set(qn("w:color"), col)
+        b.append(e)
+    for edge in ("left", "right"):
+        e = OxmlElement(f"w:{edge}")
+        e.set(qn("w:val"), "nil")
+        b.append(e)
+    table._tbl.tblPr.append(b)
+
+
 def _hairlines(table, color=LINE_HEX):
     b = OxmlElement("w:tblBorders")
     for edge in ("top", "bottom", "insideH"):
@@ -300,6 +319,49 @@ def _lp_unit(doc, p, *, first_pedagogy):
         mp = _para(doc, space_after=2)
         _run(mp, "Materials: ", bold=True, size=9, color=INK)
         _run(mp, ", ".join(mats), size=9, color=BODY)
+    # Typed prepared content (polish pass, 2026-08-18): print parity with the PDF —
+    # a worksheet/card/key ships as a real Word table, not a paragraph about one.
+    aids = meta.get("visual_aids")
+    if isinstance(aids, str) and aids:
+        ap = _para(doc, space_after=2)
+        _run(ap, "Visual aid: ", bold=True, size=9, color=INK)
+        _run(ap, aids, size=9, color=BODY)
+    elif isinstance(aids, list):
+        for va in aids:
+            kind = "Prepared table" if va.get("type") == "table" else "Prepared text"
+            kp = _para(doc, space_before=4, space_after=2)
+            _run(kp, kind.upper() + (" · " if va.get("title") else ""), bold=True,
+                 size=7.5, color=SOFT, caps=True)
+            if va.get("title"):
+                _run(kp, va["title"], italic=True, size=8.5, color=SOFT)
+            if va.get("type") == "table" and isinstance(va.get("table"), dict):
+                tb = va["table"]; header = tb.get("header") or []; rows = tb.get("rows") or []
+                ncols = max([len(header)] + [len(r) for r in rows]) if (header or rows) else 0
+                if ncols:
+                    if tb.get("caption"):
+                        _run(_para(doc, space_after=1), tb["caption"], italic=True,
+                             size=8, color=SOFT)
+                    t = doc.add_table(rows=len(rows) + (1 if header else 0), cols=ncols)
+                    _grid_hairlines(t)
+                    r0 = 0
+                    if header:
+                        for j, h in enumerate(header):
+                            _bg(t.cell(0, j), "F1ECE2")
+                            _run(t.cell(0, j).paragraphs[0], h, bold=True, size=7.5,
+                                 color=SOFT, caps=True)
+                        r0 = 1
+                    for i, row in enumerate(rows):
+                        for j in range(ncols):
+                            _run(t.cell(i + r0, j).paragraphs[0],
+                                 row[j] if j < len(row) else "", size=9, color=BODY)
+                    if tb.get("source_note"):
+                        _run(_para(doc, space_before=1), tb["source_note"], italic=True,
+                             size=7.5, color=SOFT)
+                    doc.add_paragraph().paragraph_format.space_after = Pt(1)
+            elif va.get("type") == "prose" and va.get("text"):
+                for chunk in str(va["text"]).split("\n\n"):
+                    _run(_para(doc, space_after=2), chunk.replace("\n", " "),
+                         size=9, color=BODY)
     notes = p.get("teacher_notes") or []
     if notes:
         npp = _para(doc, space_after=3)

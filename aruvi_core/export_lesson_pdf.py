@@ -309,6 +309,21 @@ def render_lesson_pdf_html(
   .p-line {{ font-size: 7.5pt; color: #2a2a2a; margin-top: 6px; margin-bottom: 2px; line-height: 1.45; }}
   .p-lbl {{ font-weight: bold; color: {INK}; }}
 
+  .va-block {{ margin-top: 7px; padding-top: 5px; border-top: 0.5px solid #e4ddd2; }}
+  .va-kicker {{ font-size: 6.5pt; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #8a8a86; margin-bottom: 3px; }}
+  .va-title {{ text-transform: none; letter-spacing: 0; font-style: italic; color: #6b6258; }}
+  .va-cap {{ font-size: 7pt; font-style: italic; color: #6b6258; margin-bottom: 2px; }}
+  .va-tbl {{ width: 100%; border-collapse: collapse; margin-top: 2px; }}
+  .va-th {{ font-size: 6.5pt; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase;
+    color: #5a5248; border-bottom: 1px solid #2a2a2a; border-right: 0.5px solid #ece5d8;
+    padding: 2px 6px 3px 5px; }}
+  .va-td {{ font-size: 7.5pt; color: #2a2a2a; line-height: 1.4; vertical-align: top;
+    border-bottom: 0.5px solid #e4ddd2; border-right: 0.5px solid #ece5d8;
+    padding: 3px 6px 3px 5px; }}
+  .va-src {{ font-size: 6.5pt; font-style: italic; color: #8a8a86; margin-top: 2px; }}
+  .va-prose {{ font-size: 7.5pt; color: #2a2a2a; line-height: 1.5; white-space: pre-wrap; }}
+
   .phase-tbl {{ width: 100%; margin-top: 5px; }}
   .phase-tbl td {{ vertical-align: top; padding: 4px 0; border-bottom: 0.5px solid #f0ede9; }}
   .ph-band {{ width: 60px; font-size: 6.5pt; color: #8a8a86; padding-right: 12px; }}
@@ -529,6 +544,43 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False) -> str:
         if mats else ""
     )
 
+    # Typed prepared content (polish pass, 2026-08-18): the port pre-splits table aids
+    # through normalize.parse_table, so this renders STRUCTURE — a teacher printing the
+    # plan gets the worksheet/card/key as a real grid, not a paragraph describing one.
+    # Legacy string visual_aids (a textbook-figure reference) keep their quiet line.
+    aids = (p.get("meta", {}) or {}).get("visual_aids")
+    aid_blocks = []
+    if isinstance(aids, str) and aids:
+        aid_blocks.append(
+            f'<div class="p-line"><span class="p-lbl">Visual aid:</span> {_esc(aids)}</div>')
+    elif isinstance(aids, list):
+        for va in aids:
+            kind = "Prepared table" if va.get("type") == "table" else "Prepared text"
+            title = va.get("title") or ""
+            head = (f'<div class="va-kicker">{_esc(kind)}'
+                    + (f' · <span class="va-title">{_esc(title)}</span>' if title else "")
+                    + "</div>")
+            if va.get("type") == "table" and isinstance(va.get("table"), dict):
+                t = va["table"]
+                cap = (f'<div class="va-cap">{_esc(t.get("caption"))}</div>'
+                       if t.get("caption") else "")
+                th = "".join(f'<td class="va-th">{_esc(c)}</td>' for c in t.get("header") or [])
+                trs = "".join(
+                    "<tr>" + "".join(f'<td class="va-td">{_esc(c)}</td>' for c in r) + "</tr>"
+                    for r in t.get("rows") or [])
+                src = (f'<div class="va-src">{_esc(t.get("source_note"))}</div>'
+                       if t.get("source_note") else "")
+                body = (f'{cap}<table class="va-tbl"><tr>{th}</tr>{trs}</table>{src}')
+            elif va.get("type") == "prose" and va.get("text"):
+                # xhtml2pdf ignores `white-space: pre-wrap` — line breaks in card text
+                # must be literal <br/> or every card runs into one paragraph on paper.
+                body = ('<div class="va-prose">'
+                        + _esc(va["text"]).replace("\n", "<br/>") + "</div>")
+            else:
+                continue
+            aid_blocks.append(f'<div class="va-block">{head}{body}</div>')
+    aids_html = "".join(aid_blocks)
+
     # Teacher notes — the colleague's margin note (view-model first-class field),
     # replacing the raw activity description.
     notes = p.get("teacher_notes") or []
@@ -558,7 +610,7 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False) -> str:
         if hw else ""
     )
 
-    return band + mat_line + notes_line + phase_tbl + homework
+    return band + mat_line + notes_line + aids_html + phase_tbl + homework
 
 
 def export_lesson_plan_pdf(

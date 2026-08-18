@@ -1,0 +1,1524 @@
+{
+ "filename": "ch_07_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 7,
+ "chapter_title": "Temperature and its Measurement",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 13
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 13 periods = 520 minutes\nTotal: 13 periods · 8h 40min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "13x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 7",
+  "ledger_ts": "20260817_113057_sci_vi_07_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_vi_07_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_07_canonical_p11.json": "2026-08-17T12:38:00",
+    "ch_07_canonical_p09.json": "2026-08-17T12:38:00",
+    "ch_07_canonical_p07.json": "2026-08-17T12:38:00"
+   },
+   "replaced": {
+    "period_number": 13,
+    "period_duration_minutes": 40,
+    "progression_stage": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "synthesis": true,
+    "pedagogical_approach": "Inquiry approach",
+    "activity_title": "The Full Picture — Temperature, Instruments, and Reliable Measurement",
+    "activity_description": "Students work through a structured synthesis task that draws together every major strand of the chapter: the unreliability of touch, the definition of temperature, the three thermometers and their appropriate uses, the three scales and conversions, measurement technique and precision, and real-world data collection. The task requires students to reason across these strands simultaneously rather than recall them in isolation.",
+    "roles": [
+     {
+      "actor": "Students (Groups)",
+      "role_description": "Work through a multi-part synthesis task that requires them to select instruments, justify scale choices, convert a temperature value, identify a technique error, and interpret a small data set — all within a single connected scenario."
+     },
+     {
+      "actor": "Teacher",
+      "role_description": "Introduces the task, circulates to ask probing questions that push groups to connect concepts rather than treat each part independently, and facilitates a brief whole-class debrief."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-6",
+      "activity": "Teacher frames the synthesis task as a challenge that brings together everything in the chapter, presents the scenario, and checks that students understand what each part is asking."
+     },
+     {
+      "minutes": "6-27",
+      "activity": "Groups work through the synthesis task, tackling instrument selection, scale justification, a Celsius-to-Kelvin conversion, a technique error identification, and a short data pattern interpretation in sequence."
+     },
+     {
+      "minutes": "27-36",
+      "activity": "Groups share their responses for the most contested parts — typically the scale justification and technique error — and the class reaches consensus through discussion."
+     },
+     {
+      "minutes": "36-40",
+      "activity": "Teacher closes by stating the chapter's central argument: reliable measurement of temperature as a physical property of matter requires choosing the right instrument, using it correctly, reading the appropriate scale, and understanding what the numbers mean."
+     }
+    ],
+    "teacher_notes": "This synthesis unit is designed to be self-contained: it provides its own scenario and data, and students need only the chapter's content to complete it — not any specific earlier activity, worksheet, or homework from this arc. Watch for groups that treat the parts of the task as independent mini-questions rather than as facets of one scenario; the most productive intervention is to ask how their answer to one part constrains their answer to the next. The closing teacher statement should be unhurried — it is the one moment where the whole chapter's purpose is stated plainly, and students benefit from hearing it articulated clearly before the chapter closes.",
+    "materials": [
+     "Printed synthesis task sheets (one per group)",
+     "Blackboard for class debrief"
+    ],
+    "homework": []
+   }
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_vi_07_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced": {
+    "teacher_notes": "Distribute one data card per group and let groups read it in silence before any class discussion — the scenario must land as a genuine problem, not a prompted exercise. The 'felt cool' entry in the log is the hook back to Unit 1 of any plan: expect some groups to dismiss it quickly; ask them to explain to the class exactly why it cannot count as a measurement. The Kelvin-to-Celsius conversion is the arithmetic crux; circulate early to catch groups who invert the formula (subtracting 273.15 instead of doing so from K). The division-value calculation is the same operation students performed on the laboratory thermometer: the data card gives two numbered marks and the count of divisions between them, so the method is identical even though the instrument is a refrigerator thermometer. Resist supplying the protocol rules yourself; let the audit findings drive them. A group whose protocol correctly addresses instrument choice, technique (immersed and vertical; eye level), scale, and the rejection of sensory judgment has demonstrated synthesis of the whole chapter. If time is short, the protocol can be condensed to two rules per group with a shared class list built on the board.",
+    "materials": [
+     "Data card (one per group, prepared by teacher before class — see content below)",
+     "Blackboard or whiteboard",
+     "Student notebooks or loose paper for the written protocol"
+    ],
+    "visual_aids": null
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question the limits of sensory perception",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Can Your Hands Tell the Truth?",
+     "activity_description": "Students dip their hands into containers of warm water, tap water, and ice-cold water in sequence, recording predictions before and observations after each dip. The same water sample feels differently depending on which hand is used, revealing that touch-based judgement is subjective and unreliable.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the three water containers, distributes recording sheets, and guides the class to articulate the contradiction they observe."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Perform the hand-dipping sequence, record predictions and observations, and share the surprising result with their group."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher introduces the opening scenario about Lambok and Phiban — can fever always be detected by touch — to motivate the investigation."
+      },
+      {
+       "minutes": "5-20",
+       "activity": "Groups carry out the hand-dipping activity, recording individual predictions and observations on their sheets for each water container."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Groups share findings; class discussion surfaces the key contradiction — the same water felt warm to one hand and cool to the other simultaneously."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher consolidates the inference: sensory perception of hotness and coldness is context-dependent and cannot be relied upon for accurate judgement."
+      }
+     ],
+     "teacher_notes": "This is the chapter's opening unit, anchoring everything that follows in a lived contradiction students can articulate in their own words. Watch for students who assume one hand simply 'got it wrong' — the productive insight is that both hands gave a genuine signal, yet those signals disagreed, which is precisely why an objective measure is needed. A useful checkpoint before moving on: ask the class to state in one sentence why the activity showed touch is unreliable.",
+     "materials": [
+      "Three bowls or containers",
+      "Warm water",
+      "Tap water",
+      "Ice-cold water (ice cubes in water)",
+      "Recording sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question the limits of sensory perception",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "From Sensation to Scale — Introducing Temperature",
+     "activity_description": "Students encounter temperature as the scientific concept that replaces unreliable sensory judgement. They are introduced to the definition of temperature, the idea that a hotter body has a higher temperature, and the thermometer as the instrument that measures it. Two types of thermometers — clinical and laboratory — are distinguished by purpose.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured explanation connecting the previous unit's contradiction directly to why temperature as a defined quantity was needed, and introduces thermometer types."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Take structured notes and respond to teacher questions that check whether they can articulate the difference between sensory perception and measured temperature."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher revisits the previous unit's contradiction and poses the question: what would a reliable measure of hotness need to be like?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Teacher explains temperature as an objective measure of hotness or coldness, clarifies that a higher temperature means greater hotness, and defines a thermometer."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Teacher distinguishes clinical thermometers from laboratory thermometers by purpose and typical setting, using descriptions from the chapter."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Students individually write one sentence defining temperature and one sentence contrasting the two thermometer types; a few are read aloud for class feedback."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the sensory-perception contradiction from the previous unit — make that link explicit at the start so students see temperature as an answer, not an arbitrary new topic. A common early confusion is that 'temperature' and 'heat' mean the same thing; at this stage the chapter does not formally distinguish them, so focus only on temperature as a measure of hotness or coldness without introducing heat as a separate quantity. The written sentence at the close is a quick formative checkpoint: students who can contrast the two thermometer types by purpose are ready for the hands-on work ahead.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Images of a clinical thermometer and a laboratory thermometer (drawn or printed)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Identify and read instruments — clinical thermometer",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Reading Body Temperature — Clinical Thermometer in Practice",
+     "activity_description": "Students use a digital clinical thermometer to measure their own and classmates' body temperatures, recording readings in a table. They observe that healthy individuals do not all read exactly 37.0 °C and begin to notice the range of normal values.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates correct technique — placement, hygiene precautions, reading the display — before students begin, and circulates to confirm safe handling."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Take turns measuring temperature within their group, recording each reading in the shared table and noting whose temperature differs most from 37.0 °C."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher demonstrates the clinical thermometer: how to hold it, where to place the tip, how to read the digital display, and hygiene steps between users."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups measure and record body temperatures for each member, entering readings into a class data table on the board as groups finish."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Class examines the completed table and discusses why readings differ, linking variation to age, activity level, and time of day as given in the chapter."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher notes the stated population average of 37.0 °C and the normal range (not below 35 °C or above 42 °C) as a class summary."
+      }
+     ],
+     "teacher_notes": "This is the first hands-on measurement unit of the chapter; ensure students understand that 37.0 °C is a population average before they begin so they do not treat any deviation as an error. A common mistake is reading the display before the thermometer has settled — remind students to wait for the beep or stable reading. Grouping students so that each group records at least four readings gives a richer spread of data for the class discussion.",
+     "materials": [
+      "Digital clinical thermometers (one per group or shared set)",
+      "Sanitising wipes or alcohol swabs",
+      "Recording table sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Identify and read instruments — clinical thermometer",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Three Scales — Celsius, Fahrenheit, and Kelvin",
+     "activity_description": "Students learn the three temperature scales used in the chapter — Celsius, Fahrenheit, and Kelvin — and their key reference points. They practise applying the conversion formula from Celsius to Kelvin and understand why kelvin carries no degree sign and is the SI unit of temperature.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Explains each scale systematically, works through the conversion formula with a worked example, and links each scale to the contexts in which students will encounter it."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Copy and apply the conversion formula, converting two or three Celsius values to kelvin and checking against the teacher's solution."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher introduces the Celsius scale, connecting it to the clinical thermometer readings from the previous unit, and explains the degree sign convention."
+      },
+      {
+       "minutes": "10-20",
+       "activity": "Teacher introduces the Fahrenheit scale, noting 98.6 °F as normal body temperature and explaining that both scales are encountered in everyday contexts."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Teacher introduces kelvin as the SI unit, explains why there is no degree sign, and works through K = °C + 273.15 with at least two examples including normal body temperature."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Students individually convert three given Celsius values to kelvin; the class checks answers together and teacher addresses errors."
+      }
+     ],
+     "teacher_notes": "This unit follows directly from the clinical thermometer readings — students have Celsius values in hand, making the conversion exercise immediately concrete. The most persistent error at this stage is writing 'K°' or applying the formula backwards; address both explicitly during the worked example. A quick oral check — asking students why kelvin has no degree sign — reveals whether they have the conceptual distinction between a scale and a unit.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Printed or dictated conversion formula reference"
+     ],
+     "homework": [
+      "Convert five given body temperature readings from Celsius to kelvin and explain in one sentence why kelvin is called the SI unit of temperature."
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify and read instruments — laboratory thermometer",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Exploring the Laboratory Thermometer's Range and Structure",
+     "activity_description": "Students examine a laboratory thermometer, identify its structural parts — sealed glass tube, liquid-filled bulb, narrow liquid column, and graduated Celsius scale — and determine the lowest and highest temperatures it can measure by reading the scale markings at both ends.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Names and describes each structural part before distributing thermometers, and models how to hold the thermometer safely for reading."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine their thermometer, label a diagram of its parts, and record the minimum and maximum scale readings."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher describes the structure of the laboratory thermometer — tube, bulb, liquid column, scale — and explains how a liquid (alcohol or mercury) expands and contracts with temperature."
+      },
+      {
+       "minutes": "10-25",
+       "activity": "Groups examine their thermometer, complete a labelled diagram, and identify the lowest and highest temperature the thermometer can measure by reading the end markings."
+      },
+      {
+       "minutes": "25-36",
+       "activity": "Groups share their range values; class discusses why the laboratory thermometer has a wider range than the clinical thermometer given its different uses."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher briefly contrasts alcohol (coloured red) and mercury as the two liquids used, noting mercury's toxicity mentioned in the chapter's sidebar."
+      }
+     ],
+     "teacher_notes": "Students moving from the clinical thermometer in the previous two units to the laboratory thermometer here should be directed to notice what is structurally different — especially the liquid column and the analogue scale — rather than treating this as an entirely new object. A common confusion is thinking the liquid column itself is mercury regardless of colour; clarify that the chapter's example uses a coloured liquid and that mercury, now less common, looks silver. Checking that every student can correctly read the end-of-scale values before moving on is a useful gate for the next unit's calculation work.",
+     "materials": [
+      "Laboratory thermometers (one per group)",
+      "Blank thermometer diagrams for labelling",
+      "Ruler"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify and read instruments — laboratory thermometer",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Calculating the Smallest Division",
+     "activity_description": "Students calculate the temperature value represented by one division of the laboratory thermometer by selecting two numbered scale marks, counting the divisions between them, and dividing the temperature difference by the division count. They discover that the example thermometer shows 1 °C per division.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Select two numbered marks on their thermometer, count the divisions between them, perform the division calculation, and record the smallest measurable temperature step."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the method with one example on the board before students work independently, and circulates to check counting errors."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher models the calculation procedure on the board using a different pair of marks as the example, emphasising that students must count spaces, not lines."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students independently select their own pair of numbered marks, count divisions, perform the calculation, and record the result with units."
+      },
+      {
+       "minutes": "28-37",
+       "activity": "Class compares results; students who chose different pairs of marks discuss whether they get the same smallest division value, and the teacher confirms consistency as a property of a uniform scale."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher summarises: the smallest division tells a user the precision limit of the thermometer — readings finer than this cannot be trusted."
+      }
+     ],
+     "teacher_notes": "This unit builds on the previous unit's scale-reading work and introduces a calculation embedded in instrument use — a step up in cognitive demand. The most frequent error is counting lines rather than spaces between marks; walk through the distinction explicitly with a drawn scale on the board before releasing students. If a group gets a fractional result (e.g. 0.5 °C), treat it as a productive finding rather than an error — some thermometers do have finer divisions.",
+     "materials": [
+      "Laboratory thermometers (same as previous unit)",
+      "Calculation recording sheets",
+      "Blackboard or whiteboard for modelled example"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify and read instruments — laboratory thermometer",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Measuring Temperature of Warm Water — Technique and Precautions",
+     "activity_description": "Students dip the laboratory thermometer into warm water and read the temperature while the thermometer remains immersed, holding it vertically and keeping the eye level with the liquid surface. They practise the correct measurement technique and apply the precautions described in the chapter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Prepares warm water and demonstrates correct immersion technique — vertical hold, eye level with meniscus, reading while immersed — before groups begin."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Dip the thermometer into warm water, apply the correct technique, read and record the temperature, then deliberately try an incorrect technique and note how the reading changes."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher demonstrates the full measurement technique emphasising three precautions: thermometer must remain immersed while reading, held vertically, and eye kept level with the liquid surface."
+      },
+      {
+       "minutes": "10-27",
+       "activity": "Groups measure the warm water temperature using correct technique and record the reading; they then take a second reading with the thermometer tilted and note the difference."
+      },
+      {
+       "minutes": "27-37",
+       "activity": "Groups compare their readings across the class; teacher draws out why readings taken while not immersed or at an angle are unreliable."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher reinforces the fragile-glass precautions: hold near the top, never place directly over a flame, and rinse with cool water before storing."
+      }
+     ],
+     "teacher_notes": "Students in this unit move from reading a scale to actively applying measurement technique — connect this explicitly to the clinical thermometer technique from the earlier unit, noting what is similar (hygiene and correct placement) and what is different (immersion requirement). Parallax error from reading at an angle is the chief source of incorrect values here; having students deliberately tilt the thermometer for one reading makes the effect visible rather than theoretical. Groups that finish early can repeat the measurement with cooler water and confirm the liquid column moves as expected.",
+     "materials": [
+      "Laboratory thermometers",
+      "Beakers or cups of warm water",
+      "Recording sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify and read instruments — laboratory thermometer",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Doesn't Water Boil at 100 °C Here?",
+     "activity_description": "Students examine a set of boiling water temperature readings collected by multiple students in Shillong, all slightly below 100 °C. They discuss possible reasons for the variation between readings and for the departure from the textbook value, arriving at the role of altitude in lowering boiling point.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the Shillong boiling-point data and poses the guiding question, then facilitates discussion without revealing the altitude explanation until students have reasoned toward it."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine the data, list possible explanations for both inter-student variation and the departure from 100 °C, and rank their explanations by plausibility."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher presents the Shillong boiling water readings on the board and asks two distinct questions: why do readings differ between students, and why do all readings fall below 100 °C?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups discuss and list possible explanations for both questions, drawing on their experience with thermometer technique from previous units."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Groups share explanations; class evaluates each one, eventually converging on measurement technique as the source of inter-student variation and altitude as the explanation for values below 100 °C."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Teacher consolidates: boiling point varies with atmospheric pressure, which changes with altitude — Shillong is at a higher elevation than sea level, so water boils below 100 °C there."
+      }
+     ],
+     "teacher_notes": "This unit applies measurement technique knowledge from the previous three units to a real dataset that contains a genuine scientific puzzle — make sure students have had time to attempt their own explanations before the altitude connection is confirmed. A common premature closure is attributing all variation to bad technique; validate technique error as a real contribution but push the class to explain why even careful readers got values below 100 °C. Students who recall or mention altitude from geography knowledge should be encouraged — this is a productive horizontal connection.",
+     "materials": [
+      "Boiling water temperature data table (written on board or printed)",
+      "Blackboard for recording group explanations"
+     ],
+     "homework": [
+      "Look up the altitude of your own town or city and predict whether water would boil above or below 100 °C there, giving one reason for your prediction."
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Collect and analyse real temperature data — air temperature",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Recording the Sky — Maximum and Minimum Air Temperature",
+     "activity_description": "Students are introduced to the room thermometer as a device for measuring air temperature and to the practice of weather services recording daily maximum and minimum temperatures. They begin collecting air temperature data from weather reports over successive days, setting up their personal data table.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the room thermometer, explains how weather services record maximum and minimum temperatures, and models how to set up the data collection table."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Set up their own data table with columns for date, maximum temperature, and minimum temperature, and record the first available day's readings from a shared weather source."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher introduces the room thermometer and distinguishes it from the clinical and laboratory thermometers by purpose, connecting to the chapter's broader theme of matching instrument to context."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Teacher explains how weather services monitor air temperature and presents the idea of maximum and minimum daily readings, showing an example data table format."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Students set up their individual ten-day data table and enter the first day's maximum and minimum readings from a weather source the teacher provides or displays."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Teacher explains the data collection routine for the coming units and specifies what students should record between now and the analysis unit."
+      }
+     ],
+     "teacher_notes": "This unit marks a shift from measuring a single value under controlled conditions to collecting data across time — orient students to this change explicitly, noting that weather data has natural variation unlike the controlled classroom measurements they have been making. The most likely confusion is treating maximum and minimum as two separate thermometers; clarify that most modern weather stations use a single digital sensor that logs both over a 24-hour period. Setting up the table carefully now pays dividends in the analysis unit: check that every student's column headings and units are correct before the unit closes.",
+     "materials": [
+      "Printed or board-drawn ten-day data table template",
+      "Weather report source (newspaper, school weather station, or projected website data)",
+      "Rulers for table construction"
+     ],
+     "homework": [
+      "Record the maximum and minimum air temperature from a weather report for one additional day and add it to your data table."
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Collect and analyse real temperature data — air temperature",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Patterns in the Data — Analysing Ten Days of Air Temperature",
+     "activity_description": "Students pool their collected maximum and minimum air temperature data across ten days, construct a class data set, and examine it for patterns — daily range, week-to-week trend, and differences between maximum and minimum values. They attempt to articulate what drives these patterns.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Combine their individual data into a group table, compute the daily temperature range for each day, and identify the day with the greatest and smallest range."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates pattern-finding by asking guiding questions and helps groups move from describing the data to explaining what might cause the patterns they see."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Groups pool their individual data tables, resolve any discrepancies, and construct a clean shared ten-day table with daily maximum, minimum, and computed range columns."
+      },
+      {
+       "minutes": "10-25",
+       "activity": "Groups examine their table for patterns: does maximum or minimum temperature vary more day to day? Is there a rising or falling trend across the ten days? Are there any outlier days?"
+      },
+      {
+       "minutes": "25-36",
+       "activity": "Groups share their pattern descriptions with the class; teacher facilitates a discussion connecting the observed trends to the chapter's note that temperature rises toward summer and falls in winter."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher notes that monitoring these patterns over a longer period is the work of meteorologists, connecting to Anna Mani's profile in the chapter."
+      }
+     ],
+     "teacher_notes": "This unit asks students to move from data recording to pattern recognition — a step the previous unit's setup made possible. If data collection was incomplete for some students, allow groups to fill gaps using a shared class board set so no group is disadvantaged. Watch for students who describe the data numerically but do not attempt to explain it; use the prompt 'what do you think is causing this?' to push toward the causal reasoning the next stage will develop. The Anna Mani connection at the close is a natural bridge to the profile they will encounter in the chapter.",
+     "materials": [
+      "Students' completed individual data tables",
+      "Group data compilation sheets",
+      "Blackboard for class data display"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Which Thermometer, Which Scale, and Why?",
+     "activity_description": "Students are presented with a set of measurement scenarios drawn from the chapter — taking a child's fever, measuring boiling water in a lab, recording outdoor air temperature — and must select the appropriate thermometer and scale for each, justifying their choices using evidence from the chapter.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss each scenario, agree on the correct thermometer and scale, and write a one-sentence justification referencing at least one feature of the chosen instrument."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates to probe justifications, asking follow-up questions when a group selects correctly but cannot articulate why."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher presents the five scenarios on the board and checks that students understand what is being asked — instrument selection and scale selection are two separate decisions."
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Groups work through each scenario, deciding on thermometer type and scale, and drafting a written justification for each choice."
+      },
+      {
+       "minutes": "25-36",
+       "activity": "Groups share their answers for two or three scenarios; class debates any disagreements and the teacher guides resolution using chapter-specific evidence."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher draws together the key principle: the choice of instrument and scale is determined by the purpose of the measurement and the range of temperatures expected."
+      }
+     ],
+     "teacher_notes": "This unit requires students to apply what they have learned about all three thermometer types and all three scales to new decision-making contexts — it is the first unit where explanation rather than procedure is the primary demand. A common gap here is selecting the right thermometer but defaulting to Celsius for everything without considering when Kelvin or Fahrenheit would be the stated convention; the clinical temperature in Fahrenheit and the SI argument for Kelvin are worth probing. Groups that finish early can be challenged to invent a scenario of their own and swap it with another group.",
+     "materials": [
+      "Printed or board-displayed scenario cards (five scenarios)",
+      "Justification recording sheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Precision, Limits, and Why Measurement Matters",
+     "activity_description": "Students consolidate their understanding of measurement precision — what the smallest division of a thermometer tells you about the reliability of a reading — and of the limits of each instrument. They connect these ideas to the chapter's broader argument that reliable measurement of temperature requires the right instrument used correctly.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured consolidation discussion that ties together the thermometer range, smallest division, correct technique, and scale choice into a coherent account of what it means to measure temperature reliably."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Respond to teacher questions and then individually write a short explanation of why a particular incorrect thermometer choice or technique error would produce an unreliable reading."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-12",
+       "activity": "Teacher leads a discussion revisiting the smallest division calculation, the range of each thermometer, and the precautions from the measurement units, framing each as a constraint on reliability."
+      },
+      {
+       "minutes": "12-26",
+       "activity": "Teacher poses three specific error scenarios — e.g. reading after removing from the liquid, using a clinical thermometer for boiling water, writing a kelvin value with a degree sign — and students identify what is wrong and what the consequence is."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Students individually write a two-sentence explanation for one assigned error scenario, stating what rule was violated and what unreliable result would follow."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "A few explanations are read aloud and the class gives brief feedback; teacher confirms the principle that correct measurement depends on matching instrument, technique, and scale to the task."
+      }
+     ],
+     "teacher_notes": "This unit draws together the measurement precision thread — smallest division, range, technique precautions — that has run through the laboratory thermometer stage, and students need to see these as parts of one argument rather than a list of rules. The three error scenarios should be drawn directly from chapter content so students can anchor their explanations to what they read and did; do not introduce errors from outside the chapter. The individual writing task is a formative check before the synthesis unit: a student who can name the violated rule and predict the consequence has reached the level the chapter requires.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Error scenario slips or board-written scenarios",
+      "Writing materials"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Work through a multi-part synthesis task that requires them to select instruments, justify scale choices, convert a temperature value, identify a technique error, and interpret a small data set — all within a single connected scenario."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the task, circulates to ask probing questions that push groups to connect concepts rather than treat each part independently, and facilitates a brief whole-class debrief."
+      }
+     ],
+     "activity_title": "The Cold Chain Problem — Keeping Vaccines Safe",
+     "activity_description": "Students receive a data card describing a real-world logistics challenge: a rural health centre receives a batch of vaccines that must be stored between 2 °C and 8 °C. The card presents a partially filled temperature log — readings taken at different points in the journey (storage facility, transport van, health centre refrigerator) using different instruments — with some readings in °C, one in K, and one flagged as 'taken by hand, felt cool.' Students work in groups to audit the log: identifying which readings are reliable and why, converting the Kelvin reading into °C to check compliance, calculating whether the division value of the thermometer used in the van was fine enough to detect a violation, and marking any point where the cold chain may have been broken. The completed audit is then used to construct a short written protocol — three to four numbered rules — specifying which instrument, which technique, and which scale must be used at each stage to guarantee trustworthy records.",
+     "teacher_notes": "This synthesis unit asks groups to audit a flawed cold-chain temperature log and then write their own measurement protocol, so every chapter concept — sensory judgment, instrument choice, division value, scale conversion — is called into use at once rather than in isolation. Let the data card land as a genuine problem: groups read in silence before any class discussion, and resist supplying protocol rules yourself, letting the audit findings drive them. The Kelvin conversion and division-value calculation steps are the arithmetic cruxes to monitor during circulation (see material: 'Cold Chain Data Card').",
+     "materials": [
+      "Cold Chain Data Cards, one per group (see visual aid: 'Cold Chain Data Card')",
+      "Blackboard or whiteboard for the running verdict column during debrief",
+      "Student notebooks or loose paper for the written protocol"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher distributes the data card and reads the scenario aloud once: a rural health centre has just received vaccines; the cold chain log records temperatures at four checkpoints, but the log has problems. Groups read the card individually in silence, then the teacher asks: 'Before we do any calculation — which single entry on this log can you reject immediately, and why?' Students call out responses; teacher steers the class to the entry marked 'felt cool — no thermometer available,' establishing that sensory judgment is not a measurement and cannot substitute for one. This re-anchors the chapter's founding idea through the new scenario rather than through recap."
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Groups work through the audit in three steps, recording findings in their notebooks. Step 1 — Reliability check: for each of the four log entries, students state whether the instrument and technique described (clinical thermometer at body-contact setting, refrigerator thermometer read through glass without immersion, a reading given as 279 K, and the sensory entry) is appropriate for the context and why. Step 2 — Conversion: students convert the Kelvin reading to °C using K = °C + 273.15 and determine whether it falls within the 2 °C–8 °C safe range. Step 3 — Division value: the data card states that the van's thermometer has numbered marks at 0 °C and 10 °C with 20 divisions between them; students calculate the division value and decide whether this instrument could reliably detect a reading of 8.5 °C (one that would indicate a breach). Teacher circulates, prompting groups who finish early to consider what a reading taken outside the liquid — through refrigerator glass — might introduce as a source of error."
+      },
+      {
+       "minutes": "22-31",
+       "activity": "Groups share their audit findings checkpoint by checkpoint. Teacher writes a running verdict column on the board: Reliable / Unreliable / Needs conversion / Instrument mismatch. The class negotiates any disagreements, with teacher asking groups to cite the specific chapter reasoning behind each verdict — not just the answer. The division-value finding (0.5 °C per division, so the thermometer cannot distinguish a reading of 8.5 °C from 8 °C or 9 °C) is discussed as a case where a technically functioning thermometer still fails the task because its precision is insufficient — extending the chapter's idea that reliable measurement requires the right instrument used correctly."
+      },
+      {
+       "minutes": "31-38",
+       "activity": "Each group writes a cold-chain temperature protocol: three to four numbered rules that a health worker must follow to produce a trustworthy log entry. Rules must specify the instrument type, how it is to be used (immersion, orientation, eye position), the scale and unit in which the reading is recorded, and why sensory checks alone are insufficient. Groups need not all produce identical protocols; the teacher invites one group to read theirs aloud, then asks the class: 'Is there a rule missing? Is there a rule here that the chapter gives us a reason to doubt?' This surfaces any remaining gaps without the teacher supplying a model answer."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher closes by naming what the task itself showed: the scenario worked — the vaccines could be protected — only because every part of the chapter came into play together. Sensory unreliability explained why the felt-cool entry had to go. The definition of temperature as an objective property explained what the log entries actually represent. Instrument knowledge explained which thermometer belonged in a refrigerator context. Scale conversion let the Kelvin reading be checked. Division-value calculation revealed a precision limit. The protocol students wrote is the chapter's ideas functioning as a unified tool, not as a list of topics. No summary slide, no list of key terms — the audit and the protocol already did that work."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Problem-based learning: students apply the chapter's concepts as a functioning toolkit inside a concrete, unfamiliar scenario rather than revisiting those concepts in the abstract. The temperature log is the site of synthesis — every concept the chapter developed (subjective sensation vs. objective measurement, thermometer types and their appropriate contexts, scale reading, division value, scale conversion, and the sources of measurement variation) is called into use by the audit task, and the protocol students write at the end constitutes their own articulation of why the chapter's ideas matter taken together.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Cold Chain Data Card — Temperature Log",
+       "table": "Checkpoint | Instrument used | Instrument detail | Reading recorded | Technique note\nStorage facility | Refrigerator thermometer | Numbered marks at 0 °C and 10 °C; 20 divisions between them | 4 °C | Thermometer immersed in coolant; read at eye level\nTransport van | Refrigerator thermometer | Numbered marks at 0 °C and 10 °C; 20 divisions between them | 279 K | Read through refrigerator glass without immersion\nHealth centre refrigerator | Clinical thermometer | Standard body-temperature range | 6 °C | Placed in refrigerator at body-contact setting\nHealth centre — on arrival | None | — | Felt cool — no thermometer available | Sensory check by health worker"
+      },
+      {
+       "type": "prose",
+       "title": "Cold Chain Data Card — Scenario and Audit Tasks",
+       "text": "A rural health centre has just received a batch of vaccines. Vaccines must be stored between 2 °C and 8 °C at all times. The cold chain log below records temperatures at four checkpoints along the journey. The log has problems.\n\nYour group must carry out a full audit in three steps.\n\nStep 1 — Reliability check. For each of the four log entries, state whether the instrument and technique described is appropriate for the context and why. Identify any entry you can reject immediately before doing any calculation.\n\nStep 2 — Conversion. One reading is given in Kelvin. Convert it to °C using the relationship K = °C + 273.15. Decide whether the converted value falls within the safe range of 2 °C to 8 °C.\n\nStep 3 — Division value. The van's refrigerator thermometer has numbered marks at 0 °C and 10 °C with 20 divisions between them. Calculate the division value. Decide whether this instrument could reliably detect a reading of 8.5 °C — a reading that would indicate a cold-chain breach.\n\nOnce your audit is complete, write a cold-chain temperature protocol: three to four numbered rules that a health worker must follow to produce a trustworthy log entry. Each rule must specify the instrument type, how it is to be used (immersion, orientation, eye position), the scale and unit in which the reading is recorded, and why sensory checks alone are insufficient."
+      },
+      {
+       "type": "prose",
+       "title": "Debrief Verdict Column — Board Guide",
+       "text": "As groups share findings checkpoint by checkpoint, write a running verdict column on the board using these four labels:\n\nReliable | Unreliable | Needs conversion | Instrument mismatch\n\nFor each verdict, ask the group to cite the specific chapter reasoning behind it, not just the answer. Key findings to draw out:\n— The 'felt cool' entry: sensory judgment is not a measurement and cannot substitute for one.\n— The Kelvin reading (279 K): converts to 5.85 °C, which is within the safe range, but the reading was taken through refrigerator glass without immersion, introducing error.\n— The clinical thermometer: designed for body-temperature range; an instrument mismatch for a refrigerator context.\n— Division value of the van thermometer: (10 °C − 0 °C) ÷ 20 = 0.5 °C per division. This means the thermometer cannot distinguish 8.5 °C from 8 °C or 9 °C — a technically functioning instrument that still fails the task because its precision is insufficient."
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 40,
+    "count": 13
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and question the limits of sensory perception",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students perform the hand-dipping activity to experience firsthand that sensory perception of hotness is subjective and unreliable, then receive a structured introduction to temperature as the objective measure that resolves this problem.",
+    "implied_lo": "Students can demonstrate, using evidence from the hand-dipping activity, why sensory perception alone cannot reliably determine whether a body is hot or cold, and state what temperature as a concept provides instead.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Identify and read instruments — clinical thermometer",
+    "total_stages": 5,
+    "period_numbers": [
+     3,
+     4
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students use a digital clinical thermometer to measure and record body temperatures, observe variation around the population average, and learn the three temperature scales with their key reference points and the Celsius-to-Kelvin conversion.",
+    "implied_lo": "Students can measure body temperature using a digital clinical thermometer with correct technique, record readings in the appropriate unit, and convert a given Celsius temperature value to kelvin using the stated formula.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Identify and read instruments — laboratory thermometer",
+    "total_stages": 5,
+    "period_numbers": [
+     5,
+     6,
+     7,
+     8
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students examine the structure of a laboratory thermometer, determine its range, calculate the smallest division value, practise correct measurement technique for warm water, and analyse real boiling-point data to explain variation from the expected value.",
+    "implied_lo": "Students can identify the structural parts of a laboratory thermometer, calculate the value of one scale division, apply correct measurement technique including immersion and eye-level reading, and explain why a measured boiling point may differ from 100 °C.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Collect and analyse real temperature data — air temperature",
+    "total_stages": 5,
+    "period_numbers": [
+     9,
+     10
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students set up a ten-day air temperature data table, collect maximum and minimum readings from weather reports, compute daily ranges, and identify patterns of variation across the data set.",
+    "implied_lo": "Students can collect maximum and minimum air temperature data systematically over multiple days, compute daily temperature range, and describe at least one pattern of variation observed across the data set.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "total_stages": 5,
+    "period_numbers": [
+     11,
+     12,
+     13
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students select and justify the appropriate thermometer and scale for given measurement contexts, explain why measurement errors and instrument mismatches produce unreliable readings, and complete a whole-chapter synthesis task requiring simultaneous reasoning across instrument choice, scale, technique, and data interpretation.",
+    "implied_lo": "Students can select the correct thermometer and temperature scale for a given measurement purpose, justify their choice using instrument features and range constraints, and identify the consequence of a specified technique error or instrument mismatch on measurement reliability.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question the limits of sensory perception",
+    "implied_lo_assessed": "Students can demonstrate, using evidence from the hand-dipping activity, why sensory perception alone cannot reliably determine whether a body is hot or cold, and state what temperature as a concept provides instead.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "In the hand-dipping activity, a student dips her right hand into warm water and her left hand into ice-cold water, then both hands into tap water. She reports that the tap water feels cool to her right hand and warm to her left hand at the same time. What does this result best demonstrate?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Our sense of touch gives different reports for the same water depending on what the hand felt before, so touch alone is not reliable for measuring temperature.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The right hand is always more sensitive to heat than the left hand.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The tap water changed temperature between the two dips.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Warm water and cold water should not be tested with the same hands.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Selects this option: misconception that the physical property of the water changed — confuses the student's sensory context with the water's actual temperature.",
+       "B": "Selects this option: overgeneralises from one observation to a fixed anatomical claim, missing the point that the result depended on prior exposure, not on which hand was used.",
+       "D": "Selects this option: treats the experimental design as flawed rather than reading the contradiction as the intended finding — misses that the contradiction itself is the evidence."
+      },
+      "inclusivity": "Students who found the verbal scenario hard to follow can be redirected to describe the activity they performed and ask which of their own two hand-reports was 'correct'. Students who answer correctly can be extended by asking what kind of device would give a single, consistent answer."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question the limits of sensory perception",
+    "implied_lo_assessed": "Students can demonstrate, using evidence from the hand-dipping activity, why sensory perception alone cannot reliably determine whether a body is hot or cold, and state what temperature as a concept provides instead.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Recall",
+    "visual_stimulus": null,
+    "question_text": "Temperature is defined in this chapter as a measure of the hotness or coldness of a body. Which statement correctly describes the relationship between temperature and hotness?",
+    "options": [
+     {
+      "label": "A",
+      "text": "A hotter body always has a lower temperature than a cooler body.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "A hotter body has a higher temperature than a cooler body, and the difference in their temperatures quantifies the relative hotness.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Temperature is the same as the amount of heat stored in a body.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Temperature tells us how fast a body is moving.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "A": "Selects this option: reverses the relationship between temperature and hotness — a direct inversion error likely arising from a partial memory of the definition.",
+       "D": "Selects this option: conflates temperature with kinetic or motion concepts not discussed in this chapter — brings in an alternative conception from outside the chapter's scope.",
+       "C": "Selects this option: confuses temperature with heat, an alternative conception the chapter does not formally address but which the chapter's definition implicitly distinguishes by making temperature a measure of hotness, not a stored quantity."
+      },
+      "inclusivity": "Students who struggle with the comparative phrasing can be prompted to recall the Lambok and Phiban scenario and ask which body — the feverish one or the healthy one — had a higher temperature. Students who answer quickly can be asked to give a concrete numerical example using values from the clinical thermometer activity."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and read instruments — clinical thermometer",
+    "implied_lo_assessed": "Students can measure body temperature using a digital clinical thermometer with correct technique, record readings in the appropriate unit, and convert a given Celsius temperature value to kelvin using the stated formula.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A digital clinical thermometer displays a student's body temperature as 36.8 °C. Which of the following correctly expresses this temperature in kelvin?",
+    "options": [
+     {
+      "label": "A",
+      "text": "309.95 K",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "309.95 °K",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "36.8 K",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "−236.35 K",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Selects this option: ignores the conversion entirely — treats the Celsius value as a kelvin value directly, indicating the student has not applied the formula K = °C + 273.15.",
+       "B": "Selects this option: applies the arithmetic correctly but writes the unit as °K — a specific convention error the chapter explicitly addresses: kelvin carries no degree sign.",
+       "D": "Selects this option: subtracts 273.15 rather than adding it — inverts the direction of the conversion, a common procedural error."
+      },
+      "inclusivity": "Students who made an arithmetic slip can be asked to redo the calculation step by step on paper and check whether their result falls in the expected range for body temperature. Students who answer correctly can be asked to explain in one sentence why kelvin has no degree sign."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and read instruments — clinical thermometer",
+    "implied_lo_assessed": "Students can measure body temperature using a digital clinical thermometer with correct technique, record readings in the appropriate unit, and convert a given Celsius temperature value to kelvin using the stated formula.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "When a class measured body temperature using a digital clinical thermometer, different healthy students got readings of 36.5 °C, 37.1 °C, 36.9 °C, and 37.3 °C. Which explanation best accounts for these differences?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Body temperature varies naturally across individuals due to factors such as age, activity level, and time of day, so a single person's reading may differ from the population average of 37.0 °C.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Only the student who read exactly 37.0 °C was healthy; the others had a fever or were hypothermic.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The differences arose because some students placed the thermometer under the tongue and others held it in their hand.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The thermometer was faulty and gave random incorrect readings.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Selects this option: defaults to equipment error rather than natural biological variation — does not use the chapter's explanation of why body temperature varies across individuals.",
+       "B": "Selects this option: treats the population average as an exact diagnostic threshold — confuses statistical average with clinical diagnosis and misapplies the stated normal range.",
+       "C": "Selects this option: identifies a genuine technique-related source of variation but misidentifies hand-holding as the alternative technique described — confuses the precaution (place under tongue) with an invented wrong technique."
+      },
+      "inclusivity": "Students who chose option D can be redirected by asking what the chapter says about where to place the thermometer tip; this narrows the issue to placement, not hand-holding. Students who answer correctly can be extended by asking what the normal range stated in the chapter is and whether all four values in the question fall within it."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and read instruments — clinical thermometer",
+    "implied_lo_assessed": "Students can measure body temperature using a digital clinical thermometer with correct technique, record readings in the appropriate unit, and convert a given Celsius temperature value to kelvin using the stated formula.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Normal body temperature is 98.6 °F on the Fahrenheit scale and 37.0 °C on the Celsius scale. (a) Convert 37.0 °C to kelvin. (b) State one reason why kelvin is described as the SI unit of temperature. (c) Write the kelvin value using the correct notation as described in the chapter.",
+    "options": [],
+    "expected_elements": [
+     "Correct application of K = °C + 273.15 giving 310.15 K (or 310 K using 273 as stated in chapter)",
+     "Statement that kelvin is the SI unit — the internationally agreed standard unit for scientific measurement of temperature",
+     "Kelvin value written as 310.15 K (or 310 K) without a degree sign — the notation 'K°' or '°K' is incorrect"
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle with part (b) can be prompted to think about what 'SI' stands for and why having one internationally agreed unit for each quantity is useful for scientists comparing results. Students who complete all three parts quickly can be asked to also convert 98.6 °F and explain why Fahrenheit is still in common use for body temperature in some countries."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify and read instruments — laboratory thermometer",
+    "implied_lo_assessed": "Students can identify the structural parts of a laboratory thermometer, calculate the value of one scale division, apply correct measurement technique including immersion and eye-level reading, and explain why a measured boiling point may differ from 100 °C.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A laboratory thermometer has numbered marks at 30 °C and 40 °C with 10 equal divisions between them. What is the temperature value of one division, and what does this value tell the user?",
+    "options": [
+     {
+      "label": "A",
+      "text": "0.1 °C per division; there are 100 divisions between any two consecutive numbered marks.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "1 °C per division; this is the smallest temperature change the thermometer can reliably detect.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "5 °C per division; the difference between the two marks is divided by 2.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "10 °C per division; the thermometer can only measure up to 10 °C.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Selects this option: reads the temperature difference between marks directly as the division value without performing the division step — conflates the range between two marks with the size of one division.",
+       "A": "Selects this option: errors in the direction of over-precision — multiplies the number of divisions by 10 rather than dividing 10 °C by 10, misapplying the calculation procedure.",
+       "C": "Selects this option: divides by 2 instead of 10 — counts the number of labelled marks (two) rather than the number of divisions (ten) between them, a common counting confusion."
+      },
+      "inclusivity": "Students who selected option A can be shown a drawn scale and asked to count the divisions between the two marks before re-attempting the calculation. Students who answer correctly can be asked what reading they would record if the liquid column stood halfway between two consecutive marks."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify and read instruments — laboratory thermometer",
+    "implied_lo_assessed": "Students can identify the structural parts of a laboratory thermometer, calculate the value of one scale division, apply correct measurement technique including immersion and eye-level reading, and explain why a measured boiling point may differ from 100 °C.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Students in Shillong measured the temperature of boiling water and all got values slightly below 100 °C, even when their technique was correct. Which explanation best accounts for this result?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Shillong is at a higher altitude than sea level, so the atmospheric pressure is lower there and water boils at a lower temperature than 100 °C.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The Celsius scale has 100 °C as the boiling point of salt water, not pure water.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The students read the thermometer after removing it from the water, so the temperature had already dropped.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Their thermometers all had the same manufacturing defect that gave consistently low readings.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Selects this option: retreats to equipment error rather than a scientific explanation — cannot distinguish a systematic physical effect from a systematic instrument fault.",
+       "C": "Selects this option: correctly recalls a technique precaution from the chapter but misapplies it here — the scenario specifies correct technique was used, so this is a confusion between measurement error and a genuine physical phenomenon.",
+       "B": "Selects this option: introduces an incorrect detail about the definition of the Celsius scale — confuses solute content with the standard definition of 100 °C as the boiling point of pure water at sea level."
+      },
+      "inclusivity": "Students who selected option C — a plausible technique-based answer — can be redirected by asking what 'correct technique' in the scenario is intended to rule out, and then what other factor could explain a consistent result across all students. Students who answer correctly can be asked to predict what would happen to the boiling point if the experiment were repeated at sea level."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify and read instruments — laboratory thermometer",
+    "implied_lo_assessed": "Students can identify the structural parts of a laboratory thermometer, calculate the value of one scale division, apply correct measurement technique including immersion and eye-level reading, and explain why a measured boiling point may differ from 100 °C.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student measures the temperature of warm water using a laboratory thermometer. She holds the thermometer at an angle and reads the scale after lifting the thermometer out of the water. State two precautions she has violated and explain what error each violation is likely to introduce into her reading.",
+    "options": [],
+    "expected_elements": [
+     "Precaution 1: The thermometer must be held vertically — holding it at an angle causes a parallax error, making the liquid column appear to align with a scale mark it does not actually reach, giving a reading that is slightly too high or too low.",
+     "Precaution 2: The reading must be taken while the thermometer is still immersed in the liquid — removing it first allows the liquid column to begin contracting as the thermometer cools in air, so the recorded temperature will be lower than the actual water temperature."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who can name one precaution but cannot explain the error it introduces can be asked to visualise what happens to the liquid column in each case — does it move up or down? — and use that to reason about the direction of the error. Students who address both parts fully can be challenged to state which of the two errors is likely to be larger and why."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Collect and analyse real temperature data — air temperature",
+    "implied_lo_assessed": "Students can collect maximum and minimum air temperature data systematically over multiple days, compute daily temperature range, and describe at least one pattern of variation observed across the data set.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Day | Max Temp (°C) | Min Temp (°C)\n1 | 32 | 24\n2 | 31 | 23\n3 | 33 | 25\n4 | 34 | 24\n5 | 30 | 22\n6 | 29 | 21\n7 | 31 | 23\n8 | 33 | 26\n9 | 35 | 27\n10 | 36 | 28",
+    "question_text": "Refer to the table provided. A student recorded maximum and minimum air temperatures over ten days. Which statement best describes the pattern shown in the data?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both maximum and minimum temperatures show a general rising trend across the ten days, with some day-to-day variation, and the daily temperature range (max minus min) stays roughly between 7 °C and 9 °C.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The data shows no pattern — temperature values are random from day to day.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The maximum temperature is always exactly 8 °C higher than the minimum temperature each day.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The minimum temperature rises steadily each day while the maximum temperature does not change.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "C": "Selects this option: overgeneralises from a few days where the difference happens to be 8 °C without checking the full data set — applies a fixed rule without scanning for variation across all ten rows.",
+       "D": "Selects this option: reads the minimum column in isolation and notices the general rise but fails to apply the same analysis to the maximum column — partial analysis of the data set.",
+       "B": "Selects this option: does not attempt to identify a trend across the data and defaults to randomness — has not applied systematic pattern-finding to the numbers."
+      },
+      "inclusivity": "Students who selected option A can be directed to compute the daily range for every row rather than just two or three, making the variation in range visible. Students who answer correctly can be extended by asking what they would predict for day 11 based on the trend and whether the chapter gives a reason for a rising temperature trend."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Collect and analyse real temperature data — air temperature",
+    "implied_lo_assessed": "Students can collect maximum and minimum air temperature data systematically over multiple days, compute daily temperature range, and describe at least one pattern of variation observed across the data set.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Weather services record both maximum and minimum air temperatures each day rather than a single reading. Why is recording both values more useful than recording only one reading taken at a fixed time?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Because a single reading at a fixed time captures only one moment and misses how much the temperature varied across the whole day, which is important for weather monitoring.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Because maximum temperature always occurs at midnight and minimum temperature always occurs at noon.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Because minimum temperature is measured in Celsius and maximum temperature is measured in Fahrenheit.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Because two thermometers are always more accurate than one thermometer.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Selects this option: conflates the number of measurements with measurement accuracy — misunderstands why variation across a day matters, not just the precision of any single instrument.",
+       "C": "Selects this option: incorrectly assigns different scales to maximum and minimum readings — imports a misconception about scale usage not supported anywhere in the chapter.",
+       "B": "Selects this option: reverses the typical diurnal pattern (temperature is usually lowest near dawn and highest in the afternoon) and treats this as a fixed rule rather than a general tendency — also confuses the reason for recording both values with the timing of when they occur."
+      },
+      "inclusivity": "Students who struggle with the question can be asked to think about a single very hot day: if they took one reading at an arbitrary moment, could they tell how cold it got overnight? Students who answer correctly can be asked to connect this to Anna Mani's work on weather instruments described in the chapter."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Collect and analyse real temperature data — air temperature",
+    "implied_lo_assessed": "Students can collect maximum and minimum air temperature data systematically over multiple days, compute daily temperature range, and describe at least one pattern of variation observed across the data set.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": "Day | Max Temp (°C) | Min Temp (°C)\n1 | 28 | 18\n2 | 27 | 17\n3 | 26 | 16\n4 | 25 | 15\n5 | 24 | 14",
+    "question_text": "Refer to the table provided. A student recorded air temperatures over five days. (a) Calculate the daily temperature range for each day. (b) Describe one pattern you notice in the maximum temperature column. (c) Based on the chapter's description of seasonal temperature change, suggest what season this data might have been collected in.",
+    "options": [],
+    "expected_elements": [
+     "Correct daily ranges: Day 1 = 10 °C, Day 2 = 10 °C, Day 3 = 10 °C, Day 4 = 10 °C, Day 5 = 10 °C — or a correct calculation showing max minus min for each row",
+     "Pattern description: maximum temperature decreases by 1 °C each day, showing a consistent falling trend across the five days",
+     "Season suggestion: the falling temperature trend is consistent with the chapter's statement that temperature falls in winter — so this is likely winter or the approach of winter"
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who can calculate the range but cannot describe the pattern can be prompted to read down the maximum temperature column and ask whether the numbers are going up, going down, or staying the same. Students who complete all three parts accurately can be asked to predict the maximum temperature on day 6 if the trend continued."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "implied_lo_assessed": "Students can select the correct thermometer and temperature scale for a given measurement purpose, justify their choice using instrument features and range constraints, and identify the consequence of a specified technique error or instrument mismatch on measurement reliability.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student needs to measure the temperature of water that is boiling vigorously in a beaker in the school laboratory. She picks up a digital clinical thermometer. What is the most important reason why this choice is inappropriate for this task?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Clinical thermometers are designed to measure body temperature, which is in the range 35–42 °C; boiling water at approximately 100 °C is well outside this range and the thermometer is not built to measure it.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Clinical thermometers are inaccurate because they display a digital reading instead of a liquid column.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Clinical thermometers cannot be placed in a liquid — they can only be held in the hand.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Clinical thermometers use the Fahrenheit scale, which cannot measure temperatures above 98.6 °F.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Selects this option: confuses the scale used by clinical thermometers — the chapter states digital clinical thermometers use the Celsius scale — and applies an incorrect range claim to Fahrenheit.",
+       "C": "Selects this option: invents a placement restriction not stated anywhere in the chapter — conflates the chapter's description of placing the tip against the body with a general prohibition on liquid immersion.",
+       "B": "Selects this option: incorrectly treats digital display as a source of inaccuracy — confuses display type with the physical range limitation that makes the instrument inappropriate here."
+      },
+      "inclusivity": "Students who selected option C can be redirected by asking where the clinical thermometer tip is placed when measuring body temperature and whether that counts as contact with a liquid (saliva). Students who answer correctly can be asked to name which thermometer type would be appropriate and to state its approximate range."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "implied_lo_assessed": "Students can select the correct thermometer and temperature scale for a given measurement purpose, justify their choice using instrument features and range constraints, and identify the consequence of a specified technique error or instrument mismatch on measurement reliability.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A scientist reports a reaction temperature as 350 °K, using the unit symbol shown. A colleague marks this notation as incorrect. Which statement best explains the error and its implication?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The error is that the scientist should have converted 350 K to Celsius before reporting a reaction temperature.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The unit symbol °K is incorrect because kelvin does not use a degree sign; the correct notation is 350 K, and using °K suggests a misunderstanding of the distinction between a temperature scale and the SI unit.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The value 350 is too high for any real temperature, so the notation is physically impossible.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "There is no error — °K and K are interchangeable notations for the same unit.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Selects this option: focuses on the numerical value and judges it physically unreasonable without knowing that 350 K is approximately 77 °C — a plausible reaction temperature — demonstrating unfamiliarity with kelvin values for everyday temperatures.",
+       "A": "Selects this option: applies a conversion rule that does not exist — the chapter does not state that kelvin must be converted before reporting scientific results; this distractor catches students who have memorised the formula but not the reason kelvin is preferred in science.",
+       "D": "Selects this option: treats the convention as arbitrary and dismisses it — does not recognise that the degree sign carries a specific meaning tied to the historical definition of scale-based units, which kelvin, as an SI base unit, does not share."
+      },
+      "inclusivity": "Students who chose option A can be asked to convert 350 K to Celsius and reconsider whether the value is physically unreasonable. Students who answer correctly can be asked to explain in their own words why the chapter says kelvin has no degree sign — connecting the notation rule to the conceptual distinction between a scale and an SI unit."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "implied_lo_assessed": "Students can select the correct thermometer and temperature scale for a given measurement purpose, justify their choice using instrument features and range constraints, and identify the consequence of a specified technique error or instrument mismatch on measurement reliability.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A nurse needs to check whether a patient has a fever. A physics teacher needs to measure the temperature of water as it is heated from room temperature toward boiling. A weather officer needs to record today's highest and lowest outdoor air temperature. For each person, identify the most appropriate thermometer from those described in the chapter, state the temperature scale they would most likely use, and explain why the instrument and scale you chose are appropriate for that purpose. Your answer should refer to at least one feature or limitation of each thermometer you name.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly identifies the digital clinical thermometer for the nurse, states Celsius or Fahrenheit as the appropriate scale, and references the thermometer's design for body temperature range (35–42 °C) or its ease of use in a clinical setting.",
+     "Correctly identifies the laboratory thermometer for the physics teacher, states Celsius as the appropriate scale for the experiment, and references its wider range (approximately −10 °C to 110 °C) as the reason it can measure temperatures approaching boiling.",
+     "Correctly identifies the room thermometer for the weather officer, states Celsius as the scale used in weather reporting, and notes that this instrument is designed for measuring ambient air temperature rather than a specific object.",
+     "Each explanation connects at least one named instrument feature or limitation (range, design purpose, scale convention) to the reason for choosing that instrument — not just naming the thermometer without justification.",
+     "Avoids cross-contamination between instruments: does not claim a clinical thermometer can measure boiling water or that a laboratory thermometer is routinely used for body temperature."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who can identify the correct thermometer for each scenario but struggle to articulate the feature-based justification can be prompted by asking: what is this thermometer designed to measure, and does that match what the person needs? Students who address all three scenarios with full justifications can be extended by asking whether any of the three people could in principle use a different thermometer from the chapter and what trade-off that would involve."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Explain and apply — connecting measurement choices to context and purpose",
+    "implied_lo_assessed": "Students can select the correct thermometer and temperature scale for a given measurement purpose, justify their choice using instrument features and range constraints, and identify the consequence of a specified technique error or instrument mismatch on measurement reliability.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Explains the importance of measurement and measures physical properties of matter (such as volume, weight, temperature, density) in indigenous, non-standard and standard units using simple instruments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Situation | Thermometer used | Scale reported | Technique note | Temperature recorded | Error in instrument or technique? | Correct instrument / scale / technique | Expected effect of any error on the reading\nChild suspected of having fever | Laboratory thermometer (−10 to 110 °C) | Kelvin | Thermometer removed from contact before reading | 308 K | | |\nBoiling water in school lab | Digital clinical thermometer | Celsius | Tip held under tongue of researcher | 37.2 °C | | |\nOutdoor air temperature at noon | Room thermometer | Celsius | Thermometer mounted in direct sunlight | 48 °C | | |\nWarm water in a beaker | Laboratory thermometer | Celsius | Thermometer held at 45° angle, eye above the scale | 34 °C | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. Each row describes a temperature measurement situation with the thermometer used, the scale reported, and a technique note. For each situation: (1) decide whether there is an error in the instrument choice, the scale, or the technique (or a combination); (2) state what the correct instrument, scale, and technique should be; (3) explain what effect the identified error would have on the reliability or accuracy of the recorded temperature.",
+    "scaffold": "Work through each row one at a time. For each row ask yourself: Is this thermometer designed for this type of measurement? Is this scale the expected one for this purpose? Does the technique note describe a correct or incorrect procedure? Write your answers in the empty columns of the table, then add a sentence below the table explaining which type of error — instrument mismatch, scale mismatch, or technique error — you think causes the most misleading result and why.",
+    "format_of_output": [
+     "Completed table with the last three columns filled in for each of the four rows",
+     "One concluding sentence below the table comparing the severity of the three error types"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Procedure evaluation task (identify flaw, suggest improvement)",
+      "format_rationale": "The final stage implied LO requires students to identify the consequence of instrument mismatch or technique error on measurement reliability — a procedure evaluation task that presents four flawed measurement scenarios directly instantiates that operation and requires simultaneous reasoning across instrument choice, scale, and technique.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can cross-reference instrument design features and range constraints against measurement contexts, identify specific rule violations in technique, and reason forward from each violation to the direction and nature of the resulting error — the full chain from instrument selection to reliable measurement that the chapter builds.",
+      "reading_the_scaffold": "The scaffold directs students to evaluate three dimensions independently (instrument, scale, technique) before synthesising across them in the concluding sentence. A teacher reading student work should check whether the justifications in the 'Expected effect' column are specific (e.g. 'the reading will be lower than the true temperature because the liquid column began to contract') or merely generic ('the reading will be wrong'). Specificity is the marker of genuine causal reasoning.",
+      "strong_vs_weak_markers": "Strong responses: correctly identify all three error types present across the four rows; give direction-specific predictions for the effect of each error (higher or lower, not just 'inaccurate'); justify the concluding sentence with reference to a specific feature of the error type they rate most severe. Weak responses: identify instrument mismatch but overlook technique errors; describe effects as generically 'inaccurate' without direction; complete the table without writing the concluding sentence.",
+      "inclusivity": "Students who find the full table overwhelming can be asked to complete just the first two rows and the concluding sentence, which together cover instrument mismatch and technique error. Students who complete all four rows quickly can be asked to design a fifth row of their own that contains exactly two simultaneous errors and explain why measuring under those conditions would be especially problematic."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

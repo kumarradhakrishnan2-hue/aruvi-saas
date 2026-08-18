@@ -1,0 +1,1736 @@
+{
+ "filename": "ch_03_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 3,
+ "chapter_title": "Electricity — Circuits and their Components",
+ "grade": "Grade VII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 18
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 18 periods = 720 minutes\nTotal: 18 periods · 12h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "18x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vii 3",
+  "ledger_ts": "20260817_113057_sci_vii_03_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-17T12:04:39",
+    "tool": "genon/repair_meta_leak.py v1.0",
+    "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+    "edits": [
+     {
+      "unit": 18,
+      "field": "teacher_notes",
+      "rule": "register/meta-leak",
+      "removed": "— but does not assume any particular earlier activity, discussion, or material.",
+      "replaced_with": ".",
+      "note": "the dash-bracketed content list before it names the chapter's actual strands and stands"
+     }
+    ]
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:05",
+   "ledger_ts": "20260817_203333_sci_vii_03_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_03_canonical_p16.json": "2026-08-17T12:38:00",
+    "ch_03_canonical_p14.json": "2026-08-17T12:38:00",
+    "ch_03_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_03_canonical_p10.json": "2026-08-17T12:38:00"
+   },
+   "replaced": {
+    "period_number": 18,
+    "period_duration_minutes": 40,
+    "synthesis": true,
+    "progression_stage": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "pedagogical_approach": "Inquiry approach",
+    "activity_title": "Whole-Chapter Synthesis: From Torchlight to Circuit Reasoning",
+    "activity_description": "Students receive a complex scenario — a torchlight that does not work — described in terms of its components and a partial circuit diagram. They must identify all possible reasons the lamp might not glow, explain the role each component plays, redraw the corrected circuit diagram using standard symbols, and state which materials in the device are conductors and which are insulators and why.",
+    "roles": [
+     {
+      "actor": "Teacher",
+      "role_description": "Presents the synthesis scenario and facilitates discussion, drawing on the full arc of the chapter without referencing specific earlier activities."
+     },
+     {
+      "actor": "Students (Individual)",
+      "role_description": "Produce a written and diagrammatic response that draws together circuit construction, diagram representation, and material classification into a single coherent explanation."
+     }
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-7",
+      "activity": "Teacher presents the synthesis scenario: a torchlight with two cells, an incandescent lamp, and a switch does not work; a partial circuit diagram with one component missing is provided."
+     },
+     {
+      "minutes": "7-22",
+      "activity": "Students list all possible reasons the lamp might not glow — open switch, incorrect cell orientation, fused lamp, disconnected wire — and explain each in terms of the current path concept."
+     },
+     {
+      "minutes": "22-34",
+      "activity": "Students identify the missing component in the partial diagram, complete and redraw the full circuit diagram using standard symbols with correct polarity and switch position, and annotate each symbol."
+     },
+     {
+      "minutes": "34-40",
+      "activity": "Students add a final section to their response classifying each material in the torchlight — cell casing, wire, wire covering, switch contact, switch casing, lamp terminals — as conductor or insulator and explaining the design reason for each choice."
+     }
+    ],
+    "teacher_notes": "This synthesis unit assumes students have engaged with the full chapter — components and their properties, circuit construction and current direction, standard symbols and their conventions, and the conductor/insulator classification. A student who can complete all four parts of the response — fault diagnosis, component roles, corrected diagram, and material classification — has demonstrated the chapter's central cognitive operation: describing how electricity flows through simple circuits by manipulating their components. Watch especially for students who complete the diagram correctly but cannot articulate why each component is made of its material, which signals that the classification stage has not yet fully connected to circuit-design reasoning.",
+    "materials": [
+     "Synthesis scenario sheet with partial circuit diagram (printed or on board)",
+     "Notebook or plain paper",
+     "Pencil and ruler"
+    ],
+    "homework": []
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and describe circuit components",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "What Is Inside a Torchlight?",
+     "activity_description": "Students examine a torchlight, operate its switch to observe glowing and non-glowing states, then open it to identify the electric cells, lamp, and switch inside. They record what they find and share initial observations with the class.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes torchlights and guides students through the opening and observation sequence."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Operate, open, and examine the torchlight, recording each component they find."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher frames the chapter's opening context — electricity in daily life, from dams to devices — and poses the question: what makes a torchlight work?"
+      },
+      {
+       "minutes": "5-20",
+       "activity": "Groups operate the switch, observe the lamp's glowing and non-glowing states, then carefully open the torch and identify the cells, lamp, and switch inside."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Groups record a labelled list of components found and note which position of the switch made the lamp glow."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Whole-class sharing: teacher collates responses on the board, establishing the component vocabulary — cell, lamp, switch — that the chapter will build on."
+      }
+     ],
+     "teacher_notes": "This unit opens the chapter, so orient students to the big idea: electricity is invisible, but its effects and the components that control it can be examined directly. Watch for students who think the lamp glows because of the battery alone and ignore the switch's role — this conflation of energy source with circuit control is a key misconception to surface early. A useful checkpoint before moving on is whether every group can name all three components and state which switch position produces glowing.",
+     "materials": [
+      "Torchlight (one per group)",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and describe circuit components",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Examining the Electric Cell",
+     "activity_description": "Students examine a single electric cell up close, identifying the positive terminal (metal cap) and negative terminal (metal disc), their physical markings, and their relative sizes. They sketch the cell and label both terminals.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates how to handle the cell safely and directs attention to the terminal markings."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Examine the cell, complete a labelled sketch, and record the physical features that distinguish each terminal."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher briefly recaps the previous unit — the torchlight contained cells — and focuses the question: how do we tell the two ends of a cell apart?"
+      },
+      {
+       "minutes": "6-20",
+       "activity": "Each student examines a cell, locates the metal cap (positive) and metal disc (negative), reads the + and – markings, and notes differences in shape and size."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Students complete a labelled sketch of the cell with both terminals identified and a brief note on each terminal's physical feature."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher consolidates: the two terminals serve different roles in a circuit, and their correct connection matters — a point the next unit will investigate."
+      }
+     ],
+     "teacher_notes": "Building on the previous unit's component list, this unit zooms in on the cell itself. A common error is students confusing the larger flat end (negative terminal) with the positive terminal because 'bigger seems stronger'; the markings on the cell are the reliable identifier, and you should direct students to read those markings first. Ask students to predict whether it matters which terminal connects where — hold the answer for the next unit.",
+     "materials": [
+      "AA or D-type electric cells (one per student or pair)",
+      "Notebook or observation sheet",
+      "Pencil for sketching"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and describe circuit components",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Battery: Connecting Cells in Series",
+     "activity_description": "Students remove the cells from a two-cell torch, experiment with different insertion orders and orientations, and observe which arrangement lights the lamp and which does not. They record each arrangement tested and identify the correct series connection.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the challenge and circulates to prompt systematic recording of each arrangement tried."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Systematically test cell orientations in the torch and record which configuration produces a glowing lamp."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects this unit to the previous one: we know each cell has two distinct terminals — what happens when two cells are placed together in a device?"
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Groups remove cells from a two-cell torch, try at least three different insertion combinations, and record each as a small diagram showing which terminal faces which direction."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups identify the glowing arrangement, articulate the pattern — positive of one cell connects to negative of the next — and record it as a rule."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Class discussion: teacher introduces the term 'battery' for this series arrangement and notes the common usage of 'battery' for a single cell."
+      }
+     ],
+     "teacher_notes": "This unit follows naturally from the cell examination: students now have reason to care about terminal orientation. Watch for groups who simply try random orientations without recording — prompt them to draw each arrangement so the pattern becomes visible in their own data. A group is ready to move on when they can state the connection rule (positive-to-negative) as their own conclusion rather than as something told to them.",
+     "materials": [
+      "Two-cell torchlight (one per group)",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and describe circuit components",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Exploring the Lamp: Filament and Terminals",
+     "activity_description": "Students examine an incandescent lamp closely, locating the filament, the two support wires, the metal case, and the metal tip. They sketch the lamp and label every part, then examine an LED and identify its longer positive wire and shorter negative wire.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Guides students to look through the glass of the incandescent lamp and directs the comparison with the LED."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Examine both lamp types, complete labelled sketches, and record physical differences between the two."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher recalls the torchlight lamp from the first unit and asks: what is actually inside the glass that glows?"
+      },
+      {
+       "minutes": "5-20",
+       "activity": "Students examine an incandescent lamp, locate the filament and its support wires, and identify the metal case and metal tip as the two terminals; they record a labelled sketch."
+      },
+      {
+       "minutes": "20-33",
+       "activity": "Students examine an LED, identify the longer wire as positive and shorter wire as negative, and note that there is no filament — recording a second sketch alongside the first for comparison."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Teacher draws out the key distinction: the incandescent lamp glows because the filament heats up; the LED glows without a filament and has a polarity that must be respected."
+      }
+     ],
+     "teacher_notes": "This unit completes the component-identification stage by examining the lamp itself — students have now seen the cell, the battery arrangement, and the lamp in detail. A frequent misconception is that both terminals of the incandescent lamp are interchangeable, and while that is true for incandescent lamps it is explicitly not true for LEDs, so this comparison is important to set up correctly now. Ask students to predict: if the LED has a fixed positive and negative wire, what might happen if those wires are connected the wrong way?",
+     "materials": [
+      "Incandescent lamp (one per student or pair)",
+      "LED (one per student or pair)",
+      "Notebook or observation sheet",
+      "Pencil for sketching"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Construct and test complete circuits",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Making a Lamp Glow — First Circuit Assembly",
+     "activity_description": "Students assemble a working circuit using a cell, cell holder, incandescent lamp, lamp holder, and wires, testing multiple arrangements until the lamp glows. They record which configurations work and which do not, and articulate what distinguishes the working arrangement.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the circuit components and demonstrates safe handling before students begin assembly."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Assemble and test multiple circuit configurations, recording each attempt and identifying the working arrangement."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the previous stage: we can now name every component — the task is to make them work together so the lamp actually glows."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Groups assemble circuits in at least three different configurations, record each as a rough sketch, and observe whether the lamp glows in each case."
+      },
+      {
+       "minutes": "25-35",
+       "activity": "Groups compare their working and non-working arrangements, identify the distinguishing features — a complete loop, correct terminal connections — and write a brief explanation."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Class shares findings; teacher introduces the term 'complete circuit' and previews the next unit's focus on the LED's polarity requirement."
+      }
+     ],
+     "teacher_notes": "This is the first unit of the construction stage, building directly on the component knowledge of the previous four units. Watch for groups who connect the cell in the holder but leave a wire disconnected — they may not recognise that a gap anywhere in the loop breaks the circuit, treating the cell and lamp as the only things that matter. A ready-to-proceed group can explain in their own words why the lamp does not glow in the non-working arrangements.",
+     "materials": [
+      "Electric cell with cell holder",
+      "Incandescent lamp with lamp holder",
+      "Connecting wires (at least 2 per group)",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Construct and test complete circuits",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "LED Polarity Investigation",
+     "activity_description": "Students connect an LED into a circuit in two orientations — correct and reversed — and observe the difference in outcome. They record what happens in each case and construct an explanation for why the LED requires correct polarity while the incandescent lamp does not.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the guiding question and prompts students to explain the difference between the two lamp types, not just record it."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Connect the LED both ways, observe and record results, then produce a written explanation comparing LED and incandescent lamp behaviour."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher recalls the prediction from the lamp-examination unit: what happens if the LED wires are connected the wrong way? Groups are challenged to test this."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups connect the LED with longer wire to positive terminal first (lamp glows), then reverse the connections (lamp does not glow), recording each result."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups write an explanation: the LED allows current to flow in one direction only, so the polarity of connections determines whether the circuit functions."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher consolidates the key concept — current direction matters for LEDs — and connects it to the broader idea that circuits must form a complete, correctly connected path."
+      }
+     ],
+     "teacher_notes": "This unit follows the incandescent lamp assembly and uses the contrast between the two lamp types to deepen the idea of circuit completeness. A common error is students concluding that the reversed LED 'breaks' the circuit in the same way a disconnected wire does — the distinction is that the path exists but the component itself restricts current direction, which is a more subtle point. Encourage groups to articulate this difference in their written explanation before the whole-class consolidation.",
+     "materials": [
+      "LED",
+      "Electric cell with cell holder",
+      "Connecting wires",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Construct and test complete circuits",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Building and Testing a Simple Switch",
+     "activity_description": "Students construct a simple switch from drawing pins and a safety pin, incorporate it into their circuit, and test the ON (closed) and OFF (open) positions. They record what happens to the lamp in each switch state and explain the switch's role in the circuit.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Guides students through the switch construction and poses the explanatory question once the switch is working."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Construct the switch, wire it into the circuit, test both positions, and record an explanation of how the switch controls current flow."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects to the torchlight from the opening unit: it had a switch — can students now build one themselves from simple materials?"
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups construct a switch using two drawing pins pressed into a cardboard strip and a safety pin bridging them, then wire it into their cell-and-lamp circuit."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups test closed (safety pin bridges the pins) and open (safety pin lifted away) positions, recording the lamp state in each and sketching the two configurations."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Whole-class discussion: teacher formalises the terms 'open circuit' and 'closed circuit' and connects the switch's mechanical action to the presence or absence of a complete current path."
+      }
+     ],
+     "teacher_notes": "Having built circuits with cells and lamps, students now add the controlling component they first encountered in the torchlight, which closes the arc of this stage nicely. Watch for groups who press the safety pin down lightly so contact is intermittent — this produces flickering rather than a clear ON/OFF, which confuses the observation; ensure good physical contact. A group that can explain in their own words why lifting the safety pin stops current — not just that it does — is ready for the next unit.",
+     "materials": [
+      "Drawing pins (2 per group)",
+      "Safety pin (1 per group)",
+      "Small cardboard strip",
+      "Connecting wires",
+      "Electric cell with cell holder",
+      "Incandescent lamp with lamp holder"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Construct and test complete circuits",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Tracing Current Direction in a Complete Circuit",
+     "activity_description": "Students trace the path of current through their assembled circuit — from the cell's positive terminal, through the connecting wires, through the lamp, and back to the negative terminal — and represent this path as an annotated diagram. They discuss what 'complete path' means and what happens when the path is broken at any point.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses guiding questions that push students to trace the full loop rather than stopping at the lamp."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Trace current direction on their own diagram and annotate each segment, then write a one-sentence definition of an electrical circuit."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher poses the question: if you had to draw an arrow showing where current travels, where would you start and where would you finish?"
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Each student draws their assembled circuit from memory, adds arrows showing current direction from the positive terminal through all components back to the negative terminal, and labels the direction."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Students annotate the diagram with brief notes explaining what happens at each component — cell provides energy, lamp converts it to light, switch opens or closes the path — and write a definition of an electrical circuit."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Pairs compare diagrams and definitions; teacher highlights the 'complete path' criterion and notes that a broken filament (fused lamp) also breaks this path."
+      }
+     ],
+     "teacher_notes": "This unit consolidates the construction stage by requiring students to reason about current as a directional flow through a complete loop, not just a property of the cell or lamp. A misconception to watch for is students drawing current as flowing only from the cell to the lamp without returning — the loop must close at the negative terminal. The Fascinating Facts note about a fused lamp being equivalent to a gap in the circuit is worth raising here as a test of whether students have genuinely grasped 'complete path'.",
+     "materials": [
+      "Notebook or observation sheet",
+      "Pencil",
+      "Assembled circuit from previous units (or components to reassemble quickly)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Represent circuits using standard symbols",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Introducing Circuit Symbols",
+     "activity_description": "Students are introduced to the standard symbols for each circuit component — electric cell, battery, incandescent lamp, LED, switch (ON and OFF), and wire — and learn the conventions for reading each symbol, including which line in the cell symbol is positive and which is negative.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents each symbol systematically, explains the conventions embedded in it, and connects it to the physical component students have already handled."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Record each symbol alongside its component name and the convention it encodes, building a personal reference table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher motivates the need for standard symbols: the circuits we built can be drawn in many ways — a universal symbol set lets anyone read a circuit diagram anywhere in the world."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Teacher presents each symbol in turn — cell (long line = positive, short line = negative), battery, lamp, LED (triangle and arrows), switch open, switch closed, wire — as students record each in their table."
+      },
+      {
+       "minutes": "25-35",
+       "activity": "Students re-examine their annotated circuit diagrams from the previous unit and mark which parts of their sketch correspond to which standard symbol."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Quick whole-class check: teacher points to symbols at random and students identify the component and state the key convention encoded in that symbol."
+      }
+     ],
+     "teacher_notes": "This unit opens the circuit-diagram stage, using the physical circuits students built in the previous stage as the anchor for every symbol introduced. A frequent confusion is reading the shorter line in the cell symbol as positive because 'the cap at the top of a real cell looks small but is positive' — reinforce that in the symbol, long = positive, short = negative, and have students verify this against their sketches from the cell-examination unit. The LED symbol's triangle and arrows are worth spending extra time on since students have direct experience of the LED's polarity from the previous stage.",
+     "materials": [
+      "Blackboard or projected display for symbols",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Represent circuits using standard symbols",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Drawing Circuit Diagrams — Incandescent Lamp and LED",
+     "activity_description": "Students draw accurate circuit diagrams for two given circuits — one with an incandescent lamp and one with an LED — using the standard symbols introduced in the previous unit. They check each other's diagrams for correct symbol use and polarity conventions.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Provides the two circuit descriptions to be drawn and circulates to check for polarity and symbol accuracy."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Draw both circuit diagrams using standard symbols, then exchange with a partner to check for errors."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss discrepancies found during peer checking and resolve them as a group."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher briefly recaps the symbol table from the previous unit and states the task: draw two circuit diagrams, each with a cell, switch, and one lamp type."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Each student independently draws the circuit diagram for the incandescent lamp circuit, attending to cell polarity, switch state, and correct lamp symbol."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Students draw the LED circuit diagram, paying careful attention to LED polarity (triangle direction and longer/shorter wire convention translated into the symbol)."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Pairs exchange diagrams, identify any symbol or polarity errors, and discuss corrections; teacher consolidates common errors on the board."
+      }
+     ],
+     "teacher_notes": "This unit applies the symbol knowledge immediately through drawing, ensuring the previous unit's teaching does not remain passive. Watch for students who draw the LED symbol but forget to orient the triangle in the direction of current flow — this is the most common error and reflects a surface reading of the symbol without understanding the polarity convention it encodes. A pair that can explain why a particular diagram is wrong, not just that it is wrong, has met this unit's learning target.",
+     "materials": [
+      "Notebook or plain paper",
+      "Pencil and ruler",
+      "Symbol reference table from previous unit"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Represent circuits using standard symbols",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Reading a Circuit Diagram and Predicting Behaviour",
+     "activity_description": "Students are given two circuit diagrams — one with an open switch and one with the LED connected in reverse — and must predict, without building the circuits, whether the lamp will glow in each case. They justify each prediction by tracing the current path through the symbols.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the two circuit diagrams and facilitates discussion of students' predictions, pressing for symbol-based justifications."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Predict the outcome for each diagram and write a justification by tracing the current path through the standard symbols."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher presents the challenge: can we use a circuit diagram to predict what will happen without building the circuit? Two diagrams are displayed."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Each student individually predicts the outcome for each diagram (lamp glows / does not glow) and writes a justification, tracing the current path through each symbol in the diagram."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Students share predictions; teacher probes with questions such as 'which symbol tells you the path is broken?' and 'which convention in the LED symbol shows you the direction of current flow?'"
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher consolidates: reading a circuit diagram is a translation task — each symbol encodes physical reality, and tracing the path through symbols is equivalent to tracing it in the physical circuit."
+      }
+     ],
+     "teacher_notes": "This unit raises the cognitive demand within the symbols stage: students move from drawing diagrams to reading and reasoning from them, which is a meaningful step toward using circuit diagrams as tools rather than records. A misconception to watch for is students treating the open-switch diagram as having a fault in the cell rather than a deliberate gap in the switch — the switch symbol's open state must be explicitly linked to a break in the current path. If students can justify their prediction by pointing to a specific symbol and its convention, they are ready for the next stage.",
+     "materials": [
+      "Pre-drawn circuit diagrams (two, on the board or printed)",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Classify materials as conductors or insulators and explain their roles",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Building a Conduction Tester",
+     "activity_description": "Students build a conduction tester — a circuit with a cell, lamp, and two free wire ends — and test whether each of a set of provided objects completes the circuit and makes the lamp glow. They record results in a table classifying each material as a conductor or insulator.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the conduction tester concept and ensures safe handling of materials before students begin."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Assemble the tester, systematically test each material, and record results in a two-column classification table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects to the previous stage: circuit diagrams show wires connecting components — but why are the wires metal? The conduction tester will help us find out."
+      },
+      {
+       "minutes": "7-24",
+       "activity": "Groups assemble the conduction tester, then systematically test each provided object (metal rod, plastic ruler, rubber band, glass piece, wooden stick, paper strip, wax) by touching the free wire ends to it."
+      },
+      {
+       "minutes": "24-35",
+       "activity": "Groups record each test result — glow or no glow — in a table and write 'conductor' or 'insulator' next to each material."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Groups share initial findings; teacher notes patterns emerging — all metals tested so far produce a glow — and asks groups to hold their conclusion until all classes share."
+      }
+     ],
+     "teacher_notes": "This unit opens the conductors-and-insulators stage and returns students to hands-on circuit work after the symbol-representation units. A key misconception to flag is that students often think shiny or hard materials are conductors and soft or flexible materials are insulators — the test itself will disconfirm this for materials like rubber and metal foil, so encourage groups to notice surprises. Safety reminder: this tester uses only a single cell, so current levels are safe, but students should still be reminded not to touch both free wire ends simultaneously.",
+     "materials": [
+      "Electric cell with cell holder",
+      "Incandescent lamp with lamp holder",
+      "Connecting wires with free ends",
+      "Test objects: metal rod, plastic ruler, rubber band, glass piece, wooden stick, paper strip, wax piece",
+      "Notebook or recording sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Classify materials as conductors or insulators and explain their roles",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Patterns in Conductors and Insulators",
+     "activity_description": "Students consolidate the results from the conduction tester across the class and examine whether there is a pattern linking material type to conductivity. They produce a generalised classification, noting that metals are conductors and common non-metals (plastic, rubber, glass, wood, paper, wax) are insulators.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates collation of group results and guides students toward the generalisation without stating it prematurely."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Contribute their results to a class table, look for patterns across all materials tested, and write a generalised classification rule."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher invites each group to share their results; a class-wide table is built on the board showing material, glow/no glow, and initial classification."
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Groups examine the completed class table and look for a pattern: what do all the conductors have in common? What do all the insulators have in common?"
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Groups write a generalised classification rule in their own words, and then compare it with the textbook's statement about metals being good conductors and common non-metals being insulators."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Teacher raises a probing question: the human body is also a conductor — what does that imply for safety when working with electricity?"
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the tester results from the previous unit, shifting from individual data points to pattern recognition and generalisation. A misconception that often surfaces here is that water is always an insulator because 'water puts out fire' — this is worth addressing directly by noting that pure water and impure water behave differently and pointing toward the safety caution the chapter raises. The human-body conductor question at the end naturally bridges to the next unit on the roles conductors and insulators play in safety.",
+     "materials": [
+      "Class data table from previous unit (on board or chart paper)",
+      "Notebook or observation sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Classify materials as conductors or insulators and explain their roles",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Why Wires Are Metal and Coverings Are Plastic: Roles in Circuits",
+     "activity_description": "Students examine the role each material class plays in circuit design — conductors enable current flow in wires and connectors, insulators prevent accidental current flow in coverings and casings — and connect this to safety considerations, including the risk posed by the human body as a conductor.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Explains the design logic of circuit materials — why each component is made of the material it is — and highlights the safety implications."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete a two-column table matching each circuit component or covering to its material class and record the reason for the design choice."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects to the generalisation from the previous unit: now that we can classify materials, we can explain why circuit components are built the way they are."
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Teacher explains — with reference to the chapter's content — why wires are copper or aluminium, why their coverings are plastic or rubber, and why switch contacts are metal while their casings are plastic."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Students complete a structured table: component or covering | material | class (conductor/insulator) | reason for design choice — for wires, wire coverings, switch contacts, switch casing, and lamp terminals."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Teacher presents the safety caution: the human body is a conductor, so touching a live wire creates a circuit through the body; insulators in coverings and casings protect against this."
+      }
+     ],
+     "teacher_notes": "This unit applies the classification from the previous two units to design reasoning, completing the conductors-and-insulators stage. A misconception to address directly is that plastic coverings on wires are there to hold the wire together rather than to serve an electrical function — students should recognise the insulator's role as deliberate protection. The safety message about the human body as a conductor is important to deliver clearly; the chapter makes this point explicitly and it should not be treated as an aside.",
+     "materials": [
+      "Notebook or structured table sheet",
+      "Sample of insulated wire (to observe covering and inner conductor)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "What Breaks the Circuit? Fault-Finding Investigation",
+     "activity_description": "Students are given a non-working circuit and must identify which component — a disconnected wire, a fused lamp, a reversed LED, or an open switch — is responsible for the lamp not glowing. They use logical elimination and their knowledge of current paths to diagnose the fault.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Prepares circuits with different pre-introduced faults and guides students toward systematic elimination rather than random trial."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Diagnose the fault in their assigned circuit using a systematic approach, record their reasoning, and propose a fix."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher introduces the task: a circuit has been assembled but the lamp does not glow — the challenge is to find why, using only what we know about current paths and components."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Each group receives a non-working circuit with one pre-introduced fault, inspects it systematically (checking each connection, each component, and the switch state), and records the inspection steps and findings."
+      },
+      {
+       "minutes": "25-35",
+       "activity": "Groups identify the fault, explain why it breaks the current path using circuit concepts, and propose a specific fix."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Groups share diagnoses; teacher highlights that each fault type corresponds to a different point in the current path, reinforcing the idea that current must complete a full loop."
+      }
+     ],
+     "teacher_notes": "This unit opens the final application stage and requires students to reason about circuits as integrated systems rather than collections of components — a significant step up from earlier construction activities. Watch for groups who begin by randomly replacing components rather than systematically checking the path; prompt them with 'trace the path from the positive terminal — where does it stop?' A group that can explain the fault in terms of a break in the current path has demonstrated the kind of reasoning this stage is targeting.",
+     "materials": [
+      "Pre-assembled non-working circuits with single known faults (one per group)",
+      "Notebook or recording sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Circuit Design Challenge — Swap the Lamp",
+     "activity_description": "Students are given a working incandescent-lamp circuit and a circuit diagram, and must modify it to use an LED instead — determining which wires need to change, which do not, and why. They produce an updated circuit diagram using standard symbols for the modified circuit.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the design challenge and circulates to probe students' reasoning about what must change and why."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Plan the modification on paper before implementing it, then build and test the modified circuit and draw its circuit diagram."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher sets the challenge: you have a working lamp circuit — now redesign it to use an LED, updating both the physical circuit and its diagram."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups plan the modification on paper — identifying which connections stay the same and which must change due to LED polarity — then implement and test the physical change."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups draw the updated circuit diagram using standard symbols, correctly orienting the LED symbol and confirming the switch position."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Groups compare their diagrams with those from the earlier drawing unit and articulate what changed and why, linking polarity, symbol convention, and physical connection."
+      }
+     ],
+     "teacher_notes": "This unit integrates the circuit-construction skills from stage two, the symbol-drawing skills from stage three, and the polarity reasoning developed with the LED — making it a good test of whether students can apply knowledge across the chapter. A common error is students swapping in the LED but not checking its polarity until the lamp fails to glow; prompt them to plan the polarity before building, not after. A group that draws the correct circuit diagram before testing, rather than after, has demonstrated genuine application.",
+     "materials": [
+      "Working incandescent-lamp circuit",
+      "LED",
+      "Notebook or plain paper for circuit diagram",
+      "Pencil and ruler"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Explaining Circuit Behaviour — From Materials to Components to Diagrams",
+     "activity_description": "Students are given three short scenarios — a lamp does not glow when the switch is closed, a wire covering melts when touched by a bare live wire, and an LED lights when connected one way but not the other — and must produce a written explanation for each using concepts from across the chapter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the three scenarios and presses students to draw on any relevant chapter concept, not just the most recent one."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Write a full explanation for each scenario, citing the specific circuit concept — current path, conductor/insulator, polarity — that accounts for the behaviour."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher frames this as a consolidation task for the application stage: each scenario requires a different chapter concept, so students must decide which tool fits each problem."
+      },
+      {
+       "minutes": "6-26",
+       "activity": "Students work individually to write explanations for all three scenarios, explicitly naming the circuit concept responsible in each case."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Pairs exchange responses and assess whether the explanation names the correct concept and applies it accurately — they annotate each other's work with a brief comment."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher draws out one strong explanation per scenario from the class and highlights the cross-chapter reasoning required, framing the synthesis unit as the final drawing-together of all these ideas."
+      }
+     ],
+     "teacher_notes": "This unit consolidates the application stage and provides a natural diagnostic before the synthesis unit — students who can explain all three scenarios have command of the chapter's key ideas. Watch for students who explain the LED scenario correctly but use the wrong directional language — 'the LED only works one way' without specifying which way or why, which suggests surface familiarity rather than genuine understanding of current direction. The peer-annotation step is valuable here: students often catch each other's imprecisions more readily than they catch their own.",
+     "materials": [
+      "Three-scenario sheet (printed or written on board)",
+      "Notebook or response sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 18,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the synthesis scenario and facilitates discussion, drawing on the full arc of the chapter without referencing specific earlier activities."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Produce a written and diagrammatic response that draws together circuit construction, diagram representation, and material classification into a single coherent explanation."
+      }
+     ],
+     "activity_title": "The Campsite Lamp: Designing and Explaining a Real-World Circuit",
+     "activity_description": "Each group receives a 'campsite brief' describing a simple battery-powered camping lantern that must be built from a specified list of available materials — some suitable and some unsuitable — and must (1) select the correct materials, (2) produce a fully labelled circuit diagram using standard symbols, (3) annotate the diagram to show current direction and explain why each material was chosen or rejected, and (4) identify one change to the design (swapping the lamp type, reversing the LED, or removing the switch) and predict and explain the new outcome. The artefact produced is an annotated circuit diagram, not a physical construction.",
+     "teacher_notes": "Distribute the campsite brief face-down and ask groups not to turn it over until you give the signal, so the first reading happens together. The brief lists six available materials: a copper wire, a rubber strip, a plastic rod, an LED (with wire lengths labelled), an incandescent lamp, a two-cell battery, and a push switch. Groups must select from this list to complete the lantern circuit, so they must apply conductor/insulator reasoning before they can draw anything. Two materials (rubber strip, plastic rod) are traps — they are insulators and cannot serve as connecting wires. Watch for groups that include them anyway and address this during the annotation phase rather than immediately, so the error surfaces in their explanation. For the polarity annotation, confirm that groups mark the longer LED wire as positive and trace current from the positive terminal of the battery. The 'one change' prediction in the final band is the highest-demand step: a group that can explain why reversing the LED stops it glowing, or why removing the switch means the lamp cannot be turned off, has integrated component knowledge, circuit completeness, and the rules of current direction into a single causal account. If time is tight, allow groups to choose the easiest of the three offered changes rather than assigning one. The campsite context should not be treated as a story to discuss — it is simply the frame that motivates the component list. Move groups quickly from the brief to the selection task.",
+     "materials": [
+      "Campsite brief card (one per group — text: 'You are building a battery-powered camping lantern. You have these materials available: copper wire, rubber strip, plastic rod, LED (long wire = positive), incandescent lamp, two-cell battery, push switch. Choose only the materials needed, draw a complete circuit diagram using standard symbols, and label the current direction.')",
+      "Standard circuit symbol reference chart (one per group or displayed on board)",
+      "Plain paper or notebook page for the annotated diagram",
+      "Pencil and ruler"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher distributes the campsite brief face-down. On the signal, groups read it together. Teacher asks: 'Before you draw anything, go through the materials list and mark each item as usable or not usable in a connecting wire position — and write one reason for each decision.' Groups record their material classifications in their notebooks. Teacher circulates and notes any group that has accepted the rubber strip or plastic rod as wire replacements, but does not intervene yet."
+      },
+      {
+       "minutes": "7-20",
+       "activity": "Groups use their classification to select the circuit components and produce a fully labelled circuit diagram on plain paper using standard symbols. Requirements: battery symbol with polarity marked, correct LED symbol with current-direction triangle oriented consistently with the longer-wire annotation, switch symbol, and wire lines only where a conductor was chosen. Groups annotate an arrow on the diagram showing the direction of current flow and write a one-sentence note beside each rejected material explaining why it was left out."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Each group chooses one of three offered changes to their design: (A) replace the LED with the incandescent lamp, (B) reverse the LED's connections, or (C) remove the switch from the circuit. Groups draw a second small diagram showing the change and write a prediction of what happens to the lamp, with a causal explanation that names the relevant principle — polarity, circuit completeness, or the role of the switch in opening or closing the path. Teacher circulates and asks groups to include the word 'because' and to name the specific property or rule that drives the outcome."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Two groups share their annotated diagrams and 'change' explanations with the class — teacher selects one group that chose change (B) and one that chose change (C) to show complementary reasoning. Teacher then names aloud the four ideas their diagrams relied on: identifying components and their terminals, understanding that a circuit must be complete for current to flow, using standard symbols to represent any circuit clearly, and matching materials to their role based on whether they conduct or insulate. Teacher closes by pointing to the annotated diagram on the table: 'That page works because the whole chapter is in it — every decision you made came from something you built, tested, or drew earlier.'"
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Design-brief task combining materials classification, circuit diagram production, and causal annotation. Groups work from a concrete, unfamiliar real-world context (a campsite lantern) that the chapter never mentions. The brief supplies all necessary constraints; no new science is introduced. The annotated diagram format requires students to demonstrate understanding across every shared pillar of the chapter — component identity and polarity, circuit completeness, symbol use, and conductor/insulator roles — simultaneously and in writing, making the synthesis visible on a single page."
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 18
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and describe circuit components",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students examine a torchlight, electric cell, battery arrangement, incandescent lamp, and LED, identifying each component's physical features, terminals, and distinguishing characteristics through direct observation and labelled sketching.",
+    "implied_lo": "Students can identify and describe the physical features and terminal conventions of each circuit component — electric cell, battery, incandescent lamp, and LED — from direct observation.",
+    "cg": "CG-2",
+    "c_code": "C-2.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Construct and test complete circuits",
+    "total_stages": 5,
+    "period_numbers": [
+     5,
+     6,
+     7,
+     8
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students assemble working circuits with cells, lamps, LEDs, and a homemade switch, testing which configurations allow current to flow and tracing the full current path from positive to negative terminal.",
+    "implied_lo": "Students can assemble a complete circuit using given components, predict whether a circuit will function based on its configuration, and explain the current path through the circuit using the concept of a closed loop.",
+    "cg": "CG-2",
+    "c_code": "C-2.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Represent circuits using standard symbols",
+    "total_stages": 5,
+    "period_numbers": [
+     9,
+     10,
+     11
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students learn standard circuit symbols, draw circuit diagrams for given circuits using those symbols, and predict circuit behaviour by reading and tracing current through a diagram.",
+    "implied_lo": "Students can draw a circuit diagram for a given circuit using standard symbols with correct polarity and switch conventions, and predict whether a lamp will glow by tracing the current path through a circuit diagram.",
+    "cg": "CG-2",
+    "c_code": "C-2.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Classify materials as conductors or insulators and explain their roles",
+    "total_stages": 5,
+    "period_numbers": [
+     12,
+     13,
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students build a conduction tester, test a range of materials, classify them as conductors or insulators, identify the pattern that metals conduct and common non-metals insulate, and explain why circuit components are made of the materials they are.",
+    "implied_lo": "Students can classify tested materials as conductors or insulators based on experimental evidence and explain the design reason for the conductor or insulator used in each part of a circuit component.",
+    "cg": "CG-2",
+    "c_code": "C-2.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "total_stages": 5,
+    "period_numbers": [
+     15,
+     16,
+     17,
+     18
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students diagnose faults in non-working circuits, redesign circuits to swap components, produce written explanations connecting circuit behaviour to underlying concepts, and in the synthesis unit draw together all chapter knowledge to analyse a complex torchlight scenario.",
+    "implied_lo": "Students can describe how electricity flows through a simple circuit, diagnose why a circuit does not function by identifying the break in the current path, and apply their knowledge of components, symbols, and materials to explain and redesign a circuit.",
+    "cg": "CG-2",
+    "c_code": "C-2.2",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and describe circuit components",
+    "implied_lo_assessed": "Students can identify and describe the physical features and terminal conventions of each circuit component — electric cell, battery, incandescent lamp, and LED — from direct observation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Recall",
+    "visual_stimulus": null,
+    "question_text": "A student examines an electric cell and notices that one end has a metal cap and the other has a flat metal disc. Which of the following correctly identifies the two terminals?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both the metal cap and the flat disc are positive terminals; the cell has no negative terminal.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The flat metal disc is the positive terminal because it is larger and provides more energy.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The metal cap is the negative terminal and the flat metal disc is the positive terminal.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The metal cap is the positive terminal and the flat metal disc is the negative terminal.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Choosing this option indicates the student has reversed the terminal labels, possibly because the flat disc occupies a larger surface area and the student associates 'larger' with 'positive'.",
+       "A": "Choosing this option indicates the student has not grasped that a cell has two distinct, differently-charged terminals and that current flows between them — a fundamental misconception about how a cell works.",
+       "B": "Choosing this option indicates the student is conflating physical size with electrical polarity, a common confusion that arises when students reason from appearance rather than from the markings on the cell."
+      },
+      "inclusivity": "Students who struggle with reading the +/– markings can be directed to the physical shape difference first and then asked which shape matches the symbol convention. Students who identified the correct answer by the marking alone can be challenged to explain what would happen if the two terminals were identical — deepening their understanding of polarity."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and describe circuit components",
+    "implied_lo_assessed": "Students can identify and describe the physical features and terminal conventions of each circuit component — electric cell, battery, incandescent lamp, and LED — from direct observation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "An incandescent lamp and an LED are both used in circuits to produce light. Which statement correctly describes a difference between the two?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both the incandescent lamp and the LED have filaments, but the LED's filament is shorter.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The incandescent lamp allows current in one direction only; the LED has a filament that heats up and glows.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The incandescent lamp has a filament that heats up and glows; the LED has no filament and allows current in one direction only.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The incandescent lamp has two terminals and the LED has only one terminal, identified by its longer wire.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student has swapped the properties of the two lamp types, suggesting the polarity restriction and filament concept have not yet been assigned to the correct component.",
+       "A": "Choosing this option indicates the student has not grasped that the LED fundamentally lacks a filament — they may be overgeneralising the filament concept from the incandescent lamp to all light-producing components.",
+       "D": "Choosing this option indicates the student has partially recalled the LED's terminal identification (longer wire = positive) but misapplied it to mean the LED has only one terminal, losing the polarity concept."
+      },
+      "inclusivity": "Students who can select the correct option can be further challenged to explain in their own words what happens at the molecular level when the filament heats up. Students who select B or C benefit from re-examining their own sketches of both components side by side."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Construct and test complete circuits",
+    "implied_lo_assessed": "Students can assemble a complete circuit using given components, predict whether a circuit will function based on its configuration, and explain the current path through the circuit using the concept of a closed loop.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student connects a cell, a lamp, and two wires so that both wires are attached to the positive terminal of the cell and neither wire is connected to the negative terminal. What will happen and why?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The lamp will glow brightly because two wires are connected to the positive terminal, doubling the energy.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The lamp will glow dimly because only one terminal is connected.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The lamp will not glow because current needs a complete path from the positive terminal through the lamp and back to the negative terminal.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The lamp will not glow because the positive terminal does not supply current — only the negative terminal does.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student partially understands that something is wrong but has not grasped the closed-loop requirement — they treat partial connection as producing partial output.",
+       "A": "Choosing this option indicates the student believes more connections to one terminal increase power, reflecting a misconception about how energy is supplied in a circuit rather than an understanding of the complete-path criterion.",
+       "D": "Choosing this option indicates the student has confused which terminal is the current source, possibly from a surface reading of the negative terminal's role in the circuit."
+      },
+      "inclusivity": "Students who select B but struggle to articulate the reasoning can be asked to trace a path from the positive terminal in the described configuration and identify exactly where the path ends. Students who select A or C benefit from physically attempting the described configuration with a real circuit."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Construct and test complete circuits",
+    "implied_lo_assessed": "Students can assemble a complete circuit using given components, predict whether a circuit will function based on its configuration, and explain the current path through the circuit using the concept of a closed loop.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student builds a circuit with a cell, a lamp, and a switch. The lamp glows when the switch is closed. The student then replaces the incandescent lamp with an LED, connects the longer LED wire to the positive terminal, and closes the switch. The lamp still does not glow. What is the most likely reason?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The LED has been connected correctly but LEDs require a battery, not a single cell, to glow.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The LED's shorter wire, which is the negative terminal, is not connected to the negative terminal of the cell — the polarity is reversed.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The longer wire of the LED is the positive terminal, so if it is connected to the positive terminal the polarity is correct — the fault must lie elsewhere in the circuit, such as a loose connection or a fused lamp in another part.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The switch is not providing enough energy for the LED.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Choosing this option indicates the student attributes control of energy to the switch rather than understanding the switch as simply opening or closing the current path.",
+       "B": "Choosing this option indicates the student has correctly recalled that LED polarity matters but misread the scenario — the longer wire is correctly connected to positive in the description, so this is a reading-accuracy failure rather than a conceptual one.",
+       "A": "Choosing this option indicates the student has a misconception that LEDs require higher voltage sources, conflating component requirements with energy source type in a way not supported by the chapter."
+      },
+      "inclusivity": "Students who select D correctly can be challenged to identify what 'loose connection' means in terms of the current path. Students who select B should be directed to re-read the scenario carefully, as this is a precision-of-reading issue rather than a gap in understanding."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Construct and test complete circuits",
+    "implied_lo_assessed": "Students can assemble a complete circuit using given components, predict whether a circuit will function based on its configuration, and explain the current path through the circuit using the concept of a closed loop.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student uses a drawing pin, a safety pin, and wires to build a simple switch and tests it in a circuit with a cell and a lamp. Explain how closing and opening the switch controls whether the lamp glows, using the idea of current path.",
+    "options": [],
+    "expected_elements": [
+     "States that when the safety pin bridges the two drawing pins, the circuit is complete and current can flow through the closed path from the positive terminal, through the switch, through the lamp, and back to the negative terminal.",
+     "States that when the safety pin is lifted away from one drawing pin, there is a gap in the circuit, the path is broken, and current cannot flow.",
+     "Connects the presence or absence of a complete current path to whether the lamp glows."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who find written explanation difficult can be invited to first sketch the closed and open switch configurations with arrows showing the current path (or its absence) and then describe the sketch in one or two sentences. Students who give a strong response can be challenged to explain what would happen if the drawing pins were made of plastic instead of metal."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Represent circuits using standard symbols",
+    "implied_lo_assessed": "Students can draw a circuit diagram for a given circuit using standard symbols with correct polarity and switch conventions, and predict whether a lamp will glow by tracing the current path through a circuit diagram.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "In the standard symbol for an electric cell, there are two vertical lines — one long and one short. What does each line represent?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both lines represent the positive terminal; the cell symbol does not indicate the negative terminal.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The long line represents the negative terminal and the short line represents the positive terminal.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The long line represents the positive terminal and the short line represents the negative terminal.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The long line represents the wire connection and the short line represents the terminal; positive and negative are shown by arrows, not by line length.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student has reversed the convention, possibly because the metal cap of a physical cell is small and the flat base is large — they may be mapping physical size onto the symbol in an inverted way.",
+       "A": "Choosing this option indicates the student has not learned the two-terminal convention in the cell symbol and may not understand that the symbol encodes polarity information at all.",
+       "D": "Choosing this option indicates the student is inventing a different symbol convention not present in the chapter, suggesting they have not consolidated the standard symbol set."
+      },
+      "inclusivity": "Students who confuse the line lengths can be directed to hold the cell symbol next to their labelled sketch of the physical cell and match the long line to the metal cap. Students who answer correctly can be asked to draw the battery symbol (multiple cells) and explain how polarity is shown across the battery symbol."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Represent circuits using standard symbols",
+    "implied_lo_assessed": "Students can draw a circuit diagram for a given circuit using standard symbols with correct polarity and switch conventions, and predict whether a lamp will glow by tracing the current path through a circuit diagram.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A circuit diagram shows a cell, a switch in the open position, and an LED. The longer wire of the LED is connected to the positive terminal of the cell in the diagram. A student predicts the lamp will glow. Is the student correct? Choose the answer that best explains the situation.",
+    "options": [
+     {
+      "label": "A",
+      "text": "The student is correct because a switch in the open position still allows a small amount of current to flow, which is enough for an LED.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The student is correct because the LED's polarity is set up correctly with the longer-wire side at the positive terminal.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The student is incorrect because even though the LED polarity is correct, the open switch means there is a gap in the circuit and current cannot flow.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The student is incorrect because the LED symbol shows current flowing in one direction only and the diagram has it flowing the wrong way.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student has correctly read the LED polarity but has not integrated the switch's open state into the circuit analysis — they are checking components independently rather than tracing the full path.",
+       "D": "Choosing this option indicates the student correctly identifies the open switch as a problem but wrongly attributes it to LED polarity, confusing two separate reasons a circuit can fail.",
+       "A": "Choosing this option indicates a significant misconception: the student believes that an open switch permits partial current flow, which contradicts the chapter's definition of an open circuit as a complete break in the path."
+      },
+      "inclusivity": "Students who select A can be guided to trace the full current path in the diagram — starting from the positive terminal and following the loop — to identify exactly where it stops. Students who struggle with reading the switch symbol can be directed to compare the open-switch and closed-switch symbols side by side."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Represent circuits using standard symbols",
+    "implied_lo_assessed": "Students can draw a circuit diagram for a given circuit using standard symbols with correct polarity and switch conventions, and predict whether a lamp will glow by tracing the current path through a circuit diagram.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Draw a circuit diagram for a circuit containing one electric cell, one LED, and one switch in the closed position. Use standard symbols. Ensure that the LED is connected with the correct polarity for current to flow.",
+    "options": [],
+    "expected_elements": [
+     "Uses the correct standard symbol for a cell with the long line labelled or oriented as the positive terminal.",
+     "Uses the correct standard symbol for the LED with the triangle pointing in the direction of current flow and two arrows indicating light emission.",
+     "Uses the correct standard symbol for a closed switch.",
+     "Draws all components connected in a closed loop with no gaps.",
+     "The longer-wire (positive) side of the LED symbol is connected to the positive terminal of the cell."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who struggle to recall all symbols can be permitted to annotate their diagram with the component name alongside the symbol, demonstrating that they know which symbol represents which component even if the symbol itself is not perfectly drawn. Students who draw the diagram correctly can be challenged to redraw it with the switch in the open position and explain what changes in the circuit's behaviour."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Classify materials as conductors or insulators and explain their roles",
+    "implied_lo_assessed": "Students can classify tested materials as conductors or insulators based on experimental evidence and explain the design reason for the conductor or insulator used in each part of a circuit component.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Material | Conduction tester result\nCopper rod | Lamp glows\nPlastic ruler | Lamp does not glow\nRubber band | Lamp does not glow\nAluminium foil | Lamp glows\nWooden stick | Lamp does not glow\nIron nail | Lamp glows",
+    "question_text": "A student tests six materials using a conduction tester. Refer to the table provided. Which conclusion is best supported by these results?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Hard materials are conductors and soft materials are insulators.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Materials that are used in wires are conductors; all other materials are insulators.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Metals are conductors and the non-metals tested here are insulators.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Only shiny materials are conductors; dull materials are insulators.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "A": "Choosing this option indicates the student is reasoning from physical texture rather than material composition — a misconception the conduction tester results directly disconfirm, since aluminium foil is soft but conducts.",
+       "D": "Choosing this option indicates the student is reasoning from surface appearance, a common alternative conception that fails to account for dull metals being good conductors.",
+       "B": "Choosing this option indicates the student is reasoning circularly from prior knowledge of wires rather than from the experimental data provided, showing they have not yet generalised from the test results to the underlying principle."
+      },
+      "inclusivity": "Students who select B can be extended by asking whether all non-metals are insulators or only the ones tested — nudging them toward recognising the limits of the data. Students who select A or C benefit from identifying which row in the table contradicts their chosen generalisation."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Classify materials as conductors or insulators and explain their roles",
+    "implied_lo_assessed": "Students can classify tested materials as conductors or insulators based on experimental evidence and explain the design reason for the conductor or insulator used in each part of a circuit component.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "An electric wire used in a circuit consists of a copper core covered with a plastic coating. Why is each material chosen for its particular part of the wire?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both copper and plastic are conductors; the plastic layer is added only to make the wire easier to grip.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Copper is used because it is a conductor and allows current to flow; plastic is used because it is an insulator and prevents accidental current flow to surrounding objects or people.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Copper is used because it is flexible and can be bent easily; plastic is used because it is rigid and holds the wire in shape.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Copper is used because it is strong; plastic is used because it is cheaper than rubber.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Choosing this option indicates the student is reasoning from mechanical properties rather than electrical ones, failing to connect the conductor/insulator classification to its functional role in the circuit.",
+       "C": "Choosing this option again shows mechanical reasoning replacing electrical reasoning — flexibility and rigidity are physical properties, not electrical ones, and selecting this option indicates the classification learning has not yet transferred to design explanation.",
+       "A": "Choosing this option indicates a fundamental misconception: the student has classified plastic as a conductor, which contradicts the results of the conduction tester activity, and has reduced the insulating layer to a cosmetic feature."
+      },
+      "inclusivity": "Students who select B can be asked to apply the same reasoning to a different component — why is the casing of a light switch made of plastic rather than metal? Students who select D should be directed back to the tester results for plastic and asked to reconcile their answer with the experimental data."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Classify materials as conductors or insulators and explain their roles",
+    "implied_lo_assessed": "Students can classify tested materials as conductors or insulators based on experimental evidence and explain the design reason for the conductor or insulator used in each part of a circuit component.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "The chapter states that the human body is a conductor of electricity. Explain what this means for a person who touches a live wire with bare hands, using the concepts of conductor and complete circuit.",
+    "options": [],
+    "expected_elements": [
+     "States that because the human body is a conductor, it can allow current to flow through it.",
+     "Explains that when a person touches a live wire, the body becomes part of the circuit — current can flow from the wire, through the body, to the ground (or to the negative terminal), completing a path.",
+     "Connects this to the safety implication: current flowing through the body causes harm, which is why insulating coverings on wires protect people."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who struggle to frame this as a circuit can be prompted with the question: 'If the human body were a wire in a circuit, what would it connect?' Students who give a strong answer can be asked to explain why wearing rubber-soled shoes reduces the risk, applying the insulator concept to a new context."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "implied_lo_assessed": "Students can describe how electricity flows through a simple circuit, diagnose why a circuit does not function by identifying the break in the current path, and apply their knowledge of components, symbols, and materials to explain and redesign a circuit.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A circuit has a cell, a lamp, a switch in the closed position, and all wires properly connected. The lamp does not glow. A student checks the switch and finds it is properly closed. Which of the following is the most likely remaining cause?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The cell has run out of energy or the lamp's filament has broken (fused), either of which breaks the current path.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The cell's positive terminal should be connected to the lamp's metal tip and the negative terminal to the metal case; if reversed, the lamp will not glow.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The lamp requires a battery of two cells rather than a single cell to produce enough current to glow.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The switch being closed is the problem — a closed switch always prevents current from flowing until the switch is opened.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student is conflating the polarity requirements of the LED with the incandescent lamp, which the chapter makes clear does not have a polarity restriction — this is a cross-component confusion from the same chapter.",
+       "C": "Choosing this option indicates the student believes a single cell is insufficient for any lamp, which is not supported by the chapter's construction activities where single-cell circuits successfully light lamps.",
+       "D": "Choosing this option indicates a fundamental reversal of the switch's function: the student believes a closed switch stops current, directly contradicting the chapter's explanation of the switch as completing (closed) or breaking (open) the circuit."
+      },
+      "inclusivity": "Students who select A correctly can be asked to describe how they would test which of the two causes (dead cell or fused lamp) is responsible, applying systematic elimination. Students who select D benefit from revisiting the switch-construction activity mentally — what physical position allowed the lamp to glow?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "implied_lo_assessed": "Students can describe how electricity flows through a simple circuit, diagnose why a circuit does not function by identifying the break in the current path, and apply their knowledge of components, symbols, and materials to explain and redesign a circuit.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student wants to modify a working circuit by replacing the incandescent lamp with an LED. She connects the shorter wire of the LED to the positive terminal of the cell. The LED does not glow. She then checks all connections and finds them physically secure. What must she change and why?",
+    "options": [
+     {
+      "label": "A",
+      "text": "She must open the switch before reconnecting the LED, because LEDs require the switch to be in the open position to initialise.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "She must replace the cell with a battery because LEDs need more energy than a single cell provides.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "She must replace the wires with thicker wires because LEDs need a wider path for current to flow.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "She must reverse the LED's connections so that the longer wire (positive terminal of the LED) connects to the positive terminal of the cell, because the LED allows current in one direction only.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student has a misconception that LED failure is an energy-supply issue rather than a polarity issue — they may be recalling that batteries provide more sustained power without connecting this to the LED's directional current restriction.",
+       "A": "Choosing this option indicates the student has invented a procedural rule not present in the chapter, possibly confusing an electronic initialisation concept from outside the chapter's content with circuit assembly.",
+       "C": "Choosing this option indicates the student is reasoning from a mechanical-flow analogy — wider pipe for more flow — rather than from the electrical concept of current direction and polarity."
+      },
+      "inclusivity": "Students who select B can be asked to draw a circuit diagram showing the corrected connection and confirm the LED symbol's triangle orientation matches the current direction. Students who select A can be guided to re-examine the LED polarity investigation results and identify the actual variable that changed when the LED worked versus when it did not."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "implied_lo_assessed": "Students can describe how electricity flows through a simple circuit, diagnose why a circuit does not function by identifying the break in the current path, and apply their knowledge of components, symbols, and materials to explain and redesign a circuit.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A torch uses two cells in series, an incandescent lamp, and a switch. Explain: (a) how the two cells must be arranged for the torch to work and why; (b) what happens to the current path when the switch is moved to the OFF position; and (c) why the wires inside the torch are metal while their coverings are rubber.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly states the series arrangement — positive terminal of one cell connects to negative terminal of the next — and explains that this is the only arrangement that completes the circuit through both cells.",
+     "Explains that moving the switch to OFF opens the circuit, creating a gap in the current path that prevents current from flowing from the positive terminal through the lamp back to the negative terminal.",
+     "Explains that metal wires are used because metals are conductors that allow current to flow easily, and rubber coverings are used because rubber is an insulator that prevents the current from flowing into unintended paths or causing harm.",
+     "Uses circuit concepts consistently across all three parts — current path, complete circuit, conductor, insulator — rather than treating each part as an isolated recall question.",
+     "Avoids conflating LED polarity rules with incandescent lamp behaviour (the lamp here is incandescent, so polarity of the lamp itself is not the concern)."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who struggle to connect all three parts into one coherent explanation can be invited to answer each part separately as a list before attempting to weave them together. Students who give strong answers for parts (a) and (b) but a weak answer for part (c) can be challenged to explain what would happen if the rubber covering were removed and the bare metal wires touched the metal torch casing — pressing them to apply the insulator-as-protection concept."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Describe and apply how electricity flows through circuits by manipulating components",
+    "implied_lo_assessed": "Students can describe how electricity flows through a simple circuit, diagnose why a circuit does not function by identifying the break in the current path, and apply their knowledge of components, symbols, and materials to explain and redesign a circuit.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.2",
+     "competency_text": "Describing how electricity works through manipulating different elements in simple circuits and demonstrating the effects of electric current."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Circuit | Components | Switch state | Lamp result\nP | Cell, incandescent lamp, switch, all wires connected | Closed | Lamp does not glow\nQ | Cell, LED (longer wire to positive terminal), switch, all wires connected | Closed | Lamp glows\nR | Cell, LED (shorter wire to positive terminal), switch, all wires connected | Closed | Lamp does not glow\nS | Cell, incandescent lamp, switch, all wires connected | Open | Lamp does not glow",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "A student tests four circuits and records the results. Refer to the table provided. For each circuit that does not work: (1) identify the most likely reason the lamp does not glow, explaining your reasoning in terms of the current path; (2) state exactly what change would make the lamp glow; and (3) draw the corrected circuit diagram for Circuit R using standard symbols, showing the LED connected with correct polarity.",
+    "scaffold": "For each non-working circuit: first decide whether the problem is a break in the current path, a polarity issue, or a component fault, then explain the specific evidence from the table that supports your diagnosis. For Circuit R's diagram: choose the correct LED symbol orientation before drawing.",
+    "format_of_output": [
+     "Written diagnosis for each non-working circuit (Circuits P, R, and S) with reasoning",
+     "A statement of the specific change that would fix each non-working circuit",
+     "A correctly drawn circuit diagram for Circuit R using standard symbols"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Procedure evaluation task (identify flaw, suggest improvement)",
+      "format_rationale": "The final stage LO requires students to diagnose circuit failures, explain them in terms of current flow, and apply symbol conventions to a corrected design — all of which are most naturally demonstrated by evaluating a set of experimental results, identifying the flaw in each failing trial, and producing a corrected circuit diagram.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can integrate knowledge of current path (for the open switch and the fused/disconnected lamp), LED polarity (for the reversed LED), and circuit diagram conventions into a single diagnostic and design task — the chapter's central cognitive operation.",
+      "reading_the_scaffold": "The scaffold separates the diagnostic process into two explicit steps (problem type, then evidence) to ensure students engage with the reasoning, not just recall the answer. The instruction to choose the LED symbol orientation before drawing tests whether students are applying the polarity convention deliberately. A student who draws the diagram correctly but cannot explain the diagnosis in Circuits P and S has partial command; a student who diagnoses all three and draws the diagram correctly has demonstrated full command.",
+      "strong_vs_weak_markers": "Strong responses: correctly diagnose all three non-working circuits with distinct, evidence-based explanations (Circuit P — fused lamp or cell fault; Circuit R — reversed LED polarity; Circuit S — open switch); state specific, actionable fixes; draw the LED symbol in Circuit R with the triangle oriented correctly in the direction of current flow. Weak responses: diagnose all non-working circuits as 'the switch is off' or 'the battery is dead' without distinguishing between them; state fixes without explaining the underlying reason; draw the circuit diagram without orienting the LED symbol correctly or leave the switch symbol in an ambiguous state.",
+      "inclusivity": "Students who struggle with the diagram can first describe in words what the correct LED connection looks like and then attempt the drawing — partial credit for correct verbal description reflects the same understanding. Students who find the three separate diagnoses overwhelming can be directed to compare Circuit R and Circuit Q first, since those two circuits differ only in LED orientation, making the polarity issue the most visible contrast."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}
