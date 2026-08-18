@@ -248,6 +248,25 @@ DECLARED = {
     # deletes the early-finisher extension that duplicates Postcard 2 (already the
     # Milky Way faint band) — pure deletion, no replacement authored.
     "ch_12_canonical.json": {
+        # ── ARV-D-178 · F2 (C14) ruling, 2026-08-18: the batch's single longest
+        # verbatim run (28 words) — an MCQ option carrying the planetary inner/outer
+        # contrast in the BOOK's phrasing. Facts stay, expression becomes ours.
+        # (First declared as a SECOND "ch_12_canonical.json" key — the duplicate-dict-key
+        # silent-shadow trap, hit for the second time today; merged here, where it runs.)
+        "ARV-D-178": [
+            {"item_where": {"question_type": "MCQ", "progression_stage": 3,
+                            "question_text": "Which of the following correctly "
+                            "describes the structural difference between the inner "
+                            "four planets and the outer four planets of the Solar "
+                            "System?"},
+             "field": "options[2].text",
+             "old": "The inner four planets are smaller and have solid rocky surfaces; "
+                    "the outer four are much larger, mostly made of gas and ice, and "
+                    "have ring-like structures.",
+             "new": "The four planets nearest the Sun are compact worlds of rock with "
+                    "firm surfaces, while the four beyond them are giants built chiefly "
+                    "of gas and ice, each carrying a system of rings."},
+        ],
         "ARV-D-176": [
             {"unit": 14, "field": "teacher_notes",
              "old": "check that replies include both the orbit-position reasoning and "

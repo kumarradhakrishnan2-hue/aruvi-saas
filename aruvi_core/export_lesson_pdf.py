@@ -562,15 +562,39 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False) -> str:
                     + "</div>")
             if va.get("type") == "table" and isinstance(va.get("table"), dict):
                 t = va["table"]
+                header = t.get("header") or []
+                rows = t.get("rows") or []
                 cap = (f'<div class="va-cap">{_esc(t.get("caption"))}</div>'
                        if t.get("caption") else "")
-                th = "".join(f'<td class="va-th">{_esc(c)}</td>' for c in t.get("header") or [])
+                # xhtml2pdf collapses EMPTY columns and cannot wrap mid-word, so widths
+                # are computed here (2026-08-18, iterated on the founder's print check):
+                # each column's weight = its longest HEADER WORD (the floor a column can
+                # never shrink below — "Reproduction" must fit) + a bonus scaled by its
+                # actual body content. A blank write-in column stays near its header
+                # width; a prose column earns the rest. Empty cells hold their place
+                # with &nbsp;.
+                ncols = max([len(header)] + [len(r) for r in rows]) or 1
+                def _hdr_len(j):
+                    words = (header[j].split() if j < len(header) else []) or [""]
+                    return max(len(w) for w in words)
+                def _body_avg(j):
+                    vals = [len((r[j] if j < len(r) else "").strip()) for r in rows]
+                    return (sum(vals) / len(vals)) if vals else 0
+                weights = [max(_hdr_len(j), 4) + min(30.0, _body_avg(j) / 4.0)
+                           for j in range(ncols)]
+                total = sum(weights) or 1
+                widths = [w / total * 100 for w in weights]
+                def _cell(c, j, cls):
+                    txt = _esc(c) if (c or "").strip() else "&nbsp;"
+                    return f'<td class="{cls}" width="{widths[j]:.1f}%">{txt}</td>'
+                th = "".join(_cell(c, j, "va-th") for j, c in enumerate(header))
                 trs = "".join(
-                    "<tr>" + "".join(f'<td class="va-td">{_esc(c)}</td>' for c in r) + "</tr>"
-                    for r in t.get("rows") or [])
+                    "<tr>" + "".join(_cell(r[j] if j < len(r) else "", j, "va-td")
+                                     for j in range(ncols)) + "</tr>"
+                    for r in rows)
                 src = (f'<div class="va-src">{_esc(t.get("source_note"))}</div>'
                        if t.get("source_note") else "")
-                body = (f'{cap}<table class="va-tbl"><tr>{th}</tr>{trs}</table>{src}')
+                body = (f'{cap}<table class="va-tbl" width="100%"><tr>{th}</tr>{trs}</table>{src}')
             elif va.get("type") == "prose" and va.get("text"):
                 # xhtml2pdf ignores `white-space: pre-wrap` — line breaks in card text
                 # must be literal <br/> or every card runs into one paragraph on paper.
