@@ -110,7 +110,78 @@ REPAIRS = {
   # all. The U4 anchor edit puts it in the registry (which is what check 11 reconciles);
   # creating a handoff row is authoring, not repair, and the advisory "a unit anchors a
   # section the handoff does not route through" is the correct, non-gating signal for it.
+  # ── S4 · mathematics · IX · ch 3 — THE SYNTHESIS-ONLY SECTION (founder ruling 2026-08-18)
+  #
+  # THE PROBLEM, in one line: a section taught ONLY in the standard's closing synthesis unit
+  # cannot be taught by any compact, because the section registry is derived from the
+  # standard's BODY units and the synthesis unit is excluded from it by design
+  # (architecture v2.0 §0.3 — that unit's only prior is full coverage, so it must never enter
+  # first-visit arithmetic). ch 3's "3.7 Conclusion" is exactly that: U17 poses √(-1) and
+  # names the section, and 3.7 therefore never reached the registry. Both compacts then did
+  # the right thing — with no synthesis unit of their own they taught the conclusion as a
+  # body sitting — and both were rejected, five serves with them (X=8,9,11,12,13 raised
+  # SERVE INVALID). The registry MUST carry 3.7 or every present and future compact that
+  # teaches it fails.
+  #
+  # WHAT WAS REJECTED, and why it is worth recording:
+  #   * making the registry admit synthesis-taught sections generally — the structurally
+  #     correct fix, and refused as too broad: it changes serving for all five subjects and
+  #     eleven stages at once, with risks nobody has enumerated (founder, 2026-08-18);
+  #   * moving the assessment item onto U16 with the label — that is the ARV-D-025 defect the
+  #     morning's repair removed, re-created deliberately.
+  #
+  # WHAT IS DONE INSTEAD. U16 additionally names 3.7, so the registry carries it, while the
+  # coverage_handoff row for 3.7 STAYS ON U17 — routing follows the teaching, only the label
+  # is widened. The known cost is stated rather than hidden: U16's bands do not teach 3.7
+  # (U17's do), so its label is loose. Three things bound that cost:
+  #   1. the ITEM does not move. It resolves through the handoff, which still says U17, so it
+  #      is served if and only if the synthesis unit is;
+  #   2. the feared case — a serve carrying U16 but not U17, which would report the conclusion
+  #      taught when it was not — does not arise in this band. MEASURED at X=16: the engine
+  #      fills forward from the 10-unit canonical rather than taking a 16-prefix of the top,
+  #      and returns uncovered_sections ["3.7"] with 5 items unserved. The top's U16 appears
+  #      only at X=17 (identity) and X=15 (complete_rescue from 17), both of which carry U17;
+  #   3. it BUYS BACK reporting that was impossible before: with 3.7 outside the registry no
+  #      serve could ever declare it dropped. It can now.
+  # A future engine change that admits synthesis-taught sections properly should revert the
+  # 3.7 token on U16 and keep everything else.
+  #
+  # U15 is a separate, ordinary joiner fix that has to travel with it: the registry derives in
+  # first-appearance order, so with 3.6 first named on U16 the PARENT sat after its own
+  # children and every compact that opens the block with "3.6 / 3.6.1" read as an order break.
+  # Naming 3.6 where its framing actually starts puts the registry in the summary's own order.
   ("mathematics", "ix"): {
+    "ch_03_canonical.json": [
+        (15, "3.6.1", "3.6 / 3.6.1", "V2/joiner",
+         "U15 is titled 'REAL NUMBERS, Decimal Expansions and Converting Decimals to "
+         "Fractions' — 3.6 is 'Real Numbers: Decimals and Cyclic Patterns', and the unit "
+         "opens the section's frame before working its first child. Registry order becomes "
+         "3.6, 3.6.1, 3.6.2, 3.6.3, matching the chapter summary. No handoff row moves: "
+         "3.6 stays routed to U16, which still names it, and 3.6.1 stays on U15"),
+        (16, "3.6.2 / 3.6.3 / 3.6", "3.6.2 / 3.6.3 / 3.6 / 3.7", "V2/registry-carry",
+         "the 3.7 token is added to the LAST BODY UNIT so the registry carries the section; "
+         "see the block comment above for the full ruling, the rejected alternatives and the "
+         "measured bound on its cost. Declared as its own rule name (registry-carry, not "
+         "joiner) because unlike every joiner edit in this file it does NOT claim the unit "
+         "teaches the section — U17 does, the handoff still says so, and the item follows "
+         "the handoff"),
+    ],
+    "ch_03_canonical_p10.json": [
+        (10, "3.7", "3.6 / 3.7", "V2/joiner",
+         "an ordinary joiner fix, and the last of the chapter's mis-routes: p10's handoff "
+         "routes 3.6 to U10 and the unit earns it — band 0-12 draws the nested-set diagram "
+         "N ⊂ Z ⊂ Q ⊂ R, which IS 3.6's closure, and the 42-50 closing reflection is 3.7. "
+         "The compact teaches both in its final sitting because it has no synthesis unit"),
+    ],
+    # RETIRED to a 3-tuple key 2026-08-18: these four are APPLIED, and main() selects every
+    # entry whose filename carries this chapter number — so leaving them beside the live ch 3
+    # declarations above would fail the "declared text not found" guard on the first of them
+    # and block the edits that still need to run. Kept verbatim as the record; the same
+    # convention repair_register.py uses. Each is also recorded in the artefact's own
+    # genon_canonical.repairs[].
+  },
+
+  ("mathematics", "ix", "APPLIED-W1-20260818"): {
     "ch_03_canonical.json": [
         (4, "3.2", "3.2 / 3.2.2", "V2/joiner",
          "the unit title is 'Zero as a Number: Brahmagupta's Rules and the Bakhśhālī "

@@ -1,0 +1,2377 @@
+{
+  "filename": "ch_03_canonical_p10.json",
+  "saved_at": "2026-08-18T16:57:34",
+  "plan_status": "canonical",
+  "chapter_number": 3,
+  "chapter_title": "The World of Numbers",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 10
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 10 periods = 500 minutes\nTotal: 10 periods · 8h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "10x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 3",
+    "ledger_ts": "20260818_164334_math_ix_03_p10",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-18T20:07:52",
+        "tool": "genon/repair_anchors.py v1.1",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 10,
+            "field": "section_anchor",
+            "rule": "V2/joiner",
+            "removed": "3.7",
+            "replaced_with": "3.6 / 3.7",
+            "note": "an ordinary joiner fix, and the last of the chapter's mis-routes: p10's handoff routes 3.6 to U10 and the unit earns it — band 0-12 draws the nested-set diagram N ⊂ Z ⊂ Q ⊂ R, which IS 3.6's closure, and the 42-50 closing reflection is 3.7. The compact teaches both in its final sitting because it has no synthesis unit"
+          }
+        ]
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Counting, Correspondence, and the Natural Numbers",
+          "section_anchor": "3.1 / 3.1.1 / 3.1.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Timeline sketch on board: Lebombo Bone (~35,000 BCE) → Ishango Bone (~20,000 BCE) → Indus Valley weights → Vedic powers of ten",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "3.1",
+              "book_ref": "Exercise Set 3.1 Q1, p.43",
+              "description": "A merchant at Lothal receives 15 copper ingots for every 2 bags of spices; the student finds how many ingots 12 bags fetch, using proportional reasoning with natural numbers."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "3.1",
+              "book_ref": "Exercise Set 3.1 Q2, p.43",
+              "description": "Identifies what the Ishango bone column 11, 13, 17, 19 has in common and lists the next three numbers fitting the pattern."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "3.1",
+              "book_ref": "Exercise Set 3.1 Q3, p.43",
+              "description": "Given that the natural numbers are closed under addition, decides whether they are closed under subtraction and justifies the answer with a couple of examples."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open with the question: how did the earliest humans know whether all their animals had returned home each evening? Students discuss briefly in pairs. Draw out the idea of one-to-one correspondence — one pebble for each cow — and formalize it as the foundation of the natural numbers N = {1, 2, 3, 4, …}."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Present the Lebombo Bone (29 notches, ~35,000 BCE) and the Ishango Bone (~20,000 BCE) using the board timeline. Ask students to study the Ishango column {11, 13, 17, 19} and conjecture what property these numbers share. Then do Exercise Set 3.1 Q2, p.43 together: confirm they are all prime, and extend the list. Briefly discuss the Indus Valley standardised weights and the Vedic naming of powers of 10 up to 10¹² as evidence of the growing need for larger numbers."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students attempt Exercise Set 3.1 Q1, p.43 (Lothal merchant proportional reasoning) and Exercise Set 3.1 Q3, p.43 (closure of N under subtraction) individually, then compare with a neighbour. Take answers, emphasising that a counter-example is sufficient to disprove closure and that the natural numbers alone leave subtraction unfinished."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Class discussion: the Vedic tallakṣhaṇa (10⁵³) shows that the Indian tradition was already building the architecture for a place-value system. Pose the closing question: if the herder's pebbles can only count, what happens when two traders share debt? This natural gap — subtraction without a result in N — points toward the extensions that follow in the chapter."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter's central theme of successive extension of the number system, grounding it in the concrete human need to count. A common error is confusing one-to-one correspondence with simple counting — watch for students who describe the pebble-cow matching as 'just arithmetic' without recognising it as the definition of equal cardinality. Exercise Set 3.1 Q3, p.43 is particularly useful for surfacing the idea that closure is a property to be tested, not assumed.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Zero as a Number: Śhūnya, Brahmagupta, and the Bakhśhālī Dot",
+          "section_anchor": "3.2 / 3.2.1 / 3.2.2",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board display of Brahmagupta's four laws: a + 0 = a, a – 0 = a, a × 0 = 0, a – a = 0",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose the problem: the Babylonians had a placeholder for an empty column in their positional notation, but they could not answer 'what is 7 – 7?' with a number. Why not? Students attempt an explanation. Establish that Brahmagupta's contribution was to define the result of subtracting a number from itself as a genuine number: a – a = 0."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Trace the philosophical root through the Upanishadic and Buddhist concept of Śhūnyatā as genuine emptiness — not absence but a recognised state — and link it to the bold dot (bindu) of the Bakhśhālī Manuscript as the first written symbol for zero. Write Brahmagupta's four operational laws on the board. Students copy and then, in pairs, test each law with two numerical examples of their own, recording the results."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Pose three deliberate error-check problems on the board: (i) 9 × 0 + 0 = ?, (ii) 0 – 7 = ?, (iii) (5 – 5) + 3 = ?. Students solve individually, then the class identifies which of Brahmagupta's laws applies at each step. Emphasise that 0 is not 'nothing that disappears' but a number that participates in arithmetic on its own terms."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Brief discussion: what the Babylonians and Mayans lacked was not a symbol but a conceptual framework — a culture ready to accept emptiness as an entity. Connect this to why India, with its philosophical tradition of Śhūnyatā, was positioned to make this leap. Invite one or two students to articulate the distinction between a placeholder zero and an operational zero in their own words."
+            }
+          ],
+          "teacher_notes": "Having established that the natural numbers cannot complete subtraction, this unit shows how zero resolves the specific case a – a. A frequent confusion at this stage is treating 0 as 'nothing' and therefore expecting a × 0 to be undefined rather than zero; the debt-and-wealth interpretation — removing nothing changes nothing — helps. Watch also for students who conflate the Babylonian placeholder with Brahmagupta's operational definition.",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Integers, the Number Line, and Brahmagupta's Sign Rules",
+          "section_anchor": "3.3 / 3.3.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk",
+            "Rulers (one per student)"
+          ],
+          "visual_aids": "Number line drawn on board from –5 to +5, with zero, positive and negative integers labelled",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "3.3",
+              "book_ref": "Exercise Set 3.2 Q1, p.46",
+              "description": "A temperature in Ladakh of 4 °C at noon falls by 15 °C by midnight; the student finds the midnight temperature as a negative integer."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "3.3",
+              "book_ref": "Exercise Set 3.2 Q2, p.46",
+              "description": "A spice trader takes a debt of ₹850, makes a profit of ₹1,200, then incurs a loss of ₹450; the student writes the sequence as an integer equation and computes the final financial standing."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "3.3.1",
+              "book_ref": "Exercise Set 3.2 Q3, p.46",
+              "description": "Computes four signed-number results using Brahmagupta's laws: (i) (–12) × 5, (ii) (–8) × (–7), (iii) 0 – (–14), (iv) (–20) ÷ 4."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "3.3.1",
+              "book_ref": "Exercise Set 3.2 Q4, p.46",
+              "description": "Explains, through a real-world debt example, why subtracting a negative number is the same as adding a positive one, e.g. 10 – (–5) = 15."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Brahmagupta's original question: what happens when a larger number is subtracted from a smaller one? Draw the number line on the board and mark 0, the positive integers to the right and the negative integers to the left, introducing Z = {…, –2, –1, 0, 1, 2, …}. Ground the notation in commerce: fortunes (dhana) sit to the right and debts (ṛiṇa) to the left. Students locate –3, +5, –7 on their own ruler number lines."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "State Brahmagupta's five sign rules in the debt-and-fortune language: fortune + fortune = fortune, debt + debt = debt, fortune or debt minus zero is unchanged, debt × fortune = debt, debt × debt = fortune. Work through Exercise Set 3.2 Q1, p.46 (Ladakh temperature) and Exercise Set 3.2 Q2, p.46 (spice trader) as class problems, modelling each step on the number line."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Think-and-reflect moment (from section 3.3.1): ask students to explain in writing why (–a) × (–b) must be positive, using the idea that multiplication by a negative means removing a debt. After two minutes of individual thinking, share and compare explanations. Then students complete Exercise Set 3.2 Q3, p.46 and Q4, p.46 independently."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Review Exercise Set 3.2 Q3 and Q4 answers as a class, focusing on part (iii) of Q3 — removing a debt — as the clearest case for the sign rule. Consolidate: Z is closed under addition, subtraction and multiplication; division is not always possible within Z, motivating the next extension."
+            }
+          ],
+          "teacher_notes": "Having introduced zero as Brahmagupta's answer to a – a = 0, this unit extends his framework to all signed differences. The most persistent error at this stage is (–a) × (–b) = –ab; the debt-removal reading, and Exercise Set 3.2 Q4, p.46, are the most direct correctives. Students who write 0 – (–14) = –14 are misreading the subtraction of a negative, so Exercise Set 3.2 Q3 part (iii) deserves explicit board discussion.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Rational Numbers: Definition, Equivalence, and Arithmetic Laws",
+          "section_anchor": "3.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.3 Q1, p.49",
+              "description": "Proves four pairs of rational numbers equal using the cross-multiplication test ad = bc."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.3 Q2, p.49",
+              "description": "Finds three sums of rational numbers with unlike denominators, including one with a negative term."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.3 Q4, p.49",
+              "description": "Finds three products of rational numbers, including a negative factor."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.3 Q6, p.50",
+              "description": "Shows that (1/2 + 3/4) × 8/3 equals 1/2 × 8/3 + 3/4 × 8/3, verifying distributivity over a specific set of rational numbers."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.3 Q8, p.50",
+              "description": "Finds the rational number x satisfying a linear equation in which the distributive property must first be used to expand a bracketed rational expression."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Define a rational number as any number of the form p/q where p and q are integers and q ≠ 0, denoting the set Q. Discuss the think-reflect prompts from section 3.4: why must q be non-zero? (Division by zero is undefined.) Address the three sign positions for a negative fraction — –p/q, (–p)/q, p/(–q) — as equivalent forms, and state the convention of using the lowest-term co-prime representation. Introduce equivalence via the cross-multiplication test ad = bc and work one example on the board."
+            },
+            {
+              "minutes": "12-26",
+              "activity": "State Brahmagupta's laws for rational arithmetic — equality, addition and subtraction over a common denominator, multiplication, and the invert-and-multiply rule for division — deducing each from the fraction definition. Students complete Exercise Set 3.3 Q1, p.49 (equality test) and Q2, p.49 (addition with unlike denominators) and one item from Q4, p.49 (multiplication), with worked solutions compared in pairs."
+            },
+            {
+              "minutes": "26-40",
+              "activity": "Work through the distributive property p(q + r) = pq + pr as a deductive consequence of the multiplication rule, then verify it with Exercise Set 3.3 Q6, p.50. Students then attempt Exercise Set 3.3 Q8, p.50 — solving a linear equation requiring distributivity — individually. Address the think-reflect question: how do we equalise denominators systematically? (Use the LCM as the common denominator.)"
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Consolidation: state closure of Q under addition, subtraction, multiplication and (non-zero) division. Students articulate in one sentence why dividing by zero is excluded from closure. Quick check: which of the following are in Q — 5, –3/7, √2, 0, 0/5? (All except √2; 0/5 = 0 ∈ Q.) Prompt: the set Q contains N, Z and all fractions — but does it fill the number line?"
+            }
+          ],
+          "teacher_notes": "Building on the integer framework from the previous unit, this unit establishes the formal definition and laws of Q. The most common slip is failing to reduce to lowest terms before testing equality — 4/6 and 2/3 share a factor of 2, and students who skip this step often conclude they are unequal. Exercise Set 3.3 Q8, p.50 is a good test of whether students can apply distributivity before solving, rather than treating the bracket as a single term.",
+          "homework": [
+            "Exercise Set 3.3 Q3, p.49 (differences of rationals including subtraction of a negative) and Q5, p.49 (quotients by invert-and-multiply including a negative dividend)."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Rational Numbers on the Number Line, Absolute Value, and Density",
+          "section_anchor": "3.4.1 / 3.4.2",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk",
+            "Rulers"
+          ],
+          "visual_aids": "Number line on board showing 0, 1, 2 with unit intervals subdivided into quarters, marking 3/4 and 9/4",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "3.4.1",
+              "book_ref": "Example 1, p.51",
+              "description": "Evaluates |5/3|, |–5/3| and |0| to show absolute value is always non-negative."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "3.4.1",
+              "book_ref": "Exercise Set 3.4 Q1, p.52",
+              "description": "Represents 2/3, –5/4 and 1½ on a single number line by dividing unit intervals into equal parts."
+            },
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "3.4.1",
+              "book_ref": "Exercise Set 3.4 Q3, p.53",
+              "description": "Simplifies an expression combining the absolute values |–1/4| and |5/12|."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "3.4.2",
+              "book_ref": "Exercise Set 3.4 Q2, p.52",
+              "description": "Finds three distinct rational numbers lying strictly between –1/2 and 1/4, exercising the density property."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "Exercise Set 3.4 Q4, p.53",
+              "description": "A tailor with 15¾ metres of silk needs 2¼ metres per kurta; the student divides mixed-number rationals to find exactly how many kurtas can be made."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "3.4.2",
+              "book_ref": "Exercise Set 3.4 Q5, p.53",
+              "description": "Finds three rational numbers lying between the decimals 3.1415 and 3.1416, applying density to very close values."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Recall that integers are equally spaced on the number line. Extend this: to place p/q, divide the unit interval between consecutive integers into q equal parts and move p parts in the appropriate direction. Demonstrate 3/4 and 9/4 on the board number line. Students draw their own number lines and locate 2/3, –5/4, and 1½ (Exercise Set 3.4 Q1, p.52), comparing results."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Introduce absolute value as distance from 0: |x| = x if x ≥ 0, |x| = –x if x < 0. Walk through Example 1, p.51 — |5/3|, |–5/3|, |0| — emphasising that |x| is always non-negative. Define the distance between two rationals a and b as |a – b|. Students complete Exercise Set 3.4 Q3, p.53 (combining two absolute values). Discuss think-reflect prompt: locate 8/5 and –7/4 by subdivision."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Pose: is there a rational number between any two given rationals? Guide discovery that (a + b)/2 always lies strictly between a and b, and repeating the operation gives infinitely many rationals — the density property. Students apply it: Exercise Set 3.4 Q2, p.52 (three rationals between –1/2 and 1/4) and Exercise Set 3.4 Q5, p.53 (three rationals between 3.1415 and 3.1416). Exercise Set 3.4 Q4, p.53 (tailor problem) is a quick application of mixed-number division."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Raise the central question that density does not answer: the diagonal of a unit square has length √2, which cannot be located by subdividing any unit interval into rational parts. Is the number line then complete? Identify that density does not mean the rationals fill every point — gaps remain, and this question drives the next units."
+            }
+          ],
+          "teacher_notes": "The absolute value definition causes a persistent error: students write |–5/3| = –5/3 because they see the minus sign and copy it. Emphasising that |x| is defined as the distance from zero — always non-negative — and working Example 1, p.51 explicitly corrects this. For density, watch for the claim that (a + b)/2 is the only number between a and b; Exercise Set 3.4 Q5, p.53 is designed to break this misconception by placing three distinct values in a very tight interval.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Irrational Numbers and the Proof That √2 Cannot Be a Fraction",
+          "section_anchor": "3.5 / 3.5.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board display of the eight-step proof outline: assume √2 = p/q in lowest terms → 2q² = p² → p even → p = 2k → q² = 2k² → q even → contradiction",
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "3.5.1",
+              "book_ref": "End of Chapter Q2, p.64",
+              "description": "Proves that √5 is an irrational number, reproducing the proof-by-contradiction argument developed for √2."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Recall the unit square diagonal: the Baudhāyana–Pythagoras Theorem gives d² = 1² + 1² = 2, so d = √2. Pose the think-reflect question from section 3.5: can √2 be written as p/q for integers p and q? Students spend two minutes writing down a yes/no conjecture with a brief reason, then share with a neighbour. Record class responses on the board."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Introduce proof by contradiction as a named technique: assume the opposite of what you want to prove, reason forward, and arrive at a logical impossibility. Work the eight-step proof that √2 is irrational on the board with students copying each step and supplying the logical justification: assume √2 = p/q in lowest terms; square both sides; rearrange to 2q² = p²; argue p² is even so p is even; write p = 2k; substitute to get q² = 2k²; argue q is even; conclude p and q share factor 2, contradicting the co-prime assumption. State the conclusion: no fraction equals √2, so √2 is irrational."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Think-reflect from section 3.5.1: does the same argument prove √3 is irrational? Students attempt this in writing, identifying which steps transfer and what changes (factor 3 instead of 2). Discuss why the argument works for any prime factor. Students then begin End of Chapter Q2, p.64 (proving √5 irrational) in the same format."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Collect and review two or three students' proofs for √5, correcting any step that lacks a stated justification. Introduce the definition: a real number that cannot be expressed as p/q with p, q integers and q ≠ 0 is irrational. The set of irrationals is distinct from Q. Pose: if √2 exists on the number line but is not a fraction, where exactly does it sit, and how could we mark it precisely?"
+            }
+          ],
+          "teacher_notes": "The proof by contradiction is the conceptual high point of sections 3.5 and 3.5.1; the most common gap is accepting 'p² is even, so p is even' without justification — students should articulate that if p were odd, p² would be odd, which contradicts 2q² being even. End of Chapter Q2, p.64 is a direct transfer task and quickly reveals whether the logic has been grasped or merely copied. The think-reflect question about √(10/3) (from section 3.5.1) makes a good extension for students who finish early.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Constructing √2 on the Number Line, and the Story of π",
+          "section_anchor": "3.5.2 / 3.5.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Ruler and compass (one set per student)",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board diagram: right triangle OAB with OA = AB = 1, OB = √2, arc from O meeting the number line at P",
+          "textbook_items_in_class": [
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "3.5.2",
+              "book_ref": "End of Chapter Q16, p.66",
+              "description": "Finds the lengths of the hypotenuses of all the right triangles in the square root spiral of Fig. 3.14, generating √2, √3, √4, …"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Address the think-reflect question from section 3.5.2: if √2 is not a fraction, how can a line segment of that length be obtained at all? Demonstrate the construction on the board: mark O and A with OA = 1 unit; erect a perpendicular at A; mark B on it with AB = 1 unit. By the Baudhāyana–Pythagoras Theorem, OB = √2. Draw an arc centred at O with radius OB to cut the number line at P; P represents √2. Students reproduce the construction using ruler and compass."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Think-reflect extension: students extend the construction step by step — using OB = √2 as the base and erecting a perpendicular of length 1 to produce a new hypotenuse of length √3, then repeating for √4 and √5. They record the sequence of hypotenuse lengths and attempt to state the general result: at each step the hypotenuse = √(previous hypotenuse² + 1), giving √n. Students tackle End of Chapter Q16, p.66 (square root spiral hypotenuses)."
+            },
+            {
+              "minutes": "30-44",
+              "activity": "Introduce π from section 3.5.3: the ratio of any circle's circumference to its diameter. Present Āryabhaṭa's value 3927/1250 = 3.1416 (499 CE) and his own description of it as asanna (approximation). Note Lambert's 1761 proof that π is irrational. Then present Mādhava's 14th-century series π = 4(1 – 1/3 + 1/5 – 1/7 + …): ask students to compute the first four partial sums and observe convergence toward π. Discuss informally what it means to add infinitely many terms — a single fraction is not enough, but an infinite sum can approach an irrational limit."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Synthesise: both √2 (via ruler-and-compass construction) and π (via an infinite series) are real numbers that exist on the number line yet cannot be written as a ratio of integers. Each required a different tool to be understood. Pose the closing question: do the rationals and irrationals together fill the number line completely, and what would a single unified set look like?"
+            }
+          ],
+          "teacher_notes": "The construction unit links the abstract irrationality proof to a tangible geometric object — the segment OB — located precisely on the number line by the arc. A common error is placing B on the number line directly at distance 1 from A, rather than swinging the arc from O; emphasise that it is the radius OB, not AB, that is transferred to the line. For π, students often believe a very good approximation like 22/7 is exact — Mādhava's series and Āryabhaṭa's own qualifier 'asanna' are useful correctives.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Real Numbers and the Decimal Signature of Rationals",
+          "section_anchor": "3.6 / 3.6.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board summary table: terminating decimal ↔ denominator factors only 2 and/or 5; repeating decimal ↔ other prime factors in denominator",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 2, p.57",
+              "description": "Divides 3 by 8 to obtain the terminating decimal 0.375."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 3, p.57",
+              "description": "Divides 5 by 11 to obtain the non-terminating repeating decimal 0.45̄."
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 4, p.59",
+              "description": "Converts the terminating decimal 0.35 into p/q as 7/20."
+            },
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 5, p.59",
+              "description": "Converts 0.6̄ into p/q: x = 0.6̄, 10x = 6.6̄, 9x = 6, x = 2/3."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 6, p.59",
+              "description": "Converts 0.45̄ into p/q: 99x = 45, x = 5/11."
+            },
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "3.6.1",
+              "book_ref": "Example 7, p.59",
+              "description": "Converts the general repeating decimal 0.16̄ into p/q, obtaining 1/6."
+            },
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "3.6.1",
+              "book_ref": "Exercise Set 3.5 Q1, p.61",
+              "description": "Decides which of 7/20, 4/15 and 13/250 have terminating decimals, using prime factors of the denominator."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "3.6.1",
+              "book_ref": "Exercise Set 3.5 Q4, p.62",
+              "description": "Uses multiply-and-subtract to show 0.9̄ = 1."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Define the real numbers R as the union of the rationals Q and the irrationals, forming the unbroken number line. Introduce the decimal expansion as the practical test: a rational has a decimal expansion that either terminates or eventually repeats, whereas an irrational's expansion never ends and never repeats. State the why for repetition: because the number of possible remainders when dividing by a fixed denominator is finite, a remainder must recur and the digits loop."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Work through Example 2, p.57 (3 ÷ 8 = 0.375, terminating) and Example 3, p.57 (5 ÷ 11 = 0.45̄, repeating) on the board, showing the long-division remainder trail. Deduce the termination criterion: a fraction in lowest terms terminates precisely when the prime factors of the denominator are only 2, only 5, or both. Students apply this to Exercise Set 3.5 Q1, p.61 (three fractions, classify without dividing, then verify by long division). Address the think-reflect prompt: work out 10/3 and 11/12 expansions and observe digit repetition."
+            },
+            {
+              "minutes": "28-44",
+              "activity": "Develop the reverse conversion procedures: (1) terminating: place digits over appropriate power of 10 and reduce (Example 4, p.59); (2) pure repeating: set x equal to the decimal, multiply by 10ⁿ for n repeating digits, subtract (Examples 5 and 6, p.59); (3) general repeating: first clear the non-repeating part by multiplying by 10ᵐ, then apply the repeat step (Example 7, p.59). Students complete Exercise Set 3.5 Q4, p.62 (showing 0.9̄ = 1) and discuss the think-reflect implication: every terminating decimal has an alternative form ending in repeating nines."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Summarise the two-way correspondence: a rational number ↔ terminating or repeating decimal. Display the summary table on the board. Students write one example of each conversion type in their notebooks as a personal reference. Pose: what does a decimal that never terminates and never repeats look like — and does such a thing belong to R?"
+            }
+          ],
+          "teacher_notes": "The think-reflect prompt about why termination depends on the prime factors of the denominator (section 3.6.1) is well worth unpacking: multiplying numerator and denominator to make the denominator a power of 10 works precisely because 10 = 2 × 5, so any other prime factor creates an unresolvable remainder. The most common error in the reverse conversion is multiplying by the wrong power of 10 — students who multiply by 10 for a two-digit repeating block get 90x rather than 99x; Examples 5 and 6, p.59 contrast these carefully.",
+          "homework": [
+            "Example 8, p.60 and Example 9, p.60 — read and reproduce the two multi-step conversions (2.357̄ and 2.4537̄) as self-study."
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Cyclic Numbers, Irrational Decimals, and Non-Unique Representations",
+          "section_anchor": "3.6.2 / 3.6.3",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board table: 1/7 × 1 through 1/7 × 6, showing the cyclic permutations of 142857",
+          "textbook_items_in_class": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "3.6.2",
+              "book_ref": "Exercise Set 3.5 Q2, p.62",
+              "description": "Performs long division for 1/13, identifies the repeating block, and checks whether 2/13, 3/13, … show the same cyclic digit behaviour."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "3.6.1",
+              "book_ref": "Exercise Set 3.5 Q3, p.62",
+              "description": "Classifies six numbers as rational or irrational — √81, √12, 0.33333…, 0.123451234512345…, 1.01001000100001… and 23.560185612239874790120 — and writes the explicit fraction for those that are rational."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Direct students to compute 1/7 by long division and record the six-digit repeating block 142857. Pose the discovery question: what happens when you multiply 142857 by 2, 3, 4, 5, 6? Students compute in pairs and report back. Build the board table showing that each product is a cyclic permutation of the same six digits. Ask: why does this happen? Discuss informally that the six possible non-zero remainders when dividing by 7 cycle through in a fixed order, so the digit blocks permute cyclically. Students then attempt Exercise Set 3.5 Q2, p.62 (1/13 and its multiples), comparing with 1/7."
+            },
+            {
+              "minutes": "18-35",
+              "activity": "Turn to irrational decimals (section 3.6.3): display √2 = 1.4142135623… and π = 3.1415926535… on the board. Ask students to look for any repeating block in the first 10 digits — they find none. Establish the definition by contrast: an irrational number's decimal expansion is non-terminating and non-repeating; there is no cyclic pattern. Students classify the six numbers in Exercise Set 3.5 Q3, p.62 and write the fraction for those that are rational."
+            },
+            {
+              "minutes": "35-46",
+              "activity": "Address the non-uniqueness of decimal representation from section 3.6.3: use the multiply-and-subtract technique (already established for 0.9̄ = 1 in Exercise Set 3.5 Q4, p.62) to show that 1.000… = 0.999… and 2.47000… = 2.46999…. Students verify a second example of their own choice. Discuss: does this mean decimal representation is unreliable, or simply that two different-looking strings can name the same point on R?"
+            },
+            {
+              "minutes": "46-50",
+              "activity": "Brief synthesis: rational numbers split into terminating and repeating decimals; irrational numbers have non-terminating non-repeating decimals; and the two together fill every point of R. Ask students to state the key test in one sentence: a decimal represents a rational number if and only if it terminates or eventually repeats."
+            }
+          ],
+          "teacher_notes": "The cyclic number pattern in section 3.6.2 is a discovery exercise — students should compute the multiples of 142857 themselves before being told the result, so the observation carries more weight. A common misconception about irrational decimals is that 'random-looking' is the same as 'non-repeating'; Exercise Set 3.5 Q3, p.62 includes the pattern 0.123451234512345… which repeats but looks unusual, and 1.01001000100001… which does not repeat and is genuinely irrational. The non-uniqueness of 0.999… = 1 often surprises students — the algebraic proof is more convincing than any intuitive argument, so pointing back to Exercise Set 3.5 Q4, p.62 is the most direct route.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "The Number System as a Nested Whole: From N to R and Beyond",
+          "section_anchor": "3.6 / 3.7",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Blackboard",
+            "Chalk"
+          ],
+          "visual_aids": "Board diagram: nested sets N ⊂ Z ⊂ Q, separate set of irrationals I, union Q ∪ I = R",
+          "textbook_items_in_class": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "3.6.1",
+              "book_ref": "End of Chapter Q1, p.64",
+              "description": "Converts 3/50 and 2/9 into decimals, deciding in each case whether the result terminates or is non-terminating and repeating."
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "3.4.2",
+              "book_ref": "End of Chapter Q5, p.65",
+              "description": "Finds six rational numbers between the integers 3 and 4."
+            },
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "3.4",
+              "book_ref": "End of Chapter Q8, p.65",
+              "description": "Solves x/3 + x/5 = 16/15 for the rational number x."
+            },
+            {
+              "id": "E-33",
+              "type": "exercise",
+              "source_section": "3.4",
+              "source_sections": [
+                "3.3.1",
+                "3.4"
+              ],
+              "book_ref": "End of Chapter Q9, p.65",
+              "description": "Given non-zero rational numbers a and b with a + 1/b = 0, determines whether ab is positive or negative without assigning numerical values."
+            },
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "3.6.1",
+              "book_ref": "End of Chapter Q11, p.65",
+              "description": "Determines without dividing whether 18/125 terminates and how many decimal places it has."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Draw the nested-set diagram on the board: N (natural numbers, the Ishango bone notches) ⊂ Z (Brahmagupta's integers, debts and fortunes) ⊂ Q (rational fractions, dense on the line), alongside the irrationals I (√2, π), with Q ∪ I = R (the real number line). Walk through the diagram narrating the chapter's journey: each extension answered a specific gap the previous set could not fill. Students add one example of their own to each region."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Consolidation problem set, students working individually then comparing in pairs: End of Chapter Q1, p.64 (convert 3/50 and 2/9, classify terminating/repeating); End of Chapter Q5, p.65 (six rationals between 3 and 4, applying density); End of Chapter Q8, p.65 (solve x/3 + x/5 = 16/15); End of Chapter Q11, p.65 (determine without dividing that 18/125 terminates, finding the number of decimal places). The teacher circulates, targeting students who struggle with End of Chapter Q8."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Address End of Chapter Q9, p.65 as a class problem: given a + 1/b = 0, deduce that a = –1/b and then ab = –1/b × b = –1 — so the product is negative, regardless of the values of a and b. This links Brahmagupta's sign rules for integers to rational arithmetic. Discuss the think-reflect prompt from section 3.7: √–1 cannot be placed on the real number line because no real number squares to a negative — this points toward imaginary numbers, which belong to a later year."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Closing reflection: students write three sentences summarising which number set they find most surprising and why, drawing on at least one historical mathematician or text mentioned in the chapter. Two or three students share aloud. The teacher affirms the chapter's final message: R is the home of every physical measurement, but the journey — from the Ishango bone to Mādhava's infinite series — shows that numbers are discovered as much as invented."
+            }
+          ],
+          "teacher_notes": "Section 3.7 is the chapter's synthesis and naturally invites revisiting material from across the number system. The most common residual error at this stage is placing √2 inside Q on the nested diagram — End of Chapter Q11, p.65 and the irrationality proof from the previous units are the best checks. End of Chapter Q9, p.65 is a sign-reasoning problem that does not require numerical values; students who assign arbitrary numbers instead of reasoning algebraically have not yet internalised the sign rules as general laws.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 10
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "3.1",
+        "section_title": "The Dawn of Mathematics: The Human Need to Count",
+        "total_sections": 19,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can justify, using a counter-example, whether the natural numbers are closed under a given operation such as subtraction."
+        ],
+        "section_context": "Natural numbers, one-to-one correspondence, N = {1, 2, 3, …}, closure under operations",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "3.1.1",
+        "section_title": "A History Written in Bone",
+        "total_sections": 19,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can identify the mathematical significance of the Lebombo and Ishango bone notch patterns, including recognising the primes 11, 13, 17, 19 and the doubling structure."
+        ],
+        "section_context": "Lebombo Bone (29 notches), Ishango Bone columns, primes, doubling, tally records",
+        "c_code": "C-10.1",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "3.1.2",
+        "section_title": "The Indian Context: Trade and Astronomy",
+        "total_sections": 19,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can describe how the Indian naming of successive powers of ten up to 10⁵³ and the standardised weights of Lothal and Harappa contributed to the development of a place-value number system."
+        ],
+        "section_context": "Indus Valley weights, Vedic powers of ten (parārdha 10¹², tallakṣhaṇa 10⁵³), place-value system",
+        "c_code": "C-10.1",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "3.2",
+        "section_title": "The Revolution of Śhūnya: When Nothing Became Something",
+        "total_sections": 19,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can distinguish between a placeholder zero (Babylonian/Mayan) and Brahmagupta's operational zero, explaining why the latter is a genuine number that participates in arithmetic."
+        ],
+        "section_context": "Brahmagupta's zero as a – a = 0, contrast with Babylonian placeholder, 628 CE",
+        "c_code": "C-10.1",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "3.2.2",
+        "section_title": "The Bakhśhālī Manuscript and Brahmagupta's Rules",
+        "total_sections": 19,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can apply Brahmagupta's four operational laws for zero — a + 0 = a, a – 0 = a, a × 0 = 0, a – a = 0 — to evaluate expressions involving zero."
+        ],
+        "section_context": "Brahmagupta's four zero laws, Bakhśhālī bindu symbol, Brāhmasphuṭasiddhānta 628 CE",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_ref": "3.2.1",
+        "section_title": "From Philosophy to Mathematics: The Concept of Śhūnyatā",
+        "total_sections": 19,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can explain how the philosophical concept of Śhūnyatā in the Upanishads and Buddhist literature provided the cultural framework for accepting zero as a mathematical entity."
+        ],
+        "section_context": "Śhūnyatā (emptiness), Upanishads, Buddhist literature, Patanjali, Āryabhaṭa, Brahmagupta",
+        "c_code": "C-10.1",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_ref": "3.3",
+        "section_title": "Integers: Expanding the Horizon",
+        "total_sections": 19,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can represent integer arithmetic problems — involving temperature change or financial transactions — as signed-integer equations and compute the result using the number line."
+        ],
+        "section_context": "Integers Z = {…, –2, –1, 0, 1, 2, …}, dhana/ṛiṇa, number line, Brahmagupta's negative numbers",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_ref": "3.3.1",
+        "section_title": "The Arithmetic of Integers",
+        "total_sections": 19,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can apply Brahmagupta's five sign rules for adding and multiplying integers and justify why the product of two negative integers is positive using the debt-removal interpretation."
+        ],
+        "section_context": "Brahmagupta's five sign rules, negative × negative = positive, debt-and-fortune model",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_ref": "3.4",
+        "section_title": "Filling the Spaces: Fractions and Rational Numbers",
+        "total_sections": 19,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can apply Brahmagupta's laws for rational arithmetic — equality, addition/subtraction over a common denominator, multiplication, division by invert-and-multiply, and distributivity — to evaluate expressions and solve linear equations in Q."
+        ],
+        "section_context": "Rational numbers Q = p/q (q ≠ 0), cross-multiplication equality, arithmetic laws, closure, distributivity",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_ref": "3.4.1",
+        "section_title": "Representation of Rational Numbers on the Number Line",
+        "total_sections": 19,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can locate a given rational number on the number line by subdividing the unit interval and can compute the distance between two rational numbers using the absolute value |a – b|."
+        ],
+        "section_context": "Placing p/q by subdividing unit interval, absolute value as distance from 0, |a – b| between two rationals",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 11,
+        "section_ref": "3.4.2",
+        "section_title": "The Density of Rational Numbers",
+        "total_sections": 19,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can find rational numbers lying strictly between two given rationals by applying the average formula (a + b)/2 and explain why this process can be repeated to produce infinitely many such numbers."
+        ],
+        "section_context": "Density property, average (a + b)/2 between two rationals, infinitely many rationals in any interval",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 12,
+        "section_ref": "3.5",
+        "section_title": "Irrational Numbers",
+        "total_sections": 19,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can define irrational numbers as numbers on the real line that cannot be expressed as p/q with p and q integers and q ≠ 0, and identify √2 arising from the diagonal of a unit square as the historical motivation."
+        ],
+        "section_context": "Irrational numbers definition, Baudhāyana–Pythagoras on unit square diagonal, d² = 2, historical crisis",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 13,
+        "section_ref": "3.5.1",
+        "section_title": "The Proof of Irrationality of √2",
+        "total_sections": 19,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that √2 (and by the same method √5) is irrational by constructing a proof by contradiction: assuming √2 = p/q in lowest terms, deriving that both p and q must be even, and identifying the contradiction with the co-prime assumption."
+        ],
+        "section_context": "Proof by contradiction, eight-step irrationality proof for √2, extension to √3 and √5, Hippasus",
+        "c_code": "C-7.1",
+        "co_central": false
+      },
+      {
+        "section_number": 14,
+        "section_ref": "3.5.2",
+        "section_title": "Construction of Length √2",
+        "total_sections": 19,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can construct a line segment of length √n for positive integers n using a ruler-and-compass procedure that builds successive right triangles, and locate the resulting irrational length on the number line via an arc from the origin."
+        ],
+        "section_context": "Ruler-and-compass construction of √2, right triangle OAB with OA = AB = 1, arc to number line, √n spiral",
+        "c_code": "C-7.1",
+        "co_central": false
+      },
+      {
+        "section_number": 15,
+        "section_ref": "3.5.3",
+        "section_title": "The Story of Pi (π) and Mādhava's Infinite Series",
+        "total_sections": 19,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can explain why π is irrational — citing Lambert's proof and the need for an infinite series rather than a single fraction — and evaluate partial sums of Mādhava's series π = 4(1 – 1/3 + 1/5 – 1/7 + …) to observe convergence."
+        ],
+        "section_context": "π as circumference/diameter ratio, Āryabhaṭa's asanna 3927/1250, Lambert's 1761 proof, Mādhava's series",
+        "c_code": "C-10.1",
+        "co_central": false
+      },
+      {
+        "section_number": 16,
+        "section_ref": "3.6.1",
+        "section_title": "Rational Decimals: Terminating and Repeating",
+        "total_sections": 19,
+        "period_numbers": [
+          8
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can determine whether a rational number in lowest terms has a terminating or repeating decimal expansion by inspecting the prime factors of the denominator, and convert between repeating decimals and the form p/q using the multiply-and-subtract algorithm."
+        ],
+        "section_context": "Terminating/repeating decimal criterion (denominators with only 2 and/or 5), multiply-and-subtract conversion, three cases",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 17,
+        "section_ref": "3.6.2",
+        "section_title": "The Magic of Cyclic Numbers",
+        "total_sections": 19,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can identify a cyclic number pattern in the repeating block of a rational decimal by computing multiples and observing that the same digits appear in cyclic permutations."
+        ],
+        "section_context": "Cyclic number 142857 from 1/7, cyclic permutations under multiplication by 1–6, 1/13 extension",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 18,
+        "section_ref": "3.6.3",
+        "section_title": "Irrational Decimals: Chaos and Infinity",
+        "total_sections": 19,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can classify a given decimal expansion as rational or irrational by determining whether it terminates, eventually repeats, or is non-terminating and non-repeating, and explain the non-uniqueness of decimal representation (0.999… = 1)."
+        ],
+        "section_context": "Non-terminating non-repeating decimals (√2, π), classification test, 0.999… = 1 non-uniqueness",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "section_number": 19,
+        "section_ref": "3.6",
+        "section_title": "Real Numbers: Decimals and Cyclic Patterns",
+        "total_sections": 19,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can represent the real number system as a nested structure N ⊂ Z ⊂ Q with irrationals I forming R = Q ∪ I, and determine the set membership of a given number, justifying the classification using the properties of each set established in the chapter."
+        ],
+        "section_context": "Real numbers R = Q ∪ I, nested structure N ⊂ Z ⊂ Q, decimal test for membership, imaginary numbers as R's boundary",
+        "c_code": "C-1.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 3,
+      "chapter_title": "The World of Numbers",
+      "chapter_cg": "CG-1",
+      "reasoning_floor_lift_applied": true,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "3.1",
+          "section_title": "The Dawn of Mathematics: The Human Need to Count",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can justify, using a counter-example, whether the natural numbers are closed under a given operation such as subtraction.",
+          "section_context": "Natural numbers, one-to-one correspondence, N = {1, 2, 3, …}, closure under operations",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A student claims that the set of natural numbers N = {1, 2, 3, 4, …} is closed under subtraction because 7 – 3 = 4 and 4 is a natural number. Which of the following best evaluates this claim?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The claim is correct because 0 is the only result of subtraction that could fall outside N, and 0 is not a natural number.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The claim is correct: since 7 – 3 = 4 ∈ N, subtraction always stays within N.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The claim is incorrect: a single counter-example such as 3 – 7 = –4, which is not in N, is enough to show that N is not closed under subtraction.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "The claim is incorrect because subtraction is not defined for natural numbers at all.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "B": "Generalises from a single confirming instance — a classic error of inductive over-generalisation that ignores the need to check all cases.",
+                "D": "Confuses 'closed under an operation' with 'the operation is defined'; subtraction is defined for natural numbers but the result is not always a natural number.",
+                "A": "Correctly identifies that 0 is outside N but then incorrectly concludes this makes the operation almost closed, missing that negative results also fall outside N."
+              },
+              "inclusivity": "A student who is uncertain may first be asked to try 3 – 7 on a number line to see where the result lands; a student who answers quickly can be challenged to identify all the conditions on a and b in N that make a – b ∈ N (requires a ≥ b)."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "3.1.1",
+          "section_title": "A History Written in Bone",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can identify the mathematical significance of the Lebombo and Ishango bone notch patterns, including recognising the primes 11, 13, 17, 19 and the doubling structure.",
+          "section_context": "Lebombo Bone (29 notches), Ishango Bone columns, primes, doubling, tally records",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-10.1",
+            "competency_text": "Recognises the contributions of mathematicians and cultures across history to the development of the number system."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "One column of notches on the Ishango Bone groups the numbers 11, 13, 17, and 19. What mathematical property do all four of these numbers share, and what does this suggest about the knowledge of the people who made the bone?",
+          "options": [
+            {
+              "label": "A",
+              "text": "They add up to 60, suggesting a base-60 counting system like the Babylonians used.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "They are all less than 20, suggesting the maker's counting system was limited to two digits.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "They are all odd numbers, suggesting the maker could distinguish even from odd.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "They are all prime numbers — divisible only by 1 and themselves — suggesting awareness of a property more specific than mere odd-even parity.",
+              "is_correct": true
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "C": "Notices the odd-even property but stops at a coarser classification, missing that all four numbers are specifically prime — a subset of odd numbers.",
+                "B": "Confuses a numerical bound with a property of the numbers themselves; being less than 20 is not a shared mathematical structure.",
+                "A": "Fabricates a connection to Babylonian base-60 using the coincidental sum; the chapter does not support this inference and the sum 11+13+17+19 = 60 is not discussed as evidence of base-60."
+              },
+              "inclusivity": "A student who struggles may be asked to check, one by one, which numbers divide 11, 13, 17, and 19, building the prime identification step by step; a student who finishes early can be asked to name the next prime after 19 and explain why it belongs to the same class."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "3.1.2",
+          "section_title": "The Indian Context: Trade and Astronomy",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can describe how the Indian naming of successive powers of ten up to 10⁵³ and the standardised weights of Lothal and Harappa contributed to the development of a place-value number system.",
+          "section_context": "Indus Valley weights, Vedic powers of ten (parārdha 10¹², tallakṣhaṇa 10⁵³), place-value system",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-10.1",
+            "competency_text": "Recognises the contributions of mathematicians and cultures across history to the development of the number system."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The Vedic tradition assigned distinct names to every power of ten up to 10⁵³, and Indus Valley cities like Lothal and Harappa used standardised weights in trade. Which of the following best explains how these two practices together laid the groundwork for a decimal place-value system?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Naming large powers of ten proved that Indian mathematicians could count beyond 1000, which automatically gives a place-value system.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Naming powers of ten up to 10⁵³ was a religious practice with no direct connection to the development of a number system.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Standardised weights required precise comparison of quantities at different scales, and naming each power of ten created an explicit structure of multiplying by 10 at every step — the two together built the conceptual architecture on which a positional notation could be placed.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "The weights were used only for trade with Mesopotamia, so they contributed to Babylonian place-value notation rather than Indian.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "A": "Conflates the ability to name large numbers with possessing a positional system; naming and positional notation are distinct achievements.",
+                "D": "Misreads the direction of cultural influence; the chapter notes that Lothal and Harappa traded with Mesopotamia but attributes the place-value development to the Indian tradition.",
+                "B": "Treats the religious context of the Vedic texts as evidence that the naming had no mathematical application, ignoring the chapter's explicit connection between the naming structure and the place-value architecture."
+              },
+              "inclusivity": "A student who is unsure can be asked to compare how 10¹ through 10⁵ are structured — each is 10 times the previous — and then asked what a system based on that structure would look like for writing numbers; a student who answers readily can be asked to explain why a base-20 or base-60 system would have required different Vedic naming conventions."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "3.2",
+          "section_title": "The Revolution of Śhūnya: When Nothing Became Something",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can distinguish between a placeholder zero (Babylonian/Mayan) and Brahmagupta's operational zero, explaining why the latter is a genuine number that participates in arithmetic.",
+          "section_context": "Brahmagupta's zero as a – a = 0, contrast with Babylonian placeholder, 628 CE",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-10.1",
+            "competency_text": "Recognises the contributions of mathematicians and cultures across history to the development of the number system."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The Babylonians used a special symbol to mark an empty column in their positional notation — for example, to distinguish 302 from 32. Brahmagupta (628 CE) defined zero differently. Which statement most accurately captures the difference between these two uses of zero?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Both systems treated zero as a number, but the Babylonians wrote it differently.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Brahmagupta's zero is a genuine number — the result of a – a — that can be added to, subtracted from, and multiplied by other numbers; the Babylonian symbol marks an empty column but does not itself participate in arithmetic.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "The Babylonian symbol and Brahmagupta's zero are the same concept; Brahmagupta simply gave it a formal name.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The Babylonian symbol was more mathematically advanced because it was used in positional notation, whereas Brahmagupta's zero was only used in equations.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {
+                "C": "Fails to distinguish placeholder from operational number — the conceptual core of the section.",
+                "D": "Reverses the significance: positional utility does not confer arithmetic status; the chapter's point is that participating in arithmetic is what makes zero a number.",
+                "A": "Claims both systems treated zero as a number, which contradicts the chapter's explicit argument that the Babylonian symbol did not act as a number in arithmetic."
+              },
+              "inclusivity": "A student who is uncertain can be asked: can you add the Babylonian empty-column symbol to 5 and get a meaningful answer? If not, what does that tell you about its status? A student who finishes early can be asked to test each of Brahmagupta's four laws with specific numbers and confirm they are consistent."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "3.2.2",
+          "section_title": "The Bakhśhālī Manuscript and Brahmagupta's Rules",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can apply Brahmagupta's four operational laws for zero — a + 0 = a, a – 0 = a, a × 0 = 0, a – a = 0 — to evaluate expressions involving zero.",
+          "section_context": "Brahmagupta's four zero laws, Bakhśhālī bindu symbol, Brāhmasphuṭasiddhānta 628 CE",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Using only Brahmagupta's operational laws for zero, evaluate the following expression step by step, stating which law you use at each step:\n\n(17 – 17) + 8 × 0 – 0 + 5",
+          "options": [],
+          "expected_answer": "5",
+          "method_one_line": "Apply a – a = 0 to get 0, then a × 0 = 0, then 0 + 0 = 0 and 0 – 0 = 0, and finally 0 + 5 = 5 by a + 0 = a.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "A student who struggles may work each law separately first — compute 17 – 17, then 8 × 0, then combine — before writing the chain; a student who finishes quickly can be asked to construct a different expression that also evaluates to 5 using all four of Brahmagupta's laws at least once."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "3.2.1",
+          "section_title": "From Philosophy to Mathematics: The Concept of Śhūnyatā",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can explain how the philosophical concept of Śhūnyatā in the Upanishads and Buddhist literature provided the cultural framework for accepting zero as a mathematical entity.",
+          "section_context": "Śhūnyatā (emptiness), Upanishads, Buddhist literature, Patanjali, Āryabhaṭa, Brahmagupta",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-10.1",
+            "competency_text": "Recognises the contributions of mathematicians and cultures across history to the development of the number system."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The concept of Śhūnyatā in the Upanishads and Buddhist literature describes a state of genuine emptiness — not mere absence, but a recognised, valued condition. How did this philosophical idea contribute to the emergence of zero as a mathematical object in Indian thought?",
+          "options": [
+            {
+              "label": "A",
+              "text": "A culture that revered emptiness as a meaningful state had the conceptual framework to welcome nothingness into architecture, literature, linguistics and finally mathematics — making it possible to recognise 'nothing' as a legitimate object of study rather than an absence to be ignored.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "It had no connection to mathematics; the invention of zero was a purely computational discovery made independently of any cultural context.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Patanjali's Yoga Sutras contained explicit arithmetic rules for zero that Brahmagupta later copied into the Brāhmasphuṭasiddhānta.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The philosophical concept defined zero as infinity, which is why Brahmagupta's laws treat zero and infinity as interchangeable.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {
+                "B": "Denies the role of cultural context in mathematical development — the section's central argument — and treats mathematics as culturally neutral.",
+                "D": "Confuses Śhūnyatā (emptiness) with infinity; the chapter does not equate the two, and Brahmagupta's laws do not treat zero and infinity as interchangeable.",
+                "C": "Fabricates a direct textual transmission that the chapter does not assert; the Yoga Sutras are mentioned as part of the cultural context for emptiness, not as a source of arithmetic rules."
+              },
+              "inclusivity": "A student who is uncertain can be asked to think of an analogy: if a culture had no word or concept for the colour blue, would it be easy for someone in that culture to develop a theory of light wavelengths? Then apply the analogy to 'emptiness as a real state' versus 'emptiness as nothing'; a student who is confident can be asked to identify one other domain (architecture, linguistics) where Śhūnyatā was said to appear, and explain how that domain's use parallels the mathematical one."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "3.3",
+          "section_title": "Integers: Expanding the Horizon",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can represent integer arithmetic problems — involving temperature change or financial transactions — as signed-integer equations and compute the result using the number line.",
+          "section_context": "Integers Z = {…, –2, –1, 0, 1, 2, …}, dhana/ṛiṇa, number line, Brahmagupta's negative numbers",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A merchant records the following transactions over three days: she begins with a fortune of ₹600, takes on a debt of ₹900 on the first day, receives a payment of ₹350 on the second day, and incurs a further debt of ₹200 on the third day. Write a single integer equation representing these transactions and compute the merchant's final financial standing. State whether she is in fortune or in debt.",
+          "options": [],
+          "expected_answer": "Final standing = 600 – 900 + 350 – 200 = –150; the merchant is in debt by ₹150.",
+          "method_one_line": "Represent fortunes as positive integers and debts as negative integers, then evaluate the signed sum left to right: 600 – 900 = –300, –300 + 350 = 50, 50 – 200 = –150.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "A student who is uncertain can be asked to mark each transaction on a number line, moving right for fortunes and left for debts, to track the running total visually; a student who finishes quickly can be asked to find the minimum single fortune she would need to receive on a fourth day to leave her with a final standing of exactly ₹500."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "3.3.1",
+          "section_title": "The Arithmetic of Integers",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can apply Brahmagupta's five sign rules for adding and multiplying integers and justify why the product of two negative integers is positive using the debt-removal interpretation.",
+          "section_context": "Brahmagupta's five sign rules, negative × negative = positive, debt-and-fortune model",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A student writes: 'Multiplying two negative numbers gives a negative result, because two debts together always make a bigger debt.' Using Brahmagupta's debt-and-fortune model, evaluate this claim. Explain clearly whether the student is correct or incorrect, justify your answer using the debt-removal interpretation of multiplying by a negative number, and give one numerical illustration.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "States clearly that the student's claim is incorrect: the product of two negative integers is positive, not negative.",
+            "Uses the debt-removal interpretation: multiplying by –1 means 'removing once'; multiplying by –n means 'removing n times'. Removing a debt (a negative) n times is equivalent to gaining a fortune.",
+            "Example such as (–3) × (–4): removing the debt of ₹3 four times results in a net gain of ₹12, i.e. a fortune of ₹12.",
+            "Identifies Brahmagupta's rule: debt × debt = fortune (ṛiṇa × ṛiṇa = dhana).",
+            "No unjustified assertion — the justification is rooted in the debt-removal reading, not merely in stating the rule."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "A student who struggles can begin by computing (–3) × 4 using the fortune-and-debt language (removing a fortune three times = a debt of ₹12) and then asked what changes when the second factor is also negative; a student who gives a strong response can be pushed to explain why the pattern breaks down if one tries to extend the argument to zero: (0) × (–5) should give 0 under the rule, and the model must be shown to be consistent with a × 0 = 0."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "3.4",
+          "section_title": "Filling the Spaces: Fractions and Rational Numbers",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can apply Brahmagupta's laws for rational arithmetic — equality, addition/subtraction over a common denominator, multiplication, division by invert-and-multiply, and distributivity — to evaluate expressions and solve linear equations in Q.",
+          "section_context": "Rational numbers Q = p/q (q ≠ 0), cross-multiplication equality, arithmetic laws, closure, distributivity",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Find the value of x satisfying:\n\n(3/4) × (x – 2/3) = 5/8\n\nShow each step, naming the rational arithmetic law used (distributivity, invert-and-multiply, or common denominator) where relevant.",
+          "options": [],
+          "expected_answer": "x = 5/3 + 2/3 = 7/3",
+          "method_one_line": "Divide both sides by 3/4 using invert-and-multiply to get x – 2/3 = (5/8) × (4/3) = 5/6, then add 2/3 over a common denominator to get x = 5/6 + 4/6 = 9/6 = 3/2.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "A student who is uncertain can first be asked to solve (3/4) × y = 5/8 for y (a simpler one-step version using invert-and-multiply), then substitute back to solve for x; a student who finishes quickly can be asked to verify the answer by substituting x = 3/2 into the left-hand side and confirming it equals 5/8."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_ref": "3.4.1",
+          "section_title": "Representation of Rational Numbers on the Number Line",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can locate a given rational number on the number line by subdividing the unit interval and can compute the distance between two rational numbers using the absolute value |a – b|.",
+          "section_context": "Placing p/q by subdividing unit interval, absolute value as distance from 0, |a – b| between two rationals",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The rational numbers a = –7/4 and b = 5/4 are to be located on the number line.\n(i) Describe, in terms of subdivisions of the unit interval, exactly where each of a and b sits.\n(ii) Calculate the distance between a and b.",
+          "options": [],
+          "expected_answer": "(i) a = –7/4 is 7 quarter-units to the left of 0 (between –2 and –1, three quarters of the way from –2 toward –1). b = 5/4 is 5 quarter-units to the right of 0 (between 1 and 2, one quarter of the way from 1 toward 2). (ii) Distance = |b – a| = |5/4 – (–7/4)| = |12/4| = 3.",
+          "method_one_line": "Subdivide the unit interval into 4 equal parts; move p parts right (positive) or left (negative); compute distance as |b – a| = |(5/4) + (7/4)| = |12/4| = 3.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "A student who finds the negative fraction confusing may be asked to locate 7/4 first (positive), then reflect it through 0 to place –7/4; a student who finishes quickly can be asked to find a rational number equidistant from both a and b and verify their answer using the absolute value formula."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 11,
+          "section_ref": "3.4.2",
+          "section_title": "The Density of Rational Numbers",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can find rational numbers lying strictly between two given rationals by applying the average formula (a + b)/2 and explain why this process can be repeated to produce infinitely many such numbers.",
+          "section_context": "Density property, average (a + b)/2 between two rationals, infinitely many rationals in any interval",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Find three distinct rational numbers lying strictly between 3/7 and 4/7. For each number you give, show that it lies strictly between the two given values. Then explain, in two or three sentences, why the process you used can always be repeated to produce more rational numbers in the same interval.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "Three distinct rational numbers each strictly greater than 3/7 and strictly less than 4/7, with verification that 3/7 < (chosen number) < 4/7.",
+            "At least one number produced by the average formula: (3/7 + 4/7)/2 = 7/14 = 1/2 is correct and strictly between the two bounds.",
+            "An explanation that the average of any two distinct rationals is always a rational strictly between them, and that because the resulting interval is again non-empty and bounded by rationals, the process can be repeated indefinitely."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": "A student who struggles to find values may be asked to convert 3/7 and 4/7 to equivalent fractions with a larger denominator (e.g. 30/70 and 40/70) and then pick fractions between them; a student who finishes quickly can be asked to find a rational number between the two closest rational numbers they identified and then argue whether there is ever a 'last' rational number they can insert."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 12,
+          "section_ref": "3.5",
+          "section_title": "Irrational Numbers",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can define irrational numbers as numbers on the real line that cannot be expressed as p/q with p and q integers and q ≠ 0, and identify √2 arising from the diagonal of a unit square as the historical motivation.",
+          "section_context": "Irrational numbers definition, Baudhāyana–Pythagoras on unit square diagonal, d² = 2, historical crisis",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A square has a side length of 1 unit. By applying the Baudhāyana–Pythagoras Theorem to find the length of the diagonal, explain why the diagonal's length cannot be expressed as a ratio of two integers, and state what type of number it is.",
+          "options": [
+            {
+              "label": "A",
+              "text": "The diagonal has length 1.5 units; fractions like 3/2 are sufficient to express all diagonal lengths of squares.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The diagonal has length 2 units, which is a natural number and therefore rational.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The diagonal has length √2 units. Since √2 satisfies d² = 2 but cannot be written as p/q for integers p and q, it is an irrational number.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "The diagonal has length √2 units, which is a rational number because it can be approximated by the fraction 7/5.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "what_each_option_reveals": {
+                "B": "Misapplies the Pythagoras theorem, treating 1² + 1² = 2 as the diagonal length rather than the square of the diagonal length.",
+                "D": "Confuses an approximation with an exact value; 7/5 = 1.4 ≠ √2 exactly, and a good approximation does not make a number rational.",
+                "A": "Estimates the diagonal by eye as 1.5, bypassing the theorem, and then incorrectly infers that all square diagonals are rational."
+              },
+              "inclusivity": "A student who is uncertain can be asked to compute 1.4² and 1.5² and see which is closer to 2, then asked whether they found an exact value or only an approximation; a student who responds confidently can be asked to name one other irrational number and explain how they know it cannot be written as p/q."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 13,
+          "section_ref": "3.5.1",
+          "section_title": "The Proof of Irrationality of √2",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can prove that √2 (and by the same method √5) is irrational by constructing a proof by contradiction: assuming √2 = p/q in lowest terms, deriving that both p and q must be even, and identifying the contradiction with the co-prime assumption.",
+          "section_context": "Proof by contradiction, eight-step irrationality proof for √2, extension to √3 and √5, Hippasus",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-7.1",
+            "competency_text": "Proves results from stated assumptions and constructs valid mathematical arguments."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Prove that √5 is irrational. Your proof must use proof by contradiction and follow the same logical structure as the proof for √2. State clearly the assumption you begin with, the conclusion you derive from it, and the contradiction that arises.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Clearly states the assumption: suppose √5 = p/q in lowest terms, where p and q are integers with q ≠ 0 and gcd(p, q) = 1.",
+            "Squares both sides to obtain 5 = p²/q², then multiplies to get 5q² = p².",
+            "Deduces that p² is divisible by 5, and therefore p is divisible by 5 (using that 5 is prime), so p = 5k for some integer k.",
+            "Substitutes p = 5k to obtain 5q² = 25k², simplifying to q² = 5k², and deduces that q² and therefore q is divisible by 5.",
+            "Concludes that both p and q share the factor 5, contradicting the assumption that gcd(p, q) = 1.",
+            "States the conclusion: √5 cannot be written as p/q, so √5 is irrational.",
+            "Every step is justified; no step is skipped without reason."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "inclusivity": "A student who is unsure where to begin can be prompted to write the proof for √2 first as a template, then replace every instance of 2 with 5 and check that each inference still holds; a student who gives a complete proof quickly can be asked to identify exactly which property of 5 (that it is prime) is essential to the deduction 'p² divisible by 5 implies p divisible by 5', and whether the proof would fail for a composite number such as 4."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 14,
+          "section_ref": "3.5.2",
+          "section_title": "Construction of Length √2",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can construct a line segment of length √n for positive integers n using a ruler-and-compass procedure that builds successive right triangles, and locate the resulting irrational length on the number line via an arc from the origin.",
+          "section_context": "Ruler-and-compass construction of √2, right triangle OAB with OA = AB = 1, arc to number line, √n spiral",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-7.1",
+            "competency_text": "Proves results from stated assumptions and constructs valid mathematical arguments."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Describe, step by step, the ruler-and-compass construction that produces a line segment of length √3 on the number line, starting from a unit length. Explain why the constructed segment has exactly this length, and state which theorem you are using at each stage where a new length is computed.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "Step 1: Mark O and A with OA = 1 unit; erect a perpendicular at A; mark B on it with AB = 1 unit. Invoke the Baudhāyana–Pythagoras Theorem: OB² = OA² + AB² = 1 + 1 = 2, so OB = √2.",
+            "Step 2: Use OB = √2 as a new base. Erect a perpendicular at B (or equivalently at the new base point); mark a new point C with BC = 1 unit. By the Baudhāyana–Pythagoras Theorem: OC² = OB² + BC² = 2 + 1 = 3, so OC = √3.",
+            "Step 3: Draw an arc centred at O with radius OC. The arc meets the number line at point P. The distance OP = OC = √3, so P represents √3 on the number line.",
+            "Justification: at each stage the theorem applied is the Baudhāyana–Pythagoras Theorem; the arc transfers the hypotenuse length to the number line because all points on the arc are equidistant from O."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "inclusivity": "A student who is uncertain can be asked to first redo the √2 construction from memory, then identify which segment acts as the new 'base' for the next triangle; a student who gives a complete response can be asked to state the general pattern: if a segment of length √(n–1) has been constructed, what single additional step produces √n, and what does the sequence of hypotenuses look like?"
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 15,
+          "section_ref": "3.5.3",
+          "section_title": "The Story of Pi (π) and Mādhava's Infinite Series",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can explain why π is irrational — citing Lambert's proof and the need for an infinite series rather than a single fraction — and evaluate partial sums of Mādhava's series π = 4(1 – 1/3 + 1/5 – 1/7 + …) to observe convergence.",
+          "section_context": "π as circumference/diameter ratio, Āryabhaṭa's asanna 3927/1250, Lambert's 1761 proof, Mādhava's series",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-10.1",
+            "competency_text": "Recognises the contributions of mathematicians and cultures across history to the development of the number system."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Mādhava of Sangamagrama showed in the 14th century that π can be expressed as the infinite series:\n\nπ = 4(1 – 1/3 + 1/5 – 1/7 + 1/9 – …)\n\n(i) Compute the partial sums S₁, S₂, S₃, S₄, and S₅, where Sₙ uses the first n terms of the bracket before multiplying by 4. Express each partial sum as a fraction.\n(ii) Compare S₅ to the known value π ≈ 3.1416 and comment on the direction and speed of convergence.",
+          "options": [],
+          "expected_answer": "S₁ = 4(1) = 4; S₂ = 4(1 – 1/3) = 4(2/3) = 8/3 ≈ 2.667; S₃ = 4(1 – 1/3 + 1/5) = 4(13/15) = 52/15 ≈ 3.467; S₄ = 4(1 – 1/3 + 1/5 – 1/7) = 4(76/105) = 304/105 ≈ 2.895; S₅ = 4(1 – 1/3 + 1/5 – 1/7 + 1/9) = 4(263/315) = 1052/315 ≈ 3.340. The partial sums alternate above and below π, and S₅ ≈ 3.340 is still not close to 3.1416, illustrating that Mādhava's series converges but does so slowly.",
+          "method_one_line": "Add the fractions in the bracket one term at a time over a common denominator, then multiply by 4 at each stage.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "inclusivity": "A student who struggles with adding fractions over different denominators can be asked to convert each partial sum to a decimal approximation first using 1 ÷ 3, 1 ÷ 5, etc., and then check the fractional form separately; a student who finishes quickly can be asked to determine whether S₆ is above or below π and whether the distance from π is increasing or decreasing, using the alternating pattern."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 16,
+          "section_ref": "3.6.1",
+          "section_title": "Rational Decimals: Terminating and Repeating",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can determine whether a rational number in lowest terms has a terminating or repeating decimal expansion by inspecting the prime factors of the denominator, and convert between repeating decimals and the form p/q using the multiply-and-subtract algorithm.",
+          "section_context": "Terminating/repeating decimal criterion (denominators with only 2 and/or 5), multiply-and-subtract conversion, three cases",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Without performing long division, determine whether the decimal expansion of 11/40 terminates or repeats, and explain your reasoning using the prime factorisation of the denominator. Then convert the repeating decimal 0.2̄7̄ (where the block '27' repeats) into the form p/q in lowest terms, showing all steps of the multiply-and-subtract method.",
+          "options": [],
+          "expected_answer": "Part 1: 40 = 2³ × 5. The only prime factors are 2 and 5, so 11/40 has a terminating decimal expansion. (It equals 0.275.) Part 2: Let x = 0.272727… Since the repeating block has 2 digits, multiply by 100: 100x = 27.272727… Subtract: 99x = 27, so x = 27/99 = 3/11.",
+          "method_one_line": "Factorise denominator to check for only 2s and 5s; then apply the n-digit multiply-and-subtract: multiply x by 10ⁿ, subtract x, solve, and reduce.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "inclusivity": "A student who is uncertain about the termination criterion can first be directed to write 40 as a product of primes step by step before applying the rule; a student who finishes quickly can be asked to explain what the largest possible number of decimal places for 11/40 could be (it is 3, matching the power of 2 in the denominator, because multiplying by 5³/5³ gives denominator 10³) and to verify by carrying out the multiplication."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 17,
+          "section_ref": "3.6.2",
+          "section_title": "The Magic of Cyclic Numbers",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can identify a cyclic number pattern in the repeating block of a rational decimal by computing multiples and observing that the same digits appear in cyclic permutations.",
+          "section_context": "Cyclic number 142857 from 1/7, cyclic permutations under multiplication by 1–6, 1/13 extension",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The decimal expansion of 1/7 = 0.142857142857… has repeating block 142857.\n(i) Compute 142857 × 2 and 142857 × 5.\n(ii) Describe the relationship between each product and the original block 142857.\n(iii) Explain briefly why all six multiples (×1 through ×6) produce cyclic permutations of the same digits, using the fact that the six non-zero remainders when dividing by 7 cycle through in a fixed order.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "142857 × 2 = 285714 (a cyclic permutation of 142857, starting from the digit 2).",
+            "142857 × 5 = 714285 (a cyclic permutation of 142857, starting from the digit 7).",
+            "Both products contain exactly the digits 1, 2, 4, 5, 7, 8 in a different cyclic order.",
+            "Explanation: when dividing by 7, the possible non-zero remainders are 1, 2, 3, 4, 5, 6; each remainder determines the next digit block; multiplying 1/7 by k effectively starts the long division at a different remainder, producing the same digit cycle from a different starting point."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "inclusivity": "A student who is uncertain can first be asked to verify that 142857 × 3 = 428571 by long multiplication and then identify where in the original sequence '428571' appears as a cyclic rotation; a student who completes the task quickly can be asked to check whether 1/13 produces a similar cyclic pattern and compare the length of its repeating block with that of 1/7."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 18,
+          "section_ref": "3.6.3",
+          "section_title": "Irrational Decimals: Chaos and Infinity",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can classify a given decimal expansion as rational or irrational by determining whether it terminates, eventually repeats, or is non-terminating and non-repeating, and explain the non-uniqueness of decimal representation (0.999… = 1).",
+          "section_context": "Non-terminating non-repeating decimals (√2, π), classification test, 0.999… = 1 non-uniqueness",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": "Number | Decimal Expansion | Rational or Irrational?\n√81 | 9.000… | ?\n0.123451234512345… | 0.123451234512345… | ?\n1.01001000100001… | 1.01001000100001… | ?\n0.262626… | 0.262626… | ?\n√12 | 3.46410161514… | ?",
+          "graph_paper": false,
+          "question_text": "Refer to the table provided. For each of the five numbers in the table, classify it as rational or irrational, and state the reason for your classification in terms of its decimal expansion. For those you classify as rational, write the number in the form p/q in lowest terms.",
+          "options": [],
+          "expected_answer": "√81 = 9, which equals 9/1 — rational (terminating decimal). 0.123451234512345… repeats the block '12345' — rational; x = 0.1234512345…, 100000x – x = 12345, x = 12345/99999 = 823/6667. 1.01001000100001… has no repeating block (the gaps between 1s grow by one zero each time) — irrational. 0.262626… = 0.2̄6̄ repeats the block '26' — rational; 99x = 26, x = 26/99. √12 = 2√3; since √3 is irrational, √12 is irrational (non-terminating non-repeating).",
+          "method_one_line": "A decimal is rational if and only if it terminates or eventually repeats; apply the multiply-and-subtract method for repeating cases.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 18
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 18
+              },
+              "inclusivity": "A student who is unsure about 1.01001000100001… can be asked to write out the next five digits, then asked whether the pattern ever settles into a fixed repeating block; a student who finishes quickly can be asked to prove algebraically that 2.46999… = 2.47000…, applying the multiply-and-subtract technique to the repeating-nines case."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 18
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 18
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 18
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 19,
+          "section_ref": "3.6",
+          "section_title": "Real Numbers: Decimals and Cyclic Patterns",
+          "total_sections": 19,
+          "implied_lo_assessed": "Students can represent the real number system as a nested structure N ⊂ Z ⊂ Q with irrationals I forming R = Q ∪ I, and determine the set membership of a given number, justifying the classification using the properties of each set established in the chapter.",
+          "section_context": "Real numbers R = Q ∪ I, nested structure N ⊂ Z ⊂ Q, decimal test for membership, imaginary numbers as R's boundary",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Understands the successive construction of the real number system and the properties and representations of each set within it."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "You are given the following twelve numbers:\n\n–9, 0, 4/3, √49, –3/7, 0.252525…, 1.41421356…, 3/50, π, –11, 2.4537̄, √8.\n\n(a) Sort each number into exactly one of the following regions of the real number system: N (natural numbers), Z but not N (integers that are not natural), Q but not Z (rationals that are not integers), or I (irrationals). Show your reasoning for each classification.\n(b) Write each number that belongs to Q (including those in N and Z) in the form p/q in lowest terms.\n(c) For any two of the irrational numbers you identified, determine a rational number that lies strictly between them. Show that your chosen rational lies in the required interval.\n(d) Explain in two or three sentences why the diagram of nested sets (N ⊂ Z ⊂ Q, with I separate, and Q ∪ I = R) represents an unbroken line rather than a collection of gaps.",
+          "scaffold": "For part (a): use the decimal expansion test — terminating or repeating means rational; non-terminating non-repeating means irrational — alongside the integer and natural-number definitions. For part (b): apply the multiply-and-subtract method for repeating decimals. For part (c): use the average formula (a + b)/2, converting to decimal approximations first if the irrationals are hard to compare directly. For part (d): recall what density of Q and the completeness added by I together achieve.",
+          "format_of_output": [
+            "A completed classification table with one row per number: Number | Set region | Justification.",
+            "A list of the Q-members in p/q form.",
+            "A worked calculation for part (c), showing the two irrational bounds and the rational value between them.",
+            "Two to three sentences for part (d)."
+          ],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 19
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 19
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 19
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 19
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 19
+              },
+              "format_type": "Multi-representation translation",
+              "format_rationale": "The implied LO requires sorting numbers across all regions of R and reconciling symbolic, decimal, and set-membership representations — a multi-representation translation task that integrates the chapter's full number-system vocabulary.",
+              "what_this_demonstrates": "Whether the student can apply all four set-membership criteria (N, Z, Q, I) correctly, convert repeating decimals to fractions, use the density property to insert a rational between two irrationals, and articulate why R is a complete unbroken line.",
+              "reading_the_scaffold": "The scaffold for part (c) directs students to convert irrationals to decimal approximations first; a strong response uses those approximations to frame the interval and then proposes a rational inside it, verifying the inequality explicitly. The scaffold for part (d) points to density and completeness; a strong response names both and explains their distinct roles.",
+              "strong_vs_weak_markers": "Strong: all 12 numbers correctly classified with clear justification; Q-members reduced to lowest terms; part (c) shows an explicit inequality bounding the rational between the two irrationals; part (d) mentions both the density of Q and the role of irrationals in filling the remaining gaps. Weak: misclassifies √49 = 7 as irrational, or π as rational; fails to reduce p/q to lowest terms; part (c) states a rational without verifying it lies in the interval; part (d) conflates density with completeness.",
+              "inclusivity": "A student who finds the full task challenging can be asked to complete only the classification table for the six numbers they are most confident about, explaining their reasoning for each; a student who completes the task quickly can be asked to construct a number that belongs to Q but not Z and has a denominator with exactly three prime factors, then verify its decimal expansion terminates."
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

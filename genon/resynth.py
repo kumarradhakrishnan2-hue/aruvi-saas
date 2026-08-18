@@ -303,7 +303,9 @@ def install_resynth(parsed: dict, job: dict, ts: str, model: str) -> Path:
         "ledger_ts": ts, "model": model,
         # provenance only — no staleness gate (founder 2026-08-17: nothing to maintain)
         "compacts_read": job["inputs"],
-        "replaced": old,
+        # the replaced unit is NOT embedded (founder 2026-08-18: stale defective content
+        # must not ride in Bucket A) — the pre-replacement file is the backup below
+        "replaced_in": f"backup/resynth/{sf}_{gf}_ch{ch:02d}_{ts}.json",
     }
     path.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
     # ARV-D-034: repairs/replacements never move canonical_version, so derived plans
@@ -505,7 +507,6 @@ def install_polish(parsed: dict, job: dict, ts: str, model: str) -> Path:
         raise SystemExit(f"{path.name}: final unit is not the synthesis — refusing")
     BACKUP.mkdir(parents=True, exist_ok=True)
     shutil.copy2(path, BACKUP / f"{sf}_{gf}_ch{ch:02d}_polish_{ts}.json")
-    replaced = {k: unit.get(k) for k in POLISH_AUTHORED}
     for k in POLISH_AUTHORED:
         if k in parsed:
             unit[k] = parsed[k]
@@ -513,7 +514,8 @@ def install_polish(parsed: dict, job: dict, ts: str, model: str) -> Path:
         "spec": "density + typed visual_aids (founder, 2026-08-18)",
         "at": datetime.now().isoformat(timespec="seconds"),
         "ledger_ts": ts, "model": model,
-        "replaced": replaced,
+        # payload not embedded (founder 2026-08-18) — the pre-polish file is the backup
+        "replaced_in": f"backup/resynth/{sf}_{gf}_ch{ch:02d}_polish_{ts}.json",
     }
     path.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
     purge(sf, gf, ch, reason="synthesis polished (notes density + typed visual aids)")

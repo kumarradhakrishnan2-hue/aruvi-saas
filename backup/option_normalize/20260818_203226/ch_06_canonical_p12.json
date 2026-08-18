@@ -1,0 +1,1891 @@
+{
+  "filename": "ch_06_canonical_p12.json",
+  "saved_at": "2026-08-18T16:57:34",
+  "plan_status": "canonical",
+  "chapter_number": 6,
+  "chapter_title": "Measuring Space: Perimeter and Area",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 12
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 12 periods = 600 minutes\nTotal: 12 periods · 10h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "12x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 6",
+    "ledger_ts": "20260818_164334_math_ix_06_p12",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-18T17:17:53",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 2,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "Teacher foreshadows that π being irrational means no single fraction equals it — that point is taken up next.",
+            "replaced_with": "Teacher notes that π is irrational, so no single fraction equals it.",
+            "note": "the FACT is worth stating where the ratio argument lands and is kept; what goes is 'foreshadows' and the promise that it is taken up next"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Perimeter as a Border Walk — Fixed Ratios and the Circle Question",
+          "section_anchor": "6.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "ruler",
+            "textbook",
+            "squared paper"
+          ],
+          "visual_aids": "Board sketches of square, equilateral triangle, and rectangle with labelled sides",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose the question: a tiny insect walks once around the border of a square of side 5 cm, then a square of side 8 cm. Students compute each perimeter and form the ratio perimeter : side. Repeat for an equilateral triangle. Students observe the ratio stays fixed at 4 for squares and 3 for equilateral triangles regardless of size — the class records both ratios on the board."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Students derive the rectangle perimeter formula 2(a + b) and note that the square formula 4a is a special case. They then examine whether such a fixed ratio (perimeter : 'characteristic length') exists for circles: as a circle grows, does C/D stay constant? Students sketch circles of different sizes, estimate the ratio by measuring circumference with thread and diameter with ruler, and record their estimates in a table — values expected near 3.1."
+            },
+            {
+              "minutes": "30-45",
+              "activity": "Class discussion: the think-and-reflect moment from the chapter — connect the insect-walk definition of perimeter to the opening question about a 400 m athletics track. Why would the lanes have different perimeters if the straight sections are the same? Students articulate that the circular sections differ in radius, so the total perimeter of each lane is different. This is recorded as a question the chapter will answer precisely."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Quick individual work: students write the perimeter formulae for square, equilateral triangle, and rectangle, and state in one sentence why the ratio C/D for circles is worth investigating. Teacher checks responses and addresses any conflation of perimeter with area."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter by grounding perimeter in the concrete border-walk image and immediately surfaces the key question — does the C/D ratio depend on the circle's size? A common error at this point is students treating the rectangle perimeter as a + b instead of 2(a + b); watch for this when they record their formulae. Students who want to explore further may read Example 1 on p.127, which applies arc-length ideas to a compound figure.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "The C/D Ratio — History of π and Circumference Calculations",
+          "section_anchor": "6.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "textbook",
+            "calculator",
+            "thread and cylinder (cotton reel or similar)"
+          ],
+          "visual_aids": "Timeline on board: Mesopotamia → Archimedes → Ptolemy → Liu Hui → Zu Chongzhi → Āryabhaṭa → Mādhava",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "6.2",
+              "book_ref": "Exercise Set 6.1 Q1, p.129",
+              "description": "Given that the perimeter of a circle is 44 cm, find its radius."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "6.2",
+              "book_ref": "Exercise Set 6.1 Q2, p.129",
+              "description": "Calculate, correct to 3 significant figures, the circumference of a circle with (i) radius 7 cm, (ii) radius 10 cm, (iii) radius 12 cm."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "6.2",
+              "book_ref": "Exercise Set 6.1 Q8, p.130",
+              "description": "The ratio of the perimeters of two circles is 5:4; find the ratio of their radii."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students wind thread twenty times around a cylindrical object, measure the total length and divide by 20 to estimate C; they measure the diameter directly and compute C/D. Results from several groups are pooled on the board — all cluster near 3.14. Teacher names this constant π and writes C = πd = 2πr."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Walk through the historical pursuit of π using the timeline: Mesopotamia (3 + 1/8 = 3.125), Archimedes' polygon-trapping argument giving 3 + 10/71 < π < 3 + 1/7, Ptolemy's 377/120, Liu Hui's circle-cutting, Zu Chongzhi's 22/7 and 355/113, Āryabhaṭa's 3.1416 labelled āsanna, and Mādhava's series π/4 = 1 − 1/3 + 1/5 − … Students compute 22/7 and 355/113 on calculators and compare with π ≈ 3.14159 to appreciate how close these rational approximations are without being equal."
+            },
+            {
+              "minutes": "30-45",
+              "activity": "Students work individually on Exercise Set 6.1 Q1 (p.129), Q2 (p.129), and Q8 (p.130), applying C = 2πr and C = πd. Teacher circulates and checks that students use π ≈ 22/7 where the radius is a multiple of 7 and π ≈ 3.14 otherwise."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Class debrief on Q8: students explain why the ratio of circumferences equals the ratio of radii (since C = 2πr, the π cancels). Teacher notes that π is irrational, so no single fraction equals it."
+            }
+          ],
+          "teacher_notes": "Having established that the C/D ratio is fixed for all circles and named it π, this unit grounds the history so that students later handle the irrationality claim with familiarity rather than surprise. A frequent slip is writing C = πr instead of C = 2πr; watch especially when students rearrange to find r from C in Q1. Students curious about the polygon-trapping method may read ahead at their own pace.",
+          "homework": [
+            "Exercise Set 6.1 Q6, p.130 — car tyre revolution distance and count."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Why π Is Irrational — Rational Numbers, Decimals, and the Status of 22/7",
+          "section_anchor": "6.3",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "calculator"
+          ],
+          "visual_aids": "Board display of decimal expansions: 1/3, 1/11, 1/7 (repeating blocks highlighted) versus first 20 digits of π (no repeating block visible)",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students use a calculator to produce the decimal expansions of 1/3, 1/11, and 1/7, and identify the repeating block in each. Teacher records these on the board. Students then look at the first 20 digits of π (supplied on the board) and observe no repeating block. The class states the definition of a rational number: p/q with p, q integers and q ≠ 0."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Teacher explains Lambert's 1761 result — π cannot be written as p/q — walking through the logical structure: assume π = p/q; the decimal expansion of any such fraction must eventually repeat; π's expansion does not repeat; therefore no such p/q exists. Students discuss why this means 22/7 must be written with ≈, never with =, even though 22/7 ≈ 3.14286 is close to π ≈ 3.14159. Students compute both to six decimal places and confirm the gap."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students justify in writing: (i) Is √2 rational or irrational — how do you know? (ii) Give one rational and one irrational number between 3.14 and 3.15. (iii) Why is there no 'best fraction' for π? Pairs share reasoning; teacher addresses the misconception that 'close enough' makes two numbers equal."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Quick whole-class check: teacher reads out five statements (e.g., 'π = 22/7', '355/113 is a better approximation than 22/7', 'π has a repeating decimal', 'irrational numbers cannot be located on a number line') and students respond true/false with brief justification. Errors are corrected collectively."
+            }
+          ],
+          "teacher_notes": "Having named π and computed with it, this unit establishes precisely what kind of number it is — the distinction between 'close approximation' and 'exact equality' is the central point. The most persistent error is writing π = 22/7; stress emphatically that this is false and that the chapter itself uses ≈. Students who want a worked example of repeating-decimal to fraction conversion can look at the rational-number sections they met in earlier grades.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Arc Length from Symmetry — Deriving the Formula and Applying It",
+          "section_anchor": "6.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "ruler",
+            "calculator",
+            "protractor"
+          ],
+          "visual_aids": "Board diagram: full circle → semicircle (diameter as axis of symmetry) → quarter arc (90° rotation) → general arc of θ°",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "6.4",
+              "book_ref": "Exercise Set 6.1 Q3, p.129",
+              "description": "Calculate the length of an arc of a circle when (i) the radius is 3.5 cm and the central angle is 60°, and (ii) the radius is 6.3 m and the central angle is 120°."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "6.4",
+              "source_sections": [
+                "6.1",
+                "6.4"
+              ],
+              "book_ref": "Exercise Set 6.1 Q4, p.129",
+              "description": "Find the perimeter of a sector of a circle of radius 14 cm with sector angle 75°, counting both the curved arc and the two straight radii."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Teacher draws a full circle on the board and uses the reflection symmetry in a diameter to argue that the semicircular arc has length (2πr)/2 = πr. Then uses a quarter-turn rotation to show that a quarter-circle arc has length πr/2. Students rewrite these as 2πr × 180/360 and 2πr × 90/360, spotting the pattern. By proportional reasoning the class derives: arc length for central angle θ° = 2πr × θ/360."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Think-and-reflect from the chapter: the schematic 400 m athletics track — two 84.39 m straights and two semicircular ends of inner radius 36.5 m, lane width 1.22 m. Students verify the 400 m inner circuit and then compute the difference in radius between lane 1 and lane 2 (0 and 1.22 m), find the extra semicircle arc length, and hence the stagger needed for lane 2. They then consider whether the same stagger applies between lanes 2 and 3 and justify their answer."
+            },
+            {
+              "minutes": "28-44",
+              "activity": "Students work on Exercise Set 6.1 Q3 (p.129) and Q4 (p.129). For Q4 they must remember to add the two straight radii to the arc length to find the full perimeter of the sector. Teacher circulates and watches for students who forget the straight sides."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "One student presents their stagger calculation to the class; others check whether the stagger between lanes 2 and 3 is the same as between 1 and 2, and state why (lane width is constant at 1.22 m so the additional arc is always 2π × 1.22 × 180/360 = 1.22π m per semicircle). Teacher confirms and links the arc formula to the sector perimeter idea."
+            }
+          ],
+          "teacher_notes": "Having established C = 2πr, this unit derives the arc-length formula by symmetry arguments rather than by memorising a separate rule. A common error is students using the diameter instead of the radius in the arc formula, giving 2πd × θ/360; the derivation from C = 2πr makes clear that r is the correct quantity. Students who want a further composite-figure challenge may attempt Exercise Set 6.1 Q5 (p.129) independently.",
+          "homework": [
+            "Exercise Set 6.1 Q5 (p.129) — perimeters of composite figures i–iii."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Perimeter Puzzles — Equal-Arc Compound Shapes and Surprising Equalities",
+          "section_anchor": "6.5",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "textbook",
+            "compass",
+            "ruler",
+            "calculator"
+          ],
+          "visual_aids": "Board figures: two overlapping circles each passing through the other's centre; segment PQ with one large semicircle above and three small semicircles below",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "6.5",
+              "book_ref": "Example 1, p.127",
+              "description": "Two circles of equal radius r, each passing through the centre of the other; find the perimeter of the shape they form, using the equilateral triangle of radii to show each outer arc is two-thirds of a circumference and obtaining 8πr/3."
+            },
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "6.5",
+              "book_ref": "Example 2, p.128",
+              "description": "Two paths joining P and Q, one a single semicircle and the other three semicircles on sub-segments of PQ; decide which is longer, and show algebraically that because the radii satisfy a' = b' + c' + d' the two paths have equal length."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students sketch the two-circle figure from Example 1 (p.127). Teacher asks: what shape is formed by the two radii to the intersection points and the line joining the two centres? Students identify an equilateral triangle, giving 60° angles at each centre. They then state the fraction of each circumference that the outer arc represents."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Walk through Example 1 (p.127) in full: each outer arc subtends 360° − 60° = 300° at its own centre, so has length 2πr × 300/360 = 5πr/3. Two such arcs give 10πr/3. But the perimeter of the lens shape uses the arcs that subtend 60° inward, i.e., each arc is 2πr × 120/360 = 2πr/3 (the arc inside the other circle). Two arcs give 4πr/3 — students check the textbook's version and reconcile. Teacher uses the figure to clarify which arcs bound the lens."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Walk through Example 2 (p.128): students write the single-semicircle path length as πa' and the three-small-semicircle path as π(b' + c' + d'). Since a' = b' + c' + d' (the sub-segments span the full length), the two expressions are equal. Students verify with a numerical example — e.g., PQ = 12 cm, split into 6, 4, 2 cm — confirming both paths give 12π/2 = 6π cm."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students pose a short variant: what if PQ is split into four sub-segments instead of three? Does the path equality still hold? They write a brief justification using the same algebraic argument and share with a neighbour for peer critique."
+            }
+          ],
+          "teacher_notes": "The arc-fraction idea from the arc-length derivation is now put to work on compound figures — the key skill is identifying the central angle correctly for each arc. In Example 1 students often confuse the 60° angle of the equilateral triangle with the arc angle; the arc at each centre subtends the angle NOT occupied by the triangle interior, so careful diagram reading is essential. Students who find the algebraic argument in Example 2 straightforward may attempt Exercise Set 6.1 Q7 (p.130) independently.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Area of a Rectangle and Its Algebraic Identities",
+          "section_anchor": "6.6",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "textbook",
+            "squared paper",
+            "ruler",
+            "pencil"
+          ],
+          "visual_aids": "Board area model for (a + b)² as given in the textbook, alongside blank templates for student-constructed models",
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "6.6",
+              "book_ref": "End of Chapter Q1, p.149",
+              "description": "Draw area-model figures corresponding to the identities (a + b)(a − b) = a² − b² and (a + b + c)² = a² + b² + c² + 2ab + 2bc + 2ca, following the given model for (a + b)²."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students recall that area is the amount of plane space occupied, measured against a 1 × 1 unit square. Teacher asks: if a rectangle has sides 4 and 6 units, how many unit squares fit? Students count and derive ab for a rectangle of sides a and b, noting the square a² as a special case."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Teacher presents the area model for (a + b)² on the board, dividing a square of side (a + b) into four rectangles. Students verify that the four pieces have areas a², ab, ab, and b², summing to a² + 2ab + b². They then construct their own area model on squared paper for (a + b)(a − b): they draw a rectangle of sides (a + b) and (a − b), partition it, and confirm the identity a² − b²."
+            },
+            {
+              "minutes": "28-44",
+              "activity": "Students tackle End of Chapter Q1 (p.149) — constructing the area diagram for (a + b + c)² on squared paper, labelling each of the nine sub-rectangles, and writing the expanded identity. Partners check each other's diagrams against the algebraic expansion."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Class discusses: can the area model be used to verify (a − b)² = a² − 2ab + b²? Students sketch a quick argument and the teacher notes that negative lengths require care — the model must be interpreted as a removal of area rather than a tiling."
+            }
+          ],
+          "teacher_notes": "The rectangle area formula ab is familiar from Grade 8, so this unit uses it as an algebraic tool rather than re-deriving it. The common error is students omitting the 2ab cross-term in (a + b)² because they treat the two off-diagonal rectangles as one; the area model makes both rectangles visible. End of Chapter Q1 (p.149) offers a good self-study extension for students who finish early.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Area of a Parallelogram — Cut-and-Rearrange and the Thin-Parallelogram Repair",
+          "section_anchor": "6.7",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "scissors",
+            "paper cut-outs of parallelograms (standard and thin)",
+            "ruler"
+          ],
+          "visual_aids": "Board diagram: standard parallelogram cut into triangle + rectangle; then thin parallelogram with foot of perpendicular outside the base",
+          "textbook_items_in_class": [
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "6.7",
+              "book_ref": "End of Chapter Q11, p.150",
+              "description": "Using the base-times-height formula for a parallelogram and the given figure, show that the area of a trapezium is ½(a + b)h."
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "6.7",
+              "book_ref": "End of Chapter Q13, p.151",
+              "description": "Show how two identical copies of a trapezium can be fitted together to make a parallelogram, and explain how this yields the formula for the area of a trapezium."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Students cut a paper parallelogram along the perpendicular from one vertex to the opposite side, slide the triangle to the other end, and observe that a rectangle with base b and height h is formed. They write Area = bh. Teacher asks: does this argument still work when the parallelogram is very 'thin' so that the foot of the perpendicular falls outside the base? Students try to apply the same cut and find the rectangle does not assemble correctly."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Think-and-reflect from the chapter: teacher guides students through the repair argument — slide a congruent copy of the thin parallelogram along the base line until the foot of the perpendicular lands inside, demonstrating that the area is unchanged because the two parallelograms are congruent. Students also address the second part: can a parallelogram's area be found from its side lengths alone? They construct two parallelograms with the same side lengths but different heights to show it cannot."
+            },
+            {
+              "minutes": "30-44",
+              "activity": "Students work on End of Chapter Q11 (p.150) — using the parallelogram formula to derive the trapezium area ½(a + b)h — and Q13 (p.151) — fitting two identical trapezium copies into a parallelogram. They write out each deductive step."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Pair discussion: which of the two Q13 proofs (cutting vs fitting) is more convincing, and why? Teacher elicits that both use the same logic (congruent rearrangement preserves area) and that the formula is the same either way."
+            }
+          ],
+          "teacher_notes": "The cut-and-rearrange argument is intuitive for the standard parallelogram but breaks down visually for the thin case; make sure students see the repair argument as extending — not replacing — the original proof. A common error is students writing Area = base × slant side, confusing the slant side with the height; the diagram with perpendicular height explicitly marked is essential. End of Chapter Q11 (p.150) makes a good self-study item for students who want to formalise the trapezium derivation.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Area of a Triangle — Two Derivations and the Median Area Theorem",
+          "section_anchor": "6.8",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "ruler",
+            "graph paper",
+            "pencil"
+          ],
+          "visual_aids": "Board diagrams: triangle enclosed in rectangle (acute and obtuse cases); two congruent triangles forming a parallelogram; median dividing triangle into two parts",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "6.8",
+              "book_ref": "Exercise Set 6.2 Q1, p.142",
+              "description": "Find the area of triangle ADE in Fig. 6.31, given a base of 10 cm and a height of 8 cm from the accompanying figure."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "6.8",
+              "book_ref": "Exercise Set 6.2 Q6, p.142",
+              "description": "ABCD is a parallelogram and P, Q are any two points on side AB; state what can be said about the ratio area(ΔPCD) : area(ΔQCD)."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "6.8",
+              "book_ref": "Exercise Set 6.2 Q7, p.142",
+              "description": "O is any point on the diagonal PR of parallelogram PQRS; prove that triangles PSO and PQO have equal area."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Teacher derives Area = ½bh in two ways on the board: (1) enclose the triangle in the smallest rectangle of the same base and height, treating the acute and obtuse cases separately, showing the triangle covers exactly half the rectangle; (2) fit two congruent copies of the triangle together to form a parallelogram of area bh. Students check both derivations match, then apply the formula to Exercise Set 6.2 Q1 (p.142)."
+            },
+            {
+              "minutes": "18-35",
+              "activity": "Prove the median theorem: median AD of triangle ABC divides it into ABD and ACD. Both share the same height from A; their bases BD and DC are equal (D is the midpoint of BC); therefore both areas = ½ × (BC/2) × h. Students write out the proof step by step. Think-and-reflect: can the two equal-area triangles always be cut into pieces that physically rearrange to cover each other? Students argue this is not guaranteed — equal area does not imply congruence or dissection equivalence in general."
+            },
+            {
+              "minutes": "35-47",
+              "activity": "Students work on Exercise Set 6.2 Q6 (p.142) — reasoning about the ratio of triangle areas sharing a base — and Q7 (p.142) — proving equal areas using the shared-base-and-height principle. Teacher prompts students to state the shared base and height explicitly in each proof."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Brief closing discussion: the think-and-reflect question about rectangles of perimeter 40 — which has the largest and smallest area? Students conjecture (the square maximises; a degenerate rectangle with one side approaching 0 minimises) without formal proof, planting a question for further exploration."
+            }
+          ],
+          "teacher_notes": "Two derivations of ½bh make the formula robust rather than arbitrary; students who have only seen the rectangle-half argument are surprised by the parallelogram-half approach, and both should be recorded. A persistent error is using a slant side as the height; emphasise that h is always the perpendicular distance from the vertex to the base line. Students wanting more proof practice may read Exercise Set 6.2 Q9 (p.143) on their own.",
+          "homework": [
+            "Exercise Set 6.2 Q2, p.142 — trapezium area using triangles."
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Heron's Formula and Brahmagupta's Generalisation — Derivation and Verification",
+          "section_anchor": "6.8.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "textbook",
+            "calculator",
+            "squared paper"
+          ],
+          "visual_aids": "Board layout: Heron's formula with s defined; table of (a, b, c, s, area) for equilateral, isosceles 3-4-5 cases; Brahmagupta's formula for cyclic 4-gon",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "6.8.1",
+              "book_ref": "Example 3, p.134",
+              "description": "Apply Heron's formula to an equilateral triangle of side a to obtain (√3/4)a², and check the result against the half-base-times-height formula using the Baudhāyana–Pythagoras theorem."
+            },
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "6.8.1",
+              "book_ref": "Example 5, p.136",
+              "description": "Apply Heron's formula to a triangle with sides 3, 4 and 5 units to obtain area 6 sq. units, and verify it by recognising the triangle as right-angled via the converse of the Baudhāyana–Pythagoras theorem."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "6.8.1",
+              "book_ref": "Example 6, p.138",
+              "description": "Verify Brahmagupta's formula for a rectangle with sides a and b, showing that the formula returns the familiar area ab."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "6.8.1",
+              "book_ref": "Exercise Set 6.2 Q3, p.142",
+              "description": "Find the area of a triangle whose sides include 8 cm and 11 cm and whose perimeter is 32 cm."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "6.8.1",
+              "book_ref": "Exercise Set 6.2 Q4, p.142",
+              "description": "The sides of a triangular plot are in the ratio 3:5:7 and its perimeter is 300 m; find its area."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Teacher states Heron's formula: for a triangle with sides a, b, c, area = √(s(s−a)(s−b)(s−c)) where s = (a+b+c)/2. Walk through Example 3 (p.134) — equilateral triangle — and Example 5 (p.136) — 3-4-5 triangle — verifying each against ½bh. Students record both derivations and note how each verification works."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Teacher introduces Brahmagupta's formula for a cyclic quadrilateral: area = √((s−a)(s−b)(s−c)(s−d)). Walk through Example 6 (p.138) — rectangle — showing the formula returns ab. Teacher demonstrates via a rhombus example that side lengths alone do not fix a quadrilateral's area (unlike a triangle), then shows that setting d = 0 recovers Heron's formula, establishing Brahmagupta's result as a genuine generalisation."
+            },
+            {
+              "minutes": "28-45",
+              "activity": "Students work on Exercise Set 6.2 Q3 (p.142) — first finding the third side from the perimeter, then applying Heron's formula — and Q4 (p.142) — scaling the ratio sides to actual lengths before applying the formula. Teacher circulates and checks that students compute s correctly before substituting."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Class check: one student writes Q4's working on the board; class identifies any arithmetic errors under the surd. Teacher notes the two further area formulas abc/4R (circumradius) and r(a+b+c)/2 (inradius) as additional facts students may explore in the textbook."
+            }
+          ],
+          "teacher_notes": "Heron's formula is the chapter's computational peak — it operates purely from side lengths without needing a height. The most common error is computing s as (a + b + c) instead of (a + b + c)/2, which inflates all three factors under the root; insist students write s explicitly before substituting. Example 4 (p.135) on the isosceles triangle is a good self-study item for students who want to see the algebra in the general case.",
+          "homework": [
+            "End of Chapter Q5, p.149 — sides in ratio 2:3:4, perimeter 45 cm."
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Squaring a Rectangle — Baudhāyana's Geometric Construction",
+          "section_anchor": "6.9",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "compass",
+            "ruler",
+            "pencil",
+            "plain paper"
+          ],
+          "visual_aids": "Board diagram: rectangle ABCD with point E on AD, midpoint F of ED, square AFGH, arc from H through A to K, square on HP",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher poses the problem: given a rectangle of sides a and b (a > b), construct a square with exactly the same area. Students guess that the side of the square should be √(ab) and verify: (√(ab))² = ab. The algebraic challenge is to realise √(ab) geometrically without a calculator."
+            },
+            {
+              "minutes": "12-32",
+              "activity": "Step through Baudhāyana's Śhulbasūtra construction: (1) On AD mark E with AE = AB = b; now ED = a − b. (2) Find midpoint F of ED; so EF = FD = (a − b)/2. (3) AF = AE + EF = b + (a − b)/2 = (a + b)/2. (4) Construct square AFGH of side (a + b)/2. (5) Draw arc of centre H, radius HA = (a + b)/2, meeting BC at K. Now HK = HA = (a + b)/2, and HB = HG − BG = (a + b)/2 − b = (a − b)/2. By the Baudhāyana–Pythagoras theorem, BK² = HK² − HB² = ((a+b)/2)² − ((a−b)/2)² = ab. Students verify this algebra at each step on their own paper."
+            },
+            {
+              "minutes": "32-44",
+              "activity": "Students carry out the physical construction with compass and ruler on plain paper for a specific rectangle (e.g., 8 cm × 2 cm, target square side = 4 cm). They measure the constructed side and compare with √16 = 4 cm. The think-and-reflect extension: can the same method be adapted to square a given triangle? Students sketch an idea — convert the triangle to a rectangle of the same area first using the ½bh formula, then square that rectangle."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Class discussion: the construction encodes the identity ((a+b)/2)² − ((a−b)/2)² = ab — a geometric form of the difference of squares. Students state this identity and confirm it algebraically, linking Section 6.6's area models to the geometric construction here."
+            }
+          ],
+          "teacher_notes": "This unit is a construction-based proof — the algebraic identity and the geometric steps must be understood as the same argument in two languages. A common confusion is students thinking the arc gives a length equal to a + b rather than (a + b)/2; making explicit that H is the corner of the square AFGH, so HA = AF = (a + b)/2, prevents this. The think-and-reflect on squaring a triangle is a natural bridge — no further preparation is needed because the triangle-to-rectangle route uses only ½bh.",
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Area of a Circle — Historical Estimates and Archimedes' Limit Argument",
+          "section_anchor": "6.10",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "textbook",
+            "calculator",
+            "compass",
+            "ruler"
+          ],
+          "visual_aids": "Board diagram: regular polygon inscribed in circle with apothem labelled; then parallelogram formed by rearranging circular slices (Nīlakaṇṭha's argument)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-40",
+              "type": "exercise",
+              "source_section": "6.10",
+              "source_sections": [
+                "6.6",
+                "6.10"
+              ],
+              "book_ref": "End of Chapter Q17, p.151",
+              "description": "Find what fraction of each of two rectangles (Fig. 6.45 and Fig. 6.46) is covered by the circles packed inside it."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Teacher recalls that for squares, P²/A = 16, and for equilateral triangles, P²/A = 12√3 — these ratios depend only on the shape, not the size. Students compute what C²/A should equal for a circle if A = πr²: C² = 4π²r², so C²/A = 4π²r²/πr² = 4π ≈ 12.57. Historical estimates: Babylonian C²/12 gives A ≈ C²/12 (equivalent to π ≈ 3), and the Egyptian/Baudhāyana value (8d/9)² = 256r²/81 ≈ 3.16r² are checked against πr²."
+            },
+            {
+              "minutes": "15-32",
+              "activity": "Present Archimedes' argument: a regular n-gon inscribed in a circle has area = ½ × perimeter × inradius. As n grows, the perimeter approaches 2πr and the inradius approaches r, so the area approaches ½ × 2πr × r = πr². Present Nīlakaṇṭha's visual argument: cut the circle into 2n thin sectors, rearrange alternating sectors up and down to form a shape approaching a parallelogram of base πr and height r, area πr². Students describe in their own words why both arguments give the same result."
+            },
+            {
+              "minutes": "32-45",
+              "activity": "Students work on End of Chapter Q17 (p.151) — finding the fraction of a rectangle covered by packed circles. They compute the area of each circle and the area of the rectangle in terms of the radius, then form the ratio."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Think-and-reflect from the chapter: why have human cultures been drawn to circular shapes? Students offer practical reasons (wheels, containers, arches) and aesthetic ones, connecting the mathematical perfection of the circle — constant curvature, equal radii — to its utility. Teacher notes that the formula A = πr² makes it possible to compare circular and rectangular regions quantitatively."
+            }
+          ],
+          "teacher_notes": "Two independent limit arguments — Archimedes' polygon and Nīlakaṇṭha's slice-and-rearrange — converge on the same formula; presenting both makes the result feel inevitable rather than asserted. A common error is students writing A = πd² instead of πr², often because they substitute d where r is required; Archimedes' derivation, which names r explicitly as the inradius, helps prevent this. End of Chapter Q17 (p.151) provides a natural π/4 packing fraction result that students can conjecture from Q17 and prove in Q18.",
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Area of a Sector and a Segment — Formula, Symmetry, and Composite Problems",
+          "section_anchor": "6.10.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "textbook",
+            "calculator",
+            "ruler",
+            "protractor"
+          ],
+          "visual_aids": "Board diagram: circle with sector shaded (arc + two radii), segment shaded (arc + chord), sector angle θ labelled at centre",
+          "textbook_items_in_class": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "book_ref": "Exercise Set 6.3 Q1, p.148",
+              "description": "Find the area of a sector of a circle of radius 7 cm whose sector angle is 60°."
+            },
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "source_sections": [
+                "6.2",
+                "6.10.1"
+              ],
+              "book_ref": "Exercise Set 6.3 Q2, p.148",
+              "description": "Find the area of a quadrant of a circle whose circumference is 44 cm."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "book_ref": "Exercise Set 6.3 Q3, p.148",
+              "description": "The minute hand of a clock is 7 cm long; find the area it sweeps in 10 minutes."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "book_ref": "Exercise Set 6.3 Q4, p.148",
+              "description": "A chord of a circle of radius 10 cm subtends 90° at the centre; find the areas of (i) the minor sector subtending 90° and (ii) the major sector subtending 270°, taking π ≈ 3.14."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "source_sections": [
+                "6.8",
+                "6.10.1"
+              ],
+              "book_ref": "Exercise Set 6.3 Q5, p.148",
+              "description": "A chord of a circle of radius 15 cm subtends 60° at the centre; find the areas of the corresponding minor and major segments, taking π ≈ 3.14 and √3 ≈ 1.73."
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "6.10.1",
+              "book_ref": "Exercise Set 6.3 Q6, p.148",
+              "description": "A car has two non-overlapping wipers, each with a blade of length 28 cm sweeping through 120°; find the total area cleaned in each sweep."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Define sector as the region bounded by an arc and the two radii at its endpoints. Using the same reflection and quarter-turn symmetry arguments from the arc-length derivation, students derive: semicircular disc area = ½πr², quadrant area = ¼πr², and then the general sector area = πr² × θ/360. Define segment as the region between a chord and the arc it cuts; note that segment area = sector area − triangle area."
+            },
+            {
+              "minutes": "12-32",
+              "activity": "Students work through Exercise Set 6.3 Q1 (p.148), Q2 (p.148), Q3 (p.148), and Q4 (p.148) in order. Q2 requires first finding r from the circumference formula before applying the sector formula — teacher watches for students who use the circumference directly as if it were r. Q3 requires converting 10 minutes to the corresponding sector angle (10/60 × 360° = 60°)."
+            },
+            {
+              "minutes": "32-44",
+              "activity": "Students work on Exercise Set 6.3 Q5 (p.148) — segment area: they compute the 60° sector area, then the area of the equilateral triangle formed by the chord and two radii (using Heron's or ½bh), and subtract. Then Q6 (p.148) — the wiper problem with two sectors. Pairs compare answers before the class debrief."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Closing reflection: students write one sentence connecting the arc-length formula (unit 4) and the sector-area formula (this unit), noting the structural parallel: both replace 360° with θ° as a proportion of the whole. Teacher highlights that sector and segment are the chapter's final measurement objects, completing the progression from straight-sided to circular figures."
+            }
+          ],
+          "teacher_notes": "The sector formula mirrors the arc-length formula in structure — area = πr² × θ/360 parallels arc = 2πr × θ/360 — and pointing out this parallel helps students remember both. A frequent error is students computing the segment area as just the sector, forgetting to subtract the triangle; Q5 (p.148) is specifically designed to catch this. Students who want a challenge may attempt End of Chapter Q8 (p.150) on finding a quadrant area from circumference.",
+          "homework": [
+            "Exercise Set 6.3 Q4, p.148 — complete parts (i) and (ii) if not finished in class."
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 12
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "6.1",
+        "section_title": "Perimeter of a Shape",
+        "total_sections": 12,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can compute the perimeters of standard polygons and express the fixed perimeter-to-side ratio for squares and equilateral triangles."
+        ],
+        "section_context": "Perimeter of square, equilateral triangle, rectangle; fixed perimeter-to-side ratio",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "6.2",
+        "section_title": "Perimeter of a Circle — The C/D Ratio",
+        "total_sections": 12,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can calculate the circumference of a circle using C = 2πr and find the radius given the circumference, applying appropriate rational approximations of π."
+        ],
+        "section_context": "Circumference formula C = 2πr; historical approximations of π from Archimedes to Mādhava",
+        "c_code": "C-4.4",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "6.3",
+        "section_title": "π Is Irrational",
+        "total_sections": 12,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can justify why π is irrational by contrasting repeating decimal expansions of rational numbers with the non-repeating expansion of π, and correctly distinguish π from its rational approximations."
+        ],
+        "section_context": "Irrationality of π; repeating decimals of rationals; 22/7 as approximation not equality",
+        "c_code": "C-4.4",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "6.4",
+        "section_title": "Length of an Arc of a Circle",
+        "total_sections": 12,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive and apply the arc-length formula arc = 2πr × θ/360 to calculate arc lengths and sector perimeters for given radii and central angles."
+        ],
+        "section_context": "Arc-length formula from symmetry; sector perimeter; athletics track stagger application",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "6.5",
+        "section_title": "Problems, Puzzles, and Paradoxes on Perimeter",
+        "total_sections": 12,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can determine the perimeters of compound figures formed from circular arcs by identifying the central angle of each arc and summing the resulting arc lengths."
+        ],
+        "section_context": "Perimeter of lens from two equal circles; equal-length semicircle paths on sub-segments",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_ref": "6.6",
+        "section_title": "Area of a Rectangle",
+        "total_sections": 12,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can construct area models for algebraic identities involving rectangles and squares, and verify expansions such as (a + b)(a − b) = a² − b² and (a + b + c)² geometrically."
+        ],
+        "section_context": "Rectangle area ab; area models for (a+b)², (a+b)(a−b), (a+b+c)²",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_ref": "6.7",
+        "section_title": "Area of a Parallelogram",
+        "total_sections": 12,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive the area formula for a parallelogram using the cut-and-rearrange argument, including the repair for the thin-parallelogram case, and apply it to find the area of a trapezium."
+        ],
+        "section_context": "Parallelogram area = base × height; thin-parallelogram repair; trapezium area derivation",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_ref": "6.8",
+        "section_title": "Area of a Triangle",
+        "total_sections": 12,
+        "period_numbers": [
+          8
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive the triangle area formula ½bh by two methods and prove that a median divides a triangle into two triangles of equal area.",
+          "Students can apply the equal-area principle to justify area relationships in triangles and parallelograms where figures share a common base and height."
+        ],
+        "section_context": "Triangle area = ½bh; median equal-area theorem; shared-base-and-height arguments",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_ref": "6.8.1",
+        "section_title": "Heron's formula",
+        "total_sections": 12,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can apply Heron's formula to compute the area of a triangle given its three side lengths and verify the result against the half-base-times-height formula.",
+          "Students can verify Brahmagupta's formula for a cyclic quadrilateral and explain how it generalises Heron's formula when the fourth side is set to zero."
+        ],
+        "section_context": "Heron's formula; semi-perimeter; Brahmagupta's cyclic quadrilateral formula",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_ref": "6.9",
+        "section_title": "Squaring a Rectangle",
+        "total_sections": 12,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can carry out Baudhāyana's geometric construction for squaring a rectangle and justify each step using the algebraic identity ((a+b)/2)² − ((a−b)/2)² = ab."
+        ],
+        "section_context": "Baudhāyana's square-equal-to-rectangle construction; difference-of-squares identity geometrically",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 11,
+        "section_ref": "6.10",
+        "section_title": "Area of a Circle",
+        "total_sections": 12,
+        "period_numbers": [
+          11
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can explain why the area of a circle is πr² using Archimedes' inscribed-polygon argument and Nīlakaṇṭha's slice-and-rearrange argument, and apply the formula to find circle-packing fractions."
+        ],
+        "section_context": "Circle area A = πr²; Archimedes' polygon limit; Nīlakaṇṭha's parallelogram rearrangement",
+        "c_code": "C-5.1",
+        "co_central": false
+      },
+      {
+        "section_number": 12,
+        "section_ref": "6.10.1",
+        "section_title": "Area of Sector of a Circle",
+        "total_sections": 12,
+        "period_numbers": [
+          12
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can calculate the area of a sector of a circle using area = πr² × θ/360 and determine the area of a circular segment by subtracting the corresponding triangle area from the sector area."
+        ],
+        "section_context": "Sector area formula; segment area = sector area minus triangle area; composite sector problems",
+        "c_code": "C-5.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 6,
+      "chapter_title": "Measuring Space: Perimeter and Area",
+      "chapter_cg": "CG-5",
+      "reasoning_floor_lift_applied": true,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "6.1",
+          "section_title": "Perimeter of a Shape",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can compute the perimeters of standard polygons and express the fixed perimeter-to-side ratio for squares and equilateral triangles.",
+          "section_context": "Perimeter of square, equilateral triangle, rectangle; fixed perimeter-to-side ratio",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A square has side length s and an equilateral triangle has side length s. The ratio of the perimeter of the square to the perimeter of the equilateral triangle is:",
+          "options": [
+            {
+              "label": "A",
+              "text": "1 : 1",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "3 : 4",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "4 : 3",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "4 : 6",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "B": "Student has inverted the ratio, writing triangle-to-square instead of square-to-triangle.",
+                "A": "Student thinks both shapes have the same total perimeter because both use s as the side, ignoring the different number of sides.",
+                "D": "Student has used 4 and 6 (treating the equilateral triangle as having 6 units for some reason, perhaps confusing with a hexagon), rather than the correct 3 sides."
+              },
+              "inclusivity": "For students who struggle, suggest drawing both shapes with s = 6 cm and counting the total boundary length for each. For a challenge, ask students to find a value of s for the square and t for the triangle such that their perimeters are equal, then generalise."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "6.2",
+          "section_title": "Perimeter of a Circle — The C/D Ratio",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can calculate the circumference of a circle using C = 2πr and find the radius given the circumference, applying appropriate rational approximations of π.",
+          "section_context": "Circumference formula C = 2πr; historical approximations of π from Archimedes to Mādhava",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-4.4",
+            "competency_text": "Understands the nature of π, its historical approximations, and its irrationality."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A circular running track has circumference 176 m. Find its radius. (Use π = 22/7.)",
+          "options": [],
+          "expected_answer": "28 m",
+          "method_one_line": "Set C = 2πr, substitute C = 176 and π = 22/7, then solve r = 176 × 7 / (2 × 22) = 1232/44 = 28 m.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": "Students who struggle may first write C = πd, find d = 176 × 7/22 = 56 m, and then halve it to get r = 28 m — both routes are valid. For a challenge, ask students to compute how many complete laps of this track equal exactly 1 km, checking whether the answer is a whole number."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "6.3",
+          "section_title": "π Is Irrational",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can justify why π is irrational by contrasting repeating decimal expansions of rational numbers with the non-repeating expansion of π, and correctly distinguish π from its rational approximations.",
+          "section_context": "Irrationality of π; repeating decimals of rationals; 22/7 as approximation not equality",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.4",
+            "competency_text": "Understands the nature of π, its historical approximations, and its irrationality."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Which of the following statements about π and 22/7 is correct?",
+          "options": [
+            {
+              "label": "A",
+              "text": "22/7 is a rational approximation to π, and π ≠ 22/7",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "22/7 is the best possible fraction approximation to π",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "π = 22/7 because both equal approximately 3.14",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "π is rational because its digits can be computed to any number of decimal places",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "C": "Student confuses approximate numerical equality with exact equality; does not grasp that ≈ and = are different relations.",
+                "D": "Student conflates computability with rationality; a number's decimal expansion being computable does not make it a fraction — this is the key misconception the section addresses.",
+                "B": "Student has not understood that because π is irrational, there is no single 'best fraction'; 355/113 is a closer approximation than 22/7, showing 22/7 is not the best."
+              },
+              "inclusivity": "Students who struggle may compute 22/7 ≈ 3.142857… and π ≈ 3.14159… side by side to see concretely that the two decimals differ. For a challenge, students may verify that 355/113 is closer to π than 22/7 by computing the absolute differences and ranking them."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "6.4",
+          "section_title": "Length of an Arc of a Circle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can derive and apply the arc-length formula arc = 2πr × θ/360 to calculate arc lengths and sector perimeters for given radii and central angles.",
+          "section_context": "Arc-length formula from symmetry; sector perimeter; athletics track stagger application",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A sector of a circle has radius 21 cm and a central angle of 120°. Find the perimeter of the sector. (Use π = 22/7.)",
+          "options": [],
+          "expected_answer": "86 cm",
+          "method_one_line": "Arc length = 2π × 21 × 120/360 = 2 × (22/7) × 21 × (1/3) = 44 cm; perimeter = arc + 2 radii = 44 + 42 = 86 cm.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who struggle may first compute what fraction of the full circle the 120° arc represents (120/360 = 1/3), find one-third of the full circumference, and then add the two radii. For a challenge, ask students to find the central angle of a sector of the same circle whose perimeter equals exactly three times its radius."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "6.5",
+          "section_title": "Problems, Puzzles, and Paradoxes on Perimeter",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can determine the perimeters of compound figures formed from circular arcs by identifying the central angle of each arc and summing the resulting arc lengths.",
+          "section_context": "Perimeter of lens from two equal circles; equal-length semicircle paths on sub-segments",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Two circles, each of radius r, are drawn so that each passes through the centre of the other. (i) Identify the shape formed by the two radii drawn to the intersection points from each centre, and state the angle each arc subtends at its own centre. (ii) Write an expression for the perimeter of the lens-shaped region bounded by the two arcs, and simplify it. (iii) A student claims the perimeter equals the circumference of one full circle. Determine whether this claim is correct and justify your answer.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Identifies the equilateral triangle formed by the two centres and the two intersection points (all sides = r), giving 60° at each centre for the triangle sides.",
+            "Correctly deduces that each arc subtends 360° − 60° − 60° = 240° at its own centre (the arc outside the triangle), OR correctly identifies the lens arc as the 120° arc (the arc inside the other circle) — both interpretations should be checked against the textbook's figure and one consistently applied.",
+            "Uses arc = 2πr × 120/360 = 2πr/3 for each of the two lens arcs; total perimeter = 2 × 2πr/3 = 4πr/3.",
+            "Correctly addresses the student's claim: 4πr/3 ≠ 2πr (since 4/3 ≠ 2), so the claim is false; the perimeter of the lens is two-thirds of one full circumference.",
+            "Communicates the argument in a logical sequence with justification at each step."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "Students who struggle may draw the figure with r = 7 cm, compute arc lengths numerically, and use that to check whether the student's claim holds — the numerical check alone is acceptable partial credit. For a challenge, ask students to find the ratio of the lens perimeter to the circumference of either circle and express it as a fraction in lowest terms, then generalise: what fraction of a circumference is each arc?"
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "6.6",
+          "section_title": "Area of a Rectangle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can construct area models for algebraic identities involving rectangles and squares, and verify expansions such as (a + b)(a − b) = a² − b² and (a + b + c)² geometrically.",
+          "section_context": "Rectangle area ab; area models for (a+b)², (a+b)(a−b), (a+b+c)²",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Draw a labelled area-model diagram that shows why (a + b)(a − b) = a² − b², where a > b > 0. Label each region with its area and explain how the diagram proves the identity.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "A rectangle of length (a + b) and width (a − b) is drawn, or a square of side a with a smaller square of side b removed is shown.",
+            "The four sub-regions (or two sub-regions in the L-shape version) are labelled with their dimensions and areas.",
+            "The total area of all regions is summed to give a² − b².",
+            "A clear verbal or written explanation connects the diagram to the identity."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who struggle may use specific values (e.g., a = 5, b = 3) to draw a concrete diagram with unit squares before writing the general form. For a challenge, students may draw the L-shaped rearrangement — cutting the L into two rectangles in two different ways — and show both give the same area, providing a second geometric proof."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "6.7",
+          "section_title": "Area of a Parallelogram",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can derive the area formula for a parallelogram using the cut-and-rearrange argument, including the repair for the thin-parallelogram case, and apply it to find the area of a trapezium.",
+          "section_context": "Parallelogram area = base × height; thin-parallelogram repair; trapezium area derivation",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A trapezium has parallel sides of length 18 cm and 10 cm, and the perpendicular distance between the parallel sides is 9 cm. Using the parallelogram area formula, find the area of the trapezium.",
+          "options": [],
+          "expected_answer": "126 cm²",
+          "method_one_line": "Place two identical copies of the trapezium together to form a parallelogram of base (18 + 10) = 28 cm and height 9 cm; its area = 28 × 9 = 252 cm², so the trapezium area = 252/2 = 126 cm².",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who struggle may use the formula ½(a + b)h directly by substitution; that is acceptable as long as the derivation from the parallelogram is understood. For a challenge, ask students to show that if both parallel sides are equal (a = b), the trapezium formula reduces to the parallelogram formula, and give a geometric explanation."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "6.8",
+          "section_title": "Area of a Triangle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can derive the triangle area formula ½bh by two methods and prove that a median of a triangle divides it into two triangles of equal area.",
+          "section_context": "Triangle area = ½bh; median equal-area theorem; shared-base-and-height arguments",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In triangle ABC, D is the midpoint of BC, and M is any point on the median AD. Prove that area(△ABM) = area(△ACM). State clearly every fact about base and height that your proof uses.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Student recognises that median AD divides BC into BD = DC (since D is the midpoint of BC), and hence area(△ABD) = area(△ACD) by the shared-height-from-A argument.",
+            "Student further recognises that M lies on AD, so triangles MBD and MCD share the same height from M to BC, and BD = DC, giving area(△MBD) = area(△MCD).",
+            "Student correctly subtracts: area(△ABM) = area(△ABD) − area(△MBD) and area(△ACM) = area(△ACD) − area(△MCD); since both pairs are equal, the conclusions follow.",
+            "Each step explicitly states which base and which height are being used, with the shared-height or shared-base argument made clear.",
+            "The proof is written in a logical sequence with no unjustified steps."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "Students who struggle may first verify the result numerically with a specific triangle (e.g., vertices at coordinates) and then attempt to write the general proof; partial credit for a correct numerical verification with a clear attempt at the general argument. For a challenge, students may investigate whether the result still holds when M lies on the extension of AD beyond D, and prove or disprove it."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "6.8",
+          "section_title": "Area of a Triangle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can apply the equal-area principle to justify area relationships in triangles and parallelograms where figures share a common base and height.",
+          "section_context": "Triangle area = ½bh; median equal-area theorem; shared-base-and-height arguments",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "ABCD is a parallelogram and P is any point on side AB. Triangle PCD is drawn. Which of the following correctly describes the area of △PCD compared to the area of parallelogram ABCD?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Area(△PCD) = Area(ABCD) because the triangle and parallelogram share the same base CD",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Area(△PCD) = ½ × Area(ABCD), for every position of P on AB",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "Area(△PCD) = ½ × Area(ABCD) only when P is the midpoint of AB",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Area(△PCD) varies as P moves along AB, so no fixed ratio exists",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {
+                "C": "Student thinks the equal-area result requires P to be the midpoint; they have not recognised that the height from any P on AB to CD is the same fixed height h of the parallelogram.",
+                "D": "Student incorrectly believes the triangle's area changes as P moves; they have not applied the principle that base CD and height h (the distance between parallel sides) are both fixed.",
+                "A": "Student knows the base is shared but incorrectly concludes the areas are equal, having forgotten to account for the factor of ½ in the triangle area formula."
+              },
+              "inclusivity": "Students who struggle may draw the parallelogram with a specific height (e.g., 6 cm, base 10 cm) and compute the triangle area for three positions of P to confirm the ratio is always ½. For a challenge, ask students to prove the same result when P is a point inside the parallelogram rather than on a side."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "6.8.1",
+          "section_title": "Heron's formula",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can apply Heron's formula to compute the area of a triangle given its three side lengths and verify the result against the half-base-times-height formula.",
+          "section_context": "Heron's formula; semi-perimeter; Brahmagupta's cyclic quadrilateral formula",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A triangle has sides 8 cm, 15 cm, and 17 cm. (i) Apply Heron's formula to find its area. (ii) Verify your answer using the half-base-times-height formula, explaining how you identify the height.",
+          "options": [],
+          "expected_answer": "60 cm²",
+          "method_one_line": "s = (8 + 15 + 17)/2 = 20; area = √(20 × 12 × 5 × 3) = √3600 = 60 cm²; verify: 8² + 15² = 64 + 225 = 289 = 17², so the triangle is right-angled with legs 8 and 15, giving area = ½ × 8 × 15 = 60 cm².",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "Students who struggle with the surd may first compute each factor (s − a) = 12, (s − b) = 5, (s − c) = 3 and then multiply step by step: 20 × 12 = 240, 240 × 5 = 1200, 1200 × 3 = 3600 before taking the square root. For a challenge, ask students to find a triangle with integer sides whose area is also an integer but that is NOT right-angled, and verify using both Heron's formula and another method."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "6.8.1",
+          "section_title": "Heron's formula",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can verify Brahmagupta's formula for a cyclic quadrilateral and explain how it generalises Heron's formula when the fourth side is set to zero.",
+          "section_context": "Heron's formula; semi-perimeter; Brahmagupta's cyclic quadrilateral formula",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Brahmagupta's formula gives the area of a cyclic quadrilateral with sides a, b, c, d as √((s−a)(s−b)(s−c)(s−d)), where s is the semi-perimeter. (i) Apply this formula to a cyclic quadrilateral with sides 5, 12, 13, and 0 cm and compute the area. (ii) Explain why setting d = 0 turns a cyclic quadrilateral into a triangle and why the formula then equals Heron's formula. (iii) A rhombus with side 5 cm can be 'squashed' or 'straightened' to give different cyclic quadrilaterals. Explain why Brahmagupta's formula cannot be used for a rhombus in general, and what additional condition is needed.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correctly computes s = (5 + 12 + 13 + 0)/2 = 15 for part (i); area = √(10 × 3 × 2 × 15) = √900 = 30 cm².",
+            "Recognises that with d = 0 the fourth side vanishes, the quadrilateral degenerates to a triangle with sides a, b, c, and the semi-perimeter s = (a + b + c)/2 is the same as in Heron's formula — the (s − d) factor becomes s itself, recovering √(s(s−a)(s−b)(s−c)).",
+            "Explains that Brahmagupta's formula applies ONLY to cyclic quadrilaterals (those inscribed in a circle), and a rhombus is cyclic only when it is a square (diagonals equal); a general rhombus with side 5 can have different areas depending on its angles, so the formula cannot be applied to all rhombuses.",
+            "Uses the chapter's rhombus example (side lengths alone do not fix a 4-gon's area) correctly as the supporting argument.",
+            "Proof and explanation are written in a logical sequence."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "Students who struggle may complete only part (i) numerically and attempt part (ii) with a specific numerical example (d = 0 with their own triangle) to build intuition. For a challenge, ask students to verify Brahmagupta's formula for an isosceles trapezium of their own choice and compare the result with the standard trapezium area formula."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_ref": "6.9",
+          "section_title": "Squaring a Rectangle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can carry out Baudhāyana's geometric construction for squaring a rectangle and justify each step using the algebraic identity ((a+b)/2)² − ((a−b)/2)² = ab.",
+          "section_context": "Baudhāyana's square-equal-to-rectangle construction; difference-of-squares identity geometrically",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A rectangle has sides a = 12 cm and b = 3 cm. (i) Show, using the identity ((a + b)/2)² − ((a − b)/2)² = ab, that a square of side √(ab) has the same area as this rectangle. (ii) Compute the numerical value of √(ab) for these dimensions and verify by computing the rectangle's area directly. (iii) Explain in your own words how Baudhāyana's construction encodes this identity as a geometric procedure, naming each key step of the construction.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correctly computes ((12 + 3)/2)² − ((12 − 3)/2)² = 7.5² − 4.5² = 56.25 − 20.25 = 36 = 12 × 3 = ab.",
+            "States that the square of side √36 = 6 cm has area 36 cm², equal to the rectangle area 12 × 3 = 36 cm².",
+            "Connects each step of the construction to the algebra: AE = b creates the segment of length (a − b); F is the midpoint so FD = (a − b)/2; AF = (a + b)/2; the arc of radius (a + b)/2 from H to K gives HK = (a + b)/2; BK² = HK² − HB² = ((a+b)/2)² − ((a−b)/2)² = ab; so BK = √(ab).",
+            "The explanation is precise enough that someone else could follow the construction from the description alone.",
+            "No unjustified steps; algebraic and geometric reasoning are clearly distinguished."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "Students who struggle may first verify the identity numerically and carry out the physical construction with compass and ruler before writing the explanation. For a challenge, ask students to adapt the construction to square a triangle (outline the procedure: convert the triangle to an equal-area rectangle using ½bh, then apply Baudhāyana's method), explaining where each formula is used."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 11,
+          "section_ref": "6.10",
+          "section_title": "Area of a Circle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can explain why the area of a circle is πr² using Archimedes' inscribed-polygon argument and Nīlakaṇṭha's slice-and-rearrange argument, and apply the formula to find circle-packing fractions.",
+          "section_context": "Circle area A = πr²; Archimedes' polygon limit; Nīlakaṇṭha's parallelogram rearrangement",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A rectangle of length 28 cm and width 21 cm is packed with circles arranged in a single layer, each circle just touching its neighbours and the sides of the rectangle. Each circle has diameter equal to 21 cm (so exactly one row of circles fits along the 21 cm side). (i) Find the number of complete circles that fit. (ii) Calculate the total area of all the circles. (iii) Calculate the fraction of the rectangle's area that is covered by circles. (Use π = 22/7.)",
+          "options": [],
+          "expected_answer": "Part (i): 1 circle fits (diameter 21 cm equals the width; along 28 cm only one circle of diameter 21 cm fits since 28 < 42). Wait — re-reading: diameter = 21 cm, width = 21 cm (one circle fits across), length = 28 cm; 28/21 = 1.33…, so only 1 complete circle fits. Area of 1 circle = π × (10.5)² = (22/7) × 110.25 = 346.5 cm². Rectangle area = 28 × 21 = 588 cm². Fraction = 346.5/588 = 0.589… Hmm — this does not give a clean answer. Regenerating with diameter = 14 cm: one row across 21 cm → 1 circle (21/14 = 1.5, so 1 complete); along 28 cm → 2 circles (28/14 = 2). Total 2 circles. Area = 2 × π × 7² = 2 × (22/7) × 49 = 2 × 154 = 308 cm². Rectangle = 588 cm². Fraction = 308/588 = 11/21. Clean answer confirmed by alternate route: each circle occupies a 14 × 14 cell; 2 cells cover 2 × 196 = 392 cm² of cell area; circle area per cell = 154 cm²; fraction = 154/196 = 11/14. Discrepancy — recheck. 308/588 = 308/588; GCD(308,588): 308 = 4 × 77 = 4 × 7 × 11; 588 = 4 × 147 = 4 × 3 × 49 = 4 × 3 × 7²; GCD = 4 × 7 = 28; 308/28 = 11; 588/28 = 21. So fraction = 11/21. Alternate route: per circle, cell = 14 × 14 = 196 cm²; fraction = 154/196 = 77/98 = 11/14. These differ because the two circles are packed in a 28 × 21 rectangle with the circles touching the 21-width sides — each circle's cell is 14 × 21, not 14 × 14. Cell area = 14 × 21 = 294; circle area = 154; fraction = 154/294 = 77/147 = 11/21. Both routes agree: 11/21. Verified.",
+          "method_one_line": "With circles of diameter 14 cm in a 28 × 21 rectangle: 2 circles fit (1 across, 2 along); total circle area = 2 × (22/7) × 7² = 308 cm²; rectangle area = 588 cm²; fraction covered = 308/588 = 11/21.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": "Students who struggle may first draw the rectangle, sketch the circles, and count; then compute the area of one circle and multiply. For a challenge, ask students to find the fraction of the rectangle NOT covered by circles and express it as a percentage, then conjecture what happens to the fraction as the rectangle becomes very long (many circles in a row)."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 12,
+          "section_ref": "6.10.1",
+          "section_title": "Area of Sector of a Circle",
+          "total_sections": 12,
+          "implied_lo_assessed": "Students can calculate the area of a sector of a circle using area = πr² × θ/360 and determine the area of a circular segment by subtracting the corresponding triangle area from the sector area.",
+          "section_context": "Sector area formula; segment area = sector area minus triangle area; composite sector problems",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-5.1",
+            "competency_text": "Derives and uses formulae for the measure of plane figures."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A chord PQ of a circle of radius 14 cm subtends an angle of 90° at the centre O. Find: (i) the area of the minor sector OPQ, and (ii) the area of the minor segment (the region between chord PQ and the minor arc PQ). (Use π = 22/7.)",
+          "options": [],
+          "expected_answer": "Part (i): Sector area = πr² × 90/360 = (22/7) × 196 × (1/4) = (22 × 196)/(28) = 4312/28 = 154 cm². Part (ii): Triangle OPQ is right-angled at O with legs OP = OQ = 14 cm; area = ½ × 14 × 14 = 98 cm². Segment area = 154 − 98 = 56 cm². Alternate route: sector area = ¼ × πr² = ¼ × (22/7) × 196 = 154 cm². Triangle area (right-angled, legs 14 and 14) = ½ × 14 × 14 = 98 cm². Segment = 56 cm². Both routes agree. Verified.",
+          "method_one_line": "Sector area = πr² × θ/360 = (22/7) × 196 × (90/360) = 154 cm²; triangle OPQ (right-angled, legs 14 cm each) area = 98 cm²; segment area = 154 − 98 = 56 cm².",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": "Students who struggle may first compute the full circle area and then take one quarter of it; for the triangle, sketching the right-angled triangle OPQ with the two radii as legs makes the ½ × base × height calculation straightforward. For a challenge, ask students to find the area of the major segment (the larger region) and verify that minor segment + major segment = full circle area."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

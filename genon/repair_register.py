@@ -2333,7 +2333,85 @@ REPAIRS = {
     # Every edit strikes a clause. Two are narrower than the mechanical sentence span
     # (ch 5 p09 U7, ch 8 p10 U6) because the sentence carries teaching either side of the
     # offending phrase and deleting it whole would remove the teaching with the breach.
+    # ── S4 · mathematics · IX · F1 SEAM REPAIR — CAPSTONE FRAMING (founder ruling 2026-08-18)
+    #
+    # NOT A REGISTER BREACH. It rides in this file because the mechanism is the one this file
+    # exists for — a declared (old -> new) pair applied by assertion to a teacher-facing
+    # string — and the founder's standing instruction is to extend rather than grow a sibling
+    # tool (2026-08-17). The rule label says so: `seam/capstone-framing`.
+    #
+    # WHAT F1 FOUND. 11 cross-canonical seams, 7 distinct borrowed units, read in full. Four
+    # seams were JUMPY and all four had ONE shape: a compact must cover the whole chapter, so
+    # its LAST unit is itself a chapter closer — and when the standard's synthesis unit is
+    # then borrowed on top, the teacher meets two capstones on consecutive days. ch 6 X=10
+    # collects every area formula on the board at the close of U9 and builds the same summary
+    # table at the open of U10; ch 8 X=8 plays 'AP, GP or neither' in both; ch 3 X=15 narrates
+    # the chapter's journey twice.
+    #
+    # THE FOUNDER READ ALL FOUR AND RULED (2026-08-18): no major issue — the synthesis does
+    # draw on the whole chapter and repeats the previous sitting only slightly. What creates
+    # the DOUBLE-CAPSTONE reading is not the activity but the FRAMING: the compact announces
+    # itself as closing the chapter. Strike the announcement, keep the work. Every edit below
+    # removes a phrase that declares finality and nothing else — no task, no exercise
+    # reference, no mathematics is touched, and each band still does exactly what it did.
+    #
+    # This also fixes something the register gate could not see: 'close the chapter' is a
+    # COMPLETION claim in substance, and it is false whenever the plan is served with a
+    # synthesis unit after it — which is precisely the serve that produced the seam.
     ("mathematics", "ix"): {
+        "ch_03_canonical_p14.json": [
+            (14, "band:3",
+             "Section 3.7 — close the chapter. Read aloud (or summarise) the chapter's journey:",
+             "Section 3.7. Read aloud (or summarise) the chapter's journey:",
+             "seam/capstone-framing",
+             "the journey recap IS the section's teaching and stays whole; only the "
+             "announcement that the chapter ends here goes"),
+            (14, "band:3",
+             " Close the chapter on that open question.",
+             " Leave that open question standing.",
+             "seam/capstone-framing",
+             "the pedagogy is to end the sitting on an unresolved question, which is worth "
+             "keeping — 'leave it standing' says that without claiming the chapter is over"),
+        ],
+        "ch_06_canonical_p09.json": [
+            (9, "band:3",
+             "Consolidate the chapter by collecting all the area formulas on the board in one summary:",
+             "Collect all the area formulas on the board in one summary:",
+             "seam/capstone-framing",
+             "the summary table is the band's work and is untouched; 'consolidate the "
+             "chapter' was the only word that made it a capstone"),
+        ],
+        "ch_08_canonical_p07.json": [
+            (7, "band:3",
+             "Whole-chapter consolidation. Students write a recursive rule",
+             "Students write a recursive rule",
+             "seam/capstone-framing",
+             "a bare heading announcing finality, carrying no instruction. The recursive "
+             "rule, the paired questioning and the three-threads board work all stand"),
+        ],
+        "ch_03_canonical_p10.json": [
+            (10, "band:0",
+             " Walk through the diagram narrating the chapter's journey: each extension answered a specific gap the previous set could not fill.",
+             " Walk through the diagram: each extension answered a specific gap the previous set could not fill.",
+             "seam/capstone-framing",
+             "the diagram walk and its explanatory point are kept verbatim; 'narrating the "
+             "chapter's journey' is the framing that collides with the borrowed synthesis, "
+             "which opens by recalling the same journey"),
+        ],
+        "ch_04_canonical_p09.json": [
+            (9, "band:3",
+             " Share two or three responses to consolidate the chapter's main tools.",
+             " Share two or three responses.",
+             "seam/capstone-framing",
+             "swept in prophylactically: ch 4 X=11 read CLEAN, but this is the same framing "
+             "in the same slot (last unit, closing band) and would read as a double capstone "
+             "the moment the fill pattern changes. The self-check task is untouched"),
+        ],
+    },
+
+    # APPLIED 2026-08-18 17:0x (wave 2, the compacts) — retired to a 3-tuple key when the F1
+    # seam repair became the live set. Kept as the record; re-running fails its own guard.
+    ("mathematics", "ix", "APPLIED-W2-20260818"): {
         "ch_01_canonical_p08.json": [
             (2, "band:2",
              " — a preview of why the formal coordinate system in the next unit matters",

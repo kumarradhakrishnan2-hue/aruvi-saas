@@ -1,0 +1,1351 @@
+{
+  "filename": "ch_08_canonical_p07.json",
+  "saved_at": "2026-08-18T16:57:34",
+  "plan_status": "canonical",
+  "chapter_number": 8,
+  "chapter_title": "Predicting What Comes Next: Exploring Sequences and Progressions",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 7 periods = 350 minutes\nTotal: 7 periods · 5h 50min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "7x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 8",
+    "ledger_ts": "20260818_164334_math_ix_08_p07",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-18T17:18:17",
+        "tool": "genon/repair_anchors.py v1.1",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 4,
+            "field": "section_anchor",
+            "rule": "V2/joiner",
+            "removed": "8.4",
+            "replaced_with": "8.4 / 8.4.1",
+            "note": "band 40-50 opens 'Introduce the visualisation (section 8.4.1): tabulate stage vs. square count for the growing-square pattern, plot the ordered pairs'. 8.4.1 'Visualising an AP' is taught in this unit and was simply unnamed — which is why the first-visit check read U5 (8.5) as skipping a section. Nothing is missing from the compact; the label was"
+          }
+        ]
+      },
+      {
+        "tool": "repair_item_type.py v1.1",
+        "at": "2026-08-18T17:20:57",
+        "unit": null,
+        "section_ref": "8.6.2",
+        "variant": "p07",
+        "field": "question_type",
+        "from": "OPEN_TASK",
+        "to": "OPEN_TASK",
+        "evidence": "type is already right; the repair is `question_text` null -> \"\". Nothing a teacher or student sees changes — the stem was already blank on the page.",
+        "also": "question_text null -> \"\""
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "What Is a Sequence? Terms, Notation and Patterns",
+          "section_anchor": "8.1",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Squared paper or dot-grid paper",
+            "Ruler"
+          ],
+          "visual_aids": "Dot-array figures for triangular and square numbers (textbook p.175–176)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "8.1",
+              "book_ref": "Exercise, p.176",
+              "description": "For the sequence 1, 4, 7, 10, 13, ..., predict the next four terms, and derive the first 10 terms of the running-sum sequence."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "8.1",
+              "book_ref": "Exercise, p.176",
+              "description": "Write t5, t6, t7, and t8 for the sequence of triangular numbers."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open by writing the four familiar sequences on the board — natural numbers, odd numbers, triangular numbers, square numbers — and invite students to describe what they notice about each pattern. Draw out the language of 'next term' and 'rule'. Briefly display the dot-array figures from the textbook to connect the triangular and square sequences to visual arrangements."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Introduce the formal vocabulary: sequence, term, finite vs. infinite sequence. Work through how the triangular-number sequence arises as running sums of natural numbers and the square-number sequence as running sums of odd numbers, using the dot diagrams. Introduce the subscript notation t1, t2, t3, ... and clarify that n is always a positive integer while term values may be any real number."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students work in pairs on Exercise, p.176 (E-1): predict the next four terms of 1, 4, 7, 10, 13, ..., then construct the first ten terms of its running-sum sequence. Follow immediately with Exercise, p.176 (E-2): write t5, t6, t7, t8 for the triangular-number sequence. Pairs compare their running-sum rows with an adjacent pair."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Think-and-reflect discussion: ask students to describe the pattern in each of the four opening sequences and predict a few more terms. Then invite pairs to name up to five different types of sequences they can think of and share one property of each. Consolidate responses on the board, grouping ideas around constant-difference, constant-ratio, and sum-based patterns to set up the chapter's direction."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter by building shared language around sequences and term notation; watch for students who conflate the position index n with the term value — a common slip when first meeting subscript notation. Encourage students who finish early to try constructing the running-sum sequence for the odd numbers and describe what they notice about it. Students may read Example 1 (p.177) ahead as a self-study pointer once notation is in place.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Computing Any Term Directly: The Explicit Rule",
+          "section_anchor": "8.2",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Exercise books"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "8.2",
+              "book_ref": "Example 1, p.177",
+              "description": "Establishes un = 2n - 1 as the explicit rule for the odd-number sequence and solves in reverse to find that 137 is the 69th term."
+            },
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "8.2",
+              "book_ref": "Example 2, p.177",
+              "description": "For sn = 5n - 2, checks whether 308 is a term (yes, 62nd) and whether 471 is a term (no, non-natural n)."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "8.2",
+              "book_ref": "Exercise, p.178",
+              "description": "For tn = 3n - 7: find specific terms, find which term is 332, and determine whether 557 is a term."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "8.2",
+              "book_ref": "Exercise Set 8.1 Q2, p.179",
+              "description": "Find the 10th and 15th terms of tn = 5n - 3."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "8.2",
+              "book_ref": "Exercise Set 8.1 Q3, p.179",
+              "description": "Determine whether 97 and 172 are terms of tn = 5n - 3."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Define the explicit rule: a formula that computes any term directly from its position number n. Contrast this with simply listing terms. Write the general form on the board and explain why having such a formula is powerful — any term can be found without computing all previous ones."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Walk through Example 1 (p.177) in full: verify that un = 2n - 1 gives odd numbers for n = 1, 2, 3, then solve 2n - 1 = 137 to show 137 is the 69th term. Then work through Example 2 (p.177): solve 5n - 2 = 308 and 5n - 2 = 471, emphasising that a non-integer value of n means the number is not a term. Ask students to explain in their own words why the non-integer result excludes 471."
+            },
+            {
+              "minutes": "22-40",
+              "activity": "Students attempt Exercise, p.178 (E-4) individually: for tn = 3n - 7, compute the first, second, third, 12th, 18th, and 50th terms, find which term equals 332, and determine with reasoning whether 557 is a term. After individual work, pairs compare their reasoning for the 557 question. Teacher circulates and probes the justification for why n must be a natural number."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Quick consolidation on Exercise Set 8.1 Q2 (p.179, E-11) and Q3 (p.179, E-12): students find the 10th and 15th terms of tn = 5n - 3 and determine whether 97 and 172 are terms. Review answers whole-class, foregrounding the reverse-solving technique as a reusable tool for any explicit rule."
+            }
+          ],
+          "teacher_notes": "Having established what a sequence is and how its terms are named, this unit builds the explicit rule as the primary tool for computing terms directly. A frequent error is setting up n - 1 instead of n when substituting (confusing 0-indexed and 1-indexed rules); draw attention to this by asking students to verify t1 first before any other term. Exercise Set 8.1 Q4 (p.179, E-13) — finding which term of tn = 5n - 3 equals 607 — is a suitable self-study problem for students who finish early.",
+          "homework": [
+            "Exercise Set 8.1 Q4, p.179: Find which term of the sequence tn = 5n - 3 equals 607."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Building Each Term from the One Before: The Recursive Rule",
+          "section_anchor": "8.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Exercise books"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "8.3",
+              "book_ref": "Example 3, p.178",
+              "description": "First four terms of u1 = 1, un = 2un-1 + 3: successive substitution yields 1, 5, 13, 29."
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "8.3",
+              "book_ref": "Example 4, p.178-179",
+              "description": "First four terms of s1 = 3, sn = sn-1(sn-1 - 1): successive substitution yields 3, 6, 30, 870."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "8.3",
+              "book_ref": "Exercise Set 8.1 Q5, p.179",
+              "description": "For t1 = -5, tn+1 = tn + 3, find the first five terms and determine whether 52 is a term."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "8.3",
+              "book_ref": "Exercise Set 8.1 Q6, p.180",
+              "description": "For T1 = 1, T2 = 2, T3 = 4, Tn = Tn-1 + Tn-2 + Tn-3, find T4 through T8."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Define the recursive rule: a rule that defines each term in relation to the previous term(s) rather than directly from its position. Use the sequence 1, 4, 7, 10, 13, ... on the board: write the explicit rule tn = 3(n-1) + 1 alongside the recursive rule t1 = 1, tn = tn-1 + 3, and discuss the difference — the explicit rule lets you jump directly to any term; the recursive rule requires tracing from the start."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Work through Example 3 (p.178): given u1 = 1 and un = 2un-1 + 3, compute u2, u3, u4 step by step. Emphasise that each step uses only the immediately previous term. Then work through Example 4 (p.178-179): given s1 = 3 and sn = sn-1(sn-1 - 1), compute successive terms to see how rapidly this sequence grows. Introduce the Virahanka-Fibonacci rule Vn = Vn-1 + Vn-2 as a recursive rule depending on TWO previous terms, and briefly narrate its discovery context."
+            },
+            {
+              "minutes": "28-45",
+              "activity": "Students work individually on Exercise Set 8.1 Q5 (p.179, E-14): given t1 = -5 and tn+1 = tn + 3, find the first five terms and determine whether 52 is a term. Then, in pairs, attempt Q6 (p.180, E-15): given the three-term recursive rule for T, compute T4 through T8. Teacher asks: why can't you use a recursive rule alone to find the 100th term efficiently?"
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Whole-class consolidation: compare the two worked examples — one rule with a single starting term, one with two. Ask students to articulate one advantage and one limitation of recursive rules versus explicit rules. Record a concise summary on the board."
+            }
+          ],
+          "teacher_notes": "A common confusion here is failing to substitute the correct previous term — students sometimes re-use u1 at every step instead of updating. Having students write out each substitution in full, as the worked examples do, guards against this. The Virahanka-Fibonacci sequence also offers a natural opportunity to note that the number of starting values required equals the number of previous terms the rule reaches back to.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Arithmetic Progressions: Constant Difference and the nth-Term Formula",
+          "section_anchor": "8.4 / 8.4.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Exercise books",
+            "Ruler (for plotting)"
+          ],
+          "visual_aids": "Staged square-pattern figure from textbook p.181 and coordinate plot of stage number vs. square count",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "8.4.1",
+              "book_ref": "Example 5, p.183",
+              "description": "Models a taxi fare as the AP 240, 280, 320, ... and derives its nth term as 200 + 40n."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "8.4",
+              "book_ref": "Exercise, p.182",
+              "description": "Verify two APs, write their nth terms, and observe what happens when ordered pairs are plotted."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "8.4",
+              "book_ref": "Exercise, p.182",
+              "description": "Find the nth term of two APs with fractional and decimal first terms."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "8.4.1",
+              "book_ref": "Exercise, p.183",
+              "description": "Find recursive rules for the APs from the previous two exercises."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Present the growing square-pattern from the textbook (stages adding four squares each time) to motivate the AP. Derive the sequence 1, 5, 9, 13, ... and its rule tn = 1 + (n-1) × 4 = 4n - 3, identifying the constant difference d = 4. Define the AP formally: a, a+d, a+2d, ... with general term tn = a + (n-1)d. Illustrate with a decreasing AP: 11, 7, 3, -1, -5, ... (d = -4), clarifying that d may be negative."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Think-and-reflect prompt: students decide which sequences discussed so far (natural numbers, odd numbers, triangular numbers) are APs and justify each claim using the constant-difference definition. Share answers and address the triangular-number sequence — consecutive differences 1, 2, 3, ... are not constant, so it is not an AP."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students work on Exercise, p.182 (E-5 and E-6): verify that 2, 5, 8, 11, ... and -5, -1, 3, 7, ... are APs, write their nth terms, and apply the formula to the fractional and decimal APs. Teacher circulates to check that students are computing d correctly and applying tn = a + (n-1)d rather than tn = a + nd."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Introduce the visualisation (section 8.4.1): tabulate stage vs. square count for the growing-square pattern, plot the ordered pairs, and observe they lie on a straight line. Work through Example 5 (p.183, E-7 context): model the taxi fare as an AP and derive 200 + 40n. Students write the recursive rule for the two APs from E-5 and E-6 (Exercise, p.183, E-7). Summarise: explicit and recursive rules are two ways to express the same AP."
+            }
+          ],
+          "teacher_notes": "The most persistent error in AP work is using tn = a + nd (n-zero-indexed) instead of tn = a + (n-1)d — insist that students verify t1 = a as a check after every formula they write. The straight-line plot in section 8.4.1 provides a geometric way to confirm that the common difference is constant and that an AP models linear growth, which connects naturally to the linear-relationship work students have met earlier.",
+          "homework": [
+            "Exercise Set 8.2 Q1, p.185: Find the 10th and 26th terms of the AP 3, 8, 13, 18, ...",
+            "Exercise Set 8.2 Q2, p.185: Determine which term of the AP 21, 18, 15, ... is -81, and whether 0 is a term."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Summing Natural Numbers: The Reverse-and-Add Argument",
+          "section_anchor": "8.5",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Exercise books"
+          ],
+          "visual_aids": "Dot diagram (rectangular array with zigzag partition) from textbook p.184",
+          "textbook_items_in_class": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "8.5",
+              "book_ref": "Exercise Set 8.2 Q5, p.186",
+              "description": "Find how many 2-digit numbers are divisible by 3 and the sum of all such numbers."
+            },
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "8.5",
+              "book_ref": "Exercise Set 8.2 Q6, p.186",
+              "description": "Given a salary starting at Rs.5,00,000 with Rs.20,000 annual increment, find after how many years income reaches Rs.7,00,000."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "8.5",
+              "book_ref": "Exercise Set 8.2 Q7, p.186",
+              "description": "Given row k has k marbles across 25 rows, find the total number of marbles."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Write 1 + 2 + 3 + ... + 10 on the board. Show the reverse-and-add trick: write the sum forwards and backwards, pair terms that each total 11, and compute 10 × 11 ÷ 2 = 55. Ask students whether the same approach would work for 1 + 2 + ... + 100. Derive the general formula Sn = n(n+1)/2 algebraically by writing S + S = n pairs each summing to (n+1)."
+            },
+            {
+              "minutes": "15-25",
+              "activity": "Show the dot-diagram from the textbook: the rectangular array split by a zigzag partition, giving a second visual argument for Sn = n(n+1)/2. Attribute the earliest known statement to Aryabhata's Aryabhatiya. Apply the formula: compute the sum from 25 to 58 by differencing two partial sums (S58 - S24). Connect back to the triangular-number sequence: the nth triangular number equals S_n = n(n+1)/2."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Think-and-reflect: can the formula be used to find S20, S50, and S1000? Students compute these quickly and verify one by the reverse-and-add method. Then students work on Exercise Set 8.2 Q5 (p.186, E-20): identify 2-digit multiples of 3 as an AP, find their count, and sum them using Sn. Teacher monitors whether students correctly identify the AP's first term, last term, and n."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students attempt Exercise Set 8.2 Q6 (p.186, E-21) and Q7 (p.186, E-22). Q6: model the salary increment problem with Sn or tn and solve. Q7: recognise that the marble arrangement forms a triangular-number sum and apply the formula. Review Q7 whole-class: the total is S25 = 25 × 26/2 = 325."
+            }
+          ],
+          "teacher_notes": "A common slip is writing Sn = n(n+1) (forgetting to halve) — the rectangular dot diagram makes this error immediately visible because two copies of the triangle fill the rectangle. Watch also for students who use the sum formula when the problem asks for a term, or vice versa; briefly asking 'do you want one term or a running total?' before each problem helps them self-check. Exercise Set 8.2 Q4 (p.185, E-19) — finding the 29th term of an AP from the 3rd and 50th — is a good self-study problem for students who want further AP practice.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Geometric Progressions: Constant Ratio, the nth-Term Formula, and Fractals",
+          "section_anchor": "8.6 / 8.6.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Exercise books"
+          ],
+          "visual_aids": "Doubling-green-squares pattern figure and Sierpinski triangle stages 0–3 from textbook (pp.186, 189–190)",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "8.6",
+              "book_ref": "Example 6, p.187",
+              "description": "Tests whether 1, 2, 4, 8, 16, ... is a GP and finds its common ratio."
+            },
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "8.6",
+              "book_ref": "Example 7, p.187",
+              "description": "Tests whether 1, 3, 9, 27, 81, ... is a GP and finds its common ratio."
+            },
+            {
+              "id": "WE-9",
+              "type": "worked_example",
+              "source_section": "8.6",
+              "book_ref": "Example 9, p.187-188",
+              "description": "Verifies 5, 15/4, 45/16, 135/64, ... is a GP with r = 3/4 and writes its nth term as 5 × (3/4)^(n-1)."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "8.6",
+              "book_ref": "Exercise, p.188",
+              "description": "Check whether three given sequences are GPs and find their nth terms."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "8.6.1",
+              "book_ref": "Exercise Set 8.3 Q7, p.194",
+              "description": "Sierpinski square carpet: count red squares at each stage, find explicit and recursive formulas, find area formulas, and describe what happens to the area as n increases."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Introduce the GP through the doubling-green-squares pattern (textbook figure): the sequence 3, 6, 12, 24, ... Derive tn = 3 × 2^(n-1), identifying the constant ratio r = 2 as the defining property. Generalise: a, ar, ar^2, ... with tn = ar^(n-1). Think-and-reflect: how does this growth differ from the AP pattern? Students articulate: AP adds a constant; GP multiplies by a constant — one is linear, the other exponential. Work through Examples 6, 7, and 9 (p.187–188) quickly, showing the three-ratio-check method and reverse-solving for n."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Students work on Exercise, p.188 (E-8): check whether three sequences — including one with a fractional ratio and one with a negative ratio — are GPs and write their nth terms. Teacher circulates and asks: for the alternating-sign sequence, is r positive or negative, and does the formula still produce the right sign at each position? Compare with WE-8 (Example 8, p.187)."
+            },
+            {
+              "minutes": "30-45",
+              "activity": "Transition to section 8.6.1. Display the Sierpinski triangle stages 0–3 from the textbook. Students count black triangles at each stage: 1, 3, 9, 27. Think-and-reflect: predict the count at stages 4 and 5 and find a rule. Establish that the black-triangle count forms a GP with explicit rule 3^n and recursive rule t1 = 1, tn = 3 × tn-1. Then establish the shaded-area GP: each stage retains 3/4 of the previous area, giving explicit rule (3/4)^n. Students work on Exercise Set 8.3 Q7 (p.194, E-28) up to part (iii) — explicit and recursive formulas for the Sierpinski square carpet's red squares."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Consolidate with a whole-class comparison: for the Sierpinski triangle, one GP grows (black triangles, r = 3) and another shrinks (shaded area, r = 3/4). Ask: what happens to (3/4)^n as n gets very large? Introduce the general concept of a fractal as a self-similar pattern, and name tree branching and snowflakes as natural examples."
+            }
+          ],
+          "teacher_notes": "The most common error when writing tn = ar^(n-1) is using n instead of n-1 in the exponent — have students verify t1 = a × r^0 = a before using the formula for any other term. The Sierpinski triangle offers a beautiful illustration that two different GPs — one growing, one shrinking — can emerge from the same geometric construction, and this contrast helps students internalise what the common ratio controls. Exercise Set 8.3 Q7 part (iv) (area formulas for the Sierpinski square carpet) makes an excellent self-study extension.",
+          "homework": [
+            "Exercise Set 8.3 Q1, p.193: Find the 12th term of a GP with common ratio 2, given its 8th term is 192.",
+            "Exercise Set 8.3 Q2, p.193: Find the 10th and nth terms of the GP 5, 25, 125, ..."
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Visualising a GP and Applying Both Progressions to Real Contexts",
+          "section_anchor": "8.6.2",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Squared paper or graph paper",
+            "Ruler",
+            "Pencil"
+          ],
+          "visual_aids": "Coordinate plots of AP (straight line) vs. GP (curving upward) and Sierpinski area curve from textbook pp.191–192",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-10",
+              "type": "worked_example",
+              "source_section": "8.6.2",
+              "book_ref": "Example 10, p.192-193",
+              "description": "Models a bouncing ball (a = 18, r = 0.75) as a GP, computes heights over seven bounces, and determines when the ball stays below one-sixth of its original drop height."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "8.6",
+              "book_ref": "Exercise, p.188",
+              "description": "Find a recursive rule for tn = 3 × 10^(n-1)."
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "8.6.2",
+              "book_ref": "Exercise Set 8.3 Q5, p.193",
+              "description": "Ball dropped from 80 metres bouncing to 60% of its previous height: find height after 5th bounce and total vertical distance by 6th ground hit."
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "8.6",
+              "book_ref": "Exercise Set 8.3 Q4, p.193",
+              "description": "Find which term of the GP 2, 6, 18, ... is 4374, and write both the explicit and recursive formulas."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Display or sketch the two coordinate plots from section 8.6.2: first the AP stage-vs-squares plot (straight line), then the GP green-squares plot (curving upward). Ask students to describe in words the key visual difference. Plot (or read from the textbook) the Sierpinski black-triangle count (rising curve) and shaded-area count (falling toward zero), reinforcing that r > 1 and r < 1 produce opposite behaviours."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Work through Example 10 (p.192–193, WE-10) in full: the ball dropped from 24 feet rebounds to 3/4 of its previous height. Identify a = 18 (first bounce height = 24 × 3/4) and r = 0.75. Compute the first seven bounce heights using tn = 18 × (0.75)^(n-1). Determine 1/6 of 24 = 4 feet and identify n = 7 as the first bounce below that threshold. Ask: how does the GP formula make this threshold question answerable without computing all intermediate bounces one by one?"
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on Exercise Set 8.3 Q5 (p.193, E-26): ball dropped from 80 metres, 60% rebound ratio. Find height after 5th bounce (tn = 80 × 0.6^n at n = 5) and total vertical distance by 6th ground contact. Teacher supports the distance calculation — students must account for upward and downward travel on each bounce. Students who finish early work on Q4 (p.193, E-25): find which term of 2, 6, 18, ... is 4374 and write explicit and recursive formulas."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Whole-chapter consolidation. Students write a recursive rule for tn = 3 × 10^(n-1) (Exercise, p.188, E-9). Then in pairs, each student poses one question to the other: either 'give me a sequence and I will tell you if it is an AP or GP, or neither', or 'give me a and d (or a and r) and I will write the nth-term formula'. Teacher draws together the chapter's three conceptual threads on the board: sequences (explicit/recursive), arithmetic progressions (constant difference, linear graph), geometric progressions (constant ratio, curved graph)."
+            }
+          ],
+          "teacher_notes": "The bouncing-ball problem requires care about what a = 18 represents — it is the first bounce height, not the drop height; students who set a = 24 will produce a systematically shifted sequence. The visual contrast between the straight-line AP plot and the curving GP plot made in the first band of this unit consolidates a key chapter insight: constant addition produces linear growth while constant multiplication produces exponential growth. Exercise Set 8.3 Q6 (p.194, E-27) — finding which term of 2, 2√2, 4, ... equals 128 — is a compact self-study challenge involving a surd common ratio.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 7
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "8.1",
+        "section_title": "Introduction to Sequences",
+        "total_sections": 9,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can describe and extend sequences (natural, odd, triangular, square) using the subscript notation tn, distinguishing finite from infinite sequences.",
+          "Students can construct the running-sum sequence from a given sequence of natural numbers and identify the triangular and square-number sequences as running sums."
+        ],
+        "section_context": "Subscript notation, finite vs. infinite sequences, triangular and square-number dot arrays",
+        "c_code": "C-9.2",
+        "co_central": true
+      },
+      {
+        "section_number": 2,
+        "section_ref": "8.2",
+        "section_title": "Explicit Rule for a Sequence",
+        "total_sections": 9,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can use an explicit formula tn = f(n) to compute specified terms of a sequence and determine whether a given number is a term by solving for n and checking that the result is a natural number."
+        ],
+        "section_context": "Explicit nth-term formula, forward evaluation and reverse-solving for term position",
+        "c_code": "C-9.2",
+        "co_central": true
+      },
+      {
+        "section_number": 3,
+        "section_ref": "8.3",
+        "section_title": "Recursive Rule for a Sequence",
+        "total_sections": 9,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can generate the terms of a recursively defined sequence by successive substitution and distinguish the recursive rule from the explicit rule, including rules that depend on two or more prior terms."
+        ],
+        "section_context": "Recursive rule, successive substitution, Virahanka-Fibonacci two-term dependence",
+        "c_code": "C-9.2",
+        "co_central": true
+      },
+      {
+        "section_number": 4,
+        "section_ref": "8.4",
+        "section_title": "Arithmetic Progressions",
+        "total_sections": 9,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can identify whether a sequence is an arithmetic progression by verifying a constant common difference and apply the formula tn = a + (n-1)d to find specified terms or determine term positions."
+        ],
+        "section_context": "AP definition, common difference, nth-term formula tn = a + (n-1)d, positive and negative d",
+        "c_code": "C-9.4",
+        "co_central": true
+      },
+      {
+        "section_number": 5,
+        "section_ref": "8.4.1",
+        "section_title": "Visualising an AP",
+        "total_sections": 9,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can tabulate and plot an AP as ordered pairs, observe that the points are collinear, and write the recursive rule for an AP and apply the explicit rule to model a real-world linear-growth situation."
+        ],
+        "section_context": "AP as collinear points, recursive AP rule, taxi-fare linear model",
+        "c_code": "C-9.4",
+        "co_central": true
+      },
+      {
+        "section_number": 6,
+        "section_ref": "8.5",
+        "section_title": "Sum of the First n Natural Numbers",
+        "total_sections": 9,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive and apply the formula Sn = n(n+1)/2 using the reverse-and-add argument to find the sum of a consecutive-integer series or the nth triangular number."
+        ],
+        "section_context": "Reverse-and-add derivation, Sn = n(n+1)/2, triangular-number connection, differencing partial sums",
+        "c_code": "C-1.1",
+        "co_central": true
+      },
+      {
+        "section_number": 7,
+        "section_ref": "8.6",
+        "section_title": "Geometric Progressions",
+        "total_sections": 9,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can identify whether a sequence is a geometric progression by verifying a constant common ratio and apply the formula tn = ar^(n-1) to find specified terms, determine term positions, or write nth-term expressions."
+        ],
+        "section_context": "GP definition, common ratio, nth-term formula tn = ar^(n-1), positive/negative/fractional r",
+        "c_code": "C-9.4",
+        "co_central": true
+      },
+      {
+        "section_number": 8,
+        "section_ref": "8.6.1",
+        "section_title": "Fun with Fractals",
+        "total_sections": 9,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can find the explicit and recursive GP formulas for both the black-triangle count and the shaded-area sequence of the Sierpinski triangle, and explain qualitatively how one sequence grows without bound while the other shrinks toward zero."
+        ],
+        "section_context": "Sierpinski triangle, black-triangle GP 3^n, shaded-area GP (3/4)^n, self-similar fractal",
+        "c_code": "C-9.4",
+        "co_central": true
+      },
+      {
+        "section_number": 9,
+        "section_ref": "8.6.2",
+        "section_title": "Visualising a GP",
+        "total_sections": 9,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can plot the terms of a GP as ordered pairs and describe the curved (non-linear) growth or decay it produces, and apply the GP formula to a real-world multiplicative-change scenario to compute successive values and locate a threshold term."
+        ],
+        "section_context": "GP plotted as curved non-linear sequence, bouncing-ball multiplicative model, threshold computation",
+        "c_code": "C-9.4",
+        "co_central": true
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 8,
+      "chapter_title": "Predicting What Comes Next: Exploring Sequences and Progressions",
+      "chapter_cg": "CG-9",
+      "reasoning_floor_lift_applied": true,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "8.1",
+          "section_title": "Introduction to Sequences",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can describe and extend sequences (natural, odd, triangular, square) using the subscript notation tn, distinguishing finite from infinite sequences.",
+          "section_context": "Subscript notation, finite vs. infinite sequences, triangular and square-number dot arrays",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-9.2",
+            "competency_text": "Reads and analyses a sequence as a rule that generates terms, using explicit and recursive representations."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The triangular-number sequence begins 1, 3, 6, 10, 15, .... The value of t6 in this sequence is:",
+          "options": [
+            {
+              "label": "A",
+              "text": "18",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "21",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "28",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "36",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "A": "Adds 3 instead of 6 to t5 = 15, confusing the next natural-number increment with the triangular-number increment.",
+                "C": "Computes t7 = 28 instead of t6, off by one in the position index — a typical subscript-notation slip.",
+                "D": "Uses t6 = 6^2 = 36, confusing triangular numbers with square numbers."
+              },
+              "inclusivity": "A student who finds the subscript notation confusing may first list the sequence term by term and count to the sixth position. A student ready for a challenge can be asked to express t_n for the triangular-number sequence as a formula in n and verify it gives t6 = 21."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 1,
+          "section_ref": "8.1",
+          "section_title": "Introduction to Sequences",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can construct the running-sum sequence from a given sequence of natural numbers and identify the triangular and square-number sequences as running sums.",
+          "section_context": "Subscript notation, finite vs. infinite sequences, triangular and square-number dot arrays",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-9.2",
+            "competency_text": "Reads and analyses a sequence as a rule that generates terms, using explicit and recursive representations."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Consider the sequence 2, 5, 8, 11, 14, .... Form the running-sum sequence by adding all terms up to and including each position: S1, S2, S3, S4, S5. Write the five values.",
+          "options": [],
+          "expected_answer": "S1 = 2, S2 = 7, S3 = 15, S4 = 26, S5 = 40",
+          "method_one_line": "Accumulate: S1 = 2; S2 = 2+5 = 7; S3 = 7+8 = 15; S4 = 15+11 = 26; S5 = 26+14 = 40.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": "A student who struggles can first list the five terms of the sequence, then add one term at a time in a column. A student ready for extension can be asked whether the running-sum sequence here is itself an AP or a triangular-type sequence, and justify the answer."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "8.2",
+          "section_title": "Explicit Rule for a Sequence",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can use an explicit formula tn = f(n) to compute specified terms of a sequence and determine whether a given number is a term by solving for n and checking that the result is a natural number.",
+          "section_context": "Explicit nth-term formula, forward evaluation and reverse-solving for term position",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-9.2",
+            "competency_text": "Reads and analyses a sequence as a rule that generates terms, using explicit and recursive representations."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A sequence is defined by the explicit rule tn = 4n + 3. (i) Find t15. (ii) Determine whether 199 is a term of this sequence. If it is, state which term; if it is not, explain why.",
+          "options": [],
+          "expected_answer": "(i) t15 = 63. (ii) 199 is a term: solving 4n + 3 = 199 gives n = 49, a natural number, so 199 = t49.",
+          "method_one_line": "Substitute n = 15 for part (i); solve 4n + 3 = 199 for n and verify n is a positive integer for part (ii).",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": "A student who is unsure of the reverse-solving step can first substitute a few values of n near the expected answer to check; this builds confidence before writing the algebraic solution. A student ready for extension can be asked to find the smallest term of the sequence that exceeds 500."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "8.3",
+          "section_title": "Recursive Rule for a Sequence",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can generate the terms of a recursively defined sequence by successive substitution and distinguish the recursive rule from the explicit rule, including rules that depend on two or more prior terms.",
+          "section_context": "Recursive rule, successive substitution, Virahanka-Fibonacci two-term dependence",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-9.2",
+            "competency_text": "Reads and analyses a sequence as a rule that generates terms, using explicit and recursive representations."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A sequence is defined by the recursive rule: p1 = 2, pn = 3pn-1 - 1 for n ≥ 2. (a) Use successive substitution to find p2, p3, p4, and p5. (b) A student claims: 'To find p10 quickly, I can just substitute n = 10 into the rule.' Explain why this claim is incorrect and describe what a student would actually need to do.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correct computation: p2 = 3(2) - 1 = 5; p3 = 3(5) - 1 = 14; p4 = 3(14) - 1 = 41; p5 = 3(41) - 1 = 122.",
+            "Clear identification of the error: a recursive rule defines pn in terms of the PREVIOUS term pn-1, not in terms of the position n alone — substituting n = 10 directly into the rule gives 3p9 - 1, which is undefined without first knowing p9.",
+            "Correct description of the necessary process: to find p10, one must compute p2, p3, ..., p9 in sequence, each from the one before it.",
+            "Contrast with an explicit rule: a student who notes that an explicit formula like tn = f(n) would allow direct computation earns further credit."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "A student who is uncertain about the written explanation can first write out all five terms carefully, then attempt a verbal description of what they actually did. A student ready for further challenge can be asked: if you wanted to find a large-numbered term efficiently, what additional piece of information about this sequence would make that possible — and can you find such a rule for this particular sequence?"
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "8.4",
+          "section_title": "Arithmetic Progressions",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can identify whether a sequence is an arithmetic progression by verifying a constant common difference and apply the formula tn = a + (n-1)d to find specified terms or determine term positions.",
+          "section_context": "AP definition, common difference, nth-term formula tn = a + (n-1)d, positive and negative d",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-9.4",
+            "competency_text": "Turns a description of how a quantity grows into an explicit or recursive formula for any term of the resulting progression."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The 11th term of an AP is 38 and its 16th term is 73. (i) Find the first term a and the common difference d. (ii) Find the 31st term.",
+          "options": [],
+          "expected_answer": "(i) a = -32, d = 7. (ii) t31 = -32 + 30 × 7 = 178.",
+          "method_one_line": "Set up a + 10d = 38 and a + 15d = 73; subtract to find d = 7, then a = -32, and substitute into tn = a + (n-1)d at n = 31.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "A student who is unsure how to set up the two equations can write out tn = a + (n-1)d for n = 11 and n = 16 explicitly before forming the pair. A student ready for extension can verify the answer by checking that t16 - t11 = 5d = 35 and that t31 - t11 = 20d = 140, both consistent with their values."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "8.4.1",
+          "section_title": "Visualising an AP",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can tabulate and plot an AP as ordered pairs, observe that the points are collinear, and write the recursive rule for an AP and apply the explicit rule to model a real-world linear-growth situation.",
+          "section_context": "AP as collinear points, recursive AP rule, taxi-fare linear model",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-9.4",
+            "competency_text": "Turns a description of how a quantity grows into an explicit or recursive formula for any term of the resulting progression."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A mobile data plan charges a fixed monthly fee of Rs.150 plus Rs.30 for each GB of data used. (i) Write the sequence of total monthly charges for 1 GB, 2 GB, 3 GB, 4 GB, and 5 GB. (ii) Show that this sequence is an AP and state its first term and common difference. (iii) Write both the explicit nth-term formula and the recursive rule for the sequence, where n is the number of GB used.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "Sequence: 180, 210, 240, 270, 300 (Rs.) for n = 1 to 5.",
+            "Consecutive differences are all 30, confirming a constant common difference d = 30 and first term a = 180.",
+            "Explicit formula: tn = 180 + (n-1) × 30 = 150 + 30n.",
+            "Recursive rule: t1 = 180, tn = tn-1 + 30 for n ≥ 2."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "A student who struggles with the formula can first complete the table of charges numerically and verify the constant difference before attempting to write either rule. A student ready for extension can be asked: for what value of n does the monthly charge first exceed Rs.500, and verify the answer using both the explicit and recursive rules."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "8.5",
+          "section_title": "Sum of the First n Natural Numbers",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can derive and apply the formula Sn = n(n+1)/2 using the reverse-and-add argument to find the sum of a consecutive-integer series or the nth triangular number.",
+          "section_context": "Reverse-and-add derivation, Sn = n(n+1)/2, triangular-number connection, differencing partial sums",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-1.1",
+            "competency_text": "Extends facility with the structure and properties of natural and real numbers through derivation of sum formulas and their application."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Use the formula Sn = n(n+1)/2 to find the sum of all integers from 31 to 70 inclusive. Show your working clearly.",
+          "options": [],
+          "expected_answer": "S70 - S30 = 70 × 71/2 - 30 × 31/2 = 2485 - 465 = 2020.",
+          "method_one_line": "Compute S70 = 70 × 71/2 and S30 = 30 × 31/2, then subtract to obtain the sum from 31 to 70.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "A student unsure about differencing partial sums can verify by counting the number of terms (70 - 31 + 1 = 40) and using the AP-sum idea: average of 31 and 70 multiplied by 40 = 50.5 × 40 = 2020, confirming the answer by an independent route. A student ready for a challenge can be asked to find the 25th triangular number and verify it equals S25."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "8.6",
+          "section_title": "Geometric Progressions",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can identify whether a sequence is a geometric progression by verifying a constant common ratio and apply the formula tn = ar^(n-1) to find specified terms, determine term positions, or write nth-term expressions.",
+          "section_context": "GP definition, common ratio, nth-term formula tn = ar^(n-1), positive/negative/fractional r",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-9.4",
+            "competency_text": "Turns a description of how a quantity grows into an explicit or recursive formula for any term of the resulting progression."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A geometric progression has its 4th term equal to 54 and its 7th term equal to 1458. (i) Find the common ratio r and the first term a. (ii) Write the explicit formula for the nth term. (iii) Find which term of the progression equals 118098.",
+          "options": [],
+          "expected_answer": "(i) t7/t4 = r^3 = 1458/54 = 27, so r = 3; a = t4/r^3 = 54/27 = 2. (ii) tn = 2 × 3^(n-1). (iii) 2 × 3^(n-1) = 118098 → 3^(n-1) = 59049 = 3^10, so n = 11.",
+          "method_one_line": "Use t7/t4 = r^3 to find r, back-calculate a, write tn = ar^(n-1), and solve ar^(n-1) = 118098 for n by expressing as a power of 3.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "A student who is uncertain about finding r from two non-consecutive terms can write out t4 = ar^3 and t7 = ar^6 explicitly and then divide one equation by the other. A student ready for extension can be asked: if r were negative, would it still be possible to have t4 = 54 and t7 = 1458, and why or why not?"
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "8.6.1",
+          "section_title": "Fun with Fractals",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can find the explicit and recursive GP formulas for both the black-triangle count and the shaded-area sequence of the Sierpinski triangle, and explain qualitatively how one sequence grows without bound while the other shrinks toward zero.",
+          "section_context": "Sierpinski triangle, black-triangle GP 3^n, shaded-area GP (3/4)^n, self-similar fractal",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-9.4",
+            "competency_text": "Turns a description of how a quantity grows into an explicit or recursive formula for any term of the resulting progression."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The Sierpinski triangle begins at Stage 0 with a single black equilateral triangle of area 1 square unit. At each subsequent stage, the central triangle of each black triangle is removed, leaving three smaller black triangles in its place. (a) Write the number of black triangles at Stages 0, 1, 2, and 3. Show that these form a GP and state its explicit formula Bn for Stage n. (b) Each black triangle at Stage n has area (1/4)^n square units. Show that the total shaded area An also forms a GP and state its explicit formula. (c) Describe in words what happens to Bn and An as n becomes very large, and explain why the two sequences behave differently despite both being GPs.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Correct GP identification for black triangles: B0 = 1, B1 = 3, B2 = 9, B3 = 27; consecutive ratios are all 3; Bn = 3^n.",
+            "Correct derivation of total shaded area: An = (number of triangles) × (area of each) = 3^n × (1/4)^n = (3/4)^n; consecutive ratios are all 3/4; explicit formula An = (3/4)^n.",
+            "Qualitative explanation: Bn grows without bound because r = 3 > 1 (each stage triples the count); An shrinks toward zero because r = 3/4 < 1 (each stage retains only three-quarters of the area).",
+            "Explanation of why both are GPs: a GP is defined by a constant ratio between consecutive terms; Bn has constant ratio 3 and An has constant ratio 3/4 — the geometric type is the same, but the ratio's size relative to 1 determines growth vs. decay."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "A student who struggles with the area derivation can first compute the area of a single black triangle at each stage (1, 1/4, 1/16, 1/64) and the count (1, 3, 9, 27), then multiply corresponding values before looking for a pattern. A student ready for deeper work can be asked to construct an analogous pair of formulas for the Sierpinski square carpet and compare the ratio of area retention with the triangular version."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "8.6.2",
+          "section_title": "Visualising a GP",
+          "total_sections": 9,
+          "implied_lo_assessed": "Students can plot the terms of a GP as ordered pairs and describe the curved (non-linear) growth or decay it produces, and apply the GP formula to a real-world multiplicative-change scenario to compute successive values and locate a threshold term.",
+          "section_context": "GP plotted as curved non-linear sequence, bouncing-ball multiplicative model, threshold computation",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-9.4",
+            "competency_text": "Turns a description of how a quantity grows into an explicit or recursive formula for any term of the resulting progression."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": true,
+          "task": "A rubber ball is dropped from a height of 100 metres. On each bounce it rises to 80% of the height from which it fell.\n\n(A) Write the heights reached after the 1st, 2nd, 3rd, 4th, and 5th bounces. Show that these form a GP and state the values of a and r.\n\n(B) Write the explicit formula hn for the height after the nth bounce. Use it to find the height after the 8th bounce (give your answer correct to two decimal places).\n\n(C) On the graph paper provided, plot the ordered pairs (n, hn) for n = 1 to 5. Connect the points with a smooth curve. Describe in one or two sentences how this graph differs from what you would expect if the sequence were an AP instead.\n\n(D) After which bounce does the ball first reach a height less than 10 metres? Show your reasoning using the explicit formula.",
+          "scaffold": "For part (B): substitute n = 8 into hn = a × r^(n-1). For part (D): set hn < 10 and test successive values of n, or reason from the formula directly.",
+          "format_of_output": [
+            "A table of bounce heights for n = 1 to 5 (and n = 8).",
+            "The explicit formula hn written clearly.",
+            "A labelled graph (n on horizontal axis, hn on vertical axis) with a smooth curve through the five plotted points.",
+            "A written comparison of the GP curve with an AP line.",
+            "A clear calculation showing which bounce first gives hn < 10 metres."
+          ],
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "Model-and-solve",
+              "format_rationale": "The implied_lo requires students to apply the GP formula to a real multiplicative-change scenario, compute successive values, and locate a threshold term — all operations that are naturally unified in a model-and-solve vehicle.",
+              "what_this_demonstrates": "Whether students can translate a multiplicative real-world situation into a GP, operate fluently with hn = ar^(n-1), represent the sequence graphically as a curve, articulate the visual contrast with an AP, and locate a threshold by applying the formula systematically.",
+              "reading_the_scaffold": "Part (A) anchors the GP identification; part (B) demands formula use and a multi-step decimal computation; part (C) requires graphical work and written comparison; part (D) requires threshold reasoning. The scaffold for (B) and (D) names the method without supplying the answer, leaving the mathematical work entirely to the student.",
+              "strong_vs_weak_markers": "Strong: a = 80, r = 0.8 correctly identified; hn = 80 × 0.8^(n-1) stated clearly; h8 ≈ 20.97 m computed correctly; graph shows a downward-curving trend distinct from a straight line; comparison notes that a GP curve bends while an AP would be straight; threshold identified at n = 11 (h11 = 80 × 0.8^10 ≈ 8.59 m < 10 m) with clear working. Weak: confuses a with the drop height (100 m) instead of the first bounce height (80 m); uses n instead of n-1 in the exponent; plots points in a straight line or omits the curve; cannot articulate the visual difference; uses trial-and-error alone for the threshold without connecting to the formula.",
+              "inclusivity": "A student who finds the graph challenging can first complete and check the table for all five values, then plot one point at a time with teacher guidance on choosing an appropriate scale. A student ready for extension can be asked: write the recursive rule for hn, use it to verify h5, and explain why the recursive rule alone makes the threshold question harder to answer than the explicit rule."
+            }
+          },
+          "question_text": ""
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
