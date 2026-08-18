@@ -381,6 +381,15 @@ def select_whole_plan(streams, requested):
     exactly 2 apart (genon/master_plan.py) — never surrenders inside the band. Below the
     lowest canonical there is no such number, and only there do we truncate.
 
+    WHAT THE BORROWED SYNTHESIS IS AUTHORED AGAINST changed on 2026-08-17 (spec §6): the
+    F1 full-enumeration found 101 of this stage's 114 K+1 serves carrying a double
+    capstone and 3 demanding skills the served compact never taught, because the top's
+    synthesis was written against the top's own arc alone. The fix is UPSTREAM of this
+    function and leaves the serve law byte-identical: the top's synthesis unit is
+    RE-AUTHORED after wave 2, reading across the chapter's compacts (intersection-bounded
+    demands, vehicle distinct from every compact ending — genon/resynth.py). One unit,
+    one serve law, nothing new to maintain.
+
     The +1 extension is not offered on the canonical that OWNS the synthesis: it already
     ends with that unit, and lending a plan its own closer would serve it twice."""
     ranked = sorted(streams, key=lambda s: -len(s["units"]))

@@ -83,10 +83,11 @@ def make_cid(subject: str, grade: str, ch: int, variant: int | None) -> str:
            (f"p{variant:02d}" if variant else "top")
 
 
-def read_cid(cid: str) -> tuple[str, str, int, int | None]:
+def read_cid(cid: str) -> tuple[str, str, int, int | str | None]:
     abbr, grade, ch, kind = cid.split("-")
     return (ABBR_SUBJ.get(abbr, abbr), grade, int(ch),
-            None if kind == "top" else int(kind[1:]))
+            None if kind == "top" else kind if kind in ("resynth", "polish")
+            else int(kind[1:]))
 
 
 def rel(p: Path) -> str:
@@ -125,7 +126,49 @@ def build_requests(subject: str, grades: list[str], only, wave: str, redo: bool)
     for w in work:
         grade, ch, counts = w["grade"], w["ch"], w["counts"]
         klass = bb.bl.KLASS[grade]
-        if wave == "top":
+        if wave == "polish":
+            # ── the density/visual-aids polish over re-authored synthesis units
+            # (resynth.py POLISH PASS). Requires the resynth to have landed first.
+            import resynth as rs
+            if not rs.is_reauthored(subject, grade, ch):
+                notes.append((grade, ch, "synthesis not re-authored — wave resynth first"))
+                continue
+            if not redo and rs.polish_ts(subject, grade, ch):
+                notes.append((grade, ch, "already polished"))
+                continue
+            job = rs.prepare_polish_job(subject, grade, ch)
+            if job is None:
+                notes.append((grade, ch, "prepare_polish_job refused"))
+                continue
+            bf = BRIEFS / f"ch_{ch:02d}_polish.txt"
+            bf.write_text(job["system_blocks"][0]["text"] + "\n\n" +
+                          job["user_blocks"][0]["text"], encoding="utf-8")
+            out.append((f"{SUBJ_ABBR.get(subject, subject)}-{grade}-{ch:02d}-polish",
+                        job, bf))
+        elif wave == "resynth":
+            # ── wave 3 (stage-serve spec §6 v1.3): re-author the TOP's synthesis unit
+            # against the whole library — so the whole library must be on disk first.
+            # One request per chapter; collect REPLACES the unit in place (resynth.py).
+            import resynth as rs
+            lib = bb.bl.lib_dir_of(subject, grade)
+            missing = [k for k in counts[1:]
+                       if not (lib / f"ch_{ch:02d}_canonical_p{k:02d}.json").is_file()]
+            if not installed_path(subject, grade, ch, None).is_file() or missing:
+                notes.append((grade, ch, "library incomplete — waves 1+2 first"))
+                continue
+            if not redo and rs.is_reauthored(subject, grade, ch):
+                notes.append((grade, ch, "synthesis already re-authored"))
+                continue
+            job = rs.prepare_resynth_job(subject, grade, ch)
+            if job is None:
+                notes.append((grade, ch, "prepare_resynth_job refused"))
+                continue
+            bf = BRIEFS / f"ch_{ch:02d}_resynth.txt"
+            bf.write_text(job["system_blocks"][0]["text"] + "\n\n" +
+                          job["user_blocks"][0]["text"], encoding="utf-8")
+            out.append((f"{SUBJ_ABBR.get(subject, subject)}-{grade}-{ch:02d}-resynth",
+                        job, bf))
+        elif wave == "top":
             if not redo and installed_path(subject, grade, ch, None).is_file():
                 notes.append((grade, ch, "standard already installed"))
                 continue
@@ -169,8 +212,8 @@ def cmd_submit(argv) -> int:
         raise SystemExit(__doc__)
     subject, grades = args[0], [g.lower() for g in args[1:]]
     wave = vals.get("--wave", "top")
-    if wave not in ("top", "compact"):
-        raise SystemExit("--wave must be 'top' or 'compact'")
+    if wave not in ("top", "compact", "resynth", "polish"):
+        raise SystemExit("--wave must be 'top', 'compact', 'resynth' or 'polish'")
     only = bb.parse_chapter_filter(vals["--chapters"]) if "--chapters" in vals else None
     dry = "--dry" in flags
     redo = "--redo" in flags
@@ -188,7 +231,10 @@ def cmd_submit(argv) -> int:
     reqs, notes = build_requests(subject, grades, only, wave, redo)
     print(f"\n=== BATCH SUBMIT · {subject} · {', '.join(grades)} · wave {wave} ===")
     for cid, job, _bf in reqs:
-        print(f"  {cid}  {job['count']:>2} × {job['duration']} min  {job['title'][:36]}")
+        if job.get("resynth") or job.get("polish"):
+            print(f"  {cid}   1 × {job['duration']} min  {job['title'][:36]}")
+        else:
+            print(f"  {cid}  {job['count']:>2} × {job['duration']} min  {job['title'][:36]}")
     for g, c, why in notes:
         print(f"  skip {g} ch {c} — {why}")
     est_in = sum(j["sys_chars"] + j["usr_chars"] for _c, j, _b in reqs) / 4
@@ -222,7 +268,10 @@ def cmd_submit(argv) -> int:
         "batch_id": batch.id, "created_at": stamp, "subject": subject, "grades": grades,
         "wave": wave, "model": MODEL, "cache": bool(pa.USE_PROMPT_CACHE),
         "jobs": {cid: {"grade": j["grade_folder"], "chapter": j["ch"],
-                       "variant": j["variant"], "count": j["count"],
+                       "variant": ("resynth" if j.get("resynth")
+                                   else "polish" if j.get("polish")
+                                   else j.get("variant")),
+                       "count": j.get("count", 1),
                        "duration": j["duration"], "title": j["title"],
                        "brief": str(bf.relative_to(REPO))}
                  for cid, j, bf in reqs},
@@ -277,6 +326,7 @@ def cmd_collect(argv) -> int:
     m = json.loads(man.read_text())
     redo = "--redo" in flags
     subject, jobs = m["subject"], m["jobs"]
+    import resynth as rs                       # wave-3 collect path (spec §6 v1.3)
     cl = client()
     b = cl.messages.batches.retrieve(m["batch_id"])
     if b.processing_status != "ended":
@@ -297,7 +347,22 @@ def cmd_collect(argv) -> int:
             print(f"  {cid}: {kind.upper()} ({err}) — not billed; resubmit this one")
             rows.append((cid, kind, 0.0, str(err)))
             continue
-        if not redo and installed_path(subject, grade, ch, variant).is_file():
+        if variant == "resynth":
+            # Batch-aware skip (2026-08-18): compare the installed re-author's ledger_ts
+            # to THIS manifest's — `is_reauthored` alone skipped every --redo re-run at
+            # collect, because after wave 3 the answer is always yes.
+            _ts = f"{m['created_at']}_{cid.replace('-', '_')}"
+            if not redo and rs.reauthor_ts(subject, grade, ch) == _ts:
+                print(f"  {cid}: this batch's re-author already installed — skipped")
+                rows.append((cid, "skipped", 0.0, "already installed from this batch"))
+                continue
+        elif variant == "polish":
+            _ts = f"{m['created_at']}_{cid.replace('-', '_')}"
+            if not redo and rs.polish_ts(subject, grade, ch) == _ts:
+                print(f"  {cid}: this batch's polish already installed — skipped")
+                rows.append((cid, "skipped", 0.0, "already installed from this batch"))
+                continue
+        elif not redo and installed_path(subject, grade, ch, variant).is_file():
             print(f"  {cid}: already installed — skipped (--redo to overwrite)")
             rows.append((cid, "skipped", 0.0, "already installed"))
             continue
@@ -318,6 +383,26 @@ def cmd_collect(argv) -> int:
         it_billed = fresh + 1.25 * c_write + 0.1 * c_read
         cost = (it_billed * gc.USD_PER_M_INPUT + ot * gc.USD_PER_M_OUTPUT) / 1e6 * \
             gc.INR_PER_USD * PRICE_MULT
+        ts = f"{m['created_at']}_{cid.replace('-', '_')}"
+        if variant in ("resynth", "polish"):
+            # ── waves 3/3.5: the job is rebuilt from the LIVE library and the collect
+            # REPLACES fields on the top's synthesis unit in place.
+            prep = rs.prepare_resynth_job if variant == "resynth" else rs.prepare_polish_job
+            fin = rs.finish_resynth if variant == "resynth" else rs.finish_polish
+            job = prep(subject, grade, ch)
+            if job is None:
+                print(f"  {cid}: prepare refused at collect")
+                rows.append((cid, "refused", 0.0, f"prepare_{variant}_job"))
+                continue
+            print(f"\n  == {cid} · {job['title'][:40]} ==")
+            if c_read or c_write:
+                print(f"  cache    : {c_read:,} read (0.1x) · {c_write:,} written (1.25x) · "
+                      f"{fresh:,} fresh")
+            status, problems = fin(
+                job, full, it, ot, model=m["model"], ts=ts, cost_inr=cost)
+            spend += cost
+            rows.append((cid, status, round(cost, 2), "; ".join(problems)[:120]))
+            continue
         # Rebuild the job exactly as it was submitted, so validation knows the period
         # count and the install knows the variant. The brief is on disk from submit.
         job = gc.prepare_job(subject, grade, ch, variant=variant,
@@ -327,7 +412,6 @@ def cmd_collect(argv) -> int:
             rows.append((cid, "refused", 0.0, "prepare_job"))
             continue
         print(f"\n  == {cid} · {job['title'][:40]} ==")
-        ts = f"{m['created_at']}_{cid.replace('-', '_')}"
         if c_read or c_write:
             print(f"  cache    : {c_read:,} read (0.1x) · {c_write:,} written (1.25x) · "
                   f"{fresh:,} fresh")

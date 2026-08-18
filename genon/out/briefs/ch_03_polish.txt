@@ -1,0 +1,87 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 9,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Analyse assigned scenarios, construct written recommendations that draw on the full conceptual arc of the chapter — health dimensions, disease type, transmission or cause, immunity or treatment mechanism, and prevention strategy — and present their reasoning to the class."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Frames the synthesis task, circulates to probe reasoning at each conceptual layer, and leads a closing discussion that draws the full chapter together under the dissolution test's central claim."
+  }
+ ],
+ "activity_title": "The Coastal Village Health File: Reading a Place Through the Whole Chapter",
+ "activity_description": "Students receive a one-page dossier about a fictional coastal fishing village — Neelavur — that contains a hand-drawn map, an AQI reading strip, a short list of reported illnesses from the village health worker's register, a food-habit summary, and three villager quotes describing how they feel day-to-day. Working in groups, students build a 'health file' for Neelavur by annotating the dossier: classifying each illness, tracing each causal pathway, identifying which health dimensions are under threat and why, and recommending targeted actions that distinguish communicable from non-communicable responses. Groups then rotate to critique one another's files before a whole-class convergence that names — through the work itself — the chapter's central ideas.",
+ "teacher_notes": "Prepare the Neelavur dossier before the class using the template description in the materials list — it should take about fifteen minutes to draft by hand or type and photocopy. The dossier is designed so that every concept shared across all unit plans appears naturally: the three-dimensional definition of health (the villager quotes surface the mental and social dimensions); lifestyle and environment (the food-habit summary and the AQI strip); the communicable/NCD classification (the illness register lists both cholera and diabetes); transmission routes (the map shows a river used for drinking and an open fish-drying area near houses); immunity and vaccines (one quote mentions a child who 'never got vaccinated'); and the limits of treatment versus prevention. Do not pre-explain the dossier — let groups read and annotate without a tour. The annotation framework card tells them exactly what to look for. During peer critique, prompt groups to check whether the health file they are reading distinguishes vector or waterborne transmission from lifestyle-driven NCD causation, not just lists problems. In the closing band, resist summarising the chapter yourself: ask the class, 'What did you need to know to do this task?' and build the list from their answers — that list IS the synthesis. The village setting (coastal, fishing economy, river water use, fish diet, outdoor occupation) is chosen to be concretely different from the chapter's own examples, the Bhadrak sanitation case, and the urban diabetes-and-dengue and NCD neighbourhood scenarios used in the shorter plans, so students meet genuinely new terrain.",
+ "materials": [
+  "One printed Neelavur dossier per group of four, containing: (a) a simple hand-drawn or printed village map showing a river, fishing docks, houses, a fish-drying ground, one health sub-centre, and a notation 'AQI: 148 — Unhealthy for sensitive groups'; (b) a village health worker's illness register excerpt listing six conditions: cholera, dengue, Type 2 diabetes, tuberculosis, anaemia, and skin infections; (c) a food-habit summary stating: 'Most families eat fish daily; rice and vegetables twice a day; packaged snack consumption has risen in the past two years; drinking water drawn from river'; (d) three short villager quotes — Quote 1 (fisherman, adult): 'I feel tired all the time even when I am not sick'; Quote 2 (mother): 'My child was never vaccinated — the health worker came but we were at sea'; Quote 3 (teenager): 'I have no friends here; I stay inside and eat chips most of the day'",
+  "One annotation framework card per group listing four tasks: Task A — For each illness in the register, write whether it is communicable or non-communicable and name its causal agent or factor. Task B — For communicable illnesses, trace the transmission route using evidence from the map and food-habit summary. Task C — For each villager quote, identify which health dimension(s) — physical, mental, social — is affected and why. Task D — Write two targeted actions for Neelavur that distinguish what you would do differently for communicable diseases versus NCDs, and state which prevention tool (hygiene, vaccine, lifestyle change, environmental improvement) each action uses.",
+  "Blank A4 sheets (two per group) for the health file write-up",
+  "Coloured pens or pencils for annotation (at least two colours per group — one for communicable, one for non-communicable)",
+  "Blackboard or whiteboard and chalk or markers for the closing convergence list"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher distributes the Neelavur dossier face-down and the annotation framework card face-up. Without explaining the dossier, teacher says: 'Neelavur is a coastal fishing village. A health worker has handed you everything she knows about it — a map, an illness register, a food summary, and three things villagers told her. Your job is to build a health file for this village using everything you have studied.' Students turn the dossier over and read it in their groups without writing. Teacher then fields only factual clarifications about the dossier's content — no conceptual hints."
+  },
+  {
+   "minutes": "7-22",
+   "activity": "Groups work through Tasks A and B on the annotation framework card. They mark each illness in the register as communicable or non-communicable in one colour and write the causal agent or factor beside it. For communicable diseases they draw an arrow on the map or write a sentence tracing the transmission route — for example, connecting 'river water for drinking' to cholera, or 'fish-drying ground near houses' and 'standing water' to dengue. Teacher circulates, asking groups who finish Task A quickly: 'How do you know tuberculosis spreads differently from cholera — what does the map tell you?' and prompting groups who are uncertain about anaemia: 'Is there a pathogen involved, or is something missing from the diet?'"
+  },
+  {
+   "minutes": "22-32",
+   "activity": "Groups move to Tasks C and D. For Task C they annotate each villager quote — the tired fisherman triggers discussion of whether tiredness alone makes someone unwell and which dimension of health is affected; the unvaccinated child connects to acquired immunity; the isolated teenager surfaces the social and mental dimensions and the link between lifestyle and NCD risk. For Task D groups write their two targeted actions, explicitly labelling each with its prevention tool. Teacher listens for groups that write the same action for cholera and diabetes ('eat healthy food') and prompts: 'Would eating healthy food stop cholera spreading through the river water? What would — and which chapter concept is that?'"
+  },
+  {
+   "minutes": "32-40",
+   "activity": "Groups swap health files with one adjacent group. Each group reads the file they have received and writes two critique comments on a blank sheet: one thing the file got right with a reason, and one gap or error — for example, a file that traces dengue transmission correctly but recommends only antibiotics for it, or one that addresses physical health in all three quotes but misses the social dimension in the teenager's quote. Teacher gives groups two minutes to read and two minutes to write their critique, then each group returns the file and verbally delivers its critique to the authoring group in one minute."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher draws a vertical line on the board creating two columns — left blank, right headed 'What the task needed'. Addressing the whole class: 'Tell me one thing you had to know to complete any part of this task.' As students name concepts — the three dimensions of health, communicable versus non-communicable, transmission routes, what a vaccine does, what a symptom versus a sign is, what a pathogen is, why lifestyle matters, what the AQI means — teacher writes each on the right side. When the list is complete, teacher draws a bracket around it and says: 'This list is the chapter. You just used it all at once on a village none of us had seen before — that is what the chapter is for.' No further summary is given."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Collaborative annotation and peer-critique approach: students work as co-analysts of a realistic but unfamiliar document set, constructing understanding by applying concepts to evidence they have not seen before, then sharpening that understanding by interrogating a peer group's reasoning."
+}
+
+Reorganise it now, as the single JSON object specified.

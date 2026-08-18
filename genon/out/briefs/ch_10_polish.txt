@@ -1,0 +1,83 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 15,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Predict and explain image formation using converging/diverging behaviour and reflection laws",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student independently constructs the master synthesis table from memory and notes, then uses it to answer the two novel-scenario prediction questions in writing."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Introduces the synthesis table structure, confirms the column headings without pre-filling any cells, and poses the two novel-scenario questions after table completion."
+  }
+ ],
+ "activity_title": "Designing the Optical Station: A Street-Safety Installation",
+ "activity_description": "Groups receive a site brief describing a busy urban intersection with four specific optical problems — a blind corner, a poorly lit pedestrian crossing, a shopfront display window that must show passers-by an enlarged view of small items, and a security post that must monitor the widest possible arc of the street without moving. For each problem, the group traces the path of light through their chosen optical surface on a diagram, labels every relevant image property and beam behaviour, and writes a two-sentence engineering justification connecting the optical principle to the practical need. The four-problem diagram-and-justification sheet is the sole artefact; completing it forces every concept from the chapter to be deployed together.",
+ "teacher_notes": "This unit works as a chapter close in either of its two contexts. When it follows the sequence of fourteen units, students arrive with dense procedural experience and the task asks them to synthesise across all four conceptual layers simultaneously — mirror and lens types, image properties at varying distances, laws of reflection, and convergence/divergence of beams. When it is added to a shorter complete plan, it asks students who have already consolidated the chapter to carry their consolidated knowledge into a setting that is genuinely new: the street-safety frame is not an analogy for any earlier activity, so there is no shortcut through memory.\n\nFour problems are provided because the chapter has four conceptual pillars that must each be exercised: (1) the blind-corner problem requires a convex mirror — erect, diminished, wide field; (2) the pedestrian-crossing lighting problem requires a concave mirror used as a reflector — converging beam, directing light outward; (3) the shopfront display problem requires a convex lens or concave mirror used close to the object — erect, enlarged image; (4) the security-arc problem reinforces the convex mirror for field of view. Problems 1 and 4 both call for a convex mirror but for slightly different stated reasons (driver safety vs. security monitoring), which rewards students who can articulate field-of-view as the shared mechanism rather than just naming the device.\n\nThe beam-trace diagram is the critical element: it forces students to draw the incident and reflected or refracted rays, mark the normal, confirm the angle relationships, and show whether the emergent beam converges or diverges. A student who writes a correct device name but draws diverging rays for a concave mirror has revealed a conceptual gap. Circulate during group work and ask groups to defend their diagrams before they write their justifications.\n\nFor the second law of reflection, ask groups working on the lighting problem to state explicitly that the incident ray, normal, and reflected ray all lie in the same plane — this is the element most likely to be omitted without prompting.\n\nIf any group finishes early, pose an extension: a fifth problem in which the site engineer has only a concave lens available and must explain which of the four problems it is least unsuited to solve, and why. This drives home the diverging, always-erect, always-diminished character of the concave lens by contrast.\n\nThe closing debrief should not summarise the chapter as a list — instead, ask one representative to trace the light path for one problem aloud while pointing at their diagram, and ask the class to name which chapter principle each segment of the trace invokes. The closure is in seeing the trace as a whole, unified by the chapter's ideas.",
+ "materials": [
+  "One printed site-brief card per group (describing the intersection and its four optical problems in plain language — no optical vocabulary used in the brief itself)",
+  "One blank A3 diagram sheet per group showing the intersection as a simple overhead-view sketch with the four problem locations marked",
+  "Rulers",
+  "Pencils and pens",
+  "A set of small mirror-and-lens reference cards (one card per device type, listing only: device name, shape description, beam behaviour, and image properties at close and far distances) — produced by the teacher before the lesson from chapter content"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher distributes the site-brief card and reads the scenario aloud: a municipal engineer has been asked to install optical devices at four locations in a street intersection, each with a different safety or commercial function. The four problems are read one by one without naming any optical device. Teacher asks: 'Before you open any notes, what kinds of image properties would each location need?' — taking one or two quick oral responses per problem to surface initial thinking, then directing groups to begin the task."
+  },
+  {
+   "minutes": "7-28",
+   "activity": "Groups work on the diagram-and-justification sheet. For each of the four problems they: choose an optical device (concave mirror, convex mirror, convex lens, or concave lens); draw the relevant light path on the site diagram, including incident ray, normal, and reflected or refracted ray with arrows; label the image properties the device produces in this configuration; and write two sentences connecting the beam behaviour or image property to the specific requirement stated in the site brief. Reference cards are available but groups are encouraged to attempt each problem from memory first. Teacher circulates, asking groups to read their beam diagrams aloud and pressing for explicit mention of both laws of reflection wherever a mirror is chosen."
+  },
+  {
+   "minutes": "28-38",
+   "activity": "Whole-class share-out: one group presents their diagram for Problem 2 (the pedestrian-crossing lighting problem, which most directly tests convergence and the laws of reflection together) by holding up their A3 sheet and narrating the light path. A second group presents Problem 3 (the shopfront display, which requires image-distance reasoning for a convex lens or close-object concave mirror). After each presentation the class is asked: 'Does their diagram satisfy both laws of reflection — or, for the lens, does it correctly show convergence or divergence?' Disagreements between groups are aired and resolved by returning to the beam-behaviour principle, not by majority vote."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Teacher asks each group to complete one final sentence at the bottom of their sheet: 'All the converging devices in our design share one property, and all the diverging devices share one property — state both.' Groups write. Teacher takes two or three responses aloud. Closure: teacher names the central idea the task has demonstrated — that concave mirrors and convex lenses converge light and produce images that depend on object distance, while convex mirrors and concave lenses diverge light and always produce erect, diminished images — and notes that the entire street installation works because these principles are reliable laws, not device-specific tricks."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Design-brief inquiry: a realistic but unfamiliar site scenario places the chapter's optical principles under practical constraint, requiring groups to translate image characteristics and beam behaviour into engineering choices and to articulate the causal link between each principle and each design decision. The diagram-and-justification format keeps the task concrete while making reasoning visible."
+}
+
+Reorganise it now, as the single JSON object specified.

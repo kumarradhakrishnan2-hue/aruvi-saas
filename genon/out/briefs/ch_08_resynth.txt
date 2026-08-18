@@ -1,0 +1,287 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 8: Nature of Matter: Elements, Compounds, and Mixtures
+
+This chapter explores how all matter around us is composed of substances that can be classified as mixtures, pure substances (elements or compounds), and minerals. Beginning from familiar everyday objects, the chapter builds a hierarchical understanding of the classification of matter.
+
+8.1 What Are Mixtures?
+This section introduces the concept of a mixture using familiar examples such as poha, sprout salad, sugar dissolved in water, soups, and lemonade. A mixture is defined as a combination of two or more substances where each substance retains its own properties and the components do not react chemically with each other. The individual substances in a mixture are called its components. The section distinguishes between two types of mixtures: non-uniform mixtures, where different components are visible to the naked eye or with a magnifying device (e.g., sprout salad), and uniform mixtures, where components are evenly distributed and cannot be distinguished even under a microscope (e.g., sugar dissolved in water). A sidebar introduces alloys (stainless steel, brass, bronze) as examples of uniform solid-solid mixtures, and a cultural heritage note mentions the ancient Indian concept of Mishraloha, referring to alloys described in texts like the Charaka Samhita and used for medicinal purposes.
+
+8.1.1 Is air a mixture?
+This subsection revisits the composition of air, confirmed from earlier learning, as a uniform mixture of nitrogen, oxygen, argon, carbon dioxide, and water vapour. It contains a student activity (Activity 8.1) in which students prepare lime water from calcium oxide and water, then expose it to air in a petri dish to observe it turning milky — demonstrating the presence of carbon dioxide through the reaction of calcium hydroxide with carbon dioxide to form calcium carbonate. A second activity (Activity 8.2) involves placing a black sheet of paper near an open window to collect and examine airborne dust particles with a magnifying glass, showing that dust is suspended in air as a pollutant. A sidebar notes major air pollutants including particulate matter and gases like carbon monoxide, ozone, nitrogen dioxide, and sulfur dioxide, and introduces the Air Quality Index (AQI).
+
+8.1.2 Types of mixtures
+This subsection extends the classification of mixtures based on the physical states of their components. A table (Table 8.1) lists six mixture types — gas-gas (e.g., air), gas-liquid (e.g., aerated water, oxygen in water), solid-gas (e.g., carbon particles in air), liquid-liquid (e.g., vinegar, oil and water), solid-liquid (e.g., sand in water, seawater), and solid-solid (e.g., baking powder, alloys) — and asks students to classify each as uniform or non-uniform. The section also clarifies that in science, all components of a mixture must be pure substances, and that the purpose of separating a mixture in science is to obtain pure substances.
+
+8.2 What Are Pure Substances?
+This section distinguishes between the common usage of the word "pure" (meaning unadulterated) and its scientific meaning. In science, a pure substance is one that contains only one kind of particle and cannot be separated into other kinds of matter by any physical process. The section notes that everyday "pure" products like milk, ghee, or spices may still be scientifically impure if they contain more than one substance. A sidebar prompts students to classify milk, packed fruit juice, baking soda, sugar, and soil as mixtures or pure substances.
+
+8.3 What Are the Types of Pure Substances?
+This section introduces the two categories of pure substances — elements and compounds — through a demonstration activity (Activity 8.3) in which electricity is passed through water (with dilute sulfuric acid added) using a 9V battery and two inverted test tubes. Unequal volumes of gas collect in the two test tubes; testing with a burning candle confirms one is hydrogen (pop sound) and the other is oxygen (flame glows brighter). The activity shows that water decomposes into two distinct gases, establishing that water is composed of two different substances.
+
+8.3.1 Elements
+The two gases produced — hydrogen and oxygen — are identified as elements, defined as pure substances made of identical particles called atoms that cannot be broken down further into simpler substances. Elements are described as the building blocks of all matter, with examples including gold, silver, sulfur, and carbon. The section notes that atoms of most elements exist as molecules: two hydrogen atoms form a molecule of hydrogen; two oxygen atoms form a molecule of oxygen. A sidebar classifies elements as metals and non-metals, mentions metalloids (like silicon and boron), and provides facts about the 118 known elements — including that eleven are gaseous at room temperature, two are liquid (mercury and bromine), and most are solid.
+
+8.3.2 Compounds
+This section explains why water cannot be separated into hydrogen and oxygen by physical means: because the particles of hydrogen and oxygen are chemically bonded in a fixed 2:1 ratio, making water a compound. Compounds are defined as substances formed when different elements combine chemically in fixed ratios, having properties entirely different from the constituent elements. Activity 8.4 (student activity) involves heating sugar in a boiling tube, which turns brown and then chars to leave carbon behind, with water droplets forming at the open end — demonstrating that sugar is a compound of carbon, hydrogen, and oxygen. Activity 8.5 (demonstration activity) compares a mixture of iron filings and sulfur (Sample A) with iron sulfide produced by heating that mixture (Sample B). Students test both samples for colour, texture, magnetic attraction, and response to dilute hydrochloric acid: Sample A (mixture) retains the individual properties of iron and sulfur — iron is attracted to a magnet and reacts with HCl to produce hydrogen gas (colourless, no odour, burns with pop sound); Sample B (compound, iron sulfide) is uniformly black, not attracted to a magnet, and reacts with HCl to produce hydrogen sulfide gas (colourless, rotten egg odour). This contrast establishes the key distinction between mixtures and compounds.
+
+8.4 How Do We Use Elements, Compounds, and Mixtures?
+This section contextualises the practical importance of elements, compounds, and mixtures across everyday life and technology. Air is cited as a mixture of oxygen, nitrogen, and carbon dioxide; water as a compound of hydrogen and oxygen. Elements like iron and aluminium are used in construction and vehicles. Chemists combine elements into compounds to create medicines, vaccines, and fertilisers. Engineers and material scientists use knowledge of compounds and mixtures to develop advanced materials such as alloys (e.g., stainless steel stronger than pure iron) and building materials (wood, steel, concrete — all mixtures). A sidebar highlights graphene aerogel, a carbon-based material considered the lightest material on earth, with potential for oil-spill cleanup and energy-saving devices. A heritage note describes Dhokra art from Bihar and Odisha, where brass or bronze (alloys of elements) are cast using the lost-wax method to create traditional figures.
+
+8.5 What Are Minerals?
+This section introduces minerals as natural solid substances with a fixed chemical composition, found in rocks. Most rocks are mixtures of minerals. Some minerals called native minerals are pure elements (metals like gold, silver, copper, or non-metals like sulfur and carbon). Most minerals are compounds — examples include quartz, calcite, mica, pyroxene, and olivine. The section connects minerals to everyday materials: cement is made from calcite, quartz, alumina, and iron oxide; talcum powder comes from the mineral talc. The chapter closes by reinforcing that elements and compounds are the building blocks of matter, and that not everything (e.g., light, heat, electricity, thoughts) constitutes matter.
+
+
+======================================================================
+
+THE FULLEST PLAN (14 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Sorting the Everyday: Recognising Mixtures
+U2: Is Air a Mixture? Testing with Lime Water and Dust
+U3: Mapping All Mixture Types: A Classification Table
+U4: What Does 'Pure' Really Mean? Electrolysis of Water
+U5: Building Blocks: Identifying Elements Around Us
+U6: Sugar's Secret: Heating a Compound
+U7: Iron and Sulfur: Mixture vs. Compound Under Test
+U8: Why Do Properties Change? Reasoning from Fixed Ratios
+U9: From Lab to Life: How Composition Drives Use
+U10: Minerals as Natural Compounds and Elements: What Composition Reveals
+U11: Classifying the Unknown: Applying Tests to New Substances
+U12: Designing a Test Protocol: Which Substance Is It?
+U13: Beyond the Lab: Classifying Everyday Substances from Evidence
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 12 UNITS — unit-title map ---
+U1: Sorting the Familiar: What Makes a Mixture?
+U2: Is Air a Mixture? Evidence from Dust and Lime Water
+U3: Mapping Mixture Types: States, Examples, and the Alloy Exception
+U4: What Does 'Pure' Really Mean? Rethinking Everyday Language
+U5: Water Into Two Gases: Decomposing a Pure Substance
+U6: Sugar on Heat: Tracing the Elements Inside a Compound
+U7: Iron and Sulfur: A Mixture That Becomes a Compound
+U8: Building the Classification Key: From Test Results to Category
+U9: Elements Up Close: Atoms, Molecules, Metals, and Non-metals
+U10: Why Alloys Beat Pure Metals: Applying Classification to Materials Science
+U11: Minerals as Matter: Classifying Nature's Building Blocks
+U12: What Is and Is Not Matter: Evaluating the Boundary of Classification
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 12,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Evaluate how classification of matter as element, compound, or mixture determines its real-world use",
+ "pedagogical_approach": "Hands-on Science",
+ "activity_title": "What Is and Is Not Matter: Evaluating the Boundary of Classification",
+ "activity_description": "Students are given a list of entities — iron, water, light, heat, a thought, electricity, air, copper, soil — and challenged to classify each as matter (and its category) or non-matter, justifying each decision using physical and chemical criteria. Groups then construct a boundary-setting argument explaining what properties an entity must have to be classifiable under the element/compound/mixture framework.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the mixed entity list, pushes students to articulate the classification criteria rather than rely on intuition, and facilitates the class argument-building for the matter boundary."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Classify each entity with a written justification, then collaboratively construct and defend a boundary-setting argument for what counts as matter and what does not."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher presents the entity list and asks each group to make a first-pass classification of every item before any discussion — a predict-then-test structure that reveals where boundary thinking is secure."
+  },
+  {
+   "minutes": "8-25",
+   "activity": "Groups classify each entity using the physical and chemical criteria built across the chapter, writing justifications that cite specific criteria for matter entities (mass, physical state, composition) and for non-matter entities."
+  },
+  {
+   "minutes": "25-38",
+   "activity": "Groups construct a written boundary argument: what two or three criteria must an entity satisfy to enter the classification framework at all? Groups share and the class negotiates a consensus set of criteria."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Teacher closes the plan by connecting the boundary argument back to the chapter's opening — all matter can be classified; not everything is matter — and names the classification framework as a durable tool for any new substance students encounter."
+  }
+ ],
+ "teacher_notes": "This closing unit pushes stage four to its highest demand: rather than applying the framework to a named substance, students must evaluate what qualifies for classification at all, which requires holding the entire framework in view simultaneously. The misconception most likely to appear is that students classify heat or electricity as matter because they can feel or observe their effects — the key corrective is that effects are not the same as having mass and occupying space. Ending with the boundary argument rather than a summary activity ensures the chapter closes on reasoning rather than recall, which is the register this stage requires.",
+ "materials": [
+  "Entity list (printed or on board): iron, water, light, heat, a thought, electricity, air, copper, soil",
+  "Boundary argument recording sheet"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Sorting Everyday Mixtures
+U2: Is Air Really a Mixture?
+U3: What Does 'Pure' Really Mean?
+U4: Water Splits Into Two
+U5: Sugar's Hidden Components
+U6: Iron-Sulfur Mixture Versus Iron Sulfide Compound
+U7: Building Blocks: Elements in Focus
+U8: Classifying Unknown Substances
+U9: Minerals: Classifying Nature's Pure Substances
+U10: Testing Claims About Real Materials
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 10,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply the element–compound–mixture classification to unfamiliar substances and contexts using physical and chemical tests",
+ "pedagogical_approach": "Discovery approach",
+ "activity_title": "Testing Claims About Real Materials",
+ "activity_description": "Groups receive a set of real-material claims — stainless steel is stronger than pure iron because it is a mixture; graphene aerogel is a compound of carbon; brass used in Dhokra art is an element — and must evaluate each claim as true or false, citing the physical or chemical property that settles it.",
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Evaluate each claim using the classification framework, identify the specific property or test that settles the claim, and present their verdict with evidence."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates the discovery of what makes each claim accurate or inaccurate without pre-confirming verdicts, and draws the chapter's applications section into the discussion."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher distributes the claims cards and sets the task: each group must identify whether the claim is true or false and specify the single property that decides it."
+  },
+  {
+   "minutes": "8-30",
+   "activity": "Groups discuss each claim, consult their reference cards and classification worksheets from earlier units, and prepare a brief verdict with evidence for each claim."
+  },
+  {
+   "minutes": "30-42",
+   "activity": "Groups present their verdicts; class adjudicates contested claims using chapter evidence — alloy as mixture, graphene aerogel as a carbon-element-based material, brass as an alloy (mixture) not an element."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "Teacher closes the chapter by affirming the dissolution test idea: classifying any substance requires applying physical and chemical tests, not relying on names or appearance alone."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to do what the chapter has been building toward: judge an unfamiliar claim about a real material using the full classification toolkit rather than recall. The graphene aerogel claim is deliberately tricky — students may hesitate because aerogel sounds compound-like, but the chapter identifies it as carbon-based, making it an element-derived material. The Dhokra brass claim is the most consequential misconception check: if students classify brass as an element because it is used as a single craft material, the previous units need revisiting.",
+ "materials": [
+  "Printed claims cards (five claims)",
+  "Reference cards from Unit 7",
+  "Classification worksheets from Units 8 and 9"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 8 UNITS — unit-title map ---
+U1: What's in the Mix? Sorting Everyday Combinations
+U2: Air Under Examination: Is Air a Mixture?
+U3: Pure or Not Pure? Testing the Scientific Meaning
+U4: Water Splits Apart: Introducing Elements and Compounds
+U5: Sugar on Heat and Iron with Sulfur: Properties Tell the Story
+U6: The Acid Test: Chemical Evidence from Activity 8.5
+U7: From Minerals to Alloys: Where Classification Meets the Real World
+U8: Apply and Argue: Novel Substances, Full Classification Criteria
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 8,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Classify matter and explain the role of elements, compounds, and mixtures in real contexts",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Apply and Argue: Novel Substances, Full Classification Criteria",
+ "activity_description": "Students are given a set of novel, unfamiliar scenarios — including a description of seawater, a mystery solid that melts at a single sharp temperature, a gas mixture used in welding, and a substance that reacts with acid to give a single pure gas — and must apply all physical and chemical classification criteria from the chapter to identify each as element, compound, or mixture, defending their reasoning.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes scenario cards, circulates to probe reasoning rather than confirm answers, and facilitates a final whole-class argument round where groups challenge one another's classifications."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Discuss and agree on a classification for each scenario, write a justification citing at least one physical or chemical criterion from the chapter, and prepare to defend their reasoning to another group."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student independently records their own final classification table before the group discussion closes, ensuring individual accountability."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher distributes scenario cards and explains that these are unfamiliar cases — students must apply the criteria they have built across the chapter, not recall a memorised answer."
+  },
+  {
+   "minutes": "7-25",
+   "activity": "Groups discuss each scenario and agree on a classification and justification, with each student maintaining their own individual record of the group's reasoning."
+  },
+  {
+   "minutes": "25-37",
+   "activity": "Groups pair up and challenge one another's classification of at least one contested scenario; each group must respond with evidence from the chapter rather than assertion."
+  },
+  {
+   "minutes": "37-45",
+   "activity": "Teacher leads a class-wide consolidation of each scenario's correct classification, highlighting which physical or chemical criterion was decisive in each case and linking back to the chapter's central question."
+  }
+ ],
+ "teacher_notes": "This is the chapter's culminating unit, drawing all prior work together by asking students to reason across the full classification framework with novel input. The sharp-melting-point scenario (a single sharp melting point indicates a pure substance) and the single-gas-from-acid scenario are the most demanding — groups that have genuinely understood the compound definition will use the fixed-ratio and different-properties criteria naturally. The inter-group challenge round surfaces reasoning gaps more efficiently than a teacher-led quiz, and the individual record ensures you can assess who drove the group's thinking.",
+ "materials": [
+  "Scenario cards (seawater, mystery solid, welding gas, acid-reaction substance)",
+  "Individual classification record sheets",
+  "Chapter reference sections 8.1–8.5 available for consultation"
+ ],
+ "homework": [
+  "Choose one material from your kitchen or home, research whether it is an element, compound, or mixture, and write three sentences explaining which physical or chemical property supports your classification."
+ ]
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

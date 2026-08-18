@@ -1,0 +1,381 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 40-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- The SHORTEST plan's map is the binding one: applied topics and late enrichment are cut
+  from it first, so each concrete demand in your task (a condition to cite, a feature to
+  identify, a mechanism to explain) is checked against that map before it is used.
+- Every mechanism, apparatus, circuit form or process your setting relies on is one the
+  chapter itself teaches — the setting is new, its physics is entirely the chapter's.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 40…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+9.1 Nutrition in Animals
+
+Animals obtain energy from food by breaking down complex components such as carbohydrates, proteins, and fats into simpler, absorbable forms through a process called digestion. This breakdown takes place along a long continuous tube called the alimentary canal, which runs from the mouth to the anus. The simpler molecules produced through digestion are absorbed into the blood and transported to every cell in the body to fuel life processes.
+
+9.1.1 Digestion in human beings
+
+This subsection traces the step-by-step journey of food through the human alimentary canal, explaining how each organ contributes to the progressive breakdown and absorption of nutrients.
+
+Beginning with the mouth cavity
+
+Digestion begins in the mouth, where teeth perform mechanical digestion by crushing and grinding food into smaller pieces. Saliva, produced by salivary glands in the mouth, contains a digestive juice that chemically breaks down starch into simpler sugars — which is why starchy foods like chapati or rice taste sweeter when chewed for a long time. The chapter includes Activity 9.1, in which students test boiled rice for the presence of starch using iodine solution, comparing unchewed rice to rice that has been thoroughly chewed, to observe starch breakdown in the mouth.
+
+Food pipe (Oesophagus): A passage from the mouth to the stomach
+
+Once food is chewed, saliva moistens it into a soft ball and the tongue pushes it into the oesophagus, a long flexible muscular tube that connects the mouth cavity to the stomach. The walls of the oesophagus contract and relax in rhythmic wave-like movements that push the food downward; this motion continues throughout the entire length of the alimentary canal.
+
+Stomach
+
+In the stomach, the muscular walls contract and relax to churn the food and mix it thoroughly with a secretion containing digestive juice, acid, and mucus. The digestive juice breaks down proteins, the acid kills harmful bacteria that may have entered with the food, and the mucus protects the stomach's own lining from being damaged by the acid. Food remains in the stomach until it is reduced to a semi-liquid mass before passing to the next stage.
+
+Small Intestine
+
+The partially digested food moves into the small intestine, which is approximately 6 metres long and is the longest part of the alimentary canal. The small intestine receives digestive secretions from three sources: its own inner lining, the liver (which secretes bile to neutralise the acidic food mass and to help break down fats), and the pancreas (which secretes pancreatic juice to further break down carbohydrates, proteins, and fats). The inner lining of the small intestine carries thousands of tiny finger-like projections that greatly increase its surface area; through these projections, digested nutrients are absorbed into the blood vessels in the intestinal wall and transported to the rest of the body, a process the chapter calls absorption.
+
+Large intestine
+
+Undigested material that the small intestine cannot absorb passes into the large intestine, which is about 1.5 metres long and considerably wider than the small intestine. Here, water and some salts are absorbed from the remaining material, which gradually becomes solid waste called stool. The stool is stored in the rectum until it is expelled from the body through the anus, a process called egestion.
+
+9.1.2 Do all animals digest food the same way as humans do?
+
+Animals show considerable variation in their digestive adaptations depending on their diet and feeding habits. Grass-eating animals such as cows and buffaloes are called ruminants; they quickly swallow partially chewed grass, store it in a part of their stomach, and later return it to the mouth to chew it thoroughly before swallowing again — a process called rumination or chewing the cud. Birds do not have teeth and therefore cannot chew food; instead they have a muscular chamber called the gizzard in which food is broken down by powerful contractions of its walls, sometimes aided by small stones the birds swallow deliberately.
+
+9.2 Respiration in Animals
+
+The nutrients absorbed from food must be converted into usable energy inside the body's cells, and this conversion is achieved through respiration. The chapter draws a clear distinction between breathing and respiration: breathing is the physical act of moving air in and out of the lungs, whereas respiration is the chemical process by which oxygen reacts with glucose inside cells to release carbon dioxide, water, and energy.
+
+9.2.1 Respiration in humans
+
+How do we breathe?
+
+The human respiratory system consists of the nostrils, nasal passages, windpipe, and two lungs, working together to bring fresh air into the body and expel waste gases. Air inhaled through the nostrils passes through the nasal passages, where fine hairs and mucus filter out dust and dirt, before travelling down the windpipe into the lungs; inside the lungs the windpipe branches repeatedly into smaller passages that end in millions of tiny balloon-like sacs called alveoli. The chapter includes Activity 9.2, in which students construct a model using a plastic bottle and balloons to observe how changes in the volume of the chest cavity drive the movement of air in and out of the lungs, demonstrating the role of the diaphragm and rib muscles. During inhalation the ribs move upward and outward while the dome-shaped diaphragm moves downward, increasing the volume of the chest cavity so that air rushes in; during exhalation the ribs move down and inward and the diaphragm moves upward, compressing the cavity and pushing air out.
+
+What do we breathe out?
+
+Activity 9.3 demonstrates that exhaled air contains a higher concentration of carbon dioxide than inhaled air, confirmed when exhaled air causes lime water to turn milky while inhaled air does not. Inhaled air contains approximately 21% oxygen and 0.04% carbon dioxide, whereas exhaled air contains 16–17% oxygen and 4–5% carbon dioxide, showing that the body consumes oxygen and produces carbon dioxide during respiration.
+
+How does the exchange of gases happen?
+
+Gas exchange between air and blood takes place in the alveoli, which have extremely thin walls surrounded by a dense network of fine blood vessels. Blood arriving at the alveoli carries carbon dioxide collected from the body's cells; this carbon dioxide passes into the air inside the alveoli and is breathed out, while oxygen from freshly inhaled air passes in the opposite direction into the blood and is carried to all tissues of the body. The word equation given for this process is: Glucose + Oxygen → Carbon dioxide + Water + Energy.
+
+9.2.2 Do other animals breathe the same way as humans do?
+
+While many animals — including birds, mammals such as elephants and lions, and reptiles such as snakes — breathe through lungs, the precise structure of their lungs varies across groups. Aquatic animals such as fish breathe through gills, which are richly supplied with blood vessels that allow dissolved oxygen in the surrounding water to pass into the blood and carbon dioxide from the blood to pass out into the water. Frogs and other amphibians use gills for breathing as tadpoles, develop lungs for life on land as adults, and can also exchange gases through their moist skin when in water; earthworms, which have no specialised respiratory organs, exchange gases entirely through their moist skin surface.
+
+
+======================================================================
+
+THE FULLEST PLAN (17 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: What does food do inside us?
+U2: Testing starch breakdown — the iodine test
+U3: Tracing the alimentary canal — organ by organ
+U4: What does each digestive secretion do?
+U5: Small intestine — why so long, why so folded?
+U6: Classifying animal digestive adaptations
+U7: How peristalsis moves food — a causal account
+U8: Why does the stomach not digest itself?
+U9: Building the chest cavity model — demonstrating breathing mechanics
+U10: Exhaled air contains more carbon dioxide — lime water evidence
+U11: Gas exchange at the alveoli — a causal mechanism
+U12: How do other animals breathe? — lungs, gills, and skin
+U13: Connecting digestion and respiration — nutrients as fuel
+U14: What happens when one process fails?
+U15: Why must digestion and respiration be continuous?
+U16: Predicting adaptive responses — linking structure to survival
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 15 UNITS — unit-title map ---
+U1: What does food do inside us?
+U2: Testing starch breakdown in the mouth
+U3: Tracing the path of food — a body map
+U4: Journey through the alimentary canal
+U5: Why is the small intestine so long?
+U6: Comparing digestive systems — ruminants and birds
+U7: Why does the stomach not digest itself?
+U8: Building the breathing model
+U9: What is in exhaled air? The lime water test
+U10: Gas exchange at the alveoli — tracing oxygen and carbon dioxide
+U11: How other animals breathe — gills, skin, and lungs compared
+U12: What happens when one process fails?
+U13: Breathing rate and body demand — a think-pair-share investigation
+U14: Animal adaptations — applying the mechanism to new cases
+U15: How do life processes work together to keep every cell alive?
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 15,
+ "period_duration_minutes": 40,
+ "progression_stage": 4,
+ "stage_label": "Apply causal reasoning across life processes to unfamiliar scenarios",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "How do life processes work together to keep every cell alive?",
+ "activity_description": "Students construct a connected diagram showing how digestion and respiration together supply cells with energy — tracing nutrients from food through absorption, and oxygen from air through gas exchange, to a cell where the respiration equation operates. They annotate the diagram with causal links.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Constructs and annotates a connected diagram linking digestion output (absorbed nutrients) and respiration input (oxygen) to cellular energy production, using causal arrow annotations."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Poses the organising question, circulates to prompt students whose diagrams show isolated processes rather than connected ones, and facilitates a closing whole-class gallery of three or four diagrams."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher poses the organising question: a muscle cell needs energy to contract — trace every step from food entering the mouth and air entering the nostrils to the moment that energy is released inside the cell, using arrows and causal labels."
+  },
+  {
+   "minutes": "6-26",
+   "activity": "Students individually draw a connected diagram starting from food (mouth → oesophagus → stomach → small intestine → absorbed into blood) and from air (nostrils → windpipe → alveoli → oxygen into blood) converging at a cell where glucose + oxygen → CO₂ + water + energy."
+  },
+  {
+   "minutes": "26-36",
+   "activity": "Students annotate three causal links in their diagram where a structural feature directly enables a process step — for example, villi increase surface area → more nutrients absorbed per unit of time."
+  },
+  {
+   "minutes": "36-40",
+   "activity": "Teacher facilitates a quick gallery of three or four diagrams on the board, pointing out how the chapter's two life-process accounts converge on the single claim that cells are kept alive by coordinated digestion and respiration."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to hold both life processes simultaneously and show how they converge on a single cellular outcome — which is the highest-order operation the chapter builds toward. A common weakness at this stage is drawing the two processes as parallel tracks without connecting arrows at the cell; redirect those students to add the convergence point explicitly. The gallery at the close gives the class a shared visual of what a complete, connected account looks like, and rewards students whose diagrams show the tightest causal integration.",
+ "materials": [
+  "Blank A4 paper or large blank space in notebook",
+  "Pencils",
+  "Coloured pens (optional for arrows)"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 13 UNITS — unit-title map ---
+U1: Mapping the Alimentary Canal
+U2: Starch in the Mouth — Activity 9.1
+U3: From Stomach to Small Intestine — Structure and Role
+U4: Large Intestine, Rectum, and Anus — Completing the Map
+U5: Mechanical or Chemical? Sorting Digestive Events
+U6: Ruminants, Birds, and Earthworms — Adaptation Sort
+U7: Introducing Respiration — Sorting Breathing from Respiration
+U8: Building the Chest Model — Activity 9.2
+U9: Exhaled Air and Lime Water — Activity 9.3
+U10: Gas Exchange at the Alveoli — Cause and Direction
+U11: Gills, Skin, and Lungs — Causal Comparison
+U12: Connecting Digestion and Respiration — The Energy Chain
+U13: Life Processes Under a Microscope — Novel Animal Scenario
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 13,
+ "period_duration_minutes": 40,
+ "progression_stage": 4,
+ "stage_label": "Apply to Explain How Life Processes Collectively Sustain Animal Life",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Life Processes Under a Microscope — Novel Animal Scenario",
+ "activity_description": "Students receive a brief description of a novel animal with specific anatomical features and dietary habits, and apply their understanding of nutrition and respiration to explain how this animal's life processes would function and interact to sustain its life.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the novel animal scenario as a genuine reasoning challenge, emphasising that there is no single correct answer and that well-reasoned explanations drawing on evidence from both processes will be strongest."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Write an extended explanation covering how the animal digests its food, how it obtains oxygen, and how these two processes together keep it alive, referencing specific structures and mechanisms from the chapter."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher presents the novel animal scenario, reads it aloud with the class, and invites initial predictions before students begin writing."
+  },
+  {
+   "minutes": "8-26",
+   "activity": "Students write their extended explanation independently, covering digestion, respiration, and the connection between them for this specific animal."
+  },
+  {
+   "minutes": "26-36",
+   "activity": "Students exchange papers with a partner who reads and marks a tick beside each claim that is supported by a named structure or mechanism, and a question mark beside any unsupported claim."
+  },
+  {
+   "minutes": "36-40",
+   "activity": "Teacher draws the unit to a close by asking one or two students to share their strongest cross-process sentence, cementing the chapter's central integration."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to apply everything they have built across the chapter to a scenario that does not appear in the text, requiring genuine transfer rather than recall. The peer-marking step is intentionally brief and criterion-focused — named structures and mechanisms — so it functions as a self-audit rather than a formal assessment; students who find many question marks on their own paper identify their own gaps. Explanations that name absorption as the bridge between digestion and cellular respiration represent the chapter's highest cognitive achievement and are worth highlighting explicitly at the close.",
+ "materials": [
+  "Novel animal scenario description card (one per student)",
+  "Pencils"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 11 UNITS — unit-title map ---
+U1: Mapping the Alimentary Canal
+U2: Starch in the Mouth — Activity 9.1
+U3: Mechanical or Chemical? Sorting the Stomach and Small Intestine
+U4: Villi, Absorption, and the Journey to the Large Intestine
+U5: Building the Chest-Cavity Model — Activity 9.2
+U6: What Is in Exhaled Air? — Activity 9.3
+U7: Alveoli and the Gas Exchange Mechanism
+U8: How Do Other Animals Digest? Ruminants and Birds
+U9: Lungs, Gills, and Skin: Matching Respiratory Structures to Environments
+U10: Tracing a Glucose Molecule's Journey
+U11: What Breaks Down, What Sustains — Explaining Life Process Interdependence
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 11,
+ "period_duration_minutes": 40,
+ "progression_stage": 5,
+ "stage_label": "Apply understanding to explain how life processes collectively sustain animal life",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "What Breaks Down, What Sustains — Explaining Life Process Interdependence",
+ "activity_description": "Students analyse three failure scenarios — a blocked oesophagus, non-functioning alveoli, and a gizzard removed from a bird — and for each scenario explain which life process fails first, what downstream process cannot then proceed, and what effect this has on the animal's ability to sustain life.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the three scenarios as brief printed cards, asks students to work independently on the first before groups tackle the remaining two, and facilitates a closing discussion on the pattern: every failure in one process cascades into another."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Analyse the blocked-oesophagus scenario independently, identifying the failure chain, then join a group to complete the alveoli and gizzard scenarios and construct a one-sentence general claim about life process interdependence."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Complete the alveoli and gizzard scenarios collaboratively, then draft and refine the general interdependence claim before sharing it with the class."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher introduces the three scenario cards and students read all three before working individually on the blocked-oesophagus scenario."
+  },
+  {
+   "minutes": "6-26",
+   "activity": "Groups tackle the non-functioning alveoli and gizzard scenarios, tracing the downstream failure chain and drafting the general interdependence claim."
+  },
+  {
+   "minutes": "26-40",
+   "activity": "Groups share their general claim; teacher facilitates a closing discussion drawing out that the chapter's two central processes — nutrition and respiration — are not independent but linked by a shared molecule (glucose) and a shared carrier (blood)."
+  }
+ ],
+ "teacher_notes": "Building on the glucose journey narrative from the previous unit, this closing unit asks students to reason in the reverse direction — from failure back to consequence — which is a higher-order operation than tracing a successful pathway. Watch for students who identify only the directly affected organ without naming the downstream life process that then fails; the gizzard scenario is particularly useful here because it requires students to connect a digestive adaptation in a non-human animal to a general principle. The strongest responses will invoke interdependence explicitly, naming at least two linked processes in their general claim.",
+ "materials": [
+  "Failure scenario cards (three per group)",
+  "Response worksheets",
+  "Pens"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 9 UNITS — unit-title map ---
+U1: What does food do inside us?
+U2: Starch in the mouth — Activity 9.1
+U3: Journey through the alimentary canal
+U4: Comparing digestive strategies across animals
+U5: Modelling the breathing chest — Activity 9.2
+U6: What is in exhaled air? — Activity 9.3
+U7: Why does the body need both digestion and respiration?
+U8: Respiratory diversity — from gills to skin
+U9: What happens when a life process fails?
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 9,
+ "period_duration_minutes": 40,
+ "progression_stage": 5,
+ "stage_label": "Apply causal reasoning to explain how life processes sustain animal life",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "What happens when a life process fails?",
+ "activity_description": "Students analyse three scenario cards describing disruptions to digestion or respiration in different animals and explain, using causal reasoning, how each disruption cascades through connected life processes to threaten the animal's survival, applying their understanding of the full chapter to novel cases.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes scenario cards and frames the task as applying the chapter's causal framework to novel problems, circulating to ensure students identify which life process is disrupted and trace the downstream consequence."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Analyse each scenario, identify the disrupted life process, trace the causal chain of consequences, and write a justified explanation of why the disruption threatens the animal's survival."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Write a final synthesis sentence connecting both major life processes covered in the chapter to the shared goal of sustaining animal life."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher distributes scenario cards — one describing a blocked small intestine, one describing collapsed alveoli, one describing a fish removed from water — and asks groups to read all three before beginning."
+  },
+  {
+   "minutes": "6-26",
+   "activity": "Groups analyse each scenario by identifying the disrupted process, writing a causal chain of consequences, and producing one sentence explaining why survival is threatened."
+  },
+  {
+   "minutes": "26-34",
+   "activity": "Each student individually writes one synthesis sentence that names both nutrition and respiration and connects them to a single shared outcome — the sustaining of animal life."
+  },
+  {
+   "minutes": "34-40",
+   "activity": "Three groups share their analysis of one scenario each; class evaluates whether each explanation identifies a specific disrupted process and traces a consequence rather than merely restating the scenario."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to transfer the causal reasoning developed across the chapter to three novel scenarios, which is the chapter's highest cognitive demand and the operation named in the chapter's dissolution test. The fish-removed-from-water scenario is the most challenging because it requires students to connect the environmental dependency of gill function to the broader consequence of no gas exchange — watch for groups who simply say 'the fish can't breathe' without explaining the mechanism. The individual synthesis sentence is a useful exit-level signal: a strong sentence names both processes and their functional relationship, whereas a weak one names them without connecting them to any shared outcome.",
+ "materials": [
+  "Scenario cards (three per group, prepared in advance)",
+  "Student notebooks"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

@@ -1,0 +1,1809 @@
+{
+ "filename": "ch_08_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 8,
+ "chapter_title": "A Journey through States of Water",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 20
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 20 periods = 800 minutes\nTotal: 20 periods · 13h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "20x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 8",
+  "ledger_ts": "20260817_113057_sci_vi_08_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-17T12:04:39",
+    "tool": "genon/repair_meta_leak.py v1.0",
+    "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+    "edits": [
+     {
+      "unit": 20,
+      "field": "teacher_notes",
+      "rule": "register/meta-leak",
+      "removed": "This closing unit is designed to travel: it may serve a class that reached the chapter's central ideas through a completely different arc of activities, so it builds its own context and does not rely on any specific stage, activity, or discussion having occurred. Any student",
+      "replaced_with": "Any student",
+      "note": "whole opening sentence is the serve contract; false at this stage (plan-granular serve). CAP-free: the surviving sentence already opens capitalised"
+     },
+     {
+      "unit": 20,
+      "field": "teacher_notes",
+      "rule": "register/meta-leak",
+      "removed": ", not to any particular experiment or unit",
+      "replaced_with": "",
+      "note": "assume-family trailing clause; 'returning to observable properties and conditions' is the real instruction and stands"
+     }
+    ]
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-17T12:04:47",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-173": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'question_type': 'OPEN_TASK'}",
+        "field": "question_text",
+        "old": null,
+        "new": ""
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and Question",
+     "synthesis": false,
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Where Does the Puddle Go?",
+     "activity_description": "Students observe that water placed on a steel plate does not seep through, then consider where surface water goes. They sketch what they think happens to water on a mopped floor or drying cloth, and share their initial ideas about evaporation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Guides students to notice the disappearing-water phenomenon and sets up the steel plate investigation."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Observe the steel plate, sketch their ideas about disappearing water, and share initial hypotheses."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the puddle puzzle and students recall examples of water drying from surfaces around them."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups observe water on a steel plate and confirm water does not seep through, then record their observations in a sketch."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Students draw and label what they think happens to water on a drying cloth or mopped floor."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Brief sharing of ideas across groups; teacher collects initial hypotheses without confirming or denying any."
+      }
+     ],
+     "teacher_notes": "This is the chapter's opening unit, so orient students to the big idea: water keeps changing its form. Watch for the common belief that water simply soaks into solid surfaces — the steel plate observation is designed to challenge this, and students who still insist on seepage need a second look at the plate. A useful checkpoint: every group should be able to state at least one reason why seepage through a solid steel plate is unlikely before moving on.",
+     "materials": [
+      "Steel plate",
+      "Small amount of water",
+      "Notebooks for sketching"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and Question",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Water Droplets on a Cold Glass",
+     "activity_description": "Students observe water droplets forming on the outer surface of a cold glass tumbler containing ice water, record observations carefully, and generate written hypotheses explaining the source of the droplets.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up cold tumblers and guides structured observation without revealing the explanation."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Record observations of the tumbler's outer surface and write down their best hypothesis for where the droplets came from."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the previous one: water disappeared from surfaces — now new water seems to appear on a cold surface."
+      },
+      {
+       "minutes": "7-20",
+       "activity": "Students observe cold tumblers placed on the desk, note droplet formation on the outer surface, and record descriptions in their notebooks."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Students write a hypothesis — seepage from the glass, melted ice escaping, or water from the air — and give one reason supporting their choice."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher collects hypotheses publicly on the board without evaluation; students note which hypotheses they agree or disagree with."
+      }
+     ],
+     "teacher_notes": "Building on the previous unit's question about disappearing water, this unit introduces the complementary mystery of appearing water. The most persistent misconception here is that water seeps through the glass — accept this hypothesis openly, because the next unit will test it with evidence. Ensure every student has written their hypothesis before the group sharing, so discussion is grounded in individual thinking rather than peer copying.",
+     "materials": [
+      "Glass tumbler",
+      "Ice",
+      "Water",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and Question",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Testing the Seepage Hypothesis",
+     "activity_description": "Students design and carry out a simple test of the seepage hypothesis by marking the water level inside the cold tumbler and tracking whether it drops. They record evidence and use it to accept or reject their previous hypothesis.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Prompts students to think about what would happen to the water level inside if seepage were occurring, and facilitates evidence-based reasoning."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Mark the internal water level, observe over time, and compare their finding to their earlier hypothesis."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher revisits the hypotheses collected in the previous unit and asks: if seepage is happening, what should we observe about the water level inside?"
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Groups mark the internal water level on the tumbler with a rubber band or marker, wait, then check whether the level has dropped while noting droplets still forming outside."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Students write a revised conclusion: seepage is not the source — the droplets must come from water already present in the surrounding air."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher introduces the term condensation and connects it to the evidence students just gathered."
+      }
+     ],
+     "teacher_notes": "This unit completes the first arc of inquiry: students entered with a hypothesis and now have evidence to revise it. A key error to watch is students who saw the water level unchanged but still favour seepage — probe gently by asking where the water that seeped out would have to come from. The introduction of the word condensation should follow the evidence, not precede it, so resist naming it until the last few minutes.",
+     "materials": [
+      "Glass tumbler",
+      "Ice",
+      "Water",
+      "Rubber band or marker",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify by Observable Properties",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Three States — Shape, Flow, Spread",
+     "activity_description": "Students transfer ice cubes and liquid water between containers of different shapes, observe that ice retains its shape while water takes the container's shape, and then discuss what water vapour does in the surrounding air.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates the transfer activity and introduces the three-state framework, prompting students to name the properties that distinguish each state."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Transfer ice and water between differently shaped containers, record shape, flow, and spreading behaviour for each, and fill in a comparison table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the previous stage: students observed water in two forms (liquid and vapour) — now the task is to compare all three states systematically."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Groups transfer ice into a round bowl and a rectangular tray, then pour water into the same containers, recording which retains shape and which does not."
+      },
+      {
+       "minutes": "24-35",
+       "activity": "Students complete a three-column table: ice, liquid water, and water vapour — recording shape, ability to flow, and ability to spread for each."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Brief class discussion on water vapour: invisible, present in air around us even at room temperature, spreads to fill available space."
+      }
+     ],
+     "teacher_notes": "This unit marks the shift from investigation into classification — students now systematically compare what they have already observed. A common confusion is that students think water vapour and steam are the same visible thing; water vapour in this chapter is invisible, and that distinction matters for accurate classification. Check that every group's table has a row for water vapour before moving on, even if that row was filled in through discussion rather than direct observation.",
+     "materials": [
+      "Ice cubes",
+      "Water",
+      "Containers of different shapes (round bowl, rectangular tray, cylinder)",
+      "Comparison table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify by Observable Properties",
+     "synthesis": false,
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Naming and Defining the Three States",
+     "activity_description": "Students consolidate the three-state classification by formalising definitions for solid, liquid, and gas using the properties identified in the previous unit, and extend the classification to other everyday substances such as wax, oil, and ghee.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured discussion that converts observational descriptions into concise property-based definitions for each state."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Write formal definitions for each state, then classify a provided list of everyday substances as solid, liquid, or gas."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher and students together convert the previous unit's table into three formal definitions, emphasising shape retention, flow, and space-filling as the deciding properties."
+      },
+      {
+       "minutes": "10-25",
+       "activity": "Students individually classify a set of substances — wax, cooking oil, ghee, water, ice, air — placing each in the correct state column and giving one observable reason."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Class discussion: some substances like ghee are solid at room temperature but melt when heated — teacher notes that state depends on conditions, previewing the next stage."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Students correct and finalise their classification tables."
+      }
+     ],
+     "teacher_notes": "The previous unit gave students the raw observations; this unit turns them into portable definitions they can apply. The most important point to press is that state is defined by properties, not by appearance or familiarity — ghee looks solid but shares all solid properties, and cooking oil shares all liquid properties. Use the brief discussion of ghee melting on a warm pan as a bridge toward the next stage, which will address how states change.",
+     "materials": [
+      "Comparison table from previous unit",
+      "List of substances for classification (wax, oil, ghee, water, ice, air)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify by Observable Properties",
+     "synthesis": false,
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Finding Solids, Liquids, and Gases Around Us",
+     "activity_description": "Students conduct a systematic survey of their immediate classroom and school environment, classifying every material they encounter as solid, liquid, or gas, and justify each classification using the property-based definitions from the previous unit.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Survey the classroom and surroundings, list materials, classify each by observable state, and prepare a short justification for at least three classifications they found challenging."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates, poses probing questions when groups encounter ambiguous cases, and facilitates the sharing session."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher sets the task: groups will identify as many distinct materials as possible in the classroom and classify each as solid, liquid, or gas."
+      },
+      {
+       "minutes": "6-27",
+       "activity": "Groups survey the room, list materials, and record their classifications with a brief property-based justification for each."
+      },
+      {
+       "minutes": "27-38",
+       "activity": "Each group shares one classification they found difficult, and the class debates which state is correct using the property definitions."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher summarises: the same three categories apply to all matter around us, not just water."
+      }
+     ],
+     "teacher_notes": "Building on the formal definitions from the previous unit, this unit asks students to apply classification independently — a genuine test of whether the definitions are understood and not just memorised. Watch for groups who classify air as a liquid because it flows; probe them with the space-filling criterion. Groups that finish early can be challenged to find a substance that seems to belong to more than one state at once, which plants the seed for the next stage on state changes.",
+     "materials": [
+      "Notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain State Changes and Their Conditions",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Melting, Freezing, Evaporating, Condensing — Labelling the Map",
+     "activity_description": "Students complete a diagram showing the three states of water connected by four arrows, and label each arrow with the correct process name and the condition (heating or cooling) that drives it, drawing on their earlier observations.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the state-change diagram, label all four processes, and write one sentence per transition explaining what must happen for it to occur."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the terms melting and freezing formally, connects them to the condensation and evaporation terms students already know, and reviews diagrams as students work."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher builds a bridge from the previous stage's classification work: now that students can name the three states, the question is what moves matter between them."
+      },
+      {
+       "minutes": "10-27",
+       "activity": "Students individually complete the state-change diagram, labelling melts, freezes, evaporates, and condenses, with a condition sentence for each."
+      },
+      {
+       "minutes": "27-38",
+       "activity": "Pairs compare diagrams and resolve any disagreements about direction of arrows or condition descriptions."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher confirms correct diagram and draws attention to the symmetry: each process has an exact reverse."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 3 by giving students a complete map of state changes to work with. A frequent error is reversing the arrow directions — students sometimes write that condensation converts liquid to gas; press them to connect the arrow direction to what they observed on the cold tumbler. Pair comparison before whole-class review lets students catch their own directional errors without relying on the teacher to correct each one.",
+     "materials": [
+      "State-change diagram worksheet (blank arrows connecting solid, liquid, gas)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain State Changes and Their Conditions",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Surface Area and Evaporation Rate",
+     "activity_description": "Students investigate whether the exposed surface area of water affects how quickly it evaporates, comparing evaporation from a small bottle cap to evaporation from a flat plate, keeping all other conditions as constant as possible.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Set up the bottle-cap and plate comparison, monitor and record the time taken for complete evaporation in each case, and write a conclusion linking surface area to evaporation rate."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Guides groups to identify and control variables, prompting them to state what they are keeping the same and what they are changing."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-9",
+       "activity": "Teacher connects this unit to the diagram from the previous unit: evaporation is one state change — now students investigate what makes it faster or slower."
+      },
+      {
+       "minutes": "9-28",
+       "activity": "Groups set up equal volumes of water in a bottle cap and on a plate, place both in the same location, and record observations at intervals until one or both have fully evaporated."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups write a conclusion: which evaporated faster, and what property of the setup caused the difference."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Brief sharing: groups state their conclusions and teacher confirms the role of exposed surface area."
+      }
+     ],
+     "teacher_notes": "Students are now moving from naming state changes to explaining what drives them, which is the core cognitive demand of this stage. The most important variable-control error is failing to keep the amount of water constant — check each group's setup before they begin and redirect any that are using unequal amounts. If full evaporation takes longer than the unit allows, groups can compare partial evaporation and use the difference in remaining volume as their evidence.",
+     "materials": [
+      "Small bottle cap",
+      "Flat plate",
+      "Measured water (equal volumes for each)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain State Changes and Their Conditions",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Temperature, Shade, and Evaporation Speed",
+     "activity_description": "Students test whether placing water in sunlight compared to shade changes how quickly it evaporates, recording the time to complete evaporation in each condition and explaining the result in terms of temperature as a factor.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Set up sunlight and shade conditions with equal water amounts, monitor evaporation, record times, and explain the result."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates variable identification and prompts groups to connect temperature differences between sun and shade to evaporation speed."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the previous one: surface area is one factor — today students test another factor (temperature) while keeping surface area fixed."
+      },
+      {
+       "minutes": "8-26",
+       "activity": "Groups place equal amounts of water on identical plates in sunlight and shade, observe and record at intervals, noting which evaporates faster."
+      },
+      {
+       "minutes": "26-37",
+       "activity": "Groups write an explanation: higher temperature gives water molecules more energy to escape as vapour, so evaporation is faster."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Class shares findings and teacher notes that multiple factors affect evaporation rate — a theme to carry into the next unit."
+      }
+     ],
+     "teacher_notes": "This unit follows naturally from the surface-area investigation, extending students' growing model of what drives evaporation. A common alternative idea is that sunlight itself dries clothes, rather than the heat and the air movement that sunlight brings — probe this by asking whether clothes dry faster in a warm closed room than in cool sun, and let the group reason it through. Pairs who finish early can predict what would happen if they used a fan, previewing the humidity and wind discussion in the next unit.",
+     "materials": [
+      "Identical flat plates (at least two)",
+      "Measured water (equal volumes)",
+      "Access to sunlight and shade",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain State Changes and Their Conditions",
+     "synthesis": false,
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Humidity and Wind — Two More Factors",
+     "activity_description": "Students extend their evaporation model to include humidity and wind as additional factors, connecting these to everyday observations about clothes drying slowly on rainy days and the cooling sensation from a fan.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured explanation of how humidity slows evaporation and how moving air (wind or fan) speeds it up, using examples from the chapter."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Build a four-factor summary table listing surface area, temperature, humidity, and wind, with one everyday example and a direction of effect (faster or slower) for each."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher recaps the two factors tested so far and introduces humidity: when air already holds a lot of water vapour, it is harder for more vapour to enter, so evaporation slows."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Teacher explains the wind factor using the fan example: moving air carries away water vapour from the surface, allowing fresh air with lower humidity to replace it, speeding evaporation."
+      },
+      {
+       "minutes": "22-36",
+       "activity": "Students individually construct the four-factor summary table, completing rows for surface area, temperature, humidity, and wind with effect direction and everyday example."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Brief pair-check of tables; teacher addresses any reversed effect directions."
+      }
+     ],
+     "teacher_notes": "The previous two units gave students hands-on evidence for surface area and temperature; this unit rounds out the factor set through guided explanation, which is appropriate because the humidity and wind factors are harder to isolate in a single-unit investigation. The most persistent confusion here is that a fan cools you by lowering room temperature — redirect students to the evaporation explanation: it cools because it speeds evaporation of sweat. Keep the connection to the cooling effect in the next stage alive by asking students why the fan helps more on a dry day than a humid one.",
+     "materials": [
+      "Notebooks",
+      "Four-factor summary table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain State Changes and Their Conditions",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Quantitative Evidence for Condensation",
+     "activity_description": "Students place a cold-water tumbler on a digital weighing balance and record its mass at regular intervals over the unit, observing that mass increases even though nothing is added to the inside — quantitative evidence that water from the air is condensing on the outer surface.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Record mass readings at intervals, plot or list the change, and use the data to explain that condensation is adding mass from outside."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the weighing balance, guides groups to identify what the increasing mass means, and connects the result to the humidity concept."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the early condensation observations and to the humidity discussion: if air holds water vapour, that vapour should be measurable when it condenses."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups record mass of the cold tumbler at regular intervals, also checking that the internal water level has not dropped, and note the pattern of increasing mass."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups write an explanation linking the mass increase to condensation of water vapour from the surrounding air, referencing humidity."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher confirms that this quantitative method makes the invisible vapour-to-liquid change visible through measurement."
+      }
+     ],
+     "teacher_notes": "This unit strengthens students' understanding of condensation by making it quantitative — the mass data is harder to argue away than a visual observation alone. A common confusion is that the mass increase comes from melting of the ice inside the tumbler escaping; the internal water-level check is the key control, and every group must include it in their explanation. Connecting the mass increase to humidity levels in the room reinforces the four-factor model built in the previous unit.",
+     "materials": [
+      "Glass tumbler",
+      "Ice",
+      "Water",
+      "Digital weighing balance",
+      "Rubber band or marker for water level",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+     "synthesis": false,
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Why Does the Earthen Pot Keep Water Cool?",
+     "activity_description": "Students examine an earthen pot alongside a steel pot containing equal amounts of water, feel the outer surfaces, and investigate why water in the earthen pot is cooler, connecting their observation to evaporation through the porous surface.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Touch the outer surface of each pot, compare water temperatures, and write an explanation using evaporation and the factors affecting it."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the comparison, guides students to notice the damp outer surface of the earthen pot, and prompts the connection to evaporative cooling."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher opens the new stage by connecting to the factor model: evaporation takes something away from the water — today students investigate what it takes away."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Groups feel the outer surfaces of both pots, compare inner water temperatures if a thermometer is available, and record observations about wetness and temperature difference."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Students write an explanation: water seeps through the porous earthen pot, evaporates from the outer surface, and the evaporation removes heat, cooling the water inside."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Brief class share; teacher introduces the term evaporative cooling and connects it to earlier examples (sweat on skin, fan cooling)."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 4 and the earthen pot is the chapter's richest application context for evaporative cooling. Students often think the earthen pot cools water because clay is a naturally cold material — redirect by asking what would happen to a sealed, non-porous clay pot; the cooling effect depends on seepage and evaporation, not the material itself. If no earthen pot is available, the explanation can be approached through the sprinkling-water-on-roof example from the chapter.",
+     "materials": [
+      "Earthen pot",
+      "Steel pot",
+      "Equal amounts of water",
+      "Thermometer (optional)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Building a Pot-in-Pot Cooler",
+     "activity_description": "Students construct a pot-in-pot cooler using two earthen pots of different sizes with moist sand between them, cover the inner pot with a wet jute sack, and predict how storage temperature inside will compare to room temperature over time.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Assemble the pot-in-pot cooler, place a small amount of vegetable or fruit inside, and write a prediction about what will happen to freshness and temperature."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates assembly sequence, ensures moist sand fills the gap fully, and prompts students to explain their prediction using the evaporative cooling mechanism."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects this unit to the previous one: the earthen pot explanation established the mechanism — now students build a device that uses that mechanism."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups assemble the pot-in-pot cooler, fill the gap with moist sand, place a sample fruit or vegetable inside, and cover with a wet jute sack."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Students write a prediction: inside temperature will be lower than room temperature because evaporation of water from the moist sand and jute sack removes heat."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher notes that the cooler will be observed over the coming units — students should check and record the state of the fruit or vegetable in the next unit."
+      }
+     ],
+     "teacher_notes": "This is the one activity in this plan that produces an observable result over time rather than within the unit — the cooler is constructed here and observed in the next unit, so ensure assembly is complete before the unit ends. Students who argue the cooler will not work because clay is not as cold as a refrigerator are conflating two different cooling mechanisms; redirect them to the evaporation explanation rather than temperature comparison with a fridge. Check that the sand is genuinely moist, not merely damp, so the evaporation effect is strong enough to be noticeable.",
+     "materials": [
+      "Two earthen pots of different sizes (one smaller that fits inside the other)",
+      "Moist sand",
+      "Wet jute sack",
+      "Small fruit or vegetable",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Humidity, Fans, and Cooling — Putting It Together",
+     "activity_description": "Students observe the pot-in-pot cooler from the previous unit, record temperature or freshness data, and reason about how humidity affects whether the cooler works well, connecting the device's performance to the role of humidity in evaporation.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Observe and record the cooler's internal state and compare it to room temperature, then answer: would the cooler work better on a dry or humid day, and why?"
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates the observation and guides students to connect the cooler's performance to the humidity factor from Stage 3."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher reconnects to the four-factor model from Stage 3: the cooler's effectiveness depends on the rate of evaporation — which depends on humidity."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Groups observe and record the state of the fruit or vegetable inside the cooler and note whether the outer surface of the pot feels damp."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Students answer in writing: on a hot dry day versus a hot humid day, in which conditions would the cooler be more effective, and explain using evaporation and humidity."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Brief class share of answers; teacher confirms the link between low humidity, faster evaporation, and greater cooling effect."
+      }
+     ],
+     "teacher_notes": "This unit closes the loop between Stage 3's factor model and Stage 4's application context: students see directly how humidity determines the practical effectiveness of the evaporative cooler. Watch for students who claim the cooler works by absorbing heat from outside rather than through evaporation — the damp outer surface and the evaporative mechanism from the previous unit are the key evidence to revisit. The insight that fans help more on dry days than humid days (from Stage 3) maps directly onto the cooler's performance, so use that parallel explicitly.",
+     "materials": [
+      "Pot-in-pot cooler from previous unit",
+      "Thermometer (optional)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+     "synthesis": false,
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Real-World Applications of Evaporative Cooling",
+     "activity_description": "Students connect the evaporative cooling principle to a set of everyday and technological applications from the chapter — sprinkling water on a floor, sanitiser cooling the skin, the clay Surahi, and the Atmospheric Water Generator — and explain each application using the evaporation mechanism.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents each application in turn and explains how the AWG uses the reverse process (condensation) to harvest water from humid air."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "For each application, write a one-sentence explanation connecting it to evaporation or condensation and state which factor (temperature, humidity, surface area, or wind) is most important in that context."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher introduces the set of applications, starting with sprinkling water on a floor and the Surahi, asking students to predict the explanation before offering it."
+      },
+      {
+       "minutes": "10-24",
+       "activity": "Teacher explains the Atmospheric Water Generator: humid air is cooled, water vapour condenses, and liquid water is collected — the cold-tumbler effect at scale."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Students write one-sentence explanations for each application, identifying the key factor and whether the active process is evaporation or condensation."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Pair-share of explanations; teacher addresses any applications where students confused evaporation with condensation."
+      }
+     ],
+     "teacher_notes": "This unit draws Stage 4 toward its close by extending the evaporation and condensation mechanisms to a wider set of real contexts, including the AWG which reverses the cold-tumbler process. Students often find the AWG confusing because they are not sure whether condensation is being used to cool water or to produce water — clarify that it produces water by cooling humid air, the same process they measured quantitatively in unit 11. Ensuring students can distinguish which process (evaporation or condensation) is at work in each context will be essential for the final stage.",
+     "materials": [
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Reason Across Classification and Change Simultaneously",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Dust Particles and Cloud Formation in a Bottle",
+     "activity_description": "Students squeeze a plastic bottle containing water and a small piece of burnt newspaper, observe the visible haze that forms inside, and explain how this models what happens when rising water vapour condenses around dust particles to form clouds.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Conduct the bottle experiment, observe the haze, and write an explanation linking the bottle model to cloud formation, naming the state change and the condition that caused it."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the setup, ensures safety, and prompts students to identify which state change is occurring and why dust particles matter."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-9",
+       "activity": "Teacher connects this unit to the full arc so far: evaporation moves water into the air as invisible vapour — today students model what happens when that vapour encounters cold air and dust."
+      },
+      {
+       "minutes": "9-26",
+       "activity": "Groups observe the bottle experiment, squeeze the bottle to compress air, then release to lower pressure and temperature, observing the haze that forms when smoke particles are present."
+      },
+      {
+       "minutes": "26-38",
+       "activity": "Students write an explanation: water vapour condenses around dust particles in cooled air, forming tiny droplets that float — this is a cloud."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher connects the bottle model explicitly to cloud formation in the atmosphere: altitude replaces the bottle's release in providing cooling."
+      }
+     ],
+     "teacher_notes": "This unit opens the final stage by applying the condensation concept to a planetary-scale phenomenon, requiring students to reason simultaneously about state (vapour to liquid) and the condition that drives it (cooling at altitude). A common gap is that students describe the haze as smoke rather than water droplets — press them to explain why the haze forms only when both water and the smoke particles are present, not when either is missing. This reasoning — that dust is a nucleation site, not the source of the water — is central to the stage's cognitive demand.",
+     "materials": [
+      "Plastic bottle with cap",
+      "Water",
+      "Small piece of burnt newspaper (for smoke)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Reason Across Classification and Change Simultaneously",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Labelling the Water Cycle Diagram",
+     "activity_description": "Students complete a blank water cycle diagram, labelling water storage locations (ocean, lake, river, groundwater, cloud) and the processes connecting them (evaporation, condensation, rain, snow), then explain why each transition occurs using the conditions they have studied.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Label the diagram fully and write a one-sentence condition-based justification for each process arrow."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Reviews completed diagrams and probes students to explain why water rises as vapour and what determines whether precipitation falls as rain, hail, or snow."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects the bottle model to the water cycle diagram: the same condensation process operates at scale in the atmosphere."
+      },
+      {
+       "minutes": "8-26",
+       "activity": "Students individually complete the blank water cycle diagram, labelling all stores and process arrows with state-change names and conditions."
+      },
+      {
+       "minutes": "26-37",
+       "activity": "Students write justifications for each process: evaporation occurs because of solar heating; vapour rises because it is lighter than air; condensation occurs when rising air cools; rain falls when droplets combine and grow heavy."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Pair review of diagrams; teacher addresses missing labels or reversed arrows."
+      }
+     ],
+     "teacher_notes": "The water cycle diagram is the chapter's most integrative single task, requiring students to simultaneously classify water by state at each storage location and explain the process driving each transition. A frequent error is labelling the arrow from cloud to earth as evaporation rather than condensation followed by precipitation — the cloud itself is already in the liquid state (tiny droplets), so what falls is not condensation occurring at the ground but large droplets that have grown heavy. Ensure justification sentences use condition language (heating, cooling, altitude, dust) rather than simply restating process names.",
+     "materials": [
+      "Blank water cycle diagram worksheet",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 18,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Reason Across Classification and Change Simultaneously",
+     "synthesis": false,
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Why Water Availability Matters — Connecting the Cycle to Conservation",
+     "activity_description": "Students learn that only a small fraction of Earth's water is available for living things, examine the water cycle as the system that redistributes this fraction, and reason about how disrupting any part of the cycle affects availability and quality.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the proportional water availability data and leads a discussion on how pollution of water bodies and disruption of evaporation or condensation can affect the cycle."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss and present one consequence of disrupting a named stage in the water cycle — for example, reduced evaporation due to covering water bodies, or increased run-off due to loss of vegetation."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher presents the proportion of Earth's water available for use and asks students to reason about what would happen if evaporation from oceans slowed drastically."
+      },
+      {
+       "minutes": "10-26",
+       "activity": "Groups discuss a disruption scenario assigned to them — pollution, covering surfaces, deforestation — and explain which part of the water cycle is affected and how."
+      },
+      {
+       "minutes": "26-38",
+       "activity": "Each group presents their scenario and disruption analysis in two to three sentences."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher summarises: the water cycle as a system depends on each state-change process operating normally."
+      }
+     ],
+     "teacher_notes": "This unit extends the water cycle from a descriptive diagram to a causal system, asking students to reason about consequences of disruption — the highest-order thinking this chapter targets. Watch for groups who treat pollution as simply making water dirty without connecting it to the cycle; redirect by asking whether polluted water evaporates and condenses in the same way as clean water. This unit also sets up the conservation message at the chapter's close and prepares students for the synthesis unit.",
+     "materials": [
+      "Notebooks",
+      "Disruption scenario cards (one per group)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 19,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Reason Across Classification and Change Simultaneously",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Reasoning Across Both Operations — Classify, Change, Explain",
+     "activity_description": "Students work through a set of unfamiliar scenarios — dew on a car window at night, fog in a valley at dawn, hail falling from a cloud — classifying the water state at each stage of each event and explaining the condition that caused each state change.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "For each scenario, identify the initial state of water, the state after the event, name the state-change process, and state the condition that caused it."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Presents scenarios one at a time, circulates to probe reasoning, and facilitates a whole-class discussion of the hail scenario as the most complex case."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher frames the task: students have the full set of tools — classification by state and explanation of state-change conditions — and must now apply them to unfamiliar situations."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Students individually work through the scenario set, completing a classify-change-explain table for each."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Whole-class discussion of the hail scenario: condensation produces liquid droplets in a cloud, but under very cold conditions the droplets freeze before falling — so two state changes occur in sequence."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher connects this unit to the synthesis in the next unit: students are now ready to draw the full chapter together."
+      }
+     ],
+     "teacher_notes": "This is the final instructional unit before the synthesis, and it deliberately presents scenarios that require both competencies simultaneously: students must classify water by state AND explain the condition driving the change. The hail scenario is the most demanding because it involves two consecutive state changes (condensation then freezing); students who only name one are applying classification without fully explaining the condition sequence. This unit's success determines how fluent students will be in the synthesis unit.",
+     "materials": [
+      "Scenario set worksheet (dew on car window, fog in valley, hail falling)",
+      "Notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 20,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Reason Across Classification and Change Simultaneously",
+     "synthesis": true,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Water Journey — Whole-Chapter Synthesis",
+     "activity_description": "Students trace a single imaginary drop of water through a complete journey — from ocean surface through evaporation, rise as vapour, condensation into cloud, fall as rain, collection as groundwater, and use by living things — classifying its state at every named point and explaining the condition responsible for each change.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Construct a written or diagrammatic account of the water drop's journey, naming the state at each stage and the condition driving each transition, without reference to any specific earlier unit's structure."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Sets the task, circulates to probe reasoning at each state-change point, and facilitates a closing class discussion on water conservation."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher sets the synthesis task: trace a water drop from the ocean surface through a complete journey, naming state, state change, and driving condition at every step."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Students individually construct the water drop's journey as a written account or annotated diagram, ensuring every transition is labelled with both the process name and the condition that caused it."
+      },
+      {
+       "minutes": "28-37",
+       "activity": "Students pair up to compare journeys: do both accounts agree on the state of water at each named point? If they disagree, they must resolve the disagreement using evidence from the chapter."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher closes with a brief whole-class reflection on the conservation message: the water cycle is a closed system and every drop available to living things has made this journey — using water wisely keeps the cycle intact."
+      }
+     ],
+     "teacher_notes": "Any student who can classify water by its observable properties and explain what causes it to change state has everything they need to complete the water-drop journey. Resolve disagreements in the pair-share phase by returning to observable properties and conditions; this keeps the reasoning self-contained and accessible to all.",
+     "materials": [
+      "Blank paper or notebooks for the journey account",
+      "Pencils"
+     ],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 40,
+    "count": 20
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and Question",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2,
+     3
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students observe water disappearing from surfaces and appearing on cold glass, generate and test hypotheses, and establish through evidence that evaporation and condensation — not seepage — account for both phenomena.",
+    "implied_lo": "Students can describe the observations that led to rejecting the seepage hypothesis and state that water changes between liquid and vapour states at room temperature.",
+    "cg": "CG-1",
+    "c_code": "C-1.2",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify by Observable Properties",
+    "total_stages": 5,
+    "period_numbers": [
+     4,
+     5,
+     6
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students transfer water and ice between differently shaped containers, record shape, flow, and spreading behaviour, formalise definitions for solid, liquid, and gas, and apply the classification to everyday substances.",
+    "implied_lo": "Students can classify any given substance as solid, liquid, or gas by applying the observable properties of shape retention, ability to flow, and ability to fill available space.",
+    "cg": "CG-1",
+    "c_code": "C-1.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Explain State Changes and Their Conditions",
+    "total_stages": 5,
+    "period_numbers": [
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students map the four state-change processes (melting, freezing, evaporating, condensing) to conditions of heating and cooling, investigate factors that affect evaporation rate through controlled inquiry, and obtain quantitative evidence for condensation.",
+    "implied_lo": "Students can name the four state-change processes, state the heating or cooling condition required for each, and explain how surface area, temperature, humidity, and wind affect the rate of evaporation.",
+    "cg": "CG-1",
+    "c_code": "C-1.2",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+    "total_stages": 5,
+    "period_numbers": [
+     12,
+     13,
+     14,
+     15
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students investigate evaporative cooling in the earthen pot, build a pot-in-pot cooler, connect humidity to cooling performance, and extend the evaporation and condensation mechanisms to real-world applications including the AWG.",
+    "implied_lo": "Students can explain how evaporation removes heat to produce a cooling effect and apply this explanation to everyday devices and situations, identifying which evaporation factors are most relevant in each context.",
+    "cg": "CG-1",
+    "c_code": "C-1.2",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Reason Across Classification and Change Simultaneously",
+    "total_stages": 5,
+    "period_numbers": [
+     16,
+     17,
+     18,
+     19,
+     20
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students model cloud formation, label a complete water cycle diagram with state classifications and process conditions, reason about disruption consequences, and trace a water drop's journey from ocean to living things, classifying its state and explaining every transition.",
+    "implied_lo": "Students can classify water by its observable physical state at every point in the water cycle and explain the conditions that cause each state-change transition, reasoning across both operations simultaneously in unfamiliar contexts.",
+    "cg": "CG-1",
+    "c_code": "C-1.1",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and Question",
+    "implied_lo_assessed": "Students can describe the observations that led to rejecting the seepage hypothesis and state that water changes between liquid and vapour states at room temperature.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student places a cold glass tumbler filled with ice water on a dry table. After some time, water droplets appear on the outer surface of the tumbler. The student marks the water level inside the tumbler and waits. The water level inside does not drop. What does this evidence show?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Melted ice escaped through tiny cracks in the glass.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The glass absorbed moisture from the table surface.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Water seeped through the glass from the inside.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Water vapour from the surrounding air condensed on the cold surface.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Choosing this option indicates the student holds the seepage misconception and has not used the water-level evidence to reject it.",
+       "A": "Choosing this option indicates the student confused internal melting of ice with the source of the external droplets, ignoring the unchanged internal water level.",
+       "B": "Choosing this option indicates the student invented an external source not grounded in the chapter's evidence, suggesting the condensation mechanism has not been established."
+      },
+      "inclusivity": "Students who struggle with the written scenario may benefit from re-enacting the cold-tumbler observation before answering. Students who answer quickly can be asked to state what additional measurement would further confirm their chosen explanation."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and Question",
+    "implied_lo_assessed": "Students can describe the observations that led to rejecting the seepage hypothesis and state that water changes between liquid and vapour states at room temperature.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Water placed on a steel plate does not disappear into the plate. Yet after some time the plate is dry. Which statement best explains this observation?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Gravity pulled the water off the edges of the plate.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The steel absorbed the water slowly over time.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The water evaporated only because the steel plate was very hot.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The water turned into water vapour and mixed with the surrounding air.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student believes solid surfaces absorb liquids, directly contradicting the steel-plate evidence from the chapter.",
+       "C": "Choosing this option indicates the student believes evaporation requires a hot surface and does not occur at room temperature — a key misconception the chapter addresses.",
+       "A": "Choosing this option indicates the student has not engaged with the evaporation concept and is applying a non-scientific physical explanation."
+      },
+      "inclusivity": "Students who are uncertain can first be asked whether they have seen wet clothes dry indoors without any heat source; that lived experience grounds the concept of room-temperature evaporation before they answer."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify by Observable Properties",
+    "implied_lo_assessed": "Students can classify any given substance as solid, liquid, or gas by applying the observable properties of shape retention, ability to flow, and ability to fill available space.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classification of matter by observable physical characteristics."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Substance | Retains own shape? | Flows? | Fills all available space?\nP | Yes | No | No\nQ | No | Yes | No\nR | No | No | Yes",
+    "question_text": "A student records the observable properties of three substances in a table. Refer to the table provided. Which row correctly matches P, Q, and R to their states?",
+    "options": [
+     {
+      "label": "A",
+      "text": "P is a gas, Q is a liquid, R is a solid.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "P is a liquid, Q is a solid, R is a gas.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "P is a solid, Q is a gas, R is a liquid.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "P is a solid, Q is a liquid, R is a gas.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "A": "Choosing this option indicates the student has reversed the solid and gas criteria, possibly confusing shape retention with space-filling.",
+       "C": "Choosing this option indicates the student correctly identified the solid but confused the gas and liquid criteria, suggesting the space-filling property of gases is not yet secure.",
+       "B": "Choosing this option indicates the student has not applied the shape-retention criterion correctly and may be using appearance or familiarity rather than properties to classify."
+      },
+      "inclusivity": "Students who find the table format difficult can be asked to describe what each row's properties feel like with a familiar substance (ice for P, water for Q, air for R) before applying the labels."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify by Observable Properties",
+    "implied_lo_assessed": "Students can classify any given substance as solid, liquid, or gas by applying the observable properties of shape retention, ability to flow, and ability to fill available space.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classification of matter by observable physical characteristics."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Ghee is solid at room temperature but becomes liquid when heated in a pan. A student says: 'Solid ghee and liquid ghee are different substances because they look completely different.' Which response best challenges this claim using property-based reasoning?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Ghee cannot be classified as solid or liquid because it is a food substance, not a material.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "They are different substances because one can flow and the other cannot.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "They are the same substance, and both are in the liquid state because ghee is naturally oily.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "They are the same substance in different states, as state is determined by observable properties, not appearance.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option indicates the student recognises the property difference but draws the wrong conclusion — different properties of the same substance in different states does not make them different substances.",
+       "C": "Choosing this option indicates the student has not used the observable-property criteria and is relying on the everyday label 'oily' to assign state.",
+       "A": "Choosing this option indicates the student believes the classification system applies only to scientific substances and not to everyday materials."
+      },
+      "inclusivity": "Students who struggle with the abstract claim can be redirected to water: ice and liquid water look completely different — are they different substances? The parallel case scaffolds the reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify by Observable Properties",
+    "implied_lo_assessed": "Students can classify any given substance as solid, liquid, or gas by applying the observable properties of shape retention, ability to flow, and ability to fill available space.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classification of matter by observable physical characteristics."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student pours cooking oil into a round bowl and then into a rectangular tray. The oil takes the shape of each container. The student then opens a bottle of perfume across the room and can soon smell it. Use the observable properties of liquids and gases to explain these two observations.",
+    "options": [],
+    "expected_elements": [
+     "Cooking oil takes the shape of its container — this is the defining property of a liquid (no fixed shape, constant volume, can flow).",
+     "The perfume smell spreading across the room shows that perfume vapour fills the available space — the defining property of a gas.",
+     "The student correctly identifies oil as a liquid and perfume vapour as a gas using observable property-based reasoning."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who are unsure can start by writing what they observed (oil changed shape, smell spread) and then match each observation to the property list before constructing the explanation. Students who answer quickly can be asked whether a solid would behave the same way in each scenario and why not."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain State Changes and Their Conditions",
+    "implied_lo_assessed": "Students can name the four state-change processes, state the heating or cooling condition required for each, and explain how surface area, temperature, humidity, and wind affect the rate of evaporation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student places equal amounts of water in a bottle cap and on a flat plate in the same sunny location. Which observation and explanation correctly describe what will happen?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both evaporate at the same rate because they receive the same sunlight.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The water in the bottle cap evaporates faster because it is contained and cannot spread.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The water on the plate evaporates faster because it has a greater exposed surface area.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The water on the plate evaporates faster because the plate is hotter than the cap.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "A": "Choosing this option indicates the student has not connected surface area to evaporation rate and conflates identical external conditions with identical evaporation rates.",
+       "B": "Choosing this option indicates the student has reversed the surface area effect, perhaps reasoning that containment concentrates heat.",
+       "D": "Choosing this option indicates the student is attributing the difference to material temperature rather than surface area — a plausible but incorrect factor given that both containers are in the same sunny location."
+      },
+      "inclusivity": "Students who are uncertain can be prompted to imagine spreading the same water across a very large sheet versus keeping it in a cup — which dries faster? — before connecting that intuition to the bottle cap and plate setup."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain State Changes and Their Conditions",
+    "implied_lo_assessed": "Students can name the four state-change processes, state the heating or cooling condition required for each, and explain how surface area, temperature, humidity, and wind affect the rate of evaporation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "On a hot and humid rainy day, freshly washed clothes take much longer to dry than on a hot and dry sunny day, even though the temperature is similar. What is the best explanation?",
+    "options": [
+     {
+      "label": "A",
+      "text": "On humid days, the air already holds a lot of water vapour, so evaporation from the clothes slows down.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Rain water makes the clothes absorb more water, so there is more to evaporate.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Sunlight directly breaks down water molecules, so clothes dry faster only in sunlight.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Wind is always stronger on dry days, making evaporation faster than on rainy days.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Choosing this option shows the student focused on water quantity rather than the rate of evaporation, confusing the amount of water with the speed of its removal.",
+       "C": "Choosing this option reveals a misconception that sunlight chemically decomposes water rather than supplying heat that speeds evaporation.",
+       "D": "Choosing this option shows the student correctly identified wind as one factor but applied it as a universal rule rather than as one of several factors, ignoring humidity as the key variable in this scenario."
+      },
+      "inclusivity": "Students who struggle with the humidity concept can be asked to recall the fan discussion — why does a fan help more on a dry day? — and then apply that same reasoning to the clothes-drying scenario."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain State Changes and Their Conditions",
+    "implied_lo_assessed": "Students can name the four state-change processes, state the heating or cooling condition required for each, and explain how surface area, temperature, humidity, and wind affect the rate of evaporation.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Condition changed | All other conditions | Expected effect on evaporation rate\nSmall surface area → large surface area | Temperature, humidity, wind kept the same | ?\nLow temperature → high temperature | Surface area, humidity, wind kept the same | ?\nDry air → humid air | Surface area, temperature, wind kept the same | ?\nStill air → windy air | Surface area, temperature, humidity kept the same | ?",
+    "question_text": "A student is investigating how different conditions affect the rate of evaporation. Refer to the table provided. Complete the third column by stating whether evaporation rate increases or decreases, and give one reason for each.",
+    "options": [],
+    "expected_elements": [
+     "Large surface area → evaporation rate increases, because more water molecules are exposed to the air at the same time.",
+     "Higher temperature → evaporation rate increases, because water molecules gain more energy and escape into the air faster.",
+     "Humid air → evaporation rate decreases, because the air already holds a lot of water vapour, leaving less capacity to absorb more.",
+     "Windy air → evaporation rate increases, because moving air carries vapour away from the surface, allowing drier air to replace it."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who are unsure about one row can complete the others first and return; partial credit for three correct rows with reasons is still meaningful evidence of the factor model. Students who finish quickly can be asked to rank the four factors from most to least influential in a specific scenario such as drying clothes in a closed room."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+    "implied_lo_assessed": "Students can explain how evaporation removes heat to produce a cooling effect and apply this explanation to everyday devices and situations, identifying which evaporation factors are most relevant in each context.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Water stored in an earthen pot is cooler than water stored in a sealed steel pot, even when both pots are kept in the same room. Which explanation correctly accounts for this difference?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Clay is a naturally cold material that absorbs heat from the water inside.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The colour of the earthen pot reflects sunlight, keeping the water inside cooler.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The earthen pot is heavier, so it insulates the water better than the steel pot.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Water seeps through the porous earthen pot and evaporates from the outer surface, removing heat from the water inside.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "A": "Choosing this option indicates the student is attributing cooling to the material itself rather than to the evaporation mechanism — a misconception the chapter explicitly addresses.",
+       "C": "Choosing this option indicates the student has confused insulation with evaporative cooling, attributing the effect to mass rather than the porous structure enabling seepage.",
+       "B": "Choosing this option indicates the student is confusing solar reflection with evaporative cooling, applying an unrelated mechanism from outside the chapter's content."
+      },
+      "inclusivity": "Students who find the distinction difficult can be asked: what would happen to a sealed earthen pot with no moisture seeping out? If they reason that it would not cool, they are close to the mechanism."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+    "implied_lo_assessed": "Students can explain how evaporation removes heat to produce a cooling effect and apply this explanation to everyday devices and situations, identifying which evaporation factors are most relevant in each context.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A pot-in-pot cooler works by evaporation of water from moist sand between two earthen pots. A student tests the cooler on two different days: one hot and dry, the other hot and humid. On which day would the cooler work better, and why?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both days equally, because the temperature is the same on both days.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The dry day, because low humidity means the air can absorb more water vapour, so evaporation from the sand is faster.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The humid day, because higher humidity means there is more water available for evaporation.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The humid day, because more water vapour in the air keeps the sand moist for longer.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Choosing this option shows the student has a plausible but confused reasoning — high humidity keeps sand moist is partially true, but moist sand that does not evaporate does not cool.",
+       "A": "Choosing this option shows the student has isolated temperature as the only factor and has not applied the humidity factor from the evaporation model.",
+       "C": "Choosing this option shows the student has confused the presence of water vapour in air with the availability of water for evaporation, reversing the humidity effect."
+      },
+      "inclusivity": "Students who are uncertain can be prompted to recall the clothes-drying scenario: do clothes dry faster on a humid or dry day? Then ask: is the cooler making something dry? That parallel grounds the humidity reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Apply to Explain Cooling Effect and Real Contexts",
+    "implied_lo_assessed": "Students can explain how evaporation removes heat to produce a cooling effect and apply this explanation to everyday devices and situations, identifying which evaporation factors are most relevant in each context.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "When sanitiser is rubbed on hands, the hands feel cool immediately after. Explain this cooling sensation using the concept of evaporation and identify which property of sanitiser (it evaporates very quickly at room temperature) makes this effect stronger than water.",
+    "options": [],
+    "expected_elements": [
+     "Sanitiser evaporates from the skin surface; evaporation removes heat from the skin, producing the cooling sensation.",
+     "Sanitiser evaporates faster than water at room temperature, so it removes heat more quickly and the cooling effect is stronger.",
+     "The explanation correctly identifies evaporation — not condensation, absorption, or a chemical reaction — as the mechanism."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who are uncertain about why fast evaporation means greater cooling can be redirected to the surface area analogy: more rapid evaporation means more heat removed per unit of time, similar to how a larger surface area speeds up the drying process."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason Across Classification and Change Simultaneously",
+    "implied_lo_assessed": "Students can classify water by its observable physical state at every point in the water cycle and explain the conditions that cause each state-change transition, reasoning across both operations simultaneously in unfamiliar contexts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classification of matter by observable physical characteristics."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "In the bottle cloud experiment, a plastic bottle containing water and smoke from burnt paper is squeezed and then released. A visible haze forms inside the bottle when it is released. Which analysis correctly explains both the state of the haze and why it formed?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The haze is smoke in the gas state; it formed because squeezing the bottle pushed smoke to the sides.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The haze is tiny water droplets in the liquid state; it formed because releasing the bottle lowered the pressure and temperature, causing water vapour to condense around dust particles.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The haze is tiny water droplets in the liquid state; it formed because squeezing the bottle compressed water vapour directly into droplets without any need for dust particles.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The haze is water vapour in the gas state; it formed because the smoke heated the water inside the bottle.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Choosing this option shows the student identified the wrong substance (smoke, not water) as the haze and has not connected state classification to the observation.",
+       "D": "Choosing this option shows the student correctly identified the location of the haze as water-related but misclassified it as gas rather than liquid, and reversed the role of smoke from nucleation site to heat source.",
+       "C": "Choosing this option shows the student correctly identified liquid droplets but has omitted the essential role of dust particles as condensation nuclei, which is the chapter's key mechanistic point about cloud formation."
+      },
+      "inclusivity": "Students who are unsure whether the haze is liquid or gas can be asked: can you see water vapour? If the answer is no, then a visible haze must be something else — and that reasoning guides them toward classifying it as liquid droplets."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason Across Classification and Change Simultaneously",
+    "implied_lo_assessed": "Students can classify water by its observable physical state at every point in the water cycle and explain the conditions that cause each state-change transition, reasoning across both operations simultaneously in unfamiliar contexts.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Hailstones are chunks of ice that fall from clouds. A student knows that clouds are made of tiny liquid water droplets. Which sequence of state changes, with their conditions, correctly accounts for how hail forms?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Liquid water droplets in a cloud evaporate and then re-condense as ice — two state changes: evaporation caused by wind, then condensation caused by cold air.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Liquid water droplets in a cloud freeze — one state change: freezing, caused by very cold temperatures inside the cloud.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Water vapour condenses into liquid droplets, and then the liquid droplets freeze — two state changes: condensation caused by cooling, then freezing caused by extremely cold temperatures.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Water vapour in the atmosphere freezes directly into ice — one state change: freezing, caused by very cold air at high altitude.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Choosing this option shows the student bypassed the liquid droplet stage and went from vapour directly to ice, skipping the condensation step and oversimplifying the sequence.",
+       "B": "Choosing this option shows the student correctly identified freezing as the final step but missed the prior condensation step — they started the sequence from the cloud's liquid state, not from the vapour state that forms the cloud.",
+       "A": "Choosing this option shows the student recognised that two state changes occur but substituted evaporation for condensation in the first step, reversing the direction of the vapour-to-liquid change."
+      },
+      "inclusivity": "Students who find the two-step sequence difficult can be asked to first state what state water is in inside a cloud, then what state hail is in, and then identify how many transitions are needed between them — scaffolding the sequence before naming each transition."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason Across Classification and Change Simultaneously",
+    "implied_lo_assessed": "Students can classify water by its observable physical state at every point in the water cycle and explain the conditions that cause each state-change transition, reasoning across both operations simultaneously in unfamiliar contexts.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-1.2",
+     "competency_text": "Description of physical changes in matter."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "An Atmospheric Water Generator (AWG) collects drinking water from humid air by cooling the air until water condenses. A student claims: 'An AWG would work just as well in a dry desert as in a humid coastal city, because there is always some water vapour in the air.' Evaluate this claim using what you know about condensation, humidity, and state changes.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Student correctly identifies that condensation is the operative process — cooling humid air until water vapour changes to liquid state.",
+     "Student uses humidity as the key variable: the AWG's output depends on how much water vapour is available in the air, not merely on the presence of some vapour.",
+     "Student concludes that the claim is partially correct (some vapour is always present) but wrong in its inference: a dry desert has far less water vapour, so far less condensation and far less water collected.",
+     "Strong responses will additionally connect to the evaporation factor model: deserts have low humidity because high temperatures and dry air keep evaporation rates high while condensation rates stay low — showing reasoning across both classification and change conditions."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who struggle with the full evaluation can be prompted to start by stating what the AWG needs in order to work (humid air), then ask whether a desert provides that condition. This entry point allows students who cannot write a full evaluation to still demonstrate partial reasoning about condensation and humidity."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason Across Classification and Change Simultaneously",
+    "implied_lo_assessed": "Students can classify water by its observable physical state at every point in the water cycle and explain the conditions that cause each state-change transition, reasoning across both operations simultaneously in unfamiliar contexts.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-1.1",
+     "competency_text": "Classification of matter by observable physical characteristics."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Event | Starting state of water | Process (name the state change) | Condition that caused it | Ending state of water\nMorning dew appears on grass blades | | | |\nA wet road dries quickly in afternoon sun | | | |\nA factory releases large amounts of smoke particles into the atmosphere above a river | | | |\nA cold metal pipe in a warm basement drips water | | | |",
+    "task": "Refer to the table provided. For each event, classify the starting and ending states of water, name the state-change process, and state the condition that caused it. Then, for the factory smoke event, write one additional sentence explaining how smoke particles change what happens to water vapour in the air above the river.",
+    "scaffold": "For each row: first decide whether water starts as solid, liquid, or gas. Then decide what it becomes. Name the process connecting the two states. State the condition (heating, cooling, wind, humidity, dust) that drove the change. For the smoke row, think about what smoke particles do to water vapour when the air above the river cools.",
+    "format_of_output": [
+     "Completed table with all four rows filled in",
+     "One additional sentence for the factory smoke event explaining the role of smoke particles as condensation nuclei"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The final stage's implied LO requires simultaneous classification by observable state and explanation of state-change conditions; a classification-with-justification table is the most direct demonstration vehicle for both operations working together across multiple unfamiliar contexts.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can identify water's physical state at each point in a real-world event, name the correct state-change process, state the condition that caused it, and extend the condensation mechanism to the role of particulate matter — all without template support from a single chapter section.",
+      "reading_the_scaffold": "The scaffold breaks the task into four sub-decisions per row; a student who completes all four decisions for even two rows is showing partial mastery. The factory smoke row is the most demanding because it requires integrating classification (vapour to liquid), condition (cooling plus dust particles), and the mechanistic role of nuclei — a teacher should weight this row more heavily when reading responses.",
+      "strong_vs_weak_markers": "Strong responses correctly classify water as gas (vapour) at the start of dew, rain, and condensation events and as liquid at the start of evaporation events; they name specific conditions rather than generic ones ('cooled by contact with cold grass' rather than just 'cold'); and the smoke sentence explicitly names dust particles as condensation nuclei. Weak responses confuse the direction of state changes (writing evaporation when condensation is occurring), omit conditions, or describe smoke as making water dirty rather than providing nucleation sites.",
+      "inclusivity": "Students who find the table format overwhelming can be directed to complete just the dew row and the drying road row — one condensation and one evaporation event — before attempting the more complex rows. Students who complete the table quickly can be asked to design a fifth row describing a scenario from their own experience and fill it in."
+     }
+    },
+    "question_text": ""
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

@@ -1,0 +1,82 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 15,
+ "period_duration_minutes": 45,
+ "progression_stage": 6,
+ "stage_label": "Integrate and apply: connecting both effects and their energy sources to new contexts",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student builds a concept map connecting the three strands — magnetic effect, heating effect, and cell/battery source — and annotates each link with a causal mechanism drawn from the chapter."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Poses the synthesis question, circulates to probe the quality of causal links on individual maps, and facilitates a whole-class comparison of maps at the close."
+  }
+ ],
+ "activity_title": "The Fishing Boat's Power Problem",
+ "activity_description": "Students receive a brief profile of a small fishing boat that carries three electrical systems powered by a rechargeable battery: a compass-deflecting sensor coil used to detect a metal anchor chain, a heating coil that warms the bait box, and the battery itself that must survive a full day at sea. Pairs of students work through a structured fault-finding log — a printed table with three columns (System, Symptom, Cause-and-Fix) — in which five entries are already partially filled with realistic faults. Each fault requires students to trace the chain from battery → current → effect and to name the chapter concept that explains both the failure and its remedy. In the final band, the class builds a single causal map on the board connecting every fault to the chapter ideas that resolved it, making the synthesis visible as a diagram rather than a list.",
+ "teacher_notes": "The boat setting is entirely new to the chapter, but every mechanism it calls on — current producing a magnetic field in a coil, resistance converting electrical energy to heat, a rechargeable battery supplying and losing current over time — is taught in the chapter. Print one fault-finding log sheet per pair before the period; the five faults are listed in the materials. Fault 1 (coil stops deflecting compass when wire is disconnected) targets the magnetic effect and the on/off nature of electromagnets. Fault 2 (coil deflects more weakly after a sailor removes half the turns) targets strength variables. Fault 3 (heating coil no longer warms the bait box and the wire is found to be very thin and short) targets the factors that determine how much heat is produced — current, material, length — pulling in the idea that a shorter or thinner wire changes resistance and therefore heat. Fault 4 (the battery goes flat by midday instead of lasting all day) targets the rechargeable battery's limited charge-discharge cycle life and the fact that a dead battery is not harmless and must be disposed of correctly. Fault 5 (a sailor reverses the battery terminals to try to fix the flat battery and the coil's compass deflects in the opposite direction) targets current direction reversing the poles of the electromagnet. Pairs who finish early can be asked: 'Which fault would also apply to a dry cell, and which would not, and why?' — this stretches into the dry-cell versus rechargeable distinction. During the board map, draw a central node labelled CURRENT and have students place each fault's cause-concept as a branch; the visual result — all branches meeting current as the chapter's central agent — is the earned closure.",
+ "materials": [
+  "Printed fault-finding log sheet (one per pair) — five rows, three columns: System | Symptom | Cause-and-Fix; rows 1–5 have System and Symptom pre-filled, Cause-and-Fix blank",
+  "Blackboard or whiteboard",
+  "Chalk or whiteboard markers",
+  "Pencils or pens"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher reads aloud the boat profile: a small fishing vessel runs three electrical systems from a single rechargeable battery — a sensor coil near the anchor-chain pulley (a coil of wire around an iron core connected to a compass needle indicator), a bait-box heating coil, and the battery that must last a full working day. Teacher distributes the fault-finding log and asks pairs to read all five faults silently, then identify for each fault which of the chapter's three topics — magnetic effect, heating effect, or the battery and cell — is involved. Pairs record their initial classification in pencil beside each row. No answers yet; this classification primes the chapter's structure before reasoning begins."
+  },
+  {
+   "minutes": "8-30",
+   "activity": "Pairs work through the Cause-and-Fix column for each fault in order. Fault 1: the compass indicator stops deflecting when the wire to the coil works loose — pairs must explain that the magnetic field around the coil disappears when current stops, and the fix is to restore the circuit so current flows again. Fault 2: a sailor removes half the turns from the sensor coil to shorten it and the compass deflection becomes noticeably weaker — pairs must name the number of coil turns as a factor controlling electromagnet strength, and state that restoring the turns will restore the field. Fault 3: the heating coil in the bait box no longer warms adequately after a replacement coil was installed; the replacement is shorter and thinner than the original — pairs must connect wire length and thickness to the amount of heat produced, explaining that the resistance and therefore the heat generated depends on these properties of the wire. Fault 4: by midday the battery can no longer drive either effect; the crew find the battery is several years old and has been charged and discharged daily — pairs must explain that rechargeable batteries degrade after many charge-discharge cycles and eventually cannot hold enough charge to drive current; they must also note that the old battery should not be thrown overboard but taken to a proper disposal facility because it may contain acids and toxic materials. Fault 5: trying to revive the battery, a sailor connects it the wrong way round; the anchor-chain sensor's compass deflects, but in the opposite direction from normal — pairs must explain that reversing current direction reverses the poles of the electromagnet, so the compass deflects the other way. Teacher circulates, asking pairs who have written a correct cause to state the remedy in their own words before moving on, and asking pairs who are stuck on Fault 3 to recall what they found when they compared one cell with two cells in the heating activity."
+  },
+  {
+   "minutes": "30-42",
+   "activity": "Whole-class board synthesis. Teacher draws a single central node labelled CURRENT on the board. For each fault in turn, one pair reads their Cause-and-Fix aloud. Teacher writes the concept name as a branch from CURRENT — for example: 'circuit must be closed → magnetic field exists only when current flows'; 'number of turns → controls electromagnet strength'; 'wire length and thickness → controls heat produced'; 'charge-discharge cycles exhaust the battery → less current available'; 'current direction → determines pole orientation'. After all five branches are on the board, teacher asks the class: 'What is sitting at the centre of every single fix?' Students identify current as the agent that links every fault. Teacher then asks: 'What supplied the current for all of these systems?' — drawing out the rechargeable battery as the source. The map on the board now shows source → current → branches to magnetic effect concepts and heating effect concepts, with the battery's limits as the reason all effects can fail."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "Teacher closes by pointing to the finished board map and naming what it shows: the chapter is one idea in three expressions — a source drives a current, the current produces a magnetic field wherever it flows through a coil, and it produces heat wherever it meets resistance, and the source itself has a chemistry and a lifespan that set the limit on everything else. The boat's faults worked because the chapter's concepts were all that was needed to diagnose and fix them. That is why the chapter matters: not as a list of effects to memorise, but as a set of connected causal chains that explain — and fix — the world."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Students work as pairs on a structured fault-finding log rather than an open design or written analysis task. The log format forces students to move in both directions — from symptom back to cause, and from cause forward to remedy — demanding integrated use of all three chapter strands (magnetic effect, heating effect, and cell operation) in a single coherent setting. The closing causal map externalises the synthesis: as pairs contribute their fault explanations, the board diagram shows the chapter's concepts converging on the same real object."
+}
+
+Reorganise it now, as the single JSON object specified.

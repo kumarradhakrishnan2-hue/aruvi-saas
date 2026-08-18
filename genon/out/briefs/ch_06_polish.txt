@@ -1,0 +1,80 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 12,
+ "period_duration_minutes": 45,
+ "progression_stage": 6,
+ "stage_label": "Explain cyclone formation as a self-reinforcing pressure system and evaluate preparedness",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates the synthesis discussion, ensures every phenomenon is grounded in the pressure framework rather than described narratively, and draws the unified map on the board as groups contribute."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Assign each phenomenon to a region of the pressure framework (solid, liquid, atmospheric — static or differential), write a one-sentence mechanism explanation for each, and identify which phenomenon required the most steps in the causal chain."
+  }
+ ],
+ "activity_title": "The Weather Reporter's Notebook: Explaining a Coastal Storm from First Principles",
+ "activity_description": "Each group receives a 'Weather Reporter's Notebook' — a single A4 sheet presenting a sequence of six real-sounding field observations logged during a coastal storm event (a sudden afternoon sea breeze strengthens; rooftop tiles lift off a beachside building; dark anvil-shaped clouds build overhead; lightning flashes followed by distant thunder; storm surge water rises against the harbour wall; a storm warning is issued citing a deepening low-pressure centre offshore). Students are not told what each observation means — they must act as reporters reconstructing the mechanism behind each observation using the chapter's ideas, then write a single connected 'weather dispatch' paragraph that traces the whole event as one unbroken pressure-driven story, from the morning sea breeze to the offshore low.",
+ "teacher_notes": "This unit opens directly onto the notebook observations without any recap — the strangeness of being cast as a reporter, not a student, is intentional and helps signal that the chapter's ideas are being used, not reviewed. Distribute the notebook sheets face-down and ask groups to turn them over together on your signal; this creates a shared moment of first encounter. The six observations are carefully sequenced to mirror the chapter's own causal arc (pressure basics → atmospheric pressure → wind formation → speed-pressure inverse → storm/lightning chain → cyclone formation), but groups should discover that sequence rather than be told it. Circulate during annotation and listen for two failure modes: (a) groups label an observation with a vocabulary word but give no mechanism ('lightning — static charge') — push them to state why the charge builds and how it discharges; (b) groups treat each observation as independent rather than as one connected event — ask 'what had to be true in observation 3 for observation 4 to happen?' The dispatch paragraph is the key synthesis move: it must name pressure differences as the thread connecting every observation. A strong paragraph opens with a pressure gradient, traces how it generates wind, shows how high-speed wind reduces pressure above a roof, describes how continued warming produces charge separation and lightning, and ends by explaining how a self-reinforcing low-pressure centre offshore signals the beginning of a cyclone. In the closing band, do not ask groups to read their full paragraph — instead ask each group to name the single pressure principle they found hardest to place in the narrative, and use those responses to anchor the consolidation. The homework field is intentionally empty.",
+ "materials": [
+  "Weather Reporter's Notebook sheet — one per group (A4, printed or hand-written by teacher before class; contains the six numbered observations as described, with blank annotation space beside each and a lined dispatch-paragraph box at the bottom)",
+  "Pens or pencils"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher distributes the Weather Reporter's Notebook sheets face-down and sets the frame: a reporter has logged six observations during a single coastal storm event and needs the science to explain each one and write a connected account. Students turn the sheets over, read all six observations silently, and spend two minutes underlining any word or phrase in each observation that reminds them of a concept from the chapter — no discussion yet, just individual marking."
+  },
+  {
+   "minutes": "7-25",
+   "activity": "Groups work through each observation in order, writing a one- or two-sentence annotation beside it that states (i) which pressure principle is at work and (ii) the direction of the effect — what causes what. Teacher circulates, asking groups who have labelled without explaining to state the mechanism: 'You wrote pressure difference — which region is at higher pressure, which is lower, and what moves as a result?' Groups that finish all six observations early are asked to check whether their six annotations could be read as a single connected story — if not, to identify the link they are missing."
+  },
+  {
+   "minutes": "25-37",
+   "activity": "Each group composes their weather dispatch paragraph in the box at the bottom of the sheet. The paragraph must be one unbroken account — not six separate explanations — that uses the word 'pressure' or 'pressure difference' as the connecting thread across every transition from one observation to the next. Teacher reminds groups: the reporter's reader does not know the science; every causal step must be stated, not assumed."
+  },
+  {
+   "minutes": "37-45",
+   "activity": "Teacher asks each group to name aloud the single observation they found hardest to fold into the connected narrative. Responses are written on the board. Teacher uses these to consolidate: for each named observation, the class identifies which concept it rests on and how it connects to the observation before and after it. The closing statement names what the dispatch task demonstrated — that every phenomenon in the chapter, from the discomfort of a narrow strap to the formation of an offshore low, is explained by one idea: pressure arises from force and area, differences in pressure drive movement, and movement in turn changes pressure. The chapter works as one argument, not a collection of facts, and the reporters' accounts are evidence of that."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Collaborative writing-to-learn: groups first annotate each observation with the specific pressure principle that explains it, then compose a connected explanatory narrative that forces them to order and link those principles into a single causal chain — making the synthesis visible as a piece of reasoning, not a list."
+}
+
+Reorganise it now, as the single JSON object specified.

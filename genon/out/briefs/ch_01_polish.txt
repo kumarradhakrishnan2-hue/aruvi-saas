@@ -1,0 +1,85 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 6,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Synthesise — applying the full inquiry cycle to evaluate and refine an investigation",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the evaluation scenario and leads a structured whole-class synthesis that names the full cycle of scientific inquiry as a unified practice, drawing on the puri worked example and connecting it to the year's broader content arc."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Reads the scenario independently, completes a four-part written evaluation — question quality, variable control, recording completeness, and iteration potential — then contributes to the whole-class discussion."
+  }
+ ],
+ "activity_title": "The Bread Rises: Investigating a New Kitchen Puzzle",
+ "activity_description": "Students are presented with a fresh kitchen scenario — a home baker notices that a loaf of yeast bread rises unevenly: the top crust domes higher on one side, and the crumb is denser near the base than near the top. A short scenario card sets the scene and provides three observations the baker jotted down. Working first alone, then in small groups, students apply the full inquiry cycle to this new setting: they frame a focused scientific question, identify what can be changed and what can be measured, sketch a one-variable test plan, anticipate what a follow-up question might be if their predicted result occurred, and finally reflect on which ideas from the chapter made each of those steps possible. The task ends with each group composing a single 'investigation brief' — one question, one variable plan, one anticipated next question — that is shared with the class. Closure comes from naming, concretely and publicly, the chapter's core ideas as the tools that made the brief possible.",
+ "teacher_notes": "The bread-rising scenario is analogous to the puri in that it involves dough, heat, and an uneven physical outcome — but the phenomenon, the variables, and the observational details are all different, so students cannot simply replay the puri example. Watch for two tendencies: (1) students who list many variables to change simultaneously — redirect them with the one-variable principle rather than telling them the answer; (2) students whose 'scientific question' is actually a hypothesis ('Does temperature cause uneven rising?') — gently ask them to reframe it as a question about what factors might affect the outcome. When groups share their briefs, press them to name the chapter idea behind each move: 'You identified oil-temperature as a variable in the puri plan — what did you use just now to decide which factor to isolate?' The goal of the closing consolidation is that students name the ideas (curiosity as starting point, identifying changeable and measurable variables, one-variable rule, iteration) as the reason their brief is coherent — not as a list to recite, but as a explanation of why the task worked. If time is short, one group sharing in full is better than all groups rushing.",
+ "materials": [
+  "Scenario cards (one per student or one per pair) — each card contains the following printed text: 'A baker makes the same yeast-bread loaf every Sunday. She has noticed three things: (1) the top crust is always higher on the left side than the right; (2) the crumb near the base is always denser and slightly gummy compared with the crumb near the top; (3) on weeks when she uses freshly opened yeast the loaf rises faster than on weeks when the yeast packet has been open for a month. She wonders what is causing the uneven rise.' — these can be printed, photocopied, or written on the board for students to copy.",
+  "Blank investigation-brief template (one per group) — a simple half-page with four labelled boxes: 'Our scientific question', 'What we will change (one variable)', 'What we will observe or measure', 'What new question this result might open' — can be drawn by students in their notebooks using the teacher's board version as a model.",
+  "Notebooks and pencils"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher reads the scenario card aloud and places it in context: 'We have spent this chapter in a kitchen before — but this is a different kitchen, a different dough, and a different puzzle. Everything you have worked with this chapter is the toolkit; this is the new lock.' Teacher asks students to read the card silently once more and write, individually in their notebooks, one thing they notice and one thing they wonder. Two or three students share their 'wonder' aloud — teacher writes the questions on the board without evaluating them, establishing that multiple starting questions are legitimate."
+  },
+  {
+   "minutes": "8-18",
+   "activity": "Individual work. Each student works alone to: (a) choose one of the wonders from the board or write their own, and sharpen it into a focused scientific question about what factors might affect the uneven rise; (b) list every factor they can think of that might be changed in a baking experiment (type of yeast, amount of yeast, oven temperature, position of the tin in the oven, size of the tin, freshness of yeast, etc.); (c) circle the single factor they would change first and write one sentence explaining why. Teacher circulates, prompting with 'What would you keep exactly the same?' and 'What would you watch or measure to know if it made a difference?'"
+  },
+  {
+   "minutes": "18-30",
+   "activity": "Groups of three or four pool their individual questions and variable lists. Together they fill in one investigation-brief template: agree on a single scientific question, nominate the one variable to change, describe what they will observe or measure, and write the one follow-up question they predict their result would open. Groups are told they will share their brief with the class, so every box must be legible and each choice must have a reason the group can state aloud. Teacher moves between groups listening for the one-variable rule being applied or violated and asking groups to check each other's plans."
+  },
+  {
+   "minutes": "30-40",
+   "activity": "Two or three groups share their investigation briefs with the class (projecting or reading aloud). After each brief, teacher asks the presenting group: 'Which idea from our chapter did you use to write that box?' Students name the moves — framing a question from an observation, deciding what to change and what to measure, isolating one variable, anticipating iteration. Other students are invited to ask one genuine question or offer one suggestion per brief. Teacher notes on the board each chapter idea that is named, building a visible list."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Closing consolidation. Teacher points to the list of ideas on the board and says: 'Every one of these was already yours before we walked into this new kitchen today — that is what the chapter gave you.' Students write two sentences in their notebooks completing the prompt: 'The bread-rising puzzle worked as an investigation because…' — answers must reference at least two ideas from the board list. Teacher invites one or two students to read their sentences aloud. Teacher closes by observing that the baker's question about uneven rise is, like the puri's thinner side, a real phenomenon without a complete scientific explanation — the investigation brief the class wrote today is exactly the kind of thing a working scientist would draft at the start of real research."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Collaborative inquiry with structured individual accountability: each student first works alone to engage with the scenario and frame their own question and variable list, then the group pools thinking to build a shared brief, ensuring individual reasoning precedes collective output. The scenario is deliberately chosen to echo the chapter's kitchen context while being entirely new in content, so students must transfer rather than recall."
+}
+
+Reorganise it now, as the single JSON object specified.

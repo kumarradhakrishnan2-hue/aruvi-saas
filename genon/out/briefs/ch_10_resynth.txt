@@ -1,0 +1,288 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 10: Light: Mirrors and Lenses
+
+Chapter 10 introduces students to curved mirrors (concave and convex) and lenses (convex and concave), building on prior learning about plane mirrors and straight-line travel of light from Grade 7. The chapter is structured as a progression from mirror types and their image characteristics, through the laws of reflection, to the parallel world of lenses, with real-world applications woven throughout.
+
+10.1 What Are Spherical Mirrors?
+
+This section introduces spherical mirrors as a type of curved mirror whose reflecting surface forms part of a hollow glass sphere. The section opens with a student activity using a shiny metallic spoon as an improvised curved mirror to observe the difference between images formed by its inward-curving (inner) and outward-curving (outer) surfaces. The inner surface produces an inverted image while the outer surface produces an erect but smaller image. The chapter defines a concave mirror as one whose reflecting surface curves inwards and a convex mirror as one whose reflecting surface curves outwards, providing schematic representations for each. A "step further" box clarifies that spherical mirrors are manufactured by grinding a flat glass surface into a curve and applying a reflective coating, not by slicing a hollow sphere. Activity 10.2 asks students to distinguish between concave and convex mirrors by viewing them from the side to identify the direction of curvature.
+
+10.2 What Are the Characteristics of Images Formed by Spherical Mirrors?
+
+This section examines how image characteristics change with the distance of the object from a concave or convex mirror. Activity 10.3 guides students to place a small object in front of both mirror types at a short distance, then gradually move it farther away while observing changes in image size and orientation. For a concave mirror, the image is erect and enlarged when the object is close, but becomes inverted and progressively smaller as the object moves away. For a convex mirror, the image is always erect and diminished regardless of object distance, though the size decreases slightly as the object moves farther. The section distinguishes this behaviour from a plane mirror, which always produces an erect image of the same size, and notes that lateral inversion is seen in all three mirror types. Real-world uses of concave mirrors covered include torch reflectors, car and scooter headlights, and the dentist's mirror (which produces an enlarged view when held close). Real-world uses of convex mirrors include vehicle side-view mirrors (which provide a wider field of view and erect image of traffic behind), road safety mirrors at intersections, and surveillance mirrors in large stores. A "step further" box notes that modern reflecting telescopes use a large concave mirror as the primary mirror.
+
+10.3 What Are the Laws of Reflection?
+
+This section revisits the reflection activity from Grade 7 and extends it to formally establish the two laws of reflection. Activity 10.4 uses a plane mirror, a comb-and-torch setup to produce a narrow beam of light, and a white paper sheet to trace incident and reflected beams at multiple angles. Students draw the normal at the point of incidence and measure the angle of incidence and angle of reflection for several trials, discovering that these angles are always equal — this is the first law of reflection. Activity 10.5 extends this by using a sheet of chart paper with part bent at the edge of the table; the reflected beam disappears when the paper is bent, demonstrating that the incident ray, normal, and reflected ray all lie in the same plane — this is the second law. The section states that both laws are valid for all mirror types, plane and spherical. Activity 10.6 uses multiple parallel beams (multiple comb slits) to show that parallel beams reflecting off a plane mirror remain parallel, off a concave mirror they converge, and off a convex mirror they diverge. Activity 10.7 exploits concave mirror convergence by focusing sunlight onto paper to demonstrate that the concentrated light generates enough heat to ignite the paper; a "Safety First" warning is included. A "step further" box introduces solar concentrators as devices that use mirrors or lenses to concentrate sunlight for generating steam, electricity, and industrial heat, including solar furnaces that can melt steel.
+
+10.4 What Is a Lens?
+
+This section transitions from reflective to refractive optics, introducing lenses as pieces of transparent material with curved surfaces that refract rather than reflect light. Activity 10.8 demonstrates the lens effect using a water drop on an oiled glass strip: the curved outer surface of the water drop causes letters placed beneath it to appear enlarged, just as a magnifying glass does. The section defines a convex lens as one thicker at the middle than the edges (a converging lens) and a concave lens as one thicker at the edges than the middle (a diverging lens). Activity 10.9 explores image characteristics through both lens types: a convex lens produces an erect and enlarged image when the object is close but an inverted image when the object is farther away; a concave lens always produces an erect and diminished image. Activity 10.10 uses parallel beams through a flat glass plate, a convex lens, and a concave lens in sequence to confirm that the flat plate leaves the beam unchanged, the convex lens converges it, and the concave lens diverges it. Activity 10.11 repeats the paper-burning demonstration from Activity 10.7 using a convex lens in place of the concave mirror, confirming that a convex lens can also concentrate sunlight sufficiently to ignite paper. The section closes with everyday applications of lenses: eyeglasses for vision correction, cameras, telescopes, microscopes, and the flexible convex lens in the human eye. The end-of-chapter "Keep the curiosity alive" section includes exercises requiring angle calculations, matching images to mirror types, matching images to lens types, assertion-reason questions about convex mirrors, and a practical magnifying glass activity.
+
+
+======================================================================
+
+THE FULLEST PLAN (15 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: The Spoon Mirror: Inward and Outward Curves
+U2: Identifying Curvature: Which Way Does It Curve?
+U3: Moving Closer, Moving Away: Image Changes in a Concave Mirror
+U4: Always Erect, Always Smaller: The Convex Mirror
+U5: Mapping Image Behaviour: A Three-Mirror Comparison
+U6: Tracing Beams: Discovering the Equality of Angles
+U7: The Bent Paper Test: Coplanarity of Incident and Reflected Rays
+U8: Parallel Beams and Three Mirrors: Converge, Diverge, or Stay Parallel?
+U9: A Water-Drop Lens: Discovering Refraction at a Curved Surface
+U10: Close Up and Far Away: Image Characteristics Through Both Lens Types
+U11: Parallel Beams Through Glass: Flat Plate, Convex, and Concave Lens
+U12: Burning Paper with Mirror and Lens: Applying Convergence
+U13: Angle Calculations and Assertion-Reason: Applying the Laws
+U14: Match the Image: Predicting Mirror and Lens Type from Description
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 13 UNITS — unit-title map ---
+U1: The Spoon Mirror: First Encounter with Curved Surfaces
+U2: Curvature from the Side: Classifying Mirrors by Profile
+U3: Moving Away: How Distance Changes the Concave Mirror Image
+U4: Always Erect, Always Small: The Convex Mirror Investigation
+U5: Matching Images to Mirrors: Consolidation and Application
+U6: Tracing the Beam: Discovering the First Law of Reflection
+U7: The Bent Paper Test: Establishing the Second Law
+U8: Parallel Beams, Three Fates: Convergence, Divergence, and Parallel Passage
+U9: Igniting Paper with Sunlight: Concave Mirror as a Concentrator
+U10: A Drop of Water as a Lens: Discovering Refraction at a Curved Surface
+U11: Near and Far Through Lenses: Mapping Image Character by Distance
+U12: Parallel Beams Through Glass: Confirming Convergence and Divergence
+U13: Optical Reasoning Challenge: Predict, Explain, and Justify
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 13,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Explain and predict image formation by applying laws of reflection and converging/diverging behaviour across mirror and lens types",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Optical Reasoning Challenge: Predict, Explain, and Justify",
+ "activity_description": "Students receive a set of unfamiliar optical scenarios — an object placed at a specified distance from a named mirror or lens type — and must predict the image character, explain the mechanism using the laws of reflection or the converging/diverging principle, and justify real-world device choices by selecting and arguing for a particular optical element. They also work through the chapter's angle-calculation exercise.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Independently predict, explain, and justify answers to each scenario in writing, applying the laws and principles from across the chapter."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Circulates during individual work, selects two or three contrasting responses for class discussion, and conducts the chapter's angle-calculation exercise as a whole-class review."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-5",
+   "activity": "Teacher presents the challenge framing: students will now apply everything from the chapter to novel scenarios rather than repeat familiar observations."
+  },
+  {
+   "minutes": "5-28",
+   "activity": "Students individually work through four prediction-and-explanation scenarios: two involving mirrors (one concave at specified distance, one convex) and two involving lenses (one convex at close range, one concave), writing full causal justifications."
+  },
+  {
+   "minutes": "28-38",
+   "activity": "Whole-class discussion of two or three selected responses; teacher uses contrasting answers to highlight where causal reasoning is incomplete and models a complete justification."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Class works through the chapter's angle-calculation exercise items together, applying the first law of reflection to compute unknown angles and checking answers against the equality principle."
+  }
+ ],
+ "teacher_notes": "This closing unit is the place where the chapter's full progression — from observation through classification and law verification to causal application — is exercised together. The prediction-and-explanation format exposes students who have memorised image types without internalising the mechanism; a student who can classify images but not explain why the concave mirror produces an inverted image at distance has not yet reached the chapter's cognitive target. The angle-calculation exercise is a natural close because it requires the first law to be used as a tool, not merely stated.",
+ "materials": [
+  "Printed scenario sheets with four novel optical problems",
+  "Chapter textbook (for angle-calculation exercise)",
+  "Pencils and notebooks"
+ ],
+ "homework": [
+  "Select one optical instrument mentioned in the chapter — telescope, dentist's mirror, vehicle side-view mirror, or eyeglasses — and write a paragraph explaining which mirror or lens type it uses, what image character is needed, and why the converging or diverging behaviour of that optical element makes it suitable for that instrument."
+ ]
+}
+
+--- PLAN OF 11 UNITS — unit-title map ---
+U1: Spoon as a Mirror: Discovering Two Curved Surfaces
+U2: Moving the Object, Watching the Image Change
+U3: Matching Real Uses to Mirror Properties
+U4: Tracing Beams and Measuring Angles: First Law of Reflection
+U5: The Bending Paper Test: Second Law and Coplanar Rays
+U6: Convergence in Action: Focusing Sunlight with a Concave Mirror
+U7: A Water-Drop Lens: Discovering Refraction Through a Curved Surface
+U8: Varying Distance Through a Lens: How Image Changes
+U9: Parallel Beams Through Lenses and Sunlight Convergence
+U10: Predicting Images Before Looking: Applying the Rules
+U11: Choosing the Right Optical Device for the Right Job
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 11,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Explain and predict image formation by applying convergence/divergence principles",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Choosing the Right Optical Device for the Right Job",
+ "activity_description": "Students are given descriptions of practical situations requiring a specific optical outcome — a dentist needing an enlarged view, an engineer designing a vehicle rear-view mirror, an optician correcting short-sightedness — and must identify the appropriate curved mirror or lens, state the required image property, and explain the choice in terms of converging or diverging behaviour.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student independently completes a device-selection card for each scenario, naming the optical device, stating the image property it produces, and providing a causal explanation using converging or diverging vocabulary."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Groups compare individual cards, discuss contested selections, and produce a jointly agreed card where members disagreed, citing the law or beam-behaviour principle that resolves the disagreement."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Selects one or two contested cases for whole-class discussion at the close, asking students to articulate their causal reasoning explicitly rather than accepting correct answers without justification."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-5",
+   "activity": "The teacher briefly connects this unit to the previous unit's prediction work: the same principles used to predict image properties now guide the choice of optical device for a specific practical need."
+  },
+  {
+   "minutes": "5-22",
+   "activity": "Students individually complete device-selection cards for all scenarios, writing the optical device name, the image property it produces, and a causal explanation for each."
+  },
+  {
+   "minutes": "22-35",
+   "activity": "Groups compare and discuss contested selections, citing beam-behaviour or law-of-reflection evidence to resolve disagreements, and produce jointly agreed explanations."
+  },
+  {
+   "minutes": "35-45",
+   "activity": "Whole-class discussion on one or two contested cases; the teacher closes by asking students to state in one sentence the shared principle that connects all converging devices and all diverging devices across the chapter."
+  }
+ ],
+ "teacher_notes": "This unit builds directly on the prediction structure of the previous unit, extending from 'what image does this device produce?' to 'which device do I choose to get the image I need?' — a genuine inversion of the reasoning direction that tests deeper command of the convergence and divergence principle. Watch for students who select correctly but justify by analogy ('the dentist uses a concave mirror because we saw it in unit three') rather than by causal reasoning about image properties and object distance; press for the mechanism, not the memory. The closing sentence — the shared principle connecting all converging devices — is a strong signal that students can generalise across mirrors and lenses, which is the chapter's highest cognitive target.",
+ "materials": [
+  "Device-selection scenario cards",
+  "Class summary board with mirror and lens rules from earlier units",
+  "Student notebooks"
+ ],
+ "homework": [
+  "For each optical device listed (concave mirror, convex mirror, convex lens, concave lens), write one real-world application not discussed in class and explain in one sentence why that device's converging or diverging behaviour makes it the right choice for that application."
+ ]
+}
+
+--- PLAN OF 9 UNITS — unit-title map ---
+U1: Spoon as a Mirror: Meeting Concave and Convex Surfaces
+U2: Moving Closer, Moving Away: How Distance Changes the Image
+U3: Tracing Beams: Discovering the Laws of Reflection
+U4: Parallel Beams and Curved Mirrors: Converging, Diverging, Staying Parallel
+U5: Sunlight to a Point: The Concave Mirror as a Concentrator
+U6: Water Drop to Glass Lens: Meeting Convex and Concave Lenses
+U7: Lens Images at Varying Distances: Patterns in Convergence and Divergence
+U8: Sunlight Through a Convex Lens and Parallel Beams Through Lenses: Confirming Convergence and Divergence
+U9: Matching Mirror or Lens to Task: Predicting Which Optical Surface Does the Job
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 9,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply converging and diverging behaviour to explain and predict optical outcomes",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Matching Mirror or Lens to Task: Predicting Which Optical Surface Does the Job",
+ "activity_description": "Students are given a set of real-world optical tasks — torch reflector, vehicle side-view mirror, magnifying glass, spectacles for distant vision — and must predict which type of curved mirror or lens (concave mirror, convex mirror, convex lens, or concave lens) each requires, justifying each prediction using the image characteristics and beam behaviour established across the chapter.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Independently write a prediction and justification for each optical task, citing the relevant image characteristic (erect/inverted, enlarged/diminished, wider field) and the relevant beam behaviour (converging or diverging)."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Compare individual predictions within the group, discuss disagreements, and agree on a group justification that both names the correct optical surface and explains why in terms of image and beam behaviour."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates whole-class debrief, drawing out justifications that correctly integrate image characteristics from stage 1 with beam behaviour from stages 2 and 3, and prompting where students conflate mirror and lens types."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher introduces the prediction task, reminding students that they now have the full toolkit — image characteristics at varying distances, beam convergence and divergence, and the mirror–lens structural parallel."
+  },
+  {
+   "minutes": "7-20",
+   "activity": "Students work individually on the prediction-and-justification task for each optical device, writing responses without consulting the group."
+  },
+  {
+   "minutes": "20-35",
+   "activity": "Groups compare individual predictions, identify disagreements, and construct a jointly justified group response for each device."
+  },
+  {
+   "minutes": "35-45",
+   "activity": "Whole-class debrief: each group presents one device; teacher ensures every justification invokes both image outcome and beam behaviour, closing the chapter's arc."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to reason across the whole chapter — image characteristics, laws of reflection, and converging/diverging beam behaviour — to make and justify predictions about unfamiliar applications. Watch for the persistent confusion between a convex mirror (erect, wide-field side-view mirror) and a concave mirror (torch reflector), which students sometimes swap because both are associated with vehicles; require explicit justification referencing the image type needed for each task. This unit rounds off the plan at the level of the dissolution test: students explain and predict optical outcomes by applying the laws and beam behaviour they have built across all four stages.",
+ "materials": [
+  "Printed task cards (one set per student describing each optical device and its purpose)",
+  "Student response sheets"
+ ],
+ "homework": [
+  "Choose one optical instrument not covered in class (camera, telescope, or microscope) and explain in writing which type of lens or mirror it uses and why, citing the image characteristic required for that instrument to function."
+ ]
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

@@ -70,10 +70,15 @@ def main() -> int:
     #   genon/out/canonical/<subject>/<grade>/ch_NN[_tag]_<TS>_raw.txt
     grade_folder = raw_path.parent.name
     subject_folder = raw_path.parent.parent.name
-    m = re.match(r"ch_(\d+)(?:_.*?)?_(\d{8}_\d{6})_raw\.txt$", raw_path.name)
+    # Two shapes (2026-08-17): sync runs end `_<TS>_raw.txt`; batch collects append the
+    # custom_id after the timestamp (`_<TS>_sci_vii_09_p09_raw.txt`). Keep the cid in the
+    # ledger_ts so a recovery installs under exactly the name collect would have used.
+    m = re.match(r"ch_(\d+)(?:_.*?)?_(\d{8}_\d{6})(?:_(.+?))?_raw\.txt$", raw_path.name)
     if not m:
         raise SystemExit(f"cannot read chapter/timestamp from {raw_path.name}")
     ch, ts = int(m.group(1)), m.group(2)
+    if m.group(3):
+        ts = f"{ts}_{m.group(3)}"
 
     full = raw_path.read_text(encoding="utf-8")
     parsed, problems, repairs = repair_parse(full)
@@ -166,8 +171,10 @@ def main() -> int:
     doc = json.loads(dest.read_text(encoding="utf-8"))
     doc.setdefault("genon_canonical", {})["recovered_from"] = raw_path.name
     doc["genon_canonical"]["recovered_note"] = (
-        f"parse recovered at ₹0 from the saved raw after {len(repairs)} naked-quote "
-        f"repairs; the generation itself is the metered run logged at {ts}")
+        f"parse recovered at ₹0 from the saved raw after {len(repairs)} serialization "
+        f"repair(s): {'; '.join(repairs[:5]) or 'none'}"
+        f"{' …' if len(repairs) > 5 else ''}; "
+        f"the generation itself is the metered run logged at {ts}")
     dest.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"installed: {dest}")
     print("\nThe money for this artefact was logged by the run that earned it; "

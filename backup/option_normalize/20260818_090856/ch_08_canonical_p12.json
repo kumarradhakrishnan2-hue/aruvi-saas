@@ -1,0 +1,1401 @@
+{
+  "filename": "ch_08_canonical_p12.json",
+  "saved_at": "2026-08-17T12:38:00",
+  "plan_status": "canonical",
+  "chapter_number": 8,
+  "chapter_title": "Measurement of Time and Motion",
+  "grade": "Grade VII",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 12
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 12 periods = 480 minutes\nTotal: 12 periods · 8h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "12x40",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science vii 8",
+    "ledger_ts": "20260817_122348_sci_vii_08_p12",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "progression_stage": 1,
+          "stage_label": "Observe and compare timekeeping methods",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "Before the Clock: Natural Cycles and Early Devices",
+          "activity_description": "Students examine how ancient civilisations used repeating natural events — sunrise/sunset, lunar phases, seasons — as time markers, then discover four early devices (sundial, water clock, hourglass, candle clock) by matching a description card to each device's working principle.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Displays images or diagrams of the four early timekeeping devices and poses guiding questions about what repeating feature each device exploits."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Match description cards to device diagrams, noting what each device measures and what repeating process it relies on."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces Prerna's opening question and elicits student ideas about how time was measured before modern clocks, anchoring the discussion in natural repeating events."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Groups receive description cards for sundial, outflow water clock, Ghatika-yantra, hourglass, and candle clock and match each to its diagram, recording the repeating feature each device exploits."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Groups share matches and the class builds a comparative table on the board listing each device, its repeating feature, and what it cannot measure well."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Teacher highlights the Samrat Yantra and the Ghatika-yantra as remarkable examples from Indian history, drawing out the observation that all devices depend on some process repeating at equal intervals."
+            }
+          ],
+          "teacher_notes": "This opening unit orients students to the chapter's central question — what makes a reliable time measurer — rather than treating early devices as historical curiosities. Watch for the common conflation of sundials with all shadow-based methods; the Samrat Yantra's shadow moves at a known rate, making it measurably precise, not merely decorative. Asking groups 'what would go wrong with this device on a cloudy day or indoors?' quickly surfaces which devices depend on external conditions and sets up the need for a self-contained mechanism.",
+          "materials": [
+            "Printed or projected images of sundial, outflow water clock, Ghatika-yantra, hourglass, and candle clock",
+            "Description cards (one per device per group)",
+            "Blank table template for comparative recording"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "progression_stage": 1,
+          "stage_label": "Observe and compare timekeeping methods",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Build and Calibrate a Water Clock",
+          "activity_description": "Students construct a simple water clock from a cut plastic bottle, mark water-level positions at equal time intervals using a reference clock, and then use the calibrated device to measure short time intervals — verifying whether water flow is sufficiently steady to serve as a timer.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates how to set up the bottle and pierce the base, then guides groups through calibration against a reference clock."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Construct, calibrate, and test the water clock, recording water levels and comparing measured intervals against reference time."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher demonstrates piercing the bottle base and starting water flow; groups set up their own devices and establish the starting water level."
+            },
+            {
+              "minutes": "6-22",
+              "activity": "Groups mark water levels at equal reference-clock intervals, building a calibration scale on the bottle side."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Groups use their calibrated water clock to measure two self-chosen short intervals and compare the measured values to the reference clock."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Class discussion: which groups found the water clock accurate, which found it drifted, and what feature of the device causes inconsistency — connecting back to the previous unit's insight that reliability requires a steady, repeating process."
+            }
+          ],
+          "teacher_notes": "The previous unit established that all early timekeeping devices rely on a repeating process; this unit tests that principle hands-on. A frequent error is making the hole too large, causing rapid and unsteady drainage — use this as a productive observation rather than a failure, since it illustrates why the Ghatika-yantra's fine hole was so carefully controlled. Prompt groups to articulate why calibration is necessary before the device can measure anything, bridging toward the pendulum's advantage of a self-regulating period.",
+          "materials": [
+            "Plastic bottles (cut in half)",
+            "Pin or nail for piercing base",
+            "Marker pens",
+            "Containers to catch water",
+            "Reference clock or timer",
+            "Water"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Investigate the pendulum's time period",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "What Controls the Pendulum's Beat?",
+          "activity_description": "Students set up pendulums of varying string lengths and bob masses, time ten oscillations for each configuration, calculate the time period, and tabulate results — then determine from their data which variable affects the time period and which does not.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the definition of one oscillation and time period, then poses the inquiry question: does changing bob mass or string length change the time period?"
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Plan and carry out trials varying one factor at a time, record timings for ten oscillations, calculate time period, and draw a conclusion from the pattern in their table."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher defines mean position, oscillation, and time period using a live pendulum demonstration, and groups predict which variable they think matters before trialling."
+            },
+            {
+              "minutes": "8-26",
+              "activity": "Groups conduct trials: first keeping string length constant and changing bob mass, then keeping mass constant and varying string length, recording time for ten oscillations in each case and computing time period."
+            },
+            {
+              "minutes": "26-36",
+              "activity": "Groups analyse their tables, identify the pattern, and write a one-sentence conclusion stating which variable affects the time period."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Class compares conclusions across groups, resolving any disagreements by examining whose timing procedure was most consistent, and the teacher formalises: time period depends on length, not mass."
+            }
+          ],
+          "teacher_notes": "Building on the water clock unit, students now investigate a device whose repeating process is self-regulating — the key leap is that the pendulum needs no external calibration once its length is set. A persistent misconception is that a heavier bob swings faster; if any group's data appears to support this, probe their timing procedure before the data, since human reaction time errors often produce this artefact. Ensuring groups count oscillations starting from the mean position (not an extreme) prevents the systematic off-by-half error.",
+          "materials": [
+            "String (various lengths: 25 cm, 50 cm, 100 cm)",
+            "Metal bobs or washers of different masses",
+            "Rigid support or door frame to suspend pendulum",
+            "Stopwatch or phone timer",
+            "Ruler",
+            "Recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Investigate the pendulum's time period",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "From Pendulum to Precision: Clocks Across Time",
+          "activity_description": "Students consolidate the pendulum's constant time period property, trace how Galileo's discovery and Huygens's invention of the pendulum clock led to mechanical timekeeping, and compare the accuracy progression from pendulum clocks to quartz and atomic clocks.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the historical line from Galileo to Huygens to atomic clocks, emphasising what property each advance exploited and what accuracy it achieved."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete a structured note organiser that maps each clock type to its repeating process and its accuracy claim."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher reviews the previous unit's finding — time period depends on length — and explains how Huygens recognised this as the basis for a reliable clock mechanism in 1656–1657."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Teacher presents the progression: pendulum clock (seconds accuracy) → quartz clock (crystal vibrations) → atomic clock (atomic vibrations, loses one second in millions of years), and students fill a note organiser for each type."
+            },
+            {
+              "minutes": "24-34",
+              "activity": "Students answer: why must all clocks — ancient or modern — be based on a process that repeats at equal time intervals, connecting the water clock and pendulum to quartz and atomic clocks under the same principle."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Teacher introduces the SI unit of time (second, symbol s) and the conversion relationships with minutes and hours, and clarifies correct writing conventions for unit symbols."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the inquiry findings of the previous unit within the broader history of timekeeping; the narrative arc from sundials through to atomic clocks should feel like one continuous question being answered more and more precisely. Students frequently write 'sec' or 'hrs' as abbreviations — address this directly when introducing SI conventions, using the rule that unit symbols are lowercase and have no full stop. Connecting Huygens's invention to Galileo's earlier observation models how science builds cumulatively, which is worth making explicit.",
+          "materials": [
+            "Projected or printed timeline diagram: Galileo → Huygens → quartz → atomic clocks",
+            "Note organiser worksheet",
+            "Reference: SI unit writing conventions from chapter"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Investigate the pendulum's time period",
+          "pedagogical_approach": "Demonstration",
+          "activity_title": "Reading the Second: Clocks, Wall Timers, and the Smallest Interval",
+          "activity_description": "Students examine a wall clock to identify the smallest measurable time interval it can display, then compare this to the precision requirements described in sports timing, ECG measurement, digital music recording, and computing — establishing that one second, while the SI standard, is not always the appropriate unit of measurement.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the wall clock reading activity and presents real-world precision contexts from the Science and Society box, posing the question of why different fields demand different time resolutions."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Record the smallest measurable interval on the wall clock, then match each real-world context to the time resolution it requires and justify the match in one sentence."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher displays a wall clock and asks students to observe and record the smallest interval it can measure, connecting back to the pendulum's one-second beat."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Teacher presents the four precision contexts — sports (milliseconds), ECG (milliseconds), digital music (thousands of samples per second), computing (microseconds) — with concrete examples drawn from the chapter."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Students individually match each context to its required time resolution and write one-sentence justifications, then compare with a neighbour."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Class discussion consolidates the idea that the second is the SI unit but measurement precision must match the phenomenon being measured, closing this stage before moving to motion concepts."
+            }
+          ],
+          "teacher_notes": "This unit closes the timekeeping stage by showing that the second, established through the pendulum's period, is a starting point rather than a ceiling for precision. Students sometimes assume that more precision is always better regardless of context — use the ECG and music examples to show that the required precision is dictated by the phenomenon, not by the measurer's preference. The activity also reinforces the SI writing conventions introduced in the previous unit by asking students to write their time resolutions using correct symbols.",
+          "materials": [
+            "Wall clock (or projected image of clock face)",
+            "Printed or projected descriptions of four precision contexts from Science and Society box",
+            "Matching worksheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Define and calculate speed",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Who is Faster? Building the Need for Speed",
+          "activity_description": "Students analyse two race scenarios — runners covering the same distance in different times, and runners covering different distances in the same time — and derive from their reasoning the need for a single quantity that combines distance and time to compare motion meaningfully.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the two comparison scenarios as structured problems and facilitates student reasoning toward the formula definition."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss both scenarios, propose a rule for deciding who is faster, and express that rule as a ratio before being shown the formal definition."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher revisits Prerna's context — sprint timing — and poses Scenario 1: two runners cover 100 m, one in 12 s and one in 15 s; who is faster and how do you know?"
+            },
+            {
+              "minutes": "8-18",
+              "activity": "Teacher poses Scenario 2: runner A covers 200 m in 25 s and runner B covers 300 m in 30 s; groups reason through which measure to use and propose a rule."
+            },
+            {
+              "minutes": "18-28",
+              "activity": "Groups share their proposed rules; teacher consolidates toward the definition: speed = total distance ÷ total time taken, introducing SI unit of m/s and the alternate km/h unit."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students solve two numerical examples from the chapter (Examples 8.1 and 8.2) individually, applying the formula and writing answers with correct units."
+            }
+          ],
+          "teacher_notes": "This unit opens the motion stage; students arrive knowing how time is measured precisely, and now apply that measurement to characterise how fast an object moves. A frequent error is stating that the runner who covers more distance is always faster — Scenario 2 is designed to break that intuition and should be held for group debate before resolution. Insisting on units in every answer from the first calculation establishes the habit needed for the rearranged formula work in the next unit.",
+          "materials": [
+            "Race scenario cards or projected scenarios",
+            "Whiteboard or board space for group rule proposals",
+            "Worked examples 8.1 and 8.2 from chapter (printed or projected)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Define and calculate speed",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Train Timetables: Calculating and Comparing Real Speeds",
+          "activity_description": "Students use a railway timetable to identify departure and arrival times and distances for Passenger, Express, and Superfast trains between two stations, calculate the speed of each train type, and rank them — applying all three rearrangements of the speed formula.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Provides the timetable data and guides students on reading scheduled times to compute elapsed time, then circulates to check unit consistency."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Extract time and distance data, calculate speed for each train type, rank them, and write one sentence comparing the results."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the timetable format and demonstrates how to read departure and arrival times to compute elapsed journey time."
+            },
+            {
+              "minutes": "8-26",
+              "activity": "Students work individually to calculate the speed of each train type using the speed formula, converting units where necessary and recording results in a comparison table."
+            },
+            {
+              "minutes": "26-34",
+              "activity": "Students apply the rearranged formula: given a train's speed and journey time, calculate the distance it would cover; given speed and distance, calculate time — using Example 8.3 as a model."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Pairs compare rankings and discuss whether the Passenger train's lower speed makes it 'worse' or just suited to a different purpose, introducing the idea that speed describes motion without judging it."
+            }
+          ],
+          "teacher_notes": "The previous unit established the speed formula from first principles; this unit applies all three rearrangements in a concrete, real-world context drawn directly from the chapter's Activity 8.4. Students commonly confuse departure-to-arrival time with total journey distance when both are read from a timetable — insist that they write elapsed time explicitly before computing. The closing pair discussion about whether a Passenger train is 'worse' anticipates the non-uniform motion discussions ahead, where average speed describes the journey without implying constant rate.",
+          "materials": [
+            "Printed or projected railway timetable (from chapter Activity 8.4 or a locally relevant extract)",
+            "Calculation recording sheet with table template",
+            "Calculator (optional)"
+          ],
+          "homework": [
+            "A cyclist travels 36 km in 2 hours; calculate the speed in km/h and in m/s, showing your working and unit conversion."
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Define and calculate speed",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Average Speed and the Speedometer",
+          "activity_description": "Students examine the concept of average speed as the single-number description of a journey where actual speed varies, distinguish it from instantaneous speed shown by a speedometer, and solve problems requiring the average speed formula over a multi-part journey.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Explains average speed using the train timetable context from the previous unit, presents the speedometer and odometer as real instruments, and models a multi-part journey calculation."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Solve multi-part journey speed problems, identifying total distance and total time before applying the formula, and annotate a diagram of a vehicle dashboard to label speedometer and odometer functions."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher uses the train timetable results from the previous unit to show that calculated speed is an average — the train did not move at exactly that speed for the entire journey — and introduces the term average speed formally."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Teacher presents the speedometer (instantaneous speed in km/h) and odometer (total distance) from the Science and Society box; students annotate a simple vehicle dashboard diagram labelling each instrument and its measurement."
+            },
+            {
+              "minutes": "24-36",
+              "activity": "Students solve two multi-part journey problems: one requiring them to sum segment distances and times before computing average speed, reinforcing that total distance and total time — not segment averages — go into the formula."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Quick whole-class check: teacher poses an oral problem where someone naively averages two speed values; students identify the error and state the correct approach."
+            }
+          ],
+          "teacher_notes": "This unit completes the speed-calculation stage by adding the average-speed concept that prevents the common error of averaging speed values across segments. The speedometer-versus-average-speed distinction is worth dwelling on: the speedometer shows what is happening right now, while average speed describes the whole journey — this is exactly the distinction that motivates non-uniform motion in the next stage. If students struggle with the multi-part problem, prompt them to write 'total distance =' and 'total time =' as separate lines before substituting into the formula.",
+          "materials": [
+            "Projected or printed vehicle dashboard diagram (simple sketch with speedometer and odometer)",
+            "Multi-part journey problem sheet",
+            "Whiteboard for oral check problem"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Distinguish uniform from non-uniform linear motion",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "Equal Distances, Equal Times? Classifying Two Trains",
+          "activity_description": "Students receive the chapter's distance-per-interval data table for Trains X and Y and determine — by inspecting each row — whether each train covers equal distances in equal time intervals, then classify each as uniform or non-uniform linear motion and justify their classification.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the data table and poses the classification question without giving the definition first, allowing students to derive the distinguishing criterion from the data pattern."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Inspect the per-interval distances, identify the pattern (or lack of one) for each train, propose a criterion for classifying the motion, and write a justified classification statement for each train."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher distributes the Train X / Train Y data table and asks groups to study it without any definition, noting what they observe about the per-interval distances for each train."
+            },
+            {
+              "minutes": "6-20",
+              "activity": "Groups identify that Train X covers 20 km every 10-minute interval (equal distances) while Train Y's distances vary, and propose the criterion: equal distances in equal time intervals."
+            },
+            {
+              "minutes": "20-30",
+              "activity": "Groups write a justified classification statement for each train using their proposed criterion, then the class shares and teacher introduces the formal terms uniform and non-uniform linear motion."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Teacher poses extension examples — a car on a highway versus a car in city traffic — and students classify each, connecting the formal definition back to the average-speed concept from the previous stage."
+            }
+          ],
+          "teacher_notes": "Students arrive from the speed stage knowing how to calculate average speed; this unit now asks them to look inside the journey at interval-by-interval behaviour. A common confusion is equating uniform motion with 'fast' and non-uniform with 'slow' — the data table shows that Train X and Train Y have the same overall average speed, which directly dismantles that notion. Letting groups propose the criterion before receiving the definition is deliberate: it makes the definition feel discovered rather than imposed.",
+          "materials": [
+            "Printed Train X / Train Y data table from chapter section 8.4",
+            "Classification recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Distinguish uniform from non-uniform linear motion",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Plotting the Journey: Distance-Time Graphs for Both Motion Types",
+          "activity_description": "Students plot distance-time graphs for Train X and Train Y using the chapter's data table, observe the visual difference between a straight-line graph and a curved or irregular graph, and use the graphs to read off distances and times at intermediate points.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates how to set up axes (time on x-axis, distance on y-axis) and plot the first two points for each train, then circulates as groups complete and compare their graphs."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Complete both distance-time graphs, annotate each with 'uniform' or 'non-uniform', and read off at least two intermediate values to answer interpretation questions."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher establishes graph conventions — axes, scale, labels, units — and plots the first two data points for Train X as a model, then hands over to groups."
+            },
+            {
+              "minutes": "8-26",
+              "activity": "Groups complete the Train X graph (obtaining a straight line) and the Train Y graph (obtaining an irregular curve), annotating each with the motion type identified in the previous unit."
+            },
+            {
+              "minutes": "26-36",
+              "activity": "Groups answer interpretation questions: at a given elapsed time, how far has Train X travelled? Between which interval did Train Y travel fastest? — requiring them to read and reason from the graph rather than from the data table."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Class compares graphs: teacher draws out that a straight line means equal increments in both axes — a visual restatement of uniform motion — and that slope represents speed."
+            }
+          ],
+          "teacher_notes": "The previous unit established the classification criterion from data; this unit makes that criterion visual through the graph. Students frequently draw the distance-time graph with time on the y-axis — establish the convention explicitly before they begin plotting. A productive checkpoint is asking 'what would a steeper straight line mean?' — students who answer 'faster uniform motion' are ready to reason about slope as speed in the next unit.",
+          "materials": [
+            "Graph paper or printed grid sheets",
+            "Ruler",
+            "Pencil and coloured pens (two colours for two trains)",
+            "Train X / Train Y data table from chapter",
+            "Interpretation question sheet"
+          ],
+          "homework": [
+            "Sketch a distance-time graph for a cyclist who rides at a steady speed for a stretch, stops briefly, then rides faster — label each section and explain what the graph shape tells you about the motion in each section."
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Distinguish uniform from non-uniform linear motion",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Slope Means Speed: Reading Motion from Graph Shape",
+          "activity_description": "Students are given three unlabelled distance-time graphs — one straight steep line, one straight gentle line, one irregular curve — and determine the motion type and relative speed for each by analysing gradient, without being told which object each represents.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the three unlabelled graphs and poses the central question: what does the steepness (slope) of a distance-time graph tell you about an object's speed?"
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Analyse each graph's shape and gradient, classify motion type, rank the three objects by speed where possible, and justify each conclusion in writing."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher distributes unlabelled graphs and asks students to spend time observing before writing anything, connecting to the observation habit built in the hands-on units."
+            },
+            {
+              "minutes": "6-22",
+              "activity": "Students individually classify each graph (uniform or non-uniform), estimate relative speeds from gradient steepness, and write a justified sentence for each graph."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Students share conclusions with a neighbour, resolve any disagreements by returning to the graph, and produce a consensus written analysis."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Teacher consolidates: steeper straight line = greater (uniform) speed; gentler straight line = lesser (uniform) speed; irregular curve = non-uniform motion where slope varies, so average speed describes the overall journey."
+            }
+          ],
+          "teacher_notes": "This unit deepens graph reading from plotting to interpreting, building directly on the graphing work of the previous unit. A common error is ranking the irregular-curve object as 'fastest overall' because its curve climbs steeply in places — prompt students to compute the average slope (total distance over total time) to compare it fairly with the straight-line objects. The consolidation at the close should tie slope-as-speed explicitly back to the speed formula, making the graphical and algebraic representations feel like two languages for the same idea.",
+          "materials": [
+            "Three unlabelled distance-time graph sheets (prepared by teacher using the chapter's Train X/Y data as a model)",
+            "Ruler for estimating slope",
+            "Analysis recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "progression_stage": 5,
+          "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Full Description: From Raw Data to Motion Characterisation",
+          "activity_description": "Students receive a new, unfamiliar distance-time data set for two objects and must: calculate each object's speed (or average speed), plot the distance-time graph, classify the motion type, and write a complete comparative description of the two objects' motion — integrating all operations developed across the chapter.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the unfamiliar data set without scaffolding and invites students to decide their own sequence of steps, circulating to prompt rather than direct."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Independently choose a sequence, perform calculations, plot the graph, classify motion, and write a complete comparative description using the full vocabulary of the chapter."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher distributes the new data set and asks students to plan their approach in writing before beginning — what will they calculate first, what will they graph, what will they compare?"
+            },
+            {
+              "minutes": "6-24",
+              "activity": "Students carry out their planned sequence: computing speeds or average speeds, plotting both objects on one graph with appropriate labels, and noting which motion type each object exhibits."
+            },
+            {
+              "minutes": "24-36",
+              "activity": "Students write a comparative description of the two objects' motion using the vocabulary (uniform, non-uniform, average speed, time period, SI unit) — the description must include at least one numerical claim supported by their calculation."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Two or three students share their descriptions aloud; the class identifies the strongest features of each description, closing the chapter's arc with a student-produced synthesis of measurement and motion."
+            }
+          ],
+          "teacher_notes": "This closing unit asks students to apply every tool developed across the chapter — timekeeping, speed calculation, graph construction, and motion classification — to an unfamiliar data set, making it the natural culmination of the arc rather than a review. Watch for students who plot the graph before calculating speeds; this is a valid sequence and shows graphical thinking, but prompt them to verify their visual speed comparison against a numerical one. The closing share-out is the formative check: a strong description references both graph shape and a calculated value, while a weak one classifies without evidence.",
+          "materials": [
+            "New unfamiliar distance-time data set (two objects, teacher-prepared using round numbers)",
+            "Graph paper or grid sheet",
+            "Ruler",
+            "Calculator (optional)",
+            "Writing sheet for comparative description"
+          ],
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 12
+    },
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and compare timekeeping methods",
+        "total_stages": 5,
+        "period_numbers": [
+          1,
+          2
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students examine natural cycles and early timekeeping devices, match devices to their operating principles, and construct and calibrate a water clock to test whether its flow is steady enough to serve as a reliable timer.",
+        "implied_lo": "Students can compare at least three early timekeeping devices by naming the repeating process each exploits, identifying one limitation of each, and demonstrating through their calibrated water clock whether that device produces consistent time intervals.",
+        "cg": "CG-2",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Investigate the pendulum's time period",
+        "total_stages": 5,
+        "period_numbers": [
+          3,
+          4,
+          5
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students investigate which variables affect a pendulum's time period through controlled trials, connect the constant-period property to the history of clock development from Galileo and Huygens through to atomic clocks, and establish the SI unit of time and its appropriate precision for different measurement contexts.",
+        "implied_lo": "Students can state that a pendulum's time period depends on its length but not on bob mass, justify this with data from their trials, and explain how the constant-period property underpins mechanical timekeeping from the pendulum clock to modern atomic clocks.",
+        "cg": "CG-2",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Define and calculate speed",
+        "total_stages": 5,
+        "period_numbers": [
+          6,
+          7,
+          8
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students derive the need for a combined distance-and-time measure by comparing runners and trains, apply all three rearrangements of the speed formula to real timetable data, and distinguish average speed from instantaneous speed as shown by a speedometer.",
+        "implied_lo": "Students can calculate speed, distance, or time using the appropriate rearrangement of the speed formula with correct SI units, and explain why average speed — not segment-by-segment speed — correctly describes a multi-part journey.",
+        "cg": "CG-2",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Distinguish uniform from non-uniform linear motion",
+        "total_stages": 5,
+        "period_numbers": [
+          9,
+          10,
+          11
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students classify trains as undergoing uniform or non-uniform linear motion from per-interval data, plot and interpret distance-time graphs for both motion types, and determine speed or motion type from graph gradient for unlabelled graphs.",
+        "implied_lo": "Students can classify a linear motion as uniform or non-uniform from either a data table or a distance-time graph, and justify the classification by reference to equal-distance-in-equal-time criterion or the straightness and slope of the graph line.",
+        "cg": "CG-2",
+        "c_code": "C-2.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 5,
+        "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+        "total_stages": 5,
+        "period_numbers": [
+          12
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students apply all chapter tools to an unfamiliar data set: calculating speeds, plotting a distance-time graph, classifying motion type, and producing a complete comparative description of two objects' motion that combines numerical evidence with graphical observation.",
+        "implied_lo": "Students can produce a complete description of one-dimensional motion for an unfamiliar data set — calculating speed, constructing a distance-time graph, and classifying the motion as uniform or non-uniform — and compare two objects' motion with at least one numerical claim supported by calculation.",
+        "cg": "CG-2",
+        "c_code": "C-2.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and compare timekeeping methods",
+        "implied_lo_assessed": "Students can compare at least three early timekeeping devices by naming the repeating process each exploits, identifying one limitation of each, and demonstrating through their calibrated water clock whether that device produces consistent time intervals.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "In the outflow water clock, a container is filled with water and water drains slowly through a small hole. What is the repeating process that allows this device to measure time?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Sand falls from one bulb to another at a constant rate, and the water clock works on the same principle.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The shadow of the container moves at a steady rate across a marked surface.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The weight of the water pushes the container down by an equal amount every minute.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Water flows out at a roughly steady rate, so the falling water level marks equal time intervals.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "B": "Confuses the outflow water clock with a sundial — both produce a moving marker, but the sundial's marker is a shadow, not a water level; this option indicates the student has not distinguished the two device types.",
+              "C": "Applies a buoyancy or weight logic that belongs to the Ghatika-yantra (floating bowl) rather than the outflow type — indicates confusion between the two water clock variants described in the chapter.",
+              "A": "Correctly identifies that sand flow and water flow are analogous but misattributes the sand-flow mechanism to the water clock, indicating the student recognises a family resemblance without distinguishing the specific devices."
+            },
+            "inclusivity": "Students who struggle with the written stem may benefit from a paired diagram of the outflow clock alongside the question. The question can also be answered through the calibration activity: students who built the water clock can reason from their own experience of marking the water level at equal intervals."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and compare timekeeping methods",
+        "implied_lo_assessed": "Students can compare at least three early timekeeping devices by naming the repeating process each exploits, identifying one limitation of each, and demonstrating through their calibrated water clock whether that device produces consistent time intervals.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": "Device | Works best when | Fails or becomes unreliable when\nSundial | Sunlight is strong and direct | Sky is overcast or indoors\nOutflow water clock | Hole size is small and consistent | Hole enlarges or water temperature changes\nHourglass | Sand is dry and fine | Sand clumps due to moisture\nCandle clock | Candle burns in still air | Wind or draught is present",
+        "question_text": "Refer to the table provided. A student needs to measure time accurately inside a room during the day. Based on the reliability conditions shown, which device from the table is most suitable, and why?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Candle clock, because a candle can be lit indoors and its burning rate never changes.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Hourglass, because sand always falls at the same rate regardless of where it is placed.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Outflow water clock, because it does not depend on sunlight, wind, or moisture and can operate reliably indoors.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Sundial, because it uses sunlight which is available all day.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "D": "Ignores the 'inside a room' constraint and applies only the 'sunlight is available' condition — indicates the student is not reading the reliability condition relationally against the context.",
+              "B": "Overlooks the moisture-clumping failure mode listed in the table — indicates the student recalls the hourglass principle correctly but has not checked the reliability conditions against the indoor context.",
+              "A": "Ignores the draught/wind failure mode — indicates the student accepts the candle clock as reliable indoors without checking the conditions that undermine it, suggesting partial reading of the table."
+            },
+            "inclusivity": "Students who find table reading challenging can be prompted to cross out any device that lists a failure condition consistent with being indoors, reducing the choice set before reasoning about the remainder."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Investigate the pendulum's time period",
+        "implied_lo_assessed": "Students can state that a pendulum's time period depends on its length but not on bob mass, justify this with data from their trials, and explain how the constant-period property underpins mechanical timekeeping from the pendulum clock to modern atomic clocks.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": "Trial | String length (cm) | Bob mass (g) | Time for 10 oscillations (s) | Time period (s)\n1 | 100 | 50 | 20 | 2.0\n2 | 100 | 100 | 20 | 2.0\n3 | 100 | 150 | 20 | 2.0\n4 | 50 | 100 | 14 | 1.4\n5 | 25 | 100 | 10 | 1.0",
+        "question_text": "A student records pendulum data across five trials. Refer to the table provided. What conclusion about the time period is supported by this data?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The time period depends on both the string length and the bob mass together.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The time period depends on the string length but not on the bob mass.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The time period increases as the bob mass increases, because a heavier bob pulls the string harder.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The time period is the same for all string lengths, because pendulums always beat at one second.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "C": "Reflects the classic misconception that a heavier bob swings faster, likely carried from intuitions about falling objects — the student has not used the data in Trials 1–3 to test this claim.",
+              "D": "Overgeneralises from the 100 cm result (2 s period) to all pendulums — indicates the student has not compared Trials 1–3 with Trials 4–5, or has confused the pendulum's period with an arbitrary standard.",
+              "A": "Acknowledges length as a factor but incorrectly adds mass, suggesting the student has noticed the length pattern but has not isolated mass as a controlled variable across Trials 1–3."
+            },
+            "inclusivity": "Students who struggle to interpret the table can be prompted to cover the 'String length' column and compare only Trials 1–3, then cover the 'Bob mass' column and compare Trials 1, 4, and 5 — isolating one variable at a time."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Investigate the pendulum's time period",
+        "implied_lo_assessed": "Students can state that a pendulum's time period depends on its length but not on bob mass, justify this with data from their trials, and explain how the constant-period property underpins mechanical timekeeping from the pendulum clock to modern atomic clocks.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "Christiaan Huygens used the pendulum to build a more accurate mechanical clock. Which property of the pendulum made it suitable as the regulating mechanism of a clock?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A pendulum heavier bob resists air resistance better, so it keeps swinging longer without stopping.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "A pendulum of any length always completes exactly one oscillation per second, making counting easy.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "A pendulum of fixed length has a constant time period, so each oscillation marks an equal and predictable time interval.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "A pendulum swings in a perfect arc, so its path can be used to measure distance.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "B": "Confuses 'constant period' with 'always one second' — a common overgeneralisation; the student understands periodicity but not that the period's value depends on length.",
+              "D": "Misattributes the arc path as a distance-measuring tool — confuses the pendulum's geometric motion with the chapter's later theme of measuring distance; indicates the student is connecting unrelated chapter sections incorrectly.",
+              "A": "Reintroduces the bob-mass misconception in a new form — implies heavier bobs are more useful for clocks, which the data in the investigation directly contradicts."
+            },
+            "inclusivity": "Students who find abstract properties difficult can be asked to recall what happened in their investigation when they changed the bob mass: the period stayed the same. From there, ask what stayed the same when they fixed the length — connecting the lived activity to the property being tested here."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Investigate the pendulum's time period",
+        "implied_lo_assessed": "Students can state that a pendulum's time period depends on its length but not on bob mass, justify this with data from their trials, and explain how the constant-period property underpins mechanical timekeeping from the pendulum clock to modern atomic clocks.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "All clocks — from ancient water clocks to modern atomic clocks — share one key design feature. Identify this feature and explain, using one specific example from the chapter, how it is used in a clock.",
+        "options": [],
+        "expected_elements": [
+          "States that the shared feature is a process that repeats continuously at equal time intervals.",
+          "Names at least one specific clock type from the chapter (pendulum clock, quartz clock, atomic clock, water clock, or Ghatika-yantra) and identifies its repeating process (pendulum oscillation, crystal vibration, atomic vibration, water draining, bowl sinking).",
+          "Explains how counting or tracking those equal repetitions allows the clock to measure time."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who find abstract generalisation difficult can be asked to list two or three clocks from the chapter and write one sentence about each before finding the common feature. Students who prefer to write in a home language initially can translate the key terms before composing their full response."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Define and calculate speed",
+        "implied_lo_assessed": "Students can calculate speed, distance, or time using the appropriate rearrangement of the speed formula with correct SI units, and explain why average speed — not segment-by-segment speed — correctly describes a multi-part journey.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A cyclist covers 12 km in the first 30 minutes and 18 km in the next 30 minutes. A student calculates the average speed of the first segment as 24 km/h and the average speed of the second segment as 36 km/h, then takes the mean of these two values: (24 + 36) ÷ 2 = 30 km/h. What is wrong with this method, and what is the correct average speed for the whole journey?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Average speed cannot be calculated for a two-segment journey; a speedometer reading is needed.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The method is correct; the average speed is 30 km/h.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The student should have used total distance (30 km) divided by total time (1 hour), giving a correct average speed of 30 km/h — which happens to match the wrong method here.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The student should use total distance (30 km) divided by total time (1 hour) = 30 km/h; averaging segment speeds only coincidentally gives the right answer here because the time segments are equal, but the method is wrong in principle.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "B": "Accepts the segment-averaging method without scrutiny — the student has not recognised that averaging speed values is only coincidentally valid when time segments are equal.",
+              "C": "Arrives at the correct numerical answer via the correct formula but fails to identify the methodological flaw — the student can compute correctly but cannot evaluate a procedure, which is the key cognitive demand of this item.",
+              "A": "Confuses average speed (a calculated quantity) with instantaneous speed (what the speedometer shows) — conflates two related but distinct concepts from the Science and Society box in the chapter."
+            },
+            "inclusivity": "Students who find the abstract methodological critique difficult can be given a follow-up version where the time segments are unequal (e.g. 30 min and 60 min) and asked whether averaging segment speeds still gives the right answer — the concrete counterexample makes the flaw tangible."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Define and calculate speed",
+        "implied_lo_assessed": "Students can calculate speed, distance, or time using the appropriate rearrangement of the speed formula with correct SI units, and explain why average speed — not segment-by-segment speed — correctly describes a multi-part journey.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": "Train | Distance between stations (km) | Departure time | Arrival time\nPassenger | 120 | 06:00 | 10:00\nExpress | 120 | 07:00 | 09:00\nSuperfast | 120 | 08:00 | 08:30",
+        "question_text": "Refer to the table provided. Which train travels at the greatest speed, and what is that speed in km/h?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Express train; 60 km/h.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Passenger train; 30 km/h — it covers the most total time so it must be measured most accurately.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Superfast train; 120 km/h.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Superfast train; 240 km/h.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "Correctly identifies the Superfast as fastest but miscalculates its speed — likely used 2 hours instead of 0.5 hours for journey time, indicating an error in reading elapsed time from a timetable rather than an error in the formula.",
+              "C": "Uses 1 hour instead of 0.5 hours for the Superfast — the same timetable-reading error as option A but gives a different wrong value; indicates the student correctly applies the formula but cannot convert 30 minutes to a fractional hour.",
+              "B": "Inverts the relationship between time and speed — equates 'more time measured' with 'faster', a fundamental misconception about what speed means as a ratio."
+            },
+            "inclusivity": "Students who struggle with fractional hours can be prompted to convert 30 minutes to hours explicitly before substituting into the formula. Providing a worked example that converts minutes to hours as a preliminary step makes the unit conversion visible rather than implicit."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Define and calculate speed",
+        "implied_lo_assessed": "Students can calculate speed, distance, or time using the appropriate rearrangement of the speed formula with correct SI units, and explain why average speed — not segment-by-segment speed — correctly describes a multi-part journey.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A car travels 90 km at 45 km/h and then travels a further 60 km at 60 km/h. Calculate the average speed of the car for the entire journey, showing your working clearly.",
+        "options": [],
+        "expected_elements": [
+          "Calculates time for first segment: 90 ÷ 45 = 2 hours.",
+          "Calculates time for second segment: 60 ÷ 60 = 1 hour.",
+          "Computes total distance: 90 + 60 = 150 km.",
+          "Computes total time: 2 + 1 = 3 hours.",
+          "Applies average speed formula: 150 ÷ 3 = 50 km/h.",
+          "States unit correctly as km/h in the final answer."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students who find multi-step problems difficult can be asked to solve each segment separately and list four values (d1, t1, d2, t2) before combining — the four-value list externalises the working memory demand of multi-part problems."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Distinguish uniform from non-uniform linear motion",
+        "implied_lo_assessed": "Students can classify a linear motion as uniform or non-uniform from either a data table or a distance-time graph, and justify the classification by reference to equal-distance-in-equal-time criterion or the straightness and slope of the graph line.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Time interval (min) | Distance covered by Object P (km) | Distance covered by Object Q (km)\n0–10 | 15 | 10\n10–20 | 15 | 18\n20–30 | 15 | 12\n30–40 | 15 | 20",
+        "question_text": "Refer to the table provided. Which statement correctly classifies the motion of Objects P and Q?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both P and Q are in uniform linear motion because they both travel the same total distance over 40 minutes.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "P is in non-uniform linear motion because it always covers exactly 15 km, which is too regular to represent real motion.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "P is in uniform linear motion because it covers equal distances in equal time intervals; Q is in non-uniform linear motion because its distance per interval varies.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Q is in uniform linear motion because it travels more distance than P in some intervals, making it the steadier mover.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "A": "Confuses equal total distance with equal per-interval distance — the student has summed the columns correctly but applied the wrong criterion for uniform motion, indicating the classification criterion was not internalised.",
+              "D": "Equates 'faster in some intervals' with 'steadier' — inverts the definition by treating higher speed as an indicator of uniformity rather than recognising that uniformity requires consistency, not magnitude.",
+              "B": "Treats regularity in the data as evidence against real motion, a confusion between the idealised nature of uniform motion (noted in the chapter) and the data itself — indicates the student has read the chapter's caveat that uniform motion is an idealisation but misapplied it."
+            },
+            "inclusivity": "Students who struggle to apply the criterion can be prompted to compute the difference between consecutive per-interval distances for each object: if all differences are zero, the motion is uniform. This arithmetic check makes the equal-distance criterion operational."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Distinguish uniform from non-uniform linear motion",
+        "implied_lo_assessed": "Students can classify a linear motion as uniform or non-uniform from either a data table or a distance-time graph, and justify the classification by reference to equal-distance-in-equal-time criterion or the straightness and slope of the graph line.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student plots a distance-time graph for an object and obtains a straight line that passes through the origin and rises steeply. A second student plots a graph for a different object and obtains a gently rising straight line. What can be correctly concluded from comparing the two graphs?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both objects are in uniform motion, but the first object is moving at a greater speed than the second.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "The first object has travelled a greater total distance, so it must have started earlier.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The first object is in non-uniform motion because its graph is steeper.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The second object is accelerating because its slope is less steep.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "C": "Confuses steepness with non-uniformity — the student associates a steeper graph with irregularity, not recognising that a straight line (regardless of slope) represents uniform motion.",
+              "D": "Misapplies the concept of acceleration to a straight-line graph — acceleration would require a curve; this indicates the student is introducing a concept (acceleration) from outside the chapter's scope or misreading graph shape.",
+              "B": "Reads a steeper graph as indicating an earlier start rather than a greater speed — conflates total displacement at a given time with journey start time, showing a misunderstanding of what the x-axis (time since start) represents."
+            },
+            "inclusivity": "Students who find abstract graph interpretation difficult can sketch the two graphs on a grid and mark off equal time intervals, then check whether the distance increments are equal — grounding the visual interpretation in the arithmetic criterion."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Distinguish uniform from non-uniform linear motion",
+        "implied_lo_assessed": "Students can classify a linear motion as uniform or non-uniform from either a data table or a distance-time graph, and justify the classification by reference to equal-distance-in-equal-time criterion or the straightness and slope of the graph line.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student describes a distance-time graph: 'The graph is a curve that starts gently and becomes steeper over time.' (a) Classify the motion shown. (b) What does the increasing steepness of the curve tell you about the object's speed? (c) Would a speedometer reading be constant or changing for this object? Explain.",
+        "options": [],
+        "expected_elements": [
+          "Classifies the motion as non-uniform linear motion.",
+          "States that increasing steepness means the object is covering more distance in each equal time interval, so its speed is increasing.",
+          "States that the speedometer reading would be changing (not constant), because speed is not uniform — the instantaneous speed, which the speedometer shows, increases as the curve steepens.",
+          "Connects the graph shape to the definition: equal time intervals correspond to unequal distance increments when the curve steepens."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who find the multi-part format daunting can be asked to answer part (a) only, then check their answer before moving to parts (b) and (c). Students who produce a diagram of the described curve before answering in words often find the visual representation helps them articulate the speed change."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+        "implied_lo_assessed": "Students can produce a complete description of one-dimensional motion for an unfamiliar data set — calculating speed, constructing a distance-time graph, and classifying the motion as uniform or non-uniform — and compare two objects' motion with at least one numerical claim supported by calculation.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Time (min) | Distance covered by Train A (km) | Distance covered by Train B (km)\n0 | 0 | 0\n10 | 20 | 10\n20 | 40 | 25\n30 | 60 | 45\n40 | 80 | 60",
+        "question_text": "Refer to the table provided. A student claims: 'Train A is in uniform motion and has a higher average speed than Train B.' Evaluate this claim.",
+        "options": [
+          {
+            "label": "A",
+            "text": "The claim cannot be evaluated without a distance-time graph; a data table alone is insufficient.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The claim is fully correct: Train A covers 20 km per 10-minute interval (uniform) and its average speed of 120 km/h is greater than Train B's average speed of 90 km/h.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The claim is incorrect: Train B travels farther in some intervals, so it has the higher speed.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The claim is partly correct: Train A is in uniform motion, but Train B is also in uniform motion, so the comparison of average speeds is irrelevant.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "D": "Misclassifies Train B as uniform — the student has not checked whether Train B's per-interval distances are equal, indicating superficial application of the uniform-motion criterion.",
+              "C": "Applies a single-interval comparison rather than an average — focuses on the largest distance Train B covers in any one interval without computing average speed, indicating inability to integrate the speed formula with the motion-type classification.",
+              "A": "Treats the data table and the graph as separate tools that cannot both inform a conclusion — the student has not recognised that the table and graph are equivalent representations of the same data, indicating the integration of representations has not been achieved."
+            },
+            "inclusivity": "Students who find evaluation questions challenging can be asked to verify each part of the claim separately: first check Train A's uniformity using the per-interval column, then calculate both average speeds numerically, then compare. Breaking the compound claim into component checks reduces the cognitive load of simultaneous evaluation."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+        "implied_lo_assessed": "Students can produce a complete description of one-dimensional motion for an unfamiliar data set — calculating speed, constructing a distance-time graph, and classifying the motion as uniform or non-uniform — and compare two objects' motion with at least one numerical claim supported by calculation.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "Two distance-time graphs are drawn for two objects. Graph P is a straight line with a gentle positive slope. Graph Q is an irregular curve that starts steeply, flattens, then rises steeply again. Which statement best evaluates what these graphs tell us about average speed?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Average speed cannot be compared from graph shape alone; the total distance covered and total time elapsed for each object must be read from the graph and used in the speed formula.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Graph P shows greater average speed because a straight line represents faster motion than a curve.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Graph P shows uniform motion, so its average speed equals its constant speed; Graph Q is non-uniform, so it has no meaningful average speed.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Graph Q shows greater average speed because it has steeper sections.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "B": "Equates graph type (straight vs curved) with speed magnitude — the student has internalised 'straight line = uniform motion' but incorrectly extended it to mean 'straight line = faster', confusing motion type with speed.",
+              "D": "Focuses on the steepest section of the curve rather than the overall trajectory — the student reads local gradient as representative of the whole journey, indicating inability to apply the average-speed formula holistically.",
+              "C": "Correctly identifies P as uniform and Q as non-uniform but incorrectly claims average speed is undefined for non-uniform motion — the student conflates average speed (always calculable) with constant speed (only true for uniform motion), a chapter-level misconception directly addressed by the Train X/Y example."
+            },
+            "inclusivity": "Students who find abstract graph comparisons difficult can be directed to pick two specific points on each graph (start and end) and compute rise (distance) divided by run (time) — this operationalises average speed as a graph-reading action rather than a conceptual judgement."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+        "implied_lo_assessed": "Students can produce a complete description of one-dimensional motion for an unfamiliar data set — calculating speed, constructing a distance-time graph, and classifying the motion as uniform or non-uniform — and compare two objects' motion with at least one numerical claim supported by calculation.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Time (min) | Distance covered by Scooter R (km) | Distance covered by Scooter S (km)\n0 | 0 | 0\n5 | 3 | 2\n10 | 6 | 5\n15 | 9 | 9\n20 | 12 | 11\n25 | 15 | 16\n30 | 18 | 18",
+        "question_text": "Refer to the table provided. Scooters R and S travel between the same two points and arrive together. Write a complete comparative description of their motion. Your response must: (1) classify each scooter's motion type with justification from the table; (2) calculate and compare the average speed of each scooter; (3) describe what a distance-time graph of each scooter would look like.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Correctly classifies Scooter R as uniform linear motion — per-interval distances are all 3 km — and Scooter S as non-uniform — per-interval distances vary (2, 3, 4, 2, 5, 2 km).",
+          "Calculates average speed for both: total distance = 18 km, total time = 30 min = 0.5 h; average speed for both = 36 km/h — and notes they are equal despite different motion types.",
+          "Describes Scooter R's graph as a straight line with constant positive slope, and Scooter S's graph as an irregular curve whose slope varies from interval to interval.",
+          "Connects the equal average speed finding to the chapter's explanation that average speed describes the whole journey even when moment-to-moment speed varies.",
+          "Uses correct units (km/h or m/s) throughout and writes unit symbols correctly."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "inclusivity": "Students who find the open-ended write-up format difficult can be provided with a sentence-starter frame: 'Scooter R is in ___ motion because ___. Its average speed is ___. Its graph would look like ___.' The frame scaffolds the structure without supplying the content. Students who prefer a diagrammatic route can sketch both graphs first and annotate them, then convert the annotations into prose."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Describe and compare motion by integrating speed calculation and graph representation",
+        "implied_lo_assessed": "Students can produce a complete description of one-dimensional motion for an unfamiliar data set — calculating speed, constructing a distance-time graph, and classifying the motion as uniform or non-uniform — and compare two objects' motion with at least one numerical claim supported by calculation.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Describing one-dimensional motion using physical measurements through mathematical and diagrammatic representations."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Segment | Object J distance (km) | Object K distance (km) | Time for each segment (min)\nSegment 1 | 24 | 15 | 20\nSegment 2 | 24 | 20 | 20\nSegment 3 | 24 | 30 | 20\nSegment 4 | 24 | 23 | 20",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Refer to the table provided. Object J and Object K each travel four segments, each of equal duration. Use the data to complete the following:\n(1) Identify the motion type of each object and justify your classification using the data.\n(2) Calculate the average speed of each object for the whole journey. Show your working.\n(3) On the grid provided, sketch a distance-time graph for both objects on the same axes. Label each line clearly.\n(4) A student says: 'Object K is the more interesting traveller because its motion is non-uniform.' Do you agree? Write two to three sentences evaluating this claim, using your calculations and graph as evidence.",
+        "scaffold": "For step (2): total distance = sum of all four segment distances; total time = 4 × 20 min = 80 min = ? hours. For step (3): plot cumulative distance on the y-axis and cumulative time on the x-axis; both objects start at (0, 0). For step (4): consider whether 'more interesting' is a scientific claim or a value judgement, and whether average speed alone is sufficient to compare two journeys.",
+        "format_of_output": [
+          "Completed table annotation (motion type per object)",
+          "Worked calculation showing total distance, total time, and average speed for each object",
+          "Labelled sketch distance-time graph on grid",
+          "Written evaluation of the student's claim (two to three sentences)"
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "format_type": "Data interpretation task (provided table or graph)",
+            "format_rationale": "The final stage LO requires students to integrate speed calculation, graph construction, and motion classification for an unfamiliar data set; the data-interpretation format is the most natural vehicle because it presents the raw measurements and requires the student to move through all three operations — classification, calculation, graphing — before producing an evaluative judgement.",
+            "what_this_demonstrates": "A complete response evidences the student's ability to apply the equal-distance criterion to classify motion type, execute all three rearrangements of the speed formula on a multi-segment journey, construct a distance-time graph that correctly represents both motion types on shared axes, and evaluate a comparative claim about motion using numerical and graphical evidence rather than impression.",
+            "reading_the_scaffold": "The scaffold is structured to prevent students from stalling at step (2) by reminding them to compute total distance and convert total time to hours before substituting — it does not supply the answer. Step (4) is deliberately open: students who engage only with the scientific claim (equal average speeds) produce a minimally adequate response; students who also question whether 'interesting' is a scientific concept produce a stronger evaluative response.",
+            "strong_vs_weak_markers": "Strong responses: correctly classify both objects with explicit reference to per-segment distances; calculate both average speeds as 72 km/h (J) and 66 km/h (K) with correct unit conversion; draw J as a straight line and K as an irregular curve on the same labelled axes; evaluate the claim by noting that average speed favours J, so K is not 'better' by a scientific measure, even though its motion is more variable. Weak responses: classify correctly but omit justification; calculate speeds using segment averages instead of total distance / total time; draw graphs without cumulative distance on the y-axis; agree or disagree with the claim without using any numerical or graphical evidence.",
+            "inclusivity": "Students who find multi-step tasks overwhelming can be invited to complete steps (1) and (3) first — classification and graph — before attempting the numerical steps. Students who prefer to work backwards can start from the graph sketch and use it to read off total distances before calculating. Allowing students to annotate the data table directly (circling equal values for J, marking variation for K) externalises the classification reasoning before any writing is required."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

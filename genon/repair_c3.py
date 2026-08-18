@@ -214,7 +214,15 @@ GENERIC_PASSES = [
 #   stand on their own ground; the calendar word removed.
 # ARV-D-070 · Rule 10 continuity by CONTENT, never by position. In every case the content is
 #   already named, so the repair is deletion of the positional clause.
+# KEYED BY (subject, grade) SINCE 2026-08-17 — the filename key was a live trap twice
+# over: (a) running `repair_c3.py science vii 4` walked ch_04_canonical*.json and applied
+# MATHEMATICS·IX's declarations to the science files (crashing on a handoff shape the
+# maths rows assume), and (b) adding science·vii's own "ch_04_canonical_p09.json" entry
+# silently SHADOWED the maths key — the duplicate-dict-key failure repair_meta_leak's
+# wave-2 header documents. Same cure as repair_register v1.3: scope the set to the
+# subject·grade the run names, and a foreign filename can never be reached.
 DECLARED = {
+  ("science", "ix"): {
     # ── S3 · science · IX · ch 7 p18 (2026-08-17, batch wave 2) ──────────────────────
     # ARV-D-172 · `question_text: null` on the file's single OPEN_TASK (7.6.3 Lever,
     # the beam-balance table task). Unlike ARV-D-120b nothing is authored here: on an
@@ -226,6 +234,53 @@ DECLARED = {
             {"item_where": {"question_type": "OPEN_TASK", "section_label": "7.6.3 Lever"},
              "field": "question_text",
              "old": None, "new": ""},
+        ],
+    },
+  },
+  ("science", "vi"): {
+    # ── S6 · science · middle · VI ch 12 third-pass resynth unit (2026-08-18) ─────────
+    # ARV-D-176 · the F1-resynth read's ruling on "Postcards from the Dark Sky Camp":
+    # identification layer fully within every compact, but two teacher-notes MANDATES
+    # grade mechanisms p08 never taught (Venus orbit-position; comet evaporation/tail
+    # direction — and the Milky-Way disc geometry no plan teaches). Founder-approved
+    # rewording to supply-if-unmet: a teacher closing a synthesis legitimately adds a
+    # fact at the margin; she must not be told to withhold credit for it. Third edit
+    # deletes the early-finisher extension that duplicates Postcard 2 (already the
+    # Milky Way faint band) — pure deletion, no replacement authored.
+    "ch_12_canonical.json": {
+        "ARV-D-176": [
+            {"unit": 14, "field": "teacher_notes",
+             "old": "check that replies include both the orbit-position reasoning and "
+                    "the atmosphere explanation for its brightness; neither alone is "
+                    "sufficient.",
+             "new": "check that replies explain its brightness; if the orbit-position "
+                    "reasoning surfaces in no group, supply it as the chapter's fact "
+                    "and ask groups to fold it into their reply."},
+            {"unit": 14, "field": "teacher_notes",
+             "old": "the tail points away from the Sun); prompt those groups to add "
+                    "the 'why it looks that way' sentence.",
+             "new": "the tail points away from the Sun); if no group produces the "
+                    "mechanism, supply it and ask them to add the 'why it looks that "
+                    "way' sentence."},
+            {"unit": 14, "field": "teacher_notes",
+             "old": "If a group finishes early, ask them to add a fifth 'reply' for a "
+                    "hypothetical postcard describing the Milky Way as a faint band — "
+                    "this extends to Section 12.4 without being required of all "
+                    "groups. ",
+             "new": ""},
+        ],
+    },
+    # ── S6 · science · middle · VI ch 2 resynth unit (2026-08-18, F1-resynth read) ────
+    # ARV-D-175 · factual slip in the re-authored synthesis's model answer: the money
+    # plant's card evidence ("soft green stem needing support") is the chapter's own
+    # diagnostic for a CLIMBER (takes support; a creeper crawls on the ground), yet the
+    # band labels it "creeper". One word; the card evidence, venation, root and habitat
+    # readings all stay. Run: repair_c3.py science vi 2 --declared-only
+    "ch_02_canonical.json": {
+        "ARV-D-175": [
+            {"unit": 21, "field": "time_bands[2].activity",
+             "old": "soft green stem needing support — creeper",
+             "new": "soft green stem needing support — climber"},
         ],
     },
     # ── S6 · science · middle · VI ch 8 (2026-08-17, batch wave 1) ───────────────────
@@ -242,6 +297,24 @@ DECLARED = {
              "old": None, "new": ""},
         ],
     },
+  },
+  ("science", "vii"): {
+    # ── S6 · science · middle · VII ch 4 p09 (2026-08-17, batch wave 2) ──────────────
+    # ARV-D-174 · third instance of the ARV-D-172 family (172 science·ix ch 7 p18,
+    # 173 science·vi ch 8): `question_text: null` on the compact's single OPEN_TASK,
+    # item otherwise complete. null -> "" again. The rate — 3 in ~190 authored files
+    # across two stages — says the schema's `// "" for OPEN_TASK` comment reads as
+    # optional to the model roughly 1.5% of the time; a constitution-side fix is only
+    # worth it if the rate holds at S7+. Run: repair_c3.py science vii 4 --declared-only
+    "ch_04_canonical_p09.json": {
+        "ARV-D-174": [
+            {"item_where": {"question_type": "OPEN_TASK"},
+             "field": "question_text",
+             "old": None, "new": ""},
+        ],
+    },
+  },
+  ("mathematics", "ix"): {
     "ch_04_canonical.json": {
         "ARV-D-069": [
             {"unit": 3, "field": "time_bands[2].activity",
@@ -312,6 +385,30 @@ DECLARED = {
              "new": "a higher demand than rational-expression simplification."},
         ],
     },
+    "ch_04_canonical_p09.json": {
+        "ARV-D-070": [
+            {"unit": 2, "field": "time_bands[0].activity",
+             "old": "Revisit the identity (a+b)^2 = a^2+2ab+b^2 from the previous unit's work and "
+                    "pose",
+             "new": "Revisit the identity (a+b)^2 = a^2+2ab+b^2 and pose"},
+            {"unit": 9, "field": "time_bands[2].activity",
+             "old": "for any items not completed in the previous unit.",
+             "new": "for any items not yet completed."},
+        ],
+        "ARV-D-030": [
+            {"row": 5, "field": "section_context",
+             "old": "x^2, x, and unit tiles; rectangle model for (x+3)(x+4) and (2x+3)(3x+1); "
+                    "middle-term split validated spatially",
+             "new": "x^2, x, and unit tiles; rectangle model validating the middle-term split "
+                    "spatially"},
+        ],
+        "ARV-D-075": [
+            {"row": 5, "field": "c_code", "old": "C-9.3", "new": "C-3.1"},
+            {"row": 6, "field": "c_code", "old": "C-3.1", "new": "C-9.3"},
+        ],
+    },
+  },
+  ("the_world_around_us", "v"): {
     # ── S5 · the_world_around_us · V · ch 5 (2026-08-12) ─────────────────────────────
     # ARV-D-120 · the U11 item, two breaches on one item, and only ONE of them is mechanical.
     #
@@ -352,28 +449,7 @@ DECLARED = {
                      "it comes from, and what it tells us about the people who wear it.")},
         ],
     },
-    "ch_04_canonical_p09.json": {
-        "ARV-D-070": [
-            {"unit": 2, "field": "time_bands[0].activity",
-             "old": "Revisit the identity (a+b)^2 = a^2+2ab+b^2 from the previous unit's work and "
-                    "pose",
-             "new": "Revisit the identity (a+b)^2 = a^2+2ab+b^2 and pose"},
-            {"unit": 9, "field": "time_bands[2].activity",
-             "old": "for any items not completed in the previous unit.",
-             "new": "for any items not yet completed."},
-        ],
-        "ARV-D-030": [
-            {"row": 5, "field": "section_context",
-             "old": "x^2, x, and unit tiles; rectangle model for (x+3)(x+4) and (2x+3)(3x+1); "
-                    "middle-term split validated spatially",
-             "new": "x^2, x, and unit tiles; rectangle model validating the middle-term split "
-                    "spatially"},
-        ],
-        "ARV-D-075": [
-            {"row": 5, "field": "c_code", "old": "C-9.3", "new": "C-3.1"},
-            {"row": 6, "field": "c_code", "old": "C-3.1", "new": "C-9.3"},
-        ],
-    },
+  },
 }
 
 
@@ -454,8 +530,10 @@ def apply_declared(result, table, filename):
                     continue
                 container, label = cands[0], f"item{where}"
             elif "row" in entry:
+                # .get, not [] (2026-08-17): a stage without section-numbered handoff
+                # rows (science·middle) must REFUSE a foreign declaration, not crash.
                 rows = [r for r in result["coverage_handoff"]
-                        if r["section_number"] == entry["row"]]
+                        if r.get("section_number") == entry["row"]]
                 if not rows:
                     refusals.append(f"{filename}: no handoff row {entry['row']}")
                     continue
@@ -543,7 +621,10 @@ def main() -> int:
             if edits:
                 by_defect.setdefault(defect, {"label": label, "edits": []})["edits"].extend(edits)
 
-        declared, refusals = apply_declared(result, DECLARED.get(path.name, {}), path.name)
+        declared, refusals = apply_declared(
+            result,
+            DECLARED.get((args.subject, args.grade), {}).get(path.name, {}),
+            path.name)
         for edit in declared:
             by_defect.setdefault(edit["defect"], {"label": "declared edit", "edits": []})
             by_defect[edit["defect"]]["edits"].append(

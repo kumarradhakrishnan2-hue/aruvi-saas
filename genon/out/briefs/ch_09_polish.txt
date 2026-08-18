@@ -1,0 +1,85 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 17,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Explain Density Changes Due to Temperature and Pressure",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Poses the two central questions, provides the concept map template with key nodes pre-filled, and circulates to probe the quality of links students draw between nodes."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Complete the concept map collaboratively, then each member individually writes a short explanation of the novel scenario using the map as a reference."
+  }
+ ],
+ "activity_title": "The Coral Reef Report: Reading a Marine Ecosystem Through Solutions and Density",
+ "activity_description": "Students receive a one-page field report describing a shallow coral reef site — including water temperature at two depths, salinity measurements, a list of objects and organisms found at each depth, and a small data table of masses and volumes. Working as marine scientists, they must interpret every piece of data using the chapter's two strands: classifying the water samples as solutions (with saturation and concentration reasoning) and applying density and relative-density reasoning to explain which organisms and objects are found at which depth. The task produces a completed analyst's annotation sheet; the act of annotating IS the synthesis.",
+ "teacher_notes": "This unit works in two situations: as the close of the longest plan, where students have met every concept individually and need to see them working together in a genuinely new setting; and as an extra period after any shorter plan's own consolidation, where the reef scenario adds breadth without repeating a card-set or scenario-worksheet format already used. In either case, resist the urge to pre-teach the reef context — the field report gives everything students need, and working out what applies where is the cognitive work. The annotation sheet has two columns: 'Concept applied' and 'Reasoning'. Students must name the concept (e.g. 'solubility decreases with temperature for gases', 'density = mass ÷ volume', 'relative density < 1 → floats') before writing the reasoning — this prevents vague correct answers. Watch for groups that annotate the solution sections well but skip the density entries for organisms; push them with 'how would you measure whether this organism is denser than the water around it?' The field report is read silently first; do not summarise it aloud before students have read it. The closing discussion should be driven by the annotation sheet, not by the teacher narrating the chapter — ask groups to read one annotation aloud and have the class decide whether the concept name and reasoning genuinely match.",
+ "materials": [
+  "Coral Reef Field Report sheet (one per student — text and data table printed together; full content provided in the opening band so no pre-printing is required if the teacher reads it aloud and writes the data table on the board)",
+  "Analyst's Annotation Sheet (one per student — two-column table with rows pre-labelled for each data item in the report)",
+  "Blackboard or whiteboard and chalk or markers (for projecting or writing the data table if printed sheets are unavailable)"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher distributes the Coral Reef Field Report sheet and reads the opening paragraph aloud while students follow: 'A research team recorded conditions at two depths in a warm, shallow reef — the surface layer (30 °C) and the bottom layer (18 °C). At the surface they measured higher salinity: 38 g of salt dissolved per litre of water. At the bottom salinity was 34 g per litre. The team also found that fish and sea creatures were far more numerous at the bottom than the surface. They collected three objects from the reef floor: Object A (mass 48 g, volume 40 cm³), Object B (mass 27 g, volume 36 cm³), and Object C (mass 55 g, volume 50 cm³). The water density at the bottom layer is 1.026 g/cm³.' Teacher then poses the opening question to the whole class without accepting answers yet: 'Which layer holds more dissolved oxygen, and why? Which objects would you expect to find resting on the floor rather than floating up?' Students read the full report silently and begin the annotation sheet individually."
+  },
+  {
+   "minutes": "8-18",
+   "activity": "Students work individually on the first half of the annotation sheet: the three rows covering the solution strand — (1) classifying both water layers as solutions and identifying solute and solvent, (2) comparing the concentration of the two layers using the salinity figures and stating which is more concentrated, and (3) explaining the dissolved-oxygen contrast between the warm surface and the cool bottom using the gas-solubility rule. Teacher circulates, checking that the 'Concept applied' column names a specific term from the chapter (not just 'solutions') and that the reasoning column uses the numerical salinity data, not just a general statement."
+  },
+  {
+   "minutes": "18-32",
+   "activity": "Students move to the density strand rows — (4) calculating the density of each of the three objects using mass ÷ volume and recording units, (5) comparing each object's density to the bottom-layer water density (1.026 g/cm³) and predicting float or sink with a relative-density statement, (6) explaining in one sentence why the surface layer water is denser than pure water and how the dissolved salt contributes to that. Groups of three are formed at this point; students compare their calculations for Objects A, B, and C, resolve any discrepancies, and agree on a single set of values. Teacher moves between groups and asks: 'What does your relative density value tell you? State it as a comparison to 1.' A brief whole-class check is called at minute 28: teacher asks one group to call out the three density values; class confirms or corrects. (Object A: 1.2 g/cm³ — sinks; Object B: 0.75 g/cm³ — floats; Object C: 1.1 g/cm³ — sinks.)"
+  },
+  {
+   "minutes": "32-40",
+   "activity": "Groups tackle the final two rows of the annotation sheet, which require both strands together: (7) explaining why fish concentrate at the bottom layer by linking dissolved-oxygen availability (gas solubility decreasing with temperature) to the conditions at 18 °C versus 30 °C, and (8) predicting what would happen to Object B if the temperature of the water dropped significantly — whether the water's density would change, whether that affects the float-or-sink outcome, and what the particle-level reason is. Each group writes a two-sentence combined answer for row 8 that names one concept from each strand. Teacher listens in and selects two groups with different phrasings of row 8 to share in the closing band."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "The two selected groups read their row-8 annotation aloud. Class evaluates: does each sentence name a distinct concept, and do the two sentences connect? Teacher then closes not by summarising the chapter but by naming what the annotation sheet demonstrated: every entry required either identifying what kind of mixture the water is and how much it can hold, or measuring and comparing how much matter occupies a given space — and the reef made both questions necessary at the same time. The chapter's work — defining solutions and measuring density — turned a pile of field data into explanations."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Problem-based learning: students are cast as analysts working from authentic-style field data rather than constructed word problems, so the chapter's concepts are tools they reach for rather than steps they are told to follow. The unfamiliar marine setting demands that they decide which concept applies at each point in the report, making the integration visible."
+}
+
+Reorganise it now, as the single JSON object specified.

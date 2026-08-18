@@ -1,0 +1,359 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 2: The Invisible Living World: Beyond Our Naked Eye
+
+The chapter opens by explaining that the human eye cannot see objects below a certain size, and that the invention of the lens — shaped like a lentil seed — and subsequently the microscope, revealed a hidden world of tiny living creatures. Robert Hooke (1665) used a microscope to observe cork slices, naming the compartments he saw "cells." Around the same time Antonie van Leeuwenhoek built improved microscopes and became the first to clearly see and describe bacteria and blood cells, earning him the title Father of Microbiology. The chapter introduces student Activity 2.1, in which a water-filled round-bottom flask is used to demonstrate magnification before a real magnifying glass is used.
+
+2.1 What Is a Cell?
+
+All living beings are made up of cells. This section establishes the basic structure of a cell through Activity 2.2 (a teacher demonstration involving an onion peel stained with safranin and observed under a microscope) and Activity 2.3 (a student-executed investigation in which cheek cells are scraped, stained with methylene blue, and observed). Both activities show three fundamental components: the cell membrane (outer boundary, porous, controls entry and exit of materials), the cytoplasm (fills the interior, contains carbohydrates, proteins, fats, mineral salts, site of most life processes), and the nucleus (regulates all cellular activities and growth). Plant cells additionally have a cell wall that provides rigidity and strength, and a large vacuole that stores substances, removes waste, and maintains cell shape. A "step further" box introduces plastids (including chloroplasts that contain chlorophyll and enable photosynthesis) and mitochondria as additional plant cell components. Animal cells generally lack a cell wall and large vacuoles.
+
+2.1.1 Variation in shape and structure of cells
+
+Different cell types have distinct shapes that reflect their functions. Muscle cells are spindle-shaped and flexible, enabling wave-like contractions that push food through the food pipe and churn food in the stomach; other stomach cells produce digestive juices and acid. Nerve cells (neurons) are very long with branches that allow them to carry messages rapidly across the body. Cheek cells are thin and flat, forming a protective lining. Plant cells vary from rectangular to elongated to tube-like; some form tubes that carry water throughout the plant. The section establishes the principle that cell shape, size, and structure are directly related to the function the cell performs.
+
+2.2 What Are the Levels of Organisation in the Body of a Living Organism?
+
+This section introduces the hierarchy of biological organisation: Cell → Tissue → Organ → Organ system → Organism. A cell is the basic unit, analogous to a brick; similar cells group into tissues; tissues combine to form organs; organs cooperate in organ systems; all systems together constitute the organism. Complex organisms begin life as a single egg cell that divides repeatedly to produce many cells — such organisms are called multicellular organisms. Animals, plants, and humans are all multicellular. An "Ever heard of" box notes that the ostrich egg yolk is the largest known single cell, measuring 130–170 mm in diameter.
+
+2.3 What Are Microorganisms?
+
+Some living organisms are made up of just one or very few cells and are too small to see with the naked eye; these are called microorganisms or microbes. Bacteria and Amoeba are unicellular; some fungi and algae are multicellular microorganisms. Microorganisms are found in water, soil, air, and inside the body. Observing them requires a microscope that magnifies 100–400 times, though low-cost foldable paper microscopes are also referenced. Activity 2.4 involves collecting and observing pond or stagnant water under a microscope; Activity 2.5 involves observing soil suspension. Activity 2.6 presents data tables identifying organisms found in pond water (Amoeba, Paramecium — protozoa; algae) and soil suspension (bread mould and mould — fungi; algae; bacteria of spherical, comma, spiral, and rod shapes). Viruses are introduced in an "Ever heard of" box as microscopic, acellular entities that multiply only inside living cells and can infect plants, animals, and bacteria.
+
+2.4 How Are We Connected to Microbes?
+
+This section explores the ubiquitous presence of microorganisms — in water, soil, air, food, extreme environments such as hot springs and snow, and inside the human gut (helping with digestion, as introduced in Grade 7). The chapter uses the example of fruit or food rotting when left out to show that microbes are ever-present and can infect food. It notes that high concentrations of salt or sugar (used in pickles and murabbas) inhibit microbial growth.
+
+2.4.1 Key players in cleaning the environment
+
+Activity 2.7 has students layer fruit and vegetable peels with soil and observe after 2–3 weeks, finding that the peels decompose into dark, nutrient-rich manure. Bacteria and fungi in the soil break down complex plant waste into simpler substances through decomposition — returning nutrients to the soil and supporting plant growth. Microbes also decompose dead animals and animal dung. The section references the "Our scientific heritage" box noting that ancient Indian Vedic texts (particularly the Atharvaveda) reference tiny entities called 'Krimi' — both visible (Drishya) and invisible (Adrishya) — and describe their beneficial and harmful effects. A "step further" box explains that some bacteria and fungi living in oxygen-free environments decompose organic waste and release biogas (primarily methane and carbon dioxide), used as fuel for cooking, heating, electricity generation, and vehicles.
+
+2.4.2 Microorganisms and food
+
+Activity 2.8 compares yeast-added dough (bowl A) with plain dough (bowl B) after several hours in a warm place, showing that yeast (a fungus) breaks down sugar in warm conditions, releasing carbon dioxide that makes dough rise and become fluffy, with a small amount of alcohol responsible for altered smell. This property is used in making breads, cakes, idlis, dosas, and bhatura (the latter with Lactobacillus). Activity 2.9 tests curd formation by adding a spoonful of curd to lukewarm milk (bowl A) and cold milk (bowl B): Lactobacillus in warm bowl A ferments milk sugar (lactose), producing lactic acid that sets the curd and makes it sour; cold bowl B does not curdle. Rhizobium bacteria, living in root nodules of legumes (beans, peas, lentils), trap atmospheric nitrogen and make it available to plants, reducing the need for chemical fertilisers and explaining why farmers rotate legumes with other crops.
+
+2.4.3 Amazing microalgae: tiny helpers in water
+
+Microalgae are microscopic, plant-like organisms found in water, soil, air, and on trees; they produce food through photosynthesis and in doing so supply more than half of Earth's oxygen. They are nutrient-rich food sources for aquatic animals. Specific examples — Spirulina, Chlorella, and Diatoms — are used as health supplements and medicines; microalgae also help clean water and serve as biofuel feedstock. An "Ever heard of" box highlights Spirulina as a superfood rich in protein (over 60% of body weight), vitamin B12, and low in fat and sugar, and describes how it can be cultivated in a glass tank. The section warns that pollution, climate change, and habitat destruction threaten microalgal diversity and that their conservation is important for environmental protection and oxygen balance.
+
+2.5 Why Is Cell Considered to Be a Basic Unit of Life?
+
+This concluding section consolidates the chapter's core argument: all living organisms — plants, animals, and microorganisms — are built from cells. Multicellular organisms have specialised cells that cooperate; unicellular organisms (bacteria, protozoa) carry out all life functions in a single cell. Fungi can be either (yeast = unicellular; mould = multicellular). The cells of microorganisms share a cell membrane with plant and animal cells; fungal cells additionally have a cell wall but lack chloroplasts; bacteria lack a well-defined nucleus and nuclear membrane, possessing instead a nucleoid region — this is the key structural distinction between bacteria and all other cell types. The section notes that an electron microscope (magnification ~10,00,000 times) is needed to observe sub-cellular components that will be studied in higher classes.
+
+
+======================================================================
+
+THE FULLEST PLAN (17 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Bending Light, Revealing the Hidden
+U2: The Onion Peel Under the Lens
+U3: Cheek Cells: Observing an Animal Cell
+U4: Why Do Cells Look Different? Shape Meets Function
+U5: From Cell to Organism: Building the Hierarchy
+U6: Pond Water and Soil: Microorganisms in Their Habitats
+U7: Viruses: Alive or Not? A Classification Challenge
+U8: Dough That Rises: Yeast at Work
+U9: Milk to Curd: Temperature and Lactobacillus
+U10: Decomposition, Nitrogen Fixation, and the Soil Connection
+U11: Microalgae: Oxygen, Food, and Fuel
+U12: Salt, Sugar, and Preservation: Why Do Pickles Last?
+U13: Biogas from Waste: Connecting Decomposition to Energy
+U14: Microalgae Conservation: What Is at Stake?
+U15: Bacterial Shape Diversity: Structure as Prediction Tool
+U16: The Nucleus, the Nucleoid, and the Cell Wall Question
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 15 UNITS — unit-title map ---
+U1: Lenses, Light, and the Hidden World
+U2: Inside the Onion — A Cell Revealed
+U3: Your Own Cells — A Cheek Cell Investigation
+U4: What Does a Cell's Shape Tell Us?
+U5: Plant Cell, Animal Cell — Sorting the Differences
+U6: Microbes Under the Lens — Pond Water and Soil
+U7: Building the Microorganism Classification Map
+U8: Yeast at Work — Dough That Rises
+U9: Curd, Temperature, and Lactobacillus
+U10: Decomposers at Work — From Peels to Manure
+U11: Microalgae — Oxygen Makers and Ecosystem Pillars
+U12: Levels of Organisation — Building from Cell to Organism
+U13: Comparing Cell Blueprints — A Structural Reasoning Task
+U14: Why Life Needs Cells — The Central Argument
+U15: Observation, Structure, Role — Converging the Chapter
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 15,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply and connect: cellular organisation as the defining characteristic of life",
+ "pedagogical_approach": "Hands-on Science",
+ "activity_title": "Observation, Structure, Role — Converging the Chapter",
+ "activity_description": "Students return to their earliest microscope sketches and classification maps from this plan, annotate them with functional and organisational knowledge gained in later units, and produce a final annotated comparison panel: one plant cell, one animal cell, one bacterium — each labelled with structure, cell type classification, and one ecosystem or life-process role the organism plays.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Frames this unit as a convergence task — drawing both strands of the chapter together — and circulates to prompt students to check that every annotation is grounded in chapter content."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Retrieve their sketches and notes from earlier units, annotate and extend them into the three-panel comparison, and write one integrating sentence below the panel explaining why all three panels represent life despite their structural differences."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher explains the convergence task: students use everything they have produced in this plan to build a final three-panel annotated comparison."
+  },
+  {
+   "minutes": "6-28",
+   "activity": "Students work individually on the three-panel comparison, annotating each sketch with structural features, classification (cellular/unicellular/etc.), and one ecosystem or life-process role."
+  },
+  {
+   "minutes": "28-40",
+   "activity": "Students write their integrating sentence below the panel, drawing on their written argument from the previous unit to explain why cellular organisation unifies all three despite their differences."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Volunteer students read their integrating sentence aloud; teacher affirms responses that connect both the diversity strand and the cellular organisation strand, closing the chapter arc."
+  }
+ ],
+ "teacher_notes": "This closing unit draws together the two central threads of the chapter — the diversity of microscopic organisms and the universality of cellular organisation — in a single visible product that students can carry with them. Unlike a synthesis unit, it does not introduce new content; instead it asks students to re-see their earliest observations through the explanatory framework built across all fourteen prior units. Watch for students whose integrating sentence collapses the two threads into one vague claim; a probing question — 'your bacterium has no true nucleus — does that mean it is not alive? How does your cellular organisation argument handle that?' — is a reliable way to push for precision.",
+ "materials": [
+  "Student notebooks with all previous sketches and notes",
+  "Coloured pencils for annotation (optional)",
+  "Section 2.5 text for reference"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 13 UNITS — unit-title map ---
+U1: Seeing Small: From Flask to Microscope
+U2: Cheek Cells: Preparing and Reading a Slide
+U3: Cell Structure Gallery: Plant, Animal, and Beyond
+U4: Shape Tells a Story: Matching Cell Form to Function
+U5: Pond Water and Soil: Discovering Microbial Variety
+U6: Yeast at Work: Dough That Rises
+U7: Warm Milk, Cold Milk: Lactobacillus and the Conditions for Curdling
+U8: Peels into Manure: Decomposition as a Causal Story
+U9: Nitrogen, Microalgae, and the Chain of Benefit
+U10: Bricks to Buildings: Building the Hierarchy of Life
+U11: Nucleus or Nucleoid? Comparing Bacterial and Other Cells
+U12: Diversity Meets Organisation: A Cross-Organism Structural Audit
+U13: Cellular Organisation as the Line of Life: Reasoning Across the Full Chapter
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 13,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply structural understanding to the levels-of-organisation hierarchy",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Cellular Organisation as the Line of Life: Reasoning Across the Full Chapter",
+ "activity_description": "Students are presented with four short scenarios involving microorganisms and cells, and must decide for each whether the entity described is a living organism, and justify the decision using the cellular organisation criterion. One scenario includes a virus, making the boundary explicit. Students produce written justifications that reason from structural evidence.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes the four scenarios, facilitates a structured small-group discussion after individual reasoning time, and guides the class to a shared formulation of the cellular organisation criterion."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Reason through each scenario independently in writing, then share justifications in small groups and revise their reasoning if a peer's argument is stronger."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-10",
+   "activity": "Teacher presents four scenarios on the board: (1) a bacterium found in a hot spring, (2) a yeast cell fermenting sugar, (3) a virus entering a leaf cell, (4) a single Amoeba in pond water — students read and begin independent written reasoning."
+  },
+  {
+   "minutes": "10-25",
+   "activity": "Students complete individual written justifications for each scenario, using at least one structural feature from the chapter (cell membrane, nucleus type, cell wall, unicellular/multicellular) as evidence."
+  },
+  {
+   "minutes": "25-38",
+   "activity": "Small groups compare their justifications scenario by scenario and negotiate one agreed group response for any scenario where individuals disagreed."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Whole-class debrief on the virus scenario: the class formulates a shared statement of why cellular organisation is the criterion that defines life, grounded in the chapter's own evidence."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to demonstrate the chapter's terminal operation: reasoning simultaneously across microbial diversity and cellular organisation to judge whether an entity is a living organism. Watch for students using 'can it move' or 'can it reproduce' as their criteria — the chapter's argument is specifically about cellular organisation, and justifications must be grounded there. The virus scenario is deliberately placed last because it is the hardest: a virus can reproduce (inside a cell) but is acellular, so it sits outside the living-organism boundary the chapter draws.",
+ "materials": [
+  "Board-written or printed scenario sheet",
+  "Science notebook"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 11 UNITS — unit-title map ---
+U1: Magnification Before the Microscope
+U2: Inside an Onion Peel: The First Cell
+U3: Cheek Cells vs Onion Cells: A Student Investigation
+U4: Shape Meets Function: A Tour of Cell Diversity
+U5: Microorganisms Under the Lens: Pond Water and Soil
+U6: Levels of Organisation: From Cell to Organism
+U7: Yeast at Work: Dough and Fermentation
+U8: Lactobacillus and Decomposers: Cause and Condition
+U9: Microalgae: Photosynthesisers, Oxygen Suppliers, and Ecological Actors
+U10: Bacteria, Fungi, Plants, Animals: Comparing Cell Structure
+U11: Why the Cell Is the Basic Unit of Life: Reasoning Across Diversity
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 11,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Compare cell types across organisms and explain cellular organisation as the defining characteristic of life",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Why the Cell Is the Basic Unit of Life: Reasoning Across Diversity",
+ "activity_description": "Students use the completed comparison matrix and the virus contrast to reason through a structured argument: what all cellular organisms share, what viruses lack, and why cellular organisation — not size or visibility — is the defining characteristic of life. They produce a written evidence-based argument addressing the chapter's title question.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Poses the chapter's culminating question as an argument task, circulates to push students beyond listing features toward constructing logical reasoning, and facilitates a class-level discussion of the strongest arguments."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Write a structured argument answering why the cell is considered the basic unit of life, drawing on evidence from the comparison matrix, the virus contrast, and at least one specific example from their own observations."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher poses the chapter title question explicitly — 'Why is the cell considered the basic unit of life?' — and reminds students of the virus contrast introduced at the close of the previous unit, framing it as evidence they must use."
+  },
+  {
+   "minutes": "8-28",
+   "activity": "Students individually draft their argument: all living organisms from bacteria to humans are built from one or more cells; cells carry out life functions; viruses are acellular and cannot reproduce independently; therefore cellular organisation is the defining, not incidental, characteristic of life."
+  },
+  {
+   "minutes": "28-40",
+   "activity": "Students share drafts in pairs, checking that each argument cites at least one observation (cheek cell, onion cell, or microorganism from the slides) and addresses the virus contrast as a boundary case."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Class-level discussion of one or two strong arguments; teacher closes by noting that this chapter opened with a lens shaped like a lentil seed and ends with the argument that life itself is built at the scale that lens first revealed."
+  }
+ ],
+ "teacher_notes": "This unit brings together both strands of the chapter — the diversity of microscopic organisms and the cellular organisation argument — in a single written reasoning task, which is exactly what the dissolution test sentence asks students to be able to do. Watch for arguments that list cell features without making the logical step to 'therefore the cell is the basic unit' — the argument must connect structural features to functional independence, not just enumerate them. The peer-check step is important: requiring students to verify that a specific observation is cited grounds the argument in evidence rather than abstraction.",
+ "materials": [
+  "Completed comparison matrix from previous unit",
+  "Student notebooks with all accumulated sketches and tables",
+  "Blackboard for capturing class discussion points"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 9 UNITS — unit-title map ---
+U1: From Flask to Lens: First Glimpse of the Invisible
+U2: Cheek Cells Under the Microscope
+U3: Sorting the Cell Gallery: What Structure Tells Us
+U4: Microbes in Water and Soil: Observing and Identifying
+U5: Why Does Dough Rise? Investigating Yeast in Action
+U6: Microbes as Partners: Nitrogen, Decomposition, and Curd
+U7: Microalgae and the Oxygen We Breathe: Connecting Photosynthesis to Scale
+U8: Viruses, Bacteria, and the Boundary of Life
+U9: The Microscopic Web: Structural Diversity and the Cell Criterion
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 9,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Reason across both central operations simultaneously",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "The Microscopic Web: Structural Diversity and the Cell Criterion",
+ "activity_description": "Students receive a set of five novel organism cards (descriptions only, no names) and must classify each as plant-like cell, animal-like cell, bacterial cell, fungal cell, or acellular entity by applying structural criteria, then explain for each how its cellular organisation (or lack thereof) determines both its diversity role in the living world and whether it qualifies as living.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes the organism description cards, clarifies that no card names a previously studied organism directly, and asks students to reason from structural features to classification and then to the living/non-living determination."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Reads each organism description, applies structural criteria from the chapter to classify it, and writes a two-sentence justification for each card connecting structural feature to diversity role and life-status determination."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher frames the unit as a capstone application: all the structural knowledge and causal explanations built across this plan now have to work together on organisms described but not named. Distributes cards and confirms the classification options available."
+  },
+  {
+   "minutes": "7-28",
+   "activity": "Students work individually through each card, applying structural criteria (presence of cell wall, type of nucleus, chloroplast presence, acellular structure) to classify the organism and writing the justification sentence for each."
+  },
+  {
+   "minutes": "28-38",
+   "activity": "Students pair up, compare their classifications, and discuss any card where they disagreed — working toward a reasoned consensus and identifying which structural feature was decisive for the disagreement."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Teacher conducts a whole-class reveal of each card's intended classification, narrating the reasoning chain for any contested cards, and closes with the chapter's core claim: cellular organisation — its presence, type, and complexity — is both what connects all living organisms and what distinguishes the diversity of life at the microscopic scale."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to reason independently across both the diversity and the cellular-organisation strands they have developed across the plan — do not provide structural hints before students attempt each card. A likely sticking point is a card describing a fungal cell: students may default to 'plant cell' because both have a cell wall; the distinguishing feature is the absence of chloroplasts in fungi, which they identified in the previous unit. The final teacher narration explicitly closes the chapter's argument — that structural diversity at the cellular scale explains both the variety of life and the defining boundary of what counts as living.",
+ "materials": [
+  "Five organism description cards (teacher-authored from chapter content, no organism names given)",
+  "Blank classification and justification worksheet",
+  "Pencils"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

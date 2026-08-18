@@ -1,0 +1,1539 @@
+{
+ "filename": "ch_12_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 12,
+ "chapter_title": "Beyond Earth",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "14x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 12",
+  "ledger_ts": "20260817_113057_sci_vi_12_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-17T12:04:39",
+    "tool": "genon/repair_meta_leak.py v1.0",
+    "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "teacher_notes",
+      "rule": "register/meta-leak",
+      "removed": "and may be received by a class that took a different path through the content, so do not assume any particular earlier activity happened. Begin",
+      "replaced_with": ". Begin",
+      "note": "'draws every strand of the chapter together' is the whole claim the teacher needs"
+     }
+    ]
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T09:08:29",
+   "ledger_ts": "20260818_085144_sci_vi_12_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_12_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_12_canonical_p10.json": "2026-08-17T12:38:00",
+    "ch_12_canonical_p08.json": "2026-08-17T12:37:59"
+   },
+   "replaced": {
+    "period_number": 14,
+    "period_duration_minutes": 40,
+    "progression_stage": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "synthesis": true,
+    "roles": [
+     {
+      "actor": "Teacher",
+      "role_description": "Distributes the sky-scene cards and answer frames, clarifies the task structure, and facilitates a closing whole-class discussion that draws the chapter together."
+     },
+     {
+      "actor": "Students (Individual)",
+      "role_description": "Work through the sky-scene card systematically, identifying each object, stating its key property, explaining its appearance, placing it structurally, and noting how it would be located in real observation."
+     }
+    ],
+    "activity_title": "Mission Briefing: Choosing a Landing Site",
+    "activity_description": "Groups receive a mission briefing describing a newly commissioned space probe that must choose among five candidate bodies in the Solar System for a close-up study. Each candidate is described only by a set of measured properties (distance from the Sun in au, surface type, presence or absence of atmosphere, presence or absence of craters, orbital region, and whether it shines with its own light or reflected light). Groups must identify each candidate, classify it correctly, explain the property that distinguishes it from similar bodies, decide which single candidate their probe should visit and justify the choice using the chapter's concepts, then produce a one-paragraph mission rationale that also places their chosen destination within the larger structure — Solar System, Milky Way Galaxy, Universe.",
+    "teacher_notes": "The five candidate profiles are designed so that no name appears anywhere on the sheet — students must reason from properties to identity and classification before they can argue for a choice. Profile A (distance ~1.5 au, solid rocky surface, thin atmosphere, reddish dust, no own light) is Mars. Profile B (distance ~2.7 au, irregular shape, rocky, no atmosphere, heavy cratering, no own light) is an asteroid. Profile C (distance ~0.72 au, solid surface, very thick atmosphere, no craters visible, no own light, hotter than the object closer to the Sun) is Venus — the atmosphere-temperature link from Section 12.3 is essential here. Profile D (distance ~0.0026 au from Earth, heavily cratered, virtually no atmosphere, no own light) is the Moon. Profile E (distance highly variable, composed of dust, gas, rock, and ice, develops a visible tail when close to the Sun, no own light when far away) is a comet. Each profile thus demands a different cluster of concepts: atmosphere and temperature for C, crater persistence for B and D, reflected vs. own light for all five, orbital region for B, and proximity and revolution for D. Groups that try to identify without reading all properties will mis-identify C as Mercury — circulate and press them to explain why C is hotter than A despite being farther from the Sun. The mission-rationale paragraph is where synthesis is most visible: a strong rationale names the body, states its class, invokes at least one distinguishing property, and places it inside the Solar System inside the Milky Way inside the Universe. Weaker groups may stop at naming — prompt them with 'Where does this body sit in the biggest picture we studied?' Do not supply the identity of any profile; let the reasoning do the work. Groups will differ on which body they choose to visit, and that disagreement is productive — there is no correct answer for the choice, only stronger or weaker justifications.",
+    "materials": [
+     "One printed or hand-copied Mission Briefing sheet per group (five candidate-body property profiles, each labelled A–E, with no names given; properties listed: distance from Sun in au, surface description, atmosphere presence and thickness, crater presence, orbital region, own light or reflected light, one unusual distinguishing detail per profile)",
+     "Student notebooks or loose paper for working notes and the final mission rationale paragraph",
+     "Pencils or pens",
+     "One copy of a blank nested-structure outline (three concentric labels: Solar System / Milky Way Galaxy / Universe) drawn by teacher on the board for reference during the closing discussion"
+    ],
+    "time_bands": [
+     {
+      "minutes": "0-5",
+      "activity": "Teacher distributes the Mission Briefing sheet and reads the scenario aloud: a space agency has shortlisted five bodies for its next probe but has stripped all names from the files to avoid bias — groups must re-identify each body from its properties alone, then argue for one destination. Teacher reads Profile C aloud and asks the class: 'This body is farther from the Sun than Profile A, yet its surface is hotter. What could explain that?' One or two responses are taken — atmosphere is expected to surface — and the teacher confirms that the profiles are solvable using exactly what the chapter taught. Groups begin."
+     },
+     {
+      "minutes": "5-20",
+      "activity": "Groups work through all five profiles. For each they record: the identity they have reasoned to, the correct classification (planet, natural satellite, asteroid, comet, dwarf planet, or star), and the single property that most clearly separates this body from the others. Teacher circulates, pressing groups to articulate the reasoning rather than just the answer — 'Why does the heavy cratering on D persist when it does not on C?' and 'Profile B is in the same orbital region as what other objects you have studied?' are useful prompts. Groups that finish early are asked to note which two profiles were hardest to distinguish and why."
+     },
+     {
+      "minutes": "20-30",
+      "activity": "Each group selects one candidate for their probe to visit and drafts a mission rationale paragraph in their notebooks. The paragraph must state: the body's identity and classification; the distinguishing property that confirms the identification; the scientific reason this destination is worth visiting (drawn from chapter content — surface features, atmosphere, composition, position in the Solar System, etc.); and where the chosen destination sits in the nested cosmic hierarchy (Solar System → Milky Way Galaxy → Universe). Teacher circulates, checking that the hierarchy appears and that the rationale invokes chapter reasoning rather than general knowledge."
+     },
+     {
+      "minutes": "30-38",
+      "activity": "Three groups share their rationale paragraphs — chosen to represent three different destination choices if possible. After each reading, the class responds to one question posed by the teacher: 'Which property in that rationale is doing the most conceptual work — what would collapse without it?' Brief whole-class discussion surfaces how the atmosphere concept, the reflected-vs-own-light distinction, the crater-persistence idea, and the nested-hierarchy placement each carried a different part of the chapter's meaning. The board nested-structure diagram is annotated live as each shared destination is placed on it."
+     },
+     {
+      "minutes": "38-40",
+      "activity": "Teacher closes by gesturing to the annotated nested diagram: every destination the class considered — whether Moon, planet, asteroid, or comet — sits inside the Solar System, which sits inside the Milky Way, which sits inside the Universe. The mission briefing worked because the chapter gave tools for each level: properties to identify and classify bodies, reasoning about atmosphere and surface to explain what we find there, and the structural picture to place any object in its true context. The chapter is complete."
+     }
+    ],
+    "homework": [],
+    "pedagogical_approach": "Problem-based collaborative reasoning: students use a realistic decision-making frame (mission planning) to apply every major concept of the chapter — classification of celestial objects, planet and small-body properties, the role of atmosphere, surface features and what preserves or erases them, the scale of the Solar System, and the nested cosmic hierarchy — to a set of unfamiliar property profiles. The vehicle is a written mission rationale produced under structured group deliberation, distinct in kind from card-identification, observation-planning, and cosmic-hierarchy-drawing tasks used in the shorter plans' final units."
+   }
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and wonder — encountering the night sky",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "What Do You See in the Night Sky?",
+     "activity_description": "Students observe a projected or printed star-field image and share what they notice — bright and dim points, patterns, clusters. They record their observations in a simple two-column table: what they see and what it reminds them of. The class builds a shared first list of night-sky objects.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Projects or distributes the star-field image, invites open-ended observations, and records student responses on the board."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Observe the star-field image, fill in their two-column observation table, and share notices with the class."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher shows the star-field image and invites students to look carefully without speaking, then asks: what do you notice?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Students fill in their two-column observation tables independently, noting what they see and what patterns or shapes it suggests to them."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Class shares observations; teacher records distinct responses on the board, grouping similar ones, to build a shared first list of night-sky objects."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Teacher briefly names the categories that will be explored across the chapter — stars, constellations, planets, moons, and more — framing the arc ahead."
+      }
+     ],
+     "teacher_notes": "This is the chapter's opening unit, so orient students to the context established in the chapter — the children in Nubra, Ladakh gazing at the night sky — before showing the star-field image. Watch for students who conflate stars and planets (both appear as points of light); this is a productive misconception to surface now and revisit later. Accept all observations without correction at this stage; the goal is to activate curiosity and produce a class record of prior intuitions.",
+     "materials": [
+      "Projected or printed star-field image showing varied brightness and star groupings",
+      "Student observation worksheets with two-column table"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and wonder — encountering the night sky",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Drawing Your Own Constellation",
+     "activity_description": "Students receive a printed sheet of randomly distributed dots (representing stars of varying sizes) and draw imaginary lines to form their own star pattern, name it, and write a two-sentence story explaining the pattern — mirroring Activity 12.1 from the chapter. They observe that the same set of stars can yield very different patterns depending on which stars are connected.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes dot sheets, models one example on the board, and circulates to prompt students to notice that choices about which dots to connect change the pattern."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Draw personal star patterns on their dot sheets, name the pattern, and write a brief imaginative story about it."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher briefly recaps the previous unit's shared list of night-sky objects and introduces the idea that humans throughout history have seen shapes in star groupings."
+      },
+      {
+       "minutes": "5-20",
+       "activity": "Students receive dot sheets and independently draw lines to form their own patterns, name them, and write their two-sentence stories."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Pairs share their patterns with each other and notice how the same dots produced different shapes; a few pairs share with the class."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher introduces the term 'constellation' and explains that the IAU officially recognised 88 constellations dividing the entire sky into defined regions."
+      }
+     ],
+     "teacher_notes": "Building directly on the previous unit's shared list, this activity gives students a felt experience of how constellation patterns are a human choice overlaid on stars. A common error to watch for is students thinking constellations are fixed, objective groupings — emphasise that different cultures connected the same stars differently. Prompting pairs to compare their patterns before the class share heightens this realisation.",
+     "materials": [
+      "Printed dot sheets with randomly distributed star dots of varying sizes",
+      "Pencils or coloured pens"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Identify and classify — naming celestial objects and their properties",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Mapping Key Constellations and Indian Star Names",
+     "activity_description": "Students examine labelled diagrams of Orion, Canis Major, Taurus, Ursa Major (Big Dipper / Saptarishi), and Ursa Minor (Little Dipper with Pole Star) and complete a structured reference table: constellation name, notable stars, Indian name or nakshatra where applicable, and one identifying feature. They learn that the Pole Star appears nearly stationary and points north.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured presentation of each constellation diagram, highlighting key stars and their Indian names, and models filling in the first row of the table."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the remaining rows of the constellation reference table using the diagrams and teacher explanation."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects to the previous unit's dot-pattern activity and explains that recognisable constellations have names, and that the IAU formally listed 88 of them."
+      },
+      {
+       "minutes": "6-24",
+       "activity": "Teacher walks through labelled diagrams of Orion (three-star belt, Betelgeuse as Ardra), Canis Major (Sirius — brightest night star), Taurus (Pleiades as Krittika, Aldebaran as Rohini), Big Dipper/Saptarishi, and Little Dipper with Pole Star; students complete the table as each is introduced."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Teacher explains the navigational use of the Pole Star: it appears nearly stationary in the north and was used by sailors and travellers before modern technology."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Quick oral check: teacher points to a diagram and students call out the constellation name, a key star, and its Indian name if applicable."
+      }
+     ],
+     "teacher_notes": "This unit shifts from personal pattern-making to the agreed, named sky — a key conceptual step. Watch for confusion between the star name (e.g., Sirius) and the constellation name (Canis Major); keep these clearly distinct on the board throughout. The oral check at the close is a quick diagnostic — if students struggle with Indian names, note this for the next unit's reinforcement.",
+     "materials": [
+      "Labelled constellation diagrams (Orion, Canis Major, Taurus, Ursa Major, Ursa Minor) — printed or projected",
+      "Structured reference table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Identify and classify — naming celestial objects and their properties",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Can't We Always See All Stars? Investigating Night-Sky Visibility",
+     "activity_description": "Students are given a set of scenario cards describing different observation conditions (city centre at midnight, rural hillside on a clear moonless night, rooftop during smog, etc.) and must predict star visibility for each, then rank conditions from worst to best. They derive the factors that reduce or improve visibility: light pollution, smoke, dust, obstructions, moon phase, and dark-sky adaptation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes scenario cards, poses the guiding question, circulates to prompt reasoning, and facilitates the class ranking discussion."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Analyse their scenario cards, predict visibility, rank conditions collaboratively, and justify their ranking with factors drawn from the chapter."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher poses the guiding question: why do some people see thousands of stars while others see only a handful on the same night?"
+      },
+      {
+       "minutes": "5-18",
+       "activity": "Groups receive scenario cards and collaboratively rank conditions from poorest to best star visibility, noting which factors drive each judgment."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Groups share their rankings; class converges on a shared ranked list, with teacher recording factors on the board: light pollution, smoke, dust, obstructions, moon phase, eye adaptation."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Teacher introduces dark-sky reserves and sky-mapping apps (Sky Map, Stellarium), and explains practical night-sky preparation: moonless night, half-hour eye adjustment, compass and printed charts."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the previous unit's identification of constellations by asking why we may not be able to see them at all. The most common misconception here is that cloudy weather is the only visibility problem; guide students to surface light pollution as a significant and growing concern. If groups disagree on rankings, let the disagreement drive class discussion rather than resolving it immediately.",
+     "materials": [
+      "Scenario cards describing varied observation conditions",
+      "Blank ranking strips or ranking tables for groups"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Identify and classify — naming celestial objects and their properties",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Classifying Solar System Members",
+     "activity_description": "Students receive a set of description cards for Solar System objects (the Sun, each of the eight planets with one key property, the Moon, asteroids, and comets) and sort them into a classification chart with columns: object name, type, key property, and whether it produces or reflects light. This produces a complete first-pass map of Solar System members.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the Solar System as the context for the next set of units, distributes cards, and models the classification chart with one completed example."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Sort description cards into the classification chart, filling in key properties and the produces/reflects light distinction for each object."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher briefly introduces the Solar System: the Sun at the centre, eight planets in order of distance, and smaller objects including moons, asteroids, and comets."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups sort their description cards into the classification chart, deciding on object type and key property for each."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Groups compare charts with a neighbouring group and resolve any differences, with teacher circulating to address confusion about planet order or object type."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Class discussion on the produces-vs-reflects light column: teacher confirms that only the Sun produces light; all other Solar System objects shine by reflection."
+      }
+     ],
+     "teacher_notes": "This unit transitions from stars and constellations to the Solar System, so briefly acknowledge that shift. A persistent misconception is that the Moon produces its own light; the produces/reflects column in the classification chart is designed to surface and correct this. Keeping groups small ensures every student handles and reasons about the cards rather than one person completing the chart for the group.",
+     "materials": [
+      "Description cards for Solar System objects (one card per object)",
+      "Blank classification chart worksheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "The Sun and Planets — Properties, Order, and Scale",
+     "activity_description": "Students study a structured summary of the Sun's properties (distance, size relative to Earth, role in regulating climate and life) and then complete an ordered-planet table with: name, position from Sun, surface type (rocky or gaseous), one distinguishing feature, and common name where applicable. The inner-four vs outer-four contrast is made explicit.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured presentation of the Sun's properties and the planet sequence, using a board diagram of the Solar System layout to reinforce order and scale."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the ordered-planet table as each planet is presented, entering surface type, distinguishing feature, and common name."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher presents the Sun: distance from Earth as one astronomical unit (~150 million km), its diameter relative to Earth, and its role as the primary energy source regulating climate, seasons, and life."
+      },
+      {
+       "minutes": "8-26",
+       "activity": "Teacher walks through the eight planets in order, highlighting the inner four (small, rocky) vs outer four (large, gaseous with rings), Venus as hotter than Mercury due to thick atmosphere, Venus as Morning/Evening Star, Mars as Red Planet, and Earth as Blue Planet; students fill in their tables."
+      },
+      {
+       "minutes": "26-34",
+       "activity": "Teacher explains Pluto's reclassification as a dwarf planet by the IAU in 2006 when similar objects beyond Neptune were discovered."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Students recite the planet order using a mnemonic of their own invention; the class agrees on one to keep."
+      }
+     ],
+     "teacher_notes": "This unit deepens the classification begun in the previous unit by adding properties, scale, and the inner/outer structural contrast. The most important misconception to address here is that Venus is hotter because it is closer to the Sun — the chapter explicitly contradicts this, making it a strong reasoning checkpoint. The mnemonic at the close is a low-stakes memory anchor, not an assessment; keep it playful.",
+     "materials": [
+      "Board diagram of Solar System layout (order and relative scale)",
+      "Ordered-planet table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Moon — Surface Features and India's Lunar Missions",
+     "activity_description": "Students examine Moon surface images and describe what they observe: circular bowl-shaped craters. They then reason about why craters persist on the Moon but not on Earth by comparing Moon and Earth properties (atmosphere, water, biological activity). The unit closes with a timeline of India's Chandrayaan missions culminating in the south-pole landing of Chandrayaan-3.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Provides Moon surface images, poses the reasoning question about crater persistence, facilitates the Moon-Earth comparison, and presents the Chandrayaan timeline."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Observe and describe Moon surface features, then reason collaboratively about why craters are preserved on the Moon but eroded on Earth."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects to the previous unit's classification of the Moon as a natural satellite and provides key Moon facts: distance from Earth (~3,84,000 km), diameter relative to Earth, revolution period (~27 days), and virtually no atmosphere."
+      },
+      {
+       "minutes": "7-20",
+       "activity": "Groups examine Moon surface images, describe what they see, and identify craters; teacher introduces the term and explains craters are formed by asteroid and rock impacts."
+      },
+      {
+       "minutes": "20-30",
+       "activity": "Groups reason about why craters are preserved on the Moon but not on Earth — comparing presence of atmosphere, water, and life — and record their reasoning."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Teacher presents the Chandrayaan timeline: Chandrayaan-1 (2008), Chandrayaan-2 (2019), and Chandrayaan-3's Vikram lander soft-landing near the south pole on 23 August 2023, making India the first country to achieve this; 23 August is now National Space Day."
+      }
+     ],
+     "teacher_notes": "The previous unit established planets; this unit zooms into Earth's own natural satellite. Students often believe craters are volcanic rather than impact-formed — the chapter attributes them specifically to asteroid and rock impacts, so keep the explanation tightly grounded there. The Chandrayaan timeline is a strong motivational close; encourage students to connect the south-pole choice to what they have just learned about the Moon's surface.",
+     "materials": [
+      "Printed or projected Moon surface images showing craters",
+      "Moon-Earth comparison worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Asteroids, Comets, and the Asteroid Belt — Small Bodies, Big Picture",
+     "activity_description": "Students read description cards for asteroids and comets, then complete a Venn diagram comparing them: shared features (orbit Sun, part of Solar System, irregularly shaped or varying) vs distinct features (asteroids rocky/no tail; comets icy with a tail near the Sun). They then locate the asteroid belt on a Solar System diagram by position between Mars and Jupiter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes description cards and blank Venn diagrams, models the approach by placing one shared feature, and confirms the asteroid belt location on the class Solar System diagram."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the Venn diagram from description cards, then mark and label the asteroid belt on their Solar System diagram."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher briefly recaps the Solar System structure from the previous units and introduces asteroids and comets as the smaller members of the Solar System family."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Students read description cards for asteroids and comets and complete the Venn diagram, placing shared and distinct features."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Students mark and label the asteroid belt between Mars and Jupiter on their Solar System diagram, and note Halley's Comet orbit period (76 years, last seen 1986)."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Class shares Venn diagrams; teacher confirms key points and consolidates the complete Solar System family: Sun, eight planets, moons, asteroids, and comets."
+      }
+     ],
+     "teacher_notes": "This unit completes the Solar System structure arc begun in unit 5. A common confusion is that comets always have visible tails — the chapter clarifies that the tail forms only when the comet approaches the Sun and frozen material evaporates, so students should note that comets appear dim when far away. The Venn diagram makes the asteroid-comet distinction concrete and correctable; use it as a diagnostic before moving on to the Milky Way.",
+     "materials": [
+      "Description cards for asteroids and comets",
+      "Blank Venn diagram worksheets",
+      "Solar System diagram for labelling"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "From Solar System to Milky Way to Universe",
+     "activity_description": "Students complete a nested-structure diagram showing: Solar System → Milky Way Galaxy → Universe. For each level they record: what it contains, an approximate scale descriptor (relative, not numerical), and one key fact. The unit ends with the chapter's account of exoplanets and the ongoing search for life beyond Earth.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads the nested-structure presentation using a board diagram, moving from the familiar Solar System outward to the Milky Way and then the Universe."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Complete the nested-structure diagram and three-level summary table as each level is presented."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher recaps the complete Solar System family from the previous unit and introduces the concept of scale: if the Solar System is very large, where does it sit in the larger picture?"
+      },
+      {
+       "minutes": "7-20",
+       "activity": "Teacher presents the Milky Way Galaxy (Akasha Ganga): a galaxy containing millions to billions of stars, visible from dark locations as a faint band of light; the Solar System is a small part of it. Students complete that level of the nested diagram."
+      },
+      {
+       "minutes": "20-30",
+       "activity": "Teacher presents the Universe: many galaxies beyond the Milky Way, studied by scientists to understand stars and galaxies; students complete the outermost level of the diagram."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Teacher introduces exoplanets — planets orbiting stars other than our Sun — and the search for life beyond Earth; students note this in the key-fact column and discuss briefly why this search is relevant."
+      }
+     ],
+     "teacher_notes": "This is the unit that situates everything learned so far within the largest known structure. Students sometimes confuse 'galaxy' with 'universe' — the nested diagram is specifically designed to prevent this by making the containment relationship visible. Keep scale descriptors relative (e.g., 'much larger', 'vastly larger') in line with the self-contained register; the point is the ordering, not exact numbers.",
+     "materials": [
+      "Blank nested-structure diagram worksheet (three concentric regions)",
+      "Three-level summary table worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Does Venus Outshine Mercury? Reasoning About Atmosphere and Temperature",
+     "activity_description": "Students are given a simple data card showing relative distances of Mercury and Venus from the Sun alongside their surface temperatures, then asked to reason about why Venus is hotter despite being farther away. They must produce a written causal explanation linking the presence of Venus's thick atmosphere to heat trapping, drawing only on chapter content.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the Venus-Mercury temperature puzzle, distributes data cards, and facilitates group reasoning without revealing the explanation prematurely."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine the data card, discuss in groups, and produce a written causal explanation for why Venus is hotter than Mercury despite being farther from the Sun."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher poses the puzzle: Venus is farther from the Sun than Mercury — which should be hotter? Students make initial predictions individually before group discussion."
+      },
+      {
+       "minutes": "6-20",
+       "activity": "Groups examine the data card, discuss possible explanations, and settle on a causal account linking Venus's thick atmosphere to heat trapping."
+      },
+      {
+       "minutes": "20-30",
+       "activity": "Groups share their explanations; teacher uses the range of responses to highlight the crucial role of atmosphere, correcting explanations that rely only on distance."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Teacher generalises: the presence or absence of an atmosphere significantly affects a planet's temperature, connecting this to Earth's own atmosphere as a regulator of conditions for life."
+      }
+     ],
+     "teacher_notes": "This unit deliberately targets the most significant causal reasoning opportunity in the chapter. The dominant error is reasoning from distance alone — watch for groups that conclude Mercury must always be hotter and probe them with: 'What is different about Venus that might change things?' The generalisation at the close links back to Earth's role as the Blue Planet, previewing the next unit's reasoning work.",
+     "materials": [
+      "Data cards showing Mercury and Venus distances from Sun and surface temperatures (relative values)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Why Does the Pole Star Always Point North? Reasoning About Apparent Motion",
+     "activity_description": "Students use a printed circular star-chart showing Ursa Major, Ursa Minor, and the Pole Star, rotate it to simulate seasonal sky changes, and observe that the Pole Star remains fixed at the centre while other stars appear to rotate around it. They then produce a written explanation connecting the Pole Star's near-stationary position to its use in navigation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the rotating star-chart with one orientation, then guides students to rotate their own charts and articulate the observation before constructing the explanation."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Rotate the printed circular star-chart, observe and record the behaviour of the Pole Star vs other stars, and write a causal explanation for its navigational use."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects to the previous unit's reasoning work and recalls from the identification stage that the Pole Star is in Ursa Minor and appears nearly stationary pointing north."
+      },
+      {
+       "minutes": "5-18",
+       "activity": "Students receive circular star-charts and rotate them by varying amounts, recording what they observe about which star remains at the centre as others appear to move."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Students write a causal explanation: because the Pole Star appears nearly stationary in the north direction, sailors and travellers could use it to reliably determine north before modern navigation technology."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Class shares explanations; teacher highlights the chapter's point that the Pole Star is not visible from the Southern Hemisphere, asking students to reason about what that means for navigation there."
+      }
+     ],
+     "teacher_notes": "This unit builds the reasoning strand started in the previous unit by moving from planet properties to sky-observation patterns. Students sometimes state the Pole Star points north as a memorised fact without connecting it to its near-stationary appearance — the rotating chart makes the mechanism visible and supports a genuine causal explanation. The Southern Hemisphere question at the close is a productive extension that links to the visibility content from the night-sky-watching stage.",
+     "materials": [
+      "Printed circular star-charts with Ursa Major, Ursa Minor, and Pole Star marked",
+      "Paper fasteners or pins to allow chart rotation (optional)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Comet Tails and Crater Persistence — Explaining with Evidence",
+     "activity_description": "Students are given two unexplained scenario cards: (1) a comet observed near the Sun has a bright tail; the same comet observed far from the Sun has none; (2) the Moon's surface is covered in craters but Earth's surface has very few visible ones. They must construct written causal explanations for each, drawing on chapter content about comet composition and Moon vs Earth properties.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes scenario cards, sets the task of producing evidence-based causal explanations, and facilitates a whole-class comparison of explanations at the close."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss each scenario card and construct written causal explanations grounded in chapter content, citing the relevant properties or processes."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher briefly recaps the Solar System structure and the Chandrayaan crater discussion, then poses: can you explain two puzzling observations using only what you have learned?"
+      },
+      {
+       "minutes": "5-20",
+       "activity": "Groups read scenario card 1 (comet tail near/far from Sun) and produce a written causal explanation citing comet composition (ice, dust, gas) and what happens as frozen material evaporates near the Sun."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Groups read scenario card 2 (Moon craters vs Earth) and produce a causal explanation citing absence of atmosphere, water, and life on the Moon compared with Earth."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Groups share both explanations; class evaluates which explanations are well-evidenced and which rely on unsupported assertions; teacher confirms key causal links."
+      }
+     ],
+     "teacher_notes": "This unit consolidates the reasoning strand by asking students to apply causal logic to two distinct scenarios without teacher-led scaffolding. Watch for groups that describe rather than explain — a description says what happens, but a causal explanation says why, citing a mechanism. The mutual evaluation at the close (well-evidenced vs unsupported) builds the scientific value of evidence-based reasoning explicitly.",
+     "materials": [
+      "Scenario cards — card 1 (comet near/far Sun) and card 2 (Moon vs Earth craters)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Practical Sky-Observation Planning and Celestial Object Identification",
+     "activity_description": "Students are given a set of sky-observation scenarios (varying location, time, season, hemisphere) and must: identify which named celestial objects would be visible, state the conditions required, and plan the practical steps for a night-sky observation session using chapter guidance. This mirrors the spirit of Activities 12.2, 12.3, and 12.4 in a classroom planning format.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes scenario sets, explains the planning task, and circulates to ensure students are drawing on specific chapter content rather than general knowledge."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Analyse each observation scenario, identify which celestial objects are visible, state required conditions, and write a practical observation plan."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects to the reasoning stage and frames this unit as applying what has been learned to the practical challenge of actually observing the sky."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Groups work through scenario set 1 (Big Dipper and Pole Star from a northern location on a clear moonless night) and scenario set 2 (Venus at dawn or dusk from an open horizon), identifying objects, conditions, and observation steps."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Groups work through scenario set 3 (why Orion and Sirius cannot be seen from a given location at a given season, or why the Pole Star is invisible from the Southern Hemisphere) and write explanatory notes."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Groups share their observation plans; class discusses which conditions are most critical and how sky-mapping apps (Sky Map, Stellarium) support modern sky observation."
+      }
+     ],
+     "teacher_notes": "This unit is the application complement to all the identification, classification, and reasoning done in earlier units — it is the first time students use their full knowledge base together on realistic problems. Watch for groups that plan a night-sky session without accounting for eye-adaptation time or moon phase — both are explicitly in the chapter and should appear in well-constructed plans. The Sky Map and Stellarium discussion at the close links practical technology to the chapter's content on night-sky preparation.",
+     "materials": [
+      "Sky-observation scenario cards (three scenario sets)",
+      "Blank observation-plan worksheets"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes the sky-scene cards and answer frames, clarifies the task structure, and facilitates a closing whole-class discussion that draws the chapter together."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Work through the sky-scene card systematically, identifying each object, stating its key property, explaining its appearance, placing it structurally, and noting how it would be located in real observation."
+      }
+     ],
+     "activity_title": "The Lakshadweep Night Deck — Reading the Sky from the Sea",
+     "activity_description": "Students step into the role of navigators aboard a traditional fishing vessel anchored overnight in the Lakshadweep archipelago, far from city lights. They receive a Situation Sheet describing what the crew can see: a brilliant blue-white star low in the south-east, a tight cluster of six stars overhead, a reddish wandering light near the horizon, a faint smudgy band stretching across the sky, a slow-moving fuzzy blob with a faint tail growing brighter each night, and a small cratered disc low in the west. Working in groups, they fill in a Navigator's Log — identifying each object, classifying it, stating its place in the cosmic structure from Solar System body to galaxy, explaining one physical reason it looks the way it does, and deciding which single object would be most reliable for finding north. The task closes when each group defends its north-finding choice to the class, and the class together traces how every concept from the chapter — light source vs reflector, atmosphere and temperature, crater formation, comet tail mechanics, constellations as sky regions, galaxy as a star city — showed up inside a single night at sea.",
+     "teacher_notes": "The six objects on the Situation Sheet map onto: Sirius (brightest star in Canis Major, shines with its own light), the Pleiades / Krittika cluster in Taurus, Mars (reddish planet, reflects sunlight, solid rocky surface, reddish soil), the Milky Way band (Akasha Ganga, visible from dark locations), a periodic comet (ice-dust-rock composition, tail forms as it nears the Sun, not self-luminous), and the Moon (natural satellite, cratered surface, no atmosphere, reflects sunlight). Do not name the objects on the Situation Sheet — students must identify them from the descriptions. The north-finding defence is the synthesis moment: the answer is neither Sirius nor the Pleiades — it is the Pole Star (Polaris / Dhruva tara), which the crew cannot yet see because they need to locate the Big Dipper / Saptarishi pointer stars first; this forces students to recall that the Pole Star is not one of the six described objects and to explain why the other bright objects cannot serve as a fixed north reference. If a group picks Mars or Sirius, ask them whether that object is always in the same position in the sky — this surfaces the distinction between a planet that moves against the star background and a nearly stationary Pole Star. Watch for groups that classify the Milky Way as 'a star' — redirect them to the chapter's definition of a galaxy. The comet entry often reveals confusion with asteroids: press groups on composition (ice, dust, gas vs rocky) and the tail mechanism (evaporation on approach to the Sun). The Log sheets are the exit product; collect them or display selected entries as evidence of integration. The Navigator's Log can be drawn on plain notebook paper using the column headings given in the setup band; no printed template is required.",
+     "materials": [
+      "Situation Sheet (one per group) — handwritten or dictated by teacher: six object descriptions as listed in the teacher notes, without names",
+      "Student notebooks or plain paper for the Navigator's Log (columns: What I see | Object name | Type / class | Place in cosmic structure | Why it looks that way | Useful for finding north? Yes / No / Why)",
+      "Pencils",
+      "Blackboard or chart paper for the class-wide north-finding defence in the closing band"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher reads the Lakshadweep scenario aloud to the class: a crew anchored overnight, no city lights, six things visible in the sky. Teacher reads the six descriptions from the Situation Sheet one by one — without any names — and asks: 'Before you write anything, just tell me: which of these is shining with its own light, and which are only reflecting?' Groups discuss briefly; teacher takes two or three quick responses to establish the light-source-vs-reflector distinction as the first tool the crew needs. Teacher then distributes or dictates the Situation Sheet and explains the Navigator's Log column headings. Groups begin filling in the Log."
+      },
+      {
+       "minutes": "6-24",
+       "activity": "Groups work through all six descriptions, completing every column for each object. Teacher circulates and asks targeted questions without giving answers: to a group unsure about the faint band — 'How many stars does it contain — one, a few, or millions?'; to a group that has written 'asteroid' for the fuzzy tailed object — 'What is this object made of, and what happens to that material as it gets closer to the Sun?'; to a group that has placed Mars inside the Milky Way column rather than the Solar System column — 'Is Mars part of the Sun's family of objects or does it orbit a different star?'. Groups write their reasoning in the 'Why it looks that way' column using physical causes: atmosphere trapping heat (for any atmosphere discussion), impact of rocks on an airless surface (craters), evaporation of ice near the Sun (comet tail), reflection of sunlight (Moon, Mars, comet)."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "North-finding defence. Each group nominates the single object from their Log that the crew should use to find north, and prepares a two-sentence justification. Groups take turns stating their choice and reason. Teacher records each nominated object on the board without comment. After all groups have spoken, teacher asks: 'Every object on this Situation Sheet is something the crew can see right now — but is the best object for finding north actually on this list?' This prompts the class to recall the Pole Star — nearly stationary, always points north in the Northern Hemisphere — and to realise that the Saptarishi / Big Dipper pointer stars are needed to locate it. Groups that nominated Sirius or Mars must now explain why those objects fail as fixed north references: planets move against the star background; bright stars rise and set. Teacher writes the Pole Star on the board and asks a group to explain the pointer-star method."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Earned closure. Teacher asks the class: 'Let's trace which part of the chapter each object on our Log pulled on.' Students call out connections as teacher lists them on the board: stars shine by their own light — Sirius and the chapter's opening definition; constellations as sky regions and Indian star names — Pleiades / Krittika; planets reflect sunlight, inner planets have rocky surfaces, atmosphere affects temperature — Mars; crater formation and persistence on an airless body — the Moon; comet composition and tail mechanism — the comet; galaxy as millions to billions of stars — the Milky Way band; Pole Star's apparent stillness and use in navigation — the north-finding answer. Teacher closes: 'One night at sea used the whole chapter. That is what it means to understand it.'"
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Collaborative problem-solving: groups work as a crew interpreting real observational clues rather than named objects, so every identification must be justified by a physical or positional property drawn from the chapter. The Navigator's Log structure enforces the full chain — observation → identification → classification → physical explanation → practical use — making the synthesis visible in the written product rather than in a summary."
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 14
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and wonder — encountering the night sky",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students observe a star-field image and record what they notice, then draw their own star patterns and invent stories, experiencing how constellation patterns are a human choice overlaid on stars.",
+    "implied_lo": "The student can describe what is observed in a star-field (varied brightness, groupings, patterns) and explain that constellation patterns represent human choices about which stars to connect, not fixed objective groupings.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Identify and classify — naming celestial objects and their properties",
+    "total_stages": 5,
+    "period_numbers": [
+     3,
+     4,
+     5
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students identify and name key constellations and their stars (including Indian names), classify Solar System members by type and properties, and determine the factors affecting night-sky visibility.",
+    "implied_lo": "The student can identify and name key constellations (Orion, Canis Major, Taurus, Big Dipper/Saptarishi, Little Dipper) and their notable stars including Indian nakshatra names, classify Solar System objects by type and properties, and state factors that affect night-sky visibility.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+    "total_stages": 5,
+    "period_numbers": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students describe the properties and arrangement of the Sun, planets, Moon, asteroids, and comets within the Solar System, and situate the Solar System within the Milky Way Galaxy and the wider Universe.",
+    "implied_lo": "The student can describe the properties, surface types, and distinguishing features of each planet in order from the Sun; describe the Moon's surface features and lack of atmosphere; distinguish asteroids from comets; and place the Solar System correctly within the Milky Way Galaxy and the Universe.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+    "total_stages": 5,
+    "period_numbers": [
+     10,
+     11,
+     12
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students construct causal explanations for Venus being hotter than Mercury, the Pole Star's near-stationary appearance and navigational use, comet tail formation near the Sun, and crater preservation on the Moon.",
+    "implied_lo": "The student can construct causal explanations — citing atmosphere, composition, or surface properties — for why Venus is hotter than Mercury, why the Pole Star is used for navigation, why comet tails form near the Sun, and why craters persist on the Moon but not on Earth.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "total_stages": 5,
+    "period_numbers": [
+     13,
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students apply their full knowledge of celestial objects and the Solar System to plan sky-observation sessions and to identify, place, and explain every class of celestial object in a rich integrated sky-scene.",
+    "implied_lo": "The student can identify and name celestial objects — stars, constellations, planets, natural satellites, asteroids, comets, and the Milky Way — in a night-sky representation, state a key property of each, explain why each appears as it does, and place each correctly within the structure of the Solar System or beyond, while specifying the practical conditions and steps required to locate them in a real sky-watching session.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and wonder — encountering the night sky",
+    "implied_lo_assessed": "The student can describe what is observed in a star-field (varied brightness, groupings, patterns) and explain that constellation patterns represent human choices about which stars to connect, not fixed objective groupings.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Two students look at the same group of stars. One connects them to see a hunter; the other connects them to see a bird. Which statement best explains this?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Constellation patterns depend on which stars an observer chooses to connect, so the same stars can form different shapes.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Only one pattern can be correct because the International Astronomical Union has fixed all constellation shapes.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The difference happens because stars that appear bright are closer together than dim stars.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The students are looking at different stars because stars move across the sky each night.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this option indicates a misconception that stars visibly shift position from night to night, confusing long-term stellar motion with the stable patterns used to define constellations.",
+       "B": "Selecting this option reflects a confusion between the IAU's formal division of the sky into 88 regions and the idea that the specific pattern drawn within each region is uniquely fixed — the chapter notes that different cultures connected the same stars differently.",
+       "C": "Selecting this option conflates apparent brightness with physical proximity, a common misconception the chapter does not support; brightness and distance are separate properties of stars."
+      },
+      "inclusivity": "Students who struggle to articulate the concept in writing can point to their own dot-pattern drawings as evidence that the same set of dots yields different shapes. Students who find the question straightforward can be asked to name a real example from the chapter where the same star appears in different cultural traditions."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and wonder — encountering the night sky",
+    "implied_lo_assessed": "The student can describe what is observed in a star-field (varied brightness, groupings, patterns) and explain that constellation patterns represent human choices about which stars to connect, not fixed objective groupings.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Recall",
+    "visual_stimulus": null,
+    "question_text": "Stars in the night sky differ in how bright they appear. Which statement correctly describes what this difference in apparent brightness tells us?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Apparent brightness depends on a star's distance and its actual brightness, so a very bright nearby star and a very bright distant star may appear equally bright.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Brighter stars are always larger than dimmer stars.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Dimmer stars are planets because planets do not produce their own light.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Stars appear brighter or dimmer in the night sky, and some stars are brighter than others.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "Selecting this option reflects a misconception that apparent brightness is a direct proxy for physical size; the chapter does not claim this and it is not true.",
+       "A": "Selecting this option applies reasoning beyond what the chapter introduces at this stage — while scientifically nuanced, option C is the correct choice at the observational level the chapter targets for this stage.",
+       "C": "Selecting this option reveals a premature conflation of dim stars with planets, which is the star-planet misconception surfaced in the first unit of the plan; planets are not addressed as dimmer stars in the chapter."
+      },
+      "inclusivity": "Students who are unsure can be directed to the basic observation that the night sky contains stars of varied brightness, which is the entry-level claim. Students ready to go further can discuss why some stars like Sirius (in Canis Major) are notably brighter than others."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and classify — naming celestial objects and their properties",
+    "implied_lo_assessed": "The student can identify and name key constellations (Orion, Canis Major, Taurus, Big Dipper/Saptarishi, Little Dipper) and their notable stars including Indian nakshatra names, classify Solar System objects by type and properties, and state factors that affect night-sky visibility.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Constellation | Notable Star | Indian Name / Nakshatra\nOrion | Betelgeuse | ?\nTaurus | Pleiades cluster | Krittika\nTaurus | Aldebaran | Rohini\nCanis Major | Sirius | —\nUrsa Major | — | Saptarishi",
+    "question_text": "Refer to the table provided. The Indian name for Betelgeuse in Orion is missing. A student claims it is Rohini. Why is this incorrect?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Betelgeuse has no Indian name because it belongs to a Western constellation only.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Rohini is the Indian name for Aldebaran in Taurus, not for Betelgeuse in Orion.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Rohini is the Indian name for Sirius in Canis Major, and Betelgeuse has a different name.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Rohini is the Indian name for the Pleiades cluster in Taurus, not for Betelgeuse.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this option confuses Rohini with Krittika — both are Indian names for stars in Taurus, but Krittika is the Pleiades and Rohini is Aldebaran specifically.",
+       "A": "Selecting this option reveals a misconception that Indian astronomical names apply only to Indian constellations; the chapter explicitly states Betelgeuse in Orion is known as Ardra.",
+       "C": "Selecting this option introduces a false association between Rohini and Sirius; Sirius is in Canis Major and the chapter does not assign it an Indian name listed in the chapter."
+      },
+      "inclusivity": "Students who struggle with recall can use their constellation reference tables from the identification stage to cross-check. Students who answer confidently can be asked to state the correct Indian name for Betelgeuse (Ardra) and explain which constellation it is in."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and classify — naming celestial objects and their properties",
+    "implied_lo_assessed": "The student can identify and name key constellations (Orion, Canis Major, Taurus, Big Dipper/Saptarishi, Little Dipper) and their notable stars including Indian nakshatra names, classify Solar System objects by type and properties, and state factors that affect night-sky visibility.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student in a city tries to observe stars from their rooftop on a clear night but can see very few stars. Another student in a rural area on the same night sees hundreds of stars. Which combination of factors best explains the difference?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Fewer stars are located above cities because stars move to avoid bright areas over time.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The city has more light pollution and possibly smoke or dust, reducing the number of stars visible compared with the dark rural sky.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The city student's eyes are weaker, and the rural student has better eyesight.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The rural student can see more stars only because the Moon is not visible from rural areas.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this option reveals a naive personalisation of the observation difference; the chapter attributes variation in visibility to environmental conditions, not individual eyesight.",
+       "A": "Selecting this option reflects a fundamental misconception about stars being animate or responsive to human activity; it conflates apparent visibility with actual stellar position.",
+       "D": "Selecting this option partially recognises that moonlight affects visibility (which is true per the chapter) but over-applies it — moon phase affects both locations equally on the same night, so it cannot explain the city-rural difference."
+      },
+      "inclusivity": "Students can draw on the scenario-card ranking exercise from the identification stage to justify their answer. Students who choose D can be extended by asking: if both students are under the same moon, why would the moon explain the difference?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Identify and classify — naming celestial objects and their properties",
+    "implied_lo_assessed": "The student can identify and name key constellations (Orion, Canis Major, Taurus, Big Dipper/Saptarishi, Little Dipper) and their notable stars including Indian nakshatra names, classify Solar System objects by type and properties, and state factors that affect night-sky visibility.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Object | Produces own light? | Solid rocky surface? | Orbits the Sun directly? | Has a ring structure?\nSun | Yes | No | No | No\nEarth | — | — | — | —\nMars | — | — | — | —\nSaturn | — | — | — | —\nHalley's Comet | — | — | — | —",
+    "question_text": "Refer to the table provided. Complete the four blank columns for Earth, Mars, Saturn, and Halley's Comet using Yes or No. Then write one sentence explaining what the 'Produces own light?' column reveals about all Solar System objects other than the Sun.",
+    "options": [],
+    "expected_elements": [
+     "Earth row: No, Yes, Yes, No",
+     "Mars row: No, Yes, Yes, No",
+     "Saturn row: No, No, Yes, Yes",
+     "Halley's Comet row: No, No, Yes, No",
+     "Explanatory sentence states that all Solar System objects other than the Sun shine by reflecting sunlight, not by producing their own light."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle with the table can work column by column rather than row by row, focusing first on the 'Produces own light?' column for all objects before moving to the next property. Students who complete the table quickly can be asked to add a row for an asteroid and justify their entries."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+    "implied_lo_assessed": "The student can describe the properties, surface types, and distinguishing features of each planet in order from the Sun; describe the Moon's surface features and lack of atmosphere; distinguish asteroids from comets; and place the Solar System correctly within the Milky Way Galaxy and the Universe.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Which of the following correctly describes the structural difference between the inner four planets and the outer four planets of the Solar System?",
+    "options": [
+     {
+      "label": "A",
+      "text": "All eight planets have solid surfaces; the outer four simply have thicker atmospheres that make them appear larger.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The inner four planets are larger because they receive more heat from the Sun; the outer four are smaller because they are colder.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The inner four planets are smaller and have solid rocky surfaces; the outer four are much larger, mostly made of gas and ice, and have ring-like structures.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The inner four planets have rings and the outer four do not, because the asteroid belt provides ring material only near the Sun.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "Selecting this option applies a plausible but incorrect size-heat relationship; the chapter explicitly states the outer planets are much larger, not smaller, contradicting this reasoning.",
+       "A": "Selecting this option generalises Earth's rocky nature to all planets; it reflects a failure to engage with the inner/outer structural contrast that is a key classification in the chapter.",
+       "D": "Selecting this option reverses the ring structure finding — the chapter states the outer four have ring-like structures, not the inner four — and incorrectly attributes ring material to proximity to the asteroid belt."
+      },
+      "inclusivity": "Students can check their ordered-planet tables from the structure stage to verify surface types. Students who answer correctly can be extended by naming which outer planets have the most moons, drawing on the chapter's satellite data."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+    "implied_lo_assessed": "The student can describe the properties, surface types, and distinguishing features of each planet in order from the Sun; describe the Moon's surface features and lack of atmosphere; distinguish asteroids from comets; and place the Solar System correctly within the Milky Way Galaxy and the Universe.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student draws three nested circles labelled P (innermost), Q (middle), and R (outermost) to show the scale of structures in space. P contains the Sun, eight planets, their moons, asteroids, and comets. What should the student label Q and R?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Q = Another Solar System; R = The Milky Way Galaxy",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Q = The Asteroid Belt; R = The Milky Way Galaxy",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Q = The Milky Way Galaxy; R = The Universe",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Q = The Universe; R = The Milky Way Galaxy",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this option reverses the containment relationship — the Milky Way contains the Solar System, and the Universe contains the Milky Way; choosing A shows the student has the nesting order wrong.",
+       "B": "Selecting this option places the asteroid belt at the galaxy scale, confusing an intra-Solar-System structure (the asteroid belt between Mars and Jupiter) with a much larger cosmic structure.",
+       "A": "Selecting this option introduces 'another Solar System' as an intermediate level, which has no basis in the chapter's nested structure presentation; it conflates exoplanet systems with the galaxy-level scale."
+      },
+      "inclusivity": "Students can reference their nested-structure diagrams completed in the structure stage. Students who struggle with scale can first confirm what P contains, then reason outward: what is bigger than the Solar System but smaller than the Universe?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Describe structure — understanding properties, scale, and arrangement",
+    "implied_lo_assessed": "The student can describe the properties, surface types, and distinguishing features of each planet in order from the Sun; describe the Moon's surface features and lack of atmosphere; distinguish asteroids from comets; and place the Solar System correctly within the Milky Way Galaxy and the Universe.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "The Moon's surface is covered with many craters, while asteroids are small, rocky, and orbit the Sun. Give two structural features that are unique to the Moon (not shared with asteroids) and one feature the Moon and asteroids share.",
+    "options": [],
+    "expected_elements": [
+     "Two Moon-only structural features chosen from: nearly spherical shape; much larger size than asteroids; craters formed by impacts of asteroids and rocks; virtually no atmosphere; surface preserved over very long periods because of no water, atmosphere, or life; revolves around Earth (natural satellite) rather than directly around the Sun.",
+     "One shared feature: both have solid surfaces; both are part of the Solar System; both have craters or surface impact marks (though this is less certain for asteroids); both lack significant atmospheres."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who struggle to distinguish Moon from asteroid features can be directed to sort properties into two columns — Moon only vs asteroids only — before identifying shared ones. Students who answer quickly can extend by explaining why the Moon's craters are preserved while Earth's are not."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+    "implied_lo_assessed": "The student can construct causal explanations — citing atmosphere, composition, or surface properties — for why Venus is hotter than Mercury, why the Pole Star is used for navigation, why comet tails form near the Sun, and why craters persist on the Moon but not on Earth.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Mercury is closer to the Sun than Venus, yet Venus has a higher surface temperature. Which explanation correctly accounts for this?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Mercury reflects more sunlight than Venus because its surface is lighter in colour, so it absorbs less heat.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Venus has a much thicker atmosphere that traps heat, so despite being farther from the Sun it retains more heat than Mercury.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Venus is larger than Mercury and larger planets always retain more heat than smaller ones.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Venus spins more slowly than Mercury, giving it more time to absorb heat from the Sun each day.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this option applies a size-heat rule that is not supported by the chapter; it avoids the atmospheric mechanism and replaces it with an unrelated property.",
+       "D": "Selecting this option invents a rotation-rate mechanism not found in the chapter; it is a plausible-sounding distractor that bypasses the key causal factor of atmospheric heat trapping.",
+       "A": "Selecting this option invents a surface-colour/reflectivity mechanism not present in the chapter; it is a superficially scientific-sounding explanation that does not engage with the chapter's actual causal claim."
+      },
+      "inclusivity": "Students who are uncertain can be prompted: what property of Venus is described in the chapter that Mercury lacks? Students who answer correctly can be asked to explain what would happen to Earth's temperature if Earth had no atmosphere."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+    "implied_lo_assessed": "The student can construct causal explanations — citing atmosphere, composition, or surface properties — for why Venus is hotter than Mercury, why the Pole Star is used for navigation, why comet tails form near the Sun, and why craters persist on the Moon but not on Earth.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A comet was photographed near the Sun and had a long, bright tail. The same comet was photographed far from the Sun and had no visible tail. What causes this difference?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Near the Sun, the comet's frozen material (ice and gases) evaporates and forms a visible tail; far from the Sun the comet remains frozen and no tail forms.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The comet loses its tail material permanently as it passes the Sun, so it will never have a tail again on its next orbit.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The tail forms because the comet collides with asteroid belt material near the Sun; far from the Sun there are no asteroids to collide with.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The tail is made of reflected sunlight; near the Sun there is more light to reflect, so the tail appears; far from the Sun there is too little light.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this option confuses the tail's material origin (evaporating frozen matter) with reflected light; it reveals a failure to engage with the chapter's account of comet composition and the evaporation mechanism.",
+       "B": "Selecting this option misapplies the evaporation process by treating it as permanent loss, contradicting the chapter's description of comets as periodic objects — Halley's Comet reappears every 76 years with a tail.",
+       "C": "Selecting this option invents a collision-based tail mechanism not found in the chapter and mislocates the asteroid belt's relevance to comet tails."
+      },
+      "inclusivity": "Students who struggle can be prompted to recall what comets are made of (ice, dust, gases, rocks) and what heat does to frozen material. Students who answer correctly can reason further: if Halley's Comet loses some material each orbit, what does that imply about it over millions of orbits?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain and reason — connecting properties to observations and phenomena",
+    "implied_lo_assessed": "The student can construct causal explanations — citing atmosphere, composition, or surface properties — for why Venus is hotter than Mercury, why the Pole Star is used for navigation, why comet tails form near the Sun, and why craters persist on the Moon but not on Earth.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Sailors historically used the Pole Star to navigate. Using properties of the Pole Star described in the chapter, explain in two or three sentences why the Pole Star was reliable for finding north but could not be used by sailors in the Southern Hemisphere.",
+    "options": [],
+    "expected_elements": [
+     "The Pole Star (Polaris / Dhruva tara) appears nearly stationary in the sky, always pointing toward the north direction, so sailors could reliably use it to determine north.",
+     "Its near-stationary appearance is due to its position almost directly above Earth's North Pole, meaning it does not appear to move as other stars do.",
+     "The Pole Star is not visible from the Southern Hemisphere, so sailors south of the equator could not use it to find north."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students can structure their response in two parts: (1) why it works in the Northern Hemisphere; (2) why it fails in the Southern Hemisphere. Students who answer all three expected elements can be extended by reasoning about what other navigational method a Southern Hemisphere sailor might need."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "implied_lo_assessed": "The student can identify and name celestial objects — stars, constellations, planets, natural satellites, asteroids, comets, and the Milky Way — in a night-sky representation, state a key property of each, explain why each appears as it does, and place each correctly within the structure of the Solar System or beyond, while specifying the practical conditions and steps required to locate them in a real sky-watching session.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student wants to observe Venus in the sky. Which of the following correctly describes when and where to look, and why Venus is visible at those times?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Look at the southern sky at any time of night; Venus is the Red Planet and easily identifiable by colour.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Look directly at the Sun at dawn, as Venus is closest to the Sun and always seen near it during the day.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Look on the eastern horizon before sunrise (as Morning Star) or the western horizon after sunset (as Evening Star); Venus is visible at these times because of its position in the Solar System relative to Earth.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Look overhead at midnight; Venus is visible all night because it is the brightest planet.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this option misapplies Venus's brightness (which is true) to a wrong observation time and location; it does not engage with the chapter's specific guidance on when and where Venus is visible.",
+       "B": "Selecting this option confuses the direction to look (near the Sun in the sky before/after it rises or sets) with looking at the Sun directly, and incorrectly implies Venus is only a daytime object.",
+       "A": "Selecting this option conflates Venus with Mars by attributing the Red Planet identity to Venus; Mars is the Red Planet in the chapter, and Venus is the Morning/Evening Star."
+      },
+      "inclusivity": "Students who struggle with directions can be prompted to recall whether Venus is an inner or outer planet and what that implies about its position relative to the Sun from Earth's perspective. Students who answer correctly can plan a complete observation sequence: what time of year, what direction, what tools they would use."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "implied_lo_assessed": "The student can identify and name celestial objects — stars, constellations, planets, natural satellites, asteroids, comets, and the Milky Way — in a night-sky representation, state a key property of each, explain why each appears as it does, and place each correctly within the structure of the Solar System or beyond, while specifying the practical conditions and steps required to locate them in a real sky-watching session.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student in a dark rural location notices a faint, extended band of light stretching across the sky that does not look like a single star or planet. What is this most likely to be, and where does it fit in the structure of the universe described in the chapter?",
+    "options": [
+     {
+      "label": "A",
+      "text": "It is a cluster of asteroids reflecting sunlight, found in the asteroid belt between Mars and Jupiter.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "It is a comet tail stretching across the sky; comets are part of the Solar System.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "It is the light from many exoplanets orbiting stars near our Solar System, forming a band visible to the naked eye.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "It is the Milky Way Galaxy (Akasha Ganga), the galaxy that contains our entire Solar System, visible from very dark locations as a faint extended band.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "B": "Selecting this option confuses the description of the Milky Way band with a comet tail; it shows the student has not connected the 'extended band of light from a dark location' description to the Milky Way as described in the chapter.",
+       "A": "Selecting this option misidentifies the band as the asteroid belt, which is a specific region within the Solar System, not a band of light visible across the entire sky from a dark location.",
+       "C": "Selecting this option invents a naked-eye exoplanet band not described anywhere in the chapter; it reflects a confusion between the chapter's mention of exoplanets (individually studied objects) and the Milky Way as a visible structure."
+      },
+      "inclusivity": "Students who are unsure can be prompted: the chapter describes one sky feature visible only from very dark locations as a faint extended band — what is it called? Students who answer correctly can extend by identifying what makes the Milky Way visible (the combined light of millions to billions of stars) and connecting this to the chapter's galaxy description."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "implied_lo_assessed": "The student can identify and name celestial objects — stars, constellations, planets, natural satellites, asteroids, comets, and the Milky Way — in a night-sky representation, state a key property of each, explain why each appears as it does, and place each correctly within the structure of the Solar System or beyond, while specifying the practical conditions and steps required to locate them in a real sky-watching session.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student is planning a night-sky observation session. They want to observe the Big Dipper, find the Pole Star using it, and try to spot a planet near the horizon. Write a detailed plan (four to six sentences) explaining: (a) what conditions they should choose, (b) how to locate the Big Dipper and use it to find the Pole Star, (c) which planet they might look for and when and where, and (d) one reason why the Pole Star alone cannot help them find south.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Conditions correctly specified: clear moonless night, dark location away from city lights, eyes allowed to adjust to the dark for a meaningful period before observing; a compass mentioned as a useful tool.",
+     "Big Dipper correctly identified as the star pattern in Ursa Major (Saptarishi) and described as a recognisable pointer pattern usable to locate the Pole Star (Polaris / Dhruva tara) in Ursa Minor.",
+     "Pole Star correctly described as appearing nearly stationary in the north, making it reliable for finding north; student correctly links its near-stationary appearance to its position in the sky.",
+     "Planet correctly identified as Venus, with correct observation timing: eastern horizon before sunrise (Morning Star) or western horizon after sunset (Evening Star).",
+     "Pole Star limitation correctly explained: it is visible only from the Northern Hemisphere and is not visible from the Southern Hemisphere, so it cannot help find south from any location."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who struggle to write a continuous plan can use the four sub-questions (a)–(d) as a structured outline, writing one sentence for each before connecting them. Students who write strong plans can be asked to extend by explaining what a student in the Southern Hemisphere would use instead of the Pole Star, drawing on the chapter's navigational content."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply and identify — using knowledge for sky observation and Solar System placement",
+    "implied_lo_assessed": "The student can identify and name celestial objects — stars, constellations, planets, natural satellites, asteroids, comets, and the Milky Way — in a night-sky representation, state a key property of each, explain why each appears as it does, and place each correctly within the structure of the Solar System or beyond, while specifying the practical conditions and steps required to locate them in a real sky-watching session.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observe and identify celestial objects in the night sky and describe the structure of the Solar System and its place within the Milky Way Galaxy."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Object label | What type of object is it? | One key property | Why does it appear this way in the night sky? | Where does it belong in the Solar System or beyond? | How would you locate it in a real sky-watching session?\nObject P — very bright, single point of light near the western horizon just after sunset | | | | |\nObject Q — a curved arc of faint stars; six prominent stars visible; can be used to find a nearby stationary star | | | | |\nObject R — a faint extended band of light visible only from a very dark location, stretching across the sky | | | | |\nObject S — a bright object with a visible tail pointing away from the Sun | | | | |\nObject T — a dim point of light; rocky; irregular shape; located in a region between the fourth and fifth planets from the Sun | | | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. Five sky objects (P through T) are described by their appearance. For each object, complete all five columns: (1) identify what type of object it is, (2) state one key property from what you know about that type of object, (3) explain why it appears the way it does in the night sky, (4) place it correctly within the structure of the Solar System or beyond, and (5) describe how you would locate or observe it in a real sky-watching session.",
+    "scaffold": "Use the descriptions in the leftmost column carefully — each clue points to a specific type of celestial object covered in the chapter. For column 3, explain the mechanism: why does the object look the way it does (not just what it looks like)? For column 5, include at least one practical condition (when, where, what tools) drawn from the chapter's sky-watching guidance.",
+    "format_of_output": [
+     "Completed table with all five columns filled for all five objects",
+     "At least one sentence of explanation in column 3 for each object (not just a label)"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The final stage's implied LO requires identifying, classifying, explaining, and placing every class of celestial object while specifying sky-observation conditions — a classification-with-justification table is the most direct demonstration vehicle for all five sub-operations simultaneously.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can integrate identification (naming object type), property recall, causal reasoning (explaining appearance mechanisms), structural placement (Solar System or beyond), and practical sky-observation planning across all major classes of celestial object covered in the chapter.",
+      "reading_the_scaffold": "The five objects are designed so each maps to a distinct object class: P = Venus (bright inner planet near horizon at sunset), Q = Big Dipper / Ursa Major with the Pole Star as the nearby stationary star, R = Milky Way Galaxy, S = comet near the Sun with a visible tail, T = asteroid in the asteroid belt. Column 3 is the most diagnostic column — a student who merely re-describes the appearance without citing a mechanism (e.g., 'Venus is bright because sunlight reflects off it; its position as an inner planet keeps it near the Sun in the sky') has not met the reasoning expectation.",
+      "strong_vs_weak_markers": "Strong responses: correctly identify all five object types, cite at least one specific property from the chapter for each (e.g., Sirius as brightest star, asteroid belt between Mars and Jupiter, Milky Way visible only from dark locations), produce mechanism-level explanations in column 3 (not just redescriptions), place each object correctly in the nested structure (Solar System / Milky Way / Universe), and specify practical observation conditions with at least one chapter-grounded detail. Weak responses: misidentify one or more object types, repeat the appearance description in column 3 rather than explaining it, place objects at the wrong structural level (e.g., putting the Milky Way inside the Solar System), or omit practical observation conditions entirely.",
+      "inclusivity": "Students who find the full table daunting can begin with the two objects they find most recognisable and work outward. Students who complete the table quickly can be extended by adding a sixth row for an object of their own choice from the chapter and completing all five columns for it."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

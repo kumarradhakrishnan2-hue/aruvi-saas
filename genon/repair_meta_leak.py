@@ -470,6 +470,34 @@ EDITS = {
          "Pose the synthesis question broadly, relying on the concepts themselves.",
          "the instruction (concepts, broadly) survives; the assume-clause goes"),
     ],
+
+    # ══ WAVE 3b — SCIENCE·MIDDLE W2 COMPACTS (2026-08-17, same day) ════════════════
+    # Three hits in 114 compacts (W1's synthesis-note family did NOT recur — the wave-3
+    # deletions were applied before wave 2 generated, so no inference about the brief).
+    # Two are the unit-COUNT family: "across all eleven units" is falsified at X=K+1,
+    # where the serve appends the standard's synthesis unit to the whole plan. The third
+    # is the founder-ruled homonym rephrase (2026-08-17: repair the TEXT, keep the
+    # scanner strict — the clock precedent): "without requiring students to go outside"
+    # is class logistics the meta-leak pattern cannot distinguish from the serve
+    # contract; the rephrase keeps the fact and moves off the pattern.
+    "science/vi/ch_10_canonical_p11.json": [
+        (11, "teacher_notes",
+         " across all eleven units", "",
+         "count narration; 'the framework they have built' stands whole"),
+    ],
+    "science/viii/ch_09_canonical_p11.json": [
+        (11, "teacher_notes",
+         " across all eleven units", "",
+         "count narration; 'what they have built' stands whole"),
+    ],
+    "science/vi/ch_11_canonical_p08.json": [
+        (4, "teacher_notes",
+         " without requiring students to go outside during this unit",
+         " — no trip outside needed",
+         "founder-ruled homonym rephrase, NOT a deletion: the indoor-adaptation fact "
+         "is real logistics a teacher plans around, so it stays, phrased off the "
+         "pattern"),
+    ],
 }
 
 

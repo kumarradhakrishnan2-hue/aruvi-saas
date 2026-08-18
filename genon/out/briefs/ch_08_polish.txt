@@ -1,0 +1,86 @@
+ARUVI — SYNTHESIS UNIT POLISH · SCIENCE · MIDDLE STAGE
+
+You are reorganising ONE teaching unit you are given in full. Its content is final and
+correct; the problem is WHERE things live. Its teacher_notes currently carry preparation
+detail — card text, table designs, accept-lists, profiles — that belongs in structured
+materials, leaving the notes far beyond their mandated 2–3 sentences.
+
+REORGANISE. Invent nothing, drop nothing the teacher needs; every fact in your output
+must already be in the unit you were given.
+
+Return exactly this JSON object, nothing else:
+{
+  "teacher_notes": "2–3 sentences of flowing prose. What the unit is doing and the one
+    or two facilitation moves that matter most. Where preparation detail now lives in a
+    visual aid, say so with '(see material)'. Never a list, never card text.",
+  "materials": ["short physical items; where an item is prepared content, name its
+    visual aid — e.g. \"Twelve decision cards (see visual aid: 'Ramnagar decision
+    cards')\""],
+  "visual_aids": [
+    {"type": "table", "title": "…", "table": "pipe-delimited rows, first row the
+      header, one row per line — e.g. Leg | Distance (km) | Time (min)\n1 | 3 | 15"},
+    {"type": "prose", "title": "…", "text": "card text / profile / accept-list moved
+      here verbatim or lightly tightened"}
+  ]
+}
+
+Rules: teacher_notes ≤ 3 sentences and ≤ 90 words · no quantity of minutes or calendar
+time anywhere · every table's rows all have the same number of cells · visual_aids only
+for content that genuinely helps the teacher prepare or project (do not manufacture a
+table out of running prose) · time_bands are not yours to touch and their narration may
+keep describing the same content.
+
+THE UNIT, in full:
+
+{
+ "period_number": 14,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+ "synthesis": true,
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates the activity by posing the synthesis challenge and probing groups whose diagrams conflate levels of the hierarchy; consolidates a class-level hierarchy at the close."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Work through the substance descriptions, apply the full test sequence, place each substance in the hierarchy with annotated evidence, and present the completed map to the class."
+  }
+ ],
+ "activity_title": "Reading a River: Classifying What the Water Carries",
+ "activity_description": "Students receive a data card describing a river water sample collected downstream from a town. The card lists observations: the water looks slightly cloudy, smells faintly of rotten eggs, leaves a white crust on a glass dish when evaporated, turns lime water milky when air bubbled through the residue is tested, and a small piece of iron left in it for two days turns reddish-brown. A dissolved-gas reading shows two gases present in unequal proportions. Students use these observations as evidence to identify what the river water contains — distinguishing the water itself, dissolved gases, suspended solids, and a dissolved compound — and to classify each identified component as element, compound, or mixture, building a labelled classification map. The map is then used to argue whether the river water as a whole is a mixture, and why its components behave as they do.",
+ "teacher_notes": "The river water setting is entirely fresh — the chapter uses seawater and aerated water only as listed examples in a table, never as an investigative focus. Every concept the task calls on (mixture vs. pure substance, uniform vs. non-uniform mixture, element vs. compound, fixed-ratio properties of compounds, properties retained by mixture components) appears in all four unit-title maps. Draw students' attention to the unequal gas proportions clue: this mirrors the electrolysis observation from their earlier work and should prompt them to distinguish dissolved oxygen (an element) from dissolved carbon dioxide (a compound). The white crust is calcium carbonate — a compound — and the reddish-brown iron is iron oxide (rust), another compound formed because the river water is a mixture that allows its components to interact with things placed in it, not with each other chemically. The rotten-egg smell is the most demanding clue: it points to dissolved hydrogen sulfide, a compound. Do not confirm identities in advance; let groups commit to their labels and defend them. If a group classifies the river water itself as a pure substance, ask them to apply the single-kind-of-particle test. The closing consolidation should name the three ideas that made the task workable — the mixture definition, the element/compound distinction via properties and breakability, and the fixed-ratio criterion — as the reason the river's complexity became readable.",
+ "materials": [
+  "River water data card (one per group) — printed or written on the board: lists the six observations described in the activity description",
+  "Blank classification map template (one per student): a large box labelled 'River Water Sample' with branching spaces for identified components and their categories",
+  "Coloured pencils or pens for annotating the map",
+  "Chalk or whiteboard markers for a class-wide composite map"
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher distributes the river water data card and reads it aloud with the class. No labels or identities are given — only the six observations. Teacher asks: 'Before we classify anything, what does this sample seem to contain? List every distinct thing you think is present.' Groups write a first-pass inventory on their map template, naming as many components as the clues suggest. This surfaces prior knowledge and shows where groups are uncertain."
+  },
+  {
+   "minutes": "7-22",
+   "activity": "Groups work through the data card observation by observation, matching each to a component and assigning it a classification — element, compound, or mixture — with a written reason citing a specific criterion from the chapter. The unequal dissolved-gas volumes, the white evaporation crust, the rotten-egg smell, and the iron-rusting observation each require a different criterion: particle identity, fixed ratio, retained properties, or chemical change signalling a compound. Teacher circulates, asking 'What single test or criterion settles this one?' without confirming answers. Each student fills in their own map."
+  },
+  {
+   "minutes": "22-33",
+   "activity": "Groups compare maps with an adjacent group, focusing on any component they classified differently. Each group must state the criterion that drove their classification, not just the label. Where groups disagree, they identify which piece of evidence on the data card is doing the work. Teacher listens for the key contested points — especially whether dissolved oxygen is an element and whether the white crust is a compound — and notes these for the class discussion."
+  },
+  {
+   "minutes": "33-42",
+   "activity": "Teacher builds a single composite classification map on the board, taking one component at a time and asking the class to call out the classification and the decisive criterion. For each component the class settles, teacher writes the criterion beside it, not just the label. The final map shows the river water as a non-uniform mixture whose components include elements (dissolved oxygen, nitrogen), compounds (water, carbon dioxide, hydrogen sulfide, calcium carbonate, iron oxide), and suspended solid particles — each retaining its own properties within the whole."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "Teacher names what made the river readable: the mixture definition told us the water could hold different components without those components losing their identities; the element–compound distinction — anchored in whether particles are identical or chemically bonded in a fixed ratio — let us label each component precisely; and the property-change test confirmed which components had reacted to form new compounds rather than simply mixing. These three ideas are the chapter's core, and the river just showed them working together on something real."
+  }
+ ],
+ "homework": [],
+ "pedagogical_approach": "Evidence-based reasoning: students treat a structured set of observations as data and construct a classification argument from it, rather than being told what the sample contains. The vehicle is a classification map built from evidence, which differs in kind from entity-list sorting, claim-evaluation cards, and scenario-card group challenges used in the shorter plans' final units."
+}
+
+Reorganise it now, as the single JSON object specified.

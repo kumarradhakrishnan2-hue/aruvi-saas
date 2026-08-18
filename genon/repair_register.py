@@ -2589,7 +2589,52 @@ REPAIRS = {
     # scanner strict — the phrasing moves off the pattern ("of the 50-minute-later…",
     # compound-modifier singular), the astronomy is untouched, and the pattern keeps its
     # full reach for the real breaches it was written for.
+    # ── S6 · science · middle · wave 3 resynth (2026-08-18) ──────────────────────────
+    # The re-authored synthesis units: 4 clock hits in 37 (the §6 brief's no-clock line
+    # held for 33). Three are true pacing narration — pure deletions, the band carries
+    # its own minutes. The vii ch 12 hit is the moonrise homonym again: 'the Sun
+    # vanishing for two minutes at midday' is a HISTORICAL ECLIPSE CARD's content
+    # (totality lasts ~2 minutes — the duration is what identifies the event), so per
+    # the founder's standing ruling (2026-08-17, twice) the TEXT moves off the pattern
+    # and the fact stays: 'vanishing, two minutes long, at midday'.
+    ("science", "vi"): {
+        "ch_11_canonical.json": [
+            (14, "band:0",
+             " for two minutes before beginning",
+             " before beginning",
+             "register/clock",
+             "silent reading is the instruction; the band carries its own minutes"),
+        ],
+    },
+    ("science", "vii"): {
+        "ch_12_canonical.json": [
+            (14, "teacher_notes",
+             "the Sun vanishing for two minutes at midday",
+             "the Sun vanishing, two minutes long, at midday",
+             "register/clock",
+             "homonym: eclipse-card content, not pacing — totality's ~2 minutes is the "
+             "identifying fact and stays; rephrase clears the for…minutes pattern"),
+        ],
+    },
     ("science", "viii"): {
+        "ch_03_canonical.json": [
+            (9, "band:0",
+             " for two minutes without writing",
+             " without writing",
+             "register/clock",
+             "read-first-then-clarify is the instruction; the band carries its minutes"),
+        ],
+        "ch_10_canonical.json": [
+            (15, "band:3",
+             "Groups write for two minutes.",
+             "Groups write.",
+             "register/clock",
+             "the writing task is the instruction; the band carries its minutes"),
+        ],
+    },
+    # Renamed off the live key 2026-08-18 so the wave-3 set above owns it; applied
+    # 2026-08-17 (the moonrise homonym). Re-running it would fail its own guard.
+    ("science", "viii", "APPLIED-20260817-wave2"): {
         "ch_11_canonical.json": [
             (6, "band:0",
              "for the 50-minutes-later moonrise rule",

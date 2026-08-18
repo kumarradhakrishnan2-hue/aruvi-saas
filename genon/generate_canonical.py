@@ -114,12 +114,53 @@ MAX_QUOTE_REPAIRS = 500          # was 10 — see the note below
 MAX_REPAIR_SPAN = 300            # a naked pair wider than this is not a quote glitch
 
 
+def _bracket_fix(text: str, e: json.JSONDecodeError):
+    """The SECOND known glitch (2026-08-17, S6 W2): a wrong CLOSER, one character.
+
+    science·vii ch 9 p09 arrived complete (80 KB) except for `{"stage": 4)` — a `)`
+    where `}` belongs — and ₹14.27 sat unrecoverable because the only repair family was
+    naked quotes. Same guarantees as that family: exactly ONE character is changed, at
+    the exact position the parser stopped, only when a string-aware walk of everything
+    before it shows an open structure whose expected closer differs from the character
+    found. Anything else returns None and the caller falls through unchanged.
+    Returns (repaired_text, note) or None.
+    """
+    pos = e.pos
+    if pos >= len(text) or text[pos] not in ")]}":
+        return None
+    stack, in_str, esc = [], False, False
+    for ch in text[:pos]:
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+        elif ch == '"':
+            in_str = True
+        elif ch in "{[":
+            stack.append(ch)
+        elif ch in "}]" and stack:
+            stack.pop()
+    if in_str or not stack:
+        return None
+    want = "}" if stack[-1] == "{" else "]"
+    if text[pos] == want:
+        return None                      # right closer already — not this glitch
+    return (text[:pos] + want + text[pos + 1:],
+            f"bracket {text[pos]!r}->{want!r} at char {pos}")
+
+
 def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
-    """Parse model output, auto-repairing the one known serialization glitch.
+    """Parse model output, auto-repairing the two known serialization glitches:
+    naked inner quotes (below) and, since 2026-08-17, the one-character wrong
+    closer (`_bracket_fix` above — tried first, because the quote heuristic
+    corrupts on it).
 
     Returns `(parsed | None, problems, repairs)`.
 
-    THE GLITCH: naked (unescaped) double quotes inside a JSON string. Each repair
+    THE (first) GLITCH: naked (unescaped) double quotes inside a JSON string. Each repair
     escapes exactly ONE quote pair — provably content-neutral, no character is added or
     removed except the two backslashes — and every repair is recorded so the ledger can
     report it. Any OTHER defect still fails hard: nothing else is auto-touched.
@@ -150,6 +191,14 @@ def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
             parsed = json.loads(text)
             break
         except json.JSONDecodeError as e:
+            # Wrong-closer check FIRST: on a bracket typo the quote heuristic below
+            # would wrap real structure in escapes and corrupt rather than rescue
+            # (2026-08-17; see _bracket_fix).
+            fix = _bracket_fix(text, e)
+            if fix is not None:
+                text, note = fix
+                repairs.append(note)
+                continue
             q1 = text.rfind('"', 0, e.pos)
             q2 = text.find('"', e.pos)
             if q1 == -1 or q2 == -1 or q2 - q1 > MAX_REPAIR_SPAN:

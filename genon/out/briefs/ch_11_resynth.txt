@@ -1,0 +1,307 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 11: Keeping Time with the Skies
+
+11.1 How Does the Moon's Appearance Change and Why?
+
+The chapter opens with a student noticing the Moon visible during the daytime at a kite festival, which prompts inquiry into why the Moon's visible shape changes each night. The section sets up a sustained observation activity (Activity 11.1) in which students track the Moon over a full month, documenting its appearance, the size of the bright portion, and its angular separation from the Sun each day. Students are directed to begin this observation after a full Moon day and to switch from sunrise to sunset viewing midway through the cycle.
+
+11.1.1 Phases of the Moon
+
+This subsection introduces the terminology and cycle of lunar phases. Over roughly two weeks, the bright portion of the Moon decreases from a full circle to a half circle to invisibility — this is the waning period, called Krishna Paksha in India. The Moon then brightens over the next two weeks through the waxing period (Shukla Paksha), returning to a full Moon. The specific shapes encountered during the cycle are named: full Moon (Purnima), new Moon (Amavasya), gibbous (more than half illuminated), and crescent (less than half illuminated). The complete cycle from one full Moon to the next takes about one month. The key definition introduced is that the changing shapes of the bright portion of the Moon as seen from Earth are called the phases of the Moon.
+
+11.1.2 Locating the Moon
+
+This subsection explains how knowing a Moon's phase helps predict where and when to find it in the sky. On a full Moon day, the Moon is nearly opposite the Sun; as the bright portion shrinks during waning, the Moon appears progressively closer to the Sun at sunrise. A half-circle waning Moon is overhead at sunrise; a crescent waning Moon is very close to the Sun. A waxing Moon is easiest to spot at sunset, and a waning Moon at sunrise. The Moon rises about 50 minutes later each day because the Moon advances in its orbit while Earth completes one rotation, and Earth must rotate a little further for the Moon to return to the same apparent position. A student activity is noted (checking moonrise times from the Positional Astronomy Centre website over several consecutive days).
+
+11.1.3 Making sense of our observations
+
+This subsection provides the causal explanation for lunar phases. The Moon does not emit its own light but shines by reflecting sunlight; the hemisphere facing the Sun is always illuminated, while the hemisphere facing away is dark. As the Moon revolves around the Earth, the portion of the illuminated hemisphere visible to an observer on Earth changes continuously, producing the phases. Activity 11.2 models this using a ball on a stick, with a torch representing the Sun and the student's head representing the Earth: rotating with the ball outstretched, the student observes the same progression of illuminated shapes seen in the lunar cycle. The section also clarifies a common misconception — Earth's shadow on the Moon causes a lunar eclipse, not the phases. Lunar eclipses occur only on full Moon days and solar eclipses only on new Moon days, but not every month, because the Moon's orbit is slightly tilted relative to Earth's orbit around the Sun.
+
+11.2 How Did Calendars Come into Existence?
+
+This section explains how three recurring astronomical cycles gave rise to the three fundamental units of calendar time. Earth's rotation on its axis causes the Sun to appear to move across the sky daily; the average time from one solar noon to the next is 24 hours, called the mean solar day. Activity 11.3 has students measure this by tracking the shortest shadow cast by a vertical stick over several days. The Moon's phase cycle of about 29.5 days provides the basis for the month. Earth's revolution around the Sun in approximately 365.25 days, producing one cycle of seasons, defines the solar year. Fig. 11.8 illustrates these three nested cycles as the foundation of the calendar system.
+
+11.2.1 Lunar calendars
+
+Lunar calendars were developed by tracking 12 cycles of Moon phases within a season cycle. A lunar month is about 29.5 days, so a lunar year of 12 months totals approximately 354 days. The key limitation introduced is that the lunar year falls about 11 days short of the solar year, so the seasons gradually drift out of alignment with the lunar months over successive years.
+
+11.2.2 Solar calendars
+
+Solar calendars were created to keep the months synchronised with the seasons, which was important for agriculture. The Gregorian calendar, the most widely used today, is a solar calendar of 365 days, with month lengths adjusted (28, 30, or 31 days) to sum to this total. Because Earth's revolution takes approximately 365.25 days, an extra day is added every four years as a leap year (February gains a 29th day). Fine corrections are needed: century years (e.g. 1700, 1800, 1900) skip the leap year, but every 400 years (e.g. 1600, 2000) the leap year is restored, keeping the calendar accurately aligned with the seasons over long periods. The section also introduces the tropical year (time between successive spring equinoxes, the basis of the Gregorian calendar) and the sidereal year (time for the same stars to rise again at sunset, about 20 minutes longer), which astronomers use to track Earth's orbital position.
+
+11.2.3 Luni-solar calendars
+
+Luni-solar calendars use the Moon's phases to count months but add a corrective intercalary month (Adhika Maasa) every two to three years when the accumulated gap between the lunar year (354 days) and the solar year (365 days) reaches roughly a full month. This keeps the calendar broadly synchronised with the seasons while retaining lunar months as the primary unit. Many Indian regional calendars are luni-solar. The section notes two conventions within luni-solar calendars: Amant (month starts after new Moon, ends at next new Moon) and Purnimant (month starts after full Moon, ends at next full Moon). The names of the twelve Indian lunar months are listed: Chaitra, Vaisakha, Jyeshtha, Ashadha, Shravana, Bhadrapada, Ashwin, Kartika, Margashirsha, Pausha, Magha, and Phalguna. The section also includes a scientific heritage box describing how ancient Indian observers, including the Taittiriya Samhita and the Surya Siddhanta, recorded the Sun's northward (Uttarayan) and southward (Dakshinayan) movement and tracked solstices using background star patterns.
+
+11.2.4 The Indian National Calendar
+
+The Indian National Calendar is a solar calendar established by the Government of India following the recommendations of the Calendar Reform Committee (1952), chaired by astrophysicist Meghnad Saha. It has been in official use since 21 March 1956. The year begins on 22 March (the day after the spring equinox) and consists of 365 days. Months have either 30 or 31 days; the second through sixth months have 31 days and the rest have 30. In leap years (aligned with the Gregorian calendar), a day is added to Chaitra, and the new year begins on 21 March. The calendar's month names are drawn from traditional Indian calendars, and its principles follow the Surya Siddhanta.
+
+11.3 Are Festivals Related to Astronomical Phenomena?
+
+This section connects calendar systems to Indian festivals. Many festivals fall on specific lunar phases: Diwali on the new Moon of Kartika, Holi on the full Moon of Phalguna, Buddha Purnima on the full Moon of Vaisakha, Eid-ul-Fitr after sighting the crescent Moon at the end of Ramazan, and Dussehra on the tenth day of Ashwina. Because these are lunar or luni-solar dates, they fall on different Gregorian calendar dates each year. Festivals based on luni-solar calendars shift by less than a month across years (because the intercalary month corrects the drift), while purely lunar festivals like Eid can shift across different Gregorian months entirely. A small number of Indian festivals (Makar Sankranti, Pongal, Bihu, Vaisakhi) follow a solar sidereal calendar and therefore occur on nearly the same Gregorian date each year, though they slowly drift due to the difference between the sidereal and tropical years (about one day per 71 years). The Positional Astronomy Center publishes the Rashtriya Panchang annually to standardise festival dates across India's time zones.
+
+11.4 Why Do We Launch Artificial Satellites in Space?
+
+The Moon is Earth's natural satellite. Beyond it, many human-made artificial satellites orbit Earth, typically about 800 km above the surface, completing one orbit in roughly 100 minutes. They are visible as fast-moving points of light just before sunrise or after sunset. Artificial satellites serve purposes including communication, navigation, weather monitoring, disaster management, and scientific research. Activity 11.4 is a sky-watching activity directing students to spot satellites with the naked eye or binoculars, and to use mobile apps or websites for satellite pass predictions. The section highlights ISRO contributions: the Cartosat series for Earth imaging and the Bhuvan platform, AstroSat for astronomical observation, and missions Chandrayaan 1/2/3, Aditya L1, and Mangalyaan. Student-built satellites such as AzaadiSat, InspireSat-1, and Jugnu are also noted. A step-further box raises the issue of space debris — defunct satellites and rocket parts that can collide with active satellites and require international cooperation to manage.
+
+
+======================================================================
+
+THE FULLEST PLAN (15 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Noticing the Moon: What Changes and When?
+U2: Tracking the Moon: A Month of Observations (Activity 11.1)
+U3: Naming the Phases: Vocabulary of the Lunar Cycle
+U4: Light, Ball, and Head: Modelling the Phases (Activity 11.2)
+U5: Why Not Every Month? Eclipses vs. Phases
+U6: Predicting the Moon: Phase, Position, and Viewing Window
+U7: From Sky to Calendar: Discovering the Day, Month, and Year (Activity 11.3)
+U8: Lunar and Solar Calendars: The 11-Day Problem
+U9: The Luni-Solar Solution: Adhika Maasa and Indian Calendars
+U10: India's Official Calendar: The Indian National Calendar
+U11: Satellites in the Sky: Spotting and Understanding Orbital Motion (Activity 11.4)
+U12: What Do Satellites Do? Uses, ISRO Missions, and Space Debris
+U13: Natural vs. Artificial: Comparing Orbital Characteristics
+U14: Festivals, Phases, and Calendars: Applying the Full Framework
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 13 UNITS — unit-title map ---
+U1: A Month of Moon Watching
+U2: Naming the Shapes We See
+U3: When and Where to Find the Moon
+U4: Ball, Torch, and Head — Modelling Phases
+U5: Why Not an Eclipse Every Month?
+U6: Shortest Shadow, Longest Day — Finding the Solar Day
+U7: Month and Year — Where the Numbers Come From
+U8: Three Solutions to the Same Problem
+U9: Gregorian Fine-Corrections and the Indian National Calendar
+U10: Festivals as Calendar Evidence
+U11: Spotting Satellites — Natural and Artificial
+U12: What Satellites Do — ISRO Missions and Space Debris
+U13: Tracing Phenomena to Their Orbital Cause
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 13,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Explain artificial satellites and their role as extensions of Earth-sky observation",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Tracing Phenomena to Their Orbital Cause",
+ "activity_description": "Students respond to a set of novel scenarios — a festival's date, a satellite's twilight visibility, a calendar's intercalary month, a lunar eclipse — and for each must trace the phenomenon back to the specific periodic motion of Earth or Moon that causes it, demonstrating the chapter's dissolution-test capacity across all four topic threads.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents six novel scenarios on cards or the board and facilitates a structured inquiry where students work individually first, then pool reasoning in groups."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student writes a causal trace for each scenario — naming the phenomenon, the relevant periodic motion, and the mechanism linking them — before comparing with group members."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Groups compare individual traces, identify any scenario where members disagree, and produce a consensus trace with the group's best justification."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher distributes the six scenario cards and gives students a brief individual reading period to note which chapter thread each scenario belongs to."
+  },
+  {
+   "minutes": "6-22",
+   "activity": "Students individually write causal traces for all six scenarios, working silently."
+  },
+  {
+   "minutes": "22-36",
+   "activity": "Groups compare traces, flag disagreements, and produce a consensus trace for the one scenario they found most difficult."
+  },
+  {
+   "minutes": "36-45",
+   "activity": "Three groups share their consensus trace for their hardest scenario; teacher draws explicit links to the dissolution test concept — tracing all phenomena to the observable periodic motions of Earth and Moon."
+  }
+ ],
+ "teacher_notes": "This is the plan's closing unit, where students must range across all five stages to trace phenomena to their orbital causes — the chapter's highest cognitive demand. The six scenarios should span all four topic threads (phases, eclipses, calendar types, satellite visibility) so no student can succeed by mastering only one thread; if students stall on the calendar scenarios, prompt them to return to the three-column comparison table from Unit 8 as a scaffold. The closing teacher synthesis should name the unifying idea explicitly: every phenomenon in this chapter — a crescent Moon at sunrise, a festival date shifting by eleven days, a satellite appearing at dusk — is an observable consequence of a periodic orbital motion.",
+ "materials": [
+  "Six novel scenario cards (one scenario per card, enough for all groups)",
+  "Student notebooks"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 11 UNITS — unit-title map ---
+U1: Noticing the Moon in the Day Sky
+U2: Mapping the Lunar Cycle: Phase Names and Positions
+U3: Ball-and-Torch: Modelling Illuminated Hemispheres
+U4: Eclipses: When Shadows Actually Matter
+U5: Three Cycles, Three Units: Day, Month, Year
+U6: Why Lunar Calendars Drift: The 11-Day Problem
+U7: Solar, Luni-Solar, and the Indian National Calendar: Three Solutions
+U8: Festivals Anchored to the Sky: Phase-Based and Solar-Based
+U9: Spotting Satellites: Natural and Artificial Orbits
+U10: From Orbit to Observation: Explaining Three Phenomena from One Framework
+U11: The Orbital Mechanics Behind What We See: A Chapter-Wide Causal Investigation
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 11,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Trace celestial phenomena to periodic orbital motions",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "The Orbital Mechanics Behind What We See: A Chapter-Wide Causal Investigation",
+ "activity_description": "Students consolidate the chapter's central explanatory claim — that every phenomenon studied (phases, eclipses, calendar units, festival timing, satellite visibility) traces to periodic motions of Earth and Moon in their orbits — by constructing an annotated cause-and-effect map that explicitly links each phenomenon to its governing orbital motion.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates the construction of the cause-and-effect map by posing targeted questions that surface gaps and ensure causal links are explicit rather than merely associative."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Construct the cause-and-effect map collaboratively, then each group presents one causal chain from orbital motion to observable phenomenon, explaining the mechanism at each step."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "After group presentation, each student writes a two-to-three sentence answer to the chapter's opening question: why does the Moon's visible shape change each night, and how does this connect to how we keep time?"
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-12",
+   "activity": "Groups begin constructing their cause-and-effect map, starting from the three periodic motions as root causes and branching outward to their observable consequences — phases, eclipses, day, month, year, festival dates, satellite visibility windows."
+  },
+  {
+   "minutes": "12-28",
+   "activity": "Each group presents one causal chain, explaining the mechanism linking orbital motion to the phenomenon; classmates add or challenge links on their own maps."
+  },
+  {
+   "minutes": "28-40",
+   "activity": "Students individually write their response to the chapter's opening question, drawing on the full map to trace the Moon's changing appearance to reflected sunlight and changing viewing angles, and connecting this to the month as a calendar unit."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher asks one or two students to read their individual response; class identifies whether the causal chain — orbital motion to observation to timekeeping — is complete."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to do what the chapter's dissolution test requires: explain phases, calendars, and satellites by tracing each to the periodic motions of Earth and Moon. Students who stall often do so at the calendar link — they can explain phases but struggle to articulate that the month is the Moon's phase cycle measured, so prompt that specific connection if it is missing. The cause-and-effect map is the product of this unit; no prior unit's output needs to be present because each group builds it here from knowledge, not from a physical artefact.",
+ "materials": [
+  "Blank paper or large notebook pages for cause-and-effect maps",
+  "Coloured pencils if available"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 9 UNITS — unit-title map ---
+U1: Tracking the Moon: What Changes Night to Night?
+U2: Naming the Shapes: Phase Vocabulary in Action
+U3: When and Where to Look: Predicting Moon Visibility
+U4: The Ball-and-Torch Model: Why Does the Moon Change Shape?
+U5: Three Cycles, Three Units: How Calendars Were Born
+U6: Lunar, Solar, Luni-Solar: Solving the Calendar Problem
+U7: Why Does Diwali Move but Pongal Does Not?
+U8: Spotting Satellites: Artificial Moons and Their Orbits
+U9: Phenomena, Motions, Calendars: Closing the Arc
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 9,
+ "period_duration_minutes": 45,
+ "progression_stage": 6,
+ "stage_label": "Trace each celestial phenomenon to its underlying orbital motion",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Phenomena, Motions, Calendars: Closing the Arc",
+ "activity_description": "Students receive a set of scenario cards — each describing a celestial observation or calendar puzzle — and must trace each back to the specific orbital motion responsible, explaining the causal chain from motion to observable phenomenon to calendar consequence. Scenarios include phase prediction, eclipse conditions, calendar drift, festival date behaviour, and satellite visibility.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes scenario cards, sets the task of writing a causal chain for each, and circulates to probe the depth of orbital-motion reasoning rather than surface recall."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Work through each scenario card, writing a causal chain that names the orbital motion, describes the observable phenomenon it produces, and identifies the calendar or practical consequence."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher frames the task: every phenomenon in this chapter — Moon phases, eclipses, the day, the month, the year, festival date shifts, and satellite visibility — can be traced to one or more of three orbital motions: Earth's rotation, the Moon's revolution around Earth, and Earth's revolution around the Sun."
+  },
+  {
+   "minutes": "8-30",
+   "activity": "Groups work through scenario cards (one card per group member initially, then compared within the group), writing a three-part causal chain: orbital motion → observable phenomenon → calendar or practical consequence."
+  },
+  {
+   "minutes": "30-42",
+   "activity": "Groups exchange one scenario card with another group and evaluate the received causal chain for completeness and accuracy, marking any step where the orbital motion was incorrectly named or the causal link was missing."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "Teacher closes by tracing one scenario aloud as a model causal chain, drawing together the full arc of the chapter from the opening kite-festival Moon sighting to the orbital mechanics underlying everything students observed."
+  }
+ ],
+ "teacher_notes": "This final unit asks students to perform the exact cognitive operation named in the chapter's dissolution test — tracing celestial phenomena to the periodic orbital motions that produce them — across all four topic areas of the chapter simultaneously. A common slip at this stage is writing causal chains that name the phenomenon twice rather than identifying the orbital motion as the root cause; when you see this, prompt the group to ask 'what is the Earth or Moon doing?' before they write the first step. The peer-evaluation of exchanged scenario cards in the later bands is a deliberate accountability move: it surfaces gaps in reasoning that individual writing alone would not reveal.",
+ "materials": [
+  "Scenario cards — one set per group (six to eight cards covering phases, eclipses, calendar drift, festival date behaviour, satellite visibility)",
+  "Blank paper for causal chain writing",
+  "Pencils"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

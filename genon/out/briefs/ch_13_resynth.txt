@@ -1,0 +1,305 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 13: Our Home: Earth, a Unique Life Sustaining Planet
+
+13.1 Why Is Earth a Unique Planet?
+
+This section introduces Earth as the only known planet that supports life in all its forms, situating it as the focus of the concluding chapter of the middle-stage science journey. It establishes that all life exists within a remarkably thin layer on Earth's surface—the crust—which, if Earth were the size of an apple, would be no thicker than the apple's skin. This razor-thin, life-supporting layer is presented as the defining feature that makes Earth extraordinary. The section contains Activity 13.1, a student exercise to list features of Earth that are interesting and important.
+
+13.2 What Do the Planets of Our Solar System Look Like?
+
+This section revisits the solar system from prior learning, naming the eight planets in order of increasing distance from the Sun: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune. It distinguishes the four inner rocky planets from the four outer gas giants. The key concept introduced is why Venus, though not the closest planet to the Sun, is the hottest—its thick atmosphere of carbon dioxide traps heat through the greenhouse effect, preventing it from escaping. By contrast, Earth's mild greenhouse effect keeps temperatures in the range that sustains liquid water. This section contains Activity 13.2, in which students collect and complete a table of planetary temperatures, sizes, and atmospheric data, and an enrichment box (A step further) clarifying the difference between a planetary greenhouse effect and a plant greenhouse.
+
+13.3 What Makes the Earth Suitable for Life to Exist?
+
+13.3.1 Position of the Earth
+
+This subsection explains that Earth's distance from the Sun places it within the habitable zone—also called the Goldilocks zone—where temperatures allow water to remain in liquid form. If Earth were closer to the Sun, water would evaporate; if farther, it would freeze. Liquid water is established as essential for the evolution and sustenance of life. The section notes that Earth appears as the Blue Planet from space because water covers most of its surface. A sidebar discusses Mars, which lies at the edge of the habitable zone: spacecraft and rovers have found no evidence of current life, but scientists think Mars may once have had liquid water and conditions suitable for simple life forms.
+
+13.3.2 Size of the Earth
+
+This subsection identifies Earth's nearly circular orbit as a factor that keeps sunlight and heat steady throughout the year, preventing extreme seasonal temperatures. More importantly, it explains that Earth's size gives it just the right gravitational pull to retain its atmosphere. A smaller Earth would have gravity too weak to hold atmospheric gases, as illustrated by Mars (atmosphere 100 times thinner than Earth's) and Mercury (no atmosphere). A much larger planet would crush living beings with excessive gravitational force. The section introduces two key consequences of Earth's atmosphere: oxygen enables respiration for almost all life forms, and some oxygen is converted to ozone, forming the ozone layer that shields life from harmful ultraviolet rays from the Sun. A heritage box introduces India's Mangalyaan (Mars Orbiter Mission, 2013), which studied Mars's atmosphere, surface, and signs of past water.
+
+13.3.3 Magnetic field of the Earth
+
+This subsection explains that Earth behaves like a giant magnet, with its magnetic field believed to originate from the movement of molten iron in the planet's core. Earth is constantly bombarded by high-energy particles from space—cosmic rays from distant parts of the universe and solar wind from the Sun. These particles are harmful: they can damage the atmosphere, reduce the ozone layer, and increase UV radiation at the surface. Earth's magnetic field acts as a protective shield, deflecting many of these particles and keeping the atmosphere—and therefore life—safe. The section closes by integrating the four factors discussed: position (liquid water), size (atmosphere retention), atmosphere, and magnetic field together make Earth a planet where life can emerge and thrive.
+
+13.4 What Allows Life to Be Sustained on Earth?
+
+13.4.1 Air, water, and sunlight
+
+This subsection describes how the three non-living essentials—air, water, and sunlight—interact to sustain life. Oxygen in the atmosphere enables respiration; in the presence of sunlight, plants use carbon dioxide and water from soil to produce food through photosynthesis, releasing oxygen in return. The mild greenhouse effect of the atmosphere traps enough heat to keep water liquid; without it, Earth would lose heat to space and become too cold. Water, covering about 70 per cent of Earth's surface in ponds, rivers, seas, oceans, and groundwater, forms the hydrosphere. Water acts as a solvent, transports nutrients in plants, regulates body temperature in animals, aids digestion, and supports aquatic life ranging from tiny plankton to giant whales. Water vapour forms clouds, bringing rain and snow that refill rivers and lakes and affect what plants and animals can live in a region.
+
+13.4.2 Soil, rocks, and minerals
+
+This subsection introduces the geosphere—the solid parts of Earth including rocks, soils, and minerals. Soil contains nutrients such as nitrogen and potassium that plants need for growth, derived from the slow breakdown of rocks and organic remains. The section introduces the concept of geodiversity: the variety of landforms, rocks, and soils on Earth and the processes that shape them. Geodiversity creates diverse habitats where different life forms can thrive. Minerals from the geosphere provide humans with salt, coal, oil, and metals like iron and copper, supporting both ecosystems and human civilisation.
+
+13.4.3 Plants, animals, and microorganisms
+
+This subsection introduces the biosphere—all living beings together with the environments in which they live, spanning land, water, and air. It reminds students that plants produce food through photosynthesis, animals eat plants or other animals, and decomposers break down dead matter to return nutrients to the soil, echoing content from Chapter 12 on ecology. This web of interdependence among plants, animals, and microorganisms, acting together as a system, is what sustains life on Earth.
+
+13.4.4 The importance of balance
+
+This subsection presents Earth as a vast, integrated living system in which land, air, water, and living things support and influence each other. Even a small change in one part—such as cutting down a forest—can affect rainfall, soil, air quality, and wildlife. The chapter emphasises that life on Earth survives not because of any single factor but because everything works together in balance, and that preserving clean air, water, soil, and biodiversity is essential for keeping Earth habitable in the future.
+
+13.5 What Keeps Life from Disappearing?
+
+This section introduces reproduction as the mechanism that ensures the continuity of life, explaining that without it each species would eventually vanish. Parents pass genetic material—genes—stored inside every cell to their offspring. Genes act as a detailed instruction manual that determines how an organism develops. The section introduces the two major types of reproduction and notes that while reproduction maintains similarity across generations, it also allows for small inherited variations that help organisms adapt to changing environments over time, potentially leading to new life forms.
+
+13.5.1 Asexual reproduction
+
+This subsection explains asexual reproduction, in which a single parent produces genetically identical offspring. In plants, this takes the form of vegetative propagation—new individuals growing from a leaf, stem, or root planted in soil, as with money plants, potatoes, and ginger. Activity 13.3 asks students to plant stem cuttings, potato eyes, or ginger and observe the emergence of roots, stems, and leaves over time. An enrichment sidebar notes that single-celled organisms like bacteria and amoeba divide into two identical individuals; algae can regrow from small cut parts; Hydra produces buds; and Planaria, a flatworm, can regenerate from a small fragment.
+
+13.5.2 Sexual reproduction
+
+This subsection explains sexual reproduction, which involves two parents and produces offspring that are not identical to either parent. Each parent produces specialised reproductive cells called gametes, which carry only half the parent's genetic material; when male and female gametes combine, the resulting cell has a complete instruction set—half from each parent—preventing a doubling of genetic material across generations. In plants, pollen grains (male gametes) are carried by wind, insects, or animals to another flower in the process of pollination; fertilisation combines pollen with ovules (female gametes) to form a zygote that develops into a seed, while the surrounding flower tissue becomes a fruit. In animals, sperm (male) and eggs (female) may combine externally in water as in fish and frogs, or internally as in birds and mammals. In birds, the fertilised egg is laid and the embryo develops through hatching, sustained by nutrients stored within the egg. In most mammals, the embryo develops inside the mother's body, with the mother supplying nutrients and oxygen until birth. The mixing of genetic instructions from two parents produces variation among offspring, enabling new traits to appear over many generations.
+
+13.6 What Are the Threats to Life on Earth?
+
+This section presents the triple planetary crisis—climate change, biodiversity loss, and pollution—as the three interconnected environmental challenges currently threatening life on Earth. Burning fossil fuels releases greenhouse gases such as carbon dioxide and methane, trapping excess heat and causing global warming; consequences include melting ice caps, rising sea levels, flooding of coastal areas, extreme weather events, and species extinctions. Destruction of natural habitats causes biodiversity loss, disrupting food webs and weakening ecosystems. Pollution from factories, vehicles, and burning fuels harms human health, damages crops, and generates smog and acid rain; water and soil pollution from industrial, agricultural, and plastic waste harm aquatic life and reduce crop yields. The section notes global agreements—the Montreal Protocol (1987), Earth Summit (1992), Kyoto Protocol (2005), and Paris Agreement (2015)—as international responses, while acknowledging that as of 2025 the world is not on track to meet the 1.5 °C warming limit. It concludes by stressing that because the hydrosphere, biosphere, atmosphere, and geosphere are interconnected, damage to one affects all others, and that individual, community, and global action—including renewable energy, sustainable farming, waste reduction, and responsible consumption—are all needed to protect Earth's future.
+
+
+======================================================================
+
+THE FULLEST PLAN (12 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Earth in the Solar System: What Stands Out?
+U2: Why Venus Burns and Earth Doesn't: The Greenhouse Effect
+U3: The Goldilocks Zone: Position, Liquid Water, and the Habitable Band
+U4: Gravity, Atmosphere, and the Ozone Shield: Earth's Size Matters
+U5: Earth's Magnetic Shield: Deflecting the Invisible Threat
+U6: Mapping the Four Spheres: Atmosphere, Hydrosphere, Geosphere, Biosphere
+U7: Water as a System Actor: Roles Across the Spheres
+U8: Soil, Rocks, Minerals, and the Web of Life: Geodiversity in Action
+U9: Asexual Reproduction: One Parent, Identical Offspring
+U10: Sexual Reproduction: Two Parents, Variation, and the Gamete Logic
+U11: The Triple Planetary Crisis: Tracing Damage Through the Four Spheres
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Earth in the Solar System: A Planetary Data Hunt
+U2: Why Is Earth the Blue Planet? Mapping the Habitable Zone
+U3: Why Does Earth Keep Its Air? The Gravity–Atmosphere Link
+U4: Earth's Invisible Shield: The Magnetic Field
+U5: The Four Earth Systems: How They Sustain Life Together
+U6: One Parent or Two? Classifying Reproduction in Living Things
+U7: How Do Gametes Carry Instructions? Tracing Sexual Reproduction
+U8: Mapping the Triple Planetary Crisis
+U9: International Responses: Are They Enough?
+U10: What Makes Earth Irreplaceable? Connecting Planetary Conditions, Life Systems, and Continuity
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 10,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Analyse threats to Earth's balance and evaluate responses",
+ "pedagogical_approach": "Didactic approach",
+ "activity_title": "What Makes Earth Irreplaceable? Connecting Planetary Conditions, Life Systems, and Continuity",
+ "activity_description": "Students construct a written argument explaining why Earth uniquely sustains life by weaving together three threads from the chapter: the planetary conditions (habitable zone, size, magnetic field), the interdependent Earth systems, and reproduction as the mechanism of biological continuity, then applying this integrated argument to evaluate one specific current threat.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Frames the final unit as an integration task, walks through the three threads briefly, and then gives students structured writing time to produce their argument."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Writes a structured argument of four to five sentences connecting all three chapter threads and applying them to one threat from Section 13.6."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-10",
+   "activity": "Teacher briefly recaps all four progression stages by asking students to name one key idea from each: planetary comparisons, causal mechanisms, reproduction, and threats — building a verbal outline of the chapter's arc before writing begins."
+  },
+  {
+   "minutes": "10-32",
+   "activity": "Students write a structured argument: sentence 1 — what planetary conditions make Earth unique; sentence 2 — how the four Earth systems sustain life through interdependence; sentence 3 — how reproduction ensures biological continuity and variation; sentence 4 — how one specific current threat (chosen by the student from Section 13.6) damages the balance these conditions create; sentence 5 — one action that addresses the threat at the individual or community level."
+  },
+  {
+   "minutes": "32-42",
+   "activity": "Students share their arguments with a partner, who checks that all three chapter threads appear and that the threat is correctly linked to an Earth system."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "Two students read their arguments aloud; teacher highlights one strong integration point from each and names what makes it strong, closing the chapter arc."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to perform the chapter's highest-order operation: constructing an integrated argument that spans the two co-central strands — Earth's conditions for life and reproduction as life's continuity mechanism — and connects both to the current threats. Watch for arguments that correctly address all three threads but treat them as separate paragraphs rather than a connected explanation; the partner check is designed to catch this. A student who can write a sentence like 'without reproduction, even a perfectly habitable Earth would lose its biosphere over time' has grasped the integration the chapter demands.",
+ "materials": [
+  "Notebooks",
+  "All prior unit notes and maps for reference"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 8 UNITS — unit-title map ---
+U1: Earth in the Solar System: What Makes It Stand Out?
+U2: Why Is Venus Hotter Than Mercury? Unpacking the Greenhouse Effect
+U3: The Goldilocks Conditions: Position, Size, and Magnetic Shield
+U4: Earth's Four Systems: Mapping the Interdependence
+U5: How Does Life Continue? Discovering Asexual Reproduction
+U6: Two Parents, New Combinations: Investigating Sexual Reproduction
+U7: The Triple Planetary Crisis: Diagnosing the Threat
+U8: Protecting the Balance: Evaluating Actions Across Scales
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 8,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply and evaluate: threats to Earth's systems and life's continuity",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Protecting the Balance: Evaluating Actions Across Scales",
+ "activity_description": "Students evaluate a set of proposed actions — individual, community, and global — against the specific threats and system disruptions identified in the previous unit, judging which actions address root causes versus symptoms and constructing an evidence-based argument for why protecting Earth requires coordinated responses at all three scales simultaneously.",
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Receive an action card set; sort cards by scale (individual, community, global) and by the sphere and threat each action targets; then construct a written argument for why no single scale of action is sufficient."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Facilitates the evaluation by asking groups to test each action against the cascade model from the previous unit, pushing students to distinguish actions that address root causes from those that address symptoms."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-5",
+   "activity": "Teacher recalls the previous unit's cascade analysis and poses the evaluative question: given how interconnected the threats are, what kinds of actions could actually work, and at what scale?"
+  },
+  {
+   "minutes": "5-25",
+   "activity": "Groups sort the action cards by scale and by target sphere, then classify each action as addressing a root cause (e.g. switching to renewable energy reducing greenhouse gas emissions) or a symptom (e.g. cleaning a polluted river stretch)."
+  },
+  {
+   "minutes": "25-38",
+   "activity": "Groups draft a three-to-four sentence argument explaining why individual, community, and global action must operate simultaneously, using the interconnected Earth-systems and reproduction-continuity frameworks developed across the chapter."
+  },
+  {
+   "minutes": "38-45",
+   "activity": "Two or three groups share their arguments; teacher draws the chapter to a close by connecting Earth's uniqueness — the conditions examined from Unit 1 through Unit 6 — to the responsibility that uniqueness places on its inhabitants."
+  }
+ ],
+ "teacher_notes": "This closing unit brings together the chapter's two strands — planetary conditions and biological continuity — through the lens of evaluation, so guide groups to reference both strands in their written arguments rather than focusing only on climate change. Watch for arguments that treat individual action as sufficient; the cascade analysis from the previous unit should make clear that systemic threats require systemic responses alongside individual ones. The closing share-out is the natural convergence point: invite students to name which specific planetary condition or Earth system they are most concerned about, tying their answer back to the causal chains built in this unit and its predecessors.",
+ "materials": [
+  "Action cards (teacher-prepared, covering renewable energy, sustainable farming, waste reduction, habitat protection, international agreements — based on Section 13.6)",
+  "Groups' annotated threat maps from the previous unit",
+  "Writing materials for the group argument"
+ ],
+ "homework": [
+  "Choose one action from the card set and write a short explanation connecting it to a specific Earth system and reproductive process it protects, using the causal language developed in class."
+ ]
+}
+
+--- PLAN OF 6 UNITS — unit-title map ---
+U1: What Makes Earth Stand Out?
+U2: The Goldilocks Conditions: Why Earth and Not Mars or Venus?
+U3: Earth's Four Systems: How Air, Water, Soil, and Life Work Together
+U4: One Parent or Two? Comparing Asexual and Sexual Reproduction
+U5: Following the Gamete: Tracing Fertilisation in Plants and Animals
+U6: When the Balance Breaks: Connecting the Triple Planetary Crisis to Earth's Systems
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 6,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Evaluate threats to Earth's life-sustaining balance and connect planetary conditions, Earth systems, and reproduction to the consequence of their disruption",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "When the Balance Breaks: Connecting the Triple Planetary Crisis to Earth's Systems",
+ "activity_description": "Students analyse three crisis scenarios — intensified greenhouse effect from fossil fuels, habitat destruction causing biodiversity loss, and combined water and soil pollution — and for each scenario trace which Earth systems are disrupted, which planetary condition is undermined, and what consequence for reproduction and species continuity follows, recording their reasoning in a structured analysis grid.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the three crisis scenarios and guides students through the first scenario collaboratively, modelling how to trace disruption across systems and conditions before releasing groups to complete the remaining two."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Complete the structured analysis grid for all three scenarios, identifying disrupted systems, undermined planetary conditions, and consequences for reproduction and species continuity."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "The teacher connects back to the previous units' two strands — planetary conditions and reproduction — and introduces the triple planetary crisis framework, presenting the three scenarios."
+  },
+  {
+   "minutes": "8-18",
+   "activity": "The whole class works through the first scenario (intensified greenhouse effect) together, tracing atmosphere disruption to temperature rise to liquid water loss to habitat destruction to species reproduction failure."
+  },
+  {
+   "minutes": "18-35",
+   "activity": "Groups independently complete the analysis grid for the biodiversity loss scenario and the pollution scenario, tracing system disruption through to reproductive consequences."
+  },
+  {
+   "minutes": "35-42",
+   "activity": "Groups share one chain of reasoning from their grid; the teacher highlights where chains from different scenarios converge — showing how the hydrosphere, biosphere, atmosphere, and geosphere are interconnected."
+  },
+  {
+   "minutes": "42-45",
+   "activity": "The teacher closes by returning to the chapter's opening question — what makes Earth unique — and noting that the same interconnections that sustain life are also what make Earth vulnerable to disruption."
+  }
+ ],
+ "teacher_notes": "This closing unit is the point where both chapter strands converge: students must draw on what they know about planetary conditions and Earth systems from the first three units, and on reproduction from the fourth and fifth, to reason about how the triple planetary crisis threatens species continuity. A common gap is that students treat pollution as only a human health issue rather than tracing it through the geosphere and hydrosphere to its effects on plant reproduction and food web disruption; the grid structure pushes them to make those connections explicit. If a group's chains remain at the level of 'pollution is bad for animals,' probe them with the specific question of how water pollution affects the external fertilisation of frogs — this forces them to apply the reproductive detail from the previous unit.",
+ "materials": [
+  "Structured analysis grid worksheet (three rows for scenarios, columns for disrupted systems, undermined conditions, reproductive consequences)",
+  "Pencils or pens"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

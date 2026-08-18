@@ -1,0 +1,312 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 40-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- The SHORTEST plan's map is the binding one: applied topics and late enrichment are cut
+  from it first, so each concrete demand in your task (a condition to cite, a feature to
+  identify, a mechanism to explain) is checked against that map before it is used.
+- Every mechanism, apparatus, circuit form or process your setting relies on is one the
+  chapter itself teaches — the setting is new, its physics is entirely the chapter's.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 40…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 12: Beyond Earth
+
+The chapter opens with a narrative of two children in Nubra, Ladakh, who observe the night sky and experience a sense of wonder about stars, setting the context for exploring objects beyond Earth.
+
+12.1 Stars and Constellations
+
+Stars shine with their own light; some are bright and others dim. Groups of stars that appear to form recognisable patterns are called constellations — a term that in modern usage refers to defined regions of the sky rather than just the star patterns themselves. These patterns were historically used for navigation by sailors and travellers before modern technology. The International Astronomical Union (IAU) officially listed 88 constellations in the early twentieth century, dividing the entire sky into 88 regions. Notable constellations include Orion (depicted as a hunter with a three-star belt), Canis Major (which contains Sirius, the brightest star in the night sky), and Taurus. In Indian astronomy, the term nakshatra denotes specific stars or star groups — Betelgeuse in Orion is known as Ardra, the Pleiades cluster in Taurus as Krittika, and Aldebaran in Taurus as Rohini. Two widely known star patterns are the Big Dipper (in constellation Ursa Major, known in India as Saptarishi) and the Little Dipper (in Ursa Minor), which includes the Pole Star (Polaris, or Dhruva tara). The Pole Star appears nearly stationary in the North direction and is used to locate north in the Northern hemisphere. There is a student activity (Activity 12.1) in which students draw imaginary lines between stars to form their own patterns and invent stories about them.
+
+12.2 Night Sky Watching
+
+The visibility of stars depends on light pollution, smoke, dust, and obstructions such as tall buildings and trees; the night sky is best observed from open, dark locations away from city lights. Light pollution — excessive artificial light at night — reduces the number of stars visible and is a growing global concern; dark sky reserves and parks have been established to preserve dark skies for research. Not all stars and constellations are visible from all locations or at all times of the year; the Pole Star, for example, is not visible from the Southern Hemisphere. Sky mapping apps such as Sky Map and Stellarium help identify stars, constellations, and planets from any given location. The section provides practical preparation guidance for night sky watching: choosing a clear moonless night, waiting about half an hour for eyes to adjust to the dark, and using a compass and printed constellation images. Activities 12.2 and 12.3 are student activities in which learners attempt to locate the Big Dipper, the Pole Star, and the constellation Orion with the star Sirius in the actual night sky.
+
+12.3 Our Solar System
+
+The Sun
+
+The Sun is the star closest to Earth — an extremely hot, spherical ball of gases that produces heat and light, making it the primary source of energy on Earth. Its distance from Earth is about 150 million km, defined as one astronomical unit (au), the standard unit for distances within the solar system. The Sun is about 100 times larger than Earth in diameter; it appears large due to its relative proximity, while far more distant stars appear only as points of light. The Sun regulates climate, seasons, weather, the water cycle, and winds, and is essential for plant growth and all life on Earth.
+
+Planets
+
+A planet is a large, nearly spherical object that revolves around the Sun; this movement is called revolution. The eight planets in order of increasing distance from the Sun are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune. The inner four planets are smaller and have solid rocky surfaces; the outer four are much larger, mostly made of gas and ice, and have ring-like structures of dust and rocky material around them. The presence of an atmosphere affects a planet's temperature — Venus is hotter than Mercury despite being farther from the Sun because its thick atmosphere traps heat. Venus is known as the Morning Star or Evening Star; Mars is the Red Planet due to its reddish soil; Earth appears blue from space and is called the Blue Planet. Objects reclassified as dwarf planets — including Pluto — were redefined by the IAU in 2006 when similar small objects were discovered beyond Neptune. Activity 12.4 guides students to locate Venus at dawn (eastern horizon before sunrise) or dusk (western horizon after sunset).
+
+Natural Satellites
+
+Objects that move around planets are commonly called satellites; moons are the natural satellites of planets. Earth has one Moon, Mars has two moons, and Jupiter, Saturn, Uranus, and Neptune have large numbers of moons.
+
+The Moon
+
+Earth's natural satellite, the Moon, is about 3,84,000 km away and takes approximately 27 days to complete one revolution around the Earth. The Moon is about a quarter the size of Earth in diameter and has virtually no atmosphere. Its surface features circular bowl-like structures called craters, formed by the impact of asteroids and rocks from space; without atmosphere, water, or life, these features persist for very long periods. India launched Chandrayaan-1 (2008), Chandrayaan-2 (2019), and Chandrayaan-3 (July 2023); the Vikram lander of Chandrayaan-3 successfully soft-landed near the Moon's south pole on 23 August 2023, making India the first country to achieve this, and 23 August is now celebrated as National Space Day.
+
+Asteroids
+
+Asteroids are small, rocky, irregularly shaped objects that revolve around the Sun; many orbit in the region between Mars and Jupiter called the asteroid belt. Their sizes range from about 10 m to approximately 500 km.
+
+Comets
+
+Comets are objects from the outer Solar System composed of dust, gases, rocks, and ice; as they approach the Sun, frozen material evaporates to form a visible tail, but they appear dim as they move away. Many comets orbit the Sun periodically — Halley's Comet, for example, appears every 76 years and was last seen in 1986. The Solar System as a whole consists of the Sun, eight planets, their moons, and many smaller objects including asteroids and comets; all objects other than the Sun shine by reflecting sunlight.
+
+12.4 The Milky Way Galaxy
+
+The Milky Way Galaxy (Akasha Ganga) is visible from very dark locations as a faint extended band of light stretching across the night sky. A galaxy contains millions to billions of stars; our entire Solar System is a small part of the Milky Way Galaxy.
+
+12.5 The Universe
+
+Beyond the Milky Way, there are many other galaxies in outer space that scientists study to understand stars, galaxies, and the Universe as a whole. The search for life elsewhere in the Universe is ongoing and directed mainly toward exoplanets — planets discovered orbiting stars other than our Sun — but no evidence of life has been found yet.
+
+
+======================================================================
+
+THE FULLEST PLAN (14 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: What Do You See in the Night Sky?
+U2: Drawing Your Own Constellation
+U3: Mapping Key Constellations and Indian Star Names
+U4: Why Can't We Always See All Stars? Investigating Night-Sky Visibility
+U5: Classifying Solar System Members
+U6: The Sun and Planets — Properties, Order, and Scale
+U7: The Moon — Surface Features and India's Lunar Missions
+U8: Asteroids, Comets, and the Asteroid Belt — Small Bodies, Big Picture
+U9: From Solar System to Milky Way to Universe
+U10: Why Does Venus Outshine Mercury? Reasoning About Atmosphere and Temperature
+U11: Why Does the Pole Star Always Point North? Reasoning About Apparent Motion
+U12: Comet Tails and Crater Persistence — Explaining with Evidence
+U13: Practical Sky-Observation Planning and Celestial Object Identification
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 12 UNITS — unit-title map ---
+U1: What Do We See in the Night Sky?
+U2: Stars, Constellations, and the IAU Sky Map
+U3: Invent Your Own Constellation — Activity 12.1
+U4: Night Sky Watching — Preparation and Conditions
+U5: Sorting Solar System Objects
+U6: Planet Properties — Inner vs Outer, and the Venus Puzzle
+U7: Building a Relative-Distance Solar System Map
+U8: The Moon, Chandrayaan, and the Moon's Surface
+U9: Comets and Asteroids — Modelling Orbit Paths and Tails
+U10: From Solar System to Milky Way to Universe
+U11: Exoplanets and the Search for Life — Evaluating Evidence
+U12: Sky Detective — Identify and Place Any Celestial Object
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 12,
+ "period_duration_minutes": 40,
+ "progression_stage": 4,
+ "stage_label": "Describe the Solar System's place in the Milky Way and the Universe",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Sky Detective — Identify and Place Any Celestial Object",
+ "activity_description": "Students receive a set of twelve description cards, each giving observable properties of an unidentified celestial object, and must name the object, classify it by type, state where it fits in the Solar System or beyond, and — for any three of their choice — describe how and where a sky observer could detect it from Earth.",
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Identifies and classifies each description card, places it on a hand-drawn cosmic hierarchy (star → constellation region → Solar System → galaxy → Universe), and writes sky-detection notes for three chosen objects."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Circulates to ask groups to justify placements and detection strategies, ensuring reasoning draws on observable properties rather than memorised lists."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-5",
+   "activity": "Teacher sets up the task: groups will act as sky detectives, using everything from this unit across all earlier units to name, classify, and place twelve objects without prompts."
+  },
+  {
+   "minutes": "5-25",
+   "activity": "Groups work through the twelve description cards, naming each object, classifying it by type, and placing it on their drawn cosmic hierarchy from Solar System body to galaxy to Universe."
+  },
+  {
+   "minutes": "25-35",
+   "activity": "Groups write sky-detection strategies for three chosen objects, specifying which direction to look, what conditions are needed, and what the object would look like — drawing on the night sky watching and constellation knowledge from earlier units."
+  },
+  {
+   "minutes": "35-40",
+   "activity": "Rapid whole-class share: teacher reads three challenge cards and calls on different groups to give the name, type, cosmic placement, and detection strategy, closing the chapter's arc."
+  }
+ ],
+ "teacher_notes": "This closing unit draws together every strand of the chapter — naming and classifying celestial objects, understanding Solar System structure, and connecting that structure to its place in the Milky Way and beyond — by requiring students to apply all of it to unfamiliar descriptions. This is the capstone of the chapter's arc and draws on the work of every earlier unit; it is deliberately open-ended so that stronger students can articulate nuanced detection strategies while all students can demonstrate naming and classification. Watch for groups relying purely on memorised lists without invoking observable properties as their classification criterion — the sky-detection writing step is designed to surface this.",
+ "materials": [
+  "Twelve description cards (each giving observable properties without naming the object)",
+  "Student notebooks for cosmic hierarchy drawing",
+  "Pencils"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: What Do We See in the Night Sky?
+U2: Drawing Constellations — Orion, Big Dipper, and More
+U3: Sorting the Solar Family
+U4: Properties That Explain Classification — Planets Up Close
+U5: Moon, Asteroids, and Comets — Classifying Smaller Bodies
+U6: Building a Scale Sense of the Solar System
+U7: The Sun as the Centre — Energy, Climate, and Life
+U8: Night Sky Watching — Planning and Practising
+U9: From Solar System to Galaxy to Universe
+U10: Identifying and Placing Celestial Objects Across the Full Picture
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 10,
+ "period_duration_minutes": 40,
+ "progression_stage": 4,
+ "stage_label": "Describe the Solar System's place within the Milky Way and the wider Universe",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Identifying and Placing Celestial Objects Across the Full Picture",
+ "activity_description": "Students are given a set of object description clues — covering stars, constellations, planets, natural satellites, asteroids, comets, the Milky Way, and exoplanets — and must correctly identify each object, state its class, place it in the correct level of the nested Universe structure, and explain one observable property that distinguishes it from a named similar object.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Distributes clue cards, poses the challenge, and facilitates a final whole-class verification of identifications and placements."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Works through each clue card — identifies the object, assigns it to Solar System / Milky Way / Universe level, and writes a distinguishing property statement comparing it to a specified similar object."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-6",
+   "activity": "Teacher distributes clue cards and explains the three-part task: identify, place in nested structure, and distinguish from a named comparator."
+  },
+  {
+   "minutes": "6-24",
+   "activity": "Groups work through clue cards spanning all object classes covered in the chapter, using their constellation reference sheets, classification tables, and nested diagrams from previous units."
+  },
+  {
+   "minutes": "24-34",
+   "activity": "Groups present their most challenging identification to the class — including the placement and distinguishing statement — and the class evaluates whether the placement and reasoning are correct."
+  },
+  {
+   "minutes": "34-40",
+   "activity": "Teacher leads a closing verification pass through the full set of object classes, confirming identifications and placements, and drawing together the chapter's arc from the Nubra night sky to the search for life on exoplanets."
+  }
+ ],
+ "teacher_notes": "This closing unit brings together every strand of the chapter — naming, classifying, structuring, and scaling — into a single integrated identification and placement task, completing the arc that began with the Nubra children looking up at the stars. Watch for students who can name an object but cannot distinguish it from a similar one — for example, identifying a comet but failing to contrast its ice-and-dust composition with an asteroid's rocky composition; this is where the classification work from Stage 2 must be recalled. The whole-class verification at the close functions as a natural consolidation, making explicit how observational skills (Stage 1), classification (Stage 2), structural explanation (Stage 3), and galactic-scale placement (Stage 4) all connect.",
+ "materials": [
+  "Clue card set covering all object classes (one set per group)",
+  "Students' own constellation reference sheets from unit 2",
+  "Students' own classification tables from unit 5",
+  "Students' own nested diagrams from unit 9",
+  "Pencils"
+ ],
+ "homework": [
+  "Choose one constellation you have studied and write a two-sentence explanation of how a sailor in the Northern Hemisphere could use it and the Pole Star together to navigate at night — apply what the chapter says about both the constellation's pattern and the Pole Star's stationary position.",
+  "Imagine a new rocky object is discovered orbiting the Sun in the region between Mars and Jupiter. Using the classification criteria from the chapter, decide whether it is a planet, a dwarf planet, or an asteroid, and write three reasons for your classification."
+ ]
+}
+
+--- PLAN OF 8 UNITS — unit-title map ---
+U1: What Shines in the Night Sky?
+U2: Drawing Your Own Constellation
+U3: Sorting the Solar System
+U4: Planet Properties: Inner vs. Outer
+U5: Why Can't We See the Pole Star from the South?
+U6: Mapping Scale Distances in the Solar System
+U7: From Solar System to Galaxy to Universe
+U8: Planning a Night Sky Observation
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 8,
+ "period_duration_minutes": 40,
+ "progression_stage": 4,
+ "stage_label": "Describe the structure of the Solar System and its place in the Milky Way",
+ "pedagogical_approach": "Hands-on Science",
+ "activity_title": "Planning a Night Sky Observation",
+ "activity_description": "Students apply the full chapter — object identification, classification, distance and position reasoning, and structural understanding — by preparing a written sky-observation plan that specifies which celestial objects to look for, how to locate them, what conditions are needed, and what each object's place in the Solar System and galaxy structure is.",
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Draft a sky-observation plan identifying at least five distinct celestial objects (spanning stars, constellations, a planet, and the Moon), explaining how to locate each and what conditions maximise visibility, drawing on Sections 12.1–12.5."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Introduces the planning task, circulates to ensure each group's plan draws on the full chapter rather than only the opening sections, and leads a closing discussion on how the chapter's concepts connect as a whole."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher sets the planning challenge, explicitly linking it to the nested diagram from the previous unit: 'Your plan should cover objects at multiple levels — from the Moon to a galaxy if possible.'"
+  },
+  {
+   "minutes": "7-26",
+   "activity": "Groups draft the observation plan, specifying: object name and type, how to locate it (constellation pointer, Pole Star direction, horizon position for Venus), conditions needed (dark location, moonless night, eye-adjustment time), and one fact about its place in Solar System or galaxy structure."
+  },
+  {
+   "minutes": "26-36",
+   "activity": "Groups share one highlight from their plan — an unusual or challenging object choice — and the class offers additions or corrections grounded in the chapter."
+  },
+  {
+   "minutes": "36-40",
+   "activity": "Teacher closes the chapter by reading the Milky Way description from Section 12.4, connecting the local sky-watching plan to the vast structure students have just mapped."
+  }
+ ],
+ "teacher_notes": "The previous unit built the structural hierarchy; this closing unit asks students to apply that hierarchy to practical observation planning, which is the chapter's terminal skill. Watch for plans that list only stars and the Moon without engaging planets, asteroids, or galaxy-level objects — prompt such groups to add at least one object from the outer Solar System or beyond. The plan itself is the evidence of integration: check that each object entry connects naming, classification, and positional reasoning.",
+ "materials": [
+  "Observation plan template sheet (object / type / how to locate / conditions / structural fact)",
+  "Chapter Sections 12.1–12.5 for reference"
+ ],
+ "homework": [
+  "Using the observation plan your group drafted in this unit, attempt to identify at least two of your chosen objects on the next available clear night and write a brief description of what you actually saw (or why conditions prevented viewing), comparing your prediction to your experience."
+ ]
+}
+
+======================================================================
+
+VERIFIED GAPS IN THE SHORTEST (8-unit) PLAN — none of these may appear as a clue, a demand, or a closing concept: crater formation / impacts on an airless surface; the Pleiades/Krittika cluster (also absent from the 10-unit plan); identifying Mars by its reddish colour. Available instead, taught even in the 8-unit plan: Venus as the dawn/dusk object, Sirius, the Pole Star with the Saptarishi pointer method, the Milky Way, a comet's tail pointing away from the Sun, artificial satellites.
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

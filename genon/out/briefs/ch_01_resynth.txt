@@ -1,0 +1,151 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 1: Exploring the Investigative World of Science
+
+Chapter 1 is an orientation chapter that introduces Grade 8 students to the investigative nature of science and previews the year's themes. It does not introduce a single scientific topic in depth but instead establishes the mindset, vocabulary, and habits of thinking that will run through all subsequent chapters.
+
+Probe and ponder
+
+The chapter opens with a "Probe and ponder" box addressed directly to students. It poses three curiosity questions — why is one side of a puri thinner than the other, whether there are more grains of sand on Earth's beaches and deserts or more stars in the Milky Way, and why nature has created such vast biological diversity. These questions are not meant for examination; they are framed as invitations to personal curiosity. Students are asked to write their own question in the space provided, establishing from the outset that science begins with wondering.
+
+The investigative world of science — a Grade 8 orientation
+
+The chapter explains that the Grade 8 book, titled Curiosity, continues a three-year progression. In Grade 6, students discovered how science begins with wonder. In Grade 7, they learnt that science is always evolving and that answers open new questions. In Grade 8, the emphasis moves to investigation: students are expected not merely to learn facts but to learn how to find new facts. The chapter distinguishes investigation from simple observation, stating that Grade 8 students can now ask more focused questions, design simple experiments, and use observations to improve understanding. The goal is for students to become investigators — young scientists exploring real-world puzzles ranging from everyday phenomena like rising dough to planetary-scale questions like global warming.
+
+The chapter then provides a panoramic preview of the year's content, organised as a connected narrative rather than a table of contents. It traces a conceptual arc from the very small to the very large: beginning with microbes invisible to the naked eye in a drop of water, moving to human health and infection, then to electric current and its heating and magnetic effects, then to forces and pressure, then to weather phenomena including winds and cyclones, then to the particulate nature of matter and classification into elements, compounds and mixtures, then to solutions, then to light and its reflection and refraction through mirrors and lenses, then to the Moon's phases and their role in the development of calendars, and finally to ecosystems and Earth's unique capacity to support life. This previewing section demonstrates to students how the chapters are conceptually linked — forces explain pressure, pressure explains weather, particle structure explains solutions, light explains the Moon's appearance, and so on.
+
+The chapter also draws attention to two recurring visual symbols in the textbook design: roots at the bottom of left-hand pages, symbolising groundedness in careful observation and cultural heritage, and a kite at the top of right-hand pages, symbolising the freedom of creative thinking. These are introduced not as decorative elements but as a deliberate pedagogical metaphor — good scientific investigation requires both firm grounding in evidence and imaginative inquiry.
+
+To help you think like a scientist: Why is one side of a puri thinner than the other?
+
+The second half of the chapter is an extended worked example of scientific investigation built around a kitchen observation. The example is introduced with the reminder that science does not require a formal laboratory — even a home kitchen provides sufficient opportunity for observation and experiment. The phenomenon chosen is the puffing of a puri, batura, or phulka when placed in hot oil or on a flame, and specifically the fact that one side of a puri is thinner than the other.
+
+The chapter walks students through the structure of a systematic investigation. The first step is framing a scientific question: what factors might affect the way a puri puffs up when fried? The chapter distinguishes between variables that can be controlled or changed — thickness of the dough, size of the rolled circle, type of flour (atta, maida), temperature of the oil, and the angle and manner in which the dough is placed in the oil — and outcomes that can be observed or measured, such as whether the puri puffs up at all (a yes/no answer) or the time it takes to puff (measured in seconds). Students are introduced to the principle of changing only one variable at a time while keeping all other conditions constant, using the example of testing three oil temperatures while keeping dough thickness and entry angle identical.
+
+The chapter emphasises the importance of recording all observations during an experiment, including unexpected sensory details such as whether the oil splatters, smells, or smokes. It also notes that completing one round of experiments typically generates new questions — for example, whether fresh dough puffs better than stored dough, or what happens if a hole is pricked in the puri before frying. This iterative quality, where answers breed further questions, is presented as the defining feature of scientific investigation.
+
+The chapter concludes by pointing out that even this apparently simple everyday phenomenon — the puffing of a puri — has not been completely explained by scientists, making it an authentic and not merely pedagogical example. The closing paragraph connects the puri example to the Moon's phases, reminding students that the same habit of careful observation applies whether the subject is a kitchen experiment or a celestial phenomenon. The chapter ends with the phrase "Happy investigating!" — reinforcing the tone of curiosity and openness that the entire Grade 8 programme is designed to cultivate.
+
+
+======================================================================
+
+THE FULLEST PLAN (6 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: What Makes You Curious? Framing Scientific Questions
+U2: The Puri Puzzle: Sorting Variables
+U3: Plan the Test: Changing Only One Thing
+U4: Recording Well: What Counts as an Observation?
+U5: What Did the Result Open? Designing the Follow-Up Question
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (1). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 4 UNITS — unit-title map ---
+U1: Curiosity as a starting point
+U2: What can we change, what can we measure?
+U3: Planning the one-variable experiment
+U4: When answers open new questions
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 4,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Iterate and reason across the inquiry cycle",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "When answers open new questions",
+ "activity_description": "Students examine a set of hypothetical puri-investigation results and use them to generate a follow-up question, revise one assumption in their earlier plan, and explain in writing why the iterative quality of investigation — where each answer produces new questions — is a defining feature of scientific inquiry rather than a sign of failure.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Presents a brief scenario of hypothetical results (e.g., fresh dough puffs more reliably than stored dough) and poses the prompt: what does this finding make you want to test next, and what would that new plan look like?"
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Writes a follow-up question arising from the hypothetical results, sketches a revised experiment plan for it, and writes two to three sentences explaining why generating new questions is part of — not a failure of — investigation."
+  },
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Compares follow-up questions and revised plans with a partner, discussing whether the new plan still satisfies the one-variable rule and connecting the iteration cycle to the chapter's closing point about the puri phenomenon remaining incompletely explained."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher connects this unit to the previous unit's plans and introduces the idea that even a well-designed experiment produces results that raise new questions, using the chapter's example of wondering whether fresh versus stored dough behaves differently."
+  },
+  {
+   "minutes": "7-22",
+   "activity": "Students individually read the hypothetical results scenario, write a follow-up question, and sketch a revised experiment plan that changes exactly one new variable while keeping all previously tested conditions constant."
+  },
+  {
+   "minutes": "22-35",
+   "activity": "Pairs compare follow-up questions and check each other's revised plans against the one-variable rule, then discuss the chapter's point that the puri phenomenon has not been completely explained even by scientists."
+  },
+  {
+   "minutes": "35-45",
+   "activity": "Students write two to three sentences explaining why iteration — where an answer produces a new question — is a feature, not a flaw, of scientific investigation; a few are invited to read aloud before the teacher closes the chapter with 'Happy investigating!'"
+  }
+ ],
+ "teacher_notes": "This closing unit brings together all four operations from the chapter's progression — wondering, identifying variables, designing a controlled plan, and now iterating — and asks students to reason about the inquiry cycle itself rather than just perform one step of it. A misconception to watch for is the belief that a good experiment should produce a definitive final answer; the chapter explicitly states that even the puri phenomenon remains incompletely explained, and this is a feature worth emphasising. If students' written explanations of iteration are thin, prompt them with the chapter's own language: 'completing one round of experiments typically generates new questions.'",
+ "materials": [
+  "Textbook (Chapter 1, puri investigation section)",
+  "Hypothetical results scenario (teacher-prepared short paragraph)",
+  "Notebooks and pencils"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

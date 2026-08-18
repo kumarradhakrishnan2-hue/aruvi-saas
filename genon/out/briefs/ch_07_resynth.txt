@@ -1,0 +1,339 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. This unit is served in two situations, and it must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already consolidated the chapter
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
+scenario, artefact, dataset, place or design problem the chapter itself never uses. The
+class brings the chapter's concepts; the unit puts them to work in the new setting, and
+what the task shows IS the synthesis — the chapter drawn together by using it whole, not
+by summarising it.
+
+PROPERTIES OF THE UNIT:
+- It opens directly onto its fresh setting: the first band presents the new material and
+  puts the first question to the class.
+- Every concept or skill it calls on appears in EVERY unit-title map given below — the
+  shorter plans differ in what they cover; write only to what all of them share.
+- Its vehicle (the kind of task: scenario cards, argument construction, data table,
+  concept map, design brief, error correction, narrative trace…) is different in kind
+  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
+  objects, questions or catchphrases those final units use.
+- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
+  ideas as the reason the task worked — earned closure, not ceremony.
+- All materials are in its own `materials` list: things any classroom has or the unit
+  itself makes.
+- Band narration never states a quantity of minutes or any calendar time — the band's
+  `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "activity_description": "…",
+    "pedagogical_approach": "…",
+    "teacher_notes": "…",
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 45…
+    ],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, stage and duration itself.
+
+CHAPTER SUMMARY:
+
+Chapter 7: Particulate Nature of Matter
+
+Section 7.1 introduces the central question of what matter is made up of. Through Activity 7.1 (breaking and grinding chalk), students explore whether matter can be subdivided indefinitely. The activity establishes that even after grinding chalk to fine powder, each speck remains chalk — a physical change only. The key term introduced is constituent particle: the basic indivisible unit that makes up a larger piece of a substance. Activity 7.2 (dissolving sugar in water) reinforces this idea. After stirring, sugar particles become invisible yet their presence is confirmed by taste; the chapter explains that sugar breaks into its constituent particles, which occupy the interparticle spaces between water molecules. These two activities together establish the foundational idea that all matter is composed of an extremely large number of very small particles invisible even under an ordinary microscope.
+
+Section 7.2 addresses what determines the physical state of matter. The chapter explains that constituent particles are held together by interparticle attractions — forces that are attractive in nature. The strength of these attractions depends on the nature of the substance and the interparticle distance, with even a slight increase in distance causing a drastic weakening of the force. A sidebar, "Our Scientific Heritage," notes that Acharya Kanad, the ancient Indian philosopher, first proposed the concept of Parmanu (atom) — tiny, indivisible, eternal particles — in his work Vaisheshika Sutras.
+
+Subsection 7.2.1 covers the solid state. Activity 7.3 (collecting and hammering solid objects — iron nail, rock salt, stone, wood, key, aluminium) leads to the observation that all have a definite shape and volume. This is because particles in solids are tightly packed with very strong interparticle attractions that hold them in fixed positions; particles can only vibrate about their positions and cannot move past each other. When heated, vibrations intensify until the particles abandon their fixed positions and the interparticle forces weaken — this is the melting point, defined as the minimum temperature at which a solid becomes a liquid at atmospheric pressure. A data table gives melting points of ice (0°C), urea (133°C), and iron (1538°C) to illustrate how the strength of interparticle forces varies across substances.
+
+Subsection 7.2.2 examines the liquid state. Activity 7.4 (transferring 200 mL of water across three differently shaped containers A, B, C) demonstrates that liquids take the shape of their container but maintain a fixed volume. Liquids' particles are free to move but only within a limited space, making interparticle attractions slightly weaker than in solids. The section defines boiling point as the temperature at which a liquid converts to vapour at atmospheric pressure; at this point, particles have enough energy to escape the liquid entirely, and bubble formation occurs throughout the bulk. Evaporation — which occurs at all temperatures at the surface — is distinguished as a slower process occurring even below the boiling point.
+
+Subsection 7.2.3 explores the gaseous state. Activity 7.5 (collecting smoke from a burning incense stick in Gas Jar A, then allowing it to spread into an inverted Gas Jar B) shows that gas fills all available space. This demonstrates that gas particles move freely in all directions, interparticle attractions are negligible, and gases have neither a fixed shape nor a fixed volume. An alternative demonstration using iodine vapour (solid iodine subliming inside a closed jar) is mentioned. The section concludes by classifying both liquids and gases as fluids because both flow and do not retain a fixed shape.
+
+Section 7.3 investigates how interparticle spacing differs across the three states. Activity 7.6 (syringe experiment: compressing air by pushing a plunger, then repeating with water) establishes that gases are highly compressible because their particles have large spaces between them, while water is practically incompressible. Activity 7.7 (adding sugar to water, marking the water level before and after dissolution) shows that the solution volume is less than the sum of the individual volumes, proving that interparticle spaces exist in liquids and that dissolved particles fit into those spaces. Repeating with insoluble sand confirms the contrast: sand particles settle and add volume rather than dissolving. A summary diagram (Fig. 7.12) illustrates particle packing in the three states: minimum spacing in solids, moderate spacing in liquids, and maximum spacing in gases. A "A Step Further" sidebar clarifies that the term "particle" in Suspended Particulate Matter (SPM, referring to dust in air pollution) is different in scale from constituent particles like atoms and molecules.
+
+Section 7.4 examines how particles move in different states. Activity 7.8 (dropping potassium permanganate into water) shows the spread of pink colour from the grain eventually reaching the entire tumbler, demonstrating that liquid particles are in constant motion. A "Think Like a Scientist" box extends this: repeating the activity with hot, room-temperature, and ice-cold water shows that particle movement — and therefore rate of spreading — increases with temperature. Activity 7.9 (burning an incense stick in one corner of a room) demonstrates that fragrance spreads throughout the space, providing evidence that gas particles are in constant, rapid, random motion that carries scent particles in all directions. The chapter closes with a synthesis paragraph explaining that thermal energy is the underlying driver: low thermal energy in solids means strong interparticle attraction and only vibration; at the melting point thermal energy overcomes attractions allowing liquid-state movement; in the gaseous state thermal energy is sufficient to overcome attractions entirely, enabling free movement. A summary table compares interparticle spacing, packing, attraction strength, and particle movement across solid, liquid, and gas states.
+
+
+======================================================================
+
+THE FULLEST PLAN (18 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Chalk, Powder, and an Unanswered Question
+U2: Sugar That Vanishes but Stays
+U3: Nails, Rocks, and Rulers — What Solids Share
+U4: 200 mL of Water, Three Containers
+U5: Smoke in a Jar — Classifying Gas
+U6: Compressing Air, Resisting Water
+U7: Does Sugar Fit Inside Water?
+U8: The Three-State Particle Packing Picture
+U9: Permanganate Trails — Motion in Liquids
+U10: Hot, Cold, and In Between — Temperature and Spreading Rate
+U11: Fragrance Across the Room — Motion in Gases
+U12: Solids Don't Flow — Motion in the Solid State
+U13: Why Does a Solid Melt? Thermal Energy Meets Attraction
+U14: Boiling, Evaporating, and Why They Are Different
+U15: Sand in Water — When Particles Don't Fit
+U16: The Thermal Energy Arc — From Solid to Gas
+U17: Acharya Kanad and the Limits of Division
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 16 UNITS — unit-title map ---
+U1: Chalk, Sugar, and the Invisible Particle
+U2: Naming the Invisible: Constituent Particles and Interparticle Space
+U3: Sorting the Solid World: Shape, Volume, and the Hammer Test
+U4: Water in Three Containers: Classifying Liquid Behaviour
+U5: Smoke Without Boundaries: Classifying Gas Behaviour
+U6: Fluids, Melting Points, and Boiling Points: Formalising the Classification
+U7: Syringe Investigation: Why Can Air Be Squashed but Water Cannot?
+U8: The Vanishing Volume: Sugar Dissolves into Interparticle Spaces
+U9: Potassium Permanganate Spreading: Explaining Motion in Liquids
+U10: Fragrance Across the Room: Explaining Motion in Gases
+U11: Thermal Energy as the Driver: Connecting Heat to Particle Behaviour
+U12: Hot, Cold, and Room Temperature: Temperature Affects Spreading Rate
+U13: Predicting Melting and Boiling from Interparticle Attraction
+U14: State Change in Reverse: Applying the Model to Condensation and Solidification
+U15: Particulate Model as a Unified Lens: Properties and State Changes Together
+U16: Explaining the Unexplained: Novel Phenomena Through the Particulate Lens
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 16,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Integrate and apply: using the particulate model to represent properties and explain state changes simultaneously",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Explaining the Unexplained: Novel Phenomena Through the Particulate Lens",
+ "activity_description": "Students are presented with three novel phenomena drawn from the chapter's 'Think Like a Scientist' and 'A Step Further' material — phenomena they have not explicitly explained before — and must apply the integrated particulate model to produce complete written explanations that combine state classification, property identification, and causal mechanism.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Each student independently writes complete explanations for all three novel phenomena, drawing only on the particulate model vocabulary and causal framework built across the chapter."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Presents the three phenomena, clarifies only what the phenomenon is (not how to explain it), and circulates to identify responses for a closing class discussion."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-7",
+   "activity": "Teacher presents the three novel phenomena and confirms: students have all the tools they need from the chapter — the task is to deploy them independently."
+  },
+  {
+   "minutes": "7-30",
+   "activity": "Students independently write explanations for each phenomenon, using constituent particles, interparticle attraction, spacing, motion, and thermal energy as causal elements."
+  },
+  {
+   "minutes": "30-40",
+   "activity": "Teacher selects two contrasting responses for one phenomenon and presents them to the class, inviting students to evaluate which is more complete and why."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher closes by connecting the three explanations to the chapter's central idea: the particulate model is a single unified framework that can represent both observable properties and state-change mechanisms for any substance."
+  }
+ ],
+ "teacher_notes": "The previous unit practised integration with group support; this unit requires each student to demonstrate it independently with novel phenomena — the highest cognitive demand of the chapter. A misconception to watch: students may revert to observable-only descriptions ('the ice melted') without the particle-level causal account — require both levels in every explanation. Because this plan is served whole, students have the full arc of the chapter to draw on, and the closing discussion should make that arc explicit.",
+ "materials": [
+  "Three novel-phenomenon prompt cards (from Think Like a Scientist and A Step Further material in the chapter)",
+  "Lined writing sheets"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 14 UNITS — unit-title map ---
+U1: Can Matter Be Divided Forever? The Chalk and Sugar Investigations
+U2: How Small Is a Constituent Particle? Estimating the Invisible
+U3: Solids, Liquids, Gases — Sorting by What You Can Observe
+U4: Naming the Properties — Melting Points, Boiling Points, and the Fluid Family
+U5: Compressibility and Interparticle Spacing — The Syringe Inquiry
+U6: Interparticle Attractions — The Force That Determines the State
+U7: Thermal Energy as the Driver — Hot, Room, and Cold Water Spreading
+U8: Gas Particles in Motion — The Incense Stick Diffusion Activity
+U9: The Three-State Summary Table — Discovering the Pattern Across Properties
+U10: What Happens at the Melting Point? — Reasoning Through the Solid-to-Liquid Transition
+U11: Evaporation vs Boiling — A Particle-Level Distinction
+U12: Gas State Explained — From Negligible Attractions to Free Movement
+U13: The Integrated Challenge — Predicting State and Explaining It
+U14: State-Change Reasoning Across Both Strands — The Complete Particulate Account
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 14,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Reason across both classification and particulate representation simultaneously",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "State-Change Reasoning Across Both Strands — The Complete Particulate Account",
+ "activity_description": "Students tackle a layered problem: given a substance that transitions from solid to liquid to gas, they must classify the state at each stage using observable properties, then construct a continuous particle-level narrative explaining why each transition occurs — integrating observable-property classification and particulate-model representation in a single coherent account.",
+ "roles": [
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Construct a written narrative that classifies each state and explains each transition using the particulate model, then evaluate a peer's narrative against the criterion of complete integration."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Poses the layered problem, supports students who stall at the transition explanation, and facilitates the peer evaluation with a specific integration criterion."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher introduces the layered problem: imagine a substance being heated from a solid state through melting to a liquid, then further heated to its boiling point and beyond — write the complete account of what happens at the observable and particle level at each stage."
+  },
+  {
+   "minutes": "8-28",
+   "activity": "Students individually construct their written narrative, classifying the state at each stage and explaining each transition using thermal energy, interparticle attractions, and particle movement."
+  },
+  {
+   "minutes": "28-40",
+   "activity": "Students exchange narratives with a peer and evaluate whether the peer's account (a) correctly classifies each state from observable properties and (b) explains each transition with the particulate model — both criteria must be met for the account to be complete."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher highlights two or three narratives (anonymised) that show strong integration, and one that classifies well but explains poorly, closing the chapter's arc at its highest cognitive demand."
+  }
+ ],
+ "teacher_notes": "This is the chapter's culminating unit, where the full integrated cognitive operation — classify by observable properties AND represent with the particulate model — is demanded in a single sustained task. In the previous unit students practised the integration in short scenario bursts; here they must sustain it across a complete state-change sequence. Watch for narratives that describe what happens at each stage (solid is hard, liquid flows) without explaining why (because thermal energy has overcome the interparticle attractions, allowing particles to move past each other); the peer-evaluation criterion makes this distinction explicit. Sharing an exemplary integrated narrative with the class at the close is the most effective way to model the chapter's highest-order target.",
+ "materials": [
+  "Student notebooks",
+  "Peer evaluation checklist (two criteria: classification from observable properties; transition explanation using particulate model)"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 12 UNITS — unit-title map ---
+U1: Chalk, Powder, and the Invisible Particle
+U2: Sugar Vanishes — But Is It Gone?
+U3: Solid Objects Under the Hammer
+U4: Water Finds Its Shape — But Keeps Its Volume
+U5: Smoke Fills the Jar — Classifying Gases
+U6: Push the Plunger — Compressibility Reveals Spacing
+U7: Sugar Fits the Gaps — Volume Less Than the Sum
+U8: Pink Spreading — Particles in Constant Motion
+U9: Hot, Cold, Room — Temperature Drives the Spread
+U10: Fragrance Fills the Room — Gas Particles in Rapid Random Motion
+U11: Thermal Energy — The Driver Behind It All
+U12: Model Meets Evidence — Explaining Unfamiliar Observations
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 12,
+ "period_duration_minutes": 45,
+ "progression_stage": 5,
+ "stage_label": "Apply the particulate model to explain properties and state changes across all three states",
+ "pedagogical_approach": "Inquiry approach",
+ "activity_title": "Model Meets Evidence — Explaining Unfamiliar Observations",
+ "activity_description": "Students are presented with a set of new scenarios drawn from the chapter's 'Think Like a Scientist' extension and exercise questions — such as why a compressed gas cylinder stores more gas, why evaporation cools a surface, and why a substance with a very high melting point is hard to hammer flat. For each scenario, students apply the full particulate model to construct an explanation.",
+ "roles": [
+  {
+   "actor": "Students (Groups)",
+   "role_description": "Read each scenario, identify which element of the particulate model is most relevant, and construct a written explanation that connects the submicroscopic model to the observable outcome."
+  },
+  {
+   "actor": "Teacher",
+   "role_description": "Circulates to probe explanations with questions such as 'what are the particles doing at the surface?' and 'what does a high melting point tell you about attraction strength?'."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher frames the unit's task: the particulate model is only powerful if it can explain observations the chapter did not specifically rehearse — today students test that power."
+  },
+  {
+   "minutes": "8-30",
+   "activity": "Groups work through the scenario set, writing an explanation for each that explicitly names the relevant element of the particulate model — constituent particles, interparticle attraction, spacing, or motion — and states how it produces the observable effect."
+  },
+  {
+   "minutes": "30-40",
+   "activity": "Groups share explanations for one scenario each; class evaluates whether each explanation correctly identifies the relevant model element and produces an accurate causal chain."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher draws together the chapter's arc from the constituent particle idea in Unit 1 to the full explanatory model now applied to new contexts, noting the two strands — classification and particulate representation — that ran in parallel throughout."
+  }
+ ],
+ "teacher_notes": "This closing unit is Stage 5's application test and the chapter's endpoint, so make the full arc visible: students began by observing that matter can be subdivided and classified, and now they can explain any observable property of any state using the particulate model. A likely weakness is surface-level explanations that name the model element without connecting it causally to the observable outcome — insist on the 'because' in every explanation. The two strands of the chapter — classification by observable properties and explanation by the particulate model — converge here, and naming that convergence explicitly helps students see the chapter as a coherent whole rather than a set of disconnected activities.",
+ "materials": [
+  "Scenario card set (printed)",
+  "Chapter summary table (reference copy)",
+  "Writing sheets"
+ ],
+ "homework": []
+}
+
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Chalk and Sugar: First Evidence for Particles
+U2: Invisible but Real: Interparticle Spaces in Liquids
+U3: Shape, Volume, and Compressibility: Sorting the Three States
+U4: Smoke, Spread, and Fluid Flow: Observing Gas and Liquid Behaviour
+U5: Why Particles Stay Together: Interparticle Attraction and Distance
+U6: Particle Motion in Liquids: Permanganate Spread and Temperature
+U7: Gas Particles in Motion: Fragrance, Freedom, and Negligible Forces
+U8: Melting, Boiling, and Evaporation: Thermal Energy Changes State
+U9: Fig. 7.12 Unpacked: Building and Defending the Particle Summary
+U10: The Acharya Kanad Connection: Parmanu, Evidence, and Limits of the Model
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 10,
+ "period_duration_minutes": 45,
+ "progression_stage": 4,
+ "stage_label": "Apply the integrated model: thermal energy drives state changes",
+ "pedagogical_approach": "Hands-on Science",
+ "activity_title": "The Acharya Kanad Connection: Parmanu, Evidence, and Limits of the Model",
+ "activity_description": "Students revisit the 'Our Scientific Heritage' sidebar on Acharya Kanad's Parmanu concept and the 'A Step Further' note on SPM, then design a two-column argument — what the activities in this chapter provide as evidence for the particle model, and what remains unresolved or requires assumptions — producing a written evaluation of the model's explanatory power.",
+ "roles": [
+  {
+   "actor": "Teacher",
+   "role_description": "Opens by reading the Parmanu sidebar aloud, frames the task as evaluating the chapter's own evidence, and circulates to ensure students distinguish empirical observations from model-level inferences."
+  },
+  {
+   "actor": "Students (Individual)",
+   "role_description": "Construct a two-column argument independently — evidence from activities that supports the particle model, and limitations or assumptions the model requires — and write a concluding sentence on the model's overall explanatory power."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0-8",
+   "activity": "Teacher reads the Parmanu sidebar aloud and briefly notes the SPM distinction; class discusses: what can we actually see, and what do we infer from what we see?"
+  },
+  {
+   "minutes": "8-30",
+   "activity": "Students independently construct the two-column argument: left column lists specific activities (chalk grinding, sugar dissolution, syringe compression, permanganate spread, fragrance detection) with what each evidences; right column lists what is assumed or unresolved."
+  },
+  {
+   "minutes": "30-40",
+   "activity": "Students share concluding sentences; class discussion evaluates whether the activities together make the particle model convincing, and why no single activity is sufficient on its own."
+  },
+  {
+   "minutes": "40-45",
+   "activity": "Teacher closes by connecting the chapter's ten-unit arc: from the first question 'what is matter made of?' to the student's own evaluation of the model that answers it."
+  }
+ ],
+ "teacher_notes": "This closing unit asks students to step back and evaluate the very model they have been building — a higher-order operation that is appropriate here because it is the chapter's terminus. A common difficulty is students listing activities without stating what each one evidences; redirect by asking 'what specific claim about particles does grinding chalk support?' and distinguishing that from 'what did you observe?' The Acharya Kanad connection is not decorative — it positions the particle idea as a hypothesis that scientific activities test, which is the intellectual stance the whole chapter has been cultivating.",
+ "materials": [
+  "chapter text (sections 'Our Scientific Heritage' and 'A Step Further')",
+  "notebooks",
+  "blank two-column argument template"
+ ],
+ "homework": []
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.
