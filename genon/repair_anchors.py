@@ -146,6 +146,38 @@ REPAIRS = {
          "item now tests taught content or is declared unserved, never neither — but it is "
          "a real behaviour change and the founder ruled on it knowing the true version."),
     ],
+    # ── WAVE 2 (the compacts), 2026-08-18 — the SAME family, and the architecture already
+    #    names its cause. build_library's own reasoning block: "the registry offers no token
+    #    for a CONSOLIDATION unit (`synthesis` is reserved to one closing unit), so a chapter
+    #    with many more units than sections has no legal label for the rest and the model
+    #    picks the least-wrong registry entry." ch 2's p10 is that case exactly — three
+    #    consolidation units at the end, each wearing the first of the sections it revisits.
+    #    The fix is to name all of them; every `new` string is read off the unit's own title.
+    #    NOTE these are BACKWARD revisits, so they cannot break first-visit order (the check
+    #    only fires when a unit ADVANCES the frontier and skips), and the handoff's
+    #    period_numbers are untouched, so no item moves.
+    "ch_02_canonical_p10.json": [
+        (8, "2.1", "2.1 / 2.2 / 2.3", "V2/joiner",
+         "the unit is titled 'Consolidating Section 2.1-2.3: Polynomials, Equations, and "
+         "Patterns' — it names its own three sections, and the handoff routes 2.1, 2.2 and "
+         "2.3 all to U8. Only the anchor disagreed"),
+        (9, "2.4", "2.4 / 2.5", "V2/joiner",
+         "titled 'Consolidating Sections 2.4-2.5: Growth, Decay, and Two-Variable "
+         "Relationships'; the handoff routes both 2.4 and 2.5 to U9"),
+        (10, "2.5", "2.5 / 2.6", "V2/joiner",
+         "titled 'Bringing Together the Chapter: Modelling, Graphing, and Interpreting'; "
+         "the handoff routes 2.5 and 2.6 to U10. 2.6 is the chapter's last section and this "
+         "is its last routed unit, so naming it here is also what makes the compact's "
+         "coverage reach the final registry section honestly"),
+    ],
+    "ch_08_canonical_p07.json": [
+        (4, "8.4", "8.4 / 8.4.1", "V2/joiner",
+         "band 40-50 opens 'Introduce the visualisation (section 8.4.1): tabulate stage vs. "
+         "square count for the growing-square pattern, plot the ordered pairs'. 8.4.1 "
+         "'Visualising an AP' is taught in this unit and was simply unnamed — which is why "
+         "the first-visit check read U5 (8.5) as skipping a section. Nothing is missing "
+         "from the compact; the label was"),
+    ],
     "ch_07_canonical.json": [
         (2, "7.1.1", "7.1.1 / 7.1.2", "V2/joiner",
          "the handoff routes 7.1.2 'The Probability Scale' to U2, and U2's band 28-50 reads "

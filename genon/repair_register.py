@@ -2325,7 +2325,111 @@ REPAIRS = {
     # ALL FOUR EDITS BELOW STRIKE A TRAILING CLAUSE AND NOTHING ELSE. Each unit's teaching is
     # complete without it: what is removed is the sentence telling the teacher what the NEXT
     # sitting will do — exactly the thing that stops being true when a serve ends there.
+    # ── S4 · mathematics · IX · BATCH WAVE 2 (the COMPACTS) — 2026-08-18 ──────────────
+    # 14 compacts for ₹239.86. 12 ban hits over 7 of 14 files — 0.86/file against the tops'
+    # 0.71, i.e. the compacts are no worse behaved than the standards they were cut from
+    # (the same finding S2 recorded at 2.3 vs 2.25).
+    # DISTRIBUTION: 8 forward · 3 completion · 1 meta-leak · 1 clock · 0 calendar.
+    # Every edit strikes a clause. Two are narrower than the mechanical sentence span
+    # (ch 5 p09 U7, ch 8 p10 U6) because the sentence carries teaching either side of the
+    # offending phrase and deleting it whole would remove the teaching with the breach.
     ("mathematics", "ix"): {
+        "ch_01_canonical_p08.json": [
+            (2, "band:2",
+             " — a preview of why the formal coordinate system in the next unit matters",
+             "",
+             "register/forward",
+             "the band's purpose — exposing the ambiguity of an unagreed ordered-pair "
+             "convention — is stated in the same sentence and survives the cut"),
+            (2, "band:3",
+             " as the bridge to the next unit", "",
+             "register/forward",
+             "the distinction between a grid and a coordinate system is the closing "
+             "insight and stands on its own; only the pointer forward goes"),
+            (3, "band:2",
+             " for two minutes", "",
+             "register/clock",
+             "a CLOCK quantity in teacher-facing text. The band is 25-40 in this compact "
+             "and a different duration wherever the plan is served at another length, so "
+             "a fixed two minutes inside it is false by construction. 'Students reason "
+             "individually, then discuss in pairs' keeps the pedagogy — individual "
+             "thinking before pair talk — without pinning the clock"),
+        ],
+        "ch_02_canonical_p10.json": [
+            (6, "band:2",
+             " before the next unit's comparison of families of lines", "",
+             "register/forward",
+             "consolidating the two-point plotting method is the band's whole goal; the "
+             "struck clause only says what follows"),
+            (9, "band:3",
+             " Foreshadow the graphical interpretation without resolving it here.", "",
+             "register/forward",
+             "the open question to the class ('what would happen to the graph if a were "
+             "larger?') is the teaching move and is left intact — what goes is the "
+             "instruction to point at a later sitting"),
+        ],
+        "ch_05_canonical_p09.json": [
+            (2, "band:2",
+             ", previewing later sections", "",
+             "register/forward",
+             "the shrinking-chord argument and the locus task are untouched; the clause "
+             "names sections this compact may never reach"),
+            (7, "teacher_notes",
+             " so far in the chapter", "",
+             "register/completion",
+             "NARROWED deliberately: the mechanical span would delete the "
+             "misread-inequality warning, which is the note's most useful line. 'Theorem 8 "
+             "is the sharpest application of the Baudhayana-Pythagoras theorem' is true at "
+             "any serve length once the progress claim is removed"),
+        ],
+        "ch_05_canonical_p12.json": [
+            (12, "teacher_notes",
+             "This unit brings together the proof-writing skills built across the chapter; the goal is",
+             "The goal in this unit is",
+             "register/completion",
+             "a COMPLETION claim — false on any serve that reaches U12 with sections "
+             "dropped. The sentence is restarted; the Q20 double-application guidance and "
+             "the Q31 self-study pointer both stand"),
+        ],
+        "ch_06_canonical_p12.json": [
+            (2, "band:3",
+             " Teacher foreshadows that π being irrational means no single fraction equals it — that point is taken up next.",
+             " Teacher notes that π is irrational, so no single fraction equals it.",
+             "register/forward",
+             "the FACT is worth stating where the ratio argument lands and is kept; what "
+             "goes is 'foreshadows' and the promise that it is taken up next"),
+        ],
+        "ch_07_canonical_p08.json": [
+            (3, "band:2",
+             " This inductive step foreshadows the Law of Large Numbers without naming it yet.",
+             " This inductive step is how the Law of Large Numbers is met in practice.",
+             "register/forward",
+             "the concept is legitimately named here (the scanner's bridge-toward pattern "
+             "was made advisory for exactly this reading on the top, 2026-08-18), but "
+             "'foreshadows … without naming it yet' promises a later treatment. The "
+             "sentence keeps its meaning without the promise"),
+            (6, "teacher_notes",
+             ", which is introduced in the next unit;", ";",
+             "register/forward",
+             "the tree-diagram advice and the 'attempt a systematic list rather than wait' "
+             "instruction are the note's substance and stay; only the placement of the "
+             "tree diagram in a later sitting goes"),
+        ],
+        "ch_08_canonical_p10.json": [
+            (6, "teacher_notes",
+             " without requiring any prior unit to have been taught", "",
+             "register/meta-leak",
+             "NARROWED: the serve contract narrated into teacher-facing text (ARV-D-161's "
+             "family). The triangular-numbers connection back to section 8.1 is real "
+             "teaching and is kept; what goes is the clause explaining the platform's "
+             "independence guarantee to the teacher, who never needed to know it"),
+        ],
+    },
+
+    # ── APPLIED 2026-08-18 16:07 (wave 1, the standards). Retired to a 3-tuple key the same
+    #    day the compacts landed: re-running it fails its own "declared text not found" guard
+    #    on the first edit and would block every wave-2 repair behind it. Kept as the record.
+    ("mathematics", "ix", "APPLIED-W1-20260818"): {
         "ch_03_canonical.json": [
             (4, "teacher_notes",
              " Section 3.2.1 (philosophical roots) is addressed in the next unit, so this unit focuses entirely on the mathematical formulation.",

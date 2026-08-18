@@ -20,42 +20,7 @@
     "constitution": "LP v1.3 / assessment v1.2",
     "source": "generate_canonical.py one mathematics ix 1",
     "ledger_ts": "20260818_164334_math_ix_01_p08",
-    "validation": "clean",
-    "repairs": [
-      {
-        "at": "2026-08-18T17:17:53",
-        "tool": "genon/repair_register.py v1.5",
-        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
-        "edits": [
-          {
-            "unit": 2,
-            "field": "band:2",
-            "rule": "register/forward",
-            "removed": "— a preview of why the formal coordinate system in the next unit matters",
-            "replaced_with": "",
-            "note": "the band's purpose — exposing the ambiguity of an unagreed ordered-pair convention — is stated in the same sentence and survives the cut"
-          },
-          {
-            "unit": 2,
-            "field": "band:3",
-            "rule": "register/forward",
-            "removed": "as the bridge to the next unit",
-            "replaced_with": "",
-            "note": "the distinction between a grid and a coordinate system is the closing insight and stands on its own; only the pointer forward goes"
-          },
-          {
-            "unit": 3,
-            "field": "band:2",
-            "rule": "register/clock",
-            "removed": "for two minutes",
-            "replaced_with": "",
-            "note": "a CLOCK quantity in teacher-facing text. The band is 25-40 in this compact and a different duration wherever the plan is served at another length, so a fixed two minutes inside it is false by construction. 'Students reason individually, then discuss in pairs' keeps the pedagogy — individual thinking before pair talk — without pinning the clock"
-          }
-        ],
-        "ban_hits_before": 3,
-        "ban_hits_after": 0
-      }
-    ]
+    "validation": "clean"
   },
   "result": {
     "lesson_plan": {
@@ -130,11 +95,11 @@
             },
             {
               "minutes": "25-42",
-              "activity": "Introduce End of Chapter Q14 (p.13) as a parallel real-world application of the same grid idea: a city block with 10 N-S and 10 E-W streets spaced 200 m apart. Students draw the 1 cm = 200 m model on their paper and work through the question of how many intersections can carry the label (4,3) and how many can carry (3,4). The question's purpose here is to expose the ambiguity that arises without an agreed ordered-pair convention."
+              "activity": "Introduce End of Chapter Q14 (p.13) as a parallel real-world application of the same grid idea: a city block with 10 N-S and 10 E-W streets spaced 200 m apart. Students draw the 1 cm = 200 m model on their paper and work through the question of how many intersections can carry the label (4,3) and how many can carry (3,4). The question's purpose here is to expose the ambiguity that arises without an agreed ordered-pair convention — a preview of why the formal coordinate system in the next unit matters."
             },
             {
               "minutes": "42-50",
-              "activity": "Class discussion: students share their answers for how many intersections can be labelled (4,3) versus (3,4). Guide them to articulate that only one intersection per label exists once the convention is fixed — this is the unit's closing insight. Teacher notes the distinction between a grid (which has position) and a coordinate system (which also has signed convention and a fixed origin)."
+              "activity": "Class discussion: students share their answers for how many intersections can be labelled (4,3) versus (3,4). Guide them to articulate that only one intersection per label exists once the convention is fixed — this is the unit's closing insight. Teacher notes the distinction between a grid (which has position) and a coordinate system (which also has signed convention and a fixed origin) as the bridge to the next unit."
             }
           ],
           "teacher_notes": "The informal grid phase is essential: students who jump straight to (x,y) notation often carry the misconception that coordinates are just 'the numbers on the axes' rather than perpendicular distances from a fixed origin. Watch for students labelling points by counting grid squares from the corner rather than from a fixed reference — this is not an error here, but it previews the ambiguity that the formal system resolves. End of Chapter Q14 (p.13) part (i) is accessible to all students at this stage; the ordering ambiguity in part (ii) is the productive struggle to leave open.",
@@ -179,7 +144,7 @@
             },
             {
               "minutes": "25-40",
-              "activity": "Think-and-Reflect from Section 1.3 (first prompt): must a point on an axis always have a zero coordinate? Students reason individually, then discuss in pairs. Bring out the deductive argument: if a point is on the x-axis, it has zero perpendicular distance from the x-axis, so its y-coordinate is 0 by definition — not by convention but by the meaning of 'coordinate'. Then pose the second prompt: does swapping a point's coordinates ever yield the same point? Students conjecture and test with examples."
+              "activity": "Think-and-Reflect from Section 1.3 (first prompt): must a point on an axis always have a zero coordinate? Students reason individually for two minutes, then discuss in pairs. Bring out the deductive argument: if a point is on the x-axis, it has zero perpendicular distance from the x-axis, so its y-coordinate is 0 by definition — not by convention but by the meaning of 'coordinate'. Then pose the second prompt: does swapping a point's coordinates ever yield the same point? Students conjecture and test with examples."
             },
             {
               "minutes": "40-50",

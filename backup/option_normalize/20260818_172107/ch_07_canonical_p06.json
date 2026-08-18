@@ -1,0 +1,1421 @@
+{
+  "filename": "ch_07_canonical_p06.json",
+  "saved_at": "2026-08-18T16:57:34",
+  "plan_status": "canonical",
+  "chapter_number": 7,
+  "chapter_title": "The Mathematics of Maybe: Introduction to Probability",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 6
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 6 periods = 300 minutes\nTotal: 6 periods · 5h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "6x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 7",
+    "ledger_ts": "20260818_164334_math_ix_07_p06",
+    "validation": "clean",
+    "repairs": [
+      {
+        "tool": "repair_item_type.py v1.1",
+        "at": "2026-08-18T17:20:57",
+        "unit": null,
+        "section_ref": "7.4",
+        "variant": "p06",
+        "field": "question_type",
+        "from": "SCR",
+        "to": "OPEN_TASK",
+        "evidence": "the task is a drawn TREE DIAGRAM for two draws with replacement from a 3-ball bag, plus a written sample space in set notation and a probability calculation. format_of_output demands 'A drawn tree diagram with labelled branches' — there is no stem because the work IS the answer, which is what OPEN_TASK is for. An SCR asks a question and expects a short constructed response; this asks for a construction."
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Probability as Measurement: Likelihood, Randomness, and the Scale",
+          "section_anchor": "7.1 / 7.1.1 / 7.1.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers",
+            "Coins (one per student pair)"
+          ],
+          "visual_aids": "Labelled probability scale drawn on the board (impossible – less likely – even chance – more likely – certain, with 0, 0.5, 1 marked)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "7.1",
+              "book_ref": "Exercise Set 7.1 Q1, p.159",
+              "description": "Rank four events on the 0-to-1 probability scale, labelling each as impossible, less likely, equally likely, more likely, or certain, with reasons."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Open with the cricket-toss question: why is a coin toss considered a fair way to decide who bats first? Invite two or three student responses. Draw out the idea that no one can know the result in advance, yet both outcomes are possible — this is the chapter's entry point into probability as a measurement of likelihood. Introduce the idea that probability is not guesswork but a scale, just as length is measured in centimetres."
+            },
+            {
+              "minutes": "12-25",
+              "activity": "Ask each student pair to toss their coin five times and try to predict each toss before it lands. Debrief: could anyone reliably predict the outcome? Introduce the definition of a random experiment — one where every repetition can produce a different, unpredictable result even though all possible outcomes are known in advance. Use the rainfall example from Section 7.1.1 to show that randomness applies beyond coins: weather depends on many sensitive factors, making exact prediction impossible while still allowing likelihood to be estimated from patterns. Pose the think-and-reflect prompt from Section 7.1.1: even knowing the coin has two faces, can you predict the result your friend is about to get? Discuss briefly."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Introduce the probability scale from Section 7.1.2. Draw it on the board with labels (impossible = 0, certain = 1, even chance = 0.5) and explain intermediate values such as 0.75 and 0.25 using percentage language — a 75% chance is 'more likely than not'. Use the everyday-events table from the textbook to anchor each band. Ask students: where on the scale does the coin toss sit, and why? Students place the four events from Exercise Set 7.1 Q1 (p.159) on the scale individually, then share and justify their placements."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Whole-class consolidation: collect placements for each of the four events and resolve disagreements by reasoning from evidence (an elephant in the classroom is not just unlikely — it is effectively impossible; greeting at least one friend is virtually certain for most students). Close by naming the two routes to measuring probability that the chapter will explore: experiment and theory."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter by building the intuition that probability is a measurement on a fixed scale before any formula appears; keep the discussion grounded in student experience rather than moving to notation too soon. Watch for students conflating 'unlikely' with 'impossible' — the event 'snow in Mumbai in July' is not impossible in principle, just extremely unlikely, and the distinction matters for the scale. Students who finish the scale activity early can read the deck-of-cards illustration in Section 7.1.2 and position a new event of their own choosing.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Two Routes to Probability: Experimental Frequency and Theoretical Ratio",
+          "section_anchor": "7.2 / 7.2.1 / 7.2.2",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers",
+            "Six-sided dice (one per student pair)"
+          ],
+          "visual_aids": "Table on the board showing die-roll tally: outcome column, tally column, frequency column, relative-frequency column",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "7.2.1",
+              "book_ref": "Example 2, p.160",
+              "description": "Given a die rolled 50 times landing on 4 exactly 8 times, computes the experimental probability of rolling a 4 as 8/50 = 0.16 (16%)."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "7.2.2",
+              "book_ref": "Example 3, p.161",
+              "description": "Computes the theoretical probability of rolling a 4 on a standard 6-sided die as 1/6 ≈ 0.167 (16.7%)."
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "7.2.2",
+              "book_ref": "Example 4, p.161-162",
+              "description": "Computes the probability of picking the letter B from the word PROBABILITY as 2/11 ≈ 0.182 (18.2%)."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "7.2",
+              "book_ref": "Exercise Set 7.2 Q5, p.165",
+              "description": "Find the probability of getting an even number when rolling a fair 6-sided die."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Introduce the two routes to an objective probability estimate from Section 7.2: experimental probability (from repeated trials or past data) and theoretical probability (from reasoning about equally likely outcomes). Write the experimental probability formula on the board: P(event) = number of times event occurred ÷ total number of trials. Introduce the vocabulary of experiment, outcome, and sample space from Section 7.2.1, and show the bracketed notation: S = {H, T} and S = {1, 2, 3, 4, 5, 6}."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Student pairs roll their die 30 times, recording each outcome in the tally table drawn on the board. Pool the class results to build a large combined frequency table. Work through Example 2 (p.160) together: a die rolled 50 times with 4 appearing 8 times gives experimental probability 8/50 = 0.16. Ask students to compute the experimental probability of rolling a 4 from the class's combined data."
+            },
+            {
+              "minutes": "22-36",
+              "activity": "Introduce theoretical probability from Section 7.2.2: P(Event) = favourable outcomes ÷ possible outcomes, assuming all outcomes are equally likely. Work through Example 3 (p.161): P(rolling a 4) = 1/6 ≈ 0.167. Then work through Example 4 (p.161–162): ask students to count the letters in PROBABILITY on their own before revealing the answer; P(B) = 2/11. Emphasise the step of explicitly listing and counting both favourable and total outcomes."
+            },
+            {
+              "minutes": "36-50",
+              "activity": "Students solve Exercise Set 7.2 Q5 (p.165) individually: find P(even number) on a fair die by listing the favourable outcomes {2, 4, 6} and applying the formula to get 3/6 = 1/2. Debrief by asking a student to show their working. Compare the class's experimental proportion of even-number rolls with the theoretical value of 0.5, noting that the two are close but rarely identical — a point the chapter will formalise later."
+            }
+          ],
+          "teacher_notes": "The most common slip here is writing the sample space incorrectly — students sometimes list only the favourable outcomes rather than all possible outcomes, leading to a denominator error in the theoretical probability formula. Watch particularly for students who write P(even) = 3/3 because they list only {2, 4, 6}. Students ready for an extension can read Example 4 (p.161–162) again and try writing P(picking a vowel) from PROBABILITY on their own before checking.",
+          "homework": [
+            "Exercise Set 7.2 Q1 (p.165): given a sample of 30 sweets, calculate P(green) and estimate how many of 600 sweets are yellow."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Statistical Probability: Samples, Populations, and Independent Events",
+          "section_anchor": "7.2.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers"
+          ],
+          "visual_aids": "Two-column table on the board: Fruit | Number of students, with totals; second table showing population projection calculation",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "7.2.3",
+              "book_ref": "Example 5, p.162-163",
+              "description": "From a class survey of 50 students' favourite fruit, computes P(mango) = 20/50 = 0.4, then estimates that approximately 600 of 1500 students in the whole school would prefer mango."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "7.2.3",
+              "book_ref": "Example 6, p.164",
+              "description": "Explains why believing a 6 is less likely after three consecutive 6s is the Gambler's Fallacy, since each die roll is independent with probability 1/6."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "7.2",
+              "book_ref": "Exercise Set 7.2 Q1, p.165",
+              "description": "Given a sample of 30 sweets, calculate P(green) and estimate how many of 600 sweets are yellow."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "7.2",
+              "book_ref": "Exercise Set 7.2 Q2, p.165",
+              "description": "From a survey of 40 students on favourite club out of a school of 800, find P(Arts Club) and estimate how many prefer Sports Club."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Introduce Section 7.2.3: probability can be read off statistical data collected from a sample, not only from controlled experiments. Work through Example 5 (p.162–163) on the board. Step 1: build the frequency table for the 50-student survey. Step 2: compute P(mango) = 20/50 = 0.4. Step 3: project onto the population of 1500 by multiplying: 0.4 × 1500 = 600. Introduce the vocabulary of population (the full group) and sample (the observed subset)."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Students work Exercise Set 7.2 Q1 (p.165) in pairs: sample of 30 sweets — compute P(green) and estimate how many of 600 are yellow. Circulate and check that students multiply the sample probability by the population size rather than just scaling the raw count. Follow with Exercise Set 7.2 Q2 (p.165) individually: survey of 40 students on favourite club, school of 800 — find P(Arts Club) and estimate Sports Club count."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Present the Law of Large Numbers: as the number of trials increases, experimental probability approaches theoretical probability. Then work through Example 6 (p.164): the Snakes-and-Ladders scenario. Ask students to predict first — if a 6 has come up three times in a row, is the next roll more or less likely to be a 6? Reveal and discuss the Gambler's Fallacy. Each die roll is an independent event; past results do not alter the probability of future ones. Pose the think-and-reflect from Section 7.2.3: rolling a 4 eight times in a row does not change P(4) on the next roll."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Contrast experimental and theoretical probability in a short class summary on the board: experimental probability depends on observed data and varies by sample; theoretical probability assumes equally likely outcomes and is fixed. Name the conditions under which each is appropriate. Students write one sentence in their notebooks comparing the two, then one student reads their sentence aloud for class correction if needed."
+            }
+          ],
+          "teacher_notes": "The projection step — multiplying sample probability by population size — is where students commonly make an arithmetic error by instead computing a ratio of the raw counts; watch for answers like 'if 7 of 30 sweets are yellow then 140 of 600 are yellow calculated as 7 × 20' rather than '7/30 × 600'. The Gambler's Fallacy discussion is the reasoning-intensive moment of this unit; push students to articulate why independence matters rather than just naming the fallacy. Exercise Set 7.2 Q6 (p.165–166) is available as a self-study extension on comparing experimental and theoretical probabilities across increasing trial counts.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Sample Spaces: Listing All Possible Outcomes Systematically",
+          "section_anchor": "7.3.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers"
+          ],
+          "visual_aids": "Two-coin outcome table on the board: columns Coin 1, Coin 2, Outcome; rows HH, HT, TH, TT",
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "7.3.1",
+              "book_ref": "Exercise Set 7.3 Q1, p.167",
+              "description": "State the total number of possible outcomes when a single 6-sided die is rolled."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "7.3.1",
+              "book_ref": "Exercise Set 7.3 Q2, p.167-168",
+              "description": "Write the sample space S for three experiments: rolling a die and tossing a coin together; choosing a random integer between -5 and +5; drawing one ball from a box of 5 green and 7 red balls."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "7.3.1",
+              "book_ref": "End of Chapter Q4, p.170",
+              "description": "Write the sample space and calculate the probability for five scenarios including at least one head in two coin tosses and drawing an even-numbered card from cards 1-10.",
+              "source_sections": [
+                "7.2.2",
+                "7.3.1",
+                "7.3.2",
+                "7.4"
+              ]
+            },
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "7.3.1",
+              "book_ref": "End of Chapter Q6, p.171",
+              "description": "List all combinations of outfits from 2 shirts and 3 types of pants in table form.",
+              "source_sections": [
+                "7.3.1",
+                "7.4"
+              ]
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Introduce Section 7.3.1: the sample space S is the complete, non-repeating list of all possible outcomes of a random experiment, and n(S) is the count of those outcomes. Work the five examples from the section in order of increasing complexity: the binary rain/no-rain space, a coin toss, a die roll, tossing two coins. For the two-coin case, build the outcome table on the board (Coin 1 × Coin 2) to show why systematic listing matters — naive listing misses the distinction between HT and TH. Pose the think-and-reflect from Section 7.3.1: if we want to describe rainfall in more detail, what outcomes must we add?"
+            },
+            {
+              "minutes": "12-25",
+              "activity": "Students complete Exercise Set 7.3 Q1 (p.167) — n(S) for a single die roll — and Exercise Set 7.3 Q2 (p.167–168) — writing S for three experiments — individually. The third case (drawing from 5 green and 7 red balls) requires students to decide whether colour or individual ball identity is the right grain of description; discuss both interpretations and explain why the chapter uses the colour-level description."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students attempt End of Chapter Q6 (p.171): list all 2 × 3 = 6 shirt-and-pants combinations in table form. This is the multi-step sample-space enumeration of Section 7.3.1; the table format mirrors the two-coin outcome table on the board. Then ask students to work parts (i) and (ii) of End of Chapter Q4 (p.170): write S for two coin tosses (confirming their earlier table) and write S for cards 1–10, then compute P(even-numbered card)."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Debrief End of Chapter Q4 parts (i) and (ii) on the board. Emphasise the method: write S completely, count n(S), identify favourable outcomes, apply the formula. Preview that the next step — identifying specific subsets of the sample space — is what Section 7.3.2 calls an event."
+            }
+          ],
+          "teacher_notes": "Students frequently omit TH when listing the sample space for two coin tosses, treating HT and TH as the same outcome; the two-column table is the best corrective because it forces explicit recording of each coin's result. Watch also for students writing the sample space for 'integer between -5 and +5' as including -5 and +5 when the word 'between' excludes endpoints — the textbook's phrasing is worth examining carefully with the class. Exercise Set 7.3 Q2 part (iii) (p.167–168) makes a good self-study item for students who finish early.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Events as Subsets and Tree Diagrams for Multi-Step Experiments",
+          "section_anchor": "7.3.2 / 7.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers",
+            "Blank paper for student tree diagrams"
+          ],
+          "visual_aids": "Full tree diagram for two coin tosses on the board: first toss branches H/T, each branching to H/T at second toss, four leaf nodes labelled HH, HT, TH, TT with probability 1/2 on each branch",
+          "textbook_items_in_class": [
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "7.3.2",
+              "book_ref": "Exercise Set 7.3 Q3, p.168",
+              "description": "At a village fair with 3 snacks and 2 drinks, list the sample space of all snack-drink combinations and list the event 'selecting Samosa as a snack'."
+            },
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "7.4",
+              "book_ref": "Example 7, p.168-169",
+              "description": "Constructs the full tree diagram for tossing a fair coin twice, derives S = {HH, HT, TH, TT}, and computes P(HH) = 1/4."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "7.4",
+              "book_ref": "Exercise Set 7.4 Q1, p.169",
+              "description": "Given Basket A (1 apple, 2 oranges) and Basket B (1 banana, 1 mango), draw a tree diagram, list the sample space, and find P(one apple and one banana)."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Introduce Section 7.3.2: an event is any subset of the sample space — any single outcome or combination of outcomes. Work the three examples from the section on the board: two coin tosses (event 'both heads' = {HH}), a die roll (event 'number greater than 4' = {5, 6}), picking fruit from a bowl. For each, write the full sample space S first, then circle the favourable outcomes that belong to the event, then apply P = favourable/total. Students complete Exercise Set 7.3 Q3 (p.168) in pairs: list all snack-drink combinations and then list the event 'Samosa chosen'."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Introduce tree diagrams from Section 7.4 as a visual method for systematic enumeration of multi-step experiments. Explain the construction rule: one column of branches per stage, each branch labelled with its outcome and its probability; read paths from left to right to generate each compound outcome. Build the two-coin tree on the board step by step, as in Example 7 (p.168–169): first-toss branches H and T (probability 1/2 each), each splits into H and T at the second toss, giving four paths — HH, HT, TH, TT. Derive P(HH) = 1/4 by reading two favourable-outcome counts off the diagram. Pose the think-and-reflect from Section 7.4: using the completed tree, what is P(one head and one tail)? Students answer individually before discussion."
+            },
+            {
+              "minutes": "28-44",
+              "activity": "Students draw the tree diagram for Exercise Set 7.4 Q1 (p.169): Basket A has 1 apple and 2 oranges, Basket B has 1 banana and 1 mango; one fruit is picked from each. Students list the sample space from their tree (Apple-Banana, Apple-Mango, Orange1-Banana, Orange1-Mango, Orange2-Banana, Orange2-Mango) and compute P(one apple and one banana) = 1/6 when each fruit is treated as a distinct item. Circulate and check that branches correctly reflect the number of items in each basket."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Whole-class debrief of Exercise Set 7.4 Q1. Confirm the sample space and the probability. Highlight how the tree enforces completeness — it is harder to miss an outcome when each stage is drawn as branches. Briefly preview Exercise Set 7.4 Q2 (p.169) as a homework item for students who want to extend their practice with replacement draws."
+            }
+          ],
+          "teacher_notes": "The key error in Section 7.3.2 is writing an event that extends outside the sample space — for example, listing (Samosa, Coffee) when Coffee is not among the stated drinks. In the tree diagram for the basket problem, watch for students drawing only two branches from Basket A (treating 'orange' as a single item) rather than three, which gives an incorrect sample space and a wrong probability. Example 7 (p.168–169) is a complete model solution students can reread independently.",
+          "homework": [
+            "Exercise Set 7.4 Q2 (p.169): list all pen-colour outcome pairs with replacement and use the tree diagram to estimate P(both pick the same colour)."
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Consolidating Probability: Sample Spaces, Events, Data, and the Scale",
+          "section_anchor": "7.2 / 7.2.1 / 7.2.2 / 7.2.3 / 7.3.1 / 7.3.2 / 7.4",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Whiteboard and markers"
+          ],
+          "visual_aids": "Tyre-distance frequency table on the board (four distance bands, frequencies, relative frequencies)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "7.2",
+              "book_ref": "Exercise Set 7.2 Q6, p.166",
+              "description": "Given a die rolled 12 times with a '3' appearing three times, find experimental and theoretical probability of rolling a 3, explain any difference, and predict what happens as trials increase to 60, 600, 6000."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "7.2.3",
+              "book_ref": "End of Chapter Q7, p.171",
+              "description": "From a tyre-distance table of 1000 cases, find P(less than 4000 km), P(between 4000 and 14000 km), and P(more than 14000 km).",
+              "source_sections": [
+                "7.2.1",
+                "7.2.3"
+              ]
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "7.2.2",
+              "book_ref": "End of Chapter Q8, p.171",
+              "description": "From letter cards spelling PEACE, find P(P, E, or C) and P(not E).",
+              "source_sections": [
+                "7.2.2",
+                "7.3.2"
+              ]
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "7.3.1",
+              "book_ref": "End of Chapter Q4, p.170",
+              "description": "Write the sample space and calculate probabilities for five scenarios including two and three coin tosses.",
+              "source_sections": [
+                "7.2.2",
+                "7.3.1",
+                "7.3.2",
+                "7.4"
+              ]
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Begin with Exercise Set 7.2 Q6 (p.165–166): die rolled 12 times, 3 appears three times. Students compute experimental probability (3/12 = 0.25) and theoretical probability (1/6 ≈ 0.167) and write one sentence explaining why these differ. Then they predict the trend as trials increase to 60, 600, and 6000 — the Law of Large Numbers. Debrief on the board, reinforcing that the gap narrows as the number of trials grows."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Students work End of Chapter Q7 (p.171) independently: the tyre-distance frequency table with 1000 recorded cases. Build the table on the board and ask students to compute each relative frequency as a fraction and a decimal: P(< 4000 km) = 20/1000 = 0.02; P(4001–14000 km) = (210 + 325)/1000 = 0.535; P(> 14000 km) = 445/1000 = 0.445. Then work End of Chapter Q8 (p.171): PEACE has 5 letters — P(P, E, or C) requires listing the favourable letters {P, E, E, C} and computing 4/5; P(not E) = 3/5."
+            },
+            {
+              "minutes": "30-44",
+              "activity": "Students complete the remaining parts of End of Chapter Q4 (p.170) not addressed in the previous unit: parts (iii) rolling a number greater than 4 on a die, (iv) drawing a non-red ball from a bag of 3 red, 2 blue, 1 green, and (v) exactly two heads in three coin tosses. For part (v), guide students to first write the eight-outcome sample space {HHH, HHT, HTH, THH, HTT, THT, TTH, TTT}, identify the three favourable outcomes {HHT, HTH, THH}, and compute P = 3/8."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Closing synthesis: ask three students each to name one idea from the chapter that surprised them or that they found they needed to think carefully about. Map each idea onto the probability scale or the experimental-vs-theoretical distinction on the board. Close by noting that probability describes long-run behaviour of random events — it does not predict the next individual outcome — and that this distinction, explored throughout the chapter, is what makes probability useful rather than magical."
+            }
+          ],
+          "teacher_notes": "In End of Chapter Q7, students sometimes add only the two middle bands when computing P(4001–14000 km) but forget to add the frequencies before dividing by 1000; circulate to catch any student who divides each band separately and then adds the fractions without a common denominator. For End of Chapter Q8, the most common error is writing P(P, E, or C) = 3/5 by counting only distinct letters rather than counting all letter cards including both E cards. Exercise Set 7.4 Q2 (p.169) can be shared as a self-study item for any student who wants additional tree-diagram practice.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 6
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "7.1",
+        "section_title": "What is Probability?",
+        "total_sections": 10,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can place everyday events on the 0-to-1 probability scale and justify each placement using evidence-based reasoning about likelihood."
+        ],
+        "section_context": "probability scale, likelihood measurement, subjective probability, everyday events",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "7.1.1",
+        "section_title": "What is Randomness?",
+        "total_sections": 10,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can define a random experiment and distinguish it from a deterministic one by identifying whether all outcomes are known but the result is unpredictable."
+        ],
+        "section_context": "random experiment, coin toss, die roll, unpredictable outcome, known outcome set",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "7.1.2",
+        "section_title": "The Probability Scale",
+        "total_sections": 10,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can assign a numerical probability value between 0 and 1 to an event and label it using scale vocabulary (impossible, less likely, even chance, more likely, certain)."
+        ],
+        "section_context": "probability scale 0 to 1, impossible, certain, equally likely, percentage chance",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "7.2",
+        "section_title": "Measuring Probability Objectively",
+        "total_sections": 10,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can distinguish between experimental probability and theoretical probability, and identify which route is appropriate given the information available."
+        ],
+        "section_context": "experimental probability via repeated trials, theoretical probability via equally likely outcomes",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "7.2.1",
+        "section_title": "Experimental Probability: Performing Observations or Experiments",
+        "total_sections": 10,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can compute the experimental probability of an event by applying the relative-frequency formula to observed trial data."
+        ],
+        "section_context": "experimental probability formula, relative frequency, die roll trials, sample space notation",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_ref": "7.2.2",
+        "section_title": "Theoretical Probability",
+        "total_sections": 10,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can compute the theoretical probability of an event using the P(Event) = favourable outcomes ÷ possible outcomes formula under the equally likely assumption."
+        ],
+        "section_context": "theoretical probability formula, equally likely outcomes, die roll, letter-picking from a word",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_ref": "7.2.3",
+        "section_title": "Analysing Statistical Data Using Probability",
+        "total_sections": 10,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can compute a sample probability from collected data and use it to project an estimate onto a larger population.",
+          "Students can identify and explain the Gambler's Fallacy by applying the concept of independent events to a sequence of trials."
+        ],
+        "section_context": "sample probability, population projection, Law of Large Numbers, Gambler's Fallacy, independent events",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_ref": "7.3.1",
+        "section_title": "Sample Space",
+        "total_sections": 10,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can write the complete sample space S for a multi-outcome or two-stage random experiment and determine n(S)."
+        ],
+        "section_context": "sample space S, sample size n(S), systematic listing, two-coin outcome table",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_ref": "7.3.2",
+        "section_title": "Events",
+        "total_sections": 10,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can define an event as a subset of the sample space, list the outcomes belonging to a specified event, and compute its probability."
+        ],
+        "section_context": "event as subset of sample space, favourable outcomes, die roll and coin-toss event examples",
+        "c_code": "C-6.2",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_ref": "7.4",
+        "section_title": "Tree Diagrams",
+        "total_sections": 10,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can construct a tree diagram for a two-stage independent experiment, derive the sample space from its branches, and compute the probability of a specified outcome."
+        ],
+        "section_context": "tree diagram, two-stage experiment, branch labelling, two coin tosses, compound outcome probability",
+        "c_code": "C-8.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 7,
+      "chapter_title": "The Mathematics of Maybe: Introduction to Probability",
+      "chapter_cg": "CG-6",
+      "reasoning_floor_lift_applied": true,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "7.1",
+          "section_title": "What is Probability?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can place everyday events on the 0-to-1 probability scale and justify each placement using evidence-based reasoning about likelihood.",
+          "section_context": "probability scale, likelihood measurement, subjective probability, everyday events",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A student claims that the probability of drawing a red card from a standard well-shuffled deck of 52 playing cards (26 red, 26 black) is exactly 0.5, and places this event at the 'even chance' position on the probability scale. Which statement best describes this placement?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The placement is correct because 'even chance' applies to all card-drawing experiments regardless of the deck's composition.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The placement is correct because there are equal numbers of red and black cards, so both outcomes are equally likely.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "The placement is incorrect because 0.5 means the event is less likely than certain, so it should be placed closer to 0.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The placement is incorrect because probability should be stated as a percentage, making 0.5 meaningless as a scale position.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "C": "Confuses the scale position of 0.5 with being 'less than certain' rather than understanding 0.5 as the midpoint meaning equally likely — a misreading of intermediate scale values.",
+                "D": "Believes probability must be expressed as a percentage to be meaningful, misunderstanding that 0 to 1 and 0% to 100% are equivalent representations on the same scale.",
+                "A": "Over-generalises 'even chance' to apply to all card experiments regardless of deck composition, ignoring that the equally-likely label requires equal counts of favourable and unfavourable outcomes."
+              },
+              "inclusivity": "A student who finds the card context unfamiliar can be invited to describe the same reasoning aloud using a coin: 'Is getting heads equally likely as getting tails? Why?' For a challenge, ask the student to identify a deck composition (for example, 30 red and 22 black cards) where the placement would shift toward 'more likely' and justify where on the scale it would now sit."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "7.1.1",
+          "section_title": "What is Randomness?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can define a random experiment and distinguish it from a deterministic one by identifying whether all outcomes are known but the result is unpredictable.",
+          "section_context": "random experiment, coin toss, die roll, unpredictable outcome, known outcome set",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Which of the following experiments is best described as a random experiment?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Calculating the sum of two fixed numbers, such as 37 + 48.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Listing all even numbers between 10 and 20.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Measuring the length of a fixed rod to the nearest centimetre with a ruler.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Rolling a standard 6-sided die and recording which face lands up.",
+              "is_correct": true
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "A": "Treats any mathematical calculation as an experiment, missing the definition that a random experiment must have an unpredictable outcome on each repetition even when all possible outcomes are known.",
+                "C": "Confuses physical measurement with a random experiment; measurement of a fixed object gives the same result each time (within instrument precision), so it is deterministic, not random.",
+                "B": "Mistakes a mathematical listing task for an experiment; listing even numbers between 10 and 20 always gives the same set {12, 14, 16, 18} — there is no unpredictability."
+              },
+              "inclusivity": "Ask a student who is unsure to check each option against two questions: 'Do I know all possible results?' and 'Can I predict which result I will get?' — both must be true for a random experiment. For a challenge, ask the student to design one more example of a random experiment and one more example of a deterministic process, then explain the distinction in their own words."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "7.1.2",
+          "section_title": "The Probability Scale",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can assign a numerical probability value between 0 and 1 to an event and label it using scale vocabulary (impossible, less likely, even chance, more likely, certain).",
+          "section_context": "probability scale 0 to 1, impossible, certain, equally likely, percentage chance",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A bag contains 8 blue marbles and 2 red marbles. One marble is drawn at random. Which probability value and scale label correctly describe the event 'drawing a blue marble'?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Probability = 0.2; label: less likely",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Probability = 0.8; label: certain",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Probability = 0.8; label: more likely",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "Probability = 8; label: more likely",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "B": "Correctly computes 8/10 = 0.8 but confuses 'more likely' with 'certain'; 'certain' requires probability exactly 1, so a student choosing this option misreads the scale's upper end.",
+                "D": "Writes the raw count (8) as the probability rather than the ratio 8/10, showing the student has not applied the probability scale's 0-to-1 range.",
+                "A": "Computes P(red) = 2/10 = 0.2 instead of P(blue) = 8/10, showing the student identified the wrong event — the unfavourable outcomes rather than the favourable ones."
+              },
+              "inclusivity": "A student who struggles with the decimal can be encouraged to write the fraction 8/10 first and then convert; emphasise that the fraction and the decimal are the same position on the scale. For a challenge, ask: 'How many blue marbles would need to be in the bag for the event to be labelled certain? How many for equally likely?'"
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "7.2",
+          "section_title": "Measuring Probability Objectively",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can distinguish between experimental probability and theoretical probability, and identify which route is appropriate given the information available.",
+          "section_context": "experimental probability via repeated trials, theoretical probability via equally likely outcomes",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A quality inspector records how often a machine produces a defective part over 500 production cycles, finding 15 defectives. A second analyst wants to estimate the probability of a defective part. Which approach is most appropriate, and why?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Experimental probability, because the outcomes of the machine are not equally likely and must be estimated from the observed data.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Experimental probability is never used when the sample size is as small as 500, so neither approach applies.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Theoretical probability, because all outcomes (defective or not) are known in advance.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Theoretical probability, because the machine either produces a defective part or it does not, giving two equally likely outcomes.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {
+                "C": "Mistakes 'knowing all possible outcomes' for the equally-likely condition; knowing that a part is either defective or not does not mean both outcomes have equal probability.",
+                "D": "Applies the equally-likely assumption incorrectly: having two possible outcomes does not make them equally likely — the machine's defect rate is a property to be measured, not assumed.",
+                "B": "Misunderstands experimental probability by inventing a minimum sample-size threshold; the chapter establishes that experimental probability is computed from whatever data is available, though larger samples yield better estimates."
+              },
+              "inclusivity": "Students who conflate 'two outcomes' with 'equally likely' can be guided to think about a loaded coin: it has two outcomes but they are not equally likely. For a challenge, ask: 'If the machine were redesigned so that exactly 1 in every 20 parts is designed to be removed for inspection, could you then use theoretical probability? Explain.'"
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "7.2.1",
+          "section_title": "Experimental Probability: Performing Observations or Experiments",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can compute the experimental probability of an event by applying the relative-frequency formula to observed trial data.",
+          "section_context": "experimental probability formula, relative frequency, die roll trials, sample space notation",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": "Outcome | Tally | Frequency\nRed | |||| |||| | 9\nBlue | |||| | 5\nGreen | |||| |||| |||| | 14\nYellow | |||| || | 7\nPurple | |||| | 5\nTotal | — | 40",
+          "graph_paper": false,
+          "question_text": "A spinner with five coloured sectors is spun 40 times. Refer to the table provided. Calculate the experimental probability of landing on green. Show your working.",
+          "options": [],
+          "expected_answer": "14/40 = 7/20 = 0.35",
+          "method_one_line": "Apply the experimental probability formula: P(green) = number of times green occurred ÷ total number of trials = 14 ÷ 40 = 0.35.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "A student who finds the table overwhelming can be prompted to cover all rows except green and the total, then identify the two numbers needed for the formula. For a challenge, ask the student to also compute P(not green) and confirm that P(green) + P(not green) = 1."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "7.2.2",
+          "section_title": "Theoretical Probability",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can compute the theoretical probability of an event using the P(Event) = favourable outcomes ÷ possible outcomes formula under the equally likely assumption.",
+          "section_context": "theoretical probability formula, equally likely outcomes, die roll, letter-picking from a word",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "The letters of the word STATISTICS are written on individual cards and placed face-down. One card is drawn at random. Find the theoretical probability of drawing the letter T. Show all steps, including listing the total number of letters and counting the favourable outcomes.",
+          "options": [],
+          "expected_answer": "3/10 = 0.3",
+          "method_one_line": "Apply P(T) = (number of T cards) ÷ (total number of letter cards) = 3 ÷ 10.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "A student who is unsure how many letters are in STATISTICS can be asked to write each letter of the word as they say it aloud, tallying as they go — this makes the count physical. For a challenge, ask the student to also find P(vowel) and P(not S), checking that all three computed values are consistent with the sample space."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "7.2.3",
+          "section_title": "Analysing Statistical Data Using Probability",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can compute a sample probability from collected data and use it to project an estimate onto a larger population.",
+          "section_context": "sample probability, population projection, Law of Large Numbers, Gambler's Fallacy, independent events",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": "Transport Mode | Number of Students\nCycle | 18\nBus | 24\nWalk | 12\nCar | 6\nTotal | 60",
+          "graph_paper": false,
+          "question_text": "A survey of 60 students in a school records how each student travels to school. Refer to the table provided. (i) Find the probability that a randomly selected student from the sample travels by bus. (ii) The school has 900 students in total. Use your answer to estimate how many students in the whole school travel by bus. Show your working for both parts.",
+          "options": [],
+          "expected_answer": "(i) 24/60 = 2/5 = 0.4; (ii) 0.4 × 900 = 360 students",
+          "method_one_line": "Compute P(bus) = 24/60 = 0.4, then multiply by the population size: 0.4 × 900 = 360.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "A student who is unsure how to begin part (ii) can be prompted: 'If 2 out of every 5 students in the sample take the bus, how many groups of 5 are there in 900 students?' This ratio reasoning is equivalent to multiplication. For a challenge, ask the student to also estimate the number of students who walk to school and to check that all four estimates sum to 900."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "7.2.3",
+          "section_title": "Analysing Statistical Data Using Probability",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can identify and explain the Gambler's Fallacy by applying the concept of independent events to a sequence of trials.",
+          "section_context": "sample probability, population projection, Law of Large Numbers, Gambler's Fallacy, independent events",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Arjun is playing a board game that uses a fair 6-sided die. He rolls the die five times and gets a 6 each time. He says: 'I am very unlikely to get a 6 on my next roll — I have already used up most of my luck.' His friend Priya disagrees. Write a response to Arjun explaining whether his reasoning is correct, what error (if any) he is making, and what the actual probability of rolling a 6 on the next roll is. Use the concept of independent events in your answer.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "States clearly that Arjun's reasoning is incorrect.",
+            "Names or describes the Gambler's Fallacy — the belief that past outcomes influence future independent events.",
+            "Explains that each die roll is an independent event: the die has no memory, and its physical state is the same at every roll.",
+            "States the correct probability for the next roll: P(6) = 1/6, unchanged by the previous five rolls.",
+            "Uses the Law of Large Numbers correctly if referenced: it describes the long-run average, not the probability of the next individual outcome."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "A student who struggles to begin can be asked to answer one question first: 'Does the die change in any way after five rolls?' That answer unlocks the independence argument. For a challenge, ask the student to explain how the Law of Large Numbers is related to — but different from — what Arjun claimed, and why one is a statement about long-run averages while the other is about a single upcoming trial."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "7.3.1",
+          "section_title": "Sample Space",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can write the complete sample space S for a multi-outcome or two-stage random experiment and determine n(S).",
+          "section_context": "sample space S, sample size n(S), systematic listing, two-coin outcome table",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A fair coin is tossed and a fair 4-sided die (with faces numbered 1, 2, 3, 4) is rolled at the same time. (i) Write the complete sample space S for this two-stage experiment in the form {(Coin result, Die result), …}. (ii) State the value of n(S). Show your systematic listing.",
+          "options": [],
+          "expected_answer": "(i) S = {(H,1),(H,2),(H,3),(H,4),(T,1),(T,2),(T,3),(T,4)}; (ii) n(S) = 8",
+          "method_one_line": "List all combinations of the coin's two outcomes with each of the die's four outcomes systematically, then count.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": "A student who is uncertain can be prompted to draw a two-column table: Coin result in the first column, Die result in the second, and then fill row by row — this mirrors the two-coin outcome table from the textbook. For a challenge, ask the student to extend the table to a three-stage experiment by adding a second coin toss and state n(S) for that extended space."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "7.3.2",
+          "section_title": "Events",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can define an event as a subset of the sample space, list the outcomes belonging to a specified event, and compute its probability.",
+          "section_context": "event as subset of sample space, favourable outcomes, die roll and coin-toss event examples",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-6.2",
+            "competency_text": "Applying probability to everyday likelihood questions using the 0-to-1 scale, experimental data, and theoretical reasoning."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A fair 6-sided die is rolled once. (i) Write the complete sample space S. (ii) List the outcomes that belong to the event E = 'the result is a prime number'. (iii) Find P(E). Show all working.",
+          "options": [],
+          "expected_answer": "(i) S = {1, 2, 3, 4, 5, 6}; (ii) E = {2, 3, 5}; (iii) P(E) = 3/6 = 1/2 = 0.5",
+          "method_one_line": "Write S, identify prime-number outcomes in S to form the event subset E, then apply P(E) = n(E) ÷ n(S).",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "A student who is unsure whether 1 is prime can be reminded that a prime number must have exactly two distinct factors (itself and 1), so 1, which has only one factor, is not prime. For a challenge, ask the student to also find P(not prime) and verify that P(E) + P(not E) = 1."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 10,
+          "section_ref": "7.4",
+          "section_title": "Tree Diagrams",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can construct a tree diagram for a two-stage independent experiment, derive the sample space from its branches, and compute the probability of a specified outcome.",
+          "section_context": "tree diagram, two-stage experiment, branch labelling, two coin tosses, compound outcome probability",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-8.1",
+            "competency_text": "Representing multi-stage experiments using tables and tree diagrams, and drawing conclusions from sample data projected onto populations."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "A correctly drawn tree diagram with a single starting point branching to three first-draw outcomes (Red, Black, White), each labelled with probability 1/3.",
+            "Each first-draw branch further branching to three second-draw outcomes (Red, Black, White) after replacement, each labelled with probability 1/3.",
+            "A complete sample space S derived from the tree: all nine pairs {RR, RB, RW, BR, BB, BW, WR, WB, WW}, with n(S) = 9.",
+            "Correct identification of the event 'both draws are the same colour' = {RR, BB, WW}, three favourable outcomes.",
+            "Correct computation of P(both same colour) = 3/9 = 1/3 = 0.333…, with working shown."
+          ],
+          "look_for": [],
+          "task": "A bag contains 3 balls: one red (R), one black (B), and one white (W). A ball is drawn at random, its colour is recorded, and it is then placed back in the bag. A second ball is then drawn at random. (i) Draw a tree diagram showing all possible outcomes for the two draws. Label each branch with its probability. (ii) Write the complete sample space S from your tree diagram and state n(S). (iii) Find the probability that both draws produce the same colour.",
+          "scaffold": "Start by drawing a point and branching into three paths for the first draw. Each path then branches into three more paths for the second draw. Use your completed tree to list all outcomes in S.",
+          "format_of_output": [
+            "A drawn tree diagram with labelled branches",
+            "A written sample space S in set notation",
+            "A written probability calculation with working"
+          ],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "A student who finds the tree difficult to draw can begin with a table (rows = first draw, columns = second draw) to generate all nine outcomes, and then attempt to draw the tree from the table. For a challenge, ask the student: 'If the ball were not replaced after the first draw, how would the tree and the probability change?' — this asks them to reason about how replacement affects branch counts and probabilities."
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
