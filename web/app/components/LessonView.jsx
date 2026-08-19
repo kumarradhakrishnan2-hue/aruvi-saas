@@ -786,14 +786,20 @@ function AOverviewPanel({ n, lo, nav }) {
   if (n.section) rows.push(["Section", n.section]);
   rows.push(["Question type", qtypeName(n.question_type)]);
   if (n.cognitive_demand) rows.push(["Cognitive demand", n.cognitive_demand]);
-  // The textbook parallel-practice pointer — this stage's distinctive teacher-facing asset,
-  // and previously reachable only from the Question tab. The ref is the locator, the
-  // description the task; carried separately (never pre-joined) because a ref can itself
-  // contain " — ".
-  if (n.exercise_ref || n.exercise_desc) {
-    rows.push(["Book exercise",
-               [n.exercise_ref, n.exercise_desc].filter(Boolean).join(" — ")]);
-  }
+  // BOOK EXERCISE IS NOT REPEATED HERE (founder, 2026-08-19). It was added to this panel
+  // on 2026-08-10 for the reason the comment above gives — maths middle and preparatory
+  // fill none of Competency or Learning outcome, so Overview looked bare beside
+  // secondary's four rows. But the Question tab already shows it, in full, under
+  // TEXTBOOK EXERCISE, and a field that appears twice on one item reads as two different
+  // facts until the teacher checks. The bareness it was patching is already answered by
+  // the other two rows added that day: Section and Cognitive demand. Removing this leaves
+  // three rows at those stages, not one.
+  //
+  // Where it BELONGS is a separate question worth noting rather than acting on here: both
+  // exports (export_assessment_pdf.py, export_docx.py) place it in the ANSWER section, as
+  // a teacher-facing companion, while the screen places it in the Question tab. Screen and
+  // print are supposed to read alike (CLAUDE.md §4). One of the two is wrong; deciding
+  // which is a founder call, not a tidy-up.
   return (
     <div className="assess-ovrows">
       {rows.map(([k, v], i) => (

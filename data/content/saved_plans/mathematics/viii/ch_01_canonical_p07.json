@@ -1,0 +1,774 @@
+{
+  "filename": "ch_01_canonical_p07.json",
+  "saved_at": "2026-08-19T13:38:18",
+  "plan_status": "canonical",
+  "chapter_number": 1,
+  "chapter_title": "A Square and A Cube",
+  "grade": "Grade VIII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 7 periods = 315 minutes\nTotal: 7 periods · 5h 15min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "7x45",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics viii 1",
+    "ledger_ts": "20260819_130541_math_viii_01_p07",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.intro",
+              "title": "Opening Puzzle: The Locker Problem"
+            },
+            {
+              "ref": "section 1.1",
+              "title": "Square Numbers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Who Opens Which Locker? Reasoning with Factors",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 1.1a",
+              "book_ref": "Math Talk, section 1.1 p.4",
+              "description": "Discuss patterns noticed in the table of squares of the first 30 natural numbers and share observations and conjectures."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Present the Queen Ratnamanjuri locker problem: 100 people each toggle lockers in a specific sequence. Students work in pairs to record which lockers end up open, then share findings aloud. Discussion centres on the question: what is special about the people who toggle a locker an odd number of times?"
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Students list factors of several numbers (e.g., 9, 16, 25, 36 versus 10, 12, 15) and count them. Guide discovery that perfect squares have an odd number of factors and that this is why they remain open. Connect the geometric idea: a square of side n has area n × n = n², defining square numbers."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Students construct a table of n and n² for n = 1 to 15 in their notebooks. Math Talk, section 1.1 p.4 (“Discuss patterns noticed in the table of squares of the first 30 natural numbers...”) is used as the discussion prompt. Students note patterns, frame conjectures, and share them with the class."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Brief whole-class share-out: collect two or three student conjectures on the board (e.g., squares can end in 0, 1, 4, 5, 6, 9; squares of even numbers are even). Pose the question — can a number ending in 2 or 7 be a perfect square? — as an open question students carry into their thinking."
+            }
+          ],
+          "teacher_notes": "The locker puzzle is the entry point for understanding that perfect squares have an odd number of factors — this logical chain is worth making explicit before moving to patterns. Watch for students who list factors but double-count a factor pair; reinforce that for perfect squares one factor sits alone at the centre (e.g., 3 × 3 = 9, so 3 is unpaired). The definition of square numbers including fractions and decimals such as (3/5)² and (2.5)² can be noted as an extension for confident students.",
+          "materials": [
+            "blank notebooks or squared paper",
+            "board and chalk/markers"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.1a",
+              "title": "Patterns and Properties of Perfect Squares"
+            },
+            {
+              "ref": "section 1.1b",
+              "title": "Perfect Squares and Odd Numbers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Digit Patterns, Parity, and the Odd-Number Staircase",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 1.1a",
+              "book_ref": "Math Talk, section 1.1 p.4",
+              "description": "Discuss whether a number ending in 0, 1, 4, 5, 6, or 9 is always a perfect square."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 1.1b",
+              "book_ref": "Figure it Out Q8, section 1.1 p.10",
+              "description": "Fill in missing numbers in the pattern a² + b² + c² = d² (sub-parts: 4² + 5² + 20² = (__)²; 9² + 10² + (__)² = (__)²)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students return to their table of squares from the previous exploration. Using the units digits column, they classify which digits appear and which do not. Math Talk, section 1.1 p.4 (“Discuss whether a number ending in 0, 1, 4, 5, 6, or 9 is always a perfect square”) guides the discussion. Students articulate the one-way rule: a perfect square must end in 0, 1, 4, 5, 6, or 9, but the converse is not guaranteed."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "Introduce the inverted-L dot diagram to show that adding successive odd numbers builds perfect squares: 1, 1+3=4, 1+3+5=9, … Students draw diagrams for n = 1 to 5 and state the pattern in words. Lead the class to the general statement: the sum of the first n odd numbers equals n². Introduce the algebraic form: the nth odd number is 2n − 1, and verify the sum formula for small values."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Students apply the odd-number result in two directions: (i) checking whether a number is a perfect square by successively subtracting 1, 3, 5, … and observing whether the process terminates at zero; (ii) computing (n+1)² from n² by adding the next odd number. Figure it Out Q8, section 1.1 p.10 (“Fill in missing numbers in the pattern a² + b² + c² = d²...”) is attempted in pairs."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Class compares answers to Q8 and reasons about the parity rule: if n is even, n² is even; if n is odd, n² is odd. Students write a one-sentence justification of the parity rule in their notebooks, practicing mathematical communication."
+            }
+          ],
+          "teacher_notes": "Building on the discovery that perfect squares have an odd number of factors, this unit shifts focus to structural reasons behind the digit and parity patterns. A common error is to treat the units-digit condition as both necessary and sufficient — stress the counterexample 21 (ends in 1, not a square). The successive-subtraction test is a powerful procedural check students can use before reaching prime factorisation methods.",
+          "materials": [
+            "squared dot paper or plain paper for dot diagrams",
+            "board and chalk/markers"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.1c",
+              "title": "Perfect Squares and Triangular Numbers"
+            },
+            {
+              "ref": "section 1.1d",
+              "title": "Square Roots"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Triangular Pairs and Finding Square Roots Three Ways",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q4, section 1.1 p.10",
+              "description": "Find the length of the side of a square whose area is 441 m²."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q5, section 1.1 p.10",
+              "description": "Find the smallest square number divisible by each of 4, 9, and 10."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q6, section 1.1 p.10",
+              "description": "Find the smallest number by which 9408 must be multiplied to produce a perfect square, and find the square root of the product."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q7, section 1.1 p.10",
+              "description": "Find how many numbers lie between the squares of (i) 16 and 17, and (ii) 99 and 100."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Present the triangular numbers 1, 3, 6, 10, 15, … using dot-triangle diagrams. Students verify that 1 + 3 = 4 = 2², 3 + 6 = 9 = 3², 6 + 10 = 16 = 4², and conjecture the general result: the sum of two consecutive triangular numbers is always a perfect square. Students record three more examples to bolster the conjecture."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "Define square root as the inverse of squaring: √(n²) = n. Introduce and contrast three methods for finding square roots: (i) listing consecutive squares to locate the target; (ii) successive subtraction of odd numbers until zero is reached, counting subtractions; (iii) prime factorisation — pair up prime factors and take one from each pair. Demonstrate all three methods with 144 and then with 225."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Students solve Figure it Out Q4, section 1.1 p.10 (“Find the length of the side of a square whose area is 441 m²”) using prime factorisation. They then tackle Figure it Out Q5, section 1.1 p.10 (“Find the smallest square number divisible by each of 4, 9, and 10”) and Figure it Out Q6, section 1.1 p.10 (“Find the smallest number by which 9408 must be multiplied...”) individually or in pairs."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Brief estimation interlude: students bound √250 between consecutive whole numbers by identifying that 15² = 225 and 16² = 256, so √250 lies between 15 and 16. They use the units-digit property to narrow the estimate. Figure it Out Q7, section 1.1 p.10 is set as a written home task."
+            }
+          ],
+          "teacher_notes": "The triangular-number result (sum of two consecutive triangular numbers = perfect square) is a beautiful dot-diagram proof; students who struggled with algebraic justification earlier can engage confidently here through the visual. In the prime factorisation method for Q6, watch for students who find the correct unfactored remainder but forget to include it when computing the square root of the final product. Math Talk, section 1.1 p.8 (“Discuss how to determine if a large number is a perfect square”) is a useful self-study pointer for students who want to deepen their reasoning on estimation.",
+          "materials": [
+            "plain paper for dot diagrams",
+            "board and chalk/markers"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.1d",
+              "title": "Square Roots"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Perfect Square Tests and Square Root Practice",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q1, section 1.1 p.10",
+              "description": "Identify which of four given numbers (2032, 2048, 1027, 1089) are not perfect squares."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q2, section 1.1 p.10",
+              "description": "Determine which among 64², 108², 292², 36² has last digit 4."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Figure it Out Q3, section 1.1 p.10",
+              "description": "Given 125² = 15625, find the value of 126² by choosing from five options (includes sub-parts i–v)."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 1.1a",
+              "book_ref": "Figure it Out Q9, section 1.1 p.11",
+              "description": "Count the total number of tiny squares in a given picture and write the prime factorisation of that count."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 1.1d",
+              "book_ref": "Math Talk, section 1.1 p.8",
+              "description": "Discuss how to determine if a large number (e.g., 576 or 327) is a perfect square and, if so, how to find its square root."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students apply the units-digit test and the successive-subtraction method to Figure it Out Q1, section 1.1 p.10 (“Identify which of four given numbers (2032, 2048, 1027, 1089) are not perfect squares”). They give written reasons for each decision, distinguishing between impossible units digits and failed subtraction chains."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Figure it Out Q2, section 1.1 p.10 (“Determine which among 64², 108², 292², 36² has last digit 4”) is solved by reasoning about the units digit of each base and using the known units-digit multiplication rules for squares. Students justify each answer in one sentence."
+            },
+            {
+              "minutes": "22–35",
+              "activity": "Figure it Out Q3, section 1.1 p.10 (“Given 125² = 15625, find the value of 126²...”) is solved using the odd-number-addition property established in the study of perfect squares: 126² = 125² + (2×125 + 1) = 15625 + 251 = 15876. Students verify by checking the units digit. Figure it Out Q9, section 1.1 p.11 (“Count the total number of tiny squares in a given picture...”) follows as a visual counting and prime factorisation task."
+            },
+            {
+              "minutes": "35–45",
+              "activity": "Class consolidation: students pose their own “is this a perfect square?” challenge number to a partner, then exchange and solve using whichever method they find most efficient. Math Talk, section 1.1 p.8 (“Discuss how to determine if a large number is a perfect square...”) is set as a reflection home task."
+            }
+          ],
+          "teacher_notes": "Having established the three methods for finding square roots — listing, successive subtraction, and prime factorisation — this unit gives sustained practice across all three, with Q3 particularly reinforcing the odd-number-sum link to the previous exploration. Watch for students who apply the units-digit rule backwards in Q1, concluding that ending in 9 guarantees a perfect square; insist on a full prime factorisation or subtraction check. The student-posed challenge at the close is a low-stakes creative task that builds fluency without requiring any additional materials.",
+          "materials": [
+            "board and chalk/markers",
+            "plain paper"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.2",
+              "title": "Cubic Numbers"
+            },
+            {
+              "ref": "section 1.2a",
+              "title": "Perfect Cubes and Consecutive Odd Numbers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "From Volume to Pattern: Defining Cubes and Their Odd-Number Structure",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 1.2",
+              "book_ref": "Math Talk, section 1.2 p.12",
+              "description": "Discuss patterns noticed in the table of cubes of natural numbers from 1 to 20."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 1.2",
+              "book_ref": "Try This, section 1.2 p.13",
+              "description": "Find the two ways each of the next two taxicab numbers (4104 and 13832) can be expressed as the sum of two positive cubes."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 1.2",
+              "book_ref": "Figure it Out Q3, section 1.2 p.16",
+              "description": "State true or false with reasoning for five statements about cubes (sub-parts i–v): cube of odd is even; no perfect cube ends with 8; cube of 2-digit may be 3-digit; cube of 2-digit may have 7+ digits; cube numbers have odd number of factors."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Define perfect cubes geometrically: a cube of side n has volume n × n × n = n³. Students list n³ for n = 1 to 10 and examine units digits. Math Talk, section 1.2 p.12 (“Discuss patterns noticed in the table of cubes of natural numbers from 1 to 20”) structures the discussion. Students compare cube units digits (all 10 possible) with square units digits (only 6) and note why the two cases differ."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Present the Hardy–Ramanujan Taxicab story: 1729 = 1³ + 12³ = 9³ + 10³. Students verify both representations on paper. Try This, section 1.2 p.13 (“Find the two ways each of the next two taxicab numbers (4104 and 13832) can be expressed as the sum of two positive cubes”) is attempted in small groups, reinforcing fluency with cubing small numbers."
+            },
+            {
+              "minutes": "22–35",
+              "activity": "Introduce the consecutive-odd-number pattern for cubes: 1 = 1³; 3 + 5 = 8 = 2³; 7 + 9 + 11 = 27 = 3³; 13 + 15 + 17 + 19 = 64 = 4³. Students extend the pattern to 5³ and 6³, noting where each group begins and ends. They apply the pattern to determine the sum 91 + 93 + … + 109 (identifying it as 10³ = 1000)."
+            },
+            {
+              "minutes": "35–45",
+              "activity": "Figure it Out Q3, section 1.2 p.16 (“State true or false with reasoning for five statements about cubes...”) is worked individually. Students write a one-sentence reason for each sub-part. Pair-share follows, with attention to the claim about cubes ending in 8 (which is false — 2³ = 8, so cubes can and do end in 8)."
+            }
+          ],
+          "teacher_notes": "The parallel structure between squares and cubes is pedagogically powerful here: the same odd-number pattern that built squares now appears, reorganised, for cubes. Watch for the common misconception surfaced in Q3(ii) — students who over-generalise from the squares case may wrongly assert that no cube ends in 8; the counterexample 2³ = 8 should be made emphatic. The Taxicab number exploration is a rich extension; students who finish early can attempt Try This, section 1.2 p.13 in full.",
+          "materials": [
+            "board and chalk/markers",
+            "plain paper"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.2b",
+              "title": "Cube Roots"
+            },
+            {
+              "ref": "section 1.2c",
+              "title": "Successive Differences"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Prime Factorisation for Cube Roots and the Successive-Differences Pattern",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 1.2b",
+              "book_ref": "Figure it Out Q1, section 1.2 p.16",
+              "description": "Find the cube roots of 27000 and 10648."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 1.2b",
+              "book_ref": "Figure it Out Q2, section 1.2 p.16",
+              "description": "Find the number to multiply 1323 by to make it a perfect cube."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 1.2b",
+              "book_ref": "Figure it Out Q4, section 1.2 p.16",
+              "description": "Given 1331 is a perfect cube, guess its cube root without factorisation; similarly guess cube roots of 4913, 12167, and 32768."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 1.2b",
+              "book_ref": "Figure it Out Q5, section 1.2 p.17",
+              "description": "Determine which of four expressions (67³ − 66³, 43³ − 42³, 67² − 66², 43² − 42²) is greatest and explain the reasoning."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "State and apply the prime factorisation rule for cube roots: a number is a perfect cube if and only if every prime factor appears in a multiple of three in its factorisation; the cube root is found by taking one factor from each triplet. Work through 3375 = 3³ × 5³ as a class demonstration (∛3375 = 15), then show that 500 = 2² × 5³ is not a perfect cube. Students then solve Figure it Out Q1, section 1.2 p.16 (“Find the cube roots of 27000 and 10648”) independently."
+            },
+            {
+              "minutes": "14–25",
+              "activity": "Figure it Out Q2, section 1.2 p.16 (“Find the number to multiply 1323 by to make it a perfect cube”) is solved: students factorise 1323 = 3³ × 7², identify the deficit (one 7 needed), and confirm the answer. Figure it Out Q4, section 1.2 p.16 (“Guess cube roots of 1331, 4913, 12167, 32768...”) uses units-digit reasoning and bounding: students identify the units digit of the cube root from the units digit of the cube, then bound between consecutive cubes."
+            },
+            {
+              "minutes": "25–37",
+              "activity": "Introduce successive differences for cubes: from the list n³, compute first differences, then second differences, then third differences. Students tabulate these for n = 1 to 6 and observe that while squares yield constant second differences of 2, cubes require three levels before differences stabilise. Connect to the successive-differences approach used for perfect squares earlier in the chapter."
+            },
+            {
+              "minutes": "37–45",
+              "activity": "Figure it Out Q5, section 1.2 p.17 (“Determine which of 67³ − 66³, 43³ − 42³, 67² − 66², 43² − 42² is greatest...”) is tackled as a reasoning challenge. Students use the odd-number structure — the difference of consecutive cubes relates to a sum of odd numbers — and the difference of consecutive squares formula to compare without computing full values."
+            }
+          ],
+          "teacher_notes": "The prime factorisation rule for cube roots mirrors the rule for square roots — complete triplets versus complete pairs — and making this parallel explicit strengthens both. Watch for students in Q2 who find the factorisation but multiply by the entire factor 7² rather than just the missing 7; require them to state explicitly how many of each factor are present and how many are needed. Figure it Out Q5 is a rich reasoning item; students who find it difficult can use the successive-differences table just built to estimate the answer.",
+          "materials": [
+            "board and chalk/markers",
+            "plain paper"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 1.3",
+              "title": "A Pinch of History"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Roots Through the Ages: Sanskrit, Arabic, and Latin Origins",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 1.1a",
+              "book_ref": "Figure it Out Q9, section 1.1 p.11",
+              "description": "Count the total number of tiny squares in a given picture and write the prime factorisation of that count."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students read the historical passage on the Sanskrit origins of mathematical vocabulary: varga (square), ghana (cube), and mula (root) in Indian mathematical texts from the first century BCE. They note the names Aryabhata (499 CE) and Brahmagupta (628 CE) and identify when and in which texts these terms appear. Students record a brief timeline in their notebooks: first-century BCE → Aryabhata → Brahmagupta → Arabic transmission (jidhr) → Latin (radix)."
+            },
+            {
+              "minutes": "15–28",
+              "activity": "Small-group discussion: students connect each Sanskrit term to the mathematical meaning studied in the chapter — varga to area, ghana to volume, mula to the inverse operation. They discuss why the term “root” (mula, radix) is apt as a metaphor for the inverse of squaring and cubing. Groups share one key insight with the class."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Consolidation review: students revisit Figure it Out Q9, section 1.1 p.11 (“Count the total number of tiny squares in a given picture and write the prime factorisation of that count”) as a recall anchor. They then write in their own words — using the vocabulary varga, ghana, and mula alongside the English terms — a definition of perfect square, perfect cube, square root, and cube root."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Class close: three students read their definitions aloud. The class checks for mathematical accuracy — correct number of factors, correct inverse relationship — and suggests improvements in phrasing. Students correct and complete their own definitions silently as the final act of the unit."
+            }
+          ],
+          "teacher_notes": "The historical passage in section 1.3 rewards careful reading: the etymological thread from Sanskrit through Arabic to Latin is the same journey the concepts of square, cube, and root made. Watch for students who recall the term mula only as “root” without connecting it to the inverse operation; the metaphor of a root as the thing from which a square or cube grows is worth dwelling on. Students who want a further challenge can explore why Aryabhata's algorithm for computing square roots (described in Aryabhatiyam) resembles the successive-subtraction method studied in section 1.1d.",
+          "materials": [
+            "board and chalk/markers",
+            "plain paper or notebooks"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 45,
+      "count": 7
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 1.3",
+            "section_title": "A Pinch of History",
+            "goal": "recall",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out Q9, section 1.1 p.11",
+            "anchor_description": "Count the total number of tiny squares in a given picture and write the prime factorisation of that count."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 1.intro",
+            "section_title": "Opening Puzzle: The Locker Problem",
+            "goal": "reason",
+            "anchor_id": "E-15",
+            "anchor_book_ref": "Math Talk, section 1.1 p.4",
+            "anchor_description": "Discuss patterns noticed in the table of squares of the first 30 natural numbers and share observations and conjectures."
+          },
+          {
+            "section_ref": "section 1.1a",
+            "section_title": "Patterns and Properties of Perfect Squares",
+            "goal": "reason",
+            "anchor_id": "E-16",
+            "anchor_book_ref": "Math Talk, section 1.1 p.4",
+            "anchor_description": "Discuss whether a number ending in 0, 1, 4, 5, 6, or 9 is always a perfect square."
+          },
+          {
+            "section_ref": "section 1.2",
+            "section_title": "Cubic Numbers",
+            "goal": "reason",
+            "anchor_id": "E-18",
+            "anchor_book_ref": "Math Talk, section 1.2 p.12",
+            "anchor_description": "Discuss patterns noticed in the table of cubes of natural numbers from 1 to 20."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 1.1c",
+            "section_title": "Perfect Squares and Triangular Numbers",
+            "goal": "apply",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out Q4, section 1.1 p.10",
+            "anchor_description": "Find the length of the side of a square whose area is 441 m²."
+          },
+          {
+            "section_ref": "section 1.1d",
+            "section_title": "Square Roots",
+            "goal": "apply",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 1.1 p.10",
+            "anchor_description": "Identify which of four given numbers (2032, 2048, 1027, 1089) are not perfect squares."
+          },
+          {
+            "section_ref": "section 1.2b",
+            "section_title": "Cube Roots",
+            "goal": "apply",
+            "anchor_id": "E-10",
+            "anchor_book_ref": "Figure it Out Q1, section 1.2 p.16",
+            "anchor_description": "Find the cube roots of 27000 and 10648."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 1.3",
+            "section_title": "A Pinch of History",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which Sanskrit term, used in Indian mathematical texts, means the same as what we today call the 'square root' of a number?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Ghana",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Jidhr",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Mula",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "Varga",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Mula is the Sanskrit term meaning root, corresponding to what we call square root (or cube root) today.",
+              "method_one_line": "Recall the Sanskrit mathematical vocabulary from section 1.3: varga = square, ghana = cube, mula = root.",
+              "what_each_option_reveals": {
+                "D": "The student confuses varga (which means square) with the term for its inverse operation.",
+                "A": "The student confuses ghana (which means cube) with the term for the root operation.",
+                "B": "The student recalls a term from the transmission chain (Arabic jidhr) but does not identify the original Sanskrit source."
+              },
+              "inclusivity": {
+                "support": "Re-read the historical passage and locate the Sanskrit terms alongside their meanings before answering.",
+                "challenge": "Name one more term from the Arabic or Latin transmission chain and explain which Sanskrit term it derived from."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q9, section 1.1 p.11",
+              "description": "Count the total number of tiny squares in a given picture and write the prime factorisation of that count."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 1.intro",
+            "section_title": "Opening Puzzle: The Locker Problem",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "In the locker problem, each of 100 people toggles every locker whose number is a multiple of their own position number. Locker 36 ends up open. Explain, using the idea of factors, why locker 36 is open but locker 35 is closed.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Locker 36 is toggled once for each factor of 36. The factors of 36 are 1, 2, 3, 4, 6, 9, 12, 18, 36 — nine factors in total, which is odd, so the locker ends in the open position. Locker 35 has factors 1, 5, 7, 35 — four factors, an even count — so it is toggled an even number of times and ends closed. A locker ends open exactly when its number is a perfect square, because perfect squares are the only natural numbers with an odd number of factors.",
+              "method_one_line": "Count factors of 36 and 35; a perfect square has an odd number of factors because one factor (the square root) is unpaired.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "List all the factors of 36 one by one, then count them — talk through your count with a partner before writing.",
+                "challenge": "What if there were 200 lockers? How many would end up open, and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 1.1 p.4",
+              "description": "Discuss patterns noticed in the table of squares of the first 30 natural numbers and share observations and conjectures."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 1.1a",
+            "section_title": "Patterns and Properties of Perfect Squares",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student claims: 'Any number whose units digit is 9 must be a perfect square.' Is this claim correct? Justify your answer with an example and a counter-example.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The claim is incorrect. While it is true that every perfect square whose square root ends in 3 or 7 will itself end in 9 (e.g., 3² = 9, 7² = 49), the converse does not hold. For example, 19 ends in 9 but is not a perfect square (its successive subtraction: 19 − 1 = 18, 18 − 3 = 15, 15 − 5 = 10, 10 − 7 = 3, which does not reach zero). The units-digit condition is necessary but not sufficient for a number to be a perfect square.",
+              "method_one_line": "Apply the units-digit property as a necessary (not sufficient) condition, and verify using successive subtraction of odd numbers.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Try the successive-subtraction test on 19: subtract 1, then 3, then 5, … and see if you reach exactly zero.",
+                "challenge": "Write a general statement about which units digits are impossible for perfect squares, and prove it using the multiplication table for units digits."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 1.1 p.4",
+              "description": "Discuss whether a number ending in 0, 1, 4, 5, 6, or 9 is always a perfect square."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 1.2",
+            "section_title": "Cubic Numbers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student says: 'No perfect cube can end in the digit 8, just as no perfect square can end in 2 or 3.' Evaluate this statement: is it true or false? Give a specific numerical example to support your answer.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The statement is false. Unlike perfect squares — which can only end in 0, 1, 4, 5, 6, or 9 — perfect cubes can end in any digit from 0 to 9. In particular, 2³ = 8, which is a perfect cube ending in 8. The student has incorrectly extended a property of squares to cubes; the units-digit behaviour of cubes is different because cubing a number ending in 2 gives a result ending in 8.",
+              "method_one_line": "Compute 2³ = 8 as a direct counterexample; recall that all 10 units digits are possible for perfect cubes, unlike perfect squares.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Make a table of n and n³ for n = 1 to 10 and read off the units digits — talk through what you notice with a partner.",
+                "challenge": "Which units digit of a cube uniquely determines the units digit of its cube root? Explain why this is different from the squares case."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 1.2 p.12",
+              "description": "Discuss patterns noticed in the table of cubes of natural numbers from 1 to 20."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 1.1c",
+            "section_title": "Perfect Squares and Triangular Numbers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "The 7th triangular number is 28 and the 8th triangular number is 36. Without computing the full prime factorisation, use the relationship between consecutive triangular numbers and perfect squares to write down the value of √(28 + 36) and verify that your answer is correct.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The sum of the 7th and 8th triangular numbers is 28 + 36 = 64. By the chapter's result — the sum of two consecutive triangular numbers Tₙ₋₁ and Tₙ equals n² — the 8th triangular number is T₈, so the sum T₇ + T₈ = 8² = 64. Therefore √64 = 8. Verification: 8 × 8 = 64. ✓",
+              "method_one_line": "Apply the result that the sum of the (n−1)th and nth triangular numbers equals n², identify n = 8, and read off the square root directly.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw dot-triangle diagrams for T₇ and T₈, then fit them together into a square array to see the result visually.",
+                "challenge": "Change the triangular numbers to T₁₁ and T₁₂ — predict the square root of their sum without any calculation, and explain your reasoning."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 1.1 p.10",
+              "description": "Find the length of the side of a square whose area is 441 m²."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 1.1d",
+            "section_title": "Square Roots",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Find the smallest natural number by which 1372 must be multiplied so that the product is a perfect square. Also find the square root of that product. Show your working using prime factorisation.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Prime factorisation of 1372: 1372 = 2 × 686 = 2 × 2 × 343 = 4 × 343 = 2² × 7³. For a perfect square every prime factor must appear an even number of times. Here 2 appears twice (already even) and 7 appears three times (odd). To make 7's count even, multiply by one more factor of 7. The smallest multiplier is 7. Product = 1372 × 7 = 9604 = 2² × 7⁴. Square root = 2¹ × 7² = 2 × 49 = 98.",
+              "method_one_line": "Prime-factorise 1372, identify the prime with an odd exponent (7³), multiply by 7 to complete the pair, then take one factor from each pair for the square root.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Use a factor tree to find the prime factorisation step by step, then circle the factors in pairs.",
+                "challenge": "Find the smallest number by which 1372 must be divided (instead of multiplied) to produce a perfect square, and find that square root."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 1.1 p.10",
+              "description": "Identify which of four given numbers (2032, 2048, 1027, 1089) are not perfect squares."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 1.2b",
+            "section_title": "Cube Roots",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A storage box is in the shape of a cube. Its volume is 17576 cubic centimetres. Find the length of one edge of the box using prime factorisation. Show all steps.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Prime factorisation of 17576: 17576 ÷ 2 = 8788; 8788 ÷ 2 = 4394; 4394 ÷ 2 = 2197; 2197 ÷ 13 = 169; 169 ÷ 13 = 13; 13 ÷ 13 = 1. So 17576 = 2³ × 13³ = (2 × 13)³ = 26³. The cube root is 26. Each edge of the box is 26 cm.",
+              "method_one_line": "Prime-factorise 17576 into triplets (2³ × 13³), take one factor from each triplet, and multiply to get the cube root: 2 × 13 = 26.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Start by dividing 17576 by 2 repeatedly until you cannot, then try the next prime — use a factor tree to keep track.",
+                "challenge": "If the volume were instead 17576 × 5 cubic centimetres, explain why the box could no longer be a perfect cube and find the smallest whole-number volume greater than this that would be a perfect cube."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 1.2 p.16",
+              "description": "Find the cube roots of 27000 and 10648."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

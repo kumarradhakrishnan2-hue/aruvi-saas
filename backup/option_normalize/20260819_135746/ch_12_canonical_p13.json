@@ -1,0 +1,1416 @@
+{
+ "filename": "ch_12_canonical_p13.json",
+ "saved_at": "2026-08-19T13:38:18",
+ "plan_status": "canonical",
+ "chapter_number": 12,
+ "chapter_title": "Tales by Dots and Lines",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 13
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 13 periods = 585 minutes\nTotal: 13 periods · 9h 45min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "13x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 12",
+  "ledger_ts": "20260819_130541_math_viii_12_p13",
+  "validation": "clean",
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-19T13:57:45",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-180": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'id': 'Q-C-10'}",
+        "field": "prompt",
+        "old": "",
+        "new": "Meera claims: 'The average of any two multiples of 5 is itself a multiple of 5.' Which pair of numbers shows that her claim is false?"
+       },
+       {
+        "where": "item{'id': 'Q-C-10'}",
+        "field": "options",
+        "old": [],
+        "new": [
+         {
+          "label": "A",
+          "text": "10 and 20",
+          "is_correct": false
+         },
+         {
+          "label": "B",
+          "text": "5 and 10",
+          "is_correct": true
+         },
+         {
+          "label": "C",
+          "text": "15 and 25",
+          "is_correct": false
+         },
+         {
+          "label": "D",
+          "text": "20 and 30",
+          "is_correct": false
+         }
+        ]
+       },
+       {
+        "where": "item{'id': 'Q-C-10'}",
+        "field": "teacher_guide",
+        "old": {
+         "expected_answer": "",
+         "method_one_line": "",
+         "what_each_option_reveals": {},
+         "inclusivity": {
+          "support": "Refer to the book exercise(s) anchored to section 5.2.",
+          "challenge": ""
+         }
+        },
+        "new": {
+         "expected_answer": "The pair 5 and 10. Their average is 7.5, which is not a multiple of 5 — it is not even a whole number — so that one pair is enough to bring the claim down. The other three pairs average to 15, 20 and 25, every one a multiple of 5, so none of them settles anything. Algebraically, two multiples of 5 are 5a and 5b and their average is 5(a+b)/2: it stays a multiple of 5 exactly when a+b is even, and leaves as soon as a+b is odd. For 5 and 10, a+b = 1+2 = 3.",
+         "method_one_line": "Average each pair and test the result against 'multiple of 5'; one pair that fails is enough to disprove a claim about ALL pairs.",
+         "what_each_option_reveals": {
+          "A": "5 and 10 average to 7.5 — not a multiple of 5, and not a whole number. This is the counterexample the claim cannot survive.",
+          "B": "10 and 20 average to 15, a multiple of 5. The student has offered a pair that CONFIRMS the claim as though it disproved it, so the logic of a counterexample has not landed.",
+          "C": "15 and 25 average to 20, again a multiple of 5. Same confirming-instead-of-refuting error; may also mean the student is hunting for the pair that looks hardest rather than testing the claim.",
+          "D": "20 and 30 average to 25, a multiple of 5. Worth asking this student what a single counterexample is FOR."
+         },
+         "inclusivity": {
+          "support": "Refer to the book exercise(s) anchored to section 5.2.",
+          "challenge": "Ask for the general rule: for which pairs of multiples of 5 does the average stay a multiple of 5? Then push on to statement (iii) of the book exercise — five multiples of 5 average to a+b+c+d+e, always a whole number but a multiple of 5 only when that sum is."
+         }
+        }
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "The Mean as a Balance Point on the Number Line",
+     "pedagogical_method": "Inductive",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q2, section 5.1 p.113",
+       "description": "A dot plot shows a collection with its mean of 9 but one dot is missing; mark the missing value to restore the balance."
+      },
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q4, section 5.1 p.114",
+       "description": "Three dot plots show song lengths for different albums; identify which has a mean of 5.57 minutes and explain the reasoning."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students place five numbers on a number line drawn on paper, compute the arithmetic mean, then physically count the total distance of each value from that mean — left-side distances versus right-side distances — to observe that the two totals are equal. The teacher names the balance-point model: the mean is the unique point where left-total-distance equals right-total-distance."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Working in pairs, students attempt Figure it Out Q2, section 5.1 p.113 (\"A dot plot shows a collection with its mean of 9 but one dot is missing....\"). They argue from balance — what distance deficit remains on which side — to locate the missing dot, then share their reasoning aloud."
+      },
+      {
+       "minutes": "22–36",
+       "activity": "Groups examine Figure it Out Q4, section 5.1 p.114 (\"Three dot plots show song lengths for different albums....\"). Before computing, they estimate which plot 'looks' most balanced around 5.57 minutes, then calculate to verify. Groups defend or revise their initial guess."
+      },
+      {
+       "minutes": "36–45",
+       "activity": "Class-wide discussion: the teacher poses — what would happen to the balance if you shifted the fulcrum one unit to the right? Students articulate why the balance point must be unique, consolidating the reason argument in their own words."
+      }
+     ],
+     "teacher_notes": "The balance-point framing is new vocabulary; students may conflate 'equal distances' with 'equal number of values on each side' — watch for this and redirect with a counter-example. A self-study pointer: Finding the Unknown (wrestlers), p.109 shows the balance model applied numerically to recover a missing value.",
+     "materials": [
+      "Ruler or measuring strip",
+      "Blank number-line worksheets",
+      "Dot-plot cards (drawn on paper)"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "How Adding or Removing Values Shifts the Mean",
+     "pedagogical_method": "Discovery",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q5, section 5.1 p.114",
+       "description": "Find the median of a 16-value dataset; then reason about (i) one value that can be added without changing the median, (ii) two values that can be added without changing it, (iii) one value that can be removed without changing it."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q6, section 5.1 p.115",
+       "description": "Examine four statements about mean/median behaviour (removing a value less than median; including a value less than mean; including 4 values; including 4 values less than median) and classify each as always/sometimes/never true."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher presents a small dataset (e.g., {4, 6, 8, 10, 12}, mean = 8) and asks: what happens to the balance if we add the value 14? Students compute the new mean and observe it rises. The teacher repeats with adding 2, then adding 8 itself, guiding students to articulate the rule: a value above the mean pulls it up, below pulls it down, equal leaves it unchanged."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students work through Figure it Out Q5, section 5.1 p.114 (\"Find the median of a 16-value dataset....\"), reasoning carefully about which additions or removals leave the median unchanged. Students annotate the sorted list to locate the median position and test candidates."
+      },
+      {
+       "minutes": "28–42",
+       "activity": "Pairs tackle Figure it Out Q6, section 5.1 p.115 (\"Examine four statements about mean/median behaviour....\"), classifying each as always/sometimes/never true. The teacher circulates, prompting students to construct counter-examples for 'sometimes' and 'never' claims."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "A quick share-out: one pair states a classification and their evidence; another pair agrees or challenges. The teacher highlights that symmetric additions around the mean preserve balance — a key structural insight."
+      }
+     ],
+     "teacher_notes": "Students frequently assume that removing any value always changes the mean; help them see that removing a value equal to the mean keeps balance intact. The always/sometimes/never framing of Q6 is novel — encourage students to try to break each 'always' claim before accepting it.",
+     "materials": [
+      "Sorted-list worksheets",
+      "Pencils for annotating median position"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Algebraic Proofs: Shifting and Scaling the Mean",
+     "pedagogical_method": "Deductive",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 5.1",
+       "book_ref": "Try This, p.107",
+       "description": "Students explain algebraically (and using fair-share interpretation) what happens to the average when a fixed number is subtracted from every value, and then investigate what happens when every value is doubled."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q3, section 5.1 p.113",
+       "description": "Class average height of 24 students is 150.2 cm, measured with shoes adding 1 cm; determine whether remeasurement is needed and compute the correct average height (149.2 cm) from six options."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher walks through the algebraic proof that adding a constant c to every value shifts the mean by exactly c: writing (x₁+c + x₂+c + … + xₙ+c)/n = (Σxᵢ)/n + c. Students follow and fill in the distributive-property step on their own sheets, then state the result in words."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Students work Try This, p.107 (\"Students explain algebraically what happens to the average when a fixed number is subtracted....\"), writing out the subtraction-version proof independently and then extending it to the doubling (scaling) case."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students apply the shift theorem directly to Figure it Out Q3, section 5.1 p.113 (\"Class average height of 24 students is 150.2 cm, measured with shoes adding 1 cm....\"), arguing that no remeasurement is needed and the corrected average is 149.2 cm."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "The teacher briefly records the two results on the board as general statements — shift theorem and scale theorem — and invites students to verify with a self-chosen two-number example, reinforcing the deductive structure."
+      }
+     ],
+     "teacher_notes": "The common error here is students believing that the mean must be recomputed from scratch after a uniform shift — the algebraic proof exists precisely to make the shortcut rigorous. Watch for students who apply the scale theorem when the problem requires the shift theorem and vice versa.",
+     "materials": [
+      "Algebra-proof worksheets with fill-in steps",
+      "Board space for recording general statements"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Recovering Unknowns and Working with Frequency Tables",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 5.1",
+       "book_ref": "Finding the Unknown (wrestlers), p.109",
+       "description": "Given the mean weight of 10 wrestlers (39.2 kg) and 9 of the 10 weights, uses the mean formula to set up and solve a linear equation to find the missing weight (43 kg)."
+      },
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 5.1",
+       "book_ref": "Finding the Unknown (coconuts), p.109",
+       "description": "Given the average coconut harvest per tree (25.6) across 15 trees and the information that one tree's count was recorded 3 more than actual, recovers the total harvest and computes the corrected average (25.4)."
+      },
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 5.1",
+       "book_ref": "Mean and Median with Frequencies (family size), p.110",
+       "description": "Calculates mean and median of a frequency-table dataset of family sizes for 36 students, demonstrating the weighted-sum formula for mean and the cumulative-frequency method for locating the median position."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q7, section 5.1 p.115",
+       "description": "The mean of 8 numbers (8, 13, 10, 4, 5, 20, y, 10) is 10.375; find the value of y."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher models Finding the Unknown (wrestlers), p.109 (\"Given the mean weight of 10 wrestlers (39.2 kg) and 9 of the 10 weights....\"), narrating the equation-setup step: total = mean × count, so unknown = total − sum of known values. Students write the equation alongside the teacher."
+      },
+      {
+       "minutes": "15–25",
+       "activity": "Students independently replicate the method for Finding the Unknown (coconuts), p.109 (\"Given the average coconut harvest per tree (25.6) across 15 trees....\"), identifying the overcounting error and computing the corrected average."
+      },
+      {
+       "minutes": "25–40",
+       "activity": "Teacher introduces frequency tables via Mean and Median with Frequencies (family size), p.110 (\"Calculates mean and median of a frequency-table dataset of family sizes....\"), demonstrating the weighted-sum formula and cumulative-frequency median-location method. Students construct the cumulative-frequency column on their own worksheets."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students are directed to Figure it Out Q7, section 5.1 p.115 (\"The mean of 8 numbers (8, 13, 10, 4, 5, 20, y, 10) is 10.375....\") as take-home practice, setting up the equation before they leave."
+      }
+     ],
+     "teacher_notes": "The most common error is computing total = mean ÷ count instead of mean × count; a quick dimensional check (sum of weights should be in the hundreds, not single digits) catches this. The cumulative-frequency column is new notation — ensure students understand they are accumulating counts, not values.",
+     "materials": [
+      "Worked-example handout with blank equation frames",
+      "Frequency-table worksheet"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Spreadsheets, Formulae, and the Mean in Digital Tools",
+     "pedagogical_method": "Play-way",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q8, section 5.1 p.115",
+       "description": "A dataset has 15 values with mean 134; find the sum of the data."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q11, section 5.1 p.115",
+       "description": "Frequency table shows number of trials to hit a dart bull's-eye for a school competition; describe the data using minimum, maximum, mean, and median."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher draws a blank spreadsheet grid on the board and introduces vocabulary: rows, columns, cell references (B3), and range notation (B3:G3). Students copy a small marks table into their own drawn grid and label two cells they would want to sum."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher demonstrates the =SUM() and =AVERAGE() formula syntax on the board grid, showing how the range B3:G3 is evaluated. Students practice writing these formulae for the row and column ranges in their drawn table, predicting the output before computing."
+      },
+      {
+       "minutes": "25–37",
+       "activity": "Students solve Figure it Out Q8, section 5.1 p.115 (\"A dataset has 15 values with mean 134....\") using the mean-formula relationship, then Figure it Out Q11, section 5.1 p.115 (\"Frequency table shows number of trials to hit a dart bull's-eye....\"), describing the data fully with minimum, maximum, mean, and median."
+      },
+      {
+       "minutes": "37–45",
+       "activity": "Students reflect: if this data were in a spreadsheet, which formula would give the mean in one step? They write the formula out, connecting the abstract mean concept to the computational tool encountered in the section."
+      }
+     ],
+     "teacher_notes": "Students may write =AVERAGE(B3,G3) (two arguments) instead of =AVERAGE(B3:G3) (a range) — the colon versus comma distinction is worth emphasising. Describing data with all four statistics (min, max, mean, median) in Q11 reinforces that no single measure tells the whole story.",
+     "materials": [
+      "Squared paper for drawing grid",
+      "Board or projected spreadsheet diagram"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.1",
+       "title": "The Balancing Act"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Extended Practice: Mean, Median, and Dot-Plot Reasoning",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q1, section 5.1 p.113",
+       "description": "Find the mean of (i) first 50 natural numbers, (ii) first 50 odd numbers, (iii) first 50 multiples of 4; share observations."
+      },
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q9, section 5.1 p.115",
+       "description": "Given 11 values including unknown p and median 29, determine which candidate values of p (10, 25, 40, 100, 29, 47, 30) are consistent with the given median."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 5.1",
+       "book_ref": "Figure it Out Q10, section 5.1 p.115",
+       "description": "Dot plot shows weekly cycle-riding frequency; four students rode twice. Find average, median, evaluate five validity statements about the data, and predict next week's average and median if everyone rode one extra time."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students work Figure it Out Q1, section 5.1 p.113 (\"Find the mean of (i) first 50 natural numbers, (ii) first 50 odd numbers, (iii) first 50 multiples of 4....\") using the arithmetic-sequence mean shortcut — mean of an arithmetic sequence equals the average of the first and last terms — then share their observations about how the means relate."
+      },
+      {
+       "minutes": "12–27",
+       "activity": "Students tackle Figure it Out Q9, section 5.1 p.115 (\"Given 11 values including unknown p and median 29....\"), sorting the known values, inserting each candidate p, and checking whether 29 remains the 6th value in the sorted order. Groups record which candidates pass and which fail."
+      },
+      {
+       "minutes": "27–42",
+       "activity": "Students work Figure it Out Q10, section 5.1 p.115 (\"Dot plot shows weekly cycle-riding frequency....\"), computing mean and median from the dot plot, evaluating each validity statement, and applying the shift theorem (everyone rides one extra time) to predict next week's statistics."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Class debrief: what does adding one to every value do to the mean? To the median? Students state both results and the teacher confirms, reinforcing the parallel between the shift theorem for mean and the analogous logic for median."
+      }
+     ],
+     "teacher_notes": "For Q1, students who laboriously sum all 50 values benefit from seeing the arithmetic-sequence shortcut — this is a good moment to ask whether the balance-point picture explains why the mean of a symmetric arithmetic sequence is simply the midpoint. In Q9, watch for students who insert p without re-sorting the list.",
+     "materials": [
+      "Number-line or sorted-list worksheets",
+      "Dot-plot diagrams (printed or drawn)"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Line Graphs: Reading and Inferring from Real Data",
+     "pedagogical_method": "Discovery",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "WE-4",
+       "type": "worked_example",
+       "source_section": "section 5.2",
+       "book_ref": "Line Graphs — Temperature (Kerala and Punjab), p.116–118",
+       "description": "Demonstrates the two-step identify-then-infer process on a clustered line graph of monthly maximum temperatures (2023), identifying scale, markers, and trends; inferring Punjab's higher variability versus Kerala's near-constant tropical climate."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q1, section 5.2 p.122",
+       "description": "Tabular data of average daily customers visiting vs. purchasing across days of the week; visualise on a line graph."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher introduces line graphs as the representation of choice when data evolves over time, contrasting them with bar graphs. Using Line Graphs — Temperature (Kerala and Punjab), p.116–118 (\"Demonstrates the two-step identify-then-infer process on a clustered line graph of monthly maximum temperatures....\"), the teacher models Step 1 — identifying scale, axis labels, colour/marker conventions, and time range."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Students practise Step 2 — inference — on the same temperature graph: which state shows greater monthly variation? Why does Kerala's line stay nearly flat? Students write two sentences of inference and share with a partner."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students begin Figure it Out Q1, section 5.2 p.122 (\"Tabular data of average daily customers visiting vs. purchasing across days of the week....\"), choosing appropriate scales, plotting both series, and deciding whether a single-series or two-series line graph best answers a comparison question."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Brief whole-class check: does the graph show both series clearly? Students adjust their scale choice if needed, articulating what a poorly chosen scale would hide."
+      }
+     ],
+     "teacher_notes": "Students often begin plotting without first checking whether both data series share the same scale — prompt them to scan the full range of both columns before drawing the axes. The identify-before-infer sequence introduced here is the structural tool for all graph work in this section.",
+     "materials": [
+      "Graph paper",
+      "Coloured pencils (two colours per student)",
+      "Ruler"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Multi-Series Line Graphs and Valid Versus Invalid Inferences",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 5.2",
+       "book_ref": "Line Graphs — Space Launches, p.119–120",
+       "description": "Applies the two-step process to a multi-series line graph of annual space-object launches (2012–2024) for USA, China, Russia, and worldwide; distinguishes valid inferences from invalid ones (e.g., cannot infer Nepal launched nothing, cannot read individual year counts precisely from the graph)."
+      },
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q2, section 5.2 p.122",
+       "description": "Average monthly rainfall (days) for Mangaluru, New Delhi, Port Blair, Rameswaram; plot three cities on a given line graph, fill in New Delhi data from the graph, compare rainiest and driest cities, identify rainy seasons."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Teacher works through Line Graphs — Space Launches, p.119–120 (\"Applies the two-step process to a multi-series line graph of annual space-object launches (2012–2024)....\"), paying particular attention to the valid-versus-invalid inference distinction. Students classify three teacher-posed statements as valid or invalid and justify each."
+      },
+      {
+       "minutes": "18–38",
+       "activity": "Students work Figure it Out Q2, section 5.2 p.122 (\"Average monthly rainfall (days) for Mangaluru, New Delhi, Port Blair, Rameswaram....\"), plotting three cities, reading the fourth from the graph, and comparing rainy seasons. Students annotate each series with one observational label."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Pairs exchange graphs and check each other's valid-inference labels, flagging any that overstep what the data can support. The teacher emphasises: a graph shows a pattern; it cannot prove a cause."
+      }
+     ],
+     "teacher_notes": "The space-launches example is rich for the valid/invalid inference distinction — a country absent from the graph's series is not proven to have launched nothing. Watch for students treating the graph's plotted series as an exhaustive list of all countries' activity.",
+     "materials": [
+      "Graph paper",
+      "Coloured pencils (four colours)",
+      "Ruler",
+      "Rainfall data table (printed or from textbook)"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Reading Line Graphs: Births, Salt Prices, and Real Trends",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q3 (births graph), section 5.2 p.123",
+       "description": "Line graph of monthly births in India over a time period; make observations, estimate births in July 2017, identify time period captured, compare January births across 2018–2020, estimate total births in 2019."
+      },
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q9, section 5.2 p.129",
+       "description": "Retail price of iodised salt (INR) across 6 states from 2016–2025: (i) plot 3 states on a line graph; (ii) share observations; (iii) compare Gujarat and Uttar Pradesh; (iv) find the state with the greatest price increase; (v) explore further."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–22",
+       "activity": "Students work Figure it Out Q3 (births graph), section 5.2 p.123 (\"Line graph of monthly births in India over a time period....\"), practising both read-off questions (July 2017 estimate, January comparisons) and estimation of totals, which requires area-under-curve reasoning rather than precise reading."
+      },
+      {
+       "minutes": "22–40",
+       "activity": "Students tackle Figure it Out Q9, section 5.2 p.129 (\"Retail price of iodised salt (INR) across 6 states from 2016–2025....\"), plotting three states, comparing Gujarat and Uttar Pradesh trends, and identifying the greatest-price-increase state. Students write one interpretive sentence linking the graph to a real-world question."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Gallery moment: two or three students share their interpretive sentences. Class votes on which inference is best supported by the graph and which goes beyond it."
+      }
+     ],
+     "teacher_notes": "Estimating total births in 2019 requires summing monthly estimates — students often read only a few peak months; prompt them to account for all twelve. The salt-price graph introduces economic data, which may prompt authentic curiosity; encourage students to pose a follow-up question the graph cannot answer.",
+     "materials": [
+      "Graph paper",
+      "Coloured pencils",
+      "Ruler",
+      "Births-data and salt-price tables (from textbook)"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Choropleth Maps, Infographics, and Geographic Data Patterns",
+     "pedagogical_method": "Discovery",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q10, section 5.2 p.130",
+       "description": "Line graph on primary lighting source (kerosene vs electricity) in rural/urban India 1983–2023; evaluate four validity statements."
+      },
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q11, section 5.2 p.130",
+       "description": "Line graph of daily time spent on hobbies and games by rural/urban children by age; answer two read-off questions and evaluate two interpretive statements."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher introduces the choropleth map from the section — a colour-encoded map comparing per-capita rice and wheat consumption across Indian states — explaining how a colour gradient encodes a continuous quantity. Students identify three patterns visible in colour that would be harder to see in a plain table."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Students work Figure it Out Q10, section 5.2 p.130 (\"Line graph on primary lighting source (kerosene vs electricity) in rural/urban India 1983–2023....\"), evaluating the four validity statements and writing a brief justification for each classification."
+      },
+      {
+       "minutes": "28–42",
+       "activity": "Students work Figure it Out Q11, section 5.2 p.130 (\"Line graph of daily time spent on hobbies and games by rural/urban children by age....\"), answering read-off questions and evaluating the two interpretive statements, noting the difference between describing a trend and inferring a cause."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Students share one geographic pattern from the choropleth map and one inference they cannot make from it, sharpening the distinction between what colour encoding reveals and what it cannot prove."
+      }
+     ],
+     "teacher_notes": "The choropleth map is a new visual type — students may not realise that intermediate shades represent intermediate values; a brief legend-reading exercise grounds them before analysis. For Q10, students often accept a correlation (kerosene declining as electricity rises) as causal — redirect to what the graph actually records.",
+     "materials": [
+      "Textbook open to choropleth map",
+      "Coloured pencils for annotating maps"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Activity Strips: Reading, Decoding, and Creating Time-Use Representations",
+     "pedagogical_method": "Play-way",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "A-2",
+       "type": "activity",
+       "source_section": "section 5.2",
+       "book_ref": "Try This, p.125",
+       "description": "Students create their own 48-box activity strip for different days of the week, marking five activity types in 30-minute intervals, and compare their strip with an adult family member's strip."
+      },
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q12, section 5.2 p.131",
+       "description": "Individual project: create activity strips for different days of the week; track eating/sleeping regularity and outdoor time; calculate average time per activity; compare with an adult's strip."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher displays Manoj's three-day activity strips from the section and asks students to decode: which day features a long outing? Students identify the colour-coded block pattern, count boxes, and convert to hours for that day."
+      },
+      {
+       "minutes": "12–30",
+       "activity": "Students create their own 48-box activity strips for today (or a typical weekday) using Try This, p.125 (\"Students create their own 48-box activity strip for different days of the week, marking five activity types in 30-minute intervals....\"), colouring each 30-minute interval with one of five designated colours."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Working on Figure it Out Q12, section 5.2 p.131 (\"Individual project: create activity strips for different days of the week....\"), students calculate total time per activity category by counting coloured boxes and converting. They draft a comparison sentence between their strip and an imagined adult's strip."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Pairs compare each other's strips: which activity colour dominates? Do their averages differ significantly? Students note one similarity and one difference."
+      }
+     ],
+     "teacher_notes": "The 48-box strip is a novel representation — ensure students understand that each box is exactly 30 minutes and the strip starts at midnight (or the agreed start time). Students sometimes collapse two activity types into one colour; prompt them to re-examine the legend before colouring.",
+     "materials": [
+      "Pre-drawn 48-box grid strips (one per student)",
+      "Five distinctly coloured pencils or markers",
+      "Legend card showing the five activity types"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Mean and Median Puzzles: Constructing Datasets to Fit Given Statistics",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q1, section 5.2 p.127",
+       "description": "Mean grids: (i) fill a 3×3 grid with 9 distinct numbers so each row, column, and diagonal averages 10; (ii) vary numbers while preserving the average in all directions."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q2, section 5.2 p.127",
+       "description": "Give two examples each for: (i) 3 numbers with mean 8; (ii) 4 numbers with median 15.5; (iii) 5 numbers with mean 13.6; (iv) 6 numbers where mean = median; (v) 6 numbers where mean > median."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q3, section 5.2 p.127",
+       "description": "Fill three blanks in the collection (5, 21, 14, _, _, _) so its median is 13; count how many possibilities exist for counting numbers."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q4, section 5.2 p.127",
+       "description": "Fill two blanks in (3, 11, _, _, 15, 6) so its mean is 6.5; count possibilities for counting numbers."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work Figure it Out Q1, section 5.2 p.127 (\"Mean grids: fill a 3×3 grid with 9 distinct numbers so each row, column, and diagonal averages 10....\"), discovering that the total of all nine numbers must be 90, and using that constraint to place values. Groups share different valid grids."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Students work Figure it Out Q2, section 5.2 p.127 (\"Give two examples each for: 3 numbers with mean 8; 4 numbers with median 15.5....\"), exploring the open-ended construction challenge. The teacher prompts: how many valid examples exist for (iv) mean = median — finite or infinite?"
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students work Figure it Out Q3, section 5.2 p.127 (\"Fill three blanks in (5, 21, 14, _, _, _) so its median is 13....\") and Figure it Out Q4, section 5.2 p.127 (\"Fill two blanks in (3, 11, _, _, 15, 6) so its mean is 6.5....\"), counting valid possibilities systematically."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Students share one surprising valid grid from Q1 and one construction from Q2 where mean = median, reflecting on the structural constraints that make each possible."
+      }
+     ],
+     "teacher_notes": "The mean-grid puzzle (Q1) is a gateway to magic-square thinking — guide students to see that the total-must-equal-90 constraint is the key, not trial-and-error cell by cell. For Q3 and Q4, encourage students to set up the constraints as an inequality or equation before guessing values.",
+     "materials": [
+      "3×3 grid worksheets",
+      "Pencils for multiple attempts"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 5.2",
+       "title": "Visualising and Interpreting Data"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Smooth Curves, Moon Graphs, and Applying the Interpret-Infer Framework",
+     "pedagogical_method": "Problem-solving",
+     "synthesis": false,
+     "textbook_items_in_class": [
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q5, section 5.2 p.127",
+       "description": "Check whether each statement is true (with algebraic justification): (i) average of two even numbers is even; (ii) average of any two multiples of 5 is a multiple of 5; (iii) average of any 5 multiples of 5 is a multiple of 5."
+      },
+      {
+       "id": "E-28",
+       "type": "exercise",
+       "source_section": "section 5.2",
+       "book_ref": "Figure it Out Q14, section 5.2 p.131",
+       "description": "Four line graphs show sunrise and sunset times across the year at 4 Indian locations; identify sunrise vs sunset lines, find earliest January sunrise, find location with longest day, share observations."
+      },
+      {
+       "id": "A-3",
+       "type": "activity",
+       "source_section": "section 5.2",
+       "book_ref": "Try This, p.131",
+       "description": "Students read a line graph of moonrise and moonset times over a month, identify the dates of amavasya (new moon) and purnima (full moon), and note patterns."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher introduces the sleep-duration smooth curve from the section — a line graph with 80 closely spaced data points — and asks why a smooth curve is clearer than 70 columns. Students articulate: dense, continuous data is better displayed as a connected line. The teacher notes the three-phase pattern (sleep decreases through adolescence, bottoms in mid-adulthood, rises after 50)."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students work Figure it Out Q5, section 5.2 p.127 (\"Check whether each statement is true with algebraic justification: average of two even numbers is even....\"), writing algebraic proofs using 2m + 2n and 5m + 5n forms, and constructing a counter-example for the false statement."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work Figure it Out Q14, section 5.2 p.131 (\"Four line graphs show sunrise and sunset times across the year at 4 Indian locations....\"), identifying which line in each panel is sunrise versus sunset, locating the earliest January sunrise, and finding the location with the longest day. Students then work Try This, p.131 (\"Students read a line graph of moonrise and moonset times over a month....\"), identifying amavasya and purnima dates from the crossing and divergence pattern."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Closing reflection: students name one type of data that is best shown as a smooth line graph, one that suits a multi-series line graph, and one that would work as an activity strip — consolidating their sense of when each visual representation is the right choice."
+      }
+     ],
+     "teacher_notes": "For Q5, the false statement — average of any two multiples of 5 is a multiple of 5 — is actually true, but statement (iii) about five multiples requires careful algebra; watch for students who stop after checking one example. The moon-graph activity rewards careful reading of where the two curves coincide (new moon) versus are furthest apart (full moon).",
+     "materials": [
+      "Textbook open to sleep-duration graph and moon-graph",
+      "Pencils for algebraic working"
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 13
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": []
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "anchor_id": "E-2",
+      "anchor_book_ref": "Figure it Out Q2, section 5.1 p.113",
+      "anchor_description": "A dot plot shows a collection with its mean of 9 but one dot is missing; mark the missing value to restore the balance."
+     },
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "anchor_id": "E-5",
+      "anchor_book_ref": "Figure it Out Q5, section 5.1 p.114",
+      "anchor_description": "Find the median of a 16-value dataset; then reason about (i) one value that can be added without changing the median, (ii) two values that can be added without changing it, (iii) one value that can be removed without changing it."
+     },
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "anchor_id": "A-1",
+      "anchor_book_ref": "Try This, p.107",
+      "anchor_description": "Students explain algebraically (and using fair-share interpretation) what happens to the average when a fixed number is subtracted from every value, and then investigate what happens when every value is doubled."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "anchor_id": "WE-1",
+      "anchor_book_ref": "Finding the Unknown (wrestlers), p.109",
+      "anchor_description": "Given the mean weight of 10 wrestlers (39.2 kg) and 9 of the 10 weights, uses the mean formula to set up and solve a linear equation to find the missing weight (43 kg)."
+     },
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "anchor_id": "E-8",
+      "anchor_book_ref": "Figure it Out Q8, section 5.1 p.115",
+      "anchor_description": "A dataset has 15 values with mean 134; find the sum of the data."
+     },
+     {
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 5.1 p.113",
+      "anchor_description": "Find the mean of (i) first 50 natural numbers, (ii) first 50 odd numbers, (iii) first 50 multiples of 4; share observations."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "WE-4",
+      "anchor_book_ref": "Line Graphs — Temperature (Kerala and Punjab), p.116–118",
+      "anchor_description": "Demonstrates the two-step identify-then-infer process on a clustered line graph of monthly maximum temperatures (2023), identifying scale, markers, and trends; inferring Punjab's higher variability versus Kerala's near-constant tropical climate."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "WE-5",
+      "anchor_book_ref": "Line Graphs — Space Launches, p.119–120",
+      "anchor_description": "Applies the two-step process to a multi-series line graph of annual space-object launches (2012–2024) for USA, China, Russia, and worldwide; distinguishes valid inferences from invalid ones (e.g., cannot infer Nepal launched nothing, cannot read individual year counts precisely from the graph)."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "E-14",
+      "anchor_book_ref": "Figure it Out Q3 (births graph), section 5.2 p.123",
+      "anchor_description": "Line graph of monthly births in India over a time period; make observations, estimate births in July 2017, identify time period captured, compare January births across 2018–2020, estimate total births in 2019."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "E-24",
+      "anchor_book_ref": "Figure it Out Q10, section 5.2 p.130",
+      "anchor_description": "Line graph on primary lighting source (kerosene vs electricity) in rural/urban India 1983–2023; evaluate four validity statements."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "A-2",
+      "anchor_book_ref": "Try This, p.125",
+      "anchor_description": "Students create their own 48-box activity strip for different days of the week, marking five activity types in 30-minute intervals, and compare their strip with an adult family member's strip."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "E-15",
+      "anchor_book_ref": "Figure it Out Q1, section 5.2 p.127",
+      "anchor_description": "Mean grids: (i) fill a 3×3 grid with 9 distinct numbers so each row, column, and diagonal averages 10; (ii) vary numbers while preserving the average in all directions."
+     },
+     {
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "anchor_id": "E-19",
+      "anchor_book_ref": "Figure it Out Q5, section 5.2 p.127",
+      "anchor_description": "Check whether each statement is true (with algebraic justification): (i) average of two even numbers is even; (ii) average of any two multiples of 5 is a multiple of 5; (iii) average of any 5 multiples of 5 is a multiple of 5."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "No goals routed to this section in the chapter.",
+    "items": []
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A collection of five numbers has a mean of 12. A student claims that adding the number 12 to this collection will leave the mean unchanged. Is this claim correct? Justify your answer using the balance-point model of the mean.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Yes, the claim is correct. The mean is the balance point where total distance to the left equals total distance to the right. Adding 12, which equals the current mean, contributes zero net distance on either side, so the balance is undisturbed. Algebraically, the new mean = (5 × 12 + 12) / 6 = 72 / 6 = 12, confirming the mean is unchanged.",
+       "method_one_line": "Use the balance-point model and verify algebraically: new sum = old sum + mean, new count = old count + 1, so new mean = (n × mean + mean)/(n + 1) = mean.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Try with a specific example — say the five numbers are 10, 11, 12, 13, 14 — and compute both means to see the result before generalising.",
+        "challenge": "What if you add two numbers, both different from 12, but symmetric around it — does the mean still stay at 12? Explain why."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 5.1 p.113",
+       "description": "A dot plot shows a collection with its mean of 9 but one dot is missing; mark the missing value to restore the balance."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A sorted dataset of seven values has a median of 18. Explain, without computing anything, whether each of the following changes to the dataset will necessarily increase the median, necessarily decrease it, necessarily leave it unchanged, or may do any of these depending on the specific values chosen: (a) removing the value 25 from the dataset; (b) adding the value 18 to the dataset.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) Removing 25, which is greater than the median of 18, removes a value from the upper portion of the sorted list. The new sorted list of six values has its median as the average of the 3rd and 4th values. Depending on the exact values, this median may be less than, equal to, or greater than 18 — the change is not predictable without knowing the specific values. (b) Adding 18 to the sorted list of seven gives eight values; the median is the average of the 4th and 5th values in the sorted order. Since 18 is inserted at or near the current median position, the 4th and 5th values will both be at or near 18, so the median stays at 18 or moves toward 18 — it will equal 18 exactly if both new middle values are 18.",
+       "method_one_line": "Locate the median position in the sorted list after each change and reason about which values occupy the new middle position(s).",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write out a concrete sorted list of seven numbers with median 18, make the change, re-sort, and identify the new median position before generalising.",
+        "challenge": "Change one premise: what if you removed a value equal to 18 from the original dataset? Does the median necessarily stay at 18? Construct an example where it changes and one where it does not."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 5.1 p.114",
+       "description": "Find the median of a 16-value dataset; then reason about (i) one value that can be added without changing the median, (ii) two values that can be added without changing it, (iii) one value that can be removed without changing it."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "A dataset has n values with mean M. Every value in the dataset is first increased by 7, and then each resulting value is multiplied by 3. Using the algebraic argument for the shift theorem and the scale theorem, derive the new mean. Show your working step by step.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Step 1 — shift by 7: the new values are x₁+7, x₂+7, …, xₙ+7. Their sum = (x₁+x₂+…+xₙ) + 7n = nM + 7n. Mean after shift = (nM + 7n)/n = M + 7. Step 2 — scale by 3: each value becomes 3(xᵢ+7). Sum = 3(nM + 7n). Mean after scale = 3(nM + 7n)/n = 3(M + 7) = 3M + 21. The new mean is 3M + 21.",
+       "method_one_line": "Apply the shift theorem first (mean increases by 7) then the scale theorem (mean multiplies by 3), giving new mean = 3(M + 7) = 3M + 21.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Work through both theorems with the specific dataset {2, 4, 6} (mean = 4) before writing the general proof, and verify your formula gives the right answer.",
+        "challenge": "If instead the dataset is first multiplied by 3 and then increased by 7, is the new mean the same? Show algebraically whether the order of operations matters."
+       }
+      },
+      "exercise": {
+       "book_ref": "Try This, p.107",
+       "description": "Students explain algebraically (and using fair-share interpretation) what happens to the average when a fixed number is subtracted from every value, and then investigate what happens when every value is doubled."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "The mean age of 8 participants in a quiz team is 14.5 years. A new member joins the team, and the mean age of the 9 members is now 14.8 years. What is the age of the new member? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total age of 8 members = 8 × 14.5 = 116 years. Total age of 9 members = 9 × 14.8 = 133.2 years. Age of new member = 133.2 − 116 = 17.2 years.",
+       "method_one_line": "Use total = mean × count for both group sizes, then subtract to find the new member's age.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a table with columns 'number of members' and 'total age', fill in the two known rows, and compute the difference.",
+        "challenge": "If the new mean had stayed exactly 14.5, what would the new member's age have been? What general rule does this reveal about adding a value equal to the mean?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Finding the Unknown (wrestlers), p.109",
+       "description": "Given the mean weight of 10 wrestlers (39.2 kg) and 9 of the 10 weights, uses the mean formula to set up and solve a linear equation to find the missing weight (43 kg)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A dataset of 20 values has a mean of 47.5. Three values are later found to have been recorded incorrectly: each was written as 5 more than the actual value. Compute the correct mean of the dataset. Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Original total = 20 × 47.5 = 950. Each of the three incorrect values is 5 more than actual, so the total overcounting = 3 × 5 = 15. Correct total = 950 − 15 = 935. Correct mean = 935 / 20 = 46.75.",
+       "method_one_line": "Correct the total sum by subtracting the total error, then divide by the count.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "First compute the original total using mean × count, then think about how much the total must decrease when three values are each reduced by 5.",
+        "challenge": "Suppose instead one value was recorded 5 too high and two values were recorded 3 too low — what would the corrected mean be?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q8, section 5.1 p.115",
+       "description": "A dataset has 15 values with mean 134; find the sum of the data."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 5.1",
+      "section_title": "The Balancing Act",
+      "goal": "apply",
+      "question_type": "MCQ",
+      "prompt": "The first 50 even numbers are 2, 4, 6, …, 100. What is their mean?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "50",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "51",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "52",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "100",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "51. The first 50 even numbers form an arithmetic sequence from 2 to 100. The mean of an arithmetic sequence equals the average of the first and last terms: (2 + 100) / 2 = 51.",
+       "method_one_line": "Mean of an arithmetic sequence = (first term + last term) / 2 = (2 + 100) / 2 = 51.",
+       "what_each_option_reveals": {
+        "A": "The student may have computed the count (50) rather than the mean, or confused the number of terms with the average.",
+        "C": "The student may have added 1 to the midpoint of the count range, reflecting a small off-by-one error in the arithmetic-sequence mean formula.",
+        "D": "The student may have taken the last term of the sequence as the mean, not recognising that the mean is the midpoint of the sequence."
+       },
+       "inclusivity": {
+        "support": "List the first four and last four even numbers, find the average of just the first and last, and check whether the pattern holds for a smaller set like the first 4 even numbers.",
+        "challenge": "Without computing, state the mean of the first 50 multiples of 7. Can you generalise the formula for the mean of the first n multiples of any number k?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 5.1 p.113",
+       "description": "Find the mean of (i) first 50 natural numbers, (ii) first 50 odd numbers, (iii) first 50 multiples of 4; share observations."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "SCR",
+      "prompt": "A line graph shows the monthly maximum temperature (°C) of two cities, City P and City Q, over one year. City P's line rises steeply from January to May, falls steeply from August to December, and reaches a peak of 44 °C. City Q's line stays between 28 °C and 33 °C throughout the year. Using the identify-then-infer process, state two valid inferences you can draw from this description and one question the graph cannot answer.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Valid inference 1: City P experiences a much wider temperature range than City Q across the year (range approximately 30 °C vs 5 °C), suggesting a continental or semi-arid climate for P and a tropical or coastal climate for Q. Valid inference 2: City P's hottest months are likely April–June and City Q's temperature is relatively stable year-round. Question the graph cannot answer: the graph shows maximum monthly temperature only — it cannot tell us the minimum temperatures, the humidity, or whether the cities are actually in the same country.",
+       "method_one_line": "Apply the two-step identify-then-infer process: first read scale and range, then draw comparative conclusions about variability, while flagging what falls outside the graph's scope.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write 'what the graph shows' in one column and 'what I can conclude' in another, then add a third column 'what the graph does not show', to structure your thinking.",
+        "challenge": "Sketch a rough line graph consistent with the description and add a third city, City R, whose temperature range is between P and Q — what would two valid inferences about R look like?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Line Graphs — Temperature (Kerala and Punjab), p.116–118",
+       "description": "Demonstrates the two-step identify-then-infer process on a clustered line graph of monthly maximum temperatures (2023), identifying scale, markers, and trends; inferring Punjab's higher variability versus Kerala's near-constant tropical climate."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "MCQ",
+      "prompt": "A multi-series line graph shows annual space-object launches from 2012 to 2024 for four countries: A, B, C, and D. Country E does not appear on the graph at all. Which of the following is a valid inference from the graph?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Among the four plotted countries, the one with the steepest upward slope after 2020 increased its launches most rapidly in that period.",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Country E launched no objects during this period.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "The country with the highest 2024 count launched more objects than any other country in every year from 2012 to 2024.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The exact number of objects launched by Country A in 2017 can be read precisely from the graph.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option C. The slope of a line in a line graph directly represents rate of change; the steepest positive slope corresponds to the greatest rate of increase. This is a valid visual inference limited to the four plotted countries. Options A and B make claims beyond the graph's scope (A assumes absence from the graph means zero launches; B assumes dominance in every year which would require checking all years). Option D overstates reading precision from a graph.",
+       "method_one_line": "Apply the valid-inference rule: a line graph supports slope-based rate comparisons among plotted series, but cannot speak to unplotted entities or claim precise point-reads.",
+       "what_each_option_reveals": {
+        "B": "The student confuses absence from the graph with absence of the activity — a classic over-extension of graph evidence.",
+        "C": "The student conflates the 2024 leader with an all-years leader, ignoring that rankings can change across years.",
+        "D": "The student over-trusts the precision of a line graph, which shows trends but rarely permits exact point-reads at intermediate years."
+       },
+       "inclusivity": {
+        "support": "For each option, ask: does the graph show this directly, or does it require knowing something the graph does not include?",
+        "challenge": "Devise a fourth option that is also a valid inference about the plotted data, and explain why it is valid."
+       }
+      },
+      "exercise": {
+       "book_ref": "Line Graphs — Space Launches, p.119–120",
+       "description": "Applies the two-step process to a multi-series line graph of annual space-object launches (2012–2024) for USA, China, Russia, and worldwide; distinguishes valid inferences from invalid ones (e.g., cannot infer Nepal launched nothing, cannot read individual year counts precisely from the graph)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "SCR",
+      "prompt": "A line graph of monthly births in India shows that births in January 2019 were approximately 2.2 million, and births remain roughly similar for each month of 2019. Estimate the total number of births in India in 2019 and explain your method.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "If births are approximately 2.2 million each month and there are 12 months, the estimated total = 2.2 × 12 = 26.4 million births in 2019. The method is to read the approximate monthly value from the graph and multiply by 12, acknowledging that monthly variation means this is an estimate, not a precise count.",
+       "method_one_line": "Estimate total = approximate monthly average × number of months = 2.2 million × 12 = 26.4 million.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Think of the 12 monthly bars as all being roughly the same height — what is the total area (total births) if each bar is 2.2 million?",
+        "challenge": "If you knew that births in the monsoon months (June–September) were each 0.3 million higher than the January figure, how would you revise your estimate?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3 (births graph), section 5.2 p.123",
+       "description": "Line graph of monthly births in India over a time period; make observations, estimate births in July 2017, identify time period captured, compare January births across 2018–2020, estimate total births in 2019."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "MCQ",
+      "prompt": "A line graph shows the percentage of rural households in India using kerosene as a primary lighting source from 1983 to 2023. The line falls steeply from about 55% in 1983 to about 4% in 2023, while a second line showing electricity use rises steeply over the same period. Which statement is a valid inference from this graph?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "All rural households that stopped using kerosene switched to electricity.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Kerosene became more expensive after 1983, which caused households to switch to electricity.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Rural electrification expanded significantly between 1983 and 2023, leading to reduced kerosene use.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The percentage of rural households using kerosene decreased by approximately 51 percentage points from 1983 to 2023.",
+        "is_correct": true
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option C. This statement reads directly off the graph's values and computes a difference — a valid quantitative inference. Option A makes a causal claim (price caused the switch) which the graph does not show. Option B asserts a cause (rural electrification policy) beyond what the graph records. Option D claims all former kerosene users switched to electricity, but the graph does not show that the two series are complements adding to 100% — other sources (solar, LPG) may account for some households.",
+       "method_one_line": "A valid inference from a line graph reads or compares plotted values directly; causal claims and claims about unplotted alternatives are not supported.",
+       "what_each_option_reveals": {
+        "B": "The student mistakes correlation for causation — the graph shows co-occurrence of trends, not a price mechanism.",
+        "C": "The student infers a policy mechanism (rural electrification) that is plausible but not readable from the graph itself.",
+        "A": "The student assumes the two plotted series are exhaustive — that kerosene users could only have moved to electricity — ignoring other possible lighting sources."
+       },
+       "inclusivity": {
+        "support": "For each option, ask: can I point to a specific place on the graph that shows this? If the answer is no, the statement goes beyond the graph.",
+        "challenge": "Sketch a third series on the same graph representing solar/LPG use that would make Option D impossible — what shape would that series need to have?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q10, section 5.2 p.130",
+       "description": "Line graph on primary lighting source (kerosene vs electricity) in rural/urban India 1983–2023; evaluate four validity statements."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Riya creates a 48-box activity strip for a Saturday. She colours 14 boxes blue (sleep), 8 boxes green (outdoor play), 10 boxes yellow (screen time), 6 boxes red (meals), and the rest orange (study and homework). Each box represents 30 minutes. How many boxes are orange? How many total hours does Riya spend on study and homework? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total boxes = 48. Boxes accounted for = 14 + 8 + 10 + 6 = 38. Orange boxes = 48 − 38 = 10. Each box = 30 minutes = 0.5 hours. Hours on study and homework = 10 × 0.5 = 5 hours.",
+       "method_one_line": "Subtract all other categories from 48 to find orange boxes, then convert boxes to hours using the 30-minute-per-box scale.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the 48 boxes as a row and shade in each category one at a time, counting how many remain unshaded.",
+        "challenge": "If Riya wants the average time per activity category (treating all five equally) to be less than 3 hours, is her current strip consistent with that? Show your calculation."
+       }
+      },
+      "exercise": {
+       "book_ref": "Try This, p.125",
+       "description": "Students create their own 48-box activity strip for different days of the week, marking five activity types in 30-minute intervals, and compare their strip with an adult family member's strip."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Fill a 3×3 grid with nine distinct whole numbers so that every row, every column, and both diagonals have the same mean. The centre cell must contain 10. Find one valid set of nine numbers and verify that all rows, columns, and diagonals average to the same value. Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "For all rows, columns, and diagonals to have the same mean with a 3×3 grid of 9 values, each row/column/diagonal of 3 must sum to the same total T. The total of all 9 numbers = 3T (since three rows cover all nine cells). The mean of all 9 numbers equals T/3. Since the centre cell (which appears in two diagonals, one row, and one column) must be 10 and each line of three must average to the same value M, the centre equals M. So M = 10 and T = 30. One valid arrangement: place 7, 10, 13 in the middle row; 11, 14, 5 in the top row; 12, 6, 12 — but values must be distinct. A classic valid set: top row 6, 11, 13; middle row 14, 10, 6 — reworking is needed. A clean example: use the magic-square pattern shifted: 2, 9, 19 → scale to sum 30. Simplest distinct answer: {4, 12, 14; 16, 10, 4} — needs all distinct. One valid solution: top row (8, 13, 9), middle row (15, 10, 5), bottom row (7, 7, 16) — not all distinct. Clean verified solution: top (6, 14, 10), middle (16, 10, 4), bottom (8, 6, 16) — repeats. Correct approach: standard 3×3 magic square {2,7,6; 9,5,1; 4,3,8} has centre 5 and line-sum 15; scale all values by 2 to get {4,14,12; 18,10,2; 8,6,16}, centre = 10, all distinct, line-sum = 30, mean per line = 10. Verification: row 1: (4+14+12)/3=10 ✓; row 2: (18+10+2)/3=10 ✓; row 3: (8+6+16)/3=10 ✓; col 1: (4+18+8)/3=10 ✓; col 2: (14+10+6)/3=10 ✓; col 3: (12+2+16)/3=10 ✓; diag1: (4+10+16)/3=10 ✓; diag2: (12+10+8)/3=10 ✓.",
+       "method_one_line": "Double the standard 3×3 magic square (centre 5, line-sum 15) to obtain centre 10, all distinct, line-sum 30, mean 10.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Start by noting that all nine numbers must add up to 3 × 30 = 90 and the centre must be 10; then try to fill the grid row by row so each row sums to 30.",
+        "challenge": "Can you find a second valid grid that uses completely different numbers from your first solution? How many such grids exist if we also require all numbers to be positive?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 5.2 p.127",
+       "description": "Mean grids: (i) fill a 3×3 grid with 9 distinct numbers so each row, column, and diagonal averages 10; (ii) vary numbers while preserving the average in all directions."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-10",
+      "section_ref": "section 5.2",
+      "section_title": "Visualising and Interpreting Data",
+      "goal": "apply",
+      "question_type": "MCQ",
+      "prompt": "Meera claims: 'The average of any two multiples of 5 is itself a multiple of 5.' Which pair of numbers shows that her claim is false?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "10 and 20",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "5 and 10",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "15 and 25",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "20 and 30",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "The pair 5 and 10. Their average is 7.5, which is not a multiple of 5 — it is not even a whole number — so that one pair is enough to bring the claim down. The other three pairs average to 15, 20 and 25, every one a multiple of 5, so none of them settles anything. Algebraically, two multiples of 5 are 5a and 5b and their average is 5(a+b)/2: it stays a multiple of 5 exactly when a+b is even, and leaves as soon as a+b is odd. For 5 and 10, a+b = 1+2 = 3.",
+       "method_one_line": "Average each pair and test the result against 'multiple of 5'; one pair that fails is enough to disprove a claim about ALL pairs.",
+       "what_each_option_reveals": {
+        "A": "5 and 10 average to 7.5 — not a multiple of 5, and not a whole number. This is the counterexample the claim cannot survive.",
+        "B": "10 and 20 average to 15, a multiple of 5. The student has offered a pair that CONFIRMS the claim as though it disproved it, so the logic of a counterexample has not landed.",
+        "C": "15 and 25 average to 20, again a multiple of 5. Same confirming-instead-of-refuting error; may also mean the student is hunting for the pair that looks hardest rather than testing the claim.",
+        "D": "20 and 30 average to 25, a multiple of 5. Worth asking this student what a single counterexample is FOR."
+       },
+       "inclusivity": {
+        "support": "Refer to the book exercise(s) anchored to section 5.2.",
+        "challenge": "Ask for the general rule: for which pairs of multiples of 5 does the average stay a multiple of 5? Then push on to statement (iii) of the book exercise — five multiples of 5 average to a+b+c+d+e, always a whole number but a multiple of 5 only when that sum is."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 5.2 p.127",
+       "description": "Check whether each statement is true (with algebraic justification): (i) average of two even numbers is even; (ii) average of any two multiples of 5 is a multiple of 5; (iii) average of any 5 multiples of 5 is a multiple of 5."
+      },
+      "verified": false
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

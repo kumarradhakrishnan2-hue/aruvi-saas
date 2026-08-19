@@ -1,0 +1,880 @@
+{
+  "filename": "ch_15_canonical_p07.json",
+  "saved_at": "2026-08-19T13:38:19",
+  "plan_status": "canonical",
+  "chapter_number": 15,
+  "chapter_title": "Finding the Unknown",
+  "grade": "Grade VII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 7 periods = 280 minutes\nTotal: 7 periods · 4h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "7x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vii 15",
+    "ledger_ts": "20260819_130541_math_vii_15_p07",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.1",
+              "title": "Find the Unknowns"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Balancing Scales to Frame Equations",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 7, section 15.2 p.174",
+              "description": "Ranjana's square-tile sequence uses 3k + 1 tiles at Step k (shown by two counting methods); to make 100 tiles, solve 3k + 1 = 100 for k."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q1, section 15.2 p.171",
+              "description": "Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Students examine a series of weighing-scale pictures — both plates balanced — and record the unknown weight that keeps each scale level, using the hint that removing equal weights from both sides preserves balance."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Students assign a letter to each unknown weight, rewrite the balance condition as an equation (e.g., 2e = 6, 4 + 2y = 16), and solve by the same removal logic, verifying that the letter-value matches their earlier numerical guess."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "The matchstick sequence is introduced: arrangement n uses 2n + 1 sticks. Students discover which arrangement uses 99 sticks by framing 2n + 1 = 99, then use Example 7, section 15.2 p.174 (\"Ranjana's square-tile sequence uses 3k + 1 tiles...\") to see a second sequence framed the same way."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Students frame and write five equations of their own from balance-picture or sequence contexts, then exchange with a partner to check whether each qualifies as a valid equation with an LHS, an equal sign, and an RHS."
+            }
+          ],
+          "teacher_notes": "Students often guess the unknown weight correctly but struggle to express the balance condition as a formal equation — watch for those who write 'e + e = 6' rather than '2e = 6' and prompt them to count the identical weights on one plate. The definition that an equation is a statement of equality between two algebraic expressions, and that solving means finding the letter-value that makes LHS equal RHS, can be drawn out from their own balance reasoning rather than stated cold.",
+          "materials": [
+            "Textbook (balance-scale diagrams and matchstick figures)",
+            "Squared paper for drawing sequences",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.1",
+              "title": "Find the Unknowns"
+            },
+            {
+              "ref": "section 15.2",
+              "title": "Solving Equations Systematically"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "From Balance Intuition to Systematic Rules",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 1, section 15.2 p.169",
+              "description": "Given 14593 − 1459 + 145 − 14 + 88 = 13353, find 14593 − 1459 + 145 − 14 by subtracting 88 from both sides (addition and subtraction as inverse operations): the value is 13265."
+            },
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 2, section 15.2 p.169",
+              "description": "Given 23 × 41 × 11 × 8 × 7 = 5,80,888, find 23 × 41 × 11 × 8 by dividing 5,80,888 by 7 (multiplication and division as inverse operations)."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 3, section 15.2 p.169",
+              "description": "Given 12345 − 5432 + 135 − 24 − (−67) = 7091, find 12345 − 5432 + 135 − 24 by adding (−67) to both sides to remove the −(−67) term: the value is 7024."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students revisit the balance-scale idea in purely arithmetic form: Example 1, section 15.2 p.169 (\"Given 14593 − 1459 + 145 − 14 + 88 = 13353, find 14593 − 1459 + 145 − 14....\") is worked through by subtracting 88 from both sides, naming the operation used."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Example 2, section 15.2 p.169 (\"Given 23 × 41 × 11 × 8 × 7 = 5,80,888, find 23 × 41 × 11 × 8....\") and Example 3, section 15.2 p.169 (\"Given 12345 − 5432 + 135 − 24 − (−67) = 7091....\") are worked in pairs; students identify the inverse operation used each time and articulate the general rule in their own words."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "The class compares trial-and-error (testing values for 2n + 1 = 99 one by one) with the arithmetic inverse-operation shortcut, and students explain in writing why performing the same operation on both sides preserves equality — the balance idea restated as an algebraic rule."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Students recall and list the four inverse-operation rules (add/subtract, multiply/divide, and their reverses) as a reference table, then test each rule on a self-chosen numerical equality to confirm it holds."
+            }
+          ],
+          "teacher_notes": "The arithmetic examples are chosen to surface the idea of inverse operations before letters appear — students who can articulate why subtracting 88 from both sides is valid in Example 1 are ready to apply the same logic to letter equations. A common confusion at this juncture is treating the equal sign as a directional arrow rather than a balance; pair-sharing the written explanations helps surface and correct this.",
+          "materials": [
+            "Textbook",
+            "Notebooks for writing the inverse-operation rule table"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.2",
+              "title": "Solving Equations Systematically"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Solving Equations by Inverse Operations",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 5, section 15.2 p.171",
+              "description": "Solve 11y + (−5) = 61 by subtracting (−5) from both sides to get 11y = 66, then dividing by 11: y = 6."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 6, section 15.2 p.171",
+              "description": "Solve 6y + 7 = 4y + 21 by subtracting 4y from both sides to get 2y + 7 = 21, then 2y = 14 and y = 7."
+            },
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q1, section 15.2 p.171",
+              "description": "Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q2, section 15.2 p.180",
+              "description": "Find each unknown: (a) 2y = 60; (b) −8 = 5x − 3; (c) −53w = −15; (d) 13 − z = 8; (e) k + 8 = 12 − k; (f) 7m = m − 3; (g) 3n = 10 + n."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Example 5, section 15.2 p.171 (\"Solve 11y + (−5) = 61....\") is solved step by step on the board, with students identifying each inverse operation before it is written; the solution is verified by substituting y = 6 back into the original equation."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Example 6, section 15.2 p.171 (\"Solve 6y + 7 = 4y + 21....\") introduces the case where unknowns appear on both sides; students work in pairs to isolate the variable by subtracting 4y, then apply two further inverse operations to reach y = 7 and verify."
+            },
+            {
+              "minutes": "20–35",
+              "activity": "Students solve Figure it Out Q1, section 15.2 p.171 (\"Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6....\") individually, recording each inverse-operation step and substituting back to verify every solution."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Students compare solutions for part (b), 5s = 3s, and discuss why s = 0 is a valid solution — reinforcing that zero is a legitimate letter-value — before the transposition shortcut rules are named and listed."
+            }
+          ],
+          "teacher_notes": "Students frequently drop the sign of a term when moving it from one side — for example, writing 2y = 21 + 7 instead of 2y = 21 − 7 when transposing +7 — so requiring every step to be written explicitly with the operation applied to both sides reduces this error before the shortcut is introduced. Example 4, section 15.2 p.170 (\"Given 35/113 × 24 × 14 × 8/9 = 94080/1017....\") is available for self-study on fractional inverse operations.",
+          "materials": [
+            "Textbook",
+            "Notebooks"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.2",
+              "title": "Solving Equations Systematically"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Forming Equations from Word Problems",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-8",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 8, section 15.2 p.175",
+              "description": "Madhubanti's party: snacks cost ₹25 per plate plus ₹50 delivery, budget ₹500, 5 family members. Solved several ways (25p + 50 = 500; 25(f + 5) = 450): 18 plates, so 13 friends can be invited."
+            },
+            {
+              "id": "WE-9",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 9, section 15.2 p.176",
+              "description": "Jahnavi (₹4000 + ₹650/month) and Sunita (₹5050 + ₹500/month) have equal savings when 4000 + 650m = 5050 + 500m, giving 150m = 1050 and m = 7 months."
+            },
+            {
+              "id": "WE-12",
+              "type": "worked_example",
+              "source_section": "section 15.2",
+              "book_ref": "Example 12, section 15.2 p.179",
+              "description": "Ramesh and Suresh have 60 marbles, Ramesh 30 more than Suresh; letting Suresh have y and Ramesh y + 30 gives y + (y + 30) = 60, i.e. 2y + 30 = 60, to find both unknowns."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q3, section 15.2 p.180",
+              "description": "A 3-digit number's hundreds digit is 3 less than its tens digit, its tens digit is 3 less than its units digit, and the digits sum to 15; find the number."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Example 8, section 15.2 p.175 (\"Madhubanti's party: snacks cost ₹25 per plate plus ₹50 delivery....\") is read aloud; students identify the unknown, the constraint, and the equation before the teacher shows two equivalent formulations (25p + 50 = 500 and 25(f + 5) = 450), reasoning aloud why both are valid models."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Example 9, section 15.2 p.176 (\"Jahnavi ₹4000 + ₹650/month and Sunita ₹5050 + ₹500/month have equal savings when 4000 + 650m = 5050 + 500m....\") is worked in small groups; students must justify each transposition step by stating which rule it follows (additive inverse or multiplicative inverse)."
+            },
+            {
+              "minutes": "24–35",
+              "activity": "Example 12, section 15.2 p.179 (\"Ramesh and Suresh have 60 marbles, Ramesh 30 more than Suresh....\") illustrates reducing two unknowns to one by expressing both in terms of a single variable; students solve for y, then find Ramesh's count and verify the total is 60."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Students write a one-paragraph justification: why does expressing Ramesh's count as y + 30 (rather than as a separate letter) allow the problem to be solved with one equation? They share key phrases in a brief whole-class exchange."
+            }
+          ],
+          "teacher_notes": "Students often introduce two separate unknowns for two-quantity problems and then stall because they have only one equation; the reasoning about why y + 30 encodes the relationship and removes the second unknown is the conceptual core here. Watch for students who set up the equation correctly but fail to check whether their solution gives a sensible real-world answer (e.g., a negative number of friends).",
+          "materials": [
+            "Textbook",
+            "Notebooks"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.2",
+              "title": "Solving Equations Systematically"
+            },
+            {
+              "ref": "section 15.3",
+              "title": "Mind the Mistake, Mend the Mistake"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Generating Equations and Spotting Errors",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q1, section 15.2 p.180",
+              "description": "Write 5 equations whose solution is x = −2."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 15.2",
+              "book_ref": "Figure it Out Q6, section 15.2 p.180",
+              "description": "Given 4k + 1 = 13, find (a) 8k + 2; (b) 4k; (c) k; (d) 4k − 1; (e) −k − 2."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 15.3",
+              "book_ref": "section 15.3 p.181–182",
+              "description": "For nine given worked solutions (e.g. 4x + 6 = 10, 7 − 8z = 5, 2v − 4 = 6, 5z + 2 = 3z − 4, 15w − 4w = 26, 3x + 1 = −12, 4(4q + 2) = 50, −2(3 − 4x) = 14, 3(7y + 4) = 9 + 5y), decide whether the steps are correct, describe any mistake, correct it, and solve the equation."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Figure it Out Q1, section 15.2 p.180 (\"Write 5 equations whose solution is x = −2....\") is tackled by reversing the solving process — students pick any operation, apply it to both sides of x = −2, and record the resulting equation, then exchange lists with a neighbour who solves them to verify."
+            },
+            {
+              "minutes": "10–18",
+              "activity": "Figure it Out Q6, section 15.2 p.180 (\"Given 4k + 1 = 13, find (a) 8k + 2; (b) 4k; (c) k; (d) 4k − 1; (e) −k − 2....\") is solved without fully isolating k first, using the observation that 8k + 2 = 2(4k + 1); students identify which expressions can be found directly from the given equation."
+            },
+            {
+              "minutes": "18–38",
+              "activity": "Section 15.3 p.181–182 (\"For nine given worked solutions — e.g. 4x + 6 = 10, 7 − 8z = 5, 2v − 4 = 6....\") is worked in pairs: for each, students decide whether every step is correct, name any mistake (sign error, dropped coefficient, wrong inverse), correct it, and solve the equation properly."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Pairs share one diagnosed error with the class, using the transposition and balance rules established earlier to explain precisely what went wrong in that step."
+            }
+          ],
+          "teacher_notes": "The mistake-spotting task works best when students are required to cite the specific rule that was violated — 'a term moved without its sign being changed' or 'both sides were not divided by the same factor' — rather than simply saying 'the answer is wrong.' The generating-equations task in Figure it Out Q1 reverses the standard direction of solving and is a reliable early indicator of how deeply students understand transposition.",
+          "materials": [
+            "Textbook",
+            "Notebooks"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.3",
+              "title": "Mind the Mistake, Mend the Mistake"
+            },
+            {
+              "ref": "section 15.4",
+              "title": "A Pinch of History"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Error Analysis and the Origins of Algebra",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-14",
+              "type": "worked_example",
+              "source_section": "section 15.4",
+              "book_ref": "Example 16, section 15.4 p.183",
+              "description": "Bhāskarāchārya's Bījgaṇita (1150 CE) problem: one man has ₹300 and 6 horses, another has 10 horses and a ₹100 debt, and they are equally rich; solving 300 + 6x = 10x − 100 gives the price of one horse x = ₹100."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q11, section 15.4 p.187",
+              "description": "Identify and correct any mistakes in the given solution steps of (a) 6x + 9 = 66; (b) 14y + 24 = 36; (c) 4x − 5 = 9x + 8."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q1, section 15.4 p.185",
+              "description": "Fill in the blanks with integers: (a) 5 × __ − 8 = 37; (b) 37 − (33 − __) = 35; (c) −3 × (−11 + __) = 45."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Figure it Out Q11, section 15.4 p.187 (\"Identify and correct any mistakes in the given solution steps of (a) 6x + 9 = 66; (b) 14y + 24 = 36; (c) 4x − 5 = 9x + 8....\") is worked individually; students write a one-sentence diagnosis for each error before correcting the solution, using the balance and transposition rules as their standard of judgement."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "The teacher introduces the history of bījagaṇita: Brahmagupta's Brāhmasphuṭasiddhānta (628 CE), Aryabhata's method, the ancient notation yā/kā/rū for unknowns and knowns, the transmission to Al-Khwarizmi (c. 825 CE), and David Mumford's remark. Students identify which of these names they can connect to particular ideas already encountered in the chapter."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Example 16, section 15.4 p.183 (\"Bhāskarāchārya's Bījgaṇita (1150 CE): one man has ₹300 and 6 horses, another has 10 horses and a ₹100 debt, and they are equally rich....\") is solved by students; they then apply Brahmagupta's general formula x = (D − B)/(A − C) to the same equation Ax + B = Cx + D and verify that it gives the same answer."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students discuss in pairs: what does it mean to say algebra 'generalises' a pattern — and why is Brahmagupta's formula a generalisation of the transposition steps they used?"
+            }
+          ],
+          "teacher_notes": "Students often treat the history section as optional reading; anchoring it to the already-familiar transposition steps by applying Brahmagupta's formula to Example 16 and verifying it gives x = 100 keeps the reasoning active rather than decorative. Watch for students who apply the formula without first confirming the equation is in Ax + B = Cx + D form — a mismatch between the historical formulation and their own equation is a rich reasoning moment.",
+          "materials": [
+            "Textbook",
+            "Notebooks"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 15.4",
+              "title": "A Pinch of History"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Equations in Context: Puzzles, Patterns, Real Problems",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q6, section 15.4 p.186",
+              "description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled."
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q18, section 15.4 p.188",
+              "description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)."
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q20, section 15.4 p.189",
+              "description": "Children and donkeys on a beach together have 28 heads and 80 feet; find how many donkeys and how many children there are."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 15.4",
+              "book_ref": "Figure it Out Q16, section 15.4 p.188",
+              "description": "For two stick-arrangement sequences, find (a) squares at position 11; (b) sticks at position 11; (c) whether 85 sticks is achievable and at which position; (d) whether 150 sticks is achievable and at which position."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Figure it Out Q6, section 15.4 p.186 (\"A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled....\") is framed by students as an equation before solving — the focus is on identifying the unknown, the fixed cost, and the variable cost, then applying transposition."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Figure it Out Q18, section 15.4 p.188 (\"Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1)....\") is worked in small groups, with each group responsible for two parts; groups compare methods — expand first or divide first — and choose the shorter route, justifying their preference."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Figure it Out Q20, section 15.4 p.189 (\"Children and donkeys on a beach together have 28 heads and 80 feet....\") is solved by reducing the two conditions (total heads, total feet) to a single equation in one unknown, then finding both quantities and verifying against both original conditions."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students reflect in writing: choose one problem from today's work and write two sentences explaining what the equation's variable represented and why expressing one quantity in terms of the other was the key move."
+            }
+          ],
+          "teacher_notes": "The heads-and-feet puzzle is a classic two-constraint problem; students who have worked through Ramesh-and-Suresh's marbles using the balance and transposition rules established earlier in the chapter are well-placed to reduce both constraints to one equation. For students who finish quickly, Figure it Out Q23, section 15.4 p.188 (\"Write 4 equations whose solution is u = 6\") and the Bakhśhāli Manuscript problem at Figure it Out Q14, section 15.4 p.188 offer extension challenges within the same chapter.",
+          "materials": [
+            "Textbook",
+            "Notebooks"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 7
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "recall",
+            "anchor_id": "WE-7",
+            "anchor_book_ref": "Example 7, section 15.2 p.174",
+            "anchor_description": "Ranjana's square-tile sequence uses 3k + 1 tiles at Step k (shown by two counting methods); to make 100 tiles, solve 3k + 1 = 100 for k."
+          },
+          {
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "recall",
+            "anchor_id": "WE-1",
+            "anchor_book_ref": "Example 1, section 15.2 p.169",
+            "anchor_description": "Given 14593 − 1459 + 145 − 14 + 88 = 13353, find 14593 − 1459 + 145 − 14 by subtracting 88 from both sides (addition and subtraction as inverse operations): the value is 13265."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "reason",
+            "anchor_id": "WE-8",
+            "anchor_book_ref": "Example 8, section 15.2 p.175",
+            "anchor_description": "Madhubanti's party: snacks cost ₹25 per plate plus ₹50 delivery, budget ₹500, 5 family members. Solved several ways (25p + 50 = 500; 25(f + 5) = 450): 18 plates, so 13 friends can be invited."
+          },
+          {
+            "section_ref": "section 15.3",
+            "section_title": "Mind the Mistake, Mend the Mistake",
+            "goal": "reason",
+            "anchor_id": "E-20",
+            "anchor_book_ref": "Figure it Out Q11, section 15.4 p.187",
+            "anchor_description": "Identify and correct any mistakes in the given solution steps of (a) 6x + 9 = 66; (b) 14y + 24 = 36; (c) 4x − 5 = 9x + 8."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "apply",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 15.2 p.171",
+            "anchor_description": "Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6."
+          },
+          {
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "apply",
+            "anchor_id": "E-3",
+            "anchor_book_ref": "Figure it Out Q1, section 15.2 p.180",
+            "anchor_description": "Write 5 equations whose solution is x = −2."
+          },
+          {
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "apply",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "section 15.3 p.181–182",
+            "anchor_description": "For nine given worked solutions (e.g. 4x + 6 = 10, 7 − 8z = 5, 2v − 4 = 6, 5z + 2 = 3z − 4, 15w − 4w = 26, 3x + 1 = −12, 4(4q + 2) = 50, −2(3 − 4x) = 14, 3(7y + 4) = 9 + 5y), decide whether the steps are correct, describe any mistake, correct it, and solve the equation."
+          },
+          {
+            "section_ref": "section 15.4",
+            "section_title": "A Pinch of History",
+            "goal": "apply",
+            "anchor_id": "E-15",
+            "anchor_book_ref": "Figure it Out Q6, section 15.4 p.186",
+            "anchor_description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled."
+          },
+          {
+            "section_ref": "section 15.4",
+            "section_title": "A Pinch of History",
+            "goal": "apply",
+            "anchor_id": "E-27",
+            "anchor_book_ref": "Figure it Out Q18, section 15.4 p.188",
+            "anchor_description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which of the following best describes what it means to 'solve' an equation in one variable?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "To simplify the expression on the left-hand side until it contains no operations.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "To find the value of the variable that makes the left-hand side equal to the right-hand side.",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "To rewrite the equation so that all terms are on one side and zero is on the other.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "To substitute any integer into the equation and check whether a true statement results.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Finding the value of the variable that makes LHS equal RHS — option B.",
+              "method_one_line": "Recall the definition of solving an equation as given in section 15.1: the letter-number value for which LHS equals RHS.",
+              "what_each_option_reveals": {
+                "A": "The student confuses simplification of an expression with solving an equation — they may not yet distinguish an expression from an equation.",
+                "C": "The student conflates one valid rearrangement technique (moving all terms to one side) with the meaning of solving — a procedural rather than conceptual understanding.",
+                "D": "The student is describing trial-and-error substitution, which is a method for solving rather than the definition of what solving means."
+              },
+              "inclusivity": {
+                "support": "Let the student look back at the balance-scale pictures in section 15.1 and re-read the definition of an equation and what 'solving' means.",
+                "challenge": "Ask the student to write the definition in their own words and then give one example where the solution is a negative number to show the definition still holds."
+              }
+            },
+            "exercise": {
+              "book_ref": "Example 7, section 15.2 p.174",
+              "description": "Ranjana's square-tile sequence uses 3k + 1 tiles at Step k (shown by two counting methods); to make 100 tiles, solve 3k + 1 = 100 for k."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A matchstick sequence uses 2n + 1 sticks at position n. Which equation correctly represents finding the position that uses 51 sticks?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "2n + 1 = 51",
+                "is_correct": true
+              },
+              {
+                "label": "B",
+                "text": "2n − 1 = 51",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "n + 2 = 51",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "2(n + 1) = 51",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "2n + 1 = 51 — option A. Substituting n = 25 gives 2(25) + 1 = 51, which checks out.",
+              "method_one_line": "Replace the number of sticks with 51 in the given formula 2n + 1 to form the equation, as demonstrated with the 99-stick example in section 15.1.",
+              "what_each_option_reveals": {
+                "B": "The student likely subtracted 1 from the formula instead of keeping the +1 constant, confusing the structure of the expression.",
+                "C": "The student has incorrectly reversed the roles of the coefficient and the constant, treating n + 2 as the formula.",
+                "D": "The student has factored out 2 incorrectly, absorbing the +1 into the bracket and changing the value of the expression."
+              },
+              "inclusivity": {
+                "support": "Let the student look back at the 2n + 1 formula in section 15.1 and check what value of n gives 99 sticks, then apply the same process for 51.",
+                "challenge": "Ask the student to write a new sequence formula of their own (e.g., 3n + 2) and frame the equation for a chosen number of sticks."
+              }
+            },
+            "exercise": {
+              "book_ref": "Example 1, section 15.2 p.169",
+              "description": "Given 14593 − 1459 + 145 − 14 + 88 = 13353, find 14593 − 1459 + 145 − 14 by subtracting 88 from both sides (addition and subtraction as inverse operations): the value is 13265."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Priya solves the equation 3x + 5 = 2x + 11 and writes: '3x + 5 = 2x + 11, so 3x + 2x = 11 + 5, giving 5x = 16, and x = 16/5.' Identify the error in Priya's working, state the rule she has violated, and write the correct solution.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Priya moved +2x to the left without changing its sign (she added 2x instead of subtracting it) and moved +5 to the right without changing its sign (she added 5 instead of subtracting it). The transposition rule states that a term moved across the equal sign becomes its additive inverse. Correct working: 3x − 2x = 11 − 5, so x = 6. Check: LHS = 3(6) + 5 = 23; RHS = 2(6) + 11 = 23. ✓",
+              "method_one_line": "Apply the transposition rule (a term moved across the equal sign takes its additive inverse) to isolate x correctly.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to re-solve by writing out the step of subtracting 2x from both sides explicitly before transposing, so the sign change is visible.",
+                "challenge": "Ask the student: what if both the coefficient error and the sign error were present simultaneously — could the wrong steps ever coincidentally give the right answer? Construct an example or a counter-example."
+              }
+            },
+            "exercise": {
+              "book_ref": "Example 8, section 15.2 p.175",
+              "description": "Madhubanti's party: snacks cost ₹25 per plate plus ₹50 delivery, budget ₹500, 5 family members. Solved several ways (25p + 50 = 500; 25(f + 5) = 450): 18 plates, so 13 friends can be invited."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 15.3",
+            "section_title": "Mind the Mistake, Mend the Mistake",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "A student solves −2(3 − 4x) = 14 as follows:\nStep 1: −6 − 8x = 14\nStep 2: −8x = 14 + 6 = 20\nStep 3: x = 20 ÷ (−8) = −5/2\nFor each step, state whether it is correct or incorrect. For any incorrect step, name the specific error and show the correct working that leads to the right solution.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Step 1 is incorrect: expanding −2(3 − 4x) gives −6 + 8x (not −6 − 8x), because −2 × (−4x) = +8x. Step 2, given Step 1's error, correctly adds 6 to both sides but builds on a wrong expression. Step 3 correctly divides both sides by the coefficient from Step 2. Correct solution: −2(3 − 4x) = 14 → −6 + 8x = 14 → 8x = 20 → x = 20/8 = 5/2. Check: −2(3 − 4 × 5/2) = −2(3 − 10) = −2(−7) = 14. ✓",
+              "method_one_line": "Expand the bracket using the distributive law carefully (multiply the factor by each term inside, tracking signs), then apply inverse operations to isolate x.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to expand −2(3 − 4x) term by term, writing −2 × 3 and −2 × (−4x) on separate lines before combining, to make the sign of each product explicit.",
+                "challenge": "Change the constant to −2(3 − 4x) = −14 and ask the student to solve and verify — then ask whether the method changes when the right-hand side is negative."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q11, section 15.4 p.187",
+              "description": "Identify and correct any mistakes in the given solution steps of (a) 6x + 9 = 66; (b) 14y + 24 = 36; (c) 4x − 5 = 9x + 8."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 15.1",
+            "section_title": "Find the Unknowns",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A weighing scale is balanced. The left plate holds 3 identical blocks and a 2 kg weight. The right plate holds a 17 kg weight. Let each block weigh b kg. Write the equation that represents this balance, solve it for b, and verify your answer.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Equation: 3b + 2 = 17. Subtract 2 from both sides: 3b = 15. Divide both sides by 3: b = 5 kg. Verification: LHS = 3(5) + 2 = 17 = RHS. ✓",
+              "method_one_line": "Use the balance property (removing equal amounts from both sides preserves equality) to form and solve 3b + 2 = 17 by inverse operations.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw the scale: label the left plate '3b + 2' and the right plate '17', then ask what must be removed from both plates to leave only the blocks on the left.",
+                "challenge": "Change the problem so both plates have blocks — e.g., left: 3b + 2, right: b + 12 — and ask the student to set up and solve the new equation."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 15.2 p.171",
+              "description": "Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Write an equation in one variable whose solution is x = 4 and that involves at least two operations (for example, a multiplication and an addition). Solve your equation step by step to confirm the solution is x = 4.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Many valid answers exist. One example: start from x = 4, multiply both sides by 3 to get 3x = 12, then subtract 5 from both sides to get 3x − 5 = 7. Equation: 3x − 5 = 7. Solving: 3x = 7 + 5 = 12, x = 12 ÷ 3 = 4. ✓ Accept any equation that is correctly formed and verified.",
+              "method_one_line": "Reverse the solving process — apply operations to both sides of x = 4 — to generate a valid equation, then solve it back by inverse operations.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Let the student begin by writing x = 4, then ask them to add 3 to both sides and write the result — then multiply both sides by 2 — and name the resulting equation.",
+                "challenge": "Ask the student to generate a second equation with the same solution x = 4 that looks very different from the first, and explain why both equations have the same solution."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 15.2 p.180",
+              "description": "Write 5 equations whose solution is x = −2."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 15.2",
+            "section_title": "Solving Equations Systematically",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A worked solution shows these steps for solving 5z + 2 = 3z − 4:\nStep 1: 5z + 3z = −4 − 2\nStep 2: 8z = −6\nStep 3: z = −3/4\nFind the correct solution of 5z + 2 = 3z − 4, showing all steps, and verify your answer by substituting back.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Step 1 error: moving +3z to the left should subtract it (not add it), and moving +2 to the right should subtract it. Correct: 5z − 3z = −4 − 2, giving 2z = −6, so z = −3. Verification: LHS = 5(−3) + 2 = −13; RHS = 3(−3) − 4 = −13. ✓",
+              "method_one_line": "Apply the transposition rule to bring variable terms to one side and constants to the other, then divide by the coefficient.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to subtract 3z from both sides explicitly (writing the step in full) before transposing any constant, to keep each operation visible.",
+                "challenge": "Change the equation to 5z + 2 = 3z + 2 and ask whether the solution changes — then explain what kind of equation this becomes."
+              }
+            },
+            "exercise": {
+              "book_ref": "section 15.3 p.181–182",
+              "description": "For nine given worked solutions (e.g. 4x + 6 = 10, 7 − 8z = 5, 2v − 4 = 6, 5z + 2 = 3z − 4, 15w − 4w = 26, 3x + 1 = −12, 4(4q + 2) = 50, −2(3 − 4x) = 14, 3(7y + 4) = 9 + 5y), decide whether the steps are correct, describe any mistake, correct it, and solve the equation."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 15.4",
+            "section_title": "A Pinch of History",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A plumber charges ₹500 as a fixed visit fee plus ₹150 for each hour of work. If the total bill is ₹1250, write an equation for the number of hours worked, solve it, and verify your answer.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Let h = number of hours. Equation: 500 + 150h = 1250. Transposing: 150h = 1250 − 500 = 750. Dividing: h = 750 ÷ 150 = 5 hours. Verification: 500 + 150 × 5 = 500 + 750 = 1250. ✓",
+              "method_one_line": "Identify fixed and variable costs, form 500 + 150h = 1250, then apply transposition (subtract 500) and division by 150.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to draw a simple table showing total bill for h = 1, 2, 3 hours, notice when it reaches 1250, and then confirm with the equation.",
+                "challenge": "Change the total to ₹1325 and ask whether h is still a whole number — then discuss what a fractional answer means in this context."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 15.4 p.186",
+              "description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 15.4",
+            "section_title": "A Pinch of History",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Solve the equation 3(2x − 1) = 2(x + 5) + 1 by expanding the brackets and applying transposition, then verify your solution by substituting back into both sides.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Expand: 6x − 3 = 2x + 10 + 1 = 2x + 11. Transpose: 6x − 2x = 11 + 3, giving 4x = 14, so x = 14/4 = 7/2. Verification: LHS = 3(2 × 7/2 − 1) = 3(7 − 1) = 3 × 6 = 18; RHS = 2(7/2 + 5) + 1 = 2(17/2) + 1 = 17 + 1 = 18. ✓",
+              "method_one_line": "Expand both brackets using the distributive law, collect variable terms on one side by transposition, then divide by the coefficient.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to expand each bracket term by term on a separate line before combining, to avoid sign errors in the expansion.",
+                "challenge": "Replace the 1 on the right with a variable k and ask: for what value of k does the equation have solution x = 3? Set up and solve the resulting equation in k."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q18, section 15.4 p.188",
+              "description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

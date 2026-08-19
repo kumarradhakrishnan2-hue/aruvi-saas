@@ -1,0 +1,1391 @@
+{
+  "filename": "ch_14_canonical_p14.json",
+  "saved_at": "2026-08-19T13:38:19",
+  "plan_status": "canonical",
+  "chapter_number": 14,
+  "chapter_title": "Constructions and Tilings",
+  "grade": "Grade VII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 14
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "14x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vii 14",
+    "ledger_ts": "20260819_130541_math_vii_14_p14",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Drawing the Perpendicular Bisector with Compass and Ruler",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.140",
+              "description": "When constructing the perpendicular bisector, explore through construction whether the arcs above and below XY must have the same radius, then justify your answer."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.140",
+              "description": "Explore whether both pairs of arcs must be on opposite sides of XY, or whether both pairs can be on the same side, and justify your answer."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Students draw a segment XY and, following the teacher's demonstration, set the compass to a radius greater than half of XY, then draw arcs above and below XY from both X and Y, labelling the two intersection points A and B. The class observes that joining A and B produces a line that appears to cut XY at its middle at a right angle."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Students work through Figure it Out Q1, section 14.1 p.140 (\"explore whether the arcs above and below XY must have the same radius....\") by deliberately changing the compass opening between the two sets of arcs and recording what happens to the intersection points. They compare results with a neighbour and articulate in their own words why equal radii are necessary for the method to work."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Students continue with Figure it Out Q2, section 14.1 p.140 (\"explore whether both pairs of arcs must be on opposite sides....\"), drawing both arc pairs on the same side of XY to observe that the two intersection points collapse to the same side and a bisector cannot be reliably drawn. Pairs share observations aloud."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "The teacher draws out from the class: placing both arc pairs on opposite sides ensures the two intersection points A and B are distinct and the segment AB crosses XY between X and Y. Students annotate their constructions with this reasoning in a single sentence."
+            }
+          ],
+          "teacher_notes": "The perpendicular bisector emerges from the Grade 6 'Eyes' design, where arc-centres lie equidistant from the segment's endpoints — building on that visual helps students see why equal radii matter. Watch for students who set the compass radius to exactly half of XY and then wonder why the arcs barely meet; emphasise that the radius must be strictly greater than half. For additional practice, students may study the construction and justification in their own textbook before the next sitting.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "plain paper or notebook"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Proving the Perpendicular Bisector Through Triangle Congruence",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q3, section 14.1 p.140",
+              "description": "Explore whether the two arcs of one intersecting pair must use the same radius, and justify your answer."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.142",
+              "description": "Justify why AB in Fig. 6.4 (the rope construction from the Śulba-Sūtras) is the perpendicular bisector of XY."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "The teacher writes the two triangles △ABX and △ABY on the board and asks students to identify all three pairs of equal sides produced by the compass construction (AX = AY, BX = BY by equal radius, AB common). Students name the congruence criterion — SSS — and state the conclusion: △ABX ≅ △ABY."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Building on △ABX ≅ △ABY, the teacher introduces point O (intersection of AB and XY) and guides students through △AOX ≅ △AOY by SAS (AO common, ∠OAX = ∠OAY from the first congruence, AX = AY). Students deduce OX = OY (O is the midpoint) and ∠AOX = ∠AOY = 90° (supplementary equal angles). Students record the full chain of reasoning in their notebooks."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Students tackle Figure it Out Q3, section 14.1 p.140 (\"explore whether the two arcs of one intersecting pair must use the same radius....\") by re-examining which side lengths in the SSS argument would change if the two arc radii from X differed from those from Y, and writing a one-sentence justification."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Students read the Śulba-Sūtra passage and attempt Figure it Out Q1, section 14.1 p.142 (\"justify why AB in Fig. 6.4 is the perpendicular bisector of XY....\"), identifying in the rope construction exactly which lengths correspond to AX, AY, BX, BY and applying the same SSS → SAS chain."
+            }
+          ],
+          "teacher_notes": "Having established the compass steps in the previous unit, this unit grounds those steps in the SSS and SAS congruence arguments from Chapter 7 — naming those criteria explicitly keeps students aware that geometry is a connected system, not a bag of tricks. A common error is claiming AB ⊥ XY without first proving O is the midpoint; insist students produce both conclusions in order. The Śulba-Sūtra connection shows students that the same logical structure underlies a method thousands of years old.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "notebook",
+            "textbook (Śulba-Sūtra passage)"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing a 90° Angle and Exploring Rope Methods",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q4, section 14.1 p.140",
+              "description": "Recreate the given design using only a ruler and compass, then trace its boundary to make it stand out."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.142",
+              "description": "Devise different methods to construct a 90° angle at a given point on a line using a rope."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "The teacher poses the construction challenge: given a line l and a marked point P on it, construct a 90° angle at P using only compass and ruler. Students recall that the perpendicular bisector of a segment is perpendicular to it at its midpoint, and reason aloud that if P is already the midpoint of a segment XY on l, only one pair of arcs (from above or below) is needed to find a point Q such that PQ ⊥ XY."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students carry out the construction: mark X and Y at equal distances on either side of P along l, then draw arcs from X and Y (equal radii, greater than XP) above the line to find Q, and draw PQ. They verify with a protractor that ∠QPX = 90°, then repeat in a different orientation. Students also attempt Figure it Out Q4, section 14.1 p.140 (\"recreate the given design using only a ruler and compass....\"), which requires a perpendicular bisector as a structural step."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "In pairs, students tackle Figure it Out Q2, section 14.1 p.142 (\"devise different methods to construct a 90° angle at a given point on a line using a rope....\"), sketching their rope-and-peg plans and explaining how the equal-distance property of the perpendicular bisector guarantees the angle is exactly 90°. Pairs share one method each."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "The class discusses which rope method is most practical, comparing the number of pegs and rope lengths required, and a student volunteers to narrate the method to the class as if explaining it to someone who had not seen the construction before."
+            }
+          ],
+          "teacher_notes": "The key insight — that P is already known to be on the perpendicular bisector because it is the midpoint, so only one arc-pair is needed — is easily missed; ask students to state explicitly which step of the two-pair method becomes unnecessary and why. Watch for students who mark X and Y at unequal distances from P, which places P off-centre and destroys the right angle. The design in Figure it Out Q4 rewards careful compass control and makes a good display piece.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (for verification only)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Bisecting Angles and Building the 8-Petal Figure",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.144",
+              "description": "Construct at least 4 different angles and draw their bisectors."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.144",
+              "description": "Construct the 8-petalled figure shown in Fig. 6.5 (dividing 360° into eight 45° angles)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "The teacher draws an angle ∠AOB on the board and guides the class through the angle bisection steps: draw an arc centred at O cutting OA at C and OB at D; with equal radii from C and D, draw arcs that intersect at E; draw OE. Students predict what triangle congruence (SSS for △OCE and △ODE) makes OE the bisector, and name the equal sides."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Students work through Figure it Out Q1, section 14.1 p.144 (\"construct at least 4 different angles and draw their bisectors....\"), choosing angles of their own — obtuse, acute, and reflex if they wish — and constructing each bisector with compass and ruler. They check by measuring both half-angles with a protractor."
+            },
+            {
+              "minutes": "24–38",
+              "activity": "Students attempt Figure it Out Q2, section 14.1 p.144 (\"construct the 8-petalled figure shown in Fig. 6.5....\") by first constructing two perpendicular lines (giving four 90° angles), then bisecting each 90° angle to produce eight 45° sectors, and finally drawing the petal arcs. The teacher circulates and asks: why must each sector be 45°? (Answer: 360° ÷ 8 = 45°.)"
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students annotate one angle in their 8-petal figure with its measure and name the congruence argument — SSS for △OCE ≅ △ODE — that justifies the bisection step."
+            }
+          ],
+          "teacher_notes": "Angle bisection uses the same SSS congruence logic as the perpendicular bisector — naming that parallel explicitly reinforces the idea that one method underlies many constructions. A frequent error is setting different compass radii for the two arcs from C and D, which produces unequal triangles; remind students that both arcs in that step must share the same opening. The 8-petal figure connects visually to the decorative designs students will construct in later units.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (for verification)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Justifying Angle Bisection and Reasoning About Constructible Angles",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q3, section 14.1 p.144",
+              "description": "In Step 2 of angle bisection, if arcs of equal radius are drawn on the other side, explore through construction whether OC is still an angle bisector, and justify your answer."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q4, section 14.1 p.144",
+              "description": "Identify the other angles that can be constructed using angle bisection, and decide whether a 65.5° angle can be constructed."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q5, section 14.1 p.144",
+              "description": "Come up with a method to construct the angle bisector using a rope."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students tackle Figure it Out Q3, section 14.1 p.144 (\"if arcs of equal radius are drawn on the other side, explore whether OC is still an angle bisector....\") by physically doing the construction with arcs placed on the exterior of the angle and comparing the resulting ray with the standard bisector, then writing a one-sentence justification citing which SSS argument still holds (the equal sides are unchanged regardless of which side the intersection point falls on)."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "The class works through Figure it Out Q4, section 14.1 p.144 (\"identify the other angles that can be constructed using angle bisection....\") as a whole-class discussion: starting from 90°, successive halving gives 45°, 22.5°, 11.25°, … and starting from 60° (not yet constructed, anticipated for a later unit) gives 30°, 15°, … Students tabulate results and argue why 65.5° cannot be reached — it is not expressible as a sum of angles of the form 90°/2ⁿ or 60°/2ⁿ."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students plan and sketch a rope-and-peg method for Figure it Out Q5, section 14.1 p.144 (\"come up with a method to construct the angle bisector using a rope....\"), identifying which lengths must be equal and how to locate the intersection point E with a rope of fixed length."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students share one rope method aloud and the class checks whether the geometric conditions (equal sides of the SSS triangles) are satisfied by that method."
+            }
+          ],
+          "teacher_notes": "The argument that 65.5° cannot be constructed is an early encounter with the idea that compass-and-ruler constructions produce only a specific family of angles — students need not know the full theory, but they should articulate that repeated halving from 90° never lands on 65.5°. Watch for the misconception that any angle can be constructed by enough bisections; a counter-question ('What do you get when you halve 45° three times?') helps. The rope method in Q5 gives a physical anchor for the abstract SSS argument.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "notebook",
+            "string or rope (optional, for demonstration)"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Copying an Angle and Constructing Parallel Lines",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q6, section 14.1 p.144",
+              "description": "Construct the given petal figure so that the petals are of the maximum possible size within a given square."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.146",
+              "description": "Construct at least 4 different angles in different orientations without taking any measurement, and make a copy of each using ruler and compass."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.146",
+              "description": "Construct Fig. 6.6, a repeating unit made by copying an angle in two orientations."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "The teacher demonstrates copying an angle ∠ABC onto a new ray XY: draw an arc from B cutting BA at P and BC at Q; mark XY with the same arc from X obtaining D; set the compass to PQ and mark the same chord from D to get E; draw XE. Students identify the SSS argument: △BPQ ≅ △XDE because BP = XD, BQ = XE (same arc radius), and PQ = DE (same chord length)."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students complete Figure it Out Q1, section 14.1 p.146 (\"construct at least 4 different angles in different orientations without taking any measurement, and make a copy of each....\"), drawing four angles freehand (no protractor) and then reproducing each using the copy method. They verify by measuring both original and copy."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Students construct Figure it Out Q2, section 14.1 p.146 (\"construct Fig. 6.6, a repeating unit made by copying an angle in two orientations....\") and also attempt Figure it Out Q6, section 14.1 p.144 (\"construct the given petal figure so that the petals are of the maximum possible size within a given square....\"), deciding the appropriate starting radius relative to the square's side."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "The teacher connects angle-copying to parallel-line construction: copying the corresponding angle at a new point on a transversal ensures two equal corresponding angles, which is the condition for parallelism. Students sketch the setup and label which angle is being copied and where."
+            }
+          ],
+          "teacher_notes": "The SSS justification for copying an angle directly mirrors the one used for angle bisection — pointing this out builds students' sense that a small number of congruence arguments power a large range of constructions. A common error when copying is setting the chord PQ by eye rather than with the compass; insist students keep the compass opening fixed while transferring it. The petal figure in Q6 rewards careful planning of how large the initial segment can be relative to the square.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (verification only)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing Parallel Lines and Decorative Arches",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.148",
+              "description": "Construct 4 pairs of parallel lines in different orientations using ruler and compass."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.148",
+              "description": "Construct the given figure (the symmetric S–T–…–W frame) using parallel-line constructions."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.151",
+              "description": "Use the support lines in Fig. 6.11 to construct a pointed arch, making different arches by changing the radius of the arcs."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students carry out Figure it Out Q1, section 14.1 p.148 (\"construct 4 pairs of parallel lines in different orientations....\") by drawing a transversal across a given line, choosing a point on the transversal, copying the corresponding angle at that point, and extending both rays into full lines. They verify parallelism by measuring the corresponding angles with a protractor."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students tackle Figure it Out Q2, section 14.1 p.148 (\"construct the symmetric S–T–…–W frame using parallel-line constructions....\"), identifying which sides of the frame are parallel and planning the order of constructions before executing them."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Students move to Figure it Out Q1, section 14.1 p.151 (\"use the support lines in Fig. 6.11 to construct a pointed arch....\"), constructing two equal segments meeting at a point with specific angles and then drawing arcs of varying radii from the midpoints of those segments to make sharper or flatter pointed arches."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "The teacher asks: what determines how pointed the arch is? Students articulate that the radius of the arcs relative to the length of the arms controls the sharpness, and annotate one arch with the relevant measurements."
+            }
+          ],
+          "teacher_notes": "The transition from copying an angle to constructing parallel lines is a single logical step — equal corresponding angles imply parallelism — and stating this connection explicitly helps students see the construction as a proof strategy, not just a drawing recipe. Watch for students who draw the transversal without a clear chosen point; the copy must begin at a specific location. The pointed arch construction rewards attention to which points serve as arc-centres.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (verification only)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing the Regular Hexagon and Deriving Angle Families",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.151",
+              "description": "Make your own arch designs."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q1, section 14.1 p.154",
+              "description": "Construct the given figures, including an inflexed arc and figure (b) which can be constructed using only a compass."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "The teacher draws a segment AB and constructs an equilateral triangle on it: arcs of radius AB from A and B intersect at C, giving AC = BC = AB and ∠CAB = ∠CBA = 60°. Students verify the 60° angle with a protractor and reason why all three angles must be 60° (the triangle is equilateral, so all angles equal and sum to 180°, giving 60° each). They observe that six such 60° angles fit exactly around a point: 6 × 60° = 360°."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Students construct a regular hexagon by stepping around a circle with the compass set to the circle's radius, placing six points and joining them. They measure the interior angles and confirm they are 120° (each interior angle of the hexagon = 180° − 60° = 120°, since the hexagon is composed of equilateral triangles meeting at the centre). Students also note that 30° and 15° angles follow by bisecting 60° and 30°."
+            },
+            {
+              "minutes": "26–36",
+              "activity": "Students create their own arch designs for Figure it Out Q2, section 14.1 p.151 (\"make your own arch designs....\") using trefoil or pointed structures, selecting arc-centres and radii deliberately. They then attempt Figure it Out Q1, section 14.1 p.154 (\"construct the given figures, including an inflexed arc....\"), focusing on figure (b) where only a compass is needed."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students list the angle measures now within their construction repertoire — 90°, 60°, 45°, 30°, 15°, 120° — and explain in one sentence how each arises from the equilateral triangle and bisection."
+            }
+          ],
+          "teacher_notes": "The equilateral-triangle argument for 60° is the cornerstone of this part of the chapter — students who see it geometrically (equal sides force equal angles) rather than as a memorised fact are far better placed for the hexagon reasoning. A common error is using a compass radius different from AB when stepping around the circle; the hexagon construction only works when the step equals the radius exactly. Encourage students to decorate their hexagons with the 6-pointed star pattern described in the textbook.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (verification)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Justifying the Hexagon, Optical Illusions, and Extended Constructions",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q2, section 14.1 p.154",
+              "description": "Examine the given optical-illusion figure, explain how the effect happens, and recreate it in your notebook."
+            },
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q3, section 14.1 p.155",
+              "description": "Construct the given figure by first finding the angles in it."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students rehearse the reasoning chain for the regular hexagon: each of the six central triangles is equilateral (all sides equal to the circle's radius), so each has 60° at the centre; six such angles sum to 360° and fill the region around the centre without gap or overlap; the hexagon's interior angles are each 180° − 60° = 120°. Students write this argument in their own words."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Students work through Figure it Out Q2, section 14.1 p.154 (\"examine the given optical-illusion figure, explain how the effect happens, and recreate it....\"), first identifying which geometric features (parallel lines, equal angles, or converging lines) create the illusion, writing an explanation, and then reproducing the figure with compass and ruler."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students tackle Figure it Out Q3, section 14.1 p.155 (\"construct the given figure by first finding the angles in it....\"), decomposing the figure's angles into known constructible measures — combinations of 60°, 45°, 30° — before picking up the compass, and executing the construction in planned steps."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "A brief pair-share: each student asks their neighbour to name one angle in their figure and explain which construction step produced it."
+            }
+          ],
+          "teacher_notes": "Having built the hexagon by construction, this unit moves the emphasis to justification — students must produce the reasoning in prose, not just the picture. Watch for students who state 'the hexagon has 120° angles' without explaining why; prompt with 'how does the 60° at the centre become 120° at the vertex?' The optical-illusion figure sharpens students' awareness that geometric truths can contradict visual perception, an important critical-thinking moment.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.1",
+              "title": "Geometric Constructions"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing a Perpendicular from an External Point",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 14.1",
+              "book_ref": "Figure it Out Q4, section 14.1 p.155",
+              "description": "Draw a line l and a point P outside it, and construct a perpendicular to l through P (using a segment on l whose perpendicular bisector passes through P)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "The teacher poses the challenge: given line l and external point P, how can we drop a perpendicular from P to l using only compass and ruler? Students brainstorm in pairs. The teacher draws out the key idea from the class: the perpendicular bisector of any segment XY on l passes through P if and only if PX = PY — so choose X and Y on l equidistant from P (by drawing an arc centred at P cutting l at X and Y), then construct the perpendicular bisector of XY, which automatically passes through P."
+            },
+            {
+              "minutes": "12–28",
+              "activity": "Students execute the full construction for Figure it Out Q4, section 14.1 p.155 (\"draw a line l and a point P outside it, and construct a perpendicular to l through P....\"), working through: (1) arc centred at P finding X and Y on l; (2) arcs from X and Y finding intersection points A and B on opposite sides of l; (3) joining A and B, which passes through P and meets l at right angles. They verify the 90° angle with a protractor."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Students repeat the construction with a different starting configuration — P closer to l, or l in a diagonal orientation — and check that the method always works. They write a sentence explaining why it works by citing the equidistant property (P is on the perpendicular bisector of XY because PX = PY by construction)."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "The teacher asks: is this more or less accurate than measuring the distance from P to l with a ruler and drawing a perpendicular by eye? Students articulate why the compass method is more reliable."
+            }
+          ],
+          "teacher_notes": "The general fact established in unit 2 — that any point equidistant from X and Y lies on the perpendicular bisector — is exactly what makes this construction work; naming that connection shows students how a single proved property recurs across different tasks. A common error is constructing the arcs from X and Y with too small a radius, so they do not intersect on both sides of l; remind students the radius must exceed half of XY. This construction is also practically important in technical drawing and architecture.",
+          "materials": [
+            "ruler",
+            "compass",
+            "pencil",
+            "protractor (verification only)",
+            "notebook"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.2",
+              "title": "Tiling"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Tangrams, Grid Tilings, and Parity Arguments",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 14.2",
+              "book_ref": "Figure it Out, section 14.2 p.156",
+              "description": "Rearrange the seven tangram pieces to form each of the given figures."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 14.2",
+              "book_ref": "Figure it Out Q1, section 14.2 p.160",
+              "description": "Decide whether the given region can be tiled with the given tile."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Each student draws a square of side 8 cm on card or paper, divides it into the seven standard tangram pieces following the textbook's guide, and cuts them out. The class observes that all seven pieces together cover the original square exactly — no gaps, no overlaps — establishing the tangram as a tiling of a square region."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students attempt Figure it Out, section 14.2 p.156 (\"rearrange the seven tangram pieces to form each of the given figures....\") in pairs, recording which arrangements succeed and noting that the total area is conserved (all seven pieces must be used)."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "The teacher introduces the 2 × 1 tile and draws a 4 × 6 grid on the board, tiling it column by column to show it works. Students then consider a 5 × 7 grid: count 35 unit squares; each tile covers exactly 2 squares; 35 is odd, so tiling is impossible. Students apply this parity reasoning to Figure it Out Q1, section 14.2 p.160 (\"decide whether the given region can be tiled with the given tile....\"), counting unit squares and checking parity."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Students articulate the parity rule in their own words: if the region contains an odd number of unit squares and the tile covers exactly two, the tiling is impossible. A student is invited to give the counter-example of what an even count does NOT guarantee (that it is tileable — only a necessary condition, not sufficient)."
+            }
+          ],
+          "teacher_notes": "The tangram dissection is a direct instance of tiling — seven pieces tile the square — and making that connection explicit at the outset frames the whole section. Watch for students who think an even unit-square count is sufficient for tileability; the argument only establishes a necessary condition, and the colouring argument later will show even-count regions that cannot be tiled. Cutting the tangram within the unit is essential so every student has the pieces in hand for the exploration.",
+          "materials": [
+            "ruler",
+            "pencil",
+            "card or thick paper (one sheet per student)",
+            "scissors",
+            "plain paper for grid drawings"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.2",
+              "title": "Tiling"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "The Colouring Argument: Proving Tiling Impossibility",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 14.2",
+              "book_ref": "Figure it Out Q2, section 14.2 p.160",
+              "description": "Decide whether the second given region can be tiled with the given tile."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "The teacher draws a 4 × 4 chessboard and asks students to colour it black and white in the standard alternating pattern. Together the class counts: 8 black and 8 white squares. A 2 × 1 tile placed anywhere always covers exactly one black and one white square — students verify this by trying horizontal and vertical placements and recording each outcome."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "The teacher draws the irregular region from Fig. 6.14 (8 white and 6 black squares after chessboard colouring) and asks: can it be tiled by 2 × 1 tiles? Students apply the colouring argument: any tiling would need equal numbers of black and white squares covered, but 8 ≠ 6, so no tiling exists. Students write the argument in full, step by step."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students apply the same reasoning to Figure it Out Q2, section 14.2 p.160 (\"decide whether the second given region can be tiled with the given tile....\"), first colouring the region in chessboard fashion, counting black and white squares, and using the argument to decide. They then discuss: does the argument tell us tiling IS possible when the counts are equal? (It does not — only one direction of the implication holds.)"
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students reflect in one sentence on why the colouring argument works: they name what invariant the 2 × 1 tile preserves (the difference between black and white squares covered) and why any tiling must have that invariant equal to zero."
+            }
+          ],
+          "teacher_notes": "The colouring argument is a deliberate strategy of making the problem harder-looking (adding colour) to make it easier to decide — drawing students' attention to this meta-mathematical move is as important as the argument itself. Watch for students who colour their grid in stripes rather than the chessboard alternating pattern; the argument only works with proper alternation. The question of what happens when the colour counts are equal (not sufficient for tileability) is a genuine open question worth leaving as a puzzle.",
+          "materials": [
+            "ruler",
+            "pencil",
+            "two coloured pencils or crayons (black and white or any two contrasting colours)",
+            "notebook or grid paper"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.2",
+              "title": "Tiling"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Tiling the Plane: Polygons, Escher, and Natural Tilings",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 14.2",
+              "book_ref": "Figure it Out Q1, section 14.2 p.160",
+              "description": "Decide whether the given region can be tiled with the given tile."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "The teacher poses the question: which regular polygons tile the plane? Students test squares by sketching a portion of the standard grid and confirming it covers the plane. They test equilateral triangles by fitting two together into a parallelogram and repeating. They test regular hexagons using the reasoning that three 120° angles meet at each vertex (3 × 120° = 360°), exactly filling the space around each point."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students reason about regular pentagons: each interior angle is 108°, and 360° ÷ 108° ≈ 3.33 — not a whole number — so pentagons cannot tile the plane by meeting at vertices alone. They contrast this with the three successful shapes and tabulate the angle condition: the interior angle must divide 360° exactly. The teacher shows or describes M. C. Escher's animal tilings and the 2023 aperiodic tile discovery as examples where non-regular or non-symmetric shapes tile."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Students revisit Figure it Out Q1, section 14.2 p.160 (\"decide whether the given region can be tiled with the given tile....\") with the plane-tiling perspective, also connecting the hexagonal honeycomb pattern to the regular hexagon tiling and noting that bee hives and wasp nests are natural instances. Students sketch a portion of a hexagonal tiling and annotate the 120° vertex angle."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students write one sentence explaining why regular hexagons tile the plane, citing the angle-sum condition (three 120° angles meet at each vertex and sum to exactly 360°)."
+            }
+          ],
+          "teacher_notes": "The plane-tiling section connects section 14.1's hexagon construction to a real-world phenomenon — the honeycomb — making the geometry feel purposeful. A common error is claiming that any polygon whose angle divides 360° will tile the plane; the 120° hexagon works, but the condition is necessary-and-sufficient only for regular polygons at a vertex, and the Escher tilings show non-regular shapes also tile through translation and rotation. Encourage students to notice tilings in floor patterns around the school.",
+          "materials": [
+            "ruler",
+            "pencil",
+            "coloured pencils (optional for Escher-style decoration)",
+            "notebook or grid paper"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 14.2",
+              "title": "Tiling"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Reasoning About When Grids Can and Cannot Be Tiled",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 14.2",
+              "book_ref": "Figure it Out Q2, section 14.2 p.160",
+              "description": "Decide whether the second given region can be tiled with the given tile."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "The teacher poses a sequence of m × n grid questions: a 6 × 4 grid (even rows and even columns), a 3 × 8 grid (odd rows, even columns), and a 5 × 7 grid (both odd). For each, students apply the parity rule (count unit squares, check whether the count is even) and the row/column tiling strategy (a grid with an even number of rows can be tiled column by column using horizontal tiles). Students tabulate results and articulate the general rule: an m × n grid is tileable by 2 × 1 tiles if and only if m × n is even — i.e., at least one of m, n is even."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "The teacher introduces grids with one unit square removed and asks: when is the remaining region tileable? Students colour a 4 × 4 grid with the chessboard pattern (8 black, 8 white). Removing one black square leaves 7 black and 8 white — colouring argument shows the region is not tileable. Removing one white square from a corner is symmetric. Students generalise: removing a square of the majority colour from any balanced grid destroys equal colour counts, making tiling impossible; removing from the minority colour keeps the imbalance. They state the rule for which square to remove from an even × even grid."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students apply their reasoning to Figure it Out Q2, section 14.2 p.160 (\"decide whether the second given region can be tiled with the given tile....\"), writing out the full colouring argument — colouring the region, counting, and concluding — as a connected paragraph rather than bullet points."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "The teacher draws out from the class a summary of the two strategies used across this section: the parity argument (count unit squares) and the colouring argument (count black and white squares). Students state in one sentence which argument is stronger and when each is needed."
+            }
+          ],
+          "teacher_notes": "The generalisation about m × n grids — at least one dimension must be even — follows directly from the parity argument and is worth stating as a clean theorem that students can remember and apply. Watch for the error of claiming the colouring argument always decides tileability; it only certifies impossibility when counts differ, and the parity argument handles the simpler case first. Asking students to write the argument as a connected paragraph develops the mathematical writing habit the NCF recommends for the Middle Stage.",
+          "materials": [
+            "ruler",
+            "pencil",
+            "coloured pencils (two colours)",
+            "notebook or grid paper"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 14,
+      "total_minutes": 560
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": []
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "anchor_id": "E-3",
+            "anchor_book_ref": "Figure it Out Q3, section 14.1 p.140",
+            "anchor_description": "Explore whether the two arcs of one intersecting pair must use the same radius, and justify your answer."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out Q3, section 14.1 p.144",
+            "anchor_description": "In Step 2 of angle bisection, if arcs of equal radius are drawn on the other side, explore through construction whether OC is still an angle bisector, and justify your answer."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "anchor_id": "E-20",
+            "anchor_book_ref": "Figure it Out Q2, section 14.1 p.154",
+            "anchor_description": "Examine the given optical-illusion figure, explain how the effect happens, and recreate it in your notebook."
+          },
+          {
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "reason",
+            "anchor_id": "E-25",
+            "anchor_book_ref": "Figure it Out Q2, section 14.2 p.160",
+            "anchor_description": "Decide whether the second given region can be tiled with the given tile."
+          },
+          {
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "reason",
+            "anchor_id": "E-25",
+            "anchor_book_ref": "Figure it Out Q2, section 14.2 p.160",
+            "anchor_description": "Decide whether the second given region can be tiled with the given tile."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 14.1 p.140",
+            "anchor_description": "When constructing the perpendicular bisector, explore through construction whether the arcs above and below XY must have the same radius, then justify your answer."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out Q4, section 14.1 p.140",
+            "anchor_description": "Recreate the given design using only a ruler and compass, then trace its boundary to make it stand out."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-7",
+            "anchor_book_ref": "Figure it Out Q1, section 14.1 p.144",
+            "anchor_description": "Construct at least 4 different angles and draw their bisectors."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-12",
+            "anchor_book_ref": "Figure it Out Q6, section 14.1 p.144",
+            "anchor_description": "Construct the given petal figure so that the petals are of the maximum possible size within a given square."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-15",
+            "anchor_book_ref": "Figure it Out Q1, section 14.1 p.148",
+            "anchor_description": "Construct 4 pairs of parallel lines in different orientations using ruler and compass."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-18",
+            "anchor_book_ref": "Figure it Out Q2, section 14.1 p.151",
+            "anchor_description": "Make your own arch designs."
+          },
+          {
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "anchor_id": "E-22",
+            "anchor_book_ref": "Figure it Out Q4, section 14.1 p.155",
+            "anchor_description": "Draw a line l and a point P outside it, and construct a perpendicular to l through P (using a segment on l whose perpendicular bisector passes through P)."
+          },
+          {
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "apply",
+            "anchor_id": "E-23",
+            "anchor_book_ref": "Figure it Out, section 14.2 p.156",
+            "anchor_description": "Rearrange the seven tangram pieces to form each of the given figures."
+          },
+          {
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "apply",
+            "anchor_id": "E-24",
+            "anchor_book_ref": "Figure it Out Q1, section 14.2 p.160",
+            "anchor_description": "Decide whether the given region can be tiled with the given tile."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "No goals were routed to this section for this chapter.",
+        "items": []
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Priya constructs the perpendicular bisector of segment XY. In her first pair of arcs she sets the compass to radius r₁ from X and the same r₁ from Y, obtaining intersection point A above XY. For the second pair she uses a different radius r₂ from X and the same r₂ from Y, obtaining intersection point B below XY. She joins A and B. Justify, using the equidistant property, whether AB is still the perpendicular bisector of XY.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Both A and B are equidistant from X and Y: AX = AY because both were drawn with radius r₁, and BX = BY because both were drawn with radius r₂. Any point equidistant from X and Y lies on the perpendicular bisector of XY. Therefore both A and B lie on the perpendicular bisector, and the line AB is exactly the perpendicular bisector of XY. The construction remains valid even though r₁ ≠ r₂.",
+              "method_one_line": "Apply the equidistant property: every point equidistant from X and Y lies on the perpendicular bisector, so both A and B lie on it regardless of which equal radius was used for each pair.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Pair-share first: ask a partner to name what is equal about A's distances from X and Y before writing.",
+                "challenge": "Alter the premise — what if r₂ is used from X but a different r₃ from Y for the second pair? Does the argument still hold, or does it break down?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 14.1 p.140",
+              "description": "Explore whether the two arcs of one intersecting pair must use the same radius, and justify your answer."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "In the angle-bisection construction for ∠AOB, a student draws the arc from O cutting OA at C and OB at D (equal radii), then, instead of drawing arcs from C and D on the interior of the angle, draws them on the exterior, obtaining intersection point E outside ∠AOB. She draws ray OE. Justify whether OE bisects ∠AOB.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "In both the interior and exterior cases the construction produces triangles △OCE and △ODE with OC = OD (same arc radius from O), CE = DE (same arc radius from C and D), and OE common. By SSS, △OCE ≅ △ODE, so ∠COE = ∠DOE. This means OE bisects ∠COD. Since C lies on OA and D lies on OB, ∠COD = ∠AOB, so OE bisects ∠AOB. The bisector ray is the same regardless of which side the intersection point E is on.",
+              "method_one_line": "Apply SSS congruence (△OCE ≅ △ODE) to conclude ∠COE = ∠DOE, which means OE bisects ∠AOB.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Sketch the two triangles △OCE and △ODE and list the three pairs of equal sides before writing the argument.",
+                "challenge": "What if arcs from C and D use different radii — does the SSS argument still hold? Explain why or why not."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 14.1 p.144",
+              "description": "In Step 2 of angle bisection, if arcs of equal radius are drawn on the other side, explore through construction whether OC is still an angle bisector, and justify your answer."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "A regular hexagon is constructed by stepping around a circle of radius r with the compass set to r, placing six equally spaced points on the circle and joining consecutive points. (a) Explain why each side of the hexagon has length r. (b) Explain why each central triangle (formed by two radii and one side) is equilateral and has all angles equal to 60°. (c) Use the angle at the centre to justify why the interior angle of the regular hexagon is 120°.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Each side connects two consecutive points on the circle; both points are at distance r from the centre, and the compass was set to r when stepping, so each chord has length r. (b) Each central triangle has two sides that are radii (length r) and one side that is a chord (also length r), so all three sides are equal and the triangle is equilateral. An equilateral triangle has all angles equal; since they sum to 180°, each angle is 60°. In particular the angle at the centre is 60°. (c) Six central triangles meet at the centre, each contributing a 60° angle; 6 × 60° = 360°, confirming they fill the space around the centre exactly. The interior angle of the hexagon at a vertex is the sum of the two base angles of the two adjacent central triangles. Each base angle of an equilateral triangle is 60°, so the interior angle is 60° + 60° = 120°.",
+              "method_one_line": "Use the equilateral-triangle property (all sides equal ⟹ all angles 60°) to show the central angle is 60°, then add two base angles of adjacent triangles to get the 120° interior angle.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw the hexagon and label one central triangle; write the length of each side before attempting the angle argument.",
+                "challenge": "If the circle's radius were doubled but the compass step kept at r (the original radius), what shape would the six points form, and would its interior angles still be 120°?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 14.1 p.154",
+              "description": "Examine the given optical-illusion figure, explain how the effect happens, and recreate it in your notebook."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A rectangular region measuring 3 rows by 9 columns is coloured like a chessboard (alternating black and white squares, top-left square black). A student claims this region can be tiled by 2 × 1 tiles. Use the colouring argument to decide whether the claim is correct, and justify your answer fully.",
+            "visual_stimulus": "number_line: 1 col | 2 col | 3 col | 4 col | 5 col | 6 col | 7 col | 8 col | 9 col",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The region has 3 × 9 = 27 unit squares. Since 27 is odd and each 2 × 1 tile covers exactly 2 squares, 27/2 is not a whole number, so the region cannot be tiled — the parity argument alone settles it. Alternatively, with chessboard colouring and top-left black: in each row of 9 squares there are 5 squares of one colour and 4 of the other, alternating by row. Rows 1 and 3 (starting black) each have 5 black and 4 white; row 2 (starting white) has 5 white and 4 black. Total black = 5 + 4 + 5 = 14; total white = 4 + 5 + 4 = 13. Since 14 ≠ 13, no tiling by 2 × 1 tiles (each covering one black and one white) is possible. The student's claim is incorrect.",
+              "method_one_line": "Apply the parity argument (27 is odd) or the colouring argument (14 black ≠ 13 white) to prove tiling is impossible.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "First count the total number of unit squares; check whether that number is even or odd before attempting the colouring count.",
+                "challenge": "Change one dimension: for which values of n is a 3 × n grid tileable by 2 × 1 tiles? State the rule and justify it."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 14.2 p.160",
+              "description": "Decide whether the second given region can be tiled with the given tile."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "A 4 × 4 grid (16 unit squares) is coloured like a chessboard, giving 8 black and 8 white squares. One unit square is removed. (a) If the removed square is black, explain using the colouring argument whether the remaining 15-square region can be tiled by 2 × 1 tiles. (b) If the removed square is white, does your answer change? (c) Does the position of the removed square (corner, edge, or interior) affect tileability? Justify each answer.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Removing one black square leaves 7 black and 8 white squares. Each 2 × 1 tile covers one black and one white square. Any tiling would cover equal numbers of black and white squares, but 7 ≠ 8, so the region cannot be tiled. (b) Removing one white square leaves 8 black and 7 white squares; again 8 ≠ 7, so the region still cannot be tiled. (c) In both cases the 15-square region has an unequal colour count regardless of which square is removed (removing either colour creates an imbalance of 1). The position — corner, edge, or interior — does not affect the colour-count argument; the imbalance is always 7 vs 8. Therefore no matter which single square is removed from the 4 × 4 grid, the remaining region cannot be tiled by 2 × 1 tiles.",
+              "method_one_line": "Apply the colouring argument: removing any single square from an 8-black, 8-white grid creates a 7 vs 8 imbalance, making tiling impossible regardless of position.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw a small 4 × 4 chessboard, colour it, and physically cross out one square; then count the remaining black and white squares.",
+                "challenge": "For which even × even grids with two squares removed (one black, one white) does the colouring argument leave the question open? Explain what further argument would then be needed."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 14.2 p.160",
+              "description": "Decide whether the second given region can be tiled with the given tile."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A student draws segment XY of length 8 cm and constructs its perpendicular bisector using a compass set to a radius of 6 cm (for each pair of arcs). The two intersection points of the arcs are A (above XY) and B (below XY). (a) What is the distance AX? (b) What is the distance from the midpoint O of XY to A, given that OX = 4 cm? Show your working using the Pythagorean theorem.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) AX = 6 cm, because A was obtained by drawing an arc of radius 6 cm centred at X. (b) In right triangle AOX, AX = 6 cm and OX = 4 cm (half of XY = 8 cm). By the Pythagorean theorem: AO² = AX² − OX² = 36 − 16 = 20, so AO = √20 = 2√5 cm ≈ 4.47 cm.",
+              "method_one_line": "Use the Pythagorean theorem in right triangle AOX with AX = 6 cm (compass radius) and OX = 4 cm (half of XY) to find AO = 2√5 cm.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw the right triangle AOX and label AX = 6, OX = 4 before applying the theorem.",
+                "challenge": "If the compass radius is changed to 5 cm instead of 6 cm, what is the new distance AO? Check whether AX > OX is still satisfied, and explain why this condition must hold."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 14.1 p.140",
+              "description": "When constructing the perpendicular bisector, explore through construction whether the arcs above and below XY must have the same radius, then justify your answer."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "Describe the steps, in order, to construct a 90° angle at a point P that lies on line l, using only a compass and ruler. State clearly which property of the perpendicular bisector justifies that your construction produces exactly 90°.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Step 1: With compass centred at P and any chosen radius, mark two points X and Y on line l, one on each side of P, so that PX = PY. Step 2: With compass radius greater than PX, draw arcs from X and Y on one side of l (both above, say); they intersect at point Q. Step 3: Draw ray PQ. The angle ∠QPX = 90°. Justification: since PX = PY, point P is equidistant from X and Y, so P lies on the perpendicular bisector of XY. The perpendicular bisector of XY is perpendicular to XY (proved by triangle congruence: △QXP ≅ △QYP by SSS, giving ∠QPX = ∠QPY; these supplementary equal angles each equal 90°). Therefore ray PQ is perpendicular to l at P.",
+              "method_one_line": "Mark X and Y equidistant from P on l, find arc intersection Q, and draw PQ; the equidistant property ensures P is on the perpendicular bisector and PQ ⊥ l.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw a rough sketch of the line l with point P marked, and label where X, Y, and Q go before writing the steps.",
+                "challenge": "Describe an alternative construction of a 90° angle at P using the equilateral-triangle method (constructing a 60° angle and then bisecting the remaining 30° to reach 90°), and verify it gives 90°."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 14.1 p.140",
+              "description": "Recreate the given design using only a ruler and compass, then trace its boundary to make it stand out."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "MCQ",
+            "prompt": "A student wants to bisect an angle ∠PQR using compass and ruler. After drawing an arc centred at Q that cuts QP at A and QR at B, she must next draw two arcs of equal radius — one centred at A and one centred at B — that intersect at a point C inside the angle, then draw ray QC. Which triangle congruence guarantees that QC bisects ∠PQR?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "△QAC ≅ △QBC by SAS, because QA = QB (same arc from Q), AC = BC (same arc radius), and angle QAC = angle QBC.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "△QAC ≅ △QBC by SSS, because QA = QB (same arc from Q), AC = BC (same arc radius from A and B), and QC = QC (common side).",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "△QAC ≅ △QBC by AAS, because ∠AQC = ∠BQC (what we are trying to prove), QA = QB, and AC = BC.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "△QAC ≅ △QBC by RHS, because the triangles are right-angled at A and B respectively, QA = QB, and QC is common.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option B. △QAC ≅ △QBC by SSS: QA = QB (both are radii of the arc drawn from Q), AC = BC (both are radii of the equal arcs drawn from A and B), and QC = QC (common side). From this congruence, ∠AQC = ∠BQC, which means QC bisects ∠AQB = ∠PQR.",
+              "method_one_line": "Apply SSS (QA = QB, AC = BC, QC common) to conclude △QAC ≅ △QBC, giving ∠AQC = ∠BQC.",
+              "what_each_option_reveals": {
+                "A": "The student is thinking of SAS but has confused the order of elements; SAS requires two sides and the included angle, and ∠AQC is not between QA and AC in the correct sense — the student may be conflating the criterion.",
+                "C": "The student is using the very angle they are trying to prove as a given in the congruence argument, which is circular reasoning.",
+                "D": "The student incorrectly assumes right angles at A and B; there is no reason for the triangles to be right-angled at those vertices in the general angle-bisection construction."
+              },
+              "inclusivity": {
+                "support": "List the three sides of each triangle and check which are equal before deciding the congruence criterion.",
+                "challenge": "Write out the full two-line proof: state the congruence with its criterion, then state the angle equality that follows and name it as the bisection conclusion."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 14.1 p.144",
+              "description": "Construct at least 4 different angles and draw their bisectors."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Using only the angles constructible by bisecting 90° repeatedly, list all distinct angle measures (in degrees) that can be produced. Then state whether 11.25° is in your list. Show the chain of bisections that produces the smallest angle in your list.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Starting from 90°, each bisection halves the angle: 90° → 45° → 22.5° → 11.25°. The distinct angles are 90°, 45°, 22.5°, and 11.25°. Yes, 11.25° is in the list. Chain: construct a 90° angle (perpendicular bisector method); bisect it to get 45°; bisect that to get 22.5°; bisect again to get 11.25°. Each bisection uses the SSS-based angle-bisection construction.",
+              "method_one_line": "Apply the angle-bisection construction three successive times to 90°, halving at each step: 90° → 45° → 22.5° → 11.25°.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Start by writing 90 ÷ 2, then halve the result again, and again — track the numbers before describing the construction steps.",
+                "challenge": "Starting instead from a 60° angle, list the angles obtainable by repeated bisection and identify which angles can be obtained from BOTH the 90° family and the 60° family."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 14.1 p.144",
+              "description": "Construct the given petal figure so that the petals are of the maximum possible size within a given square."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "MCQ",
+            "prompt": "To construct a line through point P parallel to line l using compass and ruler, a student draws a transversal through P crossing l at T, then copies angle ∠PTl at point P on the transversal. Which angle property guarantees the new line is parallel to l?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Alternate interior angles are equal, so the new line crosses the transversal at the same angle on the opposite side, making the lines parallel.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Co-interior (same-side interior) angles are supplementary, so their sum is 180°, making the lines parallel.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Corresponding angles are equal — the copied angle at P equals ∠PTl — and equal corresponding angles formed by a transversal imply the two lines are parallel.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "Vertically opposite angles are equal, so the copied angle at P is equal to the angle on the other side of the transversal at T, making the lines parallel.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option C. The angle copied at P is in the corresponding position to ∠PTl (both are on the same side of the transversal, above the respective lines). When corresponding angles formed by a transversal cutting two lines are equal, the two lines are parallel. This is the angle property that the construction uses.",
+              "method_one_line": "Equal corresponding angles (copied angle at P equals ∠PTl) imply the new line is parallel to l by the corresponding-angles criterion.",
+              "what_each_option_reveals": {
+                "A": "The student is thinking of alternate interior angles, which lie on opposite sides of the transversal between the parallel lines — but the angle being copied is a corresponding angle, not an alternate interior angle.",
+                "B": "Co-interior angles being supplementary is also a valid test for parallelism, but the construction copies an angle to make it equal, not to make a pair supplementary — the student is applying the wrong criterion to describe this construction.",
+                "D": "Vertically opposite angles at a single point are equal to each other, but this does not connect angles at two different points on the transversal, so it cannot be the criterion used here."
+              },
+              "inclusivity": {
+                "support": "Sketch the two lines and the transversal; mark ∠PTl at T and the copied angle at P, and identify which pair (corresponding, alternate, or co-interior) they form.",
+                "challenge": "Describe how you could use the alternate interior angle criterion instead to construct the parallel line, and explain whether the resulting line would be the same."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 14.1 p.148",
+              "description": "Construct 4 pairs of parallel lines in different orientations using ruler and compass."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-6",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A pointed arch is constructed as follows: two equal segments AB and CB, each of length 5 cm, meet at apex B, where ∠ABC = 60°. The midpoint of AB is M and the midpoint of CB is N. An arc centred at M with radius 5 cm sweeps from A to B, and an arc centred at N with radius 5 cm sweeps from C to B. (a) What is the length AC? (b) What kind of triangle is △ABC? Justify using side lengths.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) In △ABC, AB = CB = 5 cm and ∠ABC = 60°. Using the cosine rule: AC² = AB² + CB² − 2·AB·CB·cos(∠ABC) = 25 + 25 − 2·25·cos 60° = 50 − 50·(1/2) = 50 − 25 = 25, so AC = 5 cm. Alternatively, since AB = CB = AC = 5 cm, the triangle is equilateral. (b) △ABC is equilateral: all three sides are equal (5 cm each), so all three angles are 60°. The 60° angle at B and the equal sides were given; the cosine-rule computation confirms AC = 5 cm, completing the equilateral triangle.",
+              "method_one_line": "Apply the cosine rule with AB = CB = 5 cm and ∠ABC = 60° to find AC = 5 cm, confirming △ABC is equilateral.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Label the triangle with AB = CB = 5 and ∠ABC = 60°; recall that cos 60° = 1/2 before applying the formula.",
+                "challenge": "If ∠ABC is changed to 90°, recompute AC and name the type of triangle. Then explain how the shape of the arch changes as the apex angle increases from 60° toward 180°."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 14.1 p.151",
+              "description": "Make your own arch designs."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-7",
+            "section_ref": "section 14.1",
+            "section_title": "Geometric Constructions",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Line l is drawn horizontally. Point P is 6 cm above l. A student finds two points X and Y on l such that PX = PY = 10 cm. (a) What is the length XY? (b) The student then constructs the perpendicular bisector of XY. Explain in one sentence why this perpendicular bisector passes through P. (c) Where does the perpendicular bisector meet l?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Drop a perpendicular from P to l; let the foot be F. PF = 6 cm (given height). In right triangle PFX, PX = 10 cm and PF = 6 cm, so FX² = PX² − PF² = 100 − 36 = 64, giving FX = 8 cm. By symmetry FY = 8 cm, so XY = FX + FY = 16 cm. (b) Since PX = PY = 10 cm, point P is equidistant from X and Y, so P lies on the perpendicular bisector of XY (any point equidistant from the endpoints of a segment lies on its perpendicular bisector). (c) The perpendicular bisector of XY is perpendicular to l and passes through the midpoint of XY, which is the foot F (the point on l directly below P). So the perpendicular bisector meets l at F.",
+              "method_one_line": "Use the Pythagorean theorem in △PFX to find FX = 8 cm, giving XY = 16 cm; then cite the equidistant property to confirm P lies on the perpendicular bisector, which meets l at the midpoint F of XY.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw and label the right triangle PFX with PX = 10, PF = 6, and find FX using the Pythagorean theorem before thinking about XY.",
+                "challenge": "Generalise: if P is at height h above l and PX = PY = d, express XY and the foot F in terms of h and d, stating the condition on h and d for the construction to be possible."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 14.1 p.155",
+              "description": "Draw a line l and a point P outside it, and construct a perpendicular to l through P (using a segment on l whose perpendicular bisector passes through P)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-8",
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "apply",
+            "question_type": "MCQ",
+            "prompt": "A student has seven tangram pieces that together make a square of area 64 cm². She rearranges all seven pieces into a rectangle with no gaps or overlaps. What must be the area of the rectangle?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "32 cm², because rearranging always halves the area.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "64 cm², because the total area of the pieces is conserved when they are rearranged without gaps or overlaps.",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "128 cm², because joining pieces side by side doubles the area.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "It cannot be determined without knowing the dimensions of each piece.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option B. The seven pieces have a combined area equal to the original square, 64 cm². Rearranging without gaps or overlaps conserves total area, so the rectangle also has area 64 cm².",
+              "method_one_line": "Area is conserved when pieces are rearranged without gaps or overlaps, so the rectangle's area equals the original square's area, 64 cm².",
+              "what_each_option_reveals": {
+                "A": "The student incorrectly believes rearrangement changes area, perhaps confusing area conservation with a halving operation.",
+                "C": "The student may be thinking that placing pieces side by side adds their individual areas without accounting for the fact that the original square already contained all seven pieces.",
+                "D": "The student has not recognised that area is an invariant of rearrangement; knowing the total area of the original square is sufficient."
+              },
+              "inclusivity": {
+                "support": "Recall that tiling means covering a region without gaps or overlaps — the pieces fill the new shape exactly, so no area is added or lost.",
+                "challenge": "If the rectangle has dimensions l cm by w cm and l = 2w, find l and w."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 14.2 p.156",
+              "description": "Rearrange the seven tangram pieces to form each of the given figures."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-9",
+            "section_ref": "section 14.2",
+            "section_title": "Tiling",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A 6 × 8 rectangular grid is to be tiled by 2 × 1 tiles. (a) How many tiles are needed? (b) A student removes one unit square from the grid, leaving 47 squares. She applies the chessboard colouring argument. Given that the grid was coloured with the top-left square black and 24 black and 24 white squares in the full grid, how many black and white squares remain after removing one black square? (c) Does the colouring argument show that the remaining region cannot be tiled? State the conclusion clearly.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) The full 6 × 8 grid has 48 unit squares. Each 2 × 1 tile covers 2 squares, so 48/2 = 24 tiles are needed. (b) The full grid has 24 black and 24 white squares. Removing one black square leaves 23 black and 24 white squares. (c) Each 2 × 1 tile covers exactly one black and one white square. Any tiling of the remaining 47 squares would require 23.5 tiles (47/2 is not a whole number), which is impossible — the parity argument settles it immediately. Alternatively using the colouring argument: 23 black ≠ 24 white, so no tiling exists. The conclusion is: the remaining 47-square region cannot be tiled by 2 × 1 tiles.",
+              "method_one_line": "Count 48/2 = 24 tiles for the full grid; after removing one black square, 23 ≠ 24 (colouring argument) or 47 is odd (parity), so the reduced region cannot be tiled.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Answer part (a) first by dividing the total square count by 2; then recount after the removal before applying the colouring argument.",
+                "challenge": "Is there any single square that can be removed from the 6 × 8 grid so that the remaining 47 squares CAN be tiled? Justify your answer."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 14.2 p.160",
+              "description": "Decide whether the given region can be tiled with the given tile."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

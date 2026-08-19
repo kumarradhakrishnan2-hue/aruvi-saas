@@ -1,0 +1,1208 @@
+{
+  "filename": "ch_05_canonical_p10.json",
+  "saved_at": "2026-08-19T13:38:18",
+  "plan_status": "canonical",
+  "chapter_number": 5,
+  "chapter_title": "Number Play",
+  "grade": "Grade VIII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 10
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 10 periods = 450 minutes\nTotal: 10 periods · 7h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "10x45",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics viii 5",
+    "ledger_ts": "20260819_130541_math_viii_05_p10",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Is This a Multiple Of?"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Consecutive Sums and the Parity of Eight Expressions",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q1, section 5.1 p.112",
+              "description": "Explore whether every natural number, every even number, and 0 (using negatives) can be written as a sum of consecutive numbers; discuss with class."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q2, section 5.1 p.112",
+              "description": "Take four consecutive numbers; place '+' and '−' signs between them in all eight ways; list all possibilities."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q3, section 5.1 p.113",
+              "description": "Evaluate each of the eight expressions formed from 3, 4, 5, 6; record results; repeat for another set of four consecutive numbers; share findings."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q4, section 5.1 p.113",
+              "description": "Take any four consecutive numbers; place '+'/'-' signs in all eight ways; observe parities; repeat for another set."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with Math Talk Q1 (p.112) (\"explore whether every natural number can be written as a sum of consecutive numbers....\"). Students try small cases individually, then share — is 1 possible? Is 4? Is 6? The class collects findings on the board, noting which numbers resist a consecutive-sum representation."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Move to Math Talk Q2 (p.112) (\"take four consecutive numbers; place '+' and '−' signs in all eight ways....\"). Students work in pairs with 3, 4, 5, 6 — listing all eight sign-combinations and computing each result. Math Talk Q3 (p.113) (\"evaluate each of the eight expressions formed from 3, 4, 5, 6....\") follows immediately: pairs record every value and repeat the exercise with a self-chosen set of four consecutive numbers."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Class pools its tables for Math Talk Q4 (p.113) (\"take any four consecutive numbers; place '+'/'-' signs in all eight ways; observe parities....\"). Students label each result odd or even, compare across different starting numbers, and articulate the conjecture: every result from any four consecutive numbers shares the same parity. Brief whole-class discussion: does the starting number matter? Does the count of numbers matter?"
+            },
+            {
+              "minutes": "36–45",
+              "activity": "Students attempt Math Talk Q5 (p.114) (\"is there a way to explain why all eight expressions from four numbers share parity?....\") in writing — one or two sentences using parity rules for sums and differences. Volunteers share their reasoning; the teacher consolidates the key insight that a ± b always has the same parity as a + b, so all eight expressions inherit the same parity."
+            }
+          ],
+          "teacher_notes": "Watch for students who check only one set of four numbers and claim the pattern must be universal — push them to try an odd-starting set and an even-starting set before generalising. The parity-of-a-sum rule (a ± b has the same parity regardless of sign) is the engine of the proof; ensure students articulate it in their own words before the unit closes.",
+          "materials": [
+            "Squared or plain paper for listing expressions",
+            "Blackboard or shared space for class table of results"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Is This a Multiple Of?"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Proving Parity Invariance: Three Algebraic Explanations",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q5, section 5.1 p.114",
+              "description": "Is there a way to explain why all eight expressions from four numbers share parity? Hint: parity rules for sum/difference of two numbers."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q6, section 5.1 p.114",
+              "description": "Replace any negative sign in a + b − c − d with positive; find the difference between the two numbers; conclude."
+            },
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 5.1",
+              "book_ref": "Explanation 1, section 5.1 p.114",
+              "description": "Algebraic proof that switching any '+' or '−' sign between four numbers changes the value by 2 times the affected number (an even amount), so all eight expressions formed from four numbers share the same parity."
+            },
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "section 5.1",
+              "book_ref": "Explanation 2, section 5.1 p.114",
+              "description": "Parity-rules proof that a ± b always has the same parity, extending to show all expressions a ± b ± c ± d share parity."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Math Talk Q7, section 5.1 p.115",
+              "description": "Is the phenomenon of all expressions having the same parity limited to four numbers? Investigate."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Revisit the parity-invariance conjecture from Math Talk Q5 (p.114) (\"is there a way to explain why all eight expressions from four numbers share parity?...\"). Students attempt a written justification in pairs before the teacher introduces any formal argument — this surfaces prior reasoning and common errors."
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Walk through Explanation 1 (p.114) (\"algebraic proof that switching any '+' or '−' sign changes the value by 2 times the affected number....\"). Students follow each step in their books. Then present Math Talk Q6 (p.114) (\"replace any negative sign in a + b − c − d with positive; find the difference between the two numbers....\") as a check: pairs compute the difference and confirm it is always even."
+            },
+            {
+              "minutes": "22–35",
+              "activity": "Introduce Explanation 2 (p.114) (\"parity-rules proof that a ± b always has the same parity, extending to all expressions a ± b ± c ± d....\"). Students compare the two proofs side-by-side: same conclusion, different route. Class discusses: which proof feels more convincing? Which is easier to extend?"
+            },
+            {
+              "minutes": "35–45",
+              "activity": "Students tackle Math Talk Q7 (p.115) (\"is the phenomenon of all expressions having the same parity limited to four numbers? Investigate....\"). Working in small groups, they test five numbers, then attempt an algebraic argument. Groups share their extension — the teacher guides them to see that the same logic applies to any count of numbers."
+            }
+          ],
+          "teacher_notes": "A common error is treating Explanation 1 and Explanation 2 as the same argument — stress that Explanation 1 tracks what changes when a sign is flipped, while Explanation 2 applies parity rules directly to the structure of the expression. Having students name the key move in each proof aloud helps fix the distinction.",
+          "materials": [
+            "Textbook open to pp.114–115",
+            "Paper for paired written justifications"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Is This a Multiple Of?"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Breaking Even, Pairs to Make Fours, and Remainder Classes",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Breaking Even — arithmetic expressions, section 5.1 p.115",
+              "description": "Without computing, determine which of the eight arithmetic expressions (43+37; 672−348; 4×347×3; 708−477; 809+214; 119×303; 543−479; 513³) are even."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Breaking Even — algebraic expressions, section 5.1 p.115",
+              "description": "Identify which algebraic expressions (2a+2b; 3g+5h; 4m+2n; 2u−4v; 13k−5k; 6m−3n; x²+2; b²+1; 4k×3j) always give an even number for any integer values; give examples and non-examples for each."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "section 5.1",
+              "book_ref": "Example, section 5.1 p.116",
+              "description": "Two justifications that 4m + 2q is always even: (i) both 4m and 2q are individually even; (ii) factoring gives 2(2m + q), showing 2 is a factor. Contrasted with x² + 2, which is not always even."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Pairs to Make Fours Q1, section 5.1 p.116",
+              "description": "Take a pair of even numbers, add them, check if divisible by 4; try different pairs; find when the sum is a multiple of 4 and when not; identify a general rule."
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "section 5.1",
+              "book_ref": "Pairs to Make Fours table, section 5.1 p.117",
+              "description": "Algebraic and visualisation proof for three cases: 4p + 4q = 4(p+q) always multiple of 4; (4p+2) + (4q+2) = 4(p+q+1) always multiple of 4; 4p + (4q+2) = 4(p+q)+2 never a multiple of 4."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Breaking Even — write algebraic expressions, section 5.1 p.116",
+              "description": "Write a few algebraic expressions that always give an even number."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students work independently on Breaking Even — arithmetic expressions (p.115) (\"without computing, determine which of the eight arithmetic expressions are even....\"). After individual attempts, a quick class comparison: students justify each answer using the product rule (a product is even if any factor is even) and the parity-of-sums rule."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Students attempt Breaking Even — algebraic expressions (p.115) (\"identify which algebraic expressions always give an even number for any integer values....\"), giving one example and one non-example for each expression they classify as 'sometimes.' The teacher then walks through the Example (p.116) (\"two justifications that 4m + 2q is always even....\"), showing both the term-by-term check and the factoring route."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Pairs explore Pairs to Make Fours Q1 (p.116) (\"take a pair of even numbers, add them, check if divisible by 4....\"), recording several trials in a table. The teacher then presents the Pairs to Make Fours table (p.117) (\"algebraic and visualisation proof for three cases: 4p + 4q; (4p+2)+(4q+2); 4p+(4q+2)....\") — students follow the algebra for each case and connect it to their trial data."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Students write down E-12 (Pairs to Make Fours Q2, p.117) (\"what happens when you add a multiple of 4 to an even non-multiple of 4?....\") as a short in-class check — one algebraic line showing why the sum is never a multiple of 4. Homework is set: Breaking Even — write algebraic expressions (p.116) (\"write a few algebraic expressions that always give an even number....\")."
+            }
+          ],
+          "teacher_notes": "Students frequently confuse 'always even' with 'even for the specific values I tried' — insist on the algebraic route rather than numerical verification alone. The key error to watch in the Pairs to Make Fours section is writing (4p+2)+(4q+2) = 4(p+q)+4 instead of 4(p+q+1); have a student expand both forms to confirm they are identical.",
+          "materials": [
+            "Textbook open to pp.115–117",
+            "Paper for trial tables"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Is This a Multiple Of?"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Always, Sometimes, or Never: Divisibility Laws and Remainder Classes",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "section 5.1",
+              "book_ref": "Always, Sometimes, or Never — statements 1–5, section 5.1 pp.118–120",
+              "description": "Five worked statements about divisibility (by 8, 7, 12, 6) classified as always/sometimes/never true with algebraic proofs, visualisations, and examples; establishes four general divisibility laws."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Always, Sometimes, or Never — examine statements, section 5.1 p.118",
+              "description": "We know the sum of two multiples of 2 is a multiple of 2. Determine if statement 1 (if 8 divides two numbers separately it divides their sum) is also true with subtraction."
+            },
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Always, Sometimes, or Never — extra statements, section 5.1 p.121",
+              "description": "Determine for statements 6–8: (6) if divisible by both 9 and 4, must be divisible by 36; (7) if divisible by both 6 and 4, must be divisible by 24; (8) odd + even gives a multiple of 6 — always, sometimes, or never true."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "What Remains? Q1, section 5.1 p.121",
+              "description": "Find a number that has a remainder of 3 when divided by 5; write more such numbers."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "What Remains? Q2, section 5.1 p.121",
+              "description": "Which algebraic expression(s) capture all numbers leaving remainder 3 when divided by 5: (i) 3k+5; (ii) 3k−5; (iii) 3k/5; (iv) 5k+3; (v) 5k−2; (vi) 5k−3?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students read statements 1–5 from Always, Sometimes, or Never — statements 1–5 (pp.118–120) (\"five worked statements about divisibility classified as always/sometimes/never true....\") and attempt a verdict for each before any class discussion. The teacher then works through each proof, with students checking their verdicts and identifying which general divisibility law each statement establishes."
+            },
+            {
+              "minutes": "15–25",
+              "activity": "Students tackle Always, Sometimes, or Never — examine statements (p.118) (\"determine if statement 1 is also true with subtraction....\") and statements 6–8 from Always, Sometimes, or Never — extra statements (p.121) (\"if divisible by both 9 and 4, must be divisible by 36; if divisible by both 6 and 4, must be divisible by 24; odd + even gives a multiple of 6....\"). Pairs compare answers, particularly on statement 7, where the intuitive answer is wrong."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Shift to What Remains? Q1 (p.121) (\"find a number that has a remainder of 3 when divided by 5; write more such numbers....\"). Students list at least five such numbers, then attempt What Remains? Q2 (p.121) (\"which algebraic expression(s) capture all numbers leaving remainder 3 when divided by 5?....\"). Class pools verdicts on all six options — the key point is that both 5k+3 and 5k−2 (for k ≥ 1) generate the same set."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Students write one sentence explaining why 5k − 2 and 5k + 3 generate the same remainder class. The teacher draws out the substitution argument: replacing k with k+1 in 5k−2 gives 5k+3. Quick class check: can students name the remainder class for 7k+1 in an analogous way?"
+            }
+          ],
+          "teacher_notes": "A persistent error is classifying statement 7 (divisible by both 6 and 4 implies divisible by 24) as 'always true' by thinking 6 × 4 = 24 — the counterexample 12 is decisive; make it the class's first check. For the remainder-class discussion, watch students who use only positive values of k and miss negative integers when evaluating 5k − 2.",
+          "materials": [
+            "Textbook open to pp.118–121",
+            "Paper for verdict tables"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Is This a Multiple Of?"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Figure It Out: Consecutive Numbers, Remainder Conditions, and Divisibility Puzzles",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q1, section 5.1 p.122",
+              "description": "The sum of four consecutive numbers is 34. What are these numbers?"
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q3, section 5.1 p.122",
+              "description": "For five statements, determine always/sometimes/never true with algebraic justification: (i) sum of two even numbers is a multiple of 3; (ii) not divisible by 18 implies not divisible by 9; (iii) if two numbers not divisible by 6, sum not divisible by 6; (iv) sum of multiple of 6 and multiple of 9 is multiple of 3; (v) sum of multiple of 6 and multiple of 3 is multiple of 9."
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q5, section 5.1 p.122",
+              "description": "Pebble riddle: number leaves remainder 1 when grouped by 3 or 5, is divisible by 7, and is less than 100. Find the number."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q7, section 5.1 p.123",
+              "description": "661 leaves remainder 3 and 4779 leaves remainder 5 when divided by 7. Without calculating, find the remainders when (i) 4779 + 661 and (ii) 4779 − 661 are divided by 7; show algebraically and visually."
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q8, section 5.1 p.123",
+              "description": "Find the smallest number that leaves remainder 2 when divided by 3, remainder 3 when divided by 4, and remainder 4 when divided by 5. Explain why it is the smallest."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q4, section 5.1 p.122",
+              "description": "Find numbers leaving remainder 2 when divided by both 3 and 4. Write an algebraic expression for all such numbers."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students solve Figure it Out Q1 (p.122) (\"the sum of four consecutive numbers is 34. What are these numbers?....\") individually using the algebraic method: if the smallest is n, the sum is 4n + 6. A quick pair-check follows; the teacher notes that the answer is not a whole-number value of n for every target sum and asks which target sums are reachable."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students attempt Figure it Out Q3 (p.122) (\"for five statements, determine always/sometimes/never true with algebraic justification....\") in pairs. After pairing time, the class focuses on statement (iii) — the most common wrong answer — and statement (iv), which most find straightforward. Students write the algebraic line that decides each verdict."
+            },
+            {
+              "minutes": "22–33",
+              "activity": "Students work individually on Figure it Out Q5 (p.122) (\"pebble riddle: number leaves remainder 1 when grouped by 3 or 5, is divisible by 7, and is less than 100....\") and Figure it Out Q7 (p.123) (\"661 leaves remainder 3 and 4779 leaves remainder 5 when divided by 7; find remainders of their sum and difference without calculating....\"). For Q7, students are required to show both an algebraic and a visual argument."
+            },
+            {
+              "minutes": "33–45",
+              "activity": "Whole-class discussion of Figure it Out Q8 (p.123) (\"find the smallest number leaving remainder 2 when divided by 3, remainder 3 when divided by 4, and remainder 4 when divided by 5....\"). Students notice each condition is equivalent to 'one less than a multiple of the divisor,' reducing the problem to finding the LCM of 3, 4, and 5 minus 1. Homework is set: Figure it Out Q4 (p.122) (\"find numbers leaving remainder 2 when divided by both 3 and 4; write an algebraic expression for all such numbers....\")."
+            }
+          ],
+          "teacher_notes": "The pebble riddle rewards systematic listing — students who try algebraic expressions first often get tangled; encourage a hybrid approach (list candidates from the remainder-1 condition, then filter by divisibility by 7). For Q7, insist on the visual argument as well as the algebraic one, since both methods are explicitly required by the book and build complementary understanding of remainder arithmetic.",
+          "materials": [
+            "Textbook open to pp.122–123",
+            "Paper for working"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Checking Divisibility Quickly"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Place-Value Algebra: Deriving Divisibility Rules for 10, 5, 2, 4, 8, and 9",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "section 5.2",
+              "book_ref": "Divisibility by 10 — place-value algebra, section 5.2 p.123",
+              "description": "Derivation using the general form …1000d + 100c + 10b + a showing all place values except units are multiples of 10, proving the divisibility-by-10 rule; students extend this to 5, 2, 4, 8."
+            },
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q1, section 5.2 p.123",
+              "description": "Explain using algebra why divisibility shortcuts for 5, 2, 4, and 8 work."
+            },
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "section 5.2",
+              "book_ref": "Shortcut for Divisibility by 9, section 5.2 pp.124–125",
+              "description": "Proof that the remainder when any number is divided by 9 equals the sum of its digits, using the decomposition 10^n = (10^n − 1) + 1 where 10^n − 1 is always a repunit multiple of 9. Worked example with 7309."
+            },
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Math Talk Q2, section 5.2 p.124",
+              "description": "Is 10 divisible by 9? What is the remainder? Check other multiples of 10 (10, 20, 30, …) divided by 9; observe the pattern."
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q1, section 5.2 p.126",
+              "description": "Find, without dividing, whether the following numbers are divisible by 9: (i) 123; (ii) 405; (iii) 8888; (iv) 93547; (v) 358095."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students examine the general expanded form of a number from the Divisibility by 10 — place-value algebra derivation (p.123) (\"derivation using the general form …1000d + 100c + 10b + a showing all place values except units are multiples of 10....\"). After reading the derivation, they individually attempt Figure it Out Q1 (p.123) (\"explain using algebra why divisibility shortcuts for 5, 2, 4, and 8 work....\"), writing the key algebraic step for each divisor."
+            },
+            {
+              "minutes": "12–28",
+              "activity": "Students work through Math Talk Q2 (p.124) (\"is 10 divisible by 9? Check multiples of 10 divided by 9; observe the pattern....\") in pairs, tabulating remainders for 10, 20, 30, 40. The teacher then walks through the Shortcut for Divisibility by 9 (pp.124–125) (\"proof that the remainder when any number is divided by 9 equals the sum of its digits, using the decomposition 10^n = (10^n−1)+1....\"), connecting it to the pattern students just observed."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Students apply the digit-sum rule in Figure it Out Q1 (p.126) (\"find, without dividing, whether 123, 405, 8888, 93547, 358095 are divisible by 9....\"). Each answer requires a written digit-sum line. Students also tackle Math Talk Q1 (p.124) (\"can any number made of only digits '0' and '9' always be divisible by 9?....\") — the digit-sum rule gives the answer immediately."
+            },
+            {
+              "minutes": "40–45",
+              "activity": "Students discuss Math Talk Q6 (p.125) (\"examine which four statements about divisibility by 9 and digit sums are correct....\") in pairs. The teacher clarifies that statements (i) and (ii) are converses of each other and both happen to be true — this biconditional is the engine of the digit-sum rule."
+            }
+          ],
+          "teacher_notes": "A frequent confusion is between the digit-sum rule for divisibility by 9 and the digit-sum rule for divisibility by 3; at this point in the unit, focus exclusively on 9 and let the parallel for 3 emerge in the next unit where it is formally treated. Watch for students who apply the digit-sum shortcut but then divide by 9 anyway to 'check' — this defeats the purpose and signals that the algebraic argument for why the rule works has not yet landed.",
+          "materials": [
+            "Textbook open to pp.123–126",
+            "Paper for remainder tables"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Checking Divisibility Quickly"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Divisibility by 3, 11, and Digital Roots: Proofs and Patterns",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-41",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Math Talk — divisibility by 3, section 5.2 p.126",
+              "description": "A number is divisible by 3 if the sum of its digits is divisible by 3. Explore remainders when powers of 10 are divided by 3 and explain why the method works."
+            },
+            {
+              "id": "WE-8",
+              "type": "worked_example",
+              "source_section": "section 5.2",
+              "book_ref": "Shortcut for Divisibility by 11, section 5.2 pp.127–128",
+              "description": "Proof of the alternating digit-sum rule for divisibility by 11 using the pattern that 10^n is alternately 1 more or 1 less than a multiple of 11. Two equivalent methods shown; worked example with 320185."
+            },
+            {
+              "id": "E-45",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Divisibility by 11 — check six numbers, section 5.2 p.128",
+              "description": "Using the shortcut, determine whether (i) 158; (ii) 841; (iii) 481; (iv) 5529; (v) 90904; (vi) 857076 are divisible by 11; find remainder if not."
+            },
+            {
+              "id": "E-50",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Digital Roots Q1, section 5.2 p.130",
+              "description": "What property does the digital root have? Recall how it connects to divisibility by 9."
+            },
+            {
+              "id": "E-57",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q2, section 5.2 p.131",
+              "description": "Write any number; generate a sequence by repeatedly adding 11; find the digital roots of this sequence; share observations."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-47",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Fill in the table, section 5.2 p.129",
+              "description": "Complete the divisibility table for ten numbers (128, 990, 1586, 275, 6686, 639210, 429714, 2856, 3060, 406839) against divisors 2, 3, 4, 5, 6, 8, 9, 10, 11."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students explore Math Talk — divisibility by 3 (p.126) (\"a number is divisible by 3 if the sum of its digits is divisible by 3; explore remainders when powers of 10 are divided by 3....\"). They tabulate remainders of 1, 10, 100, 1000 when divided by 3 and quickly see the pattern is constant (remainder 1 each time), explaining why digit sums work for 3 exactly as they do for 9."
+            },
+            {
+              "minutes": "10–28",
+              "activity": "The teacher presents the Shortcut for Divisibility by 11 (pp.127–128) (\"proof of the alternating digit-sum rule using the pattern that 10^n is alternately 1 more or 1 less than a multiple of 11....\"), working through the 320185 example in detail. Students then apply the rule to all six numbers in Divisibility by 11 — check six numbers (p.128) (\"determine whether 158, 841, 481, 5529, 90904, 857076 are divisible by 11; find remainder if not....\")."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Students read Digital Roots Q1 (p.130) (\"what property does the digital root have? Recall how it connects to divisibility by 9....\") and write a two-sentence summary in their own words. The teacher introduces the historical note about Aryabhata II and the Mahāsiddhānta — digital roots as a remainder-by-9 check has a documented history."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Students work on Figure it Out Q2 (p.131) (\"write any number; generate a sequence by repeatedly adding 11; find the digital roots....\"). After computing six or seven terms, they identify the repeating pattern and discuss why adding 11 leaves the digit-sum remainder by 9 unchanged. Homework: Fill in the table (p.129) (\"complete the divisibility table for ten numbers against divisors 2, 3, 4, 5, 6, 8, 9, 10, 11....\")."
+            }
+          ],
+          "teacher_notes": "Having established the digit-sum proof for divisibility by 9, the parallel proof for 3 follows in a few lines — students who grasp the 9-proof often find the 3-proof trivially short, which is a useful meta-lesson about how one proof can carry another. A common error in the divisibility-by-11 check is summing all digits in one group rather than alternating; insist students explicitly label odd-position and even-position digits before computing.",
+          "materials": [
+            "Textbook open to pp.126–131",
+            "Paper for digit-sum workings and remainder tables"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Digits in Disguise"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Introduction to Cryptarithms: Addition Puzzles and First Multiplication Cases",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-60",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q1, section 5.3 p.131",
+              "description": "Solve addition cryptarithm (i): A1 + 1B = B0."
+            },
+            {
+              "id": "E-61",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q2, section 5.3 p.131",
+              "description": "Solve addition cryptarithm (ii): AB + 37 = 6A."
+            },
+            {
+              "id": "E-62",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q3, section 5.3 p.131",
+              "description": "Solve addition cryptarithm (iii): ON + ON + ON = PO."
+            },
+            {
+              "id": "E-63",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q4, section 5.3 p.131",
+              "description": "Solve addition cryptarithm (iv): QR + QR + QR = PRR."
+            },
+            {
+              "id": "WE-9",
+              "type": "worked_example",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithm PQ × 8 = RS, section 5.3 p.131",
+              "description": "Worked solution showing that only PQ = 12 satisfies the constraint that a 2-digit number times 8 gives a 2-digit number with distinct digits."
+            },
+            {
+              "id": "E-64",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q5, section 5.3 p.131",
+              "description": "Solve multiplication cryptarithm (v): PQ × 8 = RS."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "The teacher sets the context: in cryptarithms, each letter stands for a distinct digit (no leading zeros), and the task is to recover every digit using place-value constraints and divisibility. Students read cryptarithm Q1 (p.131) (\"solve addition cryptarithm (i): A1 + 1B = B0....\") and attempt a solution individually before any class discussion — this surfaces how students approach an unfamiliar constraint puzzle."
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Pairs share their method for Q1, then move to cryptarithm Q2 (p.131) (\"solve AB + 37 = 6A....\"), Q3 (p.131) (\"solve ON + ON + ON = PO....\"), and Q4 (p.131) (\"solve QR + QR + QR = PRR....\"). For each puzzle, the class is asked to start from the units column and work left, writing a constraint equation before guessing. Pairs compare final answers."
+            },
+            {
+              "minutes": "22–35",
+              "activity": "The teacher walks through the Cryptarithm PQ × 8 = RS worked solution (p.131) (\"worked solution showing that only PQ = 12 satisfies the constraint that a 2-digit number times 8 gives a 2-digit number with distinct digits....\"). Students identify the two-step argument: first restrict the range of PQ so that PQ × 8 remains two digits, then check digit distinctness."
+            },
+            {
+              "minutes": "35–45",
+              "activity": "Students verify the worked answer and then attempt cryptarithm Q5 (p.131) (\"solve multiplication cryptarithm PQ × 8 = RS....\") independently, using the range-then-check strategy just demonstrated. Students record their working column by column rather than by trial-and-error alone."
+            }
+          ],
+          "teacher_notes": "The most common error in addition cryptarithms is ignoring carry — insist that students handle the tens column only after deciding whether the units column generates a carry. For the transition to multiplication cryptarithms, the key shift is that the units digit of the product must equal the units digit of the result, which narrows choices sharply; make this principle explicit before students attempt Q5.",
+          "materials": [
+            "Textbook open to pp.131–132",
+            "Paper for column-by-column working"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Digits in Disguise"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Multiplication Cryptarithms: Reasoning with Units Digits and Three-Digit Products",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-65",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q6, section 5.3 p.132",
+              "description": "Solve multiplication cryptarithm (vi): GH × H = 9K. Choose from the options given."
+            },
+            {
+              "id": "E-66",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithms Q7, section 5.3 p.132",
+              "description": "What can you say about 'Y' in BYE × 6 = RAY? What digits are possible or not possible for Y?"
+            },
+            {
+              "id": "WE-10",
+              "type": "worked_example",
+              "source_section": "section 5.3",
+              "book_ref": "Cryptarithm BYE × 6 = RAY, section 5.3 p.132",
+              "description": "Guided reasoning: B = 1 (product must stay 3-digit), Y must be even and less than 7; students deduce remaining digits."
+            },
+            {
+              "id": "E-67",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Solve the following Q1, section 5.3 p.132",
+              "description": "Solve multiplication cryptarithm: UT × 3 = PUT."
+            },
+            {
+              "id": "E-68",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Solve the following Q2, section 5.3 p.132",
+              "description": "Solve multiplication cryptarithm: AB × 5 = BC."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-69",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Solve the following Q3, section 5.3 p.132",
+              "description": "Solve multiplication cryptarithm: L2N × 2 = 2NP."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students tackle cryptarithm Q6 (p.132) (\"solve GH × H = 9K; choose from the options given....\") — the units-digit constraint that H × H must end in K, and the tens digit must produce 9, channels students to a short list. After individual attempts, pairs compare reasoning and the class settles on the answer with a one-line justification."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Students work on cryptarithm Q7 (p.132) (\"what can you say about Y in BYE × 6 = RAY?....\"), focusing entirely on what constraints the multiplication places on Y before the teacher reveals any part of the solution. The teacher then works through the Cryptarithm BYE × 6 = RAY guided reasoning (p.132) (\"B = 1 since the product must stay 3-digit; Y must be even and less than 7....\"), checking each student's Y-constraint against the book's derivation."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Students attempt Solve the following Q1 (p.132) (\"solve UT × 3 = PUT....\") and Solve the following Q2 (p.132) (\"solve AB × 5 = BC....\") independently. For Q1, the leading digit of a three-digit product from a two-digit × single-digit product is a strong constraint; for Q2, the units-digit rule for multiples of 5 provides the entry point."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Pairs compare solutions for Q1 and Q2, then the teacher addresses any discrepancies. Students note their key strategy for each — range constraint, units-digit rule, or carry analysis — in their books. Homework is set: Solve the following Q3 (p.132) (\"solve L2N × 2 = 2NP....\")."
+            }
+          ],
+          "teacher_notes": "Students sometimes confuse 'find digits satisfying the equation' with 'find one valid assignment and stop' — where a puzzle has a unique solution (as the book's worked cases do), students should verify uniqueness by confirming no other digit satisfies the constraints. For BYE × 6 = RAY, the constraint B = 1 is easy to motivate: a three-digit number times 6 can produce at most a four-digit number, so B must be small enough that the result stays three digits.",
+          "materials": [
+            "Textbook open to pp.132",
+            "Paper for constraint-and-check workings"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 45,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Digits in Disguise"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Figure It Out: Integrating Divisibility, Remainders, and Cryptarithms",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-73",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q1, section 5.3 p.132",
+              "description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+            },
+            {
+              "id": "E-77",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q5, section 5.3 p.132",
+              "description": "If 48a23b is a multiple of 18, list all possible pairs (a, b)."
+            },
+            {
+              "id": "E-84",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q12, section 5.3 p.133",
+              "description": "Determine always/sometimes/never for: (i) product of a multiple of 6 and a multiple of 3 is a multiple of 9; (ii) sum of three consecutive even numbers divisible by 6; (iii) if abcdef is a multiple of 6, then badcef is too; (iv) 8(7b−3) − 4(11b+1) is a multiple of 12."
+            },
+            {
+              "id": "E-87",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q15, section 5.3 p.133",
+              "description": "Solve cryptarithms: (i) EF × E = GGG; (ii) WOW × 5 = MEOW."
+            },
+            {
+              "id": "E-88",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q16, section 5.3 p.133",
+              "description": "Which Venn diagram (i)–(iv) correctly captures the relationship between multiples of 4, 8, and 32?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students solve Figure it Out Q1 (p.132) (\"if 31z5 is a multiple of 9 where z is a digit, find the value of z; explain why there are two answers....\"). The digit-sum rule reduces this to finding z such that 3 + 1 + z + 5 = 9 + z is divisible by 9, giving two candidate digit values — students verify both and explain the uniqueness question."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students work on Figure it Out Q5 (p.132) (\"if 48a23b is a multiple of 18, list all possible pairs (a, b)....\"). Divisibility by 18 requires divisibility by both 2 (units digit b even) and 9 (digit sum). Students systematically enumerate valid (a, b) pairs, using the digit-sum constraint to narrow b to even values and then a to what makes the total sum a multiple of 9."
+            },
+            {
+              "minutes": "22–33",
+              "activity": "Pairs tackle Figure it Out Q12 (p.133) (\"determine always/sometimes/never: product of multiple of 6 and multiple of 3 is multiple of 9; sum of three consecutive even numbers divisible by 6; if abcdef multiple of 6, badcef too; 8(7b−3)−4(11b+1) is multiple of 12....\"). Each pair writes a one-line algebraic justification for their verdict on each statement. Class quickly shares verdicts; the teacher homes in on any item with disagreement."
+            },
+            {
+              "minutes": "33–45",
+              "activity": "Students attempt Figure it Out Q15 (p.133) (\"solve cryptarithms EF × E = GGG and WOW × 5 = MEOW....\") — these are the chapter's most demanding cryptarithms. For Q16 (p.133) (\"which Venn diagram correctly captures the relationship between multiples of 4, 8, and 32?....\"), students reason from divisibility laws: every multiple of 32 is a multiple of 8, every multiple of 8 is a multiple of 4, giving a nested chain. Students select the correct diagram and write one justifying sentence."
+            }
+          ],
+          "teacher_notes": "For Figure it Out Q5, students who apply the divisibility-by-9 rule correctly but forget the divisibility-by-2 constraint will find too many pairs — insist on checking both conditions before listing a pair. For Q15's second cryptarithm WOW × 5 = MEOW, the units-digit rule for multiples of 5 (result ends in 0 or 5) and the four-digit product constraint together narrow the search sharply; prompt students to start there rather than guessing W.",
+          "materials": [
+            "Textbook open to pp.132–133",
+            "Paper for constraint-and-enumeration workings"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 45,
+      "count": 10
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": []
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Math Talk Q1, section 5.1 p.112",
+            "anchor_description": "Explore whether every natural number, every even number, and 0 (using negatives) can be written as a sum of consecutive numbers; discuss with class."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "anchor_id": "E-5",
+            "anchor_book_ref": "Math Talk Q5, section 5.1 p.114",
+            "anchor_description": "Is there a way to explain why all eight expressions from four numbers share parity? Hint: parity rules for sum/difference of two numbers."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "anchor_id": "WE-5",
+            "anchor_book_ref": "Always, Sometimes, or Never — statements 1–5, section 5.1 pp.118–120",
+            "anchor_description": "Five worked statements about divisibility (by 8, 7, 12, 6) classified as always/sometimes/never true with algebraic proofs, visualisations, and examples; establishes four general divisibility laws."
+          },
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Checking Divisibility Quickly",
+            "goal": "reason",
+            "anchor_id": "E-30",
+            "anchor_book_ref": "Figure it Out Q1, section 5.2 p.123",
+            "anchor_description": "Explain using algebra why divisibility shortcuts for 5, 2, 4, and 8 work."
+          },
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Checking Divisibility Quickly",
+            "goal": "reason",
+            "anchor_id": "E-41",
+            "anchor_book_ref": "Math Talk — divisibility by 3, section 5.2 p.126",
+            "anchor_description": "A number is divisible by 3 if the sum of its digits is divisible by 3. Explore remainders when powers of 10 are divided by 3 and explain why the method works."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "apply",
+            "anchor_id": "E-8",
+            "anchor_book_ref": "Breaking Even — arithmetic expressions, section 5.1 p.115",
+            "anchor_description": "Without computing, determine which of the eight arithmetic expressions (43+37; 672−348; 4×347×3; 708−477; 809+214; 119×303; 543−479; 513³) are even."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "apply",
+            "anchor_id": "E-22",
+            "anchor_book_ref": "Figure it Out Q1, section 5.1 p.122",
+            "anchor_description": "The sum of four consecutive numbers is 34. What are these numbers?"
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "anchor_id": "E-60",
+            "anchor_book_ref": "Cryptarithms Q1, section 5.3 p.131",
+            "anchor_description": "Solve addition cryptarithm (i): A1 + 1B = B0."
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "anchor_id": "E-65",
+            "anchor_book_ref": "Cryptarithms Q6, section 5.3 p.132",
+            "anchor_description": "Solve multiplication cryptarithm (vi): GH × H = 9K. Choose from the options given."
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "anchor_id": "E-73",
+            "anchor_book_ref": "Figure it Out Q1, section 5.3 p.132",
+            "anchor_description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "No goals routed to this section in the chapter.",
+        "items": []
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Hamid claims that the number 15 cannot be written as a sum of consecutive natural numbers. His classmate Priya says it can. Who is correct? Write out the consecutive natural numbers whose sum is 15, and explain in one sentence why such a representation is possible.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Priya is correct. 4 + 5 + 6 = 15, which is a sum of three consecutive natural numbers. Because 15 is odd and greater than 1, it can always be written as a sum of consecutive numbers (in this case the two neighbours of its middle value 5).",
+              "method_one_line": "Identify the middle value as 15/3 = 5, then take 4, 5, 6 as three consecutive naturals summing to 15.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Allow the student to list sums of two, three, and four consecutive numbers starting from 1 until a sum of 15 is found.",
+                "challenge": "Ask whether every odd number greater than 1 can be written as a sum of consecutive naturals, and whether the same holds for all even numbers."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk Q1, section 5.1 p.112",
+              "description": "Explore whether every natural number, every even number, and 0 (using negatives) can be written as a sum of consecutive numbers; discuss with class."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Consider the four consecutive numbers 5, 6, 7, 8. Form the expression 5 + 6 − 7 + 8. Now replace the first '+' with '−' to get 5 − 6 − 7 + 8. Without computing either expression, explain in two sentences why both expressions must be even.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Both expressions are even. Switching the sign between 5 and 6 from '+' to '−' changes the expression's value by 2 × 6 = 12, which is even, so if the original expression is even, the new one is even too. Since the original expression 5 + 6 − 7 + 8 = 12 is even, any expression formed by sign changes is also even.",
+              "method_one_line": "Apply the sign-switching principle from Explanation 1: each sign change alters the value by twice the affected number (an even amount), preserving parity.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student compute both expressions first to confirm they are even, then ask what changed and by how much.",
+                "challenge": "Ask the student to re-explain the argument using the parity-rules method from Explanation 2 and compare which proof is shorter."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk Q5, section 5.1 p.114",
+              "description": "Is there a way to explain why all eight expressions from four numbers share parity? Hint: parity rules for sum/difference of two numbers."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "reason",
+            "question_type": "MCQ",
+            "prompt": "A number M is divisible by 12. Which one of the following statements is always true?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "M is divisible by 24.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "M is divisible by 7.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "M is divisible by all factors of 12.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "M is divisible by any multiple of 12.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "B — M is divisible by all factors of 12.",
+              "method_one_line": "Apply the divisibility law: if A is divisible by k, then A is divisible by all factors of k; 1, 2, 3, 4, 6, and 12 are all factors of 12.",
+              "what_each_option_reveals": {
+                "A": "The student confuses 'divisible by 12' with 'divisible by all multiples of 12'; 12 itself is divisible by 12 but not by 24.",
+                "D": "The student reverses the divisibility law, believing that divisibility by k implies divisibility by multiples of k, rather than factors of k.",
+                "B": "The student does not recognise that 7 is not a factor of 12, so divisibility by 12 carries no implication about divisibility by 7."
+              },
+              "inclusivity": {
+                "support": "Let the student list all factors of 12 first and check whether 12 itself is divisible by each.",
+                "challenge": "Ask the student to state the full divisibility law in their own words and write a counterexample showing option A is false."
+              }
+            },
+            "exercise": {
+              "book_ref": "Always, Sometimes, or Never — statements 1–5, section 5.1 pp.118–120",
+              "description": "Five worked statements about divisibility (by 8, 7, 12, 6) classified as always/sometimes/never true with algebraic proofs, visualisations, and examples; establishes four general divisibility laws."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 5.2",
+            "section_title": "Checking Divisibility Quickly",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student says: 'The divisibility rule for 4 is that the last two digits must form a number divisible by 4.' Using the place-value form of a four-digit number 1000d + 100c + 10b + a, write an algebraic argument that justifies this rule.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Write the four-digit number as 1000d + 100c + 10b + a. Since 1000 = 4 × 250 and 100 = 4 × 25, both 1000d and 100c are multiples of 4. Therefore the original number is divisible by 4 if and only if 10b + a is divisible by 4, which is exactly the last two digits.",
+              "method_one_line": "Expand the number in place-value form and note that all contributions from hundreds and higher are already multiples of 4, so divisibility depends only on the last two digits.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to verify that 1000 and 100 are both divisible by 4 before writing the algebraic argument.",
+                "challenge": "Ask the student to extend the argument to explain the divisibility-by-8 rule (last three digits) using the same place-value approach."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.2 p.123",
+              "description": "Explain using algebra why divisibility shortcuts for 5, 2, 4, and 8 work."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "section_ref": "section 5.2",
+            "section_title": "Checking Divisibility Quickly",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "The remainders when 1, 10, 100, and 1000 are each divided by 3 are all equal to 1. Using this observation, explain in two sentences why a number is divisible by 3 if and only if the sum of its digits is divisible by 3.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Because every power of 10 leaves remainder 1 when divided by 3, a number …1000d + 100c + 10b + a leaves the same remainder as 1×d + 1×c + 1×b + 1×a = d + c + b + a when divided by 3. Therefore the number is divisible by 3 exactly when its digit sum is divisible by 3.",
+              "method_one_line": "Replace each power of 10 by its remainder 1 modulo 3, reducing the divisibility question to the digit sum.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Pair the student with a partner to first verify the remainder-1 pattern for 1, 10, 100, 1000 by direct division, then reconstruct the argument together.",
+                "challenge": "Ask the student to explain why the same argument with remainders for divisibility by 9 gives an identical rule, and how the two proofs differ."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk — divisibility by 3, section 5.2 p.126",
+              "description": "A number is divisible by 3 if the sum of its digits is divisible by 3. Explore remainders when powers of 10 are divided by 3 and explain why the method works."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Without performing any multiplication or addition, determine whether each of the following expressions is even or odd. Write 'even' or 'odd' for each and give a one-line reason using parity rules.\n(i) 57 + 83\n(ii) 6 × 247 × 13\n(iii) 129 − 74\n(iv) 25³",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(i) odd + odd = even. (ii) 6 is even, so the product is even regardless of the other factors. (iii) odd − even = odd. (iv) 25 is odd, and any power of an odd number is odd.",
+              "method_one_line": "Apply the parity rules: sum/difference of two numbers of the same parity is even; product is even if any factor is even; powers of odd numbers are odd.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide the student with a small table of parity rules (odd + odd, odd + even, even + even; odd × odd, etc.) to consult while working.",
+                "challenge": "Ask the student to write their own four-expression list — two that are always even and two that are always odd — and challenge a partner to justify each."
+              }
+            },
+            "exercise": {
+              "book_ref": "Breaking Even — arithmetic expressions, section 5.1 p.115",
+              "description": "Without computing, determine which of the eight arithmetic expressions (43+37; 672−348; 4×347×3; 708−477; 809+214; 119×303; 543−479; 513³) are even."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 5.1",
+            "section_title": "Is This a Multiple Of?",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "The sum of three consecutive numbers is 57. Find the three numbers. Then write an algebraic expression for all sets of three consecutive numbers whose sum is divisible by 3, and explain why every such sum is automatically divisible by 3.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Let the three consecutive numbers be n, n+1, n+2. Their sum is 3n + 3 = 3(n+1). Setting 3(n+1) = 57 gives n+1 = 19, so n = 18. The three numbers are 18, 19, 20. The sum of any three consecutive numbers is 3(n+1), which is always a multiple of 3 — so every set of three consecutive numbers has a sum divisible by 3.",
+              "method_one_line": "Let the middle number be m; the three consecutive numbers are m−1, m, m+1, summing to 3m, which is always divisible by 3.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student first guess-and-check with numbers near 57 ÷ 3 = 19, then write the algebraic version once the answer is found.",
+                "challenge": "Ask whether the sum of four consecutive numbers is always divisible by 4, and if not, what it is always divisible by."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.1 p.122",
+              "description": "The sum of four consecutive numbers is 34. What are these numbers?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Solve the addition cryptarithm: TA + AT = HH, where each letter represents a distinct digit and HH is a two-digit number with both digits equal. Show your reasoning step by step.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "HH = 11 × H, so HH must be a two-digit multiple of 11: 11, 22, 33, …, 99. TA = 10T + A and AT = 10A + T, so TA + AT = 11T + 11A = 11(T + A). Therefore H = T + A. For a two-digit result HH, we need T + A = H ≤ 9 (no carry beyond tens column). Try H = 9: T + A = 9, any pair with T ≠ A and neither equal to 9 works; e.g., T = 5, A = 4 gives 54 + 45 = 99 = HH with H = 9. The digits 5, 4, 9 are all distinct. One valid solution: T = 5, A = 4, H = 9.",
+              "method_one_line": "Write TA + AT = 11(T+A) and set equal to 11H, giving H = T + A; choose distinct digits with T + A ≤ 9.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to first list all two-digit numbers of the form HH (11, 22, … 99) and check which are sums of a two-digit number and its digit-reversal.",
+                "challenge": "Ask whether there is more than one solution, and if so, how many distinct (T, A, H) triples satisfy the cryptarithm."
+              }
+            },
+            "exercise": {
+              "book_ref": "Cryptarithms Q1, section 5.3 p.131",
+              "description": "Solve addition cryptarithm (i): A1 + 1B = B0."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Solve the multiplication cryptarithm: AB × 4 = CB, where each letter represents a distinct digit. Show all steps of your reasoning.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The units digit of AB × 4 must equal B, so 4B ≡ B (mod 10), meaning 3B ≡ 0 (mod 10). The digits B satisfying 3B ending in 0 are B = 0 (3×0=0) and B = 0 only from single digit... re-checking: 3B mod 10 = 0 gives B = 0. With B = 0: AB × 4 = C0, so A0 × 4 = C0, meaning 10A × 4 = C0, so 40A ends in 0 — always true. 40A must be a two-digit number: 40A ≤ 99 gives A = 1 (40 × 1 = 40, so C = 4). Check: 10 × 4 = 40; A=1, B=0, C=4 — all distinct. Solution: A = 1, B = 0, C = 4.",
+              "method_one_line": "Use the units-digit constraint: 4B must end in B, so 3B ≡ 0 (mod 10), giving B = 0; then determine A from the range constraint that AB × 4 stays two digits.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to first list all single digits B for which 4 × B ends in B, to find B = 0 directly.",
+                "challenge": "Ask the student to investigate whether there is a solution where B is not 0, and prove algebraically that no other value of B works."
+              }
+            },
+            "exercise": {
+              "book_ref": "Cryptarithms Q6, section 5.3 p.132",
+              "description": "Solve multiplication cryptarithm (vi): GH × H = 9K. Choose from the options given."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 5.3",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "The six-digit number 4 7 a 3 b 2 is a multiple of 18. Find all possible pairs (a, b) of digits, showing clearly how you use both divisibility conditions.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A multiple of 18 must be divisible by both 2 and 9. Divisibility by 2: the units digit is 2, which is even — this condition is always satisfied regardless of a and b. Divisibility by 9: digit sum = 4 + 7 + a + 3 + b + 2 = 16 + a + b must be a multiple of 9. So a + b = 2 (giving sum 18) or a + b = 11 (giving sum 27). Pairs with a, b single digits (0–9): a + b = 2: (0,2),(1,1),(2,0); a + b = 11: (2,9),(3,8),(4,7),(5,6),(6,5),(7,4),(8,3),(9,2). All are valid — 16 pairs in total.",
+              "method_one_line": "Apply divisibility by 2 (units digit even — automatically satisfied) and divisibility by 9 (digit sum divisible by 9), then enumerate digit pairs satisfying a + b = 2 or a + b = 11.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Prompt the student to first write the digit sum in terms of a and b, then list multiples of 9 that the sum could equal.",
+                "challenge": "Ask the student to find all pairs (a, b) for which 47a3b2 is also divisible by 4, adding the last-two-digits constraint on top of divisibility by 9."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.3 p.132",
+              "description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

@@ -222,6 +222,157 @@ GENERIC_PASSES = [
 # wave-2 header documents. Same cure as repair_register v1.3: scope the set to the
 # subject·grade the run names, and a foreign filename can never be reached.
 DECLARED = {
+  # ── S7 · mathematics · middle · BATCH WAVE 2 (2026-08-19) ────────────────────────────
+  # The two compacts certification quarantined, each for one item. Both restored from
+  # backup/quarantine/ before these ran (runbook trap 1: a quarantined file skips every
+  # later sweep, so it must be back on disk to be repaired AND to be re-scanned).
+  ("mathematics", "vi"): {
+    # ARV-D-179 · vi ch 9 p14 Q-C-5 declares `number_line:` on something that is not a
+    # tick line: "Original L (5 sq) | + vertical mirror | + horizontal mirror | =
+    # Complete figure" — four cells over the 16-char label bound, because they are
+    # narration, not labels. Certification is right to reject it, and the fix is NOT to
+    # shorten the cells.
+    #
+    # The stimulus is wrong twice over, which is why the whole field goes rather than
+    # just the tag (founder ruling 2026-08-19, on reading the item):
+    #   1. it is not the picture the question needs. The item asks how many squares
+    #      complete an L so that it gains BOTH lines of symmetry; what would help is the
+    #      L drawn on squared paper with the mirror lines marked. Rule 7 forbids a tick
+    #      line from being that — "the ticks are drawn as an ordered line, never as a
+    #      grid" — and prohibits SVG at this stage, so no permitted format can carry it.
+    #   2. what it DOES carry is the method. Compare the strip to the item's own
+    #      `method_one_line` ("reflect the original across the vertical axis, then reflect
+    #      the combined figure across the horizontal axis") — the same two steps. Printed
+    #      for the student, it converts an `apply` item into an instruction to follow.
+    #
+    # "" is not a fallback here, it is Rule 7's stated DEFAULT for exactly this item:
+    # "the default for almost all geometry items — the figure, if needed, is reached via
+    # the `exercise` companion block, which points the teacher to a textbook figure".
+    # This item already carries that block (Figure it Out Q12, section 9.1 p.229 — the six
+    # partial drawings with their mirror lines printed in blue). Nothing is lost.
+    "ch_09_canonical_p14.json": {
+        "ARV-D-179": [
+            {"item_where": {"id": "Q-C-5"},
+             "field": "visual_stimulus",
+             "old": "number_line: Original L (5 sq) | + vertical mirror | "
+                    "+ horizontal mirror | = Complete figure",
+             "new": ""},
+        ],
+    },
+  },
+  ("mathematics", "viii"): {
+    # ARV-D-180 · viii ch 12 p13 Q-C-10 is a SHELL. Declared MCQ, and it asks nothing:
+    # prompt "", options [], expected_answer "", method_one_line "",
+    # what_each_option_reveals {}. The one field the model did fill is the `exercise`
+    # companion — "Figure it Out Q5, section 5.2 p.127 · check whether each statement is
+    # true (with algebraic justification): (i) average of two even numbers is even;
+    # (ii) average of any two multiples of 5 is a multiple of 5; (iii) average of any 5
+    # multiples of 5 is a multiple of 5" — so it knew what it meant to ask and stopped.
+    # Nothing here can be repaired by substitution; there is no text to substitute.
+    #
+    # ★ THIS ENTRY AUTHORS TEXT, like amend_missing_questions.py and unlike a normal
+    # declared repair. Founder ruling 2026-08-19: "generate an equivalent question" —
+    # equivalent to what the shell was anchored on, rather than re-buying the compact.
+    #
+    # THE QUESTION IS BUILT ON STATEMENT (ii) OF THE BOOK EXERCISE, and asks for the
+    # counterexample rather than the verdict. Three reasons, all constraints rather than
+    # taste: the item's declared type is MCQ and an MCQ cannot carry the "with algebraic
+    # justification" the exercise wants; all THREE statements are false in general
+    # (5,10 → 7.5 · 2,4 → 3 · 5,5,5,5,10 → 6), so "which is true?" would need a
+    # none-of-these option and Rule 10 bans by-label options outright; and a
+    # counterexample IS the algebraic point in miniature — 5a and 5b average to
+    # 5(a+b)/2, which leaves the multiples of 5 exactly when a+b is odd.
+    #
+    # The three distractors are the three ways to misread the task, not filler: each is a
+    # pair whose average IS a multiple of 5, so choosing any of them means the student
+    # looked for a pair that CONFIRMS the claim. what_each_option_reveals says so per
+    # option. `goal` stays "apply", `section_ref` stays "section 5.2", the exercise block
+    # is untouched, and `verified` is left false — this text has not been through a
+    # verification pass and must not claim it has.
+    #
+    # NOT ONE LETTER APPEARS IN THE GUIDE PROSE, and the first draft of this entry got
+    # that wrong. It opened the expected answer with "B." and had two of the reveals
+    # refer to "the same error as A". STEP 6 then arranged the options and moved the
+    # correct pair to A — it remaps the reveals DICT KEYS (normalize_options.py:180-182,
+    # written for exactly this) but it cannot rewrite prose, so the guide was left
+    # pointing at the wrong letters the moment it was installed. The draft was rolled
+    # back from backup/c3_repair/ and rewritten rather than patched, so the artefact
+    # carries one declared repair instead of a mistake and its correction. The rule this
+    # leaves behind is general: a label is the platform's to assign, so guide text names
+    # the PAIR ("5 and 10"), never the letter beside it.
+    "ch_12_canonical_p13.json": {
+        "ARV-D-180": [
+            {"item_where": {"id": "Q-C-10"},
+             "field": "prompt",
+             "old": "",
+             "new": "Meera claims: 'The average of any two multiples of 5 is itself a "
+                    "multiple of 5.' Which pair of numbers shows that her claim is "
+                    "false?"},
+            {"item_where": {"id": "Q-C-10"},
+             "field": "options",
+             "old": [],
+             # DECLARED ORDER IS NOT THE SERVED ORDER and does not try to be — STEP 6
+             # arranges, and it remaps the reveals keys with the options. What matters,
+             # and what the second draft of this entry got wrong, is that the reveals
+             # below are keyed to the pairs AS DECLARED HERE, pair for pair. Get that
+             # agreement right and any arrangement preserves it; get it wrong and the
+             # remap faithfully carries the mismatch through.
+             "new": [{"label": "A", "text": "5 and 10", "is_correct": True},
+                     {"label": "B", "text": "10 and 20", "is_correct": False},
+                     {"label": "C", "text": "15 and 25", "is_correct": False},
+                     {"label": "D", "text": "20 and 30", "is_correct": False}]},
+            # THE GUIDE GOES IN AS ONE OBJECT, not four dotted edits. `get_nested` reads
+            # `name[i].leaf` and plain keys only — "teacher_guide.expected_answer" is
+            # taken as a literal key and reads None, which is how this first refused.
+            # Declaring the whole block is the better shape anyway: the four fields are
+            # one authored act and must land together or not at all. `inclusivity.support`
+            # is carried through byte-for-byte — it is the model's, not ours.
+            {"item_where": {"id": "Q-C-10"},
+             "field": "teacher_guide",
+             "old": {"expected_answer": "", "method_one_line": "",
+                     "what_each_option_reveals": {},
+                     "inclusivity": {
+                         "support": "Refer to the book exercise(s) anchored to "
+                                    "section 5.2.",
+                         "challenge": ""}},
+             "new": {"expected_answer":
+                     "The pair 5 and 10. Their average is 7.5, which is not a multiple "
+                     "of 5 — it is not even a whole number — so that one pair is enough "
+                     "to bring the claim down. The other three pairs average to 15, 20 "
+                     "and 25, every one a multiple of 5, so none of them settles "
+                     "anything. Algebraically, two multiples of 5 are 5a and 5b and "
+                     "their average is 5(a+b)/2: it stays a multiple of 5 exactly when "
+                     "a+b is even, and leaves as soon as a+b is odd. For 5 and 10, "
+                     "a+b = 1+2 = 3.",
+                     "method_one_line":
+                     "Average each pair and test the result against 'multiple of 5'; one "
+                     "pair that fails is enough to disprove a claim about ALL pairs.",
+                     "what_each_option_reveals": {
+                         "A": "5 and 10 average to 7.5 — not a multiple of 5, and not a "
+                              "whole number. This is the counterexample the claim cannot "
+                              "survive.",
+                         "B": "10 and 20 average to 15, a multiple of 5. The student has "
+                              "offered a pair that CONFIRMS the claim as though it "
+                              "disproved it, so the logic of a counterexample has not "
+                              "landed.",
+                         "C": "15 and 25 average to 20, again a multiple of 5. Same "
+                              "confirming-instead-of-refuting error; may also mean the "
+                              "student is hunting for the pair that looks hardest rather "
+                              "than testing the claim.",
+                         "D": "20 and 30 average to 25, a multiple of 5. Worth asking "
+                              "this student what a single counterexample is FOR."},
+                     "inclusivity": {
+                         "support": "Refer to the book exercise(s) anchored to "
+                                    "section 5.2.",
+                         "challenge":
+                         "Ask for the general rule: for which pairs of multiples of 5 "
+                         "does the average stay a multiple of 5? Then push on to "
+                         "statement (iii) of the book exercise — five multiples of 5 "
+                         "average to a+b+c+d+e, always a whole number but a multiple of "
+                         "5 only when that sum is."}}},
+        ],
+    },
+  },
   ("science", "ix"): {
     # ── S3 · science · IX · ch 7 p18 (2026-08-17, batch wave 2) ──────────────────────
     # ARV-D-172 · `question_text: null` on the file's single OPEN_TASK (7.6.3 Lever,

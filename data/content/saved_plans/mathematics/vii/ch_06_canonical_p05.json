@@ -1,0 +1,624 @@
+{
+  "filename": "ch_06_canonical_p05.json",
+  "saved_at": "2026-08-19T13:38:19",
+  "plan_status": "canonical",
+  "chapter_number": 6,
+  "chapter_title": "Number Play",
+  "grade": "Grade VII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 5
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 5 periods = 200 minutes\nTotal: 5 periods · 3h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "5x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vii 6",
+    "ledger_ts": "20260819_130541_math_vii_06_p05",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 6.1",
+              "title": "Numbers Tell us Things"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Decoding the Tallness Queue",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 6.1",
+              "book_ref": "Figure it Out, section 6.1 p.128",
+              "description": "Write down the number each child should say (count of taller children ahead) for a given arrangement of seven children of specified heights."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 6.1",
+              "book_ref": "Figure it Out Q1, section 6.1 p.128",
+              "description": "Arrange stick-figure cutouts (or draw) to produce each of these sequences: (a) 0,1,1,2,4,1,5; (b) 0,0,0,0,0,0,0; (c) 0,1,2,3,4,5,6; (d) 0,1,0,1,0,1,0; (e) 0,1,1,1,1,1,1; (f) 0,0,0,3,3,3,3."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 6.1",
+              "book_ref": "Figure it Out Q2, section 6.1 p.128",
+              "description": "Classify each statement as Always True, Only Sometimes True, or Never True with reasoning: (a) saying '0' means tallest; (b) tallest says '0'; (c) first person says '0'; (d) middle person cannot say '0'; (e) largest number is the shortest; (f) largest possible number in a group of 8."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Pose a concrete scenario: seven students with different heights stand in a line, and each calls out how many taller students stand in front of them. Students jot down the sequence they expect, then compare with a neighbour — surfacing the encoding rule through their own trial."
+            },
+            {
+              "minutes": "8–18",
+              "activity": "Work through Figure it Out, section 6.1 p.128 (\"Write down the number each child should say (count of taller children ahead) for a given arrangement of seven children of specified heights....\") as a class, building the rule that the number a child calls is determined by relative height order, not absolute height."
+            },
+            {
+              "minutes": "18–30",
+              "activity": "Students attempt Figure it Out Q1, section 6.1 p.128 (\"Arrange stick-figure cutouts (or draw) to produce each of these sequences....\") in pairs, drawing arrangements that generate the given sequences — focusing on sequences that seem impossible or surprising (e.g., all zeros, or 0,1,2,3,4,5,6)."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Whole-class discussion on Figure it Out Q2, section 6.1 p.128 (\"Classify each statement as Always True, Only Sometimes True, or Never True with reasoning....\") — students argue for their classifications, distinguishing structural necessities from contingent arrangements."
+            }
+          ],
+          "teacher_notes": "Watch for students who conflate 'saying zero' with 'being first in line' rather than 'being tallest at the point of counting' — the first person always says 0, but so does anyone whose prefix contains no taller person. A self-study pointer: the rule for the largest possible number a child in a group of 8 can call (up to 7) repays re-reading after class.",
+          "materials": [
+            "Blank paper or notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 6.2",
+              "title": "Picking Parity"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Pairing Up: Visual Proofs of Parity",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out, section 6.2 p.130",
+              "description": "Explore parity of sum of (a) 4 odd numbers; (b) 5 odd numbers; (c) 6 odd numbers using the pair-arrangement model."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out Q1, section 6.2 p.131",
+              "description": "Find the parity of: (a) sum of 2 even + 2 odd numbers; (b) sum of 2 odd + 3 even; (c) sum of 5 even numbers; (d) sum of 8 odd numbers."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out Q2, section 6.2 p.131",
+              "description": "Lakpa has odd counts of ₹1 and ₹5 coins and an even count of ₹10 coins; he claims a total of ₹205. Did he make a mistake? Explain why or why not."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out Q3, section 6.2 p.131",
+              "description": "Determine the parity of: (d) even – even; (e) odd – odd; (f) even – odd; (g) odd – even."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out, section 6.2 p.131",
+              "description": "Small Squares in Grids: find the parity of the number of squares in (a) 27 × 13 grid; (b) 42 × 78 grid; (c) 135 × 654 grid, without computing the product."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Introduce the pair-arrangement picture for even and odd numbers: draw dots in two rows to show that even numbers pair perfectly and odd numbers leave one over. Students draw this for 6, 7, and 9, then discuss what happens when two odd numbers are combined — the two leftover singles pair up."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Students work through Figure it Out, section 6.2 p.130 (\"Explore parity of sum of (a) 4 odd numbers; (b) 5 odd numbers; (c) 6 odd numbers using the pair-arrangement model....\") in small groups, drawing the pair-arrangement and counting leftover singles to reason about the parity of the total."
+            },
+            {
+              "minutes": "20–30",
+              "activity": "Class tackles Figure it Out Q1, section 6.2 p.131 (\"Find the parity of: (a) sum of 2 even + 2 odd numbers; (b) sum of 2 odd + 3 even....\") and Figure it Out Q2, section 6.2 p.131 (\"Lakpa has odd counts of ₹1 and ₹5 coins and an even count of ₹10 coins....\") — using the leftover-singles rule to justify each conclusion without computing the actual sum."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Students complete Figure it Out Q3, section 6.2 p.131 (\"Determine the parity of: (d) even – even; (e) odd – odd; (f) even – odd; (g) odd – even....\") and share reasoning aloud — building the case that subtraction follows the same parity rule as addition."
+            }
+          ],
+          "teacher_notes": "A common error is assuming that 'odd – odd = 0, so it must be even' without a general argument — push students to reason from the pair-arrangement picture rather than a single numerical example. Figure it Out, section 6.2 p.131 (the small-squares-in-grids task) is set as a quick extension for students to attempt independently.",
+          "materials": [
+            "Squared or plain paper for dot diagrams",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 6.2",
+              "title": "Picking Parity"
+            },
+            {
+              "ref": "section 6.3",
+              "title": "Some Explorations in Grids"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Parity Rules and Grid Constraints",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 6.2",
+              "book_ref": "Figure it Out, section 6.2 p.132",
+              "description": "Parity of Expressions: come up with (a) an expression that always has even parity; (b) an expression that always has odd parity; (c) an expression like 3n + 4 that can have either parity. Then determine formulas for the nth even and nth odd number."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 6.3",
+              "book_ref": "Figure it Out, section 6.3 p.133",
+              "description": "Fill two 3 × 3 grids with numbers 1–9 (no repeats) to match the given row and column sums shown in the circles. Also explain why a grid with sums 5 and 26 is impossible."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 6.3",
+              "book_ref": "Figure it Out Q1, section 6.3 p.136",
+              "description": "How many different magic squares can be made using numbers 1–9 (ignoring rotations and reflections)?"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students work on Figure it Out, section 6.2 p.132 (\"Parity of Expressions: come up with (a) an expression that always has even parity; (b) an expression that always has odd parity; (c) an expression like 3n + 4 that can have either parity. Then determine formulas for the nth even and nth odd number....\") — constructing their own algebraic expressions, testing them for small values of n, and deriving that 2n gives the nth even number and 2n – 1 the nth odd number."
+            },
+            {
+              "minutes": "12–28",
+              "activity": "Introduce grid-filling: using digits 1–9 exactly once in a 3 × 3 grid to hit prescribed row and column sums. Students attempt Figure it Out, section 6.3 p.133 (\"Fill two 3 × 3 grids with numbers 1–9 (no repeats) to match the given row and column sums shown in the circles. Also explain why a grid with sums 5 and 26 is impossible....\") in pairs, discovering that all row sums and all column sums must each total 45."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Whole-class share-out: students present the impossibility argument for sums of 5 and 26 (minimum row sum is 1+2+3 = 6; maximum is 7+8+9 = 24), and the teacher introduces the idea of a magic square — equal row, column, and diagonal sums — as the goal for the next unit of work."
+            }
+          ],
+          "teacher_notes": "Students often struggle to see why a row sum below 6 or above 24 is structurally impossible rather than merely hard to achieve — anchor the argument in the extreme cases (smallest three and largest three distinct digits from 1–9). The parity-of-expressions work from the pair-arrangement reasoning done earlier provides the algebraic vocabulary students need to justify 2n and 2n – 1.",
+          "materials": [
+            "Squared paper or printed 3×3 grid templates",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 6.3",
+              "title": "Some Explorations in Grids"
+            },
+            {
+              "ref": "section 6.4",
+              "title": "Nature's Favourite Sequence: The Virahāṅka–Fibonacci Numbers!"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Magic Squares and Rhythm Counts",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 6.3",
+              "book_ref": "Math Talk, section 6.3 p.136",
+              "description": "Generalise: if m is the centre of a magic square made from consecutive numbers, express all other entries in terms of m (analogous to the 2 × 2 calendar grid from Chapter 4)."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 6.3",
+              "book_ref": "Figure it Out Q1, section 6.3 p.137",
+              "description": "Using the generalised form, construct a magic square with centre number 25."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 6.4",
+              "book_ref": "Figure it Out, section 6.4 p.140",
+              "description": "Write 5 as a sum of 1s and 2s in all possible ways. How many ways are there? Try to find the answer without listing all possibilities. Try for n = 8."
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 6.4",
+              "book_ref": "Figure it Out, section 6.4 p.142",
+              "description": "Write the next 3 numbers after 89 in the Virahāṅka sequence. Without computing, determine the parity of the term following 233. Identify the parity pattern of the sequence."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 6.3",
+              "book_ref": "Figure it Out Q4, section 6.3 p.137",
+              "description": "Create a magic square whose magic sum is 60."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Establish the three necessary properties of the 1–9 magic square by deductive argument: the magic sum must be 15 (since all rows sum to 45 and there are three rows), the centre must be 5 (the only number that can head all four lines through the centre), and 1 and 9 must lie on edges not corners. Students then work through Math Talk, section 6.3 p.136 (\"Generalise: if m is the centre of a magic square made from consecutive numbers, express all other entries in terms of m....\") and Figure it Out Q1, section 6.3 p.137 (\"Using the generalised form, construct a magic square with centre number 25....\")."
+            },
+            {
+              "minutes": "14–26",
+              "activity": "Introduce the Virahāṅka rhythm problem: in how many ways can n beats be filled with short (1-beat) and long (2-beat) syllables? Students attempt Figure it Out, section 6.4 p.140 (\"Write 5 as a sum of 1s and 2s in all possible ways. How many ways are there? Try to find the answer without listing all possibilities. Try for n = 8....\") — listing for small n and noticing the count grows by the sum of the two preceding counts."
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Class builds the Virahāṅka sequence up to the 10th term, then works on Figure it Out, section 6.4 p.142 (\"Write the next 3 numbers after 89 in the Virahāṅka sequence. Without computing, determine the parity of the term following 233. Identify the parity pattern of the sequence....\") — deducing the parity of unseen terms from the O-O-E repeating pattern without calculating them."
+            }
+          ],
+          "teacher_notes": "Students frequently attempt to memorise the 1–9 magic square arrangement rather than deduce it — insist on the argument that fixes the centre at 5 before any placement is tried. When introducing the Virahāṅka sequence, the recursive argument (any n-beat rhythm starts with a 1 or a 2) should be stated in words before the recurrence V(n) = V(n–1) + V(n–2) is written symbolically.",
+          "materials": [
+            "Blank paper or notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 6.5",
+              "title": "Digits in Disguise"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Cracking the Cryptarithm Code",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 6.5",
+              "book_ref": "Figure it Out, section 6.5 p.143",
+              "description": "Cryptarithms: find what digit each letter stands for in: (a) YY + Z = ZOO; (b) B5 + 3D = ED5; (c) KP + C1 = PRR; (d) KP + C = 1FF."
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 6.5",
+              "book_ref": "Figure it Out Q1, section 6.5 p.143",
+              "description": "A light bulb is ON. Dorjee toggles the switch 77 times. Will the bulb be on or off? Explain using parity."
+            },
+            {
+              "id": "E-34",
+              "type": "exercise",
+              "source_section": "section 6.5",
+              "book_ref": "Figure it Out Q8, section 6.5 p.144",
+              "description": "Angaan climbs an 8-step staircase taking 1 or 2 steps at a time. In how many different ways can he reach the top?"
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "section 6.5",
+              "book_ref": "Figure it Out Q11, section 6.5 p.144",
+              "description": "Solve the cryptarithm: UT + TA = TAT."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 6.5",
+              "book_ref": "Figure it Out Q4, section 6.5 p.144",
+              "description": "Make a 3 × 3 magic square with magic sum 0. Not all numbers can be zero; use negative numbers as needed."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Present the cryptarithm T + T + T = UT (T = 5, U = 1) as a worked case: each letter stands for a unique digit, and the only single digit whose triple is a two-digit number with a repeated units digit is 5. Students verify by substitution, fixing the method of logical elimination."
+            },
+            {
+              "minutes": "8–24",
+              "activity": "Students work in pairs through Figure it Out, section 6.5 p.143 (\"Cryptarithms: find what digit each letter stands for in: (a) YY + Z = ZOO; (b) B5 + 3D = ED5; (c) KP + C1 = PRR; (d) KP + C = 1FF....\") — recording which digits have been eliminated and why at each step, not just the final answer."
+            },
+            {
+              "minutes": "24–32",
+              "activity": "Shift to parity applications: Figure it Out Q1, section 6.5 p.143 (\"A light bulb is ON. Dorjee toggles the switch 77 times. Will the bulb be on or off? Explain using parity....\") and Figure it Out Q8, section 6.5 p.144 (\"Angaan climbs an 8-step staircase taking 1 or 2 steps at a time. In how many different ways can he reach the top?...\") — connecting the staircase count to the Virahāṅka reasoning."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Class attempts Figure it Out Q11, section 6.5 p.144 (\"Solve the cryptarithm: UT + TA = TAT....\") — a more demanding two-letter carry cryptarithm — with students presenting their elimination chains aloud, consolidating the chapter's logical-deduction thread."
+            }
+          ],
+          "teacher_notes": "A persistent error in cryptarithms is allowing different letters to take the same digit — remind students that the uniqueness constraint is part of the definition and must be checked explicitly at every step. The staircase problem in Figure it Out Q8, section 6.5 p.144 revisits the Virahāṅka recursive count; students who see the connection unprompted show strong transfer of the reasoning from the rhythm context.",
+          "materials": [
+            "Blank paper or notebooks",
+            "Pencils"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "period_count": 5
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": []
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 6.1",
+            "section_title": "Numbers Tell us Things",
+            "goal": "reason",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out, section 6.1 p.128",
+            "anchor_description": "Write down the number each child should say (count of taller children ahead) for a given arrangement of seven children of specified heights."
+          },
+          {
+            "section_ref": "section 6.2",
+            "section_title": "Picking Parity",
+            "goal": "reason",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out, section 6.2 p.130",
+            "anchor_description": "Explore parity of sum of (a) 4 odd numbers; (b) 5 odd numbers; (c) 6 odd numbers using the pair-arrangement model."
+          },
+          {
+            "section_ref": "section 6.3",
+            "section_title": "Some Explorations in Grids",
+            "goal": "reason",
+            "anchor_id": "E-16",
+            "anchor_book_ref": "Math Talk, section 6.3 p.136",
+            "anchor_description": "Generalise: if m is the centre of a magic square made from consecutive numbers, express all other entries in terms of m (analogous to the 2 × 2 calendar grid from Chapter 4)."
+          },
+          {
+            "section_ref": "section 6.4",
+            "section_title": "Nature's Favourite Sequence: The Virahāṅka–Fibonacci Numbers!",
+            "goal": "reason",
+            "anchor_id": "E-23",
+            "anchor_book_ref": "Figure it Out, section 6.4 p.140",
+            "anchor_description": "Write 5 as a sum of 1s and 2s in all possible ways. How many ways are there? Try to find the answer without listing all possibilities. Try for n = 8."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 6.2",
+            "section_title": "Picking Parity",
+            "goal": "apply",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out, section 6.2 p.132",
+            "anchor_description": "Parity of Expressions: come up with (a) an expression that always has even parity; (b) an expression that always has odd parity; (c) an expression like 3n + 4 that can have either parity. Then determine formulas for the nth even and nth odd number."
+          },
+          {
+            "section_ref": "section 6.5",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "anchor_id": "E-26",
+            "anchor_book_ref": "Figure it Out, section 6.5 p.143",
+            "anchor_description": "Cryptarithms: find what digit each letter stands for in: (a) YY + Z = ZOO; (b) B5 + 3D = ED5; (c) KP + C1 = PRR; (d) KP + C = 1FF."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "No goals routed to this section in the chapter.",
+        "items": []
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 6.1",
+            "section_title": "Numbers Tell us Things",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Five students stand in a line. The sequence of numbers they call out — each saying how many taller students are standing in front of them — is 0, 0, 1, 0, 3. Is this sequence possible or impossible? Justify your answer with a clear argument about what each number implies for the height ordering.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The sequence is impossible. The fourth student calls 0, meaning no one in front is taller than her — so she is the tallest among the first four. But the fifth student calls 3, meaning three people in front are taller. Among the first four, at most the second, third, and fifth positions could supply taller students, but the fourth is already established as the tallest of the first four. For three people in positions 1–4 to all be taller than student 5, student 5 would have to be shorter than at least three of them, yet student 4 who is taller than everyone in positions 1–3 is one of those three — creating a contradiction only if we try to satisfy both constraints simultaneously. More precisely: student 4 says 0, so students 1, 2, 3 are all shorter than student 4. Student 5 says 3, so three of students 1–4 are taller than student 5. Student 4 is the tallest of the first four, so students 1, 2, 3 are shorter than student 4. For three of students 1–4 to exceed student 5, those three must include student 4 plus two others from {1,2,3}. But students 1, 2, 3 are all shorter than student 4. It is consistent for two of {1,2,3} to be taller than student 5 while student 4 is also taller — giving exactly three taller students in front of student 5. So the sequence is actually possible. The correct conclusion is: the sequence IS possible.",
+              "method_one_line": "Trace height constraints implied by each number in the sequence and check consistency with a valid height ordering.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to try assigning actual heights (e.g., 10, 20, 30 cm) to each position and verify each called number.",
+                "challenge": "Ask the student to find a second distinct height ordering that also produces this sequence."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 6.1 p.128",
+              "description": "Write down the number each child should say (count of taller children ahead) for a given arrangement of seven children of specified heights."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 6.2",
+            "section_title": "Picking Parity",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Mira claims she added seven odd numbers and got an even result. Using the pair-arrangement model for odd numbers, explain why Mira's claim is impossible.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Each odd number, when arranged in pairs, has exactly one leftover single dot. Seven odd numbers therefore contribute seven leftover singles. Seven singles cannot all pair up — six of them pair into three pairs, leaving one single remaining. The total therefore has one leftover single, making it odd. So the sum of seven odd numbers is always odd, and Mira's claim of an even result is impossible.",
+              "method_one_line": "Count the leftover singles from seven odd numbers using the pair-arrangement model — an odd count of singles means the total is odd.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to draw the pair-arrangement picture for 3 and 5 first, combine them, and count the singles before tackling seven numbers.",
+                "challenge": "Ask: what is the minimum number of odd numbers that must be added to get an even sum, and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 6.2 p.130",
+              "description": "Explore parity of sum of (a) 4 odd numbers; (b) 5 odd numbers; (c) 6 odd numbers using the pair-arrangement model."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 6.3",
+            "section_title": "Some Explorations in Grids",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "In a 3 × 3 magic square filled with nine consecutive whole numbers, prove that the magic sum must equal three times the middle (centre) number of those nine consecutive numbers. Use the fact that all row sums together account for the sum of all nine numbers.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Let the nine consecutive numbers be centred on m, so they are m–4, m–3, m–2, m–1, m, m+1, m+2, m+3, m+4. Their total sum is 9m (all the ±k terms cancel). In a magic square the three row sums are all equal to the magic sum S, and together they cover all nine entries, so 3S = 9m, giving S = 3m. The centre number of nine consecutive integers is their average, which equals their sum divided by 9, i.e. m. Therefore the magic sum is 3m — three times the centre number.",
+              "method_one_line": "Sum all nine entries two ways — as 9m and as three copies of S — then equate to get S = 3m.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student first verify with the 1–9 magic square: centre = 5, magic sum = 15 = 3 × 5.",
+                "challenge": "Ask: if every entry in the magic square is doubled, what happens to the magic sum, and why does the proof above still hold for the new square?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 6.3 p.136",
+              "description": "Generalise: if m is the centre of a magic square made from consecutive numbers, express all other entries in terms of m (analogous to the 2 × 2 calendar grid from Chapter 4)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 6.4",
+            "section_title": "Nature's Favourite Sequence: The Virahāṅka–Fibonacci Numbers!",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "The Virahāṅka sequence begins 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, … The parity pattern of these terms is O, E, O, O, E, O, O, E, O, O, … Without computing the 20th term, determine whether it is odd or even. Justify your answer by describing the repeating parity pattern.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The parity pattern of the Virahāṅka sequence repeats in blocks of three: O, O, E (positions 1–3, 4–6, 7–9, …). Position 20: divide 20 by 3 to get 6 remainder 2, so position 20 has the same parity as position 2 in the block. Position 2 in the O, O, E pattern is O (odd). Therefore the 20th term is odd. (Verification: the sequence up to the 20th term is 1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181,6765,10946 — the 20th term is 6765, which is odd.)",
+              "method_one_line": "Identify the repeating O, O, E parity block of length 3 and use 20 mod 3 = 2 to locate the parity.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to write out the parity of the first 9 terms, circle the repeating block, then count blocks to reach position 20.",
+                "challenge": "Ask: what is the parity of the 100th term, and what is the smallest n > 20 for which the nth term is even?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 6.4 p.140",
+              "description": "Write 5 as a sum of 1s and 2s in all possible ways. How many ways are there? Try to find the answer without listing all possibilities. Try for n = 8."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 6.2",
+            "section_title": "Picking Parity",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A shopkeeper counts her stock: she has 3 boxes of red pens (each box holds an odd number of pens), 4 boxes of blue pens (each box holds an odd number of pens), and 2 boxes of black pens (each box holds an odd number of pens). She claims the total number of pens across all nine boxes is 275. Without knowing the exact count in any box, determine whether her claim is possible. Show your parity reasoning clearly.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Red pens: 3 boxes, each containing an odd number → sum of 3 odd numbers → odd (since an odd count of odd numbers sums to odd). Blue pens: 4 boxes, each odd → sum of 4 odd numbers → even (even count of odds sums to even). Black pens: 2 boxes, each odd → sum of 2 odd numbers → even. Total = odd + even + even = odd. Since 275 is odd, the claim is possible — the parity is consistent.",
+              "method_one_line": "Apply the rule that an odd count of odd numbers sums to odd and an even count sums to even, then add the three group totals by parity.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest drawing a pair-arrangement sketch for 3 odd numbers and 4 odd numbers separately before combining.",
+                "challenge": "Change the black-pen count to 3 boxes and ask whether a total of 276 is now possible — re-run the parity argument."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 6.2 p.132",
+              "description": "Parity of Expressions: come up with (a) an expression that always has even parity; (b) an expression that always has odd parity; (c) an expression like 3n + 4 that can have either parity. Then determine formulas for the nth even and nth odd number."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 6.5",
+            "section_title": "Digits in Disguise",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In the cryptarithm AB + BA = CBC, each letter stands for a different digit (0–9) and no leading digit is zero. Find the digits A, B, and C. Show each elimination step.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "AB represents 10A + B and BA represents 10B + A. Their sum is 11A + 11B = 11(A + B). CBC represents 100C + 10B + C = 101C + 10B. So 11(A + B) = 101C + 10B. Since the left side is a multiple of 11, try small values of C: if C = 1, then 11(A + B) = 101 + 10B → 11A + 11B = 101 + 10B → 11A + B = 101. The maximum value of 11A is 11 × 9 = 99, so 11A + B ≤ 99 + 9 = 108; 101 is achievable with A = 9, B = 2 (11×9 + 2 = 101). Check: AB = 92, BA = 29, sum = 121 = CBC with C=1, B=2. Digits used: A=9, B=2, C=1 — all different, no leading zeros. The solution is A = 9, B = 2, C = 1.",
+              "method_one_line": "Express AB + BA as 11(A+B), equate to the three-digit form CBC = 101C + 10B, and eliminate by trying small values of C with the digit uniqueness constraint.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest expanding AB and BA as two-digit numbers (tens digit × 10 + units digit) and writing out the column-by-column addition first.",
+                "challenge": "Ask whether any other value of C (besides 1) can yield a valid solution, and prove why not."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 6.5 p.143",
+              "description": "Cryptarithms: find what digit each letter stands for in: (a) YY + Z = ZOO; (b) B5 + 3D = ED5; (c) KP + C1 = PRR; (d) KP + C = 1FF."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
