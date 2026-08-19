@@ -354,15 +354,77 @@ class TestMathematicsMiddleLanded(unittest.TestCase):
             self.assertEqual(len(it["unit_ref"]), 1,
                              f"{it.get('id')} did not anchor to exactly one unit")
 
-    def test_a_section_spanning_two_periods_anchors_at_its_LAST_unit(self):
-        """Section 5.2 is taught at periods 3 AND 4; section 5.5 at 8 AND 9. The
-        2026-08-05 ruling: an item tests the section's whole goal, so it becomes available
-        only when the section completes."""
+    def test_an_item_anchors_where_its_HANDOFF_ANCHOR_is_first_worked(self):
+        """REPLACES `…anchors_at_its_LAST_unit` (2026-08-19, ARV-D-181).
+
+        The 2026-08-05 ruling — an item tests its section's whole goal, so hold it until
+        the section closes — was right for a stage whose sections are topics and wrong for
+        this one, where they are banners over a fortnight. It put 553 items on 37% of
+        sittings at 2.8 apiece and cost a three-quarter-length serve 43% of its questions.
+        The rule now: an item anchors where its handoff anchor is FIRST worked.
+
+        This fixture shows the difference and shows it is an improvement, not a
+        relabelling. Section 5.2 is taught at U3 AND U4:
+            Q-A-2's anchor is E-17, worked at U3  → U3, not U4
+            Q-B-1's anchor is E-19, worked at U4  → U4, unchanged
+        Two items on one section, now on the two different sittings that actually work
+        their exercises. Same at 5.5: E-43 is worked at U8, so Q-B-3 moves 9 → 8.
+        """
         by_id = {it["id"]: it["unit_ref"] for it in assessment_items(self.plan, self.result)}
-        self.assertEqual(by_id["Q-A-2"], [4], "section 5.2 spans periods 3–4")
-        self.assertEqual(by_id["Q-B-1"], [4], "same section, a different goal cluster")
-        self.assertEqual(by_id["Q-B-3"], [9], "section 5.5 spans periods 8–9")
-        self.assertEqual(by_id["Q-C-5"], [10], "section 5.6 is taught once")
+        self.assertEqual(by_id["Q-A-2"], [3], "E-17 is worked at U3, not at 5.2's close")
+        self.assertEqual(by_id["Q-B-1"], [4], "E-19 is worked at U4 — same section, later")
+        self.assertEqual(by_id["Q-B-3"], [8], "E-43 is worked at U8, not at 5.5's close")
+        self.assertEqual(by_id["Q-C-5"], [10], "5.6 is taught once; both rules agree")
+
+    def test_the_SECTION_rule_still_answers_when_the_anchor_does_not(self):
+        """The two declared fallbacks (ARV-D-181's ruling), which is why
+        `items_by_period_field` is still the base pass and not dead code.
+
+        (a) an item with no `exercise` companion — 11 in the live corpus, ARV-D-184;
+        (b) an item whose companion names no handoff anchor.
+        Both must land on the section's last unit, exactly as before.
+        """
+        from aruvi_core.subjects.mathematics.subject import _anchor_then_section
+        result = {"coverage_handoff": {"section_a": {"goals": [
+                      {"anchor_id": "E-1", "anchor_book_ref": "Figure it Out Q1, p.1"}]}},
+                  "lesson_plan": {"periods": [
+                      {"period_number": 1, "textbook_segments": [{"ref": "section 1.1"}],
+                       "textbook_items_in_class": [{"id": "E-1"}]},
+                      {"period_number": 2, "textbook_segments": [{"ref": "section 1.1"}]}]}}
+        ex = lambda p: [s["ref"] for s in (p.get("textbook_segments") or [])]
+        got = _anchor_then_section(result, [
+            {"id": "ANCHORED", "goal": "recall", "section_ref": "section 1.1",
+             "exercise": {"book_ref": "Figure it Out Q1, p.1"}},
+            {"id": "BLANK", "goal": "recall", "section_ref": "section 1.1",
+             "exercise": {"book_ref": "", "description": ""}},
+            {"id": "UNKNOWN", "goal": "recall", "section_ref": "section 1.1",
+             "exercise": {"book_ref": "Some Other Exercise, p.9"}},
+        ], stage="middle", extract=ex)
+        by_id = {it["id"]: it["unit_ref"] for it in got}
+        self.assertEqual(by_id["ANCHORED"], [1], "anchor resolves — first working wins")
+        self.assertEqual(by_id["BLANK"], [2], "no companion — section's last unit")
+        self.assertEqual(by_id["UNKNOWN"], [2], "companion is not an anchor — same")
+
+    def test_an_anchor_worked_ONLY_in_the_synthesis_unit_falls_back(self):
+        """The capstones (25 in the live corpus). Their anchor is worked only in the
+        closer, which holds no items — so the resolver must decline rather than anchor
+        there, and the section rule answers. `first_working` skips the synthesis unit, so
+        this is the absence of a special case rather than one."""
+        from aruvi_core.subjects.mathematics.subject import _anchor_then_section
+        result = {"coverage_handoff": {"section_a": {"goals": [
+                      {"anchor_id": "E-9", "anchor_book_ref": "Figure it Out Q9, p.9"}]}},
+                  "lesson_plan": {"periods": [
+                      {"period_number": 1, "textbook_segments": [{"ref": "section 1.1"}]},
+                      {"period_number": 2, "textbook_segments": [{"ref": "section 1.1"}],
+                       "synthesis": True,
+                       "textbook_items_in_class": [{"id": "E-9"}]}]}}
+        got = _anchor_then_section(result, [
+            {"id": "CAPSTONE", "goal": "apply", "section_ref": "section 1.1",
+             "exercise": {"book_ref": "Figure it Out Q9, p.9"}}],
+            stage="middle",
+            extract=lambda p: [s["ref"] for s in (p.get("textbook_segments") or [])])
+        self.assertEqual(got[0]["unit_ref"], [1],
+                         "the synthesis unit is not a candidate; section rule answers")
 
     def test_a_section_no_period_teaches_resolves_to_EMPTY_not_a_guess(self):
         from aruvi_core.genon.carriers import items_by_period_field
@@ -648,21 +710,47 @@ class TestMathematicsPreparatoryLanded(unittest.TestCase):
             self.assertEqual(len(it["unit_ref"]), 1,
                              f"{it.get('id')} did not anchor to exactly one unit")
 
-    def test_every_anchor_equals_the_LAST_period_teaching_that_section(self):
-        """The 2026-08-05 ruling, computed independently off the periods rather than
-        trusted from the helper: an item tests what its section teaches, so it becomes
-        available only once the section completes. S3 spans periods 2-3 and S8 spans 6-7,
-        so both are real cases here, not hypotheticals."""
-        secs = {p["period_number"]: p["section_refs"]
-                for p in self.result["lesson_plan"]["periods"]}
+    def test_every_anchor_is_its_TASKs_first_working_or_the_sections_last_unit(self):
+        """REPLACES `…equals_the_LAST_period_teaching_that_section` (2026-08-19,
+        ARV-D-181). Preparatory is the same change as middle under other names: the
+        handoff clusters by INTENT and carries `tasks[].task_id`, the period lists
+        `tasks_in_class[].id`. Measured on iii ch 5 the section rule put every item on one
+        sitting of fourteen (7%); the anchor rule spreads them over twelve (86%).
+
+        Computed independently off the periods, both rules, so the test states which one
+        answered rather than trusting the helper. S3 spans periods 2-3 and S8 spans 6-7,
+        so the two rules genuinely differ here.
+        """
+        periods = self.result["lesson_plan"]["periods"]
+        secs = {p["period_number"]: p["section_refs"] for p in periods}
         self.assertEqual(secs[2], ["S2", "S3"])
         self.assertEqual(secs[3], ["S3", "S4"])          # S3 spans 2-3
         self.assertEqual(secs[6], ["S8"])
         self.assertEqual(secs[7], ["S8", "S9"])          # S8 spans 6-7
+        firsts = {}
+        for p in periods:
+            for key in ("tasks_in_class", "homework"):
+                for t in (p.get(key) or []):
+                    if isinstance(t, dict) and t.get("id") not in firsts:
+                        firsts[t.get("id")] = p["period_number"]
+        handoff = self.result.get("coverage_handoff") or {}
+        by_ref = {}
+        for blk in (handoff.values() if isinstance(handoff, dict) else []):
+            for e in (blk.get("tasks") or []):
+                if e.get("book_ref") and e.get("task_id"):
+                    by_ref.setdefault(" ".join(str(e["book_ref"]).split()).lower(),
+                                      e["task_id"])
+        anchored = 0
         for it in assessment_items(self.plan, self.result):
-            last = max(n for n, refs in secs.items() if it["section_ref"] in refs)
-            self.assertEqual(it["unit_ref"], [last],
-                             f"{it['id']} ({it['section_ref']}) anchored off its last unit")
+            ref = " ".join(str((it.get("exercise") or {}).get("book_ref") or "").split()).lower()
+            want = firsts.get(by_ref.get(ref)) if ref else None
+            if want is None:
+                want = max(n for n, refs in secs.items() if it["section_ref"] in refs)
+            else:
+                anchored += 1
+            self.assertEqual(it["unit_ref"], [want],
+                             f"{it['id']} ({it['section_ref']}) anchored wrongly")
+        self.assertGreater(anchored, 0, "the anchor path must actually be exercised here")
 
     def test_it_joins_on_section_refs_NOT_middles_textbook_segments(self):
         """The whole reason row 5 is its own row. A prep period carries `section_refs` and

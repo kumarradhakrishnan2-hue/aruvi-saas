@@ -22,6 +22,7 @@ from ...link_resolver import (
 )
 from ...genon.serve import _ANCHOR_JOINER          # " / " — the V2 multi-section join
 from ...genon.carriers import is_synthesis as _is_synth   # the token OR the boolean (S7)
+from . import anchor_resolver as _anchor_resolver         # ARV-D-181 — one join, two paths
 from ...normalize import (
     as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines, group_label_from_unit,
     SYNTHESIS_DISPLAY,
@@ -54,6 +55,28 @@ def _hw(v: Any) -> str:
     if isinstance(v, list):
         return "; ".join(line for line in (_hw_line(it) for it in v) if line)
     return v or ""
+
+
+def _anchor_then_section(result, items, *, stage, extract):
+    """The serve side's half of ARV-D-181 — the same two rules the display side runs, in the
+    same order: the ANCHOR resolver first, today's section join where it declines.
+
+    It is written as a wrapper around `items_by_period_field` rather than as a fresh join
+    for one reason: the section rule is still the fallback for the capstones and the
+    companionless items, and re-implementing it here would be a second copy of a join the
+    carrier already owns — the exact drift `anchor_resolver`'s docstring exists to prevent.
+    So the carrier runs unchanged and produces every item's section answer; this then
+    OVERRIDES `unit_ref` only where the resolver has a sitting to give. `unit_ref` stays a
+    singleton list, as `link_resolver.anchor_period` requires.
+    """
+    from ...genon.carriers import items_by_period_field, is_synthesis
+    out = items_by_period_field(result, items=items, item_key="section_ref", extract=extract)
+    res = _anchor_resolver.from_result(result, stage=stage, is_synthesis=is_synthesis)
+    for it in out:
+        u = res.resolve(it)
+        if u is not None:
+            it["unit_ref"] = [u]
+    return out
 
 
 class MathematicsSubject:
@@ -322,6 +345,20 @@ class MathematicsSubject:
             extract = lambda p: [seg.get("ref", "") for seg in (p.get("textbook_segments") or [])]
         period_index = period_field_index(periods, extract)
 
+        # THE ANCHOR RESOLVER RUNS FIRST, the section index is its fallback (2026-08-19,
+        # ARV-D-181). Same object the serve side builds, from `anchor_resolver` — one join,
+        # two callers, so a canonical read off disk and the same plan served cannot disagree
+        # about which sitting a question belongs to. See that module for the measurements
+        # and for why the capstones and the companionless items fall through to the section
+        # rule rather than being special-cased here.
+        # `link_context` already carries both facts the resolver needs, so nothing about the
+        # engine's contract changes. A caller that passes no context (several tests, and any
+        # path that renders assessment without its plan) simply gets None here and the old
+        # section join, which is the safe default rather than a silent wrong answer.
+        _res = _anchor_resolver.build(
+            periods=ctx.get("periods") or [], handoff=ctx.get("handoff"),
+            stage=("preparatory" if prep else "middle"), is_synthesis=_is_synth)
+
         section_groups = raw.get("assessment_items", raw) if isinstance(raw, dict) else raw
         out: List[AssessmentGroup] = []
         for sg in section_groups or []:
@@ -344,8 +381,13 @@ class MathematicsSubject:
                         "section_label": (f"{ref} — {_st}"
                                           if ref and _st and _st.lower() not in ref.lower()
                                           else (ref or _st))}
-                # Platform stamp first, section-code join as fallback (ARV-D-064).
-                stamp(meta, platform_anchor(it) or period_index.get(norm_code(ref), []),
+                # Platform stamp first, then the ANCHOR resolver, then the section-code join
+                # as fallback (ARV-D-064 for the stamp; ARV-D-181 for the resolver).
+                _u = _res.resolve(it)
+                stamp(meta,
+                      platform_anchor(it)
+                      or ([_u] if _u is not None else None)
+                      or period_index.get(norm_code(ref), []),
                       None)  # rules 4/5: no LO
                 g.items.append(AssessmentItem(
                     prompt=it.get("prompt", ""),
@@ -562,8 +604,8 @@ class MathematicsSubject:
         if groups is not None:
             flat = [it for g in groups for it in g["items"] if isinstance(it, dict)]
             if any("intent" in it for it in flat):
-                return items_by_period_field(                   # PREPARATORY — row 5
-                    result, items=flat, item_key="section_ref",
+                return _anchor_then_section(                    # PREPARATORY — row 5
+                    result, flat, stage="preparatory",
                     extract=lambda p: [str(r) for r in (p.get("section_refs") or [])])
             if not any("goal" in it for it in flat):
                 raise CarrierNotImplemented(
@@ -575,8 +617,8 @@ class MathematicsSubject:
                     "item through the wrong one is worse than failing: a file in this state "
                     "is a defect worth failing on rather than guessing past."
                 )
-            return items_by_period_field(                            # MIDDLE — row 4
-                result, items=flat, item_key="section_ref",
+            return _anchor_then_section(                             # MIDDLE — row 4
+                result, flat, stage="middle",
                 extract=lambda p: [s.get("ref", "")
                                    for s in (p.get("textbook_segments") or [])
                                    if isinstance(s, dict)])
