@@ -54,6 +54,26 @@
       "replaced_with": "Problem-based Data Analysis"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 17,
+      "field": "visual_aids[3]",
+      "removed": {
+       "type": "prose",
+       "title": "Answer Key — Density Calculations and Float/Sink Outcomes",
+       "text": "Object A: density = 48 ÷ 40 = 1.2 g/cm³. Relative density compared to bottom-layer water (1.026 g/cm³) is greater than 1 — sinks.\nObject B: density = 27 ÷ 36 = 0.75 g/cm³. Relative density less than 1 — floats.\nObject C: density = 55 ÷ 50 = 1.1 g/cm³. Relative density greater than 1 — sinks.\nFor row 8 (Object B and falling temperature): as water temperature drops, its density increases; if the water becomes denser than 0.75 g/cm³ by a greater margin the float outcome is reinforced. Accept any two-sentence answer that names one concept from each strand — e.g. 'Colder water is denser because its particles are closer together (density strand); colder water also holds more dissolved gas such as oxygen because gas solubility increases as temperature falls (solution strand).' Push groups that skip the density entries for organisms with: 'How would you measure whether this organism is denser than the water around it?'"
+      },
+      "replaced_with": [
+       "[table] Answer Key — Density Calculations and Float/Sink Outcomes",
+       "[prose] Row 8 and facilitation notes"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -847,9 +867,14 @@
        "table": "Row | Data item from report | Concept applied | Reasoning\n1 | Both water layers | Classifying solutions — identify solute and solvent | \n2 | Salinity figures: 38 g/L (surface) vs 34 g/L (bottom) | Concentration — which layer is more concentrated | \n3 | Dissolved oxygen contrast between layers | Gas solubility decreases with temperature | \n4 | Objects A, B, C — mass and volume given | Density = mass ÷ volume (record units) | \n5 | Each object vs bottom-layer water (1.026 g/cm³) | Relative density — float or sink prediction | \n6 | Surface layer vs pure water | Dissolved salt increases density of water | \n7 | Fish concentrated at bottom layer | Link dissolved-oxygen availability to temperature (18 °C vs 30 °C) | \n8 | Object B if water temperature drops significantly | Combined: density strand + solubility/solution strand (two sentences) | "
       },
       {
-       "type": "prose",
+       "type": "table",
        "title": "Answer Key — Density Calculations and Float/Sink Outcomes",
-       "text": "Object A: density = 48 ÷ 40 = 1.2 g/cm³. Relative density compared to bottom-layer water (1.026 g/cm³) is greater than 1 — sinks.\nObject B: density = 27 ÷ 36 = 0.75 g/cm³. Relative density less than 1 — floats.\nObject C: density = 55 ÷ 50 = 1.1 g/cm³. Relative density greater than 1 — sinks.\nFor row 8 (Object B and falling temperature): as water temperature drops, its density increases; if the water becomes denser than 0.75 g/cm³ by a greater margin the float outcome is reinforced. Accept any two-sentence answer that names one concept from each strand — e.g. 'Colder water is denser because its particles are closer together (density strand); colder water also holds more dissolved gas such as oxygen because gas solubility increases as temperature falls (solution strand).' Push groups that skip the density entries for organisms with: 'How would you measure whether this organism is denser than the water around it?'"
+       "table": "Object | Density calculation | Relative density and outcome\nA | density = 48 ÷ 40 = 1.2 g/cm³ | Relative density compared to bottom-layer water (1.026 g/cm³) is greater than 1 — sinks\nB | density = 27 ÷ 36 = 0.75 g/cm³ | Relative density less than 1 — floats\nC | density = 55 ÷ 50 = 1.1 g/cm³ | Relative density greater than 1 — sinks"
+      },
+      {
+       "type": "prose",
+       "title": "Row 8 and facilitation notes",
+       "text": "For row 8 (Object B and falling temperature): as water temperature drops, its density increases; if the water becomes denser than 0.75 g/cm³ by a greater margin the float outcome is reinforced. Accept any two-sentence answer that names one concept from each strand — e.g. 'Colder water is denser because its particles are closer together (density strand); colder water also holds more dissolved gas such as oxygen because gas solubility increases as temperature falls (solution strand).' Push groups that skip the density entries for organisms with: 'How would you measure whether this organism is denser than the water around it?'"
       }
      ]
     }

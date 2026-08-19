@@ -52,6 +52,25 @@
       "replaced_with": "Collaborative Artefact Construction"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 11,
+      "field": "visual_aids[1]",
+      "removed": {
+       "type": "prose",
+       "title": "Health Fair Stall Cards",
+       "text": "STALL 1 — Voice Check Corner\nOffers: a microphone and a simple pitch meter for fun.\nVisitor: Arjun, 13, notices his voice crackles when he speaks into the mic and sees a slight bulge at his throat in the mirror next to the stall.\n\nSTALL 2 — Cycle Calendar Stall\nOffers: menstrual tracking charts and information on hygiene products.\nVisitor: Meena, 12, recently started her periods and wants to understand the cycle length and what products she can use.\n\nSTALL 3 — Iron-Strong Station\nOffers: a display of iron-rich foods (spinach, kidney beans, dried fruits) and a quiz.\nVisitor: Priya, 14, often feels tired; the stall helper asks whether her periods have started recently.\n\nSTALL 4 — Move and Mood Zone\nOffers: short group dance and sport sessions.\nVisitor: Rahul, 13, came because he has been feeling irritable at home and his friend suggested this stall.\n\nSTALL 5 — Why Is This Happening? Corner\nOffers: a short talk with an illustrated chart of the brain-signal chain.\nVisitor: Divya, 11, wants to know why so many changes are happening to her body all at once.\n\nSTALL 6 — Choose Strong Stall\nOffers: role-play cards where visitors practise refusing peer pressure to try tobacco or alcohol.\nVisitor: Karan, 15, says some friends have been pressuring him at school."
+      },
+      "replaced_with": [
+       "[table] Health Fair Stall Cards"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -544,9 +563,9 @@
        "table": "Stall / Visitor Profile | Biological Change Involved | Hormonal Driver | Well-Being Measure Addressed\nStall 1 — Voice Check Corner / Arjun, 13 | | |\nStall 2 — Cycle Calendar Stall / Meena, 12 | | |\nStall 3 — Iron-Strong Station / Priya, 14 | | |\nStall 4 — Move and Mood Zone / Rahul, 13 | | |\nStall 5 — Why Is This Happening? Corner / Divya, 11 | | |\nStall 6 — Choose Strong Stall / Karan, 15 | | |\nOverlap row (Stall 3 + Stall 2): Why does Iron-Strong Station overlap with Cycle Calendar Stall? Write one sentence using biology, not common sense. | | |"
       },
       {
-       "type": "prose",
+       "type": "table",
        "title": "Health Fair Stall Cards",
-       "text": "STALL 1 — Voice Check Corner\nOffers: a microphone and a simple pitch meter for fun.\nVisitor: Arjun, 13, notices his voice crackles when he speaks into the mic and sees a slight bulge at his throat in the mirror next to the stall.\n\nSTALL 2 — Cycle Calendar Stall\nOffers: menstrual tracking charts and information on hygiene products.\nVisitor: Meena, 12, recently started her periods and wants to understand the cycle length and what products she can use.\n\nSTALL 3 — Iron-Strong Station\nOffers: a display of iron-rich foods (spinach, kidney beans, dried fruits) and a quiz.\nVisitor: Priya, 14, often feels tired; the stall helper asks whether her periods have started recently.\n\nSTALL 4 — Move and Mood Zone\nOffers: short group dance and sport sessions.\nVisitor: Rahul, 13, came because he has been feeling irritable at home and his friend suggested this stall.\n\nSTALL 5 — Why Is This Happening? Corner\nOffers: a short talk with an illustrated chart of the brain-signal chain.\nVisitor: Divya, 11, wants to know why so many changes are happening to her body all at once.\n\nSTALL 6 — Choose Strong Stall\nOffers: role-play cards where visitors practise refusing peer pressure to try tobacco or alcohol.\nVisitor: Karan, 15, says some friends have been pressuring him at school."
+       "table": "Stall | Offers | Visitor\n1 — Voice Check Corner | A microphone and a simple pitch meter for fun | Arjun, 13, notices his voice crackles when he speaks into the mic and sees a slight bulge at his throat in the mirror next to the stall\n2 — Cycle Calendar Stall | Menstrual tracking charts and information on hygiene products | Meena, 12, recently started her periods and wants to understand the cycle length and what products she can use\n3 — Iron-Strong Station | A display of iron-rich foods (spinach, kidney beans, dried fruits) and a quiz | Priya, 14, often feels tired; the stall helper asks whether her periods have started recently\n4 — Move and Mood Zone | Short group dance and sport sessions | Rahul, 13, came because he has been feeling irritable at home and his friend suggested this stall\n5 — Why Is This Happening? Corner | A short talk with an illustrated chart of the brain-signal chain | Divya, 11, wants to know why so many changes are happening to her body all at once\n6 — Choose Strong Stall | Role-play cards where visitors practise refusing peer pressure to try tobacco or alcohol | Karan, 15, says some friends have been pressuring him at school"
       }
      ]
     }

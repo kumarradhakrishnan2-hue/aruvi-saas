@@ -51,6 +51,27 @@
       "replaced_with": "Error Detection and Reconstruction"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 3,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Case File Cards — text and error guide",
+       "text": "Prepare five cards per group on separate paper strips or quarter-sheets. Cards 1, 3, and 5 are correct; Cards 2 and 4 contain deliberate errors for students to find and fix. Shuffle before handing out.\n\nCard 1 — OBSERVATION (correct)\n'Meera noticed that the plant on her windowsill, which she waters every two days, has drooping leaves and a dull colour. She finds this puzzling because she has been watering it regularly.'\n\nCard 2 — QUESTION (error)\n'Meera asks: Why is everything in the world so difficult to understand? She decides plants are impossible to figure out.'\nError: the question is too vague and not connected to the specific observation; it cannot be investigated or turned into a hypothesis because it is not about an observable, specific thing.\n\nCard 3 — HYPOTHESIS (correct)\n'Meera guesses that too much water might be drowning the roots and stopping them from working properly, causing the drooping.'\n\nCard 4 — TEST (error)\n'Meera decides to believe her guess is true because she once heard that overwatering harms plants. She does not do anything further.'\nError: a hypothesis must be tested by actual observation or experiment, not accepted on hearsay without investigation.\n\nCard 5 — ANALYSIS (correct)\n'Meera checks the soil and finds it soggy even two days after watering. She reduces watering to once a week. After several days, the leaves straighten. Her hypothesis was supported; she also wonders whether the pot's drainage hole is blocked — a new question for a new inquiry.'\n\nCase Closed paragraph prompt: the paragraph should name curiosity, a specific question, a hypothesis, a test, and the revision of understanding. If a group omits any of these, prompt: 'What step in the method does this part of the story show?'"
+      },
+      "replaced_with": [
+       "[prose] Case File Cards — preparation note",
+       "[table] Case File Cards — text and error guide",
+       "[prose] Case Closed paragraph prompt"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -212,8 +233,18 @@
      "visual_aids": [
       {
        "type": "prose",
+       "title": "Case File Cards — preparation note",
+       "text": "Prepare five cards per group on separate paper strips or quarter-sheets. Cards 1, 3, and 5 are correct; Cards 2 and 4 contain deliberate errors for students to find and fix. Shuffle before handing out."
+      },
+      {
+       "type": "table",
        "title": "Case File Cards — text and error guide",
-       "text": "Prepare five cards per group on separate paper strips or quarter-sheets. Cards 1, 3, and 5 are correct; Cards 2 and 4 contain deliberate errors for students to find and fix. Shuffle before handing out.\n\nCard 1 — OBSERVATION (correct)\n'Meera noticed that the plant on her windowsill, which she waters every two days, has drooping leaves and a dull colour. She finds this puzzling because she has been watering it regularly.'\n\nCard 2 — QUESTION (error)\n'Meera asks: Why is everything in the world so difficult to understand? She decides plants are impossible to figure out.'\nError: the question is too vague and not connected to the specific observation; it cannot be investigated or turned into a hypothesis because it is not about an observable, specific thing.\n\nCard 3 — HYPOTHESIS (correct)\n'Meera guesses that too much water might be drowning the roots and stopping them from working properly, causing the drooping.'\n\nCard 4 — TEST (error)\n'Meera decides to believe her guess is true because she once heard that overwatering harms plants. She does not do anything further.'\nError: a hypothesis must be tested by actual observation or experiment, not accepted on hearsay without investigation.\n\nCard 5 — ANALYSIS (correct)\n'Meera checks the soil and finds it soggy even two days after watering. She reduces watering to once a week. After several days, the leaves straighten. Her hypothesis was supported; she also wonders whether the pot's drainage hole is blocked — a new question for a new inquiry.'\n\nCase Closed paragraph prompt: the paragraph should name curiosity, a specific question, a hypothesis, a test, and the revision of understanding. If a group omits any of these, prompt: 'What step in the method does this part of the story show?'"
+       "table": "Card | Step | Card text | Error to find\n1 (correct) | OBSERVATION | 'Meera noticed that the plant on her windowsill, which she waters every two days, has drooping leaves and a dull colour. She finds this puzzling because she has been watering it regularly.' | \n2 (error) | QUESTION | 'Meera asks: Why is everything in the world so difficult to understand? She decides plants are impossible to figure out.' | The question is too vague and not connected to the specific observation; it cannot be investigated or turned into a hypothesis because it is not about an observable, specific thing\n3 (correct) | HYPOTHESIS | 'Meera guesses that too much water might be drowning the roots and stopping them from working properly, causing the drooping.' | \n4 (error) | TEST | 'Meera decides to believe her guess is true because she once heard that overwatering harms plants. She does not do anything further.' | A hypothesis must be tested by actual observation or experiment, not accepted on hearsay without investigation\n5 (correct) | ANALYSIS | 'Meera checks the soil and finds it soggy even two days after watering. She reduces watering to once a week. After several days, the leaves straighten. Her hypothesis was supported; she also wonders whether the pot's drainage hole is blocked — a new question for a new inquiry.' | "
+      },
+      {
+       "type": "prose",
+       "title": "Case Closed paragraph prompt",
+       "text": "The paragraph should name curiosity, a specific question, a hypothesis, a test, and the revision of understanding. If a group omits any of these, prompt: 'What step in the method does this part of the story show?'"
       }
      ]
     }

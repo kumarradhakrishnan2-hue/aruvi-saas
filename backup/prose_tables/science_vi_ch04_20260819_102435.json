@@ -1,0 +1,1705 @@
+{
+ "filename": "ch_04_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 4,
+ "chapter_title": "Exploring Magnets",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "14x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 4",
+  "ledger_ts": "20260817_113057_sci_vi_04_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T09:08:29",
+   "ledger_ts": "20260818_085144_sci_vi_04_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_04_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_04_canonical_p10.json": "2026-08-17T12:38:00",
+    "ch_04_canonical_p08.json": "2026-08-17T12:38:00"
+   },
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_vi_04_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "pedagogical_approach",
+      "removed": "Collaborative evidence-based reasoning: groups treat a novel scenario as a complete application context, mobilising magnetic and non-magnetic classification, pole-strength evidence, directional alignment, and the attraction–repulsion distinction in a single coordinated written product rather than as separate exercises.",
+      "replaced_with": "Collaborative Evidence-based Reasoning"
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and classify by magnetic response",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "What Does a Magnet Pull?",
+     "activity_description": "Students collect a set of everyday objects, predict which will be attracted to a magnet, then test each prediction by bringing a magnet close and recording outcomes in a two-column table of magnetic and non-magnetic results.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes objects and magnets, prompts prediction-making before testing begins, and circulates to ensure accurate recording."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Predict, test, and record which objects are attracted to the magnet and which are not, then share findings with the class."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces the chapter through Reshma's story about sailors and compasses, then poses the opening question: which everyday objects will a magnet attract?"
+      },
+      {
+       "minutes": "8-14",
+       "activity": "Students individually predict the outcome for each object in their set and record predictions before any testing begins."
+      },
+      {
+       "minutes": "14-30",
+       "activity": "Groups test each object with a magnet and record actual outcomes in a results table, distinguishing attracted from unattracted objects."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Class shares results; teacher consolidates the terms magnetic materials and non-magnetic materials and names key examples — iron, nickel, cobalt versus wood, plastic, glass."
+      }
+     ],
+     "teacher_notes": "This opening unit establishes the chapter's starting point: students arrive with intuitions about what magnets attract, and those intuitions are often incomplete — many assume all metals are magnetic. Watch for the common error of calling all shiny or heavy objects magnetic; prompt students to test their assumptions rather than rely on appearance. A useful checkpoint before closing is to ask students to give one example of a non-magnetic metal, such as aluminium, to surface this misconception early.",
+     "materials": [
+      "Bar magnet (one per group)",
+      "Assorted everyday objects: iron nail, aluminium foil, copper coin, rubber band, plastic spoon, wooden stick, glass marble, steel paper clip",
+      "Recording table printed or drawn in notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and classify by magnetic response",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Sorting the World into Two Groups",
+     "activity_description": "Students revisit their results table from the previous unit, sort a wider list of materials into magnetic and non-magnetic categories, and construct a justified classification identifying the shared property that determines magnetic response.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses sorting challenges and probes student reasoning with questions that require justification, not just labelling."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Extend the results table, classify additional materials by reasoning from evidence, and write one sentence explaining what magnetic materials have in common."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Quick recap of the previous unit's findings: teacher invites two groups to share their tables and highlights any disagreements across groups."
+      },
+      {
+       "minutes": "6-20",
+       "activity": "Students individually classify a new written list of materials — including iron, nickel, cobalt, steel, aluminium, copper, rubber — as magnetic or non-magnetic, writing a brief justification for each choice."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Pairs compare classifications and resolve disagreements by referring back to the tested evidence from the previous unit."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher draws out the key generalisation: magnetic materials are iron, nickel, cobalt, and some of their alloys; all other materials are non-magnetic, and this is a property of the material, not its appearance."
+      }
+     ],
+     "teacher_notes": "This unit builds directly on the previous unit's observation table, pushing students from listing to justifying — the move from recording to classifying. A frequent misconception here is that steel is not magnetic because it looks different from iron; connect steel to iron explicitly as an alloy. Students are ready to move on when they can explain why copper or aluminium fails the magnet test, not just state that it does.",
+     "materials": [
+      "Student notebooks with previous unit's results table",
+      "Written list of additional materials for classification (printed or on board)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Investigate the distribution of magnetic force",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Where Is the Magnet Strongest?",
+     "activity_description": "Students spread iron filings on paper, place a bar magnet on top, tap gently, and observe where filings cluster most densely, discovering that magnetic force is not uniform but concentrates at two specific ends.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the iron-filings setup for safety and clarity, then releases groups to run the investigation independently."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Spread iron filings, place the magnet, tap the paper, observe and sketch the pattern of clustering, and record where attraction is strongest."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher briefly connects this unit to the previous stage: now that students know which materials are magnetic, this unit asks where on a magnet the attraction is strongest — posing the question before any materials are distributed."
+      },
+      {
+       "minutes": "7-14",
+       "activity": "Teacher demonstrates the iron-filings procedure on a flat surface, showing how to tap gently to reveal the pattern without scattering filings."
+      },
+      {
+       "minutes": "14-30",
+       "activity": "Groups carry out the investigation, sketch the filing pattern around the bar magnet, and annotate where clustering is densest."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups share sketches; teacher introduces the term poles and establishes that the two ends where force concentrates are the North pole and South pole."
+      }
+     ],
+     "teacher_notes": "This unit opens the second stage of the chapter, shifting from classification to investigating the distribution of force within a magnet. Students often assume the whole magnet is equally strong; the iron-filings pattern directly challenges this. Ensure groups tap gently and consistently — vigorous tapping scatters filings and blurs the pole-concentration pattern that is the key observation here.",
+     "materials": [
+      "Bar magnet (one per group)",
+      "Iron filings in a shallow tray or paper envelope",
+      "White A4 paper sheets",
+      "Pencils for sketching"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Investigate the distribution of magnetic force",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Poles Always Come in Pairs",
+     "activity_description": "Students investigate whether a single pole can be isolated by breaking a bar magnet (simulated with a diagram and reasoning task), then test the pole-pattern of U-shaped and ring magnets with iron filings, establishing that poles always exist in pairs regardless of shape.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Guides the reasoning task about what would happen if a magnet were broken, and facilitates the iron-filings test on differently shaped magnets."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Predict pole positions on a U-shaped or ring magnet before testing, then test with iron filings and compare their prediction to the result."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the breaking-a-magnet thought experiment: if you snap a bar magnet in half, does one half have only a North pole and the other only a South pole? Students write their prediction."
+      },
+      {
+       "minutes": "8-16",
+       "activity": "Teacher explains the correct result — every fragment retains both poles — and students annotate a diagram showing a bar magnet broken into progressively smaller pieces, each labelled with N and S."
+      },
+      {
+       "minutes": "16-32",
+       "activity": "Groups use iron filings to locate poles on a U-shaped magnet (or ring magnet if available), sketch the pattern, and label where they predict N and S are before confirming."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Class discussion consolidates: poles always occur in pairs, regardless of shape or size, which is a fundamental property of magnets."
+      }
+     ],
+     "teacher_notes": "This unit deepens the poles investigation from the previous unit by tackling the persistent misconception that breaking a magnet separates its poles — students genuinely expect one half to be all-North. The diagram annotation task makes the reasoning concrete without requiring an actual break. When groups test the U-shaped magnet, ask them to predict pole positions before applying filings — this surfaces prior thinking and makes the result more meaningful.",
+     "materials": [
+      "U-shaped magnet or ring magnet (one per group)",
+      "Iron filings",
+      "White paper",
+      "Printed diagram of bar magnet breaking sequence (or drawn on board)",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the directional property and Earth's magnetism",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "The Magnet Always Points North",
+     "activity_description": "Students suspend a bar magnet freely on a thread, allow it to come to rest, mark the alignment, disturb it and repeat several times, observing that the magnet consistently returns to the same north-south line and connecting this to Earth's magnetic nature.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the suspension demonstration, guides students to mark and repeat the resting line, and introduces Earth's magnetic nature as the causal explanation."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Suspend the magnet, mark the resting alignment three times, compare the lines, and write an explanation linking the behaviour to Earth acting like a giant magnet."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the poles investigation: now that students know magnets have poles, this unit asks whether those poles have any directional preference — and why."
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Groups suspend their bar magnet, let it settle, draw the resting line on paper beneath, disturb it, and repeat; they compare the three lines and record whether they coincide."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Teacher introduces the explanation: Earth itself has magnetic properties that pull the magnet's North pole toward geographic north, so the magnet aligns with Earth's magnetic field."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Students compare the suspended magnet result with a non-magnetised iron bar to establish that directional alignment is unique to a magnet, not to iron in general."
+      }
+     ],
+     "teacher_notes": "This unit opens the third stage of the chapter, moving from describing where force concentrates to explaining why a freely suspended magnet behaves as it does. Students sometimes think the magnet points north because of some external marking on it rather than Earth's field; the comparison with an unmagnetised iron bar is essential for dismantling this. Ensure the suspension is away from iron objects and other magnets, which would distort the alignment.",
+     "materials": [
+      "Bar magnet (one per group)",
+      "Thread (30 cm)",
+      "Stand or ruler to suspend thread from",
+      "White paper to mark alignment",
+      "Non-magnetised iron bar for comparison",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the directional property and Earth's magnetism",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Building a Floating Compass",
+     "activity_description": "Students magnetise an iron sewing needle by stroking it with a magnet, mount it through a cork floating in water, and observe it aligning north-south, building a functional homemade compass that applies the directional property.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the stroking technique for magnetising the needle, emphasising consistent direction and lift-off between strokes."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Magnetise needles, assemble the floating compass, observe the alignment, and test it by rotating the bowl and confirming the needle returns to north-south."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher demonstrates the magnetising stroke — same direction, lift before returning, approximately twenty strokes — and students predict whether their needle will align north-south after magnetising."
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Groups magnetise their needles, push them through a small cork, float the cork in a bowl of water, and observe the needle's resting orientation."
+      },
+      {
+       "minutes": "25-35",
+       "activity": "Students rotate the bowl and confirm the needle returns to the same alignment, comparing their homemade compass to a commercial compass dial if available."
+      },
+      {
+       "minutes": "35-40",
+       "activity": "Teacher introduces the matsya-yantra sidebar and notes that the compass principle has been applied across cultures and centuries, including in Indian sea navigation."
+      }
+     ],
+     "teacher_notes": "This unit applies the directional property explained in the previous unit by having students build the device that embodies it. A frequent problem is students stroking the needle back and forth rather than lifting between strokes, which cancels the magnetisation; watch for this and correct it before the needle is tested. The matsya-yantra reference gives historical depth and rewards curious students without becoming a detour.",
+     "materials": [
+      "Sewing needles (2 per group)",
+      "Small corks",
+      "Shallow bowls or trays of water",
+      "Bar magnets (one per group)",
+      "Commercial magnetic compass (one, for class comparison)",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the directional property and Earth's magnetism",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "How a Compass Works",
+     "activity_description": "Students examine the structure of a commercial magnetic compass — freely rotating needle, circular box, directional dial, red-painted north end — and explain in their own words how each structural feature connects to the directional property they have already observed.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads a structured explanation of compass anatomy, linking each component to the underlying magnetic principle students have practised."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Annotate a diagram of a compass, labelling each part and writing one sentence explaining its function in relation to the directional property."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher displays or draws a labelled compass diagram and explains each part: the freely rotating magnetised needle, the pivot, the circular case, and the directional markings — connecting each to the behaviour observed in the previous two units."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students annotate their own compass diagram, writing a functional sentence for each component that links structure to the property it exploits."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Selected students share their annotations; class refines the explanations collaboratively, ensuring each structural feature is connected to a magnetic principle."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher closes by returning to Reshma's story: the sailors in her narrative would use exactly this device to navigate when stars were obscured."
+      }
+     ],
+     "teacher_notes": "This unit consolidates the directional-property stage by shifting from hands-on building to structured explanation of a real instrument. Students sometimes write that the red end of the needle is the South pole because red suggests warmth or danger; clarify that the red end is marked North by convention. The annotation task is a strong checkpoint — if a student cannot explain why the needle rotates freely, they have not yet connected the compass structure to the directional property.",
+     "materials": [
+      "Commercial magnetic compass (one per group or one class demonstration unit)",
+      "Printed or board-drawn compass diagram for annotation",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Investigate and reason about attraction and repulsion between poles",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Like Poles Repel, Unlike Poles Attract",
+     "activity_description": "Students use two bar magnets — one resting freely on pencils — to test all four pole combinations, observing that unlike poles attract and like poles repel, and recording the direction of movement in each case.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the experimental setup and ensures magnets are clearly labelled before groups begin, asking students to predict outcomes before each trial."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Test all four pole combinations systematically, record the direction of movement of the resting magnet for each combination, and state the attraction-repulsion rule derived from results."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects this unit to the directional stage: students know poles point north and south — this unit asks what happens when two magnets' poles are brought near each other."
+      },
+      {
+       "minutes": "7-12",
+       "activity": "Students predict, for each of the four pole combinations (N-N, S-S, N-S, S-N), whether the resting magnet will move toward or away from the approaching magnet."
+      },
+      {
+       "minutes": "12-30",
+       "activity": "Groups test all four combinations using the pencil-roller setup, record the direction of movement, and note whether each combination is attractive or repulsive."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Class shares results and teacher consolidates the rule: unlike poles attract, like poles repel — and notes this is a property of magnets specifically, not of all magnetic materials."
+      }
+     ],
+     "teacher_notes": "This unit opens the fourth stage, which requires students to move beyond observation to reasoning about interaction rules. Ensure magnets are clearly labelled N and S before the unit begins — unlabelled magnets make it impossible to record which combination is being tested. A useful prediction prompt before each trial is: 'What do you expect, and why?' — this surfaces whether students are guessing or applying the emerging rule.",
+     "materials": [
+      "Two bar magnets per group (clearly labelled N and S)",
+      "Two pencils per group (for the roller surface)",
+      "Recording table in notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Investigate and reason about attraction and repulsion between poles",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Repulsion: The True Test for a Magnet",
+     "activity_description": "Students bring each pole of a bar magnet near an iron bar and near another magnet, observe that the iron bar is always attracted while the second magnet shows both attraction and repulsion, establishing repulsion as the definitive test for distinguishing a magnet from an unmagnetised magnetic material.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the problem — how can you tell a magnet from an iron bar if both are attracted to another magnet? — and guides students toward designing the repulsion test."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Test both poles of a bar magnet against an iron bar and against a second magnet, record all six interactions, and draw the conclusion about which result can only come from a magnet."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the distinguishing challenge: both an iron bar and a magnet are attracted to a magnet's pole — so attraction alone cannot tell you which is which. Students are asked to design a test."
+      },
+      {
+       "minutes": "8-26",
+       "activity": "Groups test both poles of a magnet against an iron bar (all interactions are attractive) and against a second magnet (some attractive, some repulsive), recording all results."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Students write the conclusion: repulsion is only possible between two magnets, so observing repulsion is the definitive test for identifying a magnet."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher confirms and extends: this principle explains why a compass can identify pole orientation — repulsion between the compass needle and a known pole reveals the approaching magnet's pole identity."
+      }
+     ],
+     "teacher_notes": "This unit deepens the attraction-repulsion investigation by targeting a genuine conceptual challenge: students assume that if something is attracted to a magnet it must itself be a magnet. The comparison between iron-bar and magnet results directly refutes this. The extension connecting repulsion to compass use in the next activity previews the following unit and rewards students who are thinking ahead.",
+     "materials": [
+      "Two bar magnets per group (labelled)",
+      "One iron bar or large iron nail per group",
+      "Recording table in notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Investigate and reason about attraction and repulsion between poles",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Does Anything Block a Magnet?",
+     "activity_description": "Students use a magnetic compass as a detector and interpose sheets of wood, cardboard, plastic, and glass between a bar magnet and the compass needle, observing that the needle deflects equally regardless of the interposed material, establishing that magnetic effects pass through non-magnetic materials.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the compass-and-magnet arrangement and asks students to predict, for each material, whether the needle deflection will change."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Place each non-magnetic material between magnet and compass, observe and record needle deflection with and without the material, and state whether the material blocked the effect."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher poses the blocking question: if magnetic materials are attracted to magnets, do non-magnetic materials block or reduce the magnetic effect? Students write predictions before testing."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups place wood, cardboard, plastic, and glass sheets between the magnet and compass in turn, record needle deflection for each, and compare to the baseline deflection without any material."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups share results; teacher draws out the conclusion: non-magnetic materials do not block or diminish magnetic effects, which pass through them freely."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher previews the next unit: this property — magnetism passing through non-magnetic materials — is exactly what makes the cardboard-maze and water-glass activities in the Fun with Magnets section possible."
+      }
+     ],
+     "teacher_notes": "This unit completes the attraction-repulsion stage by establishing the reach of magnetic force through non-magnetic materials. Students frequently predict that thick materials will block the effect more than thin ones; use the cardboard result to challenge this quantitative intuition. The preview to the Fun with Magnets applications in the next unit gives students a purpose for the finding they have just made.",
+     "materials": [
+      "Magnetic compass (one per group)",
+      "Bar magnet (one per group)",
+      "Sheets of wood (thin plank or tongue depressor)",
+      "Cardboard sheet",
+      "Plastic sheet",
+      "Glass sheet or thick glass tile",
+      "Ruler for consistent magnet-compass distance"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply magnetic properties to practical and playful contexts",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Magnets in Play: Maze, Garland, and Water",
+     "activity_description": "Students run three informal experiments from the Fun with Magnets section — guiding a steel ball through a cardboard maze with a magnet below, picking up a paperclip from water without wetting their fingers, and building a pin garland — connecting each outcome to a specific property studied earlier in the chapter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces all three stations, asks students to name the property being exploited before they begin each one, and circulates to prompt explanations rather than just observations."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Rotate through the three activity stations, complete each task, and record which property (magnetism through non-magnetic materials, poles attract magnetic materials, etc.) explains each result."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher sets up the three stations around the room and introduces them briefly, asking students to predict which earlier-learned property each activity relies on."
+      },
+      {
+       "minutes": "6-30",
+       "activity": "Groups rotate through the three stations — maze, water-paperclip, and garland — spending roughly equal time at each, completing the task and recording the property it demonstrates."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Whole-class discussion: for each station, students state which property explains the result, and teacher confirms or corrects the connection to the chapter's earlier findings."
+      }
+     ],
+     "teacher_notes": "This unit opens the fifth stage, asking students to apply the properties they have investigated to informal practical contexts. The key pedagogical move here is requiring a property-to-application connection for each station — not just completing the fun activity. Students sometimes say the maze works 'because of magnetism' without specifying which property; press them to name the specific finding from unit 10 (magnetism passes through non-magnetic materials) that makes the maze possible.",
+     "materials": [
+      "Bar magnets (one per group)",
+      "Steel balls or small steel nails",
+      "Cardboard sheets (for maze construction)",
+      "Shallow bowls of water",
+      "Steel paperclips",
+      "Iron filings or small iron pins (for garland)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply magnetic properties to practical and playful contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Repulsion in Motion: The Magnetic Cars",
+     "activity_description": "Students mount magnets on two small toy cars with like poles facing and observe the cars repelling each other in motion, then flip one magnet to produce attraction, explaining each outcome by applying the poles interaction rule to a dynamic context.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the car setup and poses the question before each run: predict what will happen and why, before students replicate and explain."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Set up like-pole and unlike-pole car configurations, observe and record the motion in each case, and write a causal explanation using the interaction rule."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher introduces the matchbox-car setup and asks students to apply the like-repels-unlike-attracts rule to predict what happens in each configuration before any cars are moved."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Groups set up the like-pole configuration, release the cars, observe and record the motion, then flip one magnet and repeat, recording the contrasting result."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Students write a two-sentence causal explanation for each configuration: one naming the pole combination, one stating the interaction rule and how it produces the observed motion."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher connects this dynamic application back to the static repulsion test in unit 9, reinforcing that repulsion is a distinctive magnet-to-magnet property."
+      }
+     ],
+     "teacher_notes": "This unit builds on the like-repels-unlike-attracts rule established in unit 8 by applying it to a dynamic, visible context that makes the force direction concrete. Students sometimes explain that 'the magnet is pushing the car' without attributing the push to a specific pole interaction; require them to name which poles are facing and invoke the rule explicitly. The connection to unit 9's repulsion-as-identification-test at the close reinforces that repulsion is a property unique to magnets, not just a curiosity.",
+     "materials": [
+      "Two small toy cars or matchboxes per group",
+      "Four small magnets (to mount on cars, or pre-taped)",
+      "Tape",
+      "Flat surface (table or floor)"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply magnetic properties to practical and playful contexts",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Caring for Magnets: Storage and Handling Rules",
+     "activity_description": "Students learn the rules for proper magnet storage and the actions that damage magnets — heating, dropping, hammering, proximity to electronics — and apply these rules by evaluating three described storage scenarios as correct or incorrect, with justification.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Explains the storage and handling rules, connecting each to the underlying property it protects or damages, before presenting the evaluation scenarios."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Evaluate three storage-scenario descriptions as correct or incorrect, writing one sentence of justification for each that cites the relevant rule."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-12",
+       "activity": "Teacher explains proper magnet storage — unlike poles adjacent, wooden separator, soft-iron keeper bars — and the damaging actions: heating, dropping, hammering, electronic proximity; each rule is linked to the property it affects."
+      },
+      {
+       "minutes": "12-30",
+       "activity": "Students individually evaluate three written storage scenarios (one correct, two incorrect in different ways) as correct or incorrect, writing a justification sentence for each citing the relevant rule."
+      },
+      {
+       "minutes": "30-38",
+       "activity": "Pairs exchange papers and check each other's justifications, then report disagreements to the class for resolution."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher closes by connecting the care rules to the chapter's broader theme: a well-maintained magnet retains all the properties investigated throughout the chapter."
+      }
+     ],
+     "teacher_notes": "This unit completes the application stage and wraps up content across the chapter before the synthesis unit. Students sometimes think that dropping or heating a magnet is harmless because the magnet 'looks the same'; connect the loss of magnetism to the disruption of the alignment of poles at a small scale, which is accessible at this stage as an informal explanation. The peer-checking step is a useful formative signal — disagreements often reveal remaining confusion about which rule applies in each scenario.",
+     "materials": [
+      "Three storage-scenario descriptions (printed or on board)",
+      "Student notebooks"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes the statement set, prompts students to identify which chapter evidence supports or refutes each statement, and facilitates a class discussion that draws all properties together."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Classify each statement, rewrite incorrect statements correctly, and identify which property or investigation result each correction relies on."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compare individual corrections in small groups, resolve disagreements by citing evidence from any part of the chapter, and identify which property is most commonly misrepresented in the statement set."
+      }
+     ],
+     "activity_title": "The Shipwreck Box: Reading a Crate of Found Objects",
+     "activity_description": "Groups receive a set of 'shipwreck cards' — illustrated cards each depicting one object recovered from a fictional wrecked vessel. Using only the chapter's magnetic properties, groups must classify every object, identify any magnets among them, determine which end of each identified magnet is the North pole, and explain how the cargo's magnets could help surviving crew members find north without a map. Their reasoning is assembled into a short written 'harbour master's report' that uses each chapter concept exactly once as its justification.",
+     "teacher_notes": "This synthesis unit asks groups to classify eight shipwreck objects, identify any magnets and their poles, and explain how the cargo could help the crew find north — assembling their reasoning into a harbour master's report that invokes each chapter concept exactly once. The critical facilitation move during group work is the Socratic nudge 'What would happen if you brought the known North pole close to that end?' rather than giving the answer directly; in the closing discussion, read two ninth-row answers aloud and let the class reconstruct the full reasoning chain unprompted. Full card content and report template design are in the visual aids (see materials).",
+     "materials": [
+      "Eight shipwreck cards per group, printed double-sided on card stock — front: line illustration and one-line description; back: one focused question (see visual aid: 'Shipwreck card content')",
+      "One known, labelled bar magnet per group (poles marked N and S)",
+      "One magnetic compass per group",
+      "Harbour master's report template — one A4 sheet per group (see visual aid: 'Harbour master's report template')",
+      "Pencils or pens",
+      "Whiteboard and markers for closing discussion"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher places the eight shipwreck cards face-up on each group's table alongside a known labelled bar magnet and a compass, and reads aloud a two-sentence framing: a vessel has gone aground; a crate of mixed cargo has washed ashore; the harbour master needs a written report classifying every object and explaining how the crew can use anything magnetic in the crate to find their way. Teacher then directs groups to read all eight card fronts and, before touching any equipment, write a first-guess classification for every object in the Classification column. This prediction step surfaces prior reasoning and gives each student a stake in the outcome."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups work through the cards systematically, using the known magnet and compass to test each object. For each card they complete all three columns of its row: what the object is (magnetic material, non-magnetic material, or magnet), what they observed as evidence (attracted both poles / repelled one pole / no response), and the chapter concept that explains the classification (magnetic vs non-magnetic materials; poles are strongest at the ends; unlike poles attract, like poles repel; repulsion is the definitive test for a magnet; poles always exist in pairs). For cards 3 and 6, groups must identify which end is the North pole by testing repulsion against the known North pole. Teacher circulates, asking 'What would you expect to see if that end were a South pole?' to groups that have stalled."
+      },
+      {
+       "minutes": "28-36",
+       "activity": "Groups answer the ninth row: describe the simplest test using only the magnets found in the crate that would let the crew find north. Students must name which objects from their completed classification are usable, explain how a freely suspended magnet aligns with Earth's field, and state which end points north — connecting directional alignment back to the pole identification they have just done. The teacher reminds groups that their answer should be written so that someone who has not done the earlier rows can still follow the reasoning."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher reads the ninth-row answer from two groups aloud without comment, then asks the class: 'What does this answer need from everything we did in rows one through eight?' Students name, in their own words, the chain: you need to know which objects are magnetic, which of those are actual magnets, which end of each magnet is North — and only then can you suspend one and use its alignment to find direction. Teacher closes by naming this chain as the chapter's central idea made visible: the properties of magnets — what they attract, where their force concentrates, how they align, and how poles interact — are not separate facts but a single connected account of magnetic behaviour that the shipwreck task just used whole."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Collaborative Evidence-based Reasoning",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Shipwreck card content",
+       "text": "Each card is printed double-sided: front shows a simple line illustration of the object and a one-line description; back poses a single focused question about that object. All eight cards are identical across groups.\n\nCard 1 – Iron nail. Description: a plain iron nail recovered from the crate. Back question: Is this nail a magnet, a magnetic material, or non-magnetic? How do you know?\nExpected reasoning: attracts to the known magnet but does not repel either pole → magnetic material, not a magnet.\n\nCard 2 – Glass bottle. Description: a sealed glass bottle, contents unclear. Back question: Can the bottle or its contents be classified using your magnet alone? What result would confirm non-magnetic?\nExpected reasoning: no response to the known magnet → non-magnetic.\n\nCard 3 – Unmarked metal rod A. Description: a smooth metal rod with no markings. Back question: Test both ends against the known North pole. What result would prove this rod is a magnet, and which end is North?\nExpected reasoning: attracts AND one end repels the known North pole → confirmed magnet; the end that repels the known North pole is itself a North pole.\n\nCard 4 – Unmarked metal rod B. Description: a second smooth metal rod, slightly shorter. Back question: This rod attracts both poles of the known magnet and never repels. What does that tell you?\nExpected reasoning: attracts both poles, never repels → magnetic material, not a magnet.\n\nCard 5 – Wooden plank fragment. Description: a small fragment of the ship's hull planking. Back question: Predict the result before testing. What property of wood explains your prediction?\nExpected reasoning: no response → non-magnetic.\n\nCard 6 – Unmarked metal rod C. Description: a third metal rod, slightly corroded. Back question: Test both ends. If the opposite end repels, what can you conclude about that end's pole?\nExpected reasoning: attracts AND the opposite end repels → confirmed magnet; the end that repels the known North pole is North; the other end is South.\n\nCard 7 – Copper coin. Description: a large copper coin, date worn away. Back question: Copper is a metal. Does that make it magnetic? What result do you expect?\nExpected reasoning: no response → non-magnetic; being a metal does not guarantee magnetic behaviour.\n\nCard 8 – Iron ring. Description: a thick iron ring, possibly a shackle component. Back question: The ring attracts but never repels. Where on the ring would the magnetic force be strongest, and what does the absence of repulsion tell you?\nExpected reasoning: attracts, does not repel → magnetic material, not a magnet; poles (points of strongest force) exist at two points on the ring — poles always exist in pairs."
+      },
+      {
+       "type": "table",
+       "title": "Harbour master's report template",
+       "table": "Object | Classification | Evidence observed | Chapter concept invoked\nCard 1 – Iron nail | | |\nCard 2 – Glass bottle | | |\nCard 3 – Unmarked metal rod A | | |\nCard 4 – Unmarked metal rod B | | |\nCard 5 – Wooden plank fragment | | |\nCard 6 – Unmarked metal rod C | | |\nCard 7 – Copper coin | | |\nCard 8 – Iron ring | | |\nCrew navigation (ninth row): Using only the magnets found in the crate, describe the simplest test that would let the crew find north. Name which objects are usable, explain how a freely suspended magnet aligns with Earth's field, and state which end points north. | | |"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 40,
+    "count": 14
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and classify by magnetic response",
+    "total_stages": 6,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students test everyday objects with a magnet, record results, and classify materials as magnetic or non-magnetic with justified reasoning.",
+    "implied_lo": "Students can classify given materials as magnetic or non-magnetic and justify each classification by identifying the shared property of magnetic materials.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Investigate the distribution of magnetic force",
+    "total_stages": 6,
+    "period_numbers": [
+     3,
+     4
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students use iron filings to locate poles on bar and shaped magnets, and reason through evidence that poles always exist in pairs regardless of magnet shape or size.",
+    "implied_lo": "Students can identify where magnetic force is strongest on a magnet, name the poles, and explain why poles always exist in pairs even when a magnet is divided.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Explain the directional property and Earth's magnetism",
+    "total_stages": 6,
+    "period_numbers": [
+     5,
+     6,
+     7
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students suspend a magnet and build a homemade compass, observe consistent north-south alignment, and explain the behaviour by connecting it to Earth's magnetic nature and the structure of a commercial compass.",
+    "implied_lo": "Students can explain why a freely suspended magnet aligns north-south, connect this to Earth's magnetic properties, and describe how a compass exploits this directional behaviour.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Investigate and reason about attraction and repulsion between poles",
+    "total_stages": 6,
+    "period_numbers": [
+     8,
+     9,
+     10
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students test all pole combinations between two magnets and compare magnet-to-magnet interactions with magnet-to-iron interactions, establishing the like-repels-unlike-attracts rule and repulsion as the definitive magnet test; they also confirm that magnetic effects pass through non-magnetic materials.",
+    "implied_lo": "Students can state and apply the attraction-repulsion rule for pole combinations, identify repulsion as the definitive test distinguishing a magnet from unmagnetised iron, and explain that magnetic effects pass through non-magnetic materials.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Apply magnetic properties to practical and playful contexts",
+    "total_stages": 6,
+    "period_numbers": [
+     11,
+     12,
+     13
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students connect specific magnet properties to practical demonstrations — maze, water-retrieval, garland, magnetic cars — and evaluate magnet storage and handling scenarios using the rules for maintaining magnetic properties.",
+    "implied_lo": "Students can identify which specific magnet property underlies each practical application and evaluate whether storage or handling practices preserve or damage those properties.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   },
+   {
+    "stage_number": 6,
+    "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+    "total_stages": 6,
+    "period_numbers": [
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students classify and correct a set of statements about magnets, drawing on the full range of properties — magnetic materials, poles, directional alignment, interaction rules, penetration through non-magnetic materials — to demonstrate integrated command of the chapter.",
+    "implied_lo": "Students can describe and apply the full set of magnet properties — attraction of magnetic materials, pole distribution, directional alignment due to Earth's magnetism, attraction and repulsion between poles, and penetration through non-magnetic materials — by identifying and correcting errors in statements about magnets.",
+    "cg": "CG-2",
+    "c_code": "C-2.3",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and classify by magnetic response",
+    "implied_lo_assessed": "Students can classify given materials as magnetic or non-magnetic and justify each classification by identifying the shared property of magnetic materials.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student tests four objects with a bar magnet: an iron nail, a copper coin, an aluminium strip, and a steel paper clip. Which pair of objects will be attracted to the magnet?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Aluminium strip and steel paper clip",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Copper coin and aluminium strip",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Iron nail and copper coin",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Iron nail and steel paper clip",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "Student believes all non-ferrous metals are magnetic, failing to distinguish between metal as a category and magnetic materials specifically.",
+       "C": "Student correctly identifies iron but incorrectly extends magnetism to copper, confusing 'metal' with 'magnetic material'.",
+       "A": "Student correctly identifies steel (an iron alloy) as magnetic but pairs it with aluminium, suggesting incomplete understanding that the shared property is presence of iron, nickel, or cobalt content."
+      },
+      "inclusivity": "Students who struggle to recall examples can be supported by returning to the results table from the classification activity — the answer is traceable directly to recorded evidence. Students who answer quickly can be asked to name one metal that is not magnetic and explain why."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and classify by magnetic response",
+    "implied_lo_assessed": "Students can classify given materials as magnetic or non-magnetic and justify each classification by identifying the shared property of magnetic materials.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Which statement best explains why wood, rubber, and plastic are all classified as non-magnetic materials?",
+    "options": [
+     {
+      "label": "A",
+      "text": "They are non-metals, and non-metals are never magnetic.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "They are too light to be attracted by a magnet's force.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "They do not contain iron, nickel, cobalt, or alloys of these elements.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "They do not have poles, so they cannot respond to a magnet.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "Student attributes magnetic response to mass or weight rather than material composition, a common intuitive but incorrect causal explanation.",
+       "A": "Student overgeneralises the non-metal category; this fails because nickel and iron are metals that are magnetic, but also because some non-metals could in principle be magnetic — the decisive property is composition, not metal/non-metal status.",
+       "D": "Student conflates a property of magnets (having poles) with a requirement for attracted materials, misapplying the poles concept introduced later in the chapter."
+      },
+      "inclusivity": "Students who find the compositional explanation abstract can be anchored in the tested examples: every material confirmed as magnetic in the activity was made of or contained iron, nickel, or cobalt. Students who choose C can be challenged with the question: is aluminium a metal? Is it magnetic?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate the distribution of magnetic force",
+    "implied_lo_assessed": "Students can identify where magnetic force is strongest on a magnet, name the poles, and explain why poles always exist in pairs even when a magnet is divided.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Iron filings are spread on paper and a bar magnet is placed on top. After tapping, where do the filings cluster most densely, and what does this tell us?",
+    "options": [
+     {
+      "label": "A",
+      "text": "At the centre of the magnet, showing that magnetic force is strongest in the middle.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "At the two ends of the magnet, showing that magnetic force is strongest at the poles.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Scattered randomly, showing that iron filings do not respond consistently to a magnet.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Uniformly across the magnet's length, showing that magnetic force is evenly distributed.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Student holds the misconception that magnetic force is uniform throughout the magnet, failing to interpret the filing-cluster pattern as evidence of unequal distribution.",
+       "A": "Student may be confusing the magnet with a physical object where the middle is typically the strongest structural point, misapplying an everyday analogy.",
+       "C": "Student does not connect the clustering pattern to a property of the magnet, suggesting the investigation outcome was not linked to the concept of poles."
+      },
+      "inclusivity": "Students who find the abstract concept of field strength difficult can be supported by returning to their own sketches from the iron-filings activity — the visual cluster pattern is the direct evidence for option A."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate the distribution of magnetic force",
+    "implied_lo_assessed": "Students can identify where magnetic force is strongest on a magnet, name the poles, and explain why poles always exist in pairs even when a magnet is divided.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student breaks a bar magnet into three pieces. How many poles will the three pieces have in total?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Four poles — the two end pieces keep their original poles and the middle piece has none.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Six poles — each piece will have one North pole and one South pole.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Three poles — each piece has one pole of alternating type.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Two poles — the original North and South poles remain on the two end pieces.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Student holds the classic misconception that breaking a magnet separates its poles — that the North end piece keeps the North pole and the South end piece keeps the South pole, with nothing new created.",
+       "A": "Student partially corrects the misconception for the end pieces but cannot apply the rule that every fragment forms new poles, leaving the middle piece pole-less.",
+       "C": "Student attempts to apply some rule about poles but miscounts or misapplies the always-in-pairs principle, producing an impossible odd-pole scenario."
+      },
+      "inclusivity": "Students who struggle with the abstraction of breaking can be asked to annotate the diagram of a bar magnet being successively halved — each step makes the paired-pole rule visible. Students who answer correctly quickly can be challenged: could you ever produce a piece with only one pole?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Investigate the distribution of magnetic force",
+    "implied_lo_assessed": "Students can identify where magnetic force is strongest on a magnet, name the poles, and explain why poles always exist in pairs even when a magnet is divided.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A ring magnet is placed over iron filings on paper. Describe where you would expect the filings to cluster and explain what this tells you about the ring magnet's poles.",
+    "options": [],
+    "expected_elements": [
+     "Filings cluster at two distinct regions on the ring magnet, not uniformly around it.",
+     "These two regions are the poles of the ring magnet — one North and one South.",
+     "The result shows that poles always exist in pairs, and this is true for any shape of magnet, not only bar magnets."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who have not seen a ring magnet specifically can reason from the bar-magnet iron-filings result and the principle that all magnets have two poles — the shape changes the location, not the number of poles. Students who describe uniform clustering should be asked whether the bar magnet showed uniform clustering, prompting self-correction."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the directional property and Earth's magnetism",
+    "implied_lo_assessed": "Students can explain why a freely suspended magnet aligns north-south, connect this to Earth's magnetic properties, and describe how a compass exploits this directional behaviour.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A bar magnet is suspended freely by a thread and allowed to come to rest. A student disturbs it and lets it settle again three times, marking the resting line each time. What will the student observe, and what explains this?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The magnet settles along a north-south line because its North pole is heavier than its South pole.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The magnet settles along the same line because the thread always twists the same way.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The magnet settles along the same north-south line each time because Earth has magnetic properties that align the magnet's poles.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The magnet settles in a different direction each time because a suspended object's resting position is random.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Student has not connected the repeated-trial result to a directional property, treating the suspension result as unpredictable rather than as evidence of a consistent force.",
+       "B": "Student identifies the consistency of the result but attributes it to a mechanical artefact of the thread rather than to Earth's magnetic force — a plausible-sounding but incorrect mechanical explanation.",
+       "A": "Student correctly identifies north-south alignment but invents a gravitational asymmetry explanation, failing to invoke Earth's magnetic nature as the cause."
+      },
+      "inclusivity": "Students who are uncertain about what Earth's magnetic nature means can be pointed back to the comparison with the unmagnetised iron bar: if the thread were the cause, the iron bar would also align — but it does not."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the directional property and Earth's magnetism",
+    "implied_lo_assessed": "Students can explain why a freely suspended magnet aligns north-south, connect this to Earth's magnetic properties, and describe how a compass exploits this directional behaviour.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "In a magnetic compass, the needle's North-pointing end is painted red. A student claims the red end is the South pole. Which observation from the chapter most directly refutes this claim?",
+    "options": [
+     {
+      "label": "A",
+      "text": "A freely suspended magnet's North-seeking pole consistently points toward geographic north, and the red end of the compass needle points the same way.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The North pole of a magnet is always at the top when held vertically, and the red end is at the top.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The red colour is used because it is the most visible colour and has no connection to the pole type.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The South pole of a compass needle always points toward the south, so the red end, which points north, must be the North pole.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student dismisses the colour as non-evidential without invoking the directional evidence — this avoids the reasoning task rather than completing it.",
+       "D": "Student reaches the correct conclusion (red end is North) but uses circular reasoning rather than anchoring the answer in the freely-suspended-magnet observation, which is the chapter's actual evidence.",
+       "B": "Student invents a gravitational rule about pole position that is not grounded in the chapter and does not connect to Earth's magnetic property."
+      },
+      "inclusivity": "Students who find option A and C similar can be asked which one uses evidence from a specific investigation (the suspended magnet) and which one simply restates the conclusion — this distinction between evidence and restatement is the key move."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the directional property and Earth's magnetism",
+    "implied_lo_assessed": "Students can explain why a freely suspended magnet aligns north-south, connect this to Earth's magnetic properties, and describe how a compass exploits this directional behaviour.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student magnetises a sewing needle and mounts it through a cork floating in water. Describe what the needle does and explain, using what you know about Earth's magnetic properties, why it behaves this way.",
+    "options": [],
+    "expected_elements": [
+     "The magnetised needle aligns itself along the north-south direction.",
+     "The end that points north is the North pole of the magnetised needle.",
+     "Earth has magnetic properties similar to a giant magnet, which exerts a force on the needle's poles and causes this consistent alignment.",
+     "An unmagnetised needle would not show this directional behaviour, confirming that the effect is due to the needle's magnetism interacting with Earth's field."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who describe the alignment correctly but cannot explain it can be prompted: what did we compare the suspended magnet with to prove it was Earth causing the alignment, not something else? This scaffolds the iron-bar comparison without giving away the answer."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Investigate and reason about attraction and repulsion between poles",
+    "implied_lo_assessed": "Students can state and apply the attraction-repulsion rule for pole combinations, identify repulsion as the definitive test distinguishing a magnet from unmagnetised iron, and explain that magnetic effects pass through non-magnetic materials.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Pole combination | Observed movement of resting magnet\nNorth pole approaching North pole | Moves away\nSouth pole approaching South pole | Moves away\nNorth pole approaching South pole | Moves toward\nSouth pole approaching North pole | Moves toward",
+    "question_text": "Refer to the table provided. A student uses these results to write a rule about magnet interactions. Which rule is correctly supported by all four rows of the table?",
+    "options": [
+     {
+      "label": "A",
+      "text": "A magnet always attracts any object brought near it regardless of pole orientation.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Like poles repel each other and unlike poles attract each other.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Only the South pole can attract; the North pole only repels.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The North pole always repels and the South pole always attracts.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Student assigns fixed behaviours to individual poles (North always repels, South always attracts) rather than recognising that behaviour depends on the pole combination — a relational misreading of the table.",
+       "A": "Student ignores the repulsion rows entirely, holding the prior belief that magnets always attract, which the table directly contradicts.",
+       "C": "Student reverses the behaviours attributed to each pole compared to option B, still holding a fixed-pole-behaviour model rather than a relational one."
+      },
+      "inclusivity": "Students who are confused by the table can be guided to look at only the first two rows (both repulsion cases) and asked what those rows have in common before reading the attraction rows."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Investigate and reason about attraction and repulsion between poles",
+    "implied_lo_assessed": "Students can state and apply the attraction-repulsion rule for pole combinations, identify repulsion as the definitive test distinguishing a magnet from unmagnetised iron, and explain that magnetic effects pass through non-magnetic materials.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student has two objects that look identical. Object X is brought near the North pole of a known magnet and moves toward it. Object Y is brought near the same pole and moves away from it. Which conclusion is correct?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Object Y is definitely a magnet; Object X may be either a magnet or an unmagnetised magnetic material.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Object X is definitely a magnet because it was attracted to the magnet.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Both objects are magnets because both responded to the known magnet.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Object Y is non-magnetic because it moved away from the magnet.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Student uses attraction as the test for being a magnet — the core misconception that this investigation was designed to address. Attraction is not sufficient because an unmagnetised iron bar also attracts.",
+       "C": "Student extends the attraction-equals-magnet error to both objects, ignoring that Object Y showed repulsion, which is the distinctive marker.",
+       "D": "Student misinterprets repulsion as a sign of non-magnetism, inverting the logic: moving away from a magnet is only possible for another magnet (with a like pole facing), not for non-magnetic materials."
+      },
+      "inclusivity": "Students who choose B or C can be directed back to the iron-bar comparison activity: an iron bar is attracted to both poles — so attraction alone is not the test. Students who choose D can be asked: can a non-magnetic material ever be pushed away by a magnet?"
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Investigate and reason about attraction and repulsion between poles",
+    "implied_lo_assessed": "Students can state and apply the attraction-repulsion rule for pole combinations, identify repulsion as the definitive test distinguishing a magnet from unmagnetised iron, and explain that magnetic effects pass through non-magnetic materials.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A bar magnet is placed on one side of a thick plastic sheet and a magnetic compass on the other side. A student predicts that the plastic will block the magnetic effect and the compass needle will not deflect. Is the student correct? Explain your answer using what you know about magnetic effects and non-magnetic materials.",
+    "options": [],
+    "expected_elements": [
+     "The student is incorrect — the compass needle will deflect even with the plastic sheet in between.",
+     "Plastic is a non-magnetic material and does not block or diminish magnetic effects.",
+     "Magnetic effects pass through non-magnetic materials such as wood, cardboard, plastic, and glass without being reduced.",
+     "This was confirmed by the investigation in which non-magnetic materials were interposed between a magnet and compass with no change in needle deflection."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who are uncertain can be cued with the question: in the maze activity, what was between the magnet and the steel ball? This connects the abstract principle to a concrete experience without giving away the answer."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply magnetic properties to practical and playful contexts",
+    "implied_lo_assessed": "Students can identify which specific magnet property underlies each practical application and evaluate whether storage or handling practices preserve or damage those properties.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student guides a steel ball through a cardboard maze by moving a magnet beneath the cardboard. Which combination of properties makes this possible?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Cardboard is a magnetic material that helps transfer the force to the steel ball.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Steel is a magnetic material and magnetic effects pass through non-magnetic materials such as cardboard.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Steel is a magnetic material and magnets only work when there is direct contact with the object.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The poles of the magnet push the steel ball away through the cardboard.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Student holds the contact-required misconception — that magnets only act when touching the object — contradicting the non-contact attraction observed throughout the chapter's activities.",
+       "A": "Student misclassifies cardboard as magnetic, failing to apply the magnetic/non-magnetic classification established in stage 1.",
+       "D": "Student applies repulsion to this scenario, confusing the direction of the force; the steel ball is attracted toward the magnet, not repelled, and repulsion is a magnet-to-magnet phenomenon."
+      },
+      "inclusivity": "Students who choose B can be asked: in the iron-filings investigation, did the filings have to touch the magnet to cluster at the poles? This uses a familiar observation to challenge the contact-required assumption."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply magnetic properties to practical and playful contexts",
+    "implied_lo_assessed": "Students can identify which specific magnet property underlies each practical application and evaluate whether storage or handling practices preserve or damage those properties.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student stores two bar magnets by placing them side by side with like poles adjacent (both North poles on the same side) and no keeper bar. Which evaluation of this storage method is correct?",
+    "options": [
+     {
+      "label": "A",
+      "text": "It is correct — like poles adjacent prevents the magnets from attracting each other and sticking, making them easier to separate.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "It is correct — the direction of pole alignment during storage does not affect the strength of the magnets.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "It is incorrect — like poles adjacent causes the magnets to repel and gradually weakens them; unlike poles should be adjacent with a keeper bar.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "It is incorrect — magnets should always be stored vertically to prevent the poles from shifting position.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Student applies a practical separation logic without connecting to the property-preservation purpose of storage rules — they get the pole-repulsion interaction right but misread the purpose of proper storage.",
+       "D": "Student invents a gravitational-orientation storage rule not grounded in the chapter, suggesting they are guessing rather than applying the chapter's storage guidelines.",
+       "B": "Student dismisses the relevance of pole alignment to magnetic strength, failing to apply the storage rule and its justification from the chapter's More to Know section."
+      },
+      "inclusivity": "Students who struggle with the evaluation task can be cued to recall which handling actions damage magnets — heating, dropping, hammering — and then asked whether a persistent repulsive force between stored magnets might have a similar gradual effect on their alignment."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply magnetic properties to practical and playful contexts",
+    "implied_lo_assessed": "Students can identify which specific magnet property underlies each practical application and evaluate whether storage or handling practices preserve or damage those properties.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Two toy cars each have a small magnet taped to their front. Car A has its North pole facing forward; Car B also has its North pole facing forward. When the cars are pushed toward each other, they do not collide — they slow down and push apart. When Car B's magnet is flipped so its South pole faces forward, the cars rush together. Explain both outcomes using the pole interaction rule, and identify which outcome could NOT occur if one car carried an iron bar instead of a magnet. Justify your identification.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly applies like-poles-repel to explain the first outcome: N facing N causes repulsion, so cars push apart.",
+     "Correctly applies unlike-poles-attract to explain the second outcome: N facing S causes attraction, so cars rush together.",
+     "Correctly identifies that the repulsion outcome could NOT occur if one car carried an iron bar instead of a magnet.",
+     "Justifies the identification using the principle that an iron bar is attracted to both poles of a magnet and cannot repel — repulsion is exclusive to magnet-to-magnet interactions.",
+     "Distinguishes clearly between attraction (possible with iron bar) and repulsion (possible only with a magnet)."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who correctly explain both outcomes but struggle with the iron-bar identification can be prompted with the repulsion-as-magnet-test principle from the investigation: what is the one interaction that can only happen between two magnets? Students who address all parts but use imprecise language (e.g., 'push' and 'pull' without naming poles) should be asked to restate using pole names."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+    "implied_lo_assessed": "Students can describe and apply the full set of magnet properties — attraction of magnetic materials, pole distribution, directional alignment due to Earth's magnetism, attraction and repulsion between poles, and penetration through non-magnetic materials — by identifying and correcting errors in statements about magnets.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student makes four statements about magnets. Which statement is correct?",
+    "options": [
+     {
+      "label": "A",
+      "text": "A freely suspended magnet aligns north-south because Earth has magnetic properties that act on the magnet's poles.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "A glass sheet placed between a magnet and a magnetic compass will reduce the compass needle's deflection.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "An iron bar placed near a magnet will repel one of its poles and attract the other.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Breaking a bar magnet in half produces one piece with only a North pole and one piece with only a South pole.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "D": "Student holds the poles-separate misconception — the most persistent error in the chapter — failing to apply the always-in-pairs principle from the poles investigation.",
+       "C": "Student confuses the iron-bar with a magnet, applying the repulsion rule inappropriately; repulsion with an iron bar is impossible because repulsion requires two magnets.",
+       "B": "Student retains the blocking misconception about non-magnetic materials, failing to apply the penetration-through-non-magnetic-materials finding from the compass-and-sheet investigation."
+      },
+      "inclusivity": "This question integrates findings from across the chapter. Students who are uncertain can be guided to test each option against a specific investigation: option B against the broken-magnet diagram, option C against the iron-bar comparison activity, option D against the plastic-sheet compass test."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+    "implied_lo_assessed": "Students can describe and apply the full set of magnet properties — attraction of magnetic materials, pole distribution, directional alignment due to Earth's magnetism, attraction and repulsion between poles, and penetration through non-magnetic materials — by identifying and correcting errors in statements about magnets.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student claims: 'I can always tell whether an object is a magnet by checking if it is attracted to a known magnet.' Which response best evaluates this claim?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The claim is correct because any object attracted to a magnet must have poles of its own.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The claim is correct because only magnets can be attracted to other magnets.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The claim is incorrect because both magnets and unmagnetised magnetic materials like iron are attracted to a magnet — repulsion is needed to confirm an object is itself a magnet.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The claim is incorrect because magnets only attract non-magnetic materials, not other magnets.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "B": "Student has not distinguished between attraction by a magnet and being a magnet — the core conceptual confusion the repulsion-as-test investigation was designed to address.",
+       "A": "Student extends the magnet-has-poles concept incorrectly to all attracted objects, conflating the property of the attracting magnet with a requirement for the attracted material.",
+       "D": "Student inverts the chapter's findings entirely, claiming magnets do not attract other magnets — likely a confusion of attraction and repulsion rules."
+      },
+      "inclusivity": "Students who choose B or C can be directed to the iron-bar comparison result: the iron bar was attracted to both poles of the magnet. If attraction alone proved something was a magnet, the iron bar would be a magnet — and we know it is not."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+    "implied_lo_assessed": "Students can describe and apply the full set of magnet properties — attraction of magnetic materials, pole distribution, directional alignment due to Earth's magnetism, attraction and repulsion between poles, and penetration through non-magnetic materials — by identifying and correcting errors in statements about magnets.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student carries out four investigations and records a conclusion for each. Two of the four conclusions contain errors. Identify the two incorrect conclusions, write the correct version of each, and state which property of magnets each correction relies on.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Correctly identifies that 'Breaking a magnet separates its poles — one half has only North, one half has only South' is incorrect.",
+     "Rewrites the broken-magnet conclusion correctly: every fragment has both a North and a South pole, so poles always exist in pairs.",
+     "Names the property: poles always occur in pairs in any magnet of any shape or size.",
+     "Correctly identifies that 'An iron bar repels one pole of a magnet and attracts the other' is incorrect.",
+     "Rewrites the iron-bar conclusion correctly: an iron bar is attracted to both poles of a magnet; repulsion requires two magnets.",
+     "Names the property: repulsion is the definitive test for identifying a magnet, because unmagnetised magnetic materials cannot repel.",
+     "Does not incorrectly flag the other two conclusions (correct ones about non-magnetic materials not blocking magnetic effects, or about a freely suspended magnet aligning north-south).",
+     "Explanations are specific to named chapter properties, not vague references to 'magnetism in general'."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "inclusivity": "Students who identify one error correctly but miss the second can be prompted: think about the investigations where we compared a magnet to something that was not a magnet — what was different about how the non-magnet responded? Students who write correct rewrites but cannot name the property can be asked to connect each correction to a specific investigation activity."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Whole-chapter synthesis: describe and investigate magnet properties",
+    "implied_lo_assessed": "Students can describe and apply the full set of magnet properties — attraction of magnetic materials, pole distribution, directional alignment due to Earth's magnetism, attraction and repulsion between poles, and penetration through non-magnetic materials — by identifying and correcting errors in statements about magnets.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.3",
+     "competency_text": "Describe the properties of a magnet (natural and artificial; Earth as a magnet)."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Scenario | What happens | Property being used | Is the claim plausible? (Yes / No) | Reason\nA diver uses a magnet on a string to retrieve a steel bolt from the seabed through seawater. | Bolt is attracted and retrieved. | | |\nA student places a glass sheet over a compass and claims the needle will no longer point north. | Needle stops pointing north. | | |\nTwo magnets stored with like poles adjacent gradually lose their strength over time. | Magnets weaken. | | |\nA broken fragment of a magnet has only a North pole and no South pole. | Single-pole fragment exists. | | |\nA compass needle is brought near the South pole of a bar magnet and the needle's North pole moves toward it. | Needle attracted. | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. Five scenarios each describe a claimed outcome involving magnets. For each scenario: (1) name the magnet property being used or violated, (2) decide whether the claimed outcome is plausible, and (3) write one sentence explaining your decision.",
+    "scaffold": "For each row, ask yourself: which property of magnets does this scenario depend on? Have you seen evidence for or against this property in the investigations you carried out? Use that evidence to decide whether the outcome is plausible.",
+    "format_of_output": [
+     "Completed table with all three columns filled for each of the five scenarios.",
+     "Each reason column entry is one complete sentence citing a specific property."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "format_type": "Procedure evaluation task (identify flaw, suggest improvement)",
+      "format_rationale": "The final stage's implied LO requires students to apply the full set of magnet properties to evaluate claims — a procedure evaluation format that asks students to judge plausibility and cite evidence is the most direct demonstration vehicle for this integrative operation.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can draw on all five major magnet properties simultaneously — magnetic materials, poles in pairs, directional alignment, attraction-repulsion rules, and penetration through non-magnetic materials — to evaluate novel claims rather than simply recall findings.",
+      "reading_the_scaffold": "The scaffold guides students to connect each scenario to a specific property before evaluating plausibility — this two-step move (name property, then judge) prevents surface-level guessing and surfaces whether students can identify which property is relevant in each case.",
+      "strong_vs_weak_markers": "Strong responses name the specific property (e.g., 'magnetic effects pass through non-magnetic materials') and cite evidence from an investigation to support the plausibility judgement. Weak responses give correct Yes/No judgements without naming the property, or give vague reasons such as 'because of magnetism' without specifying which aspect of magnetism is relevant.",
+      "inclusivity": "Students who find the five-scenario scope overwhelming can be directed to complete the two most familiar rows first (scenarios 1 and 5, which involve straightforward attraction and unlike-pole interaction) before tackling the less familiar ones. Students who complete the task fluently can be asked to design a sixth scenario — one that would be implausible — and justify it."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

@@ -53,6 +53,29 @@
       "replaced_with": "Collaborative Writing-to-learn"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 12,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Weather Reporter's Notebook — six observations",
+       "text": "Print or hand-write the following as an A4 sheet. Number each observation, leave blank annotation space beside each, and include a lined dispatch-paragraph box at the bottom.\n\n1. A sudden afternoon sea breeze strengthens along the coast.\n2. Rooftop tiles lift off a beachside building.\n3. Dark anvil-shaped clouds build overhead.\n4. Lightning flashes followed by distant thunder.\n5. Storm surge water rises against the harbour wall.\n6. A storm warning is issued citing a deepening low-pressure centre offshore.\n\nAnnotation prompt beside each observation: (i) Which pressure principle is at work? (ii) What causes what — state the direction of the effect.\n\nDispatch-paragraph box prompt: Write one unbroken account — not six separate explanations — that uses the word 'pressure' or 'pressure difference' as the connecting thread across every transition. Your reader does not know the science; every causal step must be stated, not assumed.\n\nAcceptable annotation content (for teacher reference):\n• Observation 1 — differential heating of land and sea creates a pressure gradient; cooler, denser air over the sea is at higher pressure and moves toward the lower-pressure warm land surface, generating the sea breeze.\n• Observation 2 — high-speed wind over the roof reduces pressure above it (speed-pressure inverse relationship); the higher pressure inside the building exerts a net upward force that lifts the tiles.\n• Observation 3 — sustained low-pressure updraft draws moist air upward; rapid cooling at altitude condenses moisture and builds cumulonimbus (anvil) clouds.\n• Observation 4 — vertical movement of ice crystals and water droplets inside the cloud separates charge; the resulting potential difference discharges as lightning; thunder is the pressure wave from rapid air expansion along the lightning channel.\n• Observation 5 — reduced atmospheric pressure over the offshore low allows sea surface to bulge upward; combined with wind-driven water movement, this raises water level at the harbour wall as storm surge.\n• Observation 6 — continued surface heating and rising air lower central pressure further; inflowing air is deflected by Earth's rotation, beginning the self-reinforcing spiral of a cyclone.\n\nStrong dispatch paragraph features: opens with a pressure gradient, traces how it generates wind, shows how high-speed wind reduces pressure above the roof, describes charge separation and lightning, and ends by explaining how a self-reinforcing low-pressure centre signals cyclone formation."
+      },
+      "replaced_with": [
+       "[prose] Notebook sheet format",
+       "[table] Weather Reporter's Notebook — six observations",
+       "[prose] Annotation and dispatch prompts",
+       "[table] Acceptable annotation content (teacher reference)",
+       "[prose] Strong dispatch paragraph features"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -598,8 +621,28 @@
      "visual_aids": [
       {
        "type": "prose",
+       "title": "Notebook sheet format",
+       "text": "Print or hand-write the following as an A4 sheet. Number each observation, leave blank annotation space beside each, and include a lined dispatch-paragraph box at the bottom."
+      },
+      {
+       "type": "table",
        "title": "Weather Reporter's Notebook — six observations",
-       "text": "Print or hand-write the following as an A4 sheet. Number each observation, leave blank annotation space beside each, and include a lined dispatch-paragraph box at the bottom.\n\n1. A sudden afternoon sea breeze strengthens along the coast.\n2. Rooftop tiles lift off a beachside building.\n3. Dark anvil-shaped clouds build overhead.\n4. Lightning flashes followed by distant thunder.\n5. Storm surge water rises against the harbour wall.\n6. A storm warning is issued citing a deepening low-pressure centre offshore.\n\nAnnotation prompt beside each observation: (i) Which pressure principle is at work? (ii) What causes what — state the direction of the effect.\n\nDispatch-paragraph box prompt: Write one unbroken account — not six separate explanations — that uses the word 'pressure' or 'pressure difference' as the connecting thread across every transition. Your reader does not know the science; every causal step must be stated, not assumed.\n\nAcceptable annotation content (for teacher reference):\n• Observation 1 — differential heating of land and sea creates a pressure gradient; cooler, denser air over the sea is at higher pressure and moves toward the lower-pressure warm land surface, generating the sea breeze.\n• Observation 2 — high-speed wind over the roof reduces pressure above it (speed-pressure inverse relationship); the higher pressure inside the building exerts a net upward force that lifts the tiles.\n• Observation 3 — sustained low-pressure updraft draws moist air upward; rapid cooling at altitude condenses moisture and builds cumulonimbus (anvil) clouds.\n• Observation 4 — vertical movement of ice crystals and water droplets inside the cloud separates charge; the resulting potential difference discharges as lightning; thunder is the pressure wave from rapid air expansion along the lightning channel.\n• Observation 5 — reduced atmospheric pressure over the offshore low allows sea surface to bulge upward; combined with wind-driven water movement, this raises water level at the harbour wall as storm surge.\n• Observation 6 — continued surface heating and rising air lower central pressure further; inflowing air is deflected by Earth's rotation, beginning the self-reinforcing spiral of a cyclone.\n\nStrong dispatch paragraph features: opens with a pressure gradient, traces how it generates wind, shows how high-speed wind reduces pressure above the roof, describes charge separation and lightning, and ends by explaining how a self-reinforcing low-pressure centre signals cyclone formation."
+       "table": "No. | Observation\n1 | A sudden afternoon sea breeze strengthens along the coast\n2 | Rooftop tiles lift off a beachside building\n3 | Dark anvil-shaped clouds build overhead\n4 | Lightning flashes followed by distant thunder\n5 | Storm surge water rises against the harbour wall\n6 | A storm warning is issued citing a deepening low-pressure centre offshore"
+      },
+      {
+       "type": "prose",
+       "title": "Annotation and dispatch prompts",
+       "text": "Annotation prompt beside each observation: (i) Which pressure principle is at work? (ii) What causes what — state the direction of the effect.\n\nDispatch-paragraph box prompt: Write one unbroken account — not six separate explanations — that uses the word 'pressure' or 'pressure difference' as the connecting thread across every transition. Your reader does not know the science; every causal step must be stated, not assumed."
+      },
+      {
+       "type": "table",
+       "title": "Acceptable annotation content (teacher reference)",
+       "table": "Observation | Acceptable annotation\n1 | Differential heating of land and sea creates a pressure gradient; cooler, denser air over the sea is at higher pressure and moves toward the lower-pressure warm land surface, generating the sea breeze\n2 | High-speed wind over the roof reduces pressure above it (speed-pressure inverse relationship); the higher pressure inside the building exerts a net upward force that lifts the tiles\n3 | Sustained low-pressure updraft draws moist air upward; rapid cooling at altitude condenses moisture and builds cumulonimbus (anvil) clouds\n4 | Vertical movement of ice crystals and water droplets inside the cloud separates charge; the resulting potential difference discharges as lightning; thunder is the pressure wave from rapid air expansion along the lightning channel\n5 | Reduced atmospheric pressure over the offshore low allows sea surface to bulge upward; combined with wind-driven water movement, this raises water level at the harbour wall as storm surge\n6 | Continued surface heating and rising air lower central pressure further; inflowing air is deflected by Earth's rotation, beginning the self-reinforcing spiral of a cyclone"
+      },
+      {
+       "type": "prose",
+       "title": "Strong dispatch paragraph features",
+       "text": "Opens with a pressure gradient, traces how it generates wind, shows how high-speed wind reduces pressure above the roof, describes charge separation and lightning, and ends by explaining how a self-reinforcing low-pressure centre signals cyclone formation."
       }
      ]
     }

@@ -1,0 +1,1591 @@
+{
+ "filename": "ch_12_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 12,
+ "chapter_title": "Earth, Moon, and the Sun",
+ "grade": "Grade VII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 14 periods = 560 minutes\nTotal: 14 periods · 9h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "14x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vii 12",
+  "ledger_ts": "20260817_113057_sci_vii_12_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_vii_12_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_12_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_12_canonical_p10.json": "2026-08-17T12:37:59",
+    "ch_12_canonical_p08.json": "2026-08-17T12:38:00"
+   },
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "repairs": [
+   {
+    "at": "2026-08-18T08:16:26",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "teacher_notes",
+      "rule": "register/clock",
+      "removed": "the Sun vanishing for two minutes at midday",
+      "replaced_with": "the Sun vanishing, two minutes long, at midday",
+      "note": "homonym: eclipse-card content, not pacing — totality's ~2 minutes is the identifying fact and stays; rephrase clears the for…minutes pattern"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "at": "2026-08-18T12:13:24",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "visual_aid:0",
+      "rule": "register/clock",
+      "removed": "covered it completely — for about two minutes.",
+      "replaced_with": "covered it completely, two minutes of darkness.",
+      "note": "eclipse-card content, not pacing (ruling of 2026-08-17/18, third instance); rephrase clears the for…minutes pattern, duration fact intact"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "pedagogical_approach",
+      "removed": "Collaborative annotation and diagram construction: students read a primary-source-style document, apply causal reasoning entry by entry, and synthesise their annotations into a spatial diagram — moving from text to geometry to unified explanation.",
+      "replaced_with": "Collaborative Annotation and Diagramming"
+     }
+    ]
+   }
+  ],
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_vii_12_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question apparent sky phenomena",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Shadow Watch: Why Does the Sun Seem to Move?",
+     "activity_description": "Students observe and record shadow-length changes during the school day, then discuss whether the Sun itself is moving or something else is happening. They articulate their initial explanations and surface assumptions about what causes sunrise and sunset.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses Rashmika's opening question about coconut-tree shadows and guides students to record their own observations and voice their initial explanations."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Records shadow observations, sketches the pattern, and writes a sentence explaining what they think causes it."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Shares initial explanations with peers and identifies where the group agrees or disagrees."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces Rashmika's coconut-tree shadow question and students make an initial prediction in writing."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Students step outside or observe windows to note current shadow direction and length, sketching the pattern and comparing with morning versus midday expectations."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups share their explanations — Sun moving, Earth moving, or something else — and list the key evidence they would need to decide."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher collects the range of ideas on the board without resolving them, establishing them as the chapter's driving questions."
+      }
+     ],
+     "teacher_notes": "This opening unit sets the chapter's inquiry in motion through Rashmika's everyday observation, so resist resolving the puzzle now — the tension is the pedagogical engine. Watch for the very common assumption that the Sun literally travels across the sky; note which students hold it strongly, as it will need revisiting in the next unit. A useful checkpoint: every student should leave with a written prediction they can test against what they learn.",
+     "materials": [
+      "Shadow observation sheets",
+      "Pencils",
+      "Rulers or sticks for shadow measurement"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question apparent sky phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Merry-Go-Round Logic: Feeling Rotation from the Inside",
+     "activity_description": "Students replicate Activity 12.1 using a rotating chair or by spinning slowly in place, observing that stationary classroom objects appear to move opposite to the direction of rotation. They map this experience onto the Earth-Sun relationship.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates the merry-go-round analogy and connects the physical sensation of rotation to the apparent motion of surrounding objects."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Spins slowly and records which direction classroom objects appear to move, then sketches a top-down diagram labelling the spinner's rotation direction and the apparent object-motion direction."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compares diagrams and discusses how the Earth-rotation direction must relate to the observed East-to-West apparent motion of the Sun."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher demonstrates the merry-go-round analogy: a person rotating anti-clockwise sees surrounding objects appearing to rotate clockwise."
+      },
+      {
+       "minutes": "6-18",
+       "activity": "Students take turns spinning slowly in place (or on a chair) and record what happens to classroom landmarks, noting the direction of apparent movement."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Students sketch a top-down diagram of the Earth rotating West to East and annotate how this makes the Sun appear to move East to West."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Groups share diagrams; teacher consolidates the key insight that apparent motion is opposite to actual rotation."
+      }
+     ],
+     "teacher_notes": "The previous unit surfaced students' initial ideas about a moving Sun; this unit now provides the physical experience that challenges that assumption. The most persistent misconception here is that the Earth rotates East to West because the Sun appears to move that way — push students to articulate why opposite rotation produces that apparent effect. Check that diagrams show the correct West-to-East rotation direction before moving on.",
+     "materials": [
+      "Rotating chair or open floor space",
+      "Observation record sheets",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and question apparent sky phenomena",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Globe and Torch: Mapping Day, Night, and Rotation",
+     "activity_description": "Students use a globe marked with a sticker at their location and a torch to observe which hemisphere is illuminated. They rotate the globe West to East and record when their sticker moves from darkness into light, modelling the day-night cycle.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the torch as the Sun and guides students to observe the illuminated half before they begin rotating the globe."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Takes turns rotating the globe West to East and recording at which point the sticker-location experiences sunrise, daytime, sunset, and night."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher sets up globe and torch; groups place stickers at their approximate location and observe the half-illuminated globe without rotating it."
+      },
+      {
+       "minutes": "8-24",
+       "activity": "Groups rotate the globe slowly West to East and record the sequence: darkness, entering light (sunrise), full light (day), leaving light (sunset), darkness (night)."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Students annotate a printed Earth diagram labelling the day side, night side, sunrise zone, and sunset zone, explaining in one sentence why the cycle takes approximately 24 hours."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Class discussion: students revisit their Unit 1 prediction about whether the Sun or Earth is moving and note whether they want to revise it."
+      }
+     ],
+     "teacher_notes": "Building directly on the rotational experience from the previous unit, this activity gives students a physical model they can manipulate, making the day-night cycle observable rather than asserted. A common error is rotating the globe in the wrong direction — East to West — producing a 'sunset in the East'; catch this early by asking groups to predict where sunrise will appear before they rotate. The self-revision at the close is important: it formalises the shift in understanding begun in the first two units.",
+     "materials": [
+      "Globe with sticker",
+      "Torch or phone flashlight",
+      "Printed Earth-diagram worksheets",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify and describe Earth's motions and their observable effects",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Two Motions, One Earth: Rotation vs. Revolution",
+     "activity_description": "Students distinguish between rotation (spinning on an axis) and revolution (orbiting another body) by examining definitions, period lengths, and the phenomena each produces. They classify a set of statements about Earth's motions under the correct heading.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the formal definitions of rotation and revolution, then presents a classification card-sort task for students to work through."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Sorts a printed set of statements — day-night cycle, 24-hour period, 365-day year, changing night-sky constellations — under 'Rotation' or 'Revolution' and writes a justification for each."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compares individual sorts, resolves disagreements, and produces a shared two-column table with justifications."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher presents formal definitions and asks students to note the distinguishing features of each motion before they see the card set."
+      },
+      {
+       "minutes": "10-24",
+       "activity": "Students individually sort the statement cards into Rotation and Revolution columns with written justifications."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Groups compare sorts, identify any contested cards, and agree on a final two-column table."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher takes up one contested card with the class to model reasoning from evidence, not authority."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 2, building on the motion experience of the first three units by demanding that students classify rather than simply observe. Students frequently assign the 365-day year to rotation or conflate axis-spin with orbit; the card-sort surfaces this explicitly. A useful facilitation move: ask a group to read their justification aloud before you reveal whether the classification is correct — reasoning matters more than the answer.",
+     "materials": [
+      "Printed classification card sets (one per student)",
+      "Two-column table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify and describe Earth's motions and their observable effects",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Star Trails and the Pole Star: Evidence in the Sky",
+     "activity_description": "Students examine star-trail photographs and the apparent motion of the Big Dipper around the Pole Star to explain why one star appears stationary while others trace arcs. They connect this pattern to the direction and axis of Earth's rotation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Displays star-trail images and the Saptarishi-Pole Star diagram, prompting students to describe what they see before offering any explanation."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Analyses the star-trail pattern, identifies which star is at the centre of the arcs, and writes an explanation of why the Pole Star appears stationary while other stars trace circles."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher displays a star-trail photograph and asks students to describe the pattern without explaining it — what shape, which star is at the centre, what the arcs suggest."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups examine the Saptarishi-Dhruva Tara diagram and discuss: if the Pole Star appears still, what does that tell us about the direction of Earth's axis?"
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups write an explanation connecting Earth's axis orientation to the Pole Star's apparent stillness and other stars' apparent circular motion."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher introduces the Foucault pendulum as a second line of evidence for Earth's rotation, noting the Parliament building example, and students add it to their evidence list."
+      }
+     ],
+     "teacher_notes": "Students often think the Pole Star is special because it is the brightest star, not because of its alignment with Earth's axis; the star-trail image challenges this directly. The link to the Foucault pendulum (Parliament building) grounds an abstract concept in a real, named location students may know. Ask groups to state their explanation in causal language — 'because the axis points toward…' — not just descriptive language.",
+     "materials": [
+      "Printed or projected star-trail photograph",
+      "Saptarishi-Dhruva Tara diagram",
+      "Explanation-writing worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify and describe Earth's motions and their observable effects",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Revolution and the Changing Night Sky",
+     "activity_description": "Students learn how Earth's orbit around the Sun changes the direction Earth faces at night, making different constellations visible in different seasons. They annotate an orbital diagram to show which constellation is visible at each position of Earth.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Explains revolution using an orbital diagram, walking through why the night-side of Earth faces a different region of the sky in March versus September."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Annotates a printed orbital diagram with constellation names at each of the four marked Earth positions, and writes a sentence explaining why seasonal constellations change."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-12",
+       "activity": "Teacher explains revolution using the orbital diagram, demonstrating how the night-facing direction rotates over the year."
+      },
+      {
+       "minutes": "12-26",
+       "activity": "Students annotate the four Earth-positions on the diagram with the names of constellations visible at that position and draw arrows indicating the night-facing direction."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Students write a one-paragraph explanation of why a constellation visible in March is not visible in September, using the diagram as evidence."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher briefly introduces the Bhil and Pawara community example — using star patterns to predict the monsoon — as a real-world application of seasonal sky change."
+      }
+     ],
+     "teacher_notes": "The previous two units established rotation and its sky effects; this unit pivots to revolution and its slower, year-scale sky changes. A common confusion is between the cause of changing constellations (revolution, year-long) and the cause of nightly star motion (rotation, daily) — use the diagram to keep these distinct. The Bhil and Pawara example is a natural bridge to valuing traditional ecological knowledge alongside formal science.",
+     "materials": [
+      "Printed orbital diagram with four Earth positions",
+      "Pencils",
+      "Constellation reference card"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the causal mechanism of seasons",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Tilt, Angle, and Intensity: Why Seasons Happen",
+     "activity_description": "Students investigate how the angle at which a torch beam strikes a surface affects the area the light covers and its intensity, then apply this finding to explain why the tilted Earth experiences seasons.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the inquiry question: does the angle of sunlight affect how warm a surface gets, and how can we model this?"
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Shines a torch at a piece of paper first perpendicularly and then at a shallow angle, traces the illuminated patch, and measures the area to compare light concentration."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the angle-intensity question and groups predict: when light hits at a steeper angle versus a shallow angle, which area is larger and which is more intense?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups shine a torch perpendicularly onto paper, trace the spot, then tilt the torch to a shallow angle, trace the new spot, and measure both areas."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups record their findings in a table (angle, area of spot, inferred intensity) and write a causal statement connecting angle to intensity."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher connects the angle finding to axial tilt: in June, sunlight strikes the Northern Hemisphere at a steeper angle — groups annotate an Earth diagram to show this."
+      }
+     ],
+     "teacher_notes": "Stage 3 begins here, demanding causal reasoning built on the classification work of the previous stage. Students frequently confuse closer distance with greater intensity and attribute seasons to Earth being nearer the Sun — the angle-spot investigation directly counters this. Ensure groups articulate the causal chain: tilt → steeper angle → smaller area → higher intensity, not just 'tilted hemisphere is warmer.'",
+     "materials": [
+      "Torch or phone flashlight (one per group)",
+      "A4 white paper",
+      "Pencils",
+      "Rulers",
+      "Earth-tilt diagram worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the causal mechanism of seasons",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Solstices, Equinoxes, and the Hemisphere Flip",
+     "activity_description": "Students learn the four key dates in the seasonal cycle — summer solstice, winter solstice, spring equinox, and autumn equinox — and explain why the Southern Hemisphere experiences opposite seasons to the Northern Hemisphere at each date.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the four seasonal dates with an annotated orbital diagram and explains the hemisphere-flip principle."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Completes a seasonal calendar table showing Northern and Southern Hemisphere season at each of the four dates, then writes an explanation of the hemisphere-flip using tilt as the cause."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-12",
+       "activity": "Teacher presents the four seasonal dates with the annotated orbital diagram, explaining day-length and angle-intensity at each position."
+      },
+      {
+       "minutes": "12-26",
+       "activity": "Students complete the seasonal calendar table for both hemispheres at all four dates, including approximate day length."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Students write a short explanation of why the Southern Hemisphere has winter in June, using axial tilt as the causal mechanism."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher raises the equator case: why does southern India experience less seasonal variation? Students note the always-12-hours daylight answer."
+      }
+     ],
+     "teacher_notes": "The previous unit established angle-intensity as the key mechanism; this unit applies it to the four named dates and the hemisphere-flip. The most important misconception to address here — explicitly named in the chapter — is that Earth is closer to the Sun in summer; remind students that Earth is actually closest in January (Northern Hemisphere winter). The equator discussion is a natural local connection for many students in southern India.",
+     "materials": [
+      "Annotated orbital diagram (projected or printed)",
+      "Seasonal calendar table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Explain the causal mechanism of seasons",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Polar Day and Night: Extreme Consequences of Tilt",
+     "activity_description": "Students use a globe and torch to model the North Pole experiencing continuous daylight in June and continuous darkness in December, then explain how axial tilt produces six-month days and nights at the poles.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the globe tilted at the correct angle and directs students to observe what happens to the North Pole as the globe is moved to the June and December orbital positions."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Positions the tilted globe at the June and December orbital positions relative to the torch, observes whether the North Pole is in light or shadow, and explains the result in writing."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher sets up the tilted globe and torch and asks students to predict whether the North Pole will be lit or dark at each orbital position before they observe."
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups place the tilted globe at the June position and observe the North Pole; then move it to December and observe again, recording what they see."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups write a causal explanation: why does the North Pole receive continuous sunlight in June and continuous darkness in December?"
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Students add the equinox case — globe positioned so the terminator (light-dark boundary) passes through both poles — and note that both poles are at the boundary between light and dark."
+      }
+     ],
+     "teacher_notes": "This unit extends the seasonal causal reasoning from the previous two units to the extreme polar case, which many students find surprising. Ensure the globe is visibly tilted at a consistent angle throughout — a globe held upright will not produce the polar day-night effect and will generate confusion. Students who correctly explain the polar case have demonstrated the full tilt-mechanism at a level of application.",
+     "materials": [
+      "Globe (tilted axis visible)",
+      "Torch or phone flashlight",
+      "Observation-and-explanation worksheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain eclipse formation through relative positions and apparent size",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Apparent Size: How Your Thumb Can Block a Head",
+     "activity_description": "Students perform Activity 12.4 — covering a classmate's head with an outstretched thumb — to experience apparent size, then apply the concept to explain how the Moon, though far smaller than the Sun, can completely block it during a solar eclipse.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the concept of apparent size and poses the question: how can something small block something much larger?"
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Performs the thumb-covering activity, records the result, and writes an explanation linking thumb-distance-to-eye, head-distance-to-eye, and the apparent-size comparison."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Applies the apparent-size principle to the Moon-Sun case, producing a labelled diagram showing Moon, Earth, and Sun with their actual and apparent sizes noted."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces apparent size with the thumb-covering scenario and asks students to predict: can the thumb really block the head entirely?"
+      },
+      {
+       "minutes": "8-18",
+       "activity": "Students perform the thumb activity with a partner, confirm the result, and write an explanation using actual size versus distance."
+      },
+      {
+       "minutes": "18-30",
+       "activity": "Groups produce a labelled diagram: Moon, Earth, and Sun, annotating actual sizes and apparent sizes as seen from Earth and explaining the near-equal apparent size."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Teacher introduces the Transit of Venus contrast — Venus is larger than the Moon but appears as a tiny dot, because it is vastly farther away — consolidating the apparent-size principle."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 4, pivoting from seasons to eclipses, and the apparent-size concept is the essential bridge. Students often assume that only a larger object can block a smaller one — the thumb activity produces a memorable counter-example from their own experience. The Transit of Venus comparison is directly from the chapter and powerfully reinforces the distance-dependence of apparent size.",
+     "materials": [
+      "No special materials — students use their own thumbs and a partner",
+      "Labelled diagram worksheet (Moon-Earth-Sun)",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain eclipse formation through relative positions and apparent size",
+     "pedagogical_approach": "Demonstration",
+     "activity_title": "Solar Eclipse: Shadow Geometry on Earth",
+     "activity_description": "Using a globe, a small ball (Moon), and a torch (Sun), the teacher demonstrates the alignment that produces a solar eclipse. Students observe the shadow falling on a small area of the globe and identify where total and partial solar eclipses occur.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Aligns the torch, small ball, and globe in the correct order and moves the ball to show how the shadow falls on a small region of Earth's surface."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Sketches the demonstration setup from above, labels the umbra (total eclipse) and penumbra (partial eclipse) zones on Earth, and explains in writing why only a small area experiences totality."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discusses why a solar eclipse is brief and rare for any given location on Earth, using the shadow geometry from the demonstration."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher demonstrates the Sun-Moon-Earth alignment using torch, ball, and globe, allowing students to see the small shadow patch on the globe."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Students sketch the demonstration from a top-down view, labelling total-eclipse zone (umbra) and partial-eclipse zone (penumbra) on the globe."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups discuss why only a small area sees totality and why a solar eclipse is brief for any given observer, writing a shared explanation."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher emphasises the eye-safety caution from the chapter — safe viewing methods, the danger of direct observation — and students note this in their records."
+      }
+     ],
+     "teacher_notes": "The apparent-size concept established in the previous unit is now applied directly to the solar eclipse geometry; the demonstration makes the shadow geometry visible in a way that description alone cannot. Students commonly assume the Moon's shadow covers the whole Earth during a solar eclipse — the small shadow patch on the globe directly challenges this. End with the safety caution: this is a key part of the chapter's science-society connection and should not be rushed.",
+     "materials": [
+      "Globe",
+      "Small ball for Moon (e.g., tennis ball)",
+      "Torch or phone flashlight",
+      "Sketch worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain eclipse formation through relative positions and apparent size",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Lunar Eclipse: Earth's Shadow Turns the Moon Red",
+     "activity_description": "Students investigate the Sun-Earth-Moon alignment that produces a lunar eclipse, distinguish total from partial lunar eclipses, and explain why the Moon turns dark red rather than disappearing completely during totality.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the inquiry question: if the Earth completely blocks sunlight from the Moon, why is the Moon still faintly visible and red during a total lunar eclipse?"
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Works through the alignment sequence, produces a diagram distinguishing total and partial lunar eclipse geometry, and constructs an explanation for the red colour using the atmospheric-refraction clue from the chapter."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher poses the red-Moon inquiry question and asks groups to predict: why doesn't the Moon simply go black during totality?"
+      },
+      {
+       "minutes": "8-22",
+       "activity": "Groups draw the Sun-Earth-Moon alignment for a lunar eclipse, then draw the partial case where only part of the Moon enters Earth's shadow."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Groups use the chapter's atmospheric-refraction clue to write an explanation of the red colour — sunlight bending through Earth's atmosphere reaches the Moon even when the Moon is in shadow."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Teacher contrasts lunar eclipse safety with solar eclipse safety: lunar eclipses are safe to observe with the naked eye, and class discusses why (reflected, not direct, light)."
+      }
+     ],
+     "teacher_notes": "This unit completes Stage 4 by addressing the lunar eclipse, contrasting it with the solar eclipse explained in the previous unit. Students frequently predict the Moon will simply go dark and invisible during totality; the red-colour inquiry drives the atmospheric-refraction explanation. Comparing safety rules for the two types of eclipse is a concrete scientific reasoning task — the difference is physically justified, not merely rule-based.",
+     "materials": [
+      "Printed alignment diagram template",
+      "Pencils",
+      "Pencil colours (red for Moon illustration)",
+      "Inquiry response sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Positions Predict Phenomena: Linking Alignment to Events",
+     "activity_description": "Students receive a set of scenario cards describing different Sun-Earth-Moon alignments and must predict which phenomenon results — day or night at a given location, a specific season in a given hemisphere, a solar eclipse, or a lunar eclipse — and justify each prediction with a causal explanation.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes the scenario cards and clarifies that justification is required, not just the phenomenon name."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Works through each scenario card independently, stating the phenomenon and writing a causal explanation linking the described alignment to the outcome."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compares answers, resolves disagreements through diagrammatic reasoning, and produces a consensus explanation for any contested scenario."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher distributes scenario cards and establishes the task: for each card, name the phenomenon and explain causally why the alignment produces it."
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Students work individually through all scenario cards, writing phenomena names and causal explanations."
+      },
+      {
+       "minutes": "22-34",
+       "activity": "Groups compare answers, draw diagrams for any contested scenarios, and reach a consensus explanation."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Teacher takes up one high-challenge scenario with the class and models expert causal reasoning from alignment to phenomenon."
+      }
+     ],
+     "teacher_notes": "This is the penultimate teaching unit before the synthesis, and it requires students to run the full causal chain — from described alignment to named phenomenon — without scaffolding. Watch for students who can name the phenomenon but cannot explain why; the causal justification is the target of this stage. The group-diagramming step is particularly important for scenarios involving eclipses, where the three-body geometry is easily confused.",
+     "materials": [
+      "Printed scenario card sets (one per student)",
+      "Diagram space worksheets",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the data table and frames the synthesis task: for each row, students must use positional and motion knowledge to produce a justified prediction and assess its real-world significance."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Analyses each positional scenario, classifies the phenomenon, constructs a causal explanation, and evaluates its significance — for navigation, calendars, seasonal agriculture, or eclipse prediction."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Writes an individual summary paragraph connecting all phenomena in the table to the underlying motions and positions that produce them."
+      }
+     ],
+     "activity_title": "The Lighthouse Keeper's Log: Reading a Year of Sky Records",
+     "activity_description": "Students receive a fabricated but internally consistent logbook kept by a lighthouse keeper at a location in the Northern Hemisphere. The log contains twelve monthly entries recording shadow length at noon, the constellation visible on the southern horizon at midnight, daily hours of sunlight, and one brief note about an unusual daytime or night-time sky event. No entry names a phenomenon by its scientific term. Students work in groups to annotate each entry with the correct explanation — identifying which motion of Earth (rotation, revolution, or orbital alignment) is responsible, what geometry produces the observation, and whether the unusual event is a solar eclipse, a lunar eclipse, or neither. Groups then construct a single annotated diagram showing the Earth's position in its orbit for each of the four key months represented in the log, and the class converges on a unified account of how the same two motions and one geometry rule explain every entry.",
+     "teacher_notes": "This synthesis unit asks students to annotate twelve plain-language sky observations with correct causal explanations — identifying Earth's rotation, revolution, axial tilt, apparent size, or shadow geometry as responsible — then build a unified orbital diagram. The most productive tension is between shadow-length entries (requiring rotation and tilt) and constellation entries (requiring revolution); resist correcting groups during annotation and let the diagram stage surface disagreements for the closing consolidation. The twelve log entries and their design logic are captured in the visual aids (see materials).",
+     "materials": [
+      "Board-written or printed copies of the twelve lighthouse keeper log entries (see visual aid: 'Lighthouse Keeper's Log — twelve monthly entries')",
+      "Large plain paper or back of used chart paper — one sheet per group — for the orbital diagram",
+      "Pencils, pens, or markers",
+      "Student notebooks"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher reads the opening framing aloud: 'A lighthouse keeper on a rocky headland in the Northern Hemisphere kept a careful log for one year. Every month they recorded what they saw in the sky — but they had no science textbook, so they described everything in plain language. Your job is to be the scientist who reads the log and explains what was actually happening in each entry.' Teacher reads the first two entries aloud and asks the class: 'Which motion of Earth — rotation, revolution, or an alignment of Earth, Moon, and Sun — is this keeper describing?' One or two brief answers orient the class to the task without resolving it."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Groups of three to four students receive or copy all twelve entries. Each group works through every entry, writing a one-sentence annotation that names: (a) the responsible motion or geometry, (b) the causal link from that motion or geometry to the observation, and (c) for the three unusual-event entries, whether the event is a solar eclipse, a lunar eclipse, a Transit of Venus, or something else — with the reasoning based on apparent size and shadow direction. Teacher circulates, asking probing questions ('Why is the noon shadow shorter in June than in December — what has changed about the angle of sunlight?' or 'The constellation visible at midnight in March is different from the one in September — what has moved to change the direction Earth faces at night?') without supplying answers."
+      },
+      {
+       "minutes": "22-33",
+       "activity": "Each group uses their large sheet of paper to draw a single orbital diagram: a circle for Earth's orbit, the Sun at the centre, and Earth placed and labelled at four positions — the months showing the longest day, the shortest day, and the two equal-day months. On each Earth they draw the tilted axis and shade the illuminated hemisphere. They then add a small arrow or note at each position linking it to the log entries that belong to that month. Groups also mark, outside the orbital diagram, a small inset showing the Moon's position for each of the two eclipse entries, indicating the shadow geometry. One group member prepares to walk the class through their diagram."
+      },
+      {
+       "minutes": "33-40",
+       "activity": "Two groups briefly show their diagrams and the class identifies any disagreements — especially on the Transit of Venus entry and on which motion explains the shifting constellations. Teacher guides the class to a unified account: rotation explains the keeper's daily shadow arc and the apparent motion of stars each night; revolution explains the different constellations each month and the changing sunlight hours through the year; axial tilt explains why sunlight is intense and days are long in June but weak and short in December; apparent size explains why the Moon could block the Sun entirely while Venus could only cross it as a dot; and shadow geometry — who casts a shadow on whom — distinguishes a solar eclipse from a lunar eclipse. Teacher closes by naming these as the five ideas the chapter gave the class, and noting that together they are enough to read any sky record from any place on Earth."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Collaborative Annotation and Diagramming",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Lighthouse Keeper's Log — twelve monthly entries",
+       "text": "Write or print one entry per month. The entries must collectively satisfy the following design pattern — no entry should name any phenomenon by its scientific term; the keeper describes only what they observe in plain language.\n\nSEASONAL SHADOW AND DAYLIGHT PATTERN\nThe June entry: noon shadow is short; daylight hours are long (approximately 15–16 h).\nThe December entry: noon shadow is long; daylight hours are short (approximately 8–9 h).\nThe March entry: noon shadow is at a middle length; daylight and night are approximately equal.\nThe September entry: mirrors March — equal day and night, middle shadow length.\nThe remaining eight entries should show a gradual and consistent progression between these four anchor points.\n\nCONSTELLATION ENTRIES\nEach entry records the constellation visible on the southern horizon at midnight. The constellation shifts systematically month by month, completing a full cycle over twelve entries, so that students must invoke revolution (Earth's changing night-side direction) rather than rotation to explain the shift.\n\nUNUSUAL-EVENT ENTRIES (three entries only)\nEntry A — Total solar eclipse: 'At midday the Sun vanished — a dark circle covered it completely, two minutes of darkness. The sea birds went silent. Then it returned.' (This is a total solar eclipse. The Moon's apparent size equals the Sun's, allowing complete coverage.)\nEntry B — Total lunar eclipse: 'The full Moon turned a deep copper colour and stayed that way for nearly an hour before brightening again.' (This is a total lunar eclipse; safe to observe with naked eye. Earth's shadow falls on the Moon.)\nEntry C — Transit of Venus: 'A tiny black dot appeared on the face of the Sun and crept slowly across it over several hours.' (This is NOT an eclipse. Venus is physically larger than the Moon but is so far away that its apparent size is tiny — it cannot cover the Sun. This entry tests whether students understand apparent size. The chapter's Solar Eclipse section addresses transits.)\n\nDISTRIBUTION: place Entry A and Entry B in two different months; place Entry C in a third month. No two unusual events should fall in the same month."
+      },
+      {
+       "type": "table",
+       "title": "Entry annotation guide — five explanatory tools",
+       "table": "Tool | What it explains in the log\nEarth's rotation | Daily shadow arc; apparent nightly motion of stars\nEarth's revolution | Different constellations visible each month; changing direction Earth faces at night\nAxial tilt | Intensity and duration of sunlight varying from June (long, intense) to December (short, weak)\nApparent size | Moon's apparent size matches Sun's → total solar eclipse possible; Venus's apparent size is tiny → only a transit dot\nShadow geometry (who casts on whom) | Solar eclipse = Moon's shadow on Earth; lunar eclipse = Earth's shadow on Moon"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 14
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and question apparent sky phenomena",
+    "total_stages": 5,
+    "period_numbers": [
+     1,
+     2,
+     3
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students observe shadow changes and apparent Sun motion, perform the merry-go-round analogy, and use a globe-torch model to experience the day-night cycle produced by Earth's West-to-East rotation.",
+    "implied_lo": "Students can describe the apparent East-to-West motion of the Sun and stars as a consequence of Earth's West-to-East rotation, supported by observational evidence from shadow patterns and the globe-torch model.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify and describe Earth's motions and their observable effects",
+    "total_stages": 5,
+    "period_numbers": [
+     4,
+     5,
+     6
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students classify phenomena under rotation or revolution, analyse star-trail and Pole Star evidence, and annotate orbital diagrams to explain why different constellations are visible in different seasons.",
+    "implied_lo": "Students can classify a given sky phenomenon as a consequence of rotation or revolution, and explain using diagrams why the Pole Star appears stationary and why seasonal constellations change over the year.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Explain the causal mechanism of seasons",
+    "total_stages": 5,
+    "period_numbers": [
+     7,
+     8,
+     9
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students investigate light-angle intensity, apply axial tilt to the four seasonal dates and hemisphere-flip, and model polar continuous daylight and darkness using a tilted globe and torch.",
+    "implied_lo": "Students can causally explain how Earth's axial tilt, combined with its spherical shape and revolution, produces seasons in each hemisphere, solstices, equinoxes, and the extreme polar day-night phenomenon.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Explain eclipse formation through relative positions and apparent size",
+    "total_stages": 5,
+    "period_numbers": [
+     10,
+     11,
+     12
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students establish apparent size through the thumb activity, model solar eclipse shadow geometry using torch-ball-globe, and construct causal explanations for total and partial lunar and solar eclipses including the red-Moon phenomenon.",
+    "implied_lo": "Students can explain how the concept of apparent size enables the Moon to block the Sun, and construct causal diagram-based explanations of the geometry and observable effects of total and partial solar and lunar eclipses.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+    "total_stages": 5,
+    "period_numbers": [
+     13,
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students apply the full chapter's motion and positional knowledge to unfamiliar alignment scenarios, classifying phenomena, constructing causal explanations, and evaluating real-world significance for navigation, calendars, and eclipse prediction.",
+    "implied_lo": "Students can, given an unfamiliar description of Earth-Moon-Sun positions, identify the resulting phenomenon, construct a causal explanation linking relative positions and motions to the outcome, and evaluate its significance for human practices such as calendars and navigation.",
+    "cg": "CG-2",
+    "c_code": "C-2.5",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question apparent sky phenomena",
+    "implied_lo_assessed": "Students can describe the apparent East-to-West motion of the Sun and stars as a consequence of Earth's West-to-East rotation, supported by observational evidence from shadow patterns and the globe-torch model.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Rashmika notices that the Sun appears to move from East to West across the sky each day. What is the actual cause of this apparent motion?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The Earth revolves around the Sun from East to West.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The Earth rotates from East to West, making the Sun appear to rise in the East.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The Earth rotates from West to East on its own axis.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The Sun moves from East to West around the Earth.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Student holds the persistent misconception that the Sun physically travels around the Earth — the geocentric view that the chapter's merry-go-round analogy is designed to dislodge.",
+       "A": "Student confuses revolution (Earth orbiting the Sun) with the cause of daily apparent Sun motion; this is a within-chapter concept confusion between the two types of Earth motion.",
+       "B": "Student correctly identifies Earth's rotation as the cause but reverses the direction — East-to-West rotation — which would produce sunrise in the West, not the East."
+      },
+      "inclusivity": "Students who articulate the merry-go-round analogy verbally or sketch a top-down diagram showing rotation direction demonstrate the same outcome. The question can also be posed with a diagram showing Earth rotating in two directions for students who find spatial reasoning easier than verbal description."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and question apparent sky phenomena",
+    "implied_lo_assessed": "Students can describe the apparent East-to-West motion of the Sun and stars as a consequence of Earth's West-to-East rotation, supported by observational evidence from shadow patterns and the globe-torch model.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "When a student uses a globe and torch to model the Earth-Sun system, she rotates the globe from West to East. What does she observe about her location-sticker as the globe turns?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The sticker experiences day and night only if the globe is tilted, not when it is upright.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The sticker experiences night first and then permanent daytime because it has moved closer to the torch.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The sticker moves from darkness into light, representing sunrise, then back into darkness, representing night.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The sticker stays in continuous light because the torch illuminates the whole globe.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Student has not engaged with the half-illumination constraint — the key observation from Activity 12.2 that only one hemisphere is lit at any moment.",
+       "B": "Student confuses proximity to the torch with permanent illumination; this reflects a distance-based misconception rather than understanding rotation as the mechanism.",
+       "A": "Student conflates the tilt-requirement for seasons (Stage 3 content) with the basic day-night cycle, which is produced by rotation regardless of tilt."
+      },
+      "inclusivity": "Students who re-enact the globe activity physically or draw a sequence of diagrams showing the sticker's position at four rotation steps demonstrate the same understanding. For students with difficulty with spatial rotation, the question can be paired with a diagram showing the globe at four positions."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and describe Earth's motions and their observable effects",
+    "implied_lo_assessed": "Students can classify a given sky phenomenon as a consequence of rotation or revolution, and explain using diagrams why the Pole Star appears stationary and why seasonal constellations change over the year.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student notices that different star constellations are visible on clear nights in January compared to July. Which motion of the Earth is primarily responsible for this change?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Revolution of the Earth around the Sun, which changes the direction Earth faces at night over the year.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Revolution of the Moon around the Earth, which shifts the background of stars visible each month.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Rotation of the Earth on its axis, which makes stars rise in the East and set in the West each night.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The tilt of Earth's axis, which alone determines which constellations are visible from each hemisphere.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Student confuses the daily apparent star motion (caused by rotation) with the year-scale change in which constellations are visible — a common within-chapter confusion between the two Earth motions.",
+       "B": "Student attributes the seasonal sky change to the Moon's revolution rather than Earth's revolution around the Sun — a misassignment of the cause to the wrong orbital motion.",
+       "D": "Student identifies axial tilt as the sole factor, confusing its role in seasonal temperature change with the separate phenomenon of seasonal constellation visibility."
+      },
+      "inclusivity": "Students who annotate an orbital diagram with constellation names at the four Earth positions demonstrate the same classification. The question can also be posed with a diagram showing Earth at two positions in its orbit for students who find diagram-based reasoning more accessible."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and describe Earth's motions and their observable effects",
+    "implied_lo_assessed": "Students can classify a given sky phenomenon as a consequence of rotation or revolution, and explain using diagrams why the Pole Star appears stationary and why seasonal constellations change over the year.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "When observers photograph the night sky with a long exposure, all stars except one trace circular arcs in the image. That one star appears as a single dot at the centre of all the arcs. Why does this one star appear stationary?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Because that star is closest to the Earth, so its apparent motion is too small to record on a photograph.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Because that star is the brightest in the sky, and bright stars are too luminous to show motion in photographs.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Because the Earth revolves around that star rather than around the Sun.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Because the Earth's axis of rotation points very close to that star, so it lies almost directly above the North Pole.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "B": "Student attributes the Pole Star's apparent stillness to brightness — a common misconception the chapter directly challenges; Polaris is not the brightest star in the sky.",
+       "A": "Student confuses proximity (distance from Earth) with the axis-alignment explanation, applying an incorrect distance-based rationale.",
+       "C": "Student generates a plausible-sounding but entirely incorrect orbital explanation — Earth revolves around the Sun, not the Pole Star."
+      },
+      "inclusivity": "Students who annotate a top-down diagram of Earth's axis pointing toward the Pole Star, with other stars shown tracing arcs, demonstrate the same understanding through a spatial rather than verbal pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and describe Earth's motions and their observable effects",
+    "implied_lo_assessed": "Students can classify a given sky phenomenon as a consequence of rotation or revolution, and explain using diagrams why the Pole Star appears stationary and why seasonal constellations change over the year.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "The Bhil and Pawara communities of the Tapi Valley traditionally used the appearance of specific star patterns in the sky as a sign that the monsoon was approaching. Using your knowledge of Earth's revolution, explain why the same star pattern reliably appears at the same time each year.",
+    "options": [],
+    "expected_elements": [
+     "Earth's revolution around the Sun causes the night-side of Earth to face a different region of the sky at different times of year.",
+     "Because Earth follows the same orbit each year, it reaches the same orbital position at approximately the same calendar time each year.",
+     "This means the same direction faces away from the Sun — and therefore the same constellations are visible — at the same season every year.",
+     "The reliability of this pattern makes particular star appearances usable as seasonal indicators."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who draw an annotated orbital diagram showing the Tapi Valley community's observation point at the same Earth-orbit position each year demonstrate the same reasoning spatially. Students who connect the reliability of the orbital period to the reliability of the star-indicator show the deepest engagement with the application."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the causal mechanism of seasons",
+    "implied_lo_assessed": "Students can causally explain how Earth's axial tilt, combined with its spherical shape and revolution, produces seasons in each hemisphere, solstices, equinoxes, and the extreme polar day-night phenomenon.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "In June, the Northern Hemisphere experiences summer while the Southern Hemisphere experiences winter. A student claims this is because the Northern Hemisphere is physically closer to the Sun in June. Why is this explanation incorrect?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Distance has no effect on how much heat a surface receives; only the duration of daylight matters for seasonal temperature.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The distance difference caused by tilt is too small to account for the observed temperature change; the key factor is the steeper angle at which sunlight strikes the tilted hemisphere.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The Northern Hemisphere is actually farther from the Sun in June because the elliptical orbit places Earth farther away in that month.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The Sun moves closer to the Southern Hemisphere in June, so the Northern Hemisphere cools down despite being tilted toward the Sun.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student has partially absorbed the Dive Deeper correction — Earth is closer to the Sun in January — but misapplied it, claiming the orbit places Earth farther away in June rather than that the tilt-distance difference is simply too small to matter.",
+       "A": "Student over-corrects: having rejected the distance explanation, they replace it with day-length alone, discarding the angle-intensity mechanism that the torch-paper investigation established.",
+       "D": "Student reverts to a Sun-motion misconception and inverts the hemisphere relationship, suggesting the Sun moves rather than the Earth tilts."
+      },
+      "inclusivity": "Students who draw the June orbital position diagram with angle annotations and label the concentration of sunlight on the Northern Hemisphere demonstrate the same causal analysis through a diagrammatic pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the causal mechanism of seasons",
+    "implied_lo_assessed": "Students can causally explain how Earth's axial tilt, combined with its spherical shape and revolution, produces seasons in each hemisphere, solstices, equinoxes, and the extreme polar day-night phenomenon.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "At the North Pole, the Sun rises on approximately 21 March and does not set until approximately 22 September. What combination of Earth's properties directly causes this six-month polar day?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The axial tilt of the Earth combined with its revolution around the Sun, which keeps the North Pole continuously facing the Sun for half the year.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The elliptical orbit of the Earth, which keeps the North Pole closer to the Sun for six months.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The rotation of the Earth, which at the poles takes six months to complete one full spin.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The spherical shape of the Earth alone, which means the pole curves away from the Sun's light for only half the year.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student attributes the six-month polar day to rotation speed at the poles — a misconception about rotation rate; Earth's rotation period is the same everywhere.",
+       "B": "Student reverts to the elliptical-orbit distance explanation that the Dive Deeper box explicitly corrects, misapplying orbit shape to a polar phenomenon.",
+       "D": "Student correctly identifies spherical shape as relevant but treats it as sufficient alone, omitting the axial tilt and revolution that together produce the polar result."
+      },
+      "inclusivity": "Students who model the polar case with the tilted globe and torch — observing the North Pole in continuous light — and narrate what they see are demonstrating the same understanding through physical reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Explain the causal mechanism of seasons",
+    "implied_lo_assessed": "Students can causally explain how Earth's axial tilt, combined with its spherical shape and revolution, produces seasons in each hemisphere, solstices, equinoxes, and the extreme polar day-night phenomenon.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student says: 'Southern India near the equator barely has seasons, but Sweden has very strong summer and winter.' Using axial tilt, sunlight angle, and day length, explain why the seasonal difference is so much stronger at higher latitudes than near the equator.",
+    "options": [],
+    "expected_elements": [
+     "Earth's axial tilt means that the angle at which sunlight strikes a location varies more as latitude increases away from the equator.",
+     "At the equator, sunlight always strikes at a relatively steep angle and the day always lasts approximately 12 hours, so intensity and duration change very little across the year.",
+     "At higher latitudes (like Sweden), the summer angle is steep and day length exceeds 12 hours, but the winter angle is shallow and day length is much less than 12 hours — both factors reinforce each other to produce strong temperature contrast.",
+     "The equator is effectively unaffected by the hemisphere's tilt direction, so seasons are minimal there."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who draw a diagram comparing sunlight angle at the equator versus a high-latitude location in summer and winter, annotating day length and beam spread, demonstrate the same causal reasoning spatially. Accept explanations that use 'concentration of light' as equivalent to angle-intensity."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain eclipse formation through relative positions and apparent size",
+    "implied_lo_assessed": "Students can explain how the concept of apparent size enables the Moon to block the Sun, and construct causal diagram-based explanations of the geometry and observable effects of total and partial solar and lunar eclipses.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Although the Sun is about 400 times larger than the Moon, the Moon can completely block the Sun during a solar eclipse. What is the correct explanation for this?",
+    "options": [
+     {
+      "label": "A",
+      "text": "During a solar eclipse the Sun is at its farthest point from Earth, making it appear smaller and easier to block.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The Moon expands slightly as it approaches Earth, increasing its actual size enough to cover the Sun.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The Moon is about 400 times closer to the Earth than the Sun, so its apparent size as seen from Earth nearly equals the Sun's apparent size.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The Moon's shadow is much larger than the Moon itself, so it can cover the full Sun even though the Moon is smaller.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Student invents a physical size-change mechanism — the Moon expanding — rather than applying the apparent-size concept established through the thumb activity.",
+       "A": "Student applies a distance-variation explanation but applies it to the Sun rather than the Moon, and misattributes the coincidence to orbital position rather than to the ratio of distance to actual size.",
+       "D": "Student confuses the shadow (the darkened area on Earth) with the apparent disk of the Moon — a reasonable inference but one that conflates two distinct concepts from the eclipse geometry."
+      },
+      "inclusivity": "Students who reproduce the thumb-activity analogy in diagram form — annotating actual sizes and distances of both the thumb-head and Moon-Sun pairs — demonstrate the apparent-size concept through a concrete analogy pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain eclipse formation through relative positions and apparent size",
+    "implied_lo_assessed": "Students can explain how the concept of apparent size enables the Moon to block the Sun, and construct causal diagram-based explanations of the geometry and observable effects of total and partial solar and lunar eclipses.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "During a total lunar eclipse, the Moon does not become completely invisible — it appears dark red. What causes the Moon to appear red rather than black?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Some sunlight is refracted through Earth's atmosphere and reaches the Moon, and the atmosphere bends red wavelengths more efficiently toward the Moon.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The Moon reflects red light from Earth's surface, which is heated by the Sun during the eclipse.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The Moon's own surface minerals produce a red glow when they are no longer illuminated by direct sunlight.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The red colour is caused by the Moon passing through the outer part of Earth's shadow where sunlight is only partially blocked.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Student confuses the Moon's illumination source during an eclipse — mistakenly attributing the red light to Earth's surface rather than to refraction through Earth's atmosphere.",
+       "C": "Student invents a surface-mineral luminescence explanation — the Moon does not self-illuminate — confusing reflection with emission.",
+       "D": "Student conflates the partial eclipse (where the Moon is in the penumbra) with the total eclipse red phenomenon, not engaging with the atmospheric-refraction mechanism."
+      },
+      "inclusivity": "Students who sketch the Sun-Earth-Moon alignment with a ray diagram showing refracted sunlight bending around Earth's limb toward the Moon demonstrate the same causal reasoning through a geometric pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain eclipse formation through relative positions and apparent size",
+    "implied_lo_assessed": "Students can explain how the concept of apparent size enables the Moon to block the Sun, and construct causal diagram-based explanations of the geometry and observable effects of total and partial solar and lunar eclipses.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Venus is larger than the Moon but cannot produce a solar eclipse as seen from Earth — it can only appear as a tiny black dot crossing the Sun's face (a Transit of Venus). Using the concept of apparent size, explain why Venus cannot block the Sun even though it is physically larger than the Moon.",
+    "options": [],
+    "expected_elements": [
+     "Apparent size depends on both the actual size of an object and its distance from the observer.",
+     "Venus is much farther from Earth than the Moon, so despite its larger actual size, its apparent size as seen from Earth is much smaller.",
+     "For an object to completely block the Sun, its apparent size must be at least as large as the Sun's apparent size.",
+     "Venus's apparent size is far smaller than the Sun's, so it can only appear as a small disk crossing the Sun's face, not block it entirely."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who draw annotated diagrams comparing Moon-Earth and Venus-Earth distances, with apparent size marked, demonstrate the same reasoning spatially. Accept explanations that use the thumb-activity analogy explicitly as a valid reasoning scaffold."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+    "implied_lo_assessed": "Students can, given an unfamiliar description of Earth-Moon-Sun positions, identify the resulting phenomenon, construct a causal explanation linking relative positions and motions to the outcome, and evaluate its significance for human practices such as calendars and navigation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Position description | Which body is between the other two? | Approximate season in Northern Hemisphere\nThe Moon is between the Sun and Earth, all three nearly aligned | Moon | Northern Hemisphere summer\nThe Earth is between the Sun and Moon, all three nearly aligned | Earth | Northern Hemisphere winter\nEarth is tilted so the Northern Hemisphere leans away from the Sun | — | Northern Hemisphere winter\nEarth is at a position where neither hemisphere tilts toward or away from the Sun | — | Equinox",
+    "question_text": "Refer to the table provided. A student examines Row 1 and Row 2. She claims that Row 1 always produces a solar eclipse and Row 2 always produces a lunar eclipse whenever those positions occur. Is her claim correct? Choose the best assessment.",
+    "options": [
+     {
+      "label": "A",
+      "text": "Her claim is correct: every time the Moon is between Earth and the Sun, a solar eclipse occurs, because the Moon always blocks the Sun from Earth's view.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Her claim is incorrect because solar eclipses can only occur during Northern Hemisphere summer and lunar eclipses only during winter, not in the positions the table describes.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Her claim is incorrect: solar and lunar eclipses in Rows 1 and 2 only occur when the three bodies are nearly perfectly aligned; the Moon's orbit is slightly tilted, so most monthly alignments do not produce eclipses.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Her claim is partially correct for Row 1 but not Row 2, because lunar eclipses require the Earth's shadow to be larger than the Moon, which only happens in summer.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Student over-generalises from the eclipse geometry — assuming that the alignment type (Moon between Earth and Sun) automatically guarantees an eclipse, without accounting for the orbital tilt constraint.",
+       "D": "Student applies a seasonal filter to eclipse occurrence — a misconception not supported by the chapter — and invents a shadow-size condition that is not part of the eclipse model.",
+       "B": "Student invents a season-eclipse pairing rule entirely absent from the chapter, confusing seasonal position in orbit with the geometry required for eclipses."
+      },
+      "inclusivity": "Students who annotate the table with a fifth column explaining why Rows 1 and 2 do not always produce eclipses — including a sketch of the Moon's tilted orbit — demonstrate the evaluative reasoning through a diagrammatic pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+    "implied_lo_assessed": "Students can, given an unfamiliar description of Earth-Moon-Sun positions, identify the resulting phenomenon, construct a causal explanation linking relative positions and motions to the outcome, and evaluate its significance for human practices such as calendars and navigation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "Ancient Indian astronomers, including those who wrote the Surya Siddhanta, were able to predict eclipses precisely long before modern telescopes. Which combination of knowledge would have been essential for making accurate eclipse predictions?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Detailed records of seasonal star constellations, since eclipses occur only when specific constellations are visible.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Knowledge of Earth's rotation period alone, since eclipses repeat on a daily cycle tied to the day-night pattern.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Knowledge of the apparent size of the Sun and Moon only, since eclipses occur whenever apparent sizes match.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Precise knowledge of the orbital periods of Earth and Moon, the geometry of Sun-Earth-Moon alignments, and the orbital tilt of the Moon.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Student over-applies the apparent-size concept — treating it as sufficient for eclipse prediction — without integrating orbital period and alignment geometry, which are also required.",
+       "A": "Student confuses seasonal star knowledge (a consequence of revolution) with eclipse prediction knowledge, which depends on the Moon's orbital period and alignment, not constellation visibility.",
+       "B": "Student incorrectly maps eclipse prediction onto rotation (day-night period), confusing the timescale of rotation with the much longer orbital period required for eclipse prediction."
+      },
+      "inclusivity": "Students who list the three required knowledge types and explain the role of each — period for timing, geometry for alignment type, tilt for frequency — demonstrate evaluation through a structured analytical response rather than a single-choice pathway."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+    "implied_lo_assessed": "Students can, given an unfamiliar description of Earth-Moon-Sun positions, identify the resulting phenomenon, construct a causal explanation linking relative positions and motions to the outcome, and evaluate its significance for human practices such as calendars and navigation.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A navigator on a ship in the open ocean, with no GPS, uses two observations to find their approximate position: (1) the Pole Star is visible at a certain angle above the horizon, and (2) the Sun rises exactly in the East and sets exactly in the West. Using your knowledge of Earth's motions and celestial mechanics, explain what each observation tells the navigator and why both together give more useful positional information than either alone.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "The response correctly identifies that the Pole Star's angle above the horizon indicates the observer's latitude — the axis of Earth's rotation points toward the Pole Star, so the elevation angle equals latitude.",
+     "The response correctly identifies that the Sun rising due East and setting due West indicates the observer is on or near the equinox date, when all locations on Earth receive 12 hours of sunlight.",
+     "The response explains why latitude alone is insufficient for full positional information and how the Sun-rise-set direction adds a directional or temporal constraint.",
+     "The response connects both observations to underlying Earth motions: the Pole Star observation is a consequence of Earth's rotation axis orientation; the equinox rise-set direction is a consequence of Earth's orbital position and axial tilt.",
+     "A strong response evaluates the significance of these celestial observations for navigation without modern instruments, noting that they are reliable, repeatable, and derived from predictable motions."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who structure their response as a two-column table — one column per observation — with rows for 'what it tells the navigator' and 'underlying Earth motion' demonstrate the same analytical reasoning in a more scaffolded format. Accept responses that use diagrams annotated with directional labels as evidence of positional reasoning."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Apply positional and motion knowledge to explain relative-position phenomena and their significance",
+    "implied_lo_assessed": "Students can, given an unfamiliar description of Earth-Moon-Sun positions, identify the resulting phenomenon, construct a causal explanation linking relative positions and motions to the outcome, and evaluate its significance for human practices such as calendars and navigation.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.5",
+     "competency_text": "Observing and identifying celestial objects and explaining their role in navigation, calendars, and other phenomena including phases of the moon and eclipses."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Scenario | Position description | Phenomenon observed | Causal explanation (use motions and positions) | Real-world significance\n1 | The Moon is directly between the Sun and Earth; all three are nearly perfectly aligned; an observer is in the Moon's small shadow. | | |\n2 | Earth is between the Sun and Moon; all three are nearly aligned; the Moon is fully inside Earth's shadow. | | |\n3 | Earth is at the orbital position where the Northern Hemisphere is tilted maximally away from the Sun; an observer is at the North Pole. | | |\n4 | Earth is at the orbital position where neither hemisphere is tilted toward or away from the Sun; an observer is anywhere on Earth. | | |\n5 | Earth is at its orbital position in June; an observer is in the Southern Hemisphere at a high southern latitude. | | |",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. For each scenario: (1) name the phenomenon the observer experiences, (2) write a causal explanation linking the described positions and motions to the phenomenon, and (3) state one real-world significance of this phenomenon for human practices such as navigation, calendars, agriculture, or cultural knowledge.",
+    "scaffold": "Work through each row in order. For the phenomenon column, use precise terms from your study of Earth, Moon, and the Sun. For the causal explanation, name the motion or positions responsible and explain the mechanism — do not just restate the position description. For real-world significance, think about how people have used knowledge of this phenomenon across history or in daily life.",
+    "format_of_output": [
+     "Completed table with all five rows filled across all four columns.",
+     "One synthesis sentence below the table explaining how all five scenarios are connected by the relative motions and positions of Earth, Moon, and Sun."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The five scenarios require students to classify each positional description into a named phenomenon and then justify the classification causally — directly demonstrating the final-stage LO of identifying phenomena from positions and explaining their significance.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can integrate rotational motion, revolutionary motion, axial tilt, apparent size, and eclipse geometry into a single coherent framework, applying it to unfamiliar positional descriptions and evaluating real-world significance.",
+      "reading_the_scaffold": "The scaffold directs students to use precise terminology and causal language rather than restating the position description — this distinguishes students who have internalised the mechanisms from those who are paraphrasing. The synthesis sentence at the end requires students to articulate the unifying principle across all five phenomena.",
+      "strong_vs_weak_markers": "Strong responses: use correct phenomenon names (e.g. total solar eclipse, winter solstice, total lunar eclipse, equinox), provide mechanistic causal explanations (e.g. tilt causes steeper-angle sunlight, Moon's shadow falls on small Earth area), and connect significance to specific practices (e.g. eclipse prediction in Surya Siddhanta, polar navigation using Pole Star). Weak responses: restate the position description as the phenomenon name, use vague causal language ('because of the Sun's position'), or omit the significance column entirely.",
+      "inclusivity": "Students who complete three of the five rows with full causal reasoning demonstrate partial but meaningful mastery. Students who find writing extended explanations difficult may complete the causal explanation column as annotated diagrams — a ray diagram for eclipses or an orbital diagram for seasonal scenarios — with brief labels, and this should be accepted as equivalent evidence of causal understanding. The teacher may substitute a predict-and-explain task format using the same five scenarios for students who find table completion less accessible."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

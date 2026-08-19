@@ -72,6 +72,27 @@
       "replaced_with": "Scenario-based Group Reasoning"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 18,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Lighthouse scene cards",
+       "text": "Print or hand-draw one card per scene on index cards or cut paper. Each card carries a short illustrated description of the situation.\n\nSCENE 1 — The Hidden Lamp: A fishing boat crew cannot see the lighthouse lamp because a rocky headland lies directly between them and the lamp.\n\nSCENE 2 — The Changing Shadow: A child walking along the harbour wall notices her shadow on the wall keeps changing size as she moves closer to or farther from the lamp post.\n\nSCENE 3 — The Foggy Window: A foggy (frosted) window in the keeper's cottage lets light into the room but makes the view of the sea outside completely blurry.\n\nSCENE 4 — The Backwards Message: A message scratched backwards into a tide-pool rock reads correctly only when the keeper looks at its reflection in perfectly still water.\n\nSCENE 5 — The Inverted Sea: A tiny crack in a shuttered room projects an upside-down image of the sea and sky onto the floor of the room.\n\nPrinciples covered across the five scenes: rectilinear propagation of light; shadow formation and the effect of source distance on shadow size; transparency and translucency of materials; the pinhole effect and image inversion; laws of reflection including lateral inversion."
+      },
+      "replaced_with": [
+       "[prose] Lighthouse scene cards — preparation note",
+       "[table] Lighthouse scene cards",
+       "[prose] Principles covered across the five scenes"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -896,8 +917,18 @@
      "visual_aids": [
       {
        "type": "prose",
+       "title": "Lighthouse scene cards — preparation note",
+       "text": "Print or hand-draw one card per scene on index cards or cut paper. Each card carries a short illustrated description of the situation."
+      },
+      {
+       "type": "table",
        "title": "Lighthouse scene cards",
-       "text": "Print or hand-draw one card per scene on index cards or cut paper. Each card carries a short illustrated description of the situation.\n\nSCENE 1 — The Hidden Lamp: A fishing boat crew cannot see the lighthouse lamp because a rocky headland lies directly between them and the lamp.\n\nSCENE 2 — The Changing Shadow: A child walking along the harbour wall notices her shadow on the wall keeps changing size as she moves closer to or farther from the lamp post.\n\nSCENE 3 — The Foggy Window: A foggy (frosted) window in the keeper's cottage lets light into the room but makes the view of the sea outside completely blurry.\n\nSCENE 4 — The Backwards Message: A message scratched backwards into a tide-pool rock reads correctly only when the keeper looks at its reflection in perfectly still water.\n\nSCENE 5 — The Inverted Sea: A tiny crack in a shuttered room projects an upside-down image of the sea and sky onto the floor of the room.\n\nPrinciples covered across the five scenes: rectilinear propagation of light; shadow formation and the effect of source distance on shadow size; transparency and translucency of materials; the pinhole effect and image inversion; laws of reflection including lateral inversion."
+       "table": "Scene | Situation\n1 — The Hidden Lamp | A fishing boat crew cannot see the lighthouse lamp because a rocky headland lies directly between them and the lamp\n2 — The Changing Shadow | A child walking along the harbour wall notices her shadow on the wall keeps changing size as she moves closer to or farther from the lamp post\n3 — The Foggy Window | A foggy (frosted) window in the keeper's cottage lets light into the room but makes the view of the sea outside completely blurry\n4 — The Backwards Message | A message scratched backwards into a tide-pool rock reads correctly only when the keeper looks at its reflection in perfectly still water\n5 — The Inverted Sea | A tiny crack in a shuttered room projects an upside-down image of the sea and sky onto the floor of the room"
+      },
+      {
+       "type": "prose",
+       "title": "Principles covered across the five scenes",
+       "text": "Rectilinear propagation of light; shadow formation and the effect of source distance on shadow size; transparency and translucency of materials; the pinhole effect and image inversion; laws of reflection including lateral inversion."
       },
       {
        "type": "table",

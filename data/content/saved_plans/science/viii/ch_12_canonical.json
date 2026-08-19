@@ -71,6 +71,28 @@
       "replaced_with": "Collaborative Annotation"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 12,
+      "field": "visual_aids[3]",
+      "removed": {
+       "type": "prose",
+       "title": "Interaction-type legend strip",
+       "text": "Print one per pair as a narrow strip (can be cut from the bottom of the profile card sheet).\n\nCOLOUR CODE FOR ARROWS:\n• Colour 1 — Biotic–biotic interaction\n• Colour 2 — Biotic–abiotic interaction\n• Colour 3 — Abiotic–abiotic interaction\n\nFIVE RELATIONSHIP TYPES TO LABEL:\n• Predation / herbivory (one organism eats another)\n• Mutualism (both organisms benefit)\n• Commensalism (one benefits, one unaffected)\n• Parasitism (one benefits, one harmed)\n• Competition (both organisms compete for the same resource)\n• Decomposer role (breaks down dead matter, releases nutrients to abiotic environment)\n\nTROPHIC LEVEL REMINDER:\nA trophic level is a feeding position in a food chain. Producers are Level 1; primary consumers (eat producers) are Level 2; secondary consumers (eat primary consumers) are Level 3; and so on."
+      },
+      "replaced_with": [
+       "[prose] Interaction-type legend strip",
+       "[table] Colour code for arrows",
+       "[table] Relationship types to label",
+       "[prose] Trophic level reminder"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -631,7 +653,22 @@
       {
        "type": "prose",
        "title": "Interaction-type legend strip",
-       "text": "Print one per pair as a narrow strip (can be cut from the bottom of the profile card sheet).\n\nCOLOUR CODE FOR ARROWS:\n• Colour 1 — Biotic–biotic interaction\n• Colour 2 — Biotic–abiotic interaction\n• Colour 3 — Abiotic–abiotic interaction\n\nFIVE RELATIONSHIP TYPES TO LABEL:\n• Predation / herbivory (one organism eats another)\n• Mutualism (both organisms benefit)\n• Commensalism (one benefits, one unaffected)\n• Parasitism (one benefits, one harmed)\n• Competition (both organisms compete for the same resource)\n• Decomposer role (breaks down dead matter, releases nutrients to abiotic environment)\n\nTROPHIC LEVEL REMINDER:\nA trophic level is a feeding position in a food chain. Producers are Level 1; primary consumers (eat producers) are Level 2; secondary consumers (eat primary consumers) are Level 3; and so on."
+       "text": "Print one per pair as a narrow strip (can be cut from the bottom of the profile card sheet)."
+      },
+      {
+       "type": "table",
+       "title": "Colour code for arrows",
+       "table": "Colour | Interaction type\n1 | Biotic–biotic interaction\n2 | Biotic–abiotic interaction\n3 | Abiotic–abiotic interaction"
+      },
+      {
+       "type": "table",
+       "title": "Relationship types to label",
+       "table": "Relationship | Meaning\nPredation / herbivory | One organism eats another\nMutualism | Both organisms benefit\nCommensalism | One benefits, one unaffected\nParasitism | One benefits, one harmed\nCompetition | Both organisms compete for the same resource\nDecomposer role | Breaks down dead matter, releases nutrients to abiotic environment"
+      },
+      {
+       "type": "prose",
+       "title": "Trophic level reminder",
+       "text": "A trophic level is a feeding position in a food chain. Producers are Level 1; primary consumers (eat producers) are Level 2; secondary consumers (eat primary consumers) are Level 3; and so on."
       },
       {
        "type": "prose",

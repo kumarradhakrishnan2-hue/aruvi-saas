@@ -63,6 +63,25 @@
       "replaced_with": "Design-brief Inquiry"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 15,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Street-intersection site brief",
+       "text": "A municipal engineer has been asked to install optical devices at four locations in a busy urban street intersection. No optical vocabulary is used in this brief — students must supply the device choices themselves.\n\nProblem 1 — Blind corner: Drivers approaching a sharp blind corner cannot see oncoming traffic or pedestrians stepping off the pavement. The installation must give drivers the widest possible view of what is around the corner from a single fixed device.\n\nProblem 2 — Pedestrian-crossing lighting: A pedestrian crossing is poorly lit at night. A single lamp is available but its light spreads in all directions. The installation must redirect as much of that light as possible onto the crossing in a controlled beam.\n\nProblem 3 — Shopfront display window: A jeweller wants passers-by to see an enlarged view of small items placed near the window. The image must be upright and noticeably larger than the actual object.\n\nProblem 4 — Security monitoring post: A security officer seated at a fixed post must monitor the widest possible arc of the street in front of the building without turning or moving. One device, fixed to the wall, must cover the whole arc."
+      },
+      "replaced_with": [
+       "[table] Street-intersection site brief"
+      ]
+     }
+    ]
    }
   ],
   "synthesis_polish": {
@@ -749,9 +768,9 @@
      "pedagogical_approach": "Design-brief Inquiry",
      "visual_aids": [
       {
-       "type": "prose",
+       "type": "table",
        "title": "Street-intersection site brief",
-       "text": "A municipal engineer has been asked to install optical devices at four locations in a busy urban street intersection. No optical vocabulary is used in this brief — students must supply the device choices themselves.\n\nProblem 1 — Blind corner: Drivers approaching a sharp blind corner cannot see oncoming traffic or pedestrians stepping off the pavement. The installation must give drivers the widest possible view of what is around the corner from a single fixed device.\n\nProblem 2 — Pedestrian-crossing lighting: A pedestrian crossing is poorly lit at night. A single lamp is available but its light spreads in all directions. The installation must redirect as much of that light as possible onto the crossing in a controlled beam.\n\nProblem 3 — Shopfront display window: A jeweller wants passers-by to see an enlarged view of small items placed near the window. The image must be upright and noticeably larger than the actual object.\n\nProblem 4 — Security monitoring post: A security officer seated at a fixed post must monitor the widest possible arc of the street in front of the building without turning or moving. One device, fixed to the wall, must cover the whole arc."
+       "table": "A municipal engineer has been asked to install optical devices at four locations in a busy urban street intersection. No optical vocabulary is used in this brief — students must supply the device choices themselves\nProblem | Situation | Installation requirement\n1 — Blind corner | Drivers approaching a sharp blind corner cannot see oncoming traffic or pedestrians stepping off the pavement | Give drivers the widest possible view of what is around the corner from a single fixed device\n2 — Pedestrian-crossing lighting | A pedestrian crossing is poorly lit at night. A single lamp is available but its light spreads in all directions | Redirect as much of that light as possible onto the crossing in a controlled beam\n3 — Shopfront display window | A jeweller wants passers-by to see an enlarged view of small items placed near the window | The image must be upright and noticeably larger than the actual object\n4 — Security monitoring post | A security officer seated at a fixed post must monitor the widest possible arc of the street in front of the building without turning or moving | One device, fixed to the wall, must cover the whole arc"
       },
       {
        "type": "table",

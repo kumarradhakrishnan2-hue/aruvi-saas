@@ -282,6 +282,10 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   Read-derived per-chapter brief notes (`resynth.EXCLUSIONS` / `POLISH_NOTES`) are the
   mechanism when the generic brief misses. Spec `docs/science_middle_stage_serve.md` §6
   v1.3; full story MEMORY.md 2026-08-17/18. Material-tab live render + mobile pass OWED.
+  **Addendum 2026-08-19:** the polish pass had left enumerable card/event/scene sets as dense
+  prose aids; `genon/repair_prose_tables.py` tabulated 29 of them (32 new typed tables across
+  24 chapters, content moved verbatim, titles referenced by note-pointers kept exact — e.g.
+  vi ch 4 'Shipwreck card content' → Card | Question | Expected reasoning). MEMORY.md 2026-08-19.
 - ★ **ONE STAGE IS SERVED DIFFERENTLY — science·middle (2026-08-07, engine e17).** Spec:
   `docs/science_middle_stage_serve.md`. Its LP is organised by the chapter's COGNITIVE
   PROGRESSION ARC, not by textbook sections, so it has no `section_anchor`, no registry, and

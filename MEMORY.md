@@ -687,7 +687,70 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-17/18 (newest) — S6 · SCIENCE·MIDDLE BATCH-RELEASED, AND THE STAGE'S
+## 2026-08-19 (newest) — DENSE PROSE VISUAL AIDS IN SCIENCE·MIDDLE SYNTHESIS UNITS
+## BECAME TYPED TABLES (founder direction, starting from vi ch 4's shipwreck cards)
+
+**What happened.** The founder flagged vi ch 4 "Exploring Magnets": the polished synthesis
+unit's 'Shipwreck card content' visual aid was a 2.7k-character PROSE block whose content is
+actually eight parallel RECORDS (card · question · expected reasoning). Direction: tabulate
+it (columns Card | Question | Expected reasoning) and sweep the whole science·middle stage
+for the same pattern. The sweep found the polish pass (2026-08-18) had left this class of
+aid as prose across the stage — enumerable card/event/scene/stall/fault/observation sets
+flattened into dense text. On screen that is a wall of words; **in DOCX it is objectively
+broken** (export_docx renders prose by `\n\n` chunk and collapses single `\n` to a space, so
+single-newline lists mash into run-on lines — the Ramnagar decision cards printed as one
+paragraph in Word).
+
+**The repair: `genon/repair_prose_tables.py` v1.0** (the declared-edit idiom of
+repair_worksheet_split/repair_courier_table). **29 prose aids across 24 chapters became 32
+typed tables** (+ companion prose for genuine scene-setting/facilitation text). Discipline
+held throughout: content MOVED verbatim, never rewritten — record labels ('Card 1 –',
+'Description:', 'Expected reasoning:') became rows/columns; one-line scene-setters became
+parse_table leading-CAPTION rows; multi-sentence format notes became companion prose aids.
+Each edit sha1-asserted against the installed text (artefact drift refuses the run); old
+aids archived under `genon_canonical.repairs`; files backed up to `backup/prose_tables/`;
+`purge_derived` run per chapter (no derived plans existed — free). Three flagged candidates
+were deliberately LEFT prose (vi ch5 coverage notes, vi ch11 gap prompts, viii ch11
+design-sheet questions — flowing narrative, not records).
+
+**Title discipline that mattered:** teacher_notes/materials carry literal pointers
+("see visual aid: 'Shipwreck card content'"), so the converted TABLE keeps the original
+title exactly in every split; companions get derived titles. Where the pointed-at content
+went multi-aid (vii ch12 keeper's log → 5 aids, viii ch06 weather notebook → 5, viii ch12
+legend strip → 4), the referenced title stayed on the aid carrying the pointed-at content.
+
+**Verified end-to-end:** view model builds clean for all 37 science·middle canonicals
+(73 synthesis tables, uniform widths after parse_table); vi ch 4 exported to real PDF and
+DOCX with every table cell present (DOCX uppercases header cells by design — probe
+case-insensitively); suites test_science_port · test_lp_standard · test_render ·
+test_phases · test_genon_serve · test_genon_plan_granularity all pass. NO code changed —
+data only; the renderers already consumed typed tables everywhere. **Owed (unchanged from
+2026-08-18): the Material-tab LIVE render + mobile pass** — now with materially more
+tables on screen, the ~360 px table behaviour check matters more, not less.
+
+**Same day, follow-up (founder): the INTEGRATED (lesson plan + assessment) PDF was the
+one renderer left unformatted.** `export_integrated_pdf.py` OWNS a consolidated
+stylesheet (its own docstring warns: "If the lesson-plan or assessment styling changes,
+re-check the mirrored rules here") — and it had drifted twice: (a) the 2026-08-18 polish
+added the `.va-*` family (typed prepared tables/prose) to `_period_block` +
+export_lesson_pdf's CSS but NEVER mirrored it here, so integrated PDFs printed every
+prepared table/card as bare unstyled default-font text; (b) the assessment exporter had
+since grown `.q`, `.qm-rk`, `.qm-rv`, `.stim-tbl-cap`, `.stim-tbl-src`, also absent. Fix:
+mirrored all of them in (+ `G_EDGE` import). **Lesson for next time:** the consolidated
+stylesheet is a MIRROR with no parity check — the verification harness that caught the
+full extent was a class diff (regex `class="…"` out of the rendered HTML vs `.class`
+selectors in `_css()`); worth re-running whenever either fragment exporter's CSS moves.
+Also learned: verifying exports MUST replicate the API's assembly (`link_context` +
+`carriers.from_engine_items`) — calling `assessment_to_view` bare leaves every
+`anchor_period` None and all items fall to the defensive "Further assessment" tail,
+which looks like a placement bug but is only a harness artefact. Verified through the
+API-identical path across all 37 chapters: every class styled, every item anchored
+(2026-08-05 last-unit rule), zero leftovers, 37 valid PDFs; test_api (fastapi installed
+in-sandbox) + test_render + test_science_port + test_lp_standard pass.
+
+---
+
+## 2026-08-17/18 — S6 · SCIENCE·MIDDLE BATCH-RELEASED, AND THE STAGE'S
 ## ONE STRUCTURAL EXCEPTION EARNED A DESIGN CORRECTION READ OUT OF ITS OWN SERVES
 
 **The stage is released**: W1·W2·F1·F2 all pass, **₹2,395.71 / 236 metered runs all-in**

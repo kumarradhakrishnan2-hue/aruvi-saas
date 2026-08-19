@@ -73,6 +73,38 @@
       "replaced_with": "Case-based Analysis"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 15,
+      "field": "visual_aids[2]",
+      "removed": {
+       "type": "prose",
+       "title": "Concept coverage across the eight events",
+       "text": "Event 1 (rusting) — chemical change. Event 2 (scraping scale) — physical change. Event 3 (freeze-thaw crack) — physical change. Event 4 (mineral reaction with salt solution) — chemical change; new white substance formed. Event 5 (combustion) — chemical change; fire triangle implicit in conditions; deliberately desirable in this land-management context, creating productive tension with the usual hazard framing. Event 6 (bark charring and peeling) — physical change; tree identity unchanged. Event 7 (ash transport and deposition) — physical change, erosion and sedimentation. Event 8 (lithification over centuries) — physical change, irreversible, slow geological timescale.\n\nThis spread ensures every chapter concept has at least one home: physical/chemical distinction, observable evidence markers (new substance formation vs shape/mass change only), reversibility, desirability judgement, and slow natural change across geological time."
+      },
+      "replaced_with": [
+       "[table] Concept coverage across the eight events",
+       "[prose] Concept coverage — spread note"
+      ]
+     },
+     {
+      "unit": 15,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Casebook: eight change events",
+       "text": "Setting: a steel railway bridge in a coastal region, and a controlled-burn forest management programme in the same region.\n\nEvent 1 — Steel bridge girders developing a reddish-brown crust after years of sea spray exposure.\n\nEvent 2 — Bridge painters scraping loose surface scale away, changing the shape of the metal layer but not its identity.\n\nEvent 3 — A section of rock cliff beneath the bridge splitting along a crack after repeated wetting and drying cycles.\n\nEvent 4 — Minerals in the cliff face reacting with dissolved salts in sea spray, producing a white powdery residue.\n\nEvent 5 — Forest undergrowth being deliberately set alight — dry leaves and twigs burning with flame and producing ash, carbon dioxide, and smoke.\n\nEvent 6 — Larger living trees at the edge of the burn zone losing outer bark but surviving — bark chars and peels (shape/mass change), tree remains the same organism.\n\nEvent 7 — Ash and charred material being washed by rain into a nearby stream, carried downstream, and settling as a fine layer on the stream bed.\n\nEvent 8 — The settled ash layer compacting slowly with sand over centuries into a new sedimentary layer."
+      },
+      "replaced_with": [
+       "[table] Casebook: eight change events"
+      ]
+     }
+    ]
    }
   ],
   "synthesis_reauthor": {
@@ -726,9 +758,9 @@
      "pedagogical_approach": "Case-based Analysis",
      "visual_aids": [
       {
-       "type": "prose",
+       "type": "table",
        "title": "Casebook: eight change events",
-       "text": "Setting: a steel railway bridge in a coastal region, and a controlled-burn forest management programme in the same region.\n\nEvent 1 — Steel bridge girders developing a reddish-brown crust after years of sea spray exposure.\n\nEvent 2 — Bridge painters scraping loose surface scale away, changing the shape of the metal layer but not its identity.\n\nEvent 3 — A section of rock cliff beneath the bridge splitting along a crack after repeated wetting and drying cycles.\n\nEvent 4 — Minerals in the cliff face reacting with dissolved salts in sea spray, producing a white powdery residue.\n\nEvent 5 — Forest undergrowth being deliberately set alight — dry leaves and twigs burning with flame and producing ash, carbon dioxide, and smoke.\n\nEvent 6 — Larger living trees at the edge of the burn zone losing outer bark but surviving — bark chars and peels (shape/mass change), tree remains the same organism.\n\nEvent 7 — Ash and charred material being washed by rain into a nearby stream, carried downstream, and settling as a fine layer on the stream bed.\n\nEvent 8 — The settled ash layer compacting slowly with sand over centuries into a new sedimentary layer."
+       "table": "Setting: a steel railway bridge in a coastal region, and a controlled-burn forest management programme in the same region\nEvent | What happens\n1 | Steel bridge girders developing a reddish-brown crust after years of sea spray exposure\n2 | Bridge painters scraping loose surface scale away, changing the shape of the metal layer but not its identity\n3 | A section of rock cliff beneath the bridge splitting along a crack after repeated wetting and drying cycles\n4 | Minerals in the cliff face reacting with dissolved salts in sea spray, producing a white powdery residue\n5 | Forest undergrowth being deliberately set alight — dry leaves and twigs burning with flame and producing ash, carbon dioxide, and smoke\n6 | Larger living trees at the edge of the burn zone losing outer bark but surviving — bark chars and peels (shape/mass change), tree remains the same organism\n7 | Ash and charred material being washed by rain into a nearby stream, carried downstream, and settling as a fine layer on the stream bed\n8 | The settled ash layer compacting slowly with sand over centuries into a new sedimentary layer"
       },
       {
        "type": "table",
@@ -736,9 +768,14 @@
        "table": "Change Event | Type of Change | Observable Evidence | Reversible / Irreversible + Reason | Desirable / Undesirable + Reason\n1 | | | | \n2 | | | | \n3 | | | | \n4 | | | | \n5 | | | | \n6 | | | | \n7 | | | | \n8 | | | | "
       },
       {
-       "type": "prose",
+       "type": "table",
        "title": "Concept coverage across the eight events",
-       "text": "Event 1 (rusting) — chemical change. Event 2 (scraping scale) — physical change. Event 3 (freeze-thaw crack) — physical change. Event 4 (mineral reaction with salt solution) — chemical change; new white substance formed. Event 5 (combustion) — chemical change; fire triangle implicit in conditions; deliberately desirable in this land-management context, creating productive tension with the usual hazard framing. Event 6 (bark charring and peeling) — physical change; tree identity unchanged. Event 7 (ash transport and deposition) — physical change, erosion and sedimentation. Event 8 (lithification over centuries) — physical change, irreversible, slow geological timescale.\n\nThis spread ensures every chapter concept has at least one home: physical/chemical distinction, observable evidence markers (new substance formation vs shape/mass change only), reversibility, desirability judgement, and slow natural change across geological time."
+       "table": "Event | Classification and concept\n1 (rusting) | Chemical change\n2 (scraping scale) | Physical change\n3 (freeze-thaw crack) | Physical change\n4 (mineral reaction with salt solution) | Chemical change; new white substance formed\n5 (combustion) | Chemical change; fire triangle implicit in conditions; deliberately desirable in this land-management context, creating productive tension with the usual hazard framing\n6 (bark charring and peeling) | Physical change; tree identity unchanged\n7 (ash transport and deposition) | Physical change, erosion and sedimentation\n8 (lithification over centuries) | Physical change, irreversible, slow geological timescale"
+      },
+      {
+       "type": "prose",
+       "title": "Concept coverage — spread note",
+       "text": "This spread ensures every chapter concept has at least one home: physical/chemical distinction, observable evidence markers (new substance formation vs shape/mass change only), reversibility, desirability judgement, and slow natural change across geological time."
       },
       {
        "type": "prose",

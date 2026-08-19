@@ -1,0 +1,1866 @@
+{
+ "filename": "ch_05_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 5,
+ "chapter_title": "Exploring Forces",
+ "grade": "Grade VIII",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 18
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 18 periods = 810 minutes\nTotal: 18 periods · 13h 30min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "18x45",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science viii 5",
+  "ledger_ts": "20260817_113057_sci_viii_05_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_viii_05_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_05_canonical_p16.json": "2026-08-17T12:38:00",
+    "ch_05_canonical_p14.json": "2026-08-17T12:38:00",
+    "ch_05_canonical_p12.json": "2026-08-17T12:38:00",
+    "ch_05_canonical_p10.json": "2026-08-17T12:38:00"
+   },
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:58",
+   "ledger_ts": "20260818_120452_sci_viii_05_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 18,
+      "field": "pedagogical_approach",
+      "removed": "Problem-based learning in which an unfamiliar but concrete professional context (harbour engineering) supplies the integrating frame. Students work in pairs to produce written force accounts and then collaboratively assemble a shared diagram. The vehicle — a data-log-plus-annotated-diagram — differs in kind from the scenario-card analysis, structured written analysis, force map, and integrated-problem set used in the shorter plans' final units. Pair work surfaces disagreements that pairs must resolve by returning to the chapter's definitions, making the reasoning visible to the teacher through the written accounts before the diagram is built.",
+      "replaced_with": "Problem-based Learning"
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and define: what a force is and does",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Push, Pull, and Everything In Between",
+     "activity_description": "Students attempt to move a large cardboard box in as many ways as possible, recording every action taken. From their list they identify that every action is either a push or a pull, arriving at a working definition of force.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Move the cardboard box in varied ways, recording each action and labelling it as push or pull."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates the activity, prompts students who have run out of ideas, and leads a brief whole-class share-out to consolidate the definition."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Groups receive the cardboard box and attempt to move it in as many distinct ways as they can, noting each action."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Groups categorise each recorded action as a push or a pull and discuss whether any action fits neither category."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Whole-class share-out: each group contributes one action; teacher scribes on the board, prompting students to spot the push-or-pull pattern."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Teacher leads a quick consolidation: every push or pull on an object is called a force, and the class agrees on a shared working definition."
+      }
+     ],
+     "teacher_notes": "This is the chapter's opening unit, so begin by inviting students to share anything they already associate with the word 'force' before the activity starts — it surfaces prior ideas without correcting them yet. Watch for the common assumption that carrying an object upward is neither a push nor a pull; guide students to see that lifting is a push upward against gravity. A useful checkpoint: students are ready to move on when every action on the board has been labelled push or pull with no unresolved cases.",
+     "materials": [
+      "Large cardboard box",
+      "Notebook or recording sheet",
+      "Chalk or whiteboard marker"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and define: what a force is and does",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "What Does a Force Actually Do?",
+     "activity_description": "Students examine a set of everyday force situations — pulling a moving bicycle to stop it, hitting a ball with a bat, pressing an inflated balloon — and record what change each force produces. They then group their observations to identify the four effects of force.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Analyse each force situation, record the observable change produced, and attempt to group changes into categories."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the driving question, circulates to probe reasoning, and guides the class to articulate the four categories of effect."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Brief recap of the previous unit's definition of force; teacher poses the new question: a force has been applied — now what happens?"
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Groups work through the three given situations, recording the effect in each case and noting whether the object was initially at rest or moving."
+      },
+      {
+       "minutes": "22-36",
+       "activity": "Groups compare their effect lists and attempt to sort them into the fewest possible categories, justifying their groupings."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Class discussion converges on the four effects: starting motion, changing speed, changing direction, and changing shape; teacher formalises these on the board."
+      }
+     ],
+     "teacher_notes": "Building directly on the previous unit's push-pull definition, this unit asks students to shift attention from what a force IS to what a force DOES. A frequent confusion is that changing speed and changing direction are treated as the same effect; press students with a question like 'Can you change direction without changing speed?' to tease them apart. Groups that finish early can be challenged to think of a situation where more than one effect occurs simultaneously.",
+     "materials": [
+      "Situation cards or written scenario sheet (bicycle, ball-bat, balloon)",
+      "Notebook or recording sheet"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "progression_stage": 1,
+     "stage_label": "Observe and define: what a force is and does",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Force as an Interaction — and the Newton",
+     "activity_description": "Students revisit each force situation from the previous unit and count the objects involved, discovering that every force requires at least two interacting objects. The formal definition of force as an interaction is established, and the SI unit — newton — is introduced.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads structured questioning through the situation cards, formalises the interaction-based definition, and introduces the newton with its symbol N."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Re-examine their recorded force situations, count objects involved in each, and record the refined definition and unit in their notebooks."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Quick recall of the four effects from the previous unit; teacher reintroduces the situation cards asking 'how many objects are involved here?'"
+      },
+      {
+       "minutes": "7-22",
+       "activity": "Teacher-guided analysis: for each situation students count the interacting objects, leading to the observation that no force involves fewer than two objects."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Teacher presents the formal definition of force as a push or pull resulting from the interaction of two objects, and explains the 'Step Further' insight that both objects experience a force and it vanishes when interaction ends."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Introduction of the newton as the SI unit of force; students note its symbol and discuss why a standard unit is needed, connecting to measurement ideas from earlier grades."
+      }
+     ],
+     "teacher_notes": "This unit closes Stage 1 by formalising the definition students built inductively over the first two units; it also plants the measurement strand that becomes central later. A common misconception to watch for is that only the 'active' object (the hand, the bat) experiences a force — the 'Step Further' about both objects experiencing forces is worth emphasising without requiring students to calculate anything. Confirm students can state the interaction-based definition in their own words before moving on to classification.",
+     "materials": [
+      "Situation cards from previous unit",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify and investigate: contact forces",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Muscles at Work — Mapping Muscular Force",
+     "activity_description": "Students identify and catalogue every physical action they perform in a typical day, classifying each as involving muscular force or not. They then extend the catalogue to animals, birds, fish, and insects, and note where historical human use of animal muscular force appears.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "List daily physical actions, classify each as muscular force, and add examples from animals and internal body functions."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the definition of muscular force, prompts students to think beyond locomotion to internal functions, and consolidates the animal examples."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces contact forces as those requiring physical contact and defines muscular force through the mechanism of muscle contraction and elongation."
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Students individually list their own daily physical actions and mark which involve muscle contraction; they then extend the list to animals, birds, fish, and insects."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Small-group comparison of lists; groups add examples of internal body functions (digestion, heartbeat) and historical animal-force uses (ploughing, transport)."
+      },
+      {
+       "minutes": "37-45",
+       "activity": "Whole-class share-out; teacher consolidates the breadth of muscular force and asks students to note that all examples require direct physical involvement."
+      }
+     ],
+     "teacher_notes": "Stage 2 opens the classification of forces, and this unit establishes contact forces starting with muscular force — the most immediately familiar kind. Watch for students assuming muscular force only means large visible actions like lifting; the internal examples (heart pumping blood, stomach contracting) often surprise them and deepen the concept. A good probing question: 'Could a fish swim without muscular force — what would need to be true if it could?'",
+     "materials": [
+      "Notebook or worksheet for cataloguing actions"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify and investigate: contact forces",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "The Hidden Force That Stops Things — Introducing Friction",
+     "activity_description": "Students push a small object across a flat surface, observe that it slows and stops on its own, and attempt to explain what unseen force is responsible. They connect this to the four effects of force identified earlier, classifying friction as a contact force that opposes motion.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Push objects across the surface, record observations about the object slowing and stopping, and propose an explanation for the hidden force."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Poses the question of what causes the object to stop, records student hypotheses on the board, and introduces the term and definition of friction."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher recalls the four effects of force and asks: 'If no one applies a force, can a moving object stop by itself — and is a force involved in that stopping?'"
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups push an eraser or small block across a table, observe it slowing to a stop, and record their observations along with a hypothesis about the cause."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Groups share hypotheses; teacher guides the class toward the idea that a force must act between the surfaces — this is friction — and that it always opposes the direction of motion."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Teacher explains the mechanism: microscopic surface irregularities interlock, causing friction; students note the formal definition and classify friction as a contact force."
+      }
+     ],
+     "teacher_notes": "Building on the contact-force thread opened in the previous unit, this unit shifts from a clearly visible agent (muscles) to a hidden one (friction), which is a conceptually significant step. The most common misconception is that friction only acts when an object is sliding, not while it is stationary — keep the focus for now on moving objects to avoid confusion, as static friction is not addressed in the chapter. A checkpoint: students should be able to state that friction acts between surfaces in contact and opposes motion before the surface-comparison investigation next unit.",
+     "materials": [
+      "Small eraser or wooden block",
+      "Flat table surface",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "progression_stage": 2,
+     "stage_label": "Classify and investigate: contact forces",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Does Surface Type Change How Far Things Slide?",
+     "activity_description": "Students push an identical object across four or five different surfaces — glass, cloth, wood, ceramic tile, sand — and measure or compare the stopping distance on each. They use results to rank surfaces by friction and explain the variation in terms of surface irregularities.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Push the object with comparable force across each surface, record stopping distances, rank the surfaces, and explain the ranking."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the fair-test conditions, circulates to prompt students to consider what is changing across surfaces, and leads the explanation about microscopic irregularities."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher sets the inquiry question and fair-test conditions: same object, same push, different surfaces; groups plan how they will compare stopping distances."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups systematically push the object across each surface and record either a distance estimate or a relative ranking for stopping."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups compile their rankings and discuss: which surfaces gave the most friction, which the least, and why the surface texture might be responsible."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Class discussion connects surface roughness to the microscopic interlocking irregularities explained in the previous unit; teacher introduces the 'Step Further' on streamlining and drag in fluids."
+      }
+     ],
+     "teacher_notes": "This unit deepens the friction concept through a systematic surface comparison, and it is important that groups apply a consistent push so the comparison is fair — a brief discussion of what 'same push' means is worthwhile before they begin. Students often assume smoother always means less friction without thinking about why; asking them to predict the order before testing and then compare prediction to result is a productive way to challenge that assumption. The fluid drag extension connects naturally to the streamlining examples in the chapter and previews real-world applications.",
+     "materials": [
+      "Small wooden block or eraser",
+      "Samples of glass, cloth, wood, ceramic tile, sand or sandpaper",
+      "Ruler or tape measure",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Classify and investigate: non-contact forces",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Floating Magnets — Observing Magnetic Force",
+     "activity_description": "Students stack two ring magnets on a vertical stick with like poles facing each other and observe the upper magnet floating without contact. They push the upper magnet down and feel the repulsive force, then flip one magnet to observe attraction, classifying magnetic force as non-contact.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Assemble the ring-magnet stack, observe floating and repulsion, flip one magnet to experience attraction, and record observations."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Connects prior Grade 6 magnet knowledge, introduces the non-contact category, and formalises the definition of magnetic force."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher bridges from contact forces by asking: 'Can a force act without any contact at all?' and recalls students' Grade 6 experience with magnets attracting and repelling."
+      },
+      {
+       "minutes": "8-25",
+       "activity": "Groups stack ring magnets on the stick with like poles facing, observe the floating upper magnet, and push it down to feel repulsion; they record observations qualitatively."
+      },
+      {
+       "minutes": "25-36",
+       "activity": "Groups flip one magnet so unlike poles face, observe that the magnets now attract and must be held apart; they record the contrast between the two configurations."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Teacher formalises the definition of magnetic force as a non-contact force acting between a magnet and another magnet or magnetic material; students classify it and note the distinction from contact forces."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 3 by moving from contact to non-contact forces — a conceptually important transition that challenges the assumption that something must touch to exert a force. The most common confusion at this stage is treating magnetic attraction and repulsion as two different forces rather than two manifestations of one magnetic force; make that explicit. Confirming students can articulate 'no physical contact yet a force exists' is the readiness signal for the next non-contact force.",
+     "materials": [
+      "Two ring magnets of the same size",
+      "Vertical stick or pencil that fits through the magnets",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Classify and investigate: non-contact forces",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Charged Bodies Attract and Repel — Electrostatic Force",
+     "activity_description": "Students rub a plastic scale or straw with polythene and bring it near small paper pieces without touching them, observing attraction. They then charge two balloons with wool, observe balloon-balloon repulsion, and bring the wool near a balloon, observing attraction, establishing both repulsion and attraction of electrostatic force.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Perform both charging activities, record each observation, and attempt to explain attraction and repulsion in terms of charge similarity."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Guides students to connect the two activities, introduces the concept of static charge build-up through rubbing, and formalises the definition of electrostatic force."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Brief connection to the previous unit: magnetic force acts at a distance — can charge do the same? Teacher sets up both activities before distributing materials."
+      },
+      {
+       "minutes": "5-22",
+       "activity": "Groups rub the plastic scale with polythene, bring it near paper pieces, observe attraction, and record; they then charge both balloons with wool and observe balloon-balloon repulsion."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Groups bring the charged wool near one balloon and observe attraction; they compare the three interactions (scale-paper, balloon-balloon, wool-balloon) and identify the pattern of similar-repel, unlike-attract."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Teacher formalises the electrostatic force definition and explains that rubbing transfers charge — the 'Step Further' connecting moving charges to electric current is mentioned briefly."
+      }
+     ],
+     "teacher_notes": "Following directly from the magnetic force unit, this unit gives students a second non-contact force and introduces the crucial idea that the same force type can produce both attraction and repulsion depending on charge similarity — paralleling the magnet pole rule from the previous unit. A frequent error is thinking the paper is charged before the scale touches it; emphasise that the paper is uncharged yet still attracted, which is the key observation that distinguishes electrostatic attraction from simple contact. The wool-balloon attraction is the most striking moment: ask students to predict it before they observe.",
+     "materials": [
+      "Plastic scale or drinking straw",
+      "Polythene strip or plastic bag",
+      "Small paper pieces",
+      "Two balloons",
+      "Woollen cloth",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Classify and investigate: non-contact forces",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Why Does Everything Fall Down? — Gravitational Force",
+     "activity_description": "Students throw a ball upward multiple times with varying effort and record what always happens. They trace the ball's motion phases — rising, momentary stop, falling — and infer the existence and direction of a constant downward force. The section establishes gravitational force as always attractive and unique among the three non-contact forces.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Throw a ball upward with different efforts, record observations about its path and final destination, and propose what force must be acting and in what direction."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Frames the inquiry question, prompts students to consider the motion phases, and formalises the definition of gravitational force including its always-attractive character."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher poses the question: 'No matter how hard you throw a ball upward, what always happens — and what force must be responsible?'"
+      },
+      {
+       "minutes": "6-22",
+       "activity": "Groups take turns throwing a ball or eraser upward indoors or near the classroom, recording the three phases of motion (rising, pause, falling) each time."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Groups compare observations across different throw efforts and infer that the direction of force is always downward toward the Earth, regardless of the object's motion direction."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Teacher formalises gravitational force as the force with which Earth attracts objects; students note the unique character: always attractive, never repulsive — in contrast to magnetic and electrostatic forces."
+      }
+     ],
+     "teacher_notes": "This unit completes the non-contact force trio and is an important conceptual moment: students must recognise that gravitational force acts on a rising object in the same downward direction as on a falling one, which contradicts the intuition that force must be 'upward' while the object is still going up. That misconception — that force acts in the direction of motion — is the one most worth addressing directly here. A strong checkpoint: students can describe all three phases of vertical motion and correctly state the direction of force in each.",
+     "materials": [
+      "Small ball or eraser",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "progression_stage": 3,
+     "stage_label": "Classify and investigate: non-contact forces",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Mapping All Forces — A Classification Consolidation",
+     "activity_description": "Students construct a classification chart organising all five forces (muscular, friction, magnetic, electrostatic, gravitational) under contact and non-contact categories, adding for each: the objects it acts between, whether it can attract, repel, or both, and a real-world example from the chapter.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Construct the classification chart from memory and notes, filling each cell and reviewing the chart against a partner's."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Models the chart structure, clarifies any remaining confusions about category membership, and highlights the gravity-is-always-attractive distinction."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher presents the blank classification chart structure and models one row (magnetic force) as an example of how to complete it."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Students individually complete all five rows — category, objects involved, attract/repel/both, real-world example — drawing on their notes from units 4 through 9."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Students compare charts with a partner, identify any disagreements, and resolve them by referring to their notes; teacher circulates to catch persistent errors."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher-led review of the completed chart, emphasising the one asymmetry: gravity is always attractive, while magnetic and electrostatic forces can do both."
+      }
+     ],
+     "teacher_notes": "This consolidation unit draws together the entire classification built across Stages 2 and 3; it is the first time students see all five forces side by side and must distinguish them systematically. A frequent confusion is placing friction in the non-contact category because it is 'invisible'; the chart forces students to ask explicitly whether surfaces are touching. Encourage students to use their charts as a reference tool for the measurement and application stages that follow — they are allowed to refer to it in subsequent units.",
+     "materials": [
+      "Blank classification chart worksheet or notebook page",
+      "Notes from previous units"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Different Objects, Different Pulls — Observing Weight",
+     "activity_description": "Students hang a pencil box, tiffin box, and small stone from a spring one at a time, observe that each object stretches the spring by a different amount, and infer that the Earth pulls different objects with different forces. They record the relative order of stretching and connect it to the concept of weight as a force measured in newtons.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Hang each object from the spring, observe and record the stretch for each, rank the objects by stretch, and articulate what the varying stretch indicates about gravitational pull."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces weight formally as gravitational force measured in newtons, connects the spring-stretch observation to the force concept, and introduces the spring balance as a measuring instrument."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects Stage 3's gravitational force to this unit: 'We know gravity pulls everything downward — but does it pull all objects equally?'"
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Groups hang each object in turn from a spring (or rubber band), observe the stretch, and record the relative amounts in order from least to greatest stretch."
+      },
+      {
+       "minutes": "25-37",
+       "activity": "Groups discuss what the varying stretch implies about the Earth's pull on each object and record their reasoning: greater stretch means greater gravitational force."
+      },
+      {
+       "minutes": "37-45",
+       "activity": "Teacher formally defines weight as the force with which Earth pulls an object, states that it is measured in newtons, and introduces the spring balance as the instrument designed to read this force."
+      }
+     ],
+     "teacher_notes": "This unit opens Stage 4 by bridging from Stage 3's gravitational force concept to its practical measurement — a deliberate conceptual link that students should articulate themselves before the teacher names weight. The most common confusion here, and throughout Stage 4, is treating weight and mass as synonyms; resist the urge to pre-empt that confusion now — let it arise naturally and be resolved in the next unit. Groups benefit from making a prediction of stretch order before hanging the objects, making the observation genuinely surprising when it confirms or contradicts their intuition.",
+     "materials": [
+      "Spring (or strong rubber band)",
+      "Pencil box",
+      "Tiffin box (light metal)",
+      "Small stone",
+      "Stand or support for hanging",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Reading the Spring Balance — Range, Least Count, and Measurement",
+     "activity_description": "Students examine a spring balance, identify its range and calculate its least count, and then use it to measure the weight of several objects. They record readings in newtons and compare results across objects, practising correct instrument use and reading.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Identify range and least count of the spring balance, measure the weight of assigned objects, record readings in newtons, and note how to read the scale correctly."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates how a spring balance works (hook, spring, graduated scale), models correct reading technique, and clarifies range versus least count."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher demonstrates the spring balance — its parts and correct reading position — and explains range (maximum readable weight) and least count (smallest readable division)."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Groups examine their spring balances, record the maximum reading (range) and count the divisions to calculate least count, then hang each assigned object and read its weight in newtons."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Groups record all measurements in a table and identify which objects gave readings they could read confidently versus where the pointer fell between divisions."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Class discussion on measurement accuracy: what does least count tell a user about the reliability of a reading? Teacher connects this to the broader principle of instrument limitations."
+      }
+     ],
+     "teacher_notes": "Building directly on the previous unit's observation that different objects produce different spring stretches, this unit converts qualitative spring-stretch into quantitative newton readings — a critical step in the measurement strand. Watch for students reading the scale at an angle and getting parallax errors; a quick demonstration of eye-level reading prevents this consistently. A useful checkpoint before moving on: every student should be able to state the range, state the least count, and give at least one correctly recorded weight reading in newtons.",
+     "materials": [
+      "Spring balances (one per group if possible)",
+      "Assorted small objects (pencil box, stone, eraser, etc.)",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "progression_stage": 4,
+     "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Weight Is Not Mass — A Critical Distinction",
+     "activity_description": "Students compare the definitions of mass and weight, examine the data table showing one kilogram weighing differently on Earth, Moon, Mars, Venus, and Jupiter, and explain in their own words why the same object can have the same mass but different weights at different locations.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents the mass-versus-weight distinction with the planetary data table, explains why weight varies with location while mass does not, and addresses common conflations."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Study the data table, write their own explanation of why weight varies across planets, and construct a summary distinguishing mass and weight on five attributes."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher opens with the question: 'If you travelled to the Moon, would you become less massive?' Students share intuitions; teacher presents the planetary weight data table."
+      },
+      {
+       "minutes": "10-22",
+       "activity": "Students study the table and calculate or compare ratios: how many times heavier is the same object on Jupiter compared to the Moon? They record observations."
+      },
+      {
+       "minutes": "22-35",
+       "activity": "Teacher explains: mass is the amount of matter, constant everywhere, measured in kg; weight is gravitational force on that matter, varies with location, measured in N."
+      },
+      {
+       "minutes": "35-45",
+       "activity": "Students individually write a summary table distinguishing mass and weight across five attributes: definition, unit, constancy, measuring instrument, and how they are related."
+      }
+     ],
+     "teacher_notes": "This unit resolves the mass-weight confusion that Stage 4 has deliberately held open, and it is the conceptually densest unit of this stage; take care not to rush the planetary data table, which is one of the most memorable anchors for the distinction. The most persistent misconception is that weight is measured in kilograms — students have heard shopkeepers and family members use 'weight' to mean mass throughout their lives, so the correction should be made gently but explicitly with reference to the newton unit established earlier. The summary table students produce in the final band is a useful written checkpoint to collect.",
+     "materials": [
+      "Planetary weight data table (from chapter, 1 kg on Earth/Moon/Mars/Venus/Jupiter)",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Reason causally: buoyancy as a force balance",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "The Upward Push of Water — Feeling Buoyant Force",
+     "activity_description": "Students push a sealed empty bottle into a bucket of water, feel the upward push against their hands, release the bottle, and observe it bouncing back to the surface. They record observations and describe the upward force in their own words before it is formally named.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Submerge the bottle, note the force against their hands as they push it down, release it, observe its return, and write a description of the direction and nature of the force experienced."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the activity, prompts students to compare this force direction to gravity, and uses student descriptions to introduce the formal term upthrust or buoyant force."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects to the previous stage: 'We know gravity pulls everything downward — can a liquid push back?' Groups set up their bucket-and-bottle activity."
+      },
+      {
+       "minutes": "7-24",
+       "activity": "Groups push the sealed bottle into the water and hold it down, consciously noting the effort required and the direction of the resistance; they release and observe the bounce."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Groups record their observations and attempt to describe the upward force: its direction, whether it is always present or only when they push, and how it compares to the pull of gravity on the bottle."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Teacher introduces the formal terms upthrust and buoyant force, defines them as the upward force exerted by a liquid on an immersed object, and asks students to update their records."
+      }
+     ],
+     "teacher_notes": "Stage 5 introduces buoyancy as a new force context — one where two forces act simultaneously in opposite directions, setting up the float-or-sink causal reasoning of the next unit. The key observation to reinforce here is that the upward push is always present whenever the bottle is in the water, not only when students are actively pushing down — students sometimes think the upthrust is a 'reaction' to their push rather than a property of the liquid. Letting a group push the bottle only halfway in and feel the partial resistance helps make this vivid.",
+     "materials": [
+      "Sealed empty plastic bottle",
+      "Bucket of water",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 45,
+     "progression_stage": 5,
+     "stage_label": "Reason causally: buoyancy as a force balance",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Gravity vs Upthrust — Why Objects Float or Sink",
+     "activity_description": "Students compare pairs of objects (those that float and those that sink) and attempt to explain the outcome in terms of the relative magnitudes of gravitational force and buoyant force. They extend the reasoning to the pumice example and to Archimedes' Principle.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Place different objects in water, observe float-or-sink outcomes, and construct force-balance explanations for each, extending to pumice and the displaced-liquid principle."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Frames the force-balance question, circulates to push groups toward quantitative reasoning, and introduces Archimedes' Principle and the role of liquid density."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher reframes the buoyant force from the previous unit as one of two forces acting on any submerged object — the other being gravity — and poses: 'What determines which wins?'"
+      },
+      {
+       "minutes": "6-24",
+       "activity": "Groups place a selection of objects (cork, metal nut, eraser, crumpled foil) in water, record float-or-sink, and write a force-balance explanation for each."
+      },
+      {
+       "minutes": "24-36",
+       "activity": "Groups discuss the pumice example: why does a dense-looking volcanic rock float? They reason from the air-pocket density reduction argument rather than surface appearance."
+      },
+      {
+       "minutes": "36-45",
+       "activity": "Teacher introduces Archimedes' Principle (buoyant force equals weight of displaced liquid) and connects liquid density as a factor; students update their explanations to include the displaced-liquid idea."
+      }
+     ],
+     "teacher_notes": "This unit is the conceptual peak of Stage 5 and requires students to reason with two simultaneous forces — a qualitatively new demand compared to earlier units. The pumice example is particularly valuable because it challenges the surface intuition that 'heavy-looking things sink'; push students to articulate specifically why pumice's density is relevant rather than accepting 'it has air pockets' as a complete explanation. A checkpoint: a student who can correctly predict and explain float-or-sink for a novel object using force-balance language is ready for the application stage.",
+     "materials": [
+      "Bucket or large bowl of water",
+      "Cork",
+      "Metal nut or coin",
+      "Eraser",
+      "Crumpled aluminium foil",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 45,
+     "progression_stage": 6,
+     "stage_label": "Apply and explain: forces as physical causes across contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Force Analysis of Unfamiliar Situations",
+     "activity_description": "Students receive a set of novel scenarios — a leaf falling from a tree, a ship floating, an aeroplane flying, a charged comb picking up hair — and for each identify the forces acting, classify each force, and explain the observed outcome as a result of those forces.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Work through each scenario independently, naming forces, classifying them, and writing a causal explanation for the observed outcome."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Distributes scenario cards, monitors reasoning quality, and uses a targeted class discussion to surface and correct incomplete explanations."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher introduces the task: 'For each situation, name every force acting, classify it, and explain the result using force language we have built this chapter.'"
+      },
+      {
+       "minutes": "5-25",
+       "activity": "Students individually analyse each scenario, producing written force identifications, classifications, and causal explanations for the observed behaviour."
+      },
+      {
+       "minutes": "25-38",
+       "activity": "Small-group comparison: students share their explanations for two contrasting scenarios and identify any forces the other person named that they missed or named differently."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Targeted class discussion on the two most commonly incomplete scenarios; teacher models a complete causal explanation and asks students to refine their written work."
+      }
+     ],
+     "teacher_notes": "Stage 6 requires students to transfer the full force framework to contexts not explicitly discussed in class — this is the application stage that tests whether the classification and causal reasoning are genuinely operational rather than memorised. Watch for students correctly naming forces but failing to explain the outcome causally, for example writing 'gravity acts on the leaf' without explaining why the leaf accelerates downward; prompt with 'so what does that force cause the leaf to do?' The scenarios deliberately span all five force types and both the motion-change and float-sink outcomes to require a broad synthesis.",
+     "materials": [
+      "Scenario cards (leaf falling, ship floating, aeroplane flying, charged comb and hair)",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 45,
+     "progression_stage": 6,
+     "stage_label": "Apply and explain: forces as physical causes across contexts",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Design a Test: Investigating One Force Relationship",
+     "activity_description": "Groups choose one force relationship from the chapter — friction on different surfaces, buoyancy with different liquids, or magnetic force at different distances — design a simple investigation, carry it out, and produce a results record with a written causal explanation.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Select a force relationship, design the investigation specifying what they will change and what they will observe, carry it out, and record and explain results causally."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Approves group investigation designs for feasibility, circulates to ensure causal reasoning is present in the explanation rather than just result description."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Groups choose their force relationship, propose their investigation design to the teacher, and collect or confirm materials are available."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Groups carry out their chosen investigation systematically, recording observations at each step and noting unexpected results."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Groups write a results summary and a causal explanation: what varied, what changed as a result, and which force principle from the chapter explains it."
+      },
+      {
+       "minutes": "40-45",
+       "activity": "Brief whole-class share-out: each group states their force relationship and one finding; teacher flags how different choices all connect back to the same classification framework."
+      }
+     ],
+     "teacher_notes": "This unit gives students agency in applying the chapter's framework — a critical step before the synthesis unit, since students who can choose an investigation and explain it causally have internalised the force concepts rather than just recalling them. A common failure mode is groups that choose an investigation but only describe what they observed without explaining it in force terms; circulate actively during the explanation-writing phase and ask 'which force from our classification does this — and why does it cause this result?' This unit deliberately produces no artefact that the synthesis unit depends on; the synthesis unit is self-contained.",
+     "materials": [
+      "Materials as required by group choice: assorted surfaces and block (friction), containers and liquids of different densities (buoyancy), ring magnets and ruler (magnetic force)",
+      "Notebook"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 18,
+     "period_duration_minutes": 45,
+     "progression_stage": 6,
+     "stage_label": "Apply and explain: forces as physical causes across contexts",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Leads the synthesis discussion using targeted questions that require students to connect force classification to causal outcomes and to distinguish weight measurement from force classification."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Respond to synthesis questions in writing and participate in discussion, producing a final integrative summary connecting all major concepts of the chapter."
+      }
+     ],
+     "activity_title": "The Harbour Engineer's Problem",
+     "activity_description": "Students take on the role of harbour engineers examining a data log from a small coastal harbour. The log describes five real events that occurred on a single day — a laden cargo barge sitting lower in the water than expected, a ferry magnetised by its steel hull attracting loose nuts during docking, a dockworker's trolley rolling farther than usual after being pushed across a wet concrete apron, a buoy ripped from its anchor chain floating freely, and a crane hook left hanging that stretched its calibrated spring scale by a measurable amount. For each event, students construct a written force account: they name every force acting, classify each as contact or non-contact, identify the two interacting objects, state the effect the force produces (start motion, stop motion, change direction, change shape, or sustain a force balance), and — for the barge and crane events — apply the weight and buoyancy frameworks to explain the numerical outcome. The five accounts are then assembled into a single annotated harbour diagram, making visible, in one artefact, every major concept the chapter contains.",
+     "teacher_notes": "This synthesis unit asks students to act as harbour engineers, constructing written force accounts for five real events and assembling them into a single annotated harbour diagram — making every major chapter concept visible in one artefact. Open directly with the harbour log and the barge question without framing it as review; the novelty is deliberate. During pair work, listen for incomplete barge accounts (gravity named but upthrust omitted) and for trolley accounts that name 'friction' without stating its direction relative to motion (see material).",
+     "materials": [
+      "One printed or board-displayed harbour data log per pair (see visual aid: 'Harbour data log — five events')",
+      "One large blank sheet of paper per pair for the annotated harbour diagram",
+      "Pencils and, if available, two colours of pen (one for contact forces, one for non-contact forces)",
+      "Notebooks or lined paper for the individual written force accounts"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher places the harbour data log in front of every pair and reads Event 1 aloud — the laden cargo barge sitting lower in the water than its normal load line. Teacher asks: 'How many forces are acting on this barge right now, and are they in balance or out of balance?' Pairs talk for ninety seconds; two or three responses are heard. Teacher does not confirm or correct — notes the range of answers on the board and says: 'By the time you have written your five force accounts, you will be able to answer that for every event.' No further framing is given; pairs begin work."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Pairs work through all five harbour events in sequence, writing a force account for each in their notebooks. The account must contain: (a) the names of the two interacting objects, (b) the force name and contact or non-contact classification, (c) the direction of the force on each object, (d) the effect produced from the chapter's list of four effects or, where appropriate, a statement of force balance, and (e) for Events 1 and 5 (the barge and the crane hook), a comparison of gravitational force and buoyant force or the identification of what the spring scale reading represents in newtons. Teacher circulates without supplying answers, asking probing questions: 'What is the second object in the magnetic interaction?' 'Which direction does friction act on the trolley — same as motion or opposite?' 'If the barge is lower than expected, is upthrust greater than gravity, equal, or less?' Pairs who finish early are asked to re-examine their account for Event 3 (the wet concrete apron) and explain why the surface condition changes the outcome."
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Each pair draws a simple top-down or side-view sketch of the harbour on their large sheet, placing the five objects (barge, ferry at dock, trolley on apron, floating buoy, crane hook) at reasonable positions. They then annotate each object with arrows representing every force they identified — labelling each arrow with the force name, its classification in parentheses (contact or non-contact), and a one-word statement of its effect or status (e.g., 'friction — contact — opposes motion'; 'gravity — non-contact — weight downward'; 'upthrust — contact — acts upward'). Teacher circulates and asks one pair to walk through their barge annotation aloud to the class briefly, modelling the level of detail expected for the remaining pairs."
+      },
+      {
+       "minutes": "38-45",
+       "activity": "Teacher brings the class together around the original board entries from the opening question about the barge. Pairs now answer it conclusively, and the class compares what they said at the start with what they can say now. Teacher names aloud, in one pass, the chapter's central ideas as the engine behind every account just written: force is always a push or pull between two objects; every force has an identifiable effect; forces are either contact or non-contact depending on whether physical touch is needed; weight is the gravitational pull measured in newtons; buoyant force opposes gravity and determines whether an object sinks or floats; and friction, the contact force between surfaces, depends on the surfaces in contact. Teacher closes: 'Every event in that harbour was explainable by the same set of ideas — that is what a complete picture of force looks like.'"
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Problem-based Learning",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Harbour data log — five events",
+       "text": "Event 1 — Laden cargo barge: The barge is sitting lower in the water than its normal load line indicates it should for the declared cargo weight.\n\nEvent 2 — Ferry at dock: The ferry's steel hull has become magnetised; during docking, loose nuts and bolts on the concrete apron are being attracted toward the hull without anyone touching them.\n\nEvent 3 — Dockworker's trolley: After being given the same push as usual, the trolley rolls noticeably farther than normal across the concrete apron, which was wetted by an earlier rain shower.\n\nEvent 4 — Buoy adrift: A harbour buoy has broken free from its anchor chain and is floating on the surface, drifting with the current.\n\nEvent 5 — Crane hook: A crane hook is hanging motionless from a calibrated spring scale. The scale reads a measurable number of newtons even though nothing is being lifted."
+      },
+      {
+       "type": "table",
+       "title": "Force account structure — required elements per event",
+       "table": "Element | What to record\n(a) Interacting objects | Name both objects involved in the force\n(b) Force name and classification | State the force name and whether it is contact or non-contact\n(c) Direction | State the direction of the force on each object\n(d) Effect | Choose from: start motion / stop motion / change direction / change shape / sustain a force balance\n(e) Events 1 and 5 only | Compare gravitational force and buoyant force (Event 1) or state what the spring scale reading represents in newtons (Event 5)"
+      },
+      {
+       "type": "table",
+       "title": "Annotated diagram — arrow label format",
+       "table": "Label part | Example\nForce name | friction\nClassification in parentheses | (contact)\nOne-word effect or status | opposes motion\nFull label as written on arrow | friction — (contact) — opposes motion"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 18
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and define: what a force is and does",
+    "total_stages": 6,
+    "period_numbers": [
+     1,
+     2,
+     3
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students discover the push-pull definition of force through a physical activity, identify the four effects of force through scenario analysis, and formalise force as an interaction between two objects while learning the newton as its SI unit.",
+    "implied_lo": "Students can define force as a push or pull resulting from the interaction of two objects, identify at least four effects a force can produce, and state the SI unit of force.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify and investigate: contact forces",
+    "total_stages": 6,
+    "period_numbers": [
+     4,
+     5,
+     6
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students catalogue examples of muscular force across living organisms, then observe and investigate friction by pushing objects across different surfaces, ranking surfaces by stopping distance and explaining the variation in terms of microscopic surface irregularities.",
+    "implied_lo": "Students can classify muscular force and friction as contact forces, explain the mechanism of friction in terms of surface irregularities, and rank surfaces by the friction they produce based on experimental evidence.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Classify and investigate: non-contact forces",
+    "total_stages": 6,
+    "period_numbers": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students investigate magnetic force through floating ring magnets, electrostatic force through charging and observing attraction and repulsion, and gravitational force through upward-throw observations, then consolidate all five forces into a classification chart.",
+    "implied_lo": "Students can classify magnetic, electrostatic, and gravitational forces as non-contact forces, distinguish their attract-repel properties, and accurately complete a classification chart for all five forces studied in the chapter.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+    "total_stages": 6,
+    "period_numbers": [
+     11,
+     12,
+     13
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students observe that different objects stretch a spring by different amounts, use a spring balance to measure weight in newtons, and distinguish weight as gravitational force from mass as amount of matter by analysing a planetary weight data table.",
+    "implied_lo": "Students can measure the weight of objects using a spring balance, state readings in newtons, and explain in writing why the same object has the same mass but different weights on different planets.",
+    "cg": "CG-1",
+    "c_code": "C-1.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Reason causally: buoyancy as a force balance",
+    "total_stages": 6,
+    "period_numbers": [
+     14,
+     15
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students feel and name buoyant force by submerging a bottle, then explain float-or-sink outcomes for different objects as the result of the relative magnitudes of gravitational force and buoyant force, extending to Archimedes' Principle.",
+    "implied_lo": "Students can explain whether a given object will float or sink by comparing gravitational force and buoyant force, and can apply Archimedes' Principle to describe the upthrust in terms of displaced liquid.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 6,
+    "stage_label": "Apply and explain: forces as physical causes across contexts",
+    "total_stages": 6,
+    "period_numbers": [
+     16,
+     17,
+     18
+    ],
+    "period_duration_minutes": 45,
+    "activity_summary": "Students analyse unfamiliar force scenarios, design and carry out a self-chosen force investigation with causal explanation, and synthesise the full chapter by connecting force classification, causal mechanisms, and weight measurement into a unified explanatory framework.",
+    "implied_lo": "Students can explain force as the physical cause of changes in motion, shape, and direction by classifying contact and non-contact forces, explaining friction across surfaces causally, and measuring weight with a spring balance to demonstrate that gravitational pull varies across objects.",
+    "cg": "CG-2",
+    "c_code": "C-2.1",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and define: what a force is and does",
+    "implied_lo_assessed": "Students can define force as a push or pull resulting from the interaction of two objects, identify at least four effects a force can produce, and state the SI unit of force.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A football is rolling across a field and a player kicks it sideways. Which effect of force does this demonstrate?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Bringing about a change in the shape of an object",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Changing the direction of motion of a moving object",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Changing the speed of a moving object without affecting direction",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Making an object at rest begin to move",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this indicates the student confused the ball's prior rolling state, thinking it was at rest before the kick — a misreading of the scenario's initial conditions.",
+       "A": "Selecting this indicates the student associated the kick with a deformation effect, confusing the temporary contact deformation of a ball with the chapter's four defined effects.",
+       "C": "Selecting this indicates the student correctly identified a speed-change effect but failed to notice that the kick is sideways — changing direction is the primary outcome here."
+      },
+      "inclusivity": "Students who struggle with the scenario as described can be asked to mime the situation physically before choosing. Students who finish quickly can be asked to identify a real-world example of each of the other three effects."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and define: what a force is and does",
+    "implied_lo_assessed": "Students can define force as a push or pull resulting from the interaction of two objects, identify at least four effects a force can produce, and state the SI unit of force.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Radhika presses an inflated balloon with both hands and its shape changes. For this force to act, what is the minimum number of objects that must be involved?",
+    "options": [
+     {
+      "label": "A",
+      "text": "One — only the balloon needs to be present",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Three — the balloon, the hands, and the air inside the balloon",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Two — but they must be in motion relative to each other",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Two — the balloon and Radhika's hands",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "A": "Selecting this reveals the student has not internalised that force requires an interaction — they are treating force as a property of a single object rather than as a relational phenomenon.",
+       "B": "Selecting this indicates the student noticed the air inside the balloon and included it as a necessary interacting object, conflating the medium inside an object with the interacting object that applies force.",
+       "C": "Selecting this shows the student correctly identified two objects but added an extra condition — relative motion — that is not part of the definition and is contradicted by the pressing-a-stationary-balloon scenario."
+      },
+      "inclusivity": "Students who find the abstract interaction definition difficult can be guided to re-enact pressing their hands together and asked 'how many objects are pushing?' before returning to the question."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and investigate: contact forces",
+    "implied_lo_assessed": "Students can classify muscular force and friction as contact forces, explain the mechanism of friction in terms of surface irregularities, and rank surfaces by the friction they produce based on experimental evidence.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A wooden block is given the same push on four different surfaces. On which type of surface would it travel the shortest distance before stopping?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Ceramic tile",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Cloth",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Glass",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Sand",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting glass indicates the student has the friction order reversed, associating a shiny surface with high friction rather than low friction.",
+       "A": "Selecting ceramic tile suggests the student ranked surfaces by visual smoothness without connecting surface texture to microscopic irregularities — a partial understanding of the mechanism.",
+       "B": "Selecting cloth indicates the student recognised cloth as rough but ranked it above sand, possibly because cloth is more commonly encountered as a rough surface in daily life — a correct intuition applied with insufficient evidence."
+      },
+      "inclusivity": "Students who did not retain the surface-ranking results can be asked to order the surfaces by roughness to touch before answering the question about stopping distance, reconnecting physical sensation to the concept."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and investigate: contact forces",
+    "implied_lo_assessed": "Students can classify muscular force and friction as contact forces, explain the mechanism of friction in terms of surface irregularities, and rank surfaces by the friction they produce based on experimental evidence.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "An aeroplane is designed with a smooth, tapered body rather than a flat-fronted one. Which principle about friction, as extended in the chapter, best explains this design choice?",
+    "options": [
+     {
+      "label": "A",
+      "text": "A tapered body increases muscular force, allowing engines to work less",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Friction only acts between solid surfaces, so shape has no effect on air resistance",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Smooth surfaces produce no friction at all, so any smooth body eliminates drag entirely",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Streamlining reduces the drag force that air exerts on objects moving through it",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this reveals an over-extension of the smooth-surface idea: the student conflated reducing friction with eliminating it entirely, missing the chapter's nuance that smooth surfaces reduce but do not remove drag.",
+       "A": "Selecting this introduces muscular force into an aerodynamic context — the student has confused the two contact forces classified in this stage and misapplied the muscular force concept.",
+       "B": "Selecting this shows the student has not extended friction beyond solid surfaces as the chapter requires; they have not incorporated the fluid-drag content from the 'Step Further' section."
+      },
+      "inclusivity": "Students who missed the fluid-drag extension can be asked: 'What happens if you run with your hand flat versus with your hand edge-on to the wind?' before reconsidering the question."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify and investigate: contact forces",
+    "implied_lo_assessed": "Students can classify muscular force and friction as contact forces, explain the mechanism of friction in terms of surface irregularities, and rank surfaces by the friction they produce based on experimental evidence.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "Priya slides a book across a smooth-looking table and notices it slows down and stops. She concludes that the table surface must be completely flat because it 'looks' smooth. Identify one flaw in Priya's reasoning and explain what actually causes the book to slow down.",
+    "options": [],
+    "expected_elements": [
+     "Identification that apparently smooth surfaces still have microscopic irregularities invisible to the naked eye.",
+     "Statement that these irregularities interlock with those on the book's surface, generating a friction force.",
+     "Explanation that this friction force acts in the direction opposite to the book's motion, causing it to decelerate and stop."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle to write the explanation can first draw a zoomed-in sketch of two surfaces in contact showing interlocking bumps, then translate the sketch into words. Students who find the written format difficult can give a verbal explanation to the teacher."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Classify and investigate: non-contact forces",
+    "implied_lo_assessed": "Students can classify magnetic, electrostatic, and gravitational forces as non-contact forces, distinguish their attract-repel properties, and accurately complete a classification chart for all five forces studied in the chapter.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student brings a charged plastic scale near small paper pieces without touching them, and the pieces jump toward the scale. Which statement correctly identifies the force and why it is classified the way it is?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Electrostatic force; because rubbing built up charge on the scale, which acts on the uncharged paper at a distance without contact",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Electrostatic force; but it is a contact force because the scale came close enough to 'touch' the paper's field",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Magnetic force; because the plastic scale is a magnet that attracts the paper",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Muscular force; because the student's hand moved the scale, transferring force to the paper",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this shows the student conflated magnetic and electrostatic forces — both involve attraction at a distance, and the student has not used the rubbing-charge mechanism to distinguish them.",
+       "D": "Selecting this indicates the student has traced the causal chain back to the student's hand rather than identifying the proximate non-contact force; they have not separated the agent applying the force from the force itself.",
+       "B": "Selecting this indicates the student correctly named the force but misclassified it as contact — likely because proximity feels like contact; the student has not applied the definition that non-contact forces act across a gap with no physical connection."
+      },
+      "inclusivity": "Students who confuse magnetic and electrostatic can be directed to the classification chart and asked: 'Which of these requires rubbing to generate?' before reconsidering."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Classify and investigate: non-contact forces",
+    "implied_lo_assessed": "Students can classify magnetic, electrostatic, and gravitational forces as non-contact forces, distinguish their attract-repel properties, and accurately complete a classification chart for all five forces studied in the chapter.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A ball is thrown straight upward and is still rising. Which of the following correctly describes the gravitational force acting on the ball at this moment?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Gravitational force acts downward only after the ball stops at its highest point",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Gravitational force acts downward, opposing the ball's upward motion and causing it to slow",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Gravitational force acts upward, matching the ball's direction of motion",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "There is no gravitational force on the ball while it is still moving upward",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this reveals the deep misconception that force acts in the direction of motion — one of the most persistent alternative conceptions in force learning.",
+       "D": "Selecting this indicates the student believes the throw imparted a force that must first be 'used up' before gravity can act — a confusion of impetus with force.",
+       "A": "Selecting this shows a partial understanding: the student knows gravity acts downward and is linked to the falling phase, but has applied it only to the falling portion, not recognising it as constant throughout the motion."
+      },
+      "inclusivity": "Students who hold the 'force acts in direction of motion' misconception can be asked to describe what would happen if gravity suddenly switched off the moment the ball was released — would it still slow down? This thought experiment often surfaces the contradiction."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Classify and investigate: non-contact forces",
+    "implied_lo_assessed": "Students can classify magnetic, electrostatic, and gravitational forces as non-contact forces, distinguish their attract-repel properties, and accurately complete a classification chart for all five forces studied in the chapter.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Gravitational force, magnetic force, and electrostatic force are all classified as non-contact forces. However, one of these forces behaves differently from the other two in a fundamental way. Identify this difference and name the force it applies to.",
+    "options": [],
+    "expected_elements": [
+     "Identification that gravitational force is always attractive and can never repel.",
+     "Statement that magnetic and electrostatic forces can both attract and repel depending on the configuration (pole orientation for magnets; charge similarity for electrostatics).",
+     "Naming of gravitational force as the one that is fundamentally different on the attract-repel property."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who find the comparison difficult in prose can construct a two-column table (attract only / attract and repel) and place the three forces before writing their explanation. Students who conflate magnetic and gravitational may need to revisit the floating-magnet observation where repulsion was directly felt."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+    "implied_lo_assessed": "Students can measure the weight of objects using a spring balance, state readings in newtons, and explain in writing why the same object has the same mass but different weights on different planets.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties of matter using simple instruments in standard units, distinguishing weight from mass."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A spring balance reads 10 N when a stone is hung from it on Earth. The same stone is taken to the Moon. What would a spring balance on the Moon read, and what would remain unchanged?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The spring balance reads 10 N on the Moon; the stone's weight is unchanged",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The spring balance reads less than 10 N on the Moon; the stone's mass is unchanged",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The spring balance reads less than 10 N on the Moon; the stone's weight is also unchanged",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The spring balance reads more than 10 N on the Moon because gravity is weaker and stretches the spring more",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "A": "Selecting this indicates the student has not applied the planetary weight data — they are treating weight as constant everywhere, the core mass-weight confusion the chapter addresses.",
+       "C": "Selecting this shows partial understanding: the student correctly predicts a lower spring balance reading but then incorrectly claims weight is unchanged, combining the right observation with the wrong concept.",
+       "D": "Selecting this shows a logical reversal error: the student correctly associates weaker gravity with a change in reading but gets the direction of the change backwards, possibly confusing weaker gravity with a larger spring extension."
+      },
+      "inclusivity": "Students who confuse weight and mass can be redirected to the planetary data table and asked to point to the row for the Moon before answering. For students who find newton units abstract, connecting to the spring-stretch observation (less stretch = lower N reading) can anchor the concept."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+    "implied_lo_assessed": "Students can measure the weight of objects using a spring balance, state readings in newtons, and explain in writing why the same object has the same mass but different weights on different planets.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties of matter using simple instruments in standard units, distinguishing weight from mass."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student uses a spring balance with a range of 0–10 N and 50 equal divisions to measure weight. What is the least count of this balance, and what does it tell about the smallest weight difference the balance can reliably distinguish?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Least count is 0.2 N; but this is only valid when the object is exactly at rest",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Least count is 0.2 N; the balance can reliably distinguish weight differences of 0.2 N or more",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Least count is 0.5 N; the balance can reliably distinguish weight differences of 0.5 N or more",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Least count is 10 N; the balance cannot measure any weight below 10 N",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this indicates a calculation error — the student divided 10 by 20 rather than 10 by 50, possibly misreading the number of divisions.",
+       "D": "Selecting this shows the student has confused the range (maximum readable value) with the least count, treating them as the same concept.",
+       "A": "Selecting this shows the student correctly calculated least count but added a spurious condition about the object being at rest, applying an irrelevant constraint not discussed in the chapter's spring balance content."
+      },
+      "inclusivity": "Students who struggle with the calculation can be asked to draw a simple scale from 0 to 10 with 50 marks and count between two consecutive marks before calculating. This grounds the abstract division in a concrete drawing."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Measure and distinguish: weight, mass, and the spring balance",
+    "implied_lo_assessed": "Students can measure the weight of objects using a spring balance, state readings in newtons, and explain in writing why the same object has the same mass but different weights on different planets.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-1.3",
+     "competency_text": "Measure physical properties of matter using simple instruments in standard units, distinguishing weight from mass."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Arjun says: 'My mass is 40 kg, so my weight is also 40 kg.' Identify the two errors in Arjun's statement. For each error, write the correct statement with the correct value or unit where possible.",
+    "options": [],
+    "expected_elements": [
+     "First error: weight and mass are not the same quantity — weight is the gravitational force on an object, not the amount of matter.",
+     "Second error: weight is measured in newtons (N), not kilograms (kg).",
+     "Corrected statement: Arjun's mass is 40 kg (correct) but his weight on Earth is approximately 400 N (or a value consistent with the Earth weight context from the chapter)."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who can identify the unit error but not the conceptual error can be prompted: 'If Arjun travelled to the Moon, would his mass change? Would his weight change?' This question forces the distinction. Students who prefer a visual mode can fill in a two-row comparison table (mass row, weight row) with definition, value, and unit before writing the correction."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason causally: buoyancy as a force balance",
+    "implied_lo_assessed": "Students can explain whether a given object will float or sink by comparing gravitational force and buoyant force, and can apply Archimedes' Principle to describe the upthrust in terms of displaced liquid.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A sealed hollow metal ball floats on water. When the ball is pushed all the way down and held fully submerged, what happens to the buoyant force acting on it compared to when it was floating?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The buoyant force decreases because the ball is now completely underwater",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The buoyant force increases because more of the ball is submerged, displacing more water",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The buoyant force stays the same because the ball's weight has not changed",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "There is no buoyant force when the ball is fully submerged because it is not floating",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Selecting this reveals an inverted understanding of displacement — the student associated complete submersion with less contact with water, not more water displaced.",
+       "C": "Selecting this shows the student has connected buoyant force to the object's weight rather than to the volume of liquid displaced — a confusion between the force balance condition and the cause of buoyant force.",
+       "D": "Selecting this indicates the student believes buoyant force only exists when an object is floating at the surface, conflating the observable state of floating with the existence of the force."
+      },
+      "inclusivity": "Students who find the abstract version difficult can be asked to physically submerge their hand in a bowl of water and compare the upward push felt at partial versus full submersion before answering."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason causally: buoyancy as a force balance",
+    "implied_lo_assessed": "Students can explain whether a given object will float or sink by comparing gravitational force and buoyant force, and can apply Archimedes' Principle to describe the upthrust in terms of displaced liquid.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Pumice is a volcanic rock that floats on water even though it is made of rock material denser than water. Which explanation best accounts for this, using the principle of buoyant force?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Pumice contains many air-filled pockets that lower its overall density below that of water, so the buoyant force equals or exceeds its weight",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Pumice floats because friction between the rock surface and water holds it up",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Pumice floats because it is a very light rock and light objects always float",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Pumice is magnetic, and the magnetic force counters gravity to keep it on the surface",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "D": "Selecting this shows the student confused force types — attributing a buoyancy outcome to magnetic force, indicating the classification framework has not been fully applied to this new context.",
+       "C": "Selecting this shows the student used a vague 'light objects float' rule rather than the mechanistic force-balance explanation, demonstrating surface-level understanding without causal depth.",
+       "B": "Selecting this introduces friction into a float-or-sink context, confusing contact surface forces with the upward force exerted by a liquid on an immersed object."
+      },
+      "inclusivity": "Students who struggle with the density argument can be asked to imagine a rock with tiny bubbles throughout and compare how much water it displaces versus a solid rock of the same outer size — this spatial reasoning scaffold bridges to the density concept."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Reason causally: buoyancy as a force balance",
+    "implied_lo_assessed": "Students can explain whether a given object will float or sink by comparing gravitational force and buoyant force, and can apply Archimedes' Principle to describe the upthrust in terms of displaced liquid.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A steel nail sinks in water, but a steel ship floats. Both are made of the same material. Using the concept of buoyant force and Archimedes' Principle, explain how this is possible.",
+    "options": [],
+    "expected_elements": [
+     "Statement that the ship displaces a much larger volume of water than the nail because of its hollow, air-filled interior.",
+     "Application of Archimedes' Principle: the buoyant force equals the weight of water displaced, so the ship experiences a much larger upward force than the nail.",
+     "Causal conclusion: for the ship, buoyant force equals or exceeds its weight so it floats; for the nail, its weight exceeds buoyant force so it sinks — the difference arises from volume of liquid displaced, not material alone."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who find the ship-nail comparison abstract can be asked to first sketch both objects in water, draw arrows for gravitational force and buoyant force on each, and then write their explanation from the sketch. Students who can explain verbally but struggle to write may dictate their explanation to a peer who records it."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply and explain: forces as physical causes across contexts",
+    "implied_lo_assessed": "Students can explain force as the physical cause of changes in motion, shape, and direction by classifying contact and non-contact forces, explaining friction across surfaces causally, and measuring weight with a spring balance to demonstrate that gravitational pull varies across objects.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A cyclist pedalling on a road slows down and stops when she stops pedalling, even though the road is flat. Which combination of forces best explains this?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Electrostatic force between the tyres and road surface causes the bicycle to decelerate",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Friction between the tyres and road, and air drag, act opposite to the direction of motion and reduce the cyclist's speed",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Gravitational force alone pulls the bicycle to a stop on the flat road",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Muscular force decreases when she stops pedalling, which directly creates a stopping force on the bicycle",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this misapplies gravitational force to horizontal deceleration on a flat road — the student has not distinguished between the downward pull of gravity and the horizontal opposing forces that cause deceleration.",
+       "A": "Selecting this confuses electrostatic force with friction — both involve surfaces and a slowing effect in the student's reasoning, but the student has not applied the correct contact-force classification.",
+       "D": "Selecting this reveals a misunderstanding of muscular force: stopping pedalling removes the driving force but does not itself create a stopping force — the student has confused the absence of driving force with the presence of a stopping force."
+      },
+      "inclusivity": "Students who answer A can be asked: 'Would the same cyclist slow down on an icy road? Why or why not?' This directs attention to the surface-dependent nature of the stopping force."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply and explain: forces as physical causes across contexts",
+    "implied_lo_assessed": "Students can explain force as the physical cause of changes in motion, shape, and direction by classifying contact and non-contact forces, explaining friction across surfaces causally, and measuring weight with a spring balance to demonstrate that gravitational pull varies across objects.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student claims: 'Non-contact forces are always weaker than contact forces because they act from a distance.' Which response best evaluates this claim using evidence from the chapter?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The claim cannot be evaluated because force strength has not been discussed anywhere in the chapter",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The claim is correct because electrostatic force can only move tiny paper pieces, showing it is weaker than muscular force",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The claim is correct because friction, a contact force, always stops moving objects faster than gravity can",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The claim is incorrect because gravitational force, a non-contact force, pulls all objects toward Earth powerfully enough to return even the hardest-thrown ball, and also produces measurable weight in newtons",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "C": "Selecting this conflates the direction-of-force comparison (gravity acts downward on a horizontal surface, friction acts horizontally) with force magnitude, and misapplies evidence from the chapter.",
+       "B": "Selecting this uses a single, cherry-picked example — small paper pieces and electrostatics — and generalises it to all non-contact forces, an evidence-selection error that fails to consider gravitational force.",
+       "A": "Selecting this indicates the student has not connected the weight-measurement strand to the broader claim — the chapter explicitly measures weight in newtons, providing direct quantitative evidence about gravitational force."
+      },
+      "inclusivity": "Students who struggle with the evaluation framing can be asked: 'Give one piece of evidence from your work this chapter that a non-contact force can be strong' before returning to the question. This separates evidence retrieval from the evaluation task."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply and explain: forces as physical causes across contexts",
+    "implied_lo_assessed": "Students can explain force as the physical cause of changes in motion, shape, and direction by classifying contact and non-contact forces, explaining friction across surfaces causally, and measuring weight with a spring balance to demonstrate that gravitational pull varies across objects.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A science textbook states: 'Force is the physical cause of every change in the motion, direction, or shape of an object.' Using at least three different forces from this chapter, construct an argument that evaluates this statement. Your argument should include at least one contact force and one non-contact force, and should address whether there are any situations in the chapter where this statement appears to have limitations.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Uses at least one contact force (muscular or friction) with a specific chapter example showing how it causes a change in motion or shape.",
+     "Uses at least one non-contact force (gravitational, magnetic, or electrostatic) with a specific chapter example showing the same causal link.",
+     "Explicitly states and evaluates the textbook claim — either affirming it with evidence or identifying a nuance or limitation from chapter content.",
+     "Uses force terminology consistently and correctly: names forces by their chapter classifications, states direction of action where relevant.",
+     "Demonstrates integration of the weight-measurement strand: connects gravitational force to its measurable effect (weight in newtons) as further evidence for the claim."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "inclusivity": "Students who find the open-ended argument format challenging can be offered a sentence-starter frame: 'The claim is [supported / not fully supported] because... For example, [force name] causes [object] to [change] as shown when... A second example is... One possible limitation is...' Students who prefer a visual mode can construct a table with columns Force / Type / What it causes / Evidence from chapter, and then write their evaluation as a short conclusion paragraph."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply and explain: forces as physical causes across contexts",
+    "implied_lo_assessed": "Students can explain force as the physical cause of changes in motion, shape, and direction by classifying contact and non-contact forces, explaining friction across surfaces causally, and measuring weight with a spring balance to demonstrate that gravitational pull varies across objects.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-2.1",
+     "competency_text": "Understanding the physical world through the concept of force as the agent that governs changes in motion, direction, and shape."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Situation | Object(s) involved | Forces acting (name and type) | Direction of each force | Observed outcome | Why this outcome occurs\nA skydiver falls through the air at constant speed | Skydiver, Earth, air | | | Constant speed — neither accelerating nor decelerating | \nA ship loaded with heavy cargo still floats | Ship, water, Earth | | | Floats despite large weight | \nA cricket ball hit by a bat changes direction | Ball, bat | | | Direction of motion changes | \nA charged balloon pressed against a wall stays stuck without being held | Balloon, wall, charge on balloon, wall charge induced | | | Balloon stays on wall without contact support | \nA horse pulling a plough moves it forward across soil | Horse, plough, soil | | | Plough moves forward but friction from soil resists | ",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. For each situation: (1) name all forces acting and classify each as contact or non-contact, (2) state the direction of each force, (3) explain in the final column why the observed outcome occurs — using force language from this chapter. After completing the table, write two sentences connecting the weight-measurement strand: for the ship scenario, explain how a spring balance reading would differ if the cargo were removed, and why.",
+    "scaffold": "For each row, ask: What objects are interacting? Is there physical contact or not? What change — or lack of change — in motion is observed, and which force balance explains it? For the written extension, think about what 'cargo removed' means for the ship's weight in newtons and what happens to the balance between gravitational force and buoyant force.",
+    "format_of_output": [
+     "Completed table with all six columns filled for all five situations",
+     "Two-sentence written extension on weight measurement and the ship scenario"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The Final Stage's implied LO requires simultaneous reasoning across force classification, causal explanation of motion changes, and weight measurement — a classification-with-justification task is the most natural vehicle because it requires students to place each force in the correct category AND explain the causal mechanism, exercising both co-central competencies in a single response.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can identify all forces in a multi-force scenario, classify each correctly, connect the classification to the observed outcome causally, and integrate the weight-measurement strand by reasoning about how a change in an object's weight affects the force balance.",
+      "reading_the_scaffold": "The scaffold guides students to work systematically through the interaction-contact-direction-outcome chain for each row; the extension question is the integration probe that requires the student to move from classification to quantitative reasoning about weight and buoyancy simultaneously. A student who completes the table correctly but gives a vague extension response has not yet reached full integration.",
+      "strong_vs_weak_markers": "Strong response: names all forces in each row, correctly classifies contact/non-contact, states direction with reference to the object's motion, gives a causal explanation (e.g. 'friction from soil opposes the plough's forward motion, so the horse's muscular force must exceed friction for movement to occur'), and correctly links cargo removal to reduced weight in newtons and therefore a reduced need for buoyant force to match it. Weak response: names forces without classifying, omits direction, describes outcomes rather than explaining them causally, and either skips the extension or repeats a definition without applying it to the scenario.",
+      "inclusivity": "Students who find five rows overwhelming can be asked to complete three rows of their choice — one contact force, one non-contact force, and one buoyancy scenario — before attempting the extension. Students who prefer a verbal mode can discuss the skydiver row with a partner and then record their agreed explanation; the written format is not the only legitimate pathway to demonstrating the reasoning."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

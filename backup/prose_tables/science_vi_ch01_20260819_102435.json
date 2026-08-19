@@ -1,0 +1,718 @@
+{
+ "filename": "ch_01_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 1,
+ "chapter_title": "The Wonderful World of Science",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 3
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 3 periods = 120 minutes\nTotal: 3 periods · 2h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "3x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 1",
+  "ledger_ts": "20260817_113057_sci_vi_01_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:05",
+   "ledger_ts": "20260817_203333_sci_vi_01_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_01_canonical_p02.json": "2026-08-17T12:38:00"
+   },
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:59",
+   "ledger_ts": "20260818_120452_sci_vi_01_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 3,
+      "field": "pedagogical_approach",
+      "removed": "Error-detection and reconstruction: students are positioned as critical readers who must identify where scientific reasoning breaks down, repair it, and then articulate what correct reasoning looks like. This makes the structure of the scientific method visible by showing what happens when it is violated, and it foregrounds the chapter's claim that science is a way of thinking rather than a set of facts.",
+      "replaced_with": "Error Detection and Reconstruction"
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Recognise and describe scientific curiosity in everyday life",
+     "synthesis": false,
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Science Is Already Happening Around You",
+     "activity_description": "Students recall a real problem they personally tried to solve — a broken object, a spill, a puzzle — and write down what they noticed, what they guessed, and what they did next. Responses are shared in pairs, and patterns across examples are named together as a class.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student writes a short account of a personal problem-solving episode, identifying the moment of curiosity and the steps they took."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Pairs compare their written accounts and identify what their problem-solving steps have in common."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates during writing, then draws out shared patterns from paired exchanges to build a class list of common steps on the board."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "The teacher opens by asking students to think quietly about a time they tried to figure something out — a pen that stopped working, food that spilled, a game that behaved unexpectedly — and to jot down what happened and what they did."
+      },
+      {
+       "minutes": "8-20",
+       "activity": "Students write a short personal account (Activity 1.1) naming the problem, their initial guess, how they tested it, and what happened — the teacher circulates and prompts those who are stuck with a single guiding question."
+      },
+      {
+       "minutes": "20-32",
+       "activity": "Pairs share their accounts and mark the steps their stories have in common, arriving at a rough shared list on a scrap of paper."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "The teacher facilitates a brief whole-class share-out, collects the common steps on the board, and names this pattern as the starting point for the chapter's journey."
+      }
+     ],
+     "teacher_notes": "This is the chapter's opening move, so orient students to the idea that science begins with the curiosity they already practise. A common early error is that students describe what happened rather than the steps they took — prompt them specifically for the moment of guessing and the moment of checking. When the class list appears on the board, resist naming the steps formally yet; that formalisation is the next unit's work.",
+     "materials": [
+      "Notebooks or loose paper",
+      "Pens or pencils",
+      "Blackboard or whiteboard"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Map everyday problem-solving onto the five steps of the scientific method",
+     "synthesis": false,
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Pen That Stopped Writing — and Other Everyday Scientists",
+     "activity_description": "Students receive three brief scenarios — the pen example, the dal spilling from a pressure cooker, and the bicycle tyre leak — and map each scenario's events onto the five steps of the scientific method. Groups then evaluate which step is hardest to identify and why.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the five named steps by connecting them to the class list built in the previous unit, then launches the group mapping task."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "In small groups, students read each scenario, assign each event to one of the five steps, and flag any step that is absent or ambiguous."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student writes one sentence explaining which step they found hardest to identify and what that difficulty reveals about how science works."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "The teacher connects today's unit to the previous one by revisiting the board list, then formally names the five steps — observation, question, hypothesis, experiment or further observation, analysis — showing how they match what the class already found."
+      },
+      {
+       "minutes": "7-24",
+       "activity": "Groups receive the three written scenarios and work through each one, annotating which part of the story corresponds to which step and noting where a step seems missing or blurred."
+      },
+      {
+       "minutes": "24-34",
+       "activity": "Groups share their annotations briefly; the teacher facilitates a focused discussion on the hypothesis step, which students most commonly conflate with observation."
+      },
+      {
+       "minutes": "34-40",
+       "activity": "Each student writes one individual sentence on the step they found hardest to identify and what that difficulty suggests about scientific thinking, then the teacher previews the next unit's synthesis task."
+      }
+     ],
+     "teacher_notes": "Building on the personal examples named in the previous unit, this unit formalises the five steps — watch for students who treat hypothesis and observation as the same thing, since the chapter explicitly distinguishes guessing from noticing. The bicycle and dal examples are in the chapter and are worth using because they show that scientific thinking belongs to everyday workers, not only laboratory scientists. A useful checkpoint before moving on: ask one group to explain why a cook qualifies as a scientific thinker.",
+     "materials": [
+      "Printed or board-written scenario cards (pen, dal, bicycle)",
+      "Notebooks",
+      "Blackboard or whiteboard"
+     ],
+     "homework": [
+      "Describe a daily-life situation — from home, school, or the street — in which someone was following the scientific method, and label which step of the method each part of the situation represents (Activity 1.2)."
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Each student writes one original scientific question and a step-by-step plan for how they would investigate it, using the five-step structure as a scaffold."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Pairs or triads read each other's inquiry plans and give one specific piece of feedback on whether each of the five steps is genuinely present."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Opens with a whole-chapter synthesis connecting the chapter's jigsaw metaphor to what students have done across all units, then circulates during writing and facilitates the closing discussion."
+      }
+     ],
+     "activity_title": "The Mystery of the Wilting Plant: A Scientific Method Case File",
+     "activity_description": "Students receive a set of 'Case File Cards' describing a household scenario — a potted plant that has begun wilting despite apparently normal care — presented in fragments across five cards, each card corresponding to one step of the scientific method. The cards are deliberately shuffled and some contain deliberate reasoning errors. Working first individually, then in small groups, students sequence the cards correctly, identify the flawed reasoning on the error cards, rewrite those sections, and finally compose a one-paragraph 'Case Closed' verdict that names what the scenario shows about science as a way of thinking. The task draws together every shared concept from the chapter — curiosity as the entry point, science as present in everyday life, the five steps of the scientific method, the idea that hypotheses are tested and revised, and the understanding that science is collaborative — by making those ideas do real work in a setting the chapter never visits.",
+     "teacher_notes": "This unit asks students to sequence shuffled Case File Cards about a wilting plant, identify deliberate reasoning errors on two of the five cards, rewrite those cards, and compose a 'Case Closed' paragraph that names every step of the scientific method — making the chapter's concepts do real work in an everyday setting. The critical facilitation move is pushing groups beyond 'this card is wrong' to articulating which step's purpose is violated and why (see material: 'Case File Cards — text and error guide'). The closing discussion should surface the jigsaw metaphor explicitly: Card 5 ends with a new question, showing the puzzle has grown rather than closed.",
+     "materials": [
+      "Five Case File Cards per group, shuffled before distribution (see visual aid: 'Case File Cards — text and error guide')",
+      "Blackboard or whiteboard and chalk or marker",
+      "Notebook or loose paper for each student"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "The teacher places a shuffled set of five Case File Cards face-down on each group's desk and says nothing about their order or content. Students are told only this: 'A girl named Meera had a problem. These five cards tell her story. Your job is to read them, put them in the right order, and be ready to say what Meera was doing.' Students read individually and write their proposed sequence in their notebooks. No group discussion yet — each student commits to an order alone."
+      },
+      {
+       "minutes": "6-16",
+       "activity": "Groups of three or four compare their individual sequences, agree on a final order, and then read each card critically: do all five cards show good scientific thinking, or do some contain mistakes? Groups identify which cards they believe are flawed and write, in their own words, what the error is and what the card should say instead. The teacher circulates, asking groups to explain their reasoning aloud rather than just marking a card as 'wrong.'"
+      },
+      {
+       "minutes": "16-28",
+       "activity": "Each group writes a 'Case Closed' paragraph — three to five sentences — that tells Meera's complete story in the correct sequence, using their corrected versions of the error cards. The paragraph must name each step of the method as it appears in the story. The teacher pauses one group mid-task and reads their draft aloud to the class as a shared model, inviting the class to check whether every step of the method is present."
+      },
+      {
+       "minutes": "28-36",
+       "activity": "Two groups read their 'Case Closed' paragraphs aloud. After each, the class listens for: (a) whether all five steps are present and in order; (b) whether the corrected error cards are genuinely fixed; and (c) whether the paragraph captures the idea that Meera's last line opens a new question. The teacher records on the board the five steps as groups name them, building the complete sequence visibly from the groups' own words."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "The teacher closes by returning to what the task itself showed: Meera was not in a laboratory — she was at home with a houseplant, which is exactly where the chapter says science lives. Every step the class just used to fix and tell her story — noticing something puzzling, asking a focused question, guessing an explanation, testing it, and finding that the answer opens another question — is the chapter's method working in full. The board now holds those five steps, named by the class from real use, not from memorisation. The chapter's jigsaw-puzzle idea appears one last time: Card 5 ends with a new question, which means the puzzle has grown, not closed."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Error Detection and Reconstruction",
+     "visual_aids": [
+      {
+       "type": "prose",
+       "title": "Case File Cards — text and error guide",
+       "text": "Prepare five cards per group on separate paper strips or quarter-sheets. Cards 1, 3, and 5 are correct; Cards 2 and 4 contain deliberate errors for students to find and fix. Shuffle before handing out.\n\nCard 1 — OBSERVATION (correct)\n'Meera noticed that the plant on her windowsill, which she waters every two days, has drooping leaves and a dull colour. She finds this puzzling because she has been watering it regularly.'\n\nCard 2 — QUESTION (error)\n'Meera asks: Why is everything in the world so difficult to understand? She decides plants are impossible to figure out.'\nError: the question is too vague and not connected to the specific observation; it cannot be investigated or turned into a hypothesis because it is not about an observable, specific thing.\n\nCard 3 — HYPOTHESIS (correct)\n'Meera guesses that too much water might be drowning the roots and stopping them from working properly, causing the drooping.'\n\nCard 4 — TEST (error)\n'Meera decides to believe her guess is true because she once heard that overwatering harms plants. She does not do anything further.'\nError: a hypothesis must be tested by actual observation or experiment, not accepted on hearsay without investigation.\n\nCard 5 — ANALYSIS (correct)\n'Meera checks the soil and finds it soggy even two days after watering. She reduces watering to once a week. After several days, the leaves straighten. Her hypothesis was supported; she also wonders whether the pot's drainage hole is blocked — a new question for a new inquiry.'\n\nCase Closed paragraph prompt: the paragraph should name curiosity, a specific question, a hypothesis, a test, and the revision of understanding. If a group omits any of these, prompt: 'What step in the method does this part of the story show?'"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 3
+  },
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Recognise and describe scientific curiosity in everyday life",
+    "total_stages": 3,
+    "period_numbers": [
+     1
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students write and share personal problem-solving stories, identifying the moment of curiosity and steps taken, and collaboratively name common patterns.",
+    "implied_lo": "The student can describe a personal or observed everyday problem-solving episode and identify within it the moment of curiosity, an initial guess, and a checking action.",
+    "cg": "CG-6",
+    "c_code": "C-6.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Map everyday problem-solving onto the five steps of the scientific method",
+    "total_stages": 3,
+    "period_numbers": [
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students map three chapter scenarios onto the five named steps of the scientific method, identify ambiguous or missing steps, and explain the significance of the hypothesis step.",
+    "implied_lo": "The student can assign each event in an everyday scenario to one of the five steps of the scientific method and explain why the hypothesis step is distinct from observation.",
+    "cg": "CG-6",
+    "c_code": "C-6.2",
+    "co_central": false
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+    "total_stages": 3,
+    "period_numbers": [
+     3
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students formulate an original question about something genuinely puzzling and write a five-step inquiry plan, which peers evaluate for methodological completeness.",
+    "implied_lo": "The student can pose an original scientific question arising from genuine curiosity and construct a structured five-step inquiry plan that distinguishes observation, hypothesis, test, and analysis.",
+    "cg": "CG-6",
+    "c_code": "C-6.2",
+    "co_central": false
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Recognise and describe scientific curiosity in everyday life",
+    "implied_lo_assessed": "The student can describe a personal or observed everyday problem-solving episode and identify within it the moment of curiosity, an initial guess, and a checking action.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student notices that her torch stops working. She thinks the battery might be dead, so she replaces the battery. The torch works again. Which part of this story is the 'initial guess'?",
+    "options": [
+     {
+      "label": "A",
+      "text": "She replaces the battery.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The battery might be dead.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "The torch stops working.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The torch works again.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "The student confuses the triggering observation (torch stops working) with the guess — they have not yet separated noticing from proposing a cause.",
+       "A": "The student identifies the test or checking action as the guess — they are conflating what they do to check with what they think might be true.",
+       "D": "The student selects the result as the guess — they are reading backward from outcome to cause without distinguishing inference from evidence."
+      },
+      "inclusivity": "Students who express the answer verbally rather than in writing can be asked to point to the part of the story that is 'what she thinks might be wrong' — this separates the recognition task from literacy demand. Students with richer problem-solving experience may be invited to narrate a parallel example from their own life and identify the same three moments."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Recognise and describe scientific curiosity in everyday life",
+    "implied_lo_assessed": "The student can describe a personal or observed everyday problem-solving episode and identify within it the moment of curiosity, an initial guess, and a checking action.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "The chapter describes science as a giant, unending jigsaw puzzle. What does this metaphor best explain about how science works?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Every new discovery adds to understanding but also raises more questions, and earlier ideas sometimes need to be revised.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Science has a fixed number of facts that will eventually all be known.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Scientists work alone, each fitting in their own piece without connecting to others.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The most important skill in science is memorising the pieces that have already been found.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "B": "The student holds a fixed-body-of-facts conception of science — they have not engaged with the chapter's emphasis that science is a living, evolving enterprise.",
+       "C": "The student misreads the collaborative emphasis of the chapter, associating puzzle-solving with isolated individual effort rather than shared, cumulative inquiry.",
+       "D": "The student conflates science with memorisation — a common prior conception the chapter explicitly challenges by positioning curiosity above recall."
+      },
+      "inclusivity": "Students who struggle with abstract metaphor can be asked first: 'In a jigsaw, can one piece be wrong and need to move?' — grounding the metaphor in concrete puzzle experience before applying it to science."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Map everyday problem-solving onto the five steps of the scientific method",
+    "implied_lo_assessed": "The student can assign each event in an everyday scenario to one of the five steps of the scientific method and explain why the hypothesis step is distinct from observation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A cook notices that dal has spilled out of the pressure cooker. She wonders whether too much water was added. She cooks the same dal again with less water, and it does not spill. Which step of the scientific method does 'cooking the dal again with less water' represent?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Experiment or further observation",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Formulating a question",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Hypothesis",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Observation",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "The student conflates the test action with the original noticing — they have not separated what triggers inquiry from what checks it.",
+       "C": "The student confuses testing the hypothesis with the hypothesis itself — a persistent conflation this chapter specifically addresses through the dal and pen examples.",
+       "B": "The student assigns the test to the question-formulation step, suggesting they read the cook's repeated action as another instance of wondering rather than deliberate checking."
+      },
+      "inclusivity": "Students who find the step labels abstract can be prompted with: 'Is she noticing, guessing, asking, or checking?' — this collapses the five steps into plain verbs before mapping to formal labels."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Map everyday problem-solving onto the five steps of the scientific method",
+    "implied_lo_assessed": "The student can assign each event in an everyday scenario to one of the five steps of the scientific method and explain why the hypothesis step is distinct from observation.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A bicycle repair person hears a hissing sound from a tyre. He thinks there might be a puncture near the valve. He dips the tyre in water and watches for bubbles. No bubbles appear near the valve, so he checks the rest of the tyre and finds a small hole elsewhere. Which step does 'thinking there might be a puncture near the valve' represent?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Analysis, because he is drawing a conclusion about where the puncture is",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Experiment, because he is working on the tyre",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Hypothesis, because it is a proposed possible explanation that has not yet been tested",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Observation, because he is paying attention to the tyre",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "The student collapses hypothesis into observation — they associate any act of attention with the observation step rather than distinguishing active noticing from proposed explanation.",
+       "A": "The student reads 'thinking where it might be' as a conclusion rather than a pre-test guess — they have not yet grasped that analysis comes after testing, not before.",
+       "B": "The student equates any physical action involving the object with experiment — they have not distinguished mental hypothesis-formation from physical testing."
+      },
+      "inclusivity": "Pair this with the pen example from the chapter for students who find the bicycle context unfamiliar — the structure of the two scenarios is identical and allows transfer checking."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Map everyday problem-solving onto the five steps of the scientific method",
+    "implied_lo_assessed": "The student can assign each event in an everyday scenario to one of the five steps of the scientific method and explain why the hypothesis step is distinct from observation.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student's pen stops writing mid-sentence. She shakes the pen and tries again — it still does not work. She thinks the ink may have dried up, so she dips the nib briefly in water and tries again. This time it writes. Name the step of the scientific method that 'the ink may have dried up' represents, and give one reason why this step is different from the observation that the pen stopped writing.",
+    "options": [],
+    "expected_elements": [
+     "Identifies 'the ink may have dried up' as the hypothesis step.",
+     "States that the observation is what was noticed (the pen stopped working) while the hypothesis is a proposed explanation or possible cause.",
+     "Makes clear that a hypothesis has not yet been tested at the point it is formed, whereas the observation is simply what was seen or experienced."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who find written explanation difficult can respond by first drawing a two-column table labelled 'What I noticed' and 'What I think might be causing it' and then writing one sentence per column — this scaffolds the distinction without reducing the cognitive demand."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+    "implied_lo_assessed": "The student can pose an original scientific question arising from genuine curiosity and construct a structured five-step inquiry plan that distinguishes observation, hypothesis, test, and analysis.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student wants to investigate why her plant's leaves turn yellow. She writes the following plan: (1) I noticed the leaves are yellow. (2) My question is: why are the leaves yellow? (3) Maybe the plant is not getting enough water. (4) I will not water the plant for a week and see if more leaves turn yellow. (5) If more leaves turn yellow, my guess is correct. Which step of her plan has a flaw that would prevent her from answering her question reliably?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Step 1, because she should have asked the question before observing.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Step 3, because a hypothesis should be a fact, not a guess.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Step 4, because deliberately withholding water tests the opposite of what her hypothesis requires — she should water more, not less, to test whether lack of water causes yellowing.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Step 5, because analysis should be done before the experiment.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "A": "The student misreads the sequence rule — they think observation must follow questioning, reversing the chapter's account of how curiosity arises from noticing.",
+       "B": "The student holds a misconception that hypotheses must be verified facts rather than proposed, testable explanations — this is precisely what the chapter challenges.",
+       "D": "The student misplaces analysis in the sequence, suggesting they have memorised a rigid order without understanding that analysis is the act of interpreting what the experiment showed."
+      },
+      "inclusivity": "Students who struggle with evaluating the plan abstractly can be asked: 'If she already has too little water, what would stopping water tell her about whether water is the cause?' — this grounds the logical flaw in plain causal reasoning."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+    "implied_lo_assessed": "The student can pose an original scientific question arising from genuine curiosity and construct a structured five-step inquiry plan that distinguishes observation, hypothesis, test, and analysis.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "The chapter says that not all questions will be answered in Grade 6 and that science is the beginning of a longer journey. Which of the following best explains why this is presented as a strength of science rather than a weakness?",
+    "options": [
+     {
+      "label": "A",
+      "text": "It means science is too difficult for Grade 6 students to understand fully.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "It means students do not need to learn very much in Grade 6.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Scientists keep questions unanswered on purpose so that future scientists have work to do.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Unanswered questions drive further inquiry, and science grows precisely because each answer opens new questions rather than closing the puzzle.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "B": "The student reads the chapter's statement as permission to learn less — they have not engaged with the jigsaw metaphor's meaning for the nature of scientific progress.",
+       "A": "The student interprets incompleteness as a deficit of the learner rather than a feature of science — a fixed-ceiling view of knowledge the chapter explicitly challenges.",
+       "C": "The student anthropomorphises the incompleteness of science as a deliberate human strategy rather than understanding it as an intrinsic property of inquiry-driven knowledge-building."
+      },
+      "inclusivity": "Students who find the philosophical framing difficult can be redirected to the jigsaw metaphor: 'In a jigsaw, does finding one piece mean there are fewer pieces left, or does it help you see where other pieces might go?' — this makes the recursive nature of inquiry concrete."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+    "implied_lo_assessed": "The student can pose an original scientific question arising from genuine curiosity and construct a structured five-step inquiry plan that distinguishes observation, hypothesis, test, and analysis.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A student writes the following inquiry plan for the question 'Why does bread get mouldy faster in summer?': Step 1 — I noticed bread gets mouldy quickly in hot weather. Step 2 — Why does bread get mouldy faster in summer? Step 3 — Maybe heat makes mould grow faster. Step 4 — I will keep one slice of bread in a warm place and one in a cool place and check both after the same number of days. Step 5 — If the warm slice is mouldier, my hypothesis is supported. Evaluate this inquiry plan: identify one strength and one limitation, and suggest one specific improvement to make the plan more reliable.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Identifies a genuine strength — for example, that the student correctly uses a comparison (warm vs. cool) to test the hypothesis, or that all five steps are present and in the right sequence.",
+     "Identifies a genuine limitation — for example, that other variables (type of bread, amount of moisture, exposure to air) are not controlled, so the result might not be due to temperature alone.",
+     "Proposes a specific, actionable improvement — for example, using bread from the same loaf, keeping everything else identical, or repeating the test multiple times to check consistency.",
+     "Applies the logic of the scientific method (testing one variable at a time, or reliability through repetition) rather than restating the steps as a list."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who find extended writing difficult can structure their response as three labelled sentences — 'One strength:', 'One limitation:', 'One improvement:' — this scaffolds organisation without reducing the evaluative demand. Students who are more confident can be invited to propose a second improvement and explain the reasoning behind both."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Formulate an original scientific question and design a structured inquiry process",
+    "implied_lo_assessed": "The student can pose an original scientific question arising from genuine curiosity and construct a structured five-step inquiry plan that distinguishes observation, hypothesis, test, and analysis.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-6.2",
+     "competency_text": "Formulate scientific questions and structure a process of inquiry by connecting the scientific method to familiar everyday problem-solving experiences."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Scenario | What was noticed | Question formed | Hypothesis proposed | How to test | What the result would mean\nA student sees that her ink pen writes darker in the morning than in the afternoon. | Ink looks darker in the morning | Why does ink look darker in the morning? | Maybe the ink is thicker when it is cooler | (to be completed) | (to be completed)\nA student notices that his bread toasts faster on one side of the toaster than the other. | One side of bread is darker after toasting | Why does one side toast faster? | (to be completed) | (to be completed) | (to be completed)\nA student finds that her rubber eraser leaves smudges on some paper but erases cleanly on other paper. | Eraser smudges on some paper | (to be completed) | (to be completed) | (to be completed) | (to be completed)",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. Three students each noticed something puzzling in everyday life. For each scenario, complete the missing steps of the scientific method in the table. Then, for Scenario C, write two sentences below the table explaining how the result of the test would help the student decide whether the hypothesis is correct or incorrect.",
+    "scaffold": "Use the five steps you have practised — observation, question, hypothesis, test, analysis — to complete each row. For Scenario C, you are completing all steps from the question onward, so start by asking yourself: what would be a sensible possible reason for the smudging?",
+    "format_of_output": [
+     "Completed table with all blank cells filled in",
+     "Two sentences below the table for Scenario C explaining how the test result connects to the hypothesis"
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The task requires students to assign scientific-method steps to partially described scenarios and justify the connection between test outcome and hypothesis — the most direct demonstration of the final stage's implied LO within the classroom-only constraint.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can apply the five-step scientific method to unfamiliar everyday phenomena, construct a plausible hypothesis, design a test, and reason forward from result to conclusion — the full arc from observation to structured inquiry.",
+      "reading_the_scaffold": "The three scenarios are deliberately graduated: Scenario A has the most cells filled (only test and result meaning are missing), Scenario B is partially filled (hypothesis and two later steps missing), and Scenario C requires the student to generate everything from the question onward. This gradient reveals where a student's application of the method becomes effortful or breaks down.",
+      "strong_vs_weak_markers": "Strong responses propose hypotheses that are genuinely testable and specific (e.g. 'the paper with smudges is smoother and does not grip the eraser') and write analysis sentences that connect the result back to the hypothesis ('if the smooth paper smudges less after roughening, the texture is the cause'). Weak responses copy the observation as the hypothesis, write tests that do not isolate a variable, or write analysis sentences that simply restate the result without connecting it to the hypothesis.",
+      "inclusivity": "Students who find Scenario C challenging can be invited to choose any everyday object or situation they know well and construct the full row for that instead — the cognitive demand is identical and the personal context lowers the access barrier. Students who complete the task quickly can be asked to add a second hypothesis for one scenario and explain what a different test design would look like."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

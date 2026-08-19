@@ -57,6 +57,26 @@
       "replaced_with": "Structured Fault Diagnosis"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 15,
+      "field": "visual_aids[2]",
+      "removed": {
+       "type": "prose",
+       "title": "Fault answer guide (teacher reference)",
+       "text": "Fault 1 — Cause: the magnetic field around the coil disappears when current stops flowing; the electromagnet is on only when the circuit is closed. Fix: restore the loose wire connection so current flows again. Concept: magnetic effect of current; on/off nature of electromagnets.\n\nFault 2 — Cause: the number of turns in the coil is a factor controlling electromagnet strength; fewer turns produce a weaker field. Fix: restore the original number of turns. Concept: factors affecting electromagnet strength.\n\nFault 3 — Cause: wire length and thickness determine resistance and therefore the amount of heat produced; a shorter, thinner replacement wire has different resistance, changing how much heat is generated. Fix: replace with a coil matching the original length and thickness. Concept: factors affecting heating effect — current, material, length/thickness of wire.\n\nFault 4 — Cause: rechargeable batteries degrade after many charge-discharge cycles and eventually cannot hold enough charge to drive current for a full day. The old battery must not be thrown overboard; it must be taken to a proper disposal facility because it may contain acids and toxic materials. Concept: charge-discharge cycle life of rechargeable batteries; safe disposal.\n\nFault 5 — Cause: reversing the battery terminals reverses the direction of current, which reverses the poles of the electromagnet, so the compass deflects the opposite way. Concept: current direction determines pole orientation of an electromagnet.\n\nExtension prompt for early finishers: 'Which of these five faults would also apply to a dry cell, and which would not, and why?' — stretches into the dry-cell versus rechargeable distinction."
+      },
+      "replaced_with": [
+       "[table] Fault answer guide (teacher reference)",
+       "[prose] Extension prompt for early finishers"
+      ]
+     }
+    ]
    }
   ],
   "synthesis_reauthor": {
@@ -760,9 +780,14 @@
        "table": "System | Symptom | Cause-and-Fix\nSensor coil (magnetic effect) | The compass indicator stops deflecting entirely when the vessel hits a wave and the wire to the coil works loose. | (blank — students complete)\nSensor coil (magnetic effect) | A sailor removes half the turns from the sensor coil to shorten it; the compass deflection becomes noticeably weaker. | (blank — students complete)\nBait-box heating coil (heating effect) | The bait box no longer warms adequately after a replacement coil was installed; the replacement is shorter and thinner than the original. | (blank — students complete)\nRechargeable battery | By midday the battery can no longer drive either the sensor coil or the heating coil; the battery is several years old and has been charged and discharged daily. | (blank — students complete)\nSensor coil + battery (both effects) | A sailor connects the battery the wrong way round trying to revive it; the sensor coil's compass deflects, but in the opposite direction from normal. | (blank — students complete)"
       },
       {
-       "type": "prose",
+       "type": "table",
        "title": "Fault answer guide (teacher reference)",
-       "text": "Fault 1 — Cause: the magnetic field around the coil disappears when current stops flowing; the electromagnet is on only when the circuit is closed. Fix: restore the loose wire connection so current flows again. Concept: magnetic effect of current; on/off nature of electromagnets.\n\nFault 2 — Cause: the number of turns in the coil is a factor controlling electromagnet strength; fewer turns produce a weaker field. Fix: restore the original number of turns. Concept: factors affecting electromagnet strength.\n\nFault 3 — Cause: wire length and thickness determine resistance and therefore the amount of heat produced; a shorter, thinner replacement wire has different resistance, changing how much heat is generated. Fix: replace with a coil matching the original length and thickness. Concept: factors affecting heating effect — current, material, length/thickness of wire.\n\nFault 4 — Cause: rechargeable batteries degrade after many charge-discharge cycles and eventually cannot hold enough charge to drive current for a full day. The old battery must not be thrown overboard; it must be taken to a proper disposal facility because it may contain acids and toxic materials. Concept: charge-discharge cycle life of rechargeable batteries; safe disposal.\n\nFault 5 — Cause: reversing the battery terminals reverses the direction of current, which reverses the poles of the electromagnet, so the compass deflects the opposite way. Concept: current direction determines pole orientation of an electromagnet.\n\nExtension prompt for early finishers: 'Which of these five faults would also apply to a dry cell, and which would not, and why?' — stretches into the dry-cell versus rechargeable distinction."
+       "table": "Fault | Cause | Fix | Concept\n1 | The magnetic field around the coil disappears when current stops flowing; the electromagnet is on only when the circuit is closed | Restore the loose wire connection so current flows again | Magnetic effect of current; on/off nature of electromagnets\n2 | The number of turns in the coil is a factor controlling electromagnet strength; fewer turns produce a weaker field | Restore the original number of turns | Factors affecting electromagnet strength\n3 | Wire length and thickness determine resistance and therefore the amount of heat produced; a shorter, thinner replacement wire has different resistance, changing how much heat is generated | Replace with a coil matching the original length and thickness | Factors affecting heating effect — current, material, length/thickness of wire\n4 | Rechargeable batteries degrade after many charge-discharge cycles and eventually cannot hold enough charge to drive current for a full day | The old battery must not be thrown overboard; it must be taken to a proper disposal facility because it may contain acids and toxic materials | Charge-discharge cycle life of rechargeable batteries; safe disposal\n5 | Reversing the battery terminals reverses the direction of current, which reverses the poles of the electromagnet, so the compass deflects the opposite way |  | Current direction determines pole orientation of an electromagnet"
+      },
+      {
+       "type": "prose",
+       "title": "Extension prompt for early finishers",
+       "text": "'Which of these five faults would also apply to a dry cell, and which would not, and why?' — stretches into the dry-cell versus rechargeable distinction."
       }
      ]
     }

@@ -52,6 +52,26 @@
       "replaced_with": "Primary-source Inquiry"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 7,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Village Well Logbook entries",
+       "text": "A sequence of roughly twelve short dated entries spanning several decades. Include the following:\n\n1. An observation that the water tastes more sour after heavy rain.\n2. A note that the iron bucket rusted faster during the monsoon season.\n3. A sketch of ice on the stone rim with an embedded question asking why only the shaded side froze.\n4. A retraction entry reading: 'I was wrong last year — the water did not smell of metal, I had been handling coins.'\n5. A note that a new observer has begun keeping records.\n6. An unanswered question asking whether the water level drop in summer is connected to less rain or to more people drawing water.\n7. A final entry noting that the question is still open and inviting whoever reads this to continue.\n\nThe remaining entries may be filled with additional well observations of varying sharpness — some careful and specific, some vague or inconclusive. The mix of precise, muddled, retracted, and unanswered entries is intentional and essential."
+      },
+      "replaced_with": [
+       "[table] Village Well Logbook entries",
+       "[prose] Logbook entries — filling note"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -390,9 +410,14 @@
      "pedagogical_approach": "Primary-source Inquiry",
      "visual_aids": [
       {
-       "type": "prose",
+       "type": "table",
        "title": "Village Well Logbook entries",
-       "text": "A sequence of roughly twelve short dated entries spanning several decades. Include the following:\n\n1. An observation that the water tastes more sour after heavy rain.\n2. A note that the iron bucket rusted faster during the monsoon season.\n3. A sketch of ice on the stone rim with an embedded question asking why only the shaded side froze.\n4. A retraction entry reading: 'I was wrong last year — the water did not smell of metal, I had been handling coins.'\n5. A note that a new observer has begun keeping records.\n6. An unanswered question asking whether the water level drop in summer is connected to less rain or to more people drawing water.\n7. A final entry noting that the question is still open and inviting whoever reads this to continue.\n\nThe remaining entries may be filled with additional well observations of varying sharpness — some careful and specific, some vague or inconclusive. The mix of precise, muddled, retracted, and unanswered entries is intentional and essential."
+       "table": "A sequence of roughly twelve short dated entries spanning several decades. Include the following\nEntry | Content\n1 | An observation that the water tastes more sour after heavy rain\n2 | A note that the iron bucket rusted faster during the monsoon season\n3 | A sketch of ice on the stone rim with an embedded question asking why only the shaded side froze\n4 | A retraction entry reading: 'I was wrong last year — the water did not smell of metal, I had been handling coins.'\n5 | A note that a new observer has begun keeping records\n6 | An unanswered question asking whether the water level drop in summer is connected to less rain or to more people drawing water\n7 | A final entry noting that the question is still open and inviting whoever reads this to continue"
+      },
+      {
+       "type": "prose",
+       "title": "Logbook entries — filling note",
+       "text": "The remaining entries may be filled with additional well observations of varying sharpness — some careful and specific, some vague or inconclusive. The mix of precise, muddled, retracted, and unanswered entries is intentional and essential."
       }
      ]
     }

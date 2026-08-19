@@ -1,0 +1,1986 @@
+{
+ "filename": "ch_02_canonical.json",
+ "saved_at": "2026-08-17T11:54:19",
+ "plan_status": "canonical",
+ "chapter_number": 2,
+ "chapter_title": "Diversity in the Living World",
+ "grade": "Grade VI",
+ "subject": "Science",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 21
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 21 periods = 840 minutes\nTotal: 21 periods · 14h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-17",
+  "schedule": "21x40",
+  "constitution": "LP v2.2 / assessment v1.5",
+  "source": "generate_canonical.py one science vi 2",
+  "ledger_ts": "20260817_113057_sci_vi_02_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-17T12:04:39",
+    "tool": "genon/repair_meta_leak.py v1.0",
+    "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+    "edits": [
+     {
+      "unit": 21,
+      "field": "teacher_notes",
+      "rule": "register/meta-leak",
+      "removed": "Do not assume any particular earlier activity was completed; if",
+      "replaced_with": "If",
+      "note": "CAP; the reasoning instruction (reason from observable features) stands whole"
+     }
+    ]
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-18T08:50:53",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-175": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "U21",
+        "field": "time_bands[2].activity",
+        "old": "soft green stem needing support — creeper",
+        "new": "soft green stem needing support — climber"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "tool": "genon/repair_approach_labels.py v1.0",
+    "at": "2026-08-18T13:16:33",
+    "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+    "edits": [
+     {
+      "unit": 21,
+      "field": "pedagogical_approach",
+      "removed": "Collaborative inquiry with evidence-based prediction: pairs jointly classify using observable features on the cards, then construct a spoken and written prediction grounded in the organism–habitat dependence the classification itself reveals.",
+      "replaced_with": "Collaborative Evidence-based Classification"
+     }
+    ]
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "science_middle_stage_serve.md §6 v1.3",
+   "at": "2026-08-18T08:14:04",
+   "ledger_ts": "20260817_203333_sci_vi_02_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_02_canonical_p19.json": "2026-08-17T12:38:00",
+    "ch_02_canonical_p17.json": "2026-08-17T12:38:00",
+    "ch_02_canonical_p15.json": "2026-08-17T12:38:00",
+    "ch_02_canonical_p13.json": "2026-08-17T12:37:59"
+   },
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  },
+  "synthesis_polish": {
+   "spec": "density + typed visual_aids (founder, 2026-08-18)",
+   "at": "2026-08-18T12:09:58",
+   "ledger_ts": "20260818_120452_sci_vi_02_polish",
+   "model": "claude-sonnet-4-6",
+   "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and record diversity",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Nature Walk in the Classroom",
+     "activity_description": "Students examine a set of locally collected or described plant and animal specimens — leaves, seeds, images of animals — and record observations in a two-column table: one for plants, one for animals. They note features they can detect through sight, smell, and texture, mirroring the nature walk structure from the chapter.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Sets up the observation stations, distributes materials, and prompts students to use all available senses during recording."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Observe each specimen or image carefully and record distinctive features in the observation table."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher introduces the idea of biodiversity through the chapter's nature walk story, naming the three characters and asking what students think they might notice on such a walk."
+      },
+      {
+       "minutes": "8-30",
+       "activity": "Students rotate through observation stations, recording at least three features for each plant sample and each animal image in their two-column table."
+      },
+      {
+       "minutes": "30-40",
+       "activity": "Whole-class share-out: students read one surprising observation aloud, teacher lists these on the board to build a collective record of diversity noticed."
+      }
+     ],
+     "teacher_notes": "This is the chapter's entry point, so orient students to the idea that diversity is something you notice through careful observation before you can name or sort it. Watch for students who list only names rather than observable features — redirect them to what they can see, feel, or smell. A useful checkpoint before moving on: every student's table should have at least two distinct features per specimen, not just 'it is green' or 'it has wings.'",
+     "materials": [
+      "Collected leaves of three or four different plants",
+      "Printed images of five or six animals from different habitats",
+      "Observation table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "progression_stage": 1,
+     "stage_label": "Observe and record diversity",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "How Many Varieties? A Class Census",
+     "activity_description": "Each student draws one favourite plant or animal and annotates it with two observable features. The class then pools all drawings and counts how many distinct varieties appear, mirroring Activity 2.2. Students discover that even within a single classroom, the range of living things represented is large.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Draw and annotate one favourite plant or animal, then contribute it to the class display."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates the counting exercise and guides students to articulate what makes each variety distinct from the others."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "In small groups, count and tally varieties in their section of the class display and report back totals."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher briefly connects to the previous unit's observation tables, asking: did everyone notice the same things? This surfaces the idea that diversity is large and not fully captured by one observer."
+      },
+      {
+       "minutes": "5-18",
+       "activity": "Each student draws one favourite plant or animal and labels two features on the sketch."
+      },
+      {
+       "minutes": "18-32",
+       "activity": "Drawings are posted on the board; groups count distinct varieties in their assigned section and record totals."
+      },
+      {
+       "minutes": "32-40",
+       "activity": "Class totals are combined; teacher asks: why are there so many different kinds? Students share initial ideas — leading into the question of how one might begin to organise such variety."
+      }
+     ],
+     "teacher_notes": "Students come from the previous unit with a record of observed features; this unit pushes them to notice that the class collectively knows far more varieties than any individual recorded. A common slip here is students drawing the same organism as a classmate and not recognising it as a duplicate — prompt groups to ask 'is this the same kind?' rather than just counting sheets. Use the final question ('why so many different kinds?') as a bridge: it opens the grouping question that the next unit develops.",
+     "materials": [
+      "Plain drawing paper or notebooks",
+      "Coloured pencils or crayons",
+      "Space on the board or a wall to post drawings"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Sorting Stems: Trees, Shrubs, and Herbs",
+     "activity_description": "Students systematically observe stem samples or images for colour, hardness, thickness, and branching pattern, then sort them into trees, shrubs, and herbs using the chapter's criteria. They also identify climbers and creepers from the remaining specimens, recording their sorting rationale in a table.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine stem specimens or images together, discuss observed features, and reach a group consensus on which category each belongs to."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates to prompt precise observation, particularly asking students to justify their category choice with a specific feature."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects to the previous unit's question about organising variety, introducing the idea that grouping requires choosing a feature — stem type is the first criterion to explore."
+      },
+      {
+       "minutes": "7-27",
+       "activity": "Groups examine each specimen or image, record stem colour, hardness, thickness, and branching height, then write the category (tree, shrub, herb, climber, or creeper) with one justifying feature."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Each group shares one sorting decision and its justification; class discusses any disagreements, arriving at the chapter's definitions of tree, shrub, and herb."
+      }
+     ],
+     "teacher_notes": "The previous unit raised the question of how to organise diversity; this unit gives students their first concrete classification tool. A frequent error is students conflating shrubs and herbs because both are 'small' — probe whether the stem is woody and where branching begins to sharpen the distinction. If a group cannot decide on a specimen, that is productive: use it to illustrate that features must be observed carefully before a category is assigned.",
+     "materials": [
+      "Stem samples or printed images of mango, rose, tomato, money plant or similar climber, grass or creeper",
+      "Sorting table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Veins Tell a Story: Leaf Venation Patterns",
+     "activity_description": "Students collect or receive two or more leaves — one showing reticulate venation and one showing parallel venation — hold them up to light or trace the vein pattern, then classify each leaf and record the pattern name with a sketch. They match their findings against the chapter's examples of hibiscus versus banana and grass.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Examine each leaf, sketch the vein pattern, and write the venation type with a justification based on the pattern observed."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Demonstrates how to hold a leaf up to light to reveal vein patterns, and clarifies what 'net-like on both sides of a central vein' means in contrast to 'parallel lines.'"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher demonstrates examining a leaf's venation by holding it to light, explicitly connecting this to the previous unit's stem classification — a second observable feature now being added to plant classification."
+      },
+      {
+       "minutes": "6-26",
+       "activity": "Students examine their leaves, sketch the vein pattern for each, and label it as reticulate or parallel with a one-phrase justification."
+      },
+      {
+       "minutes": "26-36",
+       "activity": "Students compare their classifications with a neighbour and reconcile any differences by re-examining the leaf together."
+      },
+      {
+       "minutes": "36-40",
+       "activity": "Teacher collects responses and states the chapter's rule: reticulate — net-like pattern; parallel — veins run side by side without branching."
+      }
+     ],
+     "teacher_notes": "Students come from classifying stems; this unit adds a second classification criterion for plants, setting up the integrated pattern that will come later. A very common misconception is that all leaves have a central vein, so parallel venation must also have one — show a grass blade clearly to counter this. Ask students: 'Could you tell these two plants apart just from the leaf? What if you only had the stem?'",
+     "materials": [
+      "Hibiscus leaf or similar broad-leaved plant leaf",
+      "Banana leaf section or grass blade",
+      "Additional mixed leaves if available",
+      "Sketch paper or notebook",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Roots Revealed: Taproot vs Fibrous Systems",
+     "activity_description": "Students observe uprooted specimens or images of mustard and grass roots, sketch each root system, and identify the taproot versus fibrous classification. They record the main distinguishing feature — one main root with laterals versus a bunch of similar thin roots — for each specimen.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine root specimens or images, sketch each system, and reach a group decision on classification with a stated distinguishing feature."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Ensures students look at where roots originate — from one main root or from the base of the stem — as the key observational distinction."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher connects to the previous unit's venation work, noting that so far students have classified by stem and leaf — roots provide a third observable feature."
+      },
+      {
+       "minutes": "5-27",
+       "activity": "Groups observe mustard and grass root specimens or images, sketch each, and record: 'main root present: yes or no' and 'origin of roots: from one main root or from stem base.'"
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Groups share sketches and classifications; teacher formalises the terms taproot system and fibrous root system, connecting each to the chapter's example plants."
+      }
+     ],
+     "teacher_notes": "This unit completes the set of individual plant features — stem, leaf, root — that students will soon integrate. Watch for students confusing the lateral roots on a taproot system with fibrous roots; the key question is whether one root is clearly dominant in thickness. Prompt groups to ask: 'Is there one root that the others branch from, or are all roots roughly the same thickness from the start?'",
+     "materials": [
+      "Mustard plant or image showing taproot system",
+      "Grass plant or image showing fibrous root system",
+      "Chickpea plant if available",
+      "Sketch paper",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Seeds Split: Cotyledon Count and the Monocot-Dicot Distinction",
+     "activity_description": "Students soak chickpea and maize seeds overnight (or receive pre-soaked seeds) and carefully split each to count cotyledons. They record whether each seed has one or two cotyledons and note the presence of a thin covering on the maize seed, arriving at the terms monocotyledon and dicotyledon.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Carefully split soaked seeds, count cotyledons for each, and record observations alongside a sketch of the split seed."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Guides students to identify the cotyledon as the seed leaf rather than the outer seed coat, preventing the common miscount."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher introduces the activity by asking: 'We have sorted plants by stem, leaf, and root — does the seed also carry a pattern?' and distributes pre-soaked seeds."
+      },
+      {
+       "minutes": "6-28",
+       "activity": "Groups split seeds carefully, count cotyledons for both chickpea and maize, sketch the split seed, and record the count alongside the specimen name."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Groups share cotyledon counts; teacher introduces the terms monocot and dicot and asks students to predict which root type and venation they would expect each to have — planting the seed for the integration unit that follows."
+      }
+     ],
+     "teacher_notes": "Students arrive with three separate classification features; this unit adds a fourth and sets up the convergence that the next unit will formalise. A frequent error is treating the outer seed coat as a cotyledon — ensure students understand the cotyledon is the food-storing leaf inside. The closing prediction question ('what root type would a dicot have?') is important; do not rush past it as it previews the integrated rule directly.",
+     "materials": [
+      "Pre-soaked chickpea seeds",
+      "Pre-soaked maize seeds",
+      "Small plates or petri dishes",
+      "Magnifying glass if available",
+      "Sketch paper",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "The Pattern Across Features: Linking Venation, Roots, and Seeds",
+     "activity_description": "Students revisit their records from the previous three units — venation, root type, and cotyledon count — and organise them in a combined table for at least four plants. They test the chapter's stated rule (reticulate venation correlates with taproot and dicot; parallel venation correlates with fibrous roots and monocot) against their own data.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Compile their three-feature records into one combined table and annotate each row with whether the pattern holds or needs checking."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Asks probing questions when a row seems inconsistent, guiding students to re-examine their evidence rather than simply accepting the rule."
+      },
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Compare combined tables with group members to identify any rows where the three features do not align and discuss possible reasons."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher prompts students to open their records from the previous units on venation, roots, and seeds, and introduces the task: build one table that shows all three features for the same plants."
+      },
+      {
+       "minutes": "6-26",
+       "activity": "Students individually compile the combined table, then share within groups to check for consistency and flag rows where the pattern does not hold."
+      },
+      {
+       "minutes": "26-40",
+       "activity": "Whole-class discussion: does the rule always hold in student data? Teacher formalises the integrated rule and names the two groups — monocots and dicots — as a classification scheme built from multiple consistent features."
+      }
+     ],
+     "teacher_notes": "This unit is the convergence point of the plant classification strand; students are integrating four units of observation into one rule. Watch for students who filled in the table from memory rather than from their own records — redirect them to check their actual sketches and notes. If data inconsistencies arise, treat them as scientific opportunities: ask 'what would you need to check to resolve this?' rather than correcting the record yourself.",
+     "materials": [
+      "Students' own records from the venation, root, and seed units",
+      "Combined-feature table template",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "progression_stage": 2,
+     "stage_label": "Classify plants by observable features",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Classifying Animals by Movement and Body Parts",
+     "activity_description": "Students observe a set of animal images and, for each, record the body parts used for movement and the type of movement (walking, flying, swimming, crawling, hopping). They then group the animals by movement type, producing a classification table that mirrors Activity 2.9 from the chapter.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine animal images, record movement body parts and movement type for each, and sort them into movement-based groups."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Ensures students distinguish between body parts used for support and those actively used for movement, and asks students to justify placements like frogs — which move both on land and in water."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects to the plant classification work, asking: 'We classified plants by multiple features — what features could help us sort animals?' Students brainstorm briefly before the activity is framed around movement."
+      },
+      {
+       "minutes": "6-28",
+       "activity": "Groups fill the movement observation table for each animal image — body parts used, type of movement — then arrange animals into movement-based groups on their table."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Groups present their groupings; class discusses whether any animal fits more than one group (e.g., duck — walks and swims), noting that classification depends on the criterion chosen."
+      }
+     ],
+     "teacher_notes": "Students arrive from a run of plant classification activities; this unit shifts the domain to animals while keeping the same classification logic. A common confusion is treating legs generically rather than distinguishing the number and arrangement — prompt students to be specific about whether an animal uses two limbs, four, or six, and whether those limbs are legs or wings. The multi-group question for ducks and frogs is productive; resist resolving it immediately and let students argue the case.",
+     "materials": [
+      "Printed images of ant, goat, pigeon, housefly, fish, frog, duck, and two or three additional animals",
+      "Movement classification table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify habitats and environmental variety",
+     "pedagogical_approach": "Discovery approach",
+     "activity_title": "Mapping Life Across Regions",
+     "activity_description": "Students receive a region card — desert, mountain, ocean, or forest — and list as many plants and animals as they can associate with that region. Groups then compare across regions to discover that each region hosts a distinct set of species, establishing the concept that living things are distributed across varied surroundings.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Pool their knowledge to list species for their assigned region, then compare lists with another group to note which species appear in only one region."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Facilitates the cross-group comparison, asking students what makes a species appear only in one region — bridging toward the concept of habitat."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects from the classification work: 'We have sorted living things by features — but where do they live? Do the same kinds appear everywhere?' Each group receives a region card."
+      },
+      {
+       "minutes": "7-25",
+       "activity": "Groups brainstorm species for their region, recording names and one observable feature that makes each suited to that region."
+      },
+      {
+       "minutes": "25-40",
+       "activity": "Cross-group comparison: one spokesperson per group reads their list while others tick any species that also appear on their own list — class sees that overlap is low and most species are region-specific."
+      }
+     ],
+     "teacher_notes": "This unit opens the chapter's second major strand by asking where classified organisms live, not merely how they look. Watch for students listing only animals for some regions and no plants — nudge them to think about vegetation in deserts and mountain slopes. The low-overlap result in the comparison is the discovery moment; if groups do find an overlap, that is also interesting: ask whether the shared organism lives differently in each region.",
+     "materials": [
+      "Region cards (desert, mountain, ocean, forest — one per group)",
+      "Blank list sheet per group",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "progression_stage": 3,
+     "stage_label": "Identify habitats and environmental variety",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "What Is a Habitat? Terrestrial and Aquatic",
+     "activity_description": "Through teacher-led explanation grounded in chapter examples, students learn the term habitat and its defining conditions — food, water, air, and shelter — and distinguish terrestrial habitats (forests, deserts, grasslands, mountains) from aquatic habitats (ponds, lakes, rivers, oceans), placing their region-card species from the previous unit into the correct habitat type.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Introduces the term and definition of habitat, uses the chapter's examples to illustrate terrestrial and aquatic categories, and prompts students to reclassify their region-card species."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Sort their region-card species into terrestrial or aquatic columns and flag any that seem to belong to both, then write the habitat name beside each species."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher explains the concept of habitat using the chapter's definition — the place where an organism lives, which provides all four requirements — and names the major terrestrial and aquatic habitat types."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students revisit their region-card lists from the previous unit and sort each species into terrestrial or aquatic columns in a new two-column table, flagging any ambiguous cases."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Class discussion of flagged ambiguous cases — frogs emerge naturally; teacher introduces the term amphibian and asks students to think about what features might allow life in both."
+      }
+     ],
+     "teacher_notes": "The previous unit established that species are region-specific; this unit gives students the vocabulary and framework to name those regions as habitats. A common error is treating 'aquatic' as meaning only ocean — remind students that freshwater bodies are equally valid aquatic habitats. The amphibian discussion at the close is important groundwork for the adaptation units ahead.",
+     "materials": [
+      "Students' region-card lists from the previous unit",
+      "Two-column habitat sorting table",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain adaptations as organism-environment relationships",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Desert Adaptations: Cactus and Camel",
+     "activity_description": "Students examine descriptions and images of desert organisms from the chapter — cactus with fleshy stems, camel with long legs, wide hooves, and one hump — and for each feature ask: what environmental problem does this feature solve? They record a feature-function table showing the connection between a structural feature and the desert condition it addresses.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Discuss each desert organism feature and agree on the environmental problem it solves, recording both feature and problem in the table."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Steers groups away from listing features without function, insisting each row of the table names both a feature and the specific desert condition that feature addresses."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects from the habitat unit: 'We know the desert is one habitat — what makes it challenging to live in?' Students identify heat, sand, and scarce water before the feature-function task is introduced."
+      },
+      {
+       "minutes": "7-28",
+       "activity": "Groups build the feature-function table for cactus and camel, with at least two features per organism and a stated desert condition for each."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Groups share their tables; teacher introduces the term adaptation and asks: 'If an organism lost one of these features, what would happen?' — surfacing the dependency relationship."
+      }
+     ],
+     "teacher_notes": "This is the first unit in the adaptation strand; the shift from classification to function-environment reasoning is significant. Watch for students who write 'camels have humps for energy' without connecting this to the scarcity of food in the desert — the adaptive value only makes sense in the context of the environmental condition. The 'what if the feature were lost' question is a strong probe for whether students have grasped the relationship or are merely listing facts.",
+     "materials": [
+      "Chapter images or printed pictures of cactus and hot-desert camel",
+      "Feature-function table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain adaptations as organism-environment relationships",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Mountain Adaptations: Deodar, Rhododendron, and Cold-Desert Camel",
+     "activity_description": "Students analyse mountain organism features from the chapter — deodar's conical shape and flexible branches, rhododendron's height and leaf size variation across regions, cold-desert camel's shorter legs, two humps, and long fur — applying the feature-function approach from the previous unit to mountain and cold-desert conditions.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Independently build a feature-function table for mountain organisms using the same format established in the previous unit."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Draws attention to the rhododendron example — same species, different features in different regions — asking students why the same plant would be different in Sikkim versus the Nilgiris."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher recaps the desert feature-function approach from the previous unit, then asks: 'What challenges does a mountain environment present?' Students identify cold, wind, and snow before beginning."
+      },
+      {
+       "minutes": "6-27",
+       "activity": "Students individually build the feature-function table for deodar, rhododendron, and cold-desert camel, with at least two features per organism."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Teacher focuses discussion on the rhododendron contrast: same species, different height and leaf size in Nilgiris versus Sikkim — asking students what this tells us about how environment shapes features even within a species."
+      }
+     ],
+     "teacher_notes": "Students come from the desert adaptation unit with the feature-function framework established; this unit extends it and adds a critical nuance through the rhododendron intra-species contrast. The most important idea here — that the same species can express different features in different environments — is often missed; press students to articulate what changed (the environment) rather than what simply looks different (the plant). This prepares students for the broader principle about adaptation that the next unit synthesises.",
+     "materials": [
+      "Chapter images or printed pictures of deodar tree, rhododendron from two regions, cold-desert camel",
+      "Feature-function table worksheet or students' notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain adaptations as organism-environment relationships",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Aquatic Adaptations: Fish and Streamlined Form",
+     "activity_description": "Students examine descriptions or models of fish, noting the streamlined body shape and fins, and connect each feature to the specific challenge of moving through water. They compare this with a goat's leg structure for terrestrial movement, building a cross-habitat comparison of adaptation.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Examine fish and goat images or descriptions, record features suited for their respective habitats, and write one sentence per feature explaining the connection to the habitat condition."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Asks groups to consider what would happen if a fish had legs instead of fins, making the habitat-feature dependency explicit through hypothetical reasoning."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects from the mountain adaptation unit: 'We have looked at desert and mountain habitats — aquatic habitats have their own challenges.' Students name two challenges of living in water before the activity begins."
+      },
+      {
+       "minutes": "6-27",
+       "activity": "Groups examine fish and goat features, record each feature with its habitat-function connection, and then identify which features would be mismatched if the organisms swapped habitats."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Class shares the habitat-swap reasoning; teacher consolidates by pointing out that adaptation means a feature is suited specifically to its habitat — not universally useful."
+      }
+     ],
+     "teacher_notes": "This unit rounds out the adaptation strand's core examples. A common error is students saying 'fins help fish move' without specifying why legs would not — the habitat-swap exercise directly addresses this by making the mismatch visible. Watch also for students who focus only on movement and overlook body shape; prompt them to consider why a streamlined form matters in water but not on land.",
+     "materials": [
+      "Images of fish showing streamlined body and fins",
+      "Image of a goat or similar terrestrial animal",
+      "Students' notebooks for recording",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "progression_stage": 4,
+     "stage_label": "Explain adaptations as organism-environment relationships",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Adaptation as a Rule: Formalising the Concept",
+     "activity_description": "Teacher-led consolidation of the three habitat cases into a general definition of adaptation: the special features that enable an organism to survive in its particular habitat. Students then test this definition by applying it to one unfamiliar organism (a penguin or a lotus, drawn from the chapter's surrounding context) and stating which habitat challenge each feature addresses.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Draws together the desert, mountain, and aquatic examples into a single formal definition of adaptation and models applying it to a new organism."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Apply the adaptation definition independently to an unfamiliar organism, stating the habitat, identifying two features, and naming the challenge each addresses."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-10",
+       "activity": "Teacher uses the three habitat examples from the previous units to derive a general statement: 'Adaptation is the special feature that helps an organism survive in its particular habitat' — writing this on the board and asking students to verify it against their feature-function tables."
+      },
+      {
+       "minutes": "10-28",
+       "activity": "Students apply the definition independently to a new organism, writing habitat, two features, and the challenge each feature addresses."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Volunteers share their application; teacher probes whether the feature named would also be useful in a different habitat — reinforcing that adaptations are habitat-specific."
+      }
+     ],
+     "teacher_notes": "Students arrive with three sets of habitat-specific feature-function observations; this unit synthesises those into a transferable rule. Watch for students who apply the definition by restating a known example rather than using it to analyse the new organism — the unfamiliar organism application is the real test. The 'would this feature be useful elsewhere?' question is the key probe for genuine understanding versus pattern-matching.",
+     "materials": [
+      "Board or chart paper for writing the definition",
+      "Image of a new organism (penguin or lotus)",
+      "Students' feature-function tables from previous units",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "What Happens When a Habitat Is Damaged?",
+     "activity_description": "Students receive a scenario describing a habitat under stress — a forest being cleared, a pond drying out — and reason through a chain: which organisms live there, what each needs from the habitat, and what happens to each when a specific resource (food, shelter, water) is removed. They map the chain as a consequence diagram.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Build the consequence diagram for their assigned habitat-damage scenario, identifying at least three organisms and tracing the effect of resource removal on each."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Prompts groups to think beyond direct resource loss — asking whether an organism that seems unaffected might be affected indirectly through another organism in the chain."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-7",
+       "activity": "Teacher connects from the adaptation units: 'We established that organisms are shaped by their habitat — what does that mean for an organism if its habitat is damaged?' Students predict before receiving scenarios."
+      },
+      {
+       "minutes": "7-27",
+       "activity": "Groups build consequence diagrams for their scenario, naming at least three organisms, one resource each depends on, and the consequence of that resource being removed."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Groups present their diagrams; class discusses whether habitat damage affects all organisms equally or whether some are more dependent — surfacing the concept that biodiversity is at risk when habitats are damaged."
+      }
+     ],
+     "teacher_notes": "This unit marks the transition from describing adaptations to analysing the consequences of habitat change — a significant step in reasoning demand. Watch for groups that produce a list of 'things that would die' without showing the chain of dependency; push them to show which resource links each organism to the habitat. The indirect-effect prompt is important: some students will think only organisms directly deprived of a resource are affected.",
+     "materials": [
+      "Habitat-damage scenario cards (forest clearing, pond drying)",
+      "Blank consequence diagram template",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+     "pedagogical_approach": "Didactic approach",
+     "activity_title": "Conservation Efforts: From Project Tiger to Sacred Groves",
+     "activity_description": "Teacher-led presentation of the chapter's named conservation efforts — Project Tiger (1973), Cheetah Reintroduction Project (2022), Protected Area status for the Great Indian Bustard's habitat, and sacred groves — with students recording a two-column table: the conservation action and the biodiversity loss it addresses.",
+     "roles": [
+      {
+       "actor": "Teacher",
+       "role_description": "Presents each conservation case from the chapter, asking students after each: 'What habitat threat was this responding to?' before moving to the next case."
+      },
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Record each conservation action and the specific biodiversity threat it addresses in the two-column table as the teacher presents."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-8",
+       "activity": "Teacher connects from the consequence-diagram work: 'If habitat damage leads to biodiversity loss, what can be done?' — framing conservation as a response to the consequences students traced in the previous unit."
+      },
+      {
+       "minutes": "8-28",
+       "activity": "Teacher presents Project Tiger, the Cheetah Reintroduction Project, the Great Indian Bustard's Protected Area, and sacred groves in sequence; students complete the two-column table after each case."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Students compare the sacred grove row with the government-action rows, asking: 'How is a sacred grove different as a conservation method?' — surfacing the community-traditional distinction."
+      }
+     ],
+     "teacher_notes": "Students arrive from the consequence-diagram unit with a concrete picture of how habitat damage ripples through biodiversity; this unit shows how humans respond to those consequences. Watch for students who record only the action without the threat — prompt them to look back at their consequence diagrams to identify which threats each conservation effort addresses. The sacred grove comparison is valuable: it surfaces the idea that conservation can be community-led and traditional, not only government-initiated.",
+     "materials": [
+      "Board or chart for teacher to write conservation cases",
+      "Two-column table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+     "pedagogical_approach": "Hands-on Science",
+     "activity_title": "Scientists Who Documented and Protected Diversity",
+     "activity_description": "Students examine brief profiles of Janaki Ammal and Salim Ali from the chapter — their observations, documentation work, and conservation contributions — and construct a parallel-feature table comparing the two scientists: field of observation, method of documentation, and conservation outcome.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Read the scientist profiles from the chapter summary, extract key information, and complete the parallel-feature table independently."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Connects the scientists' documentation work to the classification and habitat concepts students have built, asking: 'Why does careful observation and documentation matter for conservation?'"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher connects to the previous unit's conservation cases: 'All those conservation projects depended on someone first documenting what was there — two scientists did exactly this.' Brief framing of Janaki Ammal and Salim Ali."
+      },
+      {
+       "minutes": "6-26",
+       "activity": "Students read the profiles from the chapter material and complete the parallel-feature table: field of observation, method of documentation, key conservation outcome."
+      },
+      {
+       "minutes": "26-40",
+       "activity": "Students share one row from their tables; teacher asks: 'What would conservation efforts have looked like without their documentation?' — connecting systematic observation to protection."
+      }
+     ],
+     "teacher_notes": "This unit grounds the scientific process — observation and documentation — in real figures from the chapter, reinforcing that the skills students have been practising are the same ones that enabled conservation. Watch for students who treat this as a biography exercise and list facts rather than drawing the observation-to-conservation connection. The closing question is the key bridge: if no one had documented bird habitats, would the Keoladeo sanctuary protection have been possible?",
+     "materials": [
+      "Chapter text sections on Janaki Ammal and Salim Ali",
+      "Parallel-feature table worksheet",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 18,
+     "period_duration_minutes": 40,
+     "progression_stage": 5,
+     "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Interdependence: Plants, Animals, and Habitat as a System",
+     "activity_description": "Students revisit the chapter's opening note that trees provide food and shelter for birds and animals, while animals help spread seeds — and extend this into a small web diagram connecting at least four organisms through food, shelter, and seed-dispersal relationships in one habitat.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Build an organism-interdependence web for a chosen habitat, drawing arrows to show each relationship type (food, shelter, seed dispersal) and labelling each arrow."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Prompts groups to consider what happens to the whole web if one organism is removed — linking back to the consequence diagrams from unit 15 and the conservation work from units 16 and 17."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-6",
+       "activity": "Teacher reconnects to the chapter's opening description of the nature walk: 'At the start of the chapter, the walk showed trees giving shelter to birds and animals giving seeds back to plants — let us map this more fully.'"
+      },
+      {
+       "minutes": "6-27",
+       "activity": "Groups choose one habitat and draw the interdependence web, including at least four organisms and labelling each arrow with the relationship type."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Groups share webs; teacher asks each group to remove one organism from their web and describe the downstream effect — consolidating the system-level understanding of biodiversity before the synthesis."
+      }
+     ],
+     "teacher_notes": "This is the final specialised unit before the synthesis and it brings together the classification, habitat, adaptation, and conservation threads into a single systems view. Watch for webs that show only food relationships — seed dispersal and shelter are equally important and are named explicitly in the chapter. The organism-removal exercise is the most demanding reasoning task of this stage; allow groups sufficient exploratory time before asking for answers.",
+     "materials": [
+      "Blank web diagram template or large blank paper per group",
+      "Pencils or markers"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 19,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Classify and Explain: An Unknown Plant and an Unknown Animal",
+     "activity_description": "Students receive descriptions of two unfamiliar organisms — one plant and one animal — not from the chapter, but consistent with its logic. For the plant, they classify stem type, predict venation and root type, and state whether it is a monocot or dicot. For the animal, they identify habitat, name one adaptation, and explain the environmental challenge it addresses.",
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Apply the chapter's classification rules and adaptation framework independently to both unfamiliar organisms, writing a short justification for each classification and adaptation claim."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Ensures students are reasoning from the chapter's criteria rather than guessing, asking them to name the specific feature and the rule it follows."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher sets the challenge: 'You now have the tools — classification criteria and the adaptation framework — to make sense of organisms you have not seen before. Two unknown organisms need your analysis.'"
+      },
+      {
+       "minutes": "5-27",
+       "activity": "Students independently classify and explain both organisms, writing stem type, predicted venation, predicted root type, monocot/dicot label, habitat, adaptation feature, and the environmental challenge addressed."
+      },
+      {
+       "minutes": "27-40",
+       "activity": "Volunteers share their analyses; class evaluates whether each justification uses the chapter's actual criteria or relies on guessing — establishing that the rules are generalisable."
+      }
+     ],
+     "teacher_notes": "This is the first application unit and it is deliberately individual and unprompted — students must draw on their own accumulated record of features and rules. The most common error is students classifying correctly but justifying poorly ('it has a taproot because it looks like mustard') — push for the feature-rule chain: 'What feature did you observe? Which rule does it follow?' The animal's adaptation claim must name both the feature and the environmental challenge, not just the feature.",
+     "materials": [
+      "Two unfamiliar organism description cards (one plant, one animal)",
+      "Students' notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 20,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+     "pedagogical_approach": "Inquiry approach",
+     "activity_title": "Habitat Change Scenario: Predict, Classify, Connect",
+     "activity_description": "Students receive a multi-part scenario: a known habitat is undergoing change (rising temperatures, reduction in one plant species). They must classify the remaining organisms using the chapter's criteria, predict which adaptations are now mismatched to the changed environment, and explain which biodiversity relationships are at risk.",
+     "roles": [
+      {
+       "actor": "Students (Groups)",
+       "role_description": "Work through the three-part scenario together — classification, adaptation mismatch, and biodiversity-at-risk — producing a written group response with justifications for each part."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Monitors that all three parts are addressed, probing groups to ensure they connect the classification of organisms to the habitat conditions and the adaptation reasoning, rather than treating each part in isolation."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher introduces the multi-part scenario and explains that all three parts must connect — classification feeds into adaptation, which feeds into biodiversity reasoning."
+      },
+      {
+       "minutes": "5-28",
+       "activity": "Groups work through the three parts: classify remaining organisms, identify which adaptations no longer fit the changed conditions, and explain which biodiversity relationships are at risk."
+      },
+      {
+       "minutes": "28-40",
+       "activity": "Groups share their responses; class evaluates whether each group's three parts are internally consistent — does the classification match the adaptation claim? Does the adaptation mismatch support the biodiversity risk?"
+      }
+     ],
+     "teacher_notes": "This unit is the final content unit before the synthesis and it asks students to operate simultaneously across classification and organism-environment reasoning — the dissolution test's two operations. Watch for groups that complete the three parts as disconnected sections; the whole point is that classification, adaptation, and biodiversity risk form a connected chain. The inter-group evaluation in the closing phase is a peer-assessment moment; ensure students are evaluating logical consistency, not just correctness of facts.",
+     "materials": [
+      "Multi-part habitat-change scenario card",
+      "Students' notebooks",
+      "Pencils"
+     ],
+     "homework": []
+    },
+    {
+     "period_number": 21,
+     "period_duration_minutes": 40,
+     "progression_stage": 6,
+     "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+     "synthesis": true,
+     "roles": [
+      {
+       "actor": "Students (Individual)",
+       "role_description": "Work independently through all four parts of the synthesis scenario — classification, adaptation explanation, consequence prediction, and conservation proposal — producing a written response that draws on the full chapter."
+      },
+      {
+       "actor": "Teacher",
+       "role_description": "Circulates without providing answers, asking students to name the rule or criterion behind each claim they make, ensuring reasoning is visible not just conclusions."
+      }
+     ],
+     "activity_title": "Reading a Marketplace: Classify, Connect, Conserve",
+     "activity_description": "Students receive a set of illustrated market-stall cards showing nine plants and animals sold or traded at a rural weekly market — a wheat bundle, a rose plant, a coconut sapling, a pumpkin vine, a maize cob, a potted money plant (creeper), a live fish, a goat, and a pigeon in a cage. Each card shows the organism's visible features: stem type, leaf (with vein pattern sketched), movement organs if applicable, and one line describing where it is sourced from. Working in pairs, students classify every organism using the chapter's full framework, then use those classifications and the sourcing information to predict which two organisms would be most severely affected if one named habitat were damaged — and to justify that prediction by naming the specific feature that ties the organism to that habitat. The task is driven entirely by reading the cards, not by recall of chapter examples.",
+     "teacher_notes": "This synthesis unit asks pairs to classify nine market organisms using the chapter's full framework, then predict which are most vulnerable to a named habitat-damage scenario — the market setting is deliberately outside the chapter so every inference must come from feature-reading, not recall. Circulate asking students to name the specific feature or criterion behind each claim, not just the conclusion; the closing consolidation should name the chapter's reasoning as the thing that made the task solvable, not re-summarise content. Card content, sourcing habitats, scenario slips, and the classification grid are ready to use (see materials).",
+     "materials": [
+      "Nine market-stall cards, teacher-drawn or printed (see visual aid: 'Market-stall card content')",
+      "One habitat-damage scenario slip per pair (see visual aid: 'Habitat-damage scenarios')",
+      "Classification grid worksheet per pair (see visual aid: 'Classification grid')",
+      "Notebooks or blank paper for written predictions"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-5",
+       "activity": "Teacher places the nine market-stall cards face-up on each pair's desk without explanation and says: 'A rural market sells all of these in a single morning. Each card tells you what the organism looks like and where it comes from. Your first job is to classify every one of them using everything this chapter gave you.' Teacher does not review chapter content — the cards are the entry point. Pairs begin reading immediately."
+      },
+      {
+       "minutes": "5-18",
+       "activity": "Pairs work through the classification grid, card by card. For each plant they determine: stem type (tree, shrub, herb, climber, or creeper), leaf venation (reticulate or parallel), root type (taproot or fibrous), and habitat type (terrestrial — specify — or aquatic). For each animal they determine: primary movement organs, locomotion type, and habitat type. Teacher circulates and asks pairs who are stuck on the pumpkin vine or money plant to re-read the stem description on the card — the question is whether the stem supports itself. For the pigeon, ask: what body parts does it use to move, and how many modes of movement does it have?"
+      },
+      {
+       "minutes": "18-22",
+       "activity": "Brief whole-class check on two contested organisms: teacher asks one pair to state their classification of the coconut sapling (tall, single thick woody trunk — tree; parallel venation on the sketched leaf — monocot, fibrous root, terrestrial coastal) and one pair to state their classification of the money plant (soft green stem needing support — climber; reticulate venation — dicot, taproot, terrestrial shaded moist). Class confirms or corrects using card evidence only. Teacher does not adjudicate by telling — asks 'what does the card say about the stem?' and lets the card settle the question."
+      },
+      {
+       "minutes": "22-30",
+       "activity": "Each pair receives their habitat-damage scenario slip. They must: (a) identify which organism or organisms on the nine cards are sourced from that habitat, (b) predict which one would be most severely affected, and (c) write two to three sentences naming the specific feature — from their classification grid — that makes that organism dependent on that habitat condition. They must also name one organism on the cards that would be unaffected, and state why its features and source habitat leave it insulated from this particular damage."
+      },
+      {
+       "minutes": "30-37",
+       "activity": "Four pairs — one for each scenario — share their prediction aloud. The class listens and evaluates: does the pair name a specific feature, or only a general dependence? For the 'freshwater pond dried up' pair, does the response mention fins and streamlined body or only 'fish need water'? Teacher keeps evaluation brief and peer-led: 'Does this prediction use the classification, or only the habitat?' After each sharing, one listening pair adds or challenges using their own grid."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Teacher closes by naming what the task demonstrated: classifying an organism by its observable features — venation, root, stem, movement organs — is not a separate skill from predicting where it can survive and what threatens it. The same features that placed the fish in an aquatic habitat, or the coconut sapling as a coastal monocot, are exactly the features that explained the vulnerability. The chapter's two threads — how to group living things and how living things fit their places — turned out to be one thread. The market was just the place where that thread became visible."
+      }
+     ],
+     "homework": [],
+     "pedagogical_approach": "Collaborative Evidence-based Classification",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Market-stall card content",
+       "table": "Organism | Sketch features | Sourcing habitat\nWheat bundle | Narrow parallel-veined leaves, hollow jointed stem | River-plain farm\nRose plant | Woody shrub stem with thorns, reticulate-veined leaves | Garden nursery\nCoconut sapling | Single thick woody trunk, parallel-veined fronds | Coastal forest edge\nPumpkin vine | Soft stem requiring support (climber), reticulate-veined leaves | Field boundary\nMaize cob | Tall herb stem, parallel-veined leaves | River-plain farm\nMoney plant (creeper) | Soft green stem requiring support, reticulate-veined leaves | Shaded riverbank\nLive fish | Streamlined body, fins labelled | Freshwater pond\nGoat | Four legs labelled, hooves | Dry grassland\nPigeon (caged) | Wings and two legs labelled | Open woodland near settlement"
+      },
+      {
+       "type": "prose",
+       "title": "Habitat-damage scenarios",
+       "text": "Distribute one slip per pair, cycling across the four types:\n\n1. 'The freshwater pond has dried up.'\n2. 'The coastal forest was cleared for construction.'\n3. 'The dry grassland was converted to farmland.'\n4. 'The river-plain farm was flooded and abandoned.'\n\nEvery scenario affects at least one organism on the cards and leaves others unaffected — this forces discriminating prediction. A strong response names a specific feature: 'The fish is most affected because its aquatic habitat is gone, and its fins and streamlined body have no function on land; the goat is unaffected because its legs and dry-grassland source are untouched.' A weak response says only 'the fish will die because it needs water' — push students to name the feature."
+      },
+      {
+       "type": "table",
+       "title": "Classification grid",
+       "table": "Organism | Plant / Animal | Stem type or movement organs | Venation or locomotion type | Root type (plants only) | Habitat type | One adaptation feature\nWheat bundle | | | | | |\nRose plant | | | | | |\nCoconut sapling | | | | | |\nPumpkin vine | | | | | |\nMaize cob | | | | | |\nMoney plant | | | | | |\nLive fish | | | | | |\nGoat | | | | | |\nPigeon | | | | | |"
+      }
+     ]
+    }
+   ]
+  },
+  "period_schedule": [
+   {
+    "duration_minutes": 40,
+    "count": 21
+   }
+  ],
+  "coverage_handoff": [
+   {
+    "stage_number": 1,
+    "stage_label": "Observe and record diversity",
+    "total_stages": 6,
+    "period_numbers": [
+     1,
+     2
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students conduct structured observation of plants and animals, recording multiple observable features per specimen, and discover through a class census how large the variety of living things is even within one setting.",
+    "implied_lo": "The student records at least three distinct observable features for each of several plants and animals, and articulates that even a small sample reveals a large variety of living things.",
+    "cg": "CG-3",
+    "c_code": "C-3.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 2,
+    "stage_label": "Classify plants by observable features",
+    "total_stages": 6,
+    "period_numbers": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students classify plants by stem type, leaf venation, root system, and cotyledon count, arriving at the integrated monocot-dicot principle, and classify animals by movement type and body parts used for movement.",
+    "implied_lo": "The student classifies a plant as monocot or dicot by citing consistent evidence across venation, root system, and cotyledon count, and groups animals by the body parts they use for movement.",
+    "cg": "CG-3",
+    "c_code": "C-3.1",
+    "co_central": true
+   },
+   {
+    "stage_number": 3,
+    "stage_label": "Identify habitats and environmental variety",
+    "total_stages": 6,
+    "period_numbers": [
+     9,
+     10
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students map species across regions, discover that each region hosts a distinct set of organisms, then categorise habitats as terrestrial or aquatic and identify the four resources a habitat provides.",
+    "implied_lo": "The student names at least two organisms specific to a given habitat type, distinguishes between terrestrial and aquatic habitats using the chapter's four defining resources, and identifies frogs as organisms living in both.",
+    "cg": "CG-3",
+    "c_code": "C-3.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 4,
+    "stage_label": "Explain adaptations as organism-environment relationships",
+    "total_stages": 6,
+    "period_numbers": [
+     11,
+     12,
+     13,
+     14
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students build feature-function tables for desert, mountain, and aquatic organisms, synthesise these into a general definition of adaptation, and apply the definition to unfamiliar organisms.",
+    "implied_lo": "The student explains two features of a named organism as adaptations by stating the specific habitat condition each feature addresses, and applies this reasoning to an organism not encountered during activities.",
+    "cg": "CG-3",
+    "c_code": "C-3.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 5,
+    "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+    "total_stages": 6,
+    "period_numbers": [
+     15,
+     16,
+     17,
+     18
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students trace the consequence chain from habitat damage to biodiversity loss, examine named conservation efforts and the threats they address, study scientist profiles connecting documentation to conservation, and build organism-interdependence webs for one habitat.",
+    "implied_lo": "The student traces a consequence chain from a specific habitat damage event to the loss of at least two organisms, names one conservation effort and the biodiversity threat it addresses, and shows at least three interdependence relationships in a habitat web.",
+    "cg": "CG-3",
+    "c_code": "C-3.3",
+    "co_central": true
+   },
+   {
+    "stage_number": 6,
+    "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+    "total_stages": 6,
+    "period_numbers": [
+     19,
+     20,
+     21
+    ],
+    "period_duration_minutes": 40,
+    "activity_summary": "Students apply the chapter's classification criteria and adaptation framework to unfamiliar organisms, reason through habitat-change scenarios combining classification and biodiversity-risk analysis, and produce a whole-chapter synthesis connecting observation, classification, adaptation, and conservation.",
+    "implied_lo": "The student classifies an unfamiliar organism using observable features and the chapter's criteria, explains how its features are suited to its habitat, and predicts the biodiversity consequences of a stated habitat threat — demonstrating simultaneous use of classification and organism-environment reasoning.",
+    "cg": "CG-3",
+    "c_code": "C-3.1",
+    "co_central": true
+   }
+  ],
+  "assessment_items": [
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and record diversity",
+    "implied_lo_assessed": "The student records at least three distinct observable features for each of several plants and animals, and articulates that even a small sample reveals a large variety of living things.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student observes a plant and writes: 'It is green.' A second student writes about the same plant: 'It has a soft green stem, smooth oval leaves, and a slight fragrance from its flowers.' Which statement is true about the two records?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both records are equally useful for distinguishing this plant from others.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Neither record is useful unless it also states the plant's name.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The first record is better because colour is the most reliable single feature for identifying a plant.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The second record is more useful because it names multiple observable features that could distinguish this plant from others.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "A": "Student has not grasped that the number and specificity of features determine how useful an observation is for classification — treats any observation as equivalent.",
+       "C": "Student holds the misconception that a single salient feature (colour) is sufficient for identification, not recognising that colour alone is shared by many organisms.",
+       "B": "Student confuses naming an organism with describing it, not recognising that observable features precede and enable naming."
+      },
+      "inclusivity": "Students who struggle with writing can respond by circling words on a feature list rather than composing a sentence. Students with stronger vocabulary can be asked to name three additional features they would record if they could examine the plant themselves."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 1,
+    "stage_label": "Observe and record diversity",
+    "implied_lo_assessed": "The student records at least three distinct observable features for each of several plants and animals, and articulates that even a small sample reveals a large variety of living things.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": "Animal | What it eats | Where it lives | How it moves\nMonkey | Fruits, leaves | Trees | Swings and runs\nFrog | Insects | Land and water | Hops and swims\nFish | Small water organisms | Water | Swims\nGoat | Grass | Land | Walks",
+    "question_text": "Refer to the table provided. A student says: 'The frog and the fish are similar because they both live near water.' Another student says: 'They are different because the frog also lives on land and moves differently.' Whose reasoning uses more of the table's information?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both students are equally right because each uses one feature from the table.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Neither student, because the table does not include body shape, which is the most important feature.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The first student, because identifying one shared feature is enough to show similarity.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The second student, because the reasoning draws on multiple columns — habitat and movement — to describe both similarity and difference.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 1
+      },
+      "what_each_option_reveals": {
+       "C": "Student believes that identifying a single shared feature constitutes sufficient comparison, not recognising that diversity description requires multiple features.",
+       "A": "Student treats all single-feature observations as equivalent, missing that one student used two features from two different columns while the other used only one.",
+       "B": "Student introduces a criterion not in the table (body shape) and uses its absence to disqualify valid multi-feature reasoning — a misdirection away from using available evidence."
+      },
+      "inclusivity": "Students who find the two-student framing complex can be asked simply: 'How many columns did each student use?' to scaffold the comparison. Students who answer quickly can be asked to write a third statement that uses all four columns."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify plants by observable features",
+    "implied_lo_assessed": "The student classifies a plant as monocot or dicot by citing consistent evidence across venation, root system, and cotyledon count, and groups animals by the body parts they use for movement.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student examines a plant and records: parallel venation in the leaves, a bunch of similar thin roots arising from the base of the stem, and a single cotyledon in the seed. Which classification is correct for this plant, and what makes the evidence strong?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Dicot, because the roots arise from the base of the stem.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Monocot, because all three features — parallel venation, fibrous roots, and single cotyledon — are consistent with each other.",
+      "is_correct": true
+     },
+     {
+      "label": "C",
+      "text": "Monocot, because parallel venation is always the deciding feature and the other two features do not need checking.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Monocot, but only the cotyledon count matters — the other features are not reliable.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "A": "Student confuses fibrous root origin (from stem base) as sufficient for dicot classification, mixing up root origin point with root type identity.",
+       "D": "Student knows the correct category but holds the misconception that only one feature is needed for classification — does not grasp that the integrated rule requires multiple consistent features.",
+       "C": "Student reaches the correct category but for a procedurally wrong reason — treating one feature as decisive rather than recognising the value of consistent multi-feature evidence."
+      },
+      "inclusivity": "Students who are uncertain can be given the three-column record and asked to check each feature against the monocot and dicot rule individually before deciding. Students who answer easily can be asked to describe what they would observe in a dicot to contrast."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify plants by observable features",
+    "implied_lo_assessed": "The student classifies a plant as monocot or dicot by citing consistent evidence across venation, root system, and cotyledon count, and groups animals by the body parts they use for movement.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": "Animal | Body parts used for movement | Type of movement\nAnt | Six legs | Walking, crawling\nPigeon | Two legs and two wings | Walking and flying\nHousefly | Six legs and two wings | Walking and flying\nFish | Fins | Swimming\nGoat | Four legs | Walking",
+    "question_text": "Refer to the table provided. A student wants to group pigeon and housefly together. Which criterion from the table best justifies placing them in the same group, and what is the limitation of that grouping?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Both are small — but size is not a movement criterion, so this grouping does not use the table's information.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Both can fly — but this grouping ignores that they also walk on legs, and an ant cannot fly yet also has six legs.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Both use legs and wings for movement — but this criterion would not include fish or goat in any flying-and-walking group, and does not capture the difference in leg number.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "Both use wings for movement — but this grouping would exclude animals that also use legs, like the ant.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "what_each_option_reveals": {
+       "D": "Student identifies wings as the criterion but applies it incompletely — stating the limitation in terms of a different animal rather than the limitation of the chosen criterion itself.",
+       "B": "Student focuses on movement type (flying) rather than the body parts column, confusing movement type with the body-parts-used classification criterion.",
+       "A": "Student abandons the table's classification framework entirely and applies an irrelevant criterion (size), showing they have not anchored their reasoning in the observable features the table records."
+      },
+      "inclusivity": "Students who find the two-part question difficult can be asked to answer each part separately: 'Which criterion do you use?' then 'What does this grouping miss?' Students who complete quickly can be asked to propose a second possible grouping using a different column."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 2,
+    "stage_label": "Classify plants by observable features",
+    "implied_lo_assessed": "The student classifies a plant as monocot or dicot by citing consistent evidence across venation, root system, and cotyledon count, and groups animals by the body parts they use for movement.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A student finds a plant with broad leaves that show a net-like vein pattern on both sides of a central vein. She has not yet examined the roots or seed. Using only the venation observation, state: (a) what root type she should predict for this plant, (b) what cotyledon count she should predict, and (c) why using three consistent features gives a stronger classification than venation alone.",
+    "options": [],
+    "expected_elements": [
+     "Predicts taproot system because reticulate venation is associated with dicot plants, which typically have a taproot.",
+     "Predicts two cotyledons (dicot) as the expected cotyledon count.",
+     "Explains that three consistent features reduce the chance of error — a plant could have unusual venation due to damage, but if roots and seed also match, the classification is more reliable."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 2
+      },
+      "inclusivity": "Students who struggle with part (c) can be prompted: 'What if only venation was your evidence and the leaf had been damaged — would your classification still hold?' Students who complete all three parts quickly can be asked to name one plant from the chapter that fits this classification and one that does not."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify habitats and environmental variety",
+    "implied_lo_assessed": "The student names at least two organisms specific to a given habitat type, distinguishes between terrestrial and aquatic habitats using the chapter's four defining resources, and identifies frogs as organisms living in both.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "A student lists the four things a habitat must provide for an organism: food, water, air, and shelter. She then asks: 'Does this mean any place with water is automatically an aquatic habitat?' Which response correctly applies the chapter's definition of habitat?",
+    "options": [
+     {
+      "label": "A",
+      "text": "No, because a habitat is defined by all four resources together — a place that provides only water but not food, air, or shelter cannot sustain an organism.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "No, because whether a habitat is aquatic or terrestrial depends on the animal's body shape, not the resources available.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Yes, because all aquatic animals need water and they can find the other three requirements anywhere.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Yes, because water is the most important of the four requirements, so its presence defines an aquatic habitat.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "D": "Student has ranked water as the dominant resource, misapplying the chapter's definition which treats all four resources as jointly necessary.",
+       "C": "Student accepts the water-only criterion for aquatic habitat but adds a vague claim that other resources are easily sourced elsewhere — not grounded in the chapter's definition.",
+       "B": "Student confuses the organism's features (body shape as an adaptation) with the habitat's defining properties, collapsing the habitat-organism distinction."
+      },
+      "inclusivity": "Students who find the four-resource framework difficult can be given a checklist of the four resources and asked to tick which ones the student's proposed 'water place' provides. Students who answer quickly can be asked to name one aquatic and one terrestrial habitat from the chapter and confirm that each supplies all four resources."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify habitats and environmental variety",
+    "implied_lo_assessed": "The student names at least two organisms specific to a given habitat type, distinguishes between terrestrial and aquatic habitats using the chapter's four defining resources, and identifies frogs as organisms living in both.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Four organisms are listed: camel, frog, deodar tree, and fish. A student is asked to sort them into terrestrial and aquatic habitat columns. Which placement is incorrect?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Camel in the terrestrial column, because camels live in desert and mountain land habitats.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Deodar tree in the terrestrial column, because it grows on mountain slopes.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Fish in the aquatic column, because fish have fins and a streamlined body suited for water.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Frog in the terrestrial column only, because frogs are commonly seen on land.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "what_each_option_reveals": {
+       "C": "Student who selects B misreads the question — B is a correct placement, not an incorrect one; selecting it reveals the student confused 'incorrect' with 'incorrect reasoning.'",
+       "A": "Student who selects C misreads the question — C is correct; selecting it suggests the student did not know that deserts and mountains are terrestrial habitats.",
+       "B": "Student who selects D misreads the question — D is correct; selecting it suggests confusion about whether trees have habitats in the same sense animals do."
+      },
+      "inclusivity": "Students who find frogs ambiguous can be prompted: 'Does a frog live only on land, only in water, or in both?' before answering. Students who answer quickly can be asked to explain what term the chapter uses for organisms that live in both habitat types."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 3,
+    "stage_label": "Identify habitats and environmental variety",
+    "implied_lo_assessed": "The student names at least two organisms specific to a given habitat type, distinguishes between terrestrial and aquatic habitats using the chapter's four defining resources, and identifies frogs as organisms living in both.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Understanding",
+    "visual_stimulus": null,
+    "question_text": "Name two organisms from the chapter — one specific to a terrestrial habitat and one specific to an aquatic habitat. For each, name the habitat and state one resource that habitat provides which the other habitat does not provide in the same form.",
+    "options": [],
+    "expected_elements": [
+     "Names one terrestrial organism (e.g., camel, deodar tree, goat) and correctly identifies a terrestrial habitat (desert, mountain, forest, grassland).",
+     "Names one aquatic organism (e.g., fish) and correctly identifies an aquatic habitat (pond, river, ocean).",
+     "States one resource difference: for example, 'the forest provides tree-based shelter, while the pond provides submerged or floating plant shelter' or 'the ocean provides salt water while the desert provides none.'"
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 3
+      },
+      "inclusivity": "Students who struggle with the resource-difference part can be given a prompt: 'Think about how shelter looks different underwater versus on a mountain slope.' Students who complete quickly can be asked to explain why a frog cannot be placed in only one column."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain adaptations as organism-environment relationships",
+    "implied_lo_assessed": "The student explains two features of a named organism as adaptations by stating the specific habitat condition each feature addresses, and applies this reasoning to an organism not encountered during activities.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "The chapter states that rhododendrons in the Nilgiris grow shorter and with smaller leaves due to heavy winds, while those in Sikkim grow taller. What does this observation most directly demonstrate?",
+    "options": [
+     {
+      "label": "A",
+      "text": "That adaptations can differ within the same species depending on the specific environmental conditions of the habitat.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "That height is the most important adaptation for all mountain plants.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "That plants in colder regions always grow taller than plants in warmer regions.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "That rhododendrons in the Nilgiris are a different species from those in Sikkim.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "D": "Student treats observable feature differences between populations as evidence of species difference, not recognising that the same species can express different features in response to different conditions.",
+       "B": "Student overgeneralises from the rhododendron example to a claim about all mountain plants, not attending to the specific wind condition named in the chapter.",
+       "C": "Student constructs a temperature-height rule not present in the chapter, confusing the named cause (heavy winds in the Nilgiris) with a different variable (temperature)."
+      },
+      "inclusivity": "Students who find the intra-species concept difficult can be told: 'Both plants are called rhododendron — they are the same type. Now ask: what is different between Nilgiris and Sikkim?' Students who complete quickly can be asked to name a second example from the chapter where the same kind of organism differs by region."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain adaptations as organism-environment relationships",
+    "implied_lo_assessed": "The student explains two features of a named organism as adaptations by stating the specific habitat condition each feature addresses, and applies this reasoning to an organism not encountered during activities.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A cold-desert camel in Ladakh has shorter legs, two humps, and long thick fur. A hot-desert camel has longer legs, one hump, and short fur. A student says: 'The two humps store more food, which is why cold-desert camels have two.' What is missing from this explanation?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The explanation does not state which habitat condition makes having two food-storage humps more necessary in a cold desert than in a hot desert.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "The explanation is complete — the number of humps is only about food storage.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The explanation is wrong because the chapter says the hot-desert camel also stores food in its hump.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The explanation should focus on the fur rather than the humps, since fur is a more visible feature.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "what_each_option_reveals": {
+       "B": "Student accepts a feature-description as a complete adaptation explanation, not recognising that an adaptation explanation must name the environmental condition the feature addresses.",
+       "D": "Student redirects to a different feature (fur) rather than identifying what is missing in the hump explanation — a distraction that avoids the explanatory-gap question.",
+       "C": "Student creates a contradiction with the chapter content rather than evaluating the completeness of the explanation — conflating whether the hot-desert camel has a hump with whether the student's explanation is sufficient."
+      },
+      "inclusivity": "Students who are uncertain can be given the prompt: 'A good adaptation explanation has two parts — the feature and the habitat condition it addresses. Which part is missing from the student's sentence?' Students who complete quickly can be asked to rewrite the explanation with the missing part added."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 4,
+    "stage_label": "Explain adaptations as organism-environment relationships",
+    "implied_lo_assessed": "The student explains two features of a named organism as adaptations by stating the specific habitat condition each feature addresses, and applies this reasoning to an organism not encountered during activities.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Application",
+    "visual_stimulus": null,
+    "question_text": "A deodar tree has a conical (pointed) shape and flexible, sloping branches. State the habitat condition each feature addresses and explain how the feature helps the tree survive that condition.",
+    "options": [],
+    "expected_elements": [
+     "Conical shape addresses heavy snowfall — the pointed top allows snow to slide off rather than accumulate and break branches.",
+     "Flexible, sloping branches address the weight of snow and strong mountain winds — flexibility prevents branches from snapping under load.",
+     "Each explanation connects the feature directly to the named condition rather than simply describing the feature."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 4
+      },
+      "inclusivity": "Students who produce only a list of features without connecting them to conditions can be prompted: 'What would happen to a tree with flat branches if heavy snow fell on it?' Students who complete easily can be asked to compare the deodar's adaptations with those of a cactus and explain why the deodar's features would be useless in a desert."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+    "implied_lo_assessed": "The student traces a consequence chain from a specific habitat damage event to the loss of at least two organisms, names one conservation effort and the biodiversity threat it addresses, and shows at least three interdependence relationships in a habitat web.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Project Tiger was launched in 1973. A student says: 'Project Tiger protects tigers, so it only helps tigers.' What is incorrect about this reasoning in the context of the chapter?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The reasoning is correct — conservation projects named after one animal only protect that animal.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The reasoning is incorrect because Project Tiger was about stopping hunting, not about habitat protection.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The reasoning is incorrect because protecting a tiger's habitat also protects all other plants and animals that share that habitat and depend on it.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The reasoning is incorrect because tigers do not depend on other organisms in their habitat.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "A": "Student accepts the one-animal-one-project logic, not recognising that habitat protection creates umbrella conservation effects for all organisms sharing the habitat.",
+       "B": "Student introduces a reason not stated in the chapter (hunting) and applies it to correct the student's reasoning, not recognising the habitat-interdependence argument.",
+       "D": "Student misapplies the tiger's position — denying interdependence rather than extending it — missing that tigers depend on prey and habitat conditions maintained by many organisms."
+      },
+      "inclusivity": "Students who are uncertain can be prompted: 'Think about the organism-interdependence webs you built — if you protect the whole forest, who benefits?' Students who answer quickly can be asked to name one other organism from the chapter whose conservation is linked to habitat protection."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+    "implied_lo_assessed": "The student traces a consequence chain from a specific habitat damage event to the loss of at least two organisms, names one conservation effort and the biodiversity threat it addresses, and shows at least three interdependence relationships in a habitat web.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "Sacred groves are community-protected undisturbed forest patches found across India. In what way do they differ most from government-led conservation efforts like Protected Areas?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Sacred groves are a traditional, community-led form of conservation, while Protected Areas are formally designated by government authority.",
+      "is_correct": true
+     },
+     {
+      "label": "B",
+      "text": "Sacred groves are more effective than Protected Areas because communities care more about local forests.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Sacred groves protect only plant species, while Protected Areas protect both plants and animals.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "Sacred groves were created more recently than Protected Areas as an alternative approach.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "what_each_option_reveals": {
+       "C": "Student confuses the scope of protection (plants only vs. plants and animals) with the nature of the conservation actor, fabricating a species-scope distinction not in the chapter.",
+       "B": "Student makes an effectiveness comparison not supported by the chapter, adding a value judgement absent from the chapter's presentation of both approaches.",
+       "D": "Student reverses the historical relationship — sacred groves are a traditional (older) form of conservation, not a recent one; selecting D shows a timeline misconception."
+      },
+      "inclusivity": "Students who are uncertain about the government-community distinction can be given the prompt: 'Who decided to protect each kind of forest — a government official or the people living nearby?' Students who answer quickly can be asked to name one conservation case from the chapter and identify whether it is government-led or community-led."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 5,
+    "stage_label": "Analyse habitat loss and its consequences for biodiversity",
+    "implied_lo_assessed": "The student traces a consequence chain from a specific habitat damage event to the loss of at least two organisms, names one conservation effort and the biodiversity threat it addresses, and shows at least three interdependence relationships in a habitat web.",
+    "question_type": "SCR",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A large tree in a forest is cut down. It previously provided fruit for birds, nesting branches for squirrels, and shade that kept the ground moist for insects. Trace the consequence chain: identify at least two organisms that are affected, name the resource each loses, and explain how the loss of each organism could affect one other organism in the habitat.",
+    "options": [],
+    "expected_elements": [
+     "Identifies birds as affected — loss of fruit as food source — and explains that if birds leave, seed dispersal for other plants in the habitat is reduced.",
+     "Identifies squirrels as affected — loss of nesting shelter — and explains that squirrels may leave or decline, affecting any predator that feeds on them.",
+     "Shows a chain structure: the consequence for each organism extends to at least one other organism, demonstrating indirect effects rather than only direct resource loss."
+    ],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": {
+      "learning_outcome": {
+       "stage": 5
+      },
+      "inclusivity": "Students who produce only direct effects (bird loses fruit) without the second-order chain can be prompted: 'If the bird leaves, what else in the habitat changes?' Students who complete the chain easily can be asked to add a third organism (insects losing shade-created moisture) and trace its downstream effect."
+     },
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+    "implied_lo_assessed": "The student classifies an unfamiliar organism using observable features and the chapter's criteria, explains how its features are suited to its habitat, and predicts the biodiversity consequences of a stated habitat threat — demonstrating simultaneous use of classification and organism-environment reasoning.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Analysis",
+    "visual_stimulus": null,
+    "question_text": "A student encounters a plant with the following features: parallel venation in its long narrow leaves, a bunch of thin roots of similar thickness arising from the stem base, and a single cotyledon when the seed is split. The plant grows in a low-lying wetland. What classification does the evidence support, and what does the habitat add to the description?",
+    "options": [
+     {
+      "label": "A",
+      "text": "Dicot, because wetland plants generally have taproots; the habitat confirms this.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "Monocot, but only because it grows in a wetland — habitat determines classification.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "Monocot, supported by all three features; the wetland habitat is additional contextual information but does not change the classification.",
+      "is_correct": true
+     },
+     {
+      "label": "D",
+      "text": "The classification cannot be determined without knowing the plant's height and stem type.",
+      "is_correct": false
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "A": "Student confuses habitat (wetland) with the classification criterion, treating the environment as determining root type rather than the observed root features doing so.",
+       "B": "Student reaches the correct category but through a wrong rule — habitat determines classification — collapsing the distinction between the classification framework (observable features) and the adaptation framework (habitat conditions).",
+       "D": "Student introduces stem type and height as necessary for monocot-dicot classification, not recognising that the three features already provided are sufficient for the classification."
+      },
+      "inclusivity": "Students who are uncertain can be asked to check each of the three features against the monocot rule individually before deciding on the classification. Students who answer easily can be asked to explain what the wetland habitat tells us about the plant's adaptations separately from its classification."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+    "implied_lo_assessed": "The student classifies an unfamiliar organism using observable features and the chapter's criteria, explains how its features are suited to its habitat, and predicts the biodiversity consequences of a stated habitat threat — demonstrating simultaneous use of classification and organism-environment reasoning.",
+    "question_type": "MCQ",
+    "competency": {
+     "c_code": "C-3.3",
+     "competency_text": "Analyse relationships between organisms and their environments, including adaptation and habitat dependence."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A grassland is converted into farmland. Grasses are replaced by a single crop, and most wild animals leave. A student argues: 'The grassland's biodiversity has been harmed, but since the crop is a plant, the number of plant species has not decreased.' What is the flaw in this argument?",
+    "options": [
+     {
+      "label": "A",
+      "text": "The argument is correct — replacing wild grasses with a crop plant keeps plant species count the same.",
+      "is_correct": false
+     },
+     {
+      "label": "B",
+      "text": "The argument is flawed because crops are not plants — they are cultivated species and do not count as biodiversity.",
+      "is_correct": false
+     },
+     {
+      "label": "C",
+      "text": "The argument is flawed because grassland conversion always removes all plants, not just wild grasses.",
+      "is_correct": false
+     },
+     {
+      "label": "D",
+      "text": "The argument is flawed because replacing many species of wild grasses with one crop species reduces plant diversity even though one plant species remains.",
+      "is_correct": true
+     }
+    ],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "what_each_option_reveals": {
+       "A": "Student accepts the species-count-unchanged argument, confusing the presence of one plant species with the preservation of plant diversity — not grasping that biodiversity refers to variety, not just presence.",
+       "B": "Student introduces a cultivated-versus-wild distinction to disqualify crops, which is not a distinction made in the chapter, and uses it to dismiss the plant-replacement logic rather than addressing the diversity argument.",
+       "C": "Student overcorrects by claiming all plants are removed, adding a factual error rather than identifying the actual flaw in the argument about species count."
+      },
+      "inclusivity": "Students who find the argument-flaw format challenging can be given the prompt: 'Biodiversity means variety — does having one crop mean variety has been maintained or reduced?' Students who answer quickly can be asked to name the consequences for animals that depended on the wild grasses, connecting back to the interdependence webs."
+     },
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+    "implied_lo_assessed": "The student classifies an unfamiliar organism using observable features and the chapter's criteria, explains how its features are suited to its habitat, and predicts the biodiversity consequences of a stated habitat threat — demonstrating simultaneous use of classification and organism-environment reasoning.",
+    "question_type": "ECR",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": null,
+    "question_text": "A scientist studying a newly discovered plant reports: net-like venation on broad leaves, a single thick main root with several side roots, and two cotyledons when the seed is split. The plant grows in a semi-arid shrubland where rainfall is low and sunlight is intense. Using the chapter's classification criteria and adaptation framework together, (a) classify the plant as monocot or dicot and justify with all three features, (b) explain how two of its named features are likely adaptations to the semi-arid habitat, and (c) predict what would happen to the shrubland's biodiversity if the rainfall dropped further and explain your reasoning.",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [
+     "Part (a) correctly identifies the plant as a dicot, citing reticulate venation, taproot system, and two cotyledons as consistent and mutually reinforcing evidence.",
+     "Part (b) connects two named features to specific semi-arid conditions: for example, taproot (reaches deep water in dry soil) and broad leaves with protective features (or the reverse — the student may argue broad leaves are a challenge and qualify the adaptation claim).",
+     "Part (c) provides a reasoned prediction: further rainfall reduction would stress organisms already adapted to low water; if key plants decline, the food and shelter web would unravel, reducing species variety.",
+     "The response integrates classification reasoning and adaptation-environment reasoning rather than treating parts (a), (b), and (c) as unconnected answers."
+    ],
+    "task": "",
+    "scaffold": "",
+    "format_of_output": [],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "inclusivity": "Students who struggle with part (c) can be given the prompt: 'Use what you know about habitat resources and organism interdependence to build a chain of consequences.' Students who produce strong responses to all three parts can be asked to evaluate whether the same plant would be found in a mountain habitat and what features would need to change."
+     },
+     "OPEN_TASK": null
+    }
+   },
+   {
+    "progression_stage": 6,
+    "stage_label": "Apply classification and organism-environment reasoning to new contexts",
+    "implied_lo_assessed": "The student classifies an unfamiliar organism using observable features and the chapter's criteria, explains how its features are suited to its habitat, and predicts the biodiversity consequences of a stated habitat threat — demonstrating simultaneous use of classification and organism-environment reasoning.",
+    "question_type": "OPEN_TASK",
+    "competency": {
+     "c_code": "C-3.1",
+     "competency_text": "Describe and classify the diversity of living things by observing their features, and explain how organisms relate to and are shaped by their environments."
+    },
+    "cognitive_demand": "Evaluation",
+    "visual_stimulus": "Organism | Key observable features | Habitat | Stated threat\nPlant X | Long narrow leaves with parallel veins; thin roots of similar thickness in a bunch; one cotyledon in seed | Seasonal wetland | Wetland is being drained for construction\nAnimal Y | Streamlined body; fins; no limbs | Freshwater river | River water level dropping due to diversion\nPlant Z | Broad leaves with net-like venation; one thick main root with side roots; two cotyledons | Dry scrubland | Increasing frequency of wildfires\nAnimal W | Four legs; thick fur; two fatty humps | Cold mountain plateau | Rising temperatures reducing snowfall",
+    "question_text": "",
+    "options": [],
+    "expected_elements": [],
+    "look_for": [],
+    "task": "Refer to the table provided. For each organism: (1) classify it as monocot, dicot, or name its movement-based animal group using the observable features given; (2) select one named feature and explain it as an adaptation to the stated habitat; (3) predict one consequence for the habitat's biodiversity if the stated threat continues, and justify your prediction using the organism's dependencies.",
+    "scaffold": "Work through one organism at a time. For classification, use the observable features — do not use the habitat as your evidence. For the adaptation explanation, name the feature, name the habitat condition it addresses, and explain how the feature helps. For the biodiversity consequence, think about what other organisms might depend on this one — food, shelter, or seed dispersal — and trace what happens if it declines.",
+    "format_of_output": [
+     "A completed table with four rows — one per organism — each containing: classification with justification, adaptation feature and explanation, and biodiversity consequence with reasoning."
+    ],
+    "guide": {
+     "MCQ": null,
+     "SCR": null,
+     "ECR": null,
+     "OPEN_TASK": {
+      "learning_outcome": {
+       "stage": 6
+      },
+      "format_type": "Classification or sorting task with justification",
+      "format_rationale": "The Final Stage's convergent implied LO requires simultaneous use of classification reasoning and organism-environment reasoning across both central competencies — a structured table with four organisms and three required columns per organism is the most natural vehicle for making both operations visible and assessable in a single response.",
+      "what_this_demonstrates": "A complete response demonstrates that the student can apply the chapter's classification criteria to new organisms, explain features as habitat-specific adaptations, and reason from organism-dependencies to biodiversity consequences — all three operations integrated rather than performed in isolation.",
+      "reading_the_scaffold": "The scaffold separates the three cognitive operations per organism to prevent students from conflating classification evidence with adaptation reasoning. If a student uses the habitat to justify the classification in column 1, they have not distinguished the two frameworks. The biodiversity-consequence column is the highest-demand cell: a strong response names another organism, a dependency relationship, and a downstream effect.",
+      "strong_vs_weak_markers": "Strong: classification cites the specific observable features named in the table and applies the correct rule; adaptation explanation names both the feature and the specific environmental condition it addresses; biodiversity consequence traces an indirect effect through at least one dependency. Weak: classification based on habitat rather than features; adaptation description restates the feature without naming the condition; biodiversity consequence lists only the directly threatened organism without tracing downstream effects.",
+      "inclusivity": "Students who find the four-row table demanding can be asked to complete two rows fully rather than four rows partially — the quality of reasoning in two complete rows is more informative than four incomplete rows. Students who complete all four rows with strong reasoning can be asked to identify which organism's decline would have the widest ripple effect across the habitat and justify their choice."
+     }
+    }
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

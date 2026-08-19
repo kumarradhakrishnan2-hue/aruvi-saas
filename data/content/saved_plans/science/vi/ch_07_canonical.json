@@ -53,6 +53,26 @@
       "replaced_with": "Problem-based Learning"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 13,
+      "field": "visual_aids[2]",
+      "removed": {
+       "type": "prose",
+       "title": "Debrief Verdict Column — Board Guide",
+       "text": "As groups share findings checkpoint by checkpoint, write a running verdict column on the board using these four labels:\n\nReliable | Unreliable | Needs conversion | Instrument mismatch\n\nFor each verdict, ask the group to cite the specific chapter reasoning behind it, not just the answer. Key findings to draw out:\n— The 'felt cool' entry: sensory judgment is not a measurement and cannot substitute for one.\n— The Kelvin reading (279 K): converts to 5.85 °C, which is within the safe range, but the reading was taken through refrigerator glass without immersion, introducing error.\n— The clinical thermometer: designed for body-temperature range; an instrument mismatch for a refrigerator context.\n— Division value of the van thermometer: (10 °C − 0 °C) ÷ 20 = 0.5 °C per division. This means the thermometer cannot distinguish 8.5 °C from 8 °C or 9 °C — a technically functioning instrument that still fails the task because its precision is insufficient."
+      },
+      "replaced_with": [
+       "[prose] Debrief Verdict Column — Board Guide",
+       "[table] Key findings to draw out"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -653,7 +673,12 @@
       {
        "type": "prose",
        "title": "Debrief Verdict Column — Board Guide",
-       "text": "As groups share findings checkpoint by checkpoint, write a running verdict column on the board using these four labels:\n\nReliable | Unreliable | Needs conversion | Instrument mismatch\n\nFor each verdict, ask the group to cite the specific chapter reasoning behind it, not just the answer. Key findings to draw out:\n— The 'felt cool' entry: sensory judgment is not a measurement and cannot substitute for one.\n— The Kelvin reading (279 K): converts to 5.85 °C, which is within the safe range, but the reading was taken through refrigerator glass without immersion, introducing error.\n— The clinical thermometer: designed for body-temperature range; an instrument mismatch for a refrigerator context.\n— Division value of the van thermometer: (10 °C − 0 °C) ÷ 20 = 0.5 °C per division. This means the thermometer cannot distinguish 8.5 °C from 8 °C or 9 °C — a technically functioning instrument that still fails the task because its precision is insufficient."
+       "text": "As groups share findings checkpoint by checkpoint, write a running verdict column on the board using these four labels:\n\nReliable · Unreliable · Needs conversion · Instrument mismatch\n\nFor each verdict, ask the group to cite the specific chapter reasoning behind it, not just the answer."
+      },
+      {
+       "type": "table",
+       "title": "Key findings to draw out",
+       "table": "Log entry | Reasoning to draw out\nThe 'felt cool' entry | Sensory judgment is not a measurement and cannot substitute for one\nThe Kelvin reading (279 K) | Converts to 5.85 °C, which is within the safe range, but the reading was taken through refrigerator glass without immersion, introducing error\nThe clinical thermometer | Designed for body-temperature range; an instrument mismatch for a refrigerator context\nDivision value of the van thermometer | (10 °C − 0 °C) ÷ 20 = 0.5 °C per division. This means the thermometer cannot distinguish 8.5 °C from 8 °C or 9 °C — a technically functioning instrument that still fails the task because its precision is insufficient"
       }
      ]
     }

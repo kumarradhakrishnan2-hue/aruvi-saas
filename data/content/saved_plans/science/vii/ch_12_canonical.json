@@ -80,6 +80,29 @@
       "replaced_with": "Collaborative Annotation and Diagramming"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 14,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Lighthouse Keeper's Log — twelve monthly entries",
+       "text": "Write or print one entry per month. The entries must collectively satisfy the following design pattern — no entry should name any phenomenon by its scientific term; the keeper describes only what they observe in plain language.\n\nSEASONAL SHADOW AND DAYLIGHT PATTERN\nThe June entry: noon shadow is short; daylight hours are long (approximately 15–16 h).\nThe December entry: noon shadow is long; daylight hours are short (approximately 8–9 h).\nThe March entry: noon shadow is at a middle length; daylight and night are approximately equal.\nThe September entry: mirrors March — equal day and night, middle shadow length.\nThe remaining eight entries should show a gradual and consistent progression between these four anchor points.\n\nCONSTELLATION ENTRIES\nEach entry records the constellation visible on the southern horizon at midnight. The constellation shifts systematically month by month, completing a full cycle over twelve entries, so that students must invoke revolution (Earth's changing night-side direction) rather than rotation to explain the shift.\n\nUNUSUAL-EVENT ENTRIES (three entries only)\nEntry A — Total solar eclipse: 'At midday the Sun vanished — a dark circle covered it completely, two minutes of darkness. The sea birds went silent. Then it returned.' (This is a total solar eclipse. The Moon's apparent size equals the Sun's, allowing complete coverage.)\nEntry B — Total lunar eclipse: 'The full Moon turned a deep copper colour and stayed that way for nearly an hour before brightening again.' (This is a total lunar eclipse; safe to observe with naked eye. Earth's shadow falls on the Moon.)\nEntry C — Transit of Venus: 'A tiny black dot appeared on the face of the Sun and crept slowly across it over several hours.' (This is NOT an eclipse. Venus is physically larger than the Moon but is so far away that its apparent size is tiny — it cannot cover the Sun. This entry tests whether students understand apparent size. The chapter's Solar Eclipse section addresses transits.)\n\nDISTRIBUTION: place Entry A and Entry B in two different months; place Entry C in a third month. No two unusual events should fall in the same month."
+      },
+      "replaced_with": [
+       "[prose] Lighthouse Keeper's Log — twelve monthly entries",
+       "[table] Seasonal shadow and daylight pattern",
+       "[prose] Constellation entries",
+       "[table] Unusual-event entries (three entries only)",
+       "[prose] Distribution of unusual events"
+      ]
+     }
+    ]
    }
   ],
   "synthesis_polish": {
@@ -748,7 +771,27 @@
       {
        "type": "prose",
        "title": "Lighthouse Keeper's Log — twelve monthly entries",
-       "text": "Write or print one entry per month. The entries must collectively satisfy the following design pattern — no entry should name any phenomenon by its scientific term; the keeper describes only what they observe in plain language.\n\nSEASONAL SHADOW AND DAYLIGHT PATTERN\nThe June entry: noon shadow is short; daylight hours are long (approximately 15–16 h).\nThe December entry: noon shadow is long; daylight hours are short (approximately 8–9 h).\nThe March entry: noon shadow is at a middle length; daylight and night are approximately equal.\nThe September entry: mirrors March — equal day and night, middle shadow length.\nThe remaining eight entries should show a gradual and consistent progression between these four anchor points.\n\nCONSTELLATION ENTRIES\nEach entry records the constellation visible on the southern horizon at midnight. The constellation shifts systematically month by month, completing a full cycle over twelve entries, so that students must invoke revolution (Earth's changing night-side direction) rather than rotation to explain the shift.\n\nUNUSUAL-EVENT ENTRIES (three entries only)\nEntry A — Total solar eclipse: 'At midday the Sun vanished — a dark circle covered it completely, two minutes of darkness. The sea birds went silent. Then it returned.' (This is a total solar eclipse. The Moon's apparent size equals the Sun's, allowing complete coverage.)\nEntry B — Total lunar eclipse: 'The full Moon turned a deep copper colour and stayed that way for nearly an hour before brightening again.' (This is a total lunar eclipse; safe to observe with naked eye. Earth's shadow falls on the Moon.)\nEntry C — Transit of Venus: 'A tiny black dot appeared on the face of the Sun and crept slowly across it over several hours.' (This is NOT an eclipse. Venus is physically larger than the Moon but is so far away that its apparent size is tiny — it cannot cover the Sun. This entry tests whether students understand apparent size. The chapter's Solar Eclipse section addresses transits.)\n\nDISTRIBUTION: place Entry A and Entry B in two different months; place Entry C in a third month. No two unusual events should fall in the same month."
+       "text": "Write or print one entry per month. The entries must collectively satisfy the following design pattern — no entry should name any phenomenon by its scientific term; the keeper describes only what they observe in plain language."
+      },
+      {
+       "type": "table",
+       "title": "Seasonal shadow and daylight pattern",
+       "table": "Entry | Observation recorded\nJune | Noon shadow is short; daylight hours are long (approximately 15–16 h)\nDecember | Noon shadow is long; daylight hours are short (approximately 8–9 h)\nMarch | Noon shadow is at a middle length; daylight and night are approximately equal\nSeptember | Mirrors March — equal day and night, middle shadow length\nRemaining eight entries | A gradual and consistent progression between these four anchor points"
+      },
+      {
+       "type": "prose",
+       "title": "Constellation entries",
+       "text": "Each entry records the constellation visible on the southern horizon at midnight. The constellation shifts systematically month by month, completing a full cycle over twelve entries, so that students must invoke revolution (Earth's changing night-side direction) rather than rotation to explain the shift."
+      },
+      {
+       "type": "table",
+       "title": "Unusual-event entries (three entries only)",
+       "table": "Entry | Keeper's words | Teacher key\nA | 'At midday the Sun vanished — a dark circle covered it completely, two minutes of darkness. The sea birds went silent. Then it returned.' | This is a total solar eclipse. The Moon's apparent size equals the Sun's, allowing complete coverage\nB | 'The full Moon turned a deep copper colour and stayed that way for nearly an hour before brightening again.' | This is a total lunar eclipse; safe to observe with naked eye. Earth's shadow falls on the Moon\nC | 'A tiny black dot appeared on the face of the Sun and crept slowly across it over several hours.' | This is NOT an eclipse. Venus is physically larger than the Moon but is so far away that its apparent size is tiny — it cannot cover the Sun. This entry tests whether students understand apparent size. The chapter's Solar Eclipse section addresses transits"
+      },
+      {
+       "type": "prose",
+       "title": "Distribution of unusual events",
+       "text": "Place Entry A and Entry B in two different months; place Entry C in a third month. No two unusual events should fall in the same month."
       },
       {
        "type": "table",

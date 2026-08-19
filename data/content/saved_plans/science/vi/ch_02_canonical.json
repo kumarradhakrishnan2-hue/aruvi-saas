@@ -67,6 +67,26 @@
       "replaced_with": "Collaborative Evidence-based Classification"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 21,
+      "field": "visual_aids[1]",
+      "removed": {
+       "type": "prose",
+       "title": "Habitat-damage scenarios",
+       "text": "Distribute one slip per pair, cycling across the four types:\n\n1. 'The freshwater pond has dried up.'\n2. 'The coastal forest was cleared for construction.'\n3. 'The dry grassland was converted to farmland.'\n4. 'The river-plain farm was flooded and abandoned.'\n\nEvery scenario affects at least one organism on the cards and leaves others unaffected — this forces discriminating prediction. A strong response names a specific feature: 'The fish is most affected because its aquatic habitat is gone, and its fins and streamlined body have no function on land; the goat is unaffected because its legs and dry-grassland source are untouched.' A weak response says only 'the fish will die because it needs water' — push students to name the feature."
+      },
+      "replaced_with": [
+       "[table] Habitat-damage scenarios",
+       "[prose] Habitat-damage scenarios — facilitation note"
+      ]
+     }
+    ]
    }
   ],
   "synthesis_reauthor": {
@@ -978,9 +998,14 @@
        "table": "Organism | Sketch features | Sourcing habitat\nWheat bundle | Narrow parallel-veined leaves, hollow jointed stem | River-plain farm\nRose plant | Woody shrub stem with thorns, reticulate-veined leaves | Garden nursery\nCoconut sapling | Single thick woody trunk, parallel-veined fronds | Coastal forest edge\nPumpkin vine | Soft stem requiring support (climber), reticulate-veined leaves | Field boundary\nMaize cob | Tall herb stem, parallel-veined leaves | River-plain farm\nMoney plant (creeper) | Soft green stem requiring support, reticulate-veined leaves | Shaded riverbank\nLive fish | Streamlined body, fins labelled | Freshwater pond\nGoat | Four legs labelled, hooves | Dry grassland\nPigeon (caged) | Wings and two legs labelled | Open woodland near settlement"
       },
       {
-       "type": "prose",
+       "type": "table",
        "title": "Habitat-damage scenarios",
-       "text": "Distribute one slip per pair, cycling across the four types:\n\n1. 'The freshwater pond has dried up.'\n2. 'The coastal forest was cleared for construction.'\n3. 'The dry grassland was converted to farmland.'\n4. 'The river-plain farm was flooded and abandoned.'\n\nEvery scenario affects at least one organism on the cards and leaves others unaffected — this forces discriminating prediction. A strong response names a specific feature: 'The fish is most affected because its aquatic habitat is gone, and its fins and streamlined body have no function on land; the goat is unaffected because its legs and dry-grassland source are untouched.' A weak response says only 'the fish will die because it needs water' — push students to name the feature."
+       "table": "Distribute one slip per pair, cycling across the four types\nSlip | Scenario\n1 | 'The freshwater pond has dried up.'\n2 | 'The coastal forest was cleared for construction.'\n3 | 'The dry grassland was converted to farmland.'\n4 | 'The river-plain farm was flooded and abandoned.'"
+      },
+      {
+       "type": "prose",
+       "title": "Habitat-damage scenarios — facilitation note",
+       "text": "Every scenario affects at least one organism on the cards and leaves others unaffected — this forces discriminating prediction. A strong response names a specific feature: 'The fish is most affected because its aquatic habitat is gone, and its fins and streamlined body have no function on land; the goat is unaffected because its legs and dry-grassland source are untouched.' A weak response says only 'the fish will die because it needs water' — push students to name the feature."
       },
       {
        "type": "table",

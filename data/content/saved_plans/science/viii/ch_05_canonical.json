@@ -54,6 +54,25 @@
       "replaced_with": "Problem-based Learning"
      }
     ]
+   },
+   {
+    "tool": "genon/repair_prose_tables.py v1.0",
+    "at": "2026-08-19T10:24:35",
+    "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+    "edits": [
+     {
+      "unit": 18,
+      "field": "visual_aids[0]",
+      "removed": {
+       "type": "prose",
+       "title": "Harbour data log — five events",
+       "text": "Event 1 — Laden cargo barge: The barge is sitting lower in the water than its normal load line indicates it should for the declared cargo weight.\n\nEvent 2 — Ferry at dock: The ferry's steel hull has become magnetised; during docking, loose nuts and bolts on the concrete apron are being attracted toward the hull without anyone touching them.\n\nEvent 3 — Dockworker's trolley: After being given the same push as usual, the trolley rolls noticeably farther than normal across the concrete apron, which was wetted by an earlier rain shower.\n\nEvent 4 — Buoy adrift: A harbour buoy has broken free from its anchor chain and is floating on the surface, drifting with the current.\n\nEvent 5 — Crane hook: A crane hook is hanging motionless from a calibrated spring scale. The scale reads a measurable number of newtons even though nothing is being lifted."
+      },
+      "replaced_with": [
+       "[table] Harbour data log — five events"
+      ]
+     }
+    ]
    }
   ]
  },
@@ -856,9 +875,9 @@
      "pedagogical_approach": "Problem-based Learning",
      "visual_aids": [
       {
-       "type": "prose",
+       "type": "table",
        "title": "Harbour data log — five events",
-       "text": "Event 1 — Laden cargo barge: The barge is sitting lower in the water than its normal load line indicates it should for the declared cargo weight.\n\nEvent 2 — Ferry at dock: The ferry's steel hull has become magnetised; during docking, loose nuts and bolts on the concrete apron are being attracted toward the hull without anyone touching them.\n\nEvent 3 — Dockworker's trolley: After being given the same push as usual, the trolley rolls noticeably farther than normal across the concrete apron, which was wetted by an earlier rain shower.\n\nEvent 4 — Buoy adrift: A harbour buoy has broken free from its anchor chain and is floating on the surface, drifting with the current.\n\nEvent 5 — Crane hook: A crane hook is hanging motionless from a calibrated spring scale. The scale reads a measurable number of newtons even though nothing is being lifted."
+       "table": "Event | Observation\n1 — Laden cargo barge | The barge is sitting lower in the water than its normal load line indicates it should for the declared cargo weight\n2 — Ferry at dock | The ferry's steel hull has become magnetised; during docking, loose nuts and bolts on the concrete apron are being attracted toward the hull without anyone touching them\n3 — Dockworker's trolley | After being given the same push as usual, the trolley rolls noticeably farther than normal across the concrete apron, which was wetted by an earlier rain shower\n4 — Buoy adrift | A harbour buoy has broken free from its anchor chain and is floating on the surface, drifting with the current\n5 — Crane hook | A crane hook is hanging motionless from a calibrated spring scale. The scale reads a measurable number of newtons even though nothing is being lifted"
       },
       {
        "type": "table",

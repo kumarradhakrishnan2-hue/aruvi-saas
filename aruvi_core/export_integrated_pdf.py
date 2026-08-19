@@ -41,7 +41,7 @@ from .export_lesson_pdf import (
     _group_word, targeted_competencies,
 )
 from .export_assessment_pdf import (
-    G_ACCENT, G_HEAD, G_DARK, G_TINT,
+    G_ACCENT, G_HEAD, G_DARK, G_TINT, G_EDGE,
     intro_paragraph, _question_block,
 )
 
@@ -210,13 +210,35 @@ def _css() -> str:
   .u-hw-k {{ font-weight: bold; color: {INK}; font-size: 7.5pt; }}
   .u-hw-t {{ font-size: 7.5pt; color: #2a2a2a; }}
 
+  /* typed prepared content — the .va-* family _period_block emits (polish pass,
+     2026-08-18; MIRRORED from export_lesson_pdf, 2026-08-19 — these were missing
+     here, so integrated PDFs printed the prepared tables/cards unstyled) */
+  .va-block {{ margin-top: 7px; padding-top: 5px; border-top: 0.5px solid #e4ddd2; }}
+  .va-kicker {{ font-size: 6.5pt; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #8a8a86; margin-bottom: 3px; }}
+  .va-title {{ text-transform: none; letter-spacing: 0; font-style: italic; color: #6b6258; }}
+  .va-cap {{ font-size: 7pt; font-style: italic; color: #6b6258; margin-bottom: 2px; }}
+  .va-tbl {{ width: 100%; border-collapse: collapse; margin-top: 2px; }}
+  .va-th {{ font-size: 6.5pt; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase;
+    color: #5a5248; border-bottom: 1px solid #2a2a2a; border-right: 0.5px solid #ece5d8;
+    padding: 2px 6px 3px 5px; }}
+  .va-td {{ font-size: 7.5pt; color: #2a2a2a; line-height: 1.4; vertical-align: top;
+    border-bottom: 0.5px solid #e4ddd2; border-right: 0.5px solid #ece5d8;
+    padding: 3px 6px 3px 5px; }}
+  .va-src {{ font-size: 6.5pt; font-style: italic; color: #8a8a86; margin-top: 2px; }}
+  .va-prose {{ font-size: 7.5pt; color: #2a2a2a; line-height: 1.5; white-space: pre-wrap; }}
+
   /* assessment item (green) */
+  .q {{ margin-top: 10px; }}
   .qmeta {{ width: 100%; margin-top: 10px; margin-bottom: 6px; }}
   .qmeta td {{ background-color: {G_HEAD}; vertical-align: top; }}
   .qm-top {{ padding: 5px 10px 0 10px; }}
   .qm-bot {{ padding: 0 10px 5px 10px; }}
   .qm-l {{ text-align: left; }}
   .qm-r {{ text-align: right; white-space: nowrap; }}
+  .qm-rk {{ text-align: right; white-space: nowrap; border-left: 0.75px solid {G_EDGE}; }}
+  .qm-rv {{ text-align: right; white-space: nowrap; border-left: 0.75px solid {G_EDGE};
+            font-size: 7.5pt; color: #1f3a30; }}
   .qm-qn {{ font-family: Georgia, serif; font-size: 9pt; font-weight: bold; color: {G_DARK}; }}
   .qm-k {{ font-size: 6.5pt; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; color: {G_ACCENT}; }}
   .qm-v {{ font-size: 7.5pt; color: #1f3a30; line-height: 1.35; }}
@@ -234,6 +256,8 @@ def _css() -> str:
             border: 0.5px solid #cde0d8; padding: 4px 6px; word-wrap: break-word; }}
   .st-td {{ font-size: 7pt; color: #2a2a2a; border: 0.5px solid #cde0d8; padding: 4px 6px; word-wrap: break-word; }}
   .stim-tbl-wide .st-th, .stim-tbl-wide .st-td {{ font-size: 6pt; padding: 3px 4px; }}
+  .stim-tbl-cap {{ font-size: 7.5pt; color: #2a2a2a; font-weight: bold; margin: 6px 0 2px 0; }}
+  .stim-tbl-src {{ font-size: 6.5pt; color: #55524d; font-style: italic; margin: 2px 0 6px 0; }}
   .stim-prose {{ font-size: 7.5pt; color: #2a2a2a; font-style: italic; margin: 5px 0; }}
   .stim-note {{ font-size: 7pt; color: #8a8a86; font-style: italic; margin: 5px 0; }}
   .scaf {{ font-size: 7.5pt; color: #2a2a2a; margin: 4px 0 2px; }}

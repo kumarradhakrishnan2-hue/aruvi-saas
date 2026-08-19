@@ -1,0 +1,1462 @@
+{
+  "filename": "ch_14_canonical.json",
+  "saved_at": "2026-08-19T11:14:02",
+  "plan_status": "canonical",
+  "chapter_number": 14,
+  "chapter_title": "Area",
+  "grade": "Grade VIII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 14
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 14 periods = 630 minutes\nTotal: 14 periods · 10h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "14x45",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics viii 14",
+    "ledger_ts": "20260818_205348_math_viii_14_top",
+    "validation": "clean"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.1",
+              "title": "Rectangle and Squares"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Counting Squares: Why Area Is What It Is",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "A-1",
+              "type": "activity",
+              "source_section": "section 7.1",
+              "book_ref": "Math Talk, section 7.1 p.148",
+              "description": "Think of different creative ways to divide a square into 4 parts of equal area using compression and expansion along edges."
+            },
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Figure it Out Q1, section 7.1 p.150",
+              "description": "Identify the missing side-lengths of composite rectangular figures given their areas: (i) an L-shaped figure with partial lengths 4 in, 3 in, 7 in, 2 in and areas 28 in² and 21 in²; (ii) a rectangle with one side 4 m, one side 11 m, and total area 50 m²."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with Math Talk, section 7.1 p.148 (\"Think of different creative ways to divide a square into 4 parts of equal area....\"). Students sketch three or four personal solutions on paper, sharing briefly with a neighbour."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Establish the unit-square counting basis for area: draw a 4 × 3 grid on the board, count unit squares, and confirm area = length × width. Extend: a diagonal cuts the rectangle into two congruent triangles, so each triangle has area (1/2) × length × width. Students test this with their own dimensions."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Work Figure it Out Q1, section 7.1 p.150 (\"Identify the missing side-lengths of composite rectangular figures given their areas....\") in pairs. Encourage students to split the composite figure into sub-rectangles and use area = length × width in reverse to find missing sides."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Whole-class share-out: one pair explains their decomposition strategy for each part. Consolidate the observation that equal-area shapes need not be congruent — a key idea surfaced by the opening Math Talk."
+            }
+          ],
+          "teacher_notes": "Students sometimes confuse counting perimeter units with counting area units when first setting up grids; insist on labelling which dimension is length and which is width before multiplying. The Math Talk prompt can generate many valid solutions — celebrate variety rather than converging on one answer. The triangle-as-half-rectangle result will be built on later when deriving the triangle area formula from its enclosing rectangle.",
+          "materials": [
+            "Squared grid paper",
+            "Rulers",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.1",
+              "title": "Rectangle and Squares"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Perimeter vs Area: Why One Cannot Stand in for the Other",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Figure it Out Q5, section 7.1 p.152",
+              "description": "A square is divided into three regions (1, 2, 3). If the side-length is doubled, find the increase in the areas of regions 1, 2, and 3. Give reasons."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Math Talk Q3, section 7.1 p.151",
+              "description": "A plot of 14 m × 12 m has a crosspath. Identify necessary measurements, assign values, find the area of the crosspath, and give a formula."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Figure it Out Q2, section 7.1 p.151",
+              "description": "A shaded path is laid around a rectangular park EFGH inside a larger rectangle ABCD. (i) Assign measurements of your choice and find the area of the path; give a formula. (ii) If the path width along each side is given, find its area by breaking into rectangles; give a formula. (iii) Determine whether the path area changes when the outer rectangle is shifted while keeping EFGH inside."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Pose the reasoning challenge: can two rectangles have equal perimeters but different areas? Students construct examples on paper — vary the length and width while keeping 2(l + w) fixed — and record pairs of rectangles with equal perimeters but differing areas."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Reverse the challenge: can two rectangles share the same area but have different perimeters? Students explore this in small groups, then the class discusses both findings. The teacher records examples on the board, establishing that perimeter and area are independent measures."
+            },
+            {
+              "minutes": "20–33",
+              "activity": "Work Figure it Out Q5, section 7.1 p.152 (\"If the side-length is doubled, find the increase in the areas of regions 1, 2, and 3....\"). Students reason about how scaling a square's side affects sub-region areas and articulate why the area grows by a factor of four while the perimeter only doubles."
+            },
+            {
+              "minutes": "33–45",
+              "activity": "Work Math Talk Q3, section 7.1 p.151 (\"A plot of 14 m × 12 m has a crosspath....\") in pairs. Students identify the measurements they need, assign values, and derive a formula for the crosspath area, making the perimeter-area independence concrete in a spatial context."
+            }
+          ],
+          "teacher_notes": "A common error is to add the crosspath's two strips without subtracting the overlapping centre square; prompt students to check whether any region has been counted twice. The independence of perimeter and area is a persistent misconception — use the student-generated examples to make it stick rather than asserting it. Figure it Out Q2, section 7.1 p.151 is set for independent work to extend the path-area reasoning at home.",
+          "materials": [
+            "Squared grid paper",
+            "Rulers",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.2",
+              "title": "Triangles"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Enclosing Rectangles: Proving the Triangle Area Formula",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q1, section 7.2 p.157",
+              "description": "Find the areas of three triangles: (i) triangle with base 4 cm and height 3 cm; (ii) triangle ENT with base EN = 4 cm and height 3.2 cm; (iii) triangle ANT with base AT = 3 cm and height from N."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q3, section 7.2 p.158",
+              "description": "Find the area of isosceles triangle SUB, given that SE ⊥ UB and the area of triangle SEB is 24 sq. units."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Draw a triangle with base BC and apex X inside its enclosing rectangle on the board. Through congruence — the two sub-triangles at each corner are right-angled and fit exactly into the corners of the rectangle — establish that the triangle occupies exactly half the rectangle. Lead a full class deduction: area of triangle = (1/2) × base × height."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Repeat the argument for an obtuse triangle whose altitude foot falls outside BC. Show that the larger right-triangle area minus the smaller right-triangle area still gives (1/2) × base × height, confirming the formula holds universally. Students follow the reasoning by drawing their own obtuse examples."
+            },
+            {
+              "minutes": "25–37",
+              "activity": "Apply the formula with Figure it Out Q1, section 7.2 p.157 (\"Find the areas of three triangles....\"). Students work all three parts independently, paying attention to identifying the correct base-height pair in each orientation."
+            },
+            {
+              "minutes": "37–45",
+              "activity": "Work Figure it Out Q3, section 7.2 p.158 (\"Find the area of isosceles triangle SUB, given that SE ⊥ UB and the area of triangle SEB is 24 sq. units....\"). Students apply the symmetry of the isosceles triangle — altitude from S bisects UB — to relate the two sub-triangle areas."
+            }
+          ],
+          "teacher_notes": "The most frequent error is using a slant side instead of the perpendicular height; emphasise that height is always the perpendicular distance from apex to base (or its extension). The obtuse-triangle case is where many students lose confidence — drawing the altitude outside the triangle explicitly before computing prevents confusion. The formula's universality (same reasoning for acute, right, and obtuse triangles) is the key deductive payoff here.",
+          "materials": [
+            "Ruler",
+            "Pencil",
+            "Plain paper or exercise book"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.2",
+              "title": "Triangles"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Equal-Area Triangles and the Mirror-Reflection Path",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Try This Q7, section 7.2 p.159",
+              "description": "M and N are the midpoints of XY and XZ respectively. What fraction of the area of triangle XYZ is the area of triangle XMN? [Hint: Join NY.]"
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Math Talk Q8, section 7.2 p.159",
+              "description": "Gopal must travel from his house to the river and then to his water tank. Find the shortest path using the mirror-reflection principle. Sketch the path on a rough map."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q6, section 7.2 p.158",
+              "description": "ABCD, BCEF, and BFGH are three identical squares. (i) If the area of the red region is 49 sq. units, find the area of the blue region. (ii) If the total area of blue and red regions is 180 sq. units, find the area of each square."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Establish by discovery: draw several triangles with a common base BC and apices on a line l parallel to BC. Students measure the height of each (perpendicular distance between the parallel lines) and compute the area, noticing all results are equal. Articulate: all triangles sharing a base and lying between the same parallel lines have equal area."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Work Try This Q7, section 7.2 p.159 (\"M and N are the midpoints of XY and XZ respectively. What fraction of the area of triangle XYZ is the area of triangle XMN?....\"). Students follow the hint — join NY — and use the equal-area triangle result (triangles between parallel lines) to reason about the fraction."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Introduce the mirror-reflection minimum-perimeter argument: reflect a point across line l and observe that the straight-line path from the house to the reflection and back to the tank minimises total distance. Work Math Talk Q8, section 7.2 p.159 (\"Gopal must travel from his house to the river and then to his water tank....\") by sketching on plain paper."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Students describe in one or two sentences why the reflection path is the shortest, connecting the geometry (any non-straight path is longer) to the idea that the apex on the perpendicular bisector of BC gives the minimum-perimeter triangle. Quick whole-class summary of the reasoning."
+            }
+          ],
+          "teacher_notes": "Students often jump to saying areas are equal without checking that 'same height' is established; insist they state the parallel lines before claiming equality. For the midpoint question, the hint to join NY is essential — without it most students stall; prompt them to identify the two triangles that share base NY and ask which of them has its apex on which line. Figure it Out Q6, section 7.2 p.158, set for independent work, reinforces the triangle-inside-square area relationships.",
+          "materials": [
+            "Plain paper",
+            "Ruler",
+            "Pencil",
+            "Coloured pens (optional)"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.2",
+              "title": "Triangles"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Area in Reverse: Finding Altitudes from Given Areas",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q2, section 7.2 p.158",
+              "description": "Find the length of altitude BY in triangle ABC, given base BC = 6 units, altitude AX = 8 units (with foot X on BC), and AC = 4 units."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q4, section 7.2 p.158",
+              "description": "[Śulba-Sūtras] Give a method to transform a rectangle into a triangle of equal area."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 7.2",
+              "book_ref": "Figure it Out Q5, section 7.2 p.158",
+              "description": "[Śulba-Sūtras] Give a method to transform a triangle into a rectangle of equal area."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Pose the reverse-formula problem: if area and one base are known, the altitude to a different base can be found by first computing area and then equating (1/2) × base₂ × height₂ to that area. Students write the method in their own words before seeing the worked example."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Work Figure it Out Q2, section 7.2 p.158 (\"Find the length of altitude BY in triangle ABC, given base BC = 6 units, altitude AX = 8 units....\"). Students compute area using base BC and altitude AX, then solve for BY using base AC. Verify that BY = 3.75 units."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Introduce the Śulba-Sūtra transformation theme: work Figure it Out Q4, section 7.2 p.158 (\"Give a method to transform a rectangle into a triangle of equal area....\"). Students reason that the triangle must have the same base and twice the height (or same height and twice the base) as the rectangle, and sketch a construction."
+            },
+            {
+              "minutes": "34–45",
+              "activity": "Work Figure it Out Q5, section 7.2 p.158 (\"Give a method to transform a triangle into a rectangle of equal area....\"). Students articulate the reverse: the rectangle has half the area of the enclosing rectangle, so its height is half the triangle's height. Class shares multiple valid construction methods."
+            }
+          ],
+          "teacher_notes": "When applying area in reverse, students sometimes divide area by the wrong base — insist they write 'Area = (1/2) × chosen base × corresponding height' and identify which base they are using at each step. The Śulba-Sūtra questions ask for a method, not just a number; prompt students to describe a geometric construction step by step rather than writing an equation. These transformation problems connect ancient Indian mathematical thought to the dissection ideas that run through the chapter.",
+          "materials": [
+            "Plain paper",
+            "Ruler",
+            "Pencil"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.3",
+              "title": "Area of any Polygon"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Diagonal Cuts: Computing Polygon Areas by Triangle Decomposition",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 7.3",
+              "book_ref": "Figure it Out Q1, section 7.3 p.160",
+              "description": "Find the area of quadrilateral ABCD given AC = 22 cm, BM ⊥ AC with BM = 3 cm, and DN ⊥ AC with DN = 3 cm."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 7.3",
+              "book_ref": "Figure it Out Q2, section 7.3 p.160",
+              "description": "Find the area of the shaded region given that ABCD is a rectangle with dimensions 18 cm × 10 cm and an interior quadrilateral AEFB is cut out, with AE = 10 cm, EF = 4 cm."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 7.3",
+              "book_ref": "Math Talk Q3, section 7.3 p.160",
+              "description": "What measurements would you need to find the area of a regular hexagon?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Establish the decomposition principle on the board: any polygon can be triangulated by drawing non-crossing diagonals from one vertex, and the polygon's area equals the sum of the individual triangle areas. Students draw a quadrilateral and a pentagon and count how many triangles each diagonal cut produces."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Work Figure it Out Q1, section 7.3 p.160 (\"Find the area of quadrilateral ABCD given AC = 22 cm, BM ⊥ AC with BM = 3 cm, and DN ⊥ AC with DN = 3 cm....\"). Students identify diagonal AC as the shared base, compute areas of triangles ABC and ACD separately, then sum."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Work Figure it Out Q2, section 7.3 p.160 (\"Find the area of the shaded region given that ABCD is a rectangle with dimensions 18 cm × 10 cm....\"). Students subtract the interior quadrilateral area from the rectangle area, decomposing the interior quadrilateral into triangles as needed."
+            },
+            {
+              "minutes": "36–45",
+              "activity": "Discuss Math Talk Q3, section 7.3 p.160 (\"What measurements would you need to find the area of a regular hexagon?\"). Students reason about how many triangles a hexagon decomposes into from its centre and identify that the side length and apothem are sufficient — connecting decomposition strategy to measurement choices."
+            }
+          ],
+          "teacher_notes": "Students frequently draw crossing diagonals, producing non-triangular regions; remind them that triangulation requires non-crossing cuts from a single vertex or a planned set of diagonals. When subtracting an interior region's area, confirm students have computed the interior figure's area, not just subtracted dimensions. The hexagon discussion previews more complex polygon reasoning and rewards students who think systematically about decomposition.",
+          "materials": [
+            "Plain paper",
+            "Ruler",
+            "Pencil",
+            "Coloured pens (optional for shading)"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.4",
+              "title": "Parallelogram"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Dissecting the Parallelogram: Deriving Base × Height",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "A-2",
+              "type": "activity",
+              "source_section": "section 7.4",
+              "book_ref": "Activity (parallelogram dissection), section 7.4 p.161",
+              "description": "Using a cut-out of a parallelogram, convert it into a rectangle of equal area by cutting and rearranging pieces."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 7.4",
+              "book_ref": "Figure it Out Q1, section 7.4 p.162",
+              "description": "Observe a set of parallelograms (a)–(g) on the same base between the same parallel lines. (i) What can we say about the areas of all these parallelograms? (ii) What can we say about their perimeters? Which has maximum/minimum perimeter?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students cut out a parallelogram from plain paper, draw the perpendicular altitude from one vertex to the base, cut along it, and slide the triangular piece to the opposite end to form a rectangle. They confirm both shapes have equal base and equal height, and name the technique: dissection. The formula area = base × height emerges from the rectangle they have formed."
+            },
+            {
+              "minutes": "15–27",
+              "activity": "Formalise the proof from the activity using RHS congruence: triangle AXD (cut piece) is congruent to the new triangle BYC (right angle, hypotenuse AD = BC, shared side AX = BY), so dissection conserves area. Derive the formula deductively and confirm it holds for either pair of parallel sides."
+            },
+            {
+              "minutes": "27–38",
+              "activity": "Work Figure it Out Q1, section 7.4 p.162 (\"Observe a set of parallelograms (a)–(g) on the same base between the same parallel lines....\"). Students examine why equal base and equal height produce equal areas regardless of slant, then reason about which parallelogram has maximum and which has minimum perimeter among those on the same base between fixed parallel lines."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Students articulate in their own words: the area of a parallelogram depends only on base and perpendicular height, not on slant side. Summarise by comparing the parallelogram formula to the rectangle formula, noting they are identical because dissection converts one into the other."
+            }
+          ],
+          "teacher_notes": "The most common error is multiplying the slant side by the base instead of the perpendicular height; the physical cut-out makes the height tangible before the algebraic formula appears. Ensure students understand that the dissection triangle's congruence (RHS) is what guarantees no area is lost or gained — this is the logical core of the proof. The equal-area result for parallelograms between the same parallel lines mirrors the equal-area triangle result established earlier, strengthening the parallel-lines theme.",
+          "materials": [
+            "Plain paper (for cut-out parallelogram)",
+            "Scissors",
+            "Ruler",
+            "Pencil"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.4",
+              "title": "Parallelogram"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Parallelogram Practice: Altitudes, Comparisons, and Śulba Transformations",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "section 7.4",
+              "book_ref": "Figure it Out Q2, section 7.4 p.163",
+              "description": "Find the areas of four parallelograms with dimensions: (i) base 7 cm, height 3 cm; (ii) base 5 cm, height 4 cm; (iii) base 4.8 cm, height 5 cm; (iv) base 4.4 cm, height 2 cm."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 7.4",
+              "book_ref": "Figure it Out Q3, section 7.4 p.163",
+              "description": "Find QN in parallelogram PQRS given PQ = 7.6 cm, SM = 6 cm (altitude from S to PQ), and SR = 12 cm."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 7.4",
+              "book_ref": "Figure it Out Q4, section 7.4 p.163",
+              "description": "A rectangle and a parallelogram have the same side-lengths: 5 cm and 4 cm. Which has the greater area? Justify using the dissection or height argument."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 7.4",
+              "book_ref": "Figure it Out Q9, section 7.4 p.164",
+              "description": "Which has greater area — an equilateral triangle or a square of the same side-length? Which has greater area — two identical equilateral triangles together or a square of the same side-length? Give reasons."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Work Figure it Out Q2, section 7.4 p.163 (\"Find the areas of four parallelograms with dimensions: (i) base 7 cm, height 3 cm....\") independently. Students apply area = base × height to all four cases and compare results, noting that the same base with different heights yields different areas."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Work Figure it Out Q3, section 7.4 p.163 (\"Find QN in parallelogram PQRS given PQ = 7.6 cm, SM = 6 cm, SR = 12 cm....\"). Students use both base-height pairs: compute area from one pair, then rearrange to find the unknown altitude. This applies the formula in reverse, extending the 'area in reverse' strategy from the triangle unit."
+            },
+            {
+              "minutes": "25–36",
+              "activity": "Work Figure it Out Q4, section 7.4 p.163 (\"A rectangle and a parallelogram have the same side-lengths: 5 cm and 4 cm. Which has the greater area?....\"). Students reason using the dissection argument: the parallelogram's perpendicular height is less than its slant side, so its area is less than the rectangle's, even though they share side lengths."
+            },
+            {
+              "minutes": "36–45",
+              "activity": "Introduce Figure it Out Q9, section 7.4 p.164 (\"Which has greater area — an equilateral triangle or a square of the same side-length?....\") as the homework task. Students begin reasoning about the equilateral triangle's height relative to its side, setting up the comparison they will complete independently."
+            }
+          ],
+          "teacher_notes": "For the reverse-altitude problem, students often try to divide area by the slant side — reinforce that each altitude belongs uniquely to the base it is perpendicular to. The rectangle-vs-parallelogram comparison in Q4 is a powerful application of the dissection insight: the height of the parallelogram is strictly less than the slant side unless it is a rectangle, making the area strictly smaller. Figure it Out Q9, set for independent work, extends this thinking to triangles and connects to prior work on the triangle area formula.",
+          "materials": [
+            "Pencil",
+            "Exercise book or plain paper",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.5",
+              "title": "Rhombus"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Half-Diagonals and Dissection: Deriving the Rhombus Area Formula",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "A-3",
+              "type": "activity",
+              "source_section": "section 7.5",
+              "book_ref": "Activity (rhombus dissection), section 7.5 p.164",
+              "description": "Work out how to convert a rhombus into a rectangle of equal area by dissecting the two isosceles triangles formed by one diagonal."
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q1, section 7.6 p.169",
+              "description": "Find the area of a rhombus whose diagonals are 20 cm and 15 cm."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students carry out Activity (rhombus dissection), section 7.5 p.164 (\"Work out how to convert a rhombus into a rectangle of equal area by dissecting the two isosceles triangles formed by one diagonal....\"). They cut a rhombus along one diagonal, convert each isosceles triangle into a half-rectangle, and join the two pieces to form rectangle WXYZ."
+            },
+            {
+              "minutes": "15–27",
+              "activity": "Establish the dimensions of the resulting rectangle WXYZ through discovery: one side equals the full diagonal AC and the other equals half of diagonal BD. Derive area = AC × (BD/2) = (1/2) × AC × BD, i.e., area of rhombus = (1/2) × product of diagonals. Verify using the alternative — two triangles ADB and CDB with perpendicular diagonals as altitudes — confirming the same formula."
+            },
+            {
+              "minutes": "27–37",
+              "activity": "Connect to base × height (the parallelogram formula): the rhombus is a parallelogram, so base × height also works. Students discuss why the diagonal formula is more convenient when diagonals are given rather than the perpendicular height."
+            },
+            {
+              "minutes": "37–45",
+              "activity": "Apply with Figure it Out Q1, section 7.6 p.169 (\"Find the area of a rhombus whose diagonals are 20 cm and 15 cm....\"). Students use the diagonal formula directly and confirm the result, practising reading off the two diagonals and substituting correctly."
+            }
+          ],
+          "teacher_notes": "Students occasionally confuse which dimension of the resulting rectangle corresponds to which diagonal; the physical cut-and-reassemble makes this concrete — insist they label both diagonals before cutting. The two-derivation approach (rectangle from dissection, and two triangles with perpendicular altitudes) is a genuine double-check — encourage students to confirm both give the same numerical answer as a verification habit. The connection between the diagonal formula and base × height also reinforces that a rhombus is a special parallelogram.",
+          "materials": [
+            "Plain paper (rhombus cut-out)",
+            "Scissors",
+            "Ruler",
+            "Pencil"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.6",
+              "title": "Trapezium"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Three Derivations: Building the Trapezium Area Formula",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q4, section 7.6 p.169",
+              "description": "[Śulba-Sūtras] Give a method to convert an isosceles trapezium to a rectangle using dissection."
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Math Talk Q6, section 7.6 p.170",
+              "description": "Using the trapezium-to-rectangle conversion idea, construct a trapezium of area 144 cm²."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Derive the formula via rectangle-and-triangles: label trapezium WXYZ with WX ∥ ZY, parallel sides x and y, height h, and overhang a. Decompose into rectangle WXNM and two right triangles; sum areas algebraically to get (1/2) × h × (x + y + 2a), then substitute b = x + y + a to reach (1/2) × h × (a + b). Walk through each algebraic step on the board, with students following in their notebooks."
+            },
+            {
+              "minutes": "15–27",
+              "activity": "Present the two-copy derivation: rotate a second congruent trapezium and attach it along a common side to form a parallelogram of base (a + b) and height h. The trapezium is exactly half of this parallelogram, confirming area = (1/2) × h × (a + b). Students draw both copies and the resulting parallelogram, writing the argument in their own words."
+            },
+            {
+              "minutes": "27–37",
+              "activity": "Work Figure it Out Q4, section 7.6 p.169 (\"Give a method to convert an isosceles trapezium to a rectangle using dissection....\"). Students describe a cut-and-slide construction that produces a rectangle of equal area, connecting the Śulba-Sūtra dissection tradition to the formula derivation."
+            },
+            {
+              "minutes": "37–45",
+              "activity": "Work Math Talk Q6, section 7.6 p.170 (\"Using the trapezium-to-rectangle conversion idea, construct a trapezium of area 144 cm²....\"). Students work backwards: choose a height and sum of parallel sides whose product is 288, then construct the trapezium, confirming the formula in a constructive direction."
+            }
+          ],
+          "teacher_notes": "The algebraic simplification from (1/2)h(x + y + 2a) to (1/2)h(a + b) requires careful substitution — students who do not see that b = x + y + a often treat it as a separate constraint; write b explicitly and verify. The two-copy derivation is the most elegant and the one worth memorising; the rectangle-and-triangles derivation justifies why the formula works even when one parallel side is longer. Watch for students who forget the factor of (1/2) — they are conflating the trapezium formula with the parallelogram formula.",
+          "materials": [
+            "Plain paper",
+            "Ruler",
+            "Pencil",
+            "Scissors (optional for two-copy demonstration)"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.6",
+              "title": "Trapezium"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Trapezium Exercises: Applying and Extending the Formula",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-31",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q3(i), section 7.6 p.169",
+              "description": "Find the area of a trapezium with parallel sides 10 ft and 18 ft and height 8 ft (composite figure with rectangular and triangular parts)."
+            },
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q3(ii), section 7.6 p.169",
+              "description": "Find the area of a trapezium with parallel sides 24 m and 36 m and height 14 m."
+            },
+            {
+              "id": "E-38",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q8, section 7.6 p.170",
+              "description": "ZYXW is a trapezium with ZY ∥ WX. A is the midpoint of XY. Show that the area of trapezium ZYXW equals the area of triangle ZWB (where B is a specific point on the construction)."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-33",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q3(iii), section 7.6 p.169",
+              "description": "Find the area of a composite figure with parallel sides 14 in and 18 ft and heights 12 ft and 8 ft."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Work Figure it Out Q3(i), section 7.6 p.169 (\"Find the area of a trapezium with parallel sides 10 ft and 18 ft and height 8 ft....\"). Students apply (1/2) × h × (a + b) directly; then verify by decomposing into a rectangle and two right triangles to confirm the formula gives the same answer."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Work Figure it Out Q3(ii), section 7.6 p.169 (\"Find the area of a trapezium with parallel sides 24 m and 36 m and height 14 m....\"). Students work independently using the formula, then compare answers with a partner. Encourage estimation before computing to build number sense."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Work Figure it Out Q8, section 7.6 p.170 (\"ZYXW is a trapezium with ZY ∥ WX. A is the midpoint of XY. Show that the area of trapezium ZYXW equals the area of triangle ZWB....\"). Students construct the required point B, express both areas using the trapezium and triangle formulas, and argue algebraically that they are equal."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Introduce Figure it Out Q3(iii), section 7.6 p.169 as the homework task (\"Find the area of a composite figure with parallel sides 14 in and 18 ft and heights 12 ft and 8 ft....\"). Students identify the mixed-unit challenge: the sides mix inches and feet, requiring unit conversion before applying the trapezium formula — a preview of the real-life section."
+            }
+          ],
+          "teacher_notes": "The most frequent error in trapezium area problems is adding the two parallel sides after applying the ½ factor rather than before — write the formula as (1/2) × h × (a + b) and insist students compute (a + b) first. Figure it Out Q8 is a proof item; students who struggle should be asked to write both areas as expressions in a + b and h before comparing. The mixed-unit composite figure set for independent work is a deliberate bridge to the measurement-and-conversion theme of the real-life section.",
+          "materials": [
+            "Pencil",
+            "Exercise book",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.7",
+              "title": "Areas in Real Life"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Measuring the World: Unit Conversions and Area Estimation",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-40",
+              "type": "exercise",
+              "source_section": "section 7.7",
+              "book_ref": "Figure it Out, section 7.7 p.170",
+              "description": "Unit conversion exercises: (i) express 5 in and 7.4 in in centimetres; (ii) express 5.08 cm and 11.43 cm in inches; (iii) find how many cm² is 1 in²; (iv) convert 161.29 cm² to in²; (v) find how many in² is 1 ft²."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Establish the unit-conversion chain on the board: 1 in = 2.54 cm, so 1 in² = 2.54² = 6.4516 cm²; 1 ft = 12 in, so 1 ft² = 144 in²; 1 km² = 1,000,000 m². Students copy the chain and practise two quick conversions — cm to inches and m² to km² — to internalise the squaring step."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "Work Figure it Out, section 7.7 p.170 (\"Unit conversion exercises: express 5 in and 7.4 in in centimetres; express 5.08 cm and 11.43 cm in inches; find how many cm² is 1 in²; convert 161.29 cm² to in²; find how many in² is 1 ft²....\") in pairs. Students work through all five parts, paying careful attention to whether they are converting lengths or areas."
+            },
+            {
+              "minutes": "25–37",
+              "activity": "Estimation activity: students estimate the area of a sheet of A4 paper in cm², then measure and compute. They compare to the standard 623.7 cm². Extend to estimating the classroom floor area in m² by counting floor tiles or pacing, then compare the estimate to a measured value. Discuss the regional Indian units mentioned in the text — bigha, gaj, katha, dhur, cent, ankanam — and why local units persist."
+            },
+            {
+              "minutes": "37–45",
+              "activity": "Class discussion: how would you estimate the area of your school grounds? Your city? Students propose strategies (satellite imagery scale, map estimation, grid overlay), connecting the unit conversion skills to practical measurement at increasing scales. Record one or two student-generated estimates for the school grounds."
+            }
+          ],
+          "teacher_notes": "The critical error in area conversion is applying the linear factor instead of squaring it (e.g., multiplying cm² by 2.54 instead of 6.4516 to convert to in²); make this explicit with a dimensional-analysis layout. The estimation discussions about classroom and school area are open-ended and intentionally imprecise — value the reasoning strategy over the final number. Mentioning regional Indian measurement units validates local knowledge and shows that mathematical conventions exist in cultural contexts.",
+          "materials": [
+            "A4 sheet of paper",
+            "Ruler",
+            "Pencil",
+            "Notebook for estimates"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 45,
+          "textbook_segments": [
+            {
+              "ref": "section 7.6",
+              "title": "Trapezium"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Rhombus and Trapezium Extensions: Composite and Ratio Problems",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q2, section 7.6 p.169",
+              "description": "Give a method to convert a rectangle into a rhombus of equal area using dissection."
+            },
+            {
+              "id": "E-36",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q5, section 7.6 p.169",
+              "description": "Given trapezium ABCD and rectangle EFGH of equal area, find the vertices of the rectangle given that triangles AHI ≅ DGI and BEJ ≅ CFJ."
+            },
+            {
+              "id": "E-39",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q8, section 7.6 p.170",
+              "description": "ZYXW is a trapezium with ZY ∥ WX. A is the midpoint of XY. Show that the area of trapezium ZYXW equals the area of triangle ZWB (where B is a specific point on the construction)."
+            },
+            {
+              "id": "E-38",
+              "type": "exercise",
+              "source_section": "section 7.6",
+              "book_ref": "Figure it Out Q8, section 7.6 p.170",
+              "description": "A regular hexagon is divided into a trapezium, an equilateral triangle, and a rhombus. Find the ratio of their areas."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Work Figure it Out Q2, section 7.6 p.169 (\"Give a method to convert a rectangle into a rhombus of equal area using dissection....\"). Students reason about which cut produces two congruent triangles that reassemble into a rhombus of equal area, writing a step-by-step geometric argument."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Work Figure it Out Q5, section 7.6 p.169 (\"Given trapezium ABCD and rectangle EFGH of equal area, find the vertices of the rectangle....\"). Students use the congruence conditions AHI ≅ DGI and BEJ ≅ CFJ to locate the rectangle's vertices, reasoning that equal-area dissection preserves the total."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Work Figure it Out Q8, section 7.6 p.170 (\"A regular hexagon is divided into a trapezium, an equilateral triangle, and a rhombus. Find the ratio of their areas....\"). Students decompose the hexagon, apply the diagonal formula for the rhombus and the trapezium formula, and find the ratio, bringing together multiple formulas from the chapter."
+            },
+            {
+              "minutes": "38–45",
+              "activity": "Return briefly to Figure it Out Q3(iv), section 7.6 p.169 (\"Find the area of a trapezium with parallel sides 10 in and a base and height 6 in....\") for any student who needs to consolidate the formula. Others who are confident may begin exploring the hexagon ratio result using algebraic expressions of the side length."
+            }
+          ],
+          "teacher_notes": "Figure it Out Q5 requires careful congruence reasoning — students may need a nudge to see that the congruent triangles are the 'ears' cut from the trapezium's ends and placed symmetrically on the rectangle. The hexagon decomposition in Q8 is the most demanding item in this section: guide students to first name the three sub-regions clearly, then compute each area symbolically in terms of the hexagon's side length before forming the ratio. Bringing rhombus, trapezium, and triangle formulas together in one problem consolidates the chapter's accumulated toolkit.",
+          "materials": [
+            "Plain paper",
+            "Ruler",
+            "Pencil",
+            "Coloured pens (optional)"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 45,
+          "synthesis": true,
+          "textbook_segments": [
+            {
+              "ref": "section 7.1",
+              "title": "Rectangle and Squares"
+            },
+            {
+              "ref": "section 7.2",
+              "title": "Triangles"
+            },
+            {
+              "ref": "section 7.3",
+              "title": "Area of any Polygon"
+            },
+            {
+              "ref": "section 7.4",
+              "title": "Parallelogram"
+            },
+            {
+              "ref": "section 7.5",
+              "title": "Rhombus"
+            },
+            {
+              "ref": "section 7.6",
+              "title": "Trapezium"
+            },
+            {
+              "ref": "section 7.7",
+              "title": "Areas in Real Life"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "One Chapter, Many Shapes: A Synthesis of Dissection and Area",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Math Talk Q6, section 7.1 p.152",
+              "description": "Divide a square into 4 parts by drawing two perpendicular lines inside it, then rearrange the pieces to form a larger square with a hole inside. Try using cardboard cut-outs."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 7.1",
+              "book_ref": "Figure it Out Q4, section 7.1 p.152",
+              "description": "Find the area of a spiral tube of uniform width; one dimension is 20 units with inner offsets of 5 and 10. Determine the length of an equivalent straight tube of the same area."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with a rapid whole-class recall web: the teacher writes 'Dissection' at the centre of the board and students name every formula the chapter derived through cutting and rearranging — triangle as half-rectangle, parallelogram as rearranged rectangle, rhombus via two half-rectangles, trapezium via two-copy parallelogram. For each formula, one student states the key congruence or equality that made the dissection valid."
+            },
+            {
+              "minutes": "10–23",
+              "activity": "Work Math Talk Q6, section 7.1 p.152 (\"Divide a square into 4 parts by drawing two perpendicular lines inside it, then rearrange the pieces to form a larger square with a hole inside....\"). Students use cardboard or paper, cut the four pieces, and reassemble. They compute the area of the hole by subtracting the reassembled square's area from the original, applying rectangle and triangle area ideas together."
+            },
+            {
+              "minutes": "23–36",
+              "activity": "Work Figure it Out Q4, section 7.1 p.152 (\"Find the area of a spiral tube of uniform width; one dimension is 20 units with inner offsets of 5 and 10. Determine the length of an equivalent straight tube of the same area....\"). Students decompose the spiral into a set of rectangles using the dissection strategy, sum the areas, and then find the length of the equivalent straight tube by dividing total area by the common width — connecting all three polygon sections."
+            },
+            {
+              "minutes": "36–45",
+              "activity": "Closing discussion: students choose one formula from the chapter — any of rectangle, triangle, parallelogram, rhombus, or trapezium — and describe to a partner how dissection proves it and how it connects to the real-life unit-conversion context of section 7.7. Two or three students share their chosen formula and its derivation story with the class, drawing the thread from abstract proof to practical measurement."
+            }
+          ],
+          "teacher_notes": "The spiral-tube problem requires students to identify how many rectangular strips make up the figure and track their dimensions carefully — a sketch with labelled sub-rectangles before any calculation prevents confusion. The closing partner-share is deliberately open: students who found the dissection proofs most compelling will choose parallelogram or rhombus, while those drawn to number work may choose the rectangle or unit-conversion application; both are valid synthesis entry points. The assembly activity in Math Talk Q6 surfaces the classic equal-area-but-different-shape paradox and rewards students who reason carefully about what the 'hole' area must be.",
+          "materials": [
+            "Plain paper or thin card",
+            "Scissors",
+            "Ruler",
+            "Pencil"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 45,
+      "count": 14
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 7.1 p.150",
+            "anchor_description": "Identify the missing side-lengths of composite rectangular figures given their areas: (i) an L-shaped figure with partial lengths 4 in, 3 in, 7 in, 2 in and areas 28 in² and 21 in²; (ii) a rectangle with one side 4 m, one side 11 m, and total area 50 m²."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "reason",
+            "anchor_id": "E-5",
+            "anchor_book_ref": "Figure it Out Q5, section 7.1 p.152",
+            "anchor_description": "A square is divided into three regions (1, 2, 3). If the side-length is doubled, find the increase in the areas of regions 1, 2, and 3. Give reasons."
+          },
+          {
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "reason",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out Q3, section 7.2 p.158",
+            "anchor_description": "Find the area of isosceles triangle SUB, given that SE ⊥ UB and the area of triangle SEB is 24 sq. units."
+          },
+          {
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "reason",
+            "anchor_id": "E-13",
+            "anchor_book_ref": "Try This Q7, section 7.2 p.159",
+            "anchor_description": "M and N are the midpoints of XY and XZ respectively. What fraction of the area of triangle XYZ is the area of triangle XMN? [Hint: Join NY.]"
+          },
+          {
+            "section_ref": "section 7.4",
+            "section_title": "Parallelogram",
+            "goal": "reason",
+            "anchor_id": "E-20",
+            "anchor_book_ref": "Figure it Out Q1, section 7.4 p.162",
+            "anchor_description": "Observe a set of parallelograms (a)–(g) on the same base between the same parallel lines. (i) What can we say about the areas of all these parallelograms? (ii) What can we say about their perimeters? Which has maximum/minimum perimeter?"
+          },
+          {
+            "section_ref": "section 7.4",
+            "section_title": "Parallelogram",
+            "goal": "reason",
+            "anchor_id": "E-21",
+            "anchor_book_ref": "Figure it Out Q2, section 7.4 p.163",
+            "anchor_description": "Find the areas of four parallelograms with dimensions: (i) base 7 cm, height 3 cm; (ii) base 5 cm, height 4 cm; (iii) base 4.8 cm, height 5 cm; (iv) base 4.4 cm, height 2 cm."
+          },
+          {
+            "section_ref": "section 7.5",
+            "section_title": "Rhombus",
+            "goal": "reason",
+            "anchor_id": "A-3",
+            "anchor_book_ref": "Activity (rhombus dissection), section 7.5 p.164",
+            "anchor_description": "Work out how to convert a rhombus into a rectangle of equal area by dissecting the two isosceles triangles formed by one diagonal."
+          },
+          {
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "anchor_id": "E-35",
+            "anchor_book_ref": "Figure it Out Q4, section 7.6 p.169",
+            "anchor_description": "[Śulba-Sūtras] Give a method to convert an isosceles trapezium to a rectangle using dissection."
+          },
+          {
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "anchor_id": "E-31",
+            "anchor_book_ref": "Figure it Out Q3(i), section 7.6 p.169",
+            "anchor_description": "Find the area of a trapezium with parallel sides 10 ft and 18 ft and height 8 ft (composite figure with rectangular and triangular parts)."
+          },
+          {
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "anchor_id": "E-30",
+            "anchor_book_ref": "Figure it Out Q2, section 7.6 p.169",
+            "anchor_description": "Give a method to convert a rectangle into a rhombus of equal area using dissection."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "apply",
+            "anchor_id": "E-8",
+            "anchor_book_ref": "Figure it Out Q2, section 7.2 p.158",
+            "anchor_description": "Find the length of altitude BY in triangle ABC, given base BC = 6 units, altitude AX = 8 units (with foot X on BC), and AC = 4 units."
+          },
+          {
+            "section_ref": "section 7.3",
+            "section_title": "Area of any Polygon",
+            "goal": "apply",
+            "anchor_id": "E-15",
+            "anchor_book_ref": "Figure it Out Q1, section 7.3 p.160",
+            "anchor_description": "Find the area of quadrilateral ABCD given AC = 22 cm, BM ⊥ AC with BM = 3 cm, and DN ⊥ AC with DN = 3 cm."
+          },
+          {
+            "section_ref": "section 7.7",
+            "section_title": "Areas in Real Life",
+            "goal": "apply",
+            "anchor_id": "E-40",
+            "anchor_book_ref": "Figure it Out, section 7.7 p.170",
+            "anchor_description": "Unit conversion exercises: (i) express 5 in and 7.4 in in centimetres; (ii) express 5.08 cm and 11.43 cm in inches; (iii) find how many cm² is 1 in²; (iv) convert 161.29 cm² to in²; (v) find how many in² is 1 ft²."
+          },
+          {
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "apply",
+            "anchor_id": "E-6",
+            "anchor_book_ref": "Math Talk Q6, section 7.1 p.152",
+            "anchor_description": "Divide a square into 4 parts by drawing two perpendicular lines inside it, then rearrange the pieces to form a larger square with a hole inside. Try using cardboard cut-outs."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A rectangle has a length of 9 cm and a width of 5 cm. What is the area of each triangle formed when a diagonal divides the rectangle?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "45 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "22.5 cm²",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "28 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "18 cm²",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "22.5 cm². Area of rectangle = 9 × 5 = 45 cm²; the diagonal cuts it into two congruent triangles, each with area 45 ÷ 2 = 22.5 cm².",
+              "method_one_line": "Apply area = length × width for the rectangle, then halve for each triangle.",
+              "what_each_option_reveals": {
+                "A": "The student found the rectangle's full area but forgot to halve it for the triangle.",
+                "C": "The student likely added length and width rather than multiplying, or used an incorrect partial formula.",
+                "D": "The student may have computed only one dimension times half the other (9 × 2 or 5 × (9/2) with an arithmetic slip)."
+              },
+              "inclusivity": {
+                "support": "Allow the student to re-read the unit-square counting explanation in section 7.1 and draw the rectangle with its diagonal before choosing.",
+                "challenge": "Ask the student to state one more example — a rectangle of their own dimensions — and confirm the triangle area is always exactly half."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 7.1 p.150",
+              "description": "Identify the missing side-lengths of composite rectangular figures given their areas: (i) an L-shaped figure with partial lengths 4 in, 3 in, 7 in, 2 in and areas 28 in² and 21 in²; (ii) a rectangle with one side 4 m, one side 11 m, and total area 50 m²."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Rectangle P has length 12 cm and width 3 cm. Rectangle Q has length 9 cm and width 4 cm. Both rectangles have the same perimeter. Do they have the same area? Explain your reasoning.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Perimeter of P = 2(12 + 3) = 30 cm; perimeter of Q = 2(9 + 4) = 26 cm. Wait — these are not equal: P has perimeter 30 cm and Q has perimeter 26 cm, and their areas are also different: P = 36 cm², Q = 36 cm². In fact both areas are equal (36 cm²) even though perimeters differ, illustrating that equal area does not require equal perimeter. (Alternate framing the teacher may accept: any two rectangles with equal perimeter 2(l + w) = k can have unequal areas l × w, as shown by choosing different splits of k/2 between l and w.)",
+              "method_one_line": "Compute perimeter = 2(l + w) and area = l × w for each rectangle and compare the two pairs of results.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest thinking aloud with a partner before writing: 'What does perimeter measure? What does area measure?'",
+                "challenge": "Ask: if you keep the perimeter fixed at 30 cm but change the rectangle's dimensions, what is the largest possible area? Explain."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 7.1 p.152",
+              "description": "A square is divided into three regions (1, 2, 3). If the side-length is doubled, find the increase in the areas of regions 1, 2, and 3. Give reasons."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Triangle ABC is isosceles with AB = AC. D is the foot of the altitude from A to BC. Explain why triangles ABD and ACD have equal areas. Then state what fraction of the area of triangle ABC each sub-triangle represents.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Since D is the foot of the altitude from A, AD is perpendicular to BC. Triangles ABD and ACD share the same height AD. Since AB = AC (isosceles), D is the midpoint of BC (the altitude from the apex of an isosceles triangle bisects the base), so BD = DC. Both triangles have the same base length (BD = DC) and the same height (AD), giving equal areas. Each sub-triangle has area = (1/2) × BD × AD = (1/2) × (1/2) × BC × AD = (1/4) × 2 × area of ABC, so each is exactly half of triangle ABC.",
+              "method_one_line": "Use area = (1/2) × base × height: equal bases (BD = DC) and equal heights (AD) imply equal areas, each being half of triangle ABC.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Before writing, ask the student to draw the triangle and altitude, label the shared height and the two bases, and then read area = (1/2) × base × height aloud for each triangle.",
+                "challenge": "Ask: if triangle ABC were scalene (AB ≠ AC), would the two sub-triangles still have equal area? Justify your answer."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 7.2 p.158",
+              "description": "Find the area of isosceles triangle SUB, given that SE ⊥ UB and the area of triangle SEB is 24 sq. units."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "Two triangles PQR and PQS are drawn so that R and S lie on a line l that is parallel to PQ, with R ≠ S. Prove that the area of triangle PQR equals the area of triangle PQS. Then explain why this result means that moving the apex along l (while keeping the base fixed) does not change the area.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Since l is parallel to PQ, the perpendicular distance between l and line PQ is constant — call it h. Triangle PQR has base PQ and apex R on l, so its height is h, giving area = (1/2) × PQ × h. Triangle PQS has the same base PQ and apex S on l, so its height is also h, giving area = (1/2) × PQ × h. Both areas equal (1/2) × PQ × h, so they are equal. Moving the apex along l keeps the height h unchanged (the parallel lines are always at distance h), so the area (1/2) × PQ × h remains constant regardless of where on l the apex sits.",
+              "method_one_line": "Area = (1/2) × base × height; both triangles share base PQ and have apex on l ∥ PQ, giving the same perpendicular height h.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Prompt the student to draw the two parallel lines, drop a perpendicular between them, and measure (or label) that distance before writing the proof.",
+                "challenge": "Ask: if you alter the base length (replace PQ with a shorter segment PQ′) while keeping R on l, does the equal-area result still hold between triangles PQ′R and PQ′S? What changes?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Try This Q7, section 7.2 p.159",
+              "description": "M and N are the midpoints of XY and XZ respectively. What fraction of the area of triangle XYZ is the area of triangle XMN? [Hint: Join NY.]"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 7.4",
+            "section_title": "Parallelogram",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Parallelogram ABCD has base AB = 8 cm and height (perpendicular distance between AB and CD) = 5 cm. A rectangle ABEF is drawn with the same base AB = 8 cm and the same height 5 cm. Explain why the two figures have equal area, using the dissection argument from the chapter.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "By cutting triangle AXD from the left of the parallelogram (where X is the foot of the perpendicular from D to AB) and placing it at the right end as triangle BYC, the parallelogram is rearranged exactly into a rectangle of base AB and height h. The cut triangle is congruent to the replacement triangle by RHS (right angle at X and Y, hypotenuse AD = BC, side AX = BY), so no area is gained or lost. Both figures therefore have the same area = 8 × 5 = 40 cm².",
+              "method_one_line": "Dissect the parallelogram by cutting the left-end triangle and repositioning it at the right end; RHS congruence guarantees equal area, giving base × height = 40 cm².",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest drawing the parallelogram and marking the altitude foot X on AB before attempting the written argument.",
+                "challenge": "Ask: what if the dissection is done with the other pair of parallel sides (AD and BC)? Does the same argument apply? State the new base and new height."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 7.4 p.162",
+              "description": "Observe a set of parallelograms (a)–(g) on the same base between the same parallel lines. (i) What can we say about the areas of all these parallelograms? (ii) What can we say about their perimeters? Which has maximum/minimum perimeter?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "section_ref": "section 7.4",
+            "section_title": "Parallelogram",
+            "goal": "reason",
+            "question_type": "MCQ",
+            "prompt": "Parallelogram KLMN has base KL = 6 cm and slant side KN = 5 cm. Its perpendicular height (distance between KL and MN) is 4 cm. What is its area?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "30 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "24 cm²",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "20 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "48 cm²",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "24 cm². Area = base × height = 6 × 4 = 24 cm². The slant side 5 cm is not used in the area formula.",
+              "method_one_line": "Apply area of parallelogram = base × perpendicular height = 6 × 4.",
+              "what_each_option_reveals": {
+                "A": "The student multiplied base by slant side (6 × 5 = 30) instead of using the perpendicular height.",
+                "C": "The student multiplied slant side by height (5 × 4 = 20), confusing which dimension is the base.",
+                "D": "The student multiplied all three given numbers (6 × 4 × 2 = 48) or made an arithmetic error doubling the correct answer."
+              },
+              "inclusivity": {
+                "support": "Allow the student to draw the parallelogram and mark the perpendicular height explicitly before choosing a formula.",
+                "challenge": "Ask: using the slant side as the base, what would the corresponding perpendicular height need to be to give the same area? Set up and solve the equation."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 7.4 p.163",
+              "description": "Find the areas of four parallelograms with dimensions: (i) base 7 cm, height 3 cm; (ii) base 5 cm, height 4 cm; (iii) base 4.8 cm, height 5 cm; (iv) base 4.4 cm, height 2 cm."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "section_ref": "section 7.5",
+            "section_title": "Rhombus",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "Rhombus PQRS has diagonals PR and QS that bisect each other at right angles at point O. Using the fact that the diagonals divide the rhombus into four right-angled triangles, derive the formula: area of rhombus = (1/2) × PR × QS. Show your working clearly.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Let PR = d₁ and QS = d₂. The diagonals bisect each other, so PO = OR = d₁/2 and QO = OS = d₂/2. The four triangles are: POQ, QOR, ROS, SOP, each a right-angled triangle (since diagonals of a rhombus are perpendicular). Area of triangle POQ = (1/2) × (d₁/2) × (d₂/2) = d₁d₂/8. By symmetry, all four triangles have the same area. Total area = 4 × d₁d₂/8 = d₁d₂/2 = (1/2) × PR × QS.",
+              "method_one_line": "Each of the four right-angled triangles has legs d₁/2 and d₂/2; four such triangles sum to (1/2) × d₁ × d₂.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest drawing the rhombus with both diagonals labelled, marking the four right angles at O, and computing one triangle's area before multiplying by four.",
+                "challenge": "Ask: if you know only the side length of the rhombus and one diagonal, how would you find the other diagonal and then the area? Set up the method using the Pythagorean theorem."
+              }
+            },
+            "exercise": {
+              "book_ref": "Activity (rhombus dissection), section 7.5 p.164",
+              "description": "Work out how to convert a rhombus into a rectangle of equal area by dissecting the two isosceles triangles formed by one diagonal."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-7",
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Two congruent copies of trapezium ABCD (with AB ∥ CD, AB = a, CD = b, height = h) are joined along their longer parallel sides to form a parallelogram. State the base and height of the resulting parallelogram, and use this to derive the area formula for the trapezium.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Rotate the second copy of the trapezium and join it to the first along the longer parallel side (say AB). The resulting parallelogram has base = a + b (the two parallel sides placed end-to-end) and height = h (the original trapezium's height). Area of parallelogram = (a + b) × h. Since the parallelogram is made of two congruent trapeziums, area of one trapezium = (1/2) × (a + b) × h.",
+              "method_one_line": "Two congruent trapeziums form a parallelogram of base (a + b) and height h; the trapezium is half this parallelogram.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Sketch the two trapeziums side by side and label their dimensions before attempting the algebraic derivation.",
+                "challenge": "Ask: does the same two-copy argument work for a parallelogram? Carry it out and confirm whether it gives the same formula as the direct derivation."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 7.6 p.169",
+              "description": "[Śulba-Sūtras] Give a method to convert an isosceles trapezium to a rectangle using dissection."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-8",
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "question_type": "MCQ",
+            "prompt": "Trapezium WXYZ has WX ∥ ZY, with WX = 14 cm, ZY = 8 cm, and perpendicular height = 6 cm. What is its area?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "132 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "66 cm²",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "84 cm²",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "48 cm²",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "66 cm². Area = (1/2) × h × (a + b) = (1/2) × 6 × (14 + 8) = (1/2) × 6 × 22 = 66 cm².",
+              "method_one_line": "Apply area = (1/2) × height × (sum of parallel sides) = (1/2) × 6 × 22.",
+              "what_each_option_reveals": {
+                "A": "The student omitted the (1/2) factor, computing 6 × 22 = 132 directly.",
+                "C": "The student multiplied height by only the larger parallel side: 6 × 14 = 84.",
+                "D": "The student multiplied height by only the smaller parallel side: 6 × 8 = 48."
+              },
+              "inclusivity": {
+                "support": "Prompt the student to write out the formula (1/2) × h × (a + b) and substitute each value with its label before computing.",
+                "challenge": "Ask: if the height is kept at 6 cm but the parallel sides are changed so that the area doubles to 132 cm², what constraint must the sum (a + b) satisfy? Give one possible pair of parallel sides."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3(i), section 7.6 p.169",
+              "description": "Find the area of a trapezium with parallel sides 10 ft and 18 ft and height 8 ft (composite figure with rectangular and triangular parts)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-9",
+            "section_ref": "section 7.6",
+            "section_title": "Trapezium",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A rectangle and a rhombus are both formed from the same four pieces of card (through dissection). What does this tell you about their areas? Use this to explain why, if a rectangle has dimensions 10 cm × 6 cm, a rhombus formed from the same pieces has area 60 cm².",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Dissection rearranges the same pieces without overlap or gap, so the total area is unchanged. If the rectangle and rhombus are formed from the same four pieces, they have equal area. Area of rectangle = 10 × 6 = 60 cm², so the rhombus also has area 60 cm².",
+              "method_one_line": "Dissection preserves area; rectangle area = 10 × 6 = 60 cm²; the rhombus made from the same pieces has the same area.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Prompt the student to think about what dissection means — cutting without discarding — before connecting it to the area argument.",
+                "challenge": "Ask: if the rhombus has diagonals d₁ and d₂ with (1/2) × d₁ × d₂ = 60 cm², give one possible pair of diagonals and verify the formula."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 7.6 p.169",
+              "description": "Give a method to convert a rectangle into a rhombus of equal area using dissection."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 7.2",
+            "section_title": "Triangles",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Triangle PQR has base QR = 10 cm and altitude from P to QR equal to 6 cm. A second base PR has length 8 cm. Find the length of the altitude from Q to PR. Show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Area of triangle PQR = (1/2) × base QR × altitude from P = (1/2) × 10 × 6 = 30 cm². Using base PR = 8 cm: 30 = (1/2) × 8 × h, so h = 30 ÷ 4 = 7.5 cm. The altitude from Q to PR is 7.5 cm.",
+              "method_one_line": "Compute area from the known base-height pair, then equate to (1/2) × second base × unknown height and solve.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest using an alternate representation: draw the triangle, label both base-height pairs, and write the area equation twice — once with each base — before solving.",
+                "challenge": "Change the problem: if the altitude from Q to PR were 9 cm instead, what would base QR need to be for the area to remain 30 cm²?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 7.2 p.158",
+              "description": "Find the length of altitude BY in triangle ABC, given base BC = 6 units, altitude AX = 8 units (with foot X on BC), and AC = 4 units."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 7.3",
+            "section_title": "Area of any Polygon",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Quadrilateral PQRS has diagonal PR = 16 cm. The perpendicular from Q to PR has length 4 cm, and the perpendicular from S to PR has length 5 cm. Both Q and S lie on opposite sides of PR. Find the area of quadrilateral PQRS. Show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Area = Area of triangle PQR + Area of triangle PSR = (1/2) × 16 × 4 + (1/2) × 16 × 5 = 32 + 40 = 72 cm².",
+              "method_one_line": "Decompose the quadrilateral along diagonal PR into two triangles; sum (1/2) × PR × h₁ and (1/2) × PR × h₂.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw the quadrilateral with the diagonal and the two perpendiculars labelled before computing, using an alternate visual representation.",
+                "challenge": "Change one perpendicular from 4 cm to an unknown x. If the total area is 88 cm², find x."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 7.3 p.160",
+              "description": "Find the area of quadrilateral ABCD given AC = 22 cm, BM ⊥ AC with BM = 3 cm, and DN ⊥ AC with DN = 3 cm."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 7.7",
+            "section_title": "Areas in Real Life",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A rectangular tile measures 8 inches by 6 inches. Express this area in square centimetres (use 1 inch = 2.54 cm). Show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Length in cm = 8 × 2.54 = 20.32 cm; width in cm = 6 × 2.54 = 15.24 cm. Area = 20.32 × 15.24 = 309.6768 cm². Alternatively: area in in² = 8 × 6 = 48 in²; 1 in² = 6.4516 cm²; area = 48 × 6.4516 = 309.6768 cm².",
+              "method_one_line": "Convert linear dimensions to cm using 1 in = 2.54 cm, then compute area = length × width; or convert 48 in² using 1 in² = 6.4516 cm².",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide the number-line scaffold below to help with the conversion step before multiplying for area.",
+                "challenge": "Change the unit: express the same tile area in square metres. How many such tiles cover 1 m²?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 7.7 p.170",
+              "description": "Unit conversion exercises: (i) express 5 in and 7.4 in in centimetres; (ii) express 5.08 cm and 11.43 cm in inches; (iii) find how many cm² is 1 in²; (iv) convert 161.29 cm² to in²; (v) find how many in² is 1 ft²."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 7.1",
+            "section_title": "Rectangle and Squares",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A square tile of side 12 cm is cut by two perpendicular lines parallel to its sides into four rectangles. The cuts are made at 4 cm from the left side and 5 cm from the top. Find the area of each of the four rectangles. Verify that the four areas sum to the area of the original square.",
+            "visual_stimulus": "| | Left strip (4 cm) | Right strip (8 cm) |\n|---|---|---|\n| Top band (5 cm) | ? | ? |\n| Bottom band (7 cm) | ? | ? |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Top-left: 4 × 5 = 20 cm². Top-right: 8 × 5 = 40 cm². Bottom-left: 4 × 7 = 28 cm². Bottom-right: 8 × 7 = 56 cm². Sum: 20 + 40 + 28 + 56 = 144 cm² = 12² = 144 cm². ✓",
+              "method_one_line": "Apply area = length × width to each of the four sub-rectangles and confirm the total equals the original square's area.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Label the four rectangles in the table provided and fill in the dimensions of each before computing areas.",
+                "challenge": "Ask: if the two cuts instead divide the square into four equal-area rectangles, where must each cut be placed? Give the dimensions."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk Q6, section 7.1 p.152",
+              "description": "Divide a square into 4 parts by drawing two perpendicular lines inside it, then rearrange the pieces to form a larger square with a hole inside. Try using cardboard cut-outs."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}
