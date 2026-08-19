@@ -191,8 +191,16 @@ PATTERNS = [
     # the plan ends. Striking it would delete the point of the activity to satisfy a regex —
     # the wrong direction (runbook trap 4). The ban is kept where it belongs: bridging toward
     # a named STRUCTURAL unit of the book. The bare form is advisory.
+    # NARROWED AGAIN 2026-08-19 (maths·middle W2, same shape as the ruling above): the gap
+    # may no longer swallow the word FROM. viii ch 3 p04 U2 opens "Bridge to the Egyptian
+    # system FROM SECTION 3.3.I" — and U2 anchors 3.3.I itself. "from section X" states where
+    # in the BOOK the material sits; it is provenance, the opposite of a pointer at what
+    # comes next, and the sentence stays true wherever the plan ends. Without the guard the
+    # 60-character gap ran through "Egyptian system from " and reached "section", so a unit
+    # was flagged for naming the section it was teaching. ARV-D-038's own phrase ("bridges
+    # toward the … SECTIONS THAT FOLLOW") has no "from" and is still banned.
     ("forward", True, re.compile(
-        r"\bbridges?\s+(toward|towards|to)\s+the\s+[\w\s,'’-]{0,60}?"
+        r"\bbridges?\s+(toward|towards|to)\s+the\s+(?:(?!\bfrom\b)[\w\s,'’-]){0,60}?"
         r"\b(section|sections|unit|units|lesson|lessons|chapter|topic|topics)\b", re.I)),
     ("forward", False, re.compile(r"\bbridges?\s+(toward|towards|to)\s+the\b", re.I)),
     ("completion", True, re.compile(r"\bhaving (worked through|covered|completed) (every|all|the whole)\b", re.I)),

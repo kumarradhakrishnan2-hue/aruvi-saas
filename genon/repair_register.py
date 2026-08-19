@@ -2392,7 +2392,195 @@ REPAIRS = {
     # ends "No prior draft is required; the map is constructed fresh in this sitting." That is
     # the model answering the BRIEF — the standard brief tells it the closing unit must start
     # and finish its own work — in the teacher's copy. ARV-D-161's habit, third stage running.
+    # ── S7 · mathematics · MIDDLE · BATCH WAVE 2 (the COMPACTS) — 2026-08-19 ──────────
+    # 73 compacts bought (msgbatch_0188xEyeHkH3nB3svDRNYFny, ₹1,057 at ₹14.48/run); 71
+    # installed first pass, 2 quarantined for single-item defects (ARV-D-179, ARV-D-180) and
+    # repaired. 18 ban hits over 16 of 112 library files — 0.16/file, against wave 1's 0.54
+    # and S2·middle's 2.3. THE COMPACTS ARE BETTER BEHAVED THAN THE STANDARDS THEY WERE CUT
+    # FROM, which is the reverse of S2·middle (wave 2 = wave 1) and of the prediction: a
+    # compact asserts "having covered every section" on a plan carrying fewer of them, so
+    # COMPLETION was expected to rise. It did not — 2 hits, the same as wave 1.
+    #
+    # DISTRIBUTION: 14 forward · 2 clock · 2 completion · zero calendar, zero meta-leak.
+    # Clock returns after wave 1 swept it to zero, and both hits are the same shape — a
+    # brainstorm minute written into band prose that already carries its own minutes, on the
+    # two compacts of ONE chapter (vi ch 5, p15 U14 and p20 U17, both the Special Numbers
+    # box). One defect authored twice, not two.
+    #
+    # ONE HIT IS NOT REPAIRED — it is a scanner false positive and was fixed at the scanner
+    # (runbook trap 4). viii ch 3 p04 U2's "Bridge to the Egyptian system from section 3.3.I"
+    # names where in the BOOK the material sits, and U2 anchors 3.3.I itself; the pattern's
+    # gap swallowed "Egyptian system from " and reached the word "section". See
+    # register_scan.py — same narrowing as the 2026-08-18 Law-of-Large-Numbers ruling.
+    #
+    # Two edits land on one field (viii ch 14 p11 U11 carries "built across the chapter" AND
+    # "practised throughout"; the scanner collapses overlapping matches and reported one).
     ("mathematics", "vi"): {
+        "ch_02_canonical_p12.json": [
+            (9, "teacher_notes",
+             " and is worth discussing at the start of the next unit",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …Mind the Mistake (p.44) sent home will "
+             "surface the full range of misalignment errors.…"),
+        ],
+        "ch_05_canonical_p15.json": [
+            (14, "band:0",
+             " for two minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform "
+             "rescales them | survives: …Students brainstorm individually, then a few "
+             "responses are shared…"),
+        ],
+        "ch_05_canonical_p20.json": [
+            (17, "band:0",
+             " for a few minutes",
+             "",
+             "register/clock",
+             "clock quantity struck — the p15 hit's twin, same chapter, same Special Numbers "
+             "box | survives: …Ask students to work silently and note what property of each "
+             "number sets it apart.…"),
+        ],
+        "ch_10_canonical_p10.json": [
+            (4, "band:3",
+             ", previewing the conversion rule",
+             "",
+             "register/forward",
+             "forward reference — the observation stands on its own; naming what it previews "
+             "does not | survives: …7–(–7) and 7+(+7) give the same result.…"),
+        ],
+    },
+    ("mathematics", "vii"): {
+        "ch_01_canonical_p09.json": [
+            (1, "band:3",
+             " and previews that numbers grow much further, which the next unit will explore",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here | survives: "
+             "…Teacher consolidates the rule for reading numbers beyond a lakh in the Indian "
+             "system.…"),
+        ],
+        "ch_06_canonical_p05.json": [
+            (3, "band:2",
+             "— equal row, column, and diagonal sums — as the goal for the next unit of work.",
+             "— equal row, column, and diagonal sums.",
+             "register/forward",
+             "forward reference; the em-dash pair is closed rather than left dangling, which "
+             "is why this is a substitution and not the usual clause deletion | survives: "
+             "…the teacher introduces the idea of a magic square — equal row, column, and "
+             "diagonal sums.…"),
+        ],
+        "ch_10_canonical_p07.json": [
+            (3, "teacher_notes",
+             " before the next unit",
+             "",
+             "register/forward",
+             "forward reference — the self-study pointer is useful whenever it is taken | "
+             "survives: …Example 1, section 10.2 p.35 on exam marking is a useful self-study "
+             "pointer for students who want to see the rule applied numerically.…"),
+        ],
+        "ch_12_canonical_p07.json": [
+            (6, "teacher_notes",
+             " that the next unit will reason through explicitly",
+             "",
+             "register/forward",
+             "forward reference — the pattern is encountered here whether or not a later "
+             "sitting follows | survives: …students encounter the terminating-decimal "
+             "pattern.…"),
+            (6, "band:3",
+             " — previewing the terminating-decimal observation from section 12.4's table of "
+             "1/2, 1/4, 1/5, 1/25",
+             "",
+             "register/forward",
+             "forward reference — names a section this plan may never reach | survives: "
+             "…Connect 68 g = 0.068 kg to the fraction 68/1000 — which has only 2s and 5s in "
+             "the denominator.…"),
+        ],
+        "ch_12_canonical_p10.json": [
+            (1, "teacher_notes",
+             "is a natural bridge to the next section if students finish early",
+             "is a useful extension if students finish early",
+             "register/forward",
+             "forward reference SUBSTITUTED, not deleted — the early-finisher guidance is the "
+             "point of the sentence and survives; only the pointer at what follows goes | "
+             "survives: …Example 1, section 12.2 p.69 is a useful extension if students "
+             "finish early.…"),
+        ],
+        "ch_14_canonical_p14.json": [
+            (4, "teacher_notes",
+             " students will construct in later units",
+             "",
+             "register/forward",
+             "forward reference — the visual connection is true wherever the plan ends | "
+             "survives: …The 8-petal figure connects visually to the decorative designs.…"),
+            (5, "band:1",
+             " (not yet constructed, anticipated for a later unit)",
+             "",
+             "register/forward",
+             "forward reference — parenthetical struck whole; the 60° halving sequence it "
+             "interrupts is untouched | survives: …starting from 60° gives 30°, 15°, … "
+             "Students tabulate results and argue why 65.5° cannot be reached.…"),
+        ],
+    },
+    ("mathematics", "viii"): {
+        "ch_01_canonical_p05.json": [
+            (5, "band:3",
+             " covered across the chapter's five units",
+             "",
+             "register/completion",
+             "completion claim — and doubly false on a compact, which names a unit count the "
+             "served plan may not have | survives: …applying every major result from squares, "
+             "cube properties, and roots.…"),
+        ],
+        "ch_02_canonical_p10.json": [
+            (1, "teacher_notes",
+             " in the next unit",
+             "",
+             "register/forward",
+             "forward reference — the hook motivates compact notation whenever it arrives | "
+             "survives: …The astonishment at fold 46 is the hook that motivates the need for "
+             "compact notation.…"),
+        ],
+        "ch_05_canonical_p10.json": [
+            (6, "teacher_notes",
+             " in the next unit where it is formally treated",
+             "",
+             "register/forward",
+             "forward reference — the instruction to focus on 9 here stands alone | survives: "
+             "…focus exclusively on 9 and let the parallel for 3 emerge.…"),
+        ],
+        "ch_11_canonical_p14.json": [
+            (1, "band:2",
+             " (to be constructed in later units)",
+             "",
+             "register/forward",
+             "forward reference — parenthetical struck; the natural-vs-mathematical "
+             "distinction is the task and survives | survives: …distinguishing natural "
+             "fractals (ferns, clouds, mountains) from mathematical fractals.…"),
+        ],
+        "ch_14_canonical_p11.json": [
+            (11, "band:2",
+             " built across the chapter",
+             "",
+             "register/completion",
+             "completion claim — untrue in any compact that does not carry every section it "
+             "assumes | survives: …students apply the dissection knowledge to write a "
+             "step-by-step procedure…"),
+            (11, "band:2",
+             " practised throughout",
+             "",
+             "register/completion",
+             "SECOND completion claim on the same band — the scanner collapses overlapping "
+             "matches to the first and reported one hit, so this one is repaired by reading, "
+             "not by the census | survives: …connecting the Śulba-Sūtra tradition to the "
+             "dissection methods.…"),
+        ],
+    },
+    # Wave 1's set, applied 2026-08-19 and archived under a 3-tuple key the same day so the
+    # live 2-tuple could carry wave 2 — the maths·ix pattern, kept as the cost record.
+    ("mathematics", "vi", "APPLIED-W1-20260819"): {
         "ch_05_canonical.json": [
             (9, "teacher_notes",
              "for previewing prime factorisation",
@@ -2442,7 +2630,7 @@ REPAIRS = {
              "symmetry, both types, or neither, grounded in the definitions.…"),
         ],
     },
-    ("mathematics", "vii"): {
+    ("mathematics", "vii", "APPLIED-W1-20260819"): {
         "ch_03_canonical.json": [
             (2, "band:3",
              ", foreshadowing that the same strategy extends to hundredths",
@@ -2514,7 +2702,7 @@ REPAIRS = {
              "LCM-of-denominators problem and write the setup.…"),
         ],
     },
-    ("mathematics", "viii"): {
+    ("mathematics", "viii", "APPLIED-W1-20260819"): {
         "ch_06_canonical.json": [
             (16, "band:0",
              " No prior draft is required; the map is constructed fresh in this sitting.",
