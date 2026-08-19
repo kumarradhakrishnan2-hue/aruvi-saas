@@ -111,7 +111,16 @@ def strip_fences(text: str) -> str:
 # parse step, and an inline block invites a third copy carrying the original bug back in.
 # There is now one function; call it.
 MAX_QUOTE_REPAIRS = 500          # was 10 — see the note below
-MAX_REPAIR_SPAN = 300            # a naked pair wider than this is not a quote glitch
+MAX_REPAIR_SPAN = 400            # a naked pair wider than this is not a quote glitch
+                                 # was 300 (measured 2026-08-11 on maths III ch 5: max span
+                                 # 159, median 83). S7's wave 1 lost mathematics viii ch 2
+                                 # ENTIRELY to a pair of 319 — 40 of that file's 41 pairs
+                                 # repaired and the 41st was refused by nineteen characters.
+                                 # A compliant Rule 10 narration that quotes a multi-part
+                                 # "Figure it Out" item runs longer than 2026-08-11's corpus
+                                 # showed; 400 clears the measured worst case (319) with
+                                 # headroom and still sits far below anything a genuinely
+                                 # broken structure would present. Founder ruling 2026-08-19.
 
 
 def _bracket_fix(text: str, e: json.JSONDecodeError):
@@ -179,12 +188,22 @@ def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
     present (a long chapter at ~5 bands/unit ≈ 100), not the best. Each iteration is one
     pass over ~100 KB, so the headroom costs milliseconds.
 
-    `MAX_REPAIR_SPAN` is the other magic number here and it is deliberately left as is:
-    a "pair" wider than 300 characters is more likely a genuinely broken structure than a
-    quoted phrase, and repairing it would corrupt rather than rescue. Measured on the run
-    that motivated this: max span 159, median 83, none above 300.
+    `MAX_REPAIR_SPAN` is the other magic number here — raised 300 -> 400 on 2026-08-19
+    (see the constant). A "pair" wider than that is more likely a genuinely broken
+    structure than a quoted phrase, and repairing it would corrupt rather than rescue.
+
+    THE PAIR HEURISTIC HAS A SHAPE IT CANNOT SEE, AND A LAST RESORT NOW FOLLOWS IT
+    (2026-08-19, S7 · W1). It pairs a `("` with the next `")`, which is the shape the
+    band-narration rule mandates. mathematics vi ch 10 wrote a legal narration in a
+    different shape — `p.251 (both sets: "Complete seven expressions…" and "Evaluate
+    eight…")`, two quoted phrases in one parenthetical — and the pairing walked straight
+    past it, then thrashed 417 "repairs" and corrupted a file whose content was correct.
+    `_structural_escape` below is tried only when this loop has failed, and it does not
+    guess pairs at all. Both failures cost a whole artefact, so the fallback earns itself
+    at two runs a stage.
     """
     text = strip_fences(full)
+    original = text                     # the pair loop may corrupt; the fallback re-reads this
     parsed, problems, repairs = None, [], []
     for _ in range(MAX_QUOTE_REPAIRS):
         try:
@@ -214,7 +233,67 @@ def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
         problems = [f"gave up after {MAX_QUOTE_REPAIRS} naked-quote repairs — still not "
                     f"valid JSON. The raw output is complete and on disk; recover it with "
                     f"genon/recover_from_raw.py rather than re-generating."]
+    if parsed is None:
+        # LAST RESORT — see the docstring. Run on `original`, never on the loop's output.
+        rescued, escaped = _structural_escape(original)
+        if rescued is not None:
+            parsed, problems = rescued, []
+            repairs = [f"structural-escape fallback: {escaped} inner quote(s) escaped by "
+                       f"the closing-context rule after the pair heuristic failed"]
     return parsed, problems, repairs
+
+
+def _structural_escape(text: str) -> tuple[dict | None, int]:
+    """Escape every `"` that cannot be closing a string, then parse. `(parsed|None, count)`.
+
+    THE RULE, and why it is exhaustive rather than a guess. In well-formed JSON a string
+    is a key, an array element, or an object value — nothing else — so its closing quote
+    is always followed, after optional whitespace, by one of `:` `,` `}` `]`. A quote
+    followed by anything else is therefore INSIDE the string and must be escaped. No
+    pairing, no span bound, no iteration: one left-to-right pass that already knows
+    whether it is inside a string.
+
+    WHY IT IS THE LAST RESORT AND NOT THE FIRST. It has one false positive the pair
+    heuristic does not: a string whose inner quote is itself followed by a comma —
+    `he said "yes", then left` — closes early. That corrupts STRUCTURE, so the parse
+    then fails and this returns None; a wrong split cannot reach `validate()` looking
+    like a right one. But "cannot reach" is not "cannot exist", so the certified path
+    runs first and this only ever converts a LOST artefact into a recovered one. Every
+    file that installs without it installs identically byte for byte.
+
+    Founder ruling 2026-08-19, on mathematics vi ch 10: the artefact was correct and
+    unreadable, and the alternative was paying to regenerate content already on disk.
+    """
+    out, i, n, instr, escaped = [], 0, len(text), False, 0
+    while i < n:
+        c = text[i]
+        if not instr:
+            out.append(c)
+            if c == '"':
+                instr = True
+        elif c == "\\":                          # an escape consumes its next character
+            out.append(c)
+            if i + 1 < n:
+                out.append(text[i + 1])
+            i += 2
+            continue
+        elif c == '"':
+            j = i + 1
+            while j < n and text[j] in " \t\r\n":
+                j += 1
+            if j < n and text[j] in ",:}]":
+                out.append(c)
+                instr = False
+            else:
+                out.append('\\"')
+                escaped += 1
+        else:
+            out.append(c)
+        i += 1
+    try:
+        return json.loads("".join(out)), escaped
+    except json.JSONDecodeError:
+        return None, escaped
 
 
 def validate(parsed: dict, expected_periods: int, expect_v11: bool) -> list[str]:

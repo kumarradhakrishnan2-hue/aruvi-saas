@@ -74,7 +74,21 @@ def standard_registry(subject, klass, chapter):
         return None
     try:
         return authored_registry(compile_stream(json.load(open(top_path))))
-    except Exception:                                # noqa: BLE001
+    except Exception as e:                           # noqa: BLE001
+        # WHY THIS RECORDS RATHER THAN JUST SWALLOWING (2026-08-19, S7 · W1).
+        # The bare `except` was correct — a standard that does not compile has no
+        # registry, and the row must stay provisional — but it discarded the ONE fact
+        # that says which of two very different situations you are in. On S7's wave 1,
+        # four chapters whose standard was on disk, complete and structurally sound
+        # reported "Row is provisional — author and certify the standard canonical",
+        # which reads as "the file is missing" and sent the triage looking for files
+        # that had been there all along. The real cause (an item anchored to no unit)
+        # was three layers down and visible only by re-running compile by hand.
+        # Behaviour is UNCHANGED — None still means provisional. Only the diagnosis is
+        # kept, on the function, where the caller that prints the message can reach it.
+        # Runbook trap 5's lesson, applied one level lower: a gate that cannot say why
+        # it failed is a gate you debug twice.
+        standard_registry.last_error = f"{type(e).__name__}: {e}"
         return None
 
 
@@ -377,6 +391,26 @@ def top_brief_for(subject, klass, chapter):
         "performing in this unit begins and ends inside its own minutes.",
         f"- COVERAGE COMPLETES BEFORE THE SYNTHESIS: all registry sections "
         f"first-appear across units 1..{count - 1}. {no_other}",
+        # ── added 2026-08-19 (S7 · W1, four chapters lost to this) ────────────────────
+        # The line above was the whole mandate and it was read as satisfied by
+        # construction. "All REGISTRY sections" is circular from the model's seat — the
+        # registry is derived from what the body units name, so a model that puts the
+        # chapter's last section only in the closer has not obviously broken anything it
+        # can see. mathematics vi ch 3 (3.12), vi ch 10 (10.5), vii ch 3 (3.8) and
+        # viii ch 3 (3.4.IV) all did exactly that, wrote an item on the section, and did
+        # not compile: `carriers.items_by_period_field` indexes non-synthesis units only
+        # (the S7 fix that stopped every item collapsing onto the closer), so the item
+        # anchored nowhere. Four artefacts, otherwise clean, unusable.
+        # So say the quiet part, name the section that is at risk, and state the cost.
+        f"- THE SYNTHESIS UNIT INTRODUCES NOTHING. Every section it names must "
+        f"ALREADY HAVE BEEN TAUGHT by one of units 1..{count - 1}: unit {count} "
+        f"revisits, it never delivers. This binds the chapter's LAST section hardest, "
+        f"because saving a short closing section for the closing unit reads natural and "
+        f"is the exact failure — a section whose first and only teaching is unit "
+        f"{count} enters no section list, so no shorter plan of this chapter can teach "
+        f"it, and an assessment item written on it resolves to no unit and the file is "
+        f"rejected. If the chapter's final section is slight, teach it inside unit "
+        f"{count - 1} beside its neighbour; do not hold it back for the close.",
         *_synthesis_handoff_lines(subject, klass, count),
         f"- Save as: ch_{int(chapter):02d}_canonical.json",
     ]) + "\n"
@@ -392,8 +426,14 @@ def briefs_for(subject, klass, chapter):
     row = next(c for c in combo["chapters"] if c["chapter"] == int(chapter))
     plan = row.get("canonical_plan")
     if not plan or plan.get("provisional"):
-        raise SystemExit("Row is provisional — author and certify the standard "
-                         "canonical, run this script's annotate pass, then ask again.")
+        why = getattr(standard_registry, "last_error", None)
+        if why is None:                     # the annotate pass may not have run in THIS process
+            standard_registry(subject, klass, chapter)
+            why = getattr(standard_registry, "last_error", None)
+        raise SystemExit(
+            "Row is provisional — author and certify the standard canonical, run this "
+            "script's annotate pass, then ask again."
+            + (f"\n  the standard IS on disk and did not compile: {why}" if why else ""))
     dur = combo["standard_duration_minutes"]
     if _is_plan_granularity(subject, klass):
         # No registry is read, because there is none to read: this stage's canonicals

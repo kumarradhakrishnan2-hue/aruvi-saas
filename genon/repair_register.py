@@ -2358,6 +2358,233 @@ REPAIRS = {
     # This also fixes something the register gate could not see: 'close the chapter' is a
     # COMPLETION claim in substance, and it is false whenever the plan is served with a
     # synthesis unit after it — which is precisely the serve that produced the seam.
+    # ── S7 · mathematics · MIDDLE · BATCH WAVE 1 (the STANDARDS) — 2026-08-19 ─────────
+    # 38 standards bought (msgbatch_01Tp7skXwTKtgUqH698wRXDo, ₹664 est.) plus four re-authored
+    # the same day under the tightened synthesis mandate. 21 ban hits over 15 of 39 installed
+    # files — 0.54/file, well under S2·middle's 2.3 and TWAU's ~0.33 per file.
+    #
+    # DISTRIBUTION: 16 forward · 4 completion · 1 meta-leak · ZERO clock, zero calendar. The
+    # clean sweep on clock quantities is the notable number: it is the family that dominated
+    # every earlier stage (58 of 134 at S2·middle) and maths·middle's LP v3.4 register block
+    # names it first. Forward reference is now the whole problem, and its shape is consistent —
+    # a trailing sentence or appositive at the END of a unit's LAST band or note, pointing at
+    # what comes next. Nineteen of the 21 are exactly that, which is why nineteen of the 21
+    # edits below are pure deletions with nothing put in their place.
+    #
+    # TWO ARE SUBSTITUTIONS, both because deleting the clause would have taken teaching with it:
+    #   · vii ch 7 p10 U4 — "foreshadows the angle-sum property that follows in this section"
+    #     -> "is the angle-sum property at work". The observation (a two-angle case with sum
+    #     ≥ 180° cannot close) is real mathematics the teacher should draw out; only the
+    #     pointer forward is struck.
+    #   · viii ch 11 U15 — "is a natural bridge to the next unit's topic" -> "is worth
+    #     noticing". The instruction that follows ("do not over-explain it here, but mark it
+    #     as a result worth returning to") is the actual guidance and survives intact.
+    #
+    # TWO ARE THE PILOT'S, AND THEY ARE OLDER THAN THIS WAVE. vii ch 7 is the C-cycle pilot,
+    # certified 2026-08-10 as "register clean (0 ban hits)" — the scanner had no [completion]
+    # pattern then. Its U11 hit is ARV-D-100 (found BY EYE at C5, the reason that defect was
+    # raised at all) and its p10 U4 hit is one of the five in ARV-D-125's corpus sweep. Both
+    # are OPEN. Repairing them here closes ARV-D-100 and clears one row of ARV-D-125; the
+    # library they sit in was certified under the older scanner, so this is the recheck those
+    # defects were waiting for, not a new finding.
+    #
+    # WHAT THE meta-leak IS, because it is the only one and it is instructive: viii ch 6 U16
+    # ends "No prior draft is required; the map is constructed fresh in this sitting." That is
+    # the model answering the BRIEF — the standard brief tells it the closing unit must start
+    # and finish its own work — in the teacher's copy. ARV-D-161's habit, third stage running.
+    ("mathematics", "vi"): {
+        "ch_05_canonical.json": [
+            (9, "teacher_notes",
+             "for previewing prime factorisation",
+             "for prime factorisation",
+             "register/forward",
+             "forward reference — 'previewing' asserts a later unit this class may never be "
+             "served | survives: …students who try to check by multiplying prime pairs will "
+             "find trial-and-error slow and may naturally ask for a more systematic method.…"),
+            (10, "band:3",
+             " — these become reasoning questions in the next unit",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …Take student responses without "
+             "resolving yet.…"),
+            (11, "band:3",
+             " Save the full discussion for the beginning of the next unit.",
+             "",
+             "register/forward",
+             "forward reference — the band defers work to a unit that may not follow | "
+             "survives: …Pose the question for students to think about: when does LCM equal "
+             "the product of two numbers?…"),
+        ],
+        "ch_06_canonical.json": [
+            (17, "band:0",
+             " established across the chapter",
+             "",
+             "register/completion",
+             "completion claim — untrue in any compact that does not carry every section it "
+             "assumes | survives: …Revisit the central insight: area and perimeter are "
+             "independent — the same area can pair with many different perimeters.…"),
+            (20, "band:0",
+             " established across the chapter",
+             "",
+             "register/completion",
+             "completion claim — untrue in any compact that does not carry every section it "
+             "assumes | survives: …Students revisit the three formulas: perimeter of a "
+             "polygon (sum of sides), area of a rectangle (l × b), area of a triangle.…"),
+        ],
+        "ch_09_canonical.json": [
+            (22, "teacher_notes",
+             " established throughout the chapter",
+             "",
+             "register/completion",
+             "completion claim — untrue in any compact that does not carry every section it "
+             "assumes | survives: …a clear sense of which figures have only one type of "
+             "symmetry, both types, or neither, grounded in the definitions.…"),
+        ],
+    },
+    ("mathematics", "vii"): {
+        "ch_03_canonical.json": [
+            (2, "band:3",
+             ", foreshadowing that the same strategy extends to hundredths",
+             "",
+             "register/forward",
+             "forward reference — names content a later unit teaches | survives: …teacher "
+             "highlights how converting to a single unit of tenths makes ordering "
+             "straightforward. Homework item from section 3.2 p.50 is set.…"),
+            (4, "band:3",
+             " before addition and subtraction in the next unit",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …students vote on which two are equal, "
+             "then justify. This cements the equivalence scaffold.…"),
+        ],
+        "ch_04_canonical.json": [
+            (3, "band:3",
+             " in upcoming sections",
+             "",
+             "register/forward",
+             "forward reference — the link is real, the pointer forward is not | survives: "
+             "…This links arithmetic revision explicitly to the algebraic work.…"),
+            (6, "band:3",
+             " Full item set is material for the next unit.",
+             "",
+             "register/forward",
+             "forward reference — hands work to a unit that may not follow | survives: …read "
+             "two erroneous items aloud and students write the error name on their slates.…"),
+        ],
+        # ARV-D-100 — raised at C5 (2026-08-10) on a library the scanner then called clean.
+        "ch_07_canonical.json": [
+            (11, "band:2",
+             " built throughout the chapter",
+             "",
+             "register/completion",
+             "completion claim — U11 is NOT the synthesis unit (U12 is), so a class meeting it "
+             "as its first or borrowed sitting has built no such intuition | survives: …why "
+             "unfolding the surface converts a surface-path problem into a flat straight-line "
+             "problem, connecting the geometric intuition.…"),
+        ],
+        # ARV-D-125 — one of the five live hits its 2026-08-12 corpus sweep recorded.
+        "ch_07_canonical_p10.json": [
+            (4, "teacher_notes",
+             "foreshadows the angle-sum property that follows in this section",
+             "is the angle-sum property at work",
+             "register/forward",
+             "forward reference SUBSTITUTED, not deleted — the failure of a two-angle case with "
+             "sum ≥ 180° is real mathematics worth drawing out; only the pointer forward goes | "
+             "survives: …let students articulate this themselves from their sketches before "
+             "confirming.…"),
+        ],
+        "ch_10_canonical.json": [
+            (4, "teacher_notes",
+             "the pattern-based confirmation in the next unit",
+             "the pattern-based confirmation",
+             "register/forward",
+             "forward reference — the instruction to check the four cases stands on its own | "
+             "survives: …Watch that students copy the four cases correctly before moving to "
+             "the pattern-based confirmation.…"),
+        ],
+        "ch_11_canonical.json": [
+            (10, "band:3",
+             ", to be completed in the following unit",
+             "",
+             "register/forward",
+             "forward reference — false for any served count that ends here or borrows a "
+             "different unit at this slot | survives: …students identify this as an "
+             "LCM-of-denominators problem and write the setup.…"),
+        ],
+    },
+    ("mathematics", "viii"): {
+        "ch_06_canonical.json": [
+            (16, "band:0",
+             " No prior draft is required; the map is constructed fresh in this sitting.",
+             "",
+             "register/meta-leak",
+             "meta-leak — the model answering the BRIEF's start-and-finish-your-own-work rule "
+             "inside the teacher's copy (ARV-D-161) | survives: …naming one fast-multiplication "
+             "application for each identity.…"),
+        ],
+        "ch_07_canonical.json": [
+            (12, "teacher_notes",
+             " and is the subject of the next unit",
+             "",
+             "register/forward",
+             "forward reference — the worked example stands as this unit's extension | "
+             "survives: …Example 12 in section 7.5 p.174 extends the reasoning to multi-step "
+             "contexts.…"),
+        ],
+        "ch_08_canonical.json": [
+            (9, "band:3",
+             " The result (a small loss or exact break-even depending on base) motivates the "
+             "next unit's exploration of compounded percentage changes.",
+             "",
+             "register/forward",
+             "forward reference — whole trailing sentence struck rather than patched, because "
+             "its only work was to motivate a later unit | survives: …'If you sell at a 20% "
+             "profit and then offer a 20% discount on the marked price, do you still profit?' "
+             "Students estimate first, then compute.…"),
+            (11, "band:3",
+             ", motivating the generalisation to come in the following unit",
+             "",
+             "register/forward",
+             "forward reference — the prediction task is complete without it | survives: "
+             "…what might happen over 10 or 20 years? Students write a one-sentence "
+             "prediction.…"),
+        ],
+        "ch_11_canonical.json": [
+            (15, "teacher_notes",
+             " is a natural bridge to the next unit's topic;",
+             " is worth noticing;",
+             "register/forward",
+             "forward reference SUBSTITUTED, not deleted — the guidance that follows ('do not "
+             "over-explain it here, but mark it as a result worth returning to') is the point "
+             "of the note and must survive | survives: …The cube's projection being a regular "
+             "hexagon in the isometric orientation is worth noticing…"),
+        ],
+        "ch_12_canonical.json": [
+            (1, "teacher_notes",
+             " Having established that the mean is a uniquely determined balance point, later "
+             "units can build on this to reason about how adding or removing values shifts the "
+             "balance.",
+             "",
+             "register/forward",
+             "forward reference — whole trailing sentence struck; it addressed the next unit's "
+             "author, not the teacher | survives: …students who conflate 'closest to the "
+             "middle' with 'balance point' benefit from a counter-example using a highly "
+             "skewed small dataset.…"),
+        ],
+        "ch_14_canonical.json": [
+            (11, "teacher_notes",
+             " The mixed-unit composite figure set for independent work is a deliberate bridge "
+             "to the measurement-and-conversion theme of the real-life section.",
+             "",
+             "register/forward",
+             "forward reference — whole trailing sentence struck; the homework set stands "
+             "without being justified by what follows it | survives: …students who struggle "
+             "should be asked to write both areas as expressions in a + b and h before "
+             "comparing.…"),
+        ],
+    },
     ("mathematics", "ix"): {
         "ch_03_canonical_p14.json": [
             (14, "band:3",
