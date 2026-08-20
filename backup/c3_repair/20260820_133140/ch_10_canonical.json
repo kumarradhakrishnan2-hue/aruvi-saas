@@ -1,0 +1,1278 @@
+{
+ "filename": "ch_10_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 10,
+ "chapter_title": "Proportional Reasoning–2",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 12
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 12 periods = 540 minutes\nTotal: 12 periods · 9h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "12x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 10",
+  "ledger_ts": "20260818_205348_math_viii_10_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_viii_10_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_10_canonical_p10.json": "2026-08-19T13:38:19",
+    "ch_10_canonical_p07.json": "2026-08-19T13:38:18"
+   },
+   "replaced_in": "backup/resynth/mathematics_viii_ch10_20260820_115152_math_viii_10_resynth.json"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:17",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 12,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:51:30",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 12,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.1",
+       "title": "Proportionality—A Quick Recap"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Cross-Products and the Proportionality Test",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students write three pairs of ratios from everyday contexts — ingredients, distances, speeds — and test each pair using the cross-multiplication rule a×d = b×c to judge whether they are proportional, sharing results with a neighbour."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "The class examines the idli-batter scenario from section 3.1 (Viswanath 6:3 vs Puneet 4:2) to confirm both simplify to 2:1; students articulate in their own words why equal simplified ratios guarantee proportionality, and record the definition a/c = b/d."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Pairs generate their own counter-example — a pair of ratios that looks similar but fails the cross-product test — and explain to the class why the relationship breaks. Teacher collects two or three examples on the board."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Quick whole-class round: teacher reads a ratio pair aloud; students signal thumbs-up or thumbs-down for proportional/not, then give the cross-product check as justification."
+      }
+     ],
+     "teacher_notes": "The idli-batter context makes proportionality tangible before notation takes over; students who rush to simplify both ratios without checking cross-products sometimes miss cases where simplification is not straightforward — watch for that shortcut being applied incorrectly. A useful self-study pointer: the formal definition connecting equivalent fractions to proportional ratios in section 3.1 is worth re-reading alongside any worked examples students encountered in their earlier ratio work.",
+     "materials": [
+      "Whiteboard and markers",
+      "Squared or plain paper for student jottings"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.2",
+       "title": "Ratios in Maps"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Measuring Cities with a Representative Fraction",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher introduces the Representative Fraction (RF) concept: RF 1:60,00,000 means every 1 cm on the map equals 60 km on the ground. Students write this relationship as a ratio and confirm the unit conversion (1 cm = 60,00,000 cm = 60 km)."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students use a ruler on a printed map of South India to measure the map distance between Bengaluru–Chennai and Mangaluru–Chennai, then convert each measurement to ground distance using the RF, recording their working clearly."
+      },
+      {
+       "minutes": "22–38",
+       "activity": "Map Making Activity (p.57) (\"Students make a sketch of their classroom at scale 1:50, marking locations of teacher's desk….\") Students measure the actual classroom and place each item at its proportionally correct position, using agreed symbols."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Pairs swap maps and verify two chosen items: they measure the map distance, multiply by 50, and check whether the reconstructed actual distance matches the original. Discrepancies are discussed briefly as a class."
+      }
+     ],
+     "teacher_notes": "The most common error here is mixing units before applying the RF — students multiply map centimetres by 60 but forget to confirm their ruler reading is in centimetres; flag this explicitly when reviewing the city-distance results. The Map Making Activity requires only a ruler and the classroom itself, so no prepared materials from another sitting are needed.",
+     "materials": [
+      "Printed South India map (one per pair)",
+      "Rulers (30 cm)",
+      "Plain paper for classroom sketch",
+      "Pencils and coloured markers"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.3",
+       "title": "Ratios with More than 2 Terms"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "From Spice Mixes to the General Multi-Term Rule",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 3.3",
+       "book_ref": "Example 1, section 3.3 p.58",
+       "description": "Purple paint mixed in ratio Red:Blue:White :: 2:3:5; given 10 litres of white, find litres of red and blue."
+      },
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 3.3",
+       "book_ref": "Example 2, section 3.3 p.58",
+       "description": "Cement concrete ratio 1:1.5:3; given 3 bags of cement, find total bags of concrete mixture."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher presents the four-ingredient spice mix (coriander:chillies:dal:fenugreek :: 8:4:2:1) and asks students to double every ingredient — they observe all four values scale by the same factor and the ratio is unchanged. This grounds the multi-term proportionality definition a/p = b/q = c/r = d/s."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Whole-class worked-through of Example 1, section 3.3 p.58 (\"Purple paint mixed in ratio Red:Blue:White :: 2:3:5; given 10 litres of white, find litres of red and blue.\") Teacher models identifying the scale factor from the known term, then finding the remaining terms."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students independently attempt Example 2, section 3.3 p.58 (\"Cement concrete ratio 1:1.5:3; given 3 bags of cement, find total bags of concrete mixture.\") before comparing answers with a partner and resolving differences."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students compose their own three-term ratio problem from a context of their choice (recipes, paint, materials), pose it to a partner, and solve each other's problem using the scale-factor method."
+      }
+     ],
+     "teacher_notes": "Students sometimes treat a multi-term ratio as several independent two-term ratios and solve each part separately without maintaining a single scale factor — the spice-mix doubling opener is designed to head off that error. Example 2 with a non-integer ratio term (1.5) is worth extra attention, as students often round prematurely.",
+     "materials": [
+      "Whiteboard and markers",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.4",
+       "title": "Dividing a Whole in a Given Ratio"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Splitting Totals: The Division Algorithm in Action",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 3.4",
+       "book_ref": "Example 3, section 3.4 p.59",
+       "description": "110 units of concrete needed in ratio 1:1.5:3; find units of cement, sand, and gravel."
+      },
+      {
+       "id": "WE-4",
+       "type": "worked_example",
+       "source_section": "section 3.4",
+       "book_ref": "Example 4, section 3.4 p.59",
+       "description": "50 ml of purple paint in ratio 2:3:5; find ml of red, blue, and white paint."
+      },
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 3.4",
+       "book_ref": "Figure it Out Q1, section 3.4 p.60",
+       "description": "Cricket practice session 150 min in ratio warm-up:batting:bowling:fielding :: 3:4:3:5; find time for each activity."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher states the division algorithm: each part = total × (its term) ÷ (sum of all terms). Class walks through Example 3, section 3.4 p.59 (\"110 units of concrete needed in ratio 1:1.5:3; find units of cement, sand, and gravel.\") step by step, recording each calculation."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students solve Example 4, section 3.4 p.59 (\"50 ml of purple paint in ratio 2:3:5; find ml of red, blue, and white paint.\") individually, then verify by checking the three parts sum to 50 ml before comparing with a neighbour."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Pairs tackle Figure it Out Q1, section 3.4 p.60 (\"Cricket practice session 150 min in ratio warm-up:batting:bowling:fielding :: 3:4:3:5; find time for each activity.\") and present their approach to another pair, explaining each division step."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Teacher poses a quick variation: if the fielding component must be at least 40 minutes, is the 3:4:3:5 ratio achievable in 150 minutes? Students reason aloud about the constraint, connecting division-in-ratio back to the original total."
+      }
+     ],
+     "teacher_notes": "The verification step — confirming that parts sum to the original whole — is essential practice and catches the most frequent arithmetic errors; insist on it before answers are shared. Students who use the scale-factor method from section 3.3 may get correct answers but should also see the sum-of-terms formula as the generalised procedure.",
+     "materials": [
+      "Whiteboard and markers",
+      "Calculators (optional)",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.4",
+       "title": "Dividing a Whole in a Given Ratio"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Triangles and Coins: Ratio Division Beyond Measurement",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 3.4",
+       "book_ref": "Example 5, section 3.4 p.60",
+       "description": "Construct a triangle with angles in ratio 1:3:5; compute each angle using angle-sum = 180°."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 3.4",
+       "book_ref": "Figure it Out Q2, section 3.4 p.60",
+       "description": "Library books Odiya:Hindi:English :: 3:2:1; given 288 Odiya books, find Hindi and English counts."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 3.4",
+       "book_ref": "Figure it Out Q3, section 3.4 p.60",
+       "description": "100 coins in ratio ₹10:₹5:₹2:₹1 :: 4:3:2:1; find total monetary value."
+      },
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 3.4",
+       "book_ref": "Figure it Out Q4, section 3.4 p.60",
+       "description": "Construct triangle with sidelengths in ratio 3:4:5; discuss whether all such triangles are congruent (Math Talk)."
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 3.4",
+       "book_ref": "Figure it Out Q5, section 3.4 p.60",
+       "description": "Can a triangle be constructed with sidelengths in ratio 1:3:5? Justify why or why not."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher works through Example 5, section 3.4 p.60 (\"Construct a triangle with angles in ratio 1:3:5; compute each angle using angle-sum = 180°.\") treating 180° as the 'whole' to be divided, drawing the resulting triangle on the board."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students attempt Figure it Out Q2, section 3.4 p.60 (\"Library books Odiya:Hindi:English :: 3:2:1; given 288 Odiya books, find Hindi and English counts.\") and Q3, section 3.4 p.60 (\"100 coins in ratio ₹10:₹5:₹2:₹1 :: 4:3:2:1; find total monetary value.\") independently."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Class attempts Figure it Out Q4, section 3.4 p.60 (\"Construct triangle with sidelengths in ratio 3:4:5; discuss whether all such triangles are congruent.\") in pairs using ruler and compass, and then Q5, section 3.4 p.60 (\"Can a triangle be constructed with sidelengths in ratio 1:3:5? Justify why or why not.\") — students test by trying to construct and recording whether the triangle closes."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Pairs share reasoning for Q5 with the class; teacher guides students to connect the triangle inequality to ratio terms, summarising when ratio-specified side lengths yield a valid triangle."
+      }
+     ],
+     "teacher_notes": "E-3 (the coins problem) is deceptively straightforward but requires students to distinguish between the count of coins of each denomination and the monetary value each denomination contributes — watch for students who report coin counts as the final answer. For E-4 and E-5, having compasses and rulers available is essential; the geometric construction anchors the abstract ratio calculation.",
+     "materials": [
+      "Compass and ruler (per student)",
+      "Protractors",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.5",
+       "title": "A Slice of the Pie"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "From Grade Ratios to Pie Chart Sectors",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 3.5",
+       "book_ref": "Figure it Out Q1, section 3.5 p.62",
+       "description": "360 people vote on favourite season (90 summer, 120 rainy, rest winter); draw pie chart."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 3.5",
+       "book_ref": "Figure it Out Q2, section 3.5 p.62",
+       "description": "Draw pie chart from TV channel preference data: Entertainment 50%, Sports 25%, News 15%, Information 10%."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher presents the grade-distribution data (A:B:C:D:E :: 12:10:8:6:4), asks students to find the HCF and reduce it to simplest form (6:5:4:3:2), then asks: if the total of all sectors must be 360°, how would you share 360° in this ratio? Students discuss the connection to the division-in-ratio procedure they know."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Class derives the sector angles step by step: sum of ratio terms = 20; each sector = (term/20) × 360°. Students compute all five angles (108°, 90°, 72°, 54°, 36°) and verify they sum to 360°."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Students construct the pie chart: draw a circle, mark a radius, measure 108° for the first sector, then add successive angles with a protractor, label and colour each sector. Teacher circulates checking protractor placement."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students tackle Figure it Out Q1, section 3.5 p.62 (\"360 people vote on favourite season (90 summer, 120 rainy, rest winter); draw pie chart.\") and Q2, section 3.5 p.62 (\"Draw pie chart from TV channel preference data: Entertainment 50%, Sports 25%, News 15%, Information 10%.\") computing angles before drawing."
+      }
+     ],
+     "teacher_notes": "The most consistent error is placing the protractor at the circle's edge rather than at the circle's centre; a brief demonstration before students start their constructions prevents this. Students who finished the division-in-ratio work in section 3.4 will recognise the 360° total as simply another 'whole' to be divided — surfacing that connection explicitly helps them see pie chart construction as applied ratio division.",
+     "materials": [
+      "Compass (per student)",
+      "Protractors",
+      "Ruler",
+      "Coloured pencils",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.5",
+       "title": "A Slice of the Pie"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Gathering and Charting Real Data",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 3.5",
+       "book_ref": "Figure it Out Q3, section 3.5 p.62",
+       "description": "Survey classmates on favourite subject; record data in table across 7 subjects and construct pie chart."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Quick oral warm-up: teacher projects or reads two completed sector-angle calculations (one correct, one with an error in the sum of ratio terms) and students identify the error, reinforcing the check that sector angles must sum to 360°."
+      },
+      {
+       "minutes": "8–20",
+       "activity": "Students conduct a quick class survey for Figure it Out Q3, section 3.5 p.62 (\"Survey classmates on favourite subject; record data in table across 7 subjects and construct pie chart.\") — a show-of-hands count for each of the seven subjects is tallied on the board and students copy the frequency table."
+      },
+      {
+       "minutes": "20–38",
+       "activity": "Each student computes sector angles for their class's distribution, constructs the pie chart individually using compass and protractor, then labels and colours sectors. Pairs cross-check each other's angle calculations before drawing."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Three or four volunteers display and describe their completed pie charts; class discusses whether charts with the same underlying data but slightly different angles look the same, connecting measurement precision to proportional accuracy."
+      }
+     ],
+     "teacher_notes": "When the class count does not divide evenly into 360°, rounding errors accumulate and the last sector may close slightly off — tell students to adjust the final sector to close the circle neatly and note the rounding. E-8 also develops the data-collection habit: students who confuse frequency with proportion should be prompted to ask 'out of how many?'",
+     "materials": [
+      "Compass (per student)",
+      "Protractors",
+      "Ruler",
+      "Coloured pencils",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.6",
+       "title": "Inverse Proportions"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "When One Goes Up, the Other Comes Down",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q1, section 3.6 p.65",
+       "description": "Identify which of three x-y tables shows inverse proportion by checking whether xy is constant. (Three sub-tables: (i) not inverse, (ii) direct proportion, (iii) inverse proportion.)"
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q2, section 3.6 p.65",
+       "description": "Fill empty cells in an inverse proportion table (x: 16, 12, ?, 36; y: 9, ?, 48, ?)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher presents the speed-time table (5 km/h / 18h; 15 / 6; 30 / 3; 60 / 1.5) and asks students to compute the product for each row — they discover every product equals 90. Class articulates: when speed increases by factor n, time decreases by factor n, keeping the product constant: xy = k."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Teacher introduces Example 2, section 3.6 p.63 (\"Motorcycle at 30 km/h takes 3 hours Lucknow–Kanpur; introduces speed-time table to show inverse relationship, leading to the xy=k definition.\") formally stating x₁y₁ = x₂y₂ and showing its derivation from xy = k."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Students work through Figure it Out Q1, section 3.6 p.65 (\"Identify which of three x-y tables shows inverse proportion by checking whether xy is constant.\") in pairs, writing a one-sentence justification for each sub-table before sharing with the class."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students attempt Figure it Out Q2, section 3.6 p.65 (\"Fill empty cells in an inverse proportion table (x: 16, 12, ?, 36; y: 9, ?, 48, ?).\") using xy = k to find each missing value, then explain to a partner how they determined k."
+      }
+     ],
+     "teacher_notes": "Students frequently confuse the constant-product criterion (xy = k) for inverse proportion with the constant-quotient criterion (x/y = k) for direct proportion — the side-by-side contrast of sub-tables in E-9 is specifically designed to surface this confusion; press students to commit to a criterion before computing. Example 2 (WE-7) is not walked through in full here but is a good self-study pointer for the speed-time context.",
+     "materials": [
+      "Whiteboard and markers",
+      "Calculators (optional)",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.6",
+       "title": "Inverse Proportions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Workers, Pumps and Provisions: Inverse Proportion at Work",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-8",
+       "type": "worked_example",
+       "source_section": "section 3.6",
+       "book_ref": "Example 3, section 3.6 p.65",
+       "description": "20 workers complete road in 4 days; find days needed for 10 workers using x₁y₁ = x₂y₂."
+      },
+      {
+       "id": "WE-9",
+       "type": "worked_example",
+       "source_section": "section 3.6",
+       "book_ref": "Example 4, section 3.6 p.66",
+       "description": "2 pumps fill tank in 18 hours; find time for 4 pumps using inverse proportion."
+      },
+      {
+       "id": "WE-10",
+       "type": "worked_example",
+       "source_section": "section 3.6",
+       "book_ref": "Example 5, section 3.6 p.66",
+       "description": "Food provisions for 80 students for 15 days; 20 more students join — find how many days provisions last."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q1, section 3.6 p.67",
+       "description": "Classify six real-world quantity pairs as inverse proportion or not (taps-time, painters-days, distance-petrol, cyclist speed-time, cloth length-price, pages-reading time)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher models Example 3, section 3.6 p.65 (\"20 workers complete road in 4 days; find days needed for 10 workers using x₁y₁ = x₂y₂.\") and Example 4, section 3.6 p.66 (\"2 pumps fill tank in 18 hours; find time for 4 pumps using inverse proportion.\") side by side, highlighting the substitution of x₁y₁ = x₂y₂ in each."
+      },
+      {
+       "minutes": "15–27",
+       "activity": "Students solve Example 5, section 3.6 p.66 (\"Food provisions for 80 students for 15 days; 20 more students join — find how many days provisions last.\") independently, setting up the inverse proportion equation before solving."
+      },
+      {
+       "minutes": "27–38",
+       "activity": "Groups of three classify the six quantity pairs in Figure it Out Q1, section 3.6 p.67 (\"Classify six real-world quantity pairs as inverse proportion or not.\") writing a brief justification for each classification and reporting to the class."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Teacher leads a brief discussion on which of the six pairs required an additional assumption (e.g., constant rate of use), surfacing the reasoning that not all decreasing relationships are inverse proportions."
+      }
+     ],
+     "teacher_notes": "Students who identified xy = k in the previous unit sometimes mechanically apply x₁y₁ = x₂y₂ without first verifying that the context is genuinely inversely proportional — the classification task in E-11 directly addresses this habit. Example 6 (WE-11), on combined work rates, is not covered in this unit and is a useful self-study challenge for students who finish early.",
+     "materials": [
+      "Whiteboard and markers",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.6",
+       "title": "Inverse Proportions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Solving Inverse Proportion Problems Across Contexts",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q2, section 3.6 p.67",
+       "description": "24 pencils cost ₹120; find cost of 20 pencils."
+      },
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q3, section 3.6 p.67",
+       "description": "Tank water sufficient for 20 families for 6 days; 10 more families move in — find how long water lasts; state assumptions (Math Talk)."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q6, section 3.6 p.68",
+       "description": "3 workers paint fence in 4 days; one more worker joins — find days to finish; state assumptions."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q7, section 3.6 p.68",
+       "description": "6 hours to fill 2 same-size tanks with a pump; find time to fill 5 such tanks with the same pump."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students individually attempt Figure it Out Q2, section 3.6 p.67 (\"24 pencils cost ₹120; find cost of 20 pencils.\") — a direct proportion problem embedded in the inverse proportion exercise set — and Figure it Out Q3, section 3.6 p.67 (\"Tank water sufficient for 20 families for 6 days; 10 more families move in — find how long water lasts; state assumptions.\") to see which rule applies in each."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Pairs discuss and resolve the contrast: Q2 is direct proportion (more pencils → more cost); Q3 is inverse (more families → fewer days). Teacher confirms and records the two reasoning pathways on the board."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work through Figure it Out Q6, section 3.6 p.68 (\"3 workers paint fence in 4 days; one more worker joins — find days to finish; state assumptions.\") and Q7, section 3.6 p.68 (\"6 hours to fill 2 same-size tanks with a pump; find time to fill 5 such tanks.\") applying x₁y₁ = x₂y₂ and verifying direction of change."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class reviews assumptions stated for Q3 and Q6 — equal consumption per family, equal work rate per worker — connecting the mathematical model to its real-world validity, and discusses what changes if an assumption is relaxed."
+      }
+     ],
+     "teacher_notes": "E-12 is intentionally a direct proportion item placed in the inverse proportion exercise set; students who apply x₁y₁ = x₂y₂ blindly will get a wrong answer — use this moment to reinforce that identification of the type of proportion must precede calculation. The assumptions discussion for Q3 and Q6 develops mathematical modelling habits that the chapter explicitly flags as a 'Math Talk'.",
+     "materials": [
+      "Whiteboard and markers",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 3.6",
+       "title": "Inverse Proportions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Combined Rates, Rows and Speeds: Extended Inverse Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-11",
+       "type": "worked_example",
+       "source_section": "section 3.6",
+       "book_ref": "Example 6, section 3.6 p.66",
+       "description": "Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q8, section 3.6 p.68",
+       "description": "25 rows × 12 chairs per row; rearrange with 20 chairs per row — find new number of rows."
+      },
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q9, section 3.6 p.68",
+       "description": "8 periods × 45 minutes; find period duration if school has 9 periods (total school hours unchanged)."
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q10, section 3.6 p.68",
+       "description": "Small pump fills tank in 3 hours, large pump in 2 hours; find time if both work together."
+      },
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q11, section 3.6 p.68",
+       "description": "42 machines produce toys in 63 days; find machines needed to produce same number in 54 days."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 3.6",
+       "book_ref": "Figure it Out Q12, section 3.6 p.68",
+       "description": "Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher walks through Example 6, section 3.6 p.66 (\"Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion.\") introducing unit-work-rate reasoning: Ram does 1 job/hour, Shyam does 1/1.5 jobs/hour; together they do the combined rate per hour."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students solve Figure it Out Q8–Q10 (pp.68): Q8 (\"25 rows × 12 chairs per row; rearrange with 20 chairs per row — find new number of rows.\"), Q9 (\"8 periods × 45 minutes; find period duration if school has 9 periods.\"), and Q10 (\"Small pump fills tank in 3 hours, large pump in 2 hours; find time if both work together.\") — applying unit-rate reasoning for Q10 and inverse proportion for Q8 and Q9."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Pairs attempt Figure it Out Q11, section 3.6 p.68 (\"42 machines produce toys in 63 days; find machines needed to produce same number in 54 days.\") and Q12, section 3.6 p.68 (\"Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h.\") with full written working."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Brief class share: students identify which of Q8–Q12 used inverse proportion directly and which required unit-rate as an intermediate step, articulating the reasoning chain for each."
+      }
+     ],
+     "teacher_notes": "The unit-work-rate method in Example 6 is conceptually new within this chapter and bridges inverse proportion (each person alone) with direct proportion (combined rate scales up with more workers); students who conflate the two steps often set up the combined-rate fraction incorrectly — watch for adding time rather than adding rates. Q10 parallels Example 6 exactly and is the best consolidation check.",
+     "materials": [
+      "Whiteboard and markers",
+      "Calculators (optional)",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 3.1",
+       "title": "Proportionality—A Quick Recap"
+      },
+      {
+       "ref": "section 3.2",
+       "title": "Ratios in Maps"
+      },
+      {
+       "ref": "section 3.3",
+       "title": "Ratios with More than 2 Terms"
+      },
+      {
+       "ref": "section 3.4",
+       "title": "Dividing a Whole in a Given Ratio"
+      },
+      {
+       "ref": "section 3.5",
+       "title": "A Slice of the Pie"
+      },
+      {
+       "ref": "section 3.6",
+       "title": "Inverse Proportions"
+      }
+     ],
+     "activity_title": "Four Problems, Four Methods: Putting the Chapter to Work",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems on the board at once. Students work individually for the first stretch, writing full working in their notebooks. They then compare with a neighbour; any disagreement is resolved by reconstructing the working step by step, not by voting. Each problem is then presented by a volunteer, and the class names aloud the chapter method the solution used before moving on. Problem 1 needs the cross-product proportionality test — watch for students who check only one pair of ratios and stop. Problem 2 needs the multi-term division algorithm; the most common slip is dividing by one term's value instead of the sum of all terms. Problem 3 needs the proportional sector-angle calculation — watch for students who forget to convert the data to a ratio before scaling to 360°. Problem 4 needs the inverse-proportion rule x₁y₁ = x₂y₂; students sometimes reach for direct proportion by mistake, so ask them to check the direction of change before writing the equation.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | Arjun mixes 3 cups of lemon juice with 8 cups of water. Priya mixes 9 cups of lemon juice with 24 cups of water. Are the two mixtures in the same proportion? Show your working. | Check cross-products: 3 × 24 = 72 and 8 × 9 = 72. Since the cross-products are equal, the ratios 3:8 and 9:24 are proportional. Both mixtures are in the same proportion. (Equivalently, 3/8 = 9/24, each simplifying to 3/8.)\n2 | A school garden is planted with sunflowers, marigolds, and roses in the ratio 2:3:5. If 120 plants are put in altogether, how many plants of each type are there? | Sum of ratio terms = 2 + 3 + 5 = 10. Each part = 120 ÷ 10 = 12 plants. Sunflowers: 2 × 12 = 24. Marigolds: 3 × 12 = 36. Roses: 5 × 12 = 60. Check: 24 + 36 + 60 = 120. ✓\n3 | A survey asked 180 students to name their favourite meal of the day. 60 chose breakfast, 90 chose lunch, and 30 chose dinner. Find the sector angle for each category in a pie chart of this data. | Ratio of students = 60:90:30 = 2:3:1. Sum = 6. Each unit = 360° ÷ 6 = 60°. Breakfast: 2 × 60° = 120°. Lunch: 3 × 60° = 180°. Dinner: 1 × 60° = 60°. Check: 120° + 180° + 60° = 360°. ✓\n4 | 6 volunteers can pack food boxes for a community drive in 8 hours. How long will the same job take if 12 volunteers work together at the same rate? | More volunteers → less time: inverse proportion. x₁y₁ = x₂y₂. 6 × 8 = 12 × y₂. 48 = 12 × y₂. y₂ = 48 ÷ 12 = 4 hours. With 12 volunteers the job takes 4 hours."
+      }
+     ],
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books and pencils"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "The teacher writes all four problems on the board and reads each aloud. Students copy the problems and the teacher confirms that no textbook or additional sheet is needed — everything required is on the board. Students begin individual work immediately."
+      },
+      {
+       "minutes": "3-22",
+       "activity": "Students work individually, writing full working for each problem in their notebooks. The teacher circulates without giving answers, asking only: 'What do you know?' and 'What does the problem ask?' to unblock anyone who has stopped."
+      },
+      {
+       "minutes": "22-32",
+       "activity": "Students compare their working with a neighbour. Where answers differ, they go back to the first step where the two solutions diverge and reconstruct from there. The teacher listens in on two or three pairs and notes one productive disagreement to raise with the whole class."
+      },
+      {
+       "minutes": "32-43",
+       "activity": "Four volunteers — one per problem — present their working at the board. After each presentation the class names, in one phrase, the chapter method the solution used: cross-product test; multi-term division algorithm; proportional sector angles; inverse proportion rule. The teacher introduces the next presenter only after the method has been named and briefly confirmed."
+      },
+      {
+       "minutes": "43-45",
+       "activity": "Closing statement from the teacher: every problem in this chapter — however different its surface — was solved by the same idea: when two quantities share a fixed ratio, knowing one tells you the other. That single idea, used carefully, is all the chapter needed."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 12
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 3.1",
+      "section_title": "Proportionality—A Quick Recap",
+      "goal": "recall",
+      "anchor_id": "",
+      "anchor_book_ref": "",
+      "anchor_description": ""
+     },
+     {
+      "section_ref": "section 3.3",
+      "section_title": "Ratios with More than 2 Terms",
+      "goal": "recall",
+      "anchor_id": "WE-1",
+      "anchor_book_ref": "Example 1, section 3.3 p.58",
+      "anchor_description": "Purple paint mixed in ratio Red:Blue:White :: 2:3:5; given 10 litres of white, find litres of red and blue."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "reason",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out Q1, section 3.6 p.65",
+      "anchor_description": "Identify which of three x-y tables shows inverse proportion by checking whether xy is constant. (Three sub-tables: (i) not inverse, (ii) direct proportion, (iii) inverse proportion.)"
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 3.2",
+      "section_title": "Ratios in Maps",
+      "goal": "apply",
+      "anchor_id": "A-1",
+      "anchor_book_ref": "Map Making Activity, p.57",
+      "anchor_description": "Students make a sketch of their classroom at scale 1:50, marking locations of teacher's desk, blackboard, fans, lights, and other objects using appropriate symbols."
+     },
+     {
+      "section_ref": "section 3.4",
+      "section_title": "Dividing a Whole in a Given Ratio",
+      "goal": "apply",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 3.4 p.60",
+      "anchor_description": "Cricket practice session 150 min in ratio warm-up:batting:bowling:fielding :: 3:4:3:5; find time for each activity."
+     },
+     {
+      "section_ref": "section 3.4",
+      "section_title": "Dividing a Whole in a Given Ratio",
+      "goal": "apply",
+      "anchor_id": "WE-5",
+      "anchor_book_ref": "Example 5, section 3.4 p.60",
+      "anchor_description": "Construct a triangle with angles in ratio 1:3:5; compute each angle using angle-sum = 180°."
+     },
+     {
+      "section_ref": "section 3.5",
+      "section_title": "A Slice of the Pie",
+      "goal": "apply",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Figure it Out Q1, section 3.5 p.62",
+      "anchor_description": "360 people vote on favourite season (90 summer, 120 rainy, rest winter); draw pie chart."
+     },
+     {
+      "section_ref": "section 3.5",
+      "section_title": "A Slice of the Pie",
+      "goal": "apply",
+      "anchor_id": "E-8",
+      "anchor_book_ref": "Figure it Out Q3, section 3.5 p.62",
+      "anchor_description": "Survey classmates on favourite subject; record data in table across 7 subjects and construct pie chart."
+     },
+     {
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "anchor_id": "WE-8",
+      "anchor_book_ref": "Example 3, section 3.6 p.65",
+      "anchor_description": "20 workers complete road in 4 days; find days needed for 10 workers using x₁y₁ = x₂y₂."
+     },
+     {
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "anchor_id": "E-12",
+      "anchor_book_ref": "Figure it Out Q2, section 3.6 p.67",
+      "anchor_description": "24 pencils cost ₹120; find cost of 20 pencils."
+     },
+     {
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "anchor_id": "WE-11",
+      "anchor_book_ref": "Example 6, section 3.6 p.66",
+      "anchor_description": "Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion."
+     },
+     {
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "anchor_id": "E-14",
+      "anchor_book_ref": "Figure it Out Q4, section 3.6 p.67",
+      "anchor_description": "Read pie charts showing sleep proportions for 8 living beings; select appropriate hours from a given list (15, 2.5, 20, 8, 3.5, 13, 10.5, 18)."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 3.1",
+      "section_title": "Proportionality—A Quick Recap",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Two ratios 3:4 and 9:12 are said to be in proportion. Which of the following correctly states the cross-product rule that confirms this?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "3 + 12 = 4 + 9",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "3 × 12 = 4 × 9",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "3 × 4 = 9 × 12",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "3 ÷ 9 = 12 ÷ 4",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "3 × 12 = 36 and 4 × 9 = 36; since the cross-products are equal, the ratios are in proportion.",
+       "method_one_line": "Apply the cross-product rule: for a:b and c:d to be proportional, a × d must equal b × c.",
+       "what_each_option_reveals": {
+        "A": "The student is adding outer and inner terms instead of multiplying them, confusing cross-products with sums.",
+        "C": "The student is multiplying the two means together and the two extremes together, reversing the positions in the cross-product.",
+        "D": "The student is attempting a ratio comparison but dividing first term by third and fourth by second, not forming the standard cross-product pairs."
+       },
+       "inclusivity": {
+        "support": "Let the student re-read the definition of proportional ratios in section 3.1 before attempting the check again.",
+        "challenge": "Ask the student to write their own pair of non-proportional ratios and prove it using the cross-product rule."
+       }
+      },
+      "exercise": {
+       "book_ref": "",
+       "description": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 3.3",
+      "section_title": "Ratios with More than 2 Terms",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A spice mix uses coriander, chillies, and dal in the ratio 4:2:1. If you use 8 teaspoons of dal, how many teaspoons of coriander and chillies are needed?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Coriander: 16 teaspoons, Chillies: 8 teaspoons",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Coriander: 32 teaspoons, Chillies: 16 teaspoons",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Coriander: 4 teaspoons, Chillies: 2 teaspoons",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Coriander: 8 teaspoons, Chillies: 4 teaspoons",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Dal ratio term is 1; actual dal = 8, so scale factor = 8 ÷ 1 = 8. Coriander = 4 × 8 = 32? No — re-check: ratio is 4:2:1. Scale factor = 8/1 = 8. Coriander = 4 × 8 = 32, Chillies = 2 × 8 = 16. Correct option is Coriander 32, Chillies 16.",
+       "method_one_line": "Identify the scale factor from the known term (dal: 8 ÷ 1 = 8), then multiply every ratio term by that factor.",
+       "what_each_option_reveals": {
+        "A": "The student used a scale factor of 4 (possibly dividing 8 by 2 rather than by the dal term 1), yielding half the correct quantities.",
+        "D": "The student divided each ratio term by 2 instead of finding the scale factor from the dal term, showing confusion about which term is known.",
+        "C": "The student read the ratio values directly as teaspoon counts without applying any scale factor."
+       },
+       "inclusivity": {
+        "support": "Let the student look back at the spice-mix example in section 3.3 to identify which term is the anchor for finding the scale factor.",
+        "challenge": "Ask the student to write their own three-ingredient ratio problem and pose it to a classmate, checking the answer using a different method."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 1, section 3.3 p.58",
+       "description": "Purple paint mixed in ratio Red:Blue:White :: 2:3:5; given 10 litres of white, find litres of red and blue."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A student says: 'In the table below, as x increases, y decreases, so x and y must be in inverse proportion.' Examine the table and explain whether the student's reasoning is correct. Justify your answer using the constant-product test.\n\n| x | 2 | 4 | 6 | 8 |\n| y | 24 | 12 | 8 | 6 |",
+      "visual_stimulus": "| x | 2 | 4 | 6 | 8 |\n| y | 24 | 12 | 8 | 6 |",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The student's conclusion is correct but the reasoning is incomplete. A decreasing y alone does not prove inverse proportion. Checking the products: 2 × 24 = 48, 4 × 12 = 48, 6 × 8 = 48, 8 × 6 = 48. All products equal 48, so xy = 48 (constant). Therefore x and y are in inverse proportion, and the correct justification is the constant-product test, not merely the direction of change.",
+       "method_one_line": "Compute xy for each pair; if all products are equal, the relationship is inverse proportion (xy = k).",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Pair the student with a classmate to read the table aloud together and talk through what happens to y each time x doubles.",
+        "challenge": "Ask the student: if one value of x were changed to 5, what would y need to be to preserve inverse proportion, and how would that affect the pattern?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 3.6 p.65",
+       "description": "Identify which of three x-y tables shows inverse proportion by checking whether xy is constant. (Three sub-tables: (i) not inverse, (ii) direct proportion, (iii) inverse proportion.)"
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 3.2",
+      "section_title": "Ratios in Maps",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A map has a Representative Fraction of 1:50,00,000. On the map, the distance between two cities measures 3.4 cm. What is the actual distance between the cities in kilometres? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Map distance = 3.4 cm. RF = 1:50,00,000 means 1 cm on map = 50,00,000 cm on ground. Actual distance = 3.4 × 50,00,000 cm = 1,70,00,000 cm. Converting: 1,70,00,000 ÷ 1,00,000 = 170 km. The actual distance between the cities is 170 km.",
+       "method_one_line": "Multiply the map distance in cm by the RF denominator to get actual distance in cm, then convert to km by dividing by 1,00,000.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a number line showing the unit conversion: 1 cm = 10 mm, 100 cm = 1 m, 1,00,000 cm = 1 km, so students can step through the conversion.",
+        "challenge": "Ask the student: if the actual distance were 255 km, what would the map distance be using the same RF, and what precision of ruler would you need to measure it?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Map Making Activity, p.57",
+       "description": "Students make a sketch of their classroom at scale 1:50, marking locations of teacher's desk, blackboard, fans, lights, and other objects using appropriate symbols."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 3.4",
+      "section_title": "Dividing a Whole in a Given Ratio",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A sum of ₹360 is divided among three friends Anu, Binu, and Chinu in the ratio 2:3:4. How much does each person receive? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Sum of ratio terms = 2 + 3 + 4 = 9. Anu = 360 × 2/9 = 80. Binu = 360 × 3/9 = 120. Chinu = 360 × 4/9 = 160. Check: 80 + 120 + 160 = 360. Anu receives ₹80, Binu ₹120, Chinu ₹160.",
+       "method_one_line": "Divide the total by the sum of ratio terms, then multiply each term by that unit share.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Suggest drawing three boxes labelled with the ratio terms and distributing ₹1 tokens equally across boxes to build intuition before computing.",
+        "challenge": "Change the total to ₹500 and ask whether an exact whole-rupee division is still possible in ratio 2:3:4; if not, what ratio would allow it?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 3.4 p.60",
+       "description": "Cricket practice session 150 min in ratio warm-up:batting:bowling:fielding :: 3:4:3:5; find time for each activity."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 3.4",
+      "section_title": "Dividing a Whole in a Given Ratio",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "The angles of a triangle are in the ratio 2:5:3. Find the measure of each angle. Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Sum of ratio terms = 2 + 5 + 3 = 10. Total angle sum = 180°. First angle = 180 × 2/10 = 36°. Second angle = 180 × 5/10 = 90°. Third angle = 180 × 3/10 = 54°. Check: 36 + 90 + 54 = 180°. The three angles are 36°, 90°, and 54°.",
+       "method_one_line": "Treat 180° as the whole, divide by the sum of ratio terms to find the unit share, then multiply each ratio term by the unit share.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a blank angle-sum bar divided into 10 equal strips; students shade 2, 5, and 3 strips and read off the proportional parts before computing.",
+        "challenge": "Ask the student to identify what type of triangle the ratio 2:5:3 produces, and whether a ratio of 1:1:4 would produce a valid triangle — justify using the division result."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 5, section 3.4 p.60",
+       "description": "Construct a triangle with angles in ratio 1:3:5; compute each angle using angle-sum = 180°."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 3.5",
+      "section_title": "A Slice of the Pie",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A school canteen tracks four items sold in a week: Samosas 45, Idlis 30, Biscuits 15, Juice 60. Calculate the sector angle for each item in a pie chart. Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total = 45 + 30 + 15 + 60 = 150. Samosas = (45/150) × 360 = 108°. Idlis = (30/150) × 360 = 72°. Biscuits = (15/150) × 360 = 36°. Juice = (60/150) × 360 = 144°. Check: 108 + 72 + 36 + 144 = 360°.",
+       "method_one_line": "For each category, divide its count by the total and multiply by 360° to obtain the sector angle.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Use a physical analogy: if the total were 360 items, each item would take 1°; students can first rescale mentally to see the proportional share.",
+        "challenge": "Ask the student to reduce the four quantities to their simplest ratio form first and verify that computing sector angles from the simplified ratio gives the same result."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 3.5 p.62",
+       "description": "360 people vote on favourite season (90 summer, 120 rainy, rest winter); draw pie chart."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 3.5",
+      "section_title": "A Slice of the Pie",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "In a pie chart, the sector for 'Reading' has an angle of 72°. The chart represents the hobbies of 200 students. How many students chose Reading as their hobby? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The sector angle 72° out of 360° represents the fraction 72/360 = 1/5 of the whole. Number of students = (72/360) × 200 = 200/5 = 40 students.",
+       "method_one_line": "Form the fraction (sector angle ÷ 360) and multiply by the total number to find the count represented by that sector.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a pie circle divided into five equal 72° sectors and ask the student how many equal parts the full circle has, then link that to the fraction of the total.",
+        "challenge": "Give the student two other sector angles from the same chart (e.g., 108° and 120°) and ask them to verify that all student counts in the full chart sum to 200."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 3.5 p.62",
+       "description": "Survey classmates on favourite subject; record data in table across 7 subjects and construct pie chart."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A hostel has food provisions for 45 students for 12 days. If 15 more students join the hostel, for how many days will the provisions last? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "More students means provisions last fewer days — this is inverse proportion. x₁ = 45, y₁ = 12, x₂ = 45 + 15 = 60. Using x₁y₁ = x₂y₂: 45 × 12 = 60 × y₂. 540 = 60y₂. y₂ = 540 ÷ 60 = 9 days. The provisions will last 9 days.",
+       "method_one_line": "Identify inverse proportion (more students, fewer days), set up x₁y₁ = x₂y₂, substitute known values, and solve for y₂.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a simple table with two columns (students, days) and ask the student to fill in what happens to days when students double, to build direction-of-change intuition before computing.",
+        "challenge": "Change the problem: if provisions must last at least 10 days, what is the maximum number of additional students the hostel can admit? Set up and solve the resulting inequality."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 3, section 3.6 p.65",
+       "description": "20 workers complete road in 4 days; find days needed for 10 workers using x₁y₁ = x₂y₂."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A store sells 30 pens for ₹180. How much will 45 pens cost? Show your working and state which type of proportion you used.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "More pens → more cost, so this is direct proportion (not inverse). Cost per pen = 180 ÷ 30 = ₹6. Cost of 45 pens = 45 × 6 = ₹270. Alternatively, using direct proportion: 30/180 = 45/x → x = (45 × 180)/30 = 270. The cost is ₹270.",
+       "method_one_line": "Recognise direct proportion (cost increases as quantity increases), find the unit rate, and multiply; or use the direct proportion equation to cross-multiply.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Suggest the student first decide: 'If I buy more, do I pay more or less?' and write that reasoning before picking a formula.",
+        "challenge": "Ask the student to write a companion inverse-proportion problem using the same numbers (e.g., involving workers or time), then solve both and compare the two answers."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 3.6 p.67",
+       "description": "24 pencils cost ₹120; find cost of 20 pencils."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Priya can complete a task in 4 hours working alone. Qian can complete the same task in 6 hours working alone. How long will it take them to complete the task if they work together? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Priya's rate = 1/4 task per hour. Qian's rate = 1/6 task per hour. Combined rate = 1/4 + 1/6 = 3/12 + 2/12 = 5/12 task per hour. Time together = 1 ÷ (5/12) = 12/5 = 2.4 hours, or 2 hours 24 minutes.",
+       "method_one_line": "Convert each person's time to a unit work rate (1/time), add the rates, and take the reciprocal to find combined time.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a visual bar representing one full task; ask the student to shade how much Priya completes in 1 hour and how much Qian completes in 1 hour, then combine.",
+        "challenge": "Ask the student: if a third person Ravi joins and the task now takes 1 hour together, how long would Ravi take working alone? Set up and solve."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 6, section 3.6 p.66",
+       "description": "Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 3.6",
+      "section_title": "Inverse Proportions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A pie chart shows the sleep hours of different animals. The sector for 'Dolphin' is 45°. If the chart represents a total of 24 hours in a day, how many hours does a dolphin sleep according to the chart? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Fraction of day represented by dolphin's sector = 45/360 = 1/8. Dolphin's sleep = (1/8) × 24 = 3 hours.",
+       "method_one_line": "Divide the sector angle by 360 to find the fraction of the total, then multiply by 24 hours.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to first find what fraction of a full circle 45° represents (45 out of 360), and then apply that fraction to 24 hours.",
+        "challenge": "Ask the student: if a second animal has a sector twice as large as the dolphin's, how many hours does that animal sleep, and what fraction of the day is that?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 3.6 p.67",
+       "description": "Read pie charts showing sleep proportions for 8 living beings; select appropriate hours from a given list (15, 2.5, 20, 8, 3.5, 13, 10.5, 18)."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

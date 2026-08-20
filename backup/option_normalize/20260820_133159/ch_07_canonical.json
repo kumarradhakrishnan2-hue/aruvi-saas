@@ -1,0 +1,1986 @@
+{
+ "filename": "ch_07_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 7,
+ "chapter_title": "Fractions",
+ "grade": "Grade VI",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 17
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 17 periods = 680 minutes\nTotal: 17 periods · 11h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "17x40",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics vi 7",
+  "ledger_ts": "20260818_205348_math_vi_07_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_vi_07_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_07_canonical_p14.json": "2026-08-19T13:38:18",
+    "ch_07_canonical_p10.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_vi_ch07_20260820_115152_math_vi_07_resynth.json"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:16",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 17,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "at": "2026-08-20T12:25:45",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 17,
+      "field": "teacher_notes",
+      "rule": "register/clock",
+      "removed": "for the first fifteen minutes",
+      "replaced_with": "",
+      "note": "clock quantity struck; the band carries its own minutes and the platform rescales them | survives: …students forgetting to divide both numerator and denominator by the same factor,…"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:51:29",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 17,
+        "field": "teacher_notes",
+        "old": "Pose all four problems at once on the board. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.1",
+       "title": "Fractional Units and Equal Shares"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Sharing Rotis — Who Gets More?",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 7.1",
+       "book_ref": "Figure it Out Q1, section 7.1 p.152",
+       "description": "Three guavas together weigh 1 kg and are roughly the same size — find each guava's weight as a fraction."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 7.1",
+       "book_ref": "Figure it Out Q2, section 7.1 p.152",
+       "description": "1 kg of rice packed equally into four packets — find the weight of each packet as a fraction."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 7.1",
+       "book_ref": "Figure it Out Q3, section 7.1 p.152",
+       "description": "Four friends share 3 glasses of sugarcane juice equally — find each friend's share (Math Talk)."
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 7.1",
+       "book_ref": "Figure it Out Q5, section 7.1 p.153",
+       "description": "Arrange fraction words (half, quarter, three quarters, one and a quarter, one and a half, two and a half) in ascending order of size."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 7.1",
+       "book_ref": "Figure it Out Q4, section 7.1 p.153",
+       "description": "A big fish weighs 1/2 kg and a small fish weighs 1/4 kg — find their combined weight (Math Talk)."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Pose the roti-sharing scenario from section 7.1: one roti shared equally by 2 children versus the same roti shared by 4 children. Students discuss in pairs why each child in the larger group receives less. Draw out the key insight — more equal parts means each part is smaller — and establish the term 'fractional unit'."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Students work on Figure it Out Q1, section 7.1 p.152 (\"Three guavas together weigh 1 kg….\") and Figure it Out Q2, section 7.1 p.152 (\"1 kg of rice packed equally into four packets….\"). For each problem, students write the fraction, say it aloud, and explain what the denominator tells them."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Class discussion on Figure it Out Q3, section 7.1 p.152 (\"Four friends share 3 glasses of sugarcane juice….\"). Students reason about what happens when what is shared is more than one whole unit, recording the fraction for each friend's share."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students individually order the fraction words in Figure it Out Q5, section 7.1 p.153 (\"Arrange fraction words — half, quarter, three quarters….\"). Pairs compare their orderings and articulate why the larger denominator (more equal parts) produces the smaller fractional unit, consolidating the ordering principle."
+      }
+     ],
+     "teacher_notes": "A common error is writing a fraction like 1/2 and reading the 2 as 'two' rather than 'two equal parts of the whole' — insist students say the denominator as a count of equal parts throughout. Having established that more equal shares of the same whole means each share is smaller, the ordering in Q5 becomes a direct application of that principle.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for student working"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.2",
+       "title": "Fractional Units as Parts of a Whole"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Chikki Cuts — Shape Doesn't Change the Share",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 7.2",
+       "book_ref": "Figure it Out Q(a–h), section 7.2 p.155",
+       "description": "Eight chikki pieces are shown; for each, identify what fractional unit of the whole chikki each piece represents (denominators ranging from 4 to 24)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Draw a rectangular 'chikki' on the board. Divide it first into 4 equal rectangular pieces, shade one, and ask students to name it. Then re-draw and divide the same rectangle into 4 triangular pieces (two diagonal cuts). Shade one triangular piece. Students discuss: is each triangular piece still 1/4? Guide them to see that equal area — not shape — defines the fractional unit."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students examine Figure it Out Q(a–h), section 7.2 p.155 (\"Eight chikki pieces are shown; for each, identify what fractional unit….\"). For each diagram, students count the total equal parts, identify the shaded part, and write the fraction. Encourage them to explain in their own words why two differently shaped pieces can represent the same fractional unit."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Small-group sharing: groups compare their answers to the eight chikki questions, paying particular attention to diagrams where the pieces look unequal but are in fact equal in area. The teacher circulates and prompts: 'How do you know these two pieces are the same size?'"
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Whole-class consolidation: students articulate in one sentence the defining condition for a fractional unit. Record a class-agreed statement on the board: a fractional unit 1/n is one of n equal parts of a whole, regardless of the parts' shapes."
+      }
+     ],
+     "teacher_notes": "A frequent error is judging fractional units by shape rather than size — students often claim two congruent pieces that look different are not equal. Use the chikki diagrams (b) and (d) from p.155, which show this explicitly, to prompt the class to verify equality by counting rows and columns in the grid. The key idea being cemented here is that 3/4 means three parts each of size 1/4.",
+     "materials": [
+      "Blackboard and chalk",
+      "Rulers for student reference"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.3",
+       "title": "Measuring Using Fractional Units"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Folding Strips — Building Fractions by Hand",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 7.3",
+       "book_ref": "Activity (paper strip folding), section 7.3 p.156",
+       "description": "Students fold a paper strip into halves, then quarters, then eighths to generate fractional units 1/2, 1/4, and 1/8 and record multiples of each unit in a table."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q1, section 7.3 p.158",
+       "description": "Continue the table of 1/2 for two more steps (extending repeated addition of 1/2)."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q2, section 7.3 p.158",
+       "description": "Create a similar repeated-addition table for the fractional unit 1/4."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q3, section 7.3 p.158",
+       "description": "Make 1/3 using a paper strip and use it to also make 1/6."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Distribute one strip of paper per student. Students fold in half, crease firmly, and label the two parts. Teacher introduces the language: each part is '1 half' or 1/2 — it is the fractional unit obtained when one whole is divided into 2 equal parts."
+      },
+      {
+       "minutes": "5–18",
+       "activity": "Students carry out Activity (paper strip folding), section 7.3 p.156 (\"Students fold a paper strip into halves, then quarters, then eighths….\"). After each fold they label the new fractional unit and complete the row of the table: 1×1/4, 2×1/4, 3×1/4, and so on. Teacher guides the repeated-addition language explicitly."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Students complete Figure it Out Q1, section 7.3 p.158 (\"Continue the table of 1/2 for two more steps….\") and Figure it Out Q2, section 7.3 p.158 (\"Create a similar repeated-addition table for the fractional unit 1/4….\"). They write each entry both as a repeated-addition statement and as a fraction."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Whole-class debrief: introduce the vocabulary 'numerator' and 'denominator' as named in section 7.3. Students re-read their table entries using this vocabulary (e.g., '3 times 1/4 = 3/4 — numerator 3, denominator 4'). Discuss why reading 3/4 as 'three times one-fourth' communicates size more clearly than 'three quarters'."
+      }
+     ],
+     "teacher_notes": "Students sometimes fold strips unevenly, producing parts that are not truly equal; stress that the fold must be exact and the strip must be flat. The core vocabulary shift here — from everyday fraction words to numerator/denominator language — is foundational for all subsequent work, so practise it explicitly during the debrief.",
+     "materials": [
+      "One paper strip per student (A4 paper cut lengthwise)",
+      "Pencils for labelling"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.3",
+       "title": "Measuring Using Fractional Units"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Drawing and Matching Fractional Units",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q4, section 7.3 p.158",
+       "description": "Draw pictures and write addition statements for 5 times 1/4 of a roti and 9 times 1/4 of a roti."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q5, section 7.3 p.158",
+       "description": "Match each of the four fractional units (1/3, 1/5, 1/6, 1/8) with the correct picture."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Brief recall of the repeated-addition structure established during the paper-strip folding: ask a student to say aloud what '4 times 1/8' means and write the fraction 4/8. Extend by asking what '9 times 1/4' would look like — how many whole rotis would that cover? Students predict before computing."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students work on Figure it Out Q4, section 7.3 p.158 (\"Draw pictures and write addition statements for 5 times 1/4 of a roti and 9 times 1/4 of a roti.\"). They draw rectangular roti diagrams, shade the required number of quarter-pieces, and write the addition and fraction notation beside each drawing."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Students complete Figure it Out Q5, section 7.3 p.158 (\"Match each of the four fractional units — 1/3, 1/5, 1/6, 1/8 — with the correct picture.\"). They justify each match by counting equal parts in the picture and comparing to the denominator."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Pairs exchange their Q4 drawings and check each other's addition statements and diagrams. Whole class: one student presents their drawing for 9 times 1/4, and the class discusses whether 9/4 is more or less than 2 whole rotis — bridging toward fractions greater than one."
+      }
+     ],
+     "teacher_notes": "Students sometimes draw 9 separate quarter-circles rather than grouping into whole rotis; encourage them to shade complete circles where possible so the picture itself shows whole-and-remainder structure. The comparison '9/4 vs 2 whole rotis' at the close of this unit lays natural groundwork for the mixed-fraction concept students will meet in section 7.5.",
+     "materials": [
+      "Blank paper for drawings",
+      "Pencils and rulers"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Marking Fraction Lengths on the Number Line"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Fraction Lengths on the Number Line",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q1, section 7.4 p.160",
+       "description": "On a number line draw lines of lengths 1/10, 3/10, and 4/5."
+      },
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q4, section 7.4 p.160",
+       "description": "Identify the fraction for the length of a black line on a number line where 0–1 is divided into 2 equal parts."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q5, section 7.4 p.160",
+       "description": "Write fractions giving the lengths of black lines on a number line where 0–1 is divided into 5 equal parts."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q2, section 7.4 p.160",
+       "description": "Write five fractions of own choice and mark them on the number line (Math Talk)."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Draw a number line from 0 to 1 on the board and divide the unit interval into 3 equal parts. Ask students to name each tick mark as a fraction. Repeat with 5 equal parts, then 8. Establish that the denominator tells how many equal parts the unit is divided into, and the numerator tells how many of those parts to count from 0."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students complete Figure it Out Q1, section 7.4 p.160 (\"On a number line draw lines of lengths 1/10, 3/10, and 4/5.\"). They first divide their unit interval into 10 equal parts and mark each required length. For 4/5 they reason about how to re-divide or convert to tenths."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Students work on Figure it Out Q4, section 7.4 p.160 (\"Identify the fraction for the length of a black line….\") and Figure it Out Q5, section 7.4 p.160 (\"Write fractions giving the lengths of black lines….\"). They read existing number lines and identify fractions from given marked lengths."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Class discussion on Figure it Out Q3, section 7.4 p.160 (\"How many fractions lie between 0 and 1?\"). Students share their reasoning — can they always find a fraction between any two fractions? — and the class agrees that infinitely many fractions lie between 0 and 1, introducing fractions greater than 1 by extending the number line past 1."
+      }
+     ],
+     "teacher_notes": "A common difficulty is converting 4/5 to tenths for Q1; nudge students to ask 'how many tenths make one fifth?' rather than treating 4/5 as a separate problem. The infinitude discussion at the close is deliberately open-ended — accept all reasoned answers and avoid foreclosing with a formal proof; the goal is cultivating number-sense intuition.",
+     "materials": [
+      "Rulers",
+      "Blank paper for number lines",
+      "Blackboard and chalk"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.5",
+       "title": "Mixed Fractions"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Fractions Greater Than One — Wholes and Remainders",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q1, section 7.5 p.162",
+       "description": "How many whole units are in 7/2? (Math Talk)"
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q2, section 7.5 p.162",
+       "description": "How many whole units are in 4/3 and in 7/3? (Math Talk)"
+      },
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q1 (a–c), section 7.5 p.162",
+       "description": "Figure out the number of whole units in 8/3, 11/5, and 9/4."
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q2, section 7.5 p.162",
+       "description": "Can all fractions greater than 1 be written as mixed numbers? Reason and answer."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Draw a number line from 0 to 3 and mark 7/2 on it. Ask students: between which two whole numbers does 7/2 sit? How many complete 1/2-lengths fit inside one whole? Students count aloud: 2 halves = 1, 4 halves = 2, so 7 halves = 3 wholes + 1 half. Record: 7/2 = 3 and 1/2."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Students discuss Figure it Out Q1, section 7.5 p.162 (\"How many whole units are in 7/2?\") and Figure it Out Q2, section 7.5 p.162 (\"How many whole units are in 4/3 and in 7/3?\") as a Math Talk, verbalising their grouping strategy for each."
+      },
+      {
+       "minutes": "18–30",
+       "activity": "Students individually complete Figure it Out Q1 (a–c), section 7.5 p.162 (\"Figure out the number of whole units in 8/3, 11/5, and 9/4.\"). They draw diagrams showing complete groups and the leftover fractional part, writing each result in the form 'whole number and fraction'."
+      },
+      {
+       "minutes": "30–40",
+       "activity": "Students address Figure it Out Q2, section 7.5 p.162 (\"Can all fractions greater than 1 be written as mixed numbers?\"). Pairs reason and write one-sentence answers; selected pairs share. The class agrees on the principle that any improper fraction yields a whole-number part and a proper-fraction remainder (or zero remainder)."
+      }
+     ],
+     "teacher_notes": "Students often try to find whole units by trial rather than dividing numerator by denominator — both are valid at this stage, but drawing grouped diagrams makes the structure visible. Watch for the error of writing the remainder as is (e.g., 8/3 → '2 and 2' instead of '2 and 2/3'); stress that the leftover is still counted in the same fractional unit.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for diagrams"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.5",
+       "title": "Mixed Fractions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Converting Between Improper and Mixed Forms",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q3 (a–f), section 7.5 p.162",
+       "description": "Write six improper fractions (9/2, 9/5, 21/19, 47/9, 12/11, 19/6) as mixed fractions."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q1 (a–f), section 7.5 p.163",
+       "description": "Write six mixed numbers (3¼, 7⅔, 9 4/9, 3⅙, 2 3/11, 3 9/10) as improper fractions (Math Talk)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Model the improper-to-mixed conversion using 8/3 as a worked example on the board: divide 8 by 3 to get 2 remainder 2, so 8/3 = 2 and 2/3. Then model the reverse with 3¼: reconstruct as 3 wholes + 1/4 = 12/4 + 1/4 = 13/4. Ask students to explain in their own words what the denominator of the improper fraction tells them."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students complete Figure it Out Q3 (a–f), section 7.5 p.162 (\"Write six improper fractions — 9/2, 9/5, 21/19, 47/9, 12/11, 19/6 — as mixed fractions.\"). They show the division step and the remainder step for each."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Students complete Figure it Out Q1 (a–f), section 7.5 p.163 (\"Write six mixed numbers — 3¼, 7⅔, 9 4/9, 3⅙, 2 3/11, 3 9/10 — as improper fractions.\"). They write the reconstruction as a sum of unit fractions, then combine."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Pairs cross-check one each other's answers from both sets. Students identify any pair where the improper fraction and mixed number are equivalent by converting back to check — for example, converting their answer for 3¼ back to a mixed number to verify."
+      }
+     ],
+     "teacher_notes": "The most frequent error in the reverse conversion (mixed to improper) is multiplying the whole number by the numerator instead of the denominator — a brief reminder that the denominator tells how many fractional units fill one whole prevents this. Having established that improper fractions and mixed numbers are two names for the same quantity, students are positioned to use whichever form is more convenient in computation.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.6",
+       "title": "Equivalent Fractions"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Fraction Wall — Seeing Equal Lengths",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "A-2",
+       "type": "activity",
+       "source_section": "section 7.6",
+       "book_ref": "Activity (fraction wall), section 7.6 p.164",
+       "description": "Students make a paper fraction wall using strips divided into halves through sixths and use it to identify equal fractional lengths and equivalent fractions."
+      },
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q1–Q4, section 7.6 p.164",
+       "description": "Use the fraction wall to answer four questions about equal fractional lengths (e.g., is 1/2 = 3/6? are 2/3 and 4/6 equivalent? how many 1/6 pieces make 1/2?)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students construct the fraction wall from Activity (fraction wall), section 7.6 p.164 (\"Students make a paper fraction wall using strips divided into halves through sixths….\"). Each student folds or marks five strips for halves, thirds, fourths, fifths, and sixths, aligning them below a whole strip."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Using their fraction walls, students answer Figure it Out Q1–Q4, section 7.6 p.164 (\"Use the fraction wall to answer four questions about equal fractional lengths….\"). They physically align strips to check whether 1/2 = 3/6, whether 2/3 and 4/6 reach the same point, and how many sixths make one half."
+      },
+      {
+       "minutes": "25–35",
+       "activity": "Class discussion: students share what they notice — that multiplying numerator and denominator by the same number produces a fraction that lands at the same point on the wall. The teacher formalises: 1/2 = 2/4 = 3/6 because we are describing the same length with finer divisions."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Students write one general statement in their own words explaining why doubling numerator and denominator does not change the fraction's value, then exchange with a partner to evaluate the reasoning."
+      }
+     ],
+     "teacher_notes": "Students sometimes treat equivalent fractions as 'different fractions that happen to be equal' rather than different names for the same quantity — use the physical fraction-wall alignment to make this concrete, emphasising that the strips reach the same endpoint. Watch for strips folded unevenly, which will produce misleading visual comparisons; circulate during construction.",
+     "materials": [
+      "Five paper strips per student (A4 cut lengthwise)",
+      "Pencils and rulers"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.6",
+       "title": "Equivalent Fractions"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Equal Shares of Rotis — Why Fractions Stay the Same",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q1–Q3, section 7.6 p.165",
+       "description": "Three questions using the extended fraction wall: are 3/6, 4/8, 5/10 equivalent? write two equivalent fractions for 2/6; write as many equivalents of 4/6 as possible."
+      },
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q1–Q3, section 7.6 p.166",
+       "description": "Three equal-share problems: (1) 3 rotis shared by 4 children — write division, addition, multiplication facts; (2) 2 rotis shared by 4 children; (3) 2 cakes shared by 5 children."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Recall the fraction-wall equivalences from the previous unit's work. Pose the equal-shares lens: 2 rotis shared by 4 children — each child gets 2/4. Now double the group to 8 children with 4 rotis — does each child still get the same? Students reason that 2/4 = 4/8 because both the share and the group doubled together."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students complete Figure it Out Q1–Q3, section 7.6 p.165 (\"Three questions using the extended fraction wall: are 3/6, 4/8, 5/10 equivalent?….\"). They use their fraction walls to verify and write equivalences, then generate as many equivalents of 4/6 as they can."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Students work through Figure it Out Q1–Q3, section 7.6 p.166 (\"Three equal-share problems….\"). For each, they write the division, addition, and multiplication statements and identify which equivalent fraction each situation represents."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Students pair-share their answers to Q3 (2 cakes, 5 children) and write a two-sentence justification for why the share per child is the same whether stated as 2/5 or 4/10. The teacher draws out the general principle: equivalent fractions represent the same quantity described with different-sized pieces."
+      }
+     ],
+     "teacher_notes": "The two lenses — fraction wall and equal shares of rotis — reinforce the same idea from different directions; the roti context is especially useful for students who struggled with the purely visual strip approach. A common reasoning error is thinking that 2/4 < 4/8 because '4 pieces' sounds like more — the equal-shares story corrects this by keeping the real-world context visible.",
+     "materials": [
+      "Fraction walls from the preceding unit's construction (or freshly made)",
+      "Blackboard and chalk"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.6",
+       "title": "Equivalent Fractions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Finding Missing Numbers and Lowest Terms",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q1 (a–c), section 7.6 p.168",
+       "description": "Find missing numbers in three equivalent-fraction statements (e.g., 5/4 = ?/8; 4/3 = 12/?; 7/5 = ?/?)."
+      },
+      {
+       "id": "E-27",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out (a–h), section 7.6 p.172",
+       "description": "Find equivalent fractions for eight pairs of fractions such that both have the same denominator (e.g., 7/2 and 3/5; 8/3 and 5/6)."
+      },
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 7.6",
+       "book_ref": "Example (lowest terms 16/20), section 7.6 p.172",
+       "description": "Express 16/20 in lowest terms by dividing numerator and denominator by the common factor 4, giving 4/5."
+      },
+      {
+       "id": "E-28",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out (a–d), section 7.6 p.173",
+       "description": "Express four fractions in lowest terms: 17/51, 64/144, 126/147, 525/112."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Model the missing-number strategy on the board: 5/4 = ?/8 — what was done to 4 to get 8? Multiply by 2, so multiply 5 by 2 as well. Then model the reverse: 12/? = 4/3 — what was done to 4 to get 12? Multiply by 3, so the unknown denominator is 3×3 = 9. Students try one example independently."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Students complete Figure it Out Q1 (a–c), section 7.6 p.168 (\"Find missing numbers in three equivalent-fraction statements….\"). They show the multiplier used in each step."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Students work through Figure it Out (a–h), section 7.6 p.172 (\"Find equivalent fractions for eight pairs of fractions such that both have the same denominator….\"). For each pair they identify the common denominator and rewrite both fractions."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Walk through Example (lowest terms 16/20), section 7.6 p.172 (\"Express 16/20 in lowest terms….\") as a class. Students then independently attempt Figure it Out (a–d), section 7.6 p.173 (\"Express four fractions in lowest terms….\"), dividing both numerator and denominator by their common factor. Pairs compare methods, noting that Example (lowest terms 36/60), section 7.6 p.173 shows two ways to reach 3/5."
+      }
+     ],
+     "teacher_notes": "Students frequently divide only the numerator or only the denominator when simplifying — reinforce that both must be divided by the same factor. Example (lowest terms 36/60), section 7.6 p.173 demonstrates that step-by-step division by small factors and direct division by the highest common factor both work; showing both builds flexibility.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.7",
+       "title": "Comparing Fractions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Common Denominators — Comparing Any Two Fractions",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 7.7",
+       "book_ref": "Example (compare 4/5 vs 7/9), section 7.7 p.173",
+       "description": "Compare 4/5 and 7/9 by converting to the common denominator 45: 4/5 = 36/45, 7/9 = 35/45; therefore 4/5 > 7/9."
+      },
+      {
+       "id": "E-29",
+       "type": "exercise",
+       "source_section": "section 7.7",
+       "book_ref": "Figure it Out Q1 (a–e), section 7.7 p.174",
+       "description": "Compare five pairs of fractions (8/3 vs 5/2; 4/9 vs 3/7; 7/10 vs 9/14; 12/5 vs 8/5; 9/4 vs 5/2) and justify."
+      },
+      {
+       "id": "E-30",
+       "type": "exercise",
+       "source_section": "section 7.7",
+       "book_ref": "Figure it Out Q2 (a–b), section 7.7 p.174",
+       "description": "Write two sets of three fractions each in ascending order (7/10, 11/15, 2/5; 19/24, 5/6, 7/12)."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-31",
+       "type": "exercise",
+       "source_section": "section 7.7",
+       "book_ref": "Figure it Out Q3 (a–b), section 7.7 p.174",
+       "description": "Write two sets of four fractions each in descending order (25/16, 7/8, 13/4, 17/32; 3/4, 12/5, 7/12, 5/4)."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "State the two-step comparison method: (1) rewrite both fractions with the same denominator by using the product of the two denominators; (2) compare numerators — larger numerator means larger fraction. Apply to Example (compare 4/5 vs 7/9), section 7.7 p.173 (\"Compare 4/5 and 7/9 by converting to common denominator 45….\") step by step on the board, narrating each step."
+      },
+      {
+       "minutes": "10–12",
+       "activity": "Walk through Example (compare 7/9 vs 17/21), section 7.7 p.174 (\"Compare 7/9 and 17/21 using common denominator 63….\") to show that the method works regardless of which fraction is larger. Students note the conclusion: 7/9 < 17/21."
+      },
+      {
+       "minutes": "12–27",
+       "activity": "Students independently complete Figure it Out Q1 (a–e), section 7.7 p.174 (\"Compare five pairs of fractions….\"). For each pair they write out the common denominator, the rewritten fractions, and a one-word conclusion with a justification symbol (> or <)."
+      },
+      {
+       "minutes": "27–40",
+       "activity": "Students complete Figure it Out Q2 (a–b), section 7.7 p.174 (\"Write two sets of three fractions each in ascending order….\"). They apply the same method pairwise, ordering all three fractions. A volunteer presents one ordering on the board; class checks by substituting a common denominator for all three fractions simultaneously."
+      }
+     ],
+     "teacher_notes": "Students sometimes use the product of denominators even when a smaller common multiple exists, producing larger numbers that are harder to work with — acknowledge both approaches as correct, but note that the textbook's method of using the product is reliable and general. Watch for errors in cross-multiplication when converting, particularly when one denominator does not divide the other.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.8",
+       "title": "Addition and Subtraction of Fractions"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Why Common Denominators? The Strip and Story Argument",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (add 2/5 + 1/5), section 7.8 p.176",
+       "description": "Add fractions with the same denominator using rectangular strip model: 2/5 + 1/5 = 3/5."
+      },
+      {
+       "id": "WE-6",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (add 4/7 + 6/7), section 7.8 p.176",
+       "description": "Add 4/7 + 6/7 = 10/7 = 1 and 3/7, demonstrating result as a mixed number."
+      },
+      {
+       "id": "WE-7",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (add 1/4 + 1/3), section 7.8 p.177",
+       "description": "Add fractions with unlike denominators using LCM 12: 1/4 = 3/12, 1/3 = 4/12; sum = 7/12."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Open with the chikki-sharing story from section 7.8: Rahim eats 1/2 of a chikki and his sister eats 1/4 — how much did they eat together? Draw a rectangular strip on the board divided into fourths. Students see that 1/2 = 2/4, so 2/4 + 1/4 = 3/4. Ask: why couldn't we just add 1 + 1 on top and 2 + 4 on the bottom?"
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Work through Example (add 2/5 + 1/5), section 7.8 p.176 (\"Add fractions with the same denominator using rectangular strip model….\") and Example (add 4/7 + 6/7), section 7.8 p.176 (\"Add 4/7 + 6/7 = 10/7 = 1 and 3/7….\"). Students copy the strip diagrams and write the matching addition statements, noting how the sum exceeds 1 in the second example and becomes a mixed number."
+      },
+      {
+       "minutes": "20–33",
+       "activity": "Work through Example (add 1/4 + 1/3), section 7.8 p.177 (\"Add fractions with unlike denominators using LCM 12….\"). Students follow the steps: identify LCM, rewrite each fraction, add numerators, keep denominator. They write a one-sentence justification for why the denominators must match before adding."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Students articulate Brahmagupta's three-step procedure in their own words (find common denominator, rewrite fractions, add numerators) and share with a partner. The teacher credits the 628 CE origin of the method, connecting the procedure to its historical source as named in section 7.8."
+      }
+     ],
+     "teacher_notes": "The most deeply held misconception in fraction addition is adding numerators and denominators separately (e.g., 1/2 + 1/4 = 2/6) — the rectangular strip diagram directly refutes this by making the absurdity visible. Spend time ensuring students can articulate in words why denominators must be equal before numerators can be added, since this reasoning underpins subtraction as well.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for strip diagrams"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.8",
+       "title": "Addition and Subtraction of Fractions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Adding Fractions — Brahmagupta's Method in Practice",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-8",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (add 2/3 + 1/5), section 7.8 p.178",
+       "description": "Apply Brahmagupta's method: LCM of 3 and 5 is 15; 2/3 = 10/15, 1/5 = 3/15; sum = 13/15."
+      },
+      {
+       "id": "E-32",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q1 (a–m), section 7.8 p.179",
+       "description": "Add thirteen fraction expressions using Brahmagupta's method, including sums of two and three fractions with unlike denominators (e.g., 2/7+5/7+6/7; 3/4+1/3; 2/3+5/6; 9/2+5/4; 9/2+5/4+7/6)."
+      },
+      {
+       "id": "E-33",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q2, section 7.8 p.179",
+       "description": "Word problem: Rahim mixes 2/3 litres of yellow paint and 3/4 litres of blue paint — find total volume of green paint."
+      },
+      {
+       "id": "E-34",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q3, section 7.8 p.179",
+       "description": "Word problem: Geeta buys 2/5 m and Shamim buys 3/4 m of lace — find total and determine if 1 m border can be covered."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Walk through Example (add 2/3 + 1/5), section 7.8 p.178 (\"Apply Brahmagupta's method: LCM of 3 and 5 is 15….\") on the board, narrating each of the three steps explicitly. Students copy and annotate the three steps: (1) find LCM, (2) rewrite as equivalent fractions, (3) add numerators."
+      },
+      {
+       "minutes": "8–25",
+       "activity": "Students work through a selection of Figure it Out Q1 (a–m), section 7.8 p.179 (\"Add thirteen fraction expressions using Brahmagupta's method….\"), tackling at least two same-denominator cases and three unlike-denominator cases, including one three-fraction sum. They show all three steps in their working."
+      },
+      {
+       "minutes": "25–35",
+       "activity": "Students solve Figure it Out Q2, section 7.8 p.179 (\"Rahim mixes 2/3 litres of yellow paint and 3/4 litres of blue paint….\") and Figure it Out Q3, section 7.8 p.179 (\"Geeta buys 2/5 m and Shamim buys 3/4 m of lace….\"). For each word problem they identify the fractions, apply Brahmagupta's method, and interpret the result in the real-world context."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Pairs exchange working for the lace problem (Q3) and check whether their partner correctly interpreted the result — does the total exceed 1 m? Students discuss why expressing the answer as a mixed number helps answer the contextual question."
+      }
+     ],
+     "teacher_notes": "Students sometimes apply the LCM step but forget to adjust the numerator proportionally — a quick check is to verify that the rewritten fraction equals the original by simplification. The lace problem (Q3) is an excellent diagnostic: students who add numerators and denominators will get 5/9 m and incorrectly conclude the border cannot be covered, revealing the underlying misconception.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.8",
+       "title": "Addition and Subtraction of Fractions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Subtracting Fractions — Same Logic, Opposite Direction",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-10",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (subtract 6/7 - 4/7), section 7.8 p.180",
+       "description": "Subtract fractions with same denominator using rectangular strip model: 6/7 - 4/7 = 2/7."
+      },
+      {
+       "id": "WE-11",
+       "type": "worked_example",
+       "source_section": "section 7.8",
+       "book_ref": "Example (subtract 3/4 - 2/3), section 7.8 p.181",
+       "description": "Subtract fractions with unlike denominators using common denominator 12: 3/4 = 9/12, 2/3 = 8/12; difference = 1/12."
+      },
+      {
+       "id": "E-35",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q1 (a–c), section 7.8 p.181",
+       "description": "Three same-denominator subtractions: 5/8 − 3/8; 7/9 − 5/9; 10/27 − 1/27."
+      },
+      {
+       "id": "E-36",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q1 (a–d), section 7.8 p.182",
+       "description": "Four unlike-denominator subtractions using Brahmagupta's method: 8/15 − 3/15; 2/5 − 4/15; 5/6 − 4/9; 2/3 − 1/2."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-37",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q2 (a–c), section 7.8 p.182",
+       "description": "Subtract as indicated: 13/4 from 10/3; 18/5 from 23/3; 29/7 from 45/7."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Draw a rectangular strip divided into sevenths on the board. Shade 6 parts, then erase 4 — students see that 6/7 − 4/7 = 2/7, mirroring Example (subtract 6/7 - 4/7), section 7.8 p.180 (\"Subtract fractions with same denominator using rectangular strip model….\"). Ask: what makes same-denominator subtraction straightforward?"
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Work through Example (subtract 3/4 - 2/3), section 7.8 p.181 (\"Subtract fractions with unlike denominators using common denominator 12….\"). Students follow the three parallel steps to addition: find common denominator 12, rewrite 3/4 as 9/12 and 2/3 as 8/12, subtract numerators to get 1/12."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Students complete Figure it Out Q1 (a–c), section 7.8 p.181 (\"Three same-denominator subtractions….\"). They write strip diagrams for at least one problem and the numerical working for all three."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students complete Figure it Out Q1 (a–d), section 7.8 p.182 (\"Four unlike-denominator subtractions using Brahmagupta's method….\"). They show the common-denominator step explicitly. Pairs compare answers, particularly for 2/3 − 1/2 where the small difference (1/6) surprises some students."
+      }
+     ],
+     "teacher_notes": "A frequent error is subtracting the smaller denominator from the larger before any rewriting — reinforce that subtraction can only proceed once both fractions share a denominator. The problem 2/3 − 1/2 = 1/6 is worth dwelling on: students who estimate should find the difference 'feels' small, validating the answer before they compute it.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for strip diagrams and working"
+     ]
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.8",
+       "title": "Addition and Subtraction of Fractions"
+      },
+      {
+       "ref": "section 7.9",
+       "title": "A Pinch of History"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Word Problems in Context and History's Fractions",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-38",
+       "type": "exercise",
+       "source_section": "section 7.8",
+       "book_ref": "Figure it Out Q3 (a–b), section 7.8 p.182",
+       "description": "Two word problems: (a) Jaya's school is 7/10 km away; she takes an auto for 1/2 km — how far does she walk? (b) Jeevika takes 10/3 min and Namit takes 13/4 min per lap — who is faster and by how much?"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work through Figure it Out Q3 (a–b), section 7.8 p.182 (\"Two word problems: Jaya's school is 7/10 km away….\"). For each they identify the operation required (subtraction in both cases), apply Brahmagupta's method with full working shown, and write a sentence answering the question in the real-world context. Pairs discuss which fraction is larger before subtracting."
+      },
+      {
+       "minutes": "15–25",
+       "activity": "Whole-class debrief of Q3(b): students reason about who is faster by identifying which time is smaller. They verify their answer by comparing 10/3 and 13/4 using a common denominator, then compute the difference. The teacher emphasises that a smaller time per lap means a faster runner."
+      },
+      {
+       "minutes": "25–37",
+       "activity": "Introduce section 7.9 through a read-and-discuss: the teacher reads aloud the key passage crediting Brahmagupta's 628 CE codification of fraction arithmetic and the Indian origin of bhinna/bhaga notation. Students recall that the method they have been using is exactly Brahmagupta's three-step procedure. They discuss: why is it significant that this method is still used today?"
+      },
+      {
+       "minutes": "37–40",
+       "activity": "Students preview the enrichment puzzle from Try This Q1–Q2, section 7.9 p.184 (\"Find three different fractional units that sum to 1….\"). They attempt the three-unit puzzle independently — does 1/2 + 1/3 + 1/6 = 1? Verify by computation; the answer is confirmed and students are invited to think whether any other set of three distinct unit fractions sums to 1."
+      }
+     ],
+     "teacher_notes": "Students often struggle with Q3(b) because they must first identify which fraction is smaller (i.e., which runner is faster) before computing the difference — a quick estimate ('10/3 ≈ 3.3, 13/4 = 3.25') can guide them, but the formal common-denominator comparison is the expected method. The history segment is brief but important: naming Brahmagupta and crediting the Indian tradition of fraction notation positions the method in its cultural context.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 7.9",
+       "title": "A Pinch of History"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Unit Fractions That Sum to One — Ancient Puzzles",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "E-39",
+       "type": "exercise",
+       "source_section": "section 7.9",
+       "book_ref": "Try This Q1–Q2, section 7.9 p.184",
+       "description": "Enrichment puzzle: (1) find three different fractional units that sum to 1; (2) find four different fractional units that sum to 1 (six solutions exist)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Recall the historical context of section 7.9: Brahmagupta's codification in 628 CE is still the method used for fraction arithmetic today, and the notation of fractions using bhinna/bhaga predates the European tradition. Pose the challenge: the ancient Indian mathematical tradition valued puzzles about unit fractions — today's work is one such puzzle from Try This Q1–Q2, section 7.9 p.184."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Students work on part (1) of Try This Q1–Q2, section 7.9 p.184 (\"Find three different fractional units that sum to 1.\"). They first check whether two different unit fractions can sum to 1 (they reason: 1/a + 1/b = 1 requires a and b to be equal, so no pair of distinct unit fractions works). They then try triples, using Brahmagupta's addition method to verify candidates."
+      },
+      {
+       "minutes": "18–33",
+       "activity": "Students tackle part (2) of Try This Q1–Q2, section 7.9 p.184 (\"Find four different fractional units that sum to 1 — six solutions exist.\"). Working in pairs, they build on the unique triple solution (1/2 + 1/3 + 1/6) by splitting one of its unit fractions into two distinct smaller ones. They record each valid four-fraction solution and verify by computing the sum."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Groups share solutions on the board. The class tallies how many of the six solutions have been found and verifies each by computing the sum to 1 using Brahmagupta's addition method. Students reflect: what does it mean that there is exactly one three-unit-fraction solution but six four-unit-fraction solutions?"
+      }
+     ],
+     "teacher_notes": "Students typically find the splitting strategy (split one unit fraction from the triple into two smaller ones) with a nudge; if they are stuck, ask 'can you write 1/6 as a sum of two different unit fractions?' rather than giving the decomposition. Watch for solutions that repeat a unit fraction — remind students the puzzle requires distinct fractional units.",
+     "materials": [
+      "Blackboard and chalk",
+      "Blank paper for working"
+     ]
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 40,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 7.1",
+       "title": "Fractional Units and Equal Shares"
+      },
+      {
+       "ref": "section 7.2",
+       "title": "Fractional Units as Parts of a Whole"
+      },
+      {
+       "ref": "section 7.3",
+       "title": "Measuring Using Fractional Units"
+      },
+      {
+       "ref": "section 7.4",
+       "title": "Marking Fraction Lengths on the Number Line"
+      },
+      {
+       "ref": "section 7.5",
+       "title": "Mixed Fractions"
+      },
+      {
+       "ref": "section 7.6",
+       "title": "Equivalent Fractions"
+      },
+      {
+       "ref": "section 7.7",
+       "title": "Comparing Fractions"
+      },
+      {
+       "ref": "section 7.8",
+       "title": "Addition and Subtraction of Fractions"
+      },
+      {
+       "ref": "section 7.9",
+       "title": "A Pinch of History"
+      }
+     ],
+     "activity_title": "Four Problems, One Chapter — Fractions at Work",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems at once on the board. Students work individually, writing full working in their notebooks. They then compare in groups of three: any disagreement is settled by reconstructing the solution step by step, not by voting. Each group nominates one problem to present; after each presentation the class names the chapter method the solution rested on. Watch for: Problem 1 — students forgetting to divide both numerator and denominator by the same factor, or stopping before the fraction is fully in lowest terms. Problem 2 — students choosing a common denominator that is not a multiple of both denominators, producing a wrong comparison. Problem 3 — students adding the two given fractions instead of subtracting, or reversing which fraction is larger before subtracting. Problem 4 — students forming the mixed-number whole part incorrectly by ignoring the remainder, or converting back to an improper fraction without multiplying the whole by the denominator first.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | A bag of flour weighs 48/60 kg. Write this weight as a fraction in lowest terms. | Find the HCF of 48 and 60. Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48. Factors of 60: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. HCF = 12. Divide numerator and denominator by 12: 48 ÷ 12 = 4, 60 ÷ 12 = 5. Answer: 4/5 kg. (Method: expressing a fraction in lowest terms by dividing by the HCF.)\n2 | Two friends run in a park. Arjun finishes one lap in 5/6 of a minute and Priya finishes one lap in 7/8 of a minute. Who finishes the lap faster? | Compare 5/6 and 7/8 using a common denominator. LCM of 6 and 8 is 24. 5/6 = 20/24 (multiply numerator and denominator by 4). 7/8 = 21/24 (multiply numerator and denominator by 3). 20/24 < 21/24, so 5/6 < 7/8. A smaller time means faster. Answer: Arjun finishes faster, because 5/6 min < 7/8 min. (Method: comparing fractions by finding equivalent fractions with a common denominator.)\n3 | A water tank holds 11/4 litres. After watering plants, 5/6 of a litre remains. How many litres of water were used? | Subtract: 11/4 − 5/6. LCM of 4 and 6 is 12. 11/4 = 33/12 (multiply by 3). 5/6 = 10/12 (multiply by 2). 33/12 − 10/12 = 23/12 litres. Express as a mixed number: 23 ÷ 12 = 1 remainder 11, so 23/12 = 1 and 11/12. Answer: 1 and 11/12 litres were used. (Method: subtracting fractions with unlike denominators using Brahmagupta's method.)\n4 | A ribbon of length 2 and 3/5 metres is cut from a roll. Write this length as an improper fraction. Then write the improper fraction 19/7 as a mixed number. | Part 1 — Mixed to improper: 2 and 3/5 = (2 × 5 + 3)/5 = (10 + 3)/5 = 13/5. Part 2 — Improper to mixed: 19 ÷ 7 = 2 remainder 5, so 19/7 = 2 and 5/7. Answers: 13/5 metres; 2 and 5/7. (Method: converting between mixed numbers and improper fractions in both directions.)"
+      }
+     ],
+     "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Student notebooks",
+      "Pencils"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "Write all four problems on the board. Read each one aloud. Tell the class: work every problem yourself, showing all steps. No discussion yet — each person's notebook should carry their own reasoning."
+      },
+      {
+       "minutes": "3-18",
+       "activity": "Students work individually in silence. Circulate to check that students are writing steps, not just answers. Do not confirm or correct at this stage; note which problems attract the most hesitation to guide the group phase."
+      },
+      {
+       "minutes": "18-28",
+       "activity": "Students form groups of three and compare their solutions. Where answers differ, the group reconstructs the solution step by step from the beginning — not by identifying who made an error, but by agreeing on each line before moving to the next. Groups that finish early identify and write down the chapter method each problem used."
+      },
+      {
+       "minutes": "28-37",
+       "activity": "Four brief presentations — one problem each, from four different groups or students. After each presentation, the class calls out the chapter method the solution rested on. The teacher writes the method name on the board beside the problem number as it is named."
+      },
+      {
+       "minutes": "37-40",
+       "activity": "Look at the four method names now on the board. The chapter is complete when a single idea ties them together. Ask: what did every one of these problems rely on? Accept responses, then state the closing sentence: a fraction is a number of equal parts of a whole, and every operation on fractions — comparing, simplifying, converting, adding, subtracting — comes back to that one idea."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 17
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.1",
+      "section_title": "Fractional Units and Equal Shares",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 7.1 p.152",
+      "anchor_description": "Three guavas together weigh 1 kg and are roughly the same size — find each guava's weight as a fraction."
+     },
+     {
+      "section_ref": "section 7.2",
+      "section_title": "Fractional Units as Parts of a Whole",
+      "goal": "recall",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Figure it Out Q(a–h), section 7.2 p.155",
+      "anchor_description": "Eight chikki pieces are shown; for each, identify what fractional unit of the whole chikki each piece represents (denominators ranging from 4 to 24)."
+     },
+     {
+      "section_ref": "section 7.3",
+      "section_title": "Measuring Using Fractional Units",
+      "goal": "recall",
+      "anchor_id": "E-7",
+      "anchor_book_ref": "Figure it Out Q1, section 7.3 p.158",
+      "anchor_description": "Continue the table of 1/2 for two more steps (extending repeated addition of 1/2)."
+     },
+     {
+      "section_ref": "section 7.5",
+      "section_title": "Mixed Fractions",
+      "goal": "recall",
+      "anchor_id": "E-17",
+      "anchor_book_ref": "Figure it Out Q1, section 7.5 p.162",
+      "anchor_description": "How many whole units are in 7/2? (Math Talk)"
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "recall",
+      "anchor_id": "E-23",
+      "anchor_book_ref": "Figure it Out Q1–Q4, section 7.6 p.164",
+      "anchor_description": "Use the fraction wall to answer four questions about equal fractional lengths (e.g., is 1/2 = 3/6? are 2/3 and 4/6 equivalent? how many 1/6 pieces make 1/2?)."
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "recall",
+      "anchor_id": "WE-5",
+      "anchor_book_ref": "Example (add 2/5 + 1/5), section 7.8 p.176",
+      "anchor_description": "Add fractions with the same denominator using rectangular strip model: 2/5 + 1/5 = 3/5."
+     },
+     {
+      "section_ref": "section 7.9",
+      "section_title": "A Pinch of History",
+      "goal": "recall",
+      "anchor_id": "E-39",
+      "anchor_book_ref": "Try This Q1–Q2, section 7.9 p.184",
+      "anchor_description": "Enrichment puzzle: (1) find three different fractional units that sum to 1; (2) find four different fractional units that sum to 1 (six solutions exist)."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "reason",
+      "anchor_id": "A-2",
+      "anchor_book_ref": "Activity (fraction wall), section 7.6 p.164",
+      "anchor_description": "Students make a paper fraction wall using strips divided into halves through sixths and use it to identify equal fractional lengths and equivalent fractions."
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "reason",
+      "anchor_id": "E-24",
+      "anchor_book_ref": "Figure it Out Q1–Q3, section 7.6 p.165",
+      "anchor_description": "Three questions using the extended fraction wall: are 3/6, 4/8, 5/10 equivalent? write two equivalent fractions for 2/6; write as many equivalents of 4/6 as possible."
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "reason",
+      "anchor_id": "WE-6",
+      "anchor_book_ref": "Example (add 4/7 + 6/7), section 7.8 p.176",
+      "anchor_description": "Add 4/7 + 6/7 = 10/7 = 1 and 3/7, demonstrating result as a mixed number."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.3",
+      "section_title": "Measuring Using Fractional Units",
+      "goal": "apply",
+      "anchor_id": "E-10",
+      "anchor_book_ref": "Figure it Out Q4, section 7.3 p.158",
+      "anchor_description": "Draw pictures and write addition statements for 5 times 1/4 of a roti and 9 times 1/4 of a roti."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Marking Fraction Lengths on the Number Line",
+      "goal": "apply",
+      "anchor_id": "E-12",
+      "anchor_book_ref": "Figure it Out Q1, section 7.4 p.160",
+      "anchor_description": "On a number line draw lines of lengths 1/10, 3/10, and 4/5."
+     },
+     {
+      "section_ref": "section 7.5",
+      "section_title": "Mixed Fractions",
+      "goal": "apply",
+      "anchor_id": "E-21",
+      "anchor_book_ref": "Figure it Out Q3 (a–f), section 7.5 p.162",
+      "anchor_description": "Write six improper fractions (9/2, 9/5, 21/19, 47/9, 12/11, 19/6) as mixed fractions."
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "apply",
+      "anchor_id": "E-26",
+      "anchor_book_ref": "Figure it Out Q1 (a–c), section 7.6 p.168",
+      "anchor_description": "Find missing numbers in three equivalent-fraction statements (e.g., 5/4 = ?/8; 4/3 = 12/?; 7/5 = ?/?)."
+     },
+     {
+      "section_ref": "section 7.7",
+      "section_title": "Comparing Fractions",
+      "goal": "apply",
+      "anchor_id": "E-29",
+      "anchor_book_ref": "Figure it Out Q1 (a–e), section 7.7 p.174",
+      "anchor_description": "Compare five pairs of fractions (8/3 vs 5/2; 4/9 vs 3/7; 7/10 vs 9/14; 12/5 vs 8/5; 9/4 vs 5/2) and justify."
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "anchor_id": "E-32",
+      "anchor_book_ref": "Figure it Out Q1 (a–m), section 7.8 p.179",
+      "anchor_description": "Add thirteen fraction expressions using Brahmagupta's method, including sums of two and three fractions with unlike denominators (e.g., 2/7+5/7+6/7; 3/4+1/3; 2/3+5/6; 9/2+5/4; 9/2+5/4+7/6)."
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "anchor_id": "WE-10",
+      "anchor_book_ref": "Example (subtract 6/7 - 4/7), section 7.8 p.180",
+      "anchor_description": "Subtract fractions with same denominator using rectangular strip model: 6/7 - 4/7 = 2/7."
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "anchor_id": "E-38",
+      "anchor_book_ref": "Figure it Out Q3 (a–b), section 7.8 p.182",
+      "anchor_description": "Two word problems: (a) Jaya's school is 7/10 km away; she takes an auto for 1/2 km — how far does she walk? (b) Jeevika takes 10/3 min and Namit takes 13/4 min per lap — who is faster and by how much?"
+     },
+     {
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "anchor_id": "E-34",
+      "anchor_book_ref": "Figure it Out Q3, section 7.8 p.179",
+      "anchor_description": "Word problem: Geeta buys 2/5 m and Shamim buys 3/4 m of lace — find total and determine if 1 m border can be covered."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 7.1",
+      "section_title": "Fractional Units and Equal Shares",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "One mango is shared equally among 5 friends. What fraction of the mango does each friend get?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "1/5",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "1/4",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "5/1",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "5/5",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "1/5. When one whole is divided equally among 5, each part is one fifth — the fractional unit 1/5.",
+       "method_one_line": "Identify the fractional unit: one whole divided into 5 equal parts gives 1/5 per part.",
+       "what_each_option_reveals": {
+        "C": "The student may have inverted the fraction, placing the number of friends in the numerator rather than the denominator.",
+        "B": "The student used 4 instead of 5 as the denominator, possibly counting only the remaining friends after one is removed.",
+        "D": "The student wrote the whole as 5/5, confusing the whole with each share."
+       },
+       "inclusivity": {
+        "support": "Look back at the roti-sharing examples in section 7.1 to see how the number of equal parts becomes the denominator.",
+        "challenge": "Write your own sharing scenario and state the fractional unit in two different ways."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.1 p.152",
+       "description": "Three guavas together weigh 1 kg and are roughly the same size — find each guava's weight as a fraction."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 7.2",
+      "section_title": "Fractional Units as Parts of a Whole",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A rectangular chocolate bar is cut into 6 equal pieces, though some pieces are squares and some are rectangles. Priya takes one piece. What fraction of the whole chocolate bar does Priya have?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "1/2",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "1/6",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "6/1",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The fraction cannot be determined because the pieces have different shapes.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "1/6. The whole is divided into 6 equal parts regardless of their shape, so each part is the fractional unit 1/6.",
+       "method_one_line": "Count the total equal parts to find the denominator; shape of parts does not change the fractional unit.",
+       "what_each_option_reveals": {
+        "A": "The student may have counted the rectangular pieces only, ignoring the square pieces, arriving at an incorrect total.",
+        "D": "The student incorrectly believes that unequal shapes imply unequal sizes, confusing shape with area.",
+        "C": "The student inverted the fraction, placing total parts in the numerator."
+       },
+       "inclusivity": {
+        "support": "Look at the chikki diagrams in section 7.2 to see how differently shaped pieces can still be equal in size.",
+        "challenge": "Draw your own whole divided into 8 equal parts of at least two different shapes and name the fractional unit."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q(a–h), section 7.2 p.155",
+       "description": "Eight chikki pieces are shown; for each, identify what fractional unit of the whole chikki each piece represents (denominators ranging from 4 to 24)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-3",
+      "section_ref": "section 7.3",
+      "section_title": "Measuring Using Fractional Units",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A student writes: 1/3 + 1/3 + 1/3 + 1/3 = 4/3. What does the numerator 4 represent in this repeated-addition statement?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "The number of equal parts the whole is divided into.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "The number of times the fractional unit 1/3 has been collected.",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "The size of each fractional unit.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The total number of wholes.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "The numerator 4 is the count of how many times the fractional unit 1/3 has been collected (4 times 1/3 = 4/3).",
+       "method_one_line": "Read the fraction as 'numerator times fractional unit': 4/3 means 4 times 1/3, so the numerator counts the copies of the unit.",
+       "what_each_option_reveals": {
+        "C": "The student has confused numerator and denominator roles, attributing the unit-size meaning to the numerator.",
+        "A": "The student correctly understands the denominator's role but has assigned it to the numerator.",
+        "D": "The student is attempting to link numerator to whole-number count, confusing 4/3 with 4 wholes."
+       },
+       "inclusivity": {
+        "support": "Refer to the repeated-addition table from section 7.3 and read each row aloud as 'n times 1/3'.",
+        "challenge": "Write the repeated-addition statement for 7 times 1/5 and explain what the numerator and denominator each mean."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.3 p.158",
+       "description": "Continue the table of 1/2 for two more steps (extending repeated addition of 1/2)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-4",
+      "section_ref": "section 7.5",
+      "section_title": "Mixed Fractions",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "How many whole units are contained in the improper fraction 11/4?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "2 whole units, with 3/4 remaining.",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "3 whole units, with 1/4 remaining.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "4 whole units, with 3/4 remaining.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "11 whole units.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "2 whole units with 3/4 remaining; 11/4 = 2 and 3/4 because 4+4 = 8 fourths make 2 wholes, leaving 3 fourths.",
+       "method_one_line": "Divide numerator by denominator: 11 ÷ 4 = 2 remainder 3, giving 2 and 3/4.",
+       "what_each_option_reveals": {
+        "B": "The student divided incorrectly, perhaps computing 12 ÷ 4 = 3 or miscounting groups of 4 in 11.",
+        "C": "The student may have divided 11 by 3 instead of 4, or miscounted by including a partial group as a whole.",
+        "D": "The student confused the numerator 11 with the number of whole units, ignoring the denominator entirely."
+       },
+       "inclusivity": {
+        "support": "Draw groups of 4 quarter-circles and count how many complete circles (wholes) you can make from 11 quarters.",
+        "challenge": "Convert 11/4 to a mixed number and then convert it back to an improper fraction to verify your answer."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.5 p.162",
+       "description": "How many whole units are in 7/2? (Math Talk)"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-5",
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following fractions is equivalent to 3/4?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "3/8",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "4/3",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "6/10",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "9/12",
+        "is_correct": true
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "9/12. Multiplying numerator and denominator of 3/4 by 3 gives 9/12, which represents the same quantity.",
+       "method_one_line": "Multiply numerator and denominator by the same non-zero whole number: 3×3 = 9, 4×3 = 12, so 3/4 = 9/12.",
+       "what_each_option_reveals": {
+        "C": "The student added 3 to both numerator and denominator (3+3=6, 4+6=10), incorrectly treating addition as the equivalence operation.",
+        "A": "The student doubled the denominator but kept the numerator the same, confusing multiplication of one part only with equivalence.",
+        "B": "The student swapped numerator and denominator, producing the reciprocal rather than an equivalent fraction."
+       },
+       "inclusivity": {
+        "support": "Use a fraction wall or paper strips to check whether 9/12 reaches the same point as 3/4.",
+        "challenge": "Write three more fractions equivalent to 3/4 and explain in one sentence why they are all equal."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1–Q4, section 7.6 p.164",
+       "description": "Use the fraction wall to answer four questions about equal fractional lengths (e.g., is 1/2 = 3/6? are 2/3 and 4/6 equivalent? how many 1/6 pieces make 1/2?)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-6",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "When adding two fractions with the same denominator, which of the following correctly describes the procedure?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Add both numerators and add both denominators.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Add the numerators and keep the denominator the same.",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "Add the numerators and multiply the denominators.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Multiply the numerators and keep the denominator.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Add the numerators and keep the denominator the same. The denominator names the fractional unit; adding copies of the same unit only changes the count (numerator).",
+       "method_one_line": "Same-denominator addition: sum the numerators, retain the common denominator, as shown by the rectangular strip model in section 7.8.",
+       "what_each_option_reveals": {
+        "A": "The student applies the misconception of adding both parts separately, yielding a fraction that is smaller than either addend.",
+        "D": "The student has confused the addition procedure with multiplication, applying the wrong operation to the numerators.",
+        "C": "The student correctly adds numerators but incorrectly multiplies denominators, producing a denominator that is too large."
+       },
+       "inclusivity": {
+        "support": "Draw a strip divided into fifths, shade 2 parts then shade 1 more — count the total shaded parts and the total parts in the strip.",
+        "challenge": "Explain in your own words why adding denominators as well as numerators gives a wrong answer, using a strip diagram as evidence."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example (add 2/5 + 1/5), section 7.8 p.176",
+       "description": "Add fractions with the same denominator using rectangular strip model: 2/5 + 1/5 = 3/5."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-7",
+      "section_ref": "section 7.9",
+      "section_title": "A Pinch of History",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "The method for adding and subtracting fractions that students use today was formally codified by which mathematician, and approximately when?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Al-Khwarizmi, around 820 CE.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Aryabhata, around 500 CE.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Brahmagupta, around 628 CE.",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "Euclid, around 300 BCE.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Brahmagupta, around 628 CE. Section 7.9 credits his formal codification of the fraction arithmetic method still in use today.",
+       "method_one_line": "Recall the historical attribution stated in section 7.9: Brahmagupta's treatise of 628 CE codified the method.",
+       "what_each_option_reveals": {
+        "B": "The student correctly identifies an Indian mathematician from the text but confuses Aryabhata (mentioned for notation) with Brahmagupta (the arithmetic method).",
+        "D": "The student names a famous Greek mathematician but Euclid's work predates and does not include fraction arithmetic in this form.",
+        "A": "The student names the Arab scholar through whom Indian methods were transmitted to Europe, confusing transmitter with originator."
+       },
+       "inclusivity": {
+        "support": "Re-read the historical passage in section 7.9 and find the sentence that names both the mathematician and the year.",
+        "challenge": "In your own words, explain what it means that Brahmagupta's method is 'still used today' — give one example from the chapter."
+       }
+      },
+      "exercise": {
+       "book_ref": "Try This Q1–Q2, section 7.9 p.184",
+       "description": "Enrichment puzzle: (1) find three different fractional units that sum to 1; (2) find four different fractional units that sum to 1 (six solutions exist)."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Anika says that 2/3 and 6/9 are not equal because they have different numerators and different denominators. Is she correct? Explain your reasoning using the idea of equal fractional lengths.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Anika is incorrect. 6/9 is equivalent to 2/3 because multiplying both numerator and denominator of 2/3 by 3 gives 6/9 — and equivalent fractions represent the same length or quantity, just described with finer divisions. On a fraction wall, a strip marked in thirds with 2 parts shaded reaches the same point as a strip marked in ninths with 6 parts shaded.",
+       "method_one_line": "Apply the equivalence principle: multiplying numerator and denominator by the same non-zero number preserves the fraction's value.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Try a pair-share: say aloud what 2 parts out of 3 equal parts looks like, then what 6 parts out of 9 equal parts looks like — do they reach the same place on a strip?",
+        "challenge": "Change one number in the statement so that Anika would be correct — explain why your change makes the two fractions unequal."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity (fraction wall), section 7.6 p.164",
+       "description": "Students make a paper fraction wall using strips divided into halves through sixths and use it to identify equal fractional lengths and equivalent fractions."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "Three children share 2 rotis equally, and six children share 4 rotis equally. Does each child get the same share in both groups? Justify your answer by writing the fraction for each child's share in both groups and showing they are equivalent.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In the first group each child gets 2/3 of a roti. In the second group each child gets 4/6 of a roti. Since 4/6 = 2/3 (multiply numerator and denominator of 2/3 by 2), each child receives the same share in both groups. The equal-shares reasoning shows that doubling both the number of rotis and the number of children preserves each person's share.",
+       "method_one_line": "Write each share as a fraction and verify equivalence by showing one is obtained from the other by multiplying numerator and denominator by the same number.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Talk through your reasoning with a partner before writing — say aloud what each group's share is before writing the fractions.",
+        "challenge": "What if the first group had 5 rotis and 6 children, and the second had 10 rotis and 12 children — would the shares still be equal? Extend your argument."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1–Q3, section 7.6 p.165",
+       "description": "Three questions using the extended fraction wall: are 3/6, 4/8, 5/10 equivalent? write two equivalent fractions for 2/6; write as many equivalents of 4/6 as possible."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Raju says he can add 1/3 and 1/4 by writing 1/3 + 1/4 = 2/7. Draw a rectangular strip model or use the idea of equal fractional units to explain why Raju's answer is wrong, and state what the correct answer is.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Raju is wrong. A rectangular strip model shows that 1/3 and 1/4 are pieces of different sizes — they cannot be counted together until they are expressed in the same fractional unit. Converting to twelfths: 1/3 = 4/12 and 1/4 = 3/12, so 1/3 + 1/4 = 7/12. Raju's error was adding numerators and denominators separately, which is never a valid operation for fractions.",
+       "method_one_line": "Convert to a common denominator (LCM of 3 and 4 is 12), rewrite both fractions, then add numerators.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw two strips of the same length — divide one into thirds and one into quarters — and see why you cannot count the shaded pieces together without re-dividing.",
+        "challenge": "Alter one of the fractions so that Raju's method of adding numerators and denominators happens to give the correct answer — does such a pair exist? Justify your reasoning."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example (add 4/7 + 6/7), section 7.8 p.176",
+       "description": "Add 4/7 + 6/7 = 10/7 = 1 and 3/7, demonstrating result as a mixed number."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 7.3",
+      "section_title": "Measuring Using Fractional Units",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A student collects the fractional unit 1/6 repeatedly. She records the following repeated-addition statement: 1/6 + 1/6 + 1/6 + 1/6 + 1/6 = ?. Write the fraction this equals and state whether it is less than, equal to, or greater than 1 whole.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "5/6. The numerator counts 5 copies of the fractional unit 1/6, giving 5/6. Since 5 < 6, the fraction 5/6 is less than 1 whole.",
+       "method_one_line": "Count the copies of the fractional unit to find the numerator (5) and keep the unit's denominator (6): 5 × 1/6 = 5/6, which is less than 6/6 = 1.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Use a number line divided into sixths and mark each step of 1/6 to reach your answer visually.",
+        "challenge": "How many more copies of 1/6 would need to be added to make the total equal to exactly 2 whole units? Show your working."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 7.3 p.158",
+       "description": "Draw pictures and write addition statements for 5 times 1/4 of a roti and 9 times 1/4 of a roti."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 7.4",
+      "section_title": "Marking Fraction Lengths on the Number Line",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "On a number line, the unit interval from 0 to 1 is divided into 8 equal parts. What fraction is located at the 5th tick mark from 0? Express your answer and then state whether it is closer to 0, closer to 1/2, or closer to 1.",
+      "visual_stimulus": "number_line: 0 | ... | ... | ... | ... | ... | ... | ... | 1",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The 5th tick mark is at 5/8. Since 1/2 = 4/8, we compare: 5/8 is one eighth beyond 4/8, so it is closer to 1 (the distance to 1 is 3/8, the distance to 1/2 is 1/8, and the distance to 0 is 5/8). Therefore 5/8 is closest to 1/2.",
+       "method_one_line": "Count tick marks from 0 using the fractional unit 1/8 to locate 5/8, then compare distances to 0, 1/2, and 1.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a number line, divide the 0-to-1 gap into 8 equal parts, and mark each tick from left to right to find which is the 5th.",
+        "challenge": "Find a fraction with denominator 8 that is exactly halfway between 5/8 and 1 — does such a fraction exist? Explain."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.4 p.160",
+       "description": "On a number line draw lines of lengths 1/10, 3/10, and 4/5."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 7.5",
+      "section_title": "Mixed Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Convert 23/6 to a mixed number. Then convert the mixed number 4 and 3/7 to an improper fraction. Show your working for both.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "23/6: divide 23 by 6, giving 3 remainder 5, so 23/6 = 3 and 5/6. For 4 and 3/7: 4 wholes = 28/7, so 4 and 3/7 = 28/7 + 3/7 = 31/7.",
+       "method_one_line": "Improper to mixed: divide numerator by denominator, remainder becomes the new numerator. Mixed to improper: multiply whole number by denominator and add the numerator.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw groups of 6 sixth-circles and count how many complete circles fit inside 23 sixths before doing the calculation.",
+        "challenge": "Verify your two answers are consistent by converting 3 and 5/6 back to an improper fraction and checking it equals 23/6."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3 (a–f), section 7.5 p.162",
+       "description": "Write six improper fractions (9/2, 9/5, 21/19, 47/9, 12/11, 19/6) as mixed fractions."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 7.6",
+      "section_title": "Equivalent Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Find the missing number: 5/8 = ?/40. Then express 18/30 in its lowest terms. Show your working for both.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "For 5/8 = ?/40: 8 × 5 = 40, so multiply numerator by 5 as well: 5 × 5 = 25. The missing number is 25. For 18/30: the common factor of 18 and 30 is 6; 18 ÷ 6 = 3 and 30 ÷ 6 = 5, so 18/30 = 3/5.",
+       "method_one_line": "For the missing number multiply both parts by the same factor; for lowest terms divide both parts by their highest common factor.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "For the missing number, first ask: what was multiplied by 8 to get 40? Then apply the same multiplier to 5.",
+        "challenge": "Find two different common factors of 18 and 30 and show that dividing by each in sequence also gives 3/5."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1 (a–c), section 7.6 p.168",
+       "description": "Find missing numbers in three equivalent-fraction statements (e.g., 5/4 = ?/8; 4/3 = 12/?; 7/5 = ?/?)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 7.7",
+      "section_title": "Comparing Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Compare 5/6 and 7/8 using the common-denominator method. Which is greater? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Common denominator = 6 × 8 = 48. 5/6 = 40/48 and 7/8 = 42/48. Since 42 > 40, we have 7/8 > 5/6.",
+       "method_one_line": "Rewrite both fractions with denominator 48 (the product of 6 and 8), then compare numerators: 42 > 40, so 7/8 > 5/6.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw two strips of the same length — divide one into sixths, shade 5; divide the other into eighths, shade 7 — and see which shaded region is longer.",
+        "challenge": "Find a fraction with denominator 24 that lies strictly between 5/6 and 7/8, and verify it by converting all three to twenty-fourths."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1 (a–e), section 7.7 p.174",
+       "description": "Compare five pairs of fractions (8/3 vs 5/2; 4/9 vs 3/7; 7/10 vs 9/14; 12/5 vs 8/5; 9/4 vs 5/2) and justify."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A recipe uses 3/4 cup of flour and 2/5 cup of oats. What is the total amount of dry ingredients? Show your working using Brahmagupta's method.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "LCM of 4 and 5 is 20. 3/4 = 15/20 and 2/5 = 8/20. Total = 15/20 + 8/20 = 23/20 = 1 and 3/20 cups.",
+       "method_one_line": "Find LCM (20), rewrite both fractions, add numerators: 15/20 + 8/20 = 23/20 = 1 and 3/20.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Use a number line divided into twentieths — mark 15/20 first, then count on 8 more steps to find the total.",
+        "challenge": "If a third ingredient adds 1/3 cup of sugar, find the new total using Brahmagupta's method and express it as a mixed number."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1 (a–m), section 7.8 p.179",
+       "description": "Add thirteen fraction expressions using Brahmagupta's method, including sums of two and three fractions with unlike denominators (e.g., 2/7+5/7+6/7; 3/4+1/3; 2/3+5/6; 9/2+5/4; 9/2+5/4+7/6)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Subtract 3/5 from 5/4. Show your full working using a common denominator.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Common denominator = 4 × 5 = 20. 5/4 = 25/20 and 3/5 = 12/20. Difference = 25/20 − 12/20 = 13/20.",
+       "method_one_line": "Rewrite with common denominator 20: 25/20 − 12/20 = 13/20.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "First confirm which fraction is larger so you know the subtraction will give a positive result — then apply the common-denominator step.",
+        "challenge": "Express 13/20 as a decimal and verify that 5/4 − 3/5 gives the same decimal result when each fraction is converted separately."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example (subtract 6/7 - 4/7), section 7.8 p.180",
+       "description": "Subtract fractions with same denominator using rectangular strip model: 6/7 - 4/7 = 2/7."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Meena walks 9/10 km to school. She has already walked 2/5 km. How much farther does she need to walk? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "LCM of 10 and 5 is 10. 2/5 = 4/10. Remaining distance = 9/10 − 4/10 = 5/10 = 1/2 km.",
+       "method_one_line": "Convert 2/5 to 4/10 using LCM 10, then subtract: 9/10 − 4/10 = 5/10 = 1/2.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a number line from 0 to 1 divided into tenths, mark 4/10 and 9/10, and count the gap between them.",
+        "challenge": "If Meena's route is 9/10 km but she takes a detour that adds 3/8 km, what is her total walking distance? Show full working."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3 (a–b), section 7.8 p.182",
+       "description": "Two word problems: (a) Jaya's school is 7/10 km away; she takes an auto for 1/2 km — how far does she walk? (b) Jeevika takes 10/3 min and Namit takes 13/4 min per lap — who is faster and by how much?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 7.8",
+      "section_title": "Addition and Subtraction of Fractions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A piece of ribbon is 7/4 m long. A student cuts off 5/6 m. How much ribbon remains? Show your working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "LCM of 4 and 6 is 12. 7/4 = 21/12 and 5/6 = 10/12. Remaining = 21/12 − 10/12 = 11/12 m.",
+       "method_one_line": "Find LCM of 4 and 6 (which is 12), rewrite as 21/12 and 10/12, subtract numerators: 21 − 10 = 11, giving 11/12.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Convert 7/4 to a mixed number first (1 and 3/4) to help estimate the answer before you compute with common denominators.",
+        "challenge": "Verify your answer by adding 5/6 and 11/12 and checking the sum equals 7/4."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 7.8 p.179",
+       "description": "Word problem: Geeta buys 2/5 m and Shamim buys 3/4 m of lace — find total and determine if 1 m border can be covered."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

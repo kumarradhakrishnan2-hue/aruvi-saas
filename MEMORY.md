@@ -687,7 +687,42 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-19 (newest) — DENSE PROSE VISUAL AIDS IN SCIENCE·MIDDLE SYNTHESIS UNITS
+## 2026-08-20 (newest) — F1 · MATHEMATICS·MIDDLE CLOSING-SYNTHESIS REPAIR WAVE:
+## 16 BRIEFED DEFECTS + 8 FOUND, ALL BY DECLARATION, 39/39 RE-CERTIFIED
+
+Executed `docs/f1_maths_repair_brief.md` in full. The resynthed maths·middle closers had
+shipped mathematical defects certification cannot see (it checks structure/anchors/register/
+coverage, never whether an answer is right): 4 wrong answers, 2 ill-posed problems, 7 invalid
+routes, 3 statement/solution disagreements, plus drafting scratch. Everything went through
+`genon/repair_c3.py` DECLARED entries (old → new by assertion, recorded in
+`genon_canonical.repairs[]`) — **no artefact was hand-edited**. Every problem in every touched
+table was recomputed from scratch before its edit was declared (brief §8), which surfaced
+**8 defects beyond the brief's floor** (ARV-D-214–219 among them: a "KKK" cryptarithm draft
+survivor in viii ch 5's notes, undefined vertex O in vii ch 14 P2's congruence, a duplicated
+Prepared-Table pointer in viii ch 11's notes, a mislabelled sign rule in vii ch 10 P4, and
+stated minute-quantities in vii ch 9 / ch 14 notes — the register's only hits corpus-wide).
+The headline fixes: vii ch 14 P3's "four corners same colour" was FALSE on 4×4 (repaired to
+the two-opposite-corners classic, 6 vs 8); viii ch 5 P4's "no solution for AB × 7 = CBA" was
+false (97 × 7 = 679; algebraic route 3(23A−B) = 100C now in-cell) and its P2 became the
+3A5B18 problem its own editorial note proposed; viii ch 11's ant now walks corner-to-corner
+so the Baudhāyana–Pythagoras theorem the unit names is actually needed (4√5 ≈ 8.9 cm);
+viii ch 12 P4 asks only what its given points settle. Ledger: **ARV-D-196…219 repaired**
+(evidence quoted on the campaign register, combo mathematics/middle · step F1),
+**ARV-D-220/221 OPEN for the founder** — the two §7 method-availability items (vii ch 11 P3
+needs HCF × LCM = product; vii ch 14 P3 needs the colouring argument; the shorter plans teach
+neither) are content decisions in ARV-D-181's family and were deliberately not papered over.
+Mechanics worth carrying: the applied viii ch 11 ARV-D-185/186 entries were **retired to a
+("mathematics","viii","APPLIED-20260819") key** — the closer was re-authored after they ran,
+so 185 would refuse on every run, and 186's old string *reappears* once ARV-D-216 removes the
+duplicated pointer, so left live it would re-fire and reintroduce the duplicate. All `old`
+strings were extracted byte-exact from disk by marker-pair script before declaring (zero
+refusals first dry-run). Purge: no derived plans existed (cache empty, trivially satisfied).
+Re-certified: `batch_build mathematics vi vii viii --certify-only` → **39/39 ALL PASS, 114
+files register-clean, zero ban hits**. Backups: `backup/c3_repair/20260820_1331*/`.
+
+---
+
+## 2026-08-19 — DENSE PROSE VISUAL AIDS IN SCIENCE·MIDDLE SYNTHESIS UNITS
 ## BECAME TYPED TABLES (founder direction, starting from vi ch 4's shipwreck cards)
 
 **What happened.** The founder flagged vi ch 4 "Exploring Magnets": the polished synthesis
