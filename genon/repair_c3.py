@@ -381,9 +381,16 @@ def pass_synthesis_points_at_its_table(result, ctx):
         title = tables[0]["title"]
         pointer = (f"Refer to Prepared Table (see material: '{title}') for the problems in "
                    f"full and their worked solutions. ")
+        # RECORD THE PREPEND AS A PREPEND (2026-08-20, F1 notes pass · ARV-D-256).
+        # The first record shape wrote truncated old/new pairs that read as a
+        # REPLACEMENT of the notes — and `repairs[]` is what corpus statistics use to
+        # separate generation quality from repair quality, so a record that overstates
+        # its edit corrupts that measurement. Nothing is removed by this pass: `old`
+        # is None, `new` carries exactly and only the text added, and `op` says how.
+        # The 46 pre-correction records across mathematics·middle were amended in
+        # place the same day (see the campaign register entry).
         edits.append({"unit": period["period_number"], "field": "teacher_notes",
-                      "old": notes[:60] + ("…" if len(notes) > 60 else ""),
-                      "new": pointer[:60] + "…"})
+                      "op": "prepend", "old": None, "new": pointer})
         period["teacher_notes"] = pointer + notes
     return edits
 
@@ -815,6 +822,72 @@ DECLARED = {
     # The two §7 method-availability items — vii ch 11 P3 (needs HCF × LCM = product)
     # and vii ch 14 P3's colouring method vs the shorter plan — are NOT repaired here:
     # they are content decisions in ARV-D-181's family, flagged for the founder.
+    #
+    # ── F1 · NOTES PASS (second pass, 2026-08-20) — docs/f1_maths_notes_pass_brief.md ──
+    # The audit that closed the first pass found `teacher_notes` the weakest layer:
+    # notes naming a method the problem does not use, or warning about an error the
+    # problem cannot produce — and the closing routine has the class NAME THE METHOD
+    # ALOUD from these notes. All 39 chapters were read against their own tables
+    # (two tests per note: method named = method used; warned error can arise).
+    # Solution-cell edits in this pass exist ONLY where an actual error was found and
+    # are reported as their own defects (brief §4). ARV-D-222…255.
+    "ch_01_canonical.json": {
+        # ARV-D-232 · P2 solution calls 36 "the 36th square" — it is the 6th.
+        "ARV-D-232": [
+            {"unit": 8, "field": 'visual_aids[0].table',
+             "old": 'The result is the 36th square — equivalently, the square of 6, because adding',
+             "new": 'The result is 36, the 6th square number — equivalently, the square of 6, because adding'},
+        ],
+    },
+    "ch_02_canonical.json": {
+        # ARV-D-233 · P3 names "protractor reading" for a computed 180° − 55° (no
+        # protractor, no scale anywhere); P4 warns about 22.5° — a value no route
+        # through 30 < m < 45 produces. Real hazard: the boundary values 30 and 45.
+        "ARV-D-233": [
+            {"unit": 20, "field": 'teacher_notes',
+             "old": 'Problem 3 uses protractor reading and the straight-angle property (180°); the common error is reading the wrong scale and failing to subtract.',
+             "new": 'Problem 3 uses the straight-angle property (180°); the common error is failing to subtract the given 55° from 180°.'},
+            {"unit": 20, "field": 'teacher_notes',
+             "old": 'watch for students who treat 22.5° as a valid whole-number answer.',
+             "new": 'watch for students who include the boundary values 30° and 45°, where one of the conditions becomes exactly 90° and fails.'},
+        ],
+    },
+    "ch_04_canonical.json": {
+        # ARV-D-235 · "reading each band aloud as it opens" is drafting language (the
+        # problems live in the Prepared Table, not in bands); the P4 example bar of
+        # "3 400 units" is the SUM of all six values — no bar is that tall; the
+        # tallest (Farhan) is 1 000.
+        "ARV-D-235": [
+            {"unit": 14, "field": 'teacher_notes',
+             "old": 'Pose all four problems at once by writing them on the board (or reading each band aloud as it opens).',
+             "new": 'Pose all four problems at once by writing them on the board from the Prepared Table.'},
+            {"unit": 14, "field": 'teacher_notes',
+             "old": 'students choosing a scale in P4 that produces unwieldy heights (e.g. 1 unit = 1 rupee gives a 3 400-unit bar) instead of one that fits the page.',
+             "new": 'students choosing a scale in P4 that produces unwieldy heights (e.g. 1 unit = 1 rupee gives a 1 000-unit bar for Farhan) instead of one that fits the page.'},
+        ],
+    },
+    "ch_05_canonical.json": {
+        # ARV-D-236 · P1 names "LCM reasoning" for a common-factor (HCF) method — a
+        # jump lands on both treasures iff it divides both; P2 says "when sieving" but
+        # the solution factorises 77, no sieve appears.
+        "ARV-D-236": [
+            {"unit": 25, "field": 'teacher_notes',
+             "old": 'Problem 1 — students listing multiples instead of using LCM reasoning from common factors;',
+             "new": 'Problem 1 — students testing jump sizes by listing multiples of each candidate instead of reasoning from common factors;'},
+            {"unit": 25, "field": 'teacher_notes',
+             "old": "Problem 2 — confusing 'prime' with 'odd' when sieving;",
+             "new": "Problem 2 — confusing 'prime' with 'odd' when checking the two factors of 77;"},
+        ],
+    },
+    "ch_10_canonical.json": {
+        # ARV-D-238 · P2's warned error runs the wrong way: the CORRECT answer is
+        # +145; the direction-reversal error gives −145, not the other way round.
+        "ARV-D-238": [
+            {"unit": 16, "field": 'teacher_notes',
+             "old": 'the most common error is reversing the direction, giving +145 instead of −145.',
+             "new": 'the most common error is reversing the direction, giving −145 instead of +145.'},
+        ],
+    },
     "ch_03_canonical.json": {
         # ARV-D-213 · drafting scratch (brief §6): "the number 4-digit number 3,5,2,1"
         # and "0468 = 0468, treated as 0468" — duplicated fragments, pure tightening.
@@ -825,6 +898,28 @@ DECLARED = {
             {"unit": 12, "field": 'visual_aids[0].table',
              "old": 'smallest = 0468 = 0468, treated as 0468 (pad to four digits)',
              "new": 'smallest = 0468 (pad to four digits)'},
+        ],
+        # ── notes pass ──
+        # ARV-D-222 · PRIORITY 1 of the notes brief: "the largest number is always a
+        # supercell" is FALSE (two adjacent copies of the maximum beat neither
+        # neighbour), and Problem 1 — 41, 78, 65, 78, 52 — plants exactly that
+        # near-case and asks about it. The clause is unused by the solution, which
+        # argues from the definition alone. Struck.
+        "ARV-D-222": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": '(a cell is a supercell only if it exceeds every adjacent neighbour; the largest number is always a supercell)',
+             "new": '(a cell is a supercell only if it exceeds every adjacent neighbour)'},
+        ],
+        # ARV-D-234 · known attribution defects: "reading each band aloud" is drafting
+        # language (the problems live in the Prepared Table); the P3 padding warning
+        # names an error that cannot change the answer (8640 − 468 = 8640 − 0468).
+        "ARV-D-234": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'Pose all four problems at once by reading each band aloud and writing the problems on the board.',
+             "new": 'Pose all four problems at once by writing them on the board from the Prepared Table.'},
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'in Problem 3, students who forget to pad a four-digit result with a leading zero before rearranging;',
+             "new": 'in Problem 3, students who start round 2 from the digits of the original number instead of the digits of the round-1 result;'},
         ],
     },
     "ch_06_canonical.json": {
@@ -841,6 +936,14 @@ DECLARED = {
              "old": 'The new shape is 10 cm × 4 cm — the same rectangle. Perimeter = 2 × (10 + 4) = 28 cm. Now the pieces are instead stacked along their 5 cm edges (one on top of the other along the 5 cm side), forming a 5 cm × 8 cm rectangle. Perimeter = 2 × (5 + 8) = 26 cm. The perimeter changes depending on which edges are joined: joining along the 4 cm edges gives 28 cm; joining along the 5 cm edges gives 26 cm.',
              "new": "Joining the two 5 cm × 4 cm pieces along their 5 cm edges forms a 5 cm × 8 cm rectangle. Perimeter = 2 × (5 + 8) = 26 cm. The original 10 cm × 4 cm rectangle has perimeter 2 × (10 + 4) = 28 cm, so the new shape's perimeter is 2 cm less: the cut exposed two 4 cm edges, but the join then hid two 5 cm edges."},
         ],
+        # ── notes pass ──
+        # ARV-D-237 · known: "flower bed" — Problem 2 is about FOUNTAINS. The error
+        # named (area of only one of the four) is right; the object was not.
+        "ARV-D-237": [
+            {"unit": 21, "field": 'teacher_notes',
+             "old": 'Problem 2, students finding area of only one flower bed rather than all four;',
+             "new": 'Problem 2, students finding the area of only one fountain rather than all four;'},
+        ],
     },
     "ch_09_canonical.json": {
         # ARV-D-202 · brief §5.7: "exactly 1 line of symmetry" does not follow from one
@@ -855,10 +958,92 @@ DECLARED = {
              "old": 'The vertical fold produces exact overlap, so the vertical line is a line of symmetry. The horizontal fold does not produce exact overlap, so the horizontal line is not a line of symmetry. The figure has exactly 1 line of symmetry and possesses reflection symmetry.',
              "new": 'The vertical fold produces exact overlap, so the vertical line is a line of symmetry. The horizontal fold does not, so the horizontal line is not one. The figure therefore has reflection symmetry, with the vertical line as one line of symmetry — but the two folds alone cannot fix the total, because a figure may have further lines in other directions: an equilateral triangle passes a vertical fold, fails the horizontal one, and has three lines of symmetry.'},
         ],
+        # ── notes pass ──
+        # ARV-D-223 · PRIORITY 2 of the notes brief: P4 used divisibility (necessary)
+        # as if it were sufficient — 360 ÷ 20 = 18 only fails to rule the figure out.
+        # The solution now exhibits the witness (an 18-armed radial figure, the
+        # closer's own idiom from P3) so the claim is established, and the note names
+        # the test TOGETHER WITH the witness.
+        "ARV-D-223": [
+            {"unit": 24, "field": 'visual_aids[0].table',
+             "old": 'Test: 360° ÷ 20° = 18, which is a whole number, so 20° is a valid smallest angle (it is a factor of 360). Yes, the claim is possible.',
+             "new": 'Test: 360° ÷ 20° = 18, a whole number, so 20° passes the factor-of-360 test — necessary, but not yet a proof that such a figure exists. Exhibit one: a radial figure with 18 equally spaced arms repeats after a 20° turn and after no smaller turn, so its smallest angle of symmetry is exactly 20°. Yes, the claim is possible.'},
+            {"unit": 24, "field": 'teacher_notes',
+             "old": 'Problem 4 needs the factor-of-360 test; students may accept 20° without checking, or reject it by miscounting.',
+             "new": 'Problem 4 needs the factor-of-360 test together with a witness figure; students may accept 20° from the test alone, or reject it by miscounting.'},
+        ],
     },
   },
   ("mathematics", "vii"): {
     # ── F1 · CLOSING-SYNTHESIS REPAIR WAVE (2026-08-20) — see the vi key's header. ─────
+    # ── F1 · NOTES PASS entries follow the same doctrine — see the vi key's header. ────
+    "ch_01_canonical.json": {
+        # ARV-D-225 · WRONG ANSWER found by the notes-pass audit (this chapter was not
+        # among the 8 previously audited): P4 claims the 7-digit × 2-digit product "is
+        # always 9 or 10 digits". Truth: 10,00,000 × 10 = 1,00,00,000 has EIGHT digits
+        # (the cell mis-wrote it as 10,00,00,000) and 98,99,99,901 has NINE — the
+        # answer is 8 or 9. The cell also carried "— wait, check:" drafting scratch.
+        "ARV-D-225": [
+            {"unit": 11, "field": 'visual_aids[0].table',
+             "old": 'Smallest product: fewest digits occur when both factors are as small as possible. Smallest 7-digit number = 10,00,000; smallest 2-digit number = 10. Product = 10,00,00,000, which is 9 digits. Largest product: largest 7-digit = 99,99,999; largest 2-digit = 99. Product = 99,99,999 × 99 < 1,00,00,000 × 100 = 1,00,00,00,000 (10 digits), and 99,99,999 × 99 = 98,99,99,901, which is 10 digits. So the product is always either 8 digits — wait, check: 10,00,000 × 10 = 10,00,00,000 is already 9 digits. Try the true minimum: 10,00,000 × 10 = 10,00,00,000 (9 digits). Can we get 8 digits? The product would need to be less than 10,00,00,000, meaning less than 10,00,000 × 10 — but 10,00,000 is the smallest 7-digit number and 10 is the smallest 2-digit number, so no product of a 7-digit and a 2-digit number can be less than 10,00,00,000. The product therefore has either 9 digits (e.g., 10,00,000 × 10 = 10,00,00,000) or 10 digits (e.g., 99,99,999 × 99 = 98,99,99,901). It is always 9 or 10 digits.',
+             "new": 'Smallest product: both factors as small as possible — smallest 7-digit number 10,00,000 × smallest 2-digit number 10 = 1,00,00,000, which has 8 digits. No 7-digit × 2-digit product can be smaller, so none has fewer than 8 digits. Largest product: 99,99,999 × 99 < 1,00,00,000 × 100 = 1,00,00,00,000 (a 10-digit number), so every product stays below 10 digits; and 99,99,999 × 99 = 98,99,99,901 does have 9 digits. The product therefore has either 8 digits (e.g., 10,00,000 × 10 = 1,00,00,000) or 9 digits (e.g., 99,99,999 × 99 = 98,99,99,901).'},
+        ],
+        # ARV-D-226 · P2's solution computed the exact sum (65,27,879) the stem forbids
+        # and kept an inconclusive ten-lakh-rounding trial (bounds 50–70 lakh settle
+        # nothing about 65 lakh). Only the valid rounded-down-lakh route remains.
+        "ARV-D-226": [
+            {"unit": 11, "field": 'visual_aids[0].table',
+             "old": 'For the sum: round each number down to the nearest ten lakh — 30,00,000 + 20,00,000 = 50,00,000; round each up — 40,00,000 + 30,00,000 = 70,00,000. Both addends are closer to 37,00,000 and 28,00,000; their sum 36,84,729 + 28,43,150 = 65,27,879, which exceeds 65,00,000. A sufficient justification without exact arithmetic: rounding both down to the nearest lakh gives 36,84,000 + 28,43,000 = 65,27,000 > 65,00,000, so the exact sum must also exceed 65,00,000.',
+             "new": 'For the sum: rounding both numbers down to the nearest lakh gives 36,84,000 + 28,43,000 = 65,27,000, which already exceeds 65,00,000 — and the true sum can only be larger than this rounded-down sum. So 36,84,729 + 28,43,150 is more than 65,00,000, with no exact addition needed.'},
+        ],
+        # ARV-D-239 · the P2 note branded the solution's own valid move (same-direction
+        # rounding to trap the sum) as the error; the P4 note now matches the corrected
+        # 8-or-9 answer.
+        "ARV-D-239": [
+            {"unit": 11, "field": 'teacher_notes',
+             "old": 'Problem 2 — rounding to the wrong place, or rounding both numbers in the same direction when checking whether the sum crosses a boundary;',
+             "new": 'Problem 2 — rounding to the wrong place, or rounding to the nearest and treating the rounded sum as conclusive, instead of rounding both numbers down (or both up) so the true sum is trapped on one side of the boundary;'},
+            {"unit": 11, "field": 'teacher_notes',
+             "old": 'Problem 4 — treating the 7-digit × 2-digit product as definitely 8-digit without checking the boundary case (smallest 7-digit × smallest 2-digit vs. largest 7-digit × largest 2-digit).',
+             "new": 'Problem 4 — assuming every 7-digit × 2-digit product has the same digit-count without checking both boundary cases (smallest 7-digit × smallest 2-digit vs. largest 7-digit × largest 2-digit).'},
+        ],
+    },
+    "ch_04_canonical.json": {
+        # ARV-D-241 · the P2 warning's numbers ("10 − (−3) as 7 instead of 13")
+        # describe an expression that is not this problem's (10 − 3k at k = −3 gives
+        # 19); the P4 method claim "using remainder" — 5n + 1 = 96 solves exactly.
+        "ARV-D-241": [
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'in Problem 2, students who compute 10 − (−3) as 7 instead of 13;',
+             "new": 'in Problem 2, students who compute 10 − 3(−3) as 10 − 9 = 1 instead of 10 + 9 = 19;'},
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'Problem 4 needs deriving a general formula from a growing pattern and using remainder to identify a specific term (section 4.5).',
+             "new": 'Problem 4 needs deriving a general formula from a growing pattern and inverting it to identify a specific term (section 4.5).'},
+        ],
+    },
+    "ch_05_canonical.json": {
+        # ARV-D-242 · "reading each board-row aloud" is the same drafting-language
+        # family as vi ch 3's "band"; the P3 method line named alternate-angles for a
+        # solution whose primary line is the co-interior supplementary property.
+        "ARV-D-242": [
+            {"unit": 15, "field": 'teacher_notes',
+             "old": 'Pose all four problems at once by reading each board-row aloud.',
+             "new": 'Pose all four problems at once by writing them on the board from the Prepared Table.'},
+            {"unit": 15, "field": 'teacher_notes',
+             "old": 'Problem 3 needs the alternate-angles result together with the linear-pair sum — the most common slip is treating co-interior angles as equal rather than supplementary.',
+             "new": 'Problem 3 needs the co-interior (same-side interior) supplementary property — the alternate-angles result combined with the linear-pair sum — and the most common slip is treating co-interior angles as equal rather than supplementary.'},
+        ],
+    },
+    "ch_15_canonical.json": {
+        # ARV-D-227 · P4's diagnosis branded the student's CORRECT move (−9 crossing
+        # as +9) as part of the mistake, in a sentence that then contradicted itself
+        # ("not kept as −9 or mixed wrongly"). The one real error was +2y for −2y.
+        "ARV-D-227": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Mistake: when 2y was moved from the right to the left it should have become −2y, not +2y; and 9 moved from the left to the right should have become +9, not kept as −9 or mixed wrongly.',
+             "new": 'Mistake: when 2y crossed from the right side to the left it should have become −2y, not +2y — the student added it instead of subtracting. (Moving −9 to the right as +9 was correct.)'},
+        ],
+    },
     "ch_03_canonical.json": {
         # ARV-D-204 · brief §5.9 + §6: 36.089 placed among "those with tenths digit 8"
         # (its tenths digit is 0), the ordering step 36.08 < 36.089 never given, "36.08_"
@@ -871,6 +1056,18 @@ DECLARED = {
             {"unit": 9, "field": 'visual_aids[0].table',
              "old": 'Compare left to right. All have 36 as the whole-number part. Tenths: 36.08_ has 0 (smallest), the others have 8. Among those with tenths digit 8: hundredths of 36.8 = 36.80 = 0 (trailing zero), 36.089 has 0, 36.80 has 0 — look further: 36.089 has thousandths digit 9 > 0. So 36.80 = 36.8 (trailing zero does not change value). Order: 36.08 < 36.089 < 36.8 = 36.80. The two equal readings are 36.8 and 36.80.',
              "new": 'Compare left to right. All have 36 as the whole-number part. Tenths: 36.08 and 36.089 have tenths digit 0; 36.8 and 36.80 have tenths digit 8, so both of the first pair are smaller. Between 36.08 and 36.089: they agree up to the hundredths digit, and 36.089 carries a thousandths digit 9 against 0, so 36.08 < 36.089. Finally 36.80 = 36.8 — a trailing zero does not change the value. Order: 36.08 < 36.089 < 36.8 = 36.80. The two equal readings are 36.8 and 36.80.'},
+        ],
+        # ── notes pass ──
+        # ARV-D-240 · known: the P1 note flagged the solution's own method as the
+        # error (the solution multiplies by 0.1 / 0.01); the P3 method line named a
+        # number line that appears nowhere.
+        "ARV-D-240": [
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'in Problem 1, students multiplying instead of dividing when converting mm to m;',
+             "new": 'in Problem 1, students moving the decimal point the wrong way — making the number larger — when converting mm to cm and m;'},
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'Problem 3 calls on left-to-right digit comparison to locate a decimal on the number line (section 3.6).',
+             "new": 'Problem 3 calls on left-to-right place-value comparison to order decimals (section 3.6).'},
         ],
     },
     "ch_07_canonical.json": {
@@ -892,6 +1089,15 @@ DECLARED = {
              "old": 'Since 4/7 < 1, the product is also less than 1.',
              "new": 'The product is less than 1 because the product of the numerators, 8 × 4 = 32, is less than the product of the denominators, 5 × 7 = 35.'},
         ],
+        # ── notes pass ──
+        # ARV-D-243 · the P3 warning "adding fractions before multiplying (the chain
+        # must be multiplied in order)" names an error this problem cannot produce —
+        # nothing in it invites addition, and there is no chain.
+        "ARV-D-243": [
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'Problem 3 — students adding fractions before multiplying (the chain must be multiplied in order);',
+             "new": 'Problem 3 — students stopping at 3/5 × 2/3 of the plot without ever multiplying by the side 7/4 km, so no area in sq km is produced;'},
+        ],
     },
     "ch_09_canonical.json": {
         # ARV-D-206 · brief §5.11: with P↔S, Q↔T, R↔U, reordering the first triangle as
@@ -908,6 +1114,27 @@ DECLARED = {
             {"unit": 15, "field": 'teacher_notes',
              "old": 'give students 18 minutes of silent individual work before any comparison',
              "new": 'give students a sustained stretch of silent individual work before any comparison'},
+        ],
+        # ── notes pass ──
+        # ARV-D-224 · PRIORITY 3 of the notes brief: P4's stem opened "In the figure…"
+        # — no figure exists anywhere in the unit and this stage may not carry one.
+        # The two right angles put A, M, B on the perpendicular at M, so the
+        # configuration is fully determined in words; the muddled "included angle
+        # between the known angle and the equal side" sentence is restated cleanly.
+        "ARV-D-224": [
+            {"unit": 15, "field": 'visual_aids[0].table',
+             "old": 'In the figure, M is the midpoint of segment PQ. ∠PMA = ∠QMB = 90° and ∠APM = ∠BQM = 55°.',
+             "new": 'M is the midpoint of a segment PQ. A line through M perpendicular to PQ is drawn; point A lies on it on one side of PQ and point B on the other side. This makes ∠PMA = ∠QMB = 90°, and additionally ∠APM = ∠BQM = 55°.'},
+            {"unit": 15, "field": 'visual_aids[0].table',
+             "old": '∠PMA = ∠QMB = 90° (given), so the included angle between the known angle and the equal side is 90° in both triangles. The two angles 55° and 90° are known in each triangle, with the side PM = QM between ∠APM and ∠PMA (and BQM, QMB respectively), so by ASA, △APM ≅ △BQM.',
+             "new": '∠PMA = ∠QMB = 90° because A, M, and B lie on the perpendicular to PQ at M. In each triangle two angles and the side between them are now known: in △APM the side PM lies between the 55° angle at P and the 90° angle at M, and in △BQM the side QM lies between the 55° angle at Q and the 90° angle at M. With PM = QM, by ASA, △APM ≅ △BQM.'},
+        ],
+        # ARV-D-244 · known: "proved via RHS congruence" — P3 CITES the base-angle
+        # result; it proves nothing via RHS.
+        "ARV-D-244": [
+            {"unit": 15, "field": 'teacher_notes',
+             "old": 'Problem 3 uses the isosceles base-angle result proved via RHS congruence;',
+             "new": 'Problem 3 uses the isosceles base-angle result (equal sides give equal opposite angles) together with the angle-sum property;'},
         ],
     },
     "ch_10_canonical.json": {
@@ -931,6 +1158,14 @@ DECLARED = {
              "old": 'Unlike-sign rule reversed: negative ÷ negative = positive.',
              "new": 'Like signs give a positive quotient: negative ÷ negative = positive.'},
         ],
+        # ── notes pass ──
+        # ARV-D-245 · the P3 warning distinguishes wrong from BLANK answers — the stem
+        # says all 20 are attempted, so blanks cannot arise.
+        "ARV-D-245": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'forgetting to count only wrong answers (not blank) in Problem 3;',
+             "new": 'forming the score as 3c − 2c instead of 3c − 2(20 − c) in Problem 3;'},
+        ],
     },
     "ch_12_canonical.json": {
         # ARV-D-207 · brief §5.12: the remainder is 4 tenths regrouped to 40 HUNDREDTHS
@@ -941,6 +1176,14 @@ DECLARED = {
             {"unit": 12, "field": 'visual_aids[0].table',
              "old": 'Divide 46.8 by 8 using long division. 46 ÷ 8 = 5 remainder 6. Bring down 8: 68 ÷ 8 = 8 remainder 4. Place decimal point. Regroup: 40 tenths ÷ 8 = 5 tenths. So 46.8 ÷ 8 = 5.85 litres each.',
              "new": 'Divide 46.8 by 8 using long division. Units: 46 ÷ 8 = 5, remainder 6. Place the decimal point in the quotient now, before the tenths digit is written. Bring down the 8: 68 tenths ÷ 8 = 8 tenths, remainder 4 tenths. Regroup: 4 tenths = 40 hundredths, and 40 hundredths ÷ 8 = 5 hundredths. So 46.8 ÷ 8 = 5.85 litres each.'},
+        ],
+        # ── notes pass ──
+        # ARV-D-246 · known: "division by a power of ten" attributed to P2, whose
+        # divisor is 8; powers of ten belong to P3, separately and correctly credited.
+        "ARV-D-246": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'Problem 2 — students moving the decimal point the wrong way or losing track of which way division by a power of ten shifts the point (division by powers of ten, then long division with a decimal dividend);',
+             "new": 'Problem 2 — students misplacing the decimal point in the quotient, or regrouping the leftover tenths into tenths instead of hundredths (long division with a decimal dividend);'},
         ],
     },
     "ch_14_canonical.json": {
@@ -980,6 +1223,15 @@ DECLARED = {
             {"unit": 17, "field": 'teacher_notes',
              "old": 'give the class twelve minutes of individual silent work with full working in their notebooks. Then allow five minutes in pairs or threes:',
              "new": 'give the class a first stretch of individual silent work with full working in their notebooks. Then allow a shorter stretch in pairs or threes:'},
+        ],
+        # ── notes pass ──
+        # ARV-D-247 · the P2 note reads as false as written — one bisection of 45°
+        # DOES give 22.5°; the intended warning is about reaching 22.5° from 90° in a
+        # single step.
+        "ARV-D-247": [
+            {"unit": 17, "field": 'teacher_notes',
+             "old": 'watch for students who assume a 22.5° angle can be produced in one bisection step.',
+             "new": 'watch for students who try to reach 22.5° from the 90° angle in a single bisection.'},
         ],
     },
   },
@@ -1029,6 +1281,87 @@ DECLARED = {
   },
   ("mathematics", "viii"): {
     # ── F1 · CLOSING-SYNTHESIS REPAIR WAVE (2026-08-20) — see the vi key's header. ─────
+    # ── F1 · NOTES PASS entries follow the same doctrine — see the vi key's header. ────
+    "ch_01_canonical.json": {
+        # ARV-D-248 · stated minute-quantities in the notes (register), and a P3
+        # warning describing an impossible action — with exponents 2, 2, 2 no
+        # "correct prime-factor triplets" can be formed.
+        "ARV-D-248": [
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'give students 18 minutes of silent individual working. Then 8 minutes in groups of three:',
+             "new": 'give students a sustained stretch of silent individual working. Then a shorter stretch in groups of three:'},
+            {"unit": 9, "field": 'teacher_notes',
+             "old": 'in Problem 3, students who form correct prime-factor triplets for the cube but forget to re-check the square condition;',
+             "new": 'in Problem 3, students who see even exponents and conclude 1764 is a perfect cube as well, without checking that every exponent is a multiple of 3;'},
+        ],
+    },
+    "ch_02_canonical.json": {
+        # ARV-D-249 · stated minute-quantities in the notes (register).
+        "ARV-D-249": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'give students 18 minutes to work individually with full written working. Then 8 minutes in groups of three:',
+             "new": 'give students a sustained stretch of individual work with full written working. Then a shorter stretch in groups of three:'},
+        ],
+    },
+    "ch_03_canonical.json": {
+        # ARV-D-231 · P4's stem describes cuneiform digit groups no scribe could
+        # write — "2×10+15" (15 unit-wedges) and "1×10+10" (10 unit-wedges) — in a
+        # system whose units run 1–9 within a digit. Values unchanged (35 and 20).
+        "ARV-D-231": [
+            {"unit": 6, "field": 'visual_aids[0].table',
+             "old": 'the left group shows 2×10+15 = 35, and the right group shows 1×10+10 = 20.',
+             "new": 'the left group shows 3×10+5 = 35, and the right group shows 2×10 = 20.'},
+        ],
+    },
+    "ch_04_canonical.json": {
+        # ARV-D-250 · the P1 note tells the teacher to watch for a co-interior-angles
+        # slip in a GENERAL quadrilateral — no parallel sides are given, so no
+        # co-interior relationship exists to use or misuse.
+        "ARV-D-250": [
+            {"unit": 15, "field": 'teacher_notes',
+             "old": 'watch for students who stop after finding one unknown angle and forget to use co-interior angles for the second.',
+             "new": 'watch for students who find x but stop before converting it into the actual sizes of ∠Q and ∠S.'},
+        ],
+    },
+    "ch_09_canonical.json": {
+        # ARV-D-253 · garbled P3 warning ("scaling a non-triple and mistakenly
+        # concluding it is primitive") replaced by the slip this problem can produce.
+        "ARV-D-253": [
+            {"unit": 14, "field": 'teacher_notes',
+             "old": 'Problem 3 — scaling a non-triple and mistakenly concluding it is primitive;',
+             "new": 'Problem 3 — declaring the triple a scaled one because an entry is even, without computing the GCD of all three numbers;'},
+        ],
+    },
+    "ch_13_canonical.json": {
+        # ARV-D-228 · "= 23 − 0" drafting residue in P2's algebra. ARV-D-229 · "the
+        # only rival grouping" — 84 × 6 is the strongest rival, not the only one
+        # (86 × 4, 68 × 4, 48 × 6, 46 × 8 also exist). ARV-D-255 · stated
+        # minute-quantity in the notes (register).
+        "ARV-D-228": [
+            {"unit": 6, "field": 'visual_aids[0].table',
+             "old": 'So 5 + 2k + 3 = 23, giving 2k + 8 = 23 − 0, i.e. 2k = 23 − 8 = 15, so k = 7.5.',
+             "new": 'So 5 + 2k + 3 = 23, giving 2k + 8 = 23, i.e. 2k = 15, so k = 7.5.'},
+        ],
+        "ARV-D-229": [
+            {"unit": 6, "field": 'visual_aids[0].table',
+             "old": 'Checking the only rival grouping: 84 × 6 = 504 < 512.',
+             "new": 'Checking the strongest rival: 84 × 6 = 504 < 512.'},
+        ],
+        "ARV-D-255": [
+            {"unit": 6, "field": 'teacher_notes',
+             "old": 'give students 20 minutes of individual silent working before any discussion.',
+             "new": 'give students a sustained stretch of individual silent working before any discussion.'},
+        ],
+    },
+    "ch_14_canonical.json": {
+        # ARV-D-230 · "A second altitude from P to QR" — the altitude from P to QR is
+        # unique; "second" is drafting residue.
+        "ARV-D-230": [
+            {"unit": 14, "field": 'visual_aids[0].table',
+             "old": 'A second altitude from P to QR has foot X on QR.',
+             "new": 'The altitude from P to QR has foot X on QR.'},
+        ],
+    },
     "ch_05_canonical.json": {
         # ARV-D-197 · brief §5.2, WRONG ANSWER: "No solution exists for AB × 7 = CBA" is
         # false — 97 × 7 = 679. The enumeration excluded B = 7 as "repeated digit", but
@@ -1073,6 +1406,21 @@ DECLARED = {
              "old": 'Using the Rule of Three: 15 litres : 40 minutes :: 24 litres : ? minutes. Cross multiply: 15 × ? = 24 × 40, so ? = 960 ÷ 15 = 64 — but this applies only if more litres per minute means more time, which it does not. The direct proportion here is between litres per minute and the number of minutes to fill: more rate, fewer minutes, so the proportion is inverse. Correct route: time = total volume ÷ rate = 600 ÷ 24 = 25 minutes.',
              "new": 'The rate and the time are in inverse proportion — more litres per minute means fewer minutes — so the Rule of Three runs through the fixed volume: 24 × ? = 15 × 40 = 600, giving ? = 600 ÷ 24 = 25 minutes.'},
         ],
+        # ── notes pass ──
+        # ARV-D-251 · P3 names the two-part formula m·x/(m+n) for a THREE-part share;
+        # P4 claims "a unit conversion" and warns about HECTARES — no conversion
+        # happens and hectares appear nowhere; the pre-proportion step is the area.
+        "ARV-D-251": [
+            {"unit": 17, "field": 'teacher_notes',
+             "old": 'Problem 3 needs the sharing formula (m·x/(m+n)).',
+             "new": 'Problem 3 needs the sharing formula (each share = its ratio part ÷ the sum of parts × the total).'},
+            {"unit": 17, "field": 'teacher_notes',
+             "old": 'Problem 4 needs a proportion set up after a unit conversion.',
+             "new": 'Problem 4 needs a proportion set up after computing the area.'},
+            {"unit": 17, "field": 'teacher_notes',
+             "old": 'students in Problem 4 who skip the conversion step and proportion straight from hectares to square metres.',
+             "new": 'students in Problem 4 who proportion from a side length instead of the area.'},
+        ],
     },
     "ch_08_canonical.json": {
         # ARV-D-198 · brief §5.3: the stem's "compared with the start of the first year"
@@ -1084,6 +1432,14 @@ DECLARED = {
              "old": 'fell by 15% in the second year compared with the start of the first year.',
              "new": 'fell by 15% in the second year.'},
         ],
+        # ── notes pass ──
+        # ARV-D-252 · the P2 warning names "the reduced one" — nothing is reduced at
+        # the point the 20% applies; the discount is computed on the MARKED price.
+        "ARV-D-252": [
+            {"unit": 14, "field": 'teacher_notes',
+             "old": 'Problem 2 — computing the second percentage on the original price instead of the reduced one (the multiplier chain corrects this);',
+             "new": 'Problem 2 — computing the discount on the cost price instead of the marked price (the multiplier chain 1.25 × 0.80 corrects this);'},
+        ],
     },
     "ch_10_canonical.json": {
         # ARV-D-210 · brief §5.15: "every problem … was solved by the same idea: … a
@@ -1093,6 +1449,15 @@ DECLARED = {
             {"unit": 12, "field": 'time_bands[4].activity',
              "old": 'was solved by the same idea: when two quantities share a fixed ratio, knowing one tells you the other. That single idea, used carefully, is all the chapter needed.',
              "new": 'was solved by naming how its two quantities are tied: in direct proportion the ratio stays fixed, in inverse proportion the product does. Once the tie is named, knowing one quantity tells you the other — and that habit, used carefully, is all the chapter needed.'},
+        ],
+        # ── notes pass ──
+        # ARV-D-254 · known: P1 has exactly ONE pair of ratios, so "check only one
+        # pair and stop" describes the complete method, not an error. The real rival
+        # is additive comparison.
+        "ARV-D-254": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'watch for students who check only one pair of ratios and stop.',
+             "new": 'watch for students who compare the mixtures by subtracting (9 − 3 against 24 − 8) instead of testing the ratios.'},
         ],
     },
     "ch_11_canonical.json": {

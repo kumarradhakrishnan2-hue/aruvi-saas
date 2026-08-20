@@ -1,0 +1,2206 @@
+{
+ "filename": "ch_02_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 2,
+ "chapter_title": "Lines and Angles",
+ "grade": "Grade VI",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 20
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 20 periods = 800 minutes\nTotal: 20 periods · 13h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "20x40",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics vi 2",
+  "ledger_ts": "20260818_205348_math_vi_02_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_vi_02_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_02_canonical_p16.json": "2026-08-19T13:38:19",
+    "ch_02_canonical_p12.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_vi_ch02_20260820_115152_math_vi_02_resynth.json"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:16",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 20,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "at": "2026-08-20T11:18:23",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 20,
+      "field": "teacher_notes",
+      "rule": "register/clock",
+      "removed": "for the first fifteen minutes",
+      "replaced_with": "",
+      "note": "clock quantity struck; the band carrying this work already declares its own minutes and the platform rescales them | survives: …Students work individually — full working on paper, no sharing yet. Then groups of three com …"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:51:28",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 20,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T14:03:16",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-233": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "U20",
+        "field": "teacher_notes",
+        "old": "Problem 3 uses protractor reading and the straight-angle property (180°); the common error is reading the wrong scale and failing to subtract.",
+        "new": "Problem 3 uses the straight-angle property (180°); the common error is failing to subtract the given 55° from 180°."
+       },
+       {
+        "where": "U20",
+        "field": "teacher_notes",
+        "old": "watch for students who treat 22.5° as a valid whole-number answer.",
+        "new": "watch for students who include the boundary values 30° and 45°, where one of the conditions becomes exactly 90° and fails."
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.1",
+       "title": "Point"
+      },
+      {
+       "ref": "section 2.2",
+       "title": "Line Segment"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Pinpoints and Paths: Locating the Tiniest Idea in Geometry",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q2, section 2.4 p.16",
+       "description": "Name the line segments in Fig. 2.4 (points L, M, P, Q, R); identify which of the five marked points lie on exactly one segment and which lie on two segments."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Students press a sharpened pencil tip onto paper and observe the dot produced. The class collects observations: does the dot have length? width? They name individual dots using capital letters A, B, C and articulate that a point marks an exact location with no dimension."
+      },
+      {
+       "minutes": "8–20",
+       "activity": "Students fold a sheet of paper so two pencil-marked points meet. Unfolding reveals a crease. The class discusses: why is the crease the shortest path between the two points? They label endpoints and write the segment as AB and BA, noting both names refer to the same segment."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Figure it Out Q2, section 2.4 p.16 (\"Name the line segments in Fig. 2.4 (points L, M, P, Q, R)....\") — students work in pairs to list every segment visible in the figure, then decide which marked points lie on exactly one segment and which on two."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Pairs share their segment lists with the class. The teacher gathers responses on the board, resolving disagreements by returning to the definition: a segment needs two distinct endpoints. Students verify that AB and BA are the same segment by checking both endpoints are identical."
+      }
+     ],
+     "teacher_notes": "Having students produce the crease by folding concretely grounds the idea that a line segment is the shortest connection between two points — more memorable than a stated definition. Watch for students who write segment names with three or more letters, as if naming a ray; redirect them to the two-endpoint rule. Figure it Out Q5 (p.16) makes a good self-study complement for students who want to extend their work with segment naming.",
+     "materials": [
+      "Plain sheets of paper",
+      "Sharpened pencils",
+      "Textbook open to section 2.4 p.16"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.3",
+       "title": "Line"
+      },
+      {
+       "ref": "section 2.4",
+       "title": "Ray"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Extending Forever: Lines, Rays, and Their Names",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q3, section 2.4 p.16",
+       "description": "Name the rays shown in Fig. 2.5 (T, A, N, B) and determine whether T is the starting point of each ray."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q6, section 2.4 p.17",
+       "description": "Ray OA starts at O and passes through A and B. (a) Can it also be named OB? Why? (b) Can OA be written as AO? Why or why not?"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students draw a line segment on paper, then imagine extending both ends further and further. The teacher asks: where does it end? Students articulate that a line goes on without stopping in either direction. They denote the same line two ways — using two points or a lowercase letter — and state that any two distinct points fix exactly one line."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students now imagine a torch beam: it starts at the torch and travels outward. The class identifies the starting point (initial point) and the endless direction, naming this object a ray. Using the torch model, students write ray notation for several examples and discuss how a ray differs from a segment and from a full line."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Figure it Out Q3, section 2.4 p.16 (\"Name the rays shown in Fig. 2.5 (T, A, N, B)....\") — students name each ray and argue whether T is the starting point of every ray shown. Then Figure it Out Q6, section 2.4 p.17 (\"Ray OA starts at O and passes through A and B....\") — students debate whether OA can be renamed OB and why AO would be incorrect."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Class discussion consolidates three contrasts: segment (two fixed endpoints), ray (one fixed start, endless in one direction), line (no fixed endpoints, endless both ways). Students volunteer one real-life example of each and the class evaluates each suggestion against the definitions."
+      }
+     ],
+     "teacher_notes": "A common error is naming a ray by the endpoint that is further from the starting point first — e.g., writing BA when O is the starting point and A is another point on it. Emphasise that the starting point always comes first in the ray's name. Having established the two-endpoint nature of a segment in the previous unit, this unit extends that understanding naturally toward the infinite. Figure it Out Q4 (p.16) is a useful self-study exercise for students who want practice drawing and labelling these three objects.",
+     "materials": [
+      "Plain sheets of paper",
+      "Pencils",
+      "Torch or lamp (for ray demonstration)",
+      "Textbook open to section 2.4 p.16–17"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.4",
+       "title": "Ray"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Reading Ray Figures and Building Geometric Vocabulary",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q1, section 2.4 p.15",
+       "description": "Help Rihan (how many lines through one point?) and Sheetal (how many lines through two points?) find their answers."
+      },
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q4, section 2.4 p.16",
+       "description": "Draw rough figures and label appropriately for four geometric statements: (a) OP and OQ meet at O; (b) XY and PQ intersect at M; (c) line l contains E and F but not D; (d) point P lies on AB."
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out Q5, section 2.4 p.16",
+       "description": "From Fig. 2.6 name: (a) five points; (b) a line; (c) four rays; (d) five line segments."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Figure it Out Q1, section 2.4 p.15 (\"Help Rihan (how many lines through one point?) and Sheetal (how many lines through two points?)....\") — students draw as many lines as they can through a single point, then attempt to draw two lines through two fixed points and discover that the second line through both is impossible. They articulate the uniqueness property of a line through two points."
+      },
+      {
+       "minutes": "12–26",
+       "activity": "Figure it Out Q4, section 2.4 p.16 (\"Draw rough figures and label appropriately for four geometric statements....\") — students individually sketch all four cases, labelling each with the correct notation for points, lines, rays, and segments, then compare their sketches with a neighbour and reconcile differences."
+      },
+      {
+       "minutes": "26–38",
+       "activity": "Figure it Out Q5, section 2.4 p.16 (\"From Fig. 2.6 name: (a) five points; (b) a line; (c) four rays; (d) five line segments....\") — students work through each sub-part in writing, naming objects using correct notation. The teacher circulates and prompts students who conflate rays with segments to re-examine the figure's arrows."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "A quick verbal round: the teacher points to different parts of the board diagram and students respond with the correct object name and notation. Misconceptions surfaced are noted for follow-up."
+      }
+     ],
+     "teacher_notes": "Having defined lines, rays, and segments, students now practise reading and writing the notations fluently — the core challenge at this stage is not the concept but its symbolic representation. Watch for students who omit the arrowhead convention when writing ray names or who treat a segment as a ray because it has one visually prominent endpoint. The self-study pointer Figure it Out Q6 (p.17) deepens the ray-naming logic for interested students.",
+     "materials": [
+      "Pencils",
+      "Plain sheets of paper",
+      "Textbook open to section 2.4 p.15–17"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.5",
+       "title": "Angle"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Two Arms, One Vertex: Discovering What an Angle Is",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q1, section 2.5 p.19",
+       "description": "Find angles in given pictures (bicycle, tiled pattern, ladder, bridge truss); draw the rays forming one angle and name its vertex."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q2, section 2.5 p.20",
+       "description": "Draw and label an angle with arms ST and SR."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students open and close a pair of scissors slowly. The class observes: two blades share a pivot. The teacher names the pivot the vertex and each blade an arm, introducing the idea that an angle is formed by two rays sharing a common starting point. Real-life objects — spectacles hinge, compass, door — are briefly referenced to widen the image."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "The teacher models angle naming: vertex in the middle letter, one arm's point first, one last, e.g. ∠DBE. Students practise by naming angles from three or four simple diagrams drawn on the board, ensuring the vertex letter always occupies the middle position."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Figure it Out Q1, section 2.5 p.19 (\"Find angles in given pictures (bicycle, tiled pattern, ladder, bridge truss)....\") — students identify at least one angle in each picture, draw the two rays, mark the vertex, and write the angle name. Then Figure it Out Q2, section 2.5 p.20 (\"Draw and label an angle with arms ST and SR....\") — students draw the angle and confirm correct labelling."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Students share one angle they found in the real-life pictures and explain their choice of vertex and arm labels. The teacher consolidates: the angle is the amount of rotation from one arm to the other, not the length of the arms."
+      }
+     ],
+     "teacher_notes": "The most persistent early error is naming an angle by the vertex letter alone (e.g., ∠B instead of ∠ABD) when more than one angle is formed at that vertex — Exercise Q3 (p.20) in the book directly addresses this and is a valuable self-study pointer. Having built the ray concept in earlier units, this unit uses rays as the building blocks of angles, making the definition concrete rather than abstract.",
+     "materials": [
+      "Scissors (one pair to demonstrate)",
+      "Textbook open to section 2.5 p.19–20",
+      "Pencils",
+      "Plain sheets of paper"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.5",
+       "title": "Angle"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Naming Every Angle in a Cluster of Rays",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q3, section 2.5 p.20",
+       "description": "Explain why ∠APB (where three rays from P are shown) cannot be labelled as ∠P."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q4, section 2.5 p.20",
+       "description": "Name the angles marked in the given figure (rays from T through P, R, Q)."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q5, section 2.5 p.20",
+       "description": "Mark three non-collinear points A, B, C; draw all lines through pairs; count and name the lines; name and mark all angles using A, B, C."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out Q6, section 2.5 p.21",
+       "description": "Mark four points A, B, C, D with no three collinear; draw all lines through pairs; count and name the lines; name and mark all angles using A, B, C, D."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Figure it Out Q3, section 2.5 p.20 (\"Explain why ∠APB (where three rays from P are shown) cannot be labelled as ∠P....\") — students examine the figure independently and construct their own explanation before the class pools reasons. The discussion settles on: ∠P is ambiguous when multiple rays share vertex P."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Figure it Out Q4, section 2.5 p.20 (\"Name the angles marked in the given figure (rays from T through P, R, Q)....\") — students list every angle visible at vertex T and write each using the three-letter notation. They count the angles and verify no name is repeated."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Figure it Out Q5, section 2.5 p.20 (\"Mark three non-collinear points A, B, C; draw all lines through pairs....\") — students draw the figure, count the lines (3), and name every angle formed at each vertex. They discover that each intersection creates multiple named angles and record all of them systematically."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Figure it Out Q6, section 2.5 p.21 (\"Mark four points A, B, C, D with no three collinear....\") — students attempt this extended version, noting how the number of lines and angles grows. The teacher poses the pattern question: if three points give three lines, how many lines do four points give?"
+      }
+     ],
+     "teacher_notes": "Students at this stage often overlook angles formed between non-adjacent rays in a cluster; encourage a systematic listing strategy (pair each arm with every other arm) to prevent omissions. Having established in this unit the three-letter naming rule and its rationale, this unit deepens fluency with multi-angle figures. The pattern of lines formed by n points with no three collinear can be left as an open curiosity rather than a formula to memorise.",
+     "materials": [
+      "Pencils",
+      "Rulers",
+      "Plain sheets of paper",
+      "Textbook open to section 2.5 p.20–21"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.6",
+       "title": "Comparing Angles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Which Angle is Bigger? Superimposition and the Transparent Circle",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 2.6",
+       "book_ref": "Figure it Out Q1, section 2.6 p.23",
+       "description": "Fold a rectangular sheet to create angles; name and compare angles formed between the fold and the sides; make different angles by varied folding and identify the largest and smallest."
+      },
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 2.6",
+       "book_ref": "Figure it Out Q2, section 2.6 p.23",
+       "description": "Determine which angle is greater in each case using the given figure (rays A, X, Y from O with B and C on base): (a) ∠AOB or ∠XOY; (b) ∠AOB or ∠XOB; (c) ∠XOB or ∠XOC. Discuss reasoning with friends."
+      },
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 2.6",
+       "book_ref": "Figure it Out Q3, section 2.6 p.23",
+       "description": "Which angle is greater: ∠XOY or ∠AOB (Fig. where arms of both angles are drawn from O)? Give reasons."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Figure it Out Q1, section 2.6 p.23 (\"Fold a rectangular sheet to create angles; name and compare angles....\") — students fold a rectangular sheet at various positions, label the angles formed, and physically overlap two folded sheets vertex-on-vertex to compare which arm extends beyond the other. They articulate that the angle whose arm sticks out further is larger."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "The teacher introduces the transparent-circle method: trace a circle on tracing paper, mark one angle's arc, then place it over the second angle to compare arc intercepts without direct overlap. Students test this on their own drawn angles and discuss: why does arm length not affect the result of either comparison method?"
+      },
+      {
+       "minutes": "24–35",
+       "activity": "Figure it Out Q2, section 2.6 p.23 (\"Determine which angle is greater in each case....\") — students work through all three sub-parts, justifying each answer by reference to the superimposition idea. Then Figure it Out Q3, section 2.6 p.23 (\"Which angle is greater: ∠XOY or ∠AOB?....\") — students articulate a reason using the shared vertex in the diagram."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Class debrief: students explain in their own words why two angles can be declared equal only when vertex and both arms coincide on superimposition. The teacher records the equality condition as a class statement on the board."
+      }
+     ],
+     "teacher_notes": "The key reasoning move here — that angle size is the amount of rotation, not the arm length — is one students frequently resist; the transparent-circle method is the most convincing counter-demonstration because it separates arm length from rotation. Watch for students who judge the larger angle by which has the longer drawn arms rather than which arm extends beyond the other's arm on superimposition. Figure it Out Q3 (p.23) is a particularly rich item for class discussion because the arm lengths are deliberately misleading.",
+     "materials": [
+      "Rectangular sheets of paper",
+      "Tracing paper",
+      "Pencils",
+      "Textbook open to section 2.6 p.23"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.7",
+       "title": "Making Rotating Arms"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Build, Order, and Challenge: Rotating Arms in Action",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 2.7",
+       "book_ref": "Activity 1, p.25",
+       "description": "Students make 'rotating arms' using two paper straws inserted into the arms of a paper clip, create several rotating arms with different angles, arrange them from smallest to largest by superimposition, then perform the slit-passing challenge — tracing one rotating arm onto cardboard to make an angle-shaped slit and identifying which shuffled arm passes through it."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Activity 1, p.25 (\"Students make 'rotating arms' using two paper straws inserted into the arms of a paper clip....\") — construction phase: students insert straws into a paper clip and adjust to form an angle. Each student makes at least two rotating arms with visibly different openings, label them with a letter, and keep them flat on the desk."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Activity 1, p.25 (continued) — ordering phase: each group pools their rotating arms and arranges them from smallest to largest by superimposition, resolving disputes by the rule established in the comparison unit (which arm extends beyond the other). Groups record their final order."
+      },
+      {
+       "minutes": "24–36",
+       "activity": "Activity 1, p.25 (continued) — slit-passing challenge: one rotating arm is traced onto cardboard and the slit cut out. Students shuffle the remaining arms and predict which can pass through the slit. They test, explain in writing why some pass and some do not, and specifically address whether a longer-armed model of the same angle passes."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class discussion: what did the slit challenge prove? Students articulate that only an angle equal to or smaller than the slit angle passes, regardless of arm length. The teacher consolidates: angle size is the rotation amount between arms, not a measurement of the arms themselves."
+      }
+     ],
+     "teacher_notes": "The slit challenge is the conceptual payoff of the entire comparison strand — students who still believe longer arms mean a bigger angle are directly corrected when a long-armed rotating arm with the same rotation cannot pass through a shorter-armed slit of equal rotation. Ensure students test a case where arm lengths differ but the rotation is identical, so the outcome is unambiguous. Watch that groups do not accidentally bend the cardboard slit when testing, as this would widen it and produce false positives.",
+     "materials": [
+      "Paper straws (at least 4 per student)",
+      "Paper clips (one per student)",
+      "Cardboard strips",
+      "Scissors",
+      "Pencils",
+      "Textbook open to section 2.7 p.25"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.8",
+       "title": "Special Types of Angles"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Half-Turn to Right Angle: Discovering Special Angles by Folding",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q1, section 2.8 p.29",
+       "description": "Count right angles in classroom windows and identify other right angles in the classroom."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q2, section 2.8 p.30",
+       "description": "On a dot grid, join A to other grid points to get a straight angle in all different ways."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q3, section 2.8 p.30",
+       "description": "On a dot grid, join A to other grid points to get a right angle in all different ways (using the hint that line CAB must be bisected)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students open a notebook fully flat so the cover and back form a straight line (Vidya's scenario from the text). The teacher names this a straight angle and asks: what is special about the arms? Students observe that the two arms are collinear — they form a single straight line — and record: straight angle = half a full turn."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students fold a straight-angle paper crease exactly in half (folding the two arms onto each other). Unfolding reveals two equal creases. The class reasons: if two equal angles together make a straight angle, each must be half of it — named a right angle. They check a corner of the paper: does it match? Perpendicularity is named as lines meeting at right angles."
+      },
+      {
+       "minutes": "22–32",
+       "activity": "Figure it Out Q1, section 2.8 p.29 (\"Count right angles in classroom windows....\") — students scan the room, tally right angles and note other angle types. Then Figure it Out Q2, section 2.8 p.30 (\"On a dot grid, join A to other grid points to get a straight angle in all different ways....\") — students draw as many straight angles as possible from A on a dot grid."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Figure it Out Q3, section 2.8 p.30 (\"On a dot grid, join A to other grid points to get a right angle in all different ways....\") — students use the bisection hint to construct right angles on the dot grid. Pairs compare their figures and confirm each claimed right angle by folding or by checking against a corner of the page."
+      }
+     ],
+     "teacher_notes": "Students sometimes assert that a straight angle is 'not really an angle' because it looks like a line; the folding demonstration resolves this by showing it is generated by a half-turn. A frequent error is confusing perpendicularity (lines meeting at right angles) with parallelism; return to the folding result to clarify. Exercise Q4 (p.31) on getting a perpendicular crease from a slanting crease is a useful self-study extension for students who want to deepen the paper-folding reasoning.",
+     "materials": [
+      "Plain sheets of paper for folding",
+      "Dot-grid paper (or textbook open to section 2.8 p.29–30)",
+      "Pencils",
+      "Rulers"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.8",
+       "title": "Special Types of Angles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Acute, Right, Obtuse, Straight — Classifying and Reasoning About Angle Types",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q4, section 2.8 p.31",
+       "description": "Get a slanting crease on paper; fold to get a perpendicular crease. (a) How many right angles result? Justify they are exact right angles. (b) Describe the folding procedure so another person can replicate it."
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q1, section 2.8 p.31",
+       "description": "Identify acute, right, obtuse and straight angles in the previous figures shown in the chapter."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q3, section 2.8 p.31",
+       "description": "Explain why the words 'acute' (sharp) and 'obtuse' (blunt) have been chosen for these angle types."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 2.8",
+       "book_ref": "Figure it Out Q4, section 2.8 p.32",
+       "description": "Count the number of acute angles in each of the three given triangle figures; predict the next figure and its acute angle count; identify the numerical pattern."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Figure it Out Q4, section 2.8 p.31 (\"Get a slanting crease on paper; fold to get a perpendicular crease....\") — students fold a slanting crease, fold the paper again bringing the crease onto itself, and count how many right angles are formed. They write a justification for why the resulting angles are exact right angles based on the bisection reasoning."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Using the folding result and the straight-angle definition established in the previous unit, the teacher leads deductive classification: an angle smaller than a right angle (less than the 90° fold) is acute; one larger than a right angle but smaller than a straight angle is obtuse. Students use the word-meaning prompt — acute means sharp, obtuse means blunt — to anchor each category."
+      },
+      {
+       "minutes": "24–34",
+       "activity": "Figure it Out Q1, section 2.8 p.31 (\"Identify acute, right, obtuse and straight angles in the previous figures shown in the chapter....\") — students survey figures from earlier in the textbook and classify each marked angle. Then Figure it Out Q3, section 2.8 p.31 (\"Explain why the words 'acute' (sharp) and 'obtuse' (blunt) have been chosen....\") — students write a sentence connecting word meaning to angle appearance."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Students draw one example of each type — acute, right, obtuse, straight — in at least two different orientations each, confirming that orientation does not change the classification. Pairs cross-check each other's drawings against the definitions."
+      }
+     ],
+     "teacher_notes": "Having established by paper-folding that bisecting a straight angle yields two right angles, this unit extends that result deductively to classify acute and obtuse angles by their relationship to the right angle. A persistent error is classifying an obtuse angle as acute when it is drawn in an unusual orientation — drawing angles in varied orientations, as the exercise requires, directly addresses this. Exercise Q4 (p.32) on counting acute angles in triangle figures is set as homework to reinforce classification in a pattern context.",
+     "materials": [
+      "Plain sheets of paper for folding",
+      "Pencils",
+      "Textbook open to section 2.8 p.31–32"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Why 360? The Degree, Divisibility, and the Meaning of Measurement",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out, section 2.9 p.34",
+       "description": "A circle divided into 1, 2, 3, 4, 5, 6, 8, 9, 10, and 12 equal parts is shown; write the degree measure of each resulting angle near the indicated sector."
+      },
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q1, section 2.9 p.35",
+       "description": "Using the unlabelled protractor diagram, write the measures of ∠KAL, ∠WAL, and ∠TAK by counting 1° units (and in groups of 5° or 10° using medium and large marks)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "The teacher presents the question: why divide a full turn into 360 parts and not 100 or 400? Students brainstorm divisors of 360 in pairs (1, 2, 3, 4, 5, 6, 8, 9, 10, 12 …). The class compares this with 100 (fewer whole-number divisors) and the teacher shares the historical note from the text — Babylonian 60-unit arithmetic, ancient Indian and other calendars — to place the choice in context."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Figure it Out, section 2.9 p.34 (\"A circle divided into 1, 2, 3, 4, 5, 6, 8, 9, 10, and 12 equal parts....\") — students compute the degree measure of each sector (360° ÷ n) and record it. From this, straight angle = 360° ÷ 2 = 180° and right angle = 360° ÷ 4 = 90° are derived as natural results rather than arbitrary facts."
+      },
+      {
+       "minutes": "24–36",
+       "activity": "The teacher introduces the unlabelled protractor: the semicircle represents 180°, and the marks divide it into 1° units with medium marks at 5° and large marks at 10°. Figure it Out Q1, section 2.9 p.35 (\"Using the unlabelled protractor diagram, write the measures of ∠KAL, ∠WAL, and ∠TAK....\") — students count marks to read each angle, practising the grouping strategy (count by 10s then add leftover 1s)."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Students reason about the dual-scale design: why does a protractor have two rows of numbers? The class articulates that the inner and outer scales allow reading angles opening in either direction without flipping the protractor, preparing for the labelled protractor work ahead."
+      }
+     ],
+     "teacher_notes": "The divisibility argument for 360 is not decorative — it is the reasoning anchor that makes the degree feel motivated rather than arbitrary, and students who engage with it retain the 180° and 90° values more reliably. Watch for students who miscount by reading from the wrong end of the protractor's scale when the angle opens left; the dual-scale explanation introduced at the close of this unit addresses that error before it becomes habitual. Example 3 (§2.9 p.36) on the labelled protractor is a useful self-study item for students who want to preview the subtraction method.",
+     "materials": [
+      "Textbook open to section 2.9 p.34–35",
+      "Pencils",
+      "Rulers"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Reading the Labelled Protractor and Applying Subtraction",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out, section 2.9 p.36",
+       "description": "Using the labelled protractor figure (rays O, P, Q, R, S, T, U), name all different angles and write their degree measures; determine which scale (inner or outer) to use and apply subtraction where needed."
+      },
+      {
+       "id": "E-27",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Think!, section 2.9 p.40",
+       "description": "In Fig. 2.19, explain why ∠AOB = ∠BOC = ∠COD = ∠DOE = ∠EOF = ∠FOG = ∠GOH = ∠HOI (fill in the common value and justify)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Figure it Out, section 2.9 p.36 (\"Using the labelled protractor figure (rays O, P, Q, R, S, T, U)....\") — students name every angle formed between adjacent rays, identify whether to use the inner or outer scale for each, and record the direct readings. The teacher models one subtraction case (an angle whose arms are not on the 0° baseline) before students attempt the remaining sub-parts."
+      },
+      {
+       "minutes": "14–26",
+       "activity": "Students work through the remaining angles in the figure that require subtraction: they read both ray positions from the same scale and subtract the smaller reading from the larger. Pairs compare answers and resolve discrepancies by tracing which scale each person used, clarifying that the same scale must be used for both rays of one angle."
+      },
+      {
+       "minutes": "26–36",
+       "activity": "Think!, section 2.9 p.40 (\"In Fig. 2.19, explain why ∠AOB = ∠BOC = ∠COD....\") — students examine the figure showing nine equal angles spanning 180°, compute the common value by dividing 180° by 9, and write a justification using the definition of equal partition of a straight angle."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Students articulate the subtraction rule as a sentence: \"The measure of an angle between two rays on a protractor equals the larger reading minus the smaller reading, both taken from the same scale.\" The teacher confirms this is the general method and students record it in their notebooks."
+      }
+     ],
+     "teacher_notes": "The subtraction method is the key procedural skill in this unit; the most common error is using one reading from the inner scale and one from the outer scale for the same angle, producing an absurd result. Encourage students to decide which scale to use before reading either ray, and to verify the answer makes visual sense (a clearly acute angle should not read as obtuse). The Think! item on nine equal angles also reinforces the partition-of-a-straight-angle reasoning from the previous unit.",
+     "materials": [
+      "Textbook open to section 2.9 p.36–40",
+      "Pencils",
+      "Protractor (one per student or pair)"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Make Your Own Protractor: Folding, Measuring, and Reading",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "A-2",
+       "type": "activity",
+       "source_section": "section 2.9",
+       "book_ref": "Activity 2, p.37",
+       "description": "Students make their own protractor by successive paper folding: cut a circle, fold to semicircle (180°), fold again to quarter-circle (90°), fold again to mark 45° and 135°, fold once more to mark 22.5° and 67.5° etc., then unfold and label all creases, identifying angle bisectors and reading off the resulting degree measures."
+      },
+      {
+       "id": "E-28",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q1, section 2.9 p.40",
+       "description": "Find the degree measures of three sets of angles drawn in the figures using the handmade protractor: ∠IHJ (figure 1), ∠GHK (figure 2), ∠IHJ (figure 3)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Activity 2, p.37 (\"Students make their own protractor by successive paper folding: cut a circle, fold to semicircle (180°)....\") — construction phase: students cut a paper circle, fold to a semicircle (180°), then successively halve to mark 90°, 45°, 22.5°. Each crease is labelled with its degree measure, and students identify every crease as an angle bisector of the larger angle it divides."
+      },
+      {
+       "minutes": "18–30",
+       "activity": "Activity 2, p.37 (continued) — reading phase: students hold the completed paper protractor against drawn angles in the textbook, aligning the flat edge on the base ray and the centre on the vertex, and read off the degree measure by identifying which crease aligns with the free arm. They discuss the limitations of their paper instrument compared to a commercial one."
+      },
+      {
+       "minutes": "30–38",
+       "activity": "Figure it Out Q1, section 2.9 p.40 (\"Find the degree measures of three sets of angles....\") — students use the handmade protractor to measure ∠IHJ, ∠GHK, and ∠IHJ in the three figures, recording their readings and identifying any angle they cannot read accurately with the paper instrument (angles between labelled creases)."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Students write one sentence comparing the handmade and commercial protractor: what can the commercial protractor read that the paper one cannot? This consolidates the notion of measurement precision and the value of finer scale divisions."
+      }
+     ],
+     "teacher_notes": "The paper-folding sequence concretely embeds the concept of angle bisector — every fold is a bisection, and students experience this kinesthetically. A common difficulty is aligning the centre of the semicircle exactly on the vertex of the angle being measured; model the alignment step explicitly before students attempt it themselves. Exercise Q3 (p.41) on angles that cannot be read with the paper protractor is a productive self-study extension.",
+     "materials": [
+      "Circular paper (pre-cut, one per student, or scissors to cut)",
+      "Pencils",
+      "Ruler",
+      "Textbook open to section 2.9 p.37–40"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Measuring Angles in All Orientations and Spotting Common Errors",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-32",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q5, section 2.9 p.41",
+       "description": "Measure and write the degree measures for six angles (a–f) drawn in varied orientations."
+      },
+      {
+       "id": "E-37",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Mind the Mistake, section 2.9 p.44",
+       "description": "Six protractor-reading figures (∠U, ∠V, ∠W, ∠X, ∠Y, ∠Z) show incorrect student usage; identify the error(s) in each and explain how the correct reading should be made."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–16",
+       "activity": "Figure it Out Q5, section 2.9 p.41 (\"Measure and write the degree measures for six angles (a–f) drawn in varied orientations....\") — students measure each angle using a standard protractor, rotating the protractor as needed or applying the subtraction method when neither arm lies on 0°. They record each reading with a note on which scale (inner/outer) was used."
+      },
+      {
+       "minutes": "16–32",
+       "activity": "Mind the Mistake, section 2.9 p.44 (\"Six protractor-reading figures (∠U, ∠V, ∠W, ∠X, ∠Y, ∠Z) show incorrect student usage....\") — for each figure, students identify the specific error (wrong scale, misaligned centre, reading from wrong end) and write the correct reading procedure. Pairs compare diagnoses and discuss any disagreement."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "The teacher collects the most common errors students identified in Mind the Mistake and leads a brief oral round: the teacher describes a protractor placement (correctly or incorrectly) and students vote on whether it is right or wrong, justifying their vote. Correct placements are confirmed and incorrect ones are fixed live."
+      }
+     ],
+     "teacher_notes": "Mind the Mistake is especially valuable because it requires students to diagnose rather than just perform, building metacognitive awareness of measurement technique. Watch for students who correctly identify the error in the figure but cannot explain the correction procedure — push for the full corrective description, not just 'it's wrong.' Exercises Q6 and Q7 (p.42) provide additional measurement practice from multi-ray figures and are good self-study items for students who want more protractor fluency.",
+     "materials": [
+      "Protractors (one per student)",
+      "Textbook open to section 2.9 p.41–44",
+      "Pencils"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Angles in the Real World: Clocks, Doors, Swings, and Insects",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-38",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q1, section 2.9 p.45",
+       "description": "Angles in a clock: (a) explain why the angle at 1 o'clock is 30°; (b) find angles at 2, 4, and 6 o'clock; (c) explore other clock angles."
+      },
+      {
+       "id": "E-39",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q2, section 2.9 p.45",
+       "description": "Express the opening of a door as an angle; identify the vertex and arms."
+      },
+      {
+       "id": "E-40",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q3, section 2.9 p.45",
+       "description": "Identify the angle in the swing scenario (Vidya on a swing); determine the arms and vertex."
+      },
+      {
+       "id": "E-42",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q5, section 2.9 p.46",
+       "description": "Use angles to describe the rotation of an insect image; identify the arms and vertex using the horizontal reference line."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Figure it Out Q1, section 2.9 p.45 (\"Angles in a clock: (a) explain why the angle at 1 o'clock is 30°....\") — students divide 360° by 12 to find the angle per hour-marker, explain why the 1 o'clock position gives 30°, then compute angles at 2, 4, and 6 o'clock. The teacher prompts: why is the 6 o'clock angle a straight angle?"
+      },
+      {
+       "minutes": "14–24",
+       "activity": "Figure it Out Q2, section 2.9 p.45 (\"Express the opening of a door as an angle; identify the vertex and arms....\") — students sketch a door ajar, identify the hinge as vertex and the door edge plus the door frame as arms, and estimate the opening angle. Then Figure it Out Q3, section 2.9 p.45 (\"Identify the angle in the swing scenario....\") — students label the rope as one arm and the vertical as the other, with the pivot as vertex."
+      },
+      {
+       "minutes": "24–36",
+       "activity": "Figure it Out Q5, section 2.9 p.46 (\"Use angles to describe the rotation of an insect image; identify the arms and vertex using the horizontal reference line....\") — students use the horizontal reference line as one arm, the insect's body orientation as the other, and the image's centre as vertex, then estimate and where possible measure the rotation angle."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Students volunteer one more real-world angle from their immediate environment (a partially open book, a ramp, a clock time of their choosing) and describe its vertex, arms, and estimated measure. The class evaluates each suggestion and agrees on reasonable estimates."
+      }
+     ],
+     "teacher_notes": "The clock problem is a powerful application because students must connect the equal-partition reasoning (360° ÷ 12 = 30° per sector) to an everyday object, reinforcing the degree definition in context. Watch for students who count hour-hand positions starting from 12 but forget to multiply by 30°; a quick check is that 6 o'clock always yields 180°. Exercise Q4 (p.46) on toy slopes with one invisible arm is a useful self-study challenge for students who found the swing and door problems straightforward.",
+     "materials": [
+      "Textbook open to section 2.9 p.45–46",
+      "Pencils",
+      "Protractors (for measurement cross-checks)"
+     ]
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Origami Angles and Triangle Angle Sums",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-35",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q8, section 2.9 p.43",
+       "description": "Make the origami paper-craft (8 folding steps); unfold the paper fully, draw lines on the creases and measure the angles formed."
+      },
+      {
+       "id": "E-36",
+       "type": "exercise",
+       "source_section": "section 2.9",
+       "book_ref": "Figure it Out Q9, section 2.9 p.43",
+       "description": "Measure all three angles of each of the three triangles in Fig. 2.21 (a), (b), (c); add them up; try other triangles; make a conjecture about the angle sum of a triangle."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Figure it Out Q8, section 2.9 p.43 (\"Make the origami paper-craft (8 folding steps); unfold the paper fully, draw lines on the creases and measure the angles formed....\") — students follow the eight folding steps, unfold, draw over the creases with pencil, and measure each distinct angle formed at the intersection points using a protractor. They record every reading in a table."
+      },
+      {
+       "minutes": "18–32",
+       "activity": "Figure it Out Q9, section 2.9 p.43 (\"Measure all three angles of each of the three triangles in Fig. 2.21 (a), (b), (c); add them up....\") — students measure the three angles of each triangle and sum them. They then draw their own triangle, measure its angles, and sum. The class pools sums and looks for a pattern."
+      },
+      {
+       "minutes": "32–38",
+       "activity": "Students articulate their conjecture: the three angles of any triangle sum to 180°. The teacher asks: is this surprising? Students connect it to the straight angle (180°) defined earlier in the chapter and discuss whether the conjecture could be tested on more triangles."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "A quick vote: how confident is each student in the conjecture — very confident, somewhat confident, or not sure? The teacher notes that the conjecture is correct but its proof belongs to a later stage; what the class has done is inductive reasoning from evidence, a genuine mathematical process."
+      }
+     ],
+     "teacher_notes": "The triangle angle-sum conjecture emerges here as an inductive discovery, not a stated theorem — students experience the process of collecting evidence and generalising, which is mathematically authentic. Watch for measurement rounding errors that produce a sum significantly different from 180°; a sum of 178°–182° should be accepted as consistent with the conjecture given protractor precision limits. The origami folding also reinforces angle bisector ideas from the paper-protractor unit, tying the section together.",
+     "materials": [
+      "Plain sheets of paper for origami",
+      "Protractors",
+      "Pencils",
+      "Rulers",
+      "Textbook open to section 2.9 p.43"
+     ]
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.10",
+       "title": "Drawing Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Four Steps to Any Angle: Drawing with Precision",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-46",
+       "type": "exercise",
+       "source_section": "section 2.10",
+       "book_ref": "Figure it Out Q2, section 2.10 p.50",
+       "description": "Use a protractor to draw angles of 110°, 40°, 75°, 112°, and 134°."
+      },
+      {
+       "id": "E-47",
+       "type": "exercise",
+       "source_section": "section 2.10",
+       "book_ref": "Figure it Out Q3, section 2.10 p.50",
+       "description": "Draw an angle whose measure equals the given angle (∠HIJ); write the steps followed."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "The teacher demonstrates the four-step procedure for drawing ∠TIN = 30°: (1) draw the base ray from vertex T, (2) align the protractor's centre on T with the 0° mark on the ray, (3) locate the 30° mark and make a dot, (4) remove the protractor and draw the ray from T through the dot. Students copy the four steps into their notebooks as a checklist."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Figure it Out Q2, section 2.10 p.50 (\"Use a protractor to draw angles of 110°, 40°, 75°, 112°, and 134°....\") — students draw each angle using the four-step checklist. For each, they classify the result as acute or obtuse as a self-check: if the drawn angle looks acute but the measure is 110°, a step has gone wrong."
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Figure it Out Q3, section 2.10 p.50 (\"Draw an angle whose measure equals the given angle (∠HIJ); write the steps followed....\") — students first measure ∠HIJ with the protractor, record the measure, then draw a new angle of equal size following the four steps, and write a description of their procedure."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Partners exchange their drawn angles from Q2 and independently classify each partner's angles as acute, right, or obtuse, then verify by measuring with a protractor. Mismatches are investigated to identify which step produced the error."
+      }
+     ],
+     "teacher_notes": "The four-step procedure is a deductive application of protractor mechanics; students who skip step 2 (aligning 0° on the base ray) produce systematically offset angles. Encourage the visual self-check: an acute angle drawn for 75° and an obtuse angle for 110° are good signs; if the shapes are swapped, the wrong scale was used. Exercise Q1 (p.49) on guessing then measuring angles in a figure is a productive self-study complement that sharpens visual estimation.",
+     "materials": [
+      "Protractors (one per student)",
+      "Rulers",
+      "Pencils",
+      "Textbook open to section 2.10 p.49–50"
+     ]
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.10",
+       "title": "Drawing Angles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Guess, Draw, Score: Team Games with Angles",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "E-43",
+       "type": "exercise",
+       "source_section": "section 2.10",
+       "book_ref": "Let's Play a Game #1, section 2.10 p.48",
+       "description": "Team game: one team secretly draws an angle with a protractor; the other team visually estimates the measure; score is the absolute difference in degrees. Each team gets five turns; lowest score wins."
+      },
+      {
+       "id": "E-44",
+       "type": "exercise",
+       "source_section": "section 2.10",
+       "book_ref": "Let's Play a Game #2, section 2.10 p.48",
+       "description": "Team game: one team announces a degree measure; a player from the other team draws it freehand on the board (teammates guide verbally); score is the absolute difference between drawn and intended angle. Five turns each."
+      },
+      {
+       "id": "E-45",
+       "type": "exercise",
+       "source_section": "section 2.10",
+       "book_ref": "Figure it Out Q1, section 2.10 p.49",
+       "description": "In Fig. 2.23, list all possible angles; guess their measures; measure with a protractor; record guesses vs. actual in a table."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Let's Play a Game #1, section 2.10 p.48 (\"Team game: one team secretly draws an angle with a protractor; the other team visually estimates the measure....\") — the class divides into two teams. Team A draws an angle using a protractor (hidden from Team B); Team B estimates the measure. Score is computed as the absolute difference. Five turns per team; lowest score wins."
+      },
+      {
+       "minutes": "14–28",
+       "activity": "Let's Play a Game #2, section 2.10 p.48 (\"Team game: one team announces a degree measure; a player from the other team draws it freehand on the board....\") — Team A announces a degree measure; one Team B player draws it freehand while teammates give verbal guidance (higher, lower, a bit more). The drawn angle is measured; score is the absolute difference. Five turns each."
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Figure it Out Q1, section 2.10 p.49 (\"In Fig. 2.23, list all possible angles; guess their measures; measure with a protractor; record guesses vs. actual in a table....\") — working individually, students list every angle in the figure, estimate each, measure with a protractor, and record both values. They compute their personal absolute error and compare it with their game-round performance."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Students reflect briefly: which angle type was hardest to estimate — acute, obtuse, or those near 90°? The class gathers answers and discusses why angles near 90° are easiest to judge (reference to the right angle as a familiar standard) while reflex-range angles are hardest."
+      }
+     ],
+     "teacher_notes": "The scoring mechanism (absolute difference in degrees) keeps the games mathematically honest and builds the habit of checking one's estimate against a measured value — a genuine metrology habit. Watch for teams that deliberately choose hard-to-estimate angles (close to 90° from both sides) to maximise opponents' errors; this is actually mathematically interesting and worth a brief discussion of strategy. Exercise Q2 (p.50) on drawing a specified list of angles can serve as additional practice for students who want more precision work.",
+     "materials": [
+      "Protractors (one per student)",
+      "Rulers",
+      "Pencils",
+      "Blackboard and chalk (for Game #2)",
+      "Textbook open to section 2.10 p.48–50"
+     ]
+    },
+    {
+     "period_number": 18,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.11",
+       "title": "Types of Angles and their Measures"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "The Full Classification: From Acute to Reflex",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-48",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q1, section 2.11 p.51",
+       "description": "On dot grids, join A to other grid points to get (a) an acute angle, (b) an obtuse angle, (c) a reflex angle; mark the intended angles with curves."
+      },
+      {
+       "id": "E-49",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q2, section 2.11 p.52",
+       "description": "Use a protractor to find the measures of ∠PTR, ∠PTQ, ∠PTW, and ∠WTP from the given figure; classify each as acute, obtuse, right, or reflex."
+      },
+      {
+       "id": "E-50",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Let's Explore, section 2.11 p.53",
+       "description": "Given ∠TER = 80° in a figure where ∠REB is a straight angle and ∠SET is perpendicular context, find the measures of ∠BET and ∠SET."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "The teacher presents the five angle types in order — acute (0°–90°), right (90°), obtuse (90°–180°), straight (180°), reflex (180°–360°) — drawing labelled examples in varied orientations on the board. Students recall which types they have already named and note that reflex is new: greater than a straight angle, less than a full turn. They sketch one example of each in their notebooks."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Figure it Out Q1, section 2.11 p.51 (\"On dot grids, join A to other grid points to get (a) an acute angle, (b) an obtuse angle, (c) a reflex angle....\") — students draw one example of each on a dot grid, mark the intended angle with a curve on the correct side, and label the type. The reflex case is discussed: the curve must go the long way around."
+      },
+      {
+       "minutes": "22–34",
+       "activity": "Figure it Out Q2, section 2.11 p.52 (\"Use a protractor to find the measures of ∠PTR, ∠PTQ, ∠PTW, and ∠WTP....\") — students measure each angle and classify it. They note that ∠WTP may be reflex and discuss how to measure it (360° minus the directly measured non-reflex part)."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Let's Explore, section 2.11 p.53 (\"Given ∠TER = 80° in a figure where ∠REB is a straight angle....\") — students use the straight-angle definition (180°) and the given 80° to derive ∠BET = 100° and, with the perpendicularity condition, ∠SET = 90°. They write each step of reasoning explicitly."
+      }
+     ],
+     "teacher_notes": "The reflex angle is often overlooked because it is the less common visual impression; emphasise the curve-on-the-correct-side convention for marking angles, as without it a reflex and non-reflex angle at the same pair of rays are indistinguishable. The Let's Explore item works by combining the straight-angle and perpendicularity properties established in section 2.8, so students who engage with it are integrating knowledge from across the chapter — watch for those who simply subtract without justifying why. Exercise Q31 (p.41) on finding reflex angle measures with a protractor is a useful self-study extension.",
+     "materials": [
+      "Dot-grid paper",
+      "Protractors",
+      "Pencils",
+      "Textbook open to section 2.11 p.51–53"
+     ]
+    },
+    {
+     "period_number": 19,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 2.11",
+       "title": "Types of Angles and their Measures"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Drawing, Estimating, and Exploring Angle Patterns",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-51",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q1, section 2.11 p.53",
+       "description": "Draw angles of 140°, 82°, 195°, 70°, and 35° using a protractor."
+      },
+      {
+       "id": "E-52",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q2, section 2.11 p.53",
+       "description": "Estimate the size of each of six given angles (a–f) and then measure with a protractor; classify each as acute, right, obtuse, or reflex."
+      },
+      {
+       "id": "E-56",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q6, section 2.11 p.54",
+       "description": "The Ashoka Chakra has 24 spokes. Find the angle between two adjacent spokes; find the largest acute angle formed between two spokes."
+      },
+      {
+       "id": "E-57",
+       "type": "exercise",
+       "source_section": "section 2.11",
+       "book_ref": "Figure it Out Q7, section 2.11 p.54",
+       "description": "Puzzle: find all acute angle measures such that double, triple, and quadruple the measure are still acute, but five times the measure is obtuse."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Figure it Out Q1, section 2.11 p.53 (\"Draw angles of 140°, 82°, 195°, 70°, and 35° using a protractor....\") — students draw each angle using the four-step procedure, classify each immediately after drawing, and note the challenge of 195° (a reflex angle requiring a 360° − 195° = 165° approach or extending the protractor reading strategy)."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Figure it Out Q2, section 2.11 p.53 (\"Estimate the size of each of six given angles (a–f) and then measure with a protractor; classify each....\") — students estimate each angle visually, record the estimate, then measure and classify. They compute the absolute error between estimate and measure and reflect on which classification boundary (90° or 180°) makes estimation hardest."
+      },
+      {
+       "minutes": "22–32",
+       "activity": "Figure it Out Q6, section 2.11 p.54 (\"The Ashoka Chakra has 24 spokes. Find the angle between two adjacent spokes....\") — students divide 360° by 24 to find the adjacent-spoke angle (15°) and then identify the largest acute angle between any two spokes (75° = 5 × 15°, since 6 × 15° = 90° is right, not acute). They justify each answer."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Figure it Out Q7, section 2.11 p.54 (\"Puzzle: find all acute angle measures such that double, triple, and quadruple the measure are still acute, but five times the measure is obtuse....\") — students set up the constraint systematically: the angle must be less than 90° ÷ 4 = 22.5° to keep quadruple acute, and five times it must exceed 90°, so the angle must exceed 18°. The valid range is 18° < angle < 22.5°; students list integer values (19°, 20°, 21°, 22°) and verify each."
+      }
+     ],
+     "teacher_notes": "The Ashoka Chakra problem links angle measurement to a culturally significant national symbol, making the degree definition feel grounded. The puzzle in Q7 is a genuine inequality-reasoning task using angle classification boundaries; watch for students who test specific values without identifying the bounding conditions — push for the general reasoning that establishes the range. Exercises Q3, Q4, Q5 (p.53) on mixed-type figures and letter drawings are good self-study completions for students who have capacity.",
+     "materials": [
+      "Protractors",
+      "Rulers",
+      "Pencils",
+      "Textbook open to section 2.11 p.53–54"
+     ]
+    },
+    {
+     "period_number": 20,
+     "period_duration_minutes": 40,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 2.1",
+       "title": "Point"
+      },
+      {
+       "ref": "section 2.2",
+       "title": "Line Segment"
+      },
+      {
+       "ref": "section 2.3",
+       "title": "Line"
+      },
+      {
+       "ref": "section 2.4",
+       "title": "Ray"
+      },
+      {
+       "ref": "section 2.5",
+       "title": "Angle"
+      },
+      {
+       "ref": "section 2.6",
+       "title": "Comparing Angles"
+      },
+      {
+       "ref": "section 2.7",
+       "title": "Making Rotating Arms"
+      },
+      {
+       "ref": "section 2.8",
+       "title": "Special Types of Angles"
+      },
+      {
+       "ref": "section 2.9",
+       "title": "Measuring Angles"
+      },
+      {
+       "ref": "section 2.10",
+       "title": "Drawing Angles"
+      },
+      {
+       "ref": "section 2.11",
+       "title": "Types of Angles and their Measures"
+      }
+     ],
+     "activity_title": "Four Problems, One Chapter: Lines and Angles at Work",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems on the board at once. Students work individually in silence for the first stretch, writing full working. They then compare in pairs or threes: any disagreement is resolved by reconstructing the steps, not by voting. One student per problem presents to the class; after each presentation, the class names the chapter method the solution rested on — the teacher records that method name on the board beside the problem number. Problem 1 uses ray and angle naming (vertex as middle letter, three-letter notation). Problem 2 uses superimposition or size-reasoning to compare angles — watch for students who try to measure instead of reason from the figure. Problem 3 uses the straight-angle property (180°); the common error is failing to subtract the given 55° from 180°. Problem 4 uses the degree system and the full angle classification; watch for students who include the boundary values 30° and 45°, where one of the conditions becomes exactly 90° and fails.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | Three rays OA, OB, and OC all start at point O. Ray OB lies between rays OA and OC. Name all the angles formed, using the correct three-letter notation. How many angles are there, and which angle contains the other two as parts? | Three angles are formed: ∠AOB (arms OA and OB, vertex O), ∠BOC (arms OB and OC, vertex O), and ∠AOC (arms OA and OC, vertex O). In total there are 3 angles. ∠AOC contains ∠AOB and ∠BOC as parts, because ray OB lies inside the opening of ∠AOC — the rotation from OA to OC passes through OB on the way.\n2 | Two angles ∠PQR and ∠XYZ are drawn on paper. When ∠PQR is placed over ∠XYZ with vertices and one pair of arms matching exactly, the second arm of ∠PQR falls inside ∠XYZ (i.e., between the two arms of ∠XYZ). Which angle is greater, and how do you know? | ∠XYZ is greater. By superimposition, when the vertices coincide and arm QR lies along arm YZ, arm QP falls strictly between arms YZ and YX. This means the opening of ∠XYZ is wider than the opening of ∠PQR — its arm YX extends beyond arm QP. So ∠XYZ > ∠PQR.\n3 | Ray BE and ray BF start at point B and lie on the same straight line (E and F on opposite sides of B), forming a straight angle ∠EBF. A third ray BG is drawn from B so that ∠EBG = 55°. Find the measure of ∠GBF. Classify both ∠EBG and ∠GBF. | A straight angle measures 180°. Ray BG divides ∠EBF into two parts: ∠EBG and ∠GBF. So ∠GBF = 180° − 55° = 125°. ∠EBG = 55°: between 0° and 90°, so it is acute. ∠GBF = 125°: between 90° and 180°, so it is obtuse.\n4 | Find all whole-number degree measures for an angle such that twice the measure is still acute and three times the measure is obtuse. List every value that works. | Twice the measure must be less than 90°, so the measure is less than 45°. Three times the measure must be greater than 90°, so the measure is greater than 30°. The measure must therefore satisfy 30° < measure < 45°. The whole-number values that work are 31°, 32°, 33°, 34°, 35°, 36°, 37°, 38°, 39°, 40°, 41°, 42°, 43°, and 44° — fourteen values in all."
+      }
+     ],
+     "materials": [
+      "blackboard or whiteboard",
+      "chalk or board markers",
+      "rulers",
+      "protractors",
+      "pencils",
+      "plain paper"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-2",
+       "activity": "Teacher writes all four problems on the board, reads each aloud once, and asks students to copy them and begin. No further instruction — the class works."
+      },
+      {
+       "minutes": "2-18",
+       "activity": "Students work individually on all four problems, writing full working for each. Teacher circulates silently, noting where disagreements or errors are likely to surface, but does not intervene."
+      },
+      {
+       "minutes": "18-26",
+       "activity": "Students compare answers in pairs or threes. Any disagreement is resolved by going back through the steps one at a time, not by deferring to the louder voice. Groups that agree move on to checking their reasoning is fully written."
+      },
+      {
+       "minutes": "26-38",
+       "activity": "Four brief presentations at the board — one per problem, one student each. After each presentation the class names, aloud, the chapter method the solution used. Teacher writes the method name beside the problem number: (1) ray and angle naming; (2) superimposition; (3) straight-angle measure and classification; (4) degree system and angle classification by inequality."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Teacher states the chapter's one idea: every geometric figure — a point, a line, a ray, an angle — is defined by a precise relationship, and once that relationship is named and measured, any question about it can be answered exactly. The four problems all yielded for that reason."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 20
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.1",
+      "section_title": "Point",
+      "goal": "recall",
+      "anchor_id": "E-2",
+      "anchor_book_ref": "Figure it Out Q2, section 2.4 p.16",
+      "anchor_description": "Name the line segments in Fig. 2.4 (points L, M, P, Q, R); identify which of the five marked points lie on exactly one segment and which lie on two segments."
+     },
+     {
+      "section_ref": "section 2.3",
+      "section_title": "Line",
+      "goal": "recall",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q3, section 2.4 p.16",
+      "anchor_description": "Name the rays shown in Fig. 2.5 (T, A, N, B) and determine whether T is the starting point of each ray."
+     },
+     {
+      "section_ref": "section 2.4",
+      "section_title": "Ray",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 2.4 p.15",
+      "anchor_description": "Help Rihan (how many lines through one point?) and Sheetal (how many lines through two points?) find their answers."
+     },
+     {
+      "section_ref": "section 2.5",
+      "section_title": "Angle",
+      "goal": "recall",
+      "anchor_id": "E-7",
+      "anchor_book_ref": "Figure it Out Q1, section 2.5 p.19",
+      "anchor_description": "Find angles in given pictures (bicycle, tiled pattern, ladder, bridge truss); draw the rays forming one angle and name its vertex."
+     },
+     {
+      "section_ref": "section 2.5",
+      "section_title": "Angle",
+      "goal": "recall",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out Q3, section 2.5 p.20",
+      "anchor_description": "Explain why ∠APB (where three rays from P are shown) cannot be labelled as ∠P."
+     },
+     {
+      "section_ref": "section 2.8",
+      "section_title": "Special Types of Angles",
+      "goal": "recall",
+      "anchor_id": "E-16",
+      "anchor_book_ref": "Figure it Out Q1, section 2.8 p.29",
+      "anchor_description": "Count right angles in classroom windows and identify other right angles in the classroom."
+     },
+     {
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "recall",
+      "anchor_id": "E-48",
+      "anchor_book_ref": "Figure it Out Q1, section 2.11 p.51",
+      "anchor_description": "On dot grids, join A to other grid points to get (a) an acute angle, (b) an obtuse angle, (c) a reflex angle; mark the intended angles with curves."
+     },
+     {
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "recall",
+      "anchor_id": "E-51",
+      "anchor_book_ref": "Figure it Out Q1, section 2.11 p.53",
+      "anchor_description": "Draw angles of 140°, 82°, 195°, 70°, and 35° using a protractor."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.6",
+      "section_title": "Comparing Angles",
+      "goal": "reason",
+      "anchor_id": "E-13",
+      "anchor_book_ref": "Figure it Out Q1, section 2.6 p.23",
+      "anchor_description": "Fold a rectangular sheet to create angles; name and compare angles formed between the fold and the sides; make different angles by varied folding and identify the largest and smallest."
+     },
+     {
+      "section_ref": "section 2.8",
+      "section_title": "Special Types of Angles",
+      "goal": "reason",
+      "anchor_id": "E-19",
+      "anchor_book_ref": "Figure it Out Q4, section 2.8 p.31",
+      "anchor_description": "Get a slanting crease on paper; fold to get a perpendicular crease. (a) How many right angles result? Justify they are exact right angles. (b) Describe the folding procedure so another person can replicate it."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "reason",
+      "anchor_id": "E-26",
+      "anchor_book_ref": "Figure it Out, section 2.9 p.34",
+      "anchor_description": "A circle divided into 1, 2, 3, 4, 5, 6, 8, 9, 10, and 12 equal parts is shown; write the degree measure of each resulting angle near the indicated sector."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.7",
+      "section_title": "Making Rotating Arms",
+      "goal": "apply",
+      "anchor_id": "A-1",
+      "anchor_book_ref": "Activity 1, p.25",
+      "anchor_description": "Students make 'rotating arms' using two paper straws inserted into the arms of a paper clip, create several rotating arms with different angles, arrange them from smallest to largest by superimposition, then perform the slit-passing challenge — tracing one rotating arm onto cardboard to make an angle-shaped slit and identifying which shuffled arm passes through it."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "anchor_id": "E-25",
+      "anchor_book_ref": "Figure it Out, section 2.9 p.36",
+      "anchor_description": "Using the labelled protractor figure (rays O, P, Q, R, S, T, U), name all different angles and write their degree measures; determine which scale (inner or outer) to use and apply subtraction where needed."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "anchor_id": "A-2",
+      "anchor_book_ref": "Activity 2, p.37",
+      "anchor_description": "Students make their own protractor by successive paper folding: cut a circle, fold to semicircle (180°), fold again to quarter-circle (90°), fold again to mark 45° and 135°, fold once more to mark 22.5° and 67.5° etc., then unfold and label all creases, identifying angle bisectors and reading off the resulting degree measures."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "anchor_id": "E-32",
+      "anchor_book_ref": "Figure it Out Q5, section 2.9 p.41",
+      "anchor_description": "Measure and write the degree measures for six angles (a–f) drawn in varied orientations."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "anchor_id": "E-38",
+      "anchor_book_ref": "Figure it Out Q1, section 2.9 p.45",
+      "anchor_description": "Angles in a clock: (a) explain why the angle at 1 o'clock is 30°; (b) find angles at 2, 4, and 6 o'clock; (c) explore other clock angles."
+     },
+     {
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "anchor_id": "E-35",
+      "anchor_book_ref": "Figure it Out Q8, section 2.9 p.43",
+      "anchor_description": "Make the origami paper-craft (8 folding steps); unfold the paper fully, draw lines on the creases and measure the angles formed."
+     },
+     {
+      "section_ref": "section 2.10",
+      "section_title": "Drawing Angles",
+      "goal": "apply",
+      "anchor_id": "E-46",
+      "anchor_book_ref": "Figure it Out Q2, section 2.10 p.50",
+      "anchor_description": "Use a protractor to draw angles of 110°, 40°, 75°, 112°, and 134°."
+     },
+     {
+      "section_ref": "section 2.10",
+      "section_title": "Drawing Angles",
+      "goal": "apply",
+      "anchor_id": "E-43",
+      "anchor_book_ref": "Let's Play a Game #1, section 2.10 p.48",
+      "anchor_description": "Team game: one team secretly draws an angle with a protractor; the other team visually estimates the measure; score is the absolute difference in degrees. Each team gets five turns; lowest score wins."
+     },
+     {
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "apply",
+      "anchor_id": "E-33",
+      "anchor_book_ref": "Figure it Out Q6, section 2.9 p.42",
+      "anchor_description": "Using the protractor figure with rays A, B, C from X along base E, find the degree measures of ∠BXE, ∠CXE, ∠AXB, and ∠BXC."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 2.1",
+      "section_title": "Point",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following best describes a point in geometry?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "A dot with a very small but measurable width",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "A precise location that has no length, breadth, or height",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "A straight mark made by drawing a pencil across a page",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The shortest path between two locations",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "B — a point is a precise location with no length, breadth, or height.",
+       "method_one_line": "Recall the definition of a point as a dimensionless location modelled by the tip of a sharp pencil or needle.",
+       "what_each_option_reveals": {
+        "A": "The student confuses a drawn dot (which has physical size) with the geometric idea of a point, not appreciating that the dot merely represents the location.",
+        "D": "The student is recalling the definition of a line segment rather than a point, mixing up two distinct geometric objects.",
+        "C": "The student is describing a line or line segment produced by drawing, not the geometric concept of a point."
+       },
+       "inclusivity": {
+        "support": "Let the student look back at section 2.1 and find the sentence that describes what a point models.",
+        "challenge": "Ask the student to give one more real-life model of a point in their own words and explain why it fits the definition."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 2.4 p.16",
+       "description": "Name the line segments in Fig. 2.4 (points L, M, P, Q, R); identify which of the five marked points lie on exactly one segment and which lie on two segments."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 2.3",
+      "section_title": "Line",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "How many lines can be drawn through two distinct points P and Q?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Exactly one unique line through both points",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Exactly two — one from P to Q and one from Q to P",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Infinitely many, because the points can be connected in curved ways too",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "None, because a line requires at least three points",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "C — exactly one unique line passes through any two distinct points.",
+       "method_one_line": "Recall the property stated in section 2.3: any two distinct points determine exactly one line.",
+       "what_each_option_reveals": {
+        "C": "The student is not distinguishing between a straight line and curved paths; they have not grasped that 'line' in geometry means straight and infinite.",
+        "B": "The student treats the two directions of travel as two different lines, confusing the direction of traversal with the identity of the line.",
+        "D": "The student has invented an incorrect condition; they may be confusing the concept with something requiring three or more points."
+       },
+       "inclusivity": {
+        "support": "Let the student revisit section 2.3 and try drawing two different straight lines through the same two points to see what happens.",
+        "challenge": "Ask the student: how many lines can pass through just one point, and why is the answer different from the two-point case?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 2.4 p.16",
+       "description": "Name the rays shown in Fig. 2.5 (T, A, N, B) and determine whether T is the starting point of each ray."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-3",
+      "section_ref": "section 2.4",
+      "section_title": "Ray",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Ray OA starts at point O and passes through point A. Which statement about this ray is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "It can also be correctly named AO, because both endpoints are equivalent",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "It extends endlessly in both directions from O and A",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "It is the same as line segment OA, just written differently",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "It starts at O and extends endlessly through A in one direction",
+        "is_correct": true
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "C — a ray starts at its initial point (O) and extends endlessly in one direction through A.",
+       "method_one_line": "Recall the ray definition: one fixed starting point, endless extension in one direction; the starting point must be written first.",
+       "what_each_option_reveals": {
+        "A": "The student does not appreciate that the starting point is special — it must appear first and cannot be swapped, unlike a segment name.",
+        "B": "The student is describing a line, not a ray; they have not distinguished the one-directional nature of a ray from the two-directional nature of a line.",
+        "C": "The student conflates a ray (one endpoint, infinite) with a line segment (two endpoints, finite)."
+       },
+       "inclusivity": {
+        "support": "Let the student look back at the torch-beam description in section 2.4 to anchor the idea of one starting point and one direction.",
+        "challenge": "Ask: if OA and OB are two different rays from O, can they be the same ray? When yes, and when no?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.4 p.15",
+       "description": "Help Rihan (how many lines through one point?) and Sheetal (how many lines through two points?) find their answers."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-4",
+      "section_ref": "section 2.5",
+      "section_title": "Angle",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Three rays PA, PB, and PC share vertex P. A student labels one angle as ∠P. Why is this labelling incorrect?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "An angle must always be named with four letters",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "P cannot be a vertex because it also lies on three rays",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "The vertex letter must come first, not in the middle",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "∠P is ambiguous because several different angles share vertex P",
+        "is_correct": true
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "B — when multiple rays share a vertex, ∠P alone does not identify which pair of rays forms the angle; a three-letter name with vertex in the middle is required.",
+       "method_one_line": "Apply the angle-naming rule from section 2.5: vertex as middle letter, one point from each arm on either side.",
+       "what_each_option_reveals": {
+        "A": "The student has invented an incorrect rule; angle names use three letters (one per arm plus vertex), not four.",
+        "C": "The student has the vertex-position rule backwards; the vertex letter belongs in the middle, which is actually the correct convention.",
+        "B": "The student has confused a point lying on a ray with a point not qualifying as a vertex; any common starting point of two rays is a valid vertex."
+       },
+       "inclusivity": {
+        "support": "Let the student re-read the three-letter naming explanation in section 2.5 and try naming ∠APB and ∠APC from the same figure.",
+        "challenge": "Ask the student to explain in their own words why ∠P becomes unambiguous again when only two rays meet at P."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.5 p.19",
+       "description": "Find angles in given pictures (bicycle, tiled pattern, ladder, bridge truss); draw the rays forming one angle and name its vertex."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-5",
+      "section_ref": "section 2.5",
+      "section_title": "Angle",
+      "goal": "recall",
+      "question_type": "SCR",
+      "prompt": "Points A, B, and C are marked such that no three are collinear. Lines are drawn through every pair. List all the lines you can draw. Then name every angle formed at each intersection point, using the three-letter convention.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Three lines can be drawn: AB (or BA), AC (or CA), and BC (or CB). At the intersection of AB and AC, the vertex is A and one angle is ∠BAC (= ∠CAB). At the intersection of AB and BC, the vertex is B and one angle is ∠ABC (= ∠CBA). At the intersection of AC and BC, the vertex is C and one angle is ∠ACB (= ∠BCA). Each vertex has exactly one angle when only two lines meet there.",
+       "method_one_line": "Use the uniqueness-of-line-through-two-points property to count lines, then apply the three-letter vertex-in-middle naming rule for each angle.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Let the student sketch the three points and draw the lines one at a time, labelling each before moving to the next.",
+        "challenge": "Ask the student to predict how many lines and angles would result from four non-collinear points, and explain the pattern."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 2.5 p.20",
+       "description": "Explain why ∠APB (where three rays from P are shown) cannot be labelled as ∠P."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-6",
+      "section_ref": "section 2.8",
+      "section_title": "Special Types of Angles",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A straight angle is formed when two rays share a vertex and their arms point in exactly opposite directions. What is true about a straight angle?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "It is formed by a quarter turn",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "It is smaller than a right angle",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Its arms are collinear, forming a straight line through the vertex",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "Its arms form a right angle with each other",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "B — in a straight angle the two arms point in opposite directions and together with the vertex form a single straight line.",
+       "method_one_line": "Recall from section 2.8 that a straight angle is produced by a half-turn, making the two arms collinear.",
+       "what_each_option_reveals": {
+        "D": "The student has confused a straight angle with a right angle; they may not have distinguished the half-turn (straight) from the quarter-turn (right).",
+        "B": "The student has the comparison backwards; a straight angle (180°) is larger than a right angle (90°), not smaller.",
+        "A": "The student is describing the right angle, which results from a quarter turn, not the straight angle."
+       },
+       "inclusivity": {
+        "support": "Let the student use a sheet of paper, open it flat, and point to the straight angle formed before and after folding.",
+        "challenge": "Ask the student to explain using the folding argument why bisecting a straight angle always gives exactly two right angles, not just approximately."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.8 p.29",
+       "description": "Count right angles in classroom windows and identify other right angles in the classroom."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-7",
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "An angle measures 215°. Which type of angle is it?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Acute",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Obtuse",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Reflex",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "Straight",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "C — 215° is greater than 180° and less than 360°, so it is a reflex angle.",
+       "method_one_line": "Apply the classification table from section 2.11: reflex angles lie in the range 180° to 360°.",
+       "what_each_option_reveals": {
+        "B": "The student is applying the obtuse category (90°–180°) to a value that exceeds 180°, not recognising reflex as a separate class.",
+        "D": "The student associates 215° with 'straight' perhaps because it is 'beyond straight'; they have not retained the exact boundary of 180°.",
+        "A": "The student has significantly misclassified; they may be reading or recalling the degree value incorrectly."
+       },
+       "inclusivity": {
+        "support": "Let the student look back at the classification table in section 2.11 and locate where 215° falls between the listed boundaries.",
+        "challenge": "Ask: what is the non-reflex angle paired with 215° (i.e., 360° − 215° = 145°), and what type is that?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.11 p.51",
+       "description": "On dot grids, join A to other grid points to get (a) an acute angle, (b) an obtuse angle, (c) a reflex angle; mark the intended angles with curves."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-8",
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A student draws an angle and measures it as 82°. Which classification is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Acute angle",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Obtuse angle",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Reflex angle",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Right angle",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "D — 82° is between 0° and 90°, so the angle is acute.",
+       "method_one_line": "Apply the classification rule from section 2.11: acute angles have measures strictly between 0° and 90°.",
+       "what_each_option_reveals": {
+        "D": "The student knows 90° is special but places 82° in the right-angle category, not recognising that right requires exactly 90°.",
+        "B": "The student may have used the visual impression of the drawn angle rather than the numerical boundary; obtuse is 90°–180°.",
+        "C": "The student has placed a small angle in the reflex category, indicating significant confusion about the classification boundaries."
+       },
+       "inclusivity": {
+        "support": "Let the student re-read the classification list in section 2.11 and physically point to where 82° falls on a number line from 0° to 360°.",
+        "challenge": "Ask: what is the smallest integer-degree reflex angle that has an acute complement, and how did you find it?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.11 p.53",
+       "description": "Draw angles of 140°, 82°, 195°, 70°, and 35° using a protractor."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 2.6",
+      "section_title": "Comparing Angles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Meena draws angle ∠PQR with long arms and angle ∠STU with short arms. When she places ∠STU on top of ∠PQR so the vertices and one pair of arms coincide exactly, the free arm of ∠STU extends beyond the free arm of ∠PQR. She concludes that ∠STU is larger. Her friend says this conclusion cannot be right because ∠PQR has longer arms. Who is correct? Justify your answer using the superimposition method.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Meena is correct. When the vertices and one pair of arms coincide exactly on superimposition, the angle whose free arm extends beyond the other's free arm is the larger angle. Arm length is irrelevant to the size of an angle — the size is determined entirely by the rotation from one arm to the other. Since ∠STU's free arm extends beyond ∠PQR's free arm on superimposition, ∠STU is the larger angle, regardless of which has longer drawn arms.",
+       "method_one_line": "Apply the superimposition comparison from section 2.6: the angle whose free arm extends further is larger; arm length plays no role in the comparison.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Invite the student to pair-share their reasoning before writing, using the superimposition result as the starting point.",
+        "challenge": "Ask: what would change in the argument if, on superimposition, both free arms coincided exactly — what would that tell you about the two angles?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.6 p.23",
+       "description": "Fold a rectangular sheet to create angles; name and compare angles formed between the fold and the sides; make different angles by varied folding and identify the largest and smallest."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 2.8",
+      "section_title": "Special Types of Angles",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "A classmate argues: 'I folded a sheet of paper to create a straight crease. Then I folded the paper again so that the straight crease landed exactly on itself. This second fold must give me a right angle.' Explain, step by step, why this argument is correct or incorrect, using the definition of a straight angle and the idea of bisection.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The argument is correct. A straight angle is formed when two arms are collinear, spanning 180° (a half turn). Folding the paper so the crease lands exactly on itself bisects the straight angle — it divides it into two equal parts. Since the two parts together make 180°, each part equals 180° ÷ 2 = 90°. An angle of exactly 90° is, by definition, a right angle. Therefore the second fold always produces a right angle, and this is not a coincidence but a consequence of bisecting a straight angle.",
+       "method_one_line": "Apply the bisection argument from section 2.8: a straight angle equals 180°, and bisecting it creates two equal angles of 90° each, which are right angles by definition.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to talk through the argument step by step with a partner before writing, focusing on what 'bisecting' means.",
+        "challenge": "Ask: if instead you folded the straight-angle crease so it did not land exactly on itself, what types of angles would the two parts be, and how would their measures relate to 180°?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 2.8 p.31",
+       "description": "Get a slanting crease on paper; fold to get a perpendicular crease. (a) How many right angles result? Justify they are exact right angles. (b) Describe the folding procedure so another person can replicate it."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A full turn is divided into 360 equal parts, each called one degree (1°). Using only this fact, explain why a straight angle measures exactly 180° and a right angle measures exactly 90°. Show your reasoning in two clear steps.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Step 1: A straight angle is formed by a half turn (the two arms are collinear, pointing in opposite directions). Since a full turn = 360°, a half turn = 360° ÷ 2 = 180°. Therefore a straight angle = 180°. Step 2: A right angle is formed by bisecting a straight angle (folding the straight angle exactly in half). Since a straight angle = 180°, bisecting it gives 180° ÷ 2 = 90°. Therefore a right angle = 90°.",
+       "method_one_line": "Derive straight and right angle measures by halving the full turn and then halving the straight angle, using the degree definition from section 2.9.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Invite the student to use the circle-division table from section 2.9 p.34 as a scaffold — find the row for 2 equal parts and the row for 4 equal parts.",
+        "challenge": "Ask: what would a right angle measure if a full turn had been divided into 400 equal parts instead of 360, and how would straight angle relate to it?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.9 p.34",
+       "description": "A circle divided into 1, 2, 3, 4, 5, 6, 8, 9, 10, and 12 equal parts is shown; write the degree measure of each resulting angle near the indicated sector."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 2.7",
+      "section_title": "Making Rotating Arms",
+      "goal": "apply",
+      "question_type": "SCR",
+      "prompt": "Rani has two rotating-arm models. Model X has arms 3 cm long and opens to a certain angle. Model Y has arms 8 cm long and opens to the same angle as Model X. She cuts an angle-shaped slit in a piece of card by tracing Model X. Will Model Y pass through the slit? Give a reason for your answer.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Yes, Model Y will pass through the slit. Because the rotation (the angle size) of Model Y is equal to the rotation of Model X, the angle of the slit matches Model Y's angle exactly. The arm length (8 cm versus 3 cm) does not affect whether the model fits through — only the rotation between the arms matters. Longer arms do not widen the angle; they simply extend further along the same directions.",
+       "method_one_line": "Apply the slit-passing result from section 2.7: a rotating arm passes through an angle-shaped slit if and only if its rotation equals or is less than the slit's angle; arm length is irrelevant.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer the student a quick sketch of both models overlaid at the vertex and ask them to identify whether the arms open by the same amount.",
+        "challenge": "Ask: if Model Z has arms 8 cm long but opens to a slightly larger angle than Model X, will it pass through the same slit? Change one number in the problem and re-solve."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 1, p.25",
+       "description": "Students make 'rotating arms' using two paper straws inserted into the arms of a paper clip, create several rotating arms with different angles, arrange them from smallest to largest by superimposition, then perform the slit-passing challenge — tracing one rotating arm onto cardboard to make an angle-shaped slit and identifying which shuffled arm passes through it."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "On a labelled protractor, ray OA reads 35° on the inner scale and ray OB reads 110° on the inner scale, both measured from the same baseline. Find the measure of ∠AOB.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "∠AOB = 110° − 35° = 75°.",
+       "method_one_line": "Apply the subtraction method from section 2.9: read both rays on the same scale and subtract the smaller reading from the larger.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a visual by pointing the student to Figure it Out, section 2.9 p.36, where the same subtraction procedure is applied step by step.",
+        "challenge": "Change one reading: if OA stays at 35° and OB moves to 160°, what is ∠AOB now, and how does the answer compare? Re-solve and classify the new angle."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.9 p.36",
+       "description": "Using the labelled protractor figure (rays O, P, Q, R, S, T, U), name all different angles and write their degree measures; determine which scale (inner or outer) to use and apply subtraction where needed."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A student makes a paper protractor by folding a circle. After the first fold (semicircle) the crease marks 180°. After the second fold the crease marks 90°. After the third fold, two new creases appear. What degree measures do these two new creases mark? Show how you calculated each.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "After the first fold: 180°. After the second fold: 90°. The third fold bisects each of the two 90° sections. The first new crease bisects the 0°–90° section: 90° ÷ 2 = 45°. The second new crease bisects the 90°–180° section: 90° + 45° = 135°. The two new creases mark 45° and 135°.",
+       "method_one_line": "Apply the successive-halving method from Activity 2, section 2.9 p.37: each fold bisects the existing section, so new crease = lower boundary + (section size ÷ 2).",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a number line from 0° to 180° marked at 0°, 90°, and 180°, and ask the student to find the midpoint of each half before computing.",
+        "challenge": "Ask: what two new creases appear after a fourth fold, and what are their degree measures? Extend the pattern one step further."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 2, p.37",
+       "description": "Students make their own protractor by successive paper folding: cut a circle, fold to semicircle (180°), fold again to quarter-circle (90°), fold again to mark 45° and 135°, fold once more to mark 22.5° and 67.5° etc., then unfold and label all creases, identifying angle bisectors and reading off the resulting degree measures."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "In the figure for the problem, six angles (a–f) are drawn in varied orientations. Two of them, angle (b) and angle (e), are measured by a student using a protractor. Angle (b) appears to be roughly a quarter-turn open and the student reads 88°; angle (e) appears to be slightly more than a quarter-turn open and the student reads 97°. Without using a protractor, classify each as acute, right, or obtuse, and state whether each reading is consistent with the visual appearance. Give reasons.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Angle (b) reads 88°. Since 88° is between 0° and 90°, it is acute. A roughly quarter-turn appearance is consistent with a measure close to (but less than) 90°, so 88° is consistent with the visual. Angle (e) reads 97°. Since 97° is between 90° and 180°, it is obtuse. An opening slightly greater than a quarter-turn is consistent with a measure just above 90°, so 97° is consistent with the visual. Both readings are plausible.",
+       "method_one_line": "Apply the classification boundaries from section 2.11 (acute: 0°–90°, obtuse: 90°–180°) and cross-check each numerical reading against the visual description.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a number line marked at 0°, 90°, and 180°, and ask the student to place 88° and 97° on it before classifying.",
+        "challenge": "Change the readings: if angle (b) had read 92° and still appeared 'roughly a quarter-turn', would that reading be consistent? Explain what error in technique might produce it."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 2.9 p.41",
+       "description": "Measure and write the degree measures for six angles (a–f) drawn in varied orientations."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A clock has 12 equally spaced hour marks around a full circle of 360°. (a) What is the angle between two adjacent hour marks? (b) What is the angle between the hour hand at 12 and the hour hand at 4 o'clock? (c) Is the angle at 4 o'clock acute, right, or obtuse?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) 360° ÷ 12 = 30° per hour mark. (b) From 12 to 4 is 4 intervals, so 4 × 30° = 120°. (c) 120° is between 90° and 180°, so it is obtuse.",
+       "method_one_line": "Divide 360° equally among 12 hour marks, multiply by the number of intervals to find the angle, then classify using the section 2.11 boundaries.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a blank clock face with 12 marks and ask the student to mark the 30° gap between marks before computing the 4 o'clock angle.",
+        "challenge": "Ask: at which o'clock positions does the hour hand form a straight angle with the 12 position, and why? Re-solve for those positions."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 2.9 p.45",
+       "description": "Angles in a clock: (a) explain why the angle at 1 o'clock is 30°; (b) find angles at 2, 4, and 6 o'clock; (c) explore other clock angles."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 2.9",
+      "section_title": "Measuring Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A student folds a square sheet of paper using 8 steps of origami and then unfolds it. Two creases meet at a point inside the sheet and form four angles around that point. The student measures three of them as 45°, 90°, and 135°. What must the fourth angle measure? Justify your answer.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "All four angles around a point sum to a full turn = 360°. The three known angles sum to 45° + 90° + 135° = 270°. Therefore the fourth angle = 360° − 270° = 90°. The fourth angle is a right angle.",
+       "method_one_line": "Apply the full-turn total (360°) from section 2.9: subtract the sum of the three known angles from 360° to find the fourth.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a drawn circle divided into four sectors, label three, and ask the student what fraction is left and what its degree measure is.",
+        "challenge": "Ask: if the four angles must all be equal and sum to 360°, what would each measure? Compare this to the right angle in the original problem."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q8, section 2.9 p.43",
+       "description": "Make the origami paper-craft (8 folding steps); unfold the paper fully, draw lines on the creases and measure the angles formed."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 2.10",
+      "section_title": "Drawing Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Using a protractor and ruler, draw an angle of 75°. Then, without measuring again, draw a second angle equal to the first by copying the steps used to draw 75°. Write each step of the drawing procedure you followed.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Step 1: Draw a base ray from a chosen vertex point. Step 2: Place the protractor with its centre on the vertex and align the 0° mark on the base ray. Step 3: Locate the 75° mark on the correct scale and make a small dot. Step 4: Remove the protractor and draw a ray from the vertex through the dot. The resulting angle is 75°. To draw an equal second angle, repeat the same four steps from a new vertex, using 75° again at step 3. Both angles will measure 75°.",
+       "method_one_line": "Apply the four-step drawing procedure from section 2.10: draw base ray, align centre on vertex, locate degree mark, join to form the angle.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer the four-step checklist from section 2.10 as a visual scaffold while the student works through each step in sequence.",
+        "challenge": "Ask: what would happen at step 3 if you accidentally used the outer scale instead of the inner scale for 75°? What angle would you actually draw, and how would you catch the error?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 2.10 p.50",
+       "description": "Use a protractor to draw angles of 110°, 40°, 75°, 112°, and 134°."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 2.10",
+      "section_title": "Drawing Angles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "In a class guessing game, Team A draws an angle of 65° with a protractor. Team B's guesser estimates it as 80°. (a) What is Team B's score for this turn (score = absolute difference in degrees)? (b) In the next turn, Team B draws 120° but the guesser estimates 105°. What is Team A's score? (c) After these two turns, which team has the lower (better) score?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) |65° − 80°| = 15°. Team B's score for turn 1 is 15. (b) |120° − 105°| = 15°. Team A's score for turn 1 is 15. (c) Both teams have a score of 15 after one turn each; the scores are equal — neither team leads.",
+       "method_one_line": "Apply the absolute-difference scoring rule from section 2.10's game: score = |drawn angle − estimated angle| for each turn, then compare totals.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a number line and ask the student to mark both values (65° and 80°) and measure the gap between them before computing the absolute difference.",
+        "challenge": "Ask: if Team A scores 15 in turn 1 and then 8 in turn 2, and Team B scores 15 in turn 1 and 20 in turn 2, which team wins after two turns each, and by how much?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Let's Play a Game #1, section 2.10 p.48",
+       "description": "Team game: one team secretly draws an angle with a protractor; the other team visually estimates the measure; score is the absolute difference in degrees. Each team gets five turns; lowest score wins."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 2.11",
+      "section_title": "Types of Angles and their Measures",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "The Ashoka Chakra has 24 spokes equally spaced around a full circle. (a) What is the angle between two adjacent spokes? (b) What is the measure of the angle formed between the 1st and 6th spoke (counting 5 gaps)? (c) Is this angle acute, right, or obtuse?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) 360° ÷ 24 = 15° per gap. (b) 5 gaps × 15° = 75°. (c) 75° is between 0° and 90°, so it is acute.",
+       "method_one_line": "Divide the full 360° by 24 to find the per-spoke angle, multiply by the number of gaps, and classify using the section 2.11 boundaries.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Offer a circle divided into 24 equal sectors and ask the student to count 5 sectors and shade them before computing the angle.",
+        "challenge": "Ask: how many spoke-gaps are needed to form the largest acute angle possible (less than 90°), and how many for the smallest obtuse angle? Justify both answers."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q6, section 2.9 p.42",
+       "description": "Using the protractor figure with rays A, B, C from X along base E, find the degree measures of ∠BXE, ∠CXE, ∠AXB, and ∠BXC."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

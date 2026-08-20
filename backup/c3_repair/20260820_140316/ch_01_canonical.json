@@ -1,0 +1,1013 @@
+{
+ "filename": "ch_01_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 1,
+ "chapter_title": "Patterns in Mathematics",
+ "grade": "Grade VI",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 8
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 8 periods = 320 minutes\nTotal: 8 periods · 5h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "8x40",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics vi 1",
+  "ledger_ts": "20260818_205348_math_vi_01_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_vi_01_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_01_canonical_p05.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_vi_ch01_20260820_115152_math_vi_01_resynth.json"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:16",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 8,
+        "field": "teacher_notes",
+        "old": "Pose all three problems together on the board at the start a…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "at": "2026-08-20T12:25:45",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 8,
+      "field": "teacher_notes",
+      "rule": "register/clock",
+      "removed": "for 18 minutes",
+      "replaced_with": "",
+      "note": "clock quantity struck; the band carries its own minutes and the platform rescales them | survives: …students work individually with full written working. They then compare in group…"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:51:28",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 8,
+        "field": "teacher_notes",
+        "old": "Pose all three problems at once on the board; students work …",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.1",
+       "title": "What is Mathematics?"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Mathematics as Pattern-Finding: An Opening Exploration",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q1, section 1.1 p.2",
+       "description": "Think of other examples where mathematics helps in everyday life (shopping, cooking, speed, area, design, etc.)."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q2, section 1.1 p.2",
+       "description": "Explain how mathematics has propelled humanity forward, citing examples across scientific experiments, economy, infrastructure, technology, and timekeeping."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Open with a class brainstorm: ask students where they have noticed repeating patterns today — tiles on the floor, their own heartbeat, the sequence of traffic lights. Collect responses on the board without evaluating them, letting the variety of answers surface the idea that pattern-recognition is everywhere."
+      },
+      {
+       "minutes": "8–20",
+       "activity": "Read together the section's framing of mathematics as a search for patterns and their explanations, positioned as both art and science. Draw attention to the two real-world illustrations provided — planetary motion leading to gravitational theory, and genome patterns enabling medical diagnosis — and invite students to articulate, in their own words, what connects those two examples."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Students work in pairs on Figure it Out Q1, section 1.1 p.2 (\"Think of other examples where mathematics helps in everyday life…\"), then share one example each with the class. Record the class's examples in two informal columns: 'pattern noticed' and 'consequence or use.'"
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Class discussion on Figure it Out Q2, section 1.1 p.2 (\"Explain how mathematics has propelled humanity forward…\"). Each pair contributes one domain (economy, infrastructure, technology, timekeeping). Close by returning to the board list from the opening and asking whether any brainstorm item now fits a new category students can name."
+      }
+     ],
+     "teacher_notes": "Watch for students who treat mathematics purely as calculation — the section explicitly frames it as pattern-finding and explanation, and that reframing is the unit's core goal. A common early response to Q2 is to list tools (calculators, computers) rather than mathematical ideas; redirect students toward the underlying patterns those tools exploit. Encourage students to connect their own examples to the chapter's framing of mathematics as creative and aesthetic.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Patterns in Numbers"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Ten Sequences: Recognising and Extending Number Patterns",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q1, section 1.2 p.3",
+       "description": "Recognise the formation pattern in each of the ten number sequences listed in Table 1."
+      },
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q2, section 1.2 p.3",
+       "description": "Rewrite each sequence from Table 1 with the next three terms, and write the rule for each sequence in own words."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–7",
+       "activity": "Display Table 1's ten sequences on the board (without their names). Ask students to silently study them and note which sequences they recognise and which feel unfamiliar. Take a quick show of hands for each row — this surfaces prior knowledge and builds anticipation for the less familiar sequences."
+      },
+      {
+       "minutes": "7–20",
+       "activity": "Walk through Table 1 together. For each sequence, ask a student to articulate the formation rule before the name is revealed. Pay particular attention to triangular numbers, Virahānka numbers, and the powers — these are the sequences most students will not yet have named. Introduce the branch name 'number theory' as the study of patterns in whole numbers."
+      },
+      {
+       "minutes": "20–33",
+       "activity": "Students work individually on Figure it Out Q1, section 1.2 p.3 (\"Recognise the formation pattern in each of the ten number sequences…\") and Figure it Out Q2, section 1.2 p.3 (\"Rewrite each sequence with the next three terms and write the rule…\"). Circulate and check that students are writing the rule in their own words, not copying a formula."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Pairs compare their written rules for the Virahānka sequence and the powers of 2 — the two most likely to generate varied language. Select two or three phrasings and discuss which is clearest. Close by noting that the same sequence can be described by different but equally correct rules."
+      }
+     ],
+     "teacher_notes": "A common error is to describe the Virahānka sequence as 'each term doubles' — watch for this and prompt students to check term-by-term. The Virahānka sequence is attributed to the Indian mathematician Virahānka; name this explicitly when introducing it. Students who finish early can be asked to identify which two sequences share the term 1 as their first value, and whether that is a coincidence.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Squared or plain paper for students"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Visualising Number Sequences"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Dot Diagrams: Seeing Why Sequences Have Their Names",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q1, section 1.3 p.5",
+       "description": "Copy each pictorial representation from Table 2 and draw the next picture in each dot-diagram sequence."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q2, section 1.3 p.5",
+       "description": "Explain geometrically why 1, 3, 6, 10, 15, … are called triangular numbers; why 1, 4, 9, 16, 25, … are called square numbers; and why 1, 8, 27, 64, 125, … are called cubes."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q3, section 1.3 p.5",
+       "description": "Observe that 36 is both a triangular number and a square number; draw pictures showing 36 dots arranged as both a triangle and a square, and explore other numbers that can be represented pictorially in multiple ways."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Project or sketch on the board the first two dot diagrams from Table 2 — all 1's and counting numbers. Ask: 'What shape does the arrangement make as it grows?' Establish that a dot picture is not decoration — it is an argument about why the number sequence looks the way it does."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students copy the seven dot diagrams from Table 2 into their notebooks and draw the next picture for each sequence, working individually on Figure it Out Q1, section 1.3 p.5 (\"Copy each pictorial representation from Table 2 and draw the next picture…\"). Circulate to ensure the cube diagram is being drawn as a three-dimensional dot arrangement, not a flat square grid."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Class works through Figure it Out Q2, section 1.3 p.5 (\"Explain geometrically why 1, 3, 6, 10, 15, … are called triangular numbers…\"). Students share their geometric explanations aloud; the teacher draws attention to the difference between 'it looks triangular' and a proper geometric justification. Then pairs attempt Figure it Out Q3, section 1.3 p.5 (\"Observe that 36 is both a triangular number and a square number…\") and draw both arrangements for 36."
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Brief class share: ask pairs whether they found any other number that can be drawn as both a triangle and a square. Accept conjectures without resolving them — the goal is to leave students with an open question that demonstrates mathematics as ongoing inquiry, not a closed set of facts."
+      }
+     ],
+     "teacher_notes": "Students often accept that square numbers 'look like squares' without articulating the geometric argument precisely — push for a statement such as 'an n×n dot grid has n² dots.' The cube diagram is the most challenging to draw; accept layered square representations and ask students to explain why three dimensions are needed. Figure it Out Q4 and Q5 in section 1.3 are rich extensions; direct confident students there independently.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Dotted or plain paper",
+      "Pencils"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Visualising Number Sequences"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Hexagonal Numbers and Pictorial Powers: Extending Visual Reasoning",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q4, section 1.3 p.5",
+       "description": "Identify the sequence 1, 7, 19, 37, … as hexagonal numbers from a given dot diagram; draw these in a notebook and find the next number in the sequence."
+      },
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q5, section 1.3 p.5",
+       "description": "Devise pictorial ways to visualise the sequences of powers of 2 and powers of 3 using dot or geometric diagrams."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Recall the idea established through dot diagrams in Table 2 — that a geometric shape gives a number sequence its name and explains its growth. Present the dot diagram for hexagonal numbers (the given figure in the textbook) without naming the sequence, and ask students to describe what they see: 'What shape is forming? How many dots are added at each step?'"
+      },
+      {
+       "minutes": "10–24",
+       "activity": "Students work on Figure it Out Q4, section 1.3 p.5 (\"Identify the sequence 1, 7, 19, 37, … as hexagonal numbers from a given dot diagram…\"), drawing the hexagonal dot figures in their notebooks and identifying the next term. Partners compare their drawings and reconcile any disagreements about the pattern of growth before writing the next number."
+      },
+      {
+       "minutes": "24–38",
+       "activity": "Students tackle Figure it Out Q5, section 1.3 p.5 (\"Devise pictorial ways to visualise the sequences of powers of 2 and powers of 3…\"). This is open-ended: students are free to use branching diagrams, nested squares, or any geometric representation they can justify. Select two or three contrasting approaches and have students explain their diagram's logic to the class."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Consolidate the idea that the same number sequence can have more than one valid pictorial representation, and that choosing a good picture is itself a mathematical act — it is not just illustration but argument."
+      }
+     ],
+     "teacher_notes": "Students sometimes confuse hexagonal numbers with the hexagon shape itself; clarify that the dot arrangement grows outward from a central dot in a hexagonal pattern, and the number counts all dots in the figure at each stage. For powers of 2 and 3, expect a wide range of representations — reward those that make the multiplication-by-2 or multiplication-by-3 step visually obvious. Watch for students who draw a geometric hexagon rather than a dot-based hexagonal figure.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Dotted or plain paper",
+      "Pencils or coloured pens"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.4",
+       "title": "Relations among Number Sequences"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Odd Numbers Sum to Squares: A Visual Proof and Its Extensions",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 1.4",
+       "book_ref": "Example, section 1.4 p.6",
+       "description": "Shows that summing successive odd numbers (1, 1+3, 1+3+5, …) always yields square numbers, and provides a visual dot-grid proof by partitioning any n×n square into L-shaped gnomons of 1, 3, 5, … dots, explaining why the pattern holds for any square."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q1, section 1.4 p.8",
+       "description": "Find a pictorial explanation for why adding counting numbers up and down (1, 1+2+1, 1+2+3+2+1, …) gives square numbers."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q2, section 1.4 p.8",
+       "description": "Use the pictorial insight to determine the value of the symmetric sum 1 + 2 + 3 + … + 99 + 100 + 99 + … + 3 + 2 + 1."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Work through Example, section 1.4 p.6 (\"Shows that summing successive odd numbers…yields square numbers, with a visual dot-grid proof by L-shaped gnomons….\") together as a class. Draw the 4×4 dot grid on the board and physically partition it into gnomons of 1, 3, 5, 7 dots using coloured chalk or marker. Ask students to predict what the next gnomon would contain before drawing it."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Students attempt Figure it Out Q1, section 1.4 p.8 (\"Find a pictorial explanation for why adding counting numbers up and down…gives square numbers.\"). They draw their own dot grids, attempting to find an analogous partition. Circulate and prompt with: 'If gnomons explained odd-number sums, what geometric region might explain an up-and-down sum?'"
+      },
+      {
+       "minutes": "24–35",
+       "activity": "Discuss Q1's pictorial solution as a class. Then students apply the insight to Figure it Out Q2, section 1.4 p.8 (\"Use the pictorial insight to determine the value of the symmetric sum 1 + 2 + 3 + … + 100 + … + 2 + 1.\"). Students write their numerical answer with a one-sentence justification referencing the dot picture."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Brief reflection: ask students to state in one sentence the key idea — that a visual partition of a dot grid can prove a numerical relationship, turning an observation into a general argument. Collect two or three student sentences and discuss which best captures the idea."
+      }
+     ],
+     "teacher_notes": "The gnomon proof is central to this unit — ensure every student draws and labels at least a 3×3 dot grid partitioned into L-shapes before moving to Q1. A common error is to verify the pattern numerically for three cases and call it proved; redirect students toward the visual argument, which shows why the pattern holds for any square, not just the ones they checked. The 'adding up and down' pattern in Q1 is the key preparation for several later exercises in the section.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Dotted paper",
+      "Coloured chalk or markers"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.4",
+       "title": "Relations among Number Sequences"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Cross-Sequence Connections: Triangular, Hexagonal, and Powers",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q3, section 1.4 p.8",
+       "description": "Determine what sequence is obtained by successively adding up the all 1's sequence, and what sequence results from adding the all 1's sequence up and then down."
+      },
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q4, section 1.4 p.8",
+       "description": "Identify the sequence obtained by successively adding the counting numbers (1, 1+2, 1+2+3, …) and provide a pictorial explanation."
+      },
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q5, section 1.4 p.8",
+       "description": "Investigate what sequence is produced by adding consecutive pairs of triangular numbers (1+3, 3+6, 6+10, …) and explain the result with a picture."
+      },
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q6, section 1.4 p.8",
+       "description": "Explore running sums of powers of 2 (1, 1+2, 1+2+4, …) and find what sequence results from adding 1 to each partial sum; explain why."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q7, section 1.4 p.9",
+       "description": "Multiply each triangular number by 6 and add 1 (e.g., 1×6+1=7, 3×6+1=19, …); identify the resulting sequence and explain it with a picture."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q8, section 1.4 p.9",
+       "description": "Add up hexagonal numbers successively (1, 1+7, 1+7+19, …); identify the resulting sequence and explain it using a picture of a cube."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 1.4",
+       "book_ref": "Figure it Out Q9, section 1.4 p.9",
+       "description": "Discover own patterns or relations among the sequences in Table 1 and attempt to explain them with pictures or reasoning."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Warm-up: place three open-ended prompts on the board — 'What do you get when you add successive 1's? Successive counting numbers? Pairs of triangular numbers?' — and give students a brief silent period to jot conjectures. This activates the idea, established through the odd-number–square relationship, that adding one sequence can produce another named sequence."
+      },
+      {
+       "minutes": "8–25",
+       "activity": "Students work in groups of three on a set of selected exercises: Figure it Out Q3, section 1.4 p.8 (\"Determine what sequence results from successively adding the all 1's sequence…\"), Figure it Out Q4, section 1.4 p.8 (\"Identify the sequence from successively adding counting numbers…\"), and Figure it Out Q5, section 1.4 p.8 (\"Investigate adding consecutive pairs of triangular numbers…\"). Each group must provide both a numerical answer and a pictorial explanation."
+      },
+      {
+       "minutes": "25–36",
+       "activity": "Groups present findings for Q5 (triangular pairs → squares). Then the class explores Figure it Out Q6, section 1.4 p.8 (\"Running sums of powers of 2…\") and Figure it Out Q7, section 1.4 p.9 (\"Multiply triangular numbers by 6 and add 1…\") together, with the teacher guiding the connection to hexagonal numbers. Students with remaining time attempt Figure it Out Q8, section 1.4 p.9 (\"Add up hexagonal numbers successively…\") and connect the result to cubes."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Students who have explored Figure it Out Q9, section 1.4 p.9 (\"Discover own patterns or relations among the sequences in Table 1…\") share one self-found pattern. Close with the observation that Table 1's ten sequences are not isolated — they are woven together by relationships that can be seen and explained."
+      }
+     ],
+     "teacher_notes": "Students often identify the numerical result of Q4 (triangular numbers) without a pictorial explanation; insist on the diagram — a staircase arrangement of dots makes the relationship visible and is the section's central pedagogical act. The chain from triangular → hexagonal → cubes (Q7 and Q8) is particularly striking; if time is tight, prioritise Q5 and Q7 so that students experience at least two cross-sequence surprises. Q9 is deliberately open — treat any reasonable conjecture as a valid contribution.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Dotted or plain paper",
+      "Coloured pens or pencils"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 1.5",
+       "title": "Patterns in Shapes"
+      },
+      {
+       "ref": "section 1.6",
+       "title": "Relation to Number Sequences"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Shape Sequences: Rules, Extensions, and Hidden Number Patterns",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 1.5",
+       "book_ref": "Figure it Out Q1, section 1.5 p.11",
+       "description": "Recognise the formation pattern or rule in each of the five shape sequences presented in Table 3."
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 1.5",
+       "book_ref": "Figure it Out Q2, section 1.5 p.11",
+       "description": "Redraw each of the five shape sequences from Table 3; attempt to draw the next shape in each sequence and describe the rule in own words."
+      },
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 1.6",
+       "book_ref": "Figure it Out Q1, section 1.6 p.11",
+       "description": "Count the number of sides and corners in each regular polygon in the sequence; identify which number sequence is produced and explain why sides and corners always give the same count."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 1.6",
+       "book_ref": "Figure it Out Q2, section 1.6 p.11",
+       "description": "Count the number of lines in each complete graph (K2 through K6); identify the resulting number sequence and explain why it forms that pattern."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Introduce Table 3's five shape sequences by displaying one representative figure from each on the board. Ask students to name each family — polygons, complete graphs, stacked squares, stacked triangles, Koch snowflake — and to articulate informally what rule seems to generate successive shapes. Introduce the branch name 'geometry' as the study of patterns in shapes."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students work on Figure it Out Q1, section 1.5 p.11 (\"Recognise the formation pattern or rule in each of the five shape sequences…\") and Figure it Out Q2, section 1.5 p.11 (\"Redraw each sequence and draw the next shape; describe the rule in own words.\"). The Koch snowflake is the most intricate — circulate and prompt students to focus on what happens to each individual line segment at each iteration."
+      },
+      {
+       "minutes": "22–34",
+       "activity": "Walk through Example, section 1.6 p.11 (\"Identifies that the regular polygon sequence encodes the counting numbers starting at 3…\") as a class. Then students attempt Figure it Out Q1, section 1.6 p.11 (\"Count sides and corners in each regular polygon; identify which number sequence is produced…\") and Figure it Out Q2, section 1.6 p.11 (\"Count lines in each complete graph; identify the resulting number sequence…\"). Ask students to explain why the count of sides and corners must always match in a closed polygon."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Brief class comparison: the polygon sequence encodes counting numbers; the complete graph sequence encodes triangular numbers. Ask students whether they recognise the triangular numbers from the number-sequence work — and why each new node in a complete graph adds a predictable number of new lines. Connect the count-each-new-node logic back to the successive-addition idea from section 1.4."
+      }
+     ],
+     "teacher_notes": "A common error on the Koch snowflake is to add bumps randomly rather than replacing every segment with the four-segment pattern; slow down and have students trace one segment's transformation step by step before drawing the whole figure. The connection between complete graphs and triangular numbers is the key insight of section 1.6's opening — ensure students articulate why the n-th complete graph has edges equal to the n-th triangular number, not merely verify it for K2 through K5. Sections 1.5 and 1.6 are closely linked and naturally share this unit.",
+     "materials": [
+      "Blackboard or whiteboard",
+      "Textbook",
+      "Plain or squared paper",
+      "Ruler",
+      "Pencils"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 1.5",
+       "title": "Patterns in Shapes"
+      },
+      {
+       "ref": "section 1.6",
+       "title": "Relation to Number Sequences"
+      }
+     ],
+     "activity_title": "Patterns at Work: A Chapter Synthesis",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all three problems at once on the board; students work individually with full written working. They then compare in groups of three — any disagreement is resolved step by step, not by voting. One student per group presents a solution; after each presentation, the class names the chapter method used. Problem 1 needs the gnomon/odd-numbers method: summing the first n odd numbers by recognising the L-shaped partition of an n×n square. Watch for students who add term by term rather than using the square insight. Problem 2 needs the cross-sequence relation method: recognising that two consecutive triangular numbers add to a square. A common error is treating T₅ + T₆ as T₁₁ — insist on computing each triangular number separately. Problem 3 needs the shape-sequence method: reading a number sequence out of a growing shape by counting a structural feature at each stage. Watch for off-by-one errors in the edge count and for students who multiply rather than reason stage by stage.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | The first n odd numbers always sum to n². Use this to find the sum 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 + 17 + 19, and then find the sum 1 + 3 + 5 + … + 39. | The first sum has 10 terms (odd numbers from 1 to 19), so it equals 10² = 100. The second sum runs from 1 to 39; the nth odd number is 2n − 1, so 2n − 1 = 39 gives n = 20. The sum equals 20² = 400.\n2 | The triangular numbers are 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, … Adding any two consecutive triangular numbers gives a square number. Verify this for the 5th and 6th triangular numbers, and state which square you get. | The 5th triangular number is T₅ = 15 and the 6th is T₆ = 21. Their sum is 15 + 21 = 36 = 6². The result is the 36th square — equivalently, the square of 6, because adding the nth and (n+1)th triangular numbers always gives (n+1)²: here 5² + 5 + 6 = 36 = 6². (Pictorially, a triangle of 15 dots and a triangle of 21 dots fit together into a 6 × 6 square grid.)\n3 | A complete graph is drawn at each stage: stage 1 has 2 nodes, stage 2 has 3 nodes, stage 3 has 4 nodes, and so on, with every node connected to every other node by a line. Count the number of lines at stages 1, 2, 3, 4, and 5. Write the sequence of line-counts and name it. | At stage k the graph has k + 1 nodes. Each new node connects to all previous ones, adding k new lines to the count from stage k − 1. Stage 1 (2 nodes): 1 line. Stage 2 (3 nodes): 1 + 2 = 3 lines. Stage 3 (4 nodes): 3 + 3 = 6 lines. Stage 4 (5 nodes): 6 + 4 = 10 lines. Stage 5 (6 nodes): 10 + 5 = 15 lines. The sequence 1, 3, 6, 10, 15 is the triangular numbers."
+      }
+     ],
+     "materials": [
+      "Blackboard or whiteboard and chalk or markers",
+      "Notebook and pencil"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "The teacher writes all three problems on the board and reads each aloud. No hints are given. Students open their notebooks to a fresh page and begin working individually."
+      },
+      {
+       "minutes": "3-21",
+       "activity": "Individual working time. Every student writes full working for each problem — not just answers. The room is quiet. The teacher circulates, confirming that students are writing steps, and prompts any student who is stuck with 'Draw a picture' or 'Write the first few terms' — nothing more."
+      },
+      {
+       "minutes": "21-31",
+       "activity": "Students form groups of three and compare their working. Where answers differ, the group reconstructs both solution paths step by step to find where they diverge and which is correct. Groups that finish early are asked to check whether they can give a pictorial reason for any of their answers."
+      },
+      {
+       "minutes": "31-38",
+       "activity": "One volunteer per group presents one problem at the board, reading the steps aloud. After each presentation the teacher asks the class: 'Which chapter method did this solution use?' — students name it (odd-numbers-sum-to-squares; consecutive-triangular-numbers-make-a-square; shape-sequence-encodes-a-number-sequence). Brief corrections are made if needed; the group that solved it differently explains the discrepancy."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Closing statement from the teacher: 'Every problem today yielded because there was a pattern underneath — a pattern we could see, name, and trust. That is the one idea this chapter has been building: mathematics is the search for patterns and for the reasons they hold.' No further task is set."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 8
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 1.1",
+      "section_title": "What is Mathematics?",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 1.1 p.2",
+      "anchor_description": "Think of other examples where mathematics helps in everyday life (shopping, cooking, speed, area, design, etc.)."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Patterns in Numbers",
+      "goal": "recall",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q1, section 1.2 p.3",
+      "anchor_description": "Recognise the formation pattern in each of the ten number sequences listed in Table 1."
+     },
+     {
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "anchor_id": "E-19",
+      "anchor_book_ref": "Figure it Out Q1, section 1.5 p.11",
+      "anchor_description": "Recognise the formation pattern or rule in each of the five shape sequences presented in Table 3."
+     },
+     {
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "anchor_id": "E-21",
+      "anchor_book_ref": "Figure it Out Q1, section 1.6 p.11",
+      "anchor_description": "Count the number of sides and corners in each regular polygon in the sequence; identify which number sequence is produced and explain why sides and corners always give the same count."
+     },
+     {
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "anchor_id": "E-23",
+      "anchor_book_ref": "Figure it Out Q3, section 1.6 p.12",
+      "anchor_description": "Count the unit squares in each shape of the stacked squares sequence; identify the number sequence and explain why it arises."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Visualising Number Sequences",
+      "goal": "reason",
+      "anchor_id": "E-5",
+      "anchor_book_ref": "Figure it Out Q1, section 1.3 p.5",
+      "anchor_description": "Copy each pictorial representation from Table 2 and draw the next picture in each dot-diagram sequence."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Visualising Number Sequences",
+      "goal": "reason",
+      "anchor_id": "E-8",
+      "anchor_book_ref": "Figure it Out Q4, section 1.3 p.5",
+      "anchor_description": "Identify the sequence 1, 7, 19, 37, … as hexagonal numbers from a given dot diagram; draw these in a notebook and find the next number in the sequence."
+     },
+     {
+      "section_ref": "section 1.4",
+      "section_title": "Relations among Number Sequences",
+      "goal": "reason",
+      "anchor_id": "E-10",
+      "anchor_book_ref": "Figure it Out Q1, section 1.4 p.8",
+      "anchor_description": "Find a pictorial explanation for why adding counting numbers up and down (1, 1+2+1, 1+2+3+2+1, …) gives square numbers."
+     },
+     {
+      "section_ref": "section 1.4",
+      "section_title": "Relations among Number Sequences",
+      "goal": "reason",
+      "anchor_id": "E-12",
+      "anchor_book_ref": "Figure it Out Q3, section 1.4 p.8",
+      "anchor_description": "Determine what sequence is obtained by successively adding up the all 1's sequence, and what sequence results from adding the all 1's sequence up and then down."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": []
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 1.1",
+      "section_title": "What is Mathematics?",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following best describes what mathematics is, according to the opening chapter?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "A set of rules for solving arithmetic problems",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "The branch of science that studies physical phenomena",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "The search for patterns and explanations of why those patterns exist",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "The study of numbers and their operations only",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Mathematics is the search for patterns and the explanations for why those patterns exist, positioned as both an art and a science.",
+       "method_one_line": "Recall the chapter's opening definition of mathematics as pattern-finding and explanation.",
+       "what_each_option_reveals": {
+        "D": "The student holds a narrow computational view of mathematics and has not absorbed the chapter's broader framing.",
+        "A": "The student conflates mathematics with a rule-following procedure, missing the creative and explanatory dimension the chapter foregrounds.",
+        "B": "The student conflates mathematics with physical science, not recognising the chapter's distinction between the two disciplines."
+       },
+       "inclusivity": {
+        "support": "Let the student re-read the first paragraph of section 1.1 and highlight any sentence that defines what mathematics is.",
+        "challenge": "Ask the student to write one sentence, in their own words, explaining the difference between finding a pattern and explaining why it holds."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.1 p.2",
+       "description": "Think of other examples where mathematics helps in everyday life (shopping, cooking, speed, area, design, etc.)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 1.2",
+      "section_title": "Patterns in Numbers",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "The branch of mathematics that studies patterns in whole numbers is called:",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Algebra",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Arithmetic",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Geometry",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Number theory",
+        "is_correct": true
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Number theory is the branch of mathematics that studies patterns in whole numbers (0, 1, 2, 3, 4, …).",
+       "method_one_line": "Recall the branch name introduced in section 1.2 alongside Table 1.",
+       "what_each_option_reveals": {
+        "C": "The student recalls 'geometry' from the chapter but confuses it with the branch that studies shapes, not number patterns.",
+        "A": "The student associates patterns with algebra, a reasonable but incorrect response at this stage — the chapter names number theory specifically.",
+        "B": "The student defaults to 'arithmetic' as the study of numbers, not distinguishing the higher-level branch concerned with patterns and relationships."
+       },
+       "inclusivity": {
+        "support": "Direct the student to the first sentence of section 1.2 and ask them to underline the branch name given there.",
+        "challenge": "Ask the student to name one other branch of mathematics mentioned in the chapter and describe what it studies."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.2 p.3",
+       "description": "Recognise the formation pattern in each of the ten number sequences listed in Table 1."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-3",
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "question_type": "SCR",
+      "prompt": "Table 3 in your textbook shows five shape sequences. Name any three of these shape sequences and state, in one sentence each, the rule that generates successive shapes in that sequence.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Any three from: (1) Regular polygons — each successive shape has one more side than the previous, starting from a triangle. (2) Complete graphs — each new graph adds one node connected to all previous nodes. (3) Stacked squares — each new shape is the next larger n×n grid of unit squares. (4) Stacked triangles — each new shape adds a new row of small triangles at the base. (5) Koch snowflake — each line segment in the current shape is replaced by four segments forming a speed-bump (outward triangular bump).",
+       "method_one_line": "Recall the five shape sequences of Table 3 and their stated formation rules from section 1.5.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Allow the student to look at Table 3 in the textbook and describe what changes between the first and second shape in any sequence they choose.",
+        "challenge": "Ask the student to describe the rule for the Koch snowflake and explain why drawing the fourth iteration is significantly more complex than drawing the third."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.5 p.11",
+       "description": "Recognise the formation pattern or rule in each of the five shape sequences presented in Table 3."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-4",
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "In the sequence of regular polygons (triangle, quadrilateral, pentagon, …), which number sequence is encoded by counting the number of sides of each polygon?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Counting numbers starting at 3: 3, 4, 5, 6, …",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Odd numbers: 1, 3, 5, 7, …",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Square numbers: 1, 4, 9, 16, …",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Triangular numbers: 1, 3, 6, 10, …",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "The regular polygon sequence encodes the counting numbers starting at 3: the triangle has 3 sides, the quadrilateral 4, the pentagon 5, and so on.",
+       "method_one_line": "Recall the worked example in section 1.6 identifying the side-count sequence of regular polygons as counting numbers from 3.",
+       "what_each_option_reveals": {
+        "B": "The student notices that polygons grow by one side at a time but incorrectly maps this to odd numbers rather than consecutive integers from 3.",
+        "D": "The student confuses the polygon side sequence with the triangular number sequence, possibly because both involve triangles in different contexts.",
+        "C": "The student recalls square numbers from Table 1 but applies them incorrectly to a shape whose growth is linear, not quadratic."
+       },
+       "inclusivity": {
+        "support": "Ask the student to list the first five polygon names and write the number of sides next to each, then read off the resulting list of numbers.",
+        "challenge": "Ask the student to explain why the number of corners in each polygon always equals the number of sides, and whether this would hold for any closed polygon they could draw."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.6 p.11",
+       "description": "Count the number of sides and corners in each regular polygon in the sequence; identify which number sequence is produced and explain why sides and corners always give the same count."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-5",
+      "section_ref": "section 1.5",
+      "section_title": "Patterns in Shapes",
+      "goal": "recall",
+      "question_type": "SCR",
+      "prompt": "The stacked squares sequence shows figures that are 1×1, 2×2, 3×3, 4×4, … grids of unit squares. How many unit squares are in the 5th figure? Name the number sequence produced by counting unit squares in successive figures.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The 5th figure is a 5×5 grid containing 25 unit squares. The sequence of unit-square counts is 1, 4, 9, 16, 25, … — the square numbers.",
+       "method_one_line": "Recall that each n-th stacked-squares figure is an n×n grid, giving n² unit squares, producing the sequence of square numbers.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Invite the student to draw a 3×3 grid and count the unit squares, then repeat for 4×4, and look for the pattern in their counts.",
+        "challenge": "Ask the student to identify another shape sequence in Table 3 that also encodes square numbers and to explain, using a diagram, why two different shape sequences can produce the same number sequence."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 1.6 p.12",
+       "description": "Count the unit squares in each shape of the stacked squares sequence; identify the number sequence and explain why it arises."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 1.3",
+      "section_title": "Visualising Number Sequences",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Using dot diagrams, explain geometrically why the numbers 1, 3, 6, 10, 15 are called triangular numbers. Your answer must refer to the shape of the dot arrangement, not just the numerical pattern.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Each triangular number can be arranged as dots in an equilateral triangle shape: 1 dot forms a point (a triangle with 1 dot on each side), 3 dots form a triangle with 2 dots on each side, 6 dots form a triangle with 3 dots on each side, and so on. The n-th triangular number is the total number of dots in a triangular dot arrangement whose bottom row has n dots, with each successive row above having one fewer dot. The name comes directly from the triangular shape of the dot arrangement.",
+       "method_one_line": "Use the dot-diagram visualisation from Table 2 to show that each term fills a triangular arrangement of dots, with the n-th term having n dots on each side.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to draw dots for 1, then add a row of 2 dots below to make 3, then a row of 3 to make 6, and describe the shape they see growing.",
+        "challenge": "Ask the student to use the same geometric reasoning to explain why 36 can be both a triangular number and a square number, drawing both arrangements."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.3 p.5",
+       "description": "Copy each pictorial representation from Table 2 and draw the next picture in each dot-diagram sequence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 1.3",
+      "section_title": "Visualising Number Sequences",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "The hexagonal number sequence begins 1, 7, 19, 37, … . Without calculating numerically, explain how a dot diagram helps you find the next term in this sequence. What is the next term?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In the dot diagram for hexagonal numbers, each successive figure is formed by surrounding the previous hexagonal figure with a new outer ring of dots arranged in a hexagonal pattern. The first figure has 1 dot, the second adds a ring of 6 to give 7, the third adds a ring of 12 to give 19, the fourth adds a ring of 18 to give 37. The rings grow by 6 each time (6, 12, 18, …), so the next ring adds 24 dots, giving 37 + 24 = 61 as the fifth hexagonal number.",
+       "method_one_line": "Use the hexagonal dot diagram to identify the ring-growth pattern (rings of 6, 12, 18, … dots) and extend by one ring.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to find the differences between successive terms (7−1=6, 19−7=12, 37−19=18) and describe the pattern in the differences before connecting it to the dot diagram.",
+        "challenge": "Ask the student to explain why the differences between successive hexagonal numbers are multiples of 6, connecting this to the six-sided symmetry of the hexagonal arrangement."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 1.3 p.5",
+       "description": "Identify the sequence 1, 7, 19, 37, … as hexagonal numbers from a given dot diagram; draw these in a notebook and find the next number in the sequence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 1.4",
+      "section_title": "Relations among Number Sequences",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "The worked example in section 1.4 shows that summing successive odd numbers always gives square numbers: 1 = 1², 1+3 = 2², 1+3+5 = 3², and so on. Explain, using the idea of L-shaped gnomons in a dot grid, WHY this pattern must hold for any square number — not just the ones you can check by hand.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Draw an n×n dot grid representing n². This grid can be partitioned into n L-shaped regions called gnomons: the innermost gnomon contains 1 dot (the top-left corner), the next L-shape surrounding it contains 3 dots, the next contains 5 dots, and so on, with the k-th gnomon containing (2k−1) dots. Each gnomon is the next odd number in the sequence. Since every n×n grid — no matter how large — can be partitioned into exactly n such gnomons containing 1, 3, 5, …, (2n−1) dots, the sum of the first n odd numbers is always exactly n². This is why the pattern holds universally, not just for the cases we check.",
+       "method_one_line": "Partition any n×n dot grid into n successive L-shaped gnomons of 1, 3, 5, …, (2n−1) dots to show the sum of the first n odd numbers equals n².",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to draw a 3×3 dot grid, colour the L-shapes for 1, 3, and 5 in three different colours, and count dots in each region before writing their explanation.",
+        "challenge": "Ask the student to construct a similar gnomon-based argument to show why the 'adding up and down' sums 1, 1+2+1, 1+2+3+2+1, … also produce square numbers, drawing the corresponding dot-grid partition."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.4 p.8",
+       "description": "Find a pictorial explanation for why adding counting numbers up and down (1, 1+2+1, 1+2+3+2+1, …) gives square numbers."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "section_ref": "section 1.4",
+      "section_title": "Relations among Number Sequences",
+      "goal": "reason",
+      "question_type": "NUM",
+      "prompt": "When you successively add the terms of the all-1's sequence (1, 1, 1, 1, …), you get a new sequence. When you then add the resulting sequence up and then down (in the same way as the 'adding up and down' pattern for counting numbers), you get yet another sequence. Identify both sequences by name and give the first five terms of each.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Successively adding the all-1's sequence gives: 1, 1+1=2, 1+1+1=3, 1+1+1+1=4, 1+1+1+1+1=5 — this is the counting numbers sequence: 1, 2, 3, 4, 5. Adding the counting numbers sequence up and then down gives: 1, 1+2+1=4, 1+2+3+2+1=9, 1+2+3+4+3+2+1=16, 1+2+3+4+5+4+3+2+1=25 — this is the square numbers sequence: 1, 4, 9, 16, 25.",
+       "method_one_line": "Apply successive addition to the all-1's sequence to get counting numbers, then apply the 'adding up and down' pattern to counting numbers to obtain square numbers.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Guide the student to write out the first five partial sums of 1+1+1+… before attempting the second step, and connect the result to a named sequence from Table 1.",
+        "challenge": "Ask the student to extend the chain: if adding counting numbers up and then down gives squares, what do you predict adding odd numbers up and then down might give, and can you check it for the first three cases?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 1.4 p.8",
+       "description": "Determine what sequence is obtained by successively adding up the all 1's sequence, and what sequence results from adding the all 1's sequence up and then down."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "no goals routed to this section in the chapter",
+    "items": []
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

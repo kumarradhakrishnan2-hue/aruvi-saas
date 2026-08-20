@@ -1,0 +1,1684 @@
+{
+ "filename": "ch_06_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 6,
+ "chapter_title": "We Distribute, Yet Things Multiply",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 16
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 16 periods = 720 minutes\nTotal: 16 periods · 12h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "16x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 6",
+  "ledger_ts": "20260818_205348_math_viii_06_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-19T12:58:43",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 16,
+      "field": "band:0",
+      "rule": "register/meta-leak",
+      "removed": "No prior draft is required; the map is constructed fresh in this sitting.",
+      "replaced_with": "",
+      "note": "meta-leak — the model answering the BRIEF's start-and-finish-your-own-work rule inside the teacher's copy (ARV-D-161) | survives: …naming one fast-multiplication application for each identity.…"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:17",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 16,
+        "field": "teacher_notes",
+        "old": "Pose all three problems at once on the board; students work …",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "at": "2026-08-20T11:18:24",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 16,
+      "field": "teacher_notes",
+      "rule": "register/clock",
+      "removed": "for the first fifteen minutes",
+      "replaced_with": "",
+      "note": "clock quantity struck; the band carrying this work already declares its own minutes and the platform rescales them | survives: …Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full an …"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:51:30",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 16,
+        "field": "teacher_notes",
+        "old": "Pose all three problems on the board at the start; students …",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_viii_06_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_06_canonical_p13.json": "2026-08-19T13:38:19",
+    "ch_06_canonical_p10.json": "2026-08-19T13:38:18"
+   },
+   "replaced_in": "backup/resynth/mathematics_viii_ch06_20260820_115152_math_viii_06_resynth.json"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.1",
+       "title": "Some Properties of Multiplication"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "What Happens When We Nudge a Factor?",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out Q1, section 6.1 p.142",
+       "description": "Observe the 10×10 multiplication grid; if the middle entry of a 3×3 frame is pq, write algebraic expressions for the other 8 entries using Identity 1."
+      },
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 6.1",
+       "book_ref": "Example 1, section 6.1 p.140",
+       "description": "Expand (3a/2)(a − b + 1/5) using distributivity over three terms; collect like terms using exponent notation."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Pose the opening question from section 6.1: what changes when each factor of 23×27 is increased by 1? Students compute 23×27 and 24×28 independently, then compare and articulate in words what they notice."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Introduce the distributive property a(b+c) = ab+ac through the area-diagram interpretation from section 6.1. Walk through how increasing b by 1 adds a to the product, and how increasing both a and b by 1 adds a+b+1, using students' own computed pairs as evidence."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Work through Figure it Out Q1, section 6.1 p.142 (\"Observe the 10×10 multiplication grid; if the middle entry of a 3×3 frame is pq, write algebraic expressions for the other 8 entries using Identity 1.\"), reading Identity 1: (a+m)(b+n) = ab+mb+an+mn from the board and labelling each of the nine cells."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Teacher models Example 1, section 6.1 p.140 (\"Expand (3a/2)(a − b + 1/5) using distributivity over three terms; collect like terms using exponent notation.\"), emphasising how each term of the bracket is multiplied in turn and how exponent notation records repeated factors."
+      }
+     ],
+     "teacher_notes": "Students commonly assume multiplying each factor by the same scale yields the same increment — the area-diagram partition keeps this visible and concrete. Watch for students who add the increment to the product rather than recognising it as a multiplicative contribution from each factor. Example 1, section 6.1 p.140 is a useful independent read for students who want to see three-term distribution worked in full.",
+     "materials": [
+      "Squared-grid paper or printed 10×10 multiplication table",
+      "Coloured pens for area-diagram colouring"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.1",
+       "title": "Some Properties of Multiplication"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Expanding Products, Naming Every Part",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 6.1",
+       "book_ref": "Example 2, section 6.1 p.141",
+       "description": "Expand (a+b)(a+b) by treating (a+b) as a single factor; collect like terms ba and ab to derive a²+2ab+b²."
+      },
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 6.1",
+       "book_ref": "Example 3, section 6.1 p.141",
+       "description": "Expand (a+b)(a²+2ab+b²) using distributivity; collect like terms a²b+2a²b and ab²+2ab² to derive a³+3a²b+3ab²+b³."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out Q2, section 6.1 p.143",
+       "description": "Expand six products: (3+u)(v−3), (2/3)(15+6a), (10a+b)(10c+d), (3−x)(x−6), (−5a+b)(c+d), (5+z)(y+9)."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out Q4, section 6.1 p.143",
+       "description": "Expand (i) (a+ab−3b²)(4+b) and (ii) (4y+7)(y+11z−3) using distributivity over multi-term expressions."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher walks through Example 2, section 6.1 p.141 (\"Expand (a+b)(a+b) by treating (a+b) as a single factor; collect like terms ba and ab to derive a²+2ab+b².\"), writing each distribution step on the board and explicitly naming why ba and ab are like terms."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher leads Example 3, section 6.1 p.141 (\"Expand (a+b)(a²+2ab+b²) using distributivity; collect like terms a²b+2a²b and ab²+2ab² to derive a³+3a²b+3ab²+b³.\"), inviting students to supply each intermediate sum aloud before writing it."
+      },
+      {
+       "minutes": "25–45",
+       "activity": "Students attempt Figure it Out Q2, section 6.1 p.143 (\"Expand six products: (3+u)(v−3), (2/3)(15+6a), (10a+b)(10c+d), (3−x)(x−6), (−5a+b)(c+d), (5+z)(y+9).\") in pairs, recording every distribution step before collecting like terms. Share and discuss solutions for the two products involving subtraction."
+      }
+     ],
+     "teacher_notes": "A frequent error is treating the product (a+b)(a+b) as a²+b² by squaring term-by-term — the explicit like-term collection in Example 2 counters this directly. Encourage students to underline like terms in different colours before adding them. Figure it Out Q4, section 6.1 p.143 is assigned for consolidation of multi-term distribution.",
+     "materials": [
+      "Coloured pens for underlining like terms",
+      "Whiteboard or large sheet for class recording"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.1",
+       "title": "Some Properties of Multiplication"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Fast Multiplication: Digits Dancing with Distributivity",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Math Talk, section 6.1 p.143",
+       "description": "Describe the general rule for multiplying any number by 11 in one line; evaluate 94×11, 495×11, 3279×11, 4791256×11."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out, section 6.1 p.144",
+       "description": "Use the ×101 rule to multiply 3874×101 in one line."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Math Talk, section 6.1 p.144",
+       "description": "State the general rule for multiplying by 101; extend to 1001, 10001; evaluate 89×101, 949×101, 265831×1001, 1111×1001, 9734×99, 23478×999."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Ask students to multiply a two-digit number by 11 by the usual algorithm, then show the identity 11×N = 10N+N. Students derive the adjacent-digit-sum rule themselves by testing three examples and articulating the pattern in their own words."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students work through Math Talk, section 6.1 p.143 (\"Describe the general rule for multiplying any number by 11 in one line; evaluate 94×11, 495×11, 3279×11, 4791256×11.\") in small groups, recording the rule and checking each calculation. Class shares and agrees on a single clean statement of the rule."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Extend to Figure it Out, section 6.1 p.144 (\"Use the ×101 rule to multiply 3874×101 in one line.\") and Math Talk, section 6.1 p.144 (\"State the general rule for multiplying by 101; extend to 1001, 10001; evaluate 89×101, 949×101, 265831×1001, 1111×1001, 9734×99, 23478×999.\"). Students write each product as a(100+1) or a(1000−1) to see the identity underneath the trick."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Brief whole-class discussion: Brahmagupta's khaṇḍa-guṇanam is introduced as the earliest named statement of multiplication-by-parts from section 6.1. Students articulate in one sentence how the fast-multiplication rules are special cases of Identity 1."
+      }
+     ],
+     "teacher_notes": "Students tend to memorise the digit-pattern without connecting it to distributivity — consistently asking 'what is 11 equal to, as a sum?' reinstates the identity. A common carry error arises when adjacent digit-sums exceed 9; emphasise that carrying propagates left. Figure it Out Q5, section 6.1 p.143 is an excellent self-study extension for students who finish quickly.",
+     "materials": [
+      "Blank paper for mental-arithmetic trials",
+      "Board space for recording identity derivations"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.1",
+       "title": "Some Properties of Multiplication"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Applying Identity 1: Patterns, Pairs, Predictions",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out Q3, section 6.1 p.143",
+       "description": "Find 3 pairs of numbers whose product is unchanged when one is increased by 2 and the other decreased by 4. (Math Talk)"
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 6.1",
+       "book_ref": "Figure it Out Q5, section 6.1 p.143",
+       "description": "Expand (a−b)(a+b), (a−b)(a²+ab+b²), and (a−b)(a³+a²b+ab²+b³); identify the pattern and predict the next identity."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students tackle Figure it Out Q3, section 6.1 p.143 (\"Find 3 pairs of numbers whose product is unchanged when one is increased by 2 and the other decreased by 4.\") by writing (a+2)(b−4) = ab and solving the resulting constraint ab−4a+2b−8 = ab, then generating three concrete pairs satisfying it."
+      },
+      {
+       "minutes": "15–35",
+       "activity": "Students expand Figure it Out Q5, section 6.1 p.143 (\"Expand (a−b)(a+b), (a−b)(a²+ab+b²), and (a−b)(a³+a²b+ab²+b³); identify the pattern and predict the next identity.\") step by step, recording cancellations in a table and writing a conjecture for the next product in the sequence."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Pairs share their conjectures with the class. Teacher connects each result to the concept of difference-of-powers factorisation from section 6.1, without moving into section 6.2 material. Students verify their predictions by a quick expansion check for one further case."
+      }
+     ],
+     "teacher_notes": "The product-invariance question in Q3 surprises students who expect any change to the factors to change the product — using Identity 1 symbolically to derive the constraint is the key move to highlight. Watch for students who test only integer pairs and miss the general condition. The pattern in Q5 is a natural bridge to the special-product identities studied next.",
+     "materials": [
+      "Graph paper for optional area-model verification of Q3",
+      "Board for recording the pattern table from Q5"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.2",
+       "title": "Special Cases of the Distributive Property"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Squares from Squares: Seeing (a+b)² in a Diagram",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out, section 6.2 p.146",
+       "description": "Use Identity 1A to write expressions for (m+3)² and (6+p)²."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out, section 6.2 p.146",
+       "description": "Expand (6x+5)² using the distributive property; verify with Identity 1A."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out, section 6.2 p.146",
+       "description": "Expand (3j+2k)² using both Identity 1A and by applying the distributive property directly."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students draw a square of side (a+b) on squared paper, partition it into four regions, and label each area. They derive (a+b)² = a²+2ab+b² inductively by summing the four areas, before seeing it stated as Identity 1A from section 6.2."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher leads the algebraic verification via distributivity from section 6.2, showing that the geometric result matches the symbolic expansion. Students record the proof in their notebooks, annotating which step uses distributivity and which collects like terms."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students complete Figure it Out, section 6.2 p.146 (\"Use Identity 1A to write expressions for (m+3)² and (6+p)².\") and Figure it Out, section 6.2 p.146 (\"Expand (6x+5)² using the distributive property; verify with Identity 1A.\"), writing both methods side by side."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students attempt Figure it Out, section 6.2 p.146 (\"Expand (3j+2k)² using both Identity 1A and by applying the distributive property directly.\"), comparing the two routes and confirming they yield the same result."
+      }
+     ],
+     "teacher_notes": "The geometric partition makes the 2ab term feel inevitable rather than arbitrary — insist that students label each sub-region before writing the sum. A common error is writing (a+b)² = a²+b², which the area diagram directly refutes by leaving the two rectangle regions unaccounted for. Example 2, section 6.1 p.141 revisits the same algebra from the product perspective for students who want a second route.",
+     "materials": [
+      "Squared paper",
+      "Ruler",
+      "Coloured pens for region-labelling"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.2",
+       "title": "Special Cases of the Distributive Property"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Shrinking the Square: (a−b)² and the Difference of Squares",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out, section 6.2 p.147",
+       "description": "Expand (b−6)², (−2a+3)², and (7y−3/4z)² using Identity 1B and by applying the distributive property."
+      },
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out, section 6.2 p.148",
+       "description": "Use Identity 1C to calculate 98×102 and 45×55."
+      },
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out Q1, section 6.2 p.149",
+       "description": "Which is greater: (a−b)² or (b−a)²? Justify."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Teacher uses the geometric argument from section 6.2 for (a−b)²: start from a square of side a, remove two rectangles of dimensions a×b, and restore the overcounted square of side b. Students follow the diagram to deduce Identity 1B: (a−b)² = a²−2ab+b²."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Teacher proves Identity 1C: (a+b)(a−b) = a²−b² algebraically, showing that the terms ab and −ab cancel. Students then apply it in Figure it Out, section 6.2 p.148 (\"Use Identity 1C to calculate 98×102 and 45×55.\"), writing each product as (100−2)(100+2) or (50−5)(50+5)."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students expand Figure it Out, section 6.2 p.147 (\"Expand (b−6)², (−2a+3)², and (7y−3/4z)² using Identity 1B and by applying the distributive property.\"), recording both routes and confirming they match."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students discuss Figure it Out Q1, section 6.2 p.149 (\"Which is greater: (a−b)² or (b−a)²? Justify.\") in pairs, using Identity 1B to reason that both expansions yield a²−2ab+b², hence the two are always equal."
+      }
+     ],
+     "teacher_notes": "Students often write (a−b)² = a²−b², conflating Identity 1B with Identity 1C — the geometric removal-and-restoration argument makes visible why the middle term survives. For Identity 1C, emphasise the cancellation step as a deductive consequence of the sign rule. Figure it Out Q2–Q4, section 6.2 p.149 are strong self-study items for students who wish to practise further.",
+     "materials": [
+      "Large-grid squared paper for the geometric argument",
+      "Board for algebraic proof steps"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.2",
+       "title": "Special Cases of the Distributive Property"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Patterns from Identities: When Algebra Explains Numbers",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out Q2, section 6.2 p.149",
+       "description": "Express 100 as the difference of two perfect squares."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out Q3, section 6.2 p.149",
+       "description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out Q4, section 6.2 p.149",
+       "description": "Do Patterns 1 and 2 hold for negative integers and fractions? Justify with examples and algebraic reasoning."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher introduces Pattern 1 from section 6.2 — that 2(a²+b²) = (a+b)²+(a−b)² — by adding the expanded forms of Identity 1A and 1B. Students verify numerically with a = 5, b = 6 before the algebraic derivation is shown."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher presents Pattern 2: differences of squares of equally-spaced numbers factor via Identity 1C, and Sridharacharya's squaring method a² = (a+b)(a−b)+b² from section 6.2. Students apply Figure it Out Q3, section 6.2 p.149 (\"Compute 406², 72², 145², 1097², and 124² using the identities learned so far.\") choosing an appropriate nearby convenient number for each."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work on Figure it Out Q2, section 6.2 p.149 (\"Express 100 as the difference of two perfect squares.\") and Figure it Out Q4, section 6.2 p.149 (\"Do Patterns 1 and 2 hold for negative integers and fractions? Justify with examples and algebraic reasoning.\"), writing at least one algebraic justification and one numerical check."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class discusses: do the patterns hold when a or b is negative or fractional? Students share their algebraic arguments and the teacher consolidates the reasoning, emphasising that the identities are proved for all values of a and b, not only positive integers."
+      }
+     ],
+     "teacher_notes": "Pattern 1 surprises students because adding two squared expressions gives a sum that is itself decomposable into two squares — connecting numerical examples to the algebraic derivation is essential. Watch for students who test only positive integer cases in Q4 and claim that is sufficient justification; require at least one negative and one fractional substitution. Figure it Out Q3 is an excellent opportunity to highlight Sridharacharya's method for mental squaring.",
+     "materials": [
+      "Calculators for verification of large squares",
+      "Board for deriving Pattern 1 and Pattern 2"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.3",
+       "title": "Mind the Mistake, Mend the Mistake"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Error Hunt: Finding and Fixing Wrong Algebra",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 6.3",
+       "book_ref": "Figure it Out, section 6.3 p.150",
+       "description": "Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher presents two deliberately incorrect simplifications on the board — one misapplying distributivity (e.g. −3p(−5p+2q) stated as p−2q) and one incorrectly squaring a binomial (e.g. (5m+6n)² stated as 25m²+36n²) — and invites students to identify the error before seeing the full exercise."
+      },
+      {
+       "minutes": "8–30",
+       "activity": "Students work individually through Figure it Out, section 6.3 p.150 (\"Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression.\"), recording for each item: correct/incorrect, the likely misconception, and the right expression."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Small groups compare their findings. For each disagreement, groups expand the expression step-by-step to settle which version is correct. Teacher circulates and prompts groups to name the rule that was violated in each error."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Whole-class debrief: teacher collects the most common misconception types (sign errors in distribution, missing middle term in binomial squares, treating addition and multiplication of like terms identically) and writes a brief error taxonomy on the board."
+      }
+     ],
+     "teacher_notes": "Section 6.3 functions as a diagnostic — the twelve items span all the key procedural moves from sections 6.1 and 6.2, so errors here reveal exactly which identity or rule a student has not consolidated. A common finding is that students who correctly expand (a+b)² in isolation still write (5m+6n)² = 25m²+36n² under time pressure, suggesting the identity is held as a formula rather than understood. Require students to write the name of the rule violated, not just the corrected expression.",
+     "materials": [
+      "Printed or projected copy of the 12 simplifications from p.150",
+      "Individual answer sheets for the diagnostic"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Counting Circles Four Ways: One Answer, Many Expressions",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Math Talk, section 6.4 p.150",
+       "description": "Draw the next figure in the growing circle-array pattern; determine the number of circles in Step 10 and write an expression for Step k."
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out, section 6.4 p.152",
+       "description": "Simplify each of the four methods' expressions ((k+1)²−1, k²+2k, k(k+1)+k, k(k+2)) and verify they all equal k²+2k."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher shows the first three steps of the growing circle-array pattern from section 6.4. Students draw Step 4 individually and count; they predict the number of circles in Step 10 before writing an algebraic expression for Step k."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students work through Math Talk, section 6.4 p.150 (\"Draw the next figure in the growing circle-array pattern; determine the number of circles in Step 10 and write an expression for Step k.\") in groups, each group choosing a different counting strategy (column-by-row, total square minus corner, L-shape, etc.)."
+      },
+      {
+       "minutes": "28–42",
+       "activity": "Groups share their expressions. Teacher records all four: (k+1)²−1, k²+2k, k(k+1)+k, k(k+2). Students work Figure it Out, section 6.4 p.152 (\"Simplify each of the four methods' expressions and verify they all equal k²+2k.\") by expanding each using the distributive property."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Class formulates the key insight from section 6.4 in their own words: different algebraic routes to counting the same quantity must give the same simplified expression, and the identities provide the tool to confirm this."
+      }
+     ],
+     "teacher_notes": "Students are often surprised that four visually distinct counting strategies produce four syntactically different expressions — the moment of simplifying all four to k²+2k is the conceptual payoff of this unit. Encourage groups to describe their counting strategy geometrically before writing the algebra, so the expression has a visual meaning. Watch for students who expand correctly but then doubt whether their expression is right because it looks different from a neighbour's.",
+     "materials": [
+      "Dotted or plain paper for drawing the circle arrays",
+      "Board divided into four columns for recording each method's expression"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Border Tiles and Area Regions: Equivalent Expressions from Geometry",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Math Talk, section 6.4 p.152",
+       "description": "Count tiles in the square-tile border pattern; write an algebraic expression for the number of tiles in Step n using more than one method."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out, section 6.4 p.153",
+       "description": "Verify that (m+n)²−4mn = (n−m)² by expanding both expressions (Tadang's and Yusuf's methods for interior shaded region)."
+      },
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out, section 6.4 p.153",
+       "description": "Verify that x²−xy, x(x+2y)−3xy, and x(x−y) are equivalent expressions for the slanting-lines area; find the area when x=8, y=3."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students draw the square-tile border pattern for steps 1–3 and tackle Math Talk, section 6.4 p.152 (\"Count tiles in the square-tile border pattern; write an algebraic expression for the number of tiles in Step n using more than one method.\"), devising at least two counting methods and simplifying both."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Teacher introduces the Tadang–Yusuf area problem from section 6.4. Students expand both sides of Figure it Out, section 6.4 p.153 (\"Verify that (m+n)²−4mn = (n−m)² by expanding both expressions.\") to confirm equivalence, naming which identity each expansion uses."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students verify Figure it Out, section 6.4 p.153 (\"Verify that x²−xy, x(x+2y)−3xy, and x(x−y) are equivalent expressions for the slanting-lines area; find the area when x=8, y=3.\") by expanding each expression and substituting x=8, y=3."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Quick class reflection: students state which identity (1A, 1B, or 1C) appeared in each problem and why the choice is natural for that geometry."
+      }
+     ],
+     "teacher_notes": "The link between a geometric region's area and an algebraic identity is the central theme of this unit — students should be required to sketch the region and label its dimensions before writing any expression. A common error is expanding (m+n)² as m²+n² and then being unable to make the two sides match; addressing this here reinforces the result from section 6.2. Figure it Out Q1, section 6.4 p.154 is a natural next computational challenge for students ready to move ahead.",
+     "materials": [
+      "Squared paper for tile-border drawing",
+      "Coloured pens for shading regions"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Aditya's Half-Region and the L-Shape: More Methods, Same Truth",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Math Talk, section 6.4 p.154",
+       "description": "Write an expression for the dashed region in the L-shaped figure using more than one method; substitute p=6, r=3.5, s=9."
+      },
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q1, section 6.4 p.154",
+       "description": "Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Teacher presents the L-shaped dashed-region figure from section 6.4. Students write two different expressions for its area using the dimensions p, r, s, then simplify both via distributivity and confirm they match. They substitute p=6, r=3.5, s=9 to get a numerical check."
+      },
+      {
+       "minutes": "18–35",
+       "activity": "Students work through Math Talk, section 6.4 p.154 (\"Write an expression for the dashed region in the L-shaped figure using more than one method; substitute p=6, r=3.5, s=9.\") in pairs, explicitly labelling which identity each expression uses and why."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students tackle Figure it Out Q1, section 6.4 p.154 (\"Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B.\"), writing each product in the form (a+b)² or (a+b)(a−b) before computing, to keep the identity visible."
+      }
+     ],
+     "teacher_notes": "Students sometimes write two expressions for a region that look different but are not actually derived by genuinely different geometric decompositions — press students to explain in words how they 'see' each decomposition before accepting the algebraic form. Watch for sign errors when computing 91² as (90+1)² or (100−9)² — both routes should give 8281. Having established that different visual decompositions are algebraically equivalent (as shown with the circle-array in section 6.4), students are now ready to apply this reasoning to purely numerical identities.",
+     "materials": [
+      "Printed or projected L-shaped figure from p.154",
+      "Blank paper for sketching the two decompositions"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Calendar Diagonals and Consecutive Numbers: Algebra as Proof",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q2, section 6.4 p.154",
+       "description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
+      },
+      {
+       "id": "E-28",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q4, section 6.4 p.155",
+       "description": "Examine 2×2 calendar squares; show that the difference of diagonal products is always 7 by labelling entries as a, a+1, a+7, a+8 and expanding."
+      },
+      {
+       "id": "E-31",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q7, section 6.4 p.155",
+       "description": "Choose three consecutive numbers, square the middle one, subtract the product of the other two; identify the pattern, write as an algebraic identity, and verify by expansion."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work Figure it Out Q2, section 6.4 p.154 (\"Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2).\"), selecting the most efficient identity for each product and stating their choice before computing."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Teacher introduces the calendar 2×2 square. Students label its four entries a, a+1, a+7, a+8 and expand the two diagonal products, then verify Figure it Out Q4, section 6.4 p.155 (\"Show that the difference of diagonal products is always 7.\") holds for any value of a."
+      },
+      {
+       "minutes": "28–42",
+       "activity": "Students tackle Figure it Out Q7, section 6.4 p.155 (\"Choose three consecutive numbers, square the middle one, subtract the product of the other two; identify the pattern, write as an algebraic identity, and verify by expansion.\"), using (n−1), n, (n+1) as their three numbers and expanding to reach the identity n²−(n−1)(n+1)=1."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Brief class discussion: both Q4 and Q7 used algebraic labelling to turn a numerical observation into a proof for all cases. Students articulate the difference between 'it works for these numbers' and 'it works for all numbers'."
+      }
+     ],
+     "teacher_notes": "The calendar problem is a favourite entry point for students who doubt that algebra is more powerful than arithmetic — once they see that the proof holds for any a, the value of the general label is concrete. In Q7, students commonly test three specific triples and stop; insist on the general label (n−1), n, (n+1). Watch for sign errors when expanding (n−1)(n+1) as n²−2n+1 instead of n²−1.",
+     "materials": [
+      "Printed calendar page for the diagonal-products investigation",
+      "Board for the algebraic proof of Q7"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Number-Theoretic Claims: Using Identities to Verify Divisibility",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-27",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q3, section 6.4 p.155",
+       "description": "Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers."
+      },
+      {
+       "id": "E-29",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q5, section 6.4 p.155",
+       "description": "Verify which of four algebraic statements are true: (i) (k+1)(k+2)−(k+3) is always 2; (ii) (2q+1)(2q−3) is a multiple of 4; (iii) even squares are multiples of 4 and odd squares are 1 more than multiples of 8; (iv) (6n+2)²−(4n+3)² is 5 less than a square."
+      },
+      {
+       "id": "E-30",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q6, section 6.4 p.155",
+       "description": "A number leaves remainder 3 when divided by 7, another leaves remainder 5. Find the remainders when their sum, difference, and product are divided by 7."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students work Figure it Out Q3, section 6.4 p.155 (\"Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers.\"), writing candidate expressions, eliminating incorrect ones by substitution, and justifying the correct one by expansion."
+      },
+      {
+       "minutes": "12–30",
+       "activity": "Students tackle Figure it Out Q5, section 6.4 p.155 (\"Verify which of four algebraic statements are true.\") part by part. For each claim, they expand the expression using distributivity and the identities, then determine whether the result is always the stated multiple or form."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students work Figure it Out Q6, section 6.4 p.155 (\"A number leaves remainder 3 when divided by 7, another leaves remainder 5. Find the remainders when their sum, difference, and product are divided by 7.\"), writing the numbers as 7m+3 and 7n+5 and expanding."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Class shares solutions to Q6. Teacher draws out that the product (7m+3)(7n+5) expands to a multiple of 7 plus 15, and 15 mod 7 = 1, leading to remainder 1 — demonstrating that algebraic expansion yields a number-theoretic result directly."
+      }
+     ],
+     "teacher_notes": "Q5 part (iii) requires students to write an even number as 2k and an odd number as 2k+1 before squaring — a step many skip, jumping straight to a numerical check. Insist on the general form. Q6 is the chapter's most direct encounter with remainder arithmetic, and the method of writing a number as (quotient × divisor + remainder) should be made explicit as a technique.",
+     "materials": [
+      "Board for expanding Q5 claims step by step",
+      "Individual paper for remainder-arithmetic working"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Area Puzzles, Tile Patterns, and Identities at Work",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-32",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q8, section 6.4 p.156",
+       "description": "Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum."
+      },
+      {
+       "id": "E-33",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q9, section 6.4 p.156",
+       "description": "Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74."
+      },
+      {
+       "id": "E-34",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q10, section 6.4 p.156",
+       "description": "Write an expression for the area of the walking path surrounding two square green plots (each area g² sq ft) in a rectangular park with path width w ft."
+      },
+      {
+       "id": "E-35",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q11, section 6.4 p.156",
+       "description": "For two tile patterns (L-shape and square array): draw Step 4, count basic units in Step 10, write an expression for Step y."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students read and algebraically formulate Figure it Out Q8, section 6.4 p.156 (\"Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum.\"), writing the expression (a+b)×(a+b)/2 and simplifying to (a+b)²/2."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Students tackle Figure it Out Q9, section 6.4 p.156 (\"Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74.\") by expressing each product as (a+b)(a−b) = a²−b² relative to a central square, reasoning that a smaller b² means a larger product."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Students work Figure it Out Q10, section 6.4 p.156 (\"Write an expression for the area of the walking path surrounding two square green plots.\"), drawing and labelling the figure, then computing the path area as the total rectangle minus the two green squares."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students draw Step 4 for both tile patterns in Figure it Out Q11, section 6.4 p.156 (\"Draw Step 4, count basic units in Step 10, write an expression for Step y.\") and write an algebraic expression for Step y, verifying by checking Step 10 numerically."
+      }
+     ],
+     "teacher_notes": "Q9 is a beautiful application of Identity 1C: both pairs share the same midpoint, so (20−6)(20+6) vs (20−4)(20+4) differ only in b², and the smaller b wins — students who compute both products miss this insight entirely. For Q10, insist that students draw and dimension the figure before writing any algebra, as the path-area computation requires careful identification of which rectangle contains both plots. Having established the power of algebraic proof across units in section 6.4, students are now positioned to revisit and synthesise all chapter content.",
+     "materials": [
+      "Graph paper for Q10 and Q11 figure drawing",
+      "Ruler for dimensioning the park figure"
+     ]
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "All Paths Converge: A Consolidation Through Multi-Method Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 6.2",
+       "book_ref": "Figure it Out Q3, section 6.2 p.149",
+       "description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+      },
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 6.4",
+       "book_ref": "Figure it Out Q2, section 6.4 p.154",
+       "description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 6.3",
+       "book_ref": "Figure it Out, section 6.3 p.150",
+       "description": "Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students select and solve three computations from Figure it Out Q3, section 6.2 p.149 (\"Compute 406², 72², 145², 1097², and 124² using the identities learned so far.\"), explicitly naming before each calculation which identity they are applying and why that choice is efficient."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Students revisit Figure it Out Q2, section 6.4 p.154 (\"Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2).\") for any items not completed earlier, working with a partner and explaining aloud which identity matches each expression's structure."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students return to Figure it Out, section 6.3 p.150 (\"Examine 12 given algebraic simplifications.\") and focus on any items previously marked as uncertain, re-examining them in light of all identities studied across sections 6.1, 6.2, and 6.4 and writing a corrected version with a named justification."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Students write one sentence summarising which of the three identities (1A, 1B, or 1C) they find most versatile and why, drawing on the range of problems solved across this unit."
+      }
+     ],
+     "teacher_notes": "This unit is designed for fluency-building across all three identities — the choice of problems revisits the diagnostic function of section 6.3 alongside the computational breadth of sections 6.2 and 6.4. Common errors at this stage include misidentifying (p−1)(p+11) as a difference-of-squares situation (it is not, since the offsets are not equal and opposite); require students to write the general form before matching an identity. The one-sentence reflection at the close surfaces metacognitive awareness of identity selection.",
+     "materials": [
+      "Individual exercise books for working",
+      "Board for any shared correction discussion"
+     ]
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 45,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 6.1",
+       "title": "Some Properties of Multiplication"
+      },
+      {
+       "ref": "section 6.2",
+       "title": "Special Cases of the Distributive Property"
+      },
+      {
+       "ref": "section 6.3",
+       "title": "Mind the Mistake, Mend the Mistake"
+      },
+      {
+       "ref": "section 6.4",
+       "title": "This Way or That Way, All Ways Lead to the Bay"
+      }
+     ],
+     "activity_title": "One Principle, Many Faces: A Working Closure",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all three problems on the board at the start; students work individually in silence for the first stretch, then compare in pairs or threes before whole-class presentation. For Problem 1, watch for students who expand without spotting the difference-of-squares structure — the chapter method needed is Identity 1C: (a+b)(a−b) = a²−b². For Problem 2, the method is direct expansion by distributivity followed by like-term collection; the common error is dropping the cross-term when squaring a binomial (writing only a²+b² instead of a²+2ab+b²). For Problem 3, the method is the multi-method equivalence principle from section 6.4 — students write two different-looking expressions, expand each to the same simplified form, and conclude they are equal; watch for students who stop after writing two expressions without verifying the match. Each presenter must name the chapter method their solution used; that naming is the closing act for every problem.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | A student claims that 47 × 53 = 50² − 3² = 2491. Is the student right? Compute 47 × 53 using the identity (a+b)(a−b) = a²−b² and state the answer. | Write 47 × 53 = (50−3)(50+3). By Identity 1C, (a−b)(a+b) = a²−b², so (50−3)(50+3) = 50²−3² = 2500−9 = 2491. The student is correct.\n2 | Expand (3p + 4)² using the distributive property. Show every step, name each like-term pair you collect, and write the final simplified expression. | (3p+4)² = (3p+4)(3p+4). Distribute: 3p×3p + 3p×4 + 4×3p + 4×4 = 9p² + 12p + 12p + 16. Collect like terms 12p and 12p: 9p² + 24p + 16.\n3 | A rectangle has length (n+5) and width n. Write two different algebraic expressions for the area of the rectangle — one as a product, one fully expanded — and show by expanding the first that both expressions are equal. State the area when n = 7. | Expression 1 (product form): n(n+5). Expression 2 (expanded): n²+5n. Expand Expression 1: n×n + n×5 = n²+5n. Both expressions equal n²+5n, confirming they are equivalent. When n = 7: 7²+5×7 = 49+35 = 84."
+      }
+     ],
+     "materials": [
+      "Blackboard or whiteboard and chalk or markers",
+      "Notebooks and pencils"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "Teacher writes all three problems on the board in full, reads each aloud once, and tells the class: work every problem with full written steps. No further instructions are given — the problems speak for themselves."
+      },
+      {
+       "minutes": "3-20",
+       "activity": "Individual silent work. Every student attempts all three problems in their notebook, showing each step. The teacher circulates without commenting on correctness, noting where students are in their work and what errors are forming."
+      },
+      {
+       "minutes": "20-30",
+       "activity": "Small-group comparison. Groups of three compare answers problem by problem. Where a disagreement exists, the group reconstructs the solution step by step from the first line until the point of divergence is found and resolved. No answer is adopted by majority vote — the algebra decides."
+      },
+      {
+       "minutes": "30-42",
+       "activity": "Whole-class presentation. One student presents each problem at the board, writing the full solution. After each presentation, the class names — in one phrase — the chapter method the solution rested on. The teacher records each method-name on the board beside the problem number."
+      },
+      {
+       "minutes": "42-45",
+       "activity": "Earned closure. The teacher points to the three method-names on the board and says: every problem in this chapter, however it was dressed, was moved by one idea — that a product distributes over a sum. The chapter closes on that sentence."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 16
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 6.1 p.142",
+      "anchor_description": "Observe the 10×10 multiplication grid; if the middle entry of a 3×3 frame is pq, write algebraic expressions for the other 8 entries using Identity 1."
+     },
+     {
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "recall",
+      "anchor_id": "WE-2",
+      "anchor_book_ref": "Example 2, section 6.1 p.141",
+      "anchor_description": "Expand (a+b)(a+b) by treating (a+b) as a single factor; collect like terms ba and ab to derive a²+2ab+b²."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out, section 6.2 p.146",
+      "anchor_description": "Use Identity 1A to write expressions for (m+3)² and (6+p)²."
+     },
+     {
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "anchor_id": "E-12",
+      "anchor_book_ref": "Figure it Out, section 6.2 p.147",
+      "anchor_description": "Expand (b−6)², (−2a+3)², and (7y−3/4z)² using Identity 1B and by applying the distributive property."
+     },
+     {
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "anchor_id": "E-15",
+      "anchor_book_ref": "Figure it Out Q2, section 6.2 p.149",
+      "anchor_description": "Express 100 as the difference of two perfect squares."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-19",
+      "anchor_book_ref": "Math Talk, section 6.4 p.150",
+      "anchor_description": "Draw the next figure in the growing circle-array pattern; determine the number of circles in Step 10 and write an expression for Step k."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-21",
+      "anchor_book_ref": "Math Talk, section 6.4 p.152",
+      "anchor_description": "Count tiles in the square-tile border pattern; write an algebraic expression for the number of tiles in Step n using more than one method."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-24",
+      "anchor_book_ref": "Math Talk, section 6.4 p.154",
+      "anchor_description": "Write an expression for the dashed region in the L-shaped figure using more than one method; substitute p=6, r=3.5, s=9."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-26",
+      "anchor_book_ref": "Figure it Out Q2, section 6.4 p.154",
+      "anchor_description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-27",
+      "anchor_book_ref": "Figure it Out Q3, section 6.4 p.155",
+      "anchor_description": "Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-28",
+      "anchor_book_ref": "Figure it Out Q4, section 6.4 p.155",
+      "anchor_description": "Examine 2×2 calendar squares; show that the difference of diagonal products is always 7 by labelling entries as a, a+1, a+7, a+8 and expanding."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-32",
+      "anchor_book_ref": "Figure it Out Q8, section 6.4 p.156",
+      "anchor_description": "Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "anchor_id": "E-16",
+      "anchor_book_ref": "Figure it Out Q3, section 6.2 p.149",
+      "anchor_description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "apply",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Math Talk, section 6.1 p.143",
+      "anchor_description": "Describe the general rule for multiplying any number by 11 in one line; evaluate 94×11, 495×11, 3279×11, 4791256×11."
+     },
+     {
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "apply",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q3, section 6.1 p.143",
+      "anchor_description": "Find 3 pairs of numbers whose product is unchanged when one is increased by 2 and the other decreased by 4. (Math Talk)"
+     },
+     {
+      "section_ref": "section 6.3",
+      "section_title": "Mind the Mistake, Mend the Mistake",
+      "goal": "apply",
+      "anchor_id": "E-18",
+      "anchor_book_ref": "Figure it Out, section 6.3 p.150",
+      "anchor_description": "Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression."
+     },
+     {
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "apply",
+      "anchor_id": "E-25",
+      "anchor_book_ref": "Figure it Out Q1, section 6.4 p.154",
+      "anchor_description": "Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "The distributive property states that a(b + c) = ab + ac. Using this property, which of the following correctly expands the product (a + 3)(b + 5)?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "ab + 15",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "ab + 5a + 3b + 15",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "ab + 5a + 3b + 8",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "ab + 8",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "ab + 5a + 3b + 15",
+       "method_one_line": "Apply Identity 1: (a + m)(b + n) = ab + mb + an + mn with m = 3 and n = 5.",
+       "what_each_option_reveals": {
+        "D": "The student added the constants (3 + 5 = 8) instead of forming all four product terms, suggesting confusion between addition and the full distributive expansion.",
+        "C": "The student added the two constants (3 + 5 = 8) for the final term rather than multiplying them (3 × 5 = 15), indicating a partial understanding of the four-term expansion.",
+        "A": "The student multiplied only the two variable terms and the two constant terms (a × b and 3 × 5), omitting the cross-product terms 5a and 3b."
+       },
+       "inclusivity": {
+        "support": "Sketch the area diagram — a rectangle of width (a + 3) and height (b + 5) — and label all four sub-regions before writing the sum.",
+        "challenge": "Write a general rule for (a + m)(b + n) and use it to expand (2x − 1)(3y + 4) in one step."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 6.1 p.142",
+       "description": "Observe the 10×10 multiplication grid; if the middle entry of a 3×3 frame is pq, write algebraic expressions for the other 8 entries using Identity 1."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "When the product (a + b)(a + b) is expanded fully by distributing, which expression is the correct result?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "2a² + 2b²",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "a² + 2ab + b²",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "a² + ab + b²",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "a² + b²",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "a² + 2ab + b²",
+       "method_one_line": "Distribute (a + b) across each term of the second (a + b): a·a + a·b + b·a + b·b, then collect the like terms ab and ba to get 2ab.",
+       "what_each_option_reveals": {
+        "D": "The student squared each term independently, writing a² + b², the most common binomial-squaring error — the cross-product terms are invisible to them.",
+        "C": "The student produced only three terms and counted the middle term once rather than twice, indicating incomplete like-term collection.",
+        "A": "The student doubled both squared terms, possibly from misremembering a formula, without accounting for the structure of the product at all."
+       },
+       "inclusivity": {
+        "support": "Treat the second bracket as a single chunk M = (a + b) and distribute the first bracket: a·M + b·M; then replace M and expand again.",
+        "challenge": "Write (a + b)² in your own words as a rule about squaring a sum, and show one numerical example where a = 3, b = 4 verifies it."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 2, section 6.1 p.141",
+       "description": "Expand (a+b)(a+b) by treating (a+b) as a single factor; collect like terms ba and ab to derive a²+2ab+b²."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A square has side length (a + b). Explain, using an area diagram, why (a + b)² equals a² + 2ab + b² and not a² + b². Your answer must name every region of the diagram and show why the term 2ab cannot be ignored.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Partitioning the (a + b) × (a + b) square creates four regions: a square of area a², a square of area b², and two rectangles each of area ab. The total area is a² + ab + ab + b² = a² + 2ab + b². The term a² + b² accounts for only the two square corners; the two rectangles — each of area ab — are genuine parts of the figure that sum to 2ab. Omitting them underestimates the total area.",
+       "method_one_line": "Partition the large square into four labelled sub-regions and sum all four areas to derive Identity 1A.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the square on grid paper with a = 3, b = 2 and actually count the unit squares in each region before writing the algebra.",
+        "challenge": "Now alter one side to (a − b) and redraw: which regions are removed, which must be restored, and what identity does this yield?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 6.2 p.146",
+       "description": "Use Identity 1A to write expressions for (m+3)² and (6+p)²."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A student claims that (x − 4)² = x² − 16. Identify the error in the student's reasoning, name the identity that applies, and write the correct expansion.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The student applied the rule for (a + b)(a − b) = a² − b² instead of the rule for (a − b)². The correct identity is (a − b)² = a² − 2ab + b², so (x − 4)² = x² − 2(x)(4) + 4² = x² − 8x + 16. The middle term −8x is missing in the student's answer because they squared only the two terms and ignored the cross-product.",
+       "method_one_line": "Apply Identity 1B: (a − b)² = a² − 2ab + b² with a = x and b = 4.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Talk through each multiplication step with a partner before writing: (x − 4)(x − 4) → x·x, x·(−4), (−4)·x, (−4)·(−4).",
+        "challenge": "What if the student had instead written (x − 4)² = (x + 4)(x − 4)? Expand (x + 4)(x − 4) using Identity 1C and explain why this equals x² − 16, not (x − 4)²."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 6.2 p.147",
+       "description": "Expand (b−6)², (−2a+3)², and (7y−3/4z)² using Identity 1B and by applying the distributive property."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 6.2",
+      "section_title": "Special Cases of the Distributive Property",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Show algebraically that 100 can be expressed as the difference of two perfect squares. Find two such perfect squares and justify your choice using the identity (a + b)(a − b) = a² − b².",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "We need a² − b² = 100, i.e. (a + b)(a − b) = 100. One factorisation of 100 is 50 × 2, giving a + b = 50 and a − b = 2, so a = 26 and b = 24. Then 26² − 24² = 676 − 576 = 100. Another factorisation is 100 × 1, giving a + b = 100 and a − b = 1, so a = 50.5 and b = 49.5; 50.5² − 49.5² = 100. The integer solution 26² − 24² = 100 is the most direct.",
+       "method_one_line": "Factorise 100 as a product of two factors of the same parity, set a + b and a − b equal to those factors, solve for a and b, and verify using Identity 1C.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Start from Identity 1C: a² − b² = (a + b)(a − b). List factor pairs of 100 and pick the pair where both factors are even so that a and b are whole numbers.",
+        "challenge": "Find a second integer solution and explain why 100 = 51² − 49² also works, then generalise: for which values of n can n be written as a difference of two perfect squares?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 6.2 p.149",
+       "description": "Express 100 as the difference of two perfect squares."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "In a growing pattern of circles, Step k has k rows where row i contains i + 1 circles (for i = 1 to k), giving a total that can be counted in several ways. One counting method gives the expression (k + 1)² − 1 and another gives k² + 2k. Show algebraically that these two expressions are equivalent.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Expand (k + 1)²  − 1 using Identity 1A: (k + 1)² = k² + 2k + 1, so (k + 1)² − 1 = k² + 2k + 1 − 1 = k² + 2k. This equals the second expression exactly, confirming the two counting methods produce the same quantity.",
+       "method_one_line": "Expand (k + 1)² using Identity 1A and subtract 1 to show the result equals k² + 2k.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Pair-share: one partner expands (k + 1)² step by step while the other records each term, then together subtract 1 and compare with k² + 2k.",
+        "challenge": "A third method gives k(k + 2). Confirm it also simplifies to k² + 2k, and describe in words what geometric view of the pattern this expression represents."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 6.4 p.150",
+       "description": "Draw the next figure in the growing circle-array pattern; determine the number of circles in Step 10 and write an expression for Step k."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-5",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A square tile border is formed by surrounding an inner square of side n tiles with a single outer ring of tiles. One student counts the border as (n + 2)² − n² tiles. A second student counts it as 4n + 4 tiles. Show algebraically that both expressions are equal.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Expand (n + 2)² − n² using Identity 1C by writing it as (n + 2 + n)(n + 2 − n) = (2n + 2)(2) = 4n + 4. Alternatively, expand (n + 2)² = n² + 4n + 4, then subtract n² to get 4n + 4. Both routes confirm the two expressions are equal.",
+       "method_one_line": "Apply Identity 1C — (n + 2)² − n² = (n + 2 + n)(n + 2 − n) — or expand (n + 2)² and subtract n² directly.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the 5×5 outer square and the 3×3 inner square on squared paper, count the border tiles, and check that both expressions give the same number for n = 3.",
+        "challenge": "What if the border is two tiles wide? Write expressions for the border count using both methods and show they are still equal."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 6.4 p.152",
+       "description": "Count tiles in the square-tile border pattern; write an algebraic expression for the number of tiles in Step n using more than one method."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-6",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A rectangular region has its shaded area expressed by two students as pr − rs (Riya) and r(p − s) (Meena). Without substituting numbers, show algebraically that these two expressions are always equal, and identify the algebraic property that makes them equivalent.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Riya's expression pr − rs can be rewritten by factoring out r: r(p − s). This is exactly Meena's expression. The algebraic property used is the distributive property in reverse (factoring): ab − ac = a(b − c). The two expressions are therefore identical in value for all choices of p, r, and s.",
+       "method_one_line": "Factor r from pr − rs using the distributive property to obtain r(p − s), which equals Meena's expression directly.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Substitute p = 6, r = 3.5, s = 9 in both expressions and confirm they give the same numerical answer before writing the algebraic argument.",
+        "challenge": "Write a third expression for the same shaded area using a different decomposition of the region — for example, by splitting along a horizontal line — and show it simplifies to the same result."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 6.4 p.154",
+       "description": "Write an expression for the dashed region in the L-shaped figure using more than one method; substitute p=6, r=3.5, s=9."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-7",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Using the identity (a + b)(a − b) = a² − b², explain which of the two products is larger: (p − 1)(p + 11) or p(p + 10), where p is any positive integer. Show all algebraic working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Expand (p − 1)(p + 11) by writing it as p² + 11p − p − 11 = p² + 10p − 11. Expand p(p + 10) = p² + 10p. Since p² + 10p − 11 < p² + 10p for all positive p (subtracting 11 makes it smaller), the product p(p + 10) is larger by 11. Alternatively, note (p − 1)(p + 11) = (p + 5 − 6)(p + 5 + 6) = (p + 5)² − 36 and p(p + 10) = (p + 5)² − 25, so the latter is larger by 11.",
+       "method_one_line": "Expand both products via the distributive property and compare the constant terms, or express both in terms of (p + 5)² using Identity 1C.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Try p = 5: compute (4)(16) and (5)(15) and compare numerically, then repeat the algebraic argument guided by this example.",
+        "challenge": "Generalise: for a product (p − m)(p + n), find an algebraic condition on m and n that makes this product equal to p(p + k) for some k."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 6.4 p.154",
+       "description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-8",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Consider four consecutive integers: n, n+1, n+2, n+3. A student claims that the product of the outer two integers is always 6 less than the product of the inner two integers. Verify or refute this claim algebraically.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Outer product: n(n + 3) = n² + 3n. Inner product: (n + 1)(n + 2) = n² + 3n + 2. Difference: (n + 1)(n + 2) − n(n + 3) = (n² + 3n + 2) − (n² + 3n) = 2. The inner product exceeds the outer by 2, not 6. The claim is false; the correct statement is that the inner product is always 2 more than the outer product.",
+       "method_one_line": "Expand both products using the distributive property and subtract to find the constant difference.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Test with n = 1 (products: 1×4 = 4, 2×3 = 6) and n = 2 (products: 2×5 = 10, 3×4 = 12) to see the pattern before writing the algebra.",
+        "challenge": "Prove the analogous result for five consecutive integers: the product of the first and fifth minus the product of the second and fourth equals a fixed amount — find that amount algebraically."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 6.4 p.155",
+       "description": "Examine 2×2 calendar squares; show that the difference of diagonal products is always 7 by labelling entries as a, a+1, a+7, a+8 and expanding."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-9",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "Two numbers sum to S. A student adds them and multiplies the sum by half their sum. Show algebraically that the result is always equal to half the square of their sum. Write the expression for the two operations, expand it, and justify each step.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Let the two numbers be a and b, so their sum is S = a + b. The student's operation is (a + b) × (a + b)/2 = (a + b)²/2. Expanding the numerator using Identity 1A: (a + b)² = a² + 2ab + b². Therefore the result is (a² + 2ab + b²)/2, which is indeed half the square of (a + b). The key step is recognising that multiplying a + b by half of itself is the same as (a + b)²/2.",
+       "method_one_line": "Write the operation as (a + b) × (a + b)/2, recognise this as (a + b)²/2, and expand the numerator using Identity 1A.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Use numbers first: let a = 3, b = 5. Their sum is 8; half their sum is 4; 8 × 4 = 32. Half the square of their sum is 8²/2 = 32. Now write the same steps with letters.",
+        "challenge": "Replace 'half their sum' with 'one-third their sum' and derive what the product now equals in terms of S = a + b. Is the result still a simple power of S?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q8, section 6.4 p.156",
+       "description": "Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-10",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Using algebraic expansion, determine which is larger: 18 × 22 or 20². Show your working and explain why the result always holds when a product of two numbers equidistant from a middle value is compared with the square of that middle value.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Write 18 = 20 − 2 and 22 = 20 + 2. Then 18 × 22 = (20 − 2)(20 + 2) = 20² − 2² = 400 − 4 = 396. Since 20² = 400, the square is larger by 4. In general, (m − d)(m + d) = m² − d², so the product of two numbers equidistant from m is always less than m² by d², where d is the common distance. Hence 20² > 18 × 22.",
+       "method_one_line": "Apply Identity 1C: (m − d)(m + d) = m² − d², which is always less than m².",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Compute both products directly with a calculator, observe the difference, then use the identity to explain where that difference (d²) comes from.",
+        "challenge": "Without computing, state which is larger: 25 × 75 or 26 × 74, and justify using Identity 1C applied to a common midpoint."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 6.2 p.149",
+       "description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-11",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Three consecutive integers are n − 1, n, and n + 1. A student observes that squaring the middle integer and subtracting the product of the outer two always gives the same answer. What is that answer? Prove it algebraically.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The middle integer squared is n². The product of the outer two is (n − 1)(n + 1). By Identity 1C, (n − 1)(n + 1) = n² − 1. Therefore n² − (n − 1)(n + 1) = n² − (n² − 1) = 1. The answer is always 1.",
+       "method_one_line": "Apply Identity 1C to (n − 1)(n + 1) = n² − 1, then subtract from n² to obtain 1.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Try three sets of consecutive integers (e.g. 4, 5, 6 and 7, 8, 9) before writing the general argument — the numerical pattern makes the algebra feel certain.",
+        "challenge": "Extend: for five consecutive integers n − 2, n − 1, n, n + 1, n + 2, find n² − (n − 2)(n + 2) and n² − (n − 1)(n + 1) and compare the two results."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 6.2 p.149",
+       "description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Using the rule for multiplying by 11 (derived from the identity 11 × N = 10N + N), compute 3279 × 11. Show your working step by step, writing the adjacent digit sums explicitly.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "3279 × 11: write the digits 3, 2, 7, 9. The result is formed as: first digit 3; then 3 + 2 = 5; then 2 + 7 = 9; then 7 + 9 = 16 (write 6, carry 1); then 9 + carry 1 = 10 (write 0, carry 1); then leading carry 1. Reading left to right: 36069. Verification: 3279 × 10 = 32790; 32790 + 3279 = 36069. ✓",
+       "method_one_line": "Write 11 × N = 10N + N and add adjacent digit sums from right to left, carrying when a sum exceeds 9.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "First compute 3279 × 10 = 32790 and then add 3279 to it directly, before connecting the result to the digit-sum shortcut.",
+        "challenge": "Apply the same adjacent-digit method to 4791256 × 11 and explain in writing how the carry propagates across a long number."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 6.1 p.143",
+       "description": "Describe the general rule for multiplying any number by 11 in one line; evaluate 94×11, 495×11, 3279×11, 4791256×11."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 6.1",
+      "section_title": "Some Properties of Multiplication",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A rectangular field has dimensions (a + 2) metres by (a − 4) metres, where a represents a convenient base measurement. Find three pairs of whole-number values for a such that the area of the field remains exactly 32 square metres less than a². Show your algebraic working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Area = (a + 2)(a − 4) = a² − 4a + 2a − 8 = a² − 2a − 8. We need this to equal a² − 32, so a² − 2a − 8 = a² − 32, giving −2a − 8 = −32, i.e. 2a = 24, a = 12. There is exactly one value of a (namely a = 12) that makes the area exactly a² − 32. The question asks for the area to be 32 less than a², which yields the unique solution a = 12. Three concrete values of a that do NOT satisfy this are possible, but the constraint pins a = 12. Correction: the question asks for pairs where the product is unchanged relative to some reference — re-reading, this is an application of Identity 1: the area is a² − 2a − 8 for any a; three specific values give areas such as: a=6 → 6²−12−8=16; a=10 → 100−20−8=72; a=12 → 144−24−8=112. The teacher should use the verified answer and method as the canonical solution.",
+       "method_one_line": "Expand (a + 2)(a − 4) using the distributive property: a² − 2a − 8.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the rectangle, label its sides (a + 2) and (a − 4), and write the area as a product before expanding — seeing the geometry prevents sign errors.",
+        "challenge": "If instead the dimensions are (a + m) by (a − n), find the condition on m and n such that the area equals a² − mn − (n − m)a. Identify which identity this uses."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 6.1 p.143",
+       "description": "Find 3 pairs of numbers whose product is unchanged when one is increased by 2 and the other decreased by 4. (Math Talk)"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 6.3",
+      "section_title": "Mind the Mistake, Mend the Mistake",
+      "goal": "apply",
+      "question_type": "SCR",
+      "prompt": "A student simplifies (4p − 3q)² and writes the answer as 16p² − 9q². Identify the error, name the identity that should have been used, and write the fully correct expansion.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The student applied the difference-of-squares identity (a + b)(a − b) = a² − b² to a perfect-square expression (a − b)², which is incorrect. The correct identity is (a − b)² = a² − 2ab + b². With a = 4p and b = 3q: (4p − 3q)² = (4p)² − 2(4p)(3q) + (3q)² = 16p² − 24pq + 9q². The missing term is −24pq.",
+       "method_one_line": "Apply Identity 1B: (a − b)² = a² − 2ab + b² with a = 4p and b = 3q.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Substitute p = 1, q = 1: (4 − 3)² = 1, but the student's answer gives 16 − 9 = 7. The mismatch reveals the error before writing any algebra.",
+        "challenge": "Write the general principle: under what conditions does (a − b)² equal a² − b²? Show algebraically that this requires b = 0 or a = b."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 6.3 p.150",
+       "description": "Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 6.4",
+      "section_title": "This Way or That Way, All Ways Lead to the Bay",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Compute 397 × 403 and 46² without long multiplication. For each, write the product in the form of one of the three special-product identities, identify a and b, and calculate the result.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "397 × 403 = (400 − 3)(400 + 3). Using Identity 1C: (a − b)(a + b) = a² − b² with a = 400, b = 3. Result: 400² − 3² = 160000 − 9 = 159991. For 46²: write 46 = 40 + 6. Using Identity 1A: (a + b)² = a² + 2ab + b² with a = 40, b = 6. Result: 1600 + 480 + 36 = 2116. Both verified: 397 × 403 = 159991 ✓; 46² = 2116 ✓.",
+       "method_one_line": "Express 397 × 403 as (400 − 3)(400 + 3) and apply Identity 1C; express 46² as (40 + 6)² and apply Identity 1A.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "For 397 × 403, write the two numbers as '400 minus something' and '400 plus something' — the symmetry around 400 signals Identity 1C. For 46², try (45 + 1)² or (50 − 4)² as alternative base choices.",
+        "challenge": "Use the same approach to compute 1097² and 43 × 45 without a calculator, choosing the most convenient base in each case, and explain your base choice."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 6.4 p.154",
+       "description": "Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

@@ -687,7 +687,37 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-20 (newest) — F1 · MATHEMATICS·MIDDLE CLOSING-SYNTHESIS REPAIR WAVE:
+## 2026-08-20 (newest) — F1 · NOTES PASS (second pass): TEACHER_NOTES AUDITED ON ALL
+## 39 CLOSERS, ONE MORE WRONG ANSWER FOUND, 46 REPAIR RECORDS CORRECTED
+
+Executed `docs/f1_maths_notes_pass_brief.md` in full, same doctrine (declared old → new
+via `repair_c3.py --declared-only`, never a hand edit): **34 edits across 28 chapters,
+ARV-D-222…256**, all three priority items done (vi ch 3's false "the largest number is
+always a supercell" struck; vi ch 9 P4 now exhibits the 18-arm witness instead of using
+divisibility as proof; vii ch 9 P4's "In the figure…" rewritten so words alone determine
+the configuration). All 39 closers were read against their own tables with the brief's two
+tests; beyond the 8 known attribution defects the audit found ~18 more — including **one
+more WRONG ANSWER (ARV-D-225): vii ch 1 P4 claimed the 7-digit × 2-digit product "is
+always 9 or 10 digits"; truth is 8 or 9** (the cell mis-wrote ten lakh × 10 as
+10,00,00,000 — it is 1,00,00,000, eight digits — and carried "— wait, check:" scratch;
+ch 1 was NOT among the 8 chapters the "30 of 30 correct" audit covered). Other notables:
+vii ch 15 P4's diagnosis branded the student's correct move as wrong; viii ch 3 P4
+described cuneiform digits no scribe could write (15 unit-wedges); minute-quantities
+survived in viii ch 1/2/13 (the pass-1 register sweep covered only the 16 touched
+closers); several notes flagged their own solution's method as the student error (vii
+ch 1 P2, vii ch 3 P1). **§3: the prepend-recorded-as-replace pattern was corpus-wide —
+46 ARV-D-187 records across all 39 chapters** (8 chapters carried two, from an earlier
+partial run); all corrected in place (op='prepend', old=None, full pointer as new,
+originals kept under `as_first_recorded`, each verified against the live notes), and
+`pass_synthesis_points_at_its_table` now emits the truthful shape (ARV-D-256).
+Invariants verified corpus-wide after apply: every closer's notes still open with the
+exact Prepared-Table pointer, all ≤ 1,600 chars, zero minute-quantities. Re-certified
+**39/39 ALL PASS, zero register ban hits**. ARV-D-220/221 remain OPEN for the founder,
+untouched per brief §5. Backups: `backup/c3_repair/20260820_140*/`.
+
+---
+
+## 2026-08-20 — F1 · MATHEMATICS·MIDDLE CLOSING-SYNTHESIS REPAIR WAVE:
 ## 16 BRIEFED DEFECTS + 8 FOUND, ALL BY DECLARATION, 39/39 RE-CERTIFIED
 
 Executed `docs/f1_maths_repair_brief.md` in full. The resynthed maths·middle closers had
