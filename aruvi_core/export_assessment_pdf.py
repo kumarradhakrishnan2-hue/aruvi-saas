@@ -118,6 +118,35 @@ QUESTION_TYPE_NAMES = {
 }
 
 
+def textbook_companion(ref: Any, desc: Any) -> str:
+    """The TEXTBOOK EXERCISE companion line, with the borrowed text MARKED AS QUOTATION.
+
+    F2 / C14, 2026-08-20. The companion points a teacher at a task in the book she already
+    owns, and its description is the book's own wording. Measured across mathematics·
+    preparatory, 15.5% of these blocks carry a >12-word run verbatim from the chapter's
+    NCERT PDF — by far the highest of any surface, and far above Aruvi's own prose at 1.8%.
+    That concentration is not a defect in itself: this is precisely the surface whose job is
+    to reproduce a pointer. What was missing is that it did not LOOK like quotation. It
+    rendered as `Textbook exercise: Let us Do Q1, p.46 — Collect some cardboard boxes and
+    open them up carefully.` — a reference and then unmarked text, indistinguishable from
+    Aruvi's own writing.
+
+    Curly quotation marks make the borrowing visible and the attribution complete: C14's
+    third test is "every quotation attributed", and the `ref` beside it is the attribution.
+    Same instinct as the english poem LOCATOR at S9-S11 — do not hide the borrowing, name it.
+
+    DISPLAY-LAYER ONLY, deliberately. No artefact is edited, no constitution moves, nothing
+    re-authors, and it applies to every subject and stage at once, including libraries
+    already certified. A quotation mark is not a content change.
+    """
+    r, d = str(ref or "").strip(), str(desc or "").strip()
+    if not d:
+        return r
+    if d[0] in "\"'“‘":          # already quoted by the author — leave it alone
+        return f"{r} — {d}".strip(" —")
+    return f"{r} — “{d}”".strip(" —")
+
+
 def question_type_full(code: Any) -> str:
     """Full, teacher-facing name for an internal question-type code
     ("MCQ" → "Multiple Choice Question"). Unknown/future codes fall back to a
@@ -719,7 +748,7 @@ def _answer_block(n: Dict[str, Any], opts: List[Dict[str, Any]]) -> str:
     if n.get("exercise_ref") or n.get("exercise_desc"):
         ref = n.get("exercise_ref") or ""
         desc = n.get("exercise_desc") or ""
-        inner += _block("Textbook exercise:", f"{ref} — {desc}".strip(" —"))
+        inner += _block("Textbook exercise:", textbook_companion(ref, desc))
     if not inner:
         return ""
     return f'<div class="ans"><div class="ans-title">Answer section</div>{inner}</div>'

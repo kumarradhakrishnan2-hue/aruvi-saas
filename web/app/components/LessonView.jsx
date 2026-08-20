@@ -956,10 +956,20 @@ function AQuestionPanel({ n, opts, sets, nav }) {
         <div className="assess-look">
           <span className="assess-look-k">TEXTBOOK EXERCISE</span>
           <div className="assess-look-t">
-            {/* The book item (book_ref) is bold; the task description follows in normal weight. */}
+            {/* The book item (book_ref) is bold; the task description follows in normal weight,
+                IN QUOTATION MARKS — it is the textbook's own wording, and until 2026-08-20 it
+                rendered unmarked, indistinguishable from Aruvi's prose. F2/C14: this surface
+                carries a >12-word verbatim NCERT run 15.5% of the time (Aruvi's own prose:
+                1.8%), which is what the companion is FOR — so the fix is to show the borrowing,
+                not remove it. Mirrors `export_assessment_pdf.textbook_companion`; a description
+                the author already quoted is left alone. */}
             {n.exercise_ref ? <strong className="assess-book-item">{n.exercise_ref}</strong> : null}
             {n.exercise_ref && n.exercise_desc ? " — " : null}
-            {n.exercise_desc}
+            {n.exercise_desc
+              ? (/^["'“‘]/.test(n.exercise_desc.trim())
+                  ? n.exercise_desc
+                  : `“${n.exercise_desc.trim()}”`)
+              : null}
           </div>
         </div>
       ) : null}

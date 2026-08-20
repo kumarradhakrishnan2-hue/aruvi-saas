@@ -34,7 +34,8 @@ from .export_lesson_pdf import (
     targeted_competencies, _duration_breakdown, _group_word as _lp_group_word,
     _phase_duration, AXIS_INFO,
 )
-from .export_assessment_pdf import intro_paragraph, CTX_WORD, question_type_full
+from .export_assessment_pdf import (intro_paragraph, CTX_WORD, question_type_full,
+                                    textbook_companion)
 from .export_integrated_pdf import _items_by_anchor, _iter_group_periods
 
 # ── palette ──────────────────────────────────────────────────────────────────
@@ -604,7 +605,8 @@ def _answer_block(doc, n):
         p = _para(doc, space_after=1); _run(p, "Method: ", bold=True, size=8.5, color=G_DARK); _run(p, method, size=9, color=RGBColor(0x1F, 0x3A, 0x30))
     if ex:
         p = _para(doc, space_after=1); _run(p, "Textbook exercise: ", bold=True, size=8.5, color=G_DARK)
-        _run(p, f"{n.get('exercise_ref') or ''} — {n.get('exercise_desc') or ''}".strip(" —"), size=9, color=RGBColor(0x1F, 0x3A, 0x30))
+        _run(p, textbook_companion(n.get("exercise_ref"), n.get("exercise_desc")),
+             size=9, color=RGBColor(0x1F, 0x3A, 0x30))
 
 
 def _bg_para(p, hex_color):
